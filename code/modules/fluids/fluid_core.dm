@@ -210,7 +210,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (A.event_handler_flags & USE_FLUID_ENTER)
 			A.EnteredFluid(src, A.last_turf)
 
-	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1, var/exception = null)//called when mob is drowning
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
@@ -219,7 +219,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
-		src.group.reagents.trans_to(M, react_volume)
+		src.group.reagents.trans_to(M, react_volume, exception = exception)
 
 	Uncrossed(atom/movable/AM)
 
@@ -329,7 +329,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 						push_thing = thing
 
 					if (found)
-						if( thing.density || (thing.flags & FLUID_DENSE) )
+						if( thing.density || (thing.flags & FLUID_DENSE_ALWAYS) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))

@@ -112,7 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		..()
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		if (W.hitsound)
@@ -176,8 +176,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 				SPAWN(1.5 SECONDS)
 					ClearSpecificOverlays("bot_speech_bubble")
 			if(!src.bot_speech_color)
-				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
 			var/singing_italics = sing ? " font-style: italic;" : ""
 			var/maptext_color
 			if (sing)
@@ -195,7 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]")
+				var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
 						if (!O.client)
@@ -221,11 +220,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			hit_particle.set_loc(src.loc)
 			hit_particle.transform.Turn(rand(0, 360))
 			if (P.proj_data.damage > 1)
-				flick("block_spark", hit_particle)
+				FLICK("block_spark", hit_particle)
 				if (P.proj_data.damage_type & D_KINETIC)
 					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
 			else
-				flick("block_spark_armor", hit_particle)
+				FLICK("block_spark_armor", hit_particle)
 				if (P.proj_data.damage_type & D_ENERGY)
 					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
 		if (P.proj_data.ks_ratio > 0)
@@ -377,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)
-						flick("ion_fade", I)
+						FLICK("ion_fade", I)
 						I.icon_state = "blank"
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
@@ -400,6 +399,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			if (istype(master))
 				master.moving = 0
 				master.bot_mover = null
-				master.process() // responsive, robust AI = calling process() a million zillion times
+				master.ProcessMachine() // responsive, robust AI = calling process() a million zillion times
 				master = null
 				qdel(src)

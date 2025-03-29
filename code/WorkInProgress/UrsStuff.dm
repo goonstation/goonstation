@@ -46,9 +46,6 @@
 
 /obj/fakeobject/dreambeach/mercury
 
-/obj/item/storage/box/knitting
-	name = "\improper Knitting Supplies"
-
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep

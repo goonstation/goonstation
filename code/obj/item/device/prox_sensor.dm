@@ -11,11 +11,14 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0
 	flags = TABLEPASS | CONDUCT
-	event_handler_flags = USE_FLUID_ENTER
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
 	desc = "A device which transmits a signal when it detects movement nearby."
+
+/obj/item/device/prox_sensor/New()
+	..()
+	src.AddComponent(/datum/component/proximity, FALSE)
 
 /obj/item/device/prox_sensor/dropped()
 	..()
@@ -58,10 +61,10 @@ TYPEINFO(/obj/item/device/prox_sensor)
 			else src.timing = FALSE
 		else
 			src.armed = TRUE
-			src.time = 0
+			src.time = src.min_time
 			src.timing = FALSE
 			src.last_tick = 0
-			setup_use_proximity()
+			src.GetComponent(/datum/component/proximity).set_detection(TRUE)
 			src.UpdateIcon()
 
 		src.last_tick = TIME
@@ -71,12 +74,11 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		processing_items.Remove(src)
 	src.time = max(src.time, 0)
 
-/obj/item/device/prox_sensor/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/device/prox_sensor/EnteredProximity(atom/movable/AM)
 	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile) || AM.invisibility > INVIS_CLOAK)
 		return
 	if (AM.move_speed < 12)
 		src.sense()
-	return
 
 /obj/item/device/prox_sensor/attackby(obj/item/device/radio/signaler/S, mob/user)
 	if ((!( istype(S, /obj/item/device/radio/signaler) ) || !( S.b_stat )))
@@ -121,6 +123,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	)
 
 /obj/item/device/prox_sensor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch (action)
 		if ("set-time")
 			var/time = text2num_safe(params["value"])
@@ -129,9 +132,9 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		if ("toggle-armed")
 			src.armed = !src.armed
 			if (src.armed)
-				setup_use_proximity()
+				src.GetComponent(/datum/component/proximity).set_detection(TRUE)
 			else
-				remove_use_proximity()
+				src.GetComponent(/datum/component/proximity).set_detection(FALSE)
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
@@ -153,6 +156,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 			. = TRUE
 
 		if ("toggle-timing")
+			src.time = max(src.min_time, src.time)
 			src.timing = !src.timing
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src

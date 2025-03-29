@@ -24,9 +24,6 @@
 	var/respawn_lock = 0
 	var/admin_override = 0
 	var/antag_count = 1
-#ifdef RP_MODE
-	disabled = 1
-#endif
 
 	admin_call(var/source)
 		if (..())
@@ -36,7 +33,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind", "Space Phoenix")
 		if (!type)
 			return
 		else
@@ -65,11 +62,22 @@
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
-			#ifdef MAP_OVERRIDE_NADIR
-			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind"))
+			var/list/possible_antags
+			#ifndef RP_MODE
+			possible_antags = list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind", "Space Phoenix")
 			#else
-			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind"))
+			possible_antags = list("Space Phoenix")
 			#endif
+			#ifdef MAP_OVERRIDE_NADIR
+			possible_antags -= list("Blob")
+			#endif
+			#ifdef UNDERWATER_MAP
+			possible_antags -= list("Space Phoenix")
+			#endif
+			if (!length(possible_antags))
+				message_admins("Antagonist spawn of Space Phoenix on an underwater map is disabled, aborting.")
+				return
+			src.antagonist_type = pick(possible_antags)
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
@@ -202,7 +210,7 @@
 
 			var/role = null
 			var/objective_path = null
-			var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
+			var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags | 4: set up by antag datum
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			var/failed = 0
 			log_respawn_event(lucky_dude, src.antagonist_type, source)
@@ -339,6 +347,14 @@
 						role = ROLE_ARCFIEND
 					else
 						failed = 1
+				if ("Space Phoenix")
+					if (istype(mind))
+						send_to = 4
+						mind.add_antagonist(ROLE_PHOENIX, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+						M3 = mind.current
+						role = ROLE_PHOENIX
+					else
+						failed = 1
 				else
 					failed = 1
 
@@ -397,6 +413,7 @@
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 			message_admins("[key_name(lucky_dude)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+			message_ghosts("The random event <b>[src.antagonist_type]</b> has spawned.") //noloc4antagspawns
 		src.cleanup()
 		return
 

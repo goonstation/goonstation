@@ -105,7 +105,7 @@
 		qdel(src)
 
 	bullet_act(var/obj/projectile/P)
-		if (istype(P, /datum/projectile/energy_bolt_antighost))
+		if (istype(P.proj_data, /datum/projectile/energy_bolt_antighost))
 			src.CritterDeath()
 			return
 		else
@@ -255,7 +255,7 @@
 
 	CritterDeath()
 		..()
-		flick("ancientrobot-disappear",src)
+		FLICK("ancientrobot-disappear",src)
 		SPAWN(16) //maybe let the animation actually play
 			qdel(src)
 

@@ -32,7 +32,11 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	rand_seed(69420)
 	LAGCHECK(LAG_HIGH)
 
+#ifdef UNIT_TEST_TYPES
+	var/tests_to_run = list(UNIT_TEST_TYPES)
+#else
 	var/tests_to_run = childrentypesof(/datum/unit_test)
+#endif
 	for (var/_test_to_run in tests_to_run)
 		var/datum/unit_test/test_to_run = _test_to_run
 		if (initial(test_to_run.focus))

@@ -101,7 +101,7 @@ proc/debug_map_apc_count(delim,zlim)
 				active_tiles += length(group.members)
 
 		var/hotspots = 0
-		for(var/obj/hotspot/hotspot in world)
+		for(var/atom/movable/hotspot/hotspot in world)
 			hotspots++
 			LAGCHECK(LAG_LOW)
 
@@ -289,15 +289,6 @@ proc/debug_map_apc_count(delim,zlim)
 			if(theTurf.loc:do_not_irradiate)
 				img.app.color = "#0f0"
 			else
-				img.app.color = "#f00"
-
-	proximity
-		name = "proximity turfs"
-		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf:checkinghasproximity)
-				img.app.color = "#0f0"
-			else if(theTurf:neighcheckinghasproximity)
 				img.app.color = "#f00"
 
 	areas
@@ -1001,12 +992,6 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
-	checkinghasproximity
-		name = "checkinghasproximity"
-		help = "Green = yes. Red = no. Yellow = next to yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
-
 	blood_owner/no_items
 		name = "blood owner - no items"
 		is_ok(atom/A)
@@ -1082,7 +1067,7 @@ proc/debug_map_apc_count(delim,zlim)
 				var/next_id = beacon.codes["next_patrol"] || beacon.codes["next_tour"]
 				var/datum/packet_network/net = get_radio_connection_by_id(beacon, "navbeacon").network
 				var/datum/component/packet_connected/next_device = net.devices_by_tag[next_id][1]
-				var/datum/lineResult/R1 = drawLine(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+				var/datum/lineResult/R1 = drawLineImg(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
 				R1.lineImage.color = debug_color_of(beacon.freq)
 				img.app.overlays += R1.lineImage
 				R1.lineImage.loc = null

@@ -17,45 +17,30 @@
 	throw_range = 20
 	desc = "This isn't that old, you just spilled mugwort tea on it the other day."
 
+/obj/item/teleportation_scroll/get_desc()
+	. = "Charges left: [src.uses]."
+
 /obj/item/teleportation_scroll/attack_self(mob/user as mob)
-	src.add_dialog(user)
-	var/dat = ""
 	if (!iswizard(user))
-		src.remove_dialog(user)
 		boutput(user, SPAN_ALERT("<b>The text is illegible!</b>"))
 		return
-	if (!src.uses)
-		boutput(user, SPAN_NOTICE("<b>The depleted scroll vanishes in a puff of smoke!</b>"))
-		src.remove_dialog(user)
-		user.Browse(null,"window=scroll")
-		qdel(src)
-		return
-	dat += "<b>Teleportation Scroll:</b><br><br>"
-	dat += "Charges left: [src.uses]<br><hr><br>"
-	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><br><br><hr>"
-	user.Browse(dat,"window=scroll")
-	onclose(user, "scroll")
-	return
 
-/obj/item/teleportation_scroll/Topic(href, href_list)
-	..()
 	if (usr.getStatusDuration("unconscious") || !isalive(usr) || usr.restrained())
 		return
+
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
+
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-		if (href_list["spell_teleport"])
-			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
-				src.uses -= 1
-		if (ismob(src.loc))
-			src.AttackSelf(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.AttackSelf(M)
-	return
+		if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
+			src.uses -= 1
+			tooltip_rebuild = TRUE
+
+	if (!src.uses)
+		boutput(user, SPAN_NOTICE("<b>The depleted scroll vanishes in a puff of smoke!</b>"))
+		qdel(src)
+
 
 ////////////////////////////////////////////////////// Staves /////////////////////////////////////////////////////
 
@@ -155,8 +140,6 @@
 	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
-	force = 14
-	hitsound = 'sound/effects/ghost2.ogg'
 	eldritch = 1
 
 	New()
@@ -166,6 +149,19 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	pickup(mob/user)
+		. = ..()
+		if(iswizard(user))
+			src.force = 14
+			src.hitsound = 'sound/effects/ghost2.ogg'
+			src.tooltip_rebuild = TRUE
+
+	dropped(mob/user)
+		. = ..()
+		src.force = src::force
+		src.hitsound = src::hitsound
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(var/mob/user)
 		if (user.mind)
@@ -251,7 +247,7 @@
 		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 		..()
 
 	attack_hand(var/mob/user)
@@ -297,7 +293,7 @@
 		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
 			thunder_charges = 3
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 
 	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
 		boutput(target, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))

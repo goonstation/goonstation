@@ -68,9 +68,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data
-/obj/item/circuitboard/atmospherealerts
-	name = "circuit board (atmosphere alerts)"
-	computertype = /obj/machinery/computer/atmosphere/alerts
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
@@ -89,9 +86,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/atm
 	name = "circuit board (ATM)"
 	computertype = /obj/machinery/computer/ATM
-/obj/item/circuitboard/bank_data
-	name = "circuit board (bank records)"
-	computertype = /obj/machinery/computer/bank_data
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics
@@ -155,12 +149,68 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/telescope
 	name = "circuit board (quantum telescope)"
 	computertype = /obj/machinery/computer/telescope
+
+// Announcement Computers
 /obj/item/circuitboard/announcement
 	name = "circuit board (announcement computer)"
 	computertype = /obj/machinery/computer/announcement
-/obj/item/circuitboard/clown_announcement
+
+/obj/item/circuitboard/announcement/station
+	name = "circuit board (station announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station
+
+TYPEINFO(/obj/item/circuitboard/announcement/bridge)
+	mats = 0 //no spamming arrival messages please
+
+/obj/item/circuitboard/announcement/bridge
+	name = "circuit board (bridge/arrival announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/bridge
+
+/obj/item/circuitboard/announcement/captain
+	name = "circuit board (executive announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/captain
+
+/obj/item/circuitboard/announcement/security
+	name = "circuit board (security announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/security
+
+/obj/item/circuitboard/announcement/research
+	name = "circuit board (research announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/research
+
+/obj/item/circuitboard/announcement/medical
+	name = "circuit board (medical announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/medical
+
+/obj/item/circuitboard/announcement/engineering
+	name = "circuit board (engineering announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/engineering
+
+/obj/item/circuitboard/announcement/cargo
+	name = "circuit board (qm announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/cargo
+
+/obj/item/circuitboard/announcement/ai
+	name = "circuit board (ai announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/ai
+
+/obj/item/circuitboard/announcement/catering
+	name = "circuit board (catering announcement computer)"
+	computertype = /obj/machinery/computer/announcement/station/catering
+
+/obj/item/circuitboard/announcement/syndicate
+	name = "circuit board (syndicate announcement computer)"
+	computertype = /obj/machinery/computer/announcement/syndicate
+	is_syndicate = TRUE
+
+TYPEINFO(/obj/item/circuitboard/announcement/clown)
+	mats = null
+/obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
-	computertype = "/obj/machinery/computer/announcement/clown"
+	computertype = /obj/machinery/computer/announcement/clown
+
+//--------------------------------------------------//
+
 /obj/item/circuitboard/siphon_control
 	name = "circuit board (siphon control)"
 	computertype = /obj/machinery/computer/siphon_control
@@ -170,7 +220,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/chem_request_receiver
 	name = "circuit board (chemical request receiver)"
 	computertype = /obj/machinery/computer/chem_request_receiver
-
 /obj/item/circuitboard/sea_elevator
 	name = "circuit board (sea elevator control)"
 	computertype = /obj/machinery/computer/elevator/sea

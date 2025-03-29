@@ -127,34 +127,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 	Crossed(atom/movable/AM)
 		..()
-		//you can fall in if its open
-		if (open == 1)
-			if (isobj(AM))
-				if (AM:anchored) return //can't have hotspots, overlays, etc.
-				var/obj/O = AM
-				src.visible_message("[O] falls into [src].")
-				O.set_loc(src)
-				flush = 1
-				update()
+		//you can only fall in if its open
+		if (open != 1)
+			return
+		if (istype(AM, /obj/projectile))
+			return
+		if (isobj(AM))
+			if (AM:anchored) return //can't have hotspots, overlays, etc.
+			var/obj/O = AM
+			src.visible_message("[O] falls into [src].")
+			O.set_loc(src)
+			flush = 1
+			update()
 
-			if (isliving(AM))
-				if (AM:anchored) return
-				if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
-					return
-				var/mob/living/M = AM
-				if (M.buckled)
-					M.buckled = null
-				boutput(M, "You fall into [src].")
-				src.visible_message("[M] falls into [src].")
-				M.set_loc(src)
-				flush = 1
-				update()
+		if (isliving(AM))
+			if (AM:anchored >= ANCHORED_ALWAYS) return
+			if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
+				return
+			var/mob/living/M = AM
+			if (M.buckled)
+				M.buckled = null
+			boutput(M, "You fall into [src].")
+			src.visible_message("[M] falls into [src].")
+			M.set_loc(src)
+			flush = 1
+			update()
 
-			if(current_state <= GAME_STATE_PREGAME)
-				SPAWN(0)
-					flush()
-					sleep(1 SECOND)
-					openup()
+		if(current_state <= GAME_STATE_PREGAME)
+			SPAWN(0)
+				flush()
+				sleep(1 SECOND)
+				openup()
 
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
@@ -320,7 +323,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/openup()
 		open = 1
 		opening = TRUE
-		flick("floorflush_a", src)
+		FLICK("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
@@ -330,7 +333,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/closeup()
 		open = 0
 		opening = TRUE
-		flick("floorflush_a2", src)
+		FLICK("floorflush_a2", src)
 		src.icon_state = "floorflush_c"
 		SPAWN(0.7 SECONDS)
 			opening = FALSE
@@ -351,7 +354,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		AM.pipe_eject(0)
 		AM?.throw_at(target, 5, 1)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/machinery/floorflusher/industrial

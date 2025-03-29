@@ -147,9 +147,9 @@
 			src.corpse.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			src.corpse.set_mutantrace(/datum/mutantrace/skeleton)
 			if (prob(90))
-				src.corpse.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-				src.corpse.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-				src.corpse.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+				src.corpse.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+				src.corpse.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+				src.corpse.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
 
 		if (istype(src.muterace))
 			src.corpse.set_mutantrace(src.muterace)

@@ -529,7 +529,7 @@
 
 	// does a suit potentially cover our tail?
 	if(our_tail.clothing_image_icon && icon_state)
-		var/tail_overrides = icon_states(our_tail.clothing_image_icon)
+		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
 			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
@@ -563,11 +563,12 @@
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
 	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
 						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
+	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		var/y_to_offset = AHH.customization_first_offset_y
+		var/y_to_offset = AHH.customizations["hair_bottom"].offset_y
 
 		if(my_head.head_image_nose)
 			AddOverlays(my_head.head_image_nose, "nose", TRUE)
@@ -590,21 +591,36 @@
 		else
 			ClearSpecificOverlays(TRUE, "eyes_R")
 
+		// Add hoodie alpha mask for showing hair
+		if(hooded)
+			var/image/overlay_mask = image('icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi', "hoodie-mask")
+			overlay_mask.render_target = "*hoody[\ref(src)]"
+			my_head.add_filter("hoodie-mask", 0, alpha_mask_filter(y=-8, render_source="*hoody[\ref(src)]"))
+			src.AddOverlays(overlay_mask, "hoodie-mask-overlay", TRUE)
+		else
+			my_head.remove_filter("hoodie-mask")
+
 		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
 		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
 		src.image_cust_one = my_head.head_image_cust_one
 		src.image_cust_one?.pixel_y = y_to_offset
+		src.image_cust_one.filters = my_head.filters.Copy()
 		src.image_cust_two = my_head.head_image_cust_two
 		src.image_cust_two?.pixel_y = y_to_offset
+		src.image_cust_two.filters = my_head.filters.Copy()
 		src.image_cust_three = my_head.head_image_cust_three
 		src.image_cust_three?.pixel_y = y_to_offset
+		src.image_cust_three.filters = my_head.filters.Copy()
 
 		src.image_special_one = my_head.head_image_special_one
 		src.image_special_one?.pixel_y = y_to_offset
+		src.image_special_one.filters = my_head.filters.Copy()
 		src.image_special_two = my_head.head_image_special_two
 		src.image_special_two?.pixel_y = y_to_offset
+		src.image_special_two.filters = my_head.filters.Copy()
 		src.image_special_three = my_head.head_image_special_three
 		src.image_special_three?.pixel_y = y_to_offset
+		src.image_special_three.filters = my_head.filters.Copy()
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
@@ -729,9 +745,9 @@
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customization_first.default_layer
-		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customization_second.default_layer
-		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
+		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
+		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations["hair_middle"].style.default_layer
+		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
@@ -816,11 +832,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
 					switch(AHOLD.mob_detail_1_color_ref)
 						if(CUST_1)
-							human_image.color = AHOLD.customization_first_color
+							human_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
-							human_image.color = AHOLD.customization_second_color
+							human_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_image.color = AHOLD.customization_third_color
+							human_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_image.color = "#FFFFFF"
 					src.body_standing.overlays += human_image
@@ -829,11 +845,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
 					switch(AHOLD.mob_oversuit_1_color_ref)
 						if(CUST_1)
-							human_detail_image.color = AHOLD.customization_first_color
+							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
-							human_detail_image.color = AHOLD.customization_second_color
+							human_detail_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_detail_image.color = AHOLD.customization_third_color
+							human_detail_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_detail_image.color = "#FFFFFF"
 					src.detail_standing_oversuit.overlays += human_detail_image
@@ -882,7 +898,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					if (limb)
 						var/mutantrace_override = null
 						var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
-						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in typeinfo?.icon_states))
+						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in get_icon_states(typeinfo?.icon)))
 							mutantrace_override = typeinfo.icon
 						var/image/limb_pic = limb.getMobIcon(src.decomp_stage, mutantrace_override, force)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful

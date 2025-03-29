@@ -370,6 +370,114 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			jelly
 				name = "Jelly"
 				id = "jelly"
+
+			cockatiel
+				name = "Cockatiel"
+				id = "cockatiel"
+
+			combed_fringe
+				name = "Combed Fringe"
+				id = "combed_fringe"
+
+			slicked_back
+				name = "Slicked Back"
+				id = "slicked_back"
+
+			asym_bob
+				name = "Asymmetrical Bob"
+				id = "asym_bob"
+
+			side_curls
+				name = "Side-Part Curls"
+				id = "side_curls"
+
+			messy_fringe
+				name = "Messy Fringe"
+				id = "messy_fringe"
+
+			aristocrat
+				name = "Aristocrat"
+				id = "aristocrat"
+
+			brushed_bob
+				name = "Brushed Bob"
+				id = "brushed_bob"
+
+			short_shag
+				name = "Short Shag"
+				id = "short_shag"
+
+			luxury_bob
+				name = "Luxurious Bob"
+				id = "luxury_bob"
+
+			wavy_front
+				name = "Wavy Front"
+				id = "wavy_front"
+
+			poofy_bob
+				name = "Poofy Bob"
+				id = "poofy_bob"
+
+			short_dreads
+				name = "Short Dreads"
+				id = "short_dreads"
+
+			Shaggy
+				name = "Shaggy"
+				id = "shaggy"
+
+			cockatielbang
+				name = "Bangs: Cockatiel"
+				id = "cockatielbang"
+				random_allowed = FALSE
+
+
+			combedfringebangs
+				name = "Bangs: Combed Fringe"
+				id = "combedfringebangs"
+				random_allowed = FALSE
+
+			longeyebangs
+				name = "Bangs: Eye cover"
+				id = "longeyebangs"
+				random_allowed = FALSE
+
+			wavybang
+				name = "Bangs: Wavy"
+				id = "wavybang"
+				random_allowed = FALSE
+
+			tied_bangs
+				name = "Bangs: Tied"
+				id = "tied_bangs"
+				random_allowed = FALSE
+
+			tied_bangs_long
+				name = "Bangs: Tied Long"
+				id = "tied_bangs_long"
+				random_allowed = FALSE
+
+			bluntsidebang
+				name = "Bangs: Blunt Side"
+				id = "bluntsidebang"
+				random_allowed = FALSE
+
+			emobang
+				name = "Bangs: Emo"
+				id = "emobang"
+				random_allowed = FALSE
+
+			lopsidedbang
+				name = "Bangs: Lopsided"
+				id = "lopsidedbang"
+				random_allowed = FALSE
+
+
+			curtainbangs
+				name = "Bangs: Curtain"
+				id = "curtainbangs"
+				random_allowed = FALSE
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -410,6 +518,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			mysterybangs
 				name = "Bangs: Mysterious"
 				id = "mysterybangs"
+				random_allowed = FALSE
+			vbangs
+				name = "V-Bangs"
+				id = "v_bangs"
 				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
@@ -471,6 +583,14 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Half-Shaved: Right"
 				id = "halfshavedL"
 				gender = MASCULINE | FEMININE
+			streakbangR
+				name = "Bang: Streak Right"
+				id = "streakbangR"
+				random_allowed = FALSE
+			streakbangL
+				name = "Bang: Streak Left"
+				id = "streakbangL"
+				random_allowed = FALSE
 			kingofrockandroll
 				name = "Kingmetal"
 				id = "king-of-rock-and-roll"

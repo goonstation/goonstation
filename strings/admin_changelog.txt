@@ -1,3 +1,51 @@
+(t)fri mar 07 25
+(u)LeahTheTech
+(*)Added throw mode flags to the throw buildmode. Ever wanted to throw someone through a wall? Now you can!
+(t)tue feb 25 25
+(u)LeahTheTech
+(*)Added new gas build mode that lets you release gas on a turf or inject it into a gas container.
+(t)fri feb 21 25
+(u)Sovexe
+(*)Built out the betting booth system with safeties, bug fixes, and helper procs. Simply spawn two or more /obj/betting_booth and admin interact setup betting to get started with your gambling event!
+(t)sun feb 09 25
+(u)Sovexe
+(*)Added a "View Admin Minimap" verb to allow admins easy access to the observer minimap at any time.
+(t)tue feb 04 25
+(u)LeahTheTech
+(*)Added `/obj/lever/custom` as an easy way to make a player accessible button that calls procs on things. Basically lets you give players access to admin interact procs and more. Call "Set up" on it for setup interface.
+(t)sun jan 26 25
+(u)Sord
+(+)Added a "Show Mining Map" verb that shows you the Z5 mining level map to the "self" tab.
+(t)sat jan 25 25
+(u)Kyle
+(*)Add a "set max health" button to the player panel right next to "kill"
+(t)mon jan 6 25
+(u)LeahTheTech
+(*)Basketball wizard spells are now abilities and work like you'd think they should.
+(t)sun dec 8 24
+(u)LeahTheTech
+(*)Added a "Delete landmarks" verb that lets you delete all landmarks of a specific type.
+(t)sun dec 1 24
+(u)JORJ949
+(*)Added a "Recolor Syndicate" verb to easily recolor all syndicate gear.
+(t)tue nov 13 24
+(u)Azrun
+(*)Added Event Controller.  New Event Controller UI for evaluation.
+(t)fri nov 01 24
+(u)Azrun
+(*)Added Parallax Viewer.  Do parallax stuff with it! Also the Wand gives some cool options now!
+(t)mon oct 07 24
+(u)Sovexe
+(*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.
+(t)mon sep 23 24
+(u)Kyle
+(+)Added a "set status effect for all mobs" button to the secrets panel.
+(t)wed sep 18 24
+(u)Sord
+(+)You can now toggle ghost invisibility mid-round easily. "toggle-ghost-invisibility"
+(t)wed aug 08 24
+(u)LeahTheTech
+(*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.
 (t)tue jul 09 24
 (u)Azrun
 (*)Some seasonal content can be enabled via Terrainify! Season setting added to Winter and Forest Station.

@@ -79,15 +79,21 @@
 		. = ..()
 	else
 		. = can_access_remotely_default(user)
-
 	/*
 	 *	Prototype procs common to all /obj/machinery objects
 	 */
+
+///wrapper proc for /obj/machinery/process so that signals are always sent. Call this, but do not override it.
+/obj/machinery/proc/ProcessMachine(var/mult)
+	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(src, COMSIG_MACHINERY_PROCESS, mult))
+		return
+	src.process(mult)
+
 // Want a mult on your machine process? Put var/mult in its arguments and put mult wherever something could be mangled by lagg
 /obj/machinery/proc/process(var/mult) //<- like that, but in your machine's process()
-
+	PROTECTED_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-
 	// Called for all /obj/machinery in the "machines" list, approximately once per second
 	// by /datum/controller/game_controller/process() when a game round is active
 	// Any regular action of the machine is executed by this proc.
@@ -303,16 +309,15 @@
 
 	A.use_power(amount, chan)
 
-
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+///Checks the machinery's equipment channel and local power, setting the `NOPOWER` flag as needed.
+///
+///Called when the power settings of the containing area change.
+/obj/machinery/proc/power_change()
 	if(powered())
 		status &= ~NOPOWER
 	else
-
 		status |= NOPOWER
-	return
+	src.UpdateIcon()
 
 /obj/machinery/emp_act()
 	if(src.flags & EMP_SHORT) return
@@ -331,6 +336,13 @@
 		src.flags &= ~EMP_SHORT
 		qdel(pulse2)
 	return
+
+///Attempt to break a machine. Returns `TRUE` if already broken.
+/obj/machinery/proc/set_broken()
+	if (src.is_broken())
+		return TRUE
+	src.status |= BROKEN
+	src.power_change()
 
 /obj/machinery/proc/is_broken()
 	return (src.status & BROKEN)
@@ -399,6 +411,14 @@
 	var/list/signals = list()
 	var/list/transmitters = list()
 
+/obj/machinery/bug_reporter
+	name = "bug reporter"
+	desc = "Creates bug reports."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "moduler-on"
+	density = TRUE
+	anchored = ANCHORED
+
 /obj/machinery/set_loc(atom/target)
 	var/area/A1 = get_area(src)
 	. = ..()
@@ -417,6 +437,10 @@
 		A1.machines -= src
 		A2.machines += src
 		src.power_change()
+
+/// check if a mob is allowed to eject occupants from various machines
+/obj/machinery/proc/can_eject_occupant(mob/user)
+	return !(isintangible(user) || isghostcritter(user) || isghostdrone(user) || !can_act(user))
 
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS
@@ -450,3 +474,4 @@
 	onEnd()
 		..()
 		src.machine.set_dir(turn(src.machine.dir, -90))
+

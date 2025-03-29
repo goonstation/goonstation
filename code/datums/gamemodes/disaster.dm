@@ -10,8 +10,13 @@
 	var/const/waittime_h = 1600
 	//Time until the shuttle can be called.
 	var/const/shuttle_waittime = 4000
+	/// We have to hold a ref to this here or it'll GC and delete itself
+	var/datum/allocated_region/HTR_shuttle = null
 
 /datum/game_mode/disaster/pre_setup()
+	src.HTR_shuttle = get_singleton(/datum/mapPrefab/allocated/htr_team).load()
+	message_admins("HTR vessel generated at [log_loc(src.HTR_shuttle.bottom_left)].")
+
 	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 1)
 	if (length(candidates))
 		var/datum/mind/twraith = pick(candidates) // Just one for now
@@ -23,7 +28,7 @@
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
 		boutput(world, "<tt>BUG: MEM ERR 0000FF88 00F90045</tt>")
-		playsound_global(world, 'sound/machines/glitch1.ogg', 60)
+		playsound_global(world, 'sound/machines/glitch1.ogg', 50, channel = VOLUME_CHANNEL_AMBIENT)
 		boutput(world, "<B>We are experiencing technical difficulties. Please remain calm. Help is on the way.</B>")
 		boutput(world, "<B>Report to your station's emergency rally point: CHAPEL.</B>")
 	else
@@ -80,7 +85,7 @@
 		emergency_shuttle.incall()
 		if(derelict_mode)
 			command_alert("Ev4C**!on shu9999999__ called. Prepare fo# evacua ****SIGNAL LOST****","Emergency Al&RT")
-			playsound_global(world, 'sound/machines/engine_alert2.ogg', 60)
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 50, channel = VOLUME_CHANNEL_AMBIENT)
 		else
 			command_alert("The shuttle has been called.","Emergency Shuttle Update")
 
@@ -90,34 +95,34 @@
 				H.flash(3 SECONDS)
 
 		SPAWN(10 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 50, channel = VOLUME_CHANNEL_AMBIENT)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
 		SPAWN(20 SECONDS)
 			if(length(scarysounds))
-				playsound_global(world, pick(scarysounds), 50)
+				playsound_global(world, pick(scarysounds), 50, channel = VOLUME_CHANNEL_AMBIENT)
 
 		SPAWN(30 SECONDS)
 			if(length(scarysounds))
-				playsound_global(world, pick(scarysounds), 50)
+				playsound_global(world, pick(scarysounds), 50, channel = VOLUME_CHANNEL_AMBIENT)
 
 		SPAWN(40 SECONDS)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 50, channel = VOLUME_CHANNEL_AMBIENT)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
 		SPAWN(1 MINUTE)
-			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 50, channel = VOLUME_CHANNEL_AMBIENT)
 			for(var/mob/living/carbon/human/H in mobs)
 				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
 		SPAWN(80 SECONDS)
 			if(length(scarysounds))
-				playsound_global(world, pick(scarysounds), 50)
+				playsound_global(world, pick(scarysounds), 50, channel = VOLUME_CHANNEL_AMBIENT)
 
 	return
 

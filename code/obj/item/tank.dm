@@ -9,6 +9,8 @@ Contains:
 -Plasma Tank
 */
 
+#define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
+
 /obj/item/tank
 	name = "tank"
 	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
@@ -46,7 +48,7 @@ Contains:
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.volume = 70 //liters
+		src.air_contents.volume = TANK_VOLUME
 		src.air_contents.temperature = T20C
 		processing_items |= src
 		src.create_inventory_counter()
@@ -79,7 +81,7 @@ Contains:
 	remove_air(amount)
 		return air_contents.remove(amount)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	assume_air(datum/gas_mixture/giver)
@@ -151,9 +153,11 @@ Contains:
 			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
 			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
-			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
+			var/pressure_delta = max(1, pressure - src.previous_pressure)
+			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / pressure_delta)
+			// Prevent some absurd compensation value from existing. This can happen during varedits or cold bombs (one tank of cold fallout and one of hot agent b mix together)
+			react_compensation = clamp(react_compensation, 0, 1)
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
@@ -164,10 +168,22 @@ Contains:
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
 			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
-			var/volume_scale = (air_contents.volume / 70) ** (1/4)
+			var/volume_scale = (air_contents.volume / TANK_VOLUME) ** (1/4)
 			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
+
+			// Handle the radioactive part of the explosion, if applicable
+			var/rad_damage_multiplier = 0
+			if(src.air_contents.radgas > 0)
+				// Most of these, sadly, will end up just irradiating things which immediately are destroyed by the explosion.
+				// Thank goodness there's a lot of them! (With maxcap values you can get around 5.6 mols fallout in here tops, which is ~80 neutrons)
+				var/neutrons_to_emit = 10 * ceil( sqrt( src.air_contents.radgas * range ) )
+				for(var/i = 1 to neutrons_to_emit)
+					shoot_projectile_XY(src, new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
+				// Do some flash radiation so that the mobs just out of the gib range still get messed up bad
+				// Based off neutrons_to_emit in a way, but to be a multiplier value between 0 and 2
+				rad_damage_multiplier = 2 * clamp(neutrons_to_emit / 100, 0, 1)
 
 			if(src in bible_contents)
 				var/bible_count = length(by_type[/obj/item/bible])
@@ -176,13 +192,13 @@ Contains:
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
+						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
-			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
+			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5, flash_radiation_multiplier=rad_damage_multiplier)
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -205,7 +221,6 @@ Contains:
 
 		else if(integrity < 3)
 			integrity++
-
 	get_desc(dist, mob/user)
 		var/list/extras = list()
 		if (extra_desc)
@@ -326,8 +341,8 @@ Contains:
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
 ////////////////////////////////////////////////////////////
 
@@ -361,7 +376,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	update_wear_image(mob/living/carbon/human/H, override)
@@ -454,7 +469,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 30
-		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 ////////////////////////////////////////////////////////////
 
@@ -466,7 +481,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 ////////////////////////////////////////////////////////////
@@ -538,7 +553,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 15
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	empty
@@ -559,8 +574,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 		return
 
 ////////////////////////////////////////////////////////////
@@ -573,7 +588,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	proc/release()
@@ -603,12 +618,12 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		var/turf/ground_zero = get_turf(loc)
 
 		if(air_contents.temperature > (T0C + 400))
-			strength = fuel_moles/15
+			strength = fuel_moles/8
 
 			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
 
 		else if(air_contents.temperature > (T0C + 250))
-			strength = fuel_moles/20
+			strength = fuel_moles/10
 
 			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
 			ground_zero.assume_air(air_contents)
@@ -616,7 +631,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			ground_zero.hotspot_expose(1000, 125)
 
 		else if(air_contents.temperature > (T0C + 100))
-			strength = fuel_moles/25
+			strength = fuel_moles/13
 
 			explosion(src, ground_zero, -1, -1, strength*2, strength*3)
 			ground_zero.assume_air(air_contents)
@@ -732,3 +747,5 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			..()
 			src.air_contents.toxins = null
 			return
+
+#undef TANK_VOLUME

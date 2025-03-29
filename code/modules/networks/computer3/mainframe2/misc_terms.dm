@@ -794,6 +794,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			boutput(user, "You insert \the [I].")
 
 	ui_act(action, params)
+		. = ..()
 		switch(action)
 			if ("add_item")
 				src.add_tank(usr, usr.equipped(), params["tank"])
@@ -1024,6 +1025,8 @@ TYPEINFO(/obj/machinery/networked/storage)
 	title = "TEMPBUFFER"
 	file_amount = 4
 
+
+ADMIN_INTERACT_PROCS(/obj/machinery/networked/nuclear_charge, proc/activate, proc/deactivate, proc/detonate)
 
 TYPEINFO(/obj/machinery/networked/nuclear_charge)
 	mats = list("energy_extreme" = 27,
@@ -1278,21 +1281,9 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
 							return
-						src.timing = 1
-						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 
-						var/admessage = "NUKE: Network Nuclear Charge armed for [time] seconds."
-						var/turf/T = get_turf(src)
-						if(T)
-							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
-						message_admins(admessage)
-						//World announcement.
-						if (src.z == Z_LEVEL_STATION)
-							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
-						else
-							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
+						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
+						src.activate()
 						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
@@ -1302,18 +1293,8 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 							src.post_status(target,"command","term_message","data","command=status&status=failure&session=[sessionid]")
 							return
 
-						src.timing = 0
-						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
-						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
-						//World announcement.
-						if (src.z == Z_LEVEL_STATION)
-							command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
-						else
-							command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
-							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
-						post_display_status(-1)
+						src.deactivate()
 						return
 
 				return
@@ -1336,6 +1317,34 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				return
 
 		return
+
+	proc/activate()
+		src.timing = 1
+		var/admessage = "NUKE: Network Nuclear Charge armed for [time] seconds."
+		var/turf/T = get_turf(src)
+		if(T)
+			admessage += "<b> ([T.x],[T.y],[T.z])</b>"
+		message_admins(admessage)
+		//World announcement.
+		if (src.z == Z_LEVEL_STATION)
+			command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+		else
+			command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
+
+	proc/deactivate()
+		src.timing = 0
+		src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+		src.icon_state = "net_nuke0"
+		//World announcement.
+		if (src.z == Z_LEVEL_STATION)
+			command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+		else
+			command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
+			playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+		post_display_status(-1)
 
 	proc/detonate()
 		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
@@ -1660,7 +1669,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 
 				SPAWN(0)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
-					flick("net_radio-blink", src)
+					FLICK("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
 				return
@@ -2054,7 +2063,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			sheets_remaining--
 			use_power(200)
 
-			flick("printer-printing",src)
+			FLICK("printer-printing",src)
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 			SPAWN(3.2 SECONDS)
 
@@ -2347,7 +2356,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return 1
 
 		scanning = 1
-		flick("scanner-scanning",src)
+		FLICK("scanner-scanning",src)
 		sleep(2 SECONDS)
 		if (scan_buffer)
 			scan_buffer.dispose()
@@ -3721,7 +3730,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.visible_message("<b>[src.name]</b> extends its stand.")
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
-						flick("impactpad-extend",src)
+						FLICK("impactpad-extend",src)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
@@ -3732,7 +3741,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.visible_message("<b>[src.name]</b> retracts its stand.")
 					src.set_density(0)
 					src.setup_base_icon_state = "impactpad"
-					flick("impactstand-retract",src)
+					FLICK("impactstand-retract",src)
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					message_host("command=ack")

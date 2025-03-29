@@ -11,7 +11,6 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 	. = ..()
 	if (!ispulsingtool(parent) || start_piano == null || user == null || !istype(start_piano, /obj/player_piano) || !istype(user, /mob))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE, PROC_REF(is_active))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(store_piano))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(finish_storing_pianos))
 	src.pianos = list()
@@ -56,9 +55,6 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 	boutput(user, SPAN_NOTICE("Stored piano."))
 	return
 
-/datum/component/player_piano_auto_linker/proc/is_active(atom/pulser)
-	return TRUE
-
 /datum/component/player_piano_auto_linker/proc/store_piano(obj/item/pulser, atom/A, mob/user)
 	if (!istype(A, /obj/player_piano))
 		return FALSE
@@ -82,7 +78,6 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 	return TRUE
 
 /datum/component/player_piano_auto_linker/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACKBY_PRE)
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	for (var/obj/player_piano/piano as anything in src.pianos)

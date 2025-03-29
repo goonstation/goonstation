@@ -33,21 +33,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acid
 	name = "acid"
-	icon_state = "radbolt"
-	damage = 45
-	dissipation_rate = 30
+	icon_state = "ecto"
+	damage = 0.001 // to bypass 0 damage checks
 	dissipation_delay = 10
 	sname = "acid"
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
-		var/power = projectile.power
-		hit.damage_corrosive(power)
-
-	potent
-		damage = 100
-
-	weak
-		damage = 15
+		if (istype(hit, /mob))
+			projectile.create_reagents(10)
+			projectile.reagents.add_reagent("pacid", 10)
+			projectile.reagents.reaction(hit, react_volume = 10)
+		else if (istype(hit, /obj/machinery/vehicle))
+			hit.changeStatus("pod_corrosion", 30 SECONDS)
+		else
+			var/power = projectile.power
+			hit.damage_corrosive(power)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
@@ -136,6 +136,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/split_type = 0
 	var/pellet_shot_volume = 0
 	silentshot = 1
+	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -191,6 +192,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.rotateDirection(current_angle)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
+		FC.spread = P.spread + spread_angle
 
 /datum/projectile/special/spreader/buckshot_burst
 	name = "buckshot"
@@ -211,6 +213,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
+		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
 	name = "fragments"
 	sname = "fragments"
@@ -706,6 +709,65 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
+/datum/projectile/special/homing/mechcomp_warp
+	name = "teleporter energy ball"
+	icon_state = "heavyion"
+	auto_find_targets = 0
+	max_speed = 6
+	start_speed = 0.1
+	invisibility = INVIS_MESON
+
+	shot_sound = null
+	goes_through_walls = 1
+	goes_through_mobs = 1
+	smashes_glasses = FALSE
+
+	silentshot = 1
+	var/obj/effect/eye_glider
+	var/turf/starting_turf
+
+	on_launch(obj/projectile/P)
+		. = ..()
+		src.starting_turf = get_turf(P)
+		src.eye_glider = new(get_turf(P))
+		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.anchored = ANCHORED_ALWAYS
+		for (var/mob/M in P.contents)
+			if(M.client)
+				M.client.eye = src.eye_glider
+
+	tick(obj/projectile/P)
+		..()
+		src.eye_glider.set_loc(get_turf(P))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
+			P.die()
+		var/obj/item/mechanics/telecomp/target_tele = P.targets[1]
+		if (!target_tele.anchored || target_tele.send_only)
+			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as target teleporter at [log_loc(target_tele)] was [target_tele.anchored ? "de-anchored" : "set to send only"].")
+			P.die()
+		if (get_turf(P) == src.starting_turf) return
+		for (var/obj/item/mechanics/telecomp/tele in get_turf(P))
+			if (tele.anchored && !tele.send_only)
+				particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(tele.loc))).Run()
+				// Dest. pad gets "from=origin&count=123"
+				SEND_SIGNAL(tele, COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[tele.teleID]&count=[P.special_data["count_sent"]]")
+				if (tele != target_tele)
+					logTheThing(LOG_STATION, tele, "intercepted teleport projectile [P] at [log_loc(tele)] (targeted destination [log_loc(target_tele)])")
+				P.die()
+
+	on_end(obj/projectile/P)
+		for (var/atom/movable/AM in P.contents)
+			AM.set_loc(get_turf(P))
+			AM.delStatus("teleporting")
+			if (istype(AM, /mob))
+				var/mob/M = AM
+				if (M.client)
+					M.client.eye = M
+		qdel(src.eye_glider)
+		src.eye_glider = null
+		..()
+
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
 	sname = "magic missile"
@@ -761,7 +823,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
-			M.lastattacker = src.master?.shooter
+			M.lastattacker = get_weakref(src.master?.shooter)
 			M.lastattackertime = TIME
 		else if(projectile.reflectcount < src.max_bounce_count)
 			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
@@ -903,6 +965,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	split_type = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -919,6 +982,37 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.launch()
 		current_angle += angle_adjust_per_pellet
 
+/datum/projectile/special/spreader/tasershotgunspread/laser
+	name = "laser"
+	sname = "shotgun spread"
+	cost = 50
+	damage = 20
+	damage_type = D_ENERGY
+	pellets_to_fire = 5
+	spread_projectile_type = /datum/projectile/laser/lasershotgun
+	split_type = 0
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+
+/datum/projectile/laser/lasershotgun
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/shotgunlaser.ogg'
+	cost = 50
+	damage = 15
+	shot_number = 1
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(!ismob(hit))
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, 2, PROJ_HEADON_BOUNCE)
+			shot_volume = 100
+		if(proj.reflectcount >= 2)
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
 /datum/projectile/special/spreader/pwshotgunspread
 	name = "blaster bolt"
 	sname = "shotgun spread"
@@ -927,6 +1021,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/shotgun
 	split_type = 0
 	shot_sound = 'sound/weapons/laser_b.ogg'
+	energy_particles_override = TRUE
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -965,6 +1060,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	window_pass = 0
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
+	has_impact_particles = FALSE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -1130,6 +1226,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	fullauto_valid = 0
+	var/can_spawn_fluid = FALSE
 
 
 	/// Releases some of the projectile's gas into the turf
@@ -1160,13 +1257,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(!T.reagents) // first get the turf
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
-		copied.reaction(T, TOUCH, 0, 0)
+		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
 			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
-			copied.reaction(A, TOUCH, 0, 0)
+			copied.reaction(A, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
 			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
 			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
@@ -1180,7 +1277,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_launch(obj/projectile/O)
 		if(length(O.special_data))
-			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
+			if(O.special_data["speed_mult"])
+				O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
 		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
@@ -1197,14 +1295,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/i = 1, i < cross2.len, i++)
 			var/turf/T = cross2[i]
 			if (cross2[T] < O.curr_t)
-				src.emit_chems(T, O)
-				src.emit_gas(T, 0)
-				if(O.reagents?.total_volume < 0.01)
-					O.die()
+				src.cross_turf(O, T)
 				cross2.Cut(1,2)
 				i--
 			else
 				break
+
+	proc/cross_turf(obj/projectile/O, turf/T)
+		src.turf_effect(O, T)
+
+	proc/turf_effect(obj/projectile/O, turf/T)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 0)
+		T.active_liquid?.try_connect_to_adjacent()
+		if(O.reagents?.total_volume < 0.01)
+			O.die()
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		var/turf/T = get_turf(O)

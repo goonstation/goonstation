@@ -33,8 +33,6 @@
 	var/can_write_on = FALSE
 	///value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/messy = 0
-	var/tmp/checkinghasproximity = 0
-	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -47,11 +45,16 @@
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
 
+	/// Whether this turf is currently being evaluated for changing hands from the "unconnected zone" area (constructed) to a "real" area
+	var/tmp/transfer_evaluation = FALSE
+
 	// Vars used for breaking and burning turfs, only used for floors at the moment
 	var/can_burn = FALSE
 	var/can_break = FALSE
 	var/broken = FALSE
 	var/burnt = FALSE
+
+	var/can_build = FALSE
 
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
@@ -60,7 +63,6 @@
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
-
 
 	New()
 		..()
@@ -132,15 +134,8 @@
 
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
-		for(var/dir in (cardinal + 0))
-			var/turf/thing = get_step(src, dir)
-			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
-				fuck_everything.contents += src
-				return
-
-		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
-		zone.contents += src//get in the ZONE
+		unconnected_zone.contents += src
+		unconnected_zone.propagate_zone(src)
 
 	proc/break_tile(var/force)
 		if (!src.can_break && !force)
@@ -213,7 +208,7 @@
 		if (rods)
 			rods.change_stack_amount(-1)
 
-		var/obj/grille/catwalk/catwalk = new
+		var/obj/mesh/catwalk/catwalk = new
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
@@ -246,16 +241,6 @@
 	alpha = 255
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
-
-	Move()
-		SHOULD_CALL_PARENT(FALSE)
-		return FALSE
-
-/obj/overlay/tile_gas_effect
-	name = ""
-	anchored = ANCHORED
-	density = 0
-	mouse_opacity = 0
 
 	Move()
 		SHOULD_CALL_PARENT(FALSE)
@@ -296,9 +281,9 @@
 	var/static/list/space_color = generate_space_color()
 	var/static/image/starlight
 
-	flags = ALWAYS_SOLID_FLUID
-	turf_flags = CAN_BE_SPACE_SAMPLE
+	flags = FLUID_DENSE
 	event_handler_flags = IMMUNE_SINGULARITY
+	can_build = TRUE
 	dense
 		icon_state = "dplaceholder"
 		density = 1
@@ -322,7 +307,7 @@
 		toxins = ONE_ATMOSPHERE/3
 		New()
 			..()
-			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			var/atom/movable/tile_gas_effect/gas_icon_overlay = new
 			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
 			gas_icon_overlay.icon_state = "plasma-alpha"
 			gas_icon_overlay.dir = pick(cardinal)
@@ -333,20 +318,20 @@
 
 /turf/space/New()
 	..()
-	if(global.dont_init_space) return
+	if(global.dont_init_space)
+		return
 	switch(icon_state)
-		if ("placeholder")
-			icon_state = "[rand(1,25)]"
+		if ("placeholder", "dplaceholder")
+			icon_state = "[(((x + y) ^ ~(x * y) + z) % 25)+1]" // rand(1,25)
 		if ("aplaceholder")
-			icon_state = "a[rand(1,10)]"
-		if ("dplaceholder")
-			icon_state = "[rand(1,25)]"
+			icon_state = "a[(((x + y) ^ ~(x * y) + z) % 10)+1]" // rand(1,10)
 
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+
 	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
@@ -355,12 +340,17 @@
 		new/obj/item/device/key/random(src)
 	#endif
 
-	UpdateIcon() // for starlight
+	// // forbidden zone // //
+	update_icon() // HIGHLY ILLEGAL NEVER DO THIS, SPECIAL CASE IGNORE ME (for starlight)
+	// // do not pass go // //
 
 proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
 		if(regenerate)
 			T.space_color = generate_space_color()
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_DEBRIS, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_MINING, T.space_color, 10 SECONDS)
 			regenerate = FALSE
 		if(istype(T, /turf/space/fluid))
 			continue
@@ -428,12 +418,16 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		src.underlays = list(starlight)
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
+
+		if(length(src.underlays))
+			src.underlays = list(starlight)
+		else
+			src.underlays += starlight
 	else
-		src.underlays = null
+		src.underlays = list()
 	#endif
 
 // override for space turfs, since they should never hide anything
@@ -454,7 +448,7 @@ proc/generate_space_color()
 
 /turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
-		air_master.tiles_to_space |= src
+		air_master.tiles_to_space[src] = null
 		return TRUE
 
 /turf/cordon
@@ -547,19 +541,6 @@ proc/generate_space_color()
 			if (isitem(M))
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
-
-	var/i = 0
-	i = 0
-	if (src.neighcheckinghasproximity > 0)
-		for (var/turf/T in range(1,src))
-			if (T.checkinghasproximity > 0)
-				for(var/thing in T)
-					var/atom/A = thing
-					// I Said No sanity check
-					if(i++ >= 50)
-						break
-					if (A.event_handler_flags & USE_PROXIMITY)
-						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
 
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
@@ -669,7 +650,7 @@ var/global/in_replace_with = 0
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
-	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
+	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -723,8 +704,6 @@ var/global/in_replace_with = 0
 	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
-	var/old_checkinghasproximity = src.checkinghasproximity
-	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
@@ -736,6 +715,8 @@ var/global/in_replace_with = 0
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
+
+	var/old_comp_lookup = src.comp_lookup
 
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
@@ -831,8 +812,6 @@ var/global/in_replace_with = 0
 	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
-	new_turf.checkinghasproximity = old_checkinghasproximity
-	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
@@ -843,6 +822,27 @@ var/global/in_replace_with = 0
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
 #endif
+
+	//combine the old comp_lookup with the new one because turfs sometimes register signals in New
+	if (!src.comp_lookup)
+		src.comp_lookup = old_comp_lookup
+	else
+		for (var/signal_type in old_comp_lookup)
+			//nothing there, just copy the old one
+			if (!src.comp_lookup[signal_type])
+				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
+			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
+			else if (islist(comp_lookup[signal_type]))
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+
+				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
+			//it's just a datum
+			else
+				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
+					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
+				else //the old one wasn't a list, make it so
+					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
+
 
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
@@ -878,17 +878,18 @@ var/global/in_replace_with = 0
 				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.tiles_to_update |= N
+				air_master.tiles_to_update[N] = null
 		else if (air_master)
-			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons.Remove(src)
+			air_master.tiles_to_update.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
+			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
+			oldparent.borders?.Remove(src)
 
-
-	if (istype(new_turf, /turf/simulated))
-		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
-		new_turf.update_nearby_tiles(1)
+	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with--
@@ -1050,8 +1051,6 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 
-	turf_flags = IS_TYPE_SIMULATED
-
 	attackby(var/obj/item/W, var/mob/user, params)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
@@ -1144,7 +1143,7 @@ TYPEINFO(/turf/simulated)
 	density = 1
 	pathable = 0
 	explosion_resistance = 999999
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
@@ -1243,32 +1242,35 @@ TYPEINFO(/turf/simulated)
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/space/attackby(obj/item/C, mob/user)
-	var/area/A = get_area (user)
-	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(user, SPAN_ALERT("You can't build here."))
-		return
-	var/obj/item/rods/R = C
-	if (istype(R))
-		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+/turf/attackby(obj/item/C, mob/user)
+	if(src.can_build)
+		var/area/A = get_area (user)
+		var/obj/item/rods/R = C
+		if (istype(R))
+			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+				boutput(user, SPAN_ALERT("You can't build here."))
+				return
+			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
-		boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
-		R.change_stack_amount(-1)
-		var/obj/lattice/lattice = new(src)
-		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
-		if (R.material)
-			src.setMaterial(C.material)
-		return
-
-	if (istype(C, /obj/item/tile))
-		//var/obj/lattice/L = locate(/obj/lattice, src)
-		var/obj/item/tile/T = C
-		if (T.amount >= 1)
-			for(var/obj/lattice/L in src)
-				qdel(L)
+			boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
-			T.build(src)
+			R.change_stack_amount(-1)
+			var/obj/lattice/lattice = new(src)
+			lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
+			if (R.material)
+				src.setMaterial(C.material)
+			return
+
+		if (istype(C, /obj/item/tile))
+			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+				boutput(user, SPAN_ALERT("You can't build here."))
+				return
+			var/obj/item/tile/T = C
+			if (T.amount >= 1)
+				for(var/obj/lattice/L in src)
+					qdel(L)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
+				T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
@@ -1297,6 +1299,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/space_phoenix))
+		var/mob/living/critter/space_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return

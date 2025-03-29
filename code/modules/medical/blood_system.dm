@@ -120,7 +120,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /* ---------- take_bleeding_damage() ---------- */
 /* ============================================ */
 
-/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0)
+/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0, var/is_crit = FALSE, var/override_bleed_level = -1)
 	if (!T) // I forget why I set T as a variable OH WELL
 		T = get_turf(some_idiot)
 	var/area/area = get_area(some_idiot)
@@ -169,108 +169,78 @@ this is already used where it needs to be used, you can probably ignore it.
 		H.bleeding = 10
 		return
 
-	var/increase_chance = rand(10, 30)
+	/// The base level of bleed this weapon can achieve.
+	/// Bleeds will increase by 1 per hit until they hit this level
+	/// Critical hits will also increase bleed by 1, regardless of level
+	var/bleed_level = 0
+
+	if (damage_type == DAMAGE_CUT || damage_type == DAMAGE_CRUSH || damage_type == DAMAGE_STAB)
+		bleed_level += 1
+
 	var/increase_amount = 1
 	//BLOOD_DEBUG("[H]'s initial increase chance is [increase_chance]")
-
 	switch (damage)
 		if (-INFINITY to 1)
-			increase_amount -= rand(0,2)
-		if (1 to 10)
-			increase_amount -= rand(0,1)
-		if (10 to 30)
-			increase_amount += rand(0,1)
+
+		if (6 to 10)
+			bleed_level += 1
+		if (11 to 29)
+			bleed_level += 2 //can cause unstoppable bleeding on crit
+			if (prob(30))
+				increase_amount += 1
 		if (30 to INFINITY)
-			increase_amount += rand(0,2)
-	//BLOOD_DEBUG("[H] processes damage ([damage]): increase_amount now [increase_amount]")
+			bleed_level += 3 //regularly causes unstoppable bleeding
+			if (prob(60))
+				increase_amount += 1
 
-	switch (damage_type)
-		if (DAMAGE_STAB)
-			increase_chance += rand(0, 10)
-			increase_amount += rand(0,1)
-		if (DAMAGE_CUT)
-			increase_chance += rand(5, 20)
-			increase_amount += rand(0,1)
-		if (DAMAGE_BLUNT)
-			increase_chance -= rand(10, 30)
-		if (DAMAGE_BURN)
-			if (!H.is_heat_resistant())
-				increase_chance -= rand(30, 50)
-				increase_amount -= rand(1,2)
-	//BLOOD_DEBUG("[H] processes damage_type ([dam_num2name(damage_type)]): increase_chance now [increase_chance], increase_amount now [increase_amount]")
-
-	//BLOOD_DEBUG("[H]'s initial bleeding is [H.bleeding]")
-	switch (H.bleeding)
-		if (-INFINITY to 0)
-			increase_chance += rand(0, 30)
-		if (2)
-			increase_chance -= rand(0, 10)
-			increase_amount -= rand(0,1)
-		if (3)
-			increase_chance -= rand(0, 30)
-			increase_amount -= rand(0,1)
-		if (4)
-			increase_chance -= rand(10, 30)
-			increase_amount -= rand(0,1)
-			// increase_amount = 1 // we only have 1 point more of bleeding we can have!
-			// commented out above line because what if Increase_amount was below 1? it's clamped later on anyway. so this made getting from 4 -> 5 easier than 3 -> 4
-/*	switch (H.bleeding)
-		if (-INFINITY to 0)
-			increase_chance += rand(30, 50)
-		if (1 to 3)
-			increase_chance += rand(20, 30)
-		if (4 to 6)
-			increase_chance += rand(5, 20)
-			increase_amount -= rand(0,1)
-		if (7 to 8)
-			increase_chance += rand(0, 5)
-			increase_amount = 1 // it's already pretty high so just set it back to 1
-*/
-	//BLOOD_DEBUG("[H] processes bleeding: increase_chance now [increase_chance], increase_amount now [increase_amount]")
-
-	if (H.lying)
-		increase_chance -= rand(0,15)
 
 	if (H.reagents)
 		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
-		if (anticoag_amt)
-			increase_chance += clamp(anticoag_amt, 0, 50)
-			increase_amount += rand(1, round(clamp((anticoag_amt / 10), 0, 3), 1))
-			//BLOOD_DEBUG("[H] processes heparin: increase_chance now [increase_chance], increase_amount now [increase_amount]")
+		if (anticoag_amt > 20) //you blood fall out
+			bleed_level += 3
+		else if (anticoag_amt > 10)
+			bleed_level += 2
+		else if (anticoag_amt > 0)
+			bleed_level += 1
 
 		var/coag_amt = H.reagents.get_reagent_amount("proconvertin")
-		if (coag_amt)
-			increase_chance -= clamp(coag_amt, 0, 50)
-			increase_amount -= rand(1, round(clamp((coag_amt / 10), 0, 3), 1))
-			//BLOOD_DEBUG("[H] processes proconvertin: increase_chance now [increase_chance], increase_amount now [increase_amount]")
+		if (coag_amt > 10) // blood clot time. odds are they're functionally immune to bleed at this pt anyway, why not.
+			bleed_level -= 3
+		else if (coag_amt > 5)
+			bleed_level -= 2
+		else if (coag_amt > 0)
+			bleed_level -= 1
 
-	if (ischangeling(H))
-		increase_chance -= rand(10, 20)
-		increase_amount -= rand(0,1)
+	if (ischangeling(H) && bleed_level > 2) //changelings resistant to serious bleeds
+		bleed_level -= 1
 		//BLOOD_DEBUG("[H] is a changeling - [H]'s increase chance decreased to [increase_chance]")
 
 	if (H.traitHolder && H.traitHolder.hasTrait("hemophilia"))
-		increase_chance *= 3
 		increase_amount += rand(0,1)
 
-	var/final_increase_chance = round(clamp(increase_chance, 0, 100), 1)
-	var/final_increase_amount = round(clamp(increase_amount, 0, 5), 1)
+	if (override_bleed_level >= 0)
+		bleed_level = override_bleed_level
+
+	var/desired_bleed_level = is_crit ? 5 : bleed_level //crits always increase bleeds
+	var/final_increase_amount = clamp(increase_amount, 0, desired_bleed_level-H.bleeding)
+
 	//var/final_increase_amount = round(clamp(increase_amount, 0, 10), 1)
 	//BLOOD_DEBUG("[H]'s final_increase_chance: [final_increase_chance], final_increase_amount: [final_increase_amount]")
 
-	if (final_increase_amount > 0 && prob(final_increase_chance))
+	if (final_increase_amount > 0)
 		var/old_bleeding = H.bleeding
 		H.bleeding += final_increase_amount
 		H.bleeding = clamp(H.bleeding, 0, 5)
-		//H.bleeding = clamp(H.bleeding, 0, 10)
 		if (H.bleeding > old_bleeding) // I'm not sure how it wouldn't be, but, uh, yeah
 			if (old_bleeding <= 0)
 				H.visible_message(SPAN_ALERT("[H] starts bleeding!"),\
 				SPAN_ALERT("<b>You start bleeding!</b>"))
-			else if (old_bleeding >= 1)
+			else if (H.bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
-			else if (old_bleeding >= 4)//9)
-				H.show_text("<b>You can't go on very long with blood pouring out of you like this!</b>", "red")
+			else if (H.bleeding > 3 && old_bleeding <= 3)
+				H.show_text("<b>That nicked an artery! Get medical attention ASAP!</b>", "red")
+			else if (H.bleeding > 3)
+				H.show_text("<b>You're seriously bleeding out!</b>", "red")
 
 		//BLOOD_DEBUG("[H] rolls bleeding increase, bleeding is now [H.bleeding]</b>")
 	else
@@ -420,12 +390,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(M.bioHolder)
-		bloodHolder.ownerName = M.real_name
-		bloodHolder.ownerType = M.type
-
-		B.add_volume(blood_color_to_pass, M.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
+		B.add_volume(blood_color_to_pass, M.blood_id, num_amount, vis_amount, blood_reagent_data=M.get_blood_bioholder())
 		return
 
 	BLOOD_DEBUG("[M] begins to bleed")
@@ -479,17 +444,12 @@ this is already used where it needs to be used, you can probably ignore it.
 				M.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(M.bioHolder)
-		bloodHolder.ownerName = M.real_name
-		bloodHolder.ownerType = M.type
-
-		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = bloodHolder)
-		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
-
 		if (B.reagents && M.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			M.reagents.trans_to(B, (num_amount - blood_to_transfer))
+			M.reagents.trans_to(B, (reagents_to_transfer))
+		B.add_volume(blood_color_to_pass, M.blood_id, blood_to_transfer, vis_amount, blood_reagent_data = M.get_blood_bioholder())
+		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
+
 
 /* ====================================== */
 /* ---------- transfer_blood() ---------- */
@@ -518,10 +478,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		blood_to_transfer = some_idiot.blood_volume
 
 	if (!A.reagents.get_reagent("bloodc") && !A.reagents.get_reagent("blood")) // if it doesn't have blood with blood bioholder data already, only then create this
-		bloodHolder = new/datum/bioHolder(null)
-		bloodHolder.CopyOther(some_idiot.bioHolder)
-		bloodHolder.ownerName = some_idiot.real_name
-		bloodHolder.ownerType = some_idiot.type
+		bloodHolder = some_idiot.get_blood_bioholder()
 
 	if (ischangeling(some_idiot))
 		A.reagents.add_reagent("bloodc", blood_to_transfer, bloodHolder)
@@ -814,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	throwforce = 0
 	throw_range = 16
 	flags = TABLEPASS | NOSHIELD
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 
 	New()
 		..()

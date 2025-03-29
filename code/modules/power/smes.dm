@@ -74,6 +74,12 @@
 						terminal = term
 						break dir_loop
 
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
+
 		if (!terminal)
 			status |= BROKEN
 			return
@@ -110,6 +116,28 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
+/obj/machinery/power/smes/proc/_toggle_input_mechchomp()
+	src.chargemode = !src.chargemode
+	if (!chargemode)
+		charging = 0
+	src.UpdateIcon()
+
+/obj/machinery/power/smes/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newinput = text2num(inp.signal)
+	if(newinput != src.chargelevel && isnum_safe(newinput))
+		src.chargelevel = clamp((newinput), 0 , SMESMAXCHARGELEVEL)
+
+/obj/machinery/power/smes/proc/_toggle_output_mechchomp()
+	src.online = !src.online
+	src.UpdateIcon()
+
+/obj/machinery/power/smes/proc/_set_output_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newoutput = text2num(inp.signal)
+	if(newoutput != src.output && isnum_safe(newoutput))
+		src.output = clamp((newoutput), 0 , SMESMAXCHARGELEVEL)
+
 /obj/machinery/power/smes/process(mult)
 
 	if (status & BROKEN)
@@ -143,6 +171,7 @@
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
 		UpdateIcon()
 
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "output=[src.output]&outputting=[src.online]&charge=[src.chargelevel]&charging=[src.chargemode]")
 	src.updateDialog()
 
 /obj/machinery/power/smes/proc/charge(mult)
@@ -275,12 +304,6 @@
 			else if(text2num_safe(target) != null) //set by drag
 				src.output = clamp(text2num_safe(target), 0 , SMESMAXOUTPUT)
 				. = TRUE
-
-/proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
-	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
-	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C?C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
-	if (Limit) return "[href]=-[Limit]'>-</A>"+rate+"[href]=[Limit]'>+</A>"
-	return rate
 
 /obj/machinery/power/smes/smart
 	name = "Dianmu smart power storage unit"

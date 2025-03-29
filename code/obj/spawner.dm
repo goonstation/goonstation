@@ -258,7 +258,7 @@
 				for(var/atom/A in T)
 					if(isliving(A))
 						affected_mobs.Add(A)
-					if(istype(A, /obj/window) || istype(A, /obj/grille))
+					if(istype(A, /obj/window) || istype(A, /obj/mesh/grille))
 						affected_objs.Add(A)
 					if(istype(A, /obj/blob))
 						affected_objs.Add(A)
@@ -275,11 +275,11 @@
 				else
 					boom.Add(A)
 
-		flick("boom_center", animation)
+		FLICK("boom_center", animation)
 		for(var/atom/movable/overlay/A in boom)
-			flick("boom_segment", A)
+			FLICK("boom_segment", A)
 		for(var/atom/movable/overlay/A in boom_tips)
-			flick("boom_tip", A)
+			FLICK("boom_tip", A)
 		for(var/mob/M in affected_mobs)
 			M.ex_act(3)
 		for(var/obj/O in affected_objs)

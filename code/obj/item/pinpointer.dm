@@ -91,7 +91,8 @@ TYPEINFO(/obj/item/pinpointer)
 				if (istype(user))
 					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
 					arrow?.change_target(src.target)
-			work_check()
+			if(work_check())
+				return
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
 			if(!ST || !T || ST.z != T.z || !isnull(max_range) && GET_DIST(src,target) > max_range)
@@ -177,6 +178,35 @@ TYPEINFO(/obj/item/pinpointer)
 /obj/item/pinpointer/category/spysticker/det
 	category = TR_CAT_SPY_STICKERS_DET
 
+	get_choices()
+		var/list/choices = ..()
+		for(var/key in choices)
+			var/obj/item/sticker/S = choices[key]
+			if(!trackable_item(S.attached))
+				choices -= key
+		return choices
+
+	proc/trackable_item(obj/item/I)
+		. = TRUE
+		if(istype(I.loc, /obj/item/storage)) //allow one level of storage item
+			I = I.loc
+		if(!(isturf(I) || isturf(I.loc) || istype(I.loc, /obj/storage))) //if we aren't on a turf, something sitting on a turf, or in a locker/etc
+			if(ismob(I.loc))
+				var/mob/M = I.loc
+				if(!(I in (M.get_equipped_items(TRUE) + M.equipped_list())))
+					. = FALSE
+			else
+				. = FALSE
+
+	work_check()
+		. = ..()
+		var/obj/item/sticker/S = src.target
+		if(!trackable_item(S.attached))
+			src.turn_off()
+			if(ismob(src.loc))
+				boutput(src.loc, SPAN_ALERT("[src] shuts down because the tracking signal is obscured!"))
+			return TRUE
+
 /obj/item/pinpointer/nuke
 	name = "pinpointer (nuclear bomb)"
 	desc = "Points in the direction of the nuclear bomb."
@@ -192,14 +222,6 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_type = "disk"
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
@@ -360,6 +382,7 @@ TYPEINFO(/obj/item/pinpointer)
 			src.turn_off()
 			if(ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("[src] shuts down because the blood in it became too dry!"))
+			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
 	mats = null
@@ -532,6 +555,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	name = "mob pinpointer"
 	category = /mob
 	thing_name = "mob"
+
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
 
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"

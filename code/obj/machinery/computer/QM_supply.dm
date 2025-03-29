@@ -365,6 +365,8 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if (null, "list")
 
 				. += "<h2>Order Supplies</h2><div style='text-align: center;' id='qmquickjump'>"
+				. += search_snippet("background: #222228; color: #ccc;")
+				. += "<br />"
 				var/ordershit = ""
 				var/catnum = 0
 				if (!global.QM_CategoryList)
@@ -392,13 +394,15 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						if((S.syndicate && !src.hacked) || S.hidden) continue
 						if (S.category == foundCategory)
 							ordershit += {"
-								<tr class='row[rownum % 2]'>
-									<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
-									<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
-								</tr>
-								<tr class='row[rownum % 2]'>
-									<td colspan='2' class='itemdesc'>[S.desc]</td>
-								</tr>
+								<tbody class='supply-package'>
+									<tr class='row[rownum % 2]'>
+										<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
+									</tr>
+									<tr class='row[rownum % 2]'>
+										<td colspan='2' class='itemdesc'>[S.desc]</td>
+									</tr>
+								</tbody>
 								"}
 							rownum++
 						LAGCHECK(LAG_LOW)
@@ -422,7 +426,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-						if (isnull(O.comment))
+						if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(trimtext(O.comment))
@@ -461,7 +465,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-							if (isnull(O.comment))
+							if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 								return .("list") // The user cancelled the order
 							O.comment = html_encode(trimtext(O.comment))
 							wagesystem.shipping_budget -= P.cost
@@ -853,6 +857,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		if ("print_req_barcode")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				if (isnull(RC))
+					boutput(usr, SPAN_ALERT("The requisition contract has expired due to a market update."))
+					return
 				src.print_barcode(RC, RC.req_code)
 			else
 				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))

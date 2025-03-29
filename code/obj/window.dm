@@ -9,7 +9,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	density = 1
 	stops_space_move = 1
 	dir = NORTHEAST //full tile
-	flags = USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
@@ -259,7 +259,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.damage_heat(rand(10, 25))
 
 	meteorhit(var/obj/M)
-		if (istype(M, /obj/newmeteor/massive))
+		if (istype(M, /obj/newmeteor/massive) && !(IS_ARRIVALS(get_area(src))))
 			smash()
 			return
 		src.damage_blunt(20)
@@ -393,7 +393,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		return
 
 	attack_hand(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		if (user.a_intent == "harm")
 			if (user.is_hulk())
@@ -417,7 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				return
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (isscrewingtool(W))
 			if (state == 10) // ???
@@ -473,7 +473,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
-			src.damage_blunt(W.force)
+			if (ischoppingtool(W))
+				src.damage_blunt(W.force*4)
+			else
+				src.damage_blunt(W.force)
 			..()
 		return
 
@@ -486,7 +489,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "[src.anchored ? "anchored" : "unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
 		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
@@ -545,14 +548,14 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			for(var/turf/simulated/T in affected_simturfs)
+			for(var/turf/simulated/T as anything in affected_simturfs)
 				if(T.parent) //Rebuild/update nearby group geometry
-					air_master.groups_to_rebuild |= T.parent
+					air_master.groups_to_rebuild[T.parent] = null
 				else
-					air_master.tiles_to_update |= T
+					air_master.tiles_to_update[T] = null
 		else
-			for(var/turf/simulated/T in affected_simturfs)
-				air_master.tiles_to_update |= T
+			for(var/turf/simulated/T as anything in affected_simturfs)
+				air_master.tiles_to_update[T] = null
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -760,7 +763,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
-	flags = USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
 	var/connectdir
@@ -848,8 +851,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	proc/update_damage_overlay()
 		var/health_percentage = health/health_max

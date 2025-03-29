@@ -21,6 +21,8 @@
 	var/can_gun_grab = TRUE
 	/// if true, bypasses unarmed attack immunity for cyborgs (separate to weird special case handling for them)
 	var/can_beat_up_robots = FALSE
+	/// Bypass to allow special attacks to work on help/grab intent, kind of dumb but necessary
+	var/use_specials_on_all_intents = FALSE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -162,7 +164,7 @@
 			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
-			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+			var/list/affected = drawLineObj(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
 				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -229,7 +231,7 @@
 				return
 			. = TRUE
 			current_shots--
-			if (pointblank)
+			if (pointblank && ismob(target))
 				src.shoot_pointblank(target, user)
 			else
 				src.shoot_range(target, user, params)
@@ -285,8 +287,11 @@
 		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
+	// if firing this limb pushes you back in space
+	var/has_space_pushback = TRUE
+
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
@@ -309,6 +314,9 @@
 		cooldown = 3 SECONDS
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		no_reload
+			reload_time = 0 SECONDS
 
 
 	cannon
@@ -356,7 +364,7 @@
 
 
 	mrl
-		proj = new /datum/projectile/bullet/homing/mrl
+		proj = new /datum/projectile/bullet/homing/rocket/mrl
 		shots = 6
 		current_shots = 6
 		cooldown = 3 SECONDS
@@ -376,6 +384,15 @@
 		current_shots = 1
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
+
+	space_phoenix
+		proj = new/datum/projectile/bullet/space_phoenix_icicle
+		shots = INFINITY
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 0
+		spread_angle = 2
+		has_space_pushback = FALSE
 
 	syringe
 		proj = new/datum/projectile/syringefilled
@@ -406,6 +423,13 @@
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
 
+	draco
+		proj = new/datum/projectile/bullet/draco
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/gun/energy
 	phaser
 		proj = new/datum/projectile/laser/light
@@ -428,6 +452,15 @@
 		current_shots = 1
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
+
+	martian_ray
+		proj = new/datum/projectile/energy_bolt/raybeam
+		shots = 3
+		current_shots = 9
+		cooldown = 1 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 3
+
 
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner
@@ -605,7 +638,7 @@
 			user.HealDamage("All", 2, 0)
 		else
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 
@@ -618,6 +651,7 @@
 	miss_prob = 90
 	stam_damage_mult = 0
 	harm_intent_delay = COMBAT_CLICK_DELAY
+	can_beat_up_robots = TRUE
 	var/human_stam_damage = 50 //! how much stam damage this limb should deal to living mobs
 	var/human_desorient_duration = 2 SECONDS //! how much desorient this limb should apply to living mobs
 	var/human_stun_duration = 5 SECONDS //! how much stun this limb should apply to living mobs
@@ -666,7 +700,7 @@
 			msgs.flush(0)
 		else
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
-	user.lastattacked = target
+	user.lastattacked = get_weakref(target)
 	if (user != target)
 		attack_twitch(user, 1.2, 1.2)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
@@ -743,14 +777,14 @@
 						return
 
 				if (TRUE)
-					user.lastattacked = target
+					user.lastattacked = get_weakref(target)
 					return
 
 		. = ..()
 
 	help(mob/target, var/mob/living/user)
 		user.show_message(SPAN_ALERT("Nope. Not going to work. You're more likely to kill them."))
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs (disarm intent) at [log_loc(user)].")
@@ -777,12 +811,13 @@
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
 	///Legally distinct from can_pickup_item, determines whether we use the thrall behaviour of pickup actionbars
 	var/can_reach = FALSE
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -813,8 +848,8 @@
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
-			else if(istype(target, /obj/grille))
-				var/obj/grille/O = target
+			else if(istype(target, /obj/mesh/grille))
+				var/obj/mesh/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
@@ -847,7 +882,7 @@
 			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
 				user.emote("scream")
 			if (hit)
-				user.lastattacked = target
+				user.lastattacked = get_weakref(target)
 				attack_particle(user, target)
 				return
 
@@ -906,7 +941,7 @@
 		else if (issilicon(target))
 			special_attack_silicon(target, user)
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 /datum/limb/zombie/thrall
@@ -931,7 +966,7 @@
 
 	help(mob/target, var/mob/living/user)
 		user.show_message(SPAN_ALERT("Not going to work. You're more likely to kill them."))
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 	disarm(mob/target, var/mob/living/user)
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dual saw (disarm intent) at [log_loc(user)].")
@@ -973,7 +1008,7 @@
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
 			target.changeStatus("knockdown", 2 SECONDS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 /datum/limb/brullbar
 	var/log_name = "brullbar limbs"
@@ -1003,7 +1038,7 @@
 							return
 
 				if (1)
-					user.lastattacked = target
+					user.lastattacked = get_weakref(target)
 					return
 
 		..()
@@ -1054,7 +1089,7 @@
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(15, disorient = 1 SECONDS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 20)
 
 /datum/limb/brullbar/king
@@ -1136,12 +1171,13 @@
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
+	can_beat_up_robots = TRUE
 	var/weak = 0
 
 	werewolf
@@ -1161,7 +1197,7 @@
 			return
 
 		if (istype(target, /obj/critter))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 
 			var/obj/critter/victim = target
 
@@ -1212,11 +1248,11 @@
 					target.Attackhand(user, params, location, control)
 					return
 				if (1)
-					user.lastattacked = target
+					user.lastattacked = get_weakref(target)
 					return
 
 		if (ismob(target))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			if (issilicon(target))
 				special_attack_silicon(target, user)
 				return
@@ -1281,7 +1317,7 @@
 		if (!msgs || !istype(msgs))
 			return
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 		if (src.weak == 1) // Werewolves get a guaranteed knockdown.
 			if (!target.anchored && prob(50))
@@ -1359,7 +1395,7 @@
 
 		msgs.flush(SUPPRESS_LOGS)
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		return
 
 	harm(mob/target, var/mob/living/user)
@@ -1438,7 +1474,7 @@
 
 			msgs.played_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 			msgs.damage = rand(8, 17)
-			flick("hastur-attack", user)
+			FLICK("hastur-attack", user)
 			msgs.damage_type = DAMAGE_CUT // Nasty tentacles with sharp spikes!
 
 		else
@@ -1460,7 +1496,7 @@
 		user.attack_effects(target, user.zone_sel?.selecting)
 		msgs.flush(SUPPRESS_LOGS)
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		return
 
 // And why not (Convair880).
@@ -1497,11 +1533,12 @@
 		if (ismob(target))
 			user.melee_attack_normal(target, 5) // Slightly more powerful punches. This is bonus damage, not a multiplier.
 			return
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		..()
 		return
 
 /datum/limb/claw
+	var/damage = 10
 	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1533,7 +1570,7 @@
 						C.cut(user,user.loc)
 						return
 				if (1)
-					user.lastattacked = target
+					user.lastattacked = get_weakref(target)
 					return
 		..()
 		return
@@ -1573,14 +1610,14 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
 
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, src.damage, src.damage, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /datum/limb/eldritch
@@ -1618,7 +1655,7 @@
 
 		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 /datum/limb/leg_hand
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -1632,7 +1669,7 @@
 			return
 
 		if (isobj(target))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			user.smash_through(target, list("grille"))
 			var/obj/O = target
 			if (isitem(O) && !O.anchored)
@@ -1657,7 +1694,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 
 /// little critters with teeth, like mice! can pick up small items only.
@@ -1706,7 +1743,7 @@
 
 	help(mob/target, var/mob/living/user)
 		if (issmallanimal(user) && iscarbon(target))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1735,7 +1772,7 @@
 		msgs.damage_type = src.dmg_type
 		msgs.flush(SUPPRESS_LOGS)
 
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 		attack_particle(user,target)
 		if (src != target)
@@ -1743,7 +1780,7 @@
 
 	grab(mob/target, var/mob/living/user)
 		if (issmallanimal(user))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1753,7 +1790,7 @@
 
 	disarm(mob/target, var/mob/living/user)
 		if (issmallanimal(user) && iscarbon(target))
-			user.lastattacked = target
+			user.lastattacked = get_weakref(target)
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
@@ -1786,6 +1823,14 @@
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/small_critter/space_phoenix
+	dam_low = 5
+	dam_high = 10
+	dmg_type = DAMAGE_CUT
+	actions = list("scratches", "slices", "claws")
+	can_gun_grab = FALSE
+	can_beat_up_robots = TRUE
 
 /datum/limb/small_critter/med/dash
 	dam_low = 3
@@ -1839,7 +1884,7 @@
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 
 /datum/limb/jean
@@ -1866,7 +1911,7 @@
 		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target]!</b>")
 		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 /datum/limb/sword
@@ -1896,5 +1941,5 @@
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)

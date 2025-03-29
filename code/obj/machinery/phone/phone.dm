@@ -78,6 +78,8 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
+
 		START_TRACKING
 
 	disposing()
@@ -91,6 +93,7 @@ TYPEINFO(/obj/machinery/phone)
 		handset = null
 
 		STOP_TRACKING
+		UnregisterSignal(src, COMSIG_CORD_RETRACT)
 		..()
 
 	get_desc()
@@ -104,8 +107,6 @@ TYPEINFO(/obj/machinery/phone)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
-				user.drop_item(PH)
-				qdel(PH)
 				hang_up()
 			return
 		if(issnippingtool(P))
@@ -135,7 +136,7 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
@@ -143,47 +144,6 @@ TYPEINFO(/obj/machinery/phone)
 				hang_up()
 			src.gib(src.loc)
 			qdel(src)
-
-	proc/draw_cord()
-		if(!src.handset)
-			return
-		var/handset_offset_x = -7
-		var/handset_offset_y = -7
-		var/atom/movable/target = src.handset
-		if(ismob(src.handset.loc))
-			var/mob/living/M = src.handset.loc
-			target = M
-			switch (M.dir)
-				if (NORTH)
-					handset_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						handset_offset_x = -6
-					else
-						handset_offset_x = 6
-				if (SOUTH)
-					handset_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						handset_offset_x = 6
-					else
-						handset_offset_x = -6
-				if (EAST)
-					if(M.hand == LEFT_HAND)
-						handset_offset_x = 4
-						handset_offset_y = -4
-					else
-						handset_offset_x = -4
-						handset_offset_y = -2
-				if(WEST)
-					if(M.hand == LEFT_HAND)
-						handset_offset_x = 4
-						handset_offset_y = -2
-					else
-						handset_offset_x = -4
-						handset_offset_y = -4
-						handset_offset_x = -4
-		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
-		result.lineImage.layer = src.layer+0.01
-		src.UpdateOverlays(result.lineImage, "phone_line_\ref[src]")
 
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
@@ -196,9 +156,8 @@ TYPEINFO(/obj/machinery/phone)
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
-		RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
+		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
 		user.put_in_hand_or_drop(src.handset)
-		src.draw_cord()
 		src.answered = TRUE
 
 		src.icon_state = "[answered_icon]"
@@ -342,11 +301,13 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
 			src.linked = null
+		src.RemoveComponentsOfType(/datum/component/cord)
 		src.ringing = FALSE
+		src.handset?.force_drop(sever=TRUE)
+		qdel(src.handset)
 		src.handset = null
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
-		src.ClearSpecificOverlays("phone_line_\ref[src]")
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
@@ -432,10 +393,8 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
 			if(src.get_holder())
 				boutput(src.get_holder(),SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
-			src.force_drop(sever=TRUE)
 			src.parent.hang_up()
 			processing_items.Remove(src)
-			qdel(src)
 
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
@@ -473,13 +432,13 @@ TYPEINFO(/obj/machinery/phone)
 			for (var/obj/item/device/radio/intercom/I in range(3, listener))
 				I.talk_into(M, text, null, M.get_heard_name(just_name_itself=TRUE), lang_id)
 
-	attack_hand(mob/user)
-		. = ..()
-		src.parent?.draw_cord()
+	// attack_hand(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
 
-	dropped(mob/user)
-		. = ..()
-		src.parent?.draw_cord()
+	// dropped(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25
@@ -508,128 +467,3 @@ TYPEINFO(/obj/machinery/phone/wall)
 	store_type = /obj/machinery/phone
 	viewstat = 2
 	secured = 2
-
-//
-//		----------------- CELL PHONE STUFF STARTS HERE ---------------------
-//
-
-
-/*
-		Radio Antennas. Cell phones require a signal to work!
-
-
-/var/global/list/radio_antennas = list()
-
-/obj/machinery/radio_antenna
-	icon='icons/obj/large/32x64.dmi'
-	icon_state = "commstower"
-	var/range = 10
-	var/active = 0
-
-	process()
-		..()
-
-	proc/get_max_range()
-		return range * 5
-
-	proc/process_message()
-
-/obj/machinery/radio_antenna/large
-	range = 40
-
-TYPEINFO(/obj/item/phone/cellphone)
-	mats = 25
-
-/obj/item/phone/cellphone
-	icon_state = "cellphone"
-	_health = 20
-	var/can_talk_across_z_levels = 0
-	var/phone_id = null
-	var/ringmode = 0 // 0 for silent, 1 for vibrate, 2 for ring
-	var/ringing = 0
-	var/answered = 0
-	var/last_ring = 0
-	var/dialing = 0
-	var/labelling = 0
-	var/chui/window/phonecall/phonebook
-	var/phone_icon = "cellphone"
-	var/ringing_icon = "cellphone_ringing"
-	var/answered_icon = "cellphone_answered"
-	var/obj/item/ammo/power_cell/cell = new /obj/item/ammo/power_cell/med_power
-	var/activated = 0
-
-
-	New()
-		..()
-
-	attackby(obj/item/P, mob/living/user)
-		if(istype(P,/obj/item/card/id))
-			if(src.activated)
-				if(alert("Do you want to un-register this phone?","yes","no") == "yes")
-					registered = 0
-					phone_id = ""
-					phonelist.Remove(src)
-			else
-				var/obj/item/card/id/new_id = obj
-				user.show_text("Activating the phone. Please wait!","blue")
-				actions.start(new/datum/action/bar/icon/activate_cell_phone(src.icon_state,src,new_id), user)
-
-		..()
-		src._health -= P.force
-		if(src._health <= 0)
-			if(src.linked)
-				hang_up()
-			src.gib(src.loc)
-			qdel(src)
-
-
-	proc/ring()
-
-	proc/talk_into()
-
-
-	proc/find_nearest_radio_tower()
-		var/min_distance = inf
-		var/nearest_tower = null
-		for(var/machinery/radio_tower/tower in radio_antennas)
-			if(!tower.active || tower.z != src.z)
-				continue
-			if(max(abs(tower.x - src.x),abs(tower.y - src.y) < nearest_tower)
-				nearest_tower = tower
-		return nearest_tower
-
-
-/obj/item/phone/cellphone/bananaphone
-	name = "Banana Phone"
-	icon = 'icons/obj/machines/phones.dmi'
-	desc = "A cellular, bananular phone."
-	icon_state = "bananaphone"
-	phone_icon = "bananaphone"
-	ringing_icon = "bananaphone_ringing"
-	answered_icon = "bananaphone_answered"
-
-	ring()
-
-/datum/action/bar/icon/activate_cell_phone
-	duration = 50
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "activate_cell_phone"
-	icon = 'icons/obj/machines/phones.dmi'
-	icon_state = "cellphone"
-	var/obj/item/cellphone/phone
-	var/registering_name
-
-	New(icon,newphone,newid_name)
-		icon_state = icon
-		phone = newphone
-		registering_name = newid_name
-		..()
-
-
-	onEnd()
-		phone.registered = 1
-		phone.phone_id = "[id.registered]'s Cell Phone"
-		phonelist.Add(phone)
-		..()
-
-*/

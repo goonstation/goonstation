@@ -62,7 +62,7 @@
 			elecflash(target,power = 2)
 			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 			target.visible_message(SPAN_ALERT("[target] is severely burned by an electrical charge!"))
-			target.lastattacker = holder.owner
+			target.lastattacker = get_weakref(holder.owner)
 			target.lastattackertime = world.time
 			target.TakeDamage("chest", 0, 40, 0, DAMAGE_BURN)
 			target.changeStatus("stunned", 6 SECONDS)

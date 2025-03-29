@@ -151,6 +151,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.verbs += /mob/living/silicon/ai/verb/rename_self
+	O.verbs += /mob/living/silicon/ai/verb/go_offline
 	O.job = "AI"
 
 	SPAWN(0)
@@ -183,7 +184,7 @@
 	newmob.gender = src.gender
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
-		original.CopyOther(src.bioHolder)
+		original.CopyOther(src.bioHolder, copyPool=FALSE, copyActiveEffects=FALSE)
 		qdel(newmob.bioHolder)
 		newmob.bioHolder = original
 
@@ -636,10 +637,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
 		newbody.stow_in_available(newbody.create_wig())
-		newbody.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		newbody.update_colorful_parts()
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears
@@ -685,7 +682,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
-	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+	newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 	newbody.set_clothing_icon_dirty()
 
 	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")

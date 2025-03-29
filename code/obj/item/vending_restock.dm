@@ -34,6 +34,12 @@
 	desc = "A cartridge that restocks medical vending machines."
 	vendingType = "medical"
 
+/obj/item/vending/restock_cartridge/chemistry
+	name = "chemical restock cartridge"
+	icon_state = "chemistry"
+	desc = "A cartridge that restocks chemical vending machines."
+	vendingType = "chemistry"
+
 /obj/item/vending/restock_cartridge/medical_public
 	name = "public medical restock cartridge"
 	icon_state = "medical_public"
@@ -154,6 +160,31 @@
 	name = "generic clothing restock cartridge"
 	icon_state = "clothing"
 	vendingType =  "jobclothing"
+
+/obj/item/vending/restock_cartridge/jobclothing/security
+	name = "security clothing restock cartridge"
+	desc = "A cartridge that restocks security clothing vending machines."
+	vendingType = "jobclothing/security"
+
+/obj/item/vending/restock_cartridge/jobclothing/medical
+	name = "medical clothing restock cartridge"
+	desc = "A cartridge that restocks medical clothing vending machines."
+	vendingType = "jobclothing/medical"
+
+/obj/item/vending/restock_cartridge/jobclothing/engineering
+	name = "engineering clothing restock cartridge"
+	desc = "A cartridge that restocks engineering clothing vending machines."
+	vendingType = "jobclothing/engineering"
+
+/obj/item/vending/restock_cartridge/jobclothing/catering
+	name = "catering clothing restock cartridge"
+	desc = "A cartridge that restocks catering clothing vending machines."
+	vendingType = "jobclothing/catering"
+
+/obj/item/vending/restock_cartridge/jobclothing/research
+	name = "research clothing restock cartridge"
+	desc = "A cartridge that restocks research clothing vending machines."
+	vendingType = "jobclothing/research"
 
 /obj/item/vending/restock_cartridge/jobclothing/syndicate
 	name = "syndicate clothing restock cartridge"

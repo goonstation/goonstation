@@ -236,8 +236,12 @@
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
+		. = ..()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = ""
@@ -265,8 +269,12 @@
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 0 0 3px black; -dm-text-outline: 2px black;"
+		. = ..()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = ""
@@ -285,6 +293,7 @@
 		msgLose = "Back to normal text."
 
 		OnAdd()
+			. = ..()
 			var/mob/living/L = owner
 			if (istype(L))
 				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
@@ -297,12 +306,16 @@
 		msgLose = "Back to normal text."
 
 		OnAdd()
+			. = ..()
 			var/mob/living/L = owner
 			if (istype(L))
 				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
 				animate_rainbow_glow(L.chat_text)
 
 		OnRemove()
+			. = ..()
+			if (!.)
+				return
 			var/mob/living/L = owner
 			if (istype(L))
 				L.speechpopupstyle = ""
@@ -317,6 +330,7 @@
 			msgLose = "Back to normal text."
 
 			OnAdd()
+				. = ..()
 				var/mob/living/L = owner
 				if (istype(L))
 					L.speechpopupstyle = "color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
@@ -413,16 +427,16 @@
 		if (!istext(message))
 			return ""
 
-		message = replacetext(message, "a", vowel_lower)
-		message = replacetext(message, "e", vowel_lower)
-		message = replacetext(message, "i", vowel_lower)
-		message = replacetext(message, "o", vowel_lower)
-		message = replacetext(message, "u", vowel_lower)
-		message = replacetext(message, "A", vowel_upper)
-		message = replacetext(message, "E", vowel_upper)
-		message = replacetext(message, "I", vowel_upper)
-		message = replacetext(message, "O", vowel_upper)
-		message = replacetext(message, "U", vowel_upper)
+		message = replacetextEx(message, "a", vowel_lower)
+		message = replacetextEx(message, "e", vowel_lower)
+		message = replacetextEx(message, "i", vowel_lower)
+		message = replacetextEx(message, "o", vowel_lower)
+		message = replacetextEx(message, "u", vowel_lower)
+		message = replacetextEx(message, "A", vowel_upper)
+		message = replacetextEx(message, "E", vowel_upper)
+		message = replacetextEx(message, "I", vowel_upper)
+		message = replacetextEx(message, "O", vowel_upper)
+		message = replacetextEx(message, "U", vowel_upper)
 
 		return message
 
@@ -563,8 +577,10 @@
 	OnAdd()
 		var/mob/living/L = owner
 		L.speech_void = TRUE
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		var/mob/living/L = owner
 		L.speech_void = FALSE
 

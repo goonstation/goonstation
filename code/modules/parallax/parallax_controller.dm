@@ -62,7 +62,14 @@
 	for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
 		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
 		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
-		animate(parallax_layer, animation_time, transform = matrix(1, 0, x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 0, 1, y_pixel_change * parallax_layer.parallax_render_source.parallax_value), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		// Round to 1s to not blur sprites
+		animate( \
+			parallax_layer, \
+			animation_time, \
+			transform = matrix(	1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1), \
+								0, 1, round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1)), \
+			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE \
+		)
 
 		// Check whether the layer should be realigned on the client's screen.
 		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
@@ -119,6 +126,15 @@
 		src.owner.screen += render_source
 		src.owner.screen += parallax_layer
 
+/// Creates a new parallax layer for every provided parallax layer render source.
+/datum/parallax_controller/proc/recalculate_parallax_layer(atom/movable/screen/parallax_render_source/render_source)
+	if(render_source in src.parallax_render_sources)
+		var/atom/movable/screen/parallax_layer/parallax_layer = src.parallax_render_sources[render_source]
+
+		parallax_layer.offset_layer()
+		parallax_layer.scroll_layer()
+		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
+
 /// Removes the parallax layers corresponding to the provided parallax layer render sources.
 /datum/parallax_controller/proc/remove_parallax_layer(list/parallax_layer_render_sources)
 	for (var/atom/movable/screen/parallax_render_source/render_source as anything in parallax_layer_render_sources)
@@ -153,10 +169,6 @@
 	src.UnregisterSignal(M, XSIG_MOVABLE_AREA_CHANGED)
 	src.UnregisterSignal(M, XSIG_MOVABLE_Z_CHANGED)
 	src.UnregisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED)
-
-
-
-
 
 /client/var/datum/parallax_controller/parallax_controller
 

@@ -6,16 +6,17 @@
 	icon_state = "firstaid1"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
+	can_hold = list(/obj/item/storage/pill_bottle)
 	throw_range = 8
-	max_wclass = W_CLASS_SMALL // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
+	max_wclass = W_CLASS_TINY
+	check_wclass = TRUE
 	var/list/kit_styles = null
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (length(kit_styles))
-				icon_state = pick(kit_styles)
-				item_state = icon_state
+		if (length(kit_styles))
+			icon_state = pick(kit_styles)
+			item_state = icon_state
 
 
 /obj/item/storage/firstaid/regular

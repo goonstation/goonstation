@@ -6,7 +6,12 @@
   margin: 10px;
   padding-top: 20px;
   background: rgb(73, 80, 74);
-  background: linear-gradient(180deg, rgba(73, 80, 74, 1) 0%, rgba(73, 80, 74, 1) 22%, rgb(87, 94, 87) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(73, 80, 74, 1) 0%,
+    rgba(73, 80, 74, 1) 22%,
+    rgb(87, 94, 87) 100%
+  );
   border-left: 5px solid rgb(61, 61, 61);
   border-bottom: 5px solid rgb(51, 51, 51);
   overflow-x: auto;
@@ -66,7 +71,10 @@
   color: rgb(56, 56, 56);
   border: 1px solid rgb(214, 214, 214);
   border-radius: 0 0 5px 5px;
-  box-shadow: -1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 0 5px #ccc inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    -1px 0 0 rgba(255, 255, 255, 0.8) inset,
+    0 0 5px #ccc inset,
+    0 0 3px rgba(0, 0, 0, 0.2);
   background: linear-gradient(to bottom, #eee 0%, #fff 100%);
   transition: 0.05s all;
 }
@@ -81,7 +89,9 @@
   border-bottom-right-radius: 5px;
   border: 1px solid rgb(59, 59, 59);
   margin: 0 0 0 -1.5em;
-  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
+  box-shadow:
+    -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+    0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
     0 2px 12px rgba(0, 0, 0, 0.5);
   background: linear-gradient(0deg, #222 0%, #555 100%);
   transition: 0.05s all;
@@ -90,14 +100,19 @@
 .instruments__piano-key-white:active,
 .instruments__piano-key-white-active {
   border: 1px solid rgb(180, 180, 180);
-  box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, -5px 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    2px 0 3px rgba(0, 0, 0, 0.1) inset,
+    -5px 5px 20px rgba(0, 0, 0, 0.2) inset,
+    0 0 3px rgba(0, 0, 0, 0.2);
   background: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
 }
 
 .instruments__piano-key-black:active,
 .instruments__piano-key-black-active {
   border: 1px solid rgb(34, 34, 34);
-  box-shadow: -1px -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset,
+  box-shadow:
+    -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+    0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset,
     0 1px 2px rgba(0, 0, 0, 0.5);
   background: linear-gradient(to bottom, #444 0%, #222 100%);
 }

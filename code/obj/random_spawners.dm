@@ -13,14 +13,14 @@
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
-	var/list/guaranteed = new/list() // things that will always spawn from this - set to a number to spawn that many of the thing
+	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(5 SECONDS) // ZEWAKA/INIT
+			sleep(2 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
@@ -920,7 +920,7 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
@@ -1100,7 +1100,7 @@
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
 	/mob/living/critter/small_animal/mouse,
-	/obj/critter/opossum,
+	/mob/living/critter/small_animal/opossum,
 	/mob/living/critter/small_animal/dog,
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
@@ -1218,7 +1218,7 @@
 	min_amt2spawn = 2
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/circuitboard/security,
-					/obj/item/circuitboard/atmospherealerts,
+					/obj/item/circuitboard/stockexchange,
 					/obj/item/circuitboard/air_management,
 					/obj/item/circuitboard/general_alert,
 					/obj/item/circuitboard/atm,
@@ -1342,7 +1342,6 @@
 		/obj/item/clothing/under/gimmick/merchant,
 		/obj/item/clothing/under/gimmick/spiderman,
 		/obj/item/clothing/under/gimmick/birdman,
-		/obj/item/clothing/under/gimmick/dawson,
 		/obj/item/clothing/under/gimmick/chav,
 		/obj/item/clothing/under/gimmick/safari,
 		/obj/item/clothing/under/gimmick/utena,
@@ -1542,7 +1541,7 @@
 						/obj/item/clothing/head/odlawhat,
 						/obj/item/clothing/head/fake_waldohat,
 						/obj/item/clothing/head/flatcap,
-						/obj/item/clothing/head/devil,
+						/obj/item/clothing/head/headband/devil,
 						/obj/item/clothing/head/biker_cap,
 						/obj/item/clothing/head/mj_hat,
 						/obj/item/clothing/head/genki,
@@ -1887,7 +1886,19 @@
 	/obj/item/gun/kinetic/makarov,
 	/obj/item/gun/kinetic/single_action/mts_255,
 	/obj/item/gun/kinetic/survival_rifle,
-	/obj/item/gun/kinetic/survival_rifle)
+	/obj/item/gun/kinetic/survival_rifle,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/m16,
+	/obj/item/gun/kinetic/pumpweapon/ks23,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/striker,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/lopoint,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/uzi,
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/greasegun
+	)
 
 	one
 		amt2spawn = 1
@@ -1916,6 +1927,33 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/armoryweapon
+	name = "armory special weapon spawner"
+	icon_state = "rand_gun"
+	amt2spawn = 1
+
+	items2spawn = list(/obj/item/gun/energy/stasis,
+	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun_jr,
+	/obj/item/gun/energy/phaser_huge)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	bunch
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
 
@@ -1925,7 +1963,9 @@
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
 
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
-						/obj/item/aiModule/experimental/equality/b)
+						/obj/item/aiModule/experimental/equality/b,
+						/obj/item/aiModule/experimental/corrupted,
+						/obj/item/aiModule/experimental/historic)
 
 	one
 		amt2spawn = 1
@@ -2009,7 +2049,9 @@
 		max_amt2spawn = 3
 
 
-/obj/random_item_spawner/armory_breaching_supplies //random
+/obj/random_item_spawner/armory_breaching_supplies //"random"
+	name = "armory breaching supplies"
+	icon_state = "breachspawn"
 	spawn_items()
 		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{
@@ -2039,6 +2081,94 @@
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
+		}(src.loc)
+
+/obj/random_item_spawner/armory_armor_supplies //"random"
+	name = "armory armor supplies"
+	icon_state = "armorspawn"
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/clothing/head/helmet/EOD{
+			pixel_x = 4;
+			pixel_y = 8
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/EOD{
+			pixel_x = 12;
+			pixel_y = 8
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/EOD{
+			pixel_x = 1
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/EOD{
+			pixel_x = 9
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/riot{
+			pixel_x = -13;
+			pixel_y = 12
+		}(src.loc)
+		new /obj/item/clothing/head/helmet/riot{
+			pixel_x = -4;
+			pixel_y = 12
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/heavy{
+			pixel_x = -5
+		}(src.loc)
+		new /obj/item/clothing/suit/armor/heavy{
+			pixel_x = -13
+		}(src.loc)
+
+/obj/random_item_spawner/armory_goggle_supplies //"random"
+	name = "armory goggle supplies"
+	icon_state = "gogglespawn"
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = -9;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = -3;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = 3;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/mask/gas/emergency{
+			pixel_x = 9;
+			pixel_y = 11
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -8;
+			pixel_y = -8
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -7;
+			pixel_y = -3
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -6;
+			pixel_y = 2
+		}(src.loc)
+		new /obj/item/clothing/glasses/nightvision{
+			pixel_x = -5;
+			pixel_y = 7
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 6;
+			pixel_y = -10
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 7;
+			pixel_y = -5
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 8;
+			pixel_y = 0
+		}(src.loc)
+		new /obj/item/clothing/glasses/thermal{
+			pixel_x = 9;
+			pixel_y = 5
 		}(src.loc)
 
 /obj/random_item_spawner/fruits
@@ -2198,7 +2328,7 @@
 		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
 
 		// Exclude the non-natural ones
-		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		items2spawn -= list(/obj/item/clothing/head/flower/rose/holorose)
 		..()
 
 	one

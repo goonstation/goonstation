@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/skintoned = TRUE
+	/// fingertip_color
+	var/fingertip_color = null
 
 	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
 	/// The icon of this overlay
@@ -94,6 +96,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/kind_of_limb
 	/// Can we roll this limb as a random limb?
 	var/random_limb_blacklisted = FALSE
+	/// Can break cuffs/shackles instantly if both limbs have this set. Has to be this high because limb pathing is a fuck.
+	var/breaks_cuffs = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -193,10 +197,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 			H.set_body_icon_dirty()
 			H.UpdateDamageIcon()
 			if (src.slot == "l_arm")
-				H.drop_from_slot(H.l_hand)
+				H.drop_from_slot(H.l_hand, force_drop=TRUE)
 				H.hud.update_hands()
 			else if (src.slot == "r_arm")
-				H.drop_from_slot(H.r_hand)
+				H.drop_from_slot(H.r_hand, force_drop=TRUE)
 				H.hud.update_hands()
 
 		else if(remove_object)
@@ -377,6 +381,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 	///Called every life tick when attached to a mob
 	proc/on_life(datum/controller/process/mobs/parent)
 		return
+
+	/// Fingertip color, used to tint overlays
+	proc/get_fingertip_color()
+		if (src.skintoned)
+			return src.skin_tone
+		return src.fingertip_color
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination

@@ -294,27 +294,27 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "[syndicate_currency] left: [src.uses]<BR>"
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
-					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
+					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name, and if it has a maximum number of times it can be purchased, that will follow the cost. </I><BR><table cellspacing=5>"
 				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
 					dat += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
 					for (var/T in src.items_telecrystal)
 						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A></td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
 				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
 						var/datum/syndicate_buylist/I3 = src.items_objective[O]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A></td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
 				if (src.items_job && islist(src.items_job) && length(src.items_job))
 					dat += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
 					for (var/J in src.items_job)
 						var/datum/syndicate_buylist/I2 = src.items_job[J]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A></td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.purchase_log[I2.type] ? src.purchase_log[I2.type] : 0]/[I2.max_buy])"]</td>"
 				if (src.items_general && islist(src.items_general) && length(src.items_general))
 					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
 					for (var/G in src.items_general)
 						var/datum/syndicate_buylist/I1 = src.items_general[G]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A></td>"
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
 				dat += "</table>"
 				var/do_divider = 1
 
@@ -423,6 +423,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.uses < I.cost)
 					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 					return
+				if (src.purchase_log[I.type] >= I.max_buy)
+					boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
+					return
 				src.uses = max(0, src.uses - I.cost)
 
 				if (src.purchase_flags & UPLINK_TRAITOR)
@@ -442,19 +445,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
-			if (I.item)
-				var/obj/item = new I.item(get_turf(src))
-				I.run_on_spawn(item, usr, FALSE, src)
+			if (length(I.items) > 0)
+				for (var/uplink_item in I.items)
+					var/obj/item = new uplink_item(get_turf(src))
+					I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 					if (!src.purchase_log[I.type])
 						src.purchase_log[I.type] = 0
 					src.purchase_log[I.type]++
-			if (I.item2)
-				new I.item2(get_turf(src))
-			if (I.item3)
-				new I.item3(get_turf(src))
 
 		else if (href_list["about"])
 			reading_about = locate(href_list["about"])
@@ -655,22 +655,22 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (src.items_general && islist(src.items_general) && length(src.items_general))
 			for (var/G in src.items_general)
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
-				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_general[G]]'>About</A></td>"
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
 		if (src.items_job && islist(src.items_job) && length(src.items_job))
 			src.menu_message += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
 			for (var/J in src.items_job)
 				var/datum/syndicate_buylist/I2 = src.items_job[J]
-				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_job[J]]'>About</A></td>"
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.purchase_log[I2.type] ? src.purchase_log[I2.type] : 0]/[I2.max_buy])"]</td>"
 		if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 			src.menu_message += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
-				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A></td>"
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
 		if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
 			src.menu_message += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_telecrystal)
 				var/datum/syndicate_buylist/I3 = src.items_telecrystal[O]
-				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
 
 		src.menu_message += "</table><HR>"
 		if(has_synd_int && !src.is_VR_uplink)
@@ -703,6 +703,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				return
 
 			if (src.is_VR_uplink == 0)
+				if (src.purchase_log[I.type] >= I.max_buy)
+					boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
+					return
 				if (src.uses < I.cost)
 					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 					return
@@ -725,19 +728,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
-			if (I.item)
-				var/obj/item = new I.item(get_turf(src.hostpda))
-				I.run_on_spawn(item, usr, FALSE, src)
+			if (length(I.items) > 0)
+				for (var/uplink_item in I.items)
+					var/obj/item = new uplink_item(get_turf(src.hostpda))
+					I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 					if (!src.purchase_log[I.type])
 						src.purchase_log[I.type] = 0
 					src.purchase_log[I.type]++
-			if (I.item2)
-				new I.item2(get_turf(src.hostpda))
-			if (I.item3)
-				new I.item3(get_turf(src.hostpda))
 
 		else if (href_list["abt_item"])
 			var/datum/syndicate_buylist/I = locate(href_list["abt_item"])
@@ -927,7 +927,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(B.delivery_area, /area/diner))
 						user.show_text("It can be found at the nearby space diner!", "red")
 					var/turf/end = B.delivery_area.spyturf
-					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
+					user.gpsToTurf(end, doText = FALSE, all_access = TRUE) // spy thieves probably need to break in anyway, so screw access check
 					return FALSE
 				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
 					if (P.uplink == src)
@@ -1287,25 +1287,25 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						var/datum/syndicate_buylist/B = commander_buylist[SB]
 						if (src.points >= B.cost)
 							src.points -= B.cost
-							var/atom/A = new B.item(get_turf(src))
-							if(B.item2)
-								new B.item2(get_turf(src))
-							if(B.item3)
-								new B.item3(get_turf(src))
 
-							B.run_on_spawn(A, usr, FALSE, src)
+							if (length(B.items) == 0)
+								break
 
-							// Remember purchased item for the crew credits
-							var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
-							antagonist_role?.uplink_items.Add(B)
+							for (var/uplink_item in B.items)
+								var/atom/A = new uplink_item(get_turf(src))
+								B.run_on_spawn(A, usr, FALSE, src)
 
-							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
-							if(isnull(loadnum))
-								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
-							. = TRUE
-							break
+								// Remember purchased item for the crew credits
+								var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+								antagonist_role?.uplink_items.Add(B)
+
+								logTheThing(LOG_STATION, usr, "bought a [initial(B.items[1].name)] from a [src] at [log_loc(usr)].")
+								var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.items[1].name)]-Purchased")
+								if(isnull(loadnum))
+									loadnum = 0
+								world.save_intra_round_value("NuclearCommander-[initial(B.items[1].name)]-Purchased", loadnum + 1)
+								. = TRUE
+								break
 
 #undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////

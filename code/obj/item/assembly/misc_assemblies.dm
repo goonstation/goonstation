@@ -285,15 +285,6 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = TABLEPASS | CONDUCT | NOSPLASH
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-
-/obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
-
-	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile))
-		return
-	if (AM.move_speed < 12 && src.part1)
-		src.part1.sense()
-	return
 
 /obj/item/assembly/prox_ignite/dropped()
 	. = ..()
@@ -851,15 +842,30 @@ Contains:
 	..()
 	return
 
-obj/item/assembly/radio_horn/attack_self(mob/user as mob)
+/obj/item/assembly/radio_horn/attack_self(mob/user as mob)
 	src.part1.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 
-obj/item/assembly/radio_horn/receive_signal()
+/obj/item/assembly/radio_horn/receive_signal()
 	var/num_notes = part2.sounds_instrument.len
 	part2.play_note(rand(1, num_notes), user = null)
 	return
+
+/obj/item/assembly/radio_horn/attackby(obj/item/W, mob/user)
+	if (iswrenchingtool(W))
+		var/turf/T = get_turf(src)
+		src.part1.set_loc(T)
+		src.part2.set_loc(T)
+		src.part1.master = null
+		src.part2.master = null
+		src.part1 = null
+		src.part2 = null
+
+		user.u_equip(src)
+		qdel(src)
+		return
+	. = ..()
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
 
@@ -928,7 +934,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/device/prox_sensor/part2 = null
 	status = null
 	flags = TABLEPASS | CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/item/assembly/rad_prox/c_state(n)
 	src.icon_state = "prox-radio[n]"
@@ -942,7 +948,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	..()
 	return
 
-/obj/item/assembly/rad_prox/HasProximity(atom/movable/AM as mob|obj)
+/obj/item/assembly/rad_prox/EnteredProximity(atom/movable/AM)
 	if (istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12 && src && src.part2)
@@ -1074,6 +1080,12 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	result = /obj/item/ammo/bullets/pipeshot/bone
 	accepteditem = /obj/item/material_piece/bone
 	craftname = "bone chunk"
+
+/datum/pipeshotrecipe/potato
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/potato
+	accepteditem = /obj/item/reagent_containers/food/snacks/plant/potato
+	craftname = "potatoe"
 
 
 /obj/item/assembly/pipehulls

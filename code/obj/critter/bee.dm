@@ -118,10 +118,10 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))
 					return
 
-				if (beeMom.lastattacker && beeMom.lastattacker != beeMom && (beeMom.lastattackertime + 140) >= world.time)
-					src.target = beeMom.lastattacker
+				if (beeMom.lastattacker?.deref() && beeMom.lastattacker.deref() != beeMom && (beeMom.lastattackertime + 140) >= world.time)
+					src.target = beeMom.lastattacker.deref()
 					src.oldtarget_name = "[src.target]"
-					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker]!</b>"))
+					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker.deref()]!</b>"))
 					src.task = "chasing"
 					return ..()
 
@@ -1010,7 +1010,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if (time2text(world.realtime, "MM DD") == "10 31")
 				name = "Beezlebubs"
 				desc = "Oh no, a terrifying demon!!  Oh, wait, no, nevermind, it's just the fat and sassy space-bee.  Wow, really had me fooled for a moment...guess that's a Halloween trick...."
-				src.hat = new /obj/item/clothing/head/devil (src)
+				src.hat = new /obj/item/clothing/head/headband/devil (src)
 				src.hat_that_bee(src.hat)
 				src.UpdateIcon()
 

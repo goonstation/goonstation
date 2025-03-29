@@ -319,6 +319,22 @@
 		else
 			boutput(user, "You can feel heat emanating from the record player. You should probably wait a while before touching it. It's kinda old and you don't want to break it.")
 
+/obj/submachine/record_player/portable
+	name = "portable record player"
+	desc = "An old school record player, painted in a cool syndicate-red."
+	icon_state = "portable_record"
+	density = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
+		if(!fold_component?.the_briefcase)
+			return
+		var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
+		if (briefcase)
+			briefcase.set_loc(get_turf(src))
+			src.set_loc(briefcase)
 // Records
 /obj/item/record
 	name = "record"
@@ -611,6 +627,16 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 	name = "record - \"Lunch4Laika\""
 	record_name = "Lunch4Laika"
 	song = 'sound/radio_station/music/lunch.ogg'
+
+/obj/item/record/random/funk/monkey_riot
+	name = "record - \"Monkey Riot\""
+	record_name = "Monkey Riot"
+	song = 'sound/radio_station/music/monkey_riot.ogg'
+
+/obj/item/record/random/funk/space_gardener
+	name = "record - \"Space Gardener\""
+	record_name = "Space Gardener"
+	song = 'sound/radio_station/music/space_gardener.ogg'
 
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario

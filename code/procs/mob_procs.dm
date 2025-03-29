@@ -137,10 +137,10 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = base_slip_delay //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
-		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
+		slip_delay += WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
 	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
 	if (ignore_actual_delay)
@@ -233,6 +233,11 @@
 	if (istype(src.glasses, /obj/item/clothing/glasses/))
 		var/obj/item/clothing/glasses/G = src.glasses
 		if (G.allow_blind_sight)
+			return 1
+
+	if (isskeleton(src))
+		var/datum/mutantrace/skeleton/skele = src.mutantrace
+		if (skele.head_tracker?.glasses?.allow_blind_sight)
 			return 1
 
 	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
@@ -367,10 +372,10 @@
 		return 0
 	return 1
 
-/mob/proc/hearing_check(var/consciousness_check = 0)
+/mob/proc/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	return 1
 
-/mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
+/mob/living/carbon/human/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.stat || src.getStatusDuration("unconscious") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
@@ -386,7 +391,7 @@
 		if (src.ear_disability || src.get_ear_damage(1))
 			.= 0
 
-/mob/living/silicon/hearing_check(var/consciousness_check = 0)
+/mob/living/silicon/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 
@@ -800,8 +805,8 @@
 			W.smash()
 			return TRUE
 
-		if (S == "grille" && istype(target, /obj/grille))
-			var/obj/grille/G = target
+		if (S == "grille" && istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))

@@ -128,7 +128,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/prefab/space_casino)
 "oD" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/Doormaint.dmi';

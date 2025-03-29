@@ -226,13 +226,49 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+
+		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
+			if(src.amount < 5)
+				boutput(user, SPAN_ALERT("You need at least five sheets to make a mask."))
+				return
+			if (!istype(src.loc,/turf/))
+				if (issilicon(user))
+					boutput(user, SPAN_ALERT("Hardcore as it sounds, smelting parts of yourself off isn't big or clever."))
+				else
+					boutput(user, SPAN_ALERT("You should probably put the sheets down first."))
+				return
+			if(!W:try_weld(user, 1))
+				return
+
+			var/obj/item/clothing/mask/steel/M = new /obj/item/clothing/mask/steel(user.loc)
+			if(src.material) M.setMaterial(src.material)
+			src.change_stack_amount(-5)
+
+			user.visible_message(SPAN_ALERT("<B>[user]</B> welds the sheets together into a mask."))
+			UpdateStackAppearance()
+			return
+
 		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
 			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
 			new /obj/item/stick(get_turf(src))
 			src.change_stack_amount(-1)
+		else if (istype(W, /obj/item/cable_coil) && (src.material?.getMaterialFlags() & MATERIAL_METAL) && ((src in user) && (W in user)))
+			var/turf/T = get_turf(user)
+			if (T.intact)
+				boutput(user, SPAN_ALERT("You must remove the plating first."))
+				return
+			boutput(user, SPAN_NOTICE("You begin assembling a data terminal."))
+			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(build_terminal), list(W, user),\
+				/obj/machinery/power/data_terminal::icon, /obj/machinery/power/data_terminal::icon_state,\
+				SPAN_NOTICE("[user] assembles a data terminal."), INTERRUPT_MOVE | INTERRUPT_STUNNED)
 		else
 			..()
-		return
+
+	proc/build_terminal(obj/item/cable_coil/cable, mob/user)
+		if ((src in user) && (cable in user))
+			new /obj/machinery/power/data_terminal(get_turf(user))
+			src.change_stack_amount(-1)
+			cable.change_stack_amount(-1)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -395,8 +431,7 @@ MATERIAL
 
 				if ("barricade","zbarricade")
 					var/turf/T = get_turf(usr)
-					var/obj/item/sheet/wood/W = src
-					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+					if (!istype(T, /turf/simulated/floor) || locate(/obj/structure/woodwall) in T.contents)
 						boutput(usr,SPAN_ALERT("You can't build that here."))
 						return
 					if (params["recipeID"] == "barricade")
@@ -706,12 +741,12 @@ MATERIAL
 			else // Lances up!
 				user.visible_message("[user] raises a rod as a lance!", "You raise the rod into jousting position.")
 				S.joustingTool = src
-		else if (locate(/obj/grille, user.loc))
-			for(var/obj/grille/G in user.loc)
+		else if (locate(/obj/mesh/grille, user.loc))
+			for(var/obj/mesh/grille/G in user.loc)
 				if (G.ruined)
 					G.health = G.health_max
-					G.set_density(1)
-					G.ruined = 0
+					G.set_density(TRUE)
+					G.ruined = FALSE
 					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
@@ -731,7 +766,7 @@ MATERIAL
 
 	proc/build_grille(mob/user)
 		if (src.amount >= 2)
-			var/atom/A = new /obj/grille(user.loc)
+			var/atom/A = new /obj/mesh/grille(user.loc)
 			A.setMaterial(src.material)
 			src.change_stack_amount(-2)
 			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.getID() || "*UNKNOWN*"]) at [log_loc(user)].")

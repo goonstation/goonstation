@@ -36,10 +36,10 @@
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 
 		// Assign wizard hair.
-		H.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/wiz
+		H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_top"].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/wiz
 		H.update_colorful_parts()
 
 		// Assign wizard attire.
@@ -62,6 +62,7 @@
 		H.equip_if_possible(SB, SLOT_BELT)
 
 		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank=TRUE)
 
 		H.assign_gimmick_skull()
 
@@ -82,7 +83,6 @@
 					newname = randomname
 
 				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
 					H.on_realname_change()

@@ -194,7 +194,7 @@ proc/create_fluff(datum/mind/target)
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/clothing/suit/hosmedal
+				steal_target = /obj/item/clothing/suit/security_badge/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
@@ -728,10 +728,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_vampire_blood(1) >= bloodcount)
-			return 1
-		else
-			return 0
+		var/datum/antagonist/vampire/antag_datum = owner.get_antagonist(ROLE_VAMPIRE)
+		return (antag_datum?.ability_holder?.get_vampire_blood(TRUE) >= bloodcount)
 
 /datum/objective/specialist/hunter/trophy
 	medal_name = "Dangerous Game"
@@ -1080,6 +1078,27 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			return 1
 		else
 			return 0
+
+/datum/objective/specialist/phoenix_collect_humans
+	explanation_text = "Collect 5 dead humans in your nest."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_humans) >= 5
+
+/datum/objective/specialist/phoenix_collect_critters
+	explanation_text = "Collect 5 dead critters in your nest."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_critters) >= 5
+
+/datum/objective/specialist/phoenix_permafrost_areas
+	explanation_text= "Use Permafrost on 5 station areas."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.permafrosted_areas) >= 5
 
 /////////////////////////////
 // Round-ending objectives //
@@ -1459,8 +1478,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
-		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powergoal)
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //

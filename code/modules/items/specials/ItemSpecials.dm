@@ -84,7 +84,6 @@
 
 
 
-#define ITEMSPECIAL_PIXELDIST_SQUARED  (70 * 70) //lol i'm putting the define RIGHT HERE.
 // These two numbers will be compared later (pixeldist squared AND the result of this function). We don't need to do unnessecary sqrt cause this is just a simple < > comparison!
 /proc/get_dist_pixel_squared(var/atom/source, var/atom/target, params)
 	var/dx = (target.x - source.x) * 32
@@ -100,6 +99,17 @@
 		dy += (text2num(params["icon-y"]) - 16)
 
 	return ((dx*dx) + (dy*dy))
+
+/// Finds every mob that is currently moving away from a turf, but has not reached the end of their movement.
+/proc/atoms_in_combat_range(var/turf/target)
+	var/list/atom/atoms = list()
+	for(var/atom/A in target)
+		atoms += A
+	for(var/mob/dude in range(1,target))
+		if (dude.next_move > world.time && dude.prev_loc == target)
+			atoms |= dude
+
+	return atoms
 
 //Handles setup for specials and adds / removes them from items.
 /obj/item/proc/setItemSpecial(var/type = null)
@@ -231,11 +241,15 @@
 			var/mob/living/carbon/human/H = user
 			if(H.stamina < staminaReqAmt) return 0
 
-		if(world.time < (last_use + cooldown))
+		if(GET_COOLDOWN(user, "[src.type]_cd"))
 			return 0
 
 		if(user.a_intent == "help" || user.a_intent == "grab")
-			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS)))
+			var/mob/living/critter/critter = user
+			var/datum/limb/active_limb = null
+			if (istype(critter)) //I am in agony
+				active_limb = critter.get_active_hand().limb
+			if(!(user.equipped() && (user.equipped().item_function_flags & USE_SPECIALS_ON_ALL_INTENTS) || active_limb?.use_specials_on_all_intents))
 				return 0
 
 		if (user.check_block())
@@ -263,6 +277,7 @@
 				person.movement_delay_modifier += moveDelay
 				sleep(moveDelayDuration)
 				person?.movement_delay_modifier -= moveDelay
+		ON_COOLDOWN(person, "[src.type]_cd", src.cooldown)
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
@@ -311,7 +326,7 @@
 	proc/rush(atom/movable/user, atom/target, progress, params)
 		preUse(user)
 		action = null
-		src.cooldown = round(max(10, initial(src.cooldown) * progress))
+		OVERRIDE_COOLDOWN(user, "[src.type]_cd", round(max(10, initial(src.cooldown) * progress)))
 
 		var/atom/lastTurf = null
 		var/direction = get_dir_pixel(user, target, params)
@@ -450,7 +465,7 @@
 			S.setup(turf)
 
 			var/hit = FALSE
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = TRUE
@@ -499,6 +514,54 @@
 			blood_slash(target,1,null, turn(user.dir,180), 3)
 		return msgs
 
+/datum/item_special/jab
+	cooldown = 2 SECONDS
+	staminaCost = 10
+	moveDelay = 5
+	moveDelayDuration = 4
+	damageMult = 0.8
+	overrideCrit = 0 // no crits, prevent insane bleeds
+
+	image = "jab"
+	name = "Jab"
+	desc = "Quickly jab in a direction. Lowers cooldown massively on a successful hit."
+
+	//cooldown on successful hit
+	//with an 80% damage mult this is ~2x bonus, but will be massively bumped down by even a little bit of armor
+	var/success_cooldown = 4 DECI SECONDS
+
+	onAdd()
+		if(master)
+			overrideStaminaDamage = master.stamina_damage * 0.4
+		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/jab/effect = new /obj/itemspecialeffect/jab
+			effect.set_dir(direction)
+			effect.setup(turf)
+
+			var/hit = FALSE
+			for(var/atom/A in atoms_in_combat_range(turf))
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = TRUE
+					last_use = world.time - (cooldown - success_cooldown)
+					OVERRIDE_COOLDOWN(user, "[src.type]_cd", src.success_cooldown)
+					break
+
+			afterUse(user)
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
+		return
+
+
 /datum/item_special/rangestab
 	cooldown = 0 //10
 	staminaCost = 5
@@ -544,7 +607,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two))
-				for(var/atom/A in T)
+				for(var/atom/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
@@ -642,7 +705,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
@@ -699,6 +762,20 @@
 			if(master)
 				overrideStaminaDamage = master.stamina_damage * 0.8
 			return
+
+	baseball
+		name = "Baseball Swing"
+		desc = "An AoE attack with a chance for a home run."
+		var/hit_range = 4
+		var/hit_speed = 1
+		var/hit_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+
+		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
+			if (msgs.damage > 0 && msgs.stamina_crit)
+				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
+				target.throw_at(target_turf, hit_range, hit_speed, throw_type = THROW_BASEBALL)
+				msgs.played_sound = hit_sound
+			return msgs
 
 /datum/item_special/launch_projectile
 	cooldown = 3 SECONDS
@@ -811,7 +888,7 @@
 
 			for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 				animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						if(master)
@@ -863,7 +940,7 @@
 
 			for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
 				animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in  atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						if (isliving(A))
@@ -894,7 +971,7 @@
 			var/list/attacked = list()
 
 			for(var/turf/T in orange(2,get_turf(master)))
-				for(var/atom/A in T)
+				for(var/atom/A in  atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, usr, params, 1)
@@ -945,7 +1022,7 @@
 			C.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in  atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackhand(user,params)
 					hit = 1
@@ -993,7 +1070,7 @@
 			C.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackhand(user,params)
 					hit = 1
@@ -1042,7 +1119,7 @@
 
 			var/hit = 0
 			for(var/turf/T in list(one, two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackhand(user,params)
@@ -1086,7 +1163,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 
 			var/hit = 0
-			for(var/atom/movable/A in effect)
+			for(var/atom/movable/A in atoms_in_combat_range(effect))
 				if(A in attacked) continue
 				if(isTarget(A))
 					on_hit(A,2)
@@ -1098,7 +1175,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				SPAWN(secondhit_delay)
 					step(spark, direction, 2)
-					for(var/atom/movable/A in spark.loc)
+					for(var/atom/movable/A in atoms_in_combat_range(spark.loc))
 						if(A in attacked) continue
 						if(isTarget(A))
 							on_hit(A, mult)
@@ -1184,7 +1261,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			S.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = 1
@@ -1199,7 +1276,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				SS.setup(turf)
 
 				hit = 0
-				for(var/atom/A in turf)
+				for(var/atom/A in atoms_in_combat_range(turf))
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
 						hit = 1
@@ -1225,6 +1302,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
+	var/barrier_type = /obj/itemspecialeffect/barrier
 
 	onAdd()
 		if(master)
@@ -1235,45 +1313,50 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
-			preUse(user)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			var/direction = get_dir_pixel(user, target, params)
-			var/turf/turf = get_step(master, direction)
+			var/turf/turf = get_step(master || user, direction)
+			if (locate(src.barrier_type) in turf)
+				return
 
-			var/obj/itemspecialeffect/barrier/E = new /obj/itemspecialeffect/barrier
+			preUse(user)
+			var/obj/itemspecialeffect/barrier/E = new src.barrier_type
 			E.setup(turf)
 			E.master = user
 			E.set_dir(direction)
-			if(master && istype(master, /obj/item/barrier))
+			E.RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj/itemspecialeffect/barrier, on_move))
+			if(istype(master, /obj/item/barrier))
 				var/obj/item/barrier/B = master
+				E.setMaterial(B.material)
 				B.destroy_deployed_barrier(user)
 				B.E = E //set barrier
-				var/mob/living/L = user
-
-				//set move callback (when user moves, shield go down)
-				if (islist(L.move_laying))
-					L.move_laying += B
-				else
-					if (L.move_laying)
-						L.move_laying = list(L.move_laying, B)
-					else
-						L.move_laying = list(B)
 
 			var/hit = 0
-			for(var/atom/A in turf)
-				if(isTarget(A))
-					A.Attackby(master, user, params, 1)
-					hit = 1
-					break
+			if (master)
+				for(var/atom/A in atoms_in_combat_range(turf))
+					if(isTarget(A))
+						A.Attackby(master, user, params, 1)
+						hit = 1
+						break
 
 			if (hit)
 				E.was_clashed(0)
 			else
-				playsound(master, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
+				playsound(master || user, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
 
 			afterUse(user)
 		return
 
+/datum/item_special/barrier/syndie
+	image = "syndiebarrier"
+	name = "Mod. 81 Alcor"
+	desc = "Deploy a temporary barrier that reflects projectiles. This design is original and NOT stolen."
+	barrier_type = /obj/itemspecialeffect/barrier/syndie
+
+/obj/itemspecialeffect/barrier/syndie
+	name = "energy barrier"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "syndiebarrier"
 
 /datum/item_special/flame
 	cooldown = 0
@@ -1330,16 +1413,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			if (flame_succ)
 				S.setup(turf)
-				flick("flame",S)
+				FLICK("flame",S)
 			else
 				S.setup(turf)
-				flick("spark",S)
+				FLICK("spark",S)
 
 
 			if (flame_succ)
 				logTheThing(LOG_COMBAT, user, "uses the flame special attack at [log_loc(user)].")
 				turf.hotspot_expose(T0C + 400, 400)
-				for(var/A in turf)
+				for(var/A in atoms_in_combat_range(turf))
 					if(!isTarget(A))
 						continue
 					logTheThing(LOG_COMBAT, user, "'s flame special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
@@ -1449,7 +1532,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 			var/hit = 0
-			for(var/atom/movable/A in effect)
+			for(var/atom/movable/A in atoms_in_combat_range(effect))
 				if(isTarget(A))
 					on_hit(A)
 					//fake harmbaton it
@@ -1546,36 +1629,36 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 			K.start.loc = T1
 			K.start.set_dir(direction)
-			flick(K.start.icon_state, K.start)
+			FLICK(K.start.icon_state, K.start)
 			apply_dash_reagent(user, T1)
 			sleep(0.1 SECONDS)
 			if (T4)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
-				flick(K.mid1.icon_state, K.mid1)
+				FLICK(K.mid1.icon_state, K.mid1)
 				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.mid2.loc = T3
 				K.mid2.set_dir(direction)
-				flick(K.mid2.icon_state, K.mid2)
+				FLICK(K.mid2.icon_state, K.mid2)
 				apply_dash_reagent(user, T3)
 				sleep(0.1 SECONDS)
 				K.end.loc = T4
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 			else if (T3)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
-				flick(K.mid1.icon_state, K.mid1)
+				FLICK(K.mid1.icon_state, K.mid1)
 				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.end.loc = T3
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 			else if (T2)
 				K.end.loc = T2
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 
 			//Reset the effects after they're drawn and put back into master for re-use later
 			SPAWN(0.8 SECONDS)
@@ -1584,7 +1667,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				K.mid2.loc = master
 				K.end.loc = master
 			// var/hit = 0
-			for(var/atom/movable/A in get_step(user, direction))
+			var/turf/turf = get_step(user,direction)
+			for(var/atom/movable/A in atoms_in_combat_range(turf))
 				if(A in attacked) continue
 				if(isTarget(A))
 					on_hit(A)
@@ -1723,8 +1807,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			else if (T2)
 				end.setup(T2)
 				end.set_dir(direction)
-
-			for(var/atom/movable/A in get_step(user, direction))
+			var/turf/turf = get_step(user, direction)
+			for(var/atom/movable/A in atoms_in_combat_range(turf))
 				if(A in attacked) continue
 				if(isTarget(A))
 					attacked += A
@@ -1776,14 +1860,14 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			var/hit = 0
 			for(var/turf/T in list(two, three))
-				for(var/atom/movable/A in T)
+				for(var/atom/movable/A in atoms_in_combat_range(T))
 					if(A in attacked) continue
 					if(isTarget(A))
 						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
-			for(var/atom/movable/A in one)
+			for(var/atom/movable/A in atoms_in_combat_range(one))
 				if(A in attacked) continue
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
@@ -1826,7 +1910,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			S.setup(turf)
 
 			var/hit = 0
-			for(var/atom/A in turf)
+			for(var/atom/A in atoms_in_combat_range(turf))
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
 					hit = 1
@@ -1846,19 +1930,99 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						user.visible_message(SPAN_ALERT("<b>[user] flings a tile from [turf] into the air!</b>"))
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
-						user.lastattacked = user //apply combat click delay
+						user.lastattacked = get_weakref(user) //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
+
+/datum/item_special/heavy_swing
+	cooldown = 55 // slightly slower than the time to get up from a wallstun
+	staminaCost = 50
+	moveDelay = 10
+	moveDelayDuration = 5
+
+	requiresStaminaToFire = 1
+	staminaReqAmt = 90
+
+	var/damageMultHit = 0.85
+	var/damageMultShove = 0.2
+
+	image = "heavyswing"
+	name = "Heavy swing"
+	desc = "Step forward and do a wide swing. Interrupted if you step into something."
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		var/direction = get_dir_pixel(user, target, params)
+		var/list/attacked = list()
+
+		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
+			direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
+		var/turf/T2 = null
+		user.next_move = world.time + 6 DECI SECONDS
+		T2 = get_step(master, direction)
+		for(var/atom/A in T2) // don't use atoms_in_combat_range, as we'd rather hit them with the swipe if they're running away
+			if(isTarget(A) && ismob(A))
+				var/mob/M = A
+				M.throw_at(get_edge_cheap(T2, direction), 3, 20, thrown_by=user)
+				var/obj/itemspecialeffect/heavybump/bumpeffect = new /obj/itemspecialeffect/heavybump
+				bumpeffect.set_dir(direction)
+				bumpeffect.setup(T2)
+				damageMult = damageMultShove
+				master.attack_verbs = list("shoves", "barges")
+				M.Attackby(master, user, params, 1)
+				master.attack_verbs = initial(master.attack_verbs)
+				playsound(master,"sound/impact_sounds/metal_thump.ogg", 50, FALSE)
+				return
+		if (!step(user, direction)) return
+
+		var/obj/itemspecialeffect/heavystep/stepeffect = new /obj/itemspecialeffect/heavystep
+		stepeffect.set_dir(direction)
+		stepeffect.setup(T2)
+		playsound(master,"sound/misc/step/step_heavyboots_[pick(1,2,3)].ogg", 50, FALSE)
+
+		SPAWN(3 DECI SECONDS)
+			var/turf/one = get_step(T2, turn(direction, 90))
+			var/turf/three = get_step(T2, direction) // front middle tile
+			var/turf/two = get_step(three, turn(direction, 90))
+			var/turf/four = get_step(three, turn(direction, -90))
+			var/turf/five = get_step(T2, turn(direction, -90))
+			damageMult = damageMultHit
+
+			var/obj/itemspecialeffect/wide_swipe/swipe = new /obj/itemspecialeffect/wide_swipe
+			swipe.set_dir(direction)
+			swipe.setup(T2)
+
+			var/hit = 0
+			for(var/turf/T in list(five,four))
+				for(var/atom/A in atoms_in_combat_range(T))
+					if(A in attacked) continue
+					if(isTarget(A))
+						A.Attackby(master, user, params, 1)
+						attacked += A
+						hit = 1
+			SPAWN(1 DECI SECONDS)
+				for(var/turf/T in list(three,two,one))
+					for(var/atom/A in atoms_in_combat_range(T))
+						if(A in attacked) continue
+						if(isTarget(A))
+							A.Attackby(master, user, params, 1)
+							attacked += A
+							hit = 1
+
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 /obj/itemspecialeffect
 	name = ""
 	desc = ""
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64
@@ -1879,7 +2043,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		src.set_loc(location)
 		//src.loc = location
 		if (do_flick)
-			flick(icon_state,src)
+			FLICK(icon_state,src)
 		create_time = world.time //mbc : kind of janky lightweight way of making us not clash with ourselves. compare spawn time.
 		if (del_self)
 			SPAWN(del_time)
@@ -1940,6 +2104,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -32
 		can_clash = 1
 
+	wide_swipe
+		icon = 'icons/effects/96x96.dmi'
+		icon_state = "wide_swipe"
+		pixel_x = -32
+		pixel_y = -32
 	dagger
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "dagger"
@@ -1952,6 +2121,17 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 		blend_mode = BLEND_ADD
+
+	heavybump
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "heavybump"
+		pixel_x = 0
+		pixel_y = 0
+	heavystep
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "heavystep"
+		pixel_x = 0
+		pixel_y = 0
 
 	simple
 		icon = 'icons/effects/effects.dmi'
@@ -1994,6 +2174,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 
+	jab
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "quickjab"
+		pixel_x = 0
+		pixel_y = 0
+
+		New()
+			pixel_x = rand(-5,5)
+			pixel_y = rand(-5,5)
+			..()
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'
@@ -2025,7 +2215,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				playsound(src.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.5)
 			qdel(src)
 
-		proc/deactivate()
+		proc/on_move(mob/living/mover, previous_loc, dir)
+			if (mover.loc != previous_loc && !(mover.restrain_time > TIME))
+				src.deactivate(mover)
+
+		proc/deactivate(mob/living/user)
+			src.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 			if (src.qdeled || src.disposed)
 				return
 			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 0.1, 0, 2)
@@ -2122,6 +2317,46 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	graffiti
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti1"
+		pixel_x = -32
+		pixel_y = -32
+	graffiti_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti2"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop //vertical slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop1"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop2"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave //horizontal slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave1"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave2"
+		pixel_x = -32
+		pixel_y = -32
+
 
 	spear
 		icon = 'icons/effects/64x64.dmi'
@@ -2232,3 +2467,4 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(progress == 1)
 			state = ACTIONSTATE_FINISH
 			return
+

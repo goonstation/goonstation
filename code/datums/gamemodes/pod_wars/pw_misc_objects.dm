@@ -92,7 +92,7 @@
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		//Healing with welding tool
 		if (health <= health_max && isweldingtool(W))
@@ -381,33 +381,23 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		if (isliving(user))
 			var/obj/item/card/id/I = user.get_id()
 
+			if(!istype(I, /obj/item/card/id/pod_wars))
+				boutput(user, SPAN_ALERT("[ship]'s locking mechanism is incompatible with your ID!"))
+				return
+			var/obj/item/card/id/pod_wars/PW_ID = I
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, SPAN_NOTICE("[ship]'s locking mechinism recognizes [I] as its key!"))
 					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
-					team_num = get_team(I)
+					team_num = PW_ID.team
 					ship.locked = 0
 					return
 
 			if (istype(I))
-				if (I == assigned_id || get_team(I) == team_num)
+				if (I == assigned_id || PW_ID.team == team_num)
 					ship.locked = !ship.locked
 					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
-
-
-
-	proc/get_team(var/obj/item/card/id/I)
-		switch(I.assignment)
-			if("NanoTrasen Commander")
-				return TEAM_NANOTRASEN
-			if("NanoTrasen Pilot")
-				return TEAM_NANOTRASEN
-			if("Syndicate Commander")
-				return TEAM_SYNDICATE
-			if("Syndicate Pilot")
-				return TEAM_SYNDICATE
-		return -1
 
 ////////////////////PDAs and PDA Accessories/////////////////////
 /obj/item/device/pda2/pod_wars
@@ -438,8 +428,22 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	syndicate
 		icon_state = "pda-syn"
+		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
+		locked_bg_color = TRUE
+		bg_color = "#A33131"
+		r_tone = /datum/ringtone/basic/ring10
+		screen_x = 2
+		window_title = "Personnel Data Actuator"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
 		team_num = TEAM_SYNDICATE
+
+		New()
+			..()
+			var/datum/computer/file/text/pda2manual/old_manual = locate() in src.hd.root.contents
+			src.hd.root.remove_file(old_manual)
+			var/datum/computer/file/pda_program/emergency_alert/crisis = locate() in src.hd.root.contents
+			src.hd.root.remove_file(crisis)
+			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
 
 /obj/item/device/pda_module/flashlight/nt_blue
 	name = "\improper NanoTrasen blue flashlight module"
@@ -502,6 +506,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
 	//exactly the same as /obj/item/card/id/pod_wars. Copy paste bad, but these two things I don't want people stealing, would be real lame... Might get rid of in the future if this structure isn't required.
+#if defined(MAP_OVERRIDE_POD_WARS)
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team)
 			..()
@@ -511,6 +516,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			user.u_equip(src)
 			src.dropped(user)
 			qdel(src)
+#endif
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
 	name = "radio headset"
@@ -527,6 +533,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_override = "ntboss"	//get better thingy // better thingy gotten
 		icon_tooltip = "NanoTrasen Commander"
 
+/obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
+	name = "military headset"
+	icon_state = "radio" // blue enough
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
+
 /obj/item/device/radio/headset/pod_wars/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
@@ -542,6 +557,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	commander
 		icon_override = "syndieboss"
 		icon_tooltip = "Syndicate Commander"
+
+/obj/item/device/radio/headset/pod_wars/syndicate/comtac
+	name = "military headset"
+	icon_state = "comtac"
+	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 100)
 
 
 /////////shit//////////////
@@ -750,7 +774,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		attack_particle(user,src)
 		take_damage(W.force)
 		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	attack_hand(mob/user)
@@ -771,7 +795,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 					attack_particle(user,src)
 
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 	proc/take_damage(var/damage)
@@ -841,15 +865,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			target.changeStatus("slowed", 4 SECONDS)
 			target.TakeDamageAccountArmor("All", rand(1,2), 0, 0, DAMAGE_CUT)
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
+		. = ..()
+		// This change prevents ghosts from being affected by barbed wire
+		if (HAS_ATOM_PROPERTY(mover, PROP_ATOM_FLOATING))
+			return
 		if(ismob(mover))
 			var/mob/M = mover
 			if(M.m_intent != "walk")
 				pokey(M, 98)
 			else
 				pokey(M, 30)
-
-		return (!density)
 
 //barricade deployer
 

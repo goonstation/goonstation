@@ -65,7 +65,7 @@
 
 		network?.update = TRUE
 
-	flick("inject", src)
+	FLICK("inject", src)
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
 	var/datum/signal/signal = get_free_signal()
@@ -73,7 +73,7 @@
 	signal.source = src
 
 	signal.data["tag"] = src.id
-	signal.data["netid"] = src.net_id
+	signal.data["sender"] = src.net_id
 	signal.data["device"] = "AO"
 	signal.data["power"] = src.on
 	signal.data["volume_rate"] = src.volume_rate
@@ -83,7 +83,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
@@ -133,7 +133,7 @@
 
 	if(.)
 		src.UpdateIcon()
-		flick("alert", src)
+		FLICK("alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.

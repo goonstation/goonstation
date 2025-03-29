@@ -16,10 +16,14 @@
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
 		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
 		/datum/manufacture/miniplasmatank,
@@ -118,6 +122,7 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
+		/datum/manufacture/cybereye_monitor,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -162,7 +167,7 @@
 		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
-		/datum/manufacture/implant_robotalk,
+		/datum/manufacture/scream_synth,
 		/datum/manufacture/sbradio,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
@@ -236,25 +241,16 @@
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
 		/datum/manufacture/floppydisk,
+		/datum/manufacture/medicalalertbutton,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
 		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
 	)
 
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
+	hidden = list()
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"
@@ -274,6 +270,7 @@
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/gastank,
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/chembarrel,
@@ -281,6 +278,8 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
+		/datum/manufacture/dropper_funnel,
+		/datum/manufacture/portable_dispenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
@@ -384,10 +383,20 @@
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
+#endif
+		/datum/manufacture/pod/light_shielding,
+		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -448,12 +457,12 @@
 		/datum/manufacture/satchel,
 		/datum/manufacture/satchel_red,
 		/datum/manufacture/satchel_green,
-		/datum/manufacture/satchel_blue)
+		/datum/manufacture/satchel_blue,
+		/datum/manufacture/handkerchief)
 
 	hidden = list(/datum/manufacture/breathmask,
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
-		/datum/manufacture/handkerchief,
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat)
 
@@ -548,7 +557,8 @@
 		/datum/manufacture/hat_green,
 		/datum/manufacture/hat_blue,
 		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat)
+		/datum/manufacture/hat_tophat,
+		/datum/manufacture/handkerchief,)
 
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
@@ -648,6 +658,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,

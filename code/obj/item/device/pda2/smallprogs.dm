@@ -1246,13 +1246,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
+			src.temp += search_snippet("background-color: #6F7961; color: #000;")
+			src.temp += "<BR><BR>"
 			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
+				src.temp += {"<div class='supply-package'><A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
 				<B>Cost:</B> [N.cost] Credits<BR>
-				<B>Contents:</B> [N.desc]<BR><BR>"}
+				<B>Contents:</B> [N.desc]<BR><BR></div>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["doorder"])
@@ -1362,17 +1364,19 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/x = -1
 	var/y = -1
 	var/z = -1
+	///Fully rendered text data about nearby celestial objects, cached here to line up with the coordinates
+	var/parallax_data = null
 
 	return_text()
 		if(..())
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<h4>Space GPS: Pocket Edition</h4>"
+		dat += "<h3>Space GPS: Pocket Edition</h3>"
 
 		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
-		if (x >= 0)
 
+		if (x >= 0)
 			var/landmark = "Unknown"
 			switch (src.z)
 				if (1)
@@ -1388,7 +1392,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					landmark = "Asteroid Field"
 					#endif
 
-			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+			dat += "<BR><b>\[</b>X = [src.x], Y = [src.y], Landmark: [landmark]<b>\]</b>"
+			dat += "<br>------------------------------------------------------------------------------"
+			dat += "<br><h4>Currently visible celestial bodies:</h4>"
+			dat += src.parallax_data
 
 		return dat
 
@@ -1401,6 +1408,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.x = T.x
 			src.y = T.y
 			src.z = T.z
+			src.parallax_data = ""
+			var/list/render_sources = usr.client?.parallax_controller?.parallax_render_sources
+			for (var/atom/movable/screen/parallax_render_source/source in render_sources)
+				if (source.visible_to_gps)
+					src.parallax_data += "<br><b>[source.name]</b> - [source.desc]<br>"
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1417,6 +1429,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	return_text()
 		if(..())
 			return
+		for_by_tcl(random_eye, /mob/living/critter/small_animal/floateye/watchful)
+			if (prob(5)) // The satellite has 21 eyes in it. it's fine if more than one jitters but it shouldn't be all of them and it should be around 1.
+				random_eye.make_jittery(100)
 
 		var/dat = src.return_text_header()
 
@@ -1745,13 +1760,13 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"
-			if(S.is_disabled())
-				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
+			if (S.is_disabled())
+				. += "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))
 				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
 				continue
-			.+= "<ul>"
+			. += "<ul>"
 			var/list/ores = S.ores
 			for(var/ore in ores)
 				var/datum/ore_cloud_data/OCD = ores[ore]

@@ -9,15 +9,17 @@ It's also the one to follow if you just want to host a local server to run aroun
 Following this guide will get your local development environment set up to do whatever you want. It will also familiarize you with the basic process of contributing to Goonstation.
 
 However, ***you must follow the guide in its entirety.<br>***
-**No skipping, even if you think you have a good reason. <ins>There are no optional sections.</ins>**<br>
+**<font color="#F95454">No skipping</font>, even if you think you have a good reason. <ins>There are no optional sections.</ins>**<br>
 Help and support is *not offered whatsoever* if you skip portions of the guide.
+
+<u>You'll also want to ensure BYOND is installed in the **default location** for ease of use.</u>
 
 
 ## :question: So, how do I get started?
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
 
-#### ***No, Visual Studio is not the same thing as Visual Studio Code - the icon should be blue and the UI should look like below. Only VSCode will work and be supported.***
+#### ***<font color="#F7A004"><u>No, Visual Studio is not the same thing as Visual Studio Code</u></font> - the icon should be blue and the UI should look like below. Only VSCode will work and be supported.***
 
 Visual Studio Code (VSCode/VSC) is a free program you can use to edit and manage your code, as well as connect with GitHub to publish it. You can also use BYOND's built-in DreamMaker software to edit, though you'll probably still find VSCode useful.
 
@@ -76,6 +78,8 @@ If this does not work, search for the following extensions:
  - Space Station 13 Extension Pack - Extension pack with all the extensions we recommend using.
  - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
+
+For the DreamMaker extension that is installed, be sure you turn on auto-updates.
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime it just breaks. :shrug:
 
@@ -146,7 +150,7 @@ Go wild! Make your code changes! This is a guide on how to contribute, not *what
 You'll find your code to edit in the Explorer sidebar of VS Code; if you need to find something, the Search sidebar is just below that.
 
 :::info
-For something simple like adding a sprite, one can use the Dream Maker program provided by BYOND (which provides an editor), or use the slick DMI modification interface in VSCode by just opening up a .dmi file there. Just copy your changes, and voilà!
+To add a sprite, one can use the slick DMI modification interface in VSCode by just opening up a .dmi file there. Just copy your changes, and voilà!
 :::
 
 Here's the changes I'm making for the purpose of this guide:
@@ -168,7 +172,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press <kbd>F5</kbd>. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl + F5</kbd> instead. **Keep in mind that this can take anywhere from 2 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
+<font color="#F7A004"><u>The easiest way to test your changes is to press <kbd>F5</kbd>.</u></font> This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl + F5</kbd> instead. **Keep in mind that this can take anywhere from 1 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
@@ -191,7 +195,7 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related- Dream Maker is a very old and occasionally fickle language, and sometimes it happens that things will just refuse to work.
 
 :::info
-It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided [here](#Using-__build.dm).
+It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided [here](#Using-__builddm).
 :::
 :::info
 If you need to inspect exactly what the game is doing, the VS code debugger can be very useful- see [a guide to using it here](#How-to-use-the-VS-Code-Debugger).
@@ -321,7 +325,7 @@ If you've done everything correctly this should finish without any problems at a
 Congratulations! Your master branch should now be up to date with all the newest code! You also might want to sync up your feature branch. This is slightly more complicated, but can be done with the following steps:
 
 :::warning
-  Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
+  Resolving icon and map conflicts will be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
 :::
 
 1. Checkout your feature branch (as above)

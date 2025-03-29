@@ -105,7 +105,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting) return
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [G.affecting] onto the [src]!</b>"))
 			if(!do_mob(user, G.affecting) || !W)
 				return
@@ -166,7 +166,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (!src.grillitem)
 			on = !on
 			cooktime = 0
-			boutput(user, SPAN_ALERT("You [on ? "light" : "turn off"] the [src] ."))
+			boutput(user, SPAN_ALERT("You [on ? "light" : "turn off"] the [src]."))
 			if (on)
 				icon_state = "shittygrill_on"
 				light.enable()

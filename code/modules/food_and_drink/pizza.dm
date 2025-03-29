@@ -309,6 +309,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza)
 	slice_amount = 6
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice
+	slice_tools = TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING
 	initial_volume = 60 // 40 units will be available to stuff the crust
 	custom_food = FALSE
 	initial_reagents = list("bread" = 20)

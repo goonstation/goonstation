@@ -210,12 +210,43 @@ TYPEINFO(/obj/item/disk)
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
+	custom_suicide = TRUE
 
 	throw_impact(obj/window/window)
 		if (istype(window) && window.health <= (/obj/window/auto::health * /obj/window/auto::health_multiplier))
 			window.smash()
 			return
 		..()
+
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+		user.visible_message(SPAN_ALERT("<b>[user] throws [src] into the air!</b>"))
+
+		src.set_loc(get_turf(user))
+		src.pixel_x = 0
+		src.pixel_y = 0
+		src.anchored = ANCHORED_ALWAYS
+		src.layer += 4
+		animate(src, pixel_y = 80, easing = EASE_OUT | QUAD_EASING, time = 0.7 SECONDS)
+		playsound(get_turf(src), 'sound/effects/throw.ogg', 50, FALSE)
+		SPAWN(0.7 SECONDS)
+			animate(src, pixel_y = 15, easing = EASE_IN | QUAD_EASING, time = 0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
+				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, FALSE)
+				user.take_brain_damage(999)
+				user.TakeDamage("Head", 999, 0, 0, DAMAGE_CRUSH, TRUE)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+				SPAWN(0.2 SECONDS)
+					animate(src, pixel_y = 0, easing = EASE_OUT | BOUNCE_EASING, time = 0.5 SECOND)
+					SPAWN(0.5 SECONDS)
+						src.anchored = UNANCHORED
+						src.layer -= 4
+		SPAWN(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
 
 /obj/item/emeter
 	name = "E-Meter"
@@ -604,16 +635,21 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
 	default_material = "slag"
+	var/datum/gas_mixture/leak_gas = new
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
+		src.AddComponent(/datum/component/radioactive, 40, FALSE, FALSE, 1)
+		leak_gas.radgas = 100
+		leak_gas.temperature = T20C
+		leak_gas.volume = 200 //I guess??
+
+	return_air(direct = FALSE)
+		return src.leak_gas
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
-		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.radgas += 100
-		current_loc.assume_air(leak_gas)
+		current_loc.assume_air(src.leak_gas)
 		qdel(src)
 
 /obj/tombstone/nuclear_warning
@@ -668,3 +704,121 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+
+/obj/item/cash_briefcase
+	name = "Cash Briefcase"
+	desc = "A foldable briefcase that can hold a large amount of cash. "
+	icon = 'icons/obj/items/storage.dmi'
+	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
+	w_class = W_CLASS_BULKY
+
+	var/balance = 0 // Current amount of cash in the case
+	var/maximum_balance = 30000 // Maximum amount of cash in the case
+	var/open = FALSE // Is the briefcase open?
+	var/open_icon_state = "briefcase-open"
+	var/closed_icon_state = "briefcase"
+
+	get_desc()
+		. = ""
+		if(src.balance > 0)
+			.+= "It has [src.balance] credits inside!"
+		else
+			.+= "It's empty!"
+
+	update_icon()
+		. = ..()
+		var/overlay_icon_state = null
+		var/image/cashoverlay = null
+		if (src.open)
+			src.icon_state = open_icon_state
+			switch (src.balance)
+				if (12 to 119)
+					overlay_icon_state = "briefcashgreen"
+				if (120 to 1199)
+					overlay_icon_state = "briefcashblue"
+				if (1200 to 5999)
+					overlay_icon_state = "briefcashindi"
+				if (6000 to 11999)
+					overlay_icon_state = "briefcashpurp"
+				if (12000 to INFINITY)
+					overlay_icon_state = "briefcashred"
+				else
+					overlay_icon_state = null
+			if (overlay_icon_state)
+				cashoverlay = image(src.icon, overlay_icon_state)
+		else
+			src.icon_state = closed_icon_state
+		src.UpdateOverlays(cashoverlay, "cash_overlay")
+
+	attack_self(mob/user)
+		src.toggleCase(user)
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/currency/spacecash))
+			if (!src.open)
+				boutput(user, "You need to open the briefcase to put cash in it.")
+				return
+			else if (src.balance >= src.maximum_balance)
+				boutput(user, "The briefcase is full!")
+				return
+			else
+				var/space_left = src.maximum_balance - src.balance
+				var/obj/item/currency/spacecash/cashstack = W
+				if (space_left < cashstack.amount)
+					src.balance += space_left
+					var/money_to_destroy = cashstack.split_stack(space_left)
+					qdel(money_to_destroy)
+				else
+					src.balance += cashstack.amount
+					user.u_equip(W)
+					qdel(W)
+				src.UpdateIcon()
+				src.tooltip_rebuild = TRUE
+		else
+			. = ..()
+
+	attack_hand(mob/user)
+		if (src.open && (user.a_intent != INTENT_GRAB))
+			var/amount = round(tgui_input_number(user, "How much cash do you want to take from the briefcase?", "Cash Briefcase", src.balance, src.balance))
+			if (isnum_safe(amount))
+				if (amount > src.balance || amount < 1)
+					boutput(user, SPAN_ALERT("You wish!"))
+					return
+				var/obj/item/currency/spacecash/taken_cash = new /obj/item/currency/spacecash
+				taken_cash.setup(src.loc, amount)
+				src.balance -= amount
+				user.put_in_hand_or_drop(taken_cash)
+				src.UpdateIcon()
+				src.tooltip_rebuild = TRUE
+		else
+			..(user)
+
+	verb/openclose()
+		set src in view(1)
+		set category = "Local"
+		set name = "Open/Close briefcase"
+		toggleCase(usr)
+
+	proc/toggleCase(mob/user)
+		if (src.open)
+			playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
+			src.open = FALSE
+			src.UpdateIcon()
+		else
+			playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
+			src.open = TRUE
+			src.UpdateIcon()
+			return
+
+/obj/item/cash_briefcase/syndicate
+	icon_state = "syndiecase"
+	item_state = "syndiecase"
+
+	maximum_balance = 50000
+	open_icon_state = "syndiecase-open"
+	closed_icon_state = "syndiecase"
+
+	loaded
+		balance = 15000

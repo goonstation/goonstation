@@ -1,42 +1,41 @@
 /**
  * @file
- * @copyright 2022
- * @author jlsnow301 (https://github.com/jlsnow301)
+ * @copyright 2023
+ * @author Ozzzim (https://github.com/Ozzzim)
  * @license ISC
  */
 
-import { InputButtons, Validator } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Section, Stack, TextArea } from '../components';
+import { KeyboardEvent, useState } from 'react';
+import { Box, Section, Stack, TextArea } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
 
- type TextInputData = {
-   max_length: number;
-   message: string;
-   placeholder: string;
-   title: string;
-   allowEmpty: boolean;
-   rows: number;
-   columns: number;
- };
+type TextInputData = {
+  max_length: number;
+  message: string;
+  placeholder: string;
+  title: string;
+  allowEmpty: boolean;
+  rows: number;
+  columns: number;
+};
 
-export const SwingSignTIM = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
-  const {
-    max_length,
-    message,
-    placeholder,
-    title,
-    allowEmpty,
-    rows,
-    columns,
-  } = data;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
-    'inputIsValid',
-    { isValid: allowEmpty || !!message, error: null }
-  );
+interface Validator {
+  isValid: boolean;
+  error: string | null;
+}
+
+export const SwingSignTIM = () => {
+  const { data } = useBackend<TextInputData>();
+  const { max_length, message, placeholder, title, allowEmpty, rows, columns } =
+    data;
+  const [input, setInput] = useState(placeholder);
+  const [inputIsValid, setInputIsValid] = useState<Validator>({
+    isValid: allowEmpty || !!message,
+    error: null,
+  });
   const onType = (event) => {
     event.preventDefault();
     const target = event.target;
@@ -45,24 +44,22 @@ export const SwingSignTIM = (_, context) => {
     setInput(target.value);
   };
   // Dynamically changes the window height based on the message.
-  const windowHeight
-     = 130 + Math.ceil(message.length / 5) + 75;
+  const windowHeight = 130 + Math.ceil(message.length / 5) + 75;
 
   return (
-    <Window title={title} width={325} height={windowHeight} >
+    <Window title={title} width={325} height={windowHeight}>
       <Window.Content>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <InputArea
-              input={input}
-              inputIsValid={inputIsValid}
-              onType={onType}
-            />
+            <InputArea input={input} onType={onType} />
+            {!inputIsValid.isValid && (
+              <Stack.Item>{inputIsValid.error}</Stack.Item>
+            )}
             <Stack.Item pl={5} pr={5}>
-              <InputButtons input={input} inputIsValid={inputIsValid} />
+              <InputButtons input={input} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -71,16 +68,20 @@ export const SwingSignTIM = (_, context) => {
   );
 };
 
+interface InputAreaProps {
+  input: string;
+  onType: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
+}
+
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
-  const { input, inputIsValid, onType } = props;
+const InputArea = (props: InputAreaProps) => {
+  const { act } = useBackend<TextInputData>();
+  const { input, onType } = props;
   const textareaStyle = {
-    overflow: "hidden",
-    // textAlign: "center",
-    whiteSpace: "pre-line",
-    wrap: "hard",
-    textAlignLast: "center",
+    overflow: 'hidden',
+    whiteSpace: 'pre-line',
+    wrap: 'hard',
+    textAlignLast: 'center' as const,
   };
 
   return (
@@ -90,7 +91,7 @@ const InputArea = (props, context) => {
         height="100%"
         textAlign="center"
         fontFamily="Consolas"
-        onInput={(event) => onType(event)}
+        onInput={onType}
         onEnter={() => {
           act('submit', { entry: input });
         }}
@@ -104,20 +105,25 @@ const InputArea = (props, context) => {
 
 /** Helper functions */
 const validateInput = (input, max_length, rows) => {
-  if ((!!max_length && input.length > max_length) || (!!rows && input.split(/\n/g).length>rows)) { // Added row count check
+  if (
+    (!!max_length && input.length > max_length) ||
+    (!!rows && input.split(/\n/g).length > rows)
+  ) {
+    // Added row count check
     return { isValid: false, error: `Too long!` };
   }
   return { isValid: true, error: null };
 };
 
 const trimText = (input, rows, columns) => {
-  let lines = input.split(/\n/g);// Split text into rows of text
+  let lines = input.split(/\n/g); // Split text into rows of text
 
-
-  for (let i=0; i<lines.length; i++) { // Insert newlines into overflowing lines
-    if (lines[i] && lines[i].length>columns) { // Check if line overflows
+  for (let i = 0; i < lines.length; i++) {
+    // Insert newlines into overflowing lines
+    if (lines[i] && lines[i].length > columns) {
+      // Check if line overflows
       let newLine = lines[i].substring(0, columns); // Extract line from the beginning
-      lines[i]=lines[i].substring(columns, lines[i].length); // Replace the old line with what remains
+      lines[i] = lines[i].substring(columns, lines[i].length); // Replace the old line with what remains
       lines.splice(i, 0, newLine); // Insert new line into the [i] spot
     }
   }

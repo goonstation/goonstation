@@ -15,6 +15,8 @@ TYPEINFO(/obj/storage/closet)
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
 	material_amt = 0.2
+	///Will this locker auto-close when someone is flung into it
+	var/auto_close = TRUE
 
 	New()
 		. = ..()
@@ -81,7 +83,7 @@ TYPEINFO(/obj/storage/closet)
 
 	Crossed(atom/movable/AM)
 		. = ..()
-		if (src.open && ismob(AM) && AM.throwing)
+		if (src.auto_close && src.open && ismob(AM) && AM.throwing)
 			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
 			AM.throw_impact(src, thr)
 			AM.throwing = FALSE
@@ -180,6 +182,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
+	auto_close = FALSE
 
 	wood
 		icon_closed = "woodcoffin"
@@ -242,7 +245,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/storage/box/handcuff_kit,
 	/obj/item/storage/box/flashbang_kit,
 	/obj/item/pinpointer/nuke = 5,
-	/obj/item/device/pda2/syndicate)
+	/obj/item/device/pda2/syndicate/nuclear)
 
 /obj/storage/closet/syndicate/malf
 	desc = "Gear preperations closet."

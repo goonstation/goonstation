@@ -31,8 +31,14 @@
 	var/closing = FALSE
 	/// The status/visibility of the UI.
 	var/status = UI_INTERACTIVE
+	/// Timed refreshing state
+	var/refreshing = FALSE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
+	/// Rate limit client refreshes to prevent DoS.
+	var/list/cooldowns // |GOONSTATION-CHANGE|
+	/// Are byond mouse events beyond the window passed in to the ui
+	var/mouse_hooked = FALSE
 
 /**
  * public
@@ -59,30 +65,38 @@
 		src.title = title
 	src.state = src_object.ui_state()
 
+/datum/tgui/disposing()
+	user = null
+	src_object = null
+	. = ..()
+
 /**
  * public
  *
  * Open this UI (and initialize it with data).
+ *
+ * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
 /datum/tgui/proc/open()
 	if(!user?.client)
-		return null
+		return FALSE
 	if(window)
-		return null
+		return FALSE
 	process_status()
 	if(status < UI_UPDATE)
-		return null
+		return FALSE
 	window = tgui_process.request_pooled_window(user)
 	if(!window)
 		if(istype(src_object, /datum/tgui_modal))
 			qdel(src_object)
-		return null
+		return FALSE
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
+			strict_mode = TRUE,
 			fancy = user.client.preferences.tgui_fancy,
-			inline_assets = list(
+			assets = list(
 				get_assets(/datum/asset/group/base_tgui),
 			))
 	else
@@ -92,8 +106,18 @@
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
+	if(mouse_hooked)
+		window.set_mouse_macro()
 	tgui_process.on_open(src)
 	SEND_SIGNAL(user, COMSIG_TGUI_WINDOW_OPEN, src)
+	return TRUE
+
+
+/datum/tgui/proc/send_assets()
+	PRIVATE_PROC(TRUE)
+	for(var/datum/asset/asset in src_object.ui_assets(user))
+		send_asset(asset)
+
 
 /**
  * public
@@ -136,6 +160,17 @@
 /**
  * public
  *
+ * Enable/disable passing through byond mouse events to the window
+ *
+ * required value bool Enable/disable hooking.
+ */
+/datum/tgui/proc/set_mouse_hook(value)
+	src.mouse_hooked = value
+	//Handle unhooking/hooking on already open windows ?
+
+/**
+ * public
+ *
  * Replace current ui.state with a new one.
  *
  * required state datum/ui_state/state Next state
@@ -149,11 +184,13 @@
  * Makes an asset available to use in tgui.
  *
  * required asset datum/asset
+ *
+ * return bool - true if an asset was actually sent
  */
 /datum/tgui/proc/send_asset(datum/asset/asset)
 	if(!window)
-		CRASH("send_asset() can only be called after open().")
-	window.send_asset(asset)
+		CRASH("send_asset() was called either without calling open() first or when open() did not return TRUE.")
+	return window.send_asset(asset)
 
 /**
  * public
@@ -164,8 +201,14 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_full_update(custom_data, force)
-	if(!user.client || !initialized || closing)
+	if(!user?.client || !initialized || closing)
 		return
+	if(ON_COOLDOWN(src, "TGUI_REFRESH_COOLDOWN", TGUI_REFRESH_FULL_UPDATE_COOLDOWN))
+		refreshing = TRUE
+		SPAWN(GET_COOLDOWN(src, "TGUI_REFRESH_COOLDOWN"))
+			src.send_full_update(custom_data, force)
+		return
+	refreshing = FALSE
 	var/should_update_data = force || status >= UI_UPDATE
 	window.send_message("update", get_payload(
 		custom_data,
@@ -201,6 +244,7 @@
 		"title" = title,
 		"status" = status,
 		"interface" = interface,
+		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
@@ -282,20 +326,21 @@
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
 		var/act_type = copytext(type, 5)
-		log_tgui(user, "Action: [act_type] [href_list["payload"]]",
-			window = window,
-			src_object = src_object)
+		if(act_type != "play_note")
+			log_tgui(user, "Action: [act_type] [href_list["payload"]]",
+				window = window,
+				src_object = src_object)
 		process_status()
-		if(src_object.ui_act(act_type, payload, src, state))
-			tgui_process.update_uis(src_object)
+		SPAWN(0)
+			on_act_message(act_type, payload, state)
 		return FALSE
 	switch(type)
 		if("ready")
-			if(!initialized)
-				initialized = TRUE
-			else // user refreshed the window
-				send_full_update(null, TRUE)
-		if("pingReply")
+			// Send a full update when the user manually refreshes the UI
+			if(initialized)
+				send_full_update()
+			initialized = TRUE
+		if("ping/reply")
 			initialized = TRUE
 		if("suspend")
 			close(can_be_suspended = TRUE)
@@ -310,3 +355,10 @@
 			LAZYLISTINIT(src_object.tgui_shared_states)
 			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
 			tgui_process.update_uis(src_object)
+
+/// Wrapper for behavior to potentially wait until the next tick if the server is overloaded
+/datum/tgui/proc/on_act_message(act_type, payload, state)
+	if(QDELETED(src) || QDELETED(src_object))
+		return
+	if(src_object.ui_act(act_type, payload, src, state))
+		tgui_process.update_uis(src_object)

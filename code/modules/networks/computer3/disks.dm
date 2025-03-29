@@ -120,8 +120,8 @@
 		src.root.add_file( place )
 
 	icemoon
-		name = "galactic coordinate disk - 'Moon X15'"
-		target_name = "Moon X15"
+		name = "galactic coordinate disk - 'Senex'"
+		target_name = "Senex"
 
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
@@ -129,8 +129,8 @@
 		target_name = "Sol"
 
 	biodome
-		name = "galactic coordinate disk - 'Moon X05'"
-		target_name = "Moon X05"
+		name = "galactic coordinate disk - 'Fatuus'"
+		target_name = "Fatuus"
 
 	mars_outpost
 		name = "galactic coordinate disk - 'Mars'"
@@ -203,6 +203,26 @@
 		boutput(user, SPAN_ALERT("You can't flip the write-protect tab, it's held in place with glue or something!"))
 		return
 
+/obj/item/disk/data/floppy/security
+	icon_state = "datadiskmed" //yeah its "med" but its not used anywhere
+	random_color = FALSE
+	New()
+		..()
+		var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+		authrec.fields = list("SEC"="[netpass_security]")
+		src.root.add_file( authrec )
+
+/obj/item/disk/data/floppy/sec_command
+	icon_state = "datadisksyn" //yeah its "syndie" but its not used anywhere
+	random_color = FALSE
+
+	New()
+		..()
+		var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+		authrec.fields = list("HEADS"="[netpass_heads]",
+							"SEC"="[netpass_security]",)
+		src.root.add_file(authrec)
+
 /obj/item/disk/data/floppy/computer3boot
 	name = "data disk-'ThinkDOS'"
 
@@ -244,14 +264,24 @@
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/security_progs
-	name = "data disk-'SecMate 6'"
-	desc = "It manages security records.  It is the law."
-	title = "SecMate 6"
+	name = "data disk-'SecMate 7'"
+	desc = "It manages security records. It is the law."
+	title = "SecMate 7"
 
 	New()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
+		src.read_only = 1
+
+/obj/item/disk/data/floppy/read_only/bank_progs
+	name = "data disk-'BankBoss 2'"
+	desc = "For managing and micro-managing staff payroll."
+	title = "BankBoss 2"
+
+	New()
+		. = ..()
+		src.root.add_file( new /datum/computer/file/terminal_program/bank_records(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/research_progs
@@ -336,6 +366,18 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name].", "You show off the [name].")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name] at [target.name].", "You show off the [name] to [target.name]")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
 
 /obj/item/disk/data/floppy/devkit
 	name = "data disk-'Development'"

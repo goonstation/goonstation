@@ -118,3 +118,10 @@
 	item_state = "cluwnehb"
 	desc = "Every word inside makes you want to wretch."
 	item_state_base = "cluwnehb"
+
+/obj/item/scripture/tidehb
+	name = "disarmanomicon"
+	icon_state = "tidehb"
+	item_state = "tidehb"
+	desc = "A picture book teaching assistants right from wrong."
+	item_state_base = "tidehb"

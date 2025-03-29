@@ -32,6 +32,7 @@
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set power level", PROC_REF(set_power_level_mechcomp))
 
 	get_desc(dist, mob/user)
 		..()
@@ -91,6 +92,15 @@
 					src.power_level = the_level
 					boutput(user, SPAN_NOTICE("You set the power level to [src.power_level]."))
 
+	proc/set_power_level_mechcomp(datum/mechanicsMessage/msg)
+		var/level = text2num_safe(msg.signal)
+		if (!level)
+			return
+		level = clamp(level, src.min_power, src.max_power)
+		src.power_level = level
+		if (src.active)
+			src.reboot()
+
 	//Code for placing the shields and adding them to the generator's shield list
 	proc/generate_shield()
 		update_orientation()
@@ -126,7 +136,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	//Changes shield orientation based on direction the generator is facing
 	proc/update_orientation()
@@ -206,7 +216,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	get_draw()
 		var/shield_draw = 0
@@ -225,6 +235,7 @@
 
 		S.layer = 2
 		S.set_dir(D.dir)
+		S.powered_locally = FALSE
 		if(!src.emagged)
 			S.linked_door = D
 			D.linked_forcefield = S
@@ -261,7 +272,7 @@
 
 		playsound(src.loc, src.sound_on, 50, 1)
 		display_active.color = "#00FF00"
-		build_icon()
+		update_icon()
 
 #undef SHIELD_BLOCK_GAS
 #undef SHIELD_BLOCK_FLUID

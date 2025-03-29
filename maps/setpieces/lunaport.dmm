@@ -34,7 +34,7 @@
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/decal/tile_edge/line/purple{
@@ -468,7 +468,7 @@
 	name = "Concourse D"
 	})
 "bX" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -549,7 +549,7 @@
 	},
 /area/moon/underground)
 "cr" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille10-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -1108,7 +1108,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "er" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/floor/frostedred,
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
@@ -1382,7 +1382,7 @@
 	dir = 1
 	},
 /obj/railing/green/reinforced,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -1549,7 +1549,7 @@
 	name = "Concourse B"
 	})
 "fR" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /mob/living/critter/spider/baby/nice,
@@ -2338,7 +2338,7 @@
 	},
 /area/moon/underground)
 "iG" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -2811,7 +2811,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "kD" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /obj/disposalpipe/segment/ejection,
@@ -3195,7 +3195,7 @@
 	name = "Concourse D"
 	})
 "lQ" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -3635,7 +3635,7 @@
 	},
 /area/moon/underground)
 "nO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
@@ -3709,7 +3709,7 @@
 	name = "Concourse D"
 	})
 "og" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M12-0"
 	},
 /obj/fakeobject/skeleton{
@@ -3829,7 +3829,7 @@
 	},
 /area/moon/underground)
 "oQ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -3916,7 +3916,7 @@
 	name = "Deep Archives"
 	})
 "pb" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M11-0"
 	},
 /obj/disposalpipe/segment/ejection,
@@ -4387,7 +4387,7 @@
 	name = "Deep Archives"
 	})
 "qB" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-0"
 	},
 /obj/window/cubicle/railing{
@@ -4603,7 +4603,7 @@
 /obj/railing/green/reinforced{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/green/reinforced,
@@ -4739,7 +4739,7 @@
 /obj/window/cubicle/railing{
 	dir = 2
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille8-2"
 	},
 /turf/unsimulated/floor/plating,
@@ -4779,7 +4779,7 @@
 	name = "Concourse B"
 	})
 "rK" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -4884,7 +4884,7 @@
 /obj/window/cubicle/railing{
 	dir = 2
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille4-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -5169,7 +5169,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "tF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -5218,7 +5218,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/orange/reinforced{
@@ -5259,7 +5259,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "uc" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille6-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -6271,7 +6271,7 @@
 	name = "Blue Line platform"
 	})
 "xo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/purple/reinforced,
@@ -6346,7 +6346,7 @@
 	},
 /area/moon/underground)
 "xy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6363,7 +6363,7 @@
 /turf/unsimulated/iomoon/floor,
 /area/space)
 "xB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6475,7 +6475,7 @@
 	name = "Concourse B"
 	})
 "xZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6513,7 +6513,7 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/orange/reinforced,
@@ -7423,7 +7423,7 @@
 	name = "Blue Line platform"
 	})
 "BC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C13-1"
 	},
 /turf/unsimulated/floor/plating,
@@ -7459,7 +7459,7 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground)
 "BJ" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -7805,7 +7805,7 @@
 /obj/railing/purple/reinforced{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C14-2"
 	},
 /obj/decal/tile_edge/line/purple{
@@ -7872,7 +7872,7 @@
 /area/moon/underground)
 "Dj" = (
 /obj/stool/chair/office,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/blackwhite,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -8324,7 +8324,7 @@
 	name = "Concourse B"
 	})
 "Fi" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M6-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -8359,7 +8359,7 @@
 	name = "Hogge & Wylde"
 	})
 "Fp" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -8389,7 +8389,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "FA" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M11-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -8405,7 +8405,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/purple/reinforced,
@@ -8477,7 +8477,7 @@
 	name = "Deep Archives"
 	})
 "FO" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M1-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -8514,7 +8514,7 @@
 	name = "Concourse B"
 	})
 "FW" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -8569,7 +8569,7 @@
 	name = "Concourse D"
 	})
 "Gf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/purple/reinforced,
@@ -8769,7 +8769,7 @@
 	},
 /area/moon/underground)
 "GW" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M9-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -8857,14 +8857,14 @@
 	name = "Concourse B"
 	})
 "Hh" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M3-0"
 	},
 /obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Hi" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille8-0"
 	},
 /obj/window/cubicle/railing{
@@ -9247,7 +9247,7 @@
 	dir = 2;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C13-1"
 	},
 /turf/unsimulated/floor/plating,
@@ -9463,7 +9463,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/orange/reinforced,
@@ -10144,7 +10144,7 @@
 	name = "Concourse D"
 	})
 "Mv" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -10164,7 +10164,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/purple/reinforced,
@@ -10226,7 +10226,7 @@
 	})
 "MR" = (
 /obj/stool/chair/office,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
@@ -10344,7 +10344,7 @@
 	name = "Concourse D"
 	})
 "Nq" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-1"
 	},
 /obj/window/cubicle/railing{
@@ -10487,13 +10487,13 @@
 	name = "Concourse D"
 	})
 "NX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C0-0"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "NY" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille14-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -10775,7 +10775,7 @@
 	dir = 1
 	},
 /obj/railing/green/reinforced,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C14-1"
 	},
 /turf/unsimulated/floor/plating,
@@ -10812,13 +10812,13 @@
 	name = "Concourse B"
 	})
 "Pd" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille3-0"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Pe" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M4-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -10849,7 +10849,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /obj/railing/orange/reinforced,
@@ -10886,7 +10886,7 @@
 	desc = "Unauthorized access will be met with lethal force.";
 	pixel_y = 29
 	},
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M14-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -11056,7 +11056,7 @@
 	name = "Concourse B"
 	})
 "Qg" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M5-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -11318,7 +11318,7 @@
 /turf/simulated/nicegrass/random,
 /area/moon/underground)
 "Ro" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille6-1"
 	},
 /turf/unsimulated/floor/plating,
@@ -11464,7 +11464,7 @@
 	name = "SPECTRE Showroom"
 	})
 "RR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Just a door. A door that's not for you.";
 	dir = 4;
@@ -11629,14 +11629,14 @@
 /obj/stool/chair/office{
 	dir = 1
 	},
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/blackwhite/side,
 /area/moon/underground/hemera{
 	icon_state = "green";
 	name = "Concourse B"
 	})
 "SB" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M7-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -12191,7 +12191,7 @@
 	name = "Concourse D"
 	})
 "Up" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille12-3"
 	},
 /turf/unsimulated/floor/plating,
@@ -12332,7 +12332,7 @@
 	name = "Concourse B"
 	})
 "UQ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -12363,7 +12363,7 @@
 	icon_state = "line-broken1"
 	},
 /obj/railing/green/reinforced,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -12552,7 +12552,7 @@
 /obj/railing/green/reinforced{
 	dir = 1
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C12-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -12572,7 +12572,7 @@
 	name = "Concourse D"
 	})
 "VG" = (
-/obj/grille/catwalk/jen{
+/obj/mesh/catwalk/jen{
 	icon_state = "M11-0"
 	},
 /turf/unsimulated/floor/plating,
@@ -12938,7 +12938,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "C14-1"
 	},
 /obj/railing/purple/reinforced{
@@ -12976,7 +12976,7 @@
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "Xf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -13692,7 +13692,7 @@
 	},
 /area/moon/underground)
 "ZC" = (
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	icon_state = "grille4-0"
 	},
 /obj/window/cubicle/railing{
@@ -13710,7 +13710,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar,
 /area/moon/underground)
 "ZF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;

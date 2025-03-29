@@ -35,11 +35,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/list/passiveVotes = list() //list of passive map votes
 	var/list/previousVotes = list() //a list of how people voted for every vote
 
+	//cause of switch to this map
+	var/thisMapWasVotedFor
 
 	New()
 		..()
 		src.setupPickableList()
-
+		thisMapWasVotedFor = world.load_intra_round_value("voted_map")
 
 	proc/setupPickableList()
 		//map_setting set by code/map.dm
@@ -50,6 +52,10 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.setCurrentMap(map)
 
 			if (mapNames[map]["playerPickable"])
+				if (BUILD_TIME_MONTH == 6 && IS_IT_FRIDAY && BUILD_TIME_DAY <= 7) //the first friday of every june is donut day
+					if (findtext(map, "donut")) //all we care about today is donut
+						src.playerPickable[map] += mapNames[map]
+					continue
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
@@ -155,23 +161,19 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		else
 			mapName = getMapNameFromID(mapID)
 
-		var/datum/apiModel/MapSwitch/mapSwitchRes
 		try
-			var/datum/apiRoute/mapswitch/mapSwitch = new
-			mapSwitch.buildBody(
-				trigger == "Player Vote" ? null : trigger, // trigger should be a ckey if not a vote
+			var/datum/apiRoute/gamebuilds/build/gameBuild = new
+			gameBuild.buildBody(
+				trigger == "Player Vote" ? "bot" : trigger,
+				config.server_id,
 				roundId,
-				null,
 				mapID,
 				votes
 			)
-			mapSwitchRes = apiHandler.queryAPI(mapSwitch)
+			apiHandler.queryAPI(gameBuild)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
 			throw EXCEPTION(error.message)
-
-		if (text2num(mapSwitchRes.status) != 200)
-			throw EXCEPTION("Build server failed to switch map. Expected HTTP status code 200, received code [isnull(mapSwitchRes.status) ? "null" : mapSwitchRes.status] instead")
 
 		//we switched away from a voted map, make a note of this
 		if (src.nextMapIsVotedFor)
@@ -180,6 +182,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
+		world.save_intra_round_value("voted_map", src.nextMapIsVotedFor)
 
 		//set next only if we're not re-compiling the current map for whatever reason
 		if (src.current != mapName)
@@ -534,6 +537,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		ui_interact(C.mob)
 
 	ui_act(action, list/params)
+		. = ..()
 		switch (action)
 			if("toggle_vote")
 				toggle_vote(params["map_name"], usr)

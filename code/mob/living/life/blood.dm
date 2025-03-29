@@ -7,12 +7,17 @@
 		if (!blood_system) // I dunno if this'll do what I want but hopefully it will
 			return ..()
 
-		if (owner.nodamage || !owner.can_bleed || isvampire(owner))
+		if (isdead(owner) || owner.nodamage || !owner.can_bleed || isvampire(owner))
 			if (owner.bleeding)
 				owner.bleeding = 0
 			return ..()
 
 		var/mult = get_multiplier()
+
+		// early return for a majority this proc is ran
+		if (src.owner.blood_volume == 500 && src.last_tick_regular_blood_range && src.owner.reagents?.total_volume <= 0)
+			src.calc_bloodpressure(500)
+			return
 
 		var/anticoag_amt = 0
 		var/coag_amt = 0
@@ -21,38 +26,42 @@
 			coag_amt = owner.reagents.get_reagent_amount("proconvertin")
 
 		if (owner.bleeding)
-			var/decrease_chance = 2 // defaults to 2 because blood does clot and all, but we want bleeding to maybe not stop entirely on its own TOO easily, and there's only so much clotting can do when all your blood is falling out at once
+			/// odds that your bleeding naturally heals
+			var/decrease_chance = 0
 			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
 
-			if (owner.bleeding > 1)
+			//let small bleeds passively heal, but let critters always heal bleeds because they won't have ways to fix it
+			if (owner.bleeding < 4 || critter_owner)
 				decrease_chance += 3
 			else
 				surgery_increase_chance += 10
 
 
 			if (anticoag_amt) // anticoagulant
-				decrease_chance -= rand(1,2)
+				decrease_chance -= 5
 			if (coag_amt) // coagulant
-				decrease_chance += rand(2,4)
+				decrease_chance += 5
 
 			if (owner.get_surgery_status())
 				decrease_chance -= 1
 
 			if (probmult(decrease_chance))
-				owner.bleeding -= 1 * mult
+				owner.bleeding -= 1
 				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
 
-			if (prob(surgery_increase_chance) && owner.get_surgery_status())
-				owner.bleeding += (1*mult)
+			if (probmult(surgery_increase_chance) && owner.get_surgery_status())
+				owner.bleeding += 1
 
 			owner.bleeding = clamp(owner.bleeding, 0, 5)
 
 			if (owner.blood_volume)
-				var/final_bleed = clamp(owner.bleeding, 0, 5) // trying this at 5 being the max
-				//var/final_bleed = clamp(src.bleeding, 0, 10) // still don't want this above 10
-
+				var/final_bleed = clamp(owner.bleeding, 0, 5)
 				if (anticoag_amt)
 					final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
+				if (owner.blood_volume < 200)
+					final_bleed *= 0.25 // this guy's basically dead anyway. more bleed just means its less likely they get a transfusion
+				else if (owner.blood_volume < 300)
+					final_bleed *= 0.75 // less blood to bleed. negative blood fx taking place
 				final_bleed *= mult
 				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)
@@ -68,10 +77,9 @@
 						if (5)
 							bleed(owner, final_bleed, 4)
 
-		if (critter_owner)
+		if (critter_owner && !HAS_ATOM_PROPERTY(critter_owner, PROP_MOB_NO_BLOOD_REGEN))
 			if (critter_owner.blood_volume < 500 && critter_owner.blood_volume > 0) // if we're full or empty, don't bother v
-				if (prob(66))
-					critter_owner.blood_volume += 1 * mult // maybe get a little blood back ^
+				critter_owner.blood_volume += 2 * mult // get a little blood back ^
 			else if (critter_owner.blood_volume > 500)
 				if (prob(20))
 					critter_owner.blood_volume -= 1 * mult
@@ -101,13 +109,7 @@
 		// high (stage 1) (140/90 or higher) (>585u)
 		// very high (stage 2) (160/100 or higher) (>666u)
 		// dangerously high (urgency) (180/110 or higher) (>750u)
-		var/current_systolic = round((current_blood_amt * 0.24), 1)
-		var/current_diastolic = round((current_blood_amt * 0.16), 1)
-		owner.blood_pressure["systolic"] = current_systolic
-		owner.blood_pressure["diastolic"] = current_diastolic
-		owner.blood_pressure["rendered"] = "[max(rand(current_systolic-5,current_systolic+5), 0)]/[max(rand(current_diastolic-2,current_diastolic+2), 0)]"
-		owner.blood_pressure["total"] = current_blood_amt
-		owner.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"
+		src.calc_bloodpressure(current_blood_amt)
 
 		if (ischangeling(owner))
 			return ..()
@@ -119,6 +121,9 @@
 				logTheThing(LOG_COMBAT, owner, "gibbed due to having over 1000 units of blood at [log_loc(src)].")
 				owner.gib(TRUE) // :v
 				return ..()
+
+		if (isdead(owner))
+			return ..()
 
 		if (current_blood_amt >= 415 && current_blood_amt <= 585)
 			if (src.last_tick_regular_blood_range)
@@ -251,3 +256,12 @@
 					owner.add_stam_mod_max("hypertension", -15)
 
 		..()
+
+	proc/calc_bloodpressure(current_blood_amt)
+		var/current_systolic = round((current_blood_amt * 0.24), 1)
+		var/current_diastolic = round((current_blood_amt * 0.16), 1)
+		owner.blood_pressure["systolic"] = current_systolic
+		owner.blood_pressure["diastolic"] = current_diastolic
+		owner.blood_pressure["rendered"] = "[max(rand(current_systolic - 5,current_systolic + 5), 0)]/[max(rand(current_diastolic - 2,current_diastolic + 2), 0)]"
+		owner.blood_pressure["total"] = current_blood_amt
+		owner.blood_pressure["status"] = (current_blood_amt < 415) ? "HYPOTENSIVE" : (current_blood_amt > 584) ? "HYPERTENSIVE" : "NORMAL"

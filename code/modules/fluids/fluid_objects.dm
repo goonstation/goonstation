@@ -127,7 +127,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	icon_state = "channel"
 	name = "channel"
 	desc = "A channel that can restrict liquid flow in one direction."
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	var/required_to_pass = 150 //fluid on the side that my Dir points to will need this amount to be able to cross
 
 	New()

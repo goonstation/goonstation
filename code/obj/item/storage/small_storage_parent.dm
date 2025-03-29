@@ -40,6 +40,22 @@
 	proc/make_my_stuff()
 		return
 
+	combust()
+		..()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+
+	process_burning()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+		. = ..()
+
+	combust_ended()
+		if (src.health <= 0) // okay lets make sure it actually fully burned and not just got extinguished
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, get_turf(src))
+		. = ..()
+
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"
@@ -56,12 +72,12 @@
 		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
 			src.storage.add_contents(new /obj/item/crowbar/red(src))
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
-		src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
 		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+		src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
 #else
 		if (prob(10)) // put these together
-			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
 			src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+			src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
 #endif
 
 
@@ -79,6 +95,134 @@
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_TINY
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
+	/// A reference to the action currently in use if eating pills from the bottle.
+	var/datum/action/bar/icon/consume_pill_from_bottle_regular/consumption_action
+
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (usr == over_object && istype(usr, /mob/living/carbon) && (src.loc == usr || src.loc?.loc == usr))
+			if(usr.restrained())
+				boutput(usr, SPAN_ALERT("You can't get into the [src] in your current state."))
+				return FALSE
+			if (!usr.is_in_hands(src))
+				if (!usr.is_in_hands(null))
+					boutput(usr, SPAN_ALERT("You need a free hand to do that."))
+					return FALSE
+				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
+				usr.put_in_hand(src)
+			start_consuming_pills(usr)
+			return
+		..()
+
+	proc/start_consuming_pills(mob/user)
+		if (!contents.len)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return
+		if (!consumption_action)
+			consumption_action = new /datum/action/bar/icon/consume_pill_from_bottle_regular(user, src)
+			actions.start(consumption_action, user)
+		else
+			consumption_action.consume_input_buffer++
+
+	/// Returns true if a pill was successfully swallowed.
+	proc/consume_next_pill(mob/user)
+		if (!contents.len)
+			return FALSE
+		// take the last pill in the list because it'll be the most recent pill added, and that makes it easier to spike pill bottles.
+		var/obj/item/reagent_containers/pill/Pill = contents[contents.len]
+		if (!Pill)
+			user.visible_message(
+				SPAN_NOTICE("[user] chokes on something from [src]!"),
+				SPAN_NOTICE("You choke on [contents[contents.len]]!"),
+				SPAN_NOTICE("Someone chokes on something.")
+			)
+			user.drop_item(contents[contents.len])
+			return FALSE
+		Pill.pill_action(user, user)
+		return TRUE
+
+	/// consume_next_pill() wrapper that handles sounds, clumsiness and majority of messaging.
+	/// Returns true if a pill was successfully swallowed.
+	proc/try_consume_from_bottle(mob/user)
+		if (!contents.len)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return FALSE
+		// clumsy and braindamaged people have a chance to consume multiple pills and spill the rest onto the floor.
+		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
+								null, SPAN_NOTICE("Someone pops some pills."))
+			var pillSwallowed = FALSE
+			for(var/i = 0; i < rand(1, max(contents.len, 3)); i++)
+				if (consume_next_pill(user)) pillSwallowed = TRUE
+			while (contents.len > 0)
+				user.drop_item(contents[contents.len])
+			return pillSwallowed
+		else
+			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+			user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+			return consume_next_pill(user)
+
+
+/datum/action/bar/icon/consume_pill_from_bottle_regular
+	duration = 0.75 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	var/mob/bottleholder
+	var/mob/target
+	var/obj/item/storage/pill_bottle/bottle
+	var/consume_input_buffer = 1
+
+	New(mob/Target, obj/item/storage/pill_bottle/Bottle)
+		..()
+		target = Target
+		bottle = Bottle
+		icon = bottle.icon
+		icon_state = bottle.icon_state
+
+	proc/checkContinue()
+		if (bottle.contents.len <= 0 || !isalive(bottleholder) || !bottleholder.find_in_hand(bottle))
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		bottleholder = src.owner
+		loopStart()
+		return
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onUpdate()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onInterrupt(flag)
+		..()
+		if (flag & (INTERRUPT_ATTACKED | INTERRUPT_STUNNED))
+			if (bottle.contents.len > 0) bottleholder.drop_item(bottle.contents[bottle.contents.len])
+		bottle.consumption_action = null
+
+	onEnd()
+		consume_input_buffer--
+		if (bottle.try_consume_from_bottle(target))
+			eat_twitch(target)
+		else // if a pill was not successfully swallowed something is probably wrong, so don't let the loop restart
+			bottle.consumption_action = null
+			..()
+			return
+		var/pillsRemainingInBottle = bottle.contents.len
+		if (pillsRemainingInBottle > 0 && consume_input_buffer > 0)
+			onRestart()
+			return
+		if(pillsRemainingInBottle <= 0)
+			boutput(usr, SPAN_ALERT("The [src] is empty."))
+		bottle.consumption_action = null
+		..()
+		return
+
 
 /obj/item/storage/briefcase
 	name = "briefcase"
@@ -102,6 +246,12 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+
+	onMaterialChanged()
+		. = ..()
+		if(istype_exact(src, /obj/item/storage/briefcase) && src.material.getID() == "leather")
+			src.desc = "A fancy natural leather-bound briefcase, capable of holding a number of small objects, with exquisite style."
+			src.tooltip_rebuild = TRUE
 
 /obj/item/storage/briefcase/toxins
 	name = "toxins research briefcase"

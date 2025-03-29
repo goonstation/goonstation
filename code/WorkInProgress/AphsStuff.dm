@@ -9,7 +9,7 @@
 	density = 1
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		src.visible_message("<B>[src]</B> screams!")
 		playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
@@ -140,7 +140,7 @@
 		if (!src.on || !message)
 			return
 		if(dectalk)
-			var/list/audio = dectalk("\[_<500,1>\][message]")
+			var/list/audio = dectalk("\[_<500,1>\][message]", BOTTALK_VOLUME)
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue

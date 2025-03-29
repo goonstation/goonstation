@@ -17,7 +17,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
 	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
 	var/ant_amnt = 5 							//! How many ants are added to food / how much reagents removed?
-	var/sliceable = FALSE 						//! Can this food be sliced with a knife
+	var/sliceable = FALSE						//! Can this food be sliced
+	var/slice_tools = TOOL_CUTTING | TOOL_SAWING	//! Which tools can be used to slice this food
 	var/slice_product = null 					//! Type to spawn when we slice this food
 	var/slice_amount = 1						//! How many slices to spawn after slicing
 	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
@@ -25,14 +26,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/did_stomach_react = 0					//! Has this already reacted when being digested
 	var/digest_count = 0						//! How digested is this while in stomach
 	var/dissolve_threshold = 20					//! How digested something needs to be before it dissolves
+	var/heats_into = null						//! Type path of the thing this becomes when heated
+	var/heat_threshold = T0C + 500				//! Temperature required for this to cook from ambient air heat
 	rc_flags = 0
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		. = ..()
+		if (src.heats_into && temperature > src.heat_threshold)
+			src.on_temperature_cook()
+			new src.heats_into(src.loc)
+			qdel(src)
+
+	proc/on_temperature_cook()
+		return
 
 	///Slowly dissolve in stomach, releasing reagents
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
 		src.digest_count += process_rate
 		if (owner && src.reagents?.total_volume > 0)
 			if (!src.did_stomach_react)
-				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
+				src.reagents.reaction(owner, INGEST, src.reagents.total_volume, paramslist = list("digestion" = TRUE))
 				src.did_stomach_react = 1
 
 			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
@@ -48,18 +61,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/item/chair) in src.loc)
+			return TRUE
+		if (locate(/obj/rack) in src.loc)
+			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
 			return TRUE
 		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
 			return TRUE
 		return FALSE
 
-	proc/get_food_color()
-		if (food_color) // keep manually defined food colors
-			return food_color
-		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
-		food_color = get_average_color(I)
-		return food_color
+	get_average_color()
+		if (src.food_color) // keep manually defined food colors
+			return src.food_color
+		return ..()
 
 	proc/heal(var/mob/living/M)
 		SHOULD_CALL_PARENT(TRUE)
@@ -67,7 +82,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 
 		if (quality <= 0.5)
 			boutput(M, SPAN_ALERT("Ugh! That tasted horrible!"))
-			if (prob(20))
+			M.nauseate(rand(1,2))
+			var/nasty_bites = 0
+			for (var/obj/item/bite in M.organHolder?.stomach?.stomach_contents)
+				if (bite.quality <= 0.5)
+					nasty_bites++
+			if (nasty_bites > 4 && prob(30))
 				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 			healing = 0
 
@@ -100,9 +120,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			M.HealDamage("All", healing, healing)
 
-	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
+	//slicing food can be done here using sliceable == TRUE, slice_amount and slice_product; slice_tools can be overridden if needed (e.g. snipping food)
 	attackby(obj/item/W, mob/user)
-		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (src.sliceable && istool(W, slice_tools))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
@@ -110,15 +130,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", group = "slicing")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
+			//the hacky place_on zone of sadness
+			var/obj/surgery_tray/tray = locate() in src.loc
+			if (!tray || !(src in tray.attached_objs))
+				tray = null
+			var/obj/item/plate/plate = src.loc
+			if (istype(plate))
+				plate.remove_contents(src)
+			else
+				plate = null
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
+				//try to put it on the plate/tray if we're on one
+				if (tray && tray.place_on(slice_result))
+					tray.attach(slice_result)
+				else if (plate)
+					plate.add_contents(slice_result)
 			qdel (src)
 		else
 			..()
@@ -206,6 +240,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.reagents.add_reagent("ants", src.ant_amnt)
 						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
+	process_sliced_products(obj/item/reagent_containers/food/snacks/slice, amount_to_transfer)
+		. = ..()
+		if (istype(slice))
+			slice.food_effects |= src.food_effects
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
@@ -388,7 +426,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
-		if (src.festivity && !ethereal_eater)
+		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
@@ -469,6 +507,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(H, pick(SPAN_ALERT("It takes all your willpower to keep that food down! You feel dizzy!"), SPAN_ALERT("The sensation of the displeasing chunk sliding down your throat makes you feel lightheaded!")))
 				H.make_dizzy(10)
 				H.change_misstep_chance(25)
+				H.nauseate(5)
 
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
@@ -480,6 +519,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/src.uneaten_bites_left //so all the bites add up to the full item fillness
+				B.quality = src.quality //nasty food stays nasty
 				if(src.reagents)
 					B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
@@ -604,9 +644,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					return
 			if(src.is_sealed)
 				return
-			if(user.mind.assigned_role == "Bartender")
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
-				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+			if(user.traitHolder.hasTrait("training_bartender"))
+				user.visible_message("[user] deftly [pick("spins, twirls")] [src], managing to keep all the contents inside.",
+				 "You deftly [pick("spin", "twirl")] [src], managing to keep all the contents inside.")
+				if(user.mind.assigned_role == "Bartender" && !ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
@@ -725,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (is_sealed)
 			boutput(user, SPAN_ALERT("[src] is sealed."))
 			return
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		// this shit sucks but there's no space for a cast since the following section is an if-else
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
@@ -1082,11 +1123,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Bartender")
+		else if (user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 50
 			hurt_prob = 10
 
@@ -1132,12 +1173,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Caution - fragile."
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "glass-drink"
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	icon_state = "drinking"
 	item_state = "drink_glass"
-	var/icon_style = "drink"
 	g_amt = 30
-	var/glass_style = "drink"
 	var/salted = 0
 	var/obj/item/reagent_containers/food/snacks/plant/wedge = null
 	var/obj/item/cocktail_stuff/drink_umbrella/umbrella = null
@@ -1146,74 +1185,102 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	var/smashed = 0
 	var/shard_amt = 1
 
-	var/image/fluid_image
-	var/image/image_ice
-	var/image/image_salt
-	var/image/image_wedge
-	var/image/image_doodad
+	/// The icon file that this container should for reagent overlays.
+	var/reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	/// The icon state that this container should for reagent overlays.
+	var/reagent_overlay_icon_state = null
+	/// The number of reagent overlay states that this container has.
+	var/reagent_overlay_states = 12
+	/// The scaling that this container's fluid overlays should use.
+	var/reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR
 
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
+	var/umbrella_x_offset = 3
+	var/umbrella_y_offset = 6
+	var/decoration_x_offset = -1
+	var/decoration_y_offset = -1
+	var/wedge_x_offset = -1
+	var/wedge_y_offset = 2
+
+	New()
+		. = ..()
+		src.reagent_overlay_icon_state ||= src.icon_state
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = src.reagent_overlay_icon, \
+			reagent_overlay_icon_state = src.reagent_overlay_icon_state, \
+			reagent_overlay_states = src.reagent_overlay_states, \
+			reagent_overlay_scaling = src.reagent_overlay_scaling, \
+		)
 
 	update_icon()
-
-		src.underlays = null
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[src.glass_style][fluid_state]", -1)
-			else
-				src.fluid_image.icon_state = "fluid-[src.glass_style][fluid_state]"
-			src.icon_state = "glass-[src.glass_style][fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = "glass-[src.glass_style]"
-
 		if (src.salted)
-			if (!src.image_salt)
-				src.image_salt = image(src.icon, "[glass_style]-salted", layer = FLOAT_LAYER)
-			else
-				src.image_salt.icon_state = "[glass_style]-salted"
-			src.UpdateOverlays(src.image_salt, "salt")
+			if (!src.GetOverlayImage("salt_overlay"))
+				var/image/salt_image = image(src.reagent_overlay_icon, "[src.reagent_overlay_icon_state]-salt", layer = FLOAT_LAYER - 1)
+				src.AddOverlays(salt_image, "salt_overlay")
 		else
-			src.UpdateOverlays(null, "salt")
+			src.ClearSpecificOverlays("salt_overlay")
 
-		if (istype(src.in_glass))
-			var/new_layer = FLOAT_LAYER - 0.2
-			if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
-				new_layer = FLOAT_LAYER + 0.2
-			if (!src.image_doodad)
-				src.image_doodad = image(src.icon, "[glass_style]-[src.in_glass.icon_state]", layer = new_layer)
-			else
-				src.image_doodad.icon_state = "[glass_style]-[src.in_glass.icon_state]"
-				src.image_doodad.layer = new_layer
-			src.UpdateOverlays(src.image_doodad, "doodad")
+		if (src.in_glass)
+			if (!src.GetOverlayImage("decoration_overlay"))
+				var/x_offset = 0
+				var/y_offset = 0
+
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+					x_offset = src.umbrella_x_offset
+					y_offset = src.umbrella_y_offset
+				else
+					x_offset = src.decoration_x_offset
+					y_offset = src.decoration_y_offset
+
+				var/icon/silhouette = icon(src.reagent_overlay_icon, "front-silhouette-[src.reagent_overlay_icon_state]")
+				silhouette.Blend(icon(src.reagent_overlay_icon, src.in_glass.icon_state), ICON_MULTIPLY, x = 1 + x_offset, y = 1 + y_offset)
+				silhouette.Crop(1 + x_offset, 1 + y_offset, 32 + x_offset, 32 + y_offset)
+
+				var/image/outside_glass = new()
+				outside_glass.overlays += silhouette
+				outside_glass.layer = FLOAT_LAYER
+				outside_glass.pixel_x = x_offset
+				outside_glass.pixel_y = y_offset
+
+				var/image/inside_glass = image(src.reagent_overlay_icon, src.in_glass.icon_state, layer = FLOAT_LAYER - 1, pixel_x = x_offset, pixel_y = y_offset)
+				inside_glass.alpha = 128
+
+				var/image/decoration_overlay = new()
+				decoration_overlay.layer = FLOAT_LAYER
+				decoration_overlay.overlays += inside_glass
+				decoration_overlay.overlays += outside_glass
+
+				src.AddOverlays(decoration_overlay, "decoration_overlay")
+
 		else
-			src.UpdateOverlays(null, "doodad")
+			src.ClearSpecificOverlays("decoration_overlay")
+
+		if (src.wedge)
+			if (!src.GetOverlayImage("wedge_overlay"))
+				var/image/wedge_overlay = image(
+					src.reagent_overlay_icon,
+					src.wedge.icon_state,
+					layer = FLOAT_LAYER,
+					pixel_x = src.wedge_x_offset,
+					pixel_y = src.wedge_y_offset,
+				)
+
+				src.UpdateOverlays(wedge_overlay, "wedge_overlay")
+
+		else
+			src.ClearSpecificOverlays("wedge_overlay")
 
 		if (src.reagents.has_reagent("ice"))
-			if (!src.image_ice)
-				src.image_ice = image(src.icon, "[glass_style]-ice", layer = FLOAT_LAYER - 0.1)
-			else
-				src.image_ice.icon_state = "[glass_style]-ice"
-			src.UpdateOverlays(src.image_ice, "ice")
-		else
-			src.UpdateOverlays(null, "ice")
+			if (!src.GetOverlayImage("ice_overlay"))
+				var/image/ice_image = image(src.reagent_overlay_icon, "[src.reagent_overlay_icon_state]-ice", layer = FLOAT_LAYER)
+				src.UpdateOverlays(ice_image, "ice_overlay")
 
-		if (istype(src.wedge))
-			if (!src.image_wedge)
-				src.image_wedge = image(src.icon, "[glass_style]-[src.wedge.icon_state]", layer = FLOAT_LAYER + 0.1)
-			else
-				src.image_wedge.icon_state = "[glass_style]-[src.wedge.icon_state]"
-			src.UpdateOverlays(src.image_wedge, "wedge")
 		else
-			src.UpdateOverlays(null, "wedge")
+			src.ClearSpecificOverlays("ice_overlay")
 
-		signal_event("icon_updated")
-		return
+	on_reagent_change()
+		. = ..()
+		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/ice))
@@ -1396,10 +1463,14 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 
 	Crossed(obj/projectile/mover) //Makes barfights cooler
-		if(istype(mover) && !istype(mover.proj_data, /datum/projectile/bullet/foamdart))
+		if(istype(mover) && mover.proj_data?.smashes_glasses)
 			if(prob(30))
 				src.smash()
 		. = ..()
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.smash()
+		return TRUE
 
 	proc/smash(var/atom/A)
 		if (src.smashed)
@@ -1541,11 +1612,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot
 	name = "shot glass"
-	icon_state = "glass-shot"
-	glass_style = "shot"
+	icon_state = "shot"
 	amount_per_transfer_from_this = 15
 	gulp_size = 15
 	initial_volume = 15
+	reagent_overlay_states = 4
+	umbrella_x_offset = 3
+	umbrella_y_offset = 2
+	decoration_x_offset = 1
+	decoration_y_offset = 1
+	wedge_x_offset = 0
+	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
 	amount_per_transfer_from_this = 50
@@ -1567,41 +1644,99 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
-	icon_state = "glass-oldf"
-	glass_style = "oldf"
+	icon_state = "old_fashioned"
 	initial_volume = 20
+	reagent_overlay_states = 7
+	umbrella_x_offset = 3
+	umbrella_y_offset = 3
+	decoration_x_offset = 0
+	decoration_y_offset = -1
+	wedge_x_offset = -1
+	wedge_y_offset = -1
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/round
 	name = "round glass"
-	icon_state = "glass-round"
-	glass_style = "round"
+	icon_state = "round"
 	initial_volume = 100
+	reagent_overlay_states = 9
+	umbrella_x_offset = 6
+	umbrella_y_offset = 4
+	decoration_x_offset = -3
+	decoration_y_offset = -1
+	wedge_x_offset = -3
+	wedge_y_offset = 0
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine
 	name = "wine glass"
-	icon_state = "glass-wine"
-	glass_style = "wine"
+	icon_state = "wine"
 	initial_volume = 30
+	reagent_overlay_states = 6
+	umbrella_x_offset = 3
+	umbrella_y_offset = 7
+	decoration_x_offset = 1
+	decoration_y_offset = 4
+	wedge_x_offset = -1
+	wedge_y_offset = 3
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal //wander office item
+	name = "crystal wine glass"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "crystal-wine"
+	shard_amt = 3
+	reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	reagent_overlay_icon_state = "wine"
+	reagent_overlay_states = 6
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail
 	name = "cocktail glass"
-	icon_state = "glass-cocktail"
-	glass_style = "cocktail"
+	icon_state = "cocktail"
 	initial_volume = 20
+	reagent_overlay_states = 5
+	umbrella_x_offset = 3
+	umbrella_y_offset = 6
+	decoration_x_offset = 1
+	decoration_y_offset = 4
+	wedge_x_offset = -2
+	wedge_y_offset = 2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute
 	name = "champagne flute"
-	icon_state = "glass-flute"
-	glass_style = "flute"
+	icon_state = "flute"
 	initial_volume = 20
+	reagent_overlay_states = 12
+	umbrella_x_offset = 2
+	umbrella_y_offset = 11
+	decoration_x_offset = 0
+	decoration_y_offset = 8
+	wedge_x_offset = 0
+	wedge_y_offset = 7
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
 	name = "glass pitcher"
 	desc = "A big container for holding a lot of liquid that you then serve to people. Probably alcohol, let's be honest."
-	icon_state = "glass-pitcher"
-	glass_style = "pitcher"
+	icon_state = "pitcher"
 	initial_volume = 120
 	shard_amt = 2
+	reagent_overlay_states = 12
+	umbrella_x_offset = 4
+	umbrella_y_offset = 5
+	decoration_x_offset = -1
+	decoration_y_offset = -3
+	wedge_x_offset = -2
+	wedge_y_offset = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pint
+	name = "pint glass"
+	icon_state = "pint"
+	initial_volume = 80
+	reagent_overlay_states = 15
+	umbrella_x_offset = 3
+	umbrella_y_offset = 10
+	decoration_x_offset = 0
+	decoration_y_offset = -2
+	wedge_x_offset = -2
+	wedge_y_offset = 3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing
 	name = "icing tube"
@@ -1611,6 +1746,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
+	reagent_overlay_states = 0
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
@@ -1645,36 +1781,39 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		qdel(src)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
-	rand_pos = 1
+	rand_pos = TRUE
+	var/list/glass_types = list(
+		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/flute,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/oldf,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/round,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+	)
+
 	New()
-		..()
-		pick_style()
+		src.pick_style()
+		. = ..()
 
 	proc/pick_style()
-		src.glass_style = pick("drink","shot","wine","cocktail","flute")
-		switch(src.glass_style)
-			if ("shot")
-				src.name = "shot glass"
-				src.icon_state = "glass-shot"
-				src.amount_per_transfer_from_this = 15
-				src.gulp_size = 15
-				src.initial_volume = 15
-				src.reagents.maximum_volume = 15
-			if ("wine")
-				src.name = "wine glass"
-				src.icon_state = "glass-wine"
-				src.initial_volume = 30
-				src.reagents.maximum_volume = 30
-			if ("cocktail")
-				src.name = "cocktail glass"
-				src.icon_state = "glass-cocktail"
-				src.initial_volume = 20
-				src.reagents.maximum_volume = 20
-			if ("flute")
-				src.name = "champagne flute"
-				src.icon_state = "glass-flute"
-				src.initial_volume = 20
-				src.reagents.maximum_volume = 20
+		var/obj/item/reagent_containers/food/drinks/drinkingglass/glass_style = pick(src.glass_types)
+		src.name = glass_style::name
+		src.icon_state = glass_style::icon_state
+		src.amount_per_transfer_from_this = glass_style::amount_per_transfer_from_this
+		src.gulp_size = glass_style::gulp_size
+		src.initial_volume = glass_style::initial_volume
+		src.reagent_overlay_icon = glass_style::reagent_overlay_icon
+		src.reagent_overlay_icon_state = glass_style::reagent_overlay_icon_state
+		src.reagent_overlay_states = glass_style::reagent_overlay_states
+		src.reagent_overlay_scaling = glass_style::reagent_overlay_scaling
+		src.umbrella_x_offset = glass_style::umbrella_x_offset
+		src.umbrella_y_offset = glass_style::umbrella_y_offset
+		src.decoration_x_offset = glass_style::decoration_x_offset
+		src.decoration_y_offset = glass_style::decoration_y_offset
+		src.wedge_x_offset = glass_style::wedge_x_offset
+		src.wedge_y_offset = glass_style::wedge_y_offset
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled
@@ -1802,6 +1941,59 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
 	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/strange
+	name = "strange skull chalice"
+	desc = "This is one ugly drinking vessel."
+	icon_state = "skullchaliceP"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/odd
+	name = "odd skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. This one's got fewer holes and more room. Convenient!"
+	icon_state = "skullchaliceA"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_volume = 60
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar
+	name = "peculiar skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. The magic keeps the contents from spilling out."
+	icon_state = "skullchalice_strange"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/menacing
+	name = "menacing skull chalice"
+	desc = "In Space Soviet Russia, chalice drink out of YOU!"
+	icon_state = "skullchalice_menacing"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_reagents = list("blood" = 50)
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/crystal
+	name = "skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. You have an odd urge to serve champagne in this."
+	icon_state = "skullchalice_crystal"
+	item_state = "skullchalice_crystal"
+	can_recycle = FALSE
+	initial_volume = 60
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/gold
+	name = "golden skull chalice"
+	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Smells a bit like processed meat snacks."
+	icon_state = "skullchalice_gold"
+	item_state = "skullchalice_gold"
+	can_recycle = FALSE
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/noface
+	name = "faceless skull chalice"
+	desc = "A thing which you can drink fluids out of. Maybe. Possibly. Hypothetically."
+	icon_state = "skullchalice_noface"
+	item_state = "skullchalice"
+	can_recycle = FALSE
+	initial_volume = 5
 
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
@@ -2077,7 +2269,28 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 						if(src.reagents.has_reagent(O.ids[i]))
 							O.completed |= 1 << i-1
 		else
-			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!")
+
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (src.reagents.total_volume == 0)
+			icon_state = initial(icon_state)
+		else if (src.reagents.total_temperature >= (T0C+97))
+			icon_state = initial(icon_state)+"_hot"
+		else if (src.reagents.total_temperature > (T0C+30)) //beer can be our point of reference
+			icon_state = initial(icon_state)+"_warm"
+		else if (src.reagents.total_temperature <= (T0C-23))
+			icon_state = initial(icon_state)+"_freeze"
+		else if (src.reagents.total_temperature <= (T0C+7))
+			icon_state = initial(icon_state)+"_cool"
+		else
+			icon_state = initial(icon_state)
+
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"

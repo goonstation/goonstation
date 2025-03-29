@@ -23,6 +23,7 @@
 			return
 		return ..()
 
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
@@ -99,29 +100,22 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/toggleable/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
-					H.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.meson(src)
 				else
-					H.vision.set_scan(0)
-					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.unmeson(src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
 		if(!isliving(user))
 			return
 		if (slot == SLOT_GLASSES && on)
-			user.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+			user.meson(src)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
-		user.vision.set_scan(0)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+		user.unmeson(src)
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -129,6 +123,19 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+
+	attack_self(mob/user)
+		user.show_text("You swap the style of your glasses.")
+		if (src.icon_state == "glasses")
+			src.icon_state = "glasses_round"
+		else
+			src.icon_state = "glasses"
+
+/obj/item/clothing/glasses/regular/round
+	name = "round glasses"
+	icon_state = "glasses_round"
+	item_state = "glasses_round"
+	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
@@ -199,6 +206,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
+	var/image_group = CLIENT_IMAGE_GROUP_ARREST_ICONS
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -211,14 +219,36 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	emag_act(mob/user)
+		if (src.image_group != CLIENT_IMAGE_GROUP_ARREST_ICONS)
+			boutput(user, SPAN_ALERT("[src]'s facial recognition is already fried!"))
+			return
+		src.image_group = "fake_arrest_icons_\ref[src]"
+		for (var/i in 1 to rand(3,7))
+			var/datum/db_record/record = pick(data_core.security.records)
+			for_by_tcl(H, /mob/living/carbon/human)
+				if (H.real_name == record["name"] || H.name == record["name"])
+					var/icon_state = pick(100; "*Arrest*", 20; "Contraband", 5; "Clown")
+					var/image/fake_arrest_icon = image('icons/effects/sechud.dmi',H,icon_state,EFFECTS_LAYER_UNDER_4)
+					fake_arrest_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+					get_image_group(src.image_group).add_image(fake_arrest_icon)
+					break
+
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src.loc)
+			get_image_group(src.image_group).add_mob(src.loc)
+
+		boutput(user, SPAN_ALERT("You short out [src]'s facial recognition circuit!"))
+		return TRUE
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			get_image_group(src.image_group).add_mob(user)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			get_image_group(src.image_group).remove_mob(user)
 		..()
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
@@ -400,8 +430,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation."
-	icon_state = "vr"
-	item_state = "sunglasses"
+	icon_state = "vr_detective"
+	item_state = "vr_detective"
 	var/network = LANDMARK_VR_DET_NET
 
 	setupProperties()
@@ -434,8 +464,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
-	icon_state = "vr"
-	item_state = "sunglasses"
+	icon_state = "vr_scuttlebot"
+	item_state = "vr_scuttlebot"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
@@ -445,38 +475,38 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot couldnt be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
 				return 1
-
-			if (istype(target, /mob/living/critter/robotic/scuttlebot/weak))
-				var/mob/living/critter/robotic/scuttlebot/weak/O = S
-				if (O.linked_hat != null)
-					O.linked_hat.set_loc(get_turf(O))
-				else
-					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
-					if (O.is_inspector)
-						gadgethat.make_inspector()
-				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
-				qdel(O)
-				qdel(src)
+			if (S.linked_hat != null)
+				S.linked_hat.set_loc(get_turf(S))
 			else
-				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
-				boutput(user, "You stuff the goggles back into the hat. It powers down with a low whirr.")
-				S.drop_item()
-				qdel(S)
-				qdel(src)
+				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
+					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
+					if (S.is_inspector)
+						newgadget.make_inspector()
+				else
+					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
+					if (S.is_inspector)
+						newscuttle.make_inspector()
+			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			for(var/obj/item/photo/P in S.contents)
+				P.set_loc(get_turf(src))
+
+			S.drop_item()
+			qdel(S)
+			qdel(src)
 		else
 			..()
 
@@ -489,7 +519,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation.  You should know this, being IN the simulation and all."
 	icon_state = "vr"
-	item_state = "sunglasses"
+	item_state = "vr"
 
 	unequipped(var/mob/user)
 		..()
@@ -499,9 +529,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return
 
 /obj/item/clothing/glasses/vr/arcade
+	icon_state = "vr"
+	item_state = "vr"
 	network = LANDMARK_VR_ARCADE
 
 /obj/item/clothing/glasses/vr/bomb
+	icon_state = "vr_science"
+	item_state = "vr_science"
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
@@ -677,11 +711,22 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	flashblocking //Admin or gimmick spawn option
+		name = "advanced night vision sechud goggles"
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND with darkened lenses? Wowee!"
+		color_r = 0.8
+		color_g = 0.8
+		color_b = 0.8
+
+		setupProperties()
+			..()
+			setProperty("disorient_resist_eye", 100)
+
 	sechud
 		name = "night vision sechud goggles"
 		icon_state = "nightvisionsechud"
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
-		color_r = 1
+		color_r = 0.8
 		color_g = 0.5
 		color_b = 0.5
 
@@ -733,6 +778,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		.["frequency"] = src.freq
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		if (action == "set-frequency" && params["finish"])
 			var/old_freq = src.freq
 			src.freq = sanitize_frequency_diagnostic(params["value"])
@@ -811,3 +857,14 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 			return
 		src.clear_overlays(M)
 		src.generate_overlays(M)
+
+/obj/item/clothing/glasses/eyestrain
+	name = "blue-light filtering glasses"
+	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
+	icon_state = "oglasses"
+	// would be nice if these tinted TGUI
+
+	color_r = 1
+	color_g = 0.9
+	color_b = 0.8
+

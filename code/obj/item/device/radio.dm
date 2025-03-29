@@ -469,7 +469,7 @@ var/list/headset_channel_lookup
 
 		if (length(heard_masked))
 			if (ishuman(M))
-				if (M:wear_id)
+				if (M:wear_id && length(M:wear_id:registered))
 					rendered = "[part_a][M:wear_id:registered][part_b][M.say_quote(messages[1])][part_c]"
 				else
 					rendered = "[part_a]Unknown[part_b][M.say_quote(messages[1])][part_c]"
@@ -716,6 +716,17 @@ TYPEINFO(/obj/item/radiojammer)
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
 
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	speaker_range = 0
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -796,6 +807,25 @@ TYPEINFO(/obj/item/radiojammer)
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1
 
+// ----------------------- Assembly-procs -----------------------
+
+
+/// shock kit construction
+/obj/item/device/radio/electropack/proc/shock_kit_assembly(var/atom/to_combine_atom, var/mob/user)
+	user.u_equip(src)
+	user.u_equip(to_combine_atom)
+	var/obj/item/shock_kit/new_shock_kit = new /obj/item/shock_kit(get_turf(user), to_combine_atom, src)
+	user.put_in_hand_or_drop(new_shock_kit)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+// ----------------------- -------------- -----------------------
+
+/obj/item/device/radio/electropack/New()
+	..()
+	// Electropack + sec helmet  -> shock kit
+	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
+
 /obj/item/device/radio/electropack/update_icon()
 	src.icon_state = "electropack[src.on]"
 
@@ -822,19 +852,6 @@ TYPEINFO(/obj/item/radiojammer)
 			src.on = !(src.on)
 			. = TRUE
 			UpdateIcon()
-
-/obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user, W, src)
-		W.set_loc(A)
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(A)
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(A)
-		src.add_fingerprint(user)
-	return
 
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))//(signal.encryption != code))
@@ -1069,6 +1086,8 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	density = 0
 	desc = "A Loudspeaker."
 
+	HELP_MESSAGE_OVERRIDE("")
+
 	New()
 		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
@@ -1100,7 +1119,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 
 	for (var/mob/M in hear)
 
-		flick("loudspeaker-transmitting",src)
+		FLICK("loudspeaker-transmitting",src)
 		playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
 	return hear
 

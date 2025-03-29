@@ -46,8 +46,8 @@ datum
 				var/check = rand(0,100)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if (check < 8 && H.bioHolder.mobAppearance.customization_second.id != "tramp") // M.is_hobo = very yes
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
+					if (check < 8 && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "tramp") // M.is_hobo = very yes
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
 						boutput(M, SPAN_ALERT("<b>You feel gruff!</b>"))
 						SPAWN(0.3 SECONDS)
@@ -258,6 +258,7 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/time_in_bloodstream = 0
 			var/static/list/halluc_sounds = list(
 				"punch",
 				'sound/vox/poo-vox.ogg',
@@ -318,7 +319,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				//pretty colors
-				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
+				src.time_in_bloodstream += mult
+				if (src.time_in_bloodstream > 15)
+					M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
 
 			//get attacked
 				if(prob(60)) //monkey mode
@@ -329,7 +332,7 @@ datum
 				//THE VOICES GET LOUDER
 				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
 
-				if(probmult(8)) //display a random chat message
+				if(src.time_in_bloodstream > 10 && probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
 
@@ -347,6 +350,7 @@ datum
 			on_remove()
 				. = ..()
 				if (ismob(holder.my_atom))
+					src.time_in_bloodstream = 0 //ehhhh
 					var/mob/M = holder.my_atom
 					if (M.client)
 						animate(M.client, color = null, time = 2 SECONDS, easing = SINE_EASING) // gotta come down sometime

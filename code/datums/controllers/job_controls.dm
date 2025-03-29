@@ -12,13 +12,13 @@ var/datum/job_controller/job_controls
 
 	New()
 		..()
-		if (derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode || global.master_mode == "disaster")
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
-			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
+			new /datum/job/medical/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
@@ -28,6 +28,7 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/command)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/security)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/research)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/medical)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
@@ -82,14 +83,13 @@ var/datum/job_controller/job_controls
 		if (!valid_jobs.Find(job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
-		var/datum/preferences/P = player.client.preferences
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
 			if ((!job.allow_traitors && player.mind.special_role))
 				return
 			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
 				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
 				return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return
@@ -99,8 +99,8 @@ var/datum/job_controller/job_controls
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
-		// mentor only job check
-		if (job.mentor_only && !(player.ckey in mentors))
+		// trusted only job check
+		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.key))))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
 			return
 		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
@@ -1065,7 +1065,7 @@ var/datum/job_controller/job_controls
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 	return JOB
 
-///Soft supresses crash on failing to find a job
+///Soft supresses logging on failing to find a job
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
@@ -1095,7 +1095,7 @@ var/datum/job_controller/job_controls
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
 	if (!soft)
-		CRASH("No job found with name '[string]'!")
+		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

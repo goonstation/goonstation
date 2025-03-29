@@ -24,7 +24,7 @@ TYPEINFO(/obj/item/device/igniter)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (H:bleeding || (H.organHolder.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-			if (!src.cautery_surgery(target, user, 15))
+			if (is_special || !src.cautery_surgery(target, user, 15))
 				return ..()
 		else return ..()
 	else return ..()
@@ -138,8 +138,8 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
-		flick("igniter_light", src)
-		boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+		FLICK("igniter_light", src)
+		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
 
@@ -150,7 +150,7 @@ TYPEINFO(/obj/item/device/igniter)
 		if (src.master)
 			location = src.master.loc
 
-		flick("igniter_light", src)
+		FLICK("igniter_light", src)
 		location = get_turf(location)
 		location?.hotspot_expose((isturf(location) ? 3000 : 4000),2000)
 		last_ignite = world.time

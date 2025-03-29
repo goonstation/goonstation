@@ -827,7 +827,6 @@ var/global/noir = 0
 							<b>Regular Modes:</b><br>
 							<A href='?src=\ref[src];action=[cmd];type=secret'>Secret</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=action'>Secret: Action</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=intrigue'>Secret: Intrigue</A><br>
 							"})
 				for(var/item in regular_modes)
 					dat += "<A href='?src=\ref[src];action=[cmd];type=[regular_modes[item]]'>[item]</A><br>"
@@ -1447,6 +1446,23 @@ var/global/noir = 0
 				if (A)
 					usr.client.cmd_admin_check_health(A)
 					return
+		if ("max_health")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					if(isobserver(M))
+						tgui_alert(usr,"You can't revive a ghost! How does that even work?!")
+						return
+					if(config.allow_admin_rev)
+						var/amount = input(usr,"Amount:","Amount",100) as null|num
+						if(!amount) return
+						M.max_health = amount
+						M.full_heal()
+						message_admins(SPAN_ALERT("Admin [key_name(usr)] set max health of [key_name(M)] to [amount]!"))
+						logTheThing(LOG_ADMIN, usr, "set max health of [constructTarget(M,"admin")] to [amount]")
+						logTheThing(LOG_DIARY, usr, "set max health of [constructTarget(M,"diary")] to [amount]", "admin")
+					else
+						tgui_alert(usr,"Reviving is currently disabled, which is tied to changing max health.")
 
 		if ("kill")
 			if (src.level >= LEVEL_SA)
@@ -1719,7 +1735,7 @@ var/global/noir = 0
 				if (!trait_to_add_name)
 					return // user canceled
 				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
-				M.traitHolder.addTrait(all_traits[trait_to_add_name])
+				M.traitHolder.addTrait(all_traits[trait_to_add_name], force_trait=TRUE)
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
 				if (origin == "managetraits")//called via trait management panel
@@ -2150,9 +2166,13 @@ var/global/noir = 0
 									if(ispath(path, /turf))
 										var/turf/T = locate(0 + X,0 + Y,0 + Z)
 										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										thing.set_dir(direction ? direction : SOUTH)
 									else
-										thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.set_dir(direction ? direction : SOUTH)
+										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
+										thing = new path(locate(X, Y, Z))
+										if(isobj(thing))
+											var/obj/O = thing
+											O.initialize(TRUE)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
@@ -2162,9 +2182,13 @@ var/global/noir = 0
 										if(ispath(path, /turf))
 											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
 											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+											thing.set_dir(direction ? direction : SOUTH)
 										else
+											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
 											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.set_dir(direction ? direction : SOUTH)
+											if(isobj(thing))
+												var/obj/O = thing
+												O.initialize(TRUE)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -2339,7 +2363,7 @@ var/global/noir = 0
 						for(var/obj/item/clothing/suit/hazard/fire/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
-						for(var/obj/grille/O in world)
+						for(var/obj/mesh/grille/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())
@@ -2710,6 +2734,35 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
+					if ("setstatuseffect_one")
+						if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+							var/mob/M = tgui_input_list(owner, "Which player?","Set StatusEffect", sortNames(mobs))
+							//this doesn't seem to work I give up.
+							if (!istype(M))
+								return
+
+							var/list/L = list()
+							for(var/R in concrete_typesof(/datum/statusEffect))
+								L += R
+							sortList(L, /proc/cmp_text_asc)
+							var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
+
+							if (!effect)
+								return
+
+							var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+							if (isnull(duration))
+								return
+
+							if (duration <= 0)
+								M.delStatus(initial(effect.id))
+								message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from [key_name(M)].")
+							else
+								M.setStatus(initial(effect.id), duration SECONDS)
+								message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on [key_name(M)] for [duration] seconds.")
+
+						else
+							tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 					if ("add_reagent_one","remove_reagent_one")
 						if (src.level >= LEVEL_PA)
@@ -2812,6 +2865,34 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
+					if ("setstatuseffect_all")
+						if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+							var/list/L = list()
+							for(var/R in concrete_typesof(/datum/statusEffect))
+								L += R
+							sortList(L, /proc/cmp_text_asc)
+							var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
+
+							if (!effect)
+								return
+
+							var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+							if (isnull(duration))
+								return
+
+
+							if (duration <= 0)
+								for(var/mob/living/carbon/human/M in mobs)
+									M.delStatus(initial(effect.id))
+								message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from everyone.")
+							else
+								for(var/mob/living/carbon/human/M in mobs)
+									M.setStatus(initial(effect.id), duration SECONDS)
+
+								message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on everyone for [duration] seconds.")
+
+						else
+							tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 					if ("add_reagent_all","remove_reagent_all")
 						if (src.level >= LEVEL_PA)
@@ -3349,6 +3430,7 @@ var/global/noir = 0
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
+						//random_events.ui_interact(src.owner.mob)
 						random_events.event_config()
 					if("motives")
 						simsController.showControls(usr)
@@ -3392,7 +3474,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("[goonhub_href("/admin/logs/[roundId]")]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3843,6 +3925,9 @@ var/global/noir = 0
 					<b>Remove Ability:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_all'>All</A><BR>
+					<b>Set StatusEffect:</b>
+						*
+						<A href='?src=\ref[src];action=secretsfun;type=setstatuseffect_all'>All</A><BR>
 					<b>Add Reagent<A href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a>:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_all'>All</A><BR>
@@ -4131,6 +4216,9 @@ var/global/noir = 0
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
+				if(isobj(A))
+					var/obj/O = A
+					O.initialize(TRUE)
 				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")

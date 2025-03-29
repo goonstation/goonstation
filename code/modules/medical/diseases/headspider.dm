@@ -113,6 +113,9 @@
 				//transfer mind first
 				var/datum/mind/M = affected_mob.mind
 				D.source.changeling.addDna(affected_mob, TRUE)
+				if (affected_mob.mind && affected_mob.mind != D.source.changeling.owner.mind)
+					logTheThing(LOG_DEBUG, src, "headspider somehow failed to transfer victim [key_name(affected_mob)]'s mind properly, panicking and ghosting them because it's better than ghosting the ling [D.source.changeling.owner] (screm) (fuck) (hepl).")
+					affected_mob.ghostize()
 				D.source.mind.transfer_to(affected_mob)
 
 				affected_mob.add_existing_ability_holder(D.source.changeling)

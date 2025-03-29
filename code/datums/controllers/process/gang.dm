@@ -36,22 +36,35 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			broadcast_to_all_gangs("Each gang has [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ] available from their locker.")
+			var/nextTime = round((TIME + GANG_SPRAYPAINT_REGEN)/10 ,1)
+			var/timestring = "[(nextTime / 60) % 60]:[add_zero(num2text(nextTime % 60), 2)]"
+
 			for(var/datum/gang/gang as anything in gamemode.gangs)
 				gang.spray_paint_remaining += GANG_SPRAYPAINT_REGEN_QUANTITY
+				gang.next_spray_paint_restock = timestring
 
 
-/datum/controller/process/gang_launder_money
+/datum/controller/process/gang_locker_tick
 	setup()
-		name = "Gang_Money_laundering"
+		name = "Gang Locker Tick"
 		schedule_interval = GANG_LAUNDER_DELAY
 	doWork()
 		for_by_tcl(locker, /obj/ganglocker)
 			if (!locker)
-				return
+				continue
+			if (!locker.is_hiding)
+				var/should_hide = TRUE
+				for(var/mob/M in range(1, locker.loc))
+					if(M.get_gang() == locker.gang)
+						should_hide = FALSE
+						break
+				if (should_hide)
+					locker.toggle_hide(TRUE)
+
 			if (locker.stored_cash < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			var/launder_rate = GANG_LAUNDER_RATE
 			if (locker.superlaunder_stacks > 0)
@@ -63,7 +76,7 @@
 			if (points < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
-				return
+				continue
 
 			if (locker.superlaunder_stacks)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_superlaunder")
@@ -84,6 +97,9 @@
 		var/list/area/areas = get_accessible_station_areas()
 		for(var/area_name in areas)
 			if(istype(areas[area_name], /area/station/security) || areas[area_name].teleport_blocked || istype(areas[area_name], /area/station/turret_protected))
+				continue
+			var/typeinfo/area/typeinfo = areas[area_name].get_typeinfo()
+			if (!typeinfo.valid_bounty_area)
 				continue
 			potential_hot_zones += areas[area_name]
 	doWork()
@@ -117,7 +133,11 @@
 		objective_image.plane = PLANE_WALL
 		objective_image.alpha = 180
 		imgroup.add_image(objective_image)
-		broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
+
+		if (crate_spawn_repeats == 3)
+			broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off specialist firearms at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
+		else
+			broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
 
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
@@ -126,25 +146,68 @@
 				abil.last_cast = world.time + GANG_CRATE_DROP_TIME + 5 MINUTES
 				targetGang.leader.current.abilityHolder?.updateButtons()
 
+		var/crate_repeat = crate_spawn_repeats // in case, for some reason, this is spawning more than once a minute...
 		SPAWN(GANG_CRATE_DROP_TIME - 30 SECONDS)
-			if(drop_zone != null)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] will arrive in 30 seconds!")
-				logTheThing(LOG_GAMEMODE, src, "The crate in [drop_zone.name] will arrive in 30 seconds. Location: [location.x],[location.y].")
-			sleep(30 SECONDS)
-			if(drop_zone != null)
-				imgroup.remove_image(objective_image)
-				qdel(indicator)
-				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
-				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
+			if(drop_zone == null)
+				logTheThing(LOG_GAMEMODE, src, "A crate just tried to spawn, but had no drop zone.")
+				return
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] will arrive in 30 seconds!")
+			logTheThing(LOG_GAMEMODE, src, "The crate in [drop_zone.name] will arrive in 30 seconds. Location: [location.x],[location.y].")
 
-/datum/controller/process/gang_duffle_drop
+			sleep(30 SECONDS)
+
+			imgroup.remove_image(objective_image)
+			qdel(indicator)
+			var/obj/storage/crate/gang_crate/crate
+			if (crate_repeat == 3)
+				crate = new/obj/storage/crate/gang_crate/guns_and_gear_bonus(location)
+			else
+				crate = new/obj/storage/crate/gang_crate/guns_and_gear(location)
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
+			logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
+
+
+/datum/controller/process/gang_duffle_objectives
 	var/repeats = 1
 	var/duffle_spawn_repeats = 0
+	var/list/unvandalised_departments = list()
+	var/list/possible_departments = list()
+	var/list/smaller_departments = list()
 	setup()
-		name = "Gang_Duffle_Drops"
+		name = "Gang_Duffle_Objectives"
 		schedule_interval = GANG_LOOT_INITIAL_DROP
-		src.repeats = GANG_LOOT_DROP_VOLUME_PER_GANG
+		possible_departments += /area/station/engine
+		possible_departments += /area/station/medical/medbay
+		possible_departments += /area/station/quartermaster
+		possible_departments += /area/station/science/lobby
+		possible_departments += /area/station/crew_quarters
+		possible_departments += /area/station/hydroponics
+		possible_departments += /area/station/maintenance/north
+		possible_departments += /area/station/maintenance/northeast
+		possible_departments += /area/station/maintenance/northwest
+		possible_departments += /area/station/maintenance/east
+		possible_departments += /area/station/maintenance/south
+		possible_departments += /area/station/maintenance/southeast
+		possible_departments += /area/station/maintenance/southwest
+		possible_departments += /area/station/maintenance/central
+		possible_departments += /area/station/hallway/arrivals
+		possible_departments += /area/station/hallway/centralhallway
+		possible_departments += /area/station/hallway/primary
+		possible_departments += /area/station/hallway/secondary
+		possible_departments += /area/station/mining
+		possible_departments += /area/station/chapel
+		possible_departments += /area/station/medical/medbooth
+		possible_departments += /area/station/science/chemistry // FUCK chemists
+		possible_departments += /area/station/science/artifact
+		possible_departments += /area/station/janitor
+		possible_departments += /area/station/medical/robotics
+		possible_departments += /area/station/medical/research // and GENETICS too.
+		for (var/area in station_areas)
+			var/area/test = station_areas[area]
+			if (test.type in possible_departments)
+				unvandalised_departments += test
+
+
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
 			src.disable()
@@ -155,16 +218,47 @@
 		else if (duffle_spawn_repeats == 2)
 			schedule_interval = GANG_LOOT_DROP_FREQUENCY
 		var/datum/game_mode/gang/gamemode = ticker.mode
+		var/list/duffle_list = list()
+		var/list/vandal_list = list()
+
+		//occasionally replace 1 duffle hunt with vandalism
+		for(var/datum/gang/targetGang as anything in gamemode.gangs)
+			var/vandal_targets = min(GANG_LOOT_DROP_VOLUME_PER_GANG,length(unvandalised_departments))
+
+			//defer to duffle drops if all areas marked to be vandalised
+			duffle_list[targetGang] = GANG_LOOT_DROP_VOLUME_PER_GANG-vandal_targets
+			vandal_list[targetGang] = list()
+			for (var/i in 1 to vandal_targets)
+				var/picked_area = pick(unvandalised_departments)
+				vandal_list[targetGang] += picked_area
+				unvandalised_departments -= picked_area
+		var/list/duffle_broadcasts = doDuffles(duffle_list)
+		var/list/vandalism_broadcasts = doVandalism(vandal_list)
+
+		for(var/datum/gang/targetGang as anything in gamemode.gangs)
+			var/broadcast = "There [GANG_LOOT_DROP_VOLUME_PER_GANG>1 ? "are":"is"] [GANG_LOOT_DROP_VOLUME_PER_GANG] bag[s_es(GANG_LOOT_DROP_VOLUME_PER_GANG)] of weapons & supplies ready for your gang to claim.<br>"
+			if (duffle_broadcasts[targetGang])
+				broadcast += " - [duffle_broadcasts[targetGang]]"
+				broadcast += "<br>"
+			if (vandalism_broadcasts[targetGang])
+				broadcast += " - [vandalism_broadcasts[targetGang]]"
+			targetGang.broadcast_to_gang(broadcast)
+
+	proc/doDuffles(gang_duffle_list)
+		var/datum/game_mode/gang/gamemode = ticker.mode
 		var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
+		var/list/broadcasts = list()
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
-			for(var/i = 1 to repeats)
+			if (!gang_duffle_list[targetGang]) continue
+
+			for(var/i = 1 to gang_duffle_list[targetGang])
 				var/datum/mind/civvie = targetGang.get_random_civvie(civiliansAlreadyPinged)
 				civiliansAlreadyPinged += civvie
 				if (!(civvie in gangChosenCivvies))
 					gangChosenCivvies += civvie
 				targetGang.target_loot_spawn(civvie,targetGang)
-			var/broadcast_string = "<span style='font-size:20px'> Our associates have hidden [repeats] bag[s_es(repeats)] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to the PDAs of: "
+			var/broadcast_string = "<span style='font-size:20px'> The location of [gang_duffle_list[targetGang]] bag[s_es(gang_duffle_list[targetGang])] [(gang_duffle_list[targetGang] == 1) ? "is" : "are" ] available on the PDA[s_es(gang_duffle_list[targetGang])] of: "
 			if (length(gangChosenCivvies) > 1)
 				for (var/name=1 to length(gangChosenCivvies)-1)
 					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role], "
@@ -172,6 +266,28 @@
 			else
 				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role]."
 			broadcast_string += "</span>"
-			targetGang.broadcast_to_gang(broadcast_string)
+			broadcasts[targetGang] = broadcast_string
+		return broadcasts
 
+
+	proc/doVandalism(gang_vandalism_list)
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		var/list/broadcasts = list()
+		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
+			if (!gang_vandalism_list[targetGang]) continue
+			var/list/area_names = list()
+			for(var/area/station/chosen_area in gang_vandalism_list[targetGang])
+				area_names += initial(chosen_area.name)
+				targetGang.vandalism_tracker[chosen_area] = 0
+				if (chosen_area.initial_structure_value > 80) //large rooms
+					targetGang.vandalism_tracker_target[chosen_area] = GANG_VANDALISM_BASE_REQUIRED_SCORE
+				else if (chosen_area.initial_structure_value > 50) //medium rooms
+					targetGang.vandalism_tracker_target[chosen_area] = GANG_VANDALISM_BASE_REQUIRED_SCORE/2
+				else
+					targetGang.vandalism_tracker_target[chosen_area] = 2*GANG_VANDALISM_BASE_REQUIRED_SCORE/5
+			if (length(area_names) == 1)
+				broadcasts[targetGang] ="<span style='font-size:20px'> Cover [area_names[1]] in ProPaint tags, and smash it up for a bag!</span>"
+			else if (length(area_names) > 1)
+				broadcasts[targetGang] = "<span style='font-size:20px'> Cover [english_list(area_names)], in ProPaint tags, and smash them up for loot!</span>"
+		return broadcasts
 

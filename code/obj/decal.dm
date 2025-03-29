@@ -64,10 +64,18 @@
 	mouse_opacity = 0
 	blend_mode = 2
 	plane = PLANE_NOSHADOW_ABOVE
+	var/y_blur = 3
 
 	New()
-		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
+		add_filter("motion blur", 1, motion_blur_filter(x=0, y=src.y_blur))
 		..()
+
+	talisman
+		icon_state = null
+		y_blur = 2
+
+		proc/activate_glimmer()
+			FLICK("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"
@@ -179,7 +187,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decals/blood/blood.dmi'
 	icon_state = "floor2"
 	color = "#3399FF"
-	alpha = 100
+	alpha = 200
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
@@ -313,7 +321,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = WEST
+	random_dir = RANDOM_DIR_ALL
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 

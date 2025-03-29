@@ -418,7 +418,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
-		if(prob(20))
+		if(prob(20) && !(isghostcritter(M) && ON_COOLDOWN(src, "critter_gibs_\ref[M]", INFINITY)))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
 			boutput(M, SPAN_ALERT("You drip some meat on the floor"))
@@ -446,6 +446,7 @@
 				if(2)
 					boutput(M, SPAN_ALERT("Good grief, that tasted awful!"))
 					M.take_toxin_damage(2)
+					M.nauseate(3)
 				if(3)
 					boutput(M, SPAN_ALERT("There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK"))
 					var/vomit_message = SPAN_ALERT("[M.name] suddenly and violently vomits!")
@@ -542,7 +543,7 @@
 	take_a_bite(mob/consumer, mob/feeder)
 		if (prob(50))
 			consumer.visible_message(SPAN_ALERT("[consumer] tries to take a bite of [src], but [src] takes a bite of [consumer] instead!"),
-				SPAN_ALERT("You tries to take a bite of [src], but [src] takes a bite of you instead!"),
+				SPAN_ALERT("You try to take a bite of [src], but [src] takes a bite of you instead!"),
 				SPAN_ALERT("You hear something bite down."))
 			playsound(get_turf(feeder), pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			random_brute_damage(consumer, rand(5, 15), FALSE)
@@ -550,6 +551,40 @@
 			hit_twitch(consumer)
 		else
 			return ..()
+
+/obj/item/reagent_containers/food/snacks/burger/burgle
+	name = "burgle"
+	desc = "Reeks of crime."
+	icon_state = "burgle"
+	food_effects = list("food_cateyes", "food_energized_big")
+	contraband = 3 //ILLEGAL
+
+	take_a_bite(mob/consumer, mob/feeder)
+		if (prob(35))
+			var/list/stealable_things = consumer.equipment_list()
+			if (!length(stealable_things)) //naked burger eaters smh
+				return ..()
+			var/obj/item/stolen = pick(stealable_things)
+			consumer.drop_from_slot(stolen)
+			if (ismob(src.loc))
+				var/mob/holder = src.loc
+				holder.drop_from_slot(src)
+			playsound(get_turf(consumer), /obj/item/crowbar::hitsound, 50, TRUE)
+			random_brute_damage(consumer, 5)
+			consumer.changeStatus("knockdown", 4 SECONDS)
+			consumer.visible_message(SPAN_ALERT("[consumer] goes to take a bite of [src], but [src] has already burgled their [stolen.name] and made off with it!"),
+				SPAN_ALERT("You go to take a bite of [src], but [src] has already burgled your [stolen.name] and made off with it!"),
+				SPAN_ALERT("You hear a clonk!")
+			)
+			var/turf/T = get_turf(pick(view(10, consumer)))
+			walk_towards(src, T, 3)
+			walk_towards(stolen, T, 3)
+			SPAWN(3 SECONDS)
+				walk(src, 0)
+				walk(stolen, 0)
+			return
+		consumer.reagents?.add_reagent("methamphetamine", 5)
+		return ..()
 
 /obj/item/reagent_containers/food/snacks/burger/vr
 	icon = 'icons/effects/VR.dmi'

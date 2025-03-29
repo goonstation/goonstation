@@ -98,15 +98,15 @@
 /area/station/engine/core)
 "eN" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot loop inlet valve"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -163,7 +163,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop auxillary west"
+	name = "cold auxillary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -178,15 +178,15 @@
 /area/station/engine/core)
 "iC" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop outlet valve"
+	name = "cold outlet valve";
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "iO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop auxillary west"
+	name = "hot auxillary valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -262,7 +262,7 @@
 /area/station/engine/core)
 "pc" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
+	name = "hot purge valve"
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
@@ -388,7 +388,7 @@
 "wQ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop inlet valve"
+	name = "cold inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
@@ -562,12 +562,12 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop inlet valve"
-	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -621,7 +621,7 @@
 /area/station/engine/core)
 "OQ" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "outlet purge valve"
+	name = "cold purge valve"
 	},
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -631,7 +631,7 @@
 "PX" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop inlet valve"
+	name = "hot inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
@@ -681,7 +681,7 @@
 "WR" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop outlet valve"
+	name = "hot outlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)

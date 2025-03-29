@@ -13,7 +13,6 @@
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	flags =  FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -24,8 +23,8 @@
 	locked = 1
 	access_lookup = "Captain"
 	bot_move_delay = FIREBOT_MOVE_SPEED
-	var/obj/hotspot/target = null
-	var/obj/hotspot/oldtarget = null
+	var/atom/movable/hotspot/target = null
+	var/atom/movable/hotspot/oldtarget = null
 	var/oldloc = null
 	var/found_cooldown = 5 SECONDS
 	var/spray_cooldown = 3 SECONDS
@@ -35,6 +34,7 @@
 	var/extinguish_flags = EXTINGUISH_HOTSPOTS | EXTINGUISH_ITEMS | EXTINGUISH_MOBS
 	var/water_amt = 2
 	var/foam_amt = 8
+	var/list/people_to_ignore = list() //people we've insulted with the trait and don't need to insult again
 	//To-Do: Patrol the station for fires maybe??
 
 /obj/machinery/bot/firebot/party
@@ -62,6 +62,7 @@
 	SPAWN(0.5 SECONDS)
 		if (src)
 			src.icon_state = "firebot[src.on]"
+			src.AddComponent(/datum/component/proximity)
 
 //		if(radio_connection)
 //			radio_controller.add_object(src, "[beacon_freq]")
@@ -118,7 +119,7 @@
 		if(user)
 			boutput(user, SPAN_ALERT("You short out [src]'s valve control circuit!"))
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -140,7 +141,7 @@
 	..()
 	if (!src.emagged && prob(75))
 		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -203,7 +204,7 @@
 				src.speak(pick("ONE FIRE, ONE EXTINGUISHER.", "HEAT DEATH: DELAYED.", "TARGET FIRE TRIANGLE: DISRUPTED.", "FIRE DESTROYED.",
 											"AN EXTINGUISHER TO THE FACE KEEPS ME AWAY.", "YOU HAVE OUTRUN AN INFERNO", "GOD MADE TOMORROW FOR THE FIRES WE DON'T KILL TODAY."))
 				src.KillPathAndGiveUp(1)
-		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]))
+		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/atom/movable/hotspot]))
 			src.speak(pick("FIRE: [pick("ENDED", "MURDERED", "STARVED", "KILLED", "DEAD", "DESTROYED")].", "FIRE SAFETY PROTOCOLS: OBSERVED.",
 										 "TARGET CREATURE, OBJECT, OR REGION OF FLAME: EXTINGUISHED.","YOU ARE NO LONGER ON FIRE."))
 			src.KillPathAndGiveUp(1) // Cus they used to keep trying to put someone out, even if they arent on fire. Or are dead.
@@ -231,7 +232,7 @@
 	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
 		return
 	if(src.extinguish_flags & EXTINGUISH_HOTSPOTS)
-		for_by_tcl(H, /obj/hotspot) // First search for burning tiles
+		for_by_tcl(H, /atom/movable/hotspot) // First search for burning tiles
 			if ((H == src.oldtarget))
 				continue
 			if(IN_RANGE(src, H, 7))
@@ -256,8 +257,14 @@
 
 	if(src.extinguish_flags & EXTINGUISH_MOBS)
 		for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
-			if (M == src.oldtarget || isdead(M) || !src.valid_target(M))
+			if (M == src.oldtarget || isdead(M) || !src.valid_target(M) || (get_weakref(M) in src.people_to_ignore))
 				continue
+			if(M.traitHolder.hasTrait("wasitsomethingisaid"))
+				src.people_to_ignore.Add(get_weakref(M)) //each bot gets to insult the person once
+				src.point(M, 1)
+				src.speak(pick("I WILL IGNORE THAT BECAUSE I DO NOT LIKE YOU.", "SOME BOTS JUST WANT TO WATCH CERTAIN PEOPLE BURN TO DEATH","I CAN MAKE AN EXCEPTION JUST THIS ONCE, FIRE.","AND NOW THAT THE WORLD IS ON FIRE YOU HAVE THE AUDACITY TO COME TO ME FOR HELP?", "MY HATRED FOR YOU OUTWEIGHS MY FEELINGS ON FIRE WHICH ARE PUBLICLY KNOWN TO BE QUITE STRONG"))
+				continue
+
 			if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
 				if (src.setup_party)
 					src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
@@ -282,7 +289,7 @@
 		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 
 //Oh no, we may or may not be emagged! Better hope someone crossing us is on fire!
-/obj/machinery/bot/firebot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/bot/firebot/EnteredProximity(atom/movable/AM)
 	if(!on || stunned)
 		return
 
@@ -305,7 +312,7 @@
 
 	var/list/the_targets = list(T,T1,T2)
 
-	flick("firebot-c", src)
+	FLICK("firebot-c", src)
 	if (src.setup_party)
 		playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 75, 1, -3)
 
@@ -410,6 +417,7 @@
 	extinguish_flags = EXTINGUISH_MOBS
 	water_amt = 0
 	foam_amt = 10
+	health = 100 //thicc
 
 /obj/machinery/bot/firebot/firebrand/valid_target(mob/M)
 	return istype(M.get_id(), /obj/item/card/id/syndicate)

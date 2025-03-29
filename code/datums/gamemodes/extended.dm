@@ -9,9 +9,14 @@
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
-	for(var/datum/random_event/event in random_events.events)
+#ifdef LIVE_SERVER
+	if (global.ticker.roundstart_player_count(FALSE) < 20)
+		return FALSE
+#endif
+	for(var/datum/random_event/event in random_events.major_events)
 		if(istype(event, /datum/random_event/major/law_rack_corruption))
 			event.disabled = TRUE
+	return TRUE
 
 /datum/game_mode/extended/announce()
 	boutput(world, "<B>The current game mode is - Extended!</B>")

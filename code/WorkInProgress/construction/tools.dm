@@ -244,7 +244,7 @@ TYPEINFO(/obj/item/room_marker)
 
 			var/dense = 0
 			for (var/obj/O in C)
-				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/mesh/grille) || istype(O, /obj/window) || istype(O, /obj/table))
 					dense = 1
 					break
 			if (dense)
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
+			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
@@ -626,6 +626,7 @@ TYPEINFO(/obj/item/room_planner)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
+					W.mod = W::mod
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
@@ -733,7 +734,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in N
+				var/obj/mesh/grille/Gr = locate() in N
 				if (Gr)
 					borders_mask -= 1
 					gcount--
@@ -745,7 +746,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in S
+				var/obj/mesh/grille/Gr = locate() in S
 				if (Gr)
 					borders_mask -= 2
 					gcount--
@@ -757,7 +758,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in E
+				var/obj/mesh/grille/Gr = locate() in E
 				if (Gr)
 					borders_mask -= 4
 					gcount--
@@ -769,7 +770,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in W
+				var/obj/mesh/grille/Gr = locate() in W
 				if (Gr)
 					borders_mask -= 8
 					gcount--
@@ -814,7 +815,7 @@ TYPEINFO(/obj/item/room_planner)
 
 		origin.use_materials(2, borders)
 
-		var/obj/grille/G = new /obj/grille(L)
+		var/obj/mesh/grille/G = new /obj/mesh/grille(L)
 		G.setMaterial(metal)
 
 		var/mask = bmask
@@ -894,6 +895,7 @@ TYPEINFO(/obj/item/room_planner)
 			var/turf/simulated/wall/auto/AT = T
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
+			AT.mod = selectedmod
 
 			qdel(src)
 

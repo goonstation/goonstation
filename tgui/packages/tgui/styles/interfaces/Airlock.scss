@@ -1,6 +1,6 @@
-@use '../colors.scss';
-@use '../components/Button.scss';
-@use '../base.scss';
+@use '../colors';
+@use '../components/Button';
+@use '../base';
 
 .AccessPanel-wires-btn {
   &.Button--selected {
@@ -12,12 +12,12 @@
   font-family: monospace;
   border-width: base.em(2px);
   border-style: outset;
-  border-color: #00AA00;
+  border-color: #00aa00;
   outline: base.em(1px) solid rgb(0, 122, 0);
   &.Button--disabled {
-    background-color: #4A6A4A;
+    background-color: #4a6a4a;
   }
   &.Button--color--default {
-    background-color: #00FF00;
+    background-color: #00ff00;
   }
 }

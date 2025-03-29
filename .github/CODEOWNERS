@@ -46,10 +46,13 @@
 /code/datums/actions/ @ZeWaka
 
 # Pali
-/code/datums/components/ @pali6
-/code/obj/artifacts/ @pali6
-/code/datums/controllers/artifact_controls.dm @pali6
+#/code/datums/components/ @pali6
+#/code/obj/artifacts/ @pali6
+#/code/datums/controllers/artifact_controls.dm @pali6
 /code/WorkInProgress/pali.dm @pali6
 
+# Wire
+/tools/server/ @Wirewraith
+
 # Multiple Owners
-/tgui/ @mordent-goonstation @ZeWaka @Tarmunora
+/tgui/ @mordent-goonstation @ZeWaka

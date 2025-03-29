@@ -17,11 +17,22 @@ TYPEINFO(/obj/critter/gunbot/drone/cannondrone)
 				"conductive_high" = 13,
 				"crystal_dense" = 17,
 				"erebite" = 16)
+TYPEINFO(/obj/critter/gunbot/drone/rocketdrone)
+	mats = list("energy_extreme" = 15,
+				"metal_superdense" = 25,
+				"conductive_high" = 10,
+				"crystal_dense" = 15,
+				"erebite" = 30)
 TYPEINFO(/obj/critter/gunbot/drone/minigundrone)
 	mats = list("energy_extreme" = 13,
 				"metal_superdense" = 24,
 				"conductive_high" = 20,
 				"crystal_dense" = 17)
+TYPEINFO(/obj/critter/gunbot/drone/maserdrone)
+	mats = list("energy_extreme" = 25,
+				"metal_superdense" = 15,
+				"conductive_high" = 25,
+				"crystal_dense" = 15)
 TYPEINFO(/obj/critter/gunbot/drone/raildrone)
 	mats = list("energy_extreme" = 19,
 				"metal_superdense" = 20,
@@ -83,6 +94,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	seekrange = 15
 	flying = 1
 	var/score = 10
+	/// chance of dropping loot
+	var/drop_loot_chance = 100
 	var/obj/item/droploot = null
 	var/damaged = 0 // 1, 2, 3
 	var/dying = 0
@@ -98,7 +111,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/smashes_shit = 0
 	var/smashed_recently = 0
 	var/smash_cooldown = 200
-	var/list/can_smash = list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack)
+	var/list/can_smash = list(/obj/window, /obj/mesh/grille, /obj/table, /obj/foamedmetal, /obj/rack)
 	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser)
 
 	var/projectile_spread = 0
@@ -132,7 +145,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				if(istype(AM, /obj/window))
 					AM:health = 0
 					AM:smash()
-				else if(istype(AM,/obj/grille))
+				else if(istype(AM,/obj/mesh/grille))
 					AM:damage_blunt(30)
 				else if(istype(AM, /obj/table))
 					AM.meteorhit()
@@ -178,7 +191,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0)
 						continue
-					if (!(C.faction & FACTION_SYNDICATE))
+					if (!(FACTION_SYNDICATE in C.faction))
 						src.attack = 1
 					if (C.name == src.attacker)
 						src.attack = 1
@@ -287,7 +300,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		SPAWN(2 SECONDS)
 			if (prob(25))
 				new /obj/item/device/prox_sensor(src.loc)
-			if(droploot)
+			if(droploot && prob(src.drop_loot_chance))
 				new droploot(src.loc)
 			..()
 			return
@@ -571,7 +584,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 120
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/shipcomponent/secondary_system/crash
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
@@ -579,6 +591,25 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
+
+	rocketdrone
+		name = "Syndicate Rocket Drone"
+		desc = "A deadly Syndicate drone equipped with a pod-mounted rocket launcher."
+		icon = 'icons/mob/critter/robotic/drone/rocket.dmi'
+		icon_state = "drone_rocket"
+		dead_state = "drone_rocket"
+		health = 100
+		maxhealth = 100
+		score = 150
+		alertsound1 = 'sound/machines/engine_alert1.ogg'
+		alertsound2 = 'sound/machines/engine_alert1.ogg'
+		projectile_type = /datum/projectile/bullet/homing/rocket/gunbot_drone
+		current_projectile = new/datum/projectile/bullet/homing/rocket/gunbot_drone
+		attack_cooldown = 50
+
+		New()
+			..()
+			name = "Drone RO-[rand(1, 999)]"
 
 	minigundrone
 		name = "Syndicate BL Drone"
@@ -591,7 +622,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 120
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/bang_gun
+		drop_loot_chance = 25
+		droploot = /obj/item/shipcomponent/mainweapon/minigun
 		projectile_type = /datum/projectile/bullet/akm
 		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
@@ -609,7 +641,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		health = 800
 		maxhealth = 800
 		score = 500
-		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
+		droploot = /obj/item/currency/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
 
@@ -628,7 +660,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE)
 				src.set_dir(get_dir(src, target))
 
-				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
+				var/list/affected = drawLineObj(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 				for(var/obj/O in affected)
 					O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -795,8 +827,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		icon = 'icons/mob/critter/robotic/drone/assault.dmi'
 		icon_state = "drone_assault"
 		dead_state = "drone_assault"
-		health = 150
-		maxhealth = 150
+		health = 300
+		maxhealth = 300
 		score = 100
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
@@ -821,6 +853,23 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			..()
 			name = "Drone CA-[rand(1,999)]"
 
+	maserdrone
+		name = "Maser Drone"
+		desc = "A lethal drone equipped with a weapon designed to bypass pod armor completely. It's best to not get this thing's attention."
+		icon = 'icons/mob/critter/robotic/drone/maser.dmi'
+		icon_state = "drone_maser"
+		dead_state = "drone_maser"
+		health = 100
+		maxhealth = 100
+		score = 120
+		drop_loot_chance = 25
+		droploot = /obj/item/shipcomponent/mainweapon/maser
+		projectile_type = /datum/projectile/laser/light/maser
+		current_projectile = new/datum/projectile/laser/light/maser
+
+		New()
+			..()
+			name = "Drone MA-[rand(1, 999)]"
 
 	helldrone // the worst jerk
 		name = "Syndicate Command Drone"
@@ -917,6 +966,48 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			..()
 			name = "Battledrone Omega-[rand(1,10)]"
 			return
+
+ABSTRACT_TYPE(/obj/gunbotdrone_spawner)
+/obj/gunbotdrone_spawner
+	name = "gunbot drone spawner"
+	var/list/possible_drones = null
+
+	New()
+		..()
+		var/obj/critter/gunbot/drone/drone = weighted_pick(src.possible_drones)
+		drone = new drone(get_turf(src))
+		qdel(src)
+
+/obj/gunbotdrone_spawner/common
+	icon = 'icons/mob/critter/robotic/drone/phaser.dmi'
+	icon_state = "drone_phaser"
+	possible_drones = list(/obj/critter/gunbot/drone = 90,
+						   /obj/critter/gunbot/drone/buzzdrone = 100,
+						   /obj/critter/gunbot/drone/aciddrone = 25,
+						   /obj/critter/gunbot/drone/laserdrone = 5)
+
+/obj/gunbotdrone_spawner/uncommon
+	icon = 'icons/mob/critter/robotic/drone/laser.dmi'
+	icon_state = "drone_laser"
+	possible_drones = list(/obj/critter/gunbot/drone/laserdrone = 100,
+						   /obj/critter/gunbot/drone/heavydrone = 75,
+						   /obj/critter/gunbot/drone/cutterdrone = 25, // these are already manually placed in some asteroids, so reduced chance for variety
+						   /obj/critter/gunbot/drone/minigundrone = 5,
+						   /obj/critter/gunbot/drone/maserdrone = 5)
+
+/obj/gunbotdrone_spawner/rare
+	icon = 'icons/mob/critter/robotic/drone/ballistic.dmi'
+	icon_state = "drone_ballistic"
+	possible_drones = list(/obj/critter/gunbot/drone/minigundrone = 100,
+						   /obj/critter/gunbot/drone/maserdrone = 75,
+						   /obj/critter/gunbot/drone/cannondrone = 75,
+						   /obj/critter/gunbot/drone/rocketdrone = 50)
+
+/obj/gunbotdrone_spawner/very_rare
+	icon = 'icons/mob/critter/robotic/drone/railgun.dmi'
+	icon_state = "drone_railgun"
+	possible_drones = list(/obj/critter/gunbot/drone/raildrone = 100,
+						   /obj/critter/gunbot/drone/assdrone = 50)
 
 TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	mats = null //no
@@ -1059,7 +1150,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
-			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
@@ -1072,13 +1163,13 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		for (var/obj/machinery/cruiser/C in range(src, 5))
-			lineObjs += DrawLine(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 			playsound(C.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			C.ex_act(3)
 
@@ -1186,7 +1277,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
-			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
@@ -1199,7 +1290,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			lineObjs += drawLineObj(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)

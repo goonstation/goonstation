@@ -11,9 +11,9 @@
 	var/gen_max_y
 
 	var/tree_type = /datum/bsp_tree
+	var/room_size = 7
 	wall_turf_type	= /turf/unsimulated/wall/auto/adventure/cave
 	floor_turf_type = /turf/unsimulated/floor/cave
-	var/room_size = 7
 
 	var/edge_proc = /datum/map_generator/room_maze_generator/proc/connect_nodes_by_edges
 	/// Border between rooms
@@ -166,8 +166,10 @@
 			min_y = room_a.y + room_a.height * 0.5 + rand(-range, range)
 			max_y = min_y + prob(15)
 
-		if(max_x == src.gen_max_x || max_y == src.gen_max_y )
-			max_x = max_x
+		if(min_x < 0)	min_x = 0
+		if(min_y < 0)	min_y = 0
+		if(max_x > src.gen_max_x)	max_x = src.gen_max_x
+		if(max_y > src.gen_max_y)	max_y = src.gen_max_y
 
 		for(var/i in min_x to max_x)
 			for(var/j in min_y to max_y)
@@ -200,10 +202,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 /datum/map_generator/room_maze_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = src.cell_grid[T.x][T.y]

@@ -24,6 +24,9 @@
 	var/time_between_lotto = 0
 	var/time_until_lotto = 0
 
+	/// The last time a bonus was issued
+	var/last_issued_bonus_time = 0
+
 	// We'll start at 0 credits, and increase it in the lotteryday proc
 	var/lotteryJackpot = 0
 	// 500 minutes ~ 8.2 hours
@@ -193,12 +196,14 @@
 		else if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
-
-				if(istype(I, /obj/item/currency/spacecash/buttcoin))
-					boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
-				else
-					src.accessed_record["current_money"] += I.amount
-
+				src.accessed_record["current_money"] += I.amount
+				I.amount = 0
+				qdel(I)
+			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
+		else if(istype(I, /obj/item/currency/buttcoin/))
+			if (src.accessed_record)
+				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
+				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
 				I.amount = 0
 				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
@@ -449,6 +454,19 @@
 				src.Attackhand(user)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 			return
+		if (istype(I, /obj/item/currency/buttcoin))
+			if (afterlife)
+				boutput(user, SPAN_ALERT("On closer inspection, this ATM doesn't seem to have a deposit slot for credits!"))
+				return
+			if (src.accessed_record)
+				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
+				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
+				if (!ON_COOLDOWN(src, "sound_insertcash", 2 SECONDS))
+					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
+				I.amount = 0
+				qdel(I)
+			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
+			return
 		if (istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You insert the lottery ticket into the ATM."))
@@ -486,7 +504,7 @@
 			return
 		var/damage = I.force
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
@@ -754,7 +772,7 @@ proc/FindBankAccountsByJobs(var/list/job_list)
 	RETURN_TYPE(/list/datum/db_record)
 	. = list()
 	for (var/each_job in job_list)
-		. += data_core.bank.find_records("job", each_job)
+		. += data_core.general.find_records("rank", each_job)
 
 #undef STATE_LOGGEDOFF
 #undef STATE_LOGGEDIN

@@ -659,16 +659,6 @@ TYPEINFO(/obj/stool/chair)
 			butt_img.icon_state = "chair_[has_butt.icon_state]"
 			UpdateOverlays(butt_img, "chairbutt")
 			return
-		if (istype(W, /obj/item/assembly/shock_kit))
-			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc, W)
-			if (src.material)
-				E.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			W.set_loc(E)
-			user.u_equip(W)
-			W.layer = initial(W.layer)
-			qdel(src)
-			return
 		else
 			return ..()
 
@@ -857,6 +847,7 @@ TYPEINFO(/obj/stool/chair)
 			qdel(src)
 
 	disposing()
+		unbuckle()
 		for (var/mob/M in src.loc)
 			if (M.buckled == src)
 				M.buckled = null
@@ -920,9 +911,12 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/syndicate
 	desc = "That chair is giving off some bad vibes."
 	comfort_value = -5
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
-	HasProximity(atom/movable/AM as mob|obj)
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
+
+	EnteredProximity(atom/movable/AM)
 		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("knockdown"))
 			src.visible_message(SPAN_ALERT("[src] trips [AM]!"), SPAN_ALERT("You hear someone fall."))
 			AM.changeStatus("knockdown", 2 SECONDS)
@@ -1139,8 +1133,6 @@ TYPEINFO(/obj/item/chair/folded)
 
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mats = 15
-
-TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
@@ -1375,7 +1367,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/currency/spacecash/small,
 	/obj/item/currency/spacecash/tourist,
-	/obj/item/currency/spacecash/buttcoin)
+	/obj/item/currency/buttcoin)
 
 	New()
 		..()
@@ -1405,7 +1397,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		if (!user) return
 		if (damaged || buckled_guy) return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		playsound(src.loc, "rustle", 66, 1, -5) // todo: find a better sound.
 

@@ -12,21 +12,24 @@
 
 	New()
 		..()
-
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 		return
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		if(occupant)
 			occupant.set_loc(get_turf(src.loc))
 			occupant = null
 		..()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(src.status & BROKEN)
+			return "Use <b>2 glass sheets</b> to repair [src]."
+		else
+			return ""
 
 	examine()
 		. = ..()
@@ -109,9 +112,10 @@
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-			return 0
-		if(!iscarbon(target) )
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))				 // CHANGE TO CHECK FOR MODULE?
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
@@ -124,15 +128,10 @@
 		.= 1
 
 	set_broken()
-		if (status & BROKEN)
-			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
+		. = ..()
+		if (.) return
 		src.go_out()
 		icon_state = "PAG_broken"
-		light.disable()
-		status |= BROKEN
 
 	attack_hand(mob/user)
 		if (src.status & BROKEN)
@@ -173,16 +172,7 @@
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 
-			if (src.occupant)
-				boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
-				return
-
-			if (src.locked)
-				boutput(user, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
-				return
-
-			if(!iscarbon(G.affecting))
-				boutput(user, SPAN_HINT("<B>The scanner supports only carbon based lifeforms.</B>"))
+			if(!can_operate(user, G.affecting))
 				return
 
 			var/mob/M = G.affecting

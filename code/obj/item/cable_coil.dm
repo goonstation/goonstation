@@ -14,6 +14,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	stack_type = /obj/item/cable_coil // so cut cables can stack with partially depleted full coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
+	tool_flags = TOOL_WIRING
 	var/iconmod = null
 	var/namemod = null
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -336,7 +337,7 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 
 ///This was copy-pasted some 5 times across the 4 cable laying procs that existed) FSR?
-obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
+/obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
 	var/obj/cable/NC = new cable_obj_type(overthere, src)
 	applyCableMaterials(NC, src.insulator, src.conductor)
 	NC.d1 = dir1

@@ -79,7 +79,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aap" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -140,7 +140,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aay" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -155,7 +155,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aaz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -165,7 +165,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aaA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -249,7 +249,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -286,7 +286,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
 "aaL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -316,7 +316,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -331,7 +331,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -347,7 +347,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -362,7 +362,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -381,7 +381,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/shuttle)
 "aaS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -399,7 +399,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -409,7 +409,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -433,7 +433,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "aaW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -459,7 +459,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "aaY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -474,7 +474,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aaZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -489,7 +489,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aba" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -529,7 +529,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "abe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -546,7 +546,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "abf" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -575,7 +575,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "abh" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -601,7 +601,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "abk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -630,7 +630,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "abo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -644,7 +644,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "abp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -661,7 +661,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
 "abr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -678,7 +678,7 @@
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
 "abs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -688,12 +688,12 @@
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
 "abt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "abu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -712,7 +712,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "abw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -726,7 +726,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "abx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -736,7 +736,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aby" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -793,7 +793,7 @@
 /turf/simulated/wall,
 /area/station/security/checkpoint)
 "abE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -808,7 +808,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "abF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -1122,7 +1122,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1168,7 +1168,7 @@
 	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1217,7 +1217,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "acw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1295,7 +1295,7 @@
 /area/station/maintenance/northeast)
 "acG" = (
 /obj/machinery/portableowl{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
@@ -1542,7 +1542,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ado" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1716,7 +1716,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "adF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -1726,7 +1726,7 @@
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
 "adG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -1753,7 +1753,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/market)
 "adL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1768,7 +1768,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "adM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -1828,7 +1828,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1908,7 +1908,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2041,7 +2041,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2204,7 +2204,7 @@
 /area/station/maintenance/northeast)
 "aeD" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2271,7 +2271,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2301,7 +2301,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2496,7 +2496,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2571,7 +2571,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "afj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2587,7 +2587,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "afk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2597,7 +2597,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "afl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2646,7 +2646,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2805,7 +2805,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "afE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2993,7 +2993,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "afX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -3041,7 +3041,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3460,7 +3460,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3695,7 +3695,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3744,7 +3744,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3811,7 +3811,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ahO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -3844,7 +3844,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ahR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -3904,7 +3904,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3926,7 +3926,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -3964,7 +3964,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4049,7 +4049,7 @@
 /turf/simulated/wall,
 /area/station/janitor/office)
 "aij" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4184,7 +4184,7 @@
 /turf/simulated/floor,
 /area/station/janitor/office)
 "aiA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4240,7 +4240,7 @@
 /obj/machinery/conveyor/SN{
 	id = "garbage"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aiG" = (
@@ -4257,7 +4257,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4284,7 +4284,7 @@
 /area/station/quartermaster/storage)
 "aiJ" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4340,7 +4340,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4375,7 +4375,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4433,7 +4433,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aiY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4490,7 +4490,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4507,7 +4507,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4536,7 +4536,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4625,7 +4625,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4653,7 +4653,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4686,7 +4686,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4704,7 +4704,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4770,7 +4770,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4911,7 +4911,7 @@
 	},
 /area/station/chapel/sanctuary)
 "ajU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4948,7 +4948,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -4985,7 +4985,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5060,7 +5060,7 @@
 	},
 /area/station/chapel/sanctuary)
 "akj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5084,7 +5084,7 @@
 	pixel_y = 0
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5239,7 +5239,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -5258,7 +5258,7 @@
 	pixel_y = 0
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5437,7 +5437,7 @@
 	},
 /area/station/chapel/sanctuary)
 "akV" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5465,7 +5465,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -5513,7 +5513,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5624,7 +5624,7 @@
 /area/station/chapel/sanctuary)
 "aln" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -5676,7 +5676,7 @@
 /area/station/quartermaster/storage)
 "alr" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -5754,7 +5754,7 @@
 /area/station/quartermaster/office)
 "alw" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6286,7 +6286,7 @@
 	},
 /area/station/chapel/sanctuary)
 "amt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6513,7 +6513,7 @@
 	},
 /area/station/chapel/sanctuary)
 "amO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6571,7 +6571,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6756,7 +6756,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6798,7 +6798,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -6975,7 +6975,7 @@
 	tag = "icon-0-2";
 	icon_state = "0-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -7203,7 +7203,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -7768,7 +7768,7 @@
 /turf/simulated/floor,
 /area/space)
 "apF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/wall,
 /area/space)
 "apG" = (
@@ -8307,7 +8307,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -8334,7 +8334,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -8351,7 +8351,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8384,7 +8384,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -8406,7 +8406,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8630,7 +8630,7 @@
 /turf/simulated/floor/purple,
 /area/space)
 "arF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -8645,7 +8645,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "arG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -8689,7 +8689,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8740,7 +8740,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8927,7 +8927,7 @@
 /turf/simulated/floor/circuit,
 /area/space)
 "asj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -8975,7 +8975,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -9163,7 +9163,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/station/engine/proto_gangway)
 "asP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -9215,7 +9215,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -9726,7 +9726,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "aui" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -9750,7 +9750,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -9860,7 +9860,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "auv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -9974,7 +9974,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10026,7 +10026,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "auQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10074,7 +10074,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10117,7 +10117,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10227,7 +10227,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10301,7 +10301,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/station/engine/proto_gangway)
 "avr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -10320,7 +10320,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "avs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -10330,7 +10330,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "avt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10425,7 +10425,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -10611,7 +10611,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -10885,7 +10885,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -11105,7 +11105,7 @@
 	pixel_y = 0
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -11127,7 +11127,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -11140,7 +11140,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -11184,7 +11184,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "axh" = (
-/obj/grille{
+/obj/mesh/grille{
 	density = 0;
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
@@ -11377,7 +11377,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -11390,7 +11390,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -11412,7 +11412,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -11429,7 +11429,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -11509,7 +11509,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -11561,7 +11561,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "aya" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -11727,7 +11727,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -11762,7 +11762,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -11789,7 +11789,7 @@
 /turf/space,
 /area/shuttle/mining/station)
 "ayC" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -11802,7 +11802,7 @@
 /turf/simulated/wall,
 /area/station/engine/engineering)
 "ayE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -11834,7 +11834,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "ayG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -11914,7 +11914,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "ayO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12114,7 +12114,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "azn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12145,7 +12145,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "azq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12187,7 +12187,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "azu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12219,7 +12219,7 @@
 	},
 /area/station/hallway/primary/central)
 "azw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-2";
 	
@@ -12366,7 +12366,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -12382,7 +12382,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -12413,7 +12413,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "azQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12457,7 +12457,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "azU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-2";
 	
@@ -12577,7 +12577,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -12596,7 +12596,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12738,7 +12738,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/east)
 "aAC" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -12819,7 +12819,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "aAN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -12898,7 +12898,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aAV" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -12992,7 +12992,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -13034,7 +13034,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -13112,7 +13112,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13276,7 +13276,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13352,7 +13352,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13391,7 +13391,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13414,7 +13414,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aBS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -13707,7 +13707,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aCA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -13763,7 +13763,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "aCE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/east)
 "aCF" = (
@@ -13823,7 +13823,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13880,7 +13880,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13894,7 +13894,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "aCP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -13946,7 +13946,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -13971,7 +13971,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "aCX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -14001,7 +14001,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14015,7 +14015,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14034,7 +14034,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "aDa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14114,7 +14114,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14166,7 +14166,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "aDn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14310,7 +14310,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14363,7 +14363,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14452,7 +14452,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14474,7 +14474,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14500,7 +14500,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14513,7 +14513,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -14528,7 +14528,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "aDS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -14630,7 +14630,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14677,7 +14677,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -14699,7 +14699,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -14713,7 +14713,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "aEj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -14934,7 +14934,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "aEM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -14963,7 +14963,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -14987,7 +14987,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -15033,7 +15033,7 @@
 	pixel_y = 0
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -15043,7 +15043,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "aET" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -15136,7 +15136,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15214,7 +15214,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "aFl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -15237,7 +15237,7 @@
 /area/station/science/chemistry)
 "aFm" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -15346,7 +15346,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -15676,7 +15676,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -15728,7 +15728,7 @@
 /turf/space,
 /area/space)
 "aGk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -15789,7 +15789,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15811,7 +15811,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15824,7 +15824,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -15979,7 +15979,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -16012,7 +16012,7 @@
 /area/station/medical/medbay)
 "aGM" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -16094,7 +16094,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -16372,7 +16372,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -16489,7 +16489,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -17170,7 +17170,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -17873,7 +17873,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -17887,7 +17887,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -18066,7 +18066,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -18105,7 +18105,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -18129,7 +18129,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -18146,7 +18146,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18317,7 +18317,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aLg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -18517,7 +18517,7 @@
 	})
 "aLC" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -18629,7 +18629,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/artifact)
 "aLM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -18666,7 +18666,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -18826,7 +18826,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aMl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -19125,7 +19125,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -19196,7 +19196,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -19215,7 +19215,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -19320,7 +19320,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -19358,7 +19358,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aNi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -19639,7 +19639,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aNJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -19655,7 +19655,7 @@
 /area/station/science/artifact)
 "aNK" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -19688,7 +19688,7 @@
 	pixel_y = 0
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -19707,7 +19707,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -19799,7 +19799,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -19842,7 +19842,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aOb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -20048,7 +20048,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "aOt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -20067,7 +20067,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aOu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/west{
@@ -20093,7 +20093,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -20110,7 +20110,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -20209,7 +20209,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -20375,7 +20375,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "aPa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -20389,7 +20389,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -20659,7 +20659,7 @@
 /area/station/crew_quarters/fitness)
 "aPy" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -20731,7 +20731,7 @@
 /turf/simulated/wall,
 /area/station/hallway/primary/west)
 "aPF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -20975,7 +20975,7 @@
 	name = "Mixing Room"
 	})
 "aQa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -21003,7 +21003,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -21181,7 +21181,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
 "aQs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -21507,7 +21507,7 @@
 	tag = "icon-intact (EAST)";
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -21607,7 +21607,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/fitness)
 "aRl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -21622,7 +21622,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aRm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -21632,7 +21632,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aRn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -21674,7 +21674,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/quarters)
 "aRs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -21689,7 +21689,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "aRt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -21768,7 +21768,7 @@
 /area/station/crew_quarters/hor)
 "aRD" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -21788,7 +21788,7 @@
 /area/station/crew_quarters/hor)
 "aRE" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -22208,7 +22208,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "aSw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -22986,7 +22986,7 @@
 /turf/simulated/floor,
 /area/space)
 "aTQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -23000,7 +23000,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aTR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -23023,7 +23023,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "aTT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -23298,7 +23298,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/barber_shop)
 "aUp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -23320,7 +23320,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "aUq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -23448,7 +23448,7 @@
 /turf/simulated/floor,
 /area/space)
 "aUG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -23506,7 +23506,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -23542,7 +23542,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -23626,7 +23626,7 @@
 	})
 "aUV" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -23756,7 +23756,7 @@
 	},
 /area/station/hallway/primary/west)
 "aVl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -24236,7 +24236,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aWl" = (
-/obj/grille{
+/obj/mesh/grille{
 	health = 100
 	},
 /obj/window/crystal/reinforced{
@@ -24322,7 +24322,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "aWt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -24458,7 +24458,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aWI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -24480,7 +24480,7 @@
 /turf/simulated/floor,
 /area/space)
 "aWK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -24504,7 +24504,7 @@
 /area/space)
 "aWN" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -24637,7 +24637,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "aXj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -24686,7 +24686,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -25073,7 +25073,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aYk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -25210,7 +25210,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/arcade)
 "aYC" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -25293,7 +25293,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -25575,7 +25575,7 @@
 	},
 /area/station/crew_quarters/arcade)
 "aZn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -25741,7 +25741,7 @@
 /turf/space,
 /area/space)
 "aZE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -25912,7 +25912,7 @@
 	},
 /area/station/crew_quarters/arcade)
 "aZV" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -25972,7 +25972,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "bab" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -26021,7 +26021,7 @@
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
 "bah" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -26189,7 +26189,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "baA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -26302,7 +26302,7 @@
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
 "baL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -26373,21 +26373,11 @@
 /area/station/hallway/primary/west)
 "baU" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "baV" = (
@@ -26395,7 +26385,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -26560,7 +26550,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -26613,7 +26603,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -26661,7 +26651,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "bbx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -26819,7 +26809,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -26959,7 +26949,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -26977,7 +26967,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -27163,7 +27153,7 @@
 /area/station/security/main)
 "bcu" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27178,7 +27168,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bcv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27193,7 +27183,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "bcw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -27203,7 +27193,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "bcx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -27218,7 +27208,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "bcy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27245,7 +27235,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -27353,7 +27343,7 @@
 /area/station/hallway/primary/south)
 "bcH" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -27407,7 +27397,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -27527,7 +27517,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -27609,7 +27599,7 @@
 /area/station/security/main)
 "bdj" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27662,7 +27652,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27726,7 +27716,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -27857,7 +27847,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -27903,7 +27893,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -28045,7 +28035,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -28097,7 +28087,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28154,7 +28144,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28174,7 +28164,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "beh" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
@@ -28203,7 +28193,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bei" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -28266,7 +28256,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -28306,7 +28296,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -28321,7 +28311,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bet" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28413,7 +28403,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "beF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28478,7 +28468,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28552,7 +28542,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28571,7 +28561,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "beT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28616,7 +28606,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28674,7 +28664,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28696,7 +28686,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28754,7 +28744,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28773,7 +28763,7 @@
 	
 	},
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28800,7 +28790,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -28814,7 +28804,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -28878,7 +28868,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28921,7 +28911,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -28969,7 +28959,7 @@
 /area/station/security/brig)
 "bfw" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -29019,7 +29009,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -29040,7 +29030,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -29062,7 +29052,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -29076,7 +29066,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29284,7 +29274,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -29316,7 +29306,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -29460,7 +29450,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29530,7 +29520,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29634,7 +29624,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29706,7 +29696,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29818,7 +29808,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29964,7 +29954,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -29991,7 +29981,7 @@
 /turf/space,
 /area/space)
 "bhq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -30010,7 +30000,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30055,7 +30045,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";
@@ -30113,7 +30103,7 @@
 /area/station/security/hos)
 "bhA" = (
 /obj/cable,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30137,7 +30127,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30264,7 +30254,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30396,7 +30386,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30482,7 +30472,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30563,7 +30553,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30788,7 +30778,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -30911,7 +30901,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -31015,7 +31005,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -31097,7 +31087,7 @@
 	icon_state = "0-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -31115,7 +31105,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -31129,7 +31119,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -31152,7 +31142,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -31181,7 +31171,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -31208,7 +31198,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -31603,7 +31593,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bkz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
@@ -31613,7 +31603,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bkA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -31633,7 +31623,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bkB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -31664,7 +31654,7 @@
 /turf/simulated/floor,
 /area/space)
 "bkD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -31882,7 +31872,7 @@
 /turf/simulated/floor,
 /area/space)
 "bkX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -32174,7 +32164,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -32193,7 +32183,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "blB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -32214,7 +32204,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "blC" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -32256,7 +32246,7 @@
 /turf/simulated/floor,
 /area/space)
 "blG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -32300,7 +32290,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -32355,7 +32345,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -32388,7 +32378,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "blS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -32403,7 +32393,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "blT" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -32757,7 +32747,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -32871,7 +32861,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -33086,7 +33076,7 @@
 /turf/simulated/floor/airless/white,
 /area/space)
 "bnm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -33521,7 +33511,7 @@
 /turf/simulated/floor,
 /area/space)
 "boe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -33587,7 +33577,7 @@
 /turf/simulated/floor/plating/damaged2,
 /area/station/chapel/sanctuary)
 "bok" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -33727,7 +33717,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "box" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -33788,7 +33778,7 @@
 /turf/simulated/floor/circuit,
 /area/space)
 "boF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -33818,7 +33808,7 @@
 /turf/simulated/floor/caution/north,
 /area/space)
 "boH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -33839,7 +33829,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "boI" = (
-/obj/grille{
+/obj/mesh/grille{
 	density = 0;
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
@@ -33847,7 +33837,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "boJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -33942,7 +33932,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "boS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -34012,7 +34002,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "boY" = (
-/obj/grille{
+/obj/mesh/grille{
 	density = 0;
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
@@ -34021,12 +34011,12 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "boZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bpa" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -34036,7 +34026,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bpb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -34099,7 +34089,7 @@
 /turf/simulated/floor/caution/south,
 /area/space)
 "bpi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -34201,7 +34191,7 @@
 /turf/simulated/floor/caution/west,
 /area/space)
 "brg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -34211,7 +34201,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "brv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -34232,7 +34222,7 @@
 /turf/simulated/floor/circuit,
 /area/space)
 "btv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -34242,7 +34232,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bvA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -34261,7 +34251,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bvM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -34417,7 +34407,7 @@
 	icon_state = "1-2";
 	
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bYF" = (
@@ -34663,7 +34653,7 @@
 /turf/space,
 /area/space)
 "bZl" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "4-8";
 	
@@ -34894,7 +34884,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "bZN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bZO" = (
@@ -34947,7 +34937,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cab" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "cac" = (

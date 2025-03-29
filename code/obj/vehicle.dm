@@ -53,13 +53,14 @@ ABSTRACT_TYPE(/obj/vehicle)
 	remove_air(amount)
 		return src.loc.remove_air(amount)
 
-	return_air()
-		return src.loc.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc.return_air()
 
 	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)
 			W.attack(src.rider, user)
-			user.lastattacked = src // sets click cooldown
+			user.lastattacked = get_weakref(src) // sets click cooldown
 			if (attacks_fast_eject || is_incapacitated(rider))
 				eject_rider()
 			W.visible_message(SPAN_ALERT("[user] swings at [src.rider] with [W]!"))
@@ -124,6 +125,16 @@ ABSTRACT_TYPE(/obj/vehicle)
 						A.ex_act(severity)
 					qdel(src)
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.rider_visible && src.rider)
+			return "[src.rider] is currently riding it."
+
+	Move(NewLoc, direct)
+		. = ..()
+		if(src.rider_visible && src.rider)
+			src.rider.dir = direct
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.rider)
@@ -141,7 +152,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = TRUE)
 		if(src.rider)
 			MOVE_OUT_TO_TURF_SAFE(src.rider, src)
-			ClearSpecificOverlays("rider")
+			src.vis_contents -= src.rider
 			ClearSpecificOverlays("booster_image")
 			handle_button_removal()
 			src.rider = null
@@ -149,7 +160,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_other_stuff()
 
 	was_deconstructed_to_frame(mob/user)
-		eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
+		if (src.rider)
+			eject_rider(crashed=FALSE, selfdismount=FALSE, ejectall=TRUE)
 
 	/// remove the ability buttons from the rider
 	proc/handle_button_removal()
@@ -184,17 +196,12 @@ ABSTRACT_TYPE(/obj/vehicle)
 	// This handles the code that USED to be defined individually in each vehicle's relaymove() proc
 	// all non-machinery vehicles except forklifts and skateboards use this now
 	relaymove(mob/user as mob, dir)
-		// we reset the overlays to null in case the relaymove() call was initiated by a
-		// passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
-		src.ClearSpecificOverlays("rider")
-
 		if(!src.rider || user != src.rider)
 			return
 
-		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
+		src.dir = user.dir
 
-		if(src.rider_visible)
-			src.UpdateOverlays(src.rider, "rider")
+		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 
 		// You can't move in space without the booster upgrade
 		if (src.booster_upgrade)
@@ -333,7 +340,7 @@ TYPEINFO(/obj/vehicle/segway)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.UpdateOverlays(null, "rider")
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
@@ -551,7 +558,7 @@ TYPEINFO(/obj/vehicle/segway)
 		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	src.UpdateOverlays(rider, "rider")
+	src.vis_contents += src.rider
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -690,7 +697,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		src.underlays += src.image_under
 	else
 		src.icon_state = src.icon_base
-		src.UpdateOverlays(null, "rider")
+		src.vis_contents -= src.rider
 		src.underlays = null
 
 /obj/vehicle/floorbuffer/Move()
@@ -874,8 +881,8 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	if (target.client)
 		handle_button_addition()
 	rider.pixel_x = 0
-	rider.pixel_y = 10
-	src.UpdateOverlays(rider, "rider")
+	rider.pixel_y = 5
+	src.vis_contents += rider
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1325,7 +1332,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 /obj/vehicle/clowncar/cluwne/attackby(var/obj/item/W, var/mob/user)
 	eject_rider()
 	W.attack(rider, user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 /obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	..(crashed, selfdismount)
@@ -1477,8 +1484,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 			C.show_message(SPAN_ALERT("<b>[rider] is flung over the [src]'s head!</b>"), 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
+		src.vis_contents -= rider
 		rider = null
-		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
 		boutput(rider, SPAN_NOTICE("You dismount from the [src]."))
@@ -1486,8 +1493,8 @@ TYPEINFO(/obj/vehicle/clowncar)
 			if(C == rider)
 				continue
 			C.show_message("<b>[rider]</b> dismounts from the [src].", 1)
+	src.vis_contents -= rider
 	rider = null
-	ClearSpecificOverlays("rider")
 	return
 
 /obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
@@ -1517,7 +1524,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	src.UpdateOverlays(rider, "rider")
+	src.vis_contents += rider
 	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
@@ -1890,7 +1897,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 10, 2)
-			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal) || istype(O, /obj/table) || istype(O, /obj/railing) || istype(O, /obj/rack))
+			if(istype(O, /obj/window) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal) || istype(O, /obj/table) || istype(O, /obj/railing) || istype(O, /obj/rack))
 				qdel(O)
 			if(istype(O, /obj/storage))
 				O:pry_open()
@@ -2336,6 +2343,7 @@ TYPEINFO(/obj/vehicle/forklift)
 
 	//forklift
 	if(src.rider && user == src.rider)
+		src.dir = user.dir
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 		if (!src.booster_upgrade)
 			if(T.throw_unlimited && istype(T, /turf/space))

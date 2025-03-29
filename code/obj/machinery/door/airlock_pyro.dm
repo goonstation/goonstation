@@ -3,7 +3,7 @@
 /obj/machinery/door/airlock/pyro
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 /obj/machinery/door/airlock/pyro/safe
 	can_shock = FALSE
@@ -74,8 +74,15 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
 
-
-
+/obj/machinery/door/airlock/pyro/weapons/secure
+	name = "secure weapons airlock"
+	icon_state = "secure_closed"
+	icon_base = "secure"
+	hardened = FALSE
+	cant_hack = TRUE
+	aiControlDisabled = FALSE
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
@@ -213,6 +220,9 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
+	listeningpost
+		req_access_txt = "-1"
+
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
 	icon_base = "arrivals"
@@ -319,7 +329,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	health_max = 500
 	layer = EFFECTS_LAYER_UNDER_4 // under lights and blinds, above pretty much everything else
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/machinery/door/airlock/pyro/glass/windoor/opened()
@@ -392,18 +402,18 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	if (need_rebuild)
 		if (istype(source)) // Rebuild resp. update nearby group geometry.
 			if (source.parent)
-				air_master.groups_to_rebuild |= source.parent
+				air_master.groups_to_rebuild[source.parent] = null
 			else
-				air_master.tiles_to_update |= source
+				air_master.tiles_to_update[source] = null
 
 		if (istype(target))
 			if (target.parent)
-				air_master.groups_to_rebuild |= target.parent
+				air_master.groups_to_rebuild[target.parent] = null
 			else
-				air_master.tiles_to_update |= target
+				air_master.tiles_to_update[target] = null
 	else
-		if (istype(source)) air_master.tiles_to_update |= source
-		if (istype(target)) air_master.tiles_to_update |= target
+		if (istype(source)) air_master.tiles_to_update[source] = null
+		if (istype(target)) air_master.tiles_to_update[target] = null
 
 	if (istype(source))
 		source.selftilenotify() //for fluids

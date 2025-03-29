@@ -41,6 +41,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		ownerStatus = S
 		src.name = S.name
 		overImg.icon_state = S.icon_state
+		LAZYLISTADD(S.hud_elements, src)
 #ifdef SHOW_ME_STATUSES
 		src.owner_mob = C
 		src.owner_mob.vis_contents |= src
@@ -56,6 +57,8 @@ var/global/list/statusGroupLimits = list("Food"=4)
 				effect_obj.pixel_x -= 16
 		src.owner_mob = null
 #endif
+		LAZYLISTREMOVE(src.ownerStatus.hud_elements, src)
+		src.ownerStatus = null
 		. = ..()
 
 	clicked(list/params)

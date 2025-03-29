@@ -149,7 +149,7 @@ TYPEINFO(/obj/item/camera/large)
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-		flick("camera_flash-anim", src)
+		FLICK("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
 		var/blind_msg_others = "!"
@@ -239,7 +239,9 @@ TYPEINFO(/obj/item/camera_film/large)
 	// Update overlay layer for photo when dropping on floor or in belt/bag/container
 	dropped()
 		..()
-		render_photo_image(src.layer)
+		if(src.disposed)
+			return
+		render_photo_image(initial(src.layer))
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)

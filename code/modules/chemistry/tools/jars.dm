@@ -399,6 +399,8 @@ proc/load_intraround_jars()
 			T = region.turf_at(region.width - 1, y)
 			T.warptarget = exit
 
-	return_air()
+	return_air(direct = FALSE)
+		if (direct)
+			return null
 		var/turf/T = get_turf(src)
 		return T?.return_air()

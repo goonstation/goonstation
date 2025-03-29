@@ -44,7 +44,7 @@
 	regenRate = 0
 	tabName = "kudzu"
 	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
+	points = 50
 	pointName = "nutrients"
 	var/stealthed = 0
 	var/atom/movable/screen/kudzu/meter/nutrients_meter = null
@@ -176,7 +176,7 @@
 	icon_state = "guide"
 	targeted = 1
 	target_anything = 1
-	cooldown = 1 SECOND
+	cooldown = 0
 	pointCost = 2
 	max_range = 2
 
@@ -251,7 +251,7 @@
 		src.health -= dmg
 		if (src.health < 1)
 			qdel (src)
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 
@@ -582,6 +582,7 @@
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
 
+
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
 		if (usr.client.tooltipHolder && control == "mapwindow.map")
@@ -680,7 +681,7 @@
 	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 50
