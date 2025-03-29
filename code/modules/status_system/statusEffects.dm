@@ -1598,42 +1598,6 @@
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
-	wrestler
-		id = "wrestler"
-		name = "Wrestling!"
-		desc = "You're in the ring, break a leg!"
-		icon_state = "wrestling"
-		unique = TRUE
-		effect_quality = STATUS_QUALITY_NEUTRAL
-
-		onUpdate(timePassed)
-			var/mob/M = null
-			src.room = get_area(owner)
-			if(ismob(owner))
-				M = owner
-			else
-				return ..(timePassed)
-
-			if (M.health <= 0 | !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
-				M.delStatus("wrestler")
-
-		onRemove()
-			. = ..()
-			var/mob/M = null
-			if(ismob(owner))
-				M = owner
-				if (M.health > 0)
-					return
-
-				SPAWN(0)
-					playsound(M.loc, 'sound/misc/knockout_new.ogg', 50)
-				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
-				M.make_dizzy(140)
-				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
-				M.setStatus("resting", INFINITE_STATUS)
-				SPAWN(10 SECONDS)
-					M.UpdateOverlays(null, "dizzy")
-
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
 	name = "Cursed"
