@@ -287,6 +287,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	flags = USEDELAY | ON_BORDER
 	dir = SOUTH
+	pass_unstable = TRUE
 
 	Cross(atom/movable/O as mob|obj) // code respectfully snatched from railings
 		if (O == null)
