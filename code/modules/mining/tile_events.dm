@@ -39,7 +39,7 @@
 	analysis_string = "Unusual metal deposit detected."
 	excavation_string = "Something metallic tumbles out of the collapsing rock!"
 	scan_decal = "scan-rare_metal"
-	var/static/list/metals_to_pick = list(/obj/item/material_piece/iridiumalloy = 100,
+	var/static/list/metals_to_pick = list(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/iridium = 100,
 										  /obj/item/material_piece/plutonium = 50,
 										  /obj/item/material_piece/neutronium = 10
 										 )

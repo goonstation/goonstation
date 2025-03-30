@@ -247,6 +247,9 @@
 	uses_default_material_appearance = FALSE
 	amount = 5
 
+/obj/item/material_piece/iridiumalloy/small
+	amount = 1
+
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
