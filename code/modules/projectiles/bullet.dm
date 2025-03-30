@@ -123,6 +123,19 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_22HP
 	ricochets = TRUE
 
+/datum/projectile/bullet/bullet_22/match
+	damage = 40
+	armor_ignored = 0.33
+	dissipation_delay = 15
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	shot_sound = 'sound/weapons/capella.ogg'
+	silentshot = 0
+	projectile_speed = 96
+	shot_delay = 0.2
+	ricochets = TRUE
+
+
 /datum/projectile/bullet/custom
 	name = "bullet"
 	damage = 1
@@ -1308,7 +1321,7 @@ toxic - poisons
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
-				O.blowthefuckup(impact)
+				O.meteorhit()
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)

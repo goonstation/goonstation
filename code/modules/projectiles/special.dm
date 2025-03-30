@@ -730,6 +730,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		. = ..()
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
+		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.anchored = ANCHORED_ALWAYS
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider

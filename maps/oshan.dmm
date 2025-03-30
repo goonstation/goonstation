@@ -5495,7 +5495,7 @@
 /area/station/turret_protected/Zeta)
 "asM" = (
 /obj/machinery/light/incandescent/greenish,
-/obj/machinery/turret/construction,
+/obj/machinery/turret,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "asN" = (

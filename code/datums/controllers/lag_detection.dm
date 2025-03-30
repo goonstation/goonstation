@@ -103,6 +103,9 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		src.automatic_profiling_count++
 		if (src.automatic_profiling_count > 3 && !global.flick_hack_enabled)
 			global.flick_hack_enabled = TRUE
-			ircbot.export_async("admin_debug", list("msg"="Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."))
-			message_admins("Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK.")
+			var/msg = "Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."
+			//tell EVERYONE
+			ircbot.export_async("admin_debug", list("msg"=msg))
+			message_admins(msg)
+			logTheThing(LOG_DEBUG, null, msg)
 		return world.Profile(prof_flags, null, "json")

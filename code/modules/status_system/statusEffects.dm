@@ -3588,11 +3588,13 @@
 
 	onUpdate(timePassed)
 		..()
-		var/area/A = get_area(src.owner)
-		if (istype(A, /area/station) && !A.permafrosted)
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		if (!istype(phoenix))
+			return // ???
+
+		if (phoenix.in_dangerous_place())
 			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
 			if (src.time_passed >= 30 SECONDS)
-				var/mob/living/critter/space_phoenix/phoenix = src.owner
 				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
 					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
 					phoenix.TakeDamage("All", burn = 4 * mult)
