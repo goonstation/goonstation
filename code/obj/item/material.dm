@@ -486,12 +486,6 @@
 	default_material = "gold"
 	dense = 2
 
-/obj/item/raw_material/osmium
-	name = "osmium crystals"
-	desc = "A collection of osmium metal crystals, quite toxic due to oxidation."
-	material_name = "Osmium"
-	default_material = "osmium"
-
 /obj/item/raw_material/plutonium
 	name = "plutonium ore"
 	desc = "A rock containing just enough radioactive plutonium that it can be smelted."
