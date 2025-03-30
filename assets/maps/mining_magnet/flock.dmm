@@ -9,6 +9,13 @@
 "g" = (
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/mining/magnet)
+"l" = (
+/mob/living/critter/flock/drone{
+	dormant = 1;
+	dir = 8
+	},
+/turf/simulated/floor/feather/broken,
+/area/mining/magnet)
 "q" = (
 /mob/living/critter/flock/drone{
 	dormant = 1;
@@ -26,11 +33,24 @@
 /obj/lattice/flock,
 /turf/space,
 /area/mining/magnet)
+"y" = (
+/mob/living/critter/flock/drone{
+	dormant = 1
+	},
+/turf/simulated/floor/feather/broken,
+/area/mining/magnet)
 "z" = (
 /obj/fakeobject/flock/antenna/end{
 	dir = 8
 	},
 /turf/space,
+/area/mining/magnet)
+"B" = (
+/obj/flock_encounter_pedestal,
+/turf/simulated/floor/feather/broken,
+/area/mining/magnet)
+"C" = (
+/turf/simulated/floor/feather/broken,
 /area/mining/magnet)
 "E" = (
 /mob/living/critter/flock/drone{
@@ -80,6 +100,12 @@
 /obj/machinery/door/feather/invincible,
 /turf/simulated/floor/feather,
 /area/mining/magnet)
+"Y" = (
+/obj/machinery/light/flock/floor{
+	on = 0
+	},
+/turf/simulated/floor/feather/broken,
+/area/mining/magnet)
 "Z" = (
 /mob/living/critter/flock/drone{
 	dormant = 1
@@ -123,7 +149,7 @@ Q
 G
 M
 G
-G
+C
 G
 G
 G
@@ -141,7 +167,7 @@ G
 G
 S
 G
-G
+C
 U
 q
 Q
@@ -151,8 +177,8 @@ g
 g
 Q
 G
-G
-G
+C
+C
 G
 G
 G
@@ -167,7 +193,7 @@ g
 Q
 G
 G
-G
+C
 Q
 Q
 Q
@@ -187,7 +213,7 @@ Q
 G
 X
 G
-S
+B
 G
 N
 g
@@ -202,20 +228,20 @@ Q
 Q
 Q
 G
-G
-G
+C
+C
 Q
 g
 "}
 (9,1,1) = {"
 T
 Q
+C
 G
 G
 G
-G
-G
-G
+C
+C
 G
 G
 G
@@ -225,12 +251,12 @@ s
 (10,1,1) = {"
 g
 Q
-Z
-U
+y
+Y
 G
 G
-S
-G
+B
+C
 G
 U
 q
@@ -240,12 +266,12 @@ s
 (11,1,1) = {"
 g
 Q
+C
+l
+C
+C
 G
-E
-G
-G
-G
-G
+C
 G
 E
 G
