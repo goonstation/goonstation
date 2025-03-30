@@ -972,10 +972,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 //0.787
 /obj/item/ammo/bullets/cannon
-	sname = "20mm APHE"
-	name = "20mm APHE shells"
-	amount_left = 5
-	max_amount = 5
+	sname = "20mm AP"
+	name = "20mm AP shells"
+	amount_left = 4
+	max_amount = 4
 	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM

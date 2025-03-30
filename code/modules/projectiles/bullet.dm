@@ -124,7 +124,7 @@ toxic - poisons
 	ricochets = TRUE
 
 /datum/projectile/bullet/bullet_22/match
-	damage = 40
+	damage = 35
 	armor_ignored = 0.33
 	dissipation_delay = 15
 	damage_type = D_PIERCING
@@ -236,14 +236,16 @@ toxic - poisons
 	name = "bullet"
 	damage = 85
 	damage_type = D_PIERCING
-	armor_ignored = 0.66
+	armor_ignored = 0.50
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	shot_volume = 50 // holy fuck why was this so loud
-	dissipation_delay = 10
+	dissipation_rate = 0
+	projectile_speed = 72
+	max_range = 80
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bullethole-small"
+	impact_image_state = "bullethole-large"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
@@ -269,13 +271,13 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
-	shot_volume = 50 // holy fuck why was this so loud x2
+	shot_volume = 50 //
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bullethole-small"
+	impact_image_state = "bullethole-large"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 20) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
