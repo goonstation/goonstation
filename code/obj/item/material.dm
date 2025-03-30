@@ -486,6 +486,24 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/osmium
+	name = "osmium crystals"
+	desc = "A collection of osmium metal crystals, quite toxic due to oxidation."
+	material_name = "Osmium"
+	default_material = "osmium"
+
+/obj/item/raw_material/plutonium
+	name = "plutonium ore"
+	desc = "A rock containing just enough radioactive plutonium that it can be smelted."
+	material_name = "Plutonium"
+	default_material = "plutonium"
+
+/obj/item/raw_material/neutronium
+	name = "neutronium ore"
+	desc = "An ore containing deadly neutronium metal."
+	material_name = "Neutronium"
+	default_material = "neutronium"
+
 // Misc building material
 
 /// This has no material, why does it exist???? Someone replace it

@@ -436,12 +436,12 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
-	icon_state = "bar"
+	icon_state = "rod"
 	default_material = "neutronium"
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
-	icon_state = "bar"
+	icon_state = "rod"
 	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold
