@@ -49,7 +49,7 @@
 			return
 		var/metal_to_drop = weighted_pick(src.metals_to_pick)
 		for (var/i in 1 to rand(1, 3))
-			var/obj/item/I = new metal_to_drop(AST)
+			new metal_to_drop(AST)
 
 /datum/ore/event/geode
 	analysis_string = "Large crystalline formations detected."
