@@ -988,6 +988,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		amount_left = 1
 		max_amount = 1
 
+	antiair
+		name = "anti-air fragmenting rounds"
+		ammo_type = /datum/projectile/special/spreader/uniform_burst/circle/antiair
+
 //1.0
 /obj/item/ammo/bullets/rod
 	sname = "metal rod"

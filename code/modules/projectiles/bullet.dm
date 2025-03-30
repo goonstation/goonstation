@@ -1332,6 +1332,38 @@ toxic - poisons
 	antiair_burst
 		shot_number = 4
 
+/datum/projectile/special/spreader/uniform_burst/circle/antiair
+	name = "20mm frag round"
+	brightness = 0.7
+	window_pass = 0
+	icon_state = "20mm"
+	damage_type = D_KINETIC
+	armor_ignored = 0.5
+	hit_type = DAMAGE_CUT
+	damage = 100
+	dissipation_delay = 30
+	dissipation_rate = 5
+	cost = 1
+	shot_sound = 'sound/weapons/20mm.ogg'
+	shot_volume = 100
+	implanted = null
+	projectile_speed = 128
+	spread_projectile_type = /datum/projectile/bullet/flak_chunk
+	split_type = 1
+
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/cannon
+	shot_sound_extrarange = 1
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		..()
+		explosion_new(null, get_turf(hit), 12)
+
+
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
 	name = "metal rod"

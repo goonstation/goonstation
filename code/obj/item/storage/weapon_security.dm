@@ -149,12 +149,23 @@
 	color = "red"
 	desc = "A box containing a collapsible recoiling cannon and some 20mm ammo."
 	slots = 2
-	contraband = 100
 	check_wclass = TRUE
 	can_hold = list(/obj/item/gun/kinetic/cannon,\
 	/obj/item/ammo/bullets/cannon)
 	spawn_contents = list(/obj/item/gun/kinetic/cannon,\
 	/obj/item/ammo/bullets/cannon = 1)
+
+/obj/item/storage/box/antiair
+	name = "anti-air rifle box"
+	icon_state = "hard_case"
+	color = "red"
+	desc = "A box containing a massive antiair rifle and some 20mm ammo."
+	slots = 2
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/antiair,\
+	/obj/item/ammo/bullets/cannon/antiair)
+	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
+	/obj/item/ammo/bullets/cannon/antiair = 1)
 
 /* -------------------- Grenades -------------------- */
 
