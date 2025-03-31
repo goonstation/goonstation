@@ -62,6 +62,9 @@ var/list/admin_verbs = list(
 		/client/proc/change_admin_prefs,
 		//client/proc/cmd_boot,
 
+		/client/proc/toggle_carnigorm_briefing,
+		/client/proc/toggle_HTR_briefing,
+
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
 

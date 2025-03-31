@@ -1423,6 +1423,7 @@
 #include "code\modules\goonhub\event_recording\types\StationName.dm"
 #include "code\modules\goonhub\event_recording\types\Ticket.dm"
 #include "code\modules\gps\gps.dm"
+#include "code\modules\hearing_connector\hearing_connector.dm"
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\spacemas.dm"
 #include "code\modules\hydroponics\gene_strains.dm"

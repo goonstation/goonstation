@@ -147,3 +147,46 @@
 		var/icon/icon = new(src.map.icon)
 		icon.SwapColor(rgb(0, 0, 0), rgb(0, 0, 0, 0))
 		src.map.icon = icon
+
+/datum/minimap/area_map/broadcast
+	var/atom/movable/minimap_render_object/vis_contents_display
+	var/id = null
+	var/area/broadcast_set_area = null
+	var/list/turf/broadcast_set_turfs = null
+	var/turfs_cached
+
+/datum/minimap/area_map/broadcast/New()
+	. = ..()
+	START_TRACKING
+
+/datum/minimap/area_map/broadcast/disposing()
+	STOP_TRACKING
+	. = ..()
+
+/datum/minimap/area_map/broadcast/initialise_minimap_render()
+	. = ..()
+	src.vis_contents_display = new()
+	src.vis_contents_display.vis_flags |= VIS_INHERIT_ID
+	src.vis_contents_display.mouse_opacity = 0
+	src.vis_contents_display.pixel_x -= 5
+	src.vis_contents_display.pixel_y -= 4
+
+/datum/minimap/area_map/broadcast/proc/enable_broadcast()
+	if (length(src.vis_contents_display.vis_contents) == 0)
+		for (var/turf/T as anything in get_area_turfs(src.broadcast_set_area))
+			T.appearance_flags |= KEEP_TOGETHER
+			src.vis_contents_display.vis_contents += T
+	src.minimap_holder.vis_contents -= src.minimap_render
+	src.minimap_holder.vis_contents += src.vis_contents_display
+
+/datum/minimap/area_map/broadcast/proc/disable_broadcast()
+	src.minimap_holder.vis_contents += src.minimap_render
+	src.minimap_holder.vis_contents -= src.vis_contents_display
+
+/datum/minimap/area_map/broadcast/carnigorm
+	id = FACTION_SYNDICATE
+	broadcast_set_area = /area/high_command/syndicate/office_set
+
+/datum/minimap/area_map/broadcast/htr
+	id = FACTION_NANOTRASEN
+	broadcast_set_area = /area/high_command/nanotrasen/office_set
