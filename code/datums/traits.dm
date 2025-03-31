@@ -1484,7 +1484,9 @@ TYPEINFO(/datum/trait/partyanimal)
 /datum/trait/missing_left_eye
 	name = "Missing Left Eye"
 	id = "eye_missing_left"
+	unselectable = TRUE
 
 /datum/trait/missing_right_eye
 	name = "Missing Right Eye"
 	id = "eye_missing_right"
+	unselectable = TRUE
