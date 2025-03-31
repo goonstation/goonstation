@@ -6,6 +6,8 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///Can be a type or a list of types to randomly pick from
 	var/part_type = null
 	var/base_64_cache = null
+	/// Associated trait ID, if one is needed
+	var/associated_trait_id = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
 	///Cannot be added alongside these part IDs
 	var/incompatible_parts = list()
@@ -15,6 +17,8 @@ ABSTRACT_TYPE(/datum/part_customization)
 
 	///Check if we can, then apply the part
 	proc/try_apply(mob/M, list/custom_parts = null)
+		if (src.associated_trait_id && M.traitHolder)
+			M.traitHolder.addTrait(associated_trait_id)
 		if (src.can_apply(M, custom_parts))
 			src.apply_to(M)
 			return TRUE
@@ -252,6 +256,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 		eye_left
 			id = "eye_missing_left"
 			slot = "left_eye"
+			associated_trait_id = "eye_missing_left"
 			trait_cost = 1
 
 			get_name()
@@ -260,6 +265,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 		eye_right
 			id = "eye_missing_right"
 			slot = "right_eye"
+			associated_trait_id = "eye_missing_right"
 			trait_cost = 1
 
 			get_name()

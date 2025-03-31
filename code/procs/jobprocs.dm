@@ -521,6 +521,21 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
+	else // if you're blind and have missing eyes, you don't get a cool patch sorry
+		var/missing_left = src.traitHolder.hasTrait("eye_missing_left")
+		var/missing_right =  src.traitHolder.hasTrait("eye_missing_right")
+		if (src.glasses && (missing_left || missing_right))
+			src.stow_in_available(src.glasses)
+		if (missing_left && missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/blindfold(src), SLOT_GLASSES)
+		else if (missing_left)
+			var/obj/item/clothing/glasses/eyepatch/eyepatch = new(src)
+			eyepatch.icon_state = "eyepatch-L"
+			eyepatch.block_eye = "L"
+			src.equip_if_possible(eyepatch, SLOT_GLASSES)
+		else if (missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(src), SLOT_GLASSES)
+
 	if (src.traitHolder.hasTrait("shortsighted"))
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
