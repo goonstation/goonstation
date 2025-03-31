@@ -129,6 +129,12 @@
 	var/list/needed_parts = new/list()
 	var/obj/deconstructed_thing = null
 
+	flatpack
+		icon_state = "dbox_alt"
+		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
+
+		attack_self(mob/user)
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 
 	disposing()
 		if(deconstructed_thing)
