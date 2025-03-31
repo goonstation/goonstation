@@ -948,6 +948,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/syndicate = FALSE
 	var/emagged = 0
 	var/freemodule = TRUE
+	var/datum/ai_lawset/internal_lawset = null //for borgs that aren't bound to a law rack (mostly emagged)
 	var/obj/item/parts/robot_parts/head/head = null
 	var/obj/item/parts/robot_parts/chest/chest = null
 	var/obj/item/parts/robot_parts/l_arm = null

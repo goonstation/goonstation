@@ -124,6 +124,7 @@
 		if (frame)
 			src.freemodule = frame.freemodule
 			src.frame_material = frame.material
+			src.lawset_connection = frame.internal_lawset
 			if(HAS_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG, "borg")
 		if (starter && !(src.dependent || src.shell))
@@ -307,6 +308,8 @@
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
+			if(!src.lawset_connection.host_rack) //this might be a bad idea
+				frame.internal_lawset = lawset_connection
 			if(HAS_ATOM_PROPERTY(src, PROP_ATOM_ROUNDSTART_BORG))
 				APPLY_ATOM_PROPERTY(frame, PROP_ATOM_ROUNDSTART_BORG, "borg")
 

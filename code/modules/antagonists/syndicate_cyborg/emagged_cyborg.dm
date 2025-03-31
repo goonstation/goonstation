@@ -17,7 +17,8 @@
 		src.owner.remove_antagonist(ROLE_SYNDICATE_ROBOT)
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.lawset_connection = new /datum/ai_lawset/corrupted
+		if(!istype(cyborg.lawset_connection, /datum/ai_lawset/corrupted))
+			cyborg.lawset_connection = new /datum/ai_lawset/corrupted
 		cyborg.emagged = TRUE
 		cyborg.show_laws()
 		logTheThing(LOG_ADMIN, cyborg, "became an emagged robot with the following laws:<br>[cyborg.lawset_connection.format_for_logs()]")
