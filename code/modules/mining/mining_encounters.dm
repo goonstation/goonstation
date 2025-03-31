@@ -293,6 +293,18 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
+/datum/mining_encounter/artifact
+	name = "Fluctuating Asteroid"
+	rarity_tier = 2
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs = src.create_round_asteroid(target)
+
+		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
+		Turfspawn_Asteroid_SeedArtifacts(generated_turfs)
+
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium
@@ -903,5 +915,14 @@
 			amount++
 			continue
 		AST.set_event(E)
+
+/proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs)
+	var/turf/simulated/wall/auto/asteroid/AST
+
+	shuffle_list(turfs)
+
+	for (var/i in 1 to min(length(turfs), rand(7, 10)))
+		AST = turfs[i]
+		AST.set_event(/datum/ore/event/artifact)
 
 #undef TURF_SPAWN_EDGE_LIMIT
