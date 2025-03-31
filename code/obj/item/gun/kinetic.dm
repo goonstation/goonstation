@@ -3471,9 +3471,33 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			..()
 			set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 
+	long_barrel
+		name = "\improper Double Barrel Shotgun"
+		desc = "A bloody and worn double barreled shotgun. Details indicate recent usage in a last stand fight."
+		item_state = "double_barrel"
+		icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+		icon_state = "double_barrel"
+		gildable = FALSE
+		recoil_strength = 20
+		two_handed = TRUE
+		contraband = 5
+		force = MELEE_DMG_RIFLE
+		default_magazine = /obj/item/ammo/bullets/a12/bird/two
+
+		New()
+			..()
+			src.name = "\improper Double Barrel Shotgun"
+			if (prob(25))
+				src.name = pick("Last Stand", "Zombie Slayer", "Head Popper")
+			set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
+
+		alter_projectile(obj/projectile/P)
+			. = ..()
+			P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'
+
 	update_icon()
 		. = ..()
-		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
+		src.icon_state = initial(src.icon_state) + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot(mob/user)
 		if (!src.broke_open)
