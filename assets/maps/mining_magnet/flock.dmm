@@ -89,6 +89,15 @@
 	},
 /turf/simulated/floor/feather,
 /area/mining/magnet)
+"V" = (
+/obj/item/paper/flock_mining_magnet{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/flock_converter,
+/obj/decal/cleanable/flockdrone_debris/fluid,
+/turf/simulated/floor/feather,
+/area/mining/magnet)
 "W" = (
 /obj/fakeobject/flock/antenna/broken{
 	dir = 8;
@@ -210,7 +219,7 @@ g
 S
 G
 Q
-G
+V
 X
 G
 B
@@ -274,7 +283,7 @@ G
 C
 G
 E
-g
+G
 Q
 s
 "}
