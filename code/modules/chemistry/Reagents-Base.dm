@@ -497,6 +497,7 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
+	overdose = 30
 	taste = "metallic"
 
 	reaction_obj(var/obj/item/I, var/volume)
@@ -518,6 +519,20 @@
 				I.setMaterial(getMaterial("silver"))
 				holder.remove_reagent(src.id, 50)
 				.= 0
+	do_overdose(severity, mob/M, mult) //turns your skin blue
+		. = ..()
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/currenttone = H.bioHolder?.mobAppearance.s_tone
+			if(currenttone)
+				var/newtone = BlendRGB(currenttone, rgb(108, 125, 183), 0.02)
+				H.bioHolder.mobAppearance.s_tone = newtone
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
+				if (H.limbs)
+					H.limbs.reset_stone()
+				H.update_colorful_parts()
+
 
 /datum/reagent/sulfur
 	name = "sulfur"
