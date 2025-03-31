@@ -169,7 +169,7 @@ var/global/logLength = 0
 	var/online
 	var/dead = 1
 	var/mobType = null
-	var/lawracktext = null
+	var/lawsettext = null
 
 	var/mob/mobRef
 	if (ismob(ref))
@@ -259,23 +259,23 @@ var/global/logLength = 0
 		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
 
 	if (mobRef && (issilicon(mobRef) || isAIeye(mobRef)))
-		var/obj/machinery/lawrack/lawrack = null
+		var/datum/ai_lawset/lawset = null
 		if(isAIeye(mobRef))
 			var/mob/living/intangible/aieye/aieye = mobRef
-			lawrack = aieye?.mainframe?.lawset_connection?.host_rack
+			lawset = aieye?.mainframe?.lawset_connection
 		else if(isshell(mobRef))
 			var/mob/living/silicon/sil = mobRef
-			lawrack = sil?.mainframe?.lawset_connection?.host_rack
+			lawset = sil?.mainframe?.lawset_connection
 		else
 			var/mob/living/silicon/sil = mobRef
-			lawrack = sil?.lawset_connection?.host_rack
-		if(isnull(lawrack))
-			lawracktext = "NONE"
+			lawset = sil?.lawset_connection
+		if(isnull(lawset))
+			lawsettext = "NONE"
 		else
-			lawracktext = "<a href=\"#\" \
+			lawsettext = "<a href=\"#\" \
 				onMouseOver=\"this.children\[0\].style.display = 'block'\"	\
 				onMouseOut=\"this.children\[0\].style.display = 'none';\"		\
-				>[lawrack.unique_id]										\
+				>[lawset.host_rack ? lawset.host_rack.unique_id : "No Lawrack"]										\
 				<span id=\"innerContent\" style=\"							\
 					display: none;											\
 					background: #C8C8C8;									\
@@ -283,7 +283,7 @@ var/global/logLength = 0
 					padding: 10px;											\
 					position: absolute;										\
 					z-index: 1000;											\
-				\">[lawrack.lawset.format_for_logs()]</span>		\
+				\">[lawset.format_for_logs()]</span>		\
 				</a>"
 
 	var/list/data = list()
@@ -328,8 +328,8 @@ var/global/logLength = 0
 			data += " \[DEAD\]"
 		else
 			data += " \[<span class='alert'>DEAD</span>\]"
-	if(lawracktext)
-		data += "\[LawRack: [lawracktext]\]"
+	if(lawsettext)
+		data += "\[Lawset: [lawsettext]\]"
 	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
