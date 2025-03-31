@@ -153,8 +153,9 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "round glasses"
 	icon_state = "glasses_round"
 	item_state = "glasses_round"
+	flash_state = "round_flash"
 	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
-	flash_compatible = FALSE
+
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
