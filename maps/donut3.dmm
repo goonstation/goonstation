@@ -18574,9 +18574,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "fAO" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -37660,9 +37658,7 @@
 	},
 /area/station/hallway/primary/east)
 "lue" = (
-/obj/storage/secure/closet/fridge/pathology{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/fridge/pathology,
 /obj/item/reagent_containers/food/snacks/yuck{
 	desc = "Oh, that's not very nice...";
 	name = "\proper Pathology's Hopes and Dreams"

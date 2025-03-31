@@ -770,6 +770,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B7.pixel_x = 0
 			return 1
 
+/obj/storage/secure/closet/research/chemical/medical
+	req_access = list(access_medical_lockers)
+
 /* ======================= */
 /* ----- Engineering ----- */
 /* ======================= */

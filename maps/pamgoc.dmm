@@ -21067,9 +21067,7 @@
 /obj/item/device/radio/intercom/botany{
 	dir = 1
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -25793,10 +25791,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -27133,9 +27128,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bsV" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15
@@ -30579,11 +30572,7 @@
 	dir = 4;
 	tag = ""
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bDZ" = (
@@ -62075,9 +62064,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbooth)
 "sgU" = (
-/obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = null
+/obj/machinery/turretid/computer_core{
+	pixel_x = 24
 	},
 /obj/window/reinforced{
 	dir = 2

@@ -1281,7 +1281,7 @@
 	beacon_freq = 1443;
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  This one has a little name tag on the front labeled 'Murray'";
 	name = "Murray";
-	req_access_txt = ""
+	req_access = null
 	},
 /obj/machinery/navbeacon/tour/cog1/tour20,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -40530,9 +40530,7 @@
 /obj/item/device/radio/intercom/botany{
 	dir = 1
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -57409,9 +57407,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "sgg" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15

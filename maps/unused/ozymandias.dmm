@@ -4140,11 +4140,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfB" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -10331,10 +10327,8 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/engineering)
 "cQK" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -17503,10 +17497,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -40261,10 +40253,8 @@
 /turf/space,
 /area/space)
 "kGk" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -44670,12 +44660,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
@@ -51446,11 +51431,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nDO" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -52997,11 +52978,7 @@
 	},
 /area/ghostdrone_factory)
 "nWW" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
@@ -53628,8 +53605,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /obj/machinery/light/small{
 	dir = 8;
@@ -55329,10 +55305,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/storage)
 "oAV" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 4;
@@ -58330,8 +58304,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -58889,10 +58862,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "pxh" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -60476,10 +60447,9 @@
 	density = 0;
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatornord";
-	pixel_y = 32;
-	req_access = null;
-	req_access_txt = "44"
+	pixel_y = 32
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -66500,11 +66470,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/station{
 	dir = 8;
-	name = "Detention Announcement Computer";
-	req_access_txt = "2"
+	name = "Detention Announcement Computer"
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/brig)
 "rvU" = (

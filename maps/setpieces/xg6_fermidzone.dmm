@@ -10213,9 +10213,10 @@
 /obj/machinery/computer/announcement{
 	dir = 4;
 	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console";
-	req_access_txt = "76"
+	name = "Shen Kuo Observatory Announcement Console"
+	req_access = null
 	},
+/obj/mapping_helper/access/syndie_commander
 /obj/map/light/screen,
 /turf/unsimulated/floor/redblack{
 	dir = 4

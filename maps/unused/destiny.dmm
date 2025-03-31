@@ -6030,9 +6030,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aBE" = (
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "8|10"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/patchbox,
 /turf/simulated/floor/purple,
@@ -10283,9 +10281,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/turretid{
-	pixel_x = -24;
-	req_access_txt = "19"
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24
 	},
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -22204,10 +22201,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
 "eMD" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23478,10 +23473,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/cargo,
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -25155,10 +25147,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fZW" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -26195,9 +26185,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/baroffice)
 "gBW" = (
-/obj/machinery/turretid{
-	pixel_x = -24;
-	req_access_txt = "19"
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = -24
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -26548,8 +26537,7 @@
 	dir = 4;
 	emergency = 0;
 	id = "mining_shuttle";
-	pixel_x = -32;
-	req_access_txt = ""
+	pixel_x = -32
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -43438,8 +43426,7 @@
 /obj/machinery/computer/airbr/trader_right{
 	density = 0;
 	id = "merchant_R";
-	pixel_y = 32;
-	req_access_txt = ""
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -48189,8 +48176,7 @@
 /obj/machinery/computer/airbr/trader_left{
 	density = 0;
 	id = "merchant_L";
-	pixel_y = 32;
-	req_access_txt = ""
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
@@ -53125,10 +53111,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/computer/announcement{
-	dir = 1;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -57869,10 +57853,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},

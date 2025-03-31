@@ -6838,9 +6838,7 @@
 /obj/item/body_bag,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "4"
-	},
+/obj/storage/cart/forensic,
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
@@ -8288,9 +8286,7 @@
 	},
 /area/russian/radiation)
 "brr" = (
-/obj/storage/secure/closet/fridge/pathology{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/fridge/pathology,
 /obj/item/reagent_containers/food/snacks/agar_block,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/decal/cleanable/dirt/dirt2,
@@ -43145,10 +43141,8 @@
 	},
 /area/russian/radiation)
 "hBL" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	broken = 1;
@@ -56822,9 +56816,9 @@
 /area/russian/radiation)
 "nYJ" = (
 /obj/storage/secure/crate{
-	name = "Bartender's crate";
-	req_access_txt = "25"
+	name = "Bartender's crate"
 	},
+/obj/mapping_helper/access/bar,
 /obj/item/device/light/candle/small,
 /obj/item/device/light/candle/small,
 /obj/item/device/light/candle,
@@ -63463,10 +63457,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor/yellowblack{
 	broken = 1;
@@ -69777,10 +69768,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit{
 	burnt = 1;
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry. It is made of pharosium.";

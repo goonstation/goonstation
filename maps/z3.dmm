@@ -183,7 +183,7 @@
 "aaL" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -7662,9 +7662,9 @@
 	locked = 0;
 	name = "Satellite Main APC";
 	noalerts = 1;
-	pixel_x = -24;
-	req_access_txt = ""
+	pixel_x = -24
 	},
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -13988,11 +13988,11 @@
 	name = "Computer Core APC";
 	opened = 1;
 	pixel_x = 24;
-	req_access_txt = "";
 	start_charge = 0;
 	tag = "icon-apc-b (EAST)";
 	noalerts = 1
 	},
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat/core)
 "bir" = (

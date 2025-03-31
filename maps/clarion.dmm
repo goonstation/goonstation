@@ -31364,9 +31364,7 @@
 "qfk" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/specialroom/medbay,

@@ -2096,10 +2096,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "amX" = (
@@ -6051,10 +6048,7 @@
 	c_tag = "Cargo Bay Office";
 	dir = 1
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/orangeblack/side{
@@ -10320,9 +10314,7 @@
 "bkm" = (
 /obj/machinery/light/emergency,
 /obj/machinery/firealarm/south,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
@@ -29619,9 +29611,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pFY" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/turretid{
 	name = "Armory Perimeter Turret deactivation control";
 	req_access = list(37);
@@ -38167,9 +38157,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "vLa" = (
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
+/obj/machinery/turretid/computer_core{
+	pixel_y = 24
 	},
 /turf/simulated/floor/purple,
 /area/station/turret_protected/Zeta)

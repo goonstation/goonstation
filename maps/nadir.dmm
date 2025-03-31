@@ -3238,11 +3238,7 @@
 	name = "Nuclear Control Room"
 	})
 "buw" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -20848,7 +20844,6 @@
 	dir = 8;
 	icon_state = "commb";
 	name = "Pasiphae Announcement Computer";
-	req_access_txt = "19";
 	status = 1
 	},
 /obj/cable{
@@ -56373,9 +56368,7 @@
 /area/station/crew_quarters/lounge)
 "yjc" = (
 /obj/machinery/light_switch/west,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},

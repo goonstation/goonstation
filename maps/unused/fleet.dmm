@@ -1887,15 +1887,14 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/tenebrae)
 "eJ" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Tenebrae Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/research{
+	dir = 4;
+	name = "Tenebrae Announcement Computer"
+	},
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
@@ -4323,11 +4322,11 @@
 	})
 "kz" = (
 /obj/machinery/light,
-/obj/machinery/computer/announcement{
-	name = "Maru Announcement Computer"
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/engineering{
+	name = "Maru Announcement Computer"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -5340,15 +5339,14 @@
 	name = "Hammer Command"
 	})
 "mI" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Hammer Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4;
+	name = "Hammer Announcement Computer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -8469,14 +8467,13 @@
 	name = "Dionysus Cryocore"
 	})
 "tr" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Asclepius Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4;
+	name = "Asclepius Announcement Computer"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -9600,16 +9597,15 @@
 	name = "Asclepius Primary Zone"
 	})
 "vH" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 4;
-	name = "Dionysus Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station{
+	dir = 4;
+	name = "Dionysus Announcement Computer"
+	},
+/obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
 "vI" = (
@@ -12947,15 +12943,14 @@
 	name = "Meridian Command"
 	})
 "CO" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Meridian Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4;
+	name = "Meridian Announcement Computer"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain{
 	name = "Meridian Command"
@@ -15404,10 +15399,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/nopoweralert{
-	req_access = null;
-	req_access_txt = "24";
 	start_charge = 0
 	},
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/caution/east,
 /area/research_outpost/indigo_rye)
 "If" = (
@@ -16443,12 +16437,7 @@
 	},
 /area/listeningpost)
 "KF" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,

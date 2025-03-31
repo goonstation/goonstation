@@ -35033,9 +35033,8 @@
 	},
 /area/owlery/Owlopen)
 "cDv" = (
-/obj/machinery/vending/security{
-	req_access_txt = "71"
-	},
+/obj/machinery/vending/security,
+/obj/mapping_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/Owlopen)
 "cDw" = (
@@ -35548,12 +35547,11 @@
 /obj/item/gun/flamethrower/assembled/loaded,
 /obj/item/clothing/suit/hazard/fire/armored,
 /obj/item/clothing/head/helmet/welding,
-/obj/storage/secure/crate/weapon/confiscated_items{
-	req_access_txt = "71"
-	},
+/obj/storage/secure/crate/weapon/confiscated_items,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/mapping_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},

@@ -6570,9 +6570,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aud" = (
-/obj/storage/secure/closet/fridge/pathology{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/fridge/pathology,
 /obj/item/reagent_containers/food/snacks/agar_block,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/decal/cleanable/dirt/dirt2,
@@ -36072,9 +36070,9 @@
 /area/station/crew_quarters/baroffice)
 "cai" = (
 /obj/storage/secure/crate{
-	name = "Bartender's crate";
-	req_access_txt = "25"
+	name = "Bartender's crate"
 	},
+/obj/mapping_helper/bar,
 /obj/item/device/light/candle/small,
 /obj/item/device/light/candle/small,
 /obj/item/device/light/candle,
@@ -39125,10 +39123,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -40287,10 +40282,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "clJ" = (
@@ -57436,10 +57428,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/hallway/primary/central)
 "vbj" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 1

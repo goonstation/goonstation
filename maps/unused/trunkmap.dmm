@@ -3409,8 +3409,7 @@
 	dir = 4;
 	id = "hydro_lam";
 	name = "Hydroponics Local Air Monitor";
-	pixel_x = -22;
-	req_access_txt = list(24,19,20)
+	pixel_x = -22
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -3697,9 +3696,7 @@
 	},
 /area/station/medical/cdc)
 "alQ" = (
-/obj/storage/secure/closet/fridge/pathology{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/fridge/pathology,
 /obj/item/reagent_containers/food/snacks/agar_block,
 /obj/item/reagent_containers/food/snacks/yuck,
 /turf/simulated/floor/greenwhite{
@@ -6996,8 +6993,7 @@
 	dir = 4;
 	id = "rec_lam";
 	name = "Recreation Local Air Monitor";
-	pixel_x = -22;
-	req_access_txt = list(24,19,20)
+	pixel_x = -22
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -8334,10 +8330,6 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/machinery/forcefield{
-	name = "Security Forcefield";
-	req_access_txt = "1"
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -8901,10 +8893,6 @@
 "aEE" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
-	},
-/obj/machinery/forcefield{
-	name = "Security Forcefield";
-	req_access_txt = "1"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -19340,9 +19328,6 @@
 /turf/simulated/floor/white,
 /area/station/science/storage)
 "bpl" = (
-/obj/machinery/forcefield{
-	req_access_txt = "19"
-	},
 /turf/simulated/floor/industrial,
 /area/station/science/storage)
 "bpm" = (
@@ -22437,9 +22422,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxb" = (
@@ -24694,10 +24677,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/forcefield{
-	name = "Chemistry Forcefield";
-	req_access_txt = "7"
-	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "bEZ" = (
@@ -24705,10 +24684,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/forcefield{
-	name = "Chemistry Forcefield";
-	req_access_txt = "7"
-	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "bFa" = (
@@ -26406,10 +26381,6 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "gra" = (
-/obj/machinery/forcefield{
-	name = "Engine Forcefield";
-	req_access_txt = "48"
-	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "grm" = (
@@ -26843,8 +26814,7 @@
 /obj/machinery/door_control{
 	id = "Engineering";
 	name = "Engine Security Doors";
-	pixel_y = 8;
-	req_access_txt = "11"
+	pixel_y = 8
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
