@@ -46,7 +46,7 @@
 		SPAWN(5 SECONDS) // to give it enough time for the map loader to load the prefab in
 			var/turf/pedestal_1_loc = locate(src.x, src.y + 4, src.z)
 			var/turf/pedestal_2_loc = locate(src.x + 3, src.y + 1, src.z)
-			var/turf/pedestal_3_loc = locate(src.x, src.y - 3, src.z)
+			var/turf/pedestal_3_loc = locate(src.x, src.y - 2, src.z)
 			var/turf/pedestal_4_loc = locate(src.x - 3, src.y + 1, src.z)
 
 			var/obj/flock_encounter_pedestal/pedestal_1 = locate(/obj/flock_encounter_pedestal) in pedestal_1_loc
@@ -68,7 +68,7 @@
 			pedestal_4.adjacent_pedestals = list(pedestal_1, pedestal_3)
 
 			shuffle_list(src.pedestals)
-			for (var/i in 2 to rand(2, 3))
+			for (var/i in 1 to 2)
 				var/obj/flock_encounter_pedestal/pedestal = src.pedestals[i]
 				pedestal.toggle(null, TRUE)
 
@@ -78,13 +78,14 @@
 
 	proc/check_puzzle_solved()
 		var/pedestals_on = 0
-		for (var/obj/flock_encounter_pedestal/pedestal as anything in src.pedestals)
-			if (pedestal.on)
-				pedestals_on++
-		if (pedestals_on >= 4 && src.density)
-			src.open()
-		else if (pedestals_on <= 4 && !src.density)
-			src.close()
+		SPAWN(0.1 SECOND) // to prevent race condition for opening the door upon making an activation and deactivation at the same time
+			for (var/obj/flock_encounter_pedestal/pedestal as anything in src.pedestals)
+				if (pedestal.on)
+					pedestals_on++
+			if (pedestals_on >= 4 && src.density)
+				src.open()
+			else if (pedestals_on < 4 && !src.density)
+				src.close()
 
 /obj/item/flock_converter
 	name = "strange tool"
