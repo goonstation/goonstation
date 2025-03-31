@@ -123,7 +123,7 @@
 
 /proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
 	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
-	. = (!job || !job.can_be_antag(ROLE_GANG_LEADER) || !job.can_be_antag(ROLE_GANG_LEADER))
+	. = (!job || !job.can_be_antag(ROLE_GANG_MEMBER) || !job.can_be_antag(ROLE_GANG_LEADER))
 
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)
