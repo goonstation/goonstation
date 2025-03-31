@@ -96,7 +96,7 @@
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
-	var/request_limit = 0 //!Number of additional slots that can be requisitioned using the RoleControl program
+	var/request_limit = 0 //!Maximum limit that can be reached by requisitioning through RoleControl
 	var/request_cost = null //!Cost to open an additional slot using RoleControl
 
 	New()
@@ -996,7 +996,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Clown"
 	limit = 1
 	wages = PAY_DUMBCLOWN
-	request_limit = 2 //this is definitely a bad idea
+	request_limit = 3 //this is definitely a bad idea
 	request_cost = PAY_IMPORTANT*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
@@ -1401,7 +1401,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		..()
 		if (prob(40))
 			limit = 1
-			request_limit--
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
 
