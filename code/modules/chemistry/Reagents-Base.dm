@@ -499,6 +499,7 @@
 	transparency = 255
 	overdose = 30
 	taste = "metallic"
+	var/finaltone = rgb(108, 125, 183)
 
 	reaction_obj(var/obj/item/I, var/volume)
 		if (I.material && I.material.getID() == "silver")
@@ -524,8 +525,8 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/currenttone = H.bioHolder?.mobAppearance.s_tone
-			if(currenttone)
-				var/newtone = BlendRGB(currenttone, rgb(108, 125, 183), 0.02)
+			if(currenttone && color_dist(currenttone, finaltone) >= 5000) //these numbers might need tweaking
+				var/newtone = BlendRGB(currenttone, finaltone, 0.04)
 				H.bioHolder.mobAppearance.s_tone = newtone
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
