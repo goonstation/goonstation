@@ -109,6 +109,15 @@
 
 		return 1
 
+	// dead eyes stop working
+	breakme()
+		. = ..()
+		src.provides_sight = FALSE
+
+	unbreakme()
+		. = ..()
+		src.provides_sight = TRUE
+
 /obj/item/organ/eye/left
 	name = "left eye"
 	body_side = L_ORGAN

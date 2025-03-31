@@ -429,7 +429,7 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 
 	attack_hand(mob/user)
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (istype(user, /mob/living/critter/space_phoenix))
 			qdel(src)
@@ -439,7 +439,7 @@ ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
 
 	attackby(obj/item/I, mob/user)
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 
 		if (isweldingtool(I) && I:welding)

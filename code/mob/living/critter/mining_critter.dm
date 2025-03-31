@@ -386,6 +386,11 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	is_spacefaring()
 		return TRUE

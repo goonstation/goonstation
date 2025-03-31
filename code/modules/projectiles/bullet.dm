@@ -123,6 +123,19 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_22HP
 	ricochets = TRUE
 
+/datum/projectile/bullet/bullet_22/match
+	damage = 35
+	armor_ignored = 0.33
+	dissipation_delay = 15
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_STAB
+	shot_sound = 'sound/weapons/capella.ogg'
+	silentshot = 0
+	projectile_speed = 96
+	shot_delay = 0.2
+	ricochets = TRUE
+
+
 /datum/projectile/bullet/custom
 	name = "bullet"
 	damage = 1
@@ -223,14 +236,16 @@ toxic - poisons
 	name = "bullet"
 	damage = 85
 	damage_type = D_PIERCING
-	armor_ignored = 0.66
+	armor_ignored = 0.50
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
 	shot_volume = 50 // holy fuck why was this so loud
-	dissipation_delay = 10
+	dissipation_rate = 0
+	projectile_speed = 72
+	max_range = 80
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bullethole-small"
+	impact_image_state = "bullethole-large"
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
@@ -256,13 +271,13 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
-	shot_volume = 50 // holy fuck why was this so loud x2
+	shot_volume = 50 //
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
-	impact_image_state = "bullethole-small"
+	impact_image_state = "bullethole-large"
 	on_launch(obj/projectile/O)
 		O.AddComponent(/datum/component/sniper_wallpierce, 3, 20) //pierces 3 walls/lockers/doors/etc. Does not function on restriced Z, rwalls and blast doors use 2 pierces
 
@@ -1308,7 +1323,7 @@ toxic - poisons
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
-				O.blowthefuckup(impact)
+				O.meteorhit()
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)
@@ -1316,6 +1331,38 @@ toxic - poisons
 
 	antiair_burst
 		shot_number = 4
+
+/datum/projectile/special/spreader/uniform_burst/circle/antiair
+	name = "20mm frag round"
+	brightness = 0.7
+	window_pass = 0
+	icon_state = "20mm"
+	damage_type = D_KINETIC
+	armor_ignored = 0.5
+	hit_type = DAMAGE_CUT
+	damage = 100
+	dissipation_delay = 30
+	dissipation_rate = 5
+	cost = 1
+	shot_sound = 'sound/weapons/20mm.ogg'
+	shot_volume = 100
+	implanted = null
+	projectile_speed = 128
+	spread_projectile_type = /datum/projectile/bullet/flak_chunk
+	split_type = 1
+
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/cannon
+	shot_sound_extrarange = 1
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		..()
+		explosion_new(null, get_turf(hit), 12)
+
 
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
