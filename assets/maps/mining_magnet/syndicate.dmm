@@ -52,27 +52,6 @@
 	dir = 4
 	},
 /area/space)
-"h" = (
-/obj/storage/crate/classcrate{
-	name = "money crate"
-	},
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/currency/spacecash/thousand,
-/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
-	pixel_y = 25
-	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/space)
 "j" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/shuttle/red{
@@ -101,7 +80,7 @@
 /area/space)
 "m" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -112,6 +91,14 @@
 /obj/decal/cleanable/desk_clutter{
 	pixel_x = 3;
 	pixel_y = 4
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"o" = (
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -138,6 +125,27 @@
 	dir = 4
 	},
 /area/space)
+"v" = (
+/obj/storage/crate/classcrate{
+	name = "money crate"
+	},
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
+	pixel_y = 25
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
 "y" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -150,30 +158,10 @@
 	dir = 4
 	},
 /area/space)
-"z" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/space)
 "A" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/space)
-"C" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red";
-	name = "syndicate bedsheet"
-	},
-/obj/machinery/light/small,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -193,13 +181,6 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
-/area/space)
-"G" = (
-/obj/table/syndicate/auto,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -238,10 +219,22 @@
 	dir = 4
 	},
 /area/space)
+"J" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/machinery/light/small,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
 "K" = (
 /turf/simulated/floor/auto/glassblock/red,
 /area/space)
-"L" = (
+"M" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -270,7 +263,8 @@
 /area/space)
 "P" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	name = "Syndicate Post"
+	name = "Syndicate Post";
+	opacity = 0
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -314,6 +308,13 @@
 	dir = 4
 	},
 /area/space)
+"X" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
 
 (1,1,1) = {"
 R
@@ -350,10 +351,10 @@ R
 q
 q
 r
+o
 E
 E
-m
-E
+o
 k
 U
 q
@@ -366,7 +367,7 @@ q
 q
 q
 q
-h
+v
 E
 E
 E
@@ -385,7 +386,7 @@ q
 A
 q
 q
-z
+m
 V
 q
 R
@@ -416,7 +417,7 @@ S
 K
 E
 P
-E
+m
 P
 R
 "}
@@ -445,8 +446,8 @@ q
 f
 q
 q
-L
-C
+M
+J
 q
 R
 "}
@@ -470,11 +471,11 @@ R
 q
 q
 I
+m
 E
 E
-z
-E
-G
+m
+X
 a
 e
 q
