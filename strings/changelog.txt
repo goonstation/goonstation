@@ -1,5 +1,9 @@
 
 (t)sun mar 30 25
+(u)LeahTheTech
+(p)22793
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Ammo will cook off when exposed to high temperatures. Ammo in your inventory or in a gun is unaffected.
 (u)glowbold
 (p)22782
 (e)🆕|C-Feature
