@@ -675,7 +675,7 @@
 				var/ircmsg[] = new()
 				if(plist["target"])
 					var/who = lowertext(plist["target"])
-					var/mob/living/silicon/S = ckey_to_mob_maybe_disconnected(who)
+					var/mob/living/silicon/S = ckey_to_mob_maybe_disconnected(who, exact=0)
 					if(S)
 						ircmsg["laws"] = S.lawset_connection.format_for_logs(glue = "\n")
 						return ircbot.response(ircmsg)
