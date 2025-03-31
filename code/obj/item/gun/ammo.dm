@@ -297,6 +297,16 @@
 	get_desc()
 		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		. = ..()
+		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
+			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
+				//shoot in a truly random direction
+				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
+				if (prob(30) && src.use(1)) //small chance to do two per tick
+					sleep(0.3 SECONDS)
+					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
+
 //no caliber:
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
