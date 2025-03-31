@@ -1053,7 +1053,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	mimic
 		name = "Mimic"
 		point_cost = 1
-		count = 6
+		count = 3
 		types = list(/mob/living/critter/mimic/virtual)
 
 	meaty
@@ -1065,19 +1065,19 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	martian
 		name = "Martian"
 		point_cost = 1
-		count = 6
+		count = 3
 		types = list(/mob/living/critter/martian)
 
 	soldier
 		name = "Martian Soldier"
 		point_cost = 3
-		count = 4
+		count = 2
 		types = list(/mob/living/critter/martian/soldier)
 
 	warrior
 		name = "Martian Warrior"
 		point_cost = 3
-		count = 2
+		count = 1
 		types = list(/mob/living/critter/martian/warrior)
 
 	mutant
@@ -1089,7 +1089,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	martian_assorted
 		name = "Martian Assortment"
 		point_cost = 6
-		count = 12
+		count = 6
 		types = list(/mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/warrior)
 
 	bear
