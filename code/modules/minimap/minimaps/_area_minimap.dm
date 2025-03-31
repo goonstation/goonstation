@@ -152,8 +152,6 @@
 	var/atom/movable/minimap_render_object/vis_contents_display
 	var/id = null
 	var/area/broadcast_set_area = null
-	var/list/turf/broadcast_set_turfs = null
-	var/turfs_cached
 
 /datum/minimap/area_map/broadcast/New()
 	. = ..()
