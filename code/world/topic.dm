@@ -672,12 +672,21 @@
 
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
-				if (current_state > GAME_STATE_PREGAME)
-					var/ircmsg[] = new()
-					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
-					return ircbot.response(ircmsg)
+				var/ircmsg[] = new()
+				if(plist["target"])
+					var/who = lowertext(plist["target"])
+					var/mob/living/silicon/S = ckey_to_mob_maybe_disconnected(who, exact=0)
+					if(S)
+						ircmsg["laws"] = S.lawset_connection.format_for_logs(glue = "\n")
+						return ircbot.response(ircmsg)
+					else
+						return 0
 				else
-					return 0
+					if (current_state > GAME_STATE_PREGAME)
+						ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
+						return ircbot.response(ircmsg)
+					else
+						return 0
 
 			if ("health")
 				var/ircmsg[] = new()
