@@ -2,6 +2,8 @@
 (u)Dr. Cogwerks
 (e)📦🔊🎨|B-Game-Objects, C-Sound, C-Sprites
 (*)Updated hunting rifle to actually have a scope - wasn't meant to be a pointblank gun
+(*)OHR moved to standard traitor buylist
+(*)Chameleon projector made cheaper
 (*)New super-accurate competition pistol and anti-materiel cannon as nuke commander buylist options
 (*)Added slight warmup with visual indicator for RPG and multi-rocket launcher being shouldered
 (*)Less teamkills - more drama hopefully
