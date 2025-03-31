@@ -24,7 +24,7 @@
 				var/headline_estimate = min(signal_loss_current + rand(-10,10),100)
 				var/headline = "A solar flare has been detected near the [station_or_ship()]. We estimate a signal interference rate of [headline_estimate]% lasting anywhere between three to five minutes."
 				if (signal_loss_initial != signal_loss_current)
-					headline += "<br>Local spatial interdiction reduced interference by an estimated [min(signal_loss_initial, signal_loss_initial - signal_loss_current + rand(-5, 5))]%."
+					headline += "<br>Local spatial interdiction reduced interference by an estimated [min(headline_estimate, signal_loss_initial - signal_loss_current + rand(-5, 5))]%."
 				command_alert(headline, "Solar Flare", alert_origin = ALERT_WEATHER)
 
 		SPAWN(flare_start_time)
