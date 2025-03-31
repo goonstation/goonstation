@@ -538,7 +538,7 @@
 				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
-				burp, fart, monologue, contemplate, custom")
+				burp, fart, monologue, contemplate, nudge, adjust, custom")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
@@ -693,6 +693,29 @@
 							src.add_karma(-10)
 							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
+
+			if ("nudge", "adjust")
+				if (!src.restrained() && src.glasses.nudge_compatible)
+					var/obj/item/clothing/glasses/eyewear = src.glasses
+					var/flavor_one = pick("adjusts", "pushes up")
+					var/flavor_two = pick("intelligently.", "with a smirk.", "very seriously.")
+					if (src.nudge_toggle)
+						message = "<B>[src]</B> [flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]"
+						maptext_out = "<I>[flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]</I>"
+						src.nudge_toggle = FALSE
+					else
+						message = "<B>[src]</B> nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose."
+						maptext_out = "<I>nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose.</I>"
+						src.nudge_toggle = TRUE
+
+					if (eyewear.flash_compatible)
+						if (eyewear.flash_toggle)
+							eyewear.nudge_emote()
+							elecflash(src)
+							update_glasses()
+						else
+							eyewear.nudge_emote()
+							update_glasses()
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())

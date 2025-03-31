@@ -13,9 +13,14 @@
 	block_vision = 0
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	var/nudge_compatible = TRUE // below vars for the "nudge" emote
+	var/flash_compatible = FALSE
+	var/og_icon_state = "glasses"
+	var/flash_toggle = TRUE
+	var/flash_state = "flash"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
@@ -23,12 +28,22 @@
 			return
 		return ..()
 
+	proc/nudge_emote()
+		var/mob/living/carbon/human/H = src.loc
+		if (src.flash_toggle)
+			src.flash_toggle = FALSE
+			var/image/oglasses = image('icons/mob/clothing/eyes.dmi', loc=src.icon_state, icon_state=flash_state, layer=MOB_GLASSES_LAYER+1)
+			H.AddOverlays(oglasses, "glasses")
+		else
+			H.ClearSpecificOverlays("glasses")
+			src.flash_toggle = TRUE
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
 	item_state = "crafted"
 	desc = "A simple pair of glasses."
+	flash_compatible = TRUE
 
 	onMaterialChanged()
 		..()
@@ -46,6 +61,7 @@
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
+	nudge_compatible = FALSE
 
 	setupProperties()
 		..()
@@ -123,6 +139,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+	flash_compatible = TRUE
 
 	attack_self(mob/user)
 		user.show_text("You swap the style of your glasses.")
@@ -136,6 +153,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	icon_state = "glasses_round"
 	item_state = "glasses_round"
 	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
+	flash_compatible = FALSE
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
@@ -396,6 +414,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "eyepatch-R"
 	item_state = "headset"
 	block_eye = "R"
+	nudge_compatible = FALSE
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
 	wear_layer = MOB_GLASSES_LAYER2
@@ -576,6 +595,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
+	flash_compatible = TRUE
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85
@@ -630,6 +650,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
 	icon_state = "prodocs-upgraded"
+	flash_compatible = FALSE
 	scan_upgrade = 1
 	health_scan = 1
 
@@ -893,6 +914,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	name = "blue-light filtering glasses"
 	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
 	icon_state = "oglasses"
+	flash_compatible = TRUE
 	// would be nice if these tinted TGUI
 
 	color_r = 1
