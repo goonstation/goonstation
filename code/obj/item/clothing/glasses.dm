@@ -100,6 +100,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	icon_state = "meson"
 	item_state = "glasses"
 	desc = "Goggles that allow you to see the structure of the station through walls."
+	flash_compatible = TRUE
 	color_r = 0.92
 	color_g = 1
 	color_b = 0.92
@@ -159,6 +160,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "peculiar spectacles"
 	desc = "Admittedly, they are rather strange."
 	icon_state = "ectoglasses"
+	flash_compatible = TRUE
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
@@ -179,6 +181,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
+	flash_state = "goggle_flash"
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
@@ -317,6 +320,8 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	name = "optical thermal scanner"
 	icon_state = "thermal"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark."
 	color_r = 1
 	color_g = 0.8 // red tint
@@ -383,6 +388,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VISOR goggles"
 	icon_state = "visor"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
 	color_r = 0.92
@@ -650,7 +657,6 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
 	icon_state = "prodocs-upgraded"
-	flash_compatible = FALSE
 	scan_upgrade = 1
 	health_scan = 1
 
@@ -662,6 +668,8 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "spectroscopic scanner goggles"
 	icon_state = "spectro"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "Goggles with an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	color_r = 1 // pink tint?
 	color_g = 0.8
@@ -856,6 +864,8 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
 	icon_state = "atmos"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
 	var/list/image/atmos_overlays = list()
 	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
