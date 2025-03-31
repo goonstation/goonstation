@@ -303,7 +303,7 @@
 		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
-		Turfspawn_Asteroid_SeedArtifacts(generated_turfs)
+		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
 
 /////////////TELESCOPE ENCOUNTERS BELOW
 
@@ -916,12 +916,12 @@
 			continue
 		AST.set_event(E)
 
-/proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs)
+/proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs, num_artifacts)
 	var/turf/simulated/wall/auto/asteroid/AST
 
 	shuffle_list(turfs)
 
-	for (var/i in 1 to min(length(turfs), rand(7, 10)))
+	for (var/i in 1 to min(length(turfs), num_artifacts))
 		AST = turfs[i]
 		AST.set_event(/datum/ore/event/artifact)
 
