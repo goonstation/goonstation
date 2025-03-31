@@ -1,0 +1,512 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/syndicate/auto,
+/obj/machinery/light/lamp/black{
+	pixel_x = 1;
+	pixel_y = 4;
+	on = 1
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"b" = (
+/turf/space,
+/area/space)
+"c" = (
+/obj/table/syndicate/auto,
+/obj/item/clipboard/with_pen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/pen/pencil{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"e" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"f" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"g" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"h" = (
+/obj/storage/crate/classcrate{
+	name = "money crate"
+	},
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
+	pixel_y = 25
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"j" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"k" = (
+/obj/table/syndicate/auto,
+/obj/item/decoration/ashtray{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/obj/item/cigbutt{
+	pixel_x = 5
+	},
+/obj/item/cigbutt{
+	pixel_y = 2
+	},
+/obj/item/cigbutt{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"m" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"n" = (
+/obj/table/syndicate/auto,
+/obj/decal/cleanable/desk_clutter{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"q" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
+"r" = (
+/obj/storage/closet/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"t" = (
+/obj/machinery/vending/cigarette,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"y" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/mob/living/critter/human/syndicate/rifle,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"z" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"A" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"C" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/machinery/light/small,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"D" = (
+/obj/table/syndicate/auto,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"E" = (
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"F" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"G" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"H" = (
+/obj/storage/crate/classcrate{
+	name = "money crate"
+	},
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"I" = (
+/obj/storage/closet/syndicate,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/head/bandana/random_color,
+/obj/item/clothing/head/bandana/random_color,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/head/black,
+/obj/item/clothing/head/black,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"K" = (
+/turf/simulated/floor/auto/glassblock/red,
+/area/space)
+"L" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red";
+	name = "syndicate bedsheet"
+	},
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter{
+	pixel_y = 5;
+	pixel_x = -24
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"N" = (
+/mob/living/critter/human/syndicate/knife,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"O" = (
+/mob/living/critter/human/syndicate/rifle,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"P" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	name = "Syndicate Post"
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"R" = (
+/turf/simulated/wall/auto/asteroid/dark,
+/area/space)
+"S" = (
+/obj/submachine/syndicate_teleporter,
+/turf/simulated/floor/auto/glassblock/red,
+/area/space)
+"T" = (
+/obj/table/syndicate/auto,
+/obj/random_item_spawner/desk_stuff/few,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"U" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket{
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"V" = (
+/obj/machinery/vending/cola/blue,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+"W" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/space)
+
+(1,1,1) = {"
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+b
+"}
+(2,1,1) = {"
+R
+R
+q
+q
+q
+q
+q
+q
+q
+q
+q
+R
+R
+"}
+(3,1,1) = {"
+R
+q
+q
+r
+E
+E
+m
+E
+k
+U
+q
+q
+R
+"}
+(4,1,1) = {"
+R
+q
+q
+q
+q
+h
+E
+E
+E
+O
+t
+q
+R
+"}
+(5,1,1) = {"
+R
+g
+a
+c
+q
+q
+A
+q
+q
+z
+V
+q
+R
+"}
+(6,1,1) = {"
+R
+g
+D
+j
+q
+N
+K
+j
+q
+q
+q
+q
+R
+"}
+(7,1,1) = {"
+R
+g
+n
+W
+F
+K
+S
+K
+E
+P
+E
+P
+R
+"}
+(8,1,1) = {"
+R
+g
+D
+j
+q
+N
+K
+j
+q
+q
+q
+q
+R
+"}
+(9,1,1) = {"
+R
+g
+T
+T
+q
+q
+f
+q
+q
+L
+C
+q
+R
+"}
+(10,1,1) = {"
+R
+q
+q
+q
+q
+H
+E
+E
+E
+E
+y
+q
+R
+"}
+(11,1,1) = {"
+R
+q
+q
+I
+E
+E
+z
+E
+G
+a
+e
+q
+R
+"}
+(12,1,1) = {"
+R
+R
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+R
+"}
+(13,1,1) = {"
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+"}

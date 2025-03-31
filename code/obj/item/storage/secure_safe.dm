@@ -629,6 +629,11 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	random_code = TRUE
 	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/buttcoin, /obj/item/currency/buttcoin)
 
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/stamped_bullion = 3)
+
 #undef KEYPAD_ERR
 #undef KEYPAD_SET
 #undef KEYPAD_OK
