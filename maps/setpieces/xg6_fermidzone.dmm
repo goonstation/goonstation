@@ -10213,7 +10213,7 @@
 /obj/machinery/computer/announcement{
 	dir = 4;
 	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console"
+	name = "Shen Kuo Observatory Announcement Console";
 	req_access = null
 	},
 /obj/mapping_helper/access/syndie_commander
