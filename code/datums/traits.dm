@@ -1479,8 +1479,8 @@ TYPEINFO(/datum/trait/partyanimal)
 			var/mob/living/carbon/human/H = owner
 			randomize_mob_limbs(H)
 
-// organ removal handled in part customization, tracked here for equipping sensory item
-
+// organ removal associated traits
+// removal is handled in part customization, tracked here for equipping sensory item
 /datum/trait/missing_left_eye
 	name = "Missing Left Eye"
 	id = "eye_missing_left"
