@@ -47,8 +47,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	..()
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
-		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
-		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
+		src.lawset_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie?.lawset
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.lawset_connection?.host_rack)]")
+	else if(src.lawset_connection) //should only happen if given a lawset from a child New() call (such as by being built from a frame with an internal lawset)
+		logTheThing(LOG_STATION, src, "New cyborg [src] spawned with their own internal lawset:<br>[src.lawset_connnection.format_for_logs()]") //this might be a bit verbose
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
