@@ -20,6 +20,7 @@
 		cyborg.lawset_connection = new /datum/ai_lawset/corrupted
 		cyborg.emagged = TRUE
 		cyborg.show_laws()
+		logTheThing(LOG_ADMIN, cyborg, "became an emagged robot with the following laws:<br>[cyborg.lawset_connection.format_for_logs()]")
 
 	remove_equipment()
 		if (!isrobot(src.owner.current))
