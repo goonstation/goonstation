@@ -623,6 +623,10 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			minimum_level = 15
 			supplies = list(/obj/item/artifact/melee_weapon)
 
+		talisman
+			minimum_level = 35
+			supplies = list(/obj/item/artifact/talisman)
+
 	inactive_artifact
 		name = "An Artifact"
 		minimum_level = 20
@@ -782,6 +786,12 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = -2
 		minimum_level = 15
 		supplies = list(/obj/item/storage/firstaid/vr/toxin, /obj/item/storage/firstaid/vr/oxygen, /obj/item/storage/firstaid/vr/brain, /obj/item/reagent_containers/emergency_injector/vr/calomel)
+
+	chair
+		name = "Chair"
+		point_cost = -1
+		minimum_level = 20
+		supplies = list(/obj/item/chair/folded)
 
 /datum/gauntletEvent
 	var/name = "Event"
