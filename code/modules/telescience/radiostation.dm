@@ -273,15 +273,18 @@
 			if(!record_name)
 				boutput(user, SPAN_NOTICE("You decide not to play this record."))
 				return
+			if(!(inserted_record in user.equipped_list()))
+				boutput(user, SPAN_ALERT("You have to be holding a record to place it in the player!"))
+				return
 			if(!in_interact_range(src, user))
-				boutput(user, "You're out of range of the [src.name]!")
+				boutput(user, SPAN_ALERT("You're out of range of the [src.name]!"))
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
 			phrase_log.log_phrase("record", html_encode(record_name))
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
-			user.drop_item()
+			user.drop_item(W)
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE
