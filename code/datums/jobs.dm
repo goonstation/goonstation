@@ -96,6 +96,8 @@
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
+	var/request_limit = 0 //!Number of additional slots that can be requisitioned using the RoleControl program
+	var/request_cost = null //!Cost to open an additional slot using RoleControl
 
 	New()
 		..()
@@ -994,6 +996,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Clown"
 	limit = 1
 	wages = PAY_DUMBCLOWN
+	request_limit = 2 //this is definitely a bad idea
+	request_cost = PAY_IMPORTANT*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	linkcolor = MEDICAL_LINK_COLOR // :o)
@@ -1390,11 +1394,14 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"
+	request_limit = 2
+	request_cost = PAY_IMPORTANT*4
 
 	New()
 		..()
 		if (prob(40))
 			limit = 1
+			request_limit--
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
 
@@ -2026,6 +2033,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
 	wages = PAY_UNTRAINED
+	request_limit = 1
+	request_cost = PAY_IMPORTANT*8
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
@@ -2610,6 +2619,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
+	request_limit = 2
+	request_cost = PAY_IMPORTANT*4
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
@@ -2687,6 +2698,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Friday"
 	name = "Tourist"
 	limit = 100
+	request_limit = 0
 	wages = 0
 	slot_back = null
 	slot_belt = list(/obj/item/storage/fanny)
