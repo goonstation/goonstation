@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			src.is_busy = FALSE
 			src.curr_note = 0
 			src.event_play_end()
-			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
+			SEND_SIGNAL(src.holder, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
 			src.is_stop_requested = FALSE
 			src.update_icon(FALSE)
 			return
