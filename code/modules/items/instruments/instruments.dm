@@ -992,9 +992,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "keytar"
 	desc = "FIX ME"
 	icon = 'icons/obj/large/64x32.dmi'
-	inhand_image_icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "keytar"
-	item_state = "keytar"
+	item_state = ""
 	two_handed = 1
 	force = 10
 	note_range = list("c2", "b7")
