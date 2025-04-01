@@ -29,6 +29,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set timing", PROC_REF(mechcompConfigTiming))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set instrument", PROC_REF(mechcompConfigInstrument))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "stop", PROC_REF(mechcompConfigStop))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "unlink", PROC_REF(mechcompConfigUnlink))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset", PROC_REF(mechcompConfigReset))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "toggle looping", PROC_REF(mechcompConfigToggleLooping))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "toggle rest on unavailable notes", PROC_REF(mechcompConfigToggleRestOnUnavailableNotes))
@@ -105,6 +106,9 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	proc/mechcompConfigStop(obj/item/W as obj, mob/user as mob)
 		src.music_player.stop(TRUE)
+
+	proc/mechcompConfigUnlink(obj/item/W as obj, mob/user as mob)
+		src.music_player.unlink()
 
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
 		src.music_player.reset(0)

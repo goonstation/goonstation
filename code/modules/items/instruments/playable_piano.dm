@@ -70,6 +70,9 @@ TYPEINFO(/obj/player_piano)
 				if ("Stop Piano") // stops the piano without losing stored data
 					src.music_player.stop(TRUE)
 
+				if ("Unlink Piano") // removes all links to this piano
+					src.music_player.unlink()
+
 				if ("Reset Piano") //reset piano B)
 					src.music_player.reset()
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it!"))

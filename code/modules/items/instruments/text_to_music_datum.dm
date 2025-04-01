@@ -268,6 +268,13 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		for (var/datum/text_to_music/music_player as anything in src.linked_music_players)
 			music_player.stop()
 
+/datum/text_to_music/proc/unlink()
+	for (var/datum/text_to_music/other_music_player as anything in src.linked_music_players)
+		if (!isnull(other_music_player))
+			other_music_player.linked_music_players -= src
+
+	src.linked_music_players = list()
+
 /datum/text_to_music/proc/reset(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 	src.update_icon(FALSE)
 	src.event_reset()
