@@ -10866,7 +10866,7 @@
 /area/station/security/checkpoint/west)
 "aKI" = (
 /obj/storage/crate{
-	name = "dousing rod crate"
+	name = "dowsing rod crate"
 	},
 /obj/item/heat_dowsing,
 /obj/item/heat_dowsing,
@@ -17417,7 +17417,7 @@
 /area/station/engine/inner)
 "bmP" = (
 /obj/storage/crate{
-	name = "dousing rod crate"
+	name = "dowsing rod crate"
 	},
 /obj/item/heat_dowsing,
 /obj/item/heat_dowsing,
