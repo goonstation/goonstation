@@ -39,8 +39,8 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		var/description = "Instrument: [src.music_player.instrument_name] |  \
-											Timing: [src.music_player.timing] |  \
-											Has Notes: [length(src.music_player.note_input) ? "Yes" : "No"]"
+							Timing: [src.music_player.timing] |  \
+							Notes Amount: [length(src.music_player.note_input)]"
 		. += "<br>[SPAN_NOTICE(description)]"
 
 	// ----------------------------------------------------------------------------------------------------
