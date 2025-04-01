@@ -988,6 +988,24 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	attack_self(mob/user)
 		return //no imitating borg screams
 
+/obj/item/instrument/keytar
+	name = "keytar"
+	desc = "FIX ME"
+	icon = 'icons/obj/large/64x32.dmi'
+	inhand_image_icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "keytar"
+	item_state = "keytar"
+	two_handed = 1
+	force = 10
+	note_range = list("c2", "b7")
+	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at E1
+	// key_offset = 5
+
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
 	desc = "A wooden crate labeled to contain instruments."
