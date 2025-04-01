@@ -445,6 +445,10 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	animate_flash_color_fill(src.holder, "#ff00ff", 2, 2)
 
+/datum/text_to_music/mech_comp/set_notes(var/given_notes)
+	if (..())
+		src.rebuild_tooltip()
+
 /datum/text_to_music/mech_comp/set_timing(var/time_sel)
 	if (..())
 		src.rebuild_tooltip()
