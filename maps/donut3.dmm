@@ -27940,6 +27940,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"ixa" = (
+/obj/disposalpipe/segment/food{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/brig/south_side)
 "ixb" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -35568,7 +35575,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/maintenance/outer/west)
+/area/station/security/brig/south_side)
 "kLw" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -65042,9 +65049,6 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"tIF" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/maintenance/outer/west)
 "tIG" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/light/small/sticky{
@@ -107762,7 +107766,7 @@ fiB
 kuM
 xQr
 ctq
-fiB
+cQi
 cQi
 bpJ
 jDY
@@ -108064,7 +108068,7 @@ uwe
 uwe
 xuC
 lJb
-kgc
+ixa
 cQi
 cQi
 uXp
@@ -108367,7 +108371,7 @@ xQr
 lFK
 xuC
 kLp
-tIF
+cQi
 cQi
 lCb
 nUC
