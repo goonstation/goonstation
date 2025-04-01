@@ -19548,7 +19548,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/brig/solitary2)
+/area/station/security/brig/north_side)
 "fOw" = (
 /obj/stool/chair/comfy{
 	dir = 8
