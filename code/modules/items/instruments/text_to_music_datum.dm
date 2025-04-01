@@ -260,6 +260,14 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	return TRUE
 
+/datum/text_to_music/proc/stop(var/is_primary = FALSE)
+	if(src.is_busy)
+		src.is_stop_requested = TRUE
+
+	if (is_primary)
+		for (var/datum/text_to_music/music_player as anything in src.linked_music_players)
+			music_player.stop()
+
 /datum/text_to_music/proc/reset(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 	src.update_icon(FALSE)
 	src.event_reset()

@@ -49,8 +49,7 @@ TYPEINFO(/obj/player_piano)
 			src.music_player.set_timing(new_timing)
 
 	proc/mechcompStop(var/datum/mechanicsMessage/input)
-		if (src.music_player.is_busy)
-			src.music_player.is_stop_requested = TRUE
+		src.music_player.stop(TRUE)
 
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
 		src.music_player.reset(FALSE)
@@ -69,7 +68,7 @@ TYPEINFO(/obj/player_piano)
 
 			switch(mode_sel)
 				if ("Stop Piano") // stops the piano without losing stored data
-					src.music_player.is_stop_requested = TRUE
+					src.music_player.stop(TRUE)
 
 				if ("Reset Piano") //reset piano B)
 					src.music_player.reset()

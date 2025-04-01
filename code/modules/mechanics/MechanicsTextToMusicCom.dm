@@ -63,8 +63,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.music_player.set_instrument(input.signal)
 
 	proc/mechcompStop(var/datum/mechanicsMessage/input)
-		if (src.music_player.is_busy)
-			src.music_player.is_stop_requested = TRUE
+		src.music_player.stop(TRUE)
 
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
 		src.music_player.reset(0)
@@ -105,8 +104,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.music_player.set_instrument(new_instrument)
 
 	proc/mechcompConfigStop(obj/item/W as obj, mob/user as mob)
-		if (src.music_player.is_busy)
-			src.music_player.is_stop_requested = TRUE
+		src.music_player.stop(TRUE)
 
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
 		src.music_player.reset(0)
@@ -137,8 +135,8 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		..()
 
 	attackby(obj/item/W, mob/user)
-		if(iswrenchingtool(W) && src.anchored && src.music_player.is_busy)
-			src.music_player.is_stop_requested = TRUE
+		if(iswrenchingtool(W) && src.anchored)
+			src.music_player.stop()
 
 		return ..()
 
