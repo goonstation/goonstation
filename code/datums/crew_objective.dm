@@ -638,6 +638,24 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 			check_result = length(materials) >= 10
 		return check_result
 
+#ifndef UNDERWATER_MAP // not a lot of rockworms under the sea
+/datum/objective/crew/miner/rockworm
+	explanation_text = "Have two tamed rock worms at the end of the round."
+	var/static/check_result
+	check_completion()
+		. = ..()
+		if (isnull(check_result))
+			check_result = FALSE
+			var/tame_worm_count = 0
+			for_by_tcl(worm, /mob/living/critter/rockworm)
+				if (worm.tamed)
+					tame_worm_count++
+					if (tame_worm_count >= 2)
+						check_result = TRUE
+						break
+		return check_result
+#endif
+
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/heisenbee
 	explanation_text = "Ensure that Heisenbee escapes on the shuttle."

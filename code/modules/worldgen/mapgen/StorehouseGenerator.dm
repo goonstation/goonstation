@@ -255,7 +255,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		src.lag_check()
+		src.lag_check(flags)
 
 /datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]

@@ -39,7 +39,7 @@
 		else
 			src.icon_state = "emerg_inj-[src.label]0"
 			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
-			flick("emerg_inj-[src.label]-flick", src)
+			FLICK("emerg_inj-[src.label]-flick", src)
 		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)

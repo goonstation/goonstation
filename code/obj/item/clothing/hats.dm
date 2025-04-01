@@ -1377,6 +1377,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		icon_state = "sunhatr-stun"
 		item_state = "sunhatr-stun"
 
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_ATTACKHAND, PROC_REF(attempt_shock))
+
+	unequipped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_ATTACKHAND)
+
 	examine()
 		. = ..()
 		if (src.stunready)
@@ -1419,6 +1427,42 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			return
 
 		..()
+
+	proc/attempt_shock(mob/wearer, mob/target)
+		if(wearer != target && src.uses > 0 && target.a_intent == INTENT_HELP && target.zone_sel?.selecting == "head")
+			wearer.visible_message(SPAN_ALERT("[target] tries to pat [wearer] on the head, but gets shocked by [src]!"))
+			zap_headpatter(target)
+
+			src.uses = max(0, src.uses - 1)
+			if (src.uses < 1)
+				src.icon_state = splittext(src.icon_state,"-")[1]
+				src.item_state = splittext(src.item_state,"-")[1]
+				wearer.update_clothing()
+
+			if (src.uses <= 0)
+				wearer.show_text("The sunhat is no longer electrically charged.", "red")
+			else
+				wearer.show_text("The stunhat has [src.uses] charges left!", "red")
+			return TRUE
+
+	proc/zap_headpatter(mob/target)
+		elecflash(src)
+		target.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+		target.stuttering = max(target.stuttering,30)
+
+/obj/item/clothing/head/sunhat/killhat
+	name = "killhat"
+	desc = "The be-all, end-all of personal space protection."
+	stunready = 1
+	uses = 1
+	icon_state = "sunhatr-stun"
+	item_state = "sunhatr-stun"
+	blocked_from_petasusaphilic = TRUE
+	var/wattage = 3 MEGA WATTS //equivalent to ~120 burn damage
+
+	zap_headpatter(mob/target)
+		elecflash(src)
+		target.shock(src, wattage, ignore_gloves = TRUE)
 
 
 /obj/item/clothing/head/headmirror

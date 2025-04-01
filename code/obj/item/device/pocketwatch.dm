@@ -74,14 +74,14 @@
 
 	dropped(mob/user)
 		icon_state = "watch_closed"
-		flick("watch_close_animation_[display_type]", src)
+		FLICK("watch_close_animation_[display_type]", src)
 		if (isturf(src.loc))
 			stop_counting_steps(user)
 		..()
 
 	attack_hand(mob/user)
 		icon_state = "watch_open_[display_type]"
-		flick("watch_open_animation_[display_type]", src)
+		FLICK("watch_open_animation_[display_type]", src)
 		start_counting_steps(user)
 		process()
 		..()
