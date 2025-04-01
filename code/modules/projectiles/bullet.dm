@@ -1242,11 +1242,14 @@ toxic - poisons
 
 	on_pre_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
-		if (istype(hit, /mob/living) && !istype(hit, /mob/living/critter/space_phoenix))
+		if ((istype(hit, /mob/living) && !istype(hit, /mob/living/silicon)) && !istype(hit, /mob/living/critter/space_phoenix))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
 			L.bodytemperature -= 3
 			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
+		else if (istype(hit, /mob/living/silicon))
+			var/mob/living/L = hit
+			L.TakeDamage("All", 5, 15, damage_type = src.damage_type)
 		else if (isvehicle(hit))
 			src.damage = 25
 			src.disruption = 5
