@@ -419,7 +419,7 @@ MATERIAL
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
 
-					if (!istype(T, /turf/simulated/floor))
+					if (!(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/space_phoenix_ice_tunnel)))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
 					if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
