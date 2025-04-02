@@ -40,6 +40,8 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+	var/list/note_freq_values = null
+	var/use_pitch_shifting = FALSE
 
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
@@ -72,14 +74,24 @@
 				contextActions += newcontext
 
 		if (src.use_new_interface)
+			var/datum/pitch_shift_table_three/pitch_shift_table = null
+			if (use_pitch_shifting)
+				pitch_shift_table = new()
+				src.note_freq_values = list()
 			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
 			src.note_keys_string = src.generate_keybinds(src.notes)
 			if(!src.note_keys_string)
 				src.note_keys_string = src.default_keys_string
 			src.sounds_instrument = list()
 			for (var/i in 1 to length(src.notes))
-				src.note = src.notes[i]
+				if (src.use_pitch_shifting)
+					var/list/shift_list = pitch_shift_table.get_list(src.notes[i])
+					src.note = shift_list[1]
+					src.note_freq_values += shift_list[2]
+				else
+					src.note = src.notes[i]
 				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
+			pitch_shift_table = null
 
 	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
@@ -92,6 +104,10 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
+		if (src.use_pitch_shifting && pitch_override == null)
+			var/pitch = src.note_freq_values[note]
+			if (!isnull(pitch))
+				pitch_override = pitch
 		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
@@ -441,6 +457,7 @@
 	use_new_interface = TRUE
 	//Start at E1
 	key_offset = 5
+	use_pitch_shifting = TRUE
 
 	New()
 		..()
