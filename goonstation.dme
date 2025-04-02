@@ -986,6 +986,7 @@
 #include "code\modules\antagonists\zombie\zombie.dm"
 #include "code\modules\antagonists\zombie\abilities\_zombie_ability_holder.dm"
 #include "code\modules\antagonists\zombie\abilities\infect.dm"
+#include "code\modules\atmospherics\bubbles.dm"
 #include "code\modules\atmospherics\FEA_airgroup.dm"
 #include "code\modules\atmospherics\FEA_atom_movable.dm"
 #include "code\modules\atmospherics\FEA_fire.dm"
