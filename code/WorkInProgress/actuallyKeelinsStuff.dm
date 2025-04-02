@@ -3005,7 +3005,7 @@ var/list/lag_list = new/list()
 		active = 1
 		walk_towards(src,L,3)
 		src.invisibility = INVIS_NONE
-		flick("apparition",src)
+		FLICK("apparition",src)
 		sleep(1.5 SECONDS)
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)

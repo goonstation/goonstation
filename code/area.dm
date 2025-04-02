@@ -171,7 +171,7 @@ TYPEINFO(/area)
 	/// Are mobs normally excluded from restricted Z levels allowed to exist here even on restricted Z levels?
 	var/allowed_restricted_z = FALSE
 
-	/// is this area permafrosted by an ice phoenix?
+	/// is this area permafrosted by a space phoenix?
 	var/permafrosted = FALSE
 
 	proc/CanEnter(var/atom/movable/A)

@@ -31,7 +31,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
 	send_hear()
-		flick("amp_stack_actv", src)
+		FLICK("amp_stack_actv", src)
 
 		last_transmission = world.time
 		var/list/hear = hearers(src.speaker_range, get_turf(src))

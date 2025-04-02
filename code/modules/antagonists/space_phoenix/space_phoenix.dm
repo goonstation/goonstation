@@ -1,7 +1,7 @@
-/datum/antagonist/mob/ice_phoenix
+/datum/antagonist/mob/space_phoenix
 	id = ROLE_PHOENIX
 	display_name = "space phoenix"
-	mob_path = /mob/living/critter/ice_phoenix
+	mob_path = /mob/living/critter/space_phoenix
 	mutually_exclusive = TRUE
 	assigned_by = ANTAGONIST_SOURCE_RANDOM_EVENT
 	objectives = list(/datum/objective/specialist/phoenix_collect_humans, /datum/objective/specialist/phoenix_collect_critters, /datum/objective/specialist/phoenix_permafrost_areas)

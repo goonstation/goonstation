@@ -146,12 +146,12 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
 
@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/flash)
 
 	// Play animations.
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -250,7 +250,7 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 

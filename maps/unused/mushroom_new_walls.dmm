@@ -36099,10 +36099,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ugY" = (
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "uhh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
@@ -97035,7 +97031,7 @@ beu
 ben
 aVD
 ben
-ugY
+ben
 ben
 jYD
 koJ

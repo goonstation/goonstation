@@ -486,7 +486,7 @@
 
 	M.attack_particle.icon = 'icons/mob/mob.dmi'
 	if (M.attack_particle.icon_state == state_string)
-		flick(state_string,M.attack_particle)
+		FLICK(state_string,M.attack_particle)
 	M.attack_particle.icon_state = state_string
 
 	M.attack_particle.alpha = 255
@@ -549,7 +549,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	muzzleflash.set_loc(A)
 	A.vis_contents.Add(muzzleflash)
 	if (muzzleflash.icon_state == muzzle_anim)
-		flick(muzzle_anim,muzzleflash)
+		FLICK(muzzle_anim,muzzleflash)
 	muzzleflash.icon_state = muzzle_anim
 
 	animate(muzzleflash, time=0.4 SECONDS)
@@ -570,7 +570,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	M.sprint_particle.set_dir(null)
 	if (M.sprint_particle.icon_state == "sprint_cloud")
-		flick("sprint_cloud",M.sprint_particle)
+		FLICK("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 	SPAWN(0.6 SECONDS)
@@ -586,7 +586,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_small")
-		flick("sprint_cloud_small",M.sprint_particle)
+		FLICK("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
 	SPAWN(0.4 SECONDS)
@@ -602,7 +602,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
-		flick("sprint_cloud_tiny",M.sprint_particle)
+		FLICK("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
 	SPAWN(0.3 SECONDS)

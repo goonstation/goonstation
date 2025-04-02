@@ -36,7 +36,7 @@
 						if (has_afterburner)
 							I.color = "#ff09de"
 						src.oldposition.vis_contents += I
-						flick(istate, I)
+						FLICK(istate, I)
 						I.icon_state = "blank"
 					else
 						I = new /atom/movable/hotspot/chemfire(src.oldposition, CHEM_FIRE_BLUE)
