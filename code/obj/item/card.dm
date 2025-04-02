@@ -184,6 +184,17 @@ TYPEINFO(/obj/item/card/emag)
 	captain
 		assignment = "Space Pirate Captain"
 
+/obj/item/card/id/salvager
+	keep_icon = TRUE
+
+	New()
+		..()
+		var/mob/living/carbon/human/H = src.loc
+		if(istype(H))
+			src.registered = "[H.real_name]"
+			src.update_name()
+			src.pin = H.mind.remembered_pin
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."

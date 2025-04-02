@@ -179,7 +179,6 @@
 					return
 
 				boutput(user, SPAN_ALERT("You deploy the [src]!"))
-				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -305,6 +304,7 @@
 		qdel(src)
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
+	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 	var/turf/T = get_turf(src)
 	var/atom/movable/AM = null
 	src.stored?.transfer_stored_item(src, T, user = user)
