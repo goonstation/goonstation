@@ -109,12 +109,12 @@
 /area/mining/magnet)
 "r" = (
 /obj/storage/closet/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/clothing/suit/space/syndicate_worn,
-/obj/item/clothing/suit/space/syndicate_worn,
-/obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
+/obj/item/deployer/barricade,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -211,8 +211,6 @@
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/head/bandana/random_color,
 /obj/item/clothing/head/bandana/random_color,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/head/black,
 /obj/item/clothing/head/black,
 /turf/unsimulated/floor/shuttle/red{

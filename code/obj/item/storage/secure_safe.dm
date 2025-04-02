@@ -632,7 +632,13 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 /obj/item/storage/secure/ssafe/syndicate_mining_encounter
 	configure_mode = FALSE
 	random_code = TRUE
-	spawn_contents = list(/obj/item/stamped_bullion = 3)
+
+	New()
+		..()
+		for (var/i in rand(2, 4))
+			src.storage.add_contents(new /obj/item/stamped_bullion(src))
+		for (var/i in rand(2, 3))
+			src.storage.add_contents(new /obj/item/explosive_uplink_telecrystal(src))
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET
