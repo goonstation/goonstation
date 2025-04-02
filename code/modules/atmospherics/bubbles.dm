@@ -56,6 +56,8 @@
 		src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
 		playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
+		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#B234CB")
+		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#64B22C")
 		bubbles.color = src.color
 		qdel(src)
 
@@ -80,6 +82,7 @@
 /obj/effects/bubbles
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "bubbles_rising"
+	alpha = 200
 
 	New()
 		. = ..()
