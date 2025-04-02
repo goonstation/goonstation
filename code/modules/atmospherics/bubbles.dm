@@ -33,6 +33,9 @@
 			return
 		if (istype(newloc, /turf/space/fluid))
 			return
+		if (!checkTurfPassable(newloc))
+			src.pop()
+			return
 		playsound(newloc, 'sound/vox/popsound.ogg', 20, 1) //silly placeholder
 		T.assume_air(src.air_contents)
 		src.air_contents = null
@@ -56,9 +59,8 @@
 		src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
 		playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
-		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#B234CB")
-		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#64B22C")
-		bubbles.color = src.color
+		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
+		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
 		qdel(src)
 
 	attackby(obj/item/I, mob/user)
