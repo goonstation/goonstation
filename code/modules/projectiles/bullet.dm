@@ -1253,6 +1253,7 @@ toxic - poisons
 		else if (istype(hit, /mob/living/silicon))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 10, 30, damage_type = src.damage_type) // about 20 hits to kill a standard cyborg
+			boutput(L, SPAN_ALERT("Ice creeps into your servos!"))
 			L.changeStatus("shivering", 3 SECONDS, TRUE) // magical cold against cyborgs
 		else if (isvehicle(hit))
 			src.damage = 25
