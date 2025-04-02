@@ -5,7 +5,7 @@
 	var/list/sounds_instrument_associative = null
 
 /datum/instrument_sound_bank
-	var/static/list/bank = list()
+	var/static/list/datum/instrument_data/bank = list()
 
 /datum/instrument_sound_bank/New()
 	. = ..()
