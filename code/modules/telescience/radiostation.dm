@@ -1173,7 +1173,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	fields = strings("radioship/radioship_records.txt","log_2")
 
 
-
+TYPEINFO(/obj/item/device/radio/intercom/radiostation)
+	mats = 0
 /obj/item/device/radio/intercom/radiostation
 	name = "broadcast radio"
 	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."
