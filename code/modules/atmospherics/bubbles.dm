@@ -4,6 +4,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bubble"
 	density = FALSE
+	var/scale = 1
 
 	var/datum/gas_mixture/air_contents = null
 	///legally distinct from the turf version because this needs to be on a lower plane to work with filters
@@ -23,6 +24,7 @@
 		. = ..()
 		src.air_contents = new()
 		src.air_contents.volume = 500
+		src.air_contents.temperature = T20C
 		src.appearance_flags |= KEEP_TOGETHER
 		src.add_filter("bubble_mask", 1, alpha_mask_filter(0,0, icon('icons/obj/projectiles.dmi', "bubble_mask")))
 
@@ -45,6 +47,10 @@
 		. = ..()
 		if (!AM.density && !istype(AM, /obj/bubble)) //we can collide with other bubbles
 			return
+		if (istype(AM, /obj/machinery/portable_atmospherics/pump))
+			var/obj/machinery/portable_atmospherics/pump/pump = AM
+			if (pump.accept_bubble(src))
+				return
 		if (prob(15)) //sometimes you just walk through it
 			return
 		var/dir = AM.dir
@@ -56,9 +62,11 @@
 		return TRUE
 
 	proc/pop()
-		src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
-		playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
+		if (src.scale > 0.5)
+			src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
+			playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
+		bubbles.Scale(src.scalem src.scale)
 		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
 		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
 		qdel(src)
@@ -70,6 +78,8 @@
 		src.pop()
 
 	proc/update_graphics()
+		src.scale = min(1, MIXTURE_PRESSURE(src.air_contents) / ONE_ATMOSPHERE)
+		src.Scale(src.scale, src.scale)
 		src.air_contents.check_tile_graphic()
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_PLASMA)
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_N2O)

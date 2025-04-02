@@ -13,7 +13,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
 	var/image/tank_hatch
-
+	var/absorbing_bubble = FALSE
 
 	desc = "A device which can siphon or release gasses."
 	custom_suicide = 1
@@ -46,6 +46,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	..()
 	if (!loc) return
 	if (src.contained) return
+	if (src.absorbing_bubble)
+		return
 
 	var/datum/gas_mixture/environment
 	if(holding)
@@ -71,6 +73,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 				else
 					loc.assume_air(removed)
 		else
+			var/obj/bubble/bubble = locate() in get_turf(src)
+			if (bubble)
+				src.accept_bubble(bubble)
+
 			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(air_contents)
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
@@ -184,3 +190,17 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1
+
+/obj/machinery/portable_atmospherics/pump/proc/accept_bubble(obj/bubble/bubble)
+	if (src.absorbing_bubble)
+		return FALSE
+	bubble.set_loc(src)
+	src.vis_contents += bubble
+	animate(bubble, 2 SECONDS, transform = matrix(src.transform, 0.1, 0.1, MATRIX_SCALE), easing = CUBIC_EASING)
+	src.absorbing_bubble = TRUE
+	SPAWN(2 SECONDS)
+		src.absorbing_bubble = FALSE
+		src.vis_contents -= src
+		src.air_contents.merge(bubble.air_contents)
+		qdel(bubble)
+	return TRUE
