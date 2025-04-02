@@ -53,6 +53,12 @@
 		<li>The song will start at the beginning the next time it's played</li>
 		<li>Flashes red on stop and when the song has ended</li>
 	</ul>
+	<li>unlink</li>
+	<ul style="padding-left: 20px;">
+		<li>Unlinks this component from all other linked components</li>
+		<li>Won't work while playing or processing</li>
+		<li>Is not an input</li>
+	</ul>
 	<li>reset</li>
 	<ul style="padding-left: 20px;">
 		<li>Will wipe all stored data, except for the instrument</li>
