@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			"Input new instrument.",
 			"Set Instrument",
 			src.music_player.allow_list,
-			src.music_player.instrument_sound_path
+			src.music_player.instrument_name
 		)
 		src.music_player.set_instrument(new_instrument)
 

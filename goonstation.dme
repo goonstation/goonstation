@@ -1455,6 +1455,7 @@
 #include "code\modules\interface\multiContext\multiContext.dm"
 #include "code\modules\items\gimmick\figurine.dm"
 #include "code\modules\items\gimmick\plushies.dm"
+#include "code\modules\items\instruments\instrument_sound_bank.dm"
 #include "code\modules\items\instruments\instruments.dm"
 #include "code\modules\items\instruments\playable_piano.dm"
 #include "code\modules\items\instruments\text_to_music_datum.dm"

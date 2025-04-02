@@ -35,10 +35,8 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/song_length = 0
 	/// What note is the song on?
 	var/curr_note = 0
-	/// What's the name of the current instrument? Must be the same as the sound folder name.
+	/// What's the name of the current instrument? Must be the same as the instrument name in `instruments.dm`.
 	var/instrument_name = "piano"
-	/// Where are the note sounds located?
-	var/instrument_sound_path = null
 	/// Where input is stored.
 	var/list/note_input = ""
 	/// After we break it up into chunks.
@@ -65,12 +63,16 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/holder_name = "piano"
 	/// The object this datum is attached to
 	var/obj/holder = null
+	/// The sound bank where sound-related data is stored.
+	var/static/datum/instrument_sound_bank/sound_bank = new()
+	/// List of all sound instrument paths.
+	var/list/sounds_instrument_associative = null
 
 /datum/text_to_music/New(var/obj/new_holder)
 	. = ..()
 
 	src.holder = new_holder
-	src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(src.instrument_name)
+	src.sounds_instrument_associative = src.sound_bank.bank[src.instrument_name].sounds_instrument_associative
 
 /datum/text_to_music/proc/clean_input() //breaks our big input string into chunks
 	src.is_busy = TRUE
@@ -178,13 +180,12 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	for (var/i = 1, i <= note_names.len, i++)
 		var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
 		compiled_notes += string
+	if (isnull(src.sounds_instrument_associative))
+		CRASH("sounds_instrument_associative is null!")
 	for (var/i = 1, i <= compiled_notes.len, i++)
 		if (compiled_notes[i] == "rrr")
 			continue
-		var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
-		if (!(string in soundCache))
-			if (rest_on_notes_not_in_cache)
-				continue
+		if (isnull(src.sounds_instrument_associative[compiled_notes[i]]) && !rest_on_notes_not_in_cache)
 			src.event_error_note_not_found(i, src.notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
@@ -220,9 +221,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			return
 
 		if (concurrent_notes_played < MAX_CONCURRENT_NOTES && compiled_notes[curr_note] != "rrr")
-			var/sound_name = "[instrument_sound_path]/[compiled_notes[src.curr_note]].ogg"
-			if (sound_name in soundCache)
-				playsound(src.holder, sound_name, note_volumes[src.curr_note],0,10,0, channel = VOLUME_CHANNEL_INSTRUMENTS)
+			var/sound_path = src.sounds_instrument_associative[compiled_notes[src.curr_note]]
+			if (!isnull(sound_path))
+				playsound(src.holder, sound_path, note_volumes[src.curr_note],0,10,0, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		var/delays_left = src.note_delays[src.curr_note]
 
@@ -399,19 +400,18 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 /datum/text_to_music/mech_comp
 	/// the instruments that can be played
-	var/list/allow_list = list(
-		"banjo",
-		"bass",
-		"elecguitar",
-		"fiddle",
-		"guitar",
-		"piano",
-		"saxophone",
-		"trumpet",
-		"glockenspiel"
+	var/list/allow_list = list()
+	var/list/deny_list = list(
+		"grand piano",
+		"spooky trumpet"
 	)
 	var/list/error_messages = list()
 	holder_name = "Text to Music component"
+
+/datum/text_to_music/mech_comp/New(var/obj/new_holder)
+	. = ..(new_holder)
+
+	src.build_allow_list()
 
 /datum/text_to_music/mech_comp/event_play_start()
 	animate_flash_color_fill(src.holder, "#00ff00", 2, 2)
@@ -445,6 +445,15 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	animate_flash_color_fill(src.holder, "#ff00ff", 2, 2)
 
+/datum/text_to_music/mech_comp/proc/build_allow_list()
+	src.allow_list = list()
+
+	for (var/key in src.sound_bank.bank)
+		if (key in src.deny_list)
+			continue
+
+		src.allow_list += key
+
 /datum/text_to_music/mech_comp/set_notes(var/given_notes)
 	if (..())
 		src.rebuild_tooltip()
@@ -465,7 +474,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	if (instrument in src.allow_list)
 		src.instrument_name = instrument
-		src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(instrument)
+		src.sounds_instrument_associative = src.sound_bank.bank[instrument_name].sounds_instrument_associative
 
 		src.rebuild_tooltip()
 
