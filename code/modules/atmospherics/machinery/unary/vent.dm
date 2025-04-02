@@ -39,7 +39,10 @@
 			ourturf.air.copy_from(turf_copy)
 			qdel(turf_copy) // done with this
 
-	else if (istype(ourturf, /turf/space/fluid) && MIXTURE_PRESSURE(src.air_contents) > ONE_ATMOSPHERE) //only vent to bubbles if we have a decent presssure
+	else if (istype(ourturf, /turf/space/fluid))
+		// build up pressure and then vent it in a bubble
+		if (MIXTURE_PRESSURE(src.air_contents) < ONE_ATMOSPHERE)
+			return
 		var/obj/bubble/bubble = new(ourturf)
 		equalize_gases(list(src.air_contents, bubble.air_contents))
 		bubble.update_graphics()
