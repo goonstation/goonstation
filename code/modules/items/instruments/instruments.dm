@@ -73,7 +73,7 @@
 				contextActions += newcontext
 
 		if (src.use_new_interface)
-			var/datum/instrument_data/instr_data = src.sound_bank.bank[src.name]
+			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
 			src.notes = instr_data.notes
 			src.note_keys_string = instr_data.note_keys_string
 			src.sounds_instrument = instr_data.sounds_instrument
