@@ -444,7 +444,17 @@ proc/algae_controller()
 		if (length(color_vals))
 			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+			var/mask_state = null
 			if (istype(wall, /turf/simulated/wall/auto/asteroid))
-				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
+				mask_state = wall.icon_state
+			else if (istype(wall, /turf/simulated/wall/auto))
+				var/typeinfo/turf/simulated/wall/auto/typinfo = wall.get_typeinfo()
+				var/connectdir = wall.get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
+				mask_state = "asteroid-[connectdir]"
+			else if (istype(wall, /obj/window/auto)) //windows are different because of course they are
+				var/obj/window/auto/window = wall
+				mask_state = "asteroid-[window.connectdir]"
+			if (mask_state)
+				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[mask_state]"))
 			wall.AddOverlays(algea, "glow_algae")
 			wall.add_medium_light("glow_algae", color_vals)
