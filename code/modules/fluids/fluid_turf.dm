@@ -122,6 +122,15 @@
 		if (generateLight)
 			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
 
+	remove_air(amount)
+		return null
+
+	assume_air(datum/gas_mixture/giver)
+		// if (MIXTURE_PRESSURE(giver) > )
+		var/obj/bubble/bubble = new(src)
+		bubble.air_contents = giver
+		bubble.update_graphics()
+
 	make_light()
 		if (!light)
 			light = new
