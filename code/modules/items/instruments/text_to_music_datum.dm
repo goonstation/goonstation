@@ -270,6 +270,9 @@ ABSTRACT_TYPE(/datum/text_to_music)
 			music_player.stop()
 
 /datum/text_to_music/proc/unlink()
+	if (src.is_busy || src.is_stored)
+		return
+
 	for (var/datum/text_to_music/other_music_player as anything in src.linked_music_players)
 		if (!isnull(other_music_player))
 			other_music_player.linked_music_players -= src
