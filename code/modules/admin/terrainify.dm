@@ -573,20 +573,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if ("All")
 					algae_coverage = 1
 			if (algae_coverage)
-				if(!bioluminescent_algae)
-					bioluminescent_algae = new(algae_coverage)
-					bioluminescent_algae.setup()
 				SPAWN(1 MINUTE) // bad hack
 					for (var/turf/simulated/wall/auto/asteroid/wall in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-						if (wall.icon_state == "asteroid-255") continue
-						if (wall.ore) continue // Skip if there's ore here already
-						var/list/color_vals = bioluminescent_algae?.get_color(wall)
-						if (length(color_vals))
-							var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
-							algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-							algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
-							wall.AddOverlays(algea, "glow_algae")
-							wall.add_medium_light("glow_algae", color_vals)
+						if (wall.icon_state == "asteroid-255")
+							continue
+						if (wall.ore)
+							continue // Skip if there's ore here already
+						algae_controller().algae_wall(wall)
 						LAGCHECK(LAG_LOW)
 
 			var/list/space = list()

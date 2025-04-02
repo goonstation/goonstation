@@ -924,7 +924,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])

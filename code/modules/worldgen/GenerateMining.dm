@@ -391,6 +391,13 @@ TYPEINFO(/turf/variableTurf/clear)
 	hotspot_controller.generate_map()
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae
+proc/algae_controller()
+	RETURN_TYPE(/datum/bioluminescent_algae)
+	if (!global.bioluminescent_algae)
+		global.bioluminescent_algae = new()
+		global.bioluminescent_algae.setup()
+	return global.bioluminescent_algae
+
 /datum/bioluminescent_algae
 	/// our randomized seed values
 	var/list/seeds
@@ -415,12 +422,12 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		seeds["value"] = rand(0, 50000)
 		seeds["salinity"] = rand(0, 50000)
 
-	proc/get_color(atom/A)
+	proc/get_color(atom/A, force = FALSE)
 		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > coverage) // no algae for you :(
+		if (salinity > coverage && !force) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
@@ -431,3 +438,13 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
 		color_vals += color_alpha
 		return color_vals
+
+	proc/algae_wall(atom/wall, force = FALSE) //it could be a window I guess idk
+		var/list/color_vals = src.get_color(wall, force)
+		if (length(color_vals))
+			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+			if (istype(wall, /turf/simulated/wall/auto/asteroid))
+				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
+			wall.AddOverlays(algea, "glow_algae")
+			wall.add_medium_light("glow_algae", color_vals)
