@@ -302,7 +302,7 @@
 			return
 
 		var/dmm_suite/asset_loader = new
-		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x - 6, target.y - 6, target.z)
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
 
 /////////////TELESCOPE ENCOUNTERS BELOW
 
