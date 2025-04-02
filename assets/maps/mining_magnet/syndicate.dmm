@@ -9,10 +9,10 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "b" = (
 /turf/space,
-/area/space)
+/area/mining/magnet)
 "c" = (
 /obj/table/syndicate/auto,
 /obj/item/clipboard/with_pen{
@@ -26,7 +26,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "e" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -37,7 +37,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "f" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -45,19 +45,19 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "g" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "j" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "k" = (
 /obj/table/syndicate/auto,
 /obj/item/decoration/ashtray{
@@ -77,7 +77,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "m" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -85,7 +85,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "n" = (
 /obj/table/syndicate/auto,
 /obj/decal/cleanable/desk_clutter{
@@ -95,7 +95,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "o" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -103,10 +103,10 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "q" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/mining/magnet)
 "r" = (
 /obj/storage/closet/syndicate,
 /obj/item/tank/jetpack/syndicate,
@@ -118,13 +118,13 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "t" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "v" = (
 /obj/storage/crate/classcrate{
 	name = "money crate"
@@ -145,7 +145,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "y" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -157,7 +157,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "A" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -165,18 +165,18 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "D" = (
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "E" = (
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "F" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
@@ -184,7 +184,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "H" = (
 /obj/storage/crate/classcrate{
 	name = "money crate"
@@ -202,7 +202,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "I" = (
 /obj/storage/closet/syndicate,
 /obj/item/clothing/shoes/swat,
@@ -218,7 +218,7 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "J" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -230,10 +230,10 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "K" = (
 /turf/simulated/floor/auto/glassblock/red,
-/area/space)
+/area/mining/magnet)
 "M" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -248,19 +248,19 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "N" = (
 /mob/living/critter/human/syndicate/knife,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "O" = (
 /mob/living/critter/human/syndicate/rifle,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "P" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	name = "Syndicate Post";
@@ -269,21 +269,21 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "R" = (
 /turf/simulated/wall/auto/asteroid/dark,
-/area/space)
+/area/mining/magnet)
 "S" = (
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/auto/glassblock/red,
-/area/space)
+/area/mining/magnet)
 "T" = (
 /obj/table/syndicate/auto,
 /obj/random_item_spawner/desk_stuff/few,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "U" = (
 /obj/table/syndicate/auto,
 /obj/item/cigpacket{
@@ -292,13 +292,13 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "V" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "W" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
@@ -307,14 +307,14 @@
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 "X" = (
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/area/space)
+/area/mining/magnet)
 
 (1,1,1) = {"
 R
