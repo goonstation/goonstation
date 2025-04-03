@@ -193,7 +193,7 @@
 						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.loc)
 						I.set_dir(src.dir)
-						flick("ion_fade", I)
+						FLICK("ion_fade", I)
 						I.icon_state = "blank"
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y

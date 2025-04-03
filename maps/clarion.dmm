@@ -8420,7 +8420,7 @@
 	name = "chamber inlet pump";
 	target_pressure = 1000
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/blue,
 /area/station/science/lab)
 "bnd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -9340,7 +9340,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "bta" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9970,7 +9970,7 @@
 /area/station/quartermaster/refinery)
 "bwE" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "bwF" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -12373,7 +12373,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "cgK" = (
 /obj/cable/yellow{
 	icon_state = "1-8"
@@ -13002,7 +13002,7 @@
 /area/station/science/artifact)
 "cIA" = (
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "cIJ" = (
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -14040,17 +14040,17 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/barber_shop)
 "dBQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
 	id = "tox_hs_one";
 	layer = 4;
-	name = "Chamber One Heat Shield";
+	name = "Heat Shield";
 	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -14293,7 +14293,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "dLM" = (
 /obj/machinery/traymachine/morgue{
 	dir = 8
@@ -15679,7 +15679,7 @@
 /area/space)
 "ePi" = (
 /turf/simulated/floor/yellow/side,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "eQi" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -16530,7 +16530,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/yellow,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "fAd" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -16585,7 +16585,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "fAz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -16698,7 +16698,7 @@
 	name = "Chamber Ignition Switch";
 	pixel_x = 24
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/science/lab)
 "fCY" = (
 /obj/machinery/alarm{
@@ -19925,7 +19925,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "hRl" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -20180,7 +20180,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "icX" = (
 /obj/table/wood/round/auto,
 /obj/item/clipboard,
@@ -20317,7 +20317,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "ihs" = (
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair{
@@ -20934,7 +20934,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "iAD" = (
 /obj/disposalpipe/segment/morgue,
 /obj/landmark/pest,
@@ -22187,19 +22187,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"jvN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "jvR" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -22965,7 +22952,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "jZv" = (
 /obj/machinery/firealarm/east,
 /obj/machinery/manufacturer/robotics,
@@ -23342,7 +23329,7 @@
 "ksq" = (
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "ksK" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment{
@@ -23948,7 +23935,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "kNv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -24981,7 +24968,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_storage,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "lye" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -27252,7 +27239,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "niU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -27353,7 +27340,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "nnX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -27718,7 +27705,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "nyM" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -29789,7 +29776,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "oYr" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -30089,7 +30076,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "pmK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30938,7 +30925,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "pSt" = (
 /obj/machinery/shower,
 /obj/machinery/drainage,
@@ -31133,7 +31120,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "qbD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32458,7 +32445,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools/lots,
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "rek" = (
 /obj/table/auto,
 /obj/item/circular_saw{
@@ -32968,7 +32955,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "rwR" = (
 /obj/submachine/weapon_vendor/security,
 /obj/machinery/light,
@@ -33084,7 +33071,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "rBP" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -33264,7 +33251,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "rHm" = (
 /obj/disposalpipe/loafer/horizontal,
 /turf/simulated/floor/plating,
@@ -35574,7 +35561,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "toL" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -36584,7 +36571,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "tVZ" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 1
@@ -38376,7 +38363,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "uYT" = (
 /obj/lattice{
 	dir = 5;
@@ -38571,16 +38558,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "vhL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/atmospherics/pipe/simple/overfloor,
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
 	id = "tox_hs_one";
 	layer = 4;
-	name = "Chamber One Heat Shield";
+	name = "Heat Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "vhP" = (
@@ -39006,7 +38993,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
-/area/station/storage/primary)
+/area/station/engine/storage)
 "vEw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39811,7 +39798,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/primary)
+/area/station/engine/storage)
 "wjZ" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light,
@@ -93987,7 +93974,7 @@ bju
 cMs
 iPP
 fCF
-jvN
+vhL
 bpA
 bqC
 brP

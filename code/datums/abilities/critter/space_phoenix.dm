@@ -1,9 +1,9 @@
-ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
-/datum/targetable/critter/ice_phoenix
-	icon = 'icons/mob/critter/nonhuman/icephoenix.dmi'
+ABSTRACT_TYPE(/datum/targetable/critter/space_phoenix)
+/datum/targetable/critter/space_phoenix
+	icon = 'icons/mob/critter/nonhuman/spacephoenix.dmi'
 	icon_state = "template"
 
-/datum/targetable/critter/ice_phoenix/sail
+/datum/targetable/critter/space_phoenix/sail
 	name = "Sail"
 	desc = "Channel to gain a large movement speed buff while in space for 10 seconds"
 	icon_state = "sail"
@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		. = ..()
 		actions.start(new /datum/action/bar/sail(), src.holder.owner)
 
-/datum/targetable/critter/ice_phoenix/ice_barrier
+/datum/targetable/critter/space_phoenix/ice_barrier
 	name = "Ice Barrier"
 	desc = "Gives yourself a hardened ice barrier for 10 seconds, capping incoming damage to a max value of 10."
 	icon_state = "ice_barrier"
@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		src.holder.owner.setStatus("phoenix_ice_barrier", 10 SECONDS)
 		playsound(get_turf(src.holder.owner), 'sound/misc/phoenix/phoenix_shield.ogg', 50, TRUE)
 
-/datum/targetable/critter/ice_phoenix/glacier
+/datum/targetable/critter/space_phoenix/glacier
 	name = "Glacier"
 	desc = "Create a 5 tile wide compacted snow wall, perpendicular to the cast direction, or otherwise in a random direction. Can be destroyed by heat or force."
 	icon_state = "ice_wall"
@@ -70,38 +70,38 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		var/turf/T
 		if (spread_type == "vertical")
 			if (!center.density)
-				new /obj/ice_phoenix_ice_wall/vertical_mid(center)
+				new /obj/space_phoenix_ice_wall/vertical_mid(center)
 			T = get_step(center, NORTH)
 			if (!T.density)
-				new /obj/ice_phoenix_ice_wall/vertical_mid(T)
+				new /obj/space_phoenix_ice_wall/vertical_mid(T)
 			T = get_step(T, NORTH)
 			if (!T.density)
-				new /obj/ice_phoenix_ice_wall/north(T)
+				new /obj/space_phoenix_ice_wall/north(T)
 
 			T = get_step(center, SOUTH)
 			if (!T.density)
-				new /obj/ice_phoenix_ice_wall/vertical_mid(T)
+				new /obj/space_phoenix_ice_wall/vertical_mid(T)
 			T = get_step(T, SOUTH)
 			if (!T.density)
-				new /obj/ice_phoenix_ice_wall/south(T)
+				new /obj/space_phoenix_ice_wall/south(T)
 			return
 		if (!center.density)
-			new /obj/ice_phoenix_ice_wall/horizontal_mid(center)
+			new /obj/space_phoenix_ice_wall/horizontal_mid(center)
 		T = get_step(center, EAST)
 		if (!T.density)
-			new /obj/ice_phoenix_ice_wall/horizontal_mid(T)
+			new /obj/space_phoenix_ice_wall/horizontal_mid(T)
 		T = get_step(T, EAST)
 		if (!T.density)
-			new /obj/ice_phoenix_ice_wall/east(T)
+			new /obj/space_phoenix_ice_wall/east(T)
 
 		T = get_step(center, WEST)
 		if (!T.density)
-			new /obj/ice_phoenix_ice_wall/horizontal_mid(T)
+			new /obj/space_phoenix_ice_wall/horizontal_mid(T)
 		T = get_step(T, WEST)
 		if (!T.density)
-			new /obj/ice_phoenix_ice_wall/west(T)
+			new /obj/space_phoenix_ice_wall/west(T)
 
-/datum/targetable/critter/ice_phoenix/thermal_shock
+/datum/targetable/critter/space_phoenix/thermal_shock
 	name = "Thermal Shock"
 	desc = "Channel to create an atmospheric-blocking tunnel that allows travel through by anyone. This ability can be cast on walls, girders, and windows. Girders are destroyed instead."
 	icon_state = "thermal_shock"
@@ -128,10 +128,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 	cast(atom/target)
 		..()
 		playsound(get_turf(target), 'sound/misc/phoenix/phoenix_thermal_shock.ogg', 50, TRUE)
-		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 5 SECONDS, /mob/living/critter/ice_phoenix/proc/create_ice_tunnel, list(target), \
+		SETUP_GENERIC_ACTIONBAR(src.holder.owner, null, 5 SECONDS, /mob/living/critter/space_phoenix/proc/create_ice_tunnel, list(target), \
 			null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
-/datum/targetable/critter/ice_phoenix/wind_chill
+/datum/targetable/critter/space_phoenix/wind_chill
 	name = "Wind chill"
 	desc = "Create a freezing aura at the targeted location, inflicting cold on those within 2 tiles nearby, and freezing them solid if they're cold enough."
 	icon_state = "windchill"
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 				qdel(sparkle)
 		playsound(center, 'sound/misc/phoenix/phoenix_wind_chill.ogg', 50, TRUE)
 
-/datum/targetable/critter/ice_phoenix/touch_of_death
+/datum/targetable/critter/space_phoenix/touch_of_death
 	name = "Touch of Death"
 	desc = "Delivers constant chills to an adjacent target, dealing burn damage once their body temperature is low enough. If frozen by an ice cube, they will be broken out and unable to move."
 	icon_state = "touch_of_death"
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		..()
 		actions.start(new /datum/action/bar/touch_of_death(target), src.holder.owner)
 
-/datum/targetable/critter/ice_phoenix/permafrost
+/datum/targetable/critter/space_phoenix/permafrost
 	name = "Permafrost"
 	desc = "Target an empty station floor to channel a powerful ice beam that makes the station area habitable to you at the end, guarded by a totem."
 	icon_state = "permafrost"
@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			if (atom.density)
 				boutput(src.holder.owner, SPAN_ALERT("This turf has a blocking object on it!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (istype(get_turf(target), /turf/simulated/ice_phoenix_ice_tunnel))
+		if (istype(get_turf(target), /turf/simulated/space_phoenix_ice_tunnel))
 			boutput(src.holder.owner, SPAN_ALERT("You can't cast this ability in an ice tunnel!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
@@ -265,9 +265,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.owner.setStatus("ice_phoenix_sail", 10 SECONDS)
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner
-		var/datum/targetable/critter/ice_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/ice_phoenix/sail)
+		src.owner.setStatus("space_phoenix_sail", 10 SECONDS)
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		var/datum/targetable/critter/space_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/space_phoenix/sail)
 		abil.afterAction()
 		playsound(get_turf(src.owner), 'sound/misc/phoenix/phoenix_sail.ogg', 40, TRUE)
 
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		REMOVE_ATOM_PROPERTY(src.target, PROP_MOB_CANTMOVE, "phoenix_touch_of_death")
 
 	proc/check_for_interrupt()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
 		return QDELETED(phoenix) || QDELETED(src.target) || isdead(phoenix) || isdead(src.target) || BOUNDS_DIST(src.target, phoenix) > 0
 
 /datum/action/bar/permafrost
@@ -369,12 +369,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 
 		var/area/A = get_area(target)
 		A.add_permafrost()
-		new /obj/ice_phoenix_statue(target)
+		new /obj/space_phoenix_statue(target)
 
 		QDEL_NULL(src.dummy)
 
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner
-		var/datum/targetable/critter/ice_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/ice_phoenix/permafrost)
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		var/datum/targetable/critter/space_phoenix/sail/abil = phoenix.getAbility(/datum/targetable/critter/space_phoenix/permafrost)
 		abil.afterAction()
 
 		phoenix.permafrosted_areas |= "[A.name]-\ref[A]"
@@ -386,11 +386,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/ice_phoenix)
 		QDEL_NULL(src.dummy)
 
 	proc/check_for_interrupt()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
 		return QDELETED(phoenix) || isdead(phoenix)
 
-ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
-/obj/ice_phoenix_ice_wall
+ABSTRACT_TYPE(/obj/space_phoenix_ice_wall)
+/obj/space_phoenix_ice_wall
 	name = "compacted snow wall"
 	desc = "A wall of compacted snow and ice. An obstacle that can be destroyed, best by heat."
 	icon = 'icons/turf/walls/moon.dmi'
@@ -429,9 +429,9 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 
 	attack_hand(mob/user)
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
-		if (istype(user, /mob/living/critter/ice_phoenix))
+		if (istype(user, /mob/living/critter/space_phoenix))
 			qdel(src)
 			return
 
@@ -439,7 +439,7 @@ ABSTRACT_TYPE(/obj/ice_phoenix_ice_wall)
 
 	attackby(obj/item/I, mob/user)
 		attack_particle(user, src)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		playsound(get_turf(src), 'sound/misc/phoenix/phoenix_snow_crunch.ogg', 50, TRUE)
 
 		if (isweldingtool(I) && I:welding)

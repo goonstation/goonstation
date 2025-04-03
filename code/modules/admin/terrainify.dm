@@ -2,6 +2,8 @@
 #define TERRAINIFY_VEHICLE_CARS (1 << 1)
 #define TERRAINIFY_ALLOW_VEHCILES (1 << 2)
 
+var/global/is_map_on_ground_terrain = FALSE
+
 /client/proc/cmd_terrainify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Terrainify"
@@ -242,6 +244,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/syndi_camo_color = null
 	var/ambient_color
 	var/startTime
+	var/generates_solid_ground = TRUE
 
 	New()
 		..()
@@ -330,6 +333,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 		if(params["Parallax"])
 			var/datum/parallax_render_source_group/render_group = new parallax_render_source_group()
 			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
+
+		if (src.generates_solid_ground)
+			global.is_map_on_ground_terrain = TRUE
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
 
@@ -602,6 +608,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list()
 	additional_toggles = list()
 	ambient_color = "#222222"
+	generates_solid_ground = FALSE
 
 	New()
 		..()
@@ -658,6 +665,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
 	additional_toggles = list("Void Bubbles"=FALSE, "Void Worley"=FALSE)
+	generates_solid_ground = FALSE
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
@@ -1240,6 +1248,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/plasma
 	name = "Plasma Station"
 	desc = "Fill space with plasma gas? Warning: this is as bad as it sounds."
+	generates_solid_ground = FALSE
 
 	convert_turfs(list/turfs)
 		for (var/turf/T in turfs)
@@ -1460,6 +1469,7 @@ client/proc/unterrainify()
 		station_repair.preconvert_turfs = preconvert_turfs
 
 		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+		global.is_map_on_ground_terrain = FALSE
 
 		message_admins("Finished returning the station to space!")
 

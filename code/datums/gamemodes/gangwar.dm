@@ -2534,7 +2534,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (A.canAIControl())
 			if (A.open())
 				src.charges--
-				flick("quickhack_fire", src)
+				FLICK("quickhack_fire", src)
 				boutput(user, SPAN_ALERT("The [src.name] beeps!"))
 			else
 				boutput(user, SPAN_ALERT("The [src.name] buzzes. Maybe something's wrong with the door?"))

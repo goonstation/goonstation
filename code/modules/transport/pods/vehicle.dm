@@ -452,7 +452,6 @@
 					src.fueltank = W
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine?.activate()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
@@ -1100,7 +1099,7 @@
 		boutput(boarder, SPAN_ALERT("You can't squeeze your wide cube body through the access door!"))
 		return
 
-	if(isflockmob(boarder) || istype(boarder, /mob/living/critter/ice_phoenix))
+	if(isflockmob(boarder) || istype(boarder, /mob/living/critter/space_phoenix))
 		boutput(boarder, SPAN_ALERT("You're unable to use this vehicle!"))
 		return
 

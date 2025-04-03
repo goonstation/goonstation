@@ -55,7 +55,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
-				flick("printer-printing",P)
+				FLICK("printer-printing",P)
 				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
@@ -120,7 +120,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			continue
 		if (P.z != Z_LEVEL_STATION)
 			continue
-		flick("printer-printing",P)
+		FLICK("printer-printing",P)
 		playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 		SPAWN(3.2 SECONDS)
 			var/obj/item/poster/titled_photo/wp = new(get_turf(P))

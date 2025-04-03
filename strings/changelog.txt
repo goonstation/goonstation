@@ -1,4 +1,70 @@
+
+(t)thu apr 03 25
+(u)glowbold
+(p)22838
+(e)🆕🔊🔨|C-Feature, C-Sound, A-Player-Actions
+(+)The wonderful sound of snow crushed under foot.
+(u)glowbold
+(p)22794
+(e)🆕💪|C-Feature, A-Traits
+(+)Characters with a missing eye get an eyepatch on spawn.
+(t)tue apr 1 25
+(u)LeahTheTech
+(*)Improved workplace flow.
+(+)Removed Herobrine.
+(u)Azrun
+(e)🆕📦💳|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers got their hands on some ID cards.
+(t)mon mar 31 25
+(u)CalliopeSoups
+(p)22753
+(e)|
+(+)You can now put heads ontop of mechcomp cabinets like hats.
+(u)LeahTheTech
+(p)22804
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added flapjack, made with oatmeal, syrup and butter.
+(u)Dr. Cogwerks
+(e)📦🔊🎨|B-Game-Objects, C-Sound, C-Sprites
+(*)Updated hunting rifle to actually have a scope - wasn't meant to be a pointblank gun
+(*)OHR moved to standard traitor buylist
+(*)Chameleon projector made cheaper
+(*)New super-accurate competition pistol and anti-materiel cannon as nuke commander buylist options
+(*)Added slight warmup with visual indicator for RPG and multi-rocket launcher being shouldered
+(*)Less teamkills - more drama hopefully
+(t)sun mar 30 25
+(u)LeahTheTech
+(p)22793
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Ammo will cook off when exposed to high temperatures. Ammo in your inventory or in a gun is unaffected.
+(u)glowbold
+(p)22782
+(e)🆕|C-Feature
+(+)Miners may be tasked with taming rockworms as a crew objective.
+(t)sat mar 29 25
+(u)glowbold
+(p)22646
+(e)🪲⚖💊|C-Bug, C-Balance, A-Medical
+(+)Blindness from severely damaged eyes cannot be fixed with mutadone or oculine. Wear proper PPE!
 (t)wed mar 26 25
+(u)glowbold
+(p)22656
+(e)🪲🔨|C-Bug, A-Player-Actions
+(*)When inside an object or mob, you cannot interact with things outside it.
+(u)FlameArrow57
+(p)22683
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Added a new radio station song, Space Gardener
+(u)RubberRats and Xenomni
+(p)22698
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Adds a new trait: Touch Shy. Icon sprite by Xenomni
+(*)Touch Shy will cause you to automatically attempt to shove anyone who tries to headpat you or do another help intent interaction.
+(u)JORJ949
+(p)22732
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Armory will now only authorise objects that have armory access.
+(+)Bringing an armory access object to armory will update its access to match auth status.
 (u)LeahTheTech
 (+)Critters now always heal bleeding naturally and regenerate lost blood faster.
 (t)tue mar 25 25
