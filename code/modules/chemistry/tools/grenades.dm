@@ -104,6 +104,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	var/area/A = get_area(src)
 	if(A.sanctuary)
 		return
+	if (isghostdrone(user) || isghostcritter(user))
+		return
 	// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 	var/log_reagents = null
 	if (src.name == "grenade")
