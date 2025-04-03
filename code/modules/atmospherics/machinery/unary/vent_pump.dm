@@ -33,9 +33,21 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
+	if (src.on)
+		src.turn_on()
 	if(src.frequency)
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	var/turf/T = get_turf(src)
@@ -116,11 +128,13 @@
 
 	switch(signal.data["command"])
 		if("power_on")
-			src.on = TRUE
+			if (!src.on)
+				src.turn_on()
 			. = TRUE
 
 		if("power_off")
-			src.on = FALSE
+			if (src.on)
+				src.turn_off()
 			. = TRUE
 
 		if("power_toggle")
@@ -205,7 +219,8 @@
 			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
 		icon_state = "[hide_pipe ? "h" : "" ]off"
-		on = FALSE
+		if (src.on)
+			src.turn_off()
 
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 

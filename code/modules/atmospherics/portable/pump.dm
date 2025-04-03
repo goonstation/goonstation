@@ -73,10 +73,6 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 				else
 					loc.assume_air(removed)
 		else
-			var/obj/bubble/bubble = locate() in get_turf(src)
-			if (bubble)
-				src.accept_bubble(bubble)
-
 			var/pressure_delta = target_pressure - MIXTURE_PRESSURE(air_contents)
 			//Can not have a pressure delta that would cause environment pressure > tank pressure
 
@@ -117,6 +113,16 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return
 	return src.Attackhand(user)
 
+/obj/machinery/portable_atmospherics/pump/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/portable_atmospherics/pump/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
@@ -147,8 +153,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return
 	switch(action)
 		if("toggle-power")
-			src.on = !src.on
-			src.UpdateIcon()
+			if (src.on)
+				src.turn_off()
+			else
+				src.turn_on()
 			. = TRUE
 		if("toggle-pump")
 			src.direction_out = !src.direction_out
@@ -167,8 +175,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return 0
 
 	if (!on) //Can't chop your head off if the fan's not spinning
-		on = 1
-		UpdateIcon()
+		src.turn_on()
 
 	user.visible_message(SPAN_ALERT("<b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b>"))
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -190,17 +197,3 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		if (user && !isdead(user))
 			user.suiciding = 0
 	return 1
-
-/obj/machinery/portable_atmospherics/pump/proc/accept_bubble(obj/bubble/bubble)
-	if (src.absorbing_bubble)
-		return FALSE
-	bubble.set_loc(src)
-	src.vis_contents += bubble
-	animate(bubble, 2 SECONDS, transform = matrix(src.transform, 0.1, 0.1, MATRIX_SCALE), easing = CUBIC_EASING)
-	src.absorbing_bubble = TRUE
-	SPAWN(2 SECONDS)
-		src.absorbing_bubble = FALSE
-		src.vis_contents -= src
-		src.air_contents.merge(bubble.air_contents)
-		qdel(bubble)
-	return TRUE

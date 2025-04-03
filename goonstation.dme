@@ -212,6 +212,7 @@
 #include "code\datums\components\biodegradable.dm"
 #include "code\datums\components\bloodflick.dm"
 #include "code\datums\components\bot_command.dm"
+#include "code\datums\components\bubble_absorb.dm"
 #include "code\datums\components\bullet_holes.dm"
 #include "code\datums\components\cell_holder.dm"
 #include "code\datums\components\clown_disbelief_item.dm"

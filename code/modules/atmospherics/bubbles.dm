@@ -54,12 +54,10 @@
 
 	Crossed(atom/movable/AM)
 		. = ..()
+		if (!isturf(src.loc)) //we're being absorbed
+			return
 		if (!AM.density && !istype(AM, /obj/bubble)) //we can collide with other bubbles
 			return
-		if (istype(AM, /obj/machinery/portable_atmospherics/pump))
-			var/obj/machinery/portable_atmospherics/pump/pump = AM
-			if (pump.accept_bubble(src))
-				return
 		if (istype(AM, /obj/turbine_shaft/turbine))
 			src.pop()
 			return
@@ -98,6 +96,7 @@
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_RAD)
 
 /obj/bubble/plasma
+	lifetime = 30 SECONDS
 	New(loc)
 		var/datum/gas_mixture/plasma = new()
 		plasma.toxins = 100
