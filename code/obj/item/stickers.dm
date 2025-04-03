@@ -506,6 +506,8 @@
 
 		if (src.radio)
 			src.loc.open_to_sound = 1
+			src.radio.listening = TRUE
+			boutput(user, "The [src] activates its radio.")
 
 		if(!isnull(pinpointer_category))
 			START_TRACKING_CAT(pinpointer_category)
