@@ -1,6 +1,10 @@
 
 (t)thu apr 03 25
 (u)glowbold
+(p)22838
+(e)🆕🔊🔨|C-Feature, C-Sound, A-Player-Actions
+(+)The wonderful sound of snow crushed under foot.
+(u)glowbold
 (p)22794
 (e)🆕💪|C-Feature, A-Traits
 (+)Characters with a missing eye get an eyepatch on spawn.
