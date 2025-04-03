@@ -126,10 +126,7 @@
 		return null
 
 	assume_air(datum/gas_mixture/giver)
-		// if (MIXTURE_PRESSURE(giver) > )
-		var/obj/bubble/bubble = new(src)
-		bubble.air_contents = giver
-		bubble.update_graphics()
+		new /obj/bubble(src, giver)
 
 	make_light()
 		if (!light)

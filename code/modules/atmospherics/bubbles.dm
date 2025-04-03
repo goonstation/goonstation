@@ -4,6 +4,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bubble"
 	density = FALSE
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/scale = 1
 
 	var/datum/gas_mixture/air_contents = null
@@ -20,13 +21,18 @@
 		#endif
 	)
 
-	New()
+	New(loc, datum/gas_mixture/gas)
 		. = ..()
-		src.air_contents = new()
+		src.air_contents = gas
 		src.air_contents.volume = 500
-		src.air_contents.temperature = T20C
 		src.appearance_flags |= KEEP_TOGETHER
 		src.add_filter("bubble_mask", 1, alpha_mask_filter(0,0, icon('icons/obj/projectiles.dmi', "bubble_mask")))
+		src.update_graphics()
+		var/lifetime = (6 * src.scale)**2
+		lifetime = clamp(lifetime, 3, 30)
+		SPAWN(lifetime * rand(0.9, 1.1) SECONDS)
+			if (!QDELETED(src))
+				src.pop()
 
 	Move(newloc, dir)
 		. = ..()
@@ -66,7 +72,7 @@
 			src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
 			playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
-		bubbles.Scale(src.scalem src.scale)
+		bubbles.Scale(src.scale, src.scale)
 		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
 		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
 		qdel(src)
@@ -78,7 +84,7 @@
 		src.pop()
 
 	proc/update_graphics()
-		src.scale = min(1, MIXTURE_PRESSURE(src.air_contents) / ONE_ATMOSPHERE)
+		src.scale = clamp(MIXTURE_PRESSURE(src.air_contents) / (ONE_ATMOSPHERE * 2), 0.2, 1)
 		src.Scale(src.scale, src.scale)
 		src.air_contents.check_tile_graphic()
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_PLASMA)
@@ -86,10 +92,11 @@
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_RAD)
 
 /obj/bubble/plasma
-	New()
-		. = ..()
-		src.air_contents.toxins = 100
-		src.update_graphics()
+	New(loc)
+		var/datum/gas_mixture/plasma = new()
+		plasma.toxins = 100
+		plasma.temperature = T20C
+		..(loc, plasma)
 
 /obj/effects/bubbles
 	icon = 'icons/effects/particles.dmi'
