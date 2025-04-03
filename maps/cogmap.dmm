@@ -20373,6 +20373,9 @@
 	name = "Scrawled Note"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bte" = (

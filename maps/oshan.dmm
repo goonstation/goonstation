@@ -31454,10 +31454,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"czh" = (
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/grime,
-/area/ghostdrone_factory)
 "cAg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -43229,6 +43225,13 @@
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"rKz" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grime,
+/area/ghostdrone_factory)
 "rNr" = (
 /obj/disposalpipe/segment/produce,
 /turf/simulated/wall/auto/supernorn,
@@ -67111,7 +67114,7 @@ aqn
 aqn
 bYI
 bYI
-czh
+rKz
 bZb
 bZj
 bZv

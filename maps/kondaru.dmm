@@ -9851,6 +9851,9 @@
 	dir = 9
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aNy" = (

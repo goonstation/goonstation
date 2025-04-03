@@ -6866,6 +6866,7 @@
 "aMz" = (
 /obj/item/ghostboard,
 /obj/machinery/power/apc/autoname_south,
+/obj/cable/yellow,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aMA" = (

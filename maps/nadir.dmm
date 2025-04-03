@@ -42893,10 +42893,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"sjL" = (
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/industrial,
-/area/ghostdrone_factory)
 "sjN" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -44468,6 +44464,13 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
+"sQt" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/industrial,
+/area/ghostdrone_factory)
 "sQv" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -125443,7 +125446,7 @@ bzS
 bzS
 rJg
 rVj
-sjL
+sQt
 rvR
 rvR
 rVl
