@@ -6,6 +6,8 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///Can be a type or a list of types to randomly pick from
 	var/part_type = null
 	var/base_64_cache = null
+	/// Associated trait ID, if one is needed
+	var/associated_trait_id = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
 	///Cannot be added alongside these part IDs
 	var/incompatible_parts = list()
@@ -23,6 +25,9 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///Actually add the part
 	proc/apply_to(mob/M)
 		PROTECTED_PROC(TRUE)
+		SHOULD_CALL_PARENT(TRUE)
+		if (src.associated_trait_id && M.traitHolder)
+			M.traitHolder.addTrait(associated_trait_id)
 		return
 
 	///Can we add the part, `custom_parts` is an associative list of slot IDs to part IDs
@@ -52,6 +57,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 /datum/part_customization/human
 
 	apply_to(mob/living/carbon/human/human)
+		. = ..()
 		var/chosen_part_type = pick(src.part_type)
 		if (istype(src, /datum/part_customization/human/arm) || istype(src, /datum/part_customization/human/leg))
 			if(human.limbs.get_limb(slot)?.type != chosen_part_type)
@@ -71,6 +77,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			part_type = /obj/item/parts/human_parts/arm/left
 
 			apply_to(mob/living/carbon/human/human)
+				. = ..()
 				var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
 				if (human.gender == FEMALE) //gendered limbs???
 					limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
@@ -85,6 +92,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			part_type = /obj/item/parts/human_parts/arm/right
 
 			apply_to(mob/living/carbon/human/human)
+				. = ..()
 				var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
 				if (human.gender == FEMALE) //gendered limbs???
 					limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
@@ -136,6 +144,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			part_type = /obj/item/parts/human_parts/leg/left
 
 			apply_to(mob/living/carbon/human/human)
+				. = ..()
 				var/limb_type = human.mutantrace.l_limb_leg_type_mutantrace
 				if (human.gender == FEMALE)
 					limb_type = human.mutantrace.l_limb_leg_type_mutantrace_f || limb_type
@@ -150,6 +159,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			part_type = /obj/item/parts/human_parts/leg/right
 
 			apply_to(mob/living/carbon/human/human)
+				. = ..()
 				var/limb_type = human.mutantrace.r_limb_leg_type_mutantrace
 				if (human.gender == FEMALE)
 					limb_type = human.mutantrace.r_limb_leg_type_mutantrace_f || limb_type
@@ -207,6 +217,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 	custom_icon_state = "missing"
 
 	apply_to(mob/living/carbon/human/human)
+		. = ..()
 		if (istype(src, /datum/part_customization/human/missing/organ))
 			var/obj/item/organ/old_organ = human.organHolder?.get_organ(src.slot)
 			if(old_organ)
@@ -252,6 +263,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 		eye_left
 			id = "eye_missing_left"
 			slot = "left_eye"
+			associated_trait_id = "eye_missing_left"
 			trait_cost = 1
 
 			get_name()
@@ -260,6 +272,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 		eye_right
 			id = "eye_missing_right"
 			slot = "right_eye"
+			associated_trait_id = "eye_missing_right"
 			trait_cost = 1
 
 			get_name()
