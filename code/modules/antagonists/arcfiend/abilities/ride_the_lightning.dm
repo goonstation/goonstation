@@ -37,9 +37,7 @@
 			src.cable_images[i] = cimg
 
 	tryCast(atom/target, params)
-		if (src.active)
-			return CAST_ATTEMPT_SUCCESS
-		else
+		if (!src.active)
 			var/turf/T = get_turf(src.holder.owner)
 			if (!T.z || isrestrictedz(T.z))
 				boutput(src.holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
