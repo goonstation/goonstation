@@ -473,11 +473,6 @@
 		else
 			src.set_internal_camera(user)
 
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		..()
-		if(src.active)
-			src:radio.broadcasting = TRUE
-
 	fall_off()
 		if (src.radio)
 			src.loc.open_to_sound = FALSE
@@ -499,7 +494,7 @@
 			qdel(src.radio)
 		..()
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
 			src.camera.set_camera_status(TRUE)
