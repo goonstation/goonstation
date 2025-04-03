@@ -1,3 +1,9 @@
+
+(t)thu apr 03 25
+(u)glowbold
+(p)22794
+(e)🆕💪|C-Feature, A-Traits
+(+)Characters with a missing eye get an eyepatch on spawn.
 (t)tue apr 1 25
 (u)LeahTheTech
 (*)Improved workplace flow.
