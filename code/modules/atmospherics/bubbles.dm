@@ -6,6 +6,8 @@
 	density = FALSE
 	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/scale = 1
+	///If null, automatically calculate lifetime from size of bubble
+	var/lifetime = null
 
 	var/datum/gas_mixture/air_contents = null
 	///legally distinct from the turf version because this needs to be on a lower plane to work with filters
@@ -28,9 +30,10 @@
 		src.appearance_flags |= KEEP_TOGETHER
 		src.add_filter("bubble_mask", 1, alpha_mask_filter(0,0, icon('icons/obj/projectiles.dmi', "bubble_mask")))
 		src.update_graphics()
-		var/lifetime = (6 * src.scale)**2
-		lifetime = clamp(lifetime, 3, 30)
-		SPAWN(lifetime * rand(0.9, 1.1) SECONDS)
+		if (isnull(src.lifetime))
+			src.lifetime = (6 * src.scale)**2
+			src.lifetime = clamp(lifetime, 3, 30) * rand(0.9, 1.1) SECONDS
+		SPAWN(src.lifetime)
 			if (!QDELETED(src))
 				src.pop()
 
@@ -57,6 +60,9 @@
 			var/obj/machinery/portable_atmospherics/pump/pump = AM
 			if (pump.accept_bubble(src))
 				return
+		if (istype(AM, /obj/turbine_shaft/turbine))
+			src.pop()
+			return
 		if (prob(15)) //sometimes you just walk through it
 			return
 		var/dir = AM.dir
@@ -97,6 +103,9 @@
 		plasma.toxins = 100
 		plasma.temperature = T20C
 		..(loc, plasma)
+
+/obj/bubble/current
+	lifetime = 2 MINUTES
 
 /obj/effects/bubbles
 	icon = 'icons/effects/particles.dmi'
