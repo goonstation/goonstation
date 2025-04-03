@@ -1578,11 +1578,11 @@
 
 	cocktail_w_russian/fresh
 		id = "w_russian_fresh"
-		required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
+		required_reagents = list("vodka" = 1, "coffee_fresh" = 1, "milk" = 1)
 
 	cocktail_w_russian/espresso
 		id = "w_russian_espresso"
-		required_reagents = list("vodka" = 1, "espresso" = 1)
+		required_reagents = list("vodka" = 1, "espresso" = 1, "milk" = 1)
 
 	cocktail_w_russian/w_russian2
 		id = "w_russian2"
