@@ -67,6 +67,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				automatic_profiling_on = FALSE
 				last_tick_time = null
 				time_since_last = 0
+				src.automatic_profiling_count++
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
@@ -100,7 +101,6 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		manual_profiling_disable_time = TIME + delay
 
 	proc/start_auto_profile(prof_flags)
-		src.automatic_profiling_count++
 		if (src.automatic_profiling_count > 3 && !global.flick_hack_enabled)
 			global.flick_hack_enabled = TRUE
 			var/msg = "Autoprofiler triggered 4 times this round, enabling ACCURSED FLICK HACK."

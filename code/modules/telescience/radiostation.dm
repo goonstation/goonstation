@@ -870,6 +870,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	New()
 		. = ..()
 		START_TRACKING
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 	get_desc()
 		if(!src.can_play_tapes)
@@ -1172,7 +1173,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	fields = strings("radioship/radioship_records.txt","log_2")
 
 
-
+TYPEINFO(/obj/item/device/radio/intercom/radiostation)
+	mats = 0
 /obj/item/device/radio/intercom/radiostation
 	name = "broadcast radio"
 	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."
