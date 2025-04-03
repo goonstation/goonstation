@@ -695,18 +695,19 @@
 							src.gib()
 
 			if ("nudge", "adjust")
-				if (!src.restrained() && src.glasses.nudge_compatible)
+				if (!src.restrained() && src.glasses?.nudge_compatible)
 					var/obj/item/clothing/glasses/eyewear = src.glasses
-					var/flavor_one = pick("adjusts", "pushes up")
-					var/flavor_two = pick("intelligently.", "with a smirk.", "very seriously.")
-					if (src.nudge_toggle)
+
+					if (src.glasses.nudge_toggle)
+						var/flavor_one = pick("adjusts", "pushes up")
+						var/flavor_two = pick("intelligently.", "with a smirk.", "very seriously.")
 						message = "<B>[src]</B> [flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]"
 						maptext_out = "<I>[flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]</I>"
-						src.nudge_toggle = FALSE
+						src.glasses.nudge_toggle = FALSE
 					else
 						message = "<B>[src]</B> nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose."
 						maptext_out = "<I>nudges [his_or_her(src)] glasses back down [his_or_her(src)] nose.</I>"
-						src.nudge_toggle = TRUE
+						src.glasses.nudge_toggle = TRUE
 
 					if (eyewear.flash_compatible)
 						if (eyewear.flash_toggle)

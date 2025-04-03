@@ -18,8 +18,8 @@
 	var/correct_bad_vision = 0
 	var/nudge_compatible = TRUE // below vars for the "nudge" emote
 	var/flash_compatible = FALSE
-	var/og_icon_state = "glasses"
 	var/flash_toggle = TRUE
+	var/nudge_toggle = TRUE // control var for *nudge
 	var/flash_state = "flash"
 
 	attackby(obj/item/W, mob/user)
@@ -28,11 +28,22 @@
 			return
 		return ..()
 
+	equipped(mob/user, slot)
+		. = ..()
+		src.nudge_toggle = TRUE
+		src.flash_toggle = TRUE
+
+	unequipped(mob/user)
+		. = ..()
+		if (src.flash_compatible)
+			user.ClearSpecificOverlays("glasses")
+			src.flash_toggle = TRUE
+
 	proc/nudge_emote()
 		var/mob/living/carbon/human/H = src.loc
 		if (src.flash_toggle)
 			src.flash_toggle = FALSE
-			var/image/oglasses = image('icons/mob/clothing/eyes.dmi', loc=src.icon_state, icon_state=flash_state, layer=MOB_GLASSES_LAYER+1)
+			var/image/oglasses = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
 			H.AddOverlays(oglasses, "glasses")
 		else
 			H.ClearSpecificOverlays("glasses")
