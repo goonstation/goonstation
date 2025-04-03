@@ -342,6 +342,10 @@ TYPEINFO(/obj/item/fish_portal)
 	var/working = FALSE
 	var/allowed = list(/obj/item/reagent_containers/food/fish)
 
+	New()
+		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed)
+
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
 			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
@@ -426,11 +430,6 @@ TYPEINFO(/obj/item/fish_portal)
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
-
-	New()
-		..()
-		AddComponent(/datum/component/transfer_input/quickloading, allowed)
-		AddComponent(/datum/component/transfer_output)
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
