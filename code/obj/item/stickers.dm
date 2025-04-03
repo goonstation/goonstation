@@ -435,7 +435,7 @@
 	var/HTML = null
 
 	HELP_MESSAGE_OVERRIDE({"Can be used in-hand to change radio and camera settings.\
-							The internal radio automatically acivates when stuck to something."})
+							The internal radio automatically activates when stuck to something."})
 
 	New()
 		..()
@@ -589,7 +589,7 @@
 	has_camera = 0
 	has_selectable_skin = 0
 	HELP_MESSAGE_OVERRIDE({"Can be used in-hand to change radio settings.\
-							The internal radio automatically acivates when stuck to something."})
+							The internal radio automatically activates when stuck to something."})
 
 /obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
