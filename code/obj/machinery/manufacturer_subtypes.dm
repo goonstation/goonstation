@@ -143,7 +143,6 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/surgical_spoon,
 		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
 		/datum/manufacture/medbot,
 		/datum/manufacture/firebot,
 		/datum/manufacture/floorbot,
