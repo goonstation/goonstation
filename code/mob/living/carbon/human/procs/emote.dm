@@ -712,7 +712,8 @@
 					if (eyewear.flash_compatible)
 						if (eyewear.flash_toggle)
 							eyewear.nudge_emote()
-							elecflash(src)
+							playsound(src.loc, 'sound/effects/glare.ogg', 60, pitch=2)
+							particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, eyewear.color))
 							update_glasses()
 						else
 							eyewear.nudge_emote()

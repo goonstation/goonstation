@@ -1481,3 +1481,36 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/light_color)
 		..(location, "glow_stick_dance", 9.9, light_color)
 		SpawnParticle()
+
+/datum/particleType/glasses_sparkle // contributed by pgmzeta
+	name = "glasses_sparkle"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if(..())
+			par.pixel_x = rand(0,1) ? -8:  8
+			par.pixel_y = 6 + rand(2, 4)
+
+			var/rot = rand(-90, 90)
+
+			first.Turn(rot)
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(11)
+			animate(par, transform = first, time = 5, alpha = 245)
+
+			first.Scale(0.1 / 11)
+			first.Turn(rot)
+			animate(transform = first, time = 15, alpha = 50)
+			first.Reset()
+
+/datum/particleSystem/glasses_sparkle
+	New(var/atom/location = null, var/glasses_color)
+		..(location, "glasses_sparkle", 9.9, glasses_color)
+		SpawnParticle()
