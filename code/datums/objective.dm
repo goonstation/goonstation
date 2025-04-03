@@ -454,6 +454,18 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		else
 			return 0
 #endif
+
+/datum/objective/regular/antfarm
+	explanation_text = "Smash the Head of Personnel's ant farm, take the coin found inside, and have it on you at the end of the round."
+	var/steal_target = /obj/item/coin/antcoin
+
+	check_completion()
+		if(steal_target)
+			if(owner.current && owner.current.check_contents_for(steal_target, 1, 1))
+				return 1
+		else
+			return 0
+
 ///////////////////////////////////////////////////////////////
 // Regular objectives not currently used in current gameplay //
 ///////////////////////////////////////////////////////////////
@@ -1632,6 +1644,10 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	/datum/objective/regular/gimmick)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/survive)
+
+/datum/objective_set/traitor/rp_friendly/antfarm
+	objective_list = list(/datum/objective/regular/antfarm,/datum/objective/regular/gimmick)
+	escape_choices = list(/datum/objective/escape,/datum/objective/escape/survive)
 
 /datum/objective_set/spy_theft/bodyguard_gimmick
 	objective_list = list(/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/assassinate/bodyguard,/datum/objective/regular/gimmick)
