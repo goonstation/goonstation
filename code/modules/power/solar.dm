@@ -293,6 +293,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "zeta"
 	aisat
 		solar_id = "aisat"
+	drone_factory
+		solar_id = "dronefactory"
 
 /obj/machinery/computer/solar_control/New()
 	..()

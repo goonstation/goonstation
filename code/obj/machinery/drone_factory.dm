@@ -417,7 +417,7 @@ TYPEINFO(/obj/machinery/ghostdrone_conveyor_sensor)
 /area/ghostdrone_factory
 	name = "Ghost Drone Factory"
 	icon_state = "cloner"
-	requires_power = 0
+	requires_power = 1
 	occlude_foreground_parallax_layers = TRUE
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
