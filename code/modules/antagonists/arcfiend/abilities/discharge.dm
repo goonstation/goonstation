@@ -54,4 +54,3 @@
 		S.set_up(2, FALSE, target)
 		S.start()
 		src.holder.owner.set_dir(get_dir(src.holder.owner, target))
-		return CAST_ATTEMPT_SUCCESS
