@@ -980,6 +980,8 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /turf/unsimulated/floor/snow
 	name = "snow"
 	icon_state = "snow1"
+	step_material = "step_snow"
+	turf_flags = MOB_STEP
 
 	New()
 		..()
@@ -1322,8 +1324,9 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	icon_state = "snow1"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
 	icon_state_edge = "snow_edge"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	turf_flags = MOB_STEP
 
 	New()
 		. = ..()
