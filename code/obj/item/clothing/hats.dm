@@ -310,7 +310,7 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
