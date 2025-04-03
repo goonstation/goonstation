@@ -31454,6 +31454,10 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
+"czh" = (
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/grime,
+/area/ghostdrone_factory)
 "cAg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -67107,7 +67111,7 @@ aqn
 aqn
 bYI
 bYI
-bYU
+czh
 bZb
 bZj
 bZv

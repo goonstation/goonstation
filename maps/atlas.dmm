@@ -6865,6 +6865,7 @@
 /area/ghostdrone_factory)
 "aMz" = (
 /obj/item/ghostboard,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aMA" = (

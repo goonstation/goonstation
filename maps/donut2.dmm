@@ -21453,14 +21453,12 @@
 /area/station/crew_quarters/locker)
 "fmf" = (
 /obj/table/wood/auto,
-/obj/fakeobject/apc_broken{
-	pixel_y = 28
-	},
 /obj/item/spraybottle/cleaner,
 /obj/item/paper{
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "fmu" = (

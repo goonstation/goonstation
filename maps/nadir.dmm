@@ -42893,6 +42893,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
+"sjL" = (
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/industrial,
+/area/ghostdrone_factory)
 "sjN" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -125439,7 +125443,7 @@ bzS
 bzS
 rJg
 rVj
-rvR
+sjL
 rvR
 rvR
 rVl

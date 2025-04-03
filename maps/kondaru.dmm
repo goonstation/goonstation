@@ -9850,6 +9850,7 @@
 /obj/fakeobject/pipe/heat{
 	dir = 9
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aNy" = (
