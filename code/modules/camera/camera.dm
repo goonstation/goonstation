@@ -180,16 +180,14 @@
 	..()
 	if(!src.network)
 		return //avoid stacking emp
-	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
-		src.icon_state = "cameraemp"
+	src.icon_state = "[initial(src.icon_state)]emp"
 	src.network = null //Not the best way but it will do. I think.
 	src.set_camera_status(FALSE)
 
 	SPAWN(90 SECONDS)
 		src.set_camera_status(TRUE)
 		src.network = initial(src.network)
-		if(!istype(src, /obj/machinery/camera/television))
-			src.icon_state = initial(src.icon_state)
+		src.icon_state = initial(src.icon_state)
 
 		src.update_coverage()
 
@@ -279,7 +277,7 @@
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-	src.icon_state = "camera1"
+	src.icon_state = "[initial(src.icon_state)]1"
 	src.light.disable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
@@ -291,7 +289,7 @@
 	cables?.change_stack_amount(-1)
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
-	src.icon_state = "camera"
+	src.icon_state = initial(src.icon_state)
 	src.light.enable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))

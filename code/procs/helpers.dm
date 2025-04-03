@@ -1233,11 +1233,16 @@ proc/outermost_movable(atom/movable/target)
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
-			else if (isobj(A)) // is it holding a head
-				for(var/obj/item/organ/head/head in A)
+			else if (isobj(A))
+				for(var/obj/item/organ/head/head in A)  // is it holding a head
 					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
 						var/mob/linked_mob = head.linked_human
 						. += linked_mob
+				if (istype(A, /obj/machinery/camera/television)) // television cameras have built in mics
+					var/obj/machinery/camera/television/telecam = A
+					if (telecam.camera_status)
+						for (var/mob/camera_viewer in telecam.viewers)
+							. += camera_viewer
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
