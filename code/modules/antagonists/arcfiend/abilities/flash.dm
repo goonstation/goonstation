@@ -10,7 +10,6 @@
 		. = ..()
 		playsound(holder.owner, 'sound/effects/power_charge.ogg', 100)
 		actions.start(new/datum/action/bar/private/flash(), src.holder.owner)
-		return CAST_ATTEMPT_SUCCESS
 
 
 
