@@ -506,7 +506,7 @@
 
 		if (src.radio)
 			src.loc.open_to_sound = 1
-			src.radio.listening = TRUE
+			src.radio.broadcasting = TRUE
 			boutput(user, "The [src] activates its radio.")
 
 		if(!isnull(pinpointer_category))
