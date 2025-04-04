@@ -45,6 +45,7 @@
 			return
 		if (!src.is_nudged)
 			var/image/glasses_flash_overlay = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
+			glasses_flash_overlay.alpha = 100
 			H.AddOverlays(glasses_flash_overlay, "glasses_flash")
 			playsound(H, 'sound/effects/glare.ogg', 60, pitch=2)
 			particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, src.color))
@@ -334,8 +335,6 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	name = "optical thermal scanner"
 	icon_state = "thermal"
 	item_state = "glasses"
-	flash_state = "goggle_flash"
-	flash_compatible = TRUE
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark."
 	color_r = 1
 	color_g = 0.8 // red tint
