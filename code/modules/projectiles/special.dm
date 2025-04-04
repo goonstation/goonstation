@@ -283,6 +283,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle = 180
 	pellets_to_fire = 20
 
+/datum/projectile/special/spreader/uniform_burst/circle/airburst
+		name = "cluster munition"
+		sname = "cluster munition"
+		icon_state = "400mm"
+		pellets_to_fire = 12
+		spread_projectile_type = /datum/projectile/bullet/cluster
+		split_type = 1
+
+
 /datum/projectile/special/spreader/uniform_burst/spikes
 	name = "spike wave"
 	sname = "spike wave"
@@ -317,7 +326,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = ".50 BMG frag"
 	brightness = 2
 	window_pass = 0
-	icon_state = "40mmgatling" // it's a cool sprite ok
+	icon_state = "20mm" // close enough
 	damage_type = D_PIERCING // very, very fast.
 	armor_ignored = 0.5
 	hit_type = DAMAGE_STAB
@@ -325,10 +334,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 100
 	dissipation_rate = 2
 	cost = 1
-	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_sound = 'sound/effects/thunder.ogg'
 	shot_volume = 80
-	hit_object_sound = 'sound/effects/thunder.ogg'
-	hit_mob_sound = 'sound/effects/thunder.ogg'
+	hit_object_sound = 'sound/effects/exlow.ogg'
+	hit_mob_sound = 'sound/effects/exlow.ogg'
 	implanted = null
 	projectile_speed = 128
 	spread_projectile_type = /datum/projectile/bullet/flak_chunk/splinters
@@ -337,7 +346,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	speed_max = 128
 	speed_min = 96
 	spread_angle_variance = 35
-	dissipation_variance = 35
+	dissipation_variance = 5
 
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/rifle_loud
@@ -354,16 +363,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for(var/mob/M in range(T, 3))
 			shake_camera(M, 3, 5)
 		..()
-		new /obj/effects/explosion/fiery(T)
+		new /obj/effects/explosion/smoky(T)
 		new /obj/effects/rendersparks (T2)
-
-		if(hit && isobj(hit))
-			var/obj/O = hit
-			O.meteorhit()
 
 		if(hit && isturf(hit))
 			T.throw_shrapnel(T, 1, 1)
-			T.meteorhit()
+		explosion_new(null, T, 1, 1)
+
+
+
 
 		// no meteor hit on mobs, already brutal enough
 

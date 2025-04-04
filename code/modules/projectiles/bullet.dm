@@ -918,16 +918,20 @@ toxic - poisons
 		name = "burning splinter"
 		armor_ignored = 0.25
 		brightness = 4
-		icon_state = "flare"
+		icon_state = "birdshot3"
 		damage_type = D_BURNING
 		hit_type = DAMAGE_STAB
-		impact_image_state = "bullethole-small"
+		impact_image_state = "bullethole-small-cluster3"
 		ricochets = TRUE
 		projectile_speed = 96
 		implanted = /obj/item/implant/projectile/shrapnel
+		has_impact_particles = TRUE
+
 
 		on_launch(obj/projectile/O)
 			O.AddComponent(/datum/component/sniper_wallpierce, 1, 0, TRUE)
+			O.layer = EFFECTS_LAYER_4
+			O.plane = PLANE_ABOVE_LIGHTING
 
 		on_hit(atom/hit, direction, obj/projectile/P)
 			var/turf/T = get_turf(hit)
@@ -1203,6 +1207,26 @@ toxic - poisons
 	spread_angle_variance = 7.5
 	pellets_to_fire = 7
 	has_impact_particles = TRUE
+
+/datum/projectile/bullet/cluster
+	name = "cluster munition"
+	damage = 15
+	icon_state = "40mm_lethal"
+	dissipation_delay = 0
+	dissipation_rate = 5
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bullethole"
+	casing = /obj/item/casing/shotgun/orange
+
+	on_hit(atom/hit)
+		new /obj/effects/explosion/small(get_turf(hit))
+		explosion_new(null, get_turf(hit), 1)
+
+	on_max_range_die(obj/projectile/O)
+		new /obj/effects/explosion/small(get_turf(O))
+		explosion_new(null, get_turf(O), 1)
 
 /datum/projectile/bullet/flare
 	name = "flare"
