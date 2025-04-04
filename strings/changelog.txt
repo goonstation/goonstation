@@ -8,6 +8,9 @@
 (p)22794
 (e)🆕💪|C-Feature, A-Traits
 (+)Characters with a missing eye get an eyepatch on spawn.
+(u)Cogwerks
+(e)📦|B-Game-objects
+(+)Detective's forensics closet now has a version of the camera with a scope component for telephoto surveillance
 (t)tue apr 1 25
 (u)LeahTheTech
 (*)Improved workplace flow.
