@@ -62,7 +62,7 @@
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if(hammer.loc != src)
 			return //if someone else has it, don't put it in user's hand
@@ -72,8 +72,9 @@
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.a_intent != "harm")
+
 			src.put_back_hammer()
 			return
 		else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
