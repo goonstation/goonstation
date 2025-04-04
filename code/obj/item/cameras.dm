@@ -1,4 +1,4 @@
- /obj/item/storage/photo_album
+/obj/item/storage/photo_album
 	name = "Photo album"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "album"
