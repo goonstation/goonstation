@@ -55,18 +55,6 @@ ABSTRACT_TYPE(/datum/part_customization)
 
 ABSTRACT_TYPE(/datum/part_customization/human)
 /datum/part_customization/human
-
-	apply_to(mob/living/carbon/human/human)
-		. = ..()
-		var/chosen_part_type = pick(src.part_type)
-		if (istype(src, /datum/part_customization/human/arm) || istype(src, /datum/part_customization/human/leg))
-			if(human.limbs.get_limb(slot)?.type != chosen_part_type)
-				human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE) //pick can totally handle single values apparently
-		else
-			var/obj/item/organ/new_organ = new chosen_part_type()
-			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
-				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
-
 	can_apply(mob/M)
 		return ..() && ishuman(M)
 
@@ -100,42 +88,49 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 					limb_type = src.part_type
 				if(!human.limbs.r_arm?.type == limb_type)
 					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+		modded
 
-		robo_left
-			id = "arm_robo_left"
-			slot = "l_arm"
-			part_type = /obj/item/parts/robot_parts/arm/left/light
+			apply_to(mob/living/carbon/human/human)
+				. = ..()
+				var/chosen_part_type = pick(src.part_type)
+				if(human.limbs.get_limb(slot)?.type != chosen_part_type)
+					human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE)
 
-		robo_right
-			id = "arm_robo_right"
-			slot = "r_arm"
-			part_type = /obj/item/parts/robot_parts/arm/right/light
+			robo_left
+				id = "arm_robo_left"
+				slot = "l_arm"
+				part_type = /obj/item/parts/robot_parts/arm/left/light
 
-		robo_standard_left
-			id = "arm_robo_standard_left"
-			slot = "l_arm"
-			part_type = /obj/item/parts/robot_parts/arm/left/standard
-			trait_cost = 1
-			incompatible_parts = list("arm_robo_standard_right")
+			robo_right
+				id = "arm_robo_right"
+				slot = "r_arm"
+				part_type = /obj/item/parts/robot_parts/arm/right/light
 
-		robo_standard_right
-			id = "arm_robo_standard_right"
-			slot = "r_arm"
-			part_type = /obj/item/parts/robot_parts/arm/right/standard
-			trait_cost = 1
-			incompatible_parts = list("arm_robo_standard_left")
+			robo_standard_left
+				id = "arm_robo_standard_left"
+				slot = "l_arm"
+				part_type = /obj/item/parts/robot_parts/arm/left/standard
+				trait_cost = 1
+				incompatible_parts = list("arm_robo_standard_right")
 
-		plant_left
-			id = "arm_plant_left"
-			slot = "l_arm"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+			robo_standard_right
+				id = "arm_robo_standard_right"
+				slot = "r_arm"
+				part_type = /obj/item/parts/robot_parts/arm/right/standard
+				trait_cost = 1
+				incompatible_parts = list("arm_robo_standard_left")
 
-		plant_right
-			id = "arm_plant_right"
-			slot = "r_arm"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
+			plant_left
+				id = "arm_plant_left"
+				slot = "l_arm"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+
+			plant_right
+				id = "arm_plant_right"
+				slot = "r_arm"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
 
 	leg
 		default_left
@@ -168,19 +163,34 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 				if(human.limbs.r_leg?.type != limb_type)
 					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-		plant_left
-			id = "leg_plant_left"
-			slot = "l_leg"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/left/synth)
+		modded
 
-		plant_right
-			id = "leg_plant_right"
-			slot = "r_leg"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
+			apply_to(mob/living/carbon/human/human)
+				. = ..()
+				var/chosen_part_type = pick(src.part_type)
+				if(human.limbs.get_limb(slot)?.type != chosen_part_type)
+					human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE)
+
+			plant_left
+				id = "leg_plant_left"
+				slot = "l_leg"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/left/synth)
+
+			plant_right
+				id = "leg_plant_right"
+				slot = "r_leg"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
 
 	organ
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
+			var/chosen_part_type = pick(src.part_type)
+			var/obj/item/organ/new_organ = new chosen_part_type()
+			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
+				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
+
 		eye_default_left
 			id = "eye_default_left"
 			slot = "left_eye"
