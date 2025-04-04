@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/power/smes/magical)
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power, using magic."
-	deconstruct_flags = 0
+	deconstruct_flags = DECON_NONE
 	process()
 		capacity = INFINITY
 		charge = INFINITY
