@@ -391,10 +391,6 @@ var/list/headset_channel_lookup
 		receive += L
 
 	if(!protected)
-		for(var/mob/zoldorf/z in the_zoldorf)
-			if(z.client)
-				receive += z
-
 	// flockdrones and flockmind should hear all channels, but with terrible corruption
 		for(var/F in flocks)
 			var/datum/flock/flock = flocks[F]
