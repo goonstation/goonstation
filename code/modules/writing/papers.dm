@@ -1501,3 +1501,7 @@ proc/spawn_kitchen_note()
 	disposing()
 		. = ..()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+
+/obj/item/paper/zombie_mining_magnet
+	name = "blood stained note"
+	info = {"i was used as bait. whatever you do don't trust N"}
