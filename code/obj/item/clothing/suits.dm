@@ -2629,9 +2629,9 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
 	item_state = "denim_dress-blue"
 
 /obj/item/clothing/suit/dress/denim/turquoise
-	name = "dark blue denim dress"
-	icon_state = "denim_dress-dblue"
-	item_state = "denim_dress-dblue"
+	name = "turquoise denim dress"
+	icon_state = "denim_dress-turquoise"
+	item_state = "denim_dress-turquoise"
 
 /obj/item/clothing/suit/dress/denim/white
 	name = "white denim dress"
