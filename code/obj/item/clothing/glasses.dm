@@ -16,11 +16,10 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	var/nudge_compatible = TRUE // below vars for the "nudge" emote
-	var/flash_compatible = FALSE
-	var/flash_toggle = TRUE
-	var/nudge_toggle = TRUE // control var for *nudge
-	var/flash_state = "flash"
+	var/nudge_compatible = TRUE //! Works with the "nudge" emote
+	var/flash_compatible = FALSE //! Does an anime styled sparkle-flash effect when nudged
+	var/is_nudged = FALSE //! Are the glasses currently nudged upwards?
+	var/flash_state = "flash" //! Icon state to use when nudged and flash compatible
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
@@ -30,24 +29,27 @@
 
 	equipped(mob/user, slot)
 		. = ..()
-		src.nudge_toggle = TRUE
-		src.flash_toggle = TRUE
+		src.is_nudged = FALSE
 
 	unequipped(mob/user)
 		. = ..()
 		if (src.flash_compatible)
 			user.ClearSpecificOverlays("glasses")
-			src.flash_toggle = TRUE
 
-	proc/nudge_emote()
+	/// Does the flash effect when nudging glasses upwards
+	proc/nudge_flash()
+		if (!src.flash_compatible)
+			return
 		var/mob/living/carbon/human/H = src.loc
-		if (src.flash_toggle)
-			src.flash_toggle = FALSE
-			var/image/oglasses = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
-			H.AddOverlays(oglasses, "glasses")
+		if (!istype(H))
+			return
+		if (!src.is_nudged)
+			var/image/glasses_flash_overlay = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
+			H.AddOverlays(glasses_flash_overlay, "glasses_flash")
+			playsound(H, 'sound/effects/glare.ogg', 60, pitch=2)
+			particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, src.color))
 		else
-			H.ClearSpecificOverlays("glasses")
-			src.flash_toggle = TRUE
+			H.ClearSpecificOverlays("glasses_flash")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
