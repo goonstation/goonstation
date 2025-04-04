@@ -921,7 +921,7 @@ toxic - poisons
 		icon_state = "birdshot3"
 		damage_type = D_BURNING
 		hit_type = DAMAGE_STAB
-		impact_image_state = "bullethole-small-cluster3"
+		impact_image_state = "bullethole-small-cluster-3"
 		ricochets = TRUE
 		projectile_speed = 96
 		implanted = /obj/item/implant/projectile/shrapnel
