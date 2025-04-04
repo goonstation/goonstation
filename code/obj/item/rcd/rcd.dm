@@ -458,6 +458,8 @@ TYPEINFO(/obj/item/rcd)
 				if (length(restricted_materials) && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
+				if (istype(A, /turf/simulated/wall/auto/feather/strong))
+					return
 
 				handle_deconstruct(A, user)
 				return

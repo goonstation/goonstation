@@ -293,6 +293,18 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
+
+/datum/mining_encounter/flock
+	name = "Flock Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
+
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium

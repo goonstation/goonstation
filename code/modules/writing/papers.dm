@@ -1501,3 +1501,21 @@ proc/spawn_kitchen_note()
 	disposing()
 		. = ..()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+
+/obj/item/paper/flock_mining_magnet
+	name = "gnesis covered note"
+	info = {"day 1<br>
+	ive been trapped by the flock... my memory is foggy and it's so hard to think, all i hear is radio chatter and weird noises... something about a signal.
+	and a teal place, the Homeworld. i don't know why i can hear it. i think it's that meta neural antenna gene i got from... i'm not sure where<br><br>
+	day 3<br>
+	i'm low on food. honestly i don't think i'm going to make it out of this place alive. i did remember my memory however. i'm a scientist. i came
+	across the flock in and an attempt to study them further i used a radio device to analyze them. they certainly did not like it and they trapped me in a cage.
+	most of my belongings are gone but i was left with my backup RCD. unfortunately it doesn't work on these walls. i don't know what to do<br><br>
+	day 4<br>
+	in an attempt to escape this place, i tried introducing some of this teal goo from the cage i broke out of to my rcd out of desperation. the rcd is clearly
+	altered, but in a way i don't know. it still won't work on the walls but i'm not convinced it's been rendered useless. fuck.<br><br>
+	day 7<br>
+	i have no food. i've had no choice but to drink the teal goo for hydration. most of my memory is gone. the radio signals are so strong... all i can think
+	about is the Signal. the Homeworld. the Intruder<br><br>
+	day 13<br>
+	the signal  it calls to me  it will set me free"}
