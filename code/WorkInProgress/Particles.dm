@@ -1482,7 +1482,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		..(location, "glow_stick_dance", 9.9, light_color)
 		SpawnParticle()
 
-/datum/particleType/glasses_sparkle // contributed by pgmzeta
+/datum/particleType/glasses_sparkle
 	name = "glasses_sparkle"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "sparkle"
