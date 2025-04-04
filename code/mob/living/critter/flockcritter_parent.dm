@@ -300,7 +300,7 @@ TYPEINFO(/mob/living/critter/flock)
 			flick_anim = "spawn-wall"
 		if(src.decal)
 			src.decal.set_loc(target)
-			flick(flick_anim, src.decal)
+			FLICK(flick_anim, src.decal)
 
 		F.flock?.reserveTurf(target, F.real_name)
 
@@ -374,7 +374,7 @@ TYPEINFO(/mob/living/critter/flock)
 		src.decal = new /obj/decal/flock_build_barricade
 		if(src.decal)
 			src.decal.set_loc(target)
-			flick(flick_anim, src.decal)
+			FLICK(flick_anim, src.decal)
 
 	onInterrupt(var/flag)
 		..()

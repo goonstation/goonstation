@@ -174,10 +174,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	update_icon()
 
 		if (src.open)
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 			src.icon_state = src.icon_opened
 		else if (!src.open)
-			flick(src.closing_anim,src)
+			FLICK(src.closing_anim,src)
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
@@ -643,7 +643,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.can_open())
 			return 0
 		else
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 
 		if(entangled && !entangleLogic && !entangled.can_close())
 			visible_message(SPAN_ALERT("It won't budge!"))
@@ -668,7 +668,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		return 1
 
 	proc/close(var/entangleLogic)
-		flick(src.closing_anim,src)
+		FLICK(src.closing_anim,src)
 		if (!src.open)
 			return 0
 		if (src._health <= 0)

@@ -342,7 +342,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 		else
 			src.icon_state = initial(src.icon_state)
 			if (prob(10) && length(src.dialog) && src.alive)
-				flick("meatboss_chatter", src)
+				FLICK("meatboss_chatter", src)
 				playsound(src.loc, pick(src.meathead_noises), 40, 1)
 				src.say(pick(src.dialog))
 
@@ -1275,7 +1275,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 		changing_state = 1
 		active = (opened != default_state)
 
-		flick("fangdoorc0",src)
+		FLICK("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
 		set_opacity(0)
@@ -1295,7 +1295,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 
 		set_density(1)
 		set_opacity(1)
-		flick("fangdoorc1",src)
+		FLICK("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
 				boutput(L, SPAN_NOTICE("You just barely slip by the clenching teeth unharmed!"))

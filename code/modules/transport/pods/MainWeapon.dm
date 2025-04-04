@@ -1124,12 +1124,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = TRUE
-			flick("SPS_o_large", purge)
+			FLICK("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = FALSE
-			flick("SPS_o_small", purge)
+			FLICK("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 

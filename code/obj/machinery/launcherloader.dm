@@ -44,7 +44,7 @@
 	proc/activate()
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
-		flick("launcher_loader_1",src)
+		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
@@ -148,7 +148,7 @@
 
 		operating = 1
 
-		flick("amdl_1",src)
+		FLICK("amdl_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)

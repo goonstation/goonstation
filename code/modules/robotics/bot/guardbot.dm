@@ -4069,7 +4069,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				master.say(pick("Hey, who turned out the lights?","Error: Visual sensor impaired!","Whoa hey, what's the big deal?","Where did everyone go?"))
 
 			if (escape_counter-- > 0)
-				flick("robuddy-ghostfumble", master)
+				FLICK("robuddy-ghostfumble", master)
 				master.visible_message(SPAN_ALERT("[master] fumbles around in the sheet!"))
 			else
 				master.visible_message("[master] cuts a hole in the sheet!")

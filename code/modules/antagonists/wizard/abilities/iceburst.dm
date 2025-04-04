@@ -105,6 +105,8 @@
 
 	var/does_cooling = TRUE
 
+	var/mob/held_mob
+
 	New(loc, mob/iced as mob)
 		..()
 		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
@@ -113,10 +115,15 @@
 				return
 
 			iced.set_loc(src)
+			src.held_mob = iced
 
 			if (add_underlay)
 				src.underlays += iced
 			boutput(iced, SPAN_ALERT("You are trapped within [src]!")) // since this is used in at least two places to trap people in things other than ice cubes
+
+		if (istype(iced, /mob/living/critter/space_phoenix))
+			qdel(src)
+			return
 
 		if (iced) //apparently a blank ice cube spawns in adventure
 			iced.last_cubed = world.time
@@ -144,6 +151,9 @@
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)
+		if (src.hasStatus("cold_snap") && !istype(get_area(src), /area/phoenix_nest))
+			src.held_mob.changeStatus("cold_snap", 5 SECONDS)
+		src.held_mob = null
 		..()
 
 	relaymove(mob/user as mob)

@@ -289,7 +289,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (src.density && src.cant_emag <= 0)
 		last_used = world.time
 		src.operating = -1
-		flick(text("[]_spark", src.icon_base), src)
+		FLICK(text("[]_spark", src.icon_base), src)
 		SPAWN(0.6 SECONDS)
 			open()
 		return TRUE
@@ -494,18 +494,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	switch(animation)
 		if("opening")
 			if(src.panel_open)
-				flick("o_[icon_base]c0", src)
+				FLICK("o_[icon_base]c0", src)
 			else
-				flick("[icon_base]c0", src)
+				FLICK("[icon_base]c0", src)
 			icon_state = "[icon_base]0"
 		if("closing")
 			if(src.panel_open)
-				flick("o_[icon_base]c1", src)
+				FLICK("o_[icon_base]c1", src)
 			else
-				flick("[icon_base]c1", src)
+				FLICK("[icon_base]c1", src)
 			icon_state = "[icon_base]1"
 		if("deny")
-			flick("[icon_base]_deny", src)
+			FLICK("[icon_base]_deny", src)
 	return
 
 /obj/machinery/door/proc/open()

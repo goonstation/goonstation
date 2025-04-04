@@ -84,7 +84,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	if (.)
 		return
 
-	flick("loudspeaker-transmitting", src)
+	FLICK("loudspeaker-transmitting", src)
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/attack_self(mob/user)
 	return

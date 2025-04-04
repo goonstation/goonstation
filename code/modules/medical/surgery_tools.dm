@@ -378,7 +378,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			flick("[src.icon_base]-shock", src)
+			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		flick("[src.icon_base]-shock", src)
+		FLICK("[src.icon_base]-shock", src)
 		return 1
 
 	disposing()

@@ -13,7 +13,7 @@
 				if (BOUNDS_DIST(parrot, message.speaker) == 0)
 					parrot.CritterAttack(message.speaker)
 				else
-					flick("[parrot.species]-flaploop", parrot)
+					FLICK("[parrot.species]-flaploop", parrot)
 
 		else
 			SPAWN(rand(4, 10))

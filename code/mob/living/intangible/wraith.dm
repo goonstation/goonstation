@@ -106,6 +106,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -280,7 +281,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "wraithdie"
 			animation.master = src
-			flick(death_icon_state, animation)
+			FLICK(death_icon_state, animation)
 
 			src.ghostize()
 			qdel(src)

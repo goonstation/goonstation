@@ -112,7 +112,7 @@
 			return (folks_to_spawn.len != 0)
 
 		src.icon_state = "cryotron_down"
-		flick("cryotron_go_down", src)
+		FLICK("cryotron_go_down", src)
 
 		SPAWN(1.9 SECONDS)
 			if (!thePerson || thePerson.loc != src)
@@ -134,7 +134,7 @@
 				if (O.anchored == UNANCHORED && O != src)
 					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
-			flick("cryotron_go_up", src)
+			FLICK("cryotron_go_up", src)
 
 			if (thePerson)
 				thePerson.hibernating = 0

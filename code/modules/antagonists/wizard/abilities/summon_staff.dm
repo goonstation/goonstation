@@ -26,23 +26,24 @@
 			boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 			return 1
 
-		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOHM HEIRE", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
-		..()
-
 		var/list/staves = list()
-		var/we_hold_it = 0
+		var/we_hold_it = FALSE
 		for_by_tcl(S, /obj/item/staff/cthulhu)
 			if (M.mind && M.mind.key == S.wizard_key)
 				if (S == M.find_in_hand(S))
-					we_hold_it = 1
+					we_hold_it = TRUE
 					continue
 				if (!(S in staves))
 					staves["[S.name] #[staves.len + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
 
+		if (!we_hold_it)
+			if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
+				M.say("KOHM HEIRE", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
+			..()
+
 		switch (staves.len)
 			if (-INFINITY to 0)
-				if (we_hold_it != 0)
+				if (we_hold_it)
 					boutput(M, SPAN_ALERT("You're already holding your staff."))
 					return 1 // No cooldown.
 				else

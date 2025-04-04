@@ -167,7 +167,7 @@ TYPEINFO(/mob/living/intangible/flock/flockmind)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = FALSE
-	flick("flockmind-death", src)
+	FLICK("flockmind-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
 		qdel(src)

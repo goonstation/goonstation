@@ -36,7 +36,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		if (.)
 			return
 
-		flick("amp_stack_actv", src)
+		FLICK("amp_stack_actv", src)
 
 	toggle_speaker(speaker_enabled)
 		. = ..(TRUE)

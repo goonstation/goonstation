@@ -2407,6 +2407,9 @@ var/list/fun_images = list()
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if(tgui_alert(src.mob, "Distribute tokens to all roundstart antagonists?", "Token Distribution", list("Yes", "No")) != "Yes")
+		return
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
 		for (var/datum/antagonist/antag in M?.mind?.antagonists)

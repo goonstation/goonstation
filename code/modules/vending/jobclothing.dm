@@ -123,6 +123,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/robotics, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/genetics, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/genetics, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pathologist, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pathology, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical/april_fools, 2, hidden=1)
@@ -130,6 +132,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/robotics/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/genetics/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pathology/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pathologist/april_fools, 1, hidden=1)
 
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
@@ -184,6 +188,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/genetics, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pathologist, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pathology, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pathology/april_fools, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pathologist/april_fools, 1)
 
 /obj/machinery/vending/jobclothing/engineering
 	name = "Engineering Apparel"

@@ -16,6 +16,8 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	/// if this floor can be pried up
+	var/pryable = TRUE
 	var/has_material = TRUE
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
@@ -1399,7 +1401,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	name = "snow"
 	default_material = null
 	icon_state = "snow1"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 
 	New()
@@ -1430,7 +1432,7 @@ DEFINE_FLOORS(snowcalm,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
-	step_material = "step_outdoors";\
+	step_material = "step_snow";\
 	step_priority = STEP_PRIORITY_MED)
 
 DEFINE_FLOORS(snowcalm/border,
@@ -1440,7 +1442,7 @@ DEFINE_FLOORS(snowrough,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
-	step_material = "step_outdoors";\
+	step_material = "step_snow";\
 	step_priority = STEP_PRIORITY_MED)
 
 DEFINE_FLOORS(snowrough/border,
@@ -1986,6 +1988,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
+		return
+	if (!src.pryable)
 		return
 	if(src.reinforced)
 		boutput(user, SPAN_ALERT("You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead."))
@@ -2720,7 +2724,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state = "snow1"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
 	icon_state_edge = "snow_edge"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 
 	New()

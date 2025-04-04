@@ -166,7 +166,7 @@ TYPEINFO(/mob/living/critter/hastur)
 		. = ..()
 		M.visible_message(pick(SPAN_ALERT("<B>[M] reveals their true form for a moment and -COMPLETELY- devours [target]!</B>"),SPAN_ALERT("<B>Huge mouth emerges underneath [M]'s robes and DEVOURS [target]!</B>"),SPAN_ALERT("<B>[M] growls angrily as they reveal their true form, completely devouring [target]!</B>")))
 		playsound(M.loc, pick('sound/misc/hastur/devour1.ogg','sound/misc/hastur/devour2.ogg','sound/misc/hastur/devour3.ogg','sound/misc/hastur/devour4.ogg'), 90,1)
-		flick("hastur-devour", M)
+		FLICK("hastur-devour", M)
 		SPAWN(7 DECI SECONDS)
 			target.gib()
 			target.icon_state = "lost"

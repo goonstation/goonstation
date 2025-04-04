@@ -180,7 +180,7 @@
 					animation.icon_state = "blank"
 					animation.icon = 'icons/mob/mob.dmi'
 					animation.master = target_original_loc
-					flick("disintegrated", animation)
+					FLICK("disintegrated", animation)
 
 					if (prob(20))
 						make_cleanable(/obj/decal/cleanable/ash,target_original_loc)

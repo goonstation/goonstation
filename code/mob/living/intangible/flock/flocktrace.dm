@@ -152,7 +152,7 @@ TYPEINFO(/mob/living/intangible/flock/trace)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = FALSE
-	flick("flocktrace-death", src)
+	FLICK("flocktrace-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
 		qdel(src)

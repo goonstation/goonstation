@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(!holder?.owner)
 			return TRUE
 		. = ..()
-		flick("firebot-c", holder.owner)
+		FLICK("firebot-c", holder.owner)
 		playsound(get_turf(holder.owner), 'sound/effects/spray.ogg', 50, 1, -3)
 
 		var/direction = get_dir(holder.owner,target)
@@ -385,7 +385,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		var/turf/T = get_turf(target)
 		var/list/affected_turfs = getline(holder.owner, T)
-		flick("firebot-c", holder.owner)
+		FLICK("firebot-c", holder.owner)
 		playsound(holder.owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		var/turf/currentturf
 		var/turf/previousturf

@@ -22,5 +22,5 @@ TYPEINFO(/obj/machinery/bot/guardbot/bad)
 	setup_default_startup_task = /datum/computer/file/guardbot_task/security/crazy
 	setup_default_tool_path = /obj/item/device/guardbot_tool/taser
 	no_camera = 1
-	req_access_txt = "8088"
+	req_access = list(access_impossible)
 	object_flags = 0

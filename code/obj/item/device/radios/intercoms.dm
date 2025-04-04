@@ -342,7 +342,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	if (.)
 		return
 
-	flick("wallfish_move", src)
+	FLICK("wallfish_move", src)
 
 /obj/item/device/radio/intercom/fish/combust()
 	if (!src.burning)

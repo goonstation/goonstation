@@ -1984,12 +1984,12 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 		if (on)
 			on = FALSE
-			flick("wall-lever-up-anim", src)
+			FLICK("wall-lever-up-anim", src)
 			src.icon_state = "wall-lever-up"
 			src.off()
 		else
 			on = TRUE
-			flick("wall-lever-down-anim", src)
+			FLICK("wall-lever-down-anim", src)
 			src.icon_state = "wall-lever-down"
 			src.on()
 

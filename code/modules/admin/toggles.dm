@@ -702,8 +702,10 @@ client/proc/toggle_ghost_respawns()
 	NOT_IF_TOGGLES_ARE_OFF
 	if(flourish)
 		flourish = 0
+		boutput(usr, SPAN_NOTICE("Flourish Mode disabled."))
 	else
 		flourish = 1
+		boutput(usr, SPAN_NOTICE("Flourish Mode enabled."))
 
 /datum/admins/proc/adsound()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
