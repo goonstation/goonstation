@@ -587,6 +587,7 @@
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
 	slots = 8
+	soundproofing = 20
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
 	/obj/item/device/radio/headset,
