@@ -936,11 +936,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	if (src.seconds_electrified > 0)
 		src.seconds_electrified--
 
+#ifndef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 	//Pitch to the people!  Really sell it!
 	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (length(src.slogan_list) > 0))
 		var/slogan = pick(src.slogan_list)
 		src.say(slogan)
 		src.last_slogan = world.time
+#endif
 
 	if ((prob(shoot_inventory_chance)) && (src.shoot_inventory))
 		src.throw_item()
