@@ -270,8 +270,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/detnet/detective
 	name = "DetNet Intercom (???)"
 	frequency = R_FREQ_DETECTIVE
-	secure_frequencies = list("d" = R_FREQ_DETECTIVE)
-	secure_classes = list("d" = R_FREQ_DETECTIVE)
+	secure_frequencies = list("t" = R_FREQ_DETECTIVE)
+	secure_classes = list("t" = R_FREQ_DETECTIVE)
 	device_color = RADIOC_DETECTIVE
 	layer = 3
 

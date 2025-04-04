@@ -345,11 +345,11 @@
 	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
 	secure_frequencies = list(
 		"g" = R_FREQ_SECURITY,
-		"d" = R_FREQ_DETECTIVE,
+		"t" = R_FREQ_DETECTIVE,
 		)
 	secure_classes = list(
 		"g" = RADIOCL_SECURITY,
-		"d" = RADIOCL_DETECTIVE,
+		"t" = RADIOCL_DETECTIVE,
 		)
 	icon_override = "det" //neat little magnifying glass sprite I made
 	icon_tooltip = "Detective"
