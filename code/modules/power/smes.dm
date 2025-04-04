@@ -25,6 +25,7 @@ TYPEINFO(/obj/machinery/power/smes)
 	density = 1
 	anchored = ANCHORED
 	requires_power = FALSE
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL | DECON_CROWBAR | DECON_WELDER
 	var/output = 30000
 	var/lastout = 0
 	var/loaddemand = 0
