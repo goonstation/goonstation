@@ -791,6 +791,16 @@
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
 
+//0.50
+/obj/item/ammo/bullets/antiair
+	sname = ".50 BMG frag"
+	name = ".50 BMG fragmenting rounds"
+	desc = "Extremely powerful rounds with a fragmenting HE core."
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/antiair
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_DEAGLE
+
 //0.58
 /obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
@@ -998,9 +1008,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		amount_left = 1
 		max_amount = 1
 
-	antiair
-		name = "anti-air fragmenting rounds"
-		ammo_type = /datum/projectile/special/spreader/uniform_burst/circle/antiair
+
 
 //1.0
 /obj/item/ammo/bullets/rod

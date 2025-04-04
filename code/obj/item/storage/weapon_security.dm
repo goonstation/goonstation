@@ -125,12 +125,12 @@
 	name = "rifle case"
 	icon_state = "hard_case"
 	desc = "A box containing an old hunting rifle and some ammo."
-	slots = 2
+	slots = 3
 	check_wclass = TRUE
 	can_hold = list(/obj/item/gun/kinetic/hunting_rifle,\
 	/obj/item/ammo/bullets/rifle_3006)
 	spawn_contents = list(/obj/item/gun/kinetic/hunting_rifle,\
-	/obj/item/ammo/bullets/rifle_3006 = 1)
+	/obj/item/ammo/bullets/rifle_3006 = 2)
 
 /obj/item/storage/box/missile_launcher
 	name = "pod-targeting missile launcher box"
@@ -159,13 +159,13 @@
 	name = "anti-air rifle box"
 	icon_state = "hard_case"
 	color = "red"
-	desc = "A box containing a massive antiair rifle and some 20mm ammo."
+	desc = "A box containing a massive antiair rifle and some .50 frag ammo."
 	slots = 2
 	check_wclass = TRUE
 	can_hold = list(/obj/item/gun/kinetic/antiair,\
-	/obj/item/ammo/bullets/cannon/antiair)
+	/obj/item/ammo/bullets/antiair)
 	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
-	/obj/item/ammo/bullets/cannon/antiair = 1)
+	/obj/item/ammo/bullets/antiair = 1)
 
 /* -------------------- Grenades -------------------- */
 

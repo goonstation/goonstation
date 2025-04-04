@@ -313,6 +313,60 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 
 
+/datum/projectile/special/spreader/buckshot_burst/antiair
+	name = ".50 BMG frag"
+	brightness = 2
+	window_pass = 0
+	icon_state = "40mmgatling" // it's a cool sprite ok
+	damage_type = D_PIERCING // very, very fast.
+	armor_ignored = 0.5
+	hit_type = DAMAGE_STAB
+	damage = 100
+	dissipation_delay = 100
+	dissipation_rate = 2
+	cost = 1
+	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_volume = 80
+	hit_object_sound = 'sound/effects/thunder.ogg'
+	hit_mob_sound = 'sound/effects/thunder.ogg'
+	implanted = null
+	projectile_speed = 128
+	spread_projectile_type = /datum/projectile/bullet/flak_chunk/splinters
+	pellets_to_fire = 12
+	split_type = 1
+	speed_max = 128
+	speed_min = 96
+	spread_angle_variance = 35
+	dissipation_variance = 35
+
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/rifle_loud
+	shot_sound_extrarange = 1
+	has_impact_particles = TRUE
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		var/turf/T = get_turf(hit)
+		var/turf/T2 = get_step(T, dirflag)
+		for(var/mob/M in range(T, 3))
+			shake_camera(M, 3, 5)
+		..()
+		new /obj/effects/explosion/fiery(T)
+		new /obj/effects/rendersparks (T2)
+
+		if(hit && isobj(hit))
+			var/obj/O = hit
+			O.meteorhit()
+
+		if(hit && isturf(hit))
+			T.throw_shrapnel(T, 1, 1)
+			T.meteorhit()
+
+		// no meteor hit on mobs, already brutal enough
+
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
 	sname = "foam dart"

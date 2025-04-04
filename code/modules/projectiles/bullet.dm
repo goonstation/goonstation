@@ -914,23 +914,27 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 
-	piercing
-		name = "metal splinter"
-		armor_ignored = 0.5
-		damage = 30
-		icon_state = "sniper_bullet"
-		damage_type = D_PIERCING
+	splinters
+		name = "burning splinter"
+		armor_ignored = 0.25
+		brightness = 4
+		icon_state = "flare"
+		damage_type = D_BURNING
 		hit_type = DAMAGE_STAB
-		shot_volume = 50
-		dissipation_delay = 3
-		dissipation_rate = 10
 		impact_image_state = "bullethole-small"
 		ricochets = TRUE
-		projectile_speed = 64
+		projectile_speed = 96
+		implanted = /obj/item/implant/projectile/shrapnel
 
 		on_launch(obj/projectile/O)
 			O.AddComponent(/datum/component/sniper_wallpierce, 1, 0, TRUE)
 
+		on_hit(atom/hit, direction, obj/projectile/P)
+			var/turf/T = get_turf(hit)
+			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
+			s.set_up(2, 1, T)
+			s.start()
+			..()
 
 /datum/projectile/bullet/stinger_ball
 	name = "rubber ball"
@@ -1349,43 +1353,6 @@ toxic - poisons
 
 	antiair_burst
 		shot_number = 4
-
-/datum/projectile/special/spreader/uniform_burst/circle/antiair
-	name = "20mm frag round"
-	brightness = 0.7
-	window_pass = 0
-	icon_state = "20mm"
-	damage_type = D_KINETIC
-	armor_ignored = 0.5
-	hit_type = DAMAGE_CUT
-	damage = 80
-	dissipation_delay = 40
-	dissipation_rate = 2
-	cost = 1
-	shot_sound = 'sound/weapons/20mm.ogg'
-	shot_volume = 80
-	hit_object_sound = 'sound/effects/explosion_new3.ogg'
-	hit_mob_sound = 'sound/effects/exlow.ogg'
-	implanted = null
-	projectile_speed = 128
-	spread_projectile_type = /datum/projectile/bullet/flak_chunk/piercing
-	split_type = 1
-
-	impact_image_state = "bullethole-large"
-	casing = /obj/item/casing/cannon
-	shot_sound_extrarange = 1
-
-	on_launch(obj/projectile/proj)
-		proj.AddComponent(/datum/component/sniper_wallpierce, 1) //pierces 1 walls/lockers/doors/etc. Does not function on restricted Z, rwalls and blast doors use 2 pierces
-		for(var/mob/M in range(proj.loc, 2))
-			shake_camera(M, 2, 4)
-
-	on_hit(atom/hit, dirflag, obj/projectile/proj)
-		var/turf/T = get_turf(hit)
-		new /obj/effects/explosion/fiery(T)
-		..()
-
-
 
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
