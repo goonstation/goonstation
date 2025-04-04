@@ -321,9 +321,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (istype(mob_listener) && mob_listener.client)
 		// Display maptext to the listener, if applicable.
 		if (!(src.flags & SAYFLAG_NO_MAPTEXT) && !mob_listener.client.preferences.flying_chat_hidden)
-			if (!src.maptext_css_values["color"])
-				src.maptext_css_values["color"] = living_maptext_color(src.speaker.name)
-
+			src.maptext_css_values["color"] ||= living_maptext_color(src.speaker.name)
 			src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
 			src.message_origin.maptext_manager.add_maptext(mob_listener.client, global.message_maptext(src))
 
