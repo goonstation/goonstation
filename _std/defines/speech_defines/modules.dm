@@ -41,6 +41,7 @@
 #define SPEECH_OUTPUT_RADIO_GLOBAL_DEFAULT_ONLY "global_radio_default"
 #define SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY "global_radio_unprotected"
 #define SPEECH_OUTPUT_SILICONCHAT "siliconchat"
+#define SPEECH_OUTPUT_SILICONCHAT_ADMIN "admin_siliconchat"
 #define SPEECH_OUTPUT_SPOKEN "spoken"
 #define SPEECH_OUTPUT_SPOKEN_AUDIO_LOG "audio_log_spoken"
 #define SPEECH_OUTPUT_SPOKEN_DEVICE "device_spoken"
