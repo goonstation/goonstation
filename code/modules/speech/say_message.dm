@@ -192,8 +192,12 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 /datum/say_message/disposing()
 	src.speaker = null
 	src.original_speaker = null
+	src.message_origin = null
+	src.signal_recipient = null
 	src.language = null
 	src.received_module = null
+	src.atom_listeners_override = null
+	src.atom_listeners_to_be_excluded = null
 
 	. = ..()
 
