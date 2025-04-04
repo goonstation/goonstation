@@ -1393,6 +1393,9 @@ var/global/noir = 0
 					var/string_version
 					for(pick in picklist)
 						M.onProcCalled("addBioEffect", list("idToAdd" = pick, "magical" = 1))
+						if(!bioEffectList[pick])
+							boutput(usr, SPAN_ALERT("Invalid bioEffect ID [pick]"))
+							continue
 						if(M.bioHolder.AddEffect(pick, magical = 1))
 							successes++
 
