@@ -4,6 +4,8 @@
 #define SMESMAXCHARGELEVEL 200000
 #define SMESMAXOUTPUT 200000
 
+TYPEINFO(/obj/machinery/power/smes/magical)
+	mats = null
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power, using magic."
@@ -12,6 +14,10 @@
 		charge = INFINITY
 		..()
 
+TYPEINFO(/obj/machinery/power/smes)
+	mats = list("metal" = 40,
+				"conductive_high" = 30,
+				"energy_extreme" = 30)
 /obj/machinery/power/smes
 	name = "Dianmu power storage unit"
 	desc = "The XIANG|GIESEL model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
