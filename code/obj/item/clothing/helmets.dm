@@ -1067,6 +1067,14 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 		setProperty("meleeprot_head", 7)
 		setProperty("space_movespeed", 0)
 
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
