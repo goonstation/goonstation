@@ -143,22 +143,21 @@
 			src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)
 
 /datum/say_channel/delimited/local/outloud/log_message(datum/say_message/message)
-	var/mob/M = message.speaker
-	if (!istype(M) || !M.client || !(message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
-		return
-
+	var/content = ""
 	if (message.flags & SAYFLAG_SINGING)
-		logTheThing(LOG_DIARY, src, "(singing): [message]", "say")
+		content = "SAY: [message.prefix] [message.content] [log_loc(message.speaker)]"
 		phrase_log.log_phrase("sing", message.content, user = message.speaker, strip_html = TRUE)
 
 	else if (message.flags & SAYFLAG_WHISPER)
-		logTheThing(LOG_DIARY, src, "(whisper): [message]", "whisper")
-		logTheThing(LOG_WHISPER, src, "SAY: [message]")
+		content = "SAY: [message.prefix] [message.content] (WHISPER) [log_loc(message.speaker)]"
 		phrase_log.log_phrase("whisper", message.content, user = message.speaker, strip_html = TRUE)
 
 	else
-		logTheThing(LOG_DIARY, src, "(spoken): [message]", "say")
+		content = "SAY: [message.prefix] [message.content] [log_loc(message.speaker)]"
 		phrase_log.log_phrase("say", message.content, user = message.speaker, strip_html = TRUE)
+
+	logTheThing(LOG_SAY, message.speaker, content)
+	logTheThing(LOG_DIARY, message.speaker, content, "say")
 
 
 /datum/say_channel/global_channel/outloud

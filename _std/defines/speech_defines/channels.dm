@@ -14,6 +14,10 @@
 /// Passes a say message datum to a say channel.
 #define PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE, ARGS...) \
 	if (CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE)) { \
+		var/mob/M = MESSAGE.speaker; \
+		if (istype(M) && M.client && (MESSAGE.flags & SAYFLAG_SPOKEN_BY_PLAYER)) { \
+			CHANNEL.log_message(MESSAGE); \
+		} \
 		if (!length(MESSAGE.atom_listeners_override)) { \
 			CHANNEL.PassToChannel(MESSAGE, ARGS); \
 		} \
@@ -25,6 +29,10 @@
 /// Relays a say message datum from one say channel to another.
 #define RELAY_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE, ARGS...) \
 	if (CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE)) { \
+		var/mob/M = MESSAGE.speaker; \
+		if (istype(M) && M.client && (MESSAGE.flags & SAYFLAG_SPOKEN_BY_PLAYER)) {\
+			CHANNEL.log_message(MESSAGE); \
+		} \
 		CHANNEL.PassToChannel(MESSAGE, ARGS); \
 	}
 

@@ -18,11 +18,7 @@
 		RELAY_MESSAGE_TO_SAY_CHANNEL(src.ghostly_whisper_channel, message.Copy())
 
 /datum/say_channel/dead/log_message(datum/say_message/message)
-	var/mob/M = message.speaker
-	if (!istype(M) || !M.client || !(message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
-		return
-
-	logTheThing(LOG_SAY, message.speaker, "([src.channel_id]): [message.content]")
+	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.content] [log_loc(message.speaker)]")
 	phrase_log.log_phrase("deadsay", message.content)
 
 

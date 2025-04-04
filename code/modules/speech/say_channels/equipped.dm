@@ -25,3 +25,6 @@
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
+
+/datum/say_channel/delimited/local/equipped/log_message()
+	return

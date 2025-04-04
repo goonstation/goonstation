@@ -1,9 +1,9 @@
 //------------ Player Speech Verbs ------------//
 /mob/verb/ooc(message as text)
-	src.say(":ooc [message]")
+	src.say(":ooc [message]", flags = SAYFLAG_SPOKEN_BY_PLAYER)
 
 /mob/verb/looc(message as text)
-	src.say(":looc [message]")
+	src.say(":looc [message]", flags = SAYFLAG_SPOKEN_BY_PLAYER)
 
 /mob/verb/say_verb(message as text)
 	set name = "say"

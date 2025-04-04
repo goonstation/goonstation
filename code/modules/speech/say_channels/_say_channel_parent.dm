@@ -54,8 +54,6 @@ ABSTRACT_TYPE(/datum/say_channel)
 
 /// A secondary entry point for say message datums; they will not be passed over this channel conventionally, but rather disseminated to a stored list of atom listeners.
 /datum/say_channel/proc/PassToOverriddenAtomListeners(datum/say_message/message)
-	src.log_message(message)
-
 	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
 	for (var/atom/A as anything in message.atom_listeners_override)
 		if (!A.listen_tree)
@@ -81,11 +79,7 @@ ABSTRACT_TYPE(/datum/say_channel)
 
 /// If a message was spoken by a client, logs the message.
 /datum/say_channel/proc/log_message(datum/say_message/message)
-	var/mob/M = message.speaker
-	if (!istype(M) || !M.client || !(message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
-		return
-
-	logTheThing(LOG_SAY, message.speaker, "([src.channel_id]): [message.content]")
+	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.content] [log_loc(message.speaker)]")
 	phrase_log.log_phrase("say", message.content)
 
 /// Set up an output module for sending messages over this channel.
@@ -134,6 +128,7 @@ ABSTRACT_TYPE(/datum/say_channel/global_channel)
 	if (from_delimited_channel)
 		return
 
+	src.delimited_channel.log_message(message)
 	src.delimited_channel.PassToListeners(message, src.delimited_channel.listeners, TRUE)
 
 /datum/say_channel/global_channel/log_message()

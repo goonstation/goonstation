@@ -33,12 +33,8 @@
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
 
-/datum/say_channel/ooc/log_message(datum/say_message/message)
-	var/mob/M = message.speaker
-	if (!istype(M) || !M.client || !(message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
-		return
-
-	logTheThing(LOG_OOC, message.speaker, "([src.channel_id]): [message.content]")
+/datum/say_channel/delimited/local/looc/log_message(datum/say_message/message)
+	logTheThing(LOG_OOC, message.speaker, "[uppertext(src.channel_id)]: [message.content] [log_loc(message.speaker)]")
 	phrase_log.log_phrase("looc", message.content)
 
 
