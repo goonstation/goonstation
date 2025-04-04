@@ -172,7 +172,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 				cut_position = findtext(src.content, " ", 1) + 1
 
 		if (cut_position)
-			src.prefix = trimtext(copytext(src.content, 1, cut_position))
+			src.prefix = lowertext(trimtext(copytext(src.content, 1, cut_position)))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
 	src.content = src.make_safe_for_chat(src.content)
