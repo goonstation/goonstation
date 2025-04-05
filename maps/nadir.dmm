@@ -40153,7 +40153,7 @@
 /area/station/science/bot_storage)
 "qSK" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/decal/stage_edge{
 	dir = 4
 	},
@@ -55641,7 +55641,7 @@
 /area/station/maintenance/southeast)
 "xPC" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
