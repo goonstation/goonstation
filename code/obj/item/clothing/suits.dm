@@ -2612,3 +2612,45 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "naturerobe"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
+
+// Denim Dresses
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
+/obj/item/clothing/suit/dress/denim
+	name = "denim dress"
+	desc = "A pair of overalls with legs lopped off! Breezy and stylish."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/suit/dress/denim/blue
+	name = "blue denim dress"
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+
+/obj/item/clothing/suit/dress/denim/turquoise
+	name = "turquoise denim dress"
+	icon_state = "denim_dress-turquoise"
+	item_state = "denim_dress-turquoise"
+
+/obj/item/clothing/suit/dress/denim/white
+	name = "white denim dress"
+	icon_state = "denim_dress-white"
+	item_state = "denim_dress-white"
+
+/obj/item/clothing/suit/dress/denim/black
+	name = "black denim dress"
+	icon_state = "denim_dress-black"
+	item_state = "denim_dress-black"
+
+/obj/item/clothing/suit/dress/denim/grey
+	name = "grey denim dress"
+	icon_state = "denim_dress-grey"
+	item_state = "denim_dress-grey"
+
+/obj/item/clothing/suit/dress/denim/khaki
+	name = "khaki denim dress"
+	icon_state = "denim_dress-khaki"
+	item_state = "denim_dress-khaki"
