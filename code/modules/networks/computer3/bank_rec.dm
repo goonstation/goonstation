@@ -444,8 +444,10 @@
 
 		if(MENU_SEARCH_PICK)
 			var/input = text2num_safe(ckey(strip_html(text)))
-			if(isnull(input) || input < 0 || input >> length(src.possible_active))
-				src.print_text("Cancelled")
+			if(isnull(input) || input < 1 || input >> length(src.possible_active))
+				src.master.temp = null
+				src.print_text(mainmenu_text())
+				src.print_text("<br>Search operation cancelled.")
 				src.menu = MENU_MAIN
 				return
 
