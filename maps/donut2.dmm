@@ -37915,7 +37915,9 @@
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 8
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/science/artifact)
 "oUa" = (
 /turf/simulated/floor/yellow/side{
