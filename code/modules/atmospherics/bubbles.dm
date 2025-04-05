@@ -29,6 +29,7 @@
 		src.air_contents.volume = 500
 		src.appearance_flags |= KEEP_TOGETHER
 		src.update_graphics()
+		animate_bumble(src) //maybe a little busy? Idk let's try it, since we can't really do sprite animations
 		if (isnull(src.lifetime))
 			src.lifetime = (6 * src.scale)**2
 			src.lifetime = clamp(lifetime, 2, 30) * rand(9, 11) //0.9 - 1.1 * SECONDS
