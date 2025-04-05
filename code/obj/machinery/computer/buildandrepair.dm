@@ -62,9 +62,33 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/communications
 	name = "circuit board (communications)"
 	computertype = /obj/machinery/computer/communications
+
+// ID Card computers
 /obj/item/circuitboard/card
 	name = "circuit board (ID computer)"
 	computertype = /obj/machinery/computer/card
+
+/obj/item/circuitboard/card/engineering
+	name = "circuit board (engineering ID computer)"
+	computertype = /obj/machinery/computer/card/department/engineering
+	icon_state = "circuit_engineering"
+
+/obj/item/circuitboard/card/medical
+	name = "circuit board (medical ID computer)"
+	computertype = /obj/machinery/computer/card/department/medical
+	icon_state = "circuit_medical"
+
+/obj/item/circuitboard/card/research
+	name = "circuit board (research ID computer)"
+	computertype = /obj/machinery/computer/card/department/research
+	icon_state = "circuit_research"
+
+/obj/item/circuitboard/card/security
+	name = "circuit board (security ID computer)"
+	computertype = /obj/machinery/computer/card/department/security
+	icon_state = "circuit_security"
+
+
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
