@@ -2729,6 +2729,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()
