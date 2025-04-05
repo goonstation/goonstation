@@ -1549,7 +1549,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	.=0
 
 /turf/proc/snow_prints(atom/movable/AM)
-	if (isliving(AM))
+	if (isliving(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
 		var/mob/living/M = AM
 		if (M.lying)
 			var/obj/effect/snow_step/dragged = new(src)
@@ -1663,10 +1663,13 @@ TYPEINFO(/turf/simulated/floor/grass)
 		var/weather_severity = 0
 		if (isnull(weather_severity) || weather_severity < 1)
 			return
-		// sev0 = 10 seconds
-		// sev1 = 7 seconds
-		// sev2 = 4 seconds
-		// sev3 = 1 second
+
+		// todo: Add dynamic selection of weather severity
+		// Using active events, parallax, or other indicators
+		// sev0 = 10 seconds (clear skies)
+		// sev1 = 7 seconds (light snow)
+		// sev2 = 4 seconds (heavy snow)
+		// sev3 = 1 second (blizzard)
 		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
 
 	proc/fade_away(time)
