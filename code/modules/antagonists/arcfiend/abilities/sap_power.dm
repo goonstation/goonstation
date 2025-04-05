@@ -1,22 +1,23 @@
 #define POWER_CELL_DRAIN_RATE 80 WATTS
 #define POWER_CELL_CHARGE_PERCENT_MINIMUM 10
 #define SMES_DRAIN_RATE 100 KILO WATTS
-#define SAP_LIMIT_APC 30 WATTS
+#define SAP_LIMIT_APC 15 WATTS
 #define SAP_LIMIT_MACHINE (SAP_LIMIT_APC - 5)
-#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 10)
+#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 25)
+#define SAP_MACHINE_BROKEN_MULT 2
 
 /**
  * Arcfiend's main way of obtaining power for their abilities.
  * Can be used on:
  * - Machines (drains from the area APC's cell)
- * - APCs (drains from the cell, 1% chance per tick to break the APC)
+ * - APCs (drains from the cell)
  * - SMES units (drains from internal charge)
  * - Humans (quickly saps stamina, causes burn damage)
  * - Cyborgs (drains from the power cell, causes burn damage)
  */
 /datum/targetable/arcfiend/sap_power
 	name = "Sap Power"
-	desc = "Drain power from a target person or machine."
+	desc = "Drain power from a target person or machine. Broken machines drain power faster."
 	cooldown = 0
 	target_anything = TRUE
 	targeted = TRUE
@@ -135,20 +136,19 @@
 		else if (istype(src.target, /obj/machinery))
 			var/area/A = get_area(src.target)
 			var/obj/machinery/power/apc/target_apc = A?.area_apc
+			var/obj/machinery/M = src.target
 			var/points_gained = 0
+			var/broken_mult = M.is_broken() ? SAP_MACHINE_BROKEN_MULT : 1
 
 			if (istype(src.target, /obj/machinery/power))
 				if (istype(src.target, /obj/machinery/power/apc))
 					var/obj/machinery/power/apc/apc = src.target
-					points_gained = SAP_LIMIT_APC
+					points_gained = SAP_LIMIT_APC * broken_mult
 					target_apc = apc // drain the target APC instead of the area's
 					if (!target_apc.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
 						boutput(src.holder.owner, SPAN_ALERT("[target] doesn't have enough energy for you to absorb!"))
 						interrupt(INTERRUPT_ALWAYS)
 						return
-					if (prob(1))
-						boutput(src.holder.owner, "<span class'alert'>You feel a brief power surge underneath your hand as the APC fails and shuts down.</span>")
-						apc.set_broken()
 				else if (istype(src.target, /obj/machinery/power/smes))
 					target_apc = null
 					var/obj/machinery/power/smes/smes = src.target
@@ -157,14 +157,13 @@
 						interrupt(INTERRUPT_ALWAYS)
 						return
 					smes.charge -= SMES_DRAIN_RATE
-					points_gained = SAP_LIMIT_APC
+					points_gained = SAP_LIMIT_APC * broken_mult
 			else
 				if (!target_apc?.cell || target_apc.cell.charge <= ((target_apc.cell.maxcharge / POWER_CELL_CHARGE_PERCENT_MINIMUM) + POWER_CELL_DRAIN_RATE)) //not enough power
 					boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 					interrupt(INTERRUPT_ALWAYS)
 					return
-				var/obj/machinery/M = src.target
-				points_gained = clamp(round((M.power_usage * 0.1)), 0, SAP_LIMIT_MACHINE)
+				points_gained = clamp(round((M.power_usage * 0.1)), 0, SAP_LIMIT_MACHINE) * broken_mult
 
 			if (!points_gained)
 				boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
@@ -172,7 +171,7 @@
 				return
 			holder.addPoints(points_gained)
 			// drain is proportional to points gained
-			target_apc?.cell.use(POWER_CELL_DRAIN_RATE * (points_gained / SAP_LIMIT_APC))
+			target_apc?.cell.use(POWER_CELL_DRAIN_RATE * (points_gained / (SAP_LIMIT_APC*broken_mult)))
 
 		if (prob(35))
 			var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
