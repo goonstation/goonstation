@@ -1456,6 +1456,7 @@
 #include "code\modules\items\gimmick\figurine.dm"
 #include "code\modules\items\gimmick\plushies.dm"
 #include "code\modules\items\instruments\instruments.dm"
+#include "code\modules\items\instruments\pitch_shift_table_three.dm"
 #include "code\modules\items\instruments\playable_piano.dm"
 #include "code\modules\items\specials\ItemSpecials.dm"
 #include "code\modules\jobxp\JobXP.dm"
