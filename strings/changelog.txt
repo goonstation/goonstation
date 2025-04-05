@@ -1,4 +1,9 @@
 
+(t)sat apr 05 25
+(u)Jan.antilles
+(p)22853
+(e)⚖|C-Balance
+(+)Securitrons can no longer be printed from the robotics fabricator, and have to be assembled by hand.
 (t)fri apr 04 25
 (u)RubberRats
 (p)22806
