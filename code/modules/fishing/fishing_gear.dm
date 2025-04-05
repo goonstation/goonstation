@@ -347,6 +347,10 @@ TYPEINFO(/obj/item/fish_portal)
 	var/working = FALSE
 	var/allowed = list(/obj/item/reagent_containers/food/fish)
 
+	New()
+		..()
+		AddComponent(/datum/component/transfer_input/quickloading, allowed)
+
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
 			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
