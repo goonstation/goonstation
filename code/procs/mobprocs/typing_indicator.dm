@@ -1,4 +1,5 @@
 #define TYPING_OVERLAY_KEY "typing_indicator"
+#define EMOTE_TYPING_OVERLAY_KEY "emote_typing_indicator"
 
 // Singletons for typing indicators
 var/mutable_appearance/living_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
@@ -32,19 +33,21 @@ var/mutable_appearance/dead_typing_bubble = mutable_appearance('icons/mob/mob.dm
 	old_parent.ClearSpecificOverlays(TYPING_OVERLAY_KEY)
 	new_parent.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
 
+/mob/var/has_emote_typing_indicator = FALSE
+
 /mob/proc/create_emote_typing_indicator()
-	if (src.has_typing_indicator)
+	if (src.has_emote_typing_indicator)
 		return
 
-	src.has_typing_indicator = TRUE
-	src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
+	src.has_emote_typing_indicator = TRUE
+	src.UpdateOverlays(living_emote_typing_bubble, EMOTE_TYPING_OVERLAY_KEY)
 
 /mob/proc/remove_emote_typing_indicator()
-	if (!src.has_typing_indicator)
+	if (!src.has_emote_typing_indicator)
 		return
 
-	src.has_typing_indicator = FALSE
-	src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+	src.has_emote_typing_indicator = FALSE
+	src.UpdateOverlays(null, EMOTE_TYPING_OVERLAY_KEY)
 
 /mob/Logout()
 	src.remove_typing_indicator()
@@ -68,7 +71,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 */
 
 /// Show the typing indicator. The source signifies what action the user is typing for.
-/mob/verb/start_typing(source as text) // The source argument is currently unused
+/mob/verb/start_typing(source as text) // The source argument is currently unused.
 	set name = ".start_typing"
 	set hidden = 1
 
@@ -130,7 +133,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	set hidden = 1
 	set instant = 1
 
-	src.remove_typing_indicator()
+	src.remove_emote_typing_indicator()
 	if (message)
 		src.me_verb(message)
 
@@ -164,3 +167,4 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 
 
 #undef TYPING_OVERLAY_KEY
+#undef EMOTE_TYPING_OVERLAY_KEY
