@@ -15814,10 +15814,8 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gUW" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18557,9 +18555,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/bluewhite{
 	dir = 4

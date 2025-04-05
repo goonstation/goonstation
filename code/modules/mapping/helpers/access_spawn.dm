@@ -1,16 +1,20 @@
 /obj/mapping_helper/access
 	name = "access spawn"
-	desc = "Sets access of machines on the same turf as it to its access, then destroys itself."
+	desc = "Adds its own access to any of the following objects on it's tile: /machinery, /storage/secure. Then destroys itself"
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "access_spawn"
 
 	setup()
-		for (var/obj/machinery/M in src.loc)
-			if (!M.req_access)
-				M.req_access = src.req_access
-			else
-				M.req_access += src.req_access
-			//todo : autoname doors	here too. var editing is illegal!
+		for (var/obj/machinery/machine in src.loc) //Airlocks, Turret controls, Computers, etc.
+			src.setup_access(machine)
+		for (var/obj/storage/secure/storage in src.loc) //Lockers, crates, etc.
+			src.setup_access(storage)
+
+	proc/setup_access(var/obj/O)
+		if (!O.req_access)
+			O.req_access = src.req_access
+		else
+			O.req_access += src.req_access
 
 #define SPECIAL "#ffa135"
 #define MEDICAL "#3daff7"
@@ -288,6 +292,11 @@
 /obj/mapping_helper/access/syndie_shuttle
 	name = "syndie_shuttle access spawn"
 	req_access = list(access_syndicate_shuttle)
+	color = SECURITY
+
+/obj/mapping_helper/access/syndie_commander
+	name = "syndie commander access spawn"
+	req_access = list(access_syndicate_commander)
 	color = SECURITY
 
 /obj/mapping_helper/access/pirate_ship

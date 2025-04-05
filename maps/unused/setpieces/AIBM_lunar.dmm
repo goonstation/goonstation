@@ -7180,7 +7180,7 @@
 	beacon_freq = 1443;
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  This one has a little name tag on the front labeled 'Murray'";
 	name = "Murray";
-	req_access_txt = ""
+	req_access = null
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)

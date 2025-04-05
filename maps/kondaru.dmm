@@ -13338,9 +13338,7 @@
 	},
 /area/station/medical/medbay)
 "bcU" = (
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/medical,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -27574,10 +27572,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west/nopoweralert{
-	req_access = null;
-	req_access_txt = "24";
 	start_charge = 0
 	},
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/caution/east,
 /area/research_outpost/indigo_rye)
 "cjI" = (
@@ -28737,12 +28734,7 @@
 	},
 /area/listeningpost)
 "cnf" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
@@ -34630,11 +34622,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/light/small,
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -36520,11 +36508,7 @@
 /turf/unsimulated/floor/circuit/vintage,
 /area/station/crewquarters/cryotron)
 "gYu" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
 	},
@@ -43125,9 +43109,8 @@
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatornord";
 	pixel_x = -26;
-	req_access = null;
-	req_access_txt = "44";
-	starts_established = 1
+	starts_established = 1;
+	req_access = null
 	},
 /obj/rack,
 /obj/item/extinguisher{
@@ -43136,6 +43119,7 @@
 /obj/item/extinguisher{
 	pixel_x = 8
 	},
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -50913,11 +50897,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "rsZ" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/transport,
 /obj/machinery/light{
@@ -53276,11 +53256,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "sZS" = (
@@ -58343,8 +58319,7 @@
 "wFB" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
+	name = "breach repair cart"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -60316,15 +60291,15 @@
 	icon = 'icons/obj/airtunnel.dmi';
 	id = "vigilatorsud";
 	pixel_x = 26;
-	req_access = null;
-	req_access_txt = "44";
-	starts_established = 1
+	starts_established = 1;
+	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
 	},
 /obj/machinery/meter,
+/obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor/caution/east,
 /area/station/engine/gas)
 "xSq" = (

@@ -2386,7 +2386,7 @@
 "gM" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1

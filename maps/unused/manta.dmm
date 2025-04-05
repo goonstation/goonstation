@@ -8502,10 +8502,8 @@
 /area/station/engine/engineering/ce)
 "aza" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -10439,10 +10437,8 @@
 /area/station/hallway/starboardupperhallway)
 "aEy" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /obj/machinery/light_switch/auto{
 	pixel_x = 5;
@@ -13688,9 +13684,8 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aND" = (
-/obj/machinery/computer/announcement{
-	name = "Communications Office Announcement Computer";
-	req_access_txt = ""
+/obj/machinery/computer/announcement/station{
+	name = "Communications Office Announcement Computer"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -20338,9 +20333,7 @@
 	},
 /area/station/chapel/sanctuary)
 "bgj" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -38195,10 +38188,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "owg" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
