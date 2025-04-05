@@ -65,6 +65,7 @@
 		var/dir = AM.dir
 		if (prob(40))
 			dir = turn(dir, pick(90, -90))
+		src.glide_size = AM.glide_size
 		step(src, dir)
 
 	pull(mob/user) //no pull
