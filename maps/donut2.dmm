@@ -37909,9 +37909,13 @@
 	icon_state = "2-8"
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor/yellow/side{
+/obj/decal/tile_edge/floorguide/qm{
 	dir = 1
 	},
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 8
+	},
+/turf/simulated/floor/orange,
 /area/station/science/artifact)
 "oUa" = (
 /turf/simulated/floor/yellow/side{
