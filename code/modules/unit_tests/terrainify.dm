@@ -27,6 +27,7 @@
 		TEST_ASSERT(is_turf_path_safe(gen_under_test.wall_turf_type), "[map_gen_type]'s wall_turf_type has sim element")
 		TEST_ASSERT(is_turf_path_safe(gen_under_test.floor_turf_type), "[map_gen_type]'s floor_turf_type has sim element")
 
+	// Iterate through /datum/biome and ensure none of them generate simulated turf
 	// This is mostly redundant but Azrun can't be trusted
 	for(var/biome_path in childrentypesof(/datum/biome))
 		var/datum/biome/biome = biome_path
