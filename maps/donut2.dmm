@@ -8351,6 +8351,10 @@
 	dir = 1
 	},
 /area/station/crew_quarters/stockex)
+"aSj" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/science/artifact)
 "aSm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -16907,7 +16911,11 @@
 	pixel_y = 24
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
+	dir = 10
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -17737,16 +17745,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
 /obj/machinery/light/incandescent,
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/science/artifact)
 "dcu" = (
 /obj/decal/poster/wallsign/medbay_left{
@@ -22246,8 +22246,8 @@
 	name = "Emergency Ejection Button";
 	pixel_y = 24
 	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 5
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 4
@@ -29663,6 +29663,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
+"krh" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "krO" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 8
@@ -35048,6 +35056,9 @@
 /obj/stool/chair/office{
 	dir = 1
 	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
@@ -37897,11 +37908,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/decal/stripe_caution,
+/turf/simulated/floor/yellow/side{
 	dir = 1
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
 	},
 /area/station/science/artifact)
 "oUa" = (
@@ -45781,6 +45790,17 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"tAw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "tAx" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -129455,8 +129475,8 @@ aaa
 cOu
 wef
 dXX
+aSj
 uoo
-tma
 xnK
 fkY
 viQ
@@ -129758,7 +129778,7 @@ aiU
 aiU
 aiU
 dcj
-tma
+uoo
 nAS
 tma
 fYd
@@ -130060,7 +130080,7 @@ yhM
 fed
 dXX
 oTZ
-fkY
+tAw
 cFC
 oUV
 nIf
@@ -130362,7 +130382,7 @@ aiU
 aiU
 aiU
 cEi
-tma
+krh
 hOU
 sEx
 ybe
