@@ -18,6 +18,10 @@
 	if (src.absorbing_bubble)
 		return
 	var/atom/movable/parent = src.parent
+	if (bubble.scale <= 0.2) //small bubble, devour without ceremony
+		src.tank.merge(bubble.air_contents)
+		qdel(bubble)
+		return
 	bubble.set_loc(parent)
 	parent.vis_contents += bubble
 	animate(bubble, 2 SECONDS, transform = matrix(bubble.transform, 0.1, 0.1, MATRIX_SCALE), easing = CUBIC_EASING)
