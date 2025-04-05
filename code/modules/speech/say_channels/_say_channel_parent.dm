@@ -169,8 +169,8 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local
 	/// Whether this local channel should request registered input modules to track their outermost listeners.
 	var/track_outermost_listener = TRUE
-	/// An associative list of listen module trees, with the associated number of times a signal has been registered to them.
-	var/list/listen_trees_signal_registrations
+	/// An associative list of module trees, with the associated number of times a signal has been registered to them.
+	var/list/module_tree_signal_registrations
 	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
 	var/datum/listener_tick_cache/listener_tick_cache
 	/// The type of listener tick cache that this say channel should use.
@@ -179,11 +179,11 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/New()
 	. = ..()
 
-	src.listen_trees_signal_registrations = list()
+	src.module_tree_signal_registrations = list()
 	src.listener_tick_cache = new src.listener_tick_cache_type
 
 /datum/say_channel/delimited/local/disposing()
-	src.listen_trees_signal_registrations = null
+	src.module_tree_signal_registrations = null
 
 	. = ..()
 
@@ -243,12 +243,19 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 
 	if (src.track_outermost_listener)
 		registree.parent_tree.speaker_origin.ensure_outermost_listener_tracker().request_track()
-		src.RegisterSignal(registree.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
+
+		src.module_tree_signal_registrations[registree.parent_tree] += 1
+		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
+			src.RegisterSignal(registree.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /datum/say_channel/delimited/local/UnregisterOutput(datum/speech_module/output/registered)
 	if (src.track_outermost_listener)
 		registered.parent_tree.speaker_origin.ensure_outermost_listener_tracker().unrequest_track()
-		src.UnregisterSignal(registered.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
+
+		src.module_tree_signal_registrations[registered.parent_tree] -= 1
+		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
+			src.UnregisterSignal(registered.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
+			src.module_tree_signal_registrations -= registered.parent_tree
 
 	. = ..()
 
@@ -258,24 +265,25 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 	if (src.track_outermost_listener)
 		registree.parent_tree.listener_origin.ensure_outermost_listener_tracker().request_track()
 
-		src.listen_trees_signal_registrations[registree.parent_tree] += 1
-		if (src.listen_trees_signal_registrations[registree.parent_tree] == 1)
+		src.module_tree_signal_registrations[registree.parent_tree] += 1
+		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
 			src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
 	if (src.track_outermost_listener)
 		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
 
-		src.listen_trees_signal_registrations[registered.parent_tree] -= 1
-		if (src.listen_trees_signal_registrations[registered.parent_tree] == 0)
+		src.module_tree_signal_registrations[registered.parent_tree] -= 1
+		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
 			src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
-			src.listen_trees_signal_registrations -= registered.parent_tree
+			src.module_tree_signal_registrations -= registered.parent_tree
 
 	. = ..()
 
 /datum/say_channel/delimited/local/proc/rerequest_track(tree, atom/old_parent, atom/new_parent)
-	old_parent.ensure_outermost_listener_tracker().unrequest_track()
-	new_parent.ensure_outermost_listener_tracker().request_track()
+	var/count = src.module_tree_signal_registrations[tree]
+	old_parent.ensure_outermost_listener_tracker().unrequest_track(count)
+	new_parent.ensure_outermost_listener_tracker().request_track(count)
 
 
 

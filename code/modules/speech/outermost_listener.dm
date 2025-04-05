@@ -29,6 +29,7 @@
 
 /datum/outermost_listener_tracker/disposing()
 	src.UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	src.parent.outermost_listener_tracker = null
 	src.parent = null
 
 	. = ..()
@@ -72,12 +73,12 @@
 	return FALSE
 
 /// Add a track request to this outermost listener tracker.
-/datum/outermost_listener_tracker/proc/request_track()
-	src.track_requests += 1
+/datum/outermost_listener_tracker/proc/request_track(count = 1)
+	src.track_requests += count
 
 /// Remove a track request from this outermost listener tracker.
-/datum/outermost_listener_tracker/proc/unrequest_track()
-	src.track_requests -= 1
+/datum/outermost_listener_tracker/proc/unrequest_track(count = 1)
+	src.track_requests -= count
 
-	if (!src.track_requests)
+	if (src.track_requests <= 0)
 		qdel(src)
