@@ -2482,8 +2482,9 @@
 	id = "cargobelt_in";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "aoV" = (
 /turf/space,
 /area/supply/sell_point)
@@ -18863,7 +18864,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "dMz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -24611,7 +24612,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "hld" = (
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/random,

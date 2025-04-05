@@ -50973,8 +50973,9 @@
 /obj/machinery/conveyor/SN{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/simulated/floor/airless/plating,
-/area/supply/delivery_point)
+/area/space)
 "nyl" = (
 /obj/cryotron,
 /turf/simulated/floor/darkblue,

@@ -5592,8 +5592,9 @@
 /obj/machinery/conveyor/SN{
 	id = "north"
 	},
+/obj/landmark/supply_delivery,
 /turf/space/fluid/manta/nospawn,
-/area/supply/delivery_point)
+/area/station/maintenance/lowerport)
 "arl" = (
 /turf/space/fluid/manta,
 /area/supply/sell_point/manta)
@@ -36676,7 +36677,7 @@
 	id = "north"
 	},
 /turf/space/fluid/manta/nospawn,
-/area/space)
+/area/station/maintenance/lowerport)
 "kWs" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{

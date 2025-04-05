@@ -1833,9 +1833,7 @@
 	name = "decomposed corpse"
 	},
 /turf/simulated/floor/plating/damaged3,
-/area/spyshack{
-	lightswitch = 0
-	})
+/area/spyshack)
 "tJ" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -2088,11 +2086,6 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"vL" = (
-/turf/simulated/floor/plating,
-/area/spyshack{
-	lightswitch = 0
-	})
 "vM" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/chapel)
@@ -44875,7 +44868,7 @@ oZ
 oB
 Sq
 Ud
-vL
+gX
 gX
 gX
 DZ

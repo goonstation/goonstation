@@ -54292,8 +54292,9 @@
 /obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/cargobay)
 "vcX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1

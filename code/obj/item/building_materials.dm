@@ -422,7 +422,7 @@ MATERIAL
 					if (!istype(T, /turf/simulated/floor))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
-					if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+					if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 						boutput(usr, SPAN_ALERT("You can't build girders here."))
 						return
 					if (!amount_check(2,usr)) return

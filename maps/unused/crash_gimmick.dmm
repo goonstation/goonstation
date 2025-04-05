@@ -75876,8 +75876,8 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
-/turf/space,
-/area/supply/delivery_point)
+/obj/landmark/supply_delivery,
+/turf/space)
 "xUd" = (
 /obj/table/auto,
 /obj/bedsheetbin,

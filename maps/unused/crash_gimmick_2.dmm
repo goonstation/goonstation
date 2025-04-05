@@ -822,8 +822,9 @@
 	},
 /area/space)
 "Dm" = (
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/space)
 "Du" = (
 /obj/table/reinforced/auto,
 /obj/item/lamp_manufacturer/organic,

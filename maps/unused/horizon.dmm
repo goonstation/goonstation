@@ -41719,8 +41719,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/storage)
 "cpA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/scorched,
@@ -46312,7 +46313,7 @@
 	operating = 1
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/storage)
 "cNT" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mineral{

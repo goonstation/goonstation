@@ -11039,7 +11039,7 @@
 	id = "cargobuy"
 	},
 /turf/space,
-/area/space)
+/area/station/quartermaster/office)
 "eNG" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide/other,
@@ -19063,8 +19063,9 @@
 	invisibility = 101;
 	name = "glow - YELLOWISH"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "itV" = (
 /obj/submachine/syndicate_teleporter,
 /obj/decal/tile_edge/stripe{
