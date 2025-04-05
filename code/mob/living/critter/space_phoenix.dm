@@ -51,7 +51,7 @@
 
 		QDEL_NULL(src.organHolder)
 
-			Life()
+	Life()
 		. = ..()
 		if (istype(get_turf(src), /turf/space))
 			src.delStatus("burning")
@@ -473,7 +473,7 @@
 	proc/atom_entered(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
-var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
@@ -499,12 +499,12 @@ var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ab
 				src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_critters |= "[C.real_name]-\ref[C]"
 				C.setStatus("cold_snap", INFINITE_STATUS)
-ability_holder.updateText(FALSE)
+		ability_holder.updateText(FALSE)
 
 	proc/atom_exited(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
-var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
