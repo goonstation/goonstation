@@ -129,7 +129,7 @@
 		)
 	)
 	rock_wall_biome = /datum/biome/asteroid/wall
-	wall_turf_type	= /turf/simulated/wall/auto/asteroid
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/cave
 	floor_turf_type = /turf/unsimulated/floor/cave/asteroid
 
 ///Seeds the rust-g perlin noise with a random number.
