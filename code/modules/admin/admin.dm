@@ -990,6 +990,24 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Adminstrator to revive players.")
 
+		if ("stabilize")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					if(isobserver(M))
+						tgui_alert(usr,"You can't stabilize a ghost! How does that even work?!")
+						return
+
+					if(isdead(M))
+						tgui_alert("Cannot stabilize a dead mob")
+						return
+
+					M.stabilize()
+
+					logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
+					logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
+					message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
+
 		if ("makeai")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])

@@ -124,6 +124,12 @@
 	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
 
+/mob/living/stabilize()
+	..()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
+	restore_life_processes()
+
 /mob/living/disposing()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
