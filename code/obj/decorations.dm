@@ -2081,3 +2081,155 @@ ADMIN_INTERACT_PROCS(/obj/lever/custom, proc/set_up)
 	icon_state = "wineholder"
 	anchored = ANCHORED
 	density = 0
+
+/obj/decoration/antfarm
+	name = "ant farm"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "antfarm"
+	desc = ""
+	anchored = ANCHORED
+	density = 1
+	var/health = 30
+	var/destroyed = 0
+	proc/AntEscape(var/AntReagent, var/AntAmount = 100, var/AntChance = 100, var/turf/targetTurf = get_turf(src))
+		var/datum/reagents/tempHolder = new
+		if (prob(AntChance))
+			tempHolder.add_reagent(AntReagent, AntAmount)
+			targetTurf.fluid_react_single(AntReagent,AntAmount)
+			tempHolder.reaction(targetTurf, TOUCH)
+		return
+	get_desc(var/dist, var/mob/user)
+		if(src.destroyed)
+			return "Freed from their regular jobs, the ants have immediately turned to antarchy"
+		else if (user.mind.is_antagonist())
+			return SPAN_ALERT("<b>Some crimson sisters-in-arms trapped in the Head of Personnel's cage. Maybe you could liberate them.</b>")
+		switch(user.mind?.assigned_role)
+			if ("Captain")
+				return "The HoP's weird little pets. It wouldn't surprise you if they whisper to it when nobody is looking"
+			if ("Head of Personnel")
+				return "Your beloved workers. Look at them: Unified, happy. About their tasks and nary a complaint. If only your job was so simple."
+			if ("Chief Engineer")
+				return "A shoddy little construction. No shoring up, terrible efficiency. Where's the power generation? Are these ants even trying?"
+			if ("Head of Security")
+				return "A less-than-subtle metaphor for the HoP's megalomaniacal mindset, in ant farm form."
+			if ("Clown")
+				return "<span style=\"font-style:italic; color:pink; font-family:'Comic Sans MS', sans-serif; font-size:200%;\">Poor guys. Letting them out would make them <b>independ-ant!!!</b></span>"
+			if ("Miner")
+				return "Hopefully there aren't any volatile ores in there."
+			if ("Quartermaster")
+				return "Roughly 40 credits of sand in a case worth less than that. The ants are probably the most valuble thing in here. That assessment includes the HoP."
+			if ("Medical Director")
+				return "Possibly a symptom of the HoP's various neurosis."
+			if ("Research Director")
+				return "Wasted potential grant money. Do they even run experiments on them? These ants don't even seem to be on drugs."
+			if ("Mime")
+				return "<span class='subtle'>     `oççç `oççç `oççç      </span>" //ants in ascii form, just for mimes.
+			if ("Janitor")
+				return "<i>A mess waiting to happen.</i>"
+			if ("Botanist")
+				return "One fake plastic tree is not what you'd call a productive farm."
+			if ("Rancher")
+				return "You can't tell the sand grains from the eggs."
+			if ("Pest Control Specialist")
+				return "A shabby containment unit of Formicidae"
+			if ("Staff Assistant")
+				return "Look at them: Trapped in a prison of steel and glass without proper tools to escape. Bunch of suckers."
+			if ("Chaplain")
+				return "Godless insects living in sandy caves."
+			else
+				return "They seem pretty happy"
+
+/obj/decoration/antfarm/ex_act(severity)
+	switch(severity)
+		if (1)
+			var/obj/item/coin/antcoin/G = new /obj/item/coin/antcoin
+			message_ghosts("<b>[src]</b> has been breached! [log_loc(src, ghostjump=TRUE)].")
+			src.visible_message(SPAN_NOTICE("Ants start to escape from their farm."))
+			G.set_loc(src.loc)
+
+			qdel(src)
+		if (2)
+			if (prob(50))
+				src.health -= 15
+				src.healthcheck()
+		if (3)
+			if (prob(50))
+				src.health -= 5
+				src.healthcheck()
+
+/obj/decoration/antfarm/bullet_act(var/obj/projectile/P)
+	var/damage = 0
+	damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+	if (damage < 1)
+		return
+
+	switch(P.proj_data.damage_type)
+		if(D_KINETIC)
+			src.health -= (damage*2)
+		if(D_PIERCING)
+			src.health -= (damage/2)
+		if(D_ENERGY)
+			src.health -= (damage/4)
+
+	src.healthcheck()
+	return
+
+/obj/decoration/antfarm/blob_act(var/power)
+	if (prob(50))
+		src.health = 0
+		src.healthcheck()
+		qdel(src)
+
+/obj/decoration/antfarm/meteorhit(obj/O as obj)
+	src.health = 0
+	src.healthcheck()
+	qdel(src)
+
+/obj/decoration/antfarm/proc/healthcheck()
+	if (src.health <= 0)
+		if (!( src.destroyed ))
+			src.destroyed = 1
+			message_ghosts("<b>[src]</b> has been breached! [log_loc(src, ghostjump=TRUE)].")
+			src.visible_message(SPAN_NOTICE("Ants start to escape from their farm."))
+			var/obj/item/coin/antcoin/G = new /obj/item/coin/antcoin
+			G.set_loc(src.loc)
+			desc = "Former palace of ants."
+			AntEscape("ants", 100, 100)
+			playsound(src, "shatter", 70, 1)
+			UpdateIcon()
+	else
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
+	return
+
+/obj/decoration/antfarm/update_icon()
+	if(src.destroyed)
+		src.icon_state = "antfarmbroke"
+	else
+		src.icon_state = "antfarm"
+	return
+
+/obj/decoration/antfarm/attackby(obj/item/W, mob/user)
+	if (user.a_intent == INTENT_HARM) // clobbering time. Slightly higher damage to reflect you're not just hitting it with your hands, but still pretty low to help prevent accidents.
+		user.lastattacked = get_weakref(src)
+		attack_particle(user, src)
+		src.health -= 5
+		src.healthcheck()
+	..()
+	return
+
+/obj/decoration/antfarm/attack_hand(mob/user) //Just if you're hitting it with your hands.
+	if (user.a_intent == INTENT_HARM)
+		user.visible_message(SPAN_ALERT("[user] wallops the ant farm."))
+		user.lastattacked = get_weakref(src)
+		attack_particle(user, src)
+		src.health -= 2
+		src.healthcheck()
+	else if (user.a_intent == INTENT_HELP) //Hiiii hiii hello hello ants hi hello HI.
+		if(src.destroyed)
+			user.visible_message(SPAN_NOTICE("[user] reaches in to pet what ants remain."))
+		else
+			user.visible_message(SPAN_NOTICE("[user] taps on the glass of the ant farm."))
+		return
+	..()
+	return
+
