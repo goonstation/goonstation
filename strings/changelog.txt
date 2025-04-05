@@ -1,5 +1,9 @@
 
 (t)sat apr 05 25
+(u)FlameArrow57
+(p)22422
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod gunner module component. It allows passengers to fire weak phaser bolts while the ship's main weapon is active in an ordinal direction through left clicking. Shared cooldown among all passengers
 (u)Jan.antilles
 (p)22853
 (e)⚖|C-Balance
