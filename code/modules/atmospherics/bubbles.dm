@@ -1,7 +1,7 @@
 /obj/bubble
 	name = "bubble"
 	desc = "A large bubble of gas."
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/bubbles.dmi'
 	icon_state = "bubble"
 	density = FALSE
 	event_handler_flags = IMMUNE_TRENCH_WARP
@@ -11,7 +11,7 @@
 
 	var/datum/gas_mixture/air_contents = null
 	///legally distinct from the turf version because this needs to be on a lower plane to work with filters
-	var/static/list/icon/gas_overlays = list(
+	var/static/list/mutable_appearance/gas_overlays = list(
 		#ifdef ALPHA_GAS_OVERLAYS
 		mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", OBJ_LAYER - 0.1),
 		mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", OBJ_LAYER - 0.1),
@@ -28,11 +28,10 @@
 		src.air_contents = gas
 		src.air_contents.volume = 500
 		src.appearance_flags |= KEEP_TOGETHER
-		src.add_filter("bubble_mask", 1, alpha_mask_filter(0,0, icon('icons/obj/projectiles.dmi', "bubble_mask")))
 		src.update_graphics()
 		if (isnull(src.lifetime))
 			src.lifetime = (6 * src.scale)**2
-			src.lifetime = clamp(lifetime, 3, 30) * rand(0.9, 1.1) SECONDS
+			src.lifetime = clamp(lifetime, 2, 30) * rand(9, 11) //0.9 - 1.1 * SECONDS
 		SPAWN(src.lifetime)
 			if (!QDELETED(src))
 				src.pop()
@@ -89,7 +88,27 @@
 
 	proc/update_graphics()
 		src.scale = clamp(MIXTURE_PRESSURE(src.air_contents) / (ONE_ATMOSPHERE * 2), 0.2, 1)
-		src.Scale(src.scale, src.scale)
+		//trying out something here, three distinct sprites that get dynamically scaled between
+		//the idea is that the total scaling from the quantized sprite should never be very large, leading to cleaner looking scaling
+		//idk it kind of works, maybe I should just give up and fully quantize them
+		var/modifier = ""
+		if (scale <= 0.2)
+			modifier = "small"
+			//no scaling below this point
+		else if (scale <= 0.4)
+			modifier = "small"
+			var/effective_scale = src.scale * 32/8
+			src.Scale(effective_scale, effective_scale)
+		else if (scale <= 0.6)
+			modifier = "mid"
+			//scale it down by less because we're using a smaller sprite
+			var/effective_scale = src.scale * 32/18 //ratio of the medium sprite diameter to the large one
+			src.Scale(effective_scale, effective_scale)
+		else
+			modifier = "large"
+			src.Scale(src.scale, src.scale)
+		src.icon_state = "bubble-[modifier]"
+		src.add_filter("bubble_mask", 1, alpha_mask_filter(0,0, icon('icons/obj/bubbles.dmi', "bubble_mask-[modifier]")))
 		src.air_contents.check_tile_graphic()
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_PLASMA)
 		UPDATE_TILE_GAS_OVERLAY(src.air_contents.graphic, src, GAS_IMG_N2O)
