@@ -990,10 +990,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 /obj/item/instrument/keytar
 	name = "keytar"
-	desc = "FIX ME"
+	desc = "All the cool factor of being a rock star guitarist with none of the Wonderwall. \
+			Is the iconic 80's synth worth the back pain you'll feel after your shift ends?"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "keytar"
-	item_state = ""
+	item_state = "keytar"
 	two_handed = 1
 	force = 10
 	note_range = list("c2", "b7")
