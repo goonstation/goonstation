@@ -1,7 +1,7 @@
 /// Melee attack. Shocks a targeted mob, or can be used on an airlock to temporarily cut its power.
 /datum/targetable/arcfiend/discharge
 	name = "Discharge"
-	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, while airlocks will be briefly depowered."
+	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, airlocks will be briefly depowered, and machines will become broken."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
 	target_anything = TRUE
@@ -44,6 +44,18 @@
 			target.add_fingerprint(src.holder.owner)
 			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 			boutput(src.holder.owner, SPAN_ALERT("You run a powerful current into [target], temporarily cutting its power!"))
+		else if (istype(target, /obj/machinery/))
+			var/obj/machinery/machine = target
+			if(machine.is_broken())
+				boutput(src.holder.owner, SPAN_ALERT("[machine] is already broken!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			if(!machine.set_broken(src.holder.owner))
+				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
+				machine.visible_message(SPAN_ALERT("[machine] sparks as [src.holder.owner] strikes it!"))
+				machine.add_fingerprint(src.holder.owner)
+			else
+				boutput(src.holder.owner, SPAN_ALERT("[machine] can't be broken!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		else
 			return TRUE
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
