@@ -30,11 +30,11 @@
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
 	icon_state = "fermid"
 	icon_state_dead = "fermid-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "clacks"
-	speechverb_ask = "chitters"
-	speechverb_gasp = "rattles"
-	speechverb_stammer = "click-clacks"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "clacks"
+	speech_verb_ask = "chitters"
+	speech_verb_gasp = "rattles"
+	speech_verb_stammer = "click-clacks"
 	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE

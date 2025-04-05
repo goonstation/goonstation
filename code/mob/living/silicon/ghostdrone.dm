@@ -1,12 +1,23 @@
 #define DRONE_LUM 2
 
+TYPEINFO(/mob/living/silicon/ghostdrone)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT)
+
 /mob/living/silicon/ghostdrone
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "drone-dead"
 
 	max_health = 25 //weak as fuk
 	density = 0 //no bumping into people, basically
-	robot_talk_understand = 0 //we arent proper robots
+
+	speech_verb_say = list("beeps", "boops", "buzzes", "bloops", "transmits")
+	speech_verb_ask = null
+	speech_verb_exclaim = null
+	default_speech_output_channel = SAY_CHANNEL_GHOSTDRONE
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	flags = NODRIFT | TABLEPASS | DOORPASS
@@ -894,104 +905,8 @@
 
 		return
 
-	/*
-	//No hearing any other talk ok
-	say_understands(mob/other, forced_language)
-		if (isghostdrone(other))
-			return 1
-		else
-			return 0
-	*/
-
-	say_quote(message)
-		var/speechverb = pick("beeps", "boops", "buzzes", "bloops", "transmits")
-		return "[speechverb], \"[message]\""
-
 	proc/nohear_message()
 		return pick("beeps", "boops", "warbles incomprehensibly", "beeps sadly", "beeeeeeeeeps")
-
-	proc/drone_talk(message)
-		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='ghostdronesay'>"
-		rendered += "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> "
-		rendered += SPAN_MESSAGE("[message]")
-		rendered += "</span>"
-
-		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
-
-		for (var/client/C)
-			if (!C.mob) continue
-			if (istype(C.mob, /mob/new_player))
-				continue
-			var/mob/M = C.mob
-
-			if (((M in hearers(src)) || M.client.holder))
-				var/thisR = rendered
-				if (isghostdrone(M) || M.client.holder)
-					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-				else
-					thisR = nohear
-
-				M.show_message(thisR, 2)
-
-	proc/drone_broadcast(message)
-		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='ghostdronesay broadcast'>"
-		rendered += "[SPAN_PREFIX("DRONE:")] "
-		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.name]</span> "
-		rendered += SPAN_MESSAGE("[message]")
-		rendered += "</span>"
-
-		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
-
-		for (var/client/C)
-			if (!C.mob) continue
-			if (istype(C.mob, /mob/new_player))
-				continue
-			var/mob/M = C.mob
-
-			var/thisR = rendered
-			if (isghostdrone(M) || M.client.holder)
-				if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-				M.show_message(thisR, 2)
-			else if (M in hearers(src))
-				thisR = nohear
-				M.show_message(thisR, 2)
-
-	say(message = "")
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (!message)
-			return
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-		if (dd_hasprefix(message, ";"))
-			message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
-			return src.say_dead(message)
-
-		// emotes
-		if (dd_hasprefix(message, "*"))
-			return src.emote(copytext(message, 2),1)
-
-		return src.drone_broadcast(message)
-		// Removing normal dronesay stuff and changing :d to just ;
-		// Not much of a reason for drones to have local say imo.
-		// Discord seemed receptive to the changes
-		/*
-		var/broadcast = 0
-		if (length(message) >= 2)
-			if (dd_hasprefix(message, ";"))
-				message = trimtext(copytext(message, 2, MAX_MESSAGE_LEN))
-				broadcast = 1
-		if (broadcast)
-			return src.drone_broadcast(message)
-		else
-			return src.drone_talk(message)
-		*/
 
 	proc/show_laws_drone() //A new proc because it's handled very differently from normal laws
 		var/laws = {"<span class='bold' class='notice'>Your laws:<br>
@@ -1265,8 +1180,11 @@
 
 // Dumb gimmick ghostdrone with no vis/hear restrictions + construction tools.
 // Same laws, same crap HP, but more useful for just buildin' shit
+TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_SILICONCHAT)
+	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_SILICONCHAT)
+
 /mob/living/silicon/ghostdrone/deluxe
-	robot_talk_understand = 1
 	sees_static = FALSE
 
 	New()
@@ -1299,6 +1217,3 @@
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
-
-	say_understands(mob/other, forced_language)
-		return 1
