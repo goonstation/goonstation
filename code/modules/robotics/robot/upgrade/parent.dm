@@ -20,6 +20,8 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	var/removable = 1
 	/// Used for cyborg update_appearance proc
 	var/borg_overlay = null
+	/// alpha value of the borg overlay
+	var/borg_overlay_alpha = 255
 
 /obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user)
 	if (!user)
