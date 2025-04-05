@@ -12,6 +12,14 @@
 	animate(A, alpha = 0, transform = A.transform.Scale(2, 2), time = 10, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	animate(transform = M)
 
+/proc/animate_buff_out_time(atom/A, time=10)
+	var/matrix/M1 = matrix()
+	var/matrix/M2 = matrix()
+	M2.Scale(1.3,1.3)
+	A.transform = M1
+	A.alpha = 255
+	animate(A, alpha = 0,  transform = M2, time = time, easing = CUBIC_EASING | EASE_IN)
+
 /proc/animate_angry_wibble(atom/A)
 	var/matrix/M = matrix(A.transform)
 	animate(A, transform = A.transform.Scale(0.8), time = 1, easing = ELASTIC_EASING, loop = -1)
