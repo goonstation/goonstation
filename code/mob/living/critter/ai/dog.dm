@@ -5,7 +5,7 @@
 
 /datum/aiTask/prioritizer/critter/dog/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/floor_only, list(holder, src))
 
 // Go fetch!
 /datum/aiTask/sequence/goalbased/critter/dog/fetch
