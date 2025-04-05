@@ -329,6 +329,7 @@
 /area/space)
 "LB" = (
 /obj/machinery/light/small/floor/warm,
+/obj/hearing_connector/target/nanotrasen,
 /turf/unsimulated/floor/blue,
 /area/space)
 "NA" = (
