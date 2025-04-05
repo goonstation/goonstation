@@ -842,6 +842,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	partlistPart = "legL-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
@@ -880,6 +881,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	partlistPart = "legR-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
