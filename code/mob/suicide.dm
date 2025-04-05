@@ -19,7 +19,7 @@
 
 /mob/verb/suicide()
 
-	if ((!isliving(src) || isdead(src)) && !isAIeye(src) && !istype(src, /mob/zoldorf))
+	if ((!isliving(src) || isdead(src)) && !isAIeye(src))
 		boutput(src, SPAN_ALERT("You're already dead!"))
 		return
 
