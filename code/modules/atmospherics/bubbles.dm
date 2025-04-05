@@ -29,7 +29,7 @@
 		src.air_contents.volume = 500
 		src.appearance_flags |= KEEP_TOGETHER
 		src.update_graphics()
-		animate_bumble(src) //maybe a little busy? Idk let's try it, since we can't really do sprite animations
+		animate_bumble(src) //maybe a little busy? Idk let's try it, since we can't really do sprite animations due to alpha masking
 		if (isnull(src.lifetime))
 			src.lifetime = (6 * src.scale)**2
 			src.lifetime = clamp(lifetime, 2, 30) * rand(9, 11) //0.9 - 1.1 * SECONDS
@@ -72,9 +72,12 @@
 	pull(mob/user) //no pull
 		return TRUE
 
+	//I know this doesn't exactly make sense because we're underwater
+	//but making them look convincingly like they're rising to the surface is really really hard
+	//also I like popping bubbles :)
 	proc/pop()
 		if (src.scale > 0.5)
-			src.visible_message(SPAN_ALERT("[src] bursts into smaller bubbles!"))
+			src.visible_message(SPAN_ALERT("[src] bursts and dissipates into the water!"))
 			playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
 		bubbles.Scale(src.scale, src.scale)
@@ -127,7 +130,7 @@
 /obj/bubble/current
 	lifetime = 2 MINUTES
 
-/obj/effects/bubbles
+/obj/effects/bubbles //for when they're "popped"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "bubbles_rising"
 	alpha = 200
