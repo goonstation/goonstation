@@ -47,33 +47,6 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
-	///List of buttons used in chest organ surgery
-	var/list/datum/contextAction/contexts = list()
-	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
-	///List of buttons used in back surgery (tail/butt)
-	var/list/datum/contextAction/back_contexts = list()
-
-	//List of buttons used to open specific regions of the person
-	var/list/datum/contextAction/rib_contexts = null
-	var/list/datum/contextAction/abdomen_contexts = null
-	var/list/datum/contextAction/flanks_contexts = null
-	var/list/datum/contextAction/subcostal_contexts = null
-
-	//List of buttons showing all the organs inside a region
-	var/list/datum/contextAction/inside_ribs_contexts = null
-	var/list/datum/contextAction/inside_abdomen_contexts = null
-	var/list/datum/contextAction/inside_flanks_contexts = null
-	var/list/datum/contextAction/inside_subcostal_contexts = null
-	///How cut up is our back for surgery purposes
-	var/back_op_stage = BACK_SURGERY_CLOSED
-	///How cut up are our ribs?
-	var/ribs_stage = REGION_CLOSED
-	///How cut up is our subcostal region?
-	var/subcostal_stage = REGION_CLOSED
-	///How cut up is our abdominal region?
-	var/abdominal_stage = REGION_CLOSED
-	///How cut up are our flanks?
-	var/flanks_stage = REGION_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -84,45 +57,45 @@
 		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
 
-	proc/build_region_buttons()
+	// proc/build_region_buttons()
 
-		if (!src.chest)	//Can't do surgery without a chest to operate on
-			return null
-		src.contexts = list()
+	// 	if (!src.chest)	//Can't do surgery without a chest to operate on
+	// 		return null
+	// 	src.contexts = list()
 
-		//begin by adding regions
-		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
-		src.contexts += ribs_action
-		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
-		src.contexts += subcostal_action
-		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
-		src.contexts += abdomen_action
-		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
-		src.contexts += flanks_action
+	// 	//begin by adding regions
+	// 	var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
+	// 	src.contexts += ribs_action
+	// 	var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
+	// 	src.contexts += subcostal_action
+	// 	var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
+	// 	src.contexts += abdomen_action
+	// 	var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
+	// 	src.contexts += flanks_action
 
-		//possible parasite removal surgery
-		if (length(donor.ailments) > 0)
-			for (var/datum/ailment_data/an_ailment in donor.ailments)
-				if (an_ailment.cure_flags & CURE_SURGERY)
-					var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
-					src.contexts += parasite_action
-					break
+	// 	//possible parasite removal surgery
+	// 	if (length(donor.ailments) > 0)
+	// 		for (var/datum/ailment_data/an_ailment in donor.ailments)
+	// 			if (an_ailment.cure_flags & CURE_SURGERY)
+	// 				var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
+	// 				src.contexts += parasite_action
+	// 				break
 
-		//possible chest item removal surgery
-		if (ishuman(src.donor))
-			var/mob/living/carbon/human/H = src.donor
-			if (H.chest_item)
-				var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
-				src.contexts += item_action
+	// 	//possible chest item removal surgery
+	// 	if (ishuman(src.donor))
+	// 		var/mob/living/carbon/human/H = src.donor
+	// 		if (H.chest_item)
+	// 			var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
+	// 			src.contexts += item_action
 
-		for (var/obj/item/implant/I in donor.implant)
-			if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
-				var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
-				src.contexts += implant_action
-				break
+	// 	for (var/obj/item/implant/I in donor.implant)
+	// 		if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
+	// 			var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
+	// 			src.contexts += implant_action
+	// 			break
 
-		return length(src.contexts)
-
+	// 	return length(src.contexts)
+/*
 	proc/close_surgery_regions()
 		src.rib_contexts = null
 		src.abdomen_contexts = null
@@ -308,7 +281,7 @@
 				src.inside_flanks_contexts += action
 
 		.+= length(inside_flanks_contexts)
-
+*/
 	disposing()
 		src.organ_list.len = 0
 		src.organ_list = null
@@ -394,13 +367,6 @@
 		tail = null
 
 		donor = null
-
-		if (src.contexts)
-			for(var/datum/contextAction/C in src.contexts)
-				C.dispose()
-		if (src.back_contexts)
-			for(var/datum/contextAction/C in src.contexts)
-				C.dispose()
 
 		..()
 
@@ -582,7 +548,6 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.back_op_stage = BACK_SURGERY_CLOSED
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -1031,7 +996,7 @@
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
-	proc/receive_organ(var/obj/item/I, var/organ, var/op_stage = 0.0, var/force = 0)
+	proc/receive_organ(var/obj/item/I, var/organ, var/force = 0)
 		if (!src.donor || !I || !organ)
 			return 0
 
@@ -1049,26 +1014,26 @@
 				if (src.brain && newHead.brain)
 					boutput(usr, SPAN_ALERT("[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it."))
 					return FALSE
-				newHead.op_stage = op_stage
+				//newHead.op_stage = op_stage
 				src.head = newHead
 				newHead.set_loc(src.donor)
 				newHead.holder = src
 				if (newHead.skull)
 					if (src.skull) // how
 						src.drop_organ("skull") // I mean really, how
-					src.receive_organ(newHead.skull, "skull", newHead.skull.op_stage)
+					src.receive_organ(newHead.skull, "skull")
 				if (newHead.brain)
 					if (src.brain) // ???
 						src.drop_organ("brain") // god idfk
-					src.receive_organ(newHead.brain, "brain", newHead.brain.op_stage)
+					src.receive_organ(newHead.brain, "brain")
 				if (newHead.right_eye)
 					if (src.right_eye)
 						src.drop_organ("right_eye")
-					src.receive_organ(newHead.right_eye, "right_eye", newHead.right_eye.op_stage)
+					src.receive_organ(newHead.right_eye, "right_eye")
 				if (newHead.left_eye)
 					if (src.left_eye)
 						src.drop_organ("left_eye")
-					src.receive_organ(newHead.left_eye, "left_eye", newHead.left_eye.op_stage)
+					src.receive_organ(newHead.left_eye, "left_eye")
 				if (ishuman(src.donor))
 					var/mob/living/carbon/human/H = src.donor
 					if (newHead.glasses)
@@ -1123,7 +1088,6 @@
 				if (!src.head)
 					return 0
 				var/obj/item/skull/newSkull = I
-				newSkull.op_stage = op_stage
 				src.skull = newSkull
 				src.head.skull = newSkull
 				newSkull.set_loc(src.donor)
@@ -1152,7 +1116,7 @@
 						else
 							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
 							G.mind?.transfer_to(src.donor)
-				newBrain.op_stage = op_stage
+				//newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
 
@@ -1182,7 +1146,7 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/eye/newLeftEye = I
-				newLeftEye.op_stage = op_stage
+				//newLeftEye.op_stage = op_stage
 				src.left_eye = newLeftEye
 				src.head.left_eye = newLeftEye
 				newLeftEye.body_side = L_ORGAN
@@ -1200,7 +1164,7 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/eye/newRightEye = I
-				newRightEye.op_stage = op_stage
+				//newRightEye.op_stage = op_stage
 				src.right_eye = newRightEye
 				src.head.right_eye = newRightEye
 				newRightEye.body_side = R_ORGAN
@@ -1216,7 +1180,7 @@
 					else
 						return 0
 				var/obj/item/organ/chest/newChest = I
-				newChest.op_stage = op_stage
+				//newChest.op_stage = op_stage
 				src.chest = newChest
 				newChest.set_loc(src.donor)
 				newChest.holder = src
@@ -1243,7 +1207,7 @@
 					// else
 					// 	APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 10)
 					// 	src.donor.add_stam_mod_max("heart", 50)
-				newHeart.op_stage = op_stage
+			//	newHeart.op_stage = op_stage
 				src.heart = newHeart
 				newHeart.set_loc(src.donor)
 				newHeart.holder = src
@@ -1257,7 +1221,7 @@
 					else
 						return 0
 				var/obj/item/organ/lung/newLeftLung = I
-				newLeftLung.op_stage = op_stage
+				//newLeftLung.op_stage = op_stage
 				src.left_lung = newLeftLung
 				newLeftLung.body_side = L_ORGAN
 				newLeftLung.set_loc(src.donor)
@@ -1273,7 +1237,7 @@
 					else
 						return 0
 				var/obj/item/organ/lung/newRightLung = I
-				newRightLung.op_stage = op_stage
+				//newRightLung.op_stage = op_stage
 				src.right_lung = newRightLung
 				newRightLung.body_side = R_ORGAN
 				newRightLung.set_loc(src.donor)
@@ -1289,12 +1253,12 @@
 					else
 						return 0
 				var/obj/item/clothing/head/butt/newButt = I
-				newButt.op_stage = op_stage
+				//newButt.op_stage = op_stage
 				src.butt = newButt
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				src.back_op_stage = op_stage
+				//src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1304,7 +1268,7 @@
 					else
 						return 0
 				var/obj/item/organ/kidney/left/newleft_kidney = I
-				newleft_kidney.op_stage = op_stage
+				//newleft_kidney.op_stage = op_stage
 				src.left_kidney = newleft_kidney
 				newleft_kidney.set_loc(src.donor)
 				newleft_kidney.holder = src
@@ -1318,7 +1282,7 @@
 					else
 						return 0
 				var/obj/item/organ/kidney/right/newright_kidney = I
-				newright_kidney.op_stage = op_stage
+				//newright_kidney.op_stage = op_stage
 				src.right_kidney = newright_kidney
 				newright_kidney.set_loc(src.donor)
 				newright_kidney.holder = src
@@ -1332,7 +1296,7 @@
 					else
 						return 0
 				var/obj/item/organ/liver/newliver = I
-				newliver.op_stage = op_stage
+				//newliver.op_stage = op_stage
 				src.liver = newliver
 				newliver.set_loc(src.donor)
 				newliver.holder = src
@@ -1346,7 +1310,7 @@
 					else
 						return 0
 				var/obj/item/organ/stomach/newstomach = I
-				newstomach.op_stage = op_stage
+				//newstomach.op_stage = op_stage
 				src.stomach = newstomach
 				newstomach.set_loc(src.donor)
 				newstomach.holder = src
@@ -1360,7 +1324,7 @@
 					else
 						return 0
 				var/obj/item/organ/intestines/newintestines = I
-				newintestines.op_stage = op_stage
+				//newintestines.op_stage = op_stage
 				src.intestines = newintestines
 				newintestines.set_loc(src.donor)
 				newintestines.holder = src
@@ -1374,7 +1338,7 @@
 					else
 						return 0
 				var/obj/item/organ/spleen/newspleen = I
-				newspleen.op_stage = op_stage
+				//newspleen.op_stage = op_stage
 				src.spleen = newspleen
 				newspleen.set_loc(src.donor)
 				newspleen.holder = src
@@ -1388,7 +1352,7 @@
 					else
 						return 0
 				var/obj/item/organ/pancreas/newpancreas = I
-				newpancreas.op_stage = op_stage
+				//newpancreas.op_stage = op_stage
 				src.pancreas = newpancreas
 				newpancreas.set_loc(src.donor)
 				newpancreas.holder = src
@@ -1402,7 +1366,7 @@
 					else
 						return 0
 				var/obj/item/organ/appendix/newappendix = I
-				newappendix.op_stage = op_stage
+				//newappendix.op_stage = op_stage
 				src.appendix = newappendix
 				newappendix.set_loc(src.donor)
 				newappendix.holder = src
@@ -1416,7 +1380,7 @@
 					else
 						return 0
 				var/obj/item/organ/tail/newtail = I
-				newtail.op_stage = op_stage
+				//newtail.op_stage = op_stage
 				src.tail = newtail
 				newtail.set_loc(src.donor)
 				newtail.holder = src

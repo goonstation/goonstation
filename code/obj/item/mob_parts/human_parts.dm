@@ -40,27 +40,6 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!ismob(target))
-			return
-
-		src.add_fingerprint(user)
-
-		if(user.zone_sel.selecting != slot || !ishuman(target))
-			return ..()
-		if (!src.easy_attach)
-			if (!surgeryCheck(target,user))
-				return ..()
-
-		var/mob/living/carbon/human/H = target
-
-		if(H.limbs.vars[src.slot])
-			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
-			return
-
-		attach(H,user)
-
-		return
 
 	New(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
 		..()
@@ -120,49 +99,7 @@
 		. = ..()
 		src.set_skin_tone()
 
-	surgery(var/obj/item/tool)
-		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
-			remove_stage = 0
 
-		else if(remove_stage == 0 || remove_stage == 2)
-			if(istool(tool, TOOL_CUTTING))
-				remove_stage++
-			else
-				return 0
-
-		else if(remove_stage == 1)
-			if(istool(tool, TOOL_SAWING))
-				remove_stage++
-			else
-				return 0
-
-		if(!isdead(holder)) //This goes up here 'cuz removing limbs nulls holder
-			if(prob(40))
-				holder.emote("scream")
-		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
-
-		switch(remove_stage)
-			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", SPAN_ALERT("You attach [holder.name]'s [src.name] securely with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
-				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
-			if(1)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the skin and flesh of [holder.name]'s [src.name] with [tool]."))
-			if(2)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the bone of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the bone of [holder.name]'s [src.name] with [tool]."))
-
-				SPAWN(rand(150,200))
-					if(remove_stage == 2)
-						src.remove(0)
-			if(3)
-				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool]."))
-				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
-				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
-				src.remove(0)
-
-
-		return 1
 
 	remove(var/show_message = 1)
 		if ((isnull(src.original_DNA) || isnull(src.original_fprints)) && ismob(src.original_holder))

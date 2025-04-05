@@ -28,9 +28,9 @@
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (is_special || !pry_surgery(target, user))
-			return ..()
+	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	// 	if (is_special || !pry_surgery(target, user))
+	// 		return ..()
 
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
