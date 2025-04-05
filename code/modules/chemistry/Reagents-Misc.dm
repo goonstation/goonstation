@@ -1697,6 +1697,8 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
@@ -1708,6 +1710,8 @@ datum
 				random_brute_damage(M, 4)
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()
