@@ -143,6 +143,8 @@
 		qdel(src)
 
 /obj/bubble_vent //sus
+	name = "gas vent"
+	desc = "A presumably natural rock formation belching bubbles of gas from deep below."
 	icon = 'icons/obj/nadir_seaobj.dmi'
 	icon_state = "bitelung"
 #define _DEFINE_GAS(GAS, ...) var/GAS = FALSE;
@@ -182,3 +184,16 @@
 
 /obj/bubble_vent/oxygen
 	oxygen = TRUE
+	New()
+		. = ..()
+		if (prob(25))
+			src.oxygen_agent_b = TRUE
+
+/obj/bubble_vent/oxygen_b
+	oxygen_agent_b = TRUE
+
+/obj/bubble_vent/methane
+	farts = TRUE
+
+/obj/bubble_vent/sleepy
+	nitrous_oxide = TRUE
