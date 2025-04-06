@@ -46,7 +46,6 @@
 	name = "revolver box"
 	icon_state = "hard_case"
 	desc = "A box containing a syndicate revolver and ammo."
-	// cogwerks - i think the ammo boxes are dumb, giving the starting box more ammo
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,\
 	/obj/item/ammo/bullets/a357 = 3,\
 	/obj/item/ammo/bullets/a357/AP = 2)
@@ -64,7 +63,6 @@
 	name = "AKM box"
 	icon_state = "hard_case"
 	desc = "A box containing a surplus AKM and 3 magazines."
-	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/akm,\
 	/obj/item/ammo/bullets/akm = 2)
 
@@ -72,9 +70,17 @@
 	name = "suppressed pistol box"
 	icon_state = "hard_case"
 	desc = "A box containing a sneaky pistol and some ammo."
-	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
 	/obj/item/ammo/bullets/bullet_22HP = 3)
+
+/obj/item/storage/box/capella
+	name = "competition pistol box"
+	icon_state = "hard_case"
+	color = "red"
+	slots = 3
+	desc = "A box containing an extremely accurate sport pistol and some match-grade ammo."
+	spawn_contents = list(/obj/item/gun/kinetic/capella,\
+	/obj/item/ammo/bullets/bullet_22match = 2)
 
 /obj/item/storage/box/derringer
 	name = "derringer box"
@@ -115,6 +121,17 @@
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
 
+/obj/item/storage/box/hunting_rifle
+	name = "rifle case"
+	icon_state = "hard_case"
+	desc = "A box containing an old hunting rifle and some ammo."
+	slots = 3
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/hunting_rifle,\
+	/obj/item/ammo/bullets/rifle_3006)
+	spawn_contents = list(/obj/item/gun/kinetic/hunting_rifle,\
+	/obj/item/ammo/bullets/rifle_3006 = 2)
+
 /obj/item/storage/box/missile_launcher
 	name = "pod-targeting missile launcher box"
 	icon_state = "hard_case"
@@ -126,11 +143,35 @@
 	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
 	/obj/item/ammo/bullets/pod_seeking_missile = 4)
 
+/obj/item/storage/box/alphard
+	name = "antimateriel cannon box"
+	icon_state = "hard_case"
+	color = "red"
+	desc = "A box containing a collapsible recoiling cannon and some 20mm ammo."
+	slots = 3
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/cannon,\
+	/obj/item/ammo/bullets/cannon)
+	spawn_contents = list(/obj/item/gun/kinetic/cannon,\
+	/obj/item/ammo/bullets/cannon = 2)
+
+/obj/item/storage/box/antiair
+	name = "anti-air rifle box"
+	icon_state = "hard_case"
+	color = "red"
+	desc = "A box containing a massive antiair rifle and some .50 frag ammo."
+	slots = 3
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/antiair,\
+	/obj/item/ammo/bullets/antiair)
+	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
+	/obj/item/ammo/bullets/antiair = 2)
+
 /* -------------------- Grenades -------------------- */
 
 /obj/item/storage/box/flashbang_kit
 	name = "flashbang box"
-	desc = "<span class='alert'><B>WARNING: Do not use without reading these preautions!</B></span><br><B>These devices are extremely dangerous and can cause blindness or deafness if used incorrectly.</B><br>The chemicals contained in these devices have been tuned for maximal effectiveness and due to<br>extreme safety precuaiotn shave been incased in a tamper-proof pack. DO NOT ATTEMPT TO OPEN<br>FLASH WARNING: Do not use continually. Excercise extreme care when detonating in closed spaces.<br>&emsp;Make attemtps not to detonate withing range of 2 meters of the intended target. It is imperative<br>&emsp;that the targets visit a medical professional after usage. Damage to eyes increases extremely per<br>&emsp;use and according to range. Glasses with flash resistant filters DO NOT always work on high powered<br>&emsp;flash devices such as this. <B>EXERCISE CAUTION REGARDLESS OF CIRCUMSTANCES</B><br>SOUND WARNING: Do not use continually. Visit a medical professional if hearing is lost.<br>&emsp;There is a slight chance per use of complete deafness. Exercise caution and restraint.<br>STUN WARNING: If the intended or unintended target is too close to detonation the resulting sound<br>&emsp;and flash have been known to cause extreme sensory overload resulting in temporary<br>&emsp;incapacitation.<br><B>DO NOT USE CONTINUALLY</B><br>Operating Directions:<br>&emsp;1. Pull detonnation pin. <B>ONCE THE PIN IS PULLED THE GRENADE CAN NOT BE DISARMED!</B><br>&emsp;2. Throw grenade. <B>NEVER HOLD A LIVE FLASHBANG</B><br>&emsp;3. The grenade will detonste 10 seconds hafter being primed. <B>EXCERCISE CAUTION</B><br>&emsp;-<B>Never prime another grenade until after the first is detonated</B><br>Note: Usage of this pyrotechnic device without authorization is an extreme offense and can<br>result in severe punishment upwards of <B>10 years in prison per use</B>.<br><br>Default 3 second wait till from prime to detonation. This can be switched with a screwdriver<br>to 10 seconds.<br><br>Copyright of Nanotrasen Industries- Military Armnaments Division<br>This device was created by Nanotrasen Labs a member of the Expert Advisor Corporation"
+	desc = "<span class='alert'><B>WARNING: Do not use without reading these precautions!</B></span><br><B>These devices are extremely dangerous and can cause blindness or deafness if used incorrectly.</B><br>The chemicals contained in these devices have been tuned for maximal effectiveness and due to<br>extreme safety precuaiotn shave been incased in a tamper-proof pack. DO NOT ATTEMPT TO OPEN<br>FLASH WARNING: Do not use continually. Excercise extreme care when detonating in closed spaces.<br>&emsp;Make attemtps not to detonate withing range of 2 meters of the intended target. It is imperative<br>&emsp;that the targets visit a medical professional after usage. Damage to eyes increases extremely per<br>&emsp;use and according to range. Glasses with flash resistant filters DO NOT always work on high powered<br>&emsp;flash devices such as this. <B>EXERCISE CAUTION REGARDLESS OF CIRCUMSTANCES</B><br>SOUND WARNING: Do not use continually. Visit a medical professional if hearing is lost.<br>&emsp;There is a slight chance per use of complete deafness. Exercise caution and restraint.<br>STUN WARNING: If the intended or unintended target is too close to detonation the resulting sound<br>&emsp;and flash have been known to cause extreme sensory overload resulting in temporary<br>&emsp;incapacitation.<br><B>DO NOT USE CONTINUALLY</B><br>Operating Directions:<br>&emsp;1. Pull detonnation pin. <B>ONCE THE PIN IS PULLED THE GRENADE CAN NOT BE DISARMED!</B><br>&emsp;2. Throw grenade. <B>NEVER HOLD A LIVE FLASHBANG</B><br>&emsp;3. The grenade will detonste 10 seconds hafter being primed. <B>EXCERCISE CAUTION</B><br>&emsp;-<B>Never prime another grenade until after the first is detonated</B><br>Note: Usage of this pyrotechnic device without authorization is an extreme offense and can<br>result in severe punishment upwards of <B>10 years in prison per use</B>.<br><br>Default 3 second wait till from prime to detonation. This can be switched with a screwdriver<br>to 10 seconds.<br><br>Copyright of Nanotrasen Industries- Military Armnaments Division<br>This device was created by Nanotrasen Labs a member of the Expert Advisor Corporation"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/flashbang = 7)
 

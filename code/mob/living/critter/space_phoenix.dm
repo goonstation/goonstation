@@ -51,18 +51,7 @@
 
 		QDEL_NULL(src.organHolder)
 
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/sail)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/thermal_shock)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/ice_barrier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/glacier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/wind_chill)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/touch_of_death)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/permafrost)
-
 		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
-		src.setStatus("phoenix_mobs_collected", INFINITE_STATUS)
-
-		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_mob(src)
 
 	Life()
 		. = ..()
@@ -289,7 +278,7 @@
 		if (A.permafrosted || !istype(A, /area/station))
 			return FALSE
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless))
+		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless) || istype(T, /turf/simulated/space_phoenix_ice_tunnel))
 			return FALSE
 
 /image/phoenix_temperature_indicator
@@ -486,6 +475,7 @@
 	proc/atom_entered(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
@@ -497,9 +487,7 @@
 						src.owning_phoenix.setStatus("phoenix_revive_ready", INFINITE_STATUS)
 				if (!(H in src.entered_humans))
 					src.entered_humans += H
-					var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-					counter.humans_collected++
-					counter.onUpdate()
+					ability_holder.stored_human_count++
 					src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_humans |= "[H.real_name]-\ref[H]"
 				H.setStatus("cold_snap", INFINITE_STATUS)
@@ -509,16 +497,16 @@
 				C.setStatus("in_phoenix_nest", INFINITE_STATUS)
 			else if (!(C in src.entered_critters) && !C.last_ckey)
 				src.entered_critters += C
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.critters_collected++
-				counter.onUpdate()
+				ability_holder.stored_critter_count++
 				src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_critters |= "[C.real_name]-\ref[C]"
 				C.setStatus("cold_snap", INFINITE_STATUS)
+		ability_holder.updateText(FALSE)
 
 	proc/atom_exited(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
@@ -526,9 +514,7 @@
 			if (H in src.entered_humans)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_humans -= H
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.humans_collected--
-				counter.onUpdate()
+				ability_holder.stored_human_count--
 				H.delStatus("cold_snap")
 		else if (istype(AM, /mob/living/critter))
 			var/mob/living/critter/C = AM
@@ -537,7 +523,7 @@
 			if (C in src.entered_critters)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_critters -= C
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.critters_collected--
-				counter.onUpdate()
+				ability_holder.stored_critter_count--
 				C.delStatus("cold_snap")
+
+		ability_holder.updateText(FALSE)

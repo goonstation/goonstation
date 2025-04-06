@@ -1081,6 +1081,19 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/station/bridge)
+"aiM" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor,
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Heat Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "aiV" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -8413,15 +8426,6 @@
 "bmX" = (
 /turf/simulated/floor/grime,
 /area/station/science/artifact)
-"bnb" = (
-/obj/machinery/atmospherics/binary/pump/active{
-	frequency = 1229;
-	id = "Chamber Inlet";
-	name = "chamber inlet pump";
-	target_pressure = 1000
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "bnd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
@@ -10390,18 +10394,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market)
-"bAq" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/conveyor/NS{
-	id = "cargobelt_in";
-	operating = 1
-	},
-/obj/landmark/supply_delivery,
-/turf/space,
-/area/station/quartermaster/office)
 "bAx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13409,13 +13401,6 @@
 	dir = 2
 	},
 /area/station/crew_quarters/cafeteria)
-"cYF" = (
-/obj/machinery/conveyor/NS{
-	id = "cargobelt_in";
-	operating = 1
-	},
-/turf/space,
-/area/station/quartermaster/office)
 "cZA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14040,21 +14025,6 @@
 "dBj" = (
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/barber_shop)
-"dBQ" = (
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "dBR" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16686,21 +16656,6 @@
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"fCF" = (
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 1;
-	frequency = 1229;
-	id = "Chamber Outlet";
-	name = "chamber outlet pump";
-	target_pressure = 1000
-	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "tox_ignition1";
-	name = "Chamber Ignition Switch";
-	pixel_x = 24
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "fCY" = (
 /obj/machinery/alarm{
 	pixel_y = 23
@@ -17162,6 +17117,18 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"fTv" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/conveyor/NS{
+	id = "cargobelt_in";
+	operating = 1
+	},
+/obj/landmark/supply_delivery,
+/turf/space,
+/area/station/quartermaster/office)
 "fTw" = (
 /obj/machinery/light,
 /obj/table/wood/auto,
@@ -22188,19 +22155,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"jvN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "jvR" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -27029,6 +26983,13 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/crew_quarters/market)
+"mXP" = (
+/obj/machinery/conveyor/NS{
+	id = "cargobelt_in";
+	operating = 1
+	},
+/turf/space,
+/area/station/quartermaster/office)
 "mXT" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -30330,6 +30291,21 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"pwj" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1;
+	frequency = 1229;
+	id = "Chamber Outlet";
+	name = "chamber outlet pump";
+	target_pressure = 1000
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition1";
+	name = "Chamber Ignition Switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
 "pwy" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/redblack{
@@ -30694,6 +30670,15 @@
 	dir = 6
 	},
 /area/station/crew_quarters/cafeteria)
+"pJF" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	frequency = 1229;
+	id = "Chamber Inlet";
+	name = "chamber inlet pump";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/blue,
+/area/station/science/lab)
 "pJP" = (
 /obj/surgery_tray,
 /obj/item/bandage,
@@ -35066,6 +35051,21 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"sTe" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	density = 0;
+	icon_state = "bdoorsingle0";
+	id = "tox_hs_one";
+	layer = 4;
+	name = "Heat Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "sTE" = (
 /obj/storage/crate,
 /obj/item/clothing/glasses/vr/arcade,
@@ -38574,19 +38574,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"vhL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "vhP" = (
 /obj/table/auto,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -84244,9 +84231,9 @@ aaa
 aaa
 aaa
 aaa
-cYF
-cYF
-bAq
+mXP
+mXP
+fTv
 aau
 nRL
 sQn
@@ -93386,8 +93373,8 @@ xja
 aqr
 bId
 blM
-bnb
-vhL
+pJF
+aiM
 kSL
 bqB
 brN
@@ -93689,7 +93676,7 @@ ilc
 igh
 igh
 igh
-dBQ
+sTe
 vKu
 bpz
 brO
@@ -93990,8 +93977,8 @@ pBV
 bju
 cMs
 iPP
-fCF
-jvN
+pwj
+aiM
 bpA
 bqC
 brP

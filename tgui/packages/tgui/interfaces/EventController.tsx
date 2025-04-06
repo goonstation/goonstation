@@ -192,7 +192,9 @@ const Event = (props: EventData) => {
       <Stack.Item>
         <Button
           icon="gun"
-          tooltip="Fire Event"
+          tooltip={
+            props.customizable ? 'Fire Customizable Event' : 'Fire Event'
+          }
           color={props.customizable ? 'green' : 'blue'}
           onClick={() =>
             act('trigger_event', {

@@ -297,6 +297,16 @@
 	get_desc()
 		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		. = ..()
+		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
+			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
+				//shoot in a truly random direction
+				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
+				if (prob(30) && src.use(1)) //small chance to do two per tick
+					sleep(0.3 SECONDS)
+					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
+
 //no caliber:
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
@@ -781,6 +791,16 @@
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
 
+//0.50
+/obj/item/ammo/bullets/antiair
+	sname = ".50 BMG frag"
+	name = ".50 BMG fragmenting rounds"
+	desc = "Extremely powerful rounds with a fragmenting HE core."
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/antiair
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_DEAGLE
+
 //0.58
 /obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
@@ -972,10 +992,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 //0.787
 /obj/item/ammo/bullets/cannon
-	sname = "20mm APHE"
-	name = "20mm APHE shells"
-	amount_left = 5
-	max_amount = 5
+	sname = "20mm AP"
+	name = "20mm AP shells"
+	amount_left = 4
+	max_amount = 4
 	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM
@@ -987,6 +1007,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	single
 		amount_left = 1
 		max_amount = 1
+
+
 
 //1.0
 /obj/item/ammo/bullets/rod

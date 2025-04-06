@@ -264,7 +264,7 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = 1
-	req_access_txt = "2"
+	req_access = list(access_brig)
 	autoclose = FALSE //brig doors close only when the cell timer starts
 
 /obj/machinery/door/window/brigdoor/New()

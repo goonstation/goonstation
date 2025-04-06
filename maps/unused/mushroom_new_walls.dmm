@@ -3002,12 +3002,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"ard" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/turf/space,
-/area/station/quartermaster/office)
 "arg" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame{
@@ -4533,22 +4527,6 @@
 "azh" = (
 /turf/space,
 /area/supply/spawn_point)
-"azj" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/quartermaster/office)
-"azk" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/landmark/supply_delivery,
-/turf/space,
-/area/station/quartermaster/office)
 "azl" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -18618,6 +18596,13 @@
 	},
 /turf/space,
 /area/space)
+"gNN" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/landmark/supply_delivery,
+/turf/space,
+/area/station/quartermaster/office)
 "gNU" = (
 /obj/cable/blue{
 	icon_state = "2-4"
@@ -21389,6 +21374,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"jqY" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/quartermaster/office)
 "jrg" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -36100,10 +36094,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ugY" = (
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "uhh" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
@@ -39312,6 +39302,12 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"wNW" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/turf/space,
+/area/station/quartermaster/office)
 "wOk" = (
 /obj/table/wood/auto,
 /obj/mapping_helper/access/rancher,
@@ -77369,7 +77365,7 @@ aaa
 aaa
 aaa
 bqF
-ard
+wNW
 bqF
 aaa
 aaa
@@ -77671,7 +77667,7 @@ aaa
 aaa
 aaa
 bqE
-azj
+jqY
 anw
 aaa
 aaa
@@ -77973,7 +77969,7 @@ aaa
 aaa
 aaa
 bqF
-azk
+gNN
 bqF
 aaa
 aaa
@@ -97036,7 +97032,7 @@ beu
 ben
 aVD
 ben
-ugY
+ben
 ben
 jYD
 koJ
