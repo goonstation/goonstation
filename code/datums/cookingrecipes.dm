@@ -1,13 +1,6 @@
 ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
-	var/item1 = null
-	var/item2 = null
-	var/item3 = null
-	var/item4 = null
-	var/amt1 = 1
-	var/amt2 = 1
-	var/amt3 = 1
-	var/amt4 = 1
+	var/list/ingredients
 	var/cookbonus = null // how much cooking it needs to get a healing bonus
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
@@ -29,62 +22,68 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 
 /datum/cookingrecipe/oven/burger/humanburger
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/humanburger
 	useshumanmeat = 1
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/burger/fishburger
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/fishburger
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/burger/synthburger
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/synthburger
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/burger/slugburger
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/slugburger
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/spicychickensandwich_2
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/spicychickensandwich
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
-	item3 = /obj/item/reagent_containers/food/snacks/plant/chili
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
+	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/chickensandwich
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken
 	category = "Burgers"
-
 
 ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger
 	specialOutput(obj/submachine/ourCooker)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
-		var/obj/item/possibly_meat = locate(src.item2) in ourCooker
+		var/obj/item/possibly_meat = locate(ingredients[2]) in ourCooker
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
@@ -92,8 +91,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 		return new src.output()
 
 /datum/cookingrecipe/oven/burger/mysteryburger
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat = 1)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	category = "Burgers"
@@ -2264,3 +2264,4 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	item3 = /obj/item/reagent_containers/food/snacks/condiment/syrup //technically this should be GOLDEN syrup but this works too
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
+

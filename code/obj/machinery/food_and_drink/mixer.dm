@@ -36,7 +36,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes = list()
 
 		if (!src.recipes.len)
-			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
+/*			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
@@ -50,7 +50,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
 			src.recipes += new /datum/cookingrecipe/mixer/soysauce(src)
 			src.recipes += new /datum/cookingrecipe/mixer/gravy(src)
-
+*/
 		src.blender_off = image(src.icon, "blender_off")
 		src.blender_powered = image(src.icon, "blender_powered")
 		src.blender_working = image(src.icon, "blender_working")
@@ -194,22 +194,17 @@ TYPEINFO(/obj/machinery/mixer)
 
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
 		var/derivename = 0
-		for (var/datum/cookingrecipe/R in src.recipes)
-			to_remove.len = 0
-			if (R.item1)
-				if (!bowl_checkitem(R.item1, R.amt1)) continue
-			if (R.item2)
-				if (!bowl_checkitem(R.item2, R.amt2)) continue
-			if (R.item3)
-				if (!bowl_checkitem(R.item3, R.amt3)) continue
-			if (R.item4)
-				if (!bowl_checkitem(R.item4, R.amt4)) continue
-			output = R.specialOutput(src)
-			if (!output)
-				output = R.output
-			if (R.useshumanmeat)
-				derivename = 1
-			break
+		check_recipe:
+			for (var/datum/cookingrecipe/R in src.recipes)
+				to_remove.len = 0
+				for(var/I in R.ingredients)
+					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
+				output = R.specialOutput(src)
+				if (!output)
+					output = R.output
+				if (R.useshumanmeat)
+					derivename = 1
+				break
 
 		if (!isnull(output))
 			var/obj/item/reagent_containers/food/snacks/F
