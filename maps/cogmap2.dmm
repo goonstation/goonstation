@@ -20886,9 +20886,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	areastring = "Head of Personnel's Office";
+	areastring = "Head of Personnel's Quarters";
 	dir = 4;
-	name = "HoP's Office APC";
+	name = "HoP's Quarters APC";
 	pixel_x = 24
 	},
 /obj/machinery/portable_atmospherics/scrubber,

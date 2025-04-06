@@ -13452,15 +13452,10 @@
 /obj/item/clothing/head/powdered_wig,
 /obj/item/device/radio/headset/civilian,
 /obj/item/device/radio/headset/civilian,
-/obj/machinery/power/apc{
-	areastring = "Head of Personnel's Office";
-	dir = 4;
-	name = "HoP's Office APC";
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -33684,15 +33679,11 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/item/pen/crayon/golden,
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/hop)
 "saG" = (
