@@ -779,9 +779,11 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>\
-			Volume: [check_me.volume] L<br>\
-			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
+			Temperature: [round(check_me.temperature)] K<br>"
+			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
+			if (!istype(A, /obj/bubble))
+				data += "Volume: [check_me.volume] L<br>"
+			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

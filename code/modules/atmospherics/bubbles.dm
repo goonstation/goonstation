@@ -88,10 +88,14 @@
 		qdel(src)
 
 	attackby(obj/item/I, mob/user)
-		src.pop()
+		if (!istype(I, /obj/item/device/analyzer/atmospheric))
+			src.pop()
 
 	attack_hand(mob/user)
 		src.pop()
+
+	return_air(direct)
+		return src.air_contents
 
 	proc/update_graphics()
 		src.scale = clamp(MIXTURE_PRESSURE(src.air_contents) / (ONE_ATMOSPHERE * 2), 0.2, 1)
