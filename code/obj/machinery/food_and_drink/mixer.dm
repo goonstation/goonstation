@@ -36,7 +36,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes = list()
 
 		if (!src.recipes.len)
-/*			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
+			src.recipes += new /datum/cookingrecipe/mixer/mix_cake_custom(src)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/brownie_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
@@ -50,7 +50,7 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
 			src.recipes += new /datum/cookingrecipe/mixer/soysauce(src)
 			src.recipes += new /datum/cookingrecipe/mixer/gravy(src)
-*/
+
 		src.blender_off = image(src.icon, "blender_off")
 		src.blender_powered = image(src.icon, "blender_powered")
 		src.blender_working = image(src.icon, "blender_working")
