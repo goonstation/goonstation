@@ -1422,8 +1422,8 @@
 	name = "The Recluse"
 	})
 "TP" = (
-/obj/npc/trader/bee{
-	name = "Bambini"
+/obj/npc/trader/bee/sea{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"

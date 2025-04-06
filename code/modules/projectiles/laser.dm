@@ -464,7 +464,7 @@ toxic - poisons
 		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 		I.set_loc(get_turf(P))
 		I.set_dir(P.dir)
-		flick("ion_fade", I)
+		FLICK("ion_fade", I)
 		I.icon_state = "blank"
 		I.pixel_x = P.pixel_x
 		I.pixel_y = P.pixel_y

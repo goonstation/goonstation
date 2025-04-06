@@ -173,7 +173,7 @@
 			if(!(M in my_chair))
 				return
 
-			flick("radar_ping",my_hud.radar_ping)
+			FLICK("radar_ping",my_hud.radar_ping)
 
 			if(target.flags & HAS_ARTEMIS_SCAN)
 				actions.start(new/datum/action/bar/icon/artemis_scan(my_ship, target, my_chair), my_ship)
@@ -223,7 +223,7 @@
 		tick++
 		if(tick % 2 == 0)
 			if(helm.myhud)
-				flick("radar_ping",src.helm.myhud.radar_ping)
+				FLICK("radar_ping",src.helm.myhud.radar_ping)
 
 	onInterrupt(flag)
 		if(HAS_FLAG(flag, INTERRUPT_MOVE))

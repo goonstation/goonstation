@@ -129,6 +129,9 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/research
 	icon_state = "id_res"
 
+/obj/item/card/id/medical
+	icon_state = "id_med"
+
 /obj/item/card/id/engineering
 	icon_state = "id_eng"
 
@@ -181,6 +184,17 @@ TYPEINFO(/obj/item/card/emag)
 	captain
 		assignment = "Space Pirate Captain"
 
+/obj/item/card/id/salvager
+	keep_icon = TRUE
+
+	New()
+		..()
+		var/mob/living/carbon/human/H = src.loc
+		if(istype(H))
+			src.registered = "[H.real_name]"
+			src.update_name()
+			src.pin = H.mind.remembered_pin
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
@@ -208,8 +222,8 @@ TYPEINFO(/obj/item/card/emag)
 		team = 1
 
 		commander
-			name = "NanoTrasen Commander"
-			assignment = "NanoTrasen Commander"
+			name = "NanoTrasen Pod Commander"
+			assignment = "NanoTrasen Pod Commander"
 			access = list(access_heads, access_captain)
 
 	syndicate
@@ -220,8 +234,8 @@ TYPEINFO(/obj/item/card/emag)
 		team = 2
 
 		commander
-			name = "Syndicate Commander"
-			assignment = "Syndicate Commander"
+			name = "Syndicate Pod Commander"
+			assignment = "Syndicate Pod Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
 
@@ -315,7 +329,7 @@ TYPEINFO(/obj/item/card/emag)
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","nanotrasen","syndicate","No band")
+		var/color = input(user, "What department should the ID's band color match?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","civilian","security","command","research","medical","engineering","nanotrasen","syndicate","No band")
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
 		switch (color)
@@ -325,15 +339,17 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "gold"
 			if ("No band")
 				src.icon_state = "id"
-			if ("blue")
+			if ("civilian")
 				src.icon_state = "id_civ"
-			if ("red")
+			if ("security")
 				src.icon_state = "id_sec"
-			if ("green")
+			if ("command")
 				src.icon_state = "id_com"
-			if ("purple")
+			if ("research")
 				src.icon_state = "id_res"
-			if ("yellow")
+			if ("medical")
+				src.icon_state = "id_med"
+			if ("engineering")
 				src.icon_state = "id_eng"
 			if ("nanotrasen")
 				src.icon_state = "polaris"

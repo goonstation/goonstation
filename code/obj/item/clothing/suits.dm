@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
-	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	desc = "Made from real Space Bovine, but don't call it cowhide."
 	icon_state = "ljacket"
 	item_state = "ljacket"
 
@@ -427,12 +427,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 
 	para_troop
 		name = "rapid response armor"
-		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vaccuum rated. This one bears security insignia."
+		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vacuum rated. This one bears security insignia."
 		armor_icon = "para_sec"
 
 	para_eng
 		name = "rapid response armor"
-		desc = "A protective padded suit for emergency response personnel. Tailored for ground operations, not vaccuum rated. This one bears engineering insignia."
+		desc = "A protective padded suit for emergency response personnel. Tailored for ground operations, not vacuum rated. This one bears engineering insignia."
 		armor_icon = "para_eng"
 
 /obj/item/clothing/suit/space/suv
@@ -1207,7 +1207,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/lshirt
 	name = "long sleeved shirt"
-	desc = "A long sleeved shirt. It has a sinister looking cyborg head printed on the front."
+	desc = "A long sleeved shirt. It has a sinister-looking cyborg head printed on the front."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "lshirt"
@@ -1222,13 +1222,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "long sleeved logo shirt"
 		icon_state = "dan_red"
 		item_state = "dan_red"
-		desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+		desc = "A comfy-looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
 
 	dan_blue
 		name = "long sleeved logo shirt"
 		icon_state = "dan_blue"
 		item_state = "dan_blue"
-		desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+		desc = "A comfy-looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
 
 // SPACE SUITS
 
@@ -1315,10 +1315,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	blue
 		icon_state = "spacecap-blue"
 		item_state = "spacecap-blue"
+		desc = "A suit that protects against low pressure environments and is blue."
 
 	red
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
+		desc = "A suit that protects against low pressure environments and is red."
 
 /obj/item/clothing/suit/space/syndicate_worn
 	name = "worn syndicate space suit"
@@ -1772,7 +1774,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			name = "commander's great coat"
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
-			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been painted blue?"
 			team_num = TEAM_NANOTRASEN
 			#ifdef MAP_OVERRIDE_POD_WARS
 			attack_hand(mob/user)

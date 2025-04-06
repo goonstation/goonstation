@@ -35182,7 +35182,7 @@
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "gfS" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/red{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
@@ -39058,7 +39058,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/crew_quarters/quarters_east)
 "iQo" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
@@ -39135,7 +39135,7 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "iSr" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/blue{
 	dir = 8
 	},
 /obj/cable{
@@ -46548,7 +46548,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "okq" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/purple{
 	dir = 8
 	},
 /obj/cable{
@@ -55992,7 +55992,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "uTa" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/comfy/yellow{
 	dir = 8
 	},
 /obj/cable{
