@@ -15508,7 +15508,7 @@
 /area/station/crew_quarters/heads)
 "bbd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bbg" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal{
@@ -15785,7 +15785,7 @@
 	},
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bbZ" = (
 /obj/table/auto,
 /obj/bedsheetbin{
@@ -15804,7 +15804,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcb" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -15820,7 +15820,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcd" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -15833,7 +15833,7 @@
 /area/station/turret_protected/Zeta)
 "bcf" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16174,7 +16174,7 @@
 	},
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdg" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16183,7 +16183,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdh" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -16199,7 +16199,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdi" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16232,7 +16232,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdm" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -16502,14 +16502,14 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bec" = (
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bed" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bee" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -16517,7 +16517,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bef" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16741,7 +16741,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "beU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -16749,7 +16749,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "beW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17135,7 +17135,7 @@
 	pixel_x = 6
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bgo" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/freezer,
@@ -36956,7 +36956,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "cRg" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/bar,
@@ -39631,7 +39631,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "eFF" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/technical_trainee,
@@ -50831,7 +50831,7 @@
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "nph" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -50941,7 +50941,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "ntb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -59352,7 +59352,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "tHo" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor,

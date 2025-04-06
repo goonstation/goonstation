@@ -20361,12 +20361,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bHg" = (
-/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/item_dispenser/idcarddispenser,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -20383,7 +20383,7 @@
 /obj/machinery/light_switch/north,
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bHk" = (
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/camera{
@@ -20397,7 +20397,7 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bHl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -20862,13 +20862,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bIF" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bIH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20877,7 +20877,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bII" = (
 /obj/lattice,
 /obj/warp_beacon/research,
@@ -21267,7 +21267,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
@@ -21301,7 +21301,7 @@
 	},
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bKf" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -21309,7 +21309,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bKg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -21320,7 +21320,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bKh" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/grey,
@@ -21682,7 +21682,7 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bLu" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -21690,7 +21690,7 @@
 /obj/machinery/light,
 /obj/item/stamp/hop,
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bLv" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
@@ -21702,7 +21702,7 @@
 	pixel_y = -21
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bLw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -21710,7 +21710,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "bLx" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/grey,
@@ -32576,7 +32576,7 @@
 	},
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "esM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/transport,
@@ -38926,7 +38926,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "iLH" = (
 /obj/lattice{
 	dir = 6;
@@ -45235,7 +45235,7 @@
 	},
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "njG" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -46142,7 +46142,7 @@
 /area/station/security/main)
 "nXl" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "nXw" = (
 /turf/simulated/floor/engine/caution/misc{
 	dir = 8
@@ -50964,7 +50964,7 @@
 	name = "HOP Desk"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "rtZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
@@ -51528,7 +51528,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/green,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "rOU" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
@@ -52536,7 +52536,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "szy" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "ranch";
@@ -52786,7 +52786,7 @@
 	},
 /obj/blind_switch/area/south,
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "sJj" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pod Bay"
@@ -54249,7 +54249,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "tKP" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -57392,7 +57392,7 @@
 /area/station/storage/warehouse)
 "vTk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/crew_quarters/heads)
 "vTK" = (
 /turf/simulated/floor/escape/corner{
 	dir = 1

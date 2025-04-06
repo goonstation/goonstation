@@ -22558,9 +22558,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gLl" = (
-/obj/machinery/computer3/generic/secure_data{
-	dir = 8
-	},
 /obj/decoration/vent{
 	pixel_x = 1;
 	pixel_y = 32
@@ -22572,6 +22569,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/stockexchange{
+	dir = 8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},

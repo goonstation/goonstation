@@ -16336,7 +16336,7 @@
 "aWf" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "aWg" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -17635,14 +17635,14 @@
 /obj/item/pen/crayon/golden,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "aZv" = (
 /obj/table/wood/auto,
 /obj/item/hand_labeler,
 /obj/item_dispenser/idcarddispenser,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "aZw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17654,7 +17654,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "aZy" = (
 /obj/machinery/light{
 	dir = 8;
@@ -18843,13 +18843,13 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "bct" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "bcv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19829,7 +19829,7 @@
 "bfp" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "bfr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19845,7 +19845,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "bfs" = (
 /obj/table/auto,
 /obj/item/storage/box/mousetraps,
@@ -20952,11 +20952,11 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "bip" = (
 /obj/stool/chair/office,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "biq" = (
 /obj/machinery/computer/card{
 	dir = 8
@@ -20966,7 +20966,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "biu" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -47010,7 +47010,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "dOQ" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8;
@@ -47101,7 +47101,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue/side,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "dZA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48125,7 +48125,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue/side,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "fMn" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -51214,7 +51214,7 @@
 "kVM" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "kWJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56646,7 +56646,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/random,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "tQG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57399,7 +57399,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue/side,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "uVy" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
@@ -58994,7 +58994,7 @@
 "xmB" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/bridge/customs)
 "xmD" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/engine,

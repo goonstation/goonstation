@@ -2820,9 +2820,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "bmX" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne{
@@ -2858,9 +2856,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "bov" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4997,9 +4993,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "ckn" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/greenblack{
@@ -5145,9 +5139,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "coD" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -6322,9 +6314,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "cQL" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -10503,12 +10493,12 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "eIu" = (
-/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/courtroom)
 "eIK" = (
@@ -10580,9 +10570,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "eLE" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -11946,9 +11934,7 @@
 	pixel_x = -2
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "fpO" = (
 /obj/stool/chair/office/green{
 	dir = 4
@@ -23307,9 +23293,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "jOQ" = (
 /obj/table/reinforced/auto,
 /obj/item/decoration/flower_vase,
@@ -23943,9 +23927,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "kbv" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/stairs{
@@ -25227,9 +25209,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "kyY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25286,9 +25266,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "kAn" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -26480,9 +26458,7 @@
 "laB" = (
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "laM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -28791,9 +28767,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "lWq" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
@@ -29192,9 +29166,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 8
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "mdI" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -29885,9 +29857,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 10
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "mrH" = (
 /obj/machinery/light_switch/west,
 /obj/disposalpipe/segment/food{
@@ -37883,9 +37853,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -40474,9 +40442,7 @@
 	},
 /obj/blind_switch/area/west,
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "rcw" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -41359,9 +41325,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "rzK" = (
 /obj/lattice,
 /obj/cable{
@@ -42156,9 +42120,7 @@
 "rTj" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/green/fancy/innercorner/omni,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "rTk" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -43929,9 +43891,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "sGq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45351,9 +45311,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "tkA" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -45608,9 +45566,7 @@
 /area/station/medical/staff)
 "tqL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "tqM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49224,9 +49180,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "uWN" = (
 /obj/stool/chair{
 	dir = 8
@@ -49354,9 +49308,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "uYF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -50794,9 +50746,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "vGW" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light_switch/west,
@@ -51403,9 +51353,7 @@
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "vUQ" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
@@ -52636,9 +52584,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "wwm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53358,9 +53304,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "wOT" = (
 /obj/machinery/light,
 /obj/machinery/vending/fortune,
@@ -53440,9 +53384,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "wQX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54586,9 +54528,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "xrx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54636,9 +54576,7 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/heads)
 "xsz" = (
 /obj/cable{
 	icon_state = "4-8"
