@@ -15,6 +15,9 @@ TYPEINFO(/obj/machinery/power/smes/magical)
 		charge = INFINITY
 		..()
 
+	set_broken()
+		return TRUE
+
 TYPEINFO(/obj/machinery/power/smes)
 	mats = list("metal" = 40,
 				"conductive_high" = 30,
@@ -120,6 +123,23 @@ TYPEINFO(/obj/machinery/power/smes)
 	if (clevel>0)
 		I = SafeGetOverlayImage("chargedisp",'icons/obj/power.dmi',"smes-og[clevel]")
 		UpdateOverlays(I, "chargedisp")
+
+/obj/machinery/power/smes/set_broken()
+	if(..()) return
+	AddComponent(/datum/component/equipment_fault/dangerously_shorted, tool_flags = TOOL_WIRING | TOOL_SOLDERING | TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+
+/obj/machinery/power/smes/ex_act(severity)
+	. = ..()
+	if (QDELETED(src))
+		return
+	switch(severity)
+		if(2)
+			if (prob(25))
+				src.set_broken()
+				return
+		if(3)
+			if (prob(20))
+				src.set_broken()
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
