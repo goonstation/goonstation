@@ -47,7 +47,7 @@
 		if (!checkTurfPassable(newloc))
 			src.pop()
 			return
-		playsound(newloc, 'sound/vox/popsound.ogg', 20, 1) //silly placeholder
+		playsound(newloc, pick('sound/effects/bubble_pop1.ogg', 'sound/effects/bubble_pop2.ogg'), 50, 1)
 		T.assume_air(src.air_contents)
 		src.air_contents = null
 		qdel(src)
@@ -78,7 +78,9 @@
 	proc/pop()
 		if (src.scale > 0.5)
 			src.visible_message(SPAN_ALERT("[src] bursts and dissipates into the water!"))
-			playsound(get_turf(src), 'sound/vox/popsound.ogg', 20, 1)
+			//https://pixabay.com/sound-effects/bubble-pop-6395/
+			//TODO: put this in the PR
+			playsound(get_turf(src), pick('sound/effects/bubble_pop1.ogg', 'sound/effects/bubble_pop2.ogg'), 50, 1)
 		var/obj/effects/bubbles/bubbles = new(get_turf(src))
 		bubbles.Scale(src.scale, src.scale)
 		GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
