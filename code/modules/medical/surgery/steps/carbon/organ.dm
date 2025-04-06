@@ -9,7 +9,7 @@
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
-			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars["head"]
+			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
 			O.in_surgery = TRUE
 
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -25,6 +25,8 @@
 		flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
+			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
+			O.secure = FALSE
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [tool]!"),\
 				SPAN_ALERT("You slice the tissue around [surgeon == patient ? "your" : "[patient]'s"] spine with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [tool]!"))
@@ -38,7 +40,6 @@
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars["head"]
-			O.secure = FALSE
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [tool]!"),\
 				SPAN_ALERT("You sever most of [surgeon == patient ? "your" : "[patient]'s"] neck with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [tool]!"))
@@ -81,13 +82,15 @@
 		optional = TRUE
 		visible = FALSE
 		repeatable = TRUE
+		damage_dealt = 0
 		tools_required = list(/obj/item/hemostat)
 		on_complete(mob/surgeon, obj/item/tool)
-			user.tri_message(H, SPAN_ALERT("<b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src]."),\
-				SPAN_ALERT("You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src]."),\
-				SPAN_ALERT("[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src]."))
+			var/mob/living/carbon/human/patient = parent_surgery.patient
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> begins clamping the bleeders in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] incision with [src]."),\
+				SPAN_ALERT("You begin clamping the bleeders in [surgeon == patient ? "your" : "[patient]'s"] incision with [src]."),\
+				SPAN_ALERT("[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] clamping the bleeders in your incision with [src]."))
 
-			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(surgeon, patient), surgeon)
 			return
 
 /datum/surgery_step/organ

@@ -8,6 +8,10 @@
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
+	surgery_possible(mob/living/surgeon)
+		if (surgeon.zone_sel.selecting != "chest")
+			return FALSE
+		return ..()
 	on_cancel(mob/surgeon, obj/item/tool, quiet)
 		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
 			SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
@@ -29,9 +33,6 @@
 		var/mob/living/carbon/human/C = patient
 		return C.chest_cavity_clamped == FALSE
 
-		if (H.chest_cavity_clamped && !H.bleeding)
-			boutput(user, SPAN_NOTICE("[target]'s blood vessels are already clamped."))
-			return // if surgery_conditions and fail maybe??
 
 
 /datum/surgery/head
@@ -299,11 +300,15 @@
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
 				return ..()
-			on_cancel(mob/living/surgeon, obj/item/tool)
-				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [tool]."),\
-					SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] left eye socket closed with [tool]."),\
-					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your left eye socket closed with [tool]."))
-				..()
+			on_cancel(mob/living/surgeon, obj/item/tool, quiet)
+				if (!quiet)
+					surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [tool]."),\
+						SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] left eye socket closed with [tool]."),\
+						SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your left eye socket closed with [tool]."))
+				var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
+				if (O)
+					O.in_surgery = FALSE
+					O.secure = TRUE
 
 		right
 			id = "right_eye_surgery"
@@ -315,11 +320,15 @@
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()
-			on_cancel(mob/living/surgeon, obj/item/tool)
-				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket closed with [tool]."),\
-					SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] right eye socket closed with [tool]."),\
-					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your right eye socket closed with [tool]."))
-				..()
+			on_cancel(mob/living/surgeon, obj/item/tool, quiet)
+				if (!quiet)
+					surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket closed with [tool]."),\
+						SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] right eye socket closed with [tool]."),\
+						SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your right eye socket closed with [tool]."))
+				var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
+				if (O)
+					O.in_surgery = FALSE
+					O.secure = TRUE
 	butt
 		id = "butt_surgery"
 		name = "Butt Surgery"
@@ -405,9 +414,14 @@
 
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
+			surgery_steps[1].finished = C.organHolder.brain.in_surgery
+			if (!C.organHolder.brain.in_surgery)
+				surgery_steps[2].finished = FALSE // this step isn't tied to any vars ATM, so turn it off if we've reset surgery etc
+			surgery_steps[3].finished = !C.organHolder.brain.secure
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
+
 		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 			add_next_step(new /datum/surgery_step/organ/brain/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
@@ -434,6 +448,10 @@
 		implicit = TRUE
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
+			surgery_steps[1].finished = !C.organHolder.head.in_surgery
+			if (!C.organHolder.head.in_surgery)
+				surgery_steps[2].finished = FALSE
+			surgery_steps[3].finished = C.organHolder.head.secure
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
@@ -449,6 +467,7 @@
 			if (surgeon.a_intent != INTENT_HARM)
 				return FALSE
 			return TRUE
+
 /datum/surgery/organ/replace
 	id = "organ_addition"
 	name = "Organ Addition"

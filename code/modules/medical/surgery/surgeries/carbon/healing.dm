@@ -47,12 +47,14 @@
 	name = "Tend bleeding"
 	desc = "Heal BLEED damage with a suture."
 
+	infer_surgery_stage()
+		surgery_steps[1].finished = (patient.bleeding == 0)
+
 	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/suture(src))
 
 	on_complete(mob/living/surgeon, mob/user)
 		patient.bleeding = 0
-		regenerate_surgery_steps()
 
 	surgery_possible(mob/living/surgeon)
 		if (patient.bleeding > 0)

@@ -294,15 +294,6 @@
 				. += "<br>[SPAN_ALERT("<B>[src.name] is bleeding a lot!</B>")]"
 			if (4 to INFINITY)
 				. += "<br>[SPAN_ALERT("<B>[src.name] is bleeding very badly!</B>")]"
-/*			if (1 to 2)
-				. += "<br>[SPAN_ALERT("[src.name] is bleeding a little bit.")]"
-			if (3 to 5)
-				. += "<br>[SPAN_ALERT("<B>[src.name] is bleeding!</B>")]"
-			if (6 to 8)
-				. += "<br>[SPAN_ALERT("<B>[src.name] is bleeding a lot!</B>")]"
-			if (9 to INFINITY)
-				. += "<br>[SPAN_ALERT("<B>[src.name] is bleeding very badly!</B>")]"
-*/
 	if (!isvampire(src)) // Added a check for vampires (Convair880).
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp

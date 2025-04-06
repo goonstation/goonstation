@@ -41,6 +41,7 @@
 
 	/// Get's a surgery's progress by ID.
 	proc/get_surgery_progress(var/surgery_id)
+		all_surgeries[surgery_id].infer_surgery_stage()
 		return all_surgeries[surgery_id].get_surgery_progress()
 	proc/get_surgery_complete(var/surgery_id)
 		return all_surgeries[surgery_id].surgery_complete()

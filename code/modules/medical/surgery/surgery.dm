@@ -90,10 +90,13 @@
 	/// Check if any steps are possible on the target using the given tool. Return the first possible step.
 	proc/surgery_step_possible(mob/surgeon, obj/item/tool)
 		var/list/completed_ids = list()
+		completed_ids += TRUE // Simultaneous steps are always complete
 
 		// Create a list, where each index is the step number, and the value is whether all steps matching that step number are complete
 		for(var/datum/surgery_step/step in surgery_steps)
-			while (length(completed_ids) < step.step_number)
+			if (step.step_number == 0)
+				continue
+			while (length(completed_ids)-1 < step.step_number)
 				completed_ids += TRUE
 			completed_ids[step.step_number] = (completed_ids[step.step_number] && step.finished)
 
@@ -105,8 +108,7 @@
 				max_step_number = i
 			else
 				break
-
-		max_step_number++ // The next valid step is the highest complete step + 1
+		max_step_number++
 
 		// Now check if any steps are possible with the given tool, at this point in time.
 		for (var/datum/surgery_step/step in surgery_steps)
@@ -148,9 +150,7 @@
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
-		if (!implicit)
-			return FALSE
-		if ((!super_surgery || super_surgery?.complete) && can_perform_surgery(surgeon, I))
+		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
 			if (step)
 				step.perform_step(surgeon, I)
@@ -469,9 +469,9 @@
 
 	///Calculate if this step succeeds, apply failure effects here
 	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
-		if (surgeon.bioHolder.HasEffect("clumsy"))
+		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 			if (flags_required)
-				if (flags_required & TOOL_CUTTING && prob(50))
+				if (flags_required & TOOL_CUTTING)
 					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
 					SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 					surgeon.bioHolder.AddEffect("blind")
@@ -481,7 +481,7 @@
 					random_brute_damage(surgeon, damage)
 					take_bleeding_damage(surgeon, null, damage)
 
-				if (flags_required & TOOL_SAWING && prob(50))
+				if (flags_required & TOOL_SAWING )
 					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!"),\
 					SPAN_ALERT("You mishandle [src] and cut yourself!"))
 					surgeon.changeStatus("knockdown", 1 SECOND)
@@ -490,7 +490,7 @@
 					random_brute_damage(surgeon, damage)
 					take_bleeding_damage(surgeon, damage)
 					return FALSE
-				if (flags_required & TOOL_SNIPPING && prob(50))
+				if (flags_required & TOOL_SNIPPING )
 					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
 					SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
 					surgeon.bioHolder.AddEffect("blind")
@@ -501,7 +501,7 @@
 					random_brute_damage(surgeon, damage)
 					take_bleeding_damage(surgeon, null, damage)
 					return FALSE
-				if (flags_required & TOOL_PRYING && prob(50))
+				if (flags_required & TOOL_PRYING)
 					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!"), \
 					SPAN_ALERT("You fumble and club yourself in the head with [src]!"))
 					surgeon.changeStatus("knockdown", 0.4 SECONDS)
@@ -509,7 +509,7 @@
 					var/damage = rand(5, 15)
 					random_brute_damage(surgeon, damage)
 					return FALSE
-				if (flags_required & TOOL_CAUTERY && prob(33))
+				if (flags_required & TOOL_CAUTERY)
 					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!"),\
 					SPAN_ALERT("You burn yourself with [src]"))
 
@@ -537,6 +537,7 @@
 		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
 		if (prob(mess_up_odds))
 			on_mess_up(surgeon,tool)
+			boutput(world, "mess up")
 			return FALSE
 
 		var/success = do_surgery_step(surgeon, tool)
