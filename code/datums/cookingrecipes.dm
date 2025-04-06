@@ -1356,7 +1356,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/onionchips
 
 /datum/cookingrecipe/oven/fries
-	ingredients = (/obj/item/reagent_containers/food/snacks/ingredient/chips)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/chips = 1)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/fries
 
@@ -1393,53 +1393,53 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
 
 /datum/cookingrecipe/oven/bakedpotato
-	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/potato = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/bakedpotato
 
 /datum/cookingrecipe/oven/hotdog
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meatpaste)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = 1)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
 /datum/cookingrecipe/oven/steak_h
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_h
 	useshumanmeat = 1
 
 /datum/cookingrecipe/oven/steak_m
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_m
 
 /datum/cookingrecipe/oven/steak_s
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_s
 
 /datum/cookingrecipe/oven/steak_ling
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
 	cookbonus = 12 // tough meat
 	output = /obj/item/reagent_containers/food/snacks/steak_ling
 
 /datum/cookingrecipe/oven/fish_fingers
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/fish_fingers
 
 /datum/cookingrecipe/oven/shrimp
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/shrimp
 
 /datum/cookingrecipe/oven/bacon
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
 /datum/cookingrecipe/oven/turkey
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/turkey)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/turkey = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/turkey
 
