@@ -3,10 +3,12 @@
 		name = "Bubble vents"
 		schedule_interval = 3 SECONDS
 #ifdef MAP_OVERRIDE_NEON
-		for (var/i in 1 to 10)
+		while (length(by_type[/obj/bubble_vent]) < 10)
 			var/turf/T = null
 			while (!T || !istype_exact(T, /turf/space/fluid))
 				T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+			if (!istype(get_area(T), /area/plasma_reef) && prob(70)) //to make them more common in reefs
+				continue
 			var/vent_type = pick(\
 				prob(150); /obj/bubble_vent/plasma,\
 				prob(100);/obj/bubble_vent/oxygen,\
