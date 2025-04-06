@@ -5,7 +5,7 @@
 #ifdef MAP_OVERRIDE_NEON
 		for (var/i in 1 to 10)
 			var/turf/T = null
-			while (!istype_exact(T, /turf/space/fluid))
+			while (!T || !istype_exact(T, /turf/space/fluid))
 				T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
 			var/vent_type = pick(\
 				prob(150); /obj/bubble_vent/plasma,\
