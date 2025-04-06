@@ -10474,7 +10474,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/stockexchange,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/courtroom)
 "eIK" = (

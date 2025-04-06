@@ -20358,7 +20358,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item_dispenser/idcarddispenser,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -21259,7 +21259,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/stockexchange,
+/obj/machinery/computer3/generic/bank_data,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
