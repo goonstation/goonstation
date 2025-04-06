@@ -1,5 +1,11 @@
 
 (t)sun apr 06 25
+(u)Colossusqw
+(p)21781
+(e)🆕🎨⚖🧛🔨|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions
+(*)Changelings now have a variety of sting options to choose from, sharing a collective cooldown. (Minor changes for details)
+(+)Now changelings can swap between a neurotoxin sting(50us, 140s cooldown), a neurodepressant (5u, 20s), hemotoxin (9u, 30s), and madness toxin sting (15u, 240s cooldown, 5 DNA points).
+(+)Neurotoxin now paralyses instead of causing a KO, and is a changeling sting both in the classic and RP server.
 (u)Vic
 (p)22779
 (e)💅🐁|C-QoL, A-Critters
