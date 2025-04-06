@@ -189,9 +189,9 @@
 						location_as_object.handle_internal_lifeform(owner, 0, mult)
 
 		breath?.volume = BREATH_VOLUME * mult
-		handle_breath(breath, underwater, mult = mult)
+		var/success = handle_breath(breath, underwater, mult = mult)
 
-		if (breath)
+		if (breath && success) //only breathe out gas when we're not drowing
 			if (bubble_breathing) //we don't want to spawn more bubbles if we're breathing from a bubble
 				environment.merge(breath)
 			else
