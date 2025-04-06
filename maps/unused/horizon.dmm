@@ -16089,7 +16089,7 @@
 "aVq" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aVt" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -16317,13 +16317,13 @@
 /area/station/crew_quarters/clown)
 "aWc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aWd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aWe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -16332,7 +16332,7 @@
 	},
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aWf" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -17608,7 +17608,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZr" = (
 /obj/table/reinforced/auto,
 /obj/cable,
@@ -17618,16 +17618,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZs" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZt" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZu" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/water,
@@ -18816,7 +18816,7 @@
 /obj/landmark/start/job/head_of_personnel,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bcp" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -18825,7 +18825,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bcq" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -18835,7 +18835,7 @@
 	pixel_x = 28
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bcr" = (
 /obj/machinery/computer/announcement{
 	announces_arrivals = 1;
@@ -19811,21 +19811,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bfm" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bfn" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bfp" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor,
@@ -20935,12 +20935,12 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bin" = (
 /obj/machinery/light_switch/east,
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bio" = (
 /obj/machinery/computer3/generic/bank_data{
 	dir = 4
@@ -22070,7 +22070,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "blh" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -47022,7 +47022,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "dRE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50866,7 +50866,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "kri" = (
 /obj/machinery/light_switch/west,
 /obj/machinery/lawrack{
@@ -52338,7 +52338,7 @@
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "mPI" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -57056,7 +57056,7 @@
 	},
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "uzt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59549,7 +59549,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/darkblue,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ylZ" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4

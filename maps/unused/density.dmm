@@ -2999,7 +2999,7 @@
 /area/station/crew_quarters/garden)
 "hu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "hv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3015,7 +3015,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "hw" = (
 /obj/machinery/bathtub{
 	dir = 4
@@ -3149,7 +3149,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "hL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -3325,7 +3325,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "ii" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3344,7 +3344,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "ij" = (
 /obj/mesh/catwalk{
 	dir = 10;
@@ -3665,7 +3665,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "iK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -5373,8 +5373,7 @@
 /area/station/medical/medbay/surgery)
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -6232,8 +6231,7 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	
+	dir = 4
 	},
 /area/mining/magnet)
 "ou" = (

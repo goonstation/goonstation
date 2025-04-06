@@ -12895,9 +12895,7 @@
 	icon_state = "bedsheet-blue"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "bav" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -14399,9 +14397,7 @@
 /area/station/maintenance/southeast)
 "bic" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "bid" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14410,9 +14406,7 @@
 /turf/simulated/floor/stairs/dark{
 	dir = 4
 	},
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "bik" = (
 /turf/simulated/floor/escape{
 	dir = 1
@@ -15043,9 +15037,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "bkQ" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/escape_horizontal,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -20383,7 +20375,7 @@
 /obj/machinery/light_switch/north,
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bHk" = (
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/camera{
@@ -20397,7 +20389,7 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bHl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -20862,13 +20854,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bIF" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bIH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20877,7 +20869,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bII" = (
 /obj/lattice,
 /obj/warp_beacon/research,
@@ -21301,7 +21293,7 @@
 	},
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bKf" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -21309,7 +21301,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bKg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -21320,7 +21312,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bKh" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/grey,
@@ -21682,7 +21674,7 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bLu" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -21690,7 +21682,7 @@
 /obj/machinery/light,
 /obj/item/stamp/hop,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bLv" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
@@ -21702,7 +21694,7 @@
 	pixel_y = -21
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bLw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -21710,7 +21702,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bLx" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/grey,
@@ -26474,9 +26466,7 @@
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/wine,/obj/item/reagent_containers/food/drinks/bottle/tequila,/obj/item/reagent_containers/food/drinks/bottle/mead,/obj/item/reagent_containers/food/drinks/bottle/rum)
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "cfu" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
@@ -32576,7 +32566,7 @@
 	},
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "esM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/transport,
@@ -38926,7 +38916,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "iLH" = (
 /obj/lattice{
 	dir = 6;
@@ -43919,9 +43909,7 @@
 /area/station/science/artifact)
 "mmz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "mmP" = (
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/office)
@@ -45235,7 +45223,7 @@
 	},
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "njG" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -46142,7 +46130,7 @@
 /area/station/security/main)
 "nXl" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "nXw" = (
 /turf/simulated/floor/engine/caution/misc{
 	dir = 8
@@ -47364,9 +47352,7 @@
 /area/station/crew_quarters/bar)
 "oSO" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "oSS" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -47584,9 +47570,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "pcs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -48927,9 +48911,7 @@
 	},
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "pXp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -50964,7 +50946,7 @@
 	name = "HOP Desk"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "rtZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
@@ -51528,7 +51510,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/green,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "rOU" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
@@ -51644,9 +51626,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "rTg" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -52536,7 +52516,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "szy" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "ranch";
@@ -52786,7 +52766,7 @@
 	},
 /obj/blind_switch/area/south,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "sJj" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pod Bay"
@@ -53645,9 +53625,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "tmv" = (
 /obj/stool/bench/yellow/auto,
 /obj/cable{
@@ -54249,7 +54227,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "tKP" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -55157,9 +55135,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "usF" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
@@ -55736,9 +55712,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "uLX" = (
 /obj/mesh/catwalk{
 	dir = 10
@@ -56702,9 +56676,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "vrz" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/antagonist/blob,
@@ -57392,7 +57364,7 @@
 /area/station/storage/warehouse)
 "vTk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vTK" = (
 /turf/simulated/floor/escape/corner{
 	dir = 1

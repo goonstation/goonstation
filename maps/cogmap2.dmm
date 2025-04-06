@@ -22393,7 +22393,7 @@
 /area/station/maintenance/north)
 "brf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "brg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -22408,7 +22408,7 @@
 	},
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "brh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -22426,7 +22426,7 @@
 	},
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bri" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -22447,7 +22447,7 @@
 	},
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "brj" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -22462,7 +22462,7 @@
 	},
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "brk" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod1_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -23033,7 +23033,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsT" = (
 /obj/table/wood/auto,
 /obj/machinery/power/data_terminal,
@@ -23042,7 +23042,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsU" = (
 /obj/machinery/computer3/generic/bank_data,
 /obj/machinery/power/data_terminal,
@@ -23050,14 +23050,14 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsV" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -23065,7 +23065,7 @@
 	icon_state = "bedsheet-green"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsX" = (
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0
@@ -23076,7 +23076,7 @@
 	pixel_y = -3
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bsZ" = (
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -23731,7 +23731,7 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23741,13 +23741,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buL" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/se,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23756,10 +23756,10 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/sw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buN" = (
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buP" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -23779,7 +23779,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "buR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24349,7 +24349,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bwz" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -24358,7 +24358,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bwA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24367,7 +24367,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bwB" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24376,7 +24376,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bwC" = (
 /obj/machinery/light{
 	dir = 4;
@@ -24384,7 +24384,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bwD" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -25195,17 +25195,17 @@
 /obj/machinery/light_switch/west,
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "byz" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "byA" = (
 /obj/table/wood/auto,
 /obj/item/material_piece/foolsfoolsgold,
 /obj/item/stamp/hop,
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "byB" = (
 /obj/machinery/light,
 /obj/cable{
@@ -25215,7 +25215,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "byC" = (
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "quarters_hop";
@@ -25224,7 +25224,7 @@
 	pixel_y = -21
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "byE" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mail/vertical,
@@ -47859,7 +47859,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "cOx" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -58309,7 +58309,7 @@
 "gKD" = (
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "gKY" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/purple,
@@ -74257,7 +74257,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wtr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{

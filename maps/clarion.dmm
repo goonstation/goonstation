@@ -25,9 +25,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "aag" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -692,9 +690,7 @@
 /area/station/hallway/primary/north)
 "acV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "adD" = (
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
@@ -987,9 +983,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ahb" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/destiny)
@@ -1026,9 +1020,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ahu" = (
 /obj/machinery/light{
 	dir = 8;
@@ -1126,9 +1118,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ajM" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6295,18 +6285,14 @@
 /area/station/bridge)
 "aWQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aWS" = (
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aWT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
@@ -6491,9 +6477,7 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/blue,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aYn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -6787,9 +6771,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "baq" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -7425,9 +7407,7 @@
 	pixel_x = 5
 	},
 /turf/simulated/floor/sanitary/blue,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "bfd" = (
 /obj/strip_door,
 /obj/cable{
@@ -15309,9 +15289,7 @@
 /obj/item/material_piece/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "eAX" = (
 /obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
@@ -18319,9 +18297,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "gIX" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -18849,9 +18825,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "hhd" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -23071,9 +23045,7 @@
 	},
 /obj/machinery/light,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "keH" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -23104,9 +23076,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/omni,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "kgx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24446,9 +24416,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "leh" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -24643,9 +24611,7 @@
 /obj/machinery/firealarm/east,
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/blue,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "lkL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25072,9 +25038,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "lBa" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -27975,9 +27939,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "nMc" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -28595,9 +28557,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "ohk" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29728,9 +29688,7 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "oWh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -31804,9 +31762,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "qAX" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -33738,9 +33694,7 @@
 	},
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "saG" = (
 /obj/machinery/firealarm/south,
 /obj/storage/cart/medcart/crash,
@@ -36060,9 +36014,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "tCV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40567,9 +40519,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "wON" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -40659,9 +40609,7 @@
 /area/station/maintenance/southwest)
 "wUi" = (
 /turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "wUD" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -41989,9 +41937,7 @@
 	pixel_x = 5
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "xVW" = (
 /obj/disposaloutlet/south,
 /obj/disposalpipe/trunk/east,
@@ -42347,9 +42293,7 @@
 	},
 /mob/living/critter/small_animal/dog/blair,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "yid" = (
 /obj/machinery/disposal/mail/autoname/medbay,
 /obj/disposalpipe/trunk/mail{

@@ -718,9 +718,7 @@
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "aoK" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/horizontal,
@@ -2763,9 +2761,7 @@
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "blV" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
@@ -2820,7 +2816,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bmX" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/ne{
@@ -2856,7 +2852,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bov" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4820,9 +4816,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "chK" = (
 /obj/table/wood/round/auto,
 /obj/item/diceholder/dicebox{
@@ -4993,7 +4987,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ckn" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/greenblack{
@@ -5139,7 +5133,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "coD" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -6007,9 +6001,7 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "cLn" = (
 /obj/machinery/light,
 /obj/machinery/disposal/mail/qm,
@@ -6071,9 +6063,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "cMH" = (
 /obj/table/reinforced/auto,
 /obj/item/bee_egg_carton{
@@ -6314,7 +6304,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "cQL" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -6548,9 +6538,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "cVe" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6;
@@ -7802,9 +7790,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "dzn" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/secure/ssafe{
@@ -8315,9 +8301,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "dJj" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1
@@ -8991,9 +8975,7 @@
 /area/pasiphae/maint)
 "dZG" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "dZK" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/machinery/weapon_stand/phaser_rack,
@@ -9558,9 +9540,7 @@
 "eoL" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "eoW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9992,9 +9972,7 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "eyb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10482,9 +10460,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "eIq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mineral{
@@ -10530,9 +10506,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "eIV" = (
 /obj/stool/chair{
 	dir = 1
@@ -10558,9 +10532,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "eKW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -10570,7 +10542,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "eLE" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -11291,9 +11263,7 @@
 	})
 "eZe" = (
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "eZH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11918,9 +11888,7 @@
 "foV" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "fpk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -11934,7 +11902,7 @@
 	pixel_x = -2
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "fpO" = (
 /obj/stool/chair/office/green{
 	dir = 4
@@ -12577,9 +12545,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "fBr" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -15998,9 +15964,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "gUf" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small{
@@ -17295,9 +17259,7 @@
 "hrp" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "hry" = (
 /obj/decal/tile_edge/floorguide/command{
 	dir = 4
@@ -17848,9 +17810,7 @@
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "hBr" = (
 /obj/shrub{
 	dir = 4;
@@ -18154,9 +18114,7 @@
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "hHx" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/gloves/latex,
@@ -20597,9 +20555,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "iFE" = (
 /obj/machinery/light{
 	dir = 1;
@@ -20845,9 +20801,7 @@
 /area/pasiphae/bridge)
 "iLR" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "iLY" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/arcade,
@@ -23293,7 +23247,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "jOQ" = (
 /obj/table/reinforced/auto,
 /obj/item/decoration/flower_vase,
@@ -23904,9 +23858,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "kaR" = (
 /obj/machinery/traymachine/morgue{
 	dir = 8
@@ -23927,7 +23879,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "kbv" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/stairs{
@@ -25209,7 +25161,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "kyY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25266,7 +25218,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "kAn" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -25520,9 +25472,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "kFd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/device/radio/beacon,
@@ -26119,9 +26069,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "kTa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26458,7 +26406,7 @@
 "laB" = (
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "laM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -28767,7 +28715,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "lWq" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
@@ -29166,7 +29114,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 8
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "mdI" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -29402,9 +29350,7 @@
 /area/station/teleporter)
 "mhK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "mhP" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable/blue{
@@ -29857,7 +29803,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 10
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "mrH" = (
 /obj/machinery/light_switch/west,
 /obj/disposalpipe/segment/food{
@@ -30095,9 +30041,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "mxM" = (
 /obj/stool/chair{
 	dir = 8
@@ -30573,9 +30517,7 @@
 /area/station/medical/medbay)
 "mIa" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "mId" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -31407,9 +31349,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ndB" = (
 /obj/machinery/networked/secdetector{
 	area_access = 37;
@@ -31715,9 +31655,7 @@
 "nka" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "nkd" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -31866,9 +31804,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "nmI" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -32947,9 +32883,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "nIv" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -33244,9 +33178,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "nQU" = (
 /obj/table/auto,
 /obj/item/storage/box/cocktail_doodads{
@@ -34017,9 +33949,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "ols" = (
 /obj/stool/chair{
 	dir = 4
@@ -35318,9 +35248,7 @@
 /area/pasiphae/crew)
 "oOV" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "oPc" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -37853,7 +37781,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "pSv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -37960,9 +37888,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "pUc" = (
 /obj/machinery/networked/storage/tape_drive,
 /obj/machinery/power/data_terminal,
@@ -40442,7 +40368,7 @@
 	},
 /obj/blind_switch/area/west,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "rcw" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -40492,9 +40418,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "req" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40525,9 +40449,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "rfe" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/black,
@@ -41237,9 +41159,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ryf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41325,7 +41245,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "rzK" = (
 /obj/lattice,
 /obj/cable{
@@ -41871,9 +41791,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "rLY" = (
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
@@ -42120,7 +42038,7 @@
 "rTj" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/green/fancy/innercorner/omni,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "rTk" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -42687,9 +42605,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "sga" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
@@ -43193,9 +43109,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "srd" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -43657,9 +43571,7 @@
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "sCH" = (
 /obj/machinery/siphon_lever,
 /obj/item/paper/siphon_guide{
@@ -43891,7 +43803,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "sGq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44270,9 +44182,7 @@
 "sNC" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "sNH" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -45311,7 +45221,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "tkA" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -45380,9 +45290,7 @@
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/wine,/obj/item/reagent_containers/food/drinks/bottle/tequila,/obj/item/reagent_containers/food/drinks/bottle/mead,/obj/item/reagent_containers/food/drinks/bottle/rum)
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "tmo" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/industrial,
@@ -45548,9 +45456,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/north,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "tpJ" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
@@ -45566,7 +45472,7 @@
 /area/station/medical/staff)
 "tqL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "tqM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49180,7 +49086,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "uWN" = (
 /obj/stool/chair{
 	dir = 8
@@ -49255,9 +49161,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "uXO" = (
 /turf/simulated/floor/redblack/corner{
 	dir = 4
@@ -49308,7 +49212,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "uYF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -50116,9 +50020,7 @@
 /area/abandonedmedicalship/robot_trader)
 "vuv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "vuA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -50145,9 +50047,7 @@
 "vuR" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "vvo" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -50746,7 +50646,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vGW" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light_switch/west,
@@ -51120,9 +51020,7 @@
 	},
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/engine/caution/corner,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "vQl" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -51353,7 +51251,7 @@
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vUQ" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/mapping_helper/access/medical,
@@ -51893,9 +51791,7 @@
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "wfh" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -52584,7 +52480,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wwm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52886,9 +52782,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "wEz" = (
 /obj/lattice{
 	dir = 1;
@@ -53304,7 +53198,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wOT" = (
 /obj/machinery/light,
 /obj/machinery/vending/fortune,
@@ -53384,7 +53278,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wQX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53411,9 +53305,7 @@
 "wRm" = (
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "wRx" = (
 /obj/item/storage/toilet,
 /obj/decoration/toiletholder{
@@ -54387,9 +54279,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "xnq" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
@@ -54528,7 +54418,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "xrx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54576,7 +54466,7 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "xsz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55919,9 +55809,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
+/area/station/bridge/reception)
 "xXX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
