@@ -487,6 +487,14 @@
 		if (A.storage)
 			. += A.storage.get_all_contents()
 
+/// increase storage slots of the storage
+/datum/storage/proc/increase_slots(mod)
+	src.slots += mod
+	var/list/viewing_mobs = src.hud?.mobs
+	src.hide_all_huds()
+	for (var/mob/M as anything in viewing_mobs)
+		src.show_hud(M)
+
 /// show storage contents
 /datum/storage/proc/show_hud(mob/user)
 	if (user.s_active && user.s_active != src.hud)

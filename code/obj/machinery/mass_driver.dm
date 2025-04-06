@@ -27,5 +27,5 @@
 			break
 		use_power(500)
 		O.throw_at(target, drive_range * src.power, src.power)
-	flick("mass_driver1", src)
+	FLICK("mass_driver1", src)
 	return

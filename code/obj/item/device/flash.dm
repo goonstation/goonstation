@@ -146,12 +146,12 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
 
@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/flash)
 
 	// Play animations.
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -250,7 +250,7 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
@@ -400,12 +400,11 @@ TYPEINFO(/obj/item/device/flash/turbo)
 			return
 		if (iswrenchingtool(W) && !(src.secure))
 			boutput(user, "You disassemble [src]!")
-			src.cell.set_loc(get_turf(src))
-			var/obj/item/device/flash/F = new /obj/item/device/flash( get_turf(src) )
+			var/obj/item/device/flash/F = new /obj/item/device/flash(get_turf(src))
 			if(!src.status)
 				F.status = 0
 				F.set_icon_state("flash3")
-			qdel(src)
+			src.cell.set_loc(get_turf(src)) //Do this last as removing the cell deletes the turboflash
 		else if (isscrewingtool(W))
 			boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
 			secure = !secure

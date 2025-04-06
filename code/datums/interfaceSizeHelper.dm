@@ -23,7 +23,7 @@
 	proc/load()
 		if (!cdn)
 			src.owner.loadResourcesFromList(list(
-				"browserassets/js/interfaceSizeHelper.js"
+				"browserassets/src/js/interfaceSizeHelper.js"
 			))
 
 		var/html = src.get_html()

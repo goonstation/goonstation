@@ -413,7 +413,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 
 /obj/item/device/light/candle/spooky/summon
 	New()
-		flick("candle-summon", src)
+		FLICK("candle-summon", src)
 		..()
 
 /obj/item/device/light/candle/haunted

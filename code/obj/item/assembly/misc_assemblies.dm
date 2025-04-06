@@ -791,6 +791,12 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	accepteditem = /obj/item/material_piece/bone
 	craftname = "bone chunk"
 
+/datum/pipeshotrecipe/potato
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/potato
+	accepteditem = /obj/item/reagent_containers/food/snacks/plant/potato
+	craftname = "potatoe"
+
 
 /obj/item/pipehulls
 	name = "filled pipe hulls"

@@ -1140,7 +1140,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 
 	for (var/mob/M in hear)
 
-		flick("loudspeaker-transmitting",src)
+		FLICK("loudspeaker-transmitting",src)
 		playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
 	return hear
 

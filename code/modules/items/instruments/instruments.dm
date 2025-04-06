@@ -164,6 +164,8 @@
 
 		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
 		for(var/i in start to end)
+			if(i > length(split_default_key_string))
+				break
 			. += split_default_key_string[i]
 
 	ui_interact(mob/user, datum/tgui/ui)

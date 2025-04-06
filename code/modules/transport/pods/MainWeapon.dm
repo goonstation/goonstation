@@ -88,7 +88,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -1124,12 +1124,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = TRUE
-			flick("SPS_o_large", purge)
+			FLICK("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = FALSE
-			flick("SPS_o_small", purge)
+			FLICK("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 
@@ -1225,6 +1225,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 /datum/projectile/laser/light/pod/burst
 	damage = 25
 	shot_delay = 0.2 SECONDS
+
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4

@@ -2256,4 +2256,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/brownie_batch
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/brownie_batch/
+	output = /obj/item/reagent_containers/food/snacks/dessert_batch/brownie
+
+/datum/cookingrecipe/oven/flapjack_batch
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/oatmeal
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/condiment/syrup //technically this should be GOLDEN syrup but this works too
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/dessert_batch/flapjack

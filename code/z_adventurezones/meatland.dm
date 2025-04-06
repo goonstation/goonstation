@@ -424,7 +424,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(!src.alive || !message)
 			return
 
-		flick("meatboss_chatter", src)
+		FLICK("meatboss_chatter", src)
 		playsound(src.loc, pick(meathead_noises), 40, 1)
 
 		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
@@ -1276,7 +1276,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		changing_state = 1
 		active = (opened != default_state)
 
-		flick("fangdoorc0",src)
+		FLICK("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
 		set_opacity(0)
@@ -1296,7 +1296,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		set_density(1)
 		set_opacity(1)
-		flick("fangdoorc1",src)
+		FLICK("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
 				boutput(L, SPAN_NOTICE("You just barely slip by the clenching teeth unharmed!"))

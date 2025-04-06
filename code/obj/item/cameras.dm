@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/camera/large)
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
-	desc = "A reusable polaroid camera."
+	desc = "A reusable instant-print camera."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
@@ -41,7 +41,13 @@ TYPEINFO(/obj/item/camera/large)
 		src.setItemSpecial(null)
 
 	large
+		name = "telephoto camera"
+		desc = "A long-range surveillance and observation camera with self-printing instant film."
 		pictures_left = 30
+
+		New()
+			..()
+			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/machines/mixer.ogg')
 
 
 	examine()
@@ -149,7 +155,7 @@ TYPEINFO(/obj/item/camera/large)
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-		flick("camera_flash-anim", src)
+		FLICK("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
 		var/blind_msg_others = "!"

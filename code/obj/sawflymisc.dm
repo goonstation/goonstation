@@ -113,7 +113,7 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 	attack_self(mob/user)
 		if (ON_COOLDOWN(src, "button_pushy", 1.5 SECONDS))
 			return
-		flick("sawfly_remote-pressed", src)
+		FLICK("sawfly_remote-pressed", src)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.1 SECONDS)
 				S.foldself()

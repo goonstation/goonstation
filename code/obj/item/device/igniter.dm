@@ -119,7 +119,7 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
-		flick("igniter_light", src)
+		FLICK("igniter_light", src)
 		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/device/igniter)
 		if (src.master)
 			location = src.master.loc
 
-		flick("igniter_light", src)
+		FLICK("igniter_light", src)
 		location = get_turf(location)
 		location?.hotspot_expose((isturf(location) ? 3000 : 4000),2000)
 		last_ignite = world.time

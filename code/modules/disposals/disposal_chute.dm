@@ -522,7 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/flush()
 
 		flushing = 1
-		flick("[icon_style]-flush", src)
+		FLICK("[icon_style]-flush", src)
 
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
@@ -801,7 +801,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	//stuff to emulate computer look
 	var/datum/light/light
 	var/image/screen_image
-	///A dummy object in vis_contents so we can use flick() to animate the flush overlay
+	///A dummy object in vis_contents so we can use FLICK() to animate the flush overlay
 	var/obj/dummy/flush_dummy = null
 	///The vendor at the other end
 	var/obj/machinery/vending/player/chemicals/linked = null
@@ -866,7 +866,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
 		H.start(src)
-		flick("chemlink_flush", src.flush_dummy)
+		FLICK("chemlink_flush", src.flush_dummy)
 		playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 
 	ui_interact(mob/user, datum/tgui/ui)
