@@ -15,9 +15,6 @@ TYPEINFO(/obj/machinery/power/smes/magical)
 		charge = INFINITY
 		..()
 
-	set_broken()
-		return TRUE
-
 TYPEINFO(/obj/machinery/power/smes)
 	mats = list("metal" = 40,
 				"conductive_high" = 30,
@@ -148,10 +145,6 @@ TYPEINFO(/obj/machinery/power/smes)
 	var/newoutput = text2num(inp.signal)
 	if(newoutput != src.output && isnum_safe(newoutput))
 		src.output = clamp((newoutput), 0 , SMESMAXCHARGELEVEL)
-
-/obj/machinery/power/smes/set_broken()
-	if(..()) return
-	AddComponent(/datum/component/equipment_fault/dangerously_shorted, tool_flags = TOOL_WIRING | TOOL_SOLDERING | TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
 
 /obj/machinery/power/smes/process(mult)
 
