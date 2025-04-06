@@ -3400,7 +3400,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 // WIP //////////////////////////////////
 /obj/item/gun/kinetic/antiair
 	name = "MORS-X anti-air rifle"
-	desc = "A ruthlessly powerful rifle firing 20mm frag rounds. Built to swat down UFOs out of the sky."
+	desc = "A ruthlessly powerful rifle firing .50 caliber frag rounds. Built to swat down UFOs out of the sky."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "antiair"
 	item_state = "missile_launcher"
@@ -3408,9 +3408,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = 10
 	contraband = 50
 	rarity = 5
-	ammo_cats = list(AMMO_CANNON_20MM)
+	ammo_cats = list(AMMO_DEAGLE) // whatever close enough
 	max_ammo_capacity = 4
 	auto_eject = 1
+	gildable = 1
 
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -3420,14 +3421,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 5
 	slowdown_time = 10
 
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
+
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 
 
 	New()
-		ammo = new/obj/item/ammo/bullets/cannon/antiair
-		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/circle/antiair)
+		ammo = new/obj/item/ammo/bullets/antiair
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/antiair)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 10, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 

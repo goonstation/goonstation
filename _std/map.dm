@@ -26,7 +26,7 @@
 #define MAPGEN_IGNORE_BUILDABLE (1 << 2)
 #define MAPGEN_ALLOW_VEHICLES (1 << 3)
 #define MAPGEN_FLOOR_ONLY	(1 << 4)
-
+#define MAPGEN_SLOW_GENERATION	(1 << 5)
 #define MAPGEN_TURF_ONLY ( MAPGEN_IGNORE_FLORA | MAPGEN_IGNORE_FAUNA )
 
 // map region allocator defines

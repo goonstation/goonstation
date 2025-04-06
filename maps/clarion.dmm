@@ -8420,7 +8420,7 @@
 	name = "chamber inlet pump";
 	target_pressure = 1000
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/blue,
 /area/station/science/lab)
 "bnd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -14040,17 +14040,17 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/barber_shop)
 "dBQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
 	id = "tox_hs_one";
 	layer = 4;
-	name = "Chamber One Heat Shield";
+	name = "Heat Shield";
 	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -16698,7 +16698,7 @@
 	name = "Chamber Ignition Switch";
 	pixel_x = 24
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/red,
 /area/station/science/lab)
 "fCY" = (
 /obj/machinery/alarm{
@@ -22187,19 +22187,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"jvN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/poddoor/blast/single{
-	density = 0;
-	icon_state = "bdoorsingle0";
-	id = "tox_hs_one";
-	layer = 4;
-	name = "Chamber One Heat Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "jvR" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -38569,16 +38556,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "vhL" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/atmospherics/pipe/simple/overfloor,
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
 	id = "tox_hs_one";
 	layer = 4;
-	name = "Chamber One Heat Shield";
+	name = "Heat Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "vhP" = (
@@ -93985,7 +93972,7 @@ bju
 cMs
 iPP
 fCF
-jvN
+vhL
 bpA
 bqC
 brP

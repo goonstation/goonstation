@@ -584,7 +584,7 @@
 				if(isnull(input) || input < 1 || input >> length(src.possible_active))
 					src.master.temp = null
 					src.print_text(mainmenu_text())
-					src.print_text("Previous operation cancelled.")
+					src.print_text("<br>Search operation cancelled.")
 					src.menu = MENU_MAIN
 					return
 

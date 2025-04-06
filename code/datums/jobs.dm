@@ -1403,6 +1403,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_UNTRAINED
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/suit/purple)
+	special_spawn_location = LANDMARK_ACTOR_SPAWN
 
 /datum/job/special/random/medical_specialist
 	name = "Medical Specialist"
@@ -1607,6 +1608,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/camera)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	items_in_backpack = list(/obj/item/camera_film/large)
+	special_spawn_location = LANDMARK_JOURNALIST_SPAWN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1699,7 +1701,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	special_spawn_location = null
 #else
 	limit = 1
-	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
+	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
 #endif
 	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
@@ -1809,6 +1811,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_poc1 = list(/obj/item/device/audio_log)
 	slot_poc2 = list(/obj/item/camera)
 	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
+	special_spawn_location = LANDMARK_INFLUENCER_SPAWN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /*

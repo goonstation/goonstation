@@ -677,7 +677,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 /obj/item/paper/nast_manual
 	name = "paper- 'Nuclear Agent Sentry Turret Manual'"
 	info = {"<h4>Nuclear Agent Sentry Turret Manual</h4>
-	Congratulations, on your purchase of a Nuclear Agent Sentry Turret!<br>
+	Congratulations on your purchase of a Nuclear Agent Sentry Turret!<br>
 	This a turret that fires at non-syndicate threats in a 30 degree arc.<br>
 	Press its deploy button while it is your hand to deploy it.<br>
 	The turret will start out facing the direction you are facing.<br>
@@ -693,7 +693,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 /obj/item/paper/narcs_manual
 	name = "paper- 'Nanotrasen Automatic Riot Control System'"
 	info = {"<h4>Nanotrasen Automatic Riot Control System</h4>
-	Congratulations, on your purchase of a Nanotrasen Automatic Riot Control System!<br>
+	Congratulations on your purchase of a Nanotrasen Automatic Riot Control System!<br>
 	This a turret that fires at non-security and non-command threats in a 60 degree arc.<br>
 	Press its deploy button while it is your hand to deploy it.<br>
 	The turret will start out facing the direction you are facing.<br>

@@ -1393,6 +1393,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	rechargeable = 0
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
+	tooltip_flags = REBUILD_USER
 	var/emagged = FALSE
 
 	New(var/mob/M)
@@ -1417,6 +1418,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	disposing()
 		indicator_display = null
 		..()
+
+	get_desc(dist, mob/user)
+		if (user.mind.is_antagonist())
+			. += SPAN_ALERT("<b>It doesn't seem to like you...</b>")
 
 	attack_hand(mob/user)
 		if (!owner_prints)
