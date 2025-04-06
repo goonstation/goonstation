@@ -92,7 +92,7 @@ TYPEINFO(/obj/machinery/power/smes)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if (!terminal)
-			status |= BROKEN
+			status |= POWEROFF
 			return
 
 		terminal.master = src
@@ -101,7 +101,7 @@ TYPEINFO(/obj/machinery/power/smes)
 
 
 /obj/machinery/power/smes/update_icon()
-	if (status & BROKEN)
+	if (status & (BROKEN|POWEROFF))
 		ClearAllOverlays()
 		return
 
@@ -168,7 +168,7 @@ TYPEINFO(/obj/machinery/power/smes)
 
 /obj/machinery/power/smes/process(mult)
 
-	if (status & BROKEN)
+	if (status & (BROKEN|POWEROFF))
 		return
 
 
@@ -180,6 +180,9 @@ TYPEINFO(/obj/machinery/power/smes)
 	// Had to revert a hack here that caused SMES to continue charging despite insufficient power coming in on the input (terminal) side.
 	if (terminal)
 		charge(mult)
+	else
+		status |= POWEROFF
+		return
 
 	if (online)		// if outputting
 		if (prob(5))
