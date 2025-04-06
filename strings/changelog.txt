@@ -1,5 +1,10 @@
 
 (t)sun apr 06 25
+(u)Xenomni, Ribbie
+(p)22690
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Added denim dresses to clothing booth.
+(+)Added six different colored denim dresses to the clothing booth; blue, turquoise, white, black, grey and khaki, purchasable for 50 credits.
 (u)glowbold
 (p)22737
 (e)🆕🗺|C-Feature, A-Mapping
