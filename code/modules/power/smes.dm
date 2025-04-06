@@ -134,11 +134,11 @@ TYPEINFO(/obj/machinery/power/smes)
 		return
 	switch(severity)
 		if(2)
-			if (prob(25))
+			if (prob(50))
 				src.set_broken()
 				return
 		if(3)
-			if (prob(20))
+			if (prob(25))
 				src.set_broken()
 
 /obj/machinery/power/smes/proc/chargedisplay()
