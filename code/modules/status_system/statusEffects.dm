@@ -3672,8 +3672,8 @@
 		var/mob/living/critter/space_phoenix/phoenix = src.owner
 		var/datum/abilityHolder/space_phoenix/ability_holder = phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (!ability_holder)
-			return "Cannot connect to ability holder, please file a bug!"
-		return "Extra [phoenix.extra_life_regen] out of combat health regeneration from [min(ability_holder.stored_critter_count,5)]/5 critters and [min(ability_holder.stored_human_count,5)]/5 humans collected in your nest."
+			return "Cannot connect to ability holder, please file a bug report!"
+		return "Extra [phoenix.extra_life_regen] out of combat health regeneration from [min(ability_holder.stored_critter_count, 5)] / 5 critters and [min(ability_holder.stored_human_count, 5)] / 5 humans collected in your nest."
 
 /datum/statusEffect/phoenix_revive_ready
 	id = "phoenix_revive_ready"

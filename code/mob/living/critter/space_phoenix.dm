@@ -51,6 +51,8 @@
 
 		QDEL_NULL(src.organHolder)
 
+		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
+
 	Life()
 		. = ..()
 		if (istype(get_turf(src), /turf/space))
@@ -451,7 +453,7 @@
 		..()
 
 /area/phoenix_nest
-	name = "Space Phoenix Nest"
+	name = "ice nest"
 	skip_sims = TRUE
 	var/mob/living/critter/space_phoenix/owning_phoenix = null
 	var/list/humans_for_revive = list()
