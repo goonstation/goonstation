@@ -1,5 +1,9 @@
 
 (t)sun apr 06 25
+(u)JORJ949
+(p)22778
+(e)⚖⛔🐣|C-Balance, C-Removal, A-Respawning
+(+)Chaplains can roll roundstart vampire again (They are immune to burning in the chapel).
 (u)Colossusqw
 (p)21781
 (e)🆕🎨⚖🧛🔨|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions
