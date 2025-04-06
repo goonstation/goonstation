@@ -548,7 +548,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes = list()
 
 		if (!src.recipes.len)
-/*			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
+			src.recipes += new /datum/cookingrecipe/oven/haggass(src)
 			src.recipes += new /datum/cookingrecipe/oven/haggis(src)
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
 			src.recipes += new /datum/cookingrecipe/oven/omelette_bee(src)
@@ -803,7 +803,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
 			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
-*/
+
 			// store the list for later
 			oven_recipes = src.recipes
 
