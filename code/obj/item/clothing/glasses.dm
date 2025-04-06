@@ -34,7 +34,7 @@
 	unequipped(mob/user)
 		. = ..()
 		if (src.flash_compatible)
-			user.ClearSpecificOverlays("glasses")
+			user.ClearSpecificOverlays("glasses_flash")
 
 	/// Does the flash effect when nudging glasses upwards
 	proc/nudge_flash()
