@@ -61,7 +61,7 @@
 		if (istype(AM, /obj/turbine_shaft/turbine))
 			src.pop()
 			return
-		if (prob(15)) //sometimes you just walk through it
+		if (prob(30)) //sometimes you just walk through it
 			return
 		var/dir = AM.dir
 		if (prob(40))

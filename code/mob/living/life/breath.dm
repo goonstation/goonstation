@@ -66,10 +66,17 @@
 		var/datum/organ_status/lung/status_updates = new
 
 		var/atom/underwater = 0
+		var/bubble_breathing = FALSE
 		if (isturf(owner.loc))
 			var/turf/T = owner.loc
 			if (istype(T, /turf/space/fluid))
-				underwater = T
+				//this is potentially slow but I think still better than forcing bubbles to register and unregister from turfs
+				var/obj/bubble/bubble = locate() in T
+				if (bubble && bubble.scale >= 0.4)
+					environment = bubble.air_contents
+					bubble_breathing = TRUE
+				else
+					underwater = T
 			else if (T.active_liquid)
 				var/obj/fluid/F = T.active_liquid
 
@@ -173,8 +180,7 @@
 						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
 					else if (isturf(owner.loc) || ismob(owner.loc))
 						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
-						var/turf/T = get_turf(owner)
-						breath = T?.remove_air(breath_moles)
+						breath = environment?.remove(breath_moles)
 
 				else //Still give containing object the chance to interact
 					underwater = 0 // internals override underwater state
@@ -186,7 +192,10 @@
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
-			owner.loc.assume_air(breath)
+			if (bubble_breathing) //we don't want to spawn more bubbles if we're breathing from a bubble
+				environment.merge(breath)
+			else
+				owner.loc.assume_air(breath)
 
 
 	proc/get_breath_grabbed_by(volume_needed)
