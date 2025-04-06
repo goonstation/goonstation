@@ -2328,7 +2328,7 @@
 		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
 
 		// Exclude the non-natural ones
-		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		items2spawn -= list(/obj/item/clothing/head/flower/rose/holorose)
 		..()
 
 	one

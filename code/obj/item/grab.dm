@@ -916,7 +916,7 @@
 		var/target_dir = get_dir(user,target)
 		if(!target_dir)
 			target_dir = user.dir
-		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir)
+		if (!istype(T, /turf/space) && !(user.lying) && can_act(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE) && target_dir &&!isghostcritter(user))
 
 			user.changeStatus("knockdown", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
@@ -934,6 +934,7 @@
 
 				if (dive_attack_hit)
 					var/damage = rand(1,6)
+					var/area/AR = get_area(dive_attack_hit)
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.shoes)
@@ -943,15 +944,16 @@
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
 					if(issilicon(dive_attack_hit))
-						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+						playsound(user, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						user.visible_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
+					else if (AR.sanctuary)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit] harmlessly!</B>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
-						for (var/mob/O in AIviewers(user))
-							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
+						user.visible_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"))
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		popping = 1
 		src.visible_message(SPAN_ALERT("[src] pops violently!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-		flick("cornsplode", src)
+		FLICK("cornsplode", src)
 		SPAWN(1 SECOND)
 			var/obj/item/reagent_containers/food/snacks/new_popcorn = new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
 			new_popcorn.reagents.maximum_volume = max(new_popcorn.reagents.maximum_volume, src.reagents.total_volume)
@@ -1124,7 +1124,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
 	New()
-		flick("pumpkin_summon", src)
+		FLICK("pumpkin_summon", src)
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte

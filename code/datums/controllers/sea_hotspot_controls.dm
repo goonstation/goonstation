@@ -991,7 +991,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		on = 0
 		UpdateIcon()
-		flick("stomper2",src)
+		FLICK("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
 			SPAWN(0.4 SECONDS)

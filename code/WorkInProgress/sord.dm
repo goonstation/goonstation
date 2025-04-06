@@ -318,6 +318,8 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 
 	Crossed(atom/movable/AM)
 		. = ..()
+		if (isintangible(AM) || isobserver(AM))
+			return
 		switch(weblevel)
 			if(-INFINITY to 2)
 				if(!src.can_web_walk(AM))

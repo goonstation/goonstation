@@ -26,7 +26,9 @@ export const acw: AlertContentWindow = {
         for non-antagonists. Avoid memes (e.g. sus, pog, amogus), txt spk (e.g.
         lol, wtf), and out of game terminology when you are playing your
         character. LOOC is available if you need to communicate out of
-        character.
+        character. In addition, if you notice a character who is
+        Afk/disconnected, please do not attack or mess with them beyond taking
+        them to cryo.
       </Section>
       <Section title="2. Escalate through roleplay before attacking other players.">
         The goal of the roleplay server is character interaction and interesting

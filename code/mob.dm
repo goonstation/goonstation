@@ -235,6 +235,9 @@
 	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
 	var/list/datum/vomit_behavior/vomit_behaviors = null
 
+	/// if this mob can interface with pod context menu by left clicking
+	var/can_interface_with_pods = TRUE
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -1792,7 +1795,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
@@ -1878,7 +1881,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("elecgibbed", animation)
+		FLICK("elecgibbed", animation)
 		if(ispath(light_type))
 			light = new light_type
 			light.set_brightness(brightness)
@@ -1920,7 +1923,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("firegibbed", animation)
+		FLICK("firegibbed", animation)
 		if (drop_equipment)
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
@@ -1965,7 +1968,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2008,7 +2011,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("owlgibbed", animation)
+		FLICK("owlgibbed", animation)
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
@@ -2047,7 +2050,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("disintegrated", animation)
+		FLICK("disintegrated", animation)
 
 		if (prob(20))
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
@@ -2084,7 +2087,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("implode", animation)
+		FLICK("implode", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2192,7 +2195,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()

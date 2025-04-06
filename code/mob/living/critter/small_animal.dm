@@ -717,7 +717,7 @@ proc/filter_carrier_pets(var/type)
 		src.UpdateIcon()
 
 /mob/living/critter/small_animal/turtle/sylvester/Commander
-	beret_remove_job_needed = "NanoTrasen Commander"
+	beret_remove_job_needed = "NanoTrasen Pod Commander"
 
 	New()
 		..()
@@ -1563,7 +1563,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 								src.icon_state = src.species
 						return SPAN_EMOTE("<b>[src]</b> dances!")
 					else
-						flick("[src.species]-flaploop", src)
+						FLICK("[src.species]-flaploop", src)
 						if (prob(3))
 							SPAWN(0)
 								src.create_feather()
@@ -2046,7 +2046,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if (isobj(src.loc))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
-					flick("[src.icon_state]-flap", src)
+					FLICK("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
 					return SPAN_ALERT("<b>[src] hisses!</b>")
 		return null
@@ -2058,7 +2058,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.emote("flap")
 
 	critter_basic_attack(mob/target)
-		flick("[src.icon_state]-flap", src)
+		FLICK("[src.icon_state]-flap", src)
 		playsound(src.loc, "swing_hit", 30, 0)
 		..()
 
@@ -3450,7 +3450,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
-					flick("batrina-dance", src)
+					FLICK("batrina-dance", src)
 					return SPAN_EMOTE("<b>[src]</b> dances!")
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -4102,7 +4102,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 								if (!can_act(responseMonkey, 0))
 									continue
 								responseMonkey.emote("dance")
-					flick(pick("boogie-d1","boogie-d2","boogie-d3"), src)
+					FLICK(pick("boogie-d1","boogie-d2","boogie-d3"), src)
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")
 					return SPAN_EMOTE("<b>[src]</b> [msg]!")
 
@@ -4459,7 +4459,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on [him_or_her(src)] with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
-				flick(src.icon_state_exclaim, src)
+				FLICK(src.icon_state_exclaim, src)
 		else
 			return ..()
 
@@ -4469,7 +4469,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					if(src.icon_state_exclaim)
-						flick(src.icon_state_exclaim, src)
+						FLICK(src.icon_state_exclaim, src)
 					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
@@ -4666,7 +4666,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					var/msg = pick("gets down","yee claws", "is feelin' it now", "dances to that song! The one that goes \"beep boo boo bop boo boo beep\"", "does a little dance","dances like no one's watching")
-					flick(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
+					FLICK(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
 					return SPAN_ALERT("<b>[src] [msg]!</b>")
 		return null
 

@@ -207,7 +207,7 @@
 
 		if(cleaned_a_nerd)
 			playsound(src.loc, 'sound/effects/screech.ogg', 50, 0, 0, 0.7)
-			flick("sonicshower-on",src)
+			FLICK("sonicshower-on",src)
 			src.use_power(750)
 
 		return

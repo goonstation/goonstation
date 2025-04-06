@@ -782,6 +782,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
+			src.recipes += new /datum/cookingrecipe/oven/flapjack_batch(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
