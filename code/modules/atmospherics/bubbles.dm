@@ -141,3 +141,44 @@
 		. = ..()
 		SPAWN(2 SECONDS)
 		qdel(src)
+
+/obj/bubble_vent //sus
+	icon = 'icons/obj/nadir_seaobj.dmi'
+	icon_state = "bitelung"
+#define _DEFINE_GAS(GAS, ...) var/GAS = FALSE;
+	APPLY_TO_GASES(_DEFINE_GAS)
+#undef _DEFINE_GAS
+	///Total amount of gas per bubble
+	var/amount = 30
+	///Plus or minus this much
+	var/variance = 10
+	var/temperature = T20C
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	proc/process()
+		if (prob(60))
+			//welcome to the _SILLY_ATMOS_MACRO zone
+			var/total_gases = 0
+#define _COUNT_GASES(GAS, ...) total_gases += src.GAS;
+			APPLY_TO_GASES(_COUNT_GASES)
+#undef _COUNT_GASES
+			var/total_amount = src.amount + rand(-src.variance, src.variance)
+			var/datum/gas_mixture/gas_mixture = new()
+			gas_mixture.temperature = src.temperature
+#define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.GAS = total_amount/total_gases};
+			APPLY_TO_GASES(_MAKE_GASES)
+#undef _MAKE_GASES
+			new /obj/bubble(src.loc, gas_mixture)
+
+/obj/bubble_vent/plasma
+	toxins = TRUE
+
+/obj/bubble_vent/oxygen
+	oxygen = TRUE

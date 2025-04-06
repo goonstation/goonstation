@@ -321,6 +321,7 @@
 #include "code\datums\controllers\process\area_process.dm"
 #include "code\datums\controllers\process\arena.dm"
 #include "code\datums\controllers\process\blob.dm"
+#include "code\datums\controllers\process\bubble_vents.dm"
 #include "code\datums\controllers\process\burning.dm"
 #include "code\datums\controllers\process\camnet.dm"
 #include "code\datums\controllers\process\chemistry.dm"
