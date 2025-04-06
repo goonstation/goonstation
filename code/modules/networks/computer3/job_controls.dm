@@ -72,7 +72,7 @@ var/datum/job/priority_job = null
 							var/list/output = list("All roles that can be requisitioned:")
 							var/list/datum/job/all_jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 							for (var/datum/job/job in all_jobs)
-								if (job.request_limit <= 0 || !job.add_to_manifest || job.no_late_join)
+								if (job.request_limit <= job.limit || !job.add_to_manifest || job.no_late_join)
 									continue
 
 								output += src.job_info(job, include_requests = TRUE)
@@ -82,11 +82,11 @@ var/datum/job/priority_job = null
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
-						if (job.request_limit <= 0)
+						if (job.request_limit <= job.limit)
 							src.print_text("Error: can not requisition more slots for that role")
 							return
 						requested_job = job
-						src.print_text("Enter the number of slots to requisition (max [job.request_limit]), or type X to cancel")
+						src.print_text("Enter the number of slots to requisition (max [job.request_limit - job.limit]), or type X to cancel")
 						state = MENU_REQUEST_COUNT
 
 
@@ -96,7 +96,7 @@ var/datum/job/priority_job = null
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
-						src.print_text(src.job_info(job, include_requests = (job.request_limit > 0)))
+						src.print_text(src.job_info(job, include_requests = (job.request_limit > job.limit)))
 
 					if("quit")
 						src.master.temp = ""
@@ -112,7 +112,7 @@ var/datum/job/priority_job = null
 					requested_job = null
 					state = MENU_MAIN
 				else if(text2num(command))
-					request_count = clamp(text2num(command), 0, requested_job.request_limit)
+					request_count = clamp(text2num(command), 0, requested_job.request_limit - requested_job.limit)
 					if(request_count == 0)
 						src.print_text("Cancelling job requisition...")
 						requested_job = null
@@ -133,7 +133,6 @@ var/datum/job/priority_job = null
 							src.print_text("Error: insufficient funds. Requisition cancelled")
 						else
 							requested_job.limit += request_count
-							requested_job.request_limit -= request_count
 							global.wagesystem.station_budget -= total_cost
 							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot(s) requisitioned by [src.account.assignment] [src.account.registered]")
 
