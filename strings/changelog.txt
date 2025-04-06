@@ -1,6 +1,10 @@
 
 (t)sun apr 06 25
 (u)sunnyaries
+(p)22665
+(e)🆕|C-Feature
+(+)Added cyborg legs as part of character customization.
+(u)sunnyaries
 (p)22664
 (e)⚖|C-Balance
 (+)Light borg legs no longer negate speed penalties.
