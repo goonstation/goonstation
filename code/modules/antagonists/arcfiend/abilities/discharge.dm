@@ -35,26 +35,14 @@
 			if (T)
 				var/falloff = GET_DIST(holder.owner, M)
 				M.throw_at(T, target_dist - falloff, throw_speed)
-		else if (istype(target, /obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/airlock = target
-			if (airlock.hardened)
-				boutput(src.holder.owner, SPAN_ALERT("[target] is hardened against your electrical attacks, your [name] skill has no effect!"))
-				return TRUE
-			airlock.loseMainPower()
-			target.add_fingerprint(src.holder.owner)
-			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
-			boutput(src.holder.owner, SPAN_ALERT("You run a powerful current into [target], temporarily cutting its power!"))
-		else if (istype(target, /obj/machinery/))
+		else if (istype(target, /obj/machinery))
 			var/obj/machinery/machine = target
-			if(machine.is_broken())
-				boutput(src.holder.owner, SPAN_ALERT("[machine] is already broken!"))
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if(!machine.set_broken(src.holder.owner))
+			if (machine.overload_act())
 				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
-				machine.visible_message(SPAN_ALERT("[machine] sparks as [src.holder.owner] strikes it!"))
 				machine.add_fingerprint(src.holder.owner)
+				machine.visible_message(SPAN_ALERT("\The [machine] sparks as [src.holder.owner] strikes it!"))
 			else
-				boutput(src.holder.owner, SPAN_ALERT("[machine] can't be broken!"))
+				boutput(src.holder.owner, SPAN_ALERT("\The [machine] couldn't be overloaded!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		else
 			return TRUE
