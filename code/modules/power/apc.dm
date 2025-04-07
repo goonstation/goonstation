@@ -1456,6 +1456,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	operating = 0
 	update()
 
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
+
 // overload all the lights in this APC area
 
 /obj/machinery/power/apc/proc/overload_lighting(var/omit_emergency_lights)
