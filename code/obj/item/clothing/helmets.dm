@@ -309,9 +309,6 @@
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-		setProperty("chemprot",30)
-		setProperty("heatprot", 15)
-
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -327,6 +324,9 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)
+		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
+
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

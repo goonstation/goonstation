@@ -529,7 +529,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie/large,
-		/obj/item/clothing/suit/space/syndicate/heavy,
+		/obj/item/clothing/suit/space/syndicate/specialist/heavy,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	assault
