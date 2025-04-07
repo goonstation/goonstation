@@ -993,6 +993,10 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 			icon_state = "snow4"
 		src.set_dir(pick(cardinal))
 
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
+
 /turf/unsimulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
@@ -1332,6 +1336,10 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 		. = ..()
 		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/unsimulated/floor/auto/snow/rough
 	name = "snow"

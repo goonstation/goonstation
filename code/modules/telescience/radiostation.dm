@@ -37,14 +37,14 @@
 
 /area/radiostation/podbay
 	name = "Radio Podbay"
-	icon_state = "green"
+	icon_state = "hangar"
 
 /area/radiostation/bedroom
-	name = "Radio Bedroom"
+	name = "Radio Quarters"
 	icon_state = "red"
 
 /area/radiostation/engineering
-	name = "Radio Engine"
+	name = "Radio Supply Closet"
 	icon_state = "blue"
 
 /area/radiostation/hallway
@@ -56,6 +56,22 @@
 	icon_state = "yellow"
 	sound_environment = 3
 	workplace = 1
+
+/area/radiostation/tv_set
+	name = "Radio TV Studio"
+	icon_state = "green"
+
+/area/radiostation/green
+	name = "Radio Green Room"
+	icon_state = "green"
+
+/area/radiostation/teleporter
+	name = "Radio Cargo Intake"
+	icon_state = "red"
+
+/area/radiostation/press
+	name = "Radio Paper Press"
+	icon_state = "yellow"
 
 //objects
 
