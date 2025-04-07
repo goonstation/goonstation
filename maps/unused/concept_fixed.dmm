@@ -29595,7 +29595,7 @@
 /area/station/security/hos)
 "bgH" = (
 /turf/simulated/wall/r_wall,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bgI" = (
 /obj/storage/secure/closet/courtroom,
 /turf/simulated/floor,
@@ -29665,7 +29665,7 @@
 	},
 /obj/machinery/light/lamp,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bgQ" = (
 /obj/table/wood{
 	dir = 5
@@ -29681,7 +29681,7 @@
 	
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bgR" = (
 /obj/machinery/door/airlock/glass{
 	name = "Bridge Checkpoint";
@@ -29825,7 +29825,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhe" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -29839,7 +29839,7 @@
 	
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhf" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -29847,7 +29847,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/ATM,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhg" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -30012,7 +30012,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhs" = (
 /obj/table/wood{
 	tag = "icon-woodentable (WEST)";
@@ -30023,7 +30023,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bht" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -30034,7 +30034,7 @@
 	
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhu" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -30056,7 +30056,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhv" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -30139,7 +30139,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30150,7 +30150,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhD" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30160,14 +30160,14 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhE" = (
 /obj/cable{
 	icon_state = "4-8";
 	
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhF" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30185,7 +30185,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhG" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30267,11 +30267,11 @@
 	},
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhO" = (
 /obj/storage/secure/closet/command/hop,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhP" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -30279,7 +30279,7 @@
 	name = "Station Intercom (Security)"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhQ" = (
 /obj/stool/bed,
 /obj/machinery/status_display{
@@ -30292,7 +30292,7 @@
 	},
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhR" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
@@ -30315,10 +30315,10 @@
 	
 	},
 /turf/simulated/wall/r_wall,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhU" = (
 /turf/simulated/wall,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhV" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -35293,7 +35293,7 @@
 /obj/item/coin,
 /obj/item/coin,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "xTf" = (
 /obj/machinery/conveyor/WE{
 	id = "cargo"

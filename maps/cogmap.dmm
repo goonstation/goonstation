@@ -7944,7 +7944,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aEa" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -15151,7 +15151,7 @@
 /area/station/bridge)
 "aZQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZR" = (
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/light{
@@ -15159,7 +15159,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -15170,7 +15170,7 @@
 	pixel_y = 27
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZU" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/grey/side,
@@ -15465,7 +15465,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -15474,7 +15474,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbc" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -15505,10 +15505,10 @@
 	},
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bbg" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal{
@@ -15734,7 +15734,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15746,24 +15746,24 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbT" = (
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bbX" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/radio/intercom{
@@ -15785,7 +15785,7 @@
 	},
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bbZ" = (
 /obj/table/auto,
 /obj/bedsheetbin{
@@ -15804,7 +15804,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcb" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -15820,7 +15820,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcd" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -15833,7 +15833,7 @@
 /area/station/turret_protected/Zeta)
 "bcf" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bcg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16111,7 +16111,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bcY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16126,7 +16126,7 @@
 	dir = 8;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bda" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16135,7 +16135,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16144,7 +16144,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdc" = (
 /obj/item/device/radio/intercom{
 	dir = 1
@@ -16153,14 +16153,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdd" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdf" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -16174,7 +16174,7 @@
 	},
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdg" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16183,7 +16183,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdh" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -16199,7 +16199,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdi" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16232,7 +16232,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bdm" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -16452,7 +16452,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdZ" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced{
@@ -16466,7 +16466,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bea" = (
 /obj/table/wood/auto,
 /obj/machinery/recharger{
@@ -16485,7 +16485,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beb" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -16502,14 +16502,14 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bec" = (
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bed" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bee" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -16517,7 +16517,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bef" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16716,7 +16716,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/camera{
@@ -16741,7 +16741,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "beU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -16749,7 +16749,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "beW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17135,7 +17135,7 @@
 	pixel_x = 6
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "bgo" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/freezer,
@@ -34446,7 +34446,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "cuC" = (
 /obj/machinery/light/emergency,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -36956,7 +36956,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "cRg" = (
 /obj/landmark/pest,
 /turf/simulated/floor/specialroom/bar,
@@ -37122,7 +37122,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "cWR" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38429,7 +38429,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "dRa" = (
 /obj/lattice{
 	dir = 4;
@@ -39631,7 +39631,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "eFF" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start/job/technical_trainee,
@@ -40372,7 +40372,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ffW" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -41951,7 +41951,7 @@
 	pixel_y = 23
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "gmU" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -43877,7 +43877,7 @@
 	dir = 5;
 	icon_state = "fgreen3"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "hNK" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
@@ -50337,7 +50337,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "mWX" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -50820,18 +50820,18 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Customs"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/access/heads,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null;
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "nph" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -50941,7 +50941,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "ntb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -51329,7 +51329,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "nHP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -55343,7 +55343,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "qDq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55511,7 +55511,7 @@
 /obj/machinery/firealarm/north,
 /obj/vehicle/segway,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "qJr" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -59352,7 +59352,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint)
+/area/station/bridge/customs)
 "tHo" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor,
@@ -59378,7 +59378,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "tHP" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
