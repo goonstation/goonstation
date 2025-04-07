@@ -1,5 +1,9 @@
 
 (t)mon apr 07 25
+(u)RubberRats
+(p)22895
+(e)🔎🍝|C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed internally, please report any issues that crop up
 (u)CalliopeSoups
 (p)22818
 (e)🎨🔨|C-Sprites, A-Player-Actions
