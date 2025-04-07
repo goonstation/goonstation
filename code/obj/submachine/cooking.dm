@@ -613,8 +613,6 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/oven/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/mysteryburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/synthbuttburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/burger/cyberbuttburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/buttburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/synthheartburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/burger/cyberheartburger(src)
@@ -858,8 +856,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 				// this is null if it uses normal outputs (see below),
 				// otherwise it will be the created item from this
 				output = R.specialOutput(src)
-				if (isnull(output))
-					output = R.output
+				if (!output)
+					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
+						for(var/specialIngredient in R.variants)
+							if(output) break
+							if(OVEN_checkitem(specialIngredient, R.variant_quantity))
+								output = R.variants[specialIngredient]
+					if(!output)
+						output = R.output
 				if (R.useshumanmeat) derivename = 1
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK

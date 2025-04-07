@@ -5,9 +5,19 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
 	var/category = "Unsorted" /// category for sorting, use null to hide
+	var/list/variants = null
+	var/variant_quantity = 1
 
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
+
+//TODO: replace variant checking code with this once cooking machines have been unified under one type
+/*	proc/getVariant(var/obj/submachine/ourCooker)
+		for(var/obj/item/specialIngredient in variants)
+			if(ourCooker.check_item(specialIngredient, variant_quantity))
+			return new variants[specialIngredient]
+		return new output
+*/
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
@@ -88,7 +98,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 			var/obj/item/reagent_containers/food/snacks/burger/burgle/burgle = new()
 			possibly_meat.transfer_all_reagents(burgle)
 			return burgle
-		return new src.output()
 
 /datum/cookingrecipe/oven/burger/mysteryburger
 	ingredients = list(\
@@ -166,22 +175,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/clothing/head/butt = 1)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
-	category = "Burgers"
-
-/datum/cookingrecipe/oven/burger/synthbuttburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/clothing/head/butt/synth = 1)
-	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
-	category = "Burgers"
-
-/datum/cookingrecipe/oven/burger/cyberbuttburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/clothing/head/butt/cyberbutt = 1)
-	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+	variants = list(\
+	/obj/item/clothing/head/butt/synth = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth,
+	/obj/item/clothing/head/butt/cyberbutt = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber)
 	category = "Burgers"
 
 /datum/cookingrecipe/oven/burger/synthheartburger
