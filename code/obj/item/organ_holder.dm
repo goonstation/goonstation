@@ -1116,7 +1116,6 @@
 						else
 							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
 							G.mind?.transfer_to(src.donor)
-				//newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
 
@@ -1146,7 +1145,6 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/eye/newLeftEye = I
-				//newLeftEye.op_stage = op_stage
 				src.left_eye = newLeftEye
 				src.head.left_eye = newLeftEye
 				newLeftEye.body_side = L_ORGAN
@@ -1164,7 +1162,6 @@
 				if (!src.head)
 					return 0
 				var/obj/item/organ/eye/newRightEye = I
-				//newRightEye.op_stage = op_stage
 				src.right_eye = newRightEye
 				src.head.right_eye = newRightEye
 				newRightEye.body_side = R_ORGAN
@@ -1180,7 +1177,6 @@
 					else
 						return 0
 				var/obj/item/organ/chest/newChest = I
-				//newChest.op_stage = op_stage
 				src.chest = newChest
 				newChest.set_loc(src.donor)
 				newChest.holder = src
@@ -1207,7 +1203,6 @@
 					// else
 					// 	APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 10)
 					// 	src.donor.add_stam_mod_max("heart", 50)
-			//	newHeart.op_stage = op_stage
 				src.heart = newHeart
 				newHeart.set_loc(src.donor)
 				newHeart.holder = src
@@ -1221,7 +1216,6 @@
 					else
 						return 0
 				var/obj/item/organ/lung/newLeftLung = I
-				//newLeftLung.op_stage = op_stage
 				src.left_lung = newLeftLung
 				newLeftLung.body_side = L_ORGAN
 				newLeftLung.set_loc(src.donor)
@@ -1237,7 +1231,6 @@
 					else
 						return 0
 				var/obj/item/organ/lung/newRightLung = I
-				//newRightLung.op_stage = op_stage
 				src.right_lung = newRightLung
 				newRightLung.body_side = R_ORGAN
 				newRightLung.set_loc(src.donor)
@@ -1253,12 +1246,10 @@
 					else
 						return 0
 				var/obj/item/clothing/head/butt/newButt = I
-				//newButt.op_stage = op_stage
 				src.butt = newButt
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				//src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1268,7 +1259,6 @@
 					else
 						return 0
 				var/obj/item/organ/kidney/left/newleft_kidney = I
-				//newleft_kidney.op_stage = op_stage
 				src.left_kidney = newleft_kidney
 				newleft_kidney.set_loc(src.donor)
 				newleft_kidney.holder = src
@@ -1282,7 +1272,6 @@
 					else
 						return 0
 				var/obj/item/organ/kidney/right/newright_kidney = I
-				//newright_kidney.op_stage = op_stage
 				src.right_kidney = newright_kidney
 				newright_kidney.set_loc(src.donor)
 				newright_kidney.holder = src
@@ -1296,7 +1285,6 @@
 					else
 						return 0
 				var/obj/item/organ/liver/newliver = I
-				//newliver.op_stage = op_stage
 				src.liver = newliver
 				newliver.set_loc(src.donor)
 				newliver.holder = src
@@ -1310,7 +1298,6 @@
 					else
 						return 0
 				var/obj/item/organ/stomach/newstomach = I
-				//newstomach.op_stage = op_stage
 				src.stomach = newstomach
 				newstomach.set_loc(src.donor)
 				newstomach.holder = src
@@ -1324,7 +1311,6 @@
 					else
 						return 0
 				var/obj/item/organ/intestines/newintestines = I
-				//newintestines.op_stage = op_stage
 				src.intestines = newintestines
 				newintestines.set_loc(src.donor)
 				newintestines.holder = src
@@ -1338,7 +1324,6 @@
 					else
 						return 0
 				var/obj/item/organ/spleen/newspleen = I
-				//newspleen.op_stage = op_stage
 				src.spleen = newspleen
 				newspleen.set_loc(src.donor)
 				newspleen.holder = src
@@ -1352,7 +1337,6 @@
 					else
 						return 0
 				var/obj/item/organ/pancreas/newpancreas = I
-				//newpancreas.op_stage = op_stage
 				src.pancreas = newpancreas
 				newpancreas.set_loc(src.donor)
 				newpancreas.holder = src
@@ -1366,7 +1350,6 @@
 					else
 						return 0
 				var/obj/item/organ/appendix/newappendix = I
-				//newappendix.op_stage = op_stage
 				src.appendix = newappendix
 				newappendix.set_loc(src.donor)
 				newappendix.holder = src
@@ -1380,7 +1363,6 @@
 					else
 						return 0
 				var/obj/item/organ/tail/newtail = I
-				//newtail.op_stage = op_stage
 				src.tail = newtail
 				newtail.set_loc(src.donor)
 				newtail.holder = src
