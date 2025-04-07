@@ -524,7 +524,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
 		if (ispath(possible.output))
-			var/atom/item_path = possible.output
+			var/atom/item_path = getVariant(possible)
 			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 
@@ -805,13 +805,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 				// otherwise it will be the created item from this
 				output = R.specialOutput(src)
 				if (!output)
-					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
-						for(var/specialIngredient in R.variants)
-							if(output) break
-							if(OVEN_checkitem(specialIngredient, R.variant_quantity))
-								output = R.variants[specialIngredient]
-					if(!output)
-						output = R.output
+					output = getVariant(R)
 				if (R.useshumanmeat) derivename = 1
 				// derive the bonus amount from cooking
 				// being off by one in either direction is OK
@@ -1002,6 +996,12 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (count < recipecount)
 			return FALSE
 		return TRUE
+
+	proc/getVariant(datum/cookingrecipe/recipe)
+		for(var/specialIngredient in recipe.variants)
+			if(OVEN_checkitem(specialIngredient, recipe.variant_quantity))
+				return recipe.variants[specialIngredient]
+		return recipe.output
 
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10

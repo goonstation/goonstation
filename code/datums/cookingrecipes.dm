@@ -13,9 +13,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 //TODO: replace variant checking code with this once cooking machines have been unified under one type
 /*	proc/getVariant(var/obj/submachine/ourCooker)
-		for(var/obj/item/specialIngredient in variants)
+		for(var/specialIngredient in variants)
 			if(ourCooker.check_item(specialIngredient, variant_quantity))
-			return new variants[specialIngredient]
+				return new variants[specialIngredient]
 		return new output
 */
 
