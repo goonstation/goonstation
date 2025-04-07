@@ -4919,7 +4919,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/clothing/suit/space/syndicate/knight{
+/obj/item/clothing/suit/space/syndicate/specialist/knight{
 	pixel_y = 19;
 	pixel_x = 18
 	},
@@ -6409,7 +6409,7 @@
 /obj/item/clothing/gloves/swat/knight{
 	pixel_x = 13
 	},
-/obj/item/clothing/suit/space/syndicate/knight{
+/obj/item/clothing/suit/space/syndicate/specialistknight{
 	pixel_y = 19;
 	pixel_x = 18
 	},

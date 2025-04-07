@@ -2932,8 +2932,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			overlay_icon = "syndcomm"
 			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
 
-			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
-			slot_suit = list(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
+			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap)
+			slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
 			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
 			slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate/commander)
 

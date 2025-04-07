@@ -317,7 +317,7 @@
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
+			boutput(user, SPAN_ALERT("[src]] <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -337,30 +337,6 @@
 		desc = "A relic of the past."
 		item_state = null
 
-	commissar_cap
-		name = "commander's cap"
-		icon_state = "syndie_commander"
-		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
-		seal_hair = 0
-		see_face = TRUE
-		team_num = TEAM_SYNDICATE
-
-		setupProperties()
-			..()
-			setProperty("exploprot", 10)
-
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The cap <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
-
 	specialist
 		name = "specialist combat helmet"
 		desc = "A modified combat helmet for syndicate operative specialists."
@@ -372,14 +348,18 @@
 			setProperty("exploprot", 10)
 			setProperty("radprot", 50)
 
+		commissar_cap
+			name = "commander's cap"
+			icon_state = "syndie_commander"
+			desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
+			seal_hair = 0
+			see_face = TRUE
+
 		infiltrator
-			name = "specialist combat helmet"
-			desc = "A modified combat helmet for syndicate operative specialists."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
 		firebrand
-			name = "specialist combat helmet"
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
 
@@ -389,10 +369,8 @@
 
 		engineer
 			name = "specialist welding helmet"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing meson vision and protecting eyes."
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = FALSE
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -426,8 +404,7 @@
 
 		medic
 			name = "specialist health monitor"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing health of friends and foes."
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
