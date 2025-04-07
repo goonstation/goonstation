@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	name = "human meat"
 	desc = "A slab of meat from a human."
-	heats_into = /obj/item/reagent_containers/food/snacks/steak_h
+	heats_into = /obj/item/reagent_containers/food/snacks/steak/human
 	var/subjectname = "Human"
 	var/subjectjob = "Human Being"
 
@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat
 	name = "monkeymeat"
 	desc = "A slab of meat from a monkey."
-	heats_into = /obj/item/reagent_containers/food/snacks/steak_m
+	heats_into = /obj/item/reagent_containers/food/snacks/steak/monkey
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_volume = 20
 	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
-	heats_into = /obj/item/reagent_containers/food/snacks/steak_s
+	heats_into = /obj/item/reagent_containers/food/snacks/steak/synth
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	name = "mystery meat"
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "meat-changeling"
 	initial_volume = 30
 	initial_reagents = list("neurotoxin" = 20, "bloodc" = 10)
-	heats_into = /obj/item/reagent_containers/food/snacks/steak_ling
+	heats_into = /obj/item/reagent_containers/food/snacks/steak/ling
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody
 	name = "meaty bit"

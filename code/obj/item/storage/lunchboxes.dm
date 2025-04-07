@@ -95,7 +95,7 @@
 		/obj/item/paper/lunchbox_note)
 
 	food11
-		spawn_contents = list(/obj/item/reagent_containers/food/snacks/steak_h,\
+		spawn_contents = list(/obj/item/reagent_containers/food/snacks/steak,\
 		/obj/item/reagent_containers/food/snacks/mashedpotatoes,\
 		/obj/item/reagent_containers/food/snacks/biscuit,\
 		/obj/item/reagent_containers/food/snacks/cookie/oatmeal,\

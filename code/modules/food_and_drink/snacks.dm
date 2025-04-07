@@ -1847,24 +1847,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_energized_big", "food_warm")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
-/obj/item/reagent_containers/food/snacks/steak_h
+/obj/item/reagent_containers/food/snacks/steak
 	name = "steak"
-	desc = "Made of people."
-	icon_state = "meat-grilled"
-	fill_amt = 2
-	bites_left = 2
-	heal_amt = 3
-	var/hname = null
-	var/job = null
-	food_color = "#999966"
-	initial_volume = 50
-	initial_reagents = list("cholesterol"=3)
-	food_effects = list("food_hp_up_big", "food_brute")
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
-
-/obj/item/reagent_containers/food/snacks/steak_m
-	name = "monkey steak"
-	desc = "You'll go bananas for it."
+	desc = "A cooked piece of meat."
 	icon_state = "meat-grilled"
 	fill_amt = 2
 	bites_left = 2
@@ -1872,33 +1857,36 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#999966"
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=3)
-	food_effects = list("food_hp_up", "food_brute")
-
-/obj/item/reagent_containers/food/snacks/steak_s
-	name = "synth-steak"
-	desc = "And they thought processed food was artificial..."
-	icon_state = "meat-plant-grilled"
-	fill_amt = 2
-	bites_left = 2
-	heal_amt = 3
-	food_color = "#999966"
-	initial_volume = 50
-	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up", "food_brute")
 	meal_time_flags = MEAL_TIME_DINNER
 
-/obj/item/reagent_containers/food/snacks/steak_ling
-	name = "mutagenic steak"
-	desc  = "It stopped moving. Thank god."
-	icon_state = "meat-changeling-grilled"
-	fill_amt = 2
-	bites_left = 2
-	heal_amt = 4
-	food_color = "#999966"
-	initial_volume = 50
-	initial_reagents = list("cholesterol" = 3, "neurotoxin" = 10) // changeling blood boiled off
-	food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
-	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+	human
+		desc = "Made of people."
+		var/hname = null
+		var/job = null
+		food_effects = list("food_hp_up_big", "food_brute")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+	monkey
+		name = "monkey steak"
+		desc = "You'll go bananas for it."
+
+	synth
+		name = "synth-steak"
+		desc = "And they thought processed food was artificial..."
+		icon_state = "meat-plant-grilled"
+		initial_reagents = list("cholesterol"=2)
+		meal_time_flags = MEAL_TIME_DINNER
+
+	ling
+		name = "mutagenic steak"
+		desc  = "It stopped moving. Thank god."
+		icon_state = "meat-changeling-grilled"
+		heal_amt = 4
+		food_color = "#999966"
+		initial_reagents = list("cholesterol" = 3, "neurotoxin" = 10) // changeling blood boiled off
+		food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/turkey
 	name = "roast turkey"

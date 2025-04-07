@@ -42976,7 +42976,7 @@
 /area/tech_outpost)
 "roD" = (
 /obj/table/wood,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "roP" = (

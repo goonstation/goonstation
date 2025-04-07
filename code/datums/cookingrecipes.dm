@@ -534,14 +534,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_blt,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_blt)
 
-/datum/cookingrecipe/oven/c_butty
+/datum/cookingrecipe/oven/sandwich/c_butty
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/condiment/ketchup = 1,
 	/obj/item/reagent_containers/food/snacks/fries = 1)
 	output = /obj/item/reagent_containers/food/snacks/sandwich/c_butty
 
-/datum/cookingrecipe/oven/sandwich_mb //Original meatball sub recipe
+/datum/cookingrecipe/oven/sandwich/meatball //Original meatball sub recipe
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadloaf = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1,
@@ -550,7 +550,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
 
-/datum/cookingrecipe/oven/sandwich_mbalt //Secondary recipe that uses the baguette
+/datum/cookingrecipe/oven/sandwich/meatball_alt //Secondary recipe that uses the baguette
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/meatball = 1,
@@ -559,13 +559,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
 
-/datum/cookingrecipe/oven/sandwich_egg
+/datum/cookingrecipe/oven/sandwich/egg
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/eggsalad = 1)
 	output = /obj/item/reagent_containers/food/snacks/sandwich/eggsalad
 
-/datum/cookingrecipe/oven/sandwich_bm //Original banh mi recipe
+/datum/cookingrecipe/oven/sandwich/bahnmi //Original banh mi recipe
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadloaf/honeywheat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1,
@@ -574,7 +574,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
 
-/datum/cookingrecipe/oven/sandwich_bmalt //Secondary recipe that uses the baguette
+/datum/cookingrecipe/oven/sandwich/bahnmi_alt //Secondary recipe that uses the baguette
 	ingredients = list(\
 	/obj/item/baguette = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1,
@@ -583,7 +583,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
 
-/datum/cookingrecipe/oven/sandwich_custom
+/datum/cookingrecipe/oven/sandwich/custom
 	ingredients =  list(/obj/item/reagent_containers/food/snacks/breadslice = 2)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich
@@ -1089,26 +1089,22 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
-/datum/cookingrecipe/oven/steak //bit jank, will probably have to unroll later
+/datum/cookingrecipe/oven/cook_meat //Very jank, will need future work.
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/steak_m
+	output = /obj/item/reagent_containers/food/snacks/steak
 	useshumanmeat = 1
 	variants = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/steak_h,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak_s,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/steak/human,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/steak/monkey,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers,
 	/obj/item/reagent_containers/food/snacks/ingredient/turkey = /obj/item/reagent_containers/food/snacks/turkey)
 
 /datum/cookingrecipe/oven/steak_ling
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
 	cookbonus = 12 // tough meat
-	output = /obj/item/reagent_containers/food/snacks/steak_ling
-
-/datum/cookingrecipe/oven/fish_fingers
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
-	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/fish_fingers
+	output = /obj/item/reagent_containers/food/snacks/steak/ling
 
 /datum/cookingrecipe/oven/shrimp
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp = 1)
