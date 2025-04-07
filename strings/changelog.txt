@@ -1,4 +1,9 @@
 
+(t)mon apr 07 25
+(u)CalliopeSoups
+(p)22818
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)Type *nudge or *adjust to do the funny nerd glasses push up. Further fx support for basic glasses and most goggles.
 (t)sun apr 06 25
 (u)sunnyaries
 (p)22665
