@@ -2,11 +2,11 @@
 	channel_id = SAY_CHANNEL_LOOC
 	enabled = FALSE
 	disabled_message = "LOOC is currently disabled. For gameplay questions, try <a href='byond://winset?command=mentorhelp'>mentorhelp</a>."
+	track_outermost_listener = FALSE
 	affected_by_modifiers = FALSE
 	suppress_say_sound = TRUE
 	suppress_hear_sound = TRUE
 	suppress_speech_bubble = TRUE
-	track_outermost_listener = FALSE
 	listener_tick_cache_type = /datum/listener_tick_cache/origin_dependent
 
 /datum/say_channel/delimited/local/looc/PassToChannel(datum/say_message/message)
