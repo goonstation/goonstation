@@ -123,7 +123,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 			started++
 			if ((started == 2) && !try_billing(occupant))
-				src.say("<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.", flags = SAYFLAG_IGNORE_HTML)
+				src.say("<b>[occupant.name]</b>! You can't afford [selected_product.name] with a bank account like that.", flags = SAYFLAG_IGNORE_HTML)
 				src.eject_occupant(0)
 
 		else if (started)
@@ -321,7 +321,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 							else
 								wagesystem.research_budget += selected_product.cost
 
-							src.say("Thank you for your patronage, <b>[M.name]<b>")
+							src.say("Thank you for your patronage, <b>[M.name]</b>", flags = SAYFLAG_IGNORE_HTML)
 
 							.= 1
 							notify_sale(selected_product.cost)
