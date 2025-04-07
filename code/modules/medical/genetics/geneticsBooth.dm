@@ -321,7 +321,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 							else
 								wagesystem.research_budget += selected_product.cost
 
-							src.say("Thank you for your patronage, <b>[M.name]</b>", flags = SAYFLAG_IGNORE_HTML)
+							src.say("Thank you for your patronage, <b>[M.name]</b>.", flags = SAYFLAG_IGNORE_HTML)
 
 							.= 1
 							notify_sale(selected_product.cost)

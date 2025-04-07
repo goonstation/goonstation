@@ -29,7 +29,7 @@
 	src.parent = parent
 	src.maptext_holders_by_client = list()
 
-	src.set_loc(src.parent)
+	src.set_loc(null)
 
 /atom/movable/maptext_manager/disposing()
 	for (var/client/client as anything in src.maptext_holders_by_client)
