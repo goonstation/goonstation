@@ -37,14 +37,14 @@
 
 /area/radiostation/podbay
 	name = "Radio Podbay"
-	icon_state = "green"
+	icon_state = "hangar"
 
 /area/radiostation/bedroom
-	name = "Radio Bedroom"
+	name = "Radio Quarters"
 	icon_state = "red"
 
 /area/radiostation/engineering
-	name = "Radio Engine"
+	name = "Radio Supply Closet"
 	icon_state = "blue"
 
 /area/radiostation/hallway
@@ -56,6 +56,22 @@
 	icon_state = "yellow"
 	sound_environment = 3
 	workplace = 1
+
+/area/radiostation/tv_set
+	name = "Radio TV Studio"
+	icon_state = "green"
+
+/area/radiostation/green
+	name = "Radio Green Room"
+	icon_state = "green"
+
+/area/radiostation/teleporter
+	name = "Radio Cargo Intake"
+	icon_state = "red"
+
+/area/radiostation/press
+	name = "Radio Paper Press"
+	icon_state = "yellow"
 
 //objects
 
@@ -273,15 +289,18 @@
 			if(!record_name)
 				boutput(user, SPAN_NOTICE("You decide not to play this record."))
 				return
+			if(!(inserted_record in user.equipped_list()))
+				boutput(user, SPAN_ALERT("You have to be holding a record to place it in the player!"))
+				return
 			if(!in_interact_range(src, user))
-				boutput(user, "You're out of range of the [src.name]!")
+				boutput(user, SPAN_ALERT("You're out of range of the [src.name]!"))
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
 			phrase_log.log_phrase("record", html_encode(record_name))
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
-			user.drop_item()
+			user.drop_item(W)
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE

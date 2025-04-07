@@ -2306,13 +2306,10 @@
 /turf/simulated/floor/grey,
 /area/station/science/tenebrae)
 "fL" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "fM" = (
@@ -7923,25 +7920,19 @@
 	name = "Dionysus Cryocore"
 	})
 "sk" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/locker{
 	name = "Hammer Crew Quarters"
 	})
 "sl" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8192,13 +8183,10 @@
 	name = "Dionysus Cryocore"
 	})
 "sN" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -21119,10 +21107,7 @@
 	pixel_x = -12
 	},
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
 /turf/simulated/floor/grass,
@@ -21408,13 +21393,10 @@
 	name = "Erebus Primary Zone"
 	})
 "Ve" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "Vf" = (
