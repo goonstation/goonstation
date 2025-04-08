@@ -877,9 +877,6 @@ TYPEINFO(/obj/machinery/clonepod)
 					qdel(src)
 					return
 
-	overload_act()
-		src.malfunction()
-
 	proc/look_busy(var/big = 0)
 		if (big)
 			animate_shake(src,5,rand(3,8),rand(3,8))
