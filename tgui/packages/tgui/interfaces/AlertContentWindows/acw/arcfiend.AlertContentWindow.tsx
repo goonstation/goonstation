@@ -21,7 +21,7 @@ export const acw: AlertContentWindow = {
         </li>
         <li>
           Discharge - Run a powerful current through a target in melee range
-          damaging mobs, depowering doors, and breaking machines.
+          damaging mobs, depowering doors, and overloading machines.
         </li>
         <li>
           Flash - Release a sudden burst of power around yourself disorienting

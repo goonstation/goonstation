@@ -1,7 +1,7 @@
 /// Melee attack. Shocks a targeted mob, or can be used on an airlock to temporarily cut its power.
 /datum/targetable/arcfiend/discharge
 	name = "Discharge"
-	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, airlocks will be briefly depowered, and machines will become broken."
+	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, airlocks will be briefly depowered, and machines will overload."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
 	target_anything = TRUE
