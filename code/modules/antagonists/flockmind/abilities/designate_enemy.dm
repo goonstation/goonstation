@@ -8,7 +8,7 @@
 	if(..())
 		return TRUE
 
-	var/M = target
+	var/atom/M = target
 	var/mob/living/intangible/flock/F = holder.owner
 
 	if (!(isliving(M) || iscritter(M) || isvehicle(M)) || isflockmob(M) || isintangible(M))

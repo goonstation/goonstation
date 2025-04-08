@@ -3932,7 +3932,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	var/list/obj/machinery/turret/turret_list = list()
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
 
-/area/station/turret_protected/Entered(O)
+/area/station/turret_protected/Entered(atom/O)
 	..()
 	if (istype(O,/obj/blob))
 		blob_list += O
