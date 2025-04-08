@@ -282,7 +282,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
+	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span> [SPAN_MESSAGE("[message_a]")]")
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -292,7 +292,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
 			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
-				var/flockrendered = SPAN_ROBOTICSAY("[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]")
+				var/flockrendered = SPAN_ROBOTICSAY("[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.real_name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]")
 				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -321,7 +321,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	message = src.say_quote(message)
 
-	rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
+	rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
