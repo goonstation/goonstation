@@ -265,6 +265,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/say_decorate(message)
 	. = monospace_say_regex.Replace(message, SPAN_MONOSPACE("$1"))
 
+/mob/living/silicon/get_heard_name(just_name_itself=FALSE)
+	if (just_name_itself)
+		return src.real_name
+	return . = "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
+
 /mob/living/proc/process_killswitch()
 	return
 
