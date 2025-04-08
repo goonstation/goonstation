@@ -1,11 +1,17 @@
 #define POWER_CELL_DRAIN_RATE 80 WATTS
 #define POWER_CELL_CHARGE_PERCENT_MINIMUM 10
+/// How fast does this drain SMES units
 #define SMES_DRAIN_RATE 100 KILO WATTS
-#define SAP_LIMIT_APC 15 WATTS
+/// Maximum points from sapping an APC
+#define SAP_LIMIT_APC 30 WATTS
+/// Maximum points gained from sapping a machine
 #define SAP_LIMIT_MACHINE (SAP_LIMIT_APC - 5)
-#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 25)
+/// Maximum points gained from sapping a mob
+#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 10)
+/// Multiplier applied to machinery power usage to determine how much power the arcfiend gets per sap
+#define SAP_MACHINERY_MULT 0.1
+/// Multipler given when sapping broken machines
 #define SAP_MACHINE_BROKEN_MULT 2
-
 /**
  * Arcfiend's main way of obtaining power for their abilities.
  * Can be used on:
@@ -23,14 +29,18 @@
 	targeted = TRUE
 	icon_state = "sap"
 
+	tryCast(atom/target, params)
+		if (target == src.holder.owner)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
+			boutput(src.holder.owner, SPAN_ALERT("That is too far away!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!src.is_valid_target(target, src.holder.owner))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
-		if (target == src.holder.owner)
-			return TRUE
-		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return TRUE
-		if (!src.is_valid_target(target, src.holder.owner))
-			return TRUE
 		src.holder.owner.tri_message(target,
 			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand on [target]. A static charge fills the air.",
 			SPAN_ALERT("You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy."),
@@ -56,6 +66,13 @@
 				var/mob/living/silicon/S = M
 				if ((S.cell?.charge < POWER_CELL_DRAIN_RATE))
 					boutput(user, SPAN_ALERT("[S]'s power cell is completely drained."))
+					return FALSE
+		if(istype(target, /obj/machinery))
+			var/obj/machinery/machine = target
+			if(!istype(machine, /obj/machinery/power))
+				var/broken_mult = machine.is_broken() ? SAP_MACHINE_BROKEN_MULT : 1
+				if(round(machine.power_usage * SAP_MACHINERY_MULT * broken_mult) <= 0)
+					boutput(user, SPAN_ALERT("[machine] doesn't draw enough energy to absorb!"))
 					return FALSE
 		return ishuman(target) || issilicon(target) || istype(target, /obj/machinery)
 
@@ -163,7 +180,8 @@
 					boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 					interrupt(INTERRUPT_ALWAYS)
 					return
-				points_gained = clamp(round((M.power_usage * 0.1)), 0, SAP_LIMIT_MACHINE) * broken_mult
+				var/obj/machinery/M = src.target
+				points_gained = clamp(round((M.power_usage * SAP_MACHINERY_MULT)), 0, SAP_LIMIT_MACHINE) * broken_mult
 
 			if (!points_gained)
 				boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
@@ -188,3 +206,4 @@
 #undef SAP_LIMIT_APC
 #undef SAP_LIMIT_MACHINE
 #undef SAP_LIMIT_MOB
+#undef SAP_MACHINERY_MULT

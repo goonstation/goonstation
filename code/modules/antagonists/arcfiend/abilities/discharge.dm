@@ -16,12 +16,16 @@
 	/// how much direct burn damage this attack deals, on top of any damage from the shock itself
 	var/direct_burn_damage = 15
 
+	tryCast(atom/target, params)
+		if (target == src.holder.owner)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
+			boutput(src.holder.owner, SPAN_ALERT("That is too far away!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
-		if (target == src.holder.owner)
-			return TRUE
-		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return TRUE
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
@@ -45,8 +49,9 @@
 				boutput(src.holder.owner, SPAN_ALERT("\The [machine] couldn't be overloaded!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		else
-			return TRUE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
 		S.set_up(2, FALSE, target)
 		S.start()
 		src.holder.owner.set_dir(get_dir(src.holder.owner, target))
+		return CAST_ATTEMPT_SUCCESS

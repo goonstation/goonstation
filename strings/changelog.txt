@@ -1,4 +1,13 @@
 
+(t)tue apr 08 25
+(u)Facsimile
+(p)22830
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Increases the Glockenspiel's loudness.
+(u)glowbold
+(p)22892
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SMES units broken by explosions will emit dangerous shocks and stop charging. They can be repaired with common engineering tools and wires.
 (t)mon apr 07 25
 (u)RubberRats
 (p)22895
