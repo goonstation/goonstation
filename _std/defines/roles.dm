@@ -19,6 +19,7 @@
 #define ROLE_ARCFIEND "arcfiend"
 #define ROLE_FLOCKMIND "flockmind"
 #define ROLE_FLOCKTRACE "flocktrace"
+#define ROLE_MINDEATER "mindeater"
 #define ROLE_SALVAGER "salvager"
 #define ROLE_ANTAGONIST_CRITTER "antagonist_critter"
 #define ROLE_MISC "misc"

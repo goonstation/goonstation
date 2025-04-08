@@ -62,6 +62,9 @@
 	<a href='?src=\ref[src];action=[ROLE_FLOCKTRACE]'>Flocktrace</a> |
 	<a href='?src=\ref[src];action=[ROLE_FLOCKMIND]'>Flockmind</a>
 </div>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Instrusion</b>
+	<a href='?src=\ref[src];action=[ROLE_MINDEATER]'>Mindeater</a>
+</div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Other Antags</b>
 	<a href='?src=\ref[src];action=[ROLE_GRINCH]'>Grinch</a> |
 	<a href='?src=\ref[src];action=[ROLE_HUNTER]'>Hunter</a> |
