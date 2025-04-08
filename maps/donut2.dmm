@@ -8461,9 +8461,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "aTf" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -8477,9 +8475,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "aTg" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -8604,9 +8600,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "aTN" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -8621,9 +8615,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "aTP" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
@@ -10515,7 +10507,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10525,7 +10517,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10537,7 +10529,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -10545,7 +10537,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bdy" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10633,7 +10625,7 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beg" = (
 /obj/table/wood/auto{
 	dir = 9
@@ -10649,14 +10641,14 @@
 	dir = 8;
 	icon_state = "fgreen1"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beh" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bei" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10665,7 +10657,7 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bej" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -10678,7 +10670,7 @@
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10705,10 +10697,10 @@
 	dir = 5;
 	icon_state = "fgreen6"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "beB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11301,7 +11293,7 @@
 	dir = 6;
 	icon_state = "fgreen6"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bhP" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
@@ -15625,9 +15617,7 @@
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "bON" = (
 /obj/machinery/light/incandescent,
 /obj/storage/closet/wardrobe/black/formalwear,
@@ -15787,7 +15777,7 @@
 	dir = 9;
 	icon_state = "fgreen6"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "bST" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail{
@@ -16258,7 +16248,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "chE" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/redblack{
@@ -17032,9 +17022,7 @@
 /obj/storage/secure/closet/personal,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "cIC" = (
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
@@ -19690,9 +19678,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ekr" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/blast/pyro{
@@ -29113,7 +29099,7 @@
 /area/station/ranch)
 "kaZ" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "kbc" = (
 /obj/cable/blue{
 	icon_state = "1-8"
@@ -30963,7 +30949,7 @@
 	dir = 8;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "lcJ" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -31767,7 +31753,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "lBl" = (
 /obj/storage/crate,
 /obj/item/device/analyzer/healthanalyzer{
@@ -34448,7 +34434,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "nbo" = (
 /obj/stove{
 	pixel_y = 2
@@ -38774,9 +38760,7 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "pwl" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -41156,9 +41140,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "qPe" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -44570,7 +44552,7 @@
 	dir = 10;
 	icon_state = "fgreen6"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "sOP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -45235,7 +45217,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "tna" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -46395,9 +46377,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "tQU" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -46736,9 +46716,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "ufg" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light/emergency{
@@ -48313,7 +48291,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vet" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/grass,
@@ -48650,9 +48628,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads{
-	name = "Diplomatic Quarters"
-	})
+/area/station/crew_quarters/diplomat)
 "vlZ" = (
 /obj/fluid_spawner{
 	amount = 150
@@ -49376,7 +49352,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vEk" = (
 /obj/stool/bench/green/auto,
 /turf/simulated/floor/greenwhite/other{
@@ -49930,7 +49906,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vTy" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -51462,7 +51438,7 @@
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wUO" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -52095,7 +52071,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "xpe" = (
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/small/west,
@@ -53552,7 +53528,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 
 (1,1,1) = {"
 aaa

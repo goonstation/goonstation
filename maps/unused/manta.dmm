@@ -6082,7 +6082,7 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /turf/simulated/floor,
-/area/station/hos)
+/area/station/bridge/customs)
 "asB" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -6473,7 +6473,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "atM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -6853,7 +6853,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor,
-/area/station/hos)
+/area/station/bridge/customs)
 "auR" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc/autoname_east,
@@ -7894,7 +7894,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "axy" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -8999,7 +8999,7 @@
 	dir = 8;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aAw" = (
 /obj/stool/chair{
 	dir = 4
@@ -9014,7 +9014,7 @@
 	dir = 8;
 	icon_state = "fgreen1"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aAx" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -9031,7 +9031,7 @@
 	dir = 8;
 	icon_state = "fgreen1"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aAz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13091,7 +13091,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/crew_quarters/hop)
 "aLD" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15421,7 +15421,7 @@
 	persistent_id = "customs"
 	},
 /turf/simulated/floor,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTc" = (
 /obj/machinery/computer/card,
 /obj/machinery/power/data_terminal,
@@ -15430,21 +15430,18 @@
 	},
 /obj/item_dispenser/idcarddispenser,
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTe" = (
 /obj/filing_cabinet,
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTf" = (
 /obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTh" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hos)
-"aTi" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hos/quarter)
+/area/station/bridge/customs)
 "aTj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/beepsky)
@@ -15634,7 +15631,7 @@
 	pixel_y = 15
 	},
 /turf/simulated/floor,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTH" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -15643,29 +15640,29 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTI" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTJ" = (
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aTK" = (
 /mob/living/critter/small_animal/dog/blair,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aTL" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aTO" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/rum_spaced{
@@ -15677,7 +15674,7 @@
 	text = "NF"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aTP" = (
 /obj/stool/bed,
 /obj/item/storage/secure/ssafe{
@@ -15686,13 +15683,13 @@
 /obj/item/clothing/suit/bedsheet/hop,
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aTQ" = (
 /obj/table/wood/auto/desk,
 /obj/item/material_piece/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aTR" = (
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/red,
@@ -15925,10 +15922,10 @@
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aUy" = (
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aUB" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
@@ -16066,7 +16063,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aUU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -16082,7 +16079,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "aUV" = (
 /obj/machinery/disposal/mail/small{
 	mail_tag = "Head of Personnel's Office";
@@ -16100,7 +16097,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aUW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16117,7 +16114,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aUX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16125,7 +16122,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aUY" = (
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
@@ -16138,7 +16135,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "aUZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -16156,7 +16153,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aVb" = (
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/power/apc/autoname_east,
@@ -16170,7 +16167,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "aVc" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -27889,7 +27886,7 @@
 	},
 /obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "bAD" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
@@ -33138,7 +33135,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "dna" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/netural{
@@ -34050,7 +34047,7 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "fez" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -36528,7 +36525,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/hos)
+/area/station/bridge/customs)
 "kwX" = (
 /obj/machinery/rkit,
 /obj/machinery/light/incandescent/netural{
@@ -39491,7 +39488,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "ruT" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -40627,7 +40624,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
-/area/station/hos)
+/area/station/bridge/customs)
 "uFt" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
@@ -41166,6 +41163,9 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"vIy" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/hop)
 "vJz" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -42085,7 +42085,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/wood,
-/area/station/hos/quarter)
+/area/station/crew_quarters/hop)
 "xMu" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -93507,11 +93507,11 @@ aCR
 aCY
 aDj
 aDl
-aTh
-aTh
-aTh
+vIy
+vIy
+vIy
 aLC
-aTh
+vIy
 aIt
 aBw
 aWR
@@ -93809,11 +93809,11 @@ aCW
 aQW
 aqE
 aQW
-aTi
+vIy
 aTO
 rtf
 aVa
-aTi
+vIy
 aIt
 aBw
 aWR
@@ -94111,11 +94111,11 @@ aQW
 aQW
 adP
 aSw
-aTi
+vIy
 aTP
 aUy
 aVb
-aTi
+vIy
 aVY
 aUB
 aWR
@@ -94413,11 +94413,11 @@ aQW
 iBl
 aRX
 aSx
-aTi
+vIy
 aTQ
 xMl
-aTi
-aTi
+vIy
+vIy
 anH
 aWs
 aHA
@@ -94715,10 +94715,10 @@ aQW
 aQW
 aQW
 aQW
-aTi
-aTi
-aTi
-aTi
+vIy
+vIy
+vIy
+vIy
 aVe
 aIt
 aBw
