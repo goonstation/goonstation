@@ -1,5 +1,9 @@
 
 (t)tue apr 08 25
+(u)Facsimile
+(p)22830
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Increases the Glockenspiel's loudness.
 (u)glowbold
 (p)22892
 (e)🆕💡|C-Feature, A-Station-Systems
