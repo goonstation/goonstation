@@ -7,7 +7,6 @@ body:
   attributes:
     label: "Labels"
     description: "To automatically label this issue, add the uppercase'd label(s) sourrounded by brackets"
-    value: ""
     placeholder: "[LABEL]"
 
 - type: "input"
