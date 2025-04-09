@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	var/static/list/word_to_emoji
 	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
 
-/datum/speech_module/modifier/accent/emoji/New()
+/datum/speech_module/modifier/accent/emoji/New(datum/speech_module_tree/parent)
 	. = ..()
 	src.word_to_emoji ||= json_decode(file2text("strings/word_to_emoji.json"))
 
@@ -563,7 +563,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	var/vowel_lower
 	var/vowel_upper
 
-/datum/speech_module/modifier/accent/vowelitis/New()
+/datum/speech_module/modifier/accent/vowelitis/New(datum/speech_module_tree/parent)
 	. = ..()
 
 	src.vowel_lower = pick("a", "e", "i", "o", "u")
