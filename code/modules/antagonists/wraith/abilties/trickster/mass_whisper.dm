@@ -21,7 +21,7 @@
 			if (isdead(H))
 				continue
 			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
-			wraith_whisper_maptext(message, H, src.holder.owner)
+			global.display_wraith_whisper_maptext(H, src.holder.owner, message)
 			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> \"[message]\"")
 			H.playsound_local(H, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
 			hearers++

@@ -1168,6 +1168,5 @@ TYPEINFO(/obj/item/device/appraisal)
 		if (sell_value > 0)
 			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
-		if (user.client && !user.client.preferences?.flying_chat_hidden)
-			A.maptext_manager ||= new /atom/movable/maptext_manager(A)
-			A.maptext_manager.add_maptext(user.client, global.appraisal_maptext(A, sell_value))
+
+		global.display_appraisal_maptext(A, user, sell_value)
