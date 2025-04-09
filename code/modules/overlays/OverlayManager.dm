@@ -508,6 +508,17 @@
 
 		return ..()
 
+/datum/overlayComposition/telephoto
+	New()
+		var/datum/overlayDefinition/telephoto = new()
+		telephoto.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
+		telephoto.d_icon_state = "telephoto"
+		telephoto.do_wide_fill = 1
+		definitions.Add(telephoto)
+
+		return ..()
+
+
 /datum/overlayComposition/insanity
 	New()
 		var/datum/overlayDefinition/insanity = new()

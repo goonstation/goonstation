@@ -50,7 +50,7 @@ TYPEINFO(/obj/item/camera/large)
 
 		New()
 			..()
-			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/machines/pod_switch.ogg')
+			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/telephoto, 'sound/machines/pod_switch.ogg')
 
 
 	examine()
