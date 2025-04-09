@@ -19,10 +19,13 @@
 	speechverb_exclaim = "hums"
 	speechverb_ask = "hums"
 
+	/// shows whether this mindeater is visible to all or not
 	var/image/mindeater_visibility_indicator/vis_indicator
+	/// shows health of the mindeater
 	var/image/mindeater_health_indicator/hp_indicator
+	/// fake mindeaters created through associated ability
 	var/list/fake_mindeaters = null
-
+	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
 	New()
@@ -58,10 +61,13 @@
 		..()
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
+		src.remove_fake_mindeaters()
 
 	Life()
 		. = ..()
 		if (src.is_intangible())
+			return
+		if (src.disguised)
 			return
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")
@@ -81,15 +87,11 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "psionic-kinetic bolt"
 		HH.limb = new /datum/limb/gun/kinetic/mindeater
-		HH.icon_state = "feather"
 		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "psi_bolt"
 		HH.limb_name = "psi bolt"
 		HH.can_hold_items = FALSE
 		HH.can_range_attack = TRUE
-
-	attack_hand()
-		..()
-		src.reveal()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (src.is_intangible())
@@ -145,20 +147,29 @@
 	shock(atom/origin, wattage, zone = "chest", stun_multiplier = 1, ignore_gloves = 0)
 		if (src.is_intangible())
 			return
+		src.reveal()
 		return ..()
 
 	ex_act(severity)
 		if (src.is_intangible())
 			return
+		src.reveal()
 		return ..()
 
+	/// returns if the turf is bright enough to reveal the mindeater
 	proc/on_bright_turf()
 		var/turf/T = get_turf(src)
 		return T.is_lit()
 
+	/// if the mindeater is effectively intangible
 	proc/is_intangible()
 		return src.event_handler_flags & MOVE_NOCLIP
 
+	/// if the mindeater is visible to all humans
+	proc/is_visible()
+		return src.invisibility == INVIS_NONE
+
+	/// reveal the mindeater's true form to all
 	proc/reveal()
 		src.vis_indicator.set_visible(TRUE)
 		src.invisibility = INVIS_NONE
@@ -166,15 +177,14 @@
 		src.delStatus("mindeater_cloaking")
 		src.undisguise()
 
+	/// set the mindeater invisible to humans
 	proc/set_invisible()
 		src.vis_indicator.set_visible(FALSE)
 		src.invisibility = INVIS_INTRUDER
 		src.delStatus("mindeater_appearing")
 		src.delStatus("mindeater_cloaking")
 
-	proc/is_visible()
-		return src.invisibility == INVIS_NONE
-
+	/// move from intangible to tangible state
 	proc/manifest()
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/become_tangible)
 		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
@@ -190,6 +200,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/shades)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
+	/// move from tangible to intangible state
 	proc/demanifest()
 		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags |= UNCRUSHABLE
@@ -205,12 +216,14 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/become_tangible)
 
+	/// create fake mindeaters for associated ability
 	proc/setup_fake_mindeaters(list/fakes)
 		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(move_fake_mindeaters))
 		src.fake_mindeaters = fakes
 		SPAWN(10 SECONDS)
 			src.remove_fake_mindeaters()
 
+	/// remove fake mindeaters for associated ability
 	proc/remove_fake_mindeaters()
 		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		for (var/obj/dummy/fake_mindeater/fake as anything in src.fake_mindeaters)
@@ -222,6 +235,7 @@
 			SPAWN(0.05 SECONDS) // since they tend to glide faster
 				step(A, direct)
 
+	/// disguise as an entity
 	proc/disguise()
 		var/mob/living/carbon/human/H = new /mob/living/carbon/human/normal/assistant
 		H.invisibility = INVIS_ALWAYS
@@ -245,6 +259,7 @@
 
 		src.disguised = TRUE
 
+	/// undisguise as disguised entity
 	proc/undisguise()
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
