@@ -2479,10 +2479,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		type_multi = max(0,1-(desired_damage/current_damage)) //what to multiply all damage by to get to desired HP
 	src.HealDamage("All", src.get_brute_damage()*type_multi, src.get_burn_damage()*type_multi, src.get_toxin_damage()*type_multi)
 
-	/* TODO: uncomment when #22868 merged
 	if (src.organHolder)
 		src.organHolder.unbreak_all_organs()
-	*/
+
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, src.organHolder.organ_list)
