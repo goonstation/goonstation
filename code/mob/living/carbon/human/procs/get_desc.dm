@@ -185,9 +185,9 @@
 					else if (src.organHolder.right_eye.show_on_examine)
 						. += "<br>[SPAN_NOTICE("[src.name] has [bicon(src.organHolder.right_eye)] \an [src.organHolder.right_eye.organ_name] in [t_his] right eye socket.")]"
 
-				var/head_stage = src.surgeryHolder.get_surgery_progress("brain_surgery")
-				if (head_stage > 0)
-					if (head_stage >= 5.0)
+				var/brain_stage = src.surgeryHolder.get_surgery_progress("brain_surgery")
+				if (brain_stage > 0)
+					if (brain_stage >= 5.0)
 						if (!src.organHolder.skull)
 							. += "<br>[SPAN_ALERT("<B>There's a gaping hole in [src.name]'s head and [t_his] skull is gone!</B>")]"
 						else if (!src.organHolder.brain)
@@ -202,9 +202,10 @@
 					else
 						. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on [t_his] head!</B>")]"
 
-				if (!src.organHolder.head.secure)
+				var/head_stage = src.surgeryHolder.get_surgery_progress("head_removal")
+				if (head_stage > 2)
 					. += "<br>[SPAN_ALERT("<B>[src.name]'s head is barely attached!</B>")]"
-				else if (src.organHolder.head.in_surgery)
+				else if (head_stage > 0)
 					. += "<br>[SPAN_ALERT("<B>[src.name] has a huge incision across [t_his] neck!</B>")]"
 
 		else

@@ -193,86 +193,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	SETUP_GENERIC_ACTIONBAR(user, H, 5 SECONDS, /mob/living/carbon/human/proc/on_bandage_removal, list(user, removing), src.icon, src.icon_state, null,
 		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
-/*
 
-/mob/proc/get_surgery_depth(var/zone)
-	return FALSE
-/// Returns a number you can estimate the 'level of surgery' going on. Higher number = more, deeper surgeries.
-/mob/living/carbon/human/get_surgery_depth(var/zone)
-
-	if (!src.organHolder)
-		DEBUG_MESSAGE("has_active_surgery failed due to [src] having no organHolder")
-		return FALSE
-
-	if (!zone || zone == "head")
-		if (src.organHolder.head && src.organHolder.head.in_surgery > 0)
-			return TRUE
-
-	if (!zone || zone == "chest")
-		if (src.organHolder.chest && src.organHolder.chest.in_surgery > 0)
-			return TRUE
-
-	if (!zone || (zone in list("l_arm","r_arm","l_leg","r_leg")))
-		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
-		if (istype(surgery_limb) && surgery_limb.remove_stage > 0)
-			return TRUE
-
-	return FALSE
-
-*/
-
-/*
-/mob/proc/get_surgery_status(var/zone)
-	return FALSE
-/mob/living/carbon/human/get_surgery_status(var/zone)
-	if (!src.organHolder)
-		DEBUG_MESSAGE("get_surgery_status failed due to [src] having no organHolder")
-		return FALSE
-
-	var/datum/organHolder/oH = src.organHolder
-	var/return_thing = 0
-
-	if (!zone || zone == "head")
-		if (oH.brain)
-			return_thing += oH.brain.op_stage
-		else
-			return_thing ++
-
-		if (oH.skull)
-			return_thing += oH.skull.op_stage
-		else
-			return_thing ++
-
-		if (oH.head)
-			return_thing += oH.head.op_stage
-		else
-			return_thing ++
-
-	if (!zone || zone == "chest")
-		//I'd like to see the heart thing use the chest for surgery. I think it makes more sense than having each organ have a surgery stage...
-		if (oH.chest)
-			return_thing += oH.chest.op_stage
-		else if (oH.back_op_stage <= BACK_SURGERY_OPENED)
-			return_thing += oH.back_op_stage
-
-	if (zone in list("l_arm","r_arm","l_leg","r_leg"))
-		var/obj/item/parts/surgery_limb = src.limbs.vars[zone]
-		if (istype(surgery_limb))
-			return_thing += surgery_limb.remove_stage
-		else if (!surgery_limb)
-			return_thing ++
-
-	if(!zone)
-		for(var/actual_zone in list("l_arm","r_arm","l_leg","r_leg"))
-			var/obj/item/parts/surgery_limb = src.limbs.vars[actual_zone]
-			if (istype(surgery_limb))
-				return_thing += surgery_limb.remove_stage
-			else if (!surgery_limb)
-				return_thing ++
-
-	//DEBUG_MESSAGE("get_surgery_status for [src] returning [return_thing]")
-	return return_thing
-*/
 
 /*
 /* ============================= */
@@ -1100,17 +1021,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	if (!patient.organHolder)
 		return FALSE
-/* gunna think on this part
-	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
-		surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
-		SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
-		surgeon.bioHolder.AddEffect("blind")
-		surgeon.weakened += 4
-		var/damage = rand(5, 15)
-		random_brute_damage(surgeon, damage)
-		take_bleeding_damage(surgeon, null, damage)
-		return TRUE
-*/
 	src.add_fingerprint(surgeon)
 
 	var/surgCheck = surgeryCheck(patient, surgeon)
@@ -1130,45 +1040,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 /* ---------- SPOON - EYES ---------- */
 
-	if (surgeon.zone_sel.selecting == "head")
-		if (!headSurgeryCheck(patient))
-			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
-			return TRUE
 
-		if (!patient.organHolder.head)
-			boutput(surgeon, SPAN_ALERT("[patient] doesn't have a head!"))
-			return FALSE
-
-		var/obj/item/organ/eye/target_eye = null
-		var/target_side = null
-
-		if (surgeon.find_in_hand(src, "right") && patient.organHolder.right_eye)
-			target_eye = patient.organHolder.right_eye
-			target_side = "right"
-		else if (surgeon.find_in_hand(src, "left") && patient.organHolder.left_eye)
-			target_eye = patient.organHolder.left_eye
-			target_side = "left"
-		else if (surgeon.find_in_hand(src, "middle"))
-			surgeon.show_text("Hey, there's no middle eye!")
-			return FALSE
-		else
-			return FALSE
-
-		if (target_eye.op_stage == 0.0)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-
-			if (prob(screw_up_prob))
-				do_slipup(surgeon, patient, "head", damage_low, fluff)
-				return TRUE
-
-			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!"),\
-				SPAN_ALERT("You insert [src] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!"), \
-				SPAN_ALERT("[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [src] into your [target_side] eye socket!"))
-
-			patient.TakeDamage("head", damage_low, 0)
-			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
-			target_eye.op_stage = 1
-			return TRUE
 
 		else if (target_eye.op_stage == 2)
 			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
@@ -1242,38 +1114,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		boutput(surgeon, SPAN_NOTICE("You mess up [patient]'s surgery on purpose."))
 		return TRUE
 
-/* ---------- SNIP - chest ---------- */
-	if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HELP)
-		if (patient.organHolder.chest)
-			switch (patient.organHolder.chest.op_stage)
-				if (0)
-					src.surgeryConfusion(patient, surgeon, damage_high)
-					return TRUE
-				if (1)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
-
-					if (prob(screw_up_prob))
-						do_slipup(surgeon, patient, "chest", damage_low, fluff)
-						return TRUE
-
-					surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!"),\
-						SPAN_ALERT("You make a cut on [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!"),\
-						SPAN_ALERT("[patient == surgeon ? "You make a cut" : "<b>[surgeon]</b> makes a cut"] on chest with [src]!"))
-					patient.TakeDamage("chest", damage_low, 0)
-					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
-					patient.organHolder.chest.op_stage ++
-					return TRUE
-				if (2)
-					if (!patient.organHolder.build_region_buttons())
-						boutput(surgeon, "[patient] has no more organs!")
-						return TRUE
-					surgeon.showContextActions(patient.organHolder.contexts, patient, patient.organHolder.contextLayout)
-					return TRUE
-				if (3 to INFINITY)
-					boutput(surgeon, SPAN_ALERT("[patient]'s op_stage is above intended parameters. Dial 1-800 CODER."))
-					return TRUE
-		else
-			return FALSE
 
 ////////////////////////////////////////////////////////////////////
 

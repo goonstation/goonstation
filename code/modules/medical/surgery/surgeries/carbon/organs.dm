@@ -168,9 +168,9 @@
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		if (organ)
-			surgery_steps[1].finished = (organ:in_surgery == TRUE)
-			surgery_steps[2].finished = (organ:secure == FALSE)
-			surgery_steps[3].finished = FALSE
+			surgery_steps[1].finished = organ:op_stage >= 1
+			surgery_steps[2].finished = organ:op_stage >= 2
+			surgery_steps[3].finished = organ:op_stage >= 3
 		else
 			surgery_steps[1].finished = TRUE
 			surgery_steps[2].finished = TRUE
@@ -181,8 +181,6 @@
 
 		var/organ_name = organ_pretty_name? organ_pretty_name : organ_var_name
 		if (O)
-			O.in_surgery = FALSE
-			O.secure = TRUE
 			if (!quiet)
 				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> secures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [organ_name] back into place with [tool]."),\
 				SPAN_NOTICE("You secure [surgeon == patient ? "your" : "[patient]'s"] [organ_name] back into place with [tool]."),\
@@ -191,7 +189,7 @@
 
 	cancel_possible()
 		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
-		return (O != null && O.in_surgery == TRUE)
+		return (O != null && O.op_stage > 0)
 
 	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 		add_next_step(new /datum/surgery_step/organ/cut(src, organ_var_name)) // Makes the organ count as 'in surgery'
@@ -307,8 +305,7 @@
 						SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your left eye socket closed with [tool]."))
 				var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
 				if (O)
-					O.in_surgery = FALSE
-					O.secure = TRUE
+					O.op_stage = 0
 
 		right
 			id = "right_eye_surgery"
@@ -327,8 +324,7 @@
 						SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision in your right eye socket closed with [tool]."))
 				var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
 				if (O)
-					O.in_surgery = FALSE
-					O.secure = TRUE
+					O.op_stage = 0
 	butt
 		id = "butt_surgery"
 		name = "Butt Surgery"
@@ -414,10 +410,9 @@
 
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
-			surgery_steps[1].finished = C.organHolder.brain.in_surgery
-			if (!C.organHolder.brain.in_surgery)
-				surgery_steps[2].finished = FALSE // this step isn't tied to any vars ATM, so turn it off if we've reset surgery etc
-			surgery_steps[3].finished = !C.organHolder.brain.secure
+			surgery_steps[1].finished = C.organHolder.brain.op_stage >= 1
+			surgery_steps[2].finished = C.organHolder.brain.op_stage >= 2
+			surgery_steps[3].finished = C.organHolder.brain.op_stage >= 3
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
@@ -448,10 +443,9 @@
 		implicit = TRUE
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
-			surgery_steps[1].finished = !C.organHolder.head.in_surgery
-			if (!C.organHolder.head.in_surgery)
-				surgery_steps[2].finished = FALSE
-			surgery_steps[3].finished = C.organHolder.head.secure
+			surgery_steps[1].finished = C.organHolder.head.op_stage >= 1
+			surgery_steps[2].finished = C.organHolder.head.op_stage >= 2
+			surgery_steps[3].finished = C.organHolder.head.op_stage >= 3
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return

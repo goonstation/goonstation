@@ -10,7 +10,7 @@
 		flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
-			O.in_surgery = TRUE
+			O.op_stage = 1
 
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [tool]!"),\
@@ -26,7 +26,7 @@
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
-			O.secure = FALSE
+			O.op_stage = 3
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [tool]!"),\
 				SPAN_ALERT("You slice the tissue around [surgeon == patient ? "your" : "[patient]'s"] spine with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You slice" : "<b>[surgeon]</b> slices"] the tissue around your spine with [tool]!"))
@@ -40,6 +40,7 @@
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars["head"]
+			O.op_stage = 2
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [tool]!"),\
 				SPAN_ALERT("You sever most of [surgeon == patient ? "your" : "[patient]'s"] neck with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] most of your neck with [tool]!"))
@@ -73,7 +74,6 @@
 				SPAN_ALERT("You cut through [surgeon == patient ? "your" : "[patient]'s"] flesh with [tool]!"),\
 				SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] through your flesh with [tool]!"))
 			patient.chest_cavity_clamped = FALSE
-			patient.organHolder.chest.in_surgery = TRUE
 	clamp
 		name = "Clamp"
 		desc = "Clamp the bleeders."
@@ -107,7 +107,7 @@
 		flags_required = TOOL_SNIPPING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			O.secure = FALSE
+			O.op_stage = 2
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> snips out various veins and tendons from [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [O.name] with [tool]!"),\
 				SPAN_ALERT("You snip out various veins and tendons from [surgeon == C ? "your" : "[C]'s"] [O.name] with [tool]!"),\
@@ -121,7 +121,7 @@
 		flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			O.in_surgery = TRUE
+			O.op_stage = 1
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> cuts through the flesh holding [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [O.name] in with [tool]!"),\
 				SPAN_ALERT("You cut through the flesh holding [surgeon == C ? "your" : "[C]'s"] [O.name] in with [tool]!"), \
@@ -136,7 +136,7 @@
 		on_complete(mob/surgeon, obj/item/tool)
 			var/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			O.in_surgery = TRUE
+			O.op_stage = 4
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> takes out [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] [O.name]."),\
 				SPAN_NOTICE("You take out [surgeon == patient ? "your" : "[patient]'s"] [O.name]."),\
 				SPAN_ALERT("[patient == surgeon ? "You take" : "<b>[surgeon]</b> takes"] out your [O.name]!"))
@@ -153,7 +153,7 @@
 		flags_required = TOOL_SAWING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-			O.secure = FALSE
+			O.op_stage = 3
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] [O.name] with [tool]!"),\
 				SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] [O.name] with [tool]!"),\
@@ -169,8 +169,7 @@
 			var/obj/item/organ/O = tool
 			O.attach_organ(parent_surgery.patient, surgeon)
 			//secure, as per old behavior
-			O.secure = TRUE
-			O.in_surgery = FALSE
+			O.op_stage = 0
 		tool_requirement(mob/surgeon, obj/item/tool)
 			if (istype(tool, /obj/item/organ))
 				var/obj/item/organ/O = tool
@@ -234,7 +233,6 @@
 					SPAN_ALERT("You insert [tool] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!"), \
 					SPAN_ALERT("[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [tool] into your [target_side] eye socket!"))
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-				O.in_surgery = TRUE
 
 		cut
 			name = "Cut"
@@ -248,7 +246,6 @@
 					SPAN_ALERT("You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] right eye in with [tool]!"), \
 					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [tool]!"))
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
-				O.secure = FALSE
 
 		scoop
 			name = "Scoop"
@@ -277,7 +274,7 @@
 					SPAN_ALERT("You cut [surgeon == C ? "your" : "[C]'s"] head open with [tool]!"), \
 					SPAN_ALERT("[C == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] your head open with [tool]!"))
 				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s brain with [tool].")
-				C.organHolder.brain.in_surgery= TRUE
+				C.organHolder.brain.op_stage = 1
 
 		cut2
 			name = "Cut"
@@ -296,7 +293,7 @@
 					surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> opens the area around [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] brain cavity with [tool]!"),\
 						SPAN_ALERT("You open the area around [surgeon == C ? "your" : "[C]'s"] brain cavity with [tool]!"),\
 						SPAN_ALERT("[C == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [tool]!"))
-				C.organHolder.brain.secure = FALSE
+				C.organHolder.brain.op_stage = 3
 
 
 		saw
@@ -314,6 +311,7 @@
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws open [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] skull [missing_fluff] with [tool]!"),\
 					SPAN_ALERT("You saw open [surgeon == C ? "your" : "[C]'s"] skull [missing_fluff] with [tool]!"),\
 					SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [tool]!"))
+				C.organHolder.brain.op_stage = 2
 
 
 		remove

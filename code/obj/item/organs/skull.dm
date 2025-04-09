@@ -18,8 +18,7 @@
 	//var/owner_job = null
 	var/value = 1
 
-	/// Is this under active surgery?
-	var/in_surgery = FALSE
+	var/op_stage = 0 //! The stage of surgery this organ is currently in
 
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
