@@ -6,6 +6,8 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///Can be a type or a list of types to randomly pick from
 	var/part_type = null
 	var/base_64_cache = null
+	/// Associated trait ID, if one is needed
+	var/associated_trait_id = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
 	///Cannot be added alongside these part IDs
 	var/incompatible_parts = list()
@@ -23,6 +25,9 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///Actually add the part
 	proc/apply_to(mob/M)
 		PROTECTED_PROC(TRUE)
+		SHOULD_CALL_PARENT(TRUE)
+		if (src.associated_trait_id && M.traitHolder)
+			M.traitHolder.addTrait(associated_trait_id)
 		return
 
 	///Can we add the part, `custom_parts` is an associative list of slot IDs to part IDs
@@ -50,136 +55,234 @@ ABSTRACT_TYPE(/datum/part_customization)
 
 ABSTRACT_TYPE(/datum/part_customization/human)
 /datum/part_customization/human
-
-	apply_to(mob/living/carbon/human/human)
-		var/chosen_part_type = pick(src.part_type)
-		if (istype(src, /datum/part_customization/human/arm) || istype(src, /datum/part_customization/human/leg))
-			if(human.limbs.get_limb(slot)?.type != chosen_part_type)
-				human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE) //pick can totally handle single values apparently
-		else
-			var/obj/item/organ/new_organ = new chosen_part_type()
-			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
-				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
-
 	can_apply(mob/M)
 		return ..() && ishuman(M)
 
-	arm
-		default_left
-			id = "arm_default_left"
-			slot = "l_arm"
-			part_type = /obj/item/parts/human_parts/arm/left
+ABSTRACT_TYPE(/datum/part_customization/human/limb)
+/datum/part_customization/human/limb
 
-			apply_to(mob/living/carbon/human/human)
-				var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
-				if (human.gender == FEMALE) //gendered limbs???
-					limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
-				if (!limb_type)
-					limb_type = src.part_type
-				if(human.limbs.l_arm?.type != limb_type)
-					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+	default
+		arm
+			left
+				id = "arm_default_left"
+				slot = "l_arm"
+				part_type = /obj/item/parts/human_parts/arm/left
 
-		default_right
-			id = "arm_default_right"
-			slot = "r_arm"
-			part_type = /obj/item/parts/human_parts/arm/right
+				apply_to(mob/living/carbon/human/human)
+					. = ..()
+					var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
+					if (human.gender == FEMALE) //gendered limbs???
+						limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f || limb_type
+					if (!limb_type)
+						limb_type = src.part_type
+					if(human.limbs.l_arm?.type != limb_type)
+						human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-			apply_to(mob/living/carbon/human/human)
-				var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
-				if (human.gender == FEMALE) //gendered limbs???
-					limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
-				if (!limb_type)
-					limb_type = src.part_type
-				if(!human.limbs.r_arm?.type == limb_type)
-					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+			right
+				id = "arm_default_right"
+				slot = "r_arm"
+				part_type = /obj/item/parts/human_parts/arm/right
 
-		robo_left
-			id = "arm_robo_left"
-			slot = "l_arm"
-			part_type = /obj/item/parts/robot_parts/arm/left/light
+				apply_to(mob/living/carbon/human/human)
+					. = ..()
+					var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
+					if (human.gender == FEMALE) //gendered limbs???
+						limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
+					if (!limb_type)
+						limb_type = src.part_type
+					if(!human.limbs.r_arm?.type == limb_type)
+						human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-		robo_right
-			id = "arm_robo_right"
-			slot = "r_arm"
-			part_type = /obj/item/parts/robot_parts/arm/right/light
+		leg
+			left
+				id = "leg_default_left"
+				slot = "l_leg"
+				part_type = /obj/item/parts/human_parts/leg/left
 
-		robo_standard_left
-			id = "arm_robo_standard_left"
-			slot = "l_arm"
-			part_type = /obj/item/parts/robot_parts/arm/left/standard
-			trait_cost = 1
-			incompatible_parts = list("arm_robo_standard_right")
+				apply_to(mob/living/carbon/human/human)
+					. = ..()
+					var/limb_type = human.mutantrace.l_limb_leg_type_mutantrace
+					if (human.gender == FEMALE)
+						limb_type = human.mutantrace.l_limb_leg_type_mutantrace_f || limb_type
+					if (!limb_type)
+						limb_type = src.part_type
+					if(human.limbs.l_leg?.type != limb_type)
+						human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-		robo_standard_right
-			id = "arm_robo_standard_right"
-			slot = "r_arm"
-			part_type = /obj/item/parts/robot_parts/arm/right/standard
-			trait_cost = 1
-			incompatible_parts = list("arm_robo_standard_left")
+			right
+				id = "leg_default_right"
+				slot = "r_leg"
+				part_type = /obj/item/parts/human_parts/leg/right
 
-		plant_left
-			id = "arm_plant_left"
-			slot = "l_arm"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+				apply_to(mob/living/carbon/human/human)
+					. = ..()
+					var/limb_type = human.mutantrace.r_limb_leg_type_mutantrace
+					if (human.gender == FEMALE)
+						limb_type = human.mutantrace.r_limb_leg_type_mutantrace_f || limb_type
+					if (!limb_type)
+						limb_type = src.part_type
+					if(human.limbs.r_leg?.type != limb_type)
+						human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
-		plant_right
-			id = "arm_plant_right"
-			slot = "r_arm"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
+	replacement
 
-	leg
-		default_left
-			id = "leg_default_left"
-			slot = "l_leg"
-			part_type = /obj/item/parts/human_parts/leg/left
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
+			var/chosen_part_type = pick(src.part_type)
+			if(human.limbs.get_limb(slot)?.type != chosen_part_type)
+				human.limbs.replace_with(src.slot, chosen_part_type, null, FALSE, TRUE)
 
-			apply_to(mob/living/carbon/human/human)
-				var/limb_type = human.mutantrace.l_limb_leg_type_mutantrace
-				if (human.gender == FEMALE)
-					limb_type = human.mutantrace.l_limb_leg_type_mutantrace_f || limb_type
-				if (!limb_type)
-					limb_type = src.part_type
-				if(human.limbs.l_leg?.type != limb_type)
-					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+		arm
 
-		default_right
-			id = "leg_default_right"
-			slot = "r_leg"
-			part_type = /obj/item/parts/human_parts/leg/right
+			robo_left
+				id = "arm_robo_left"
+				slot = "l_arm"
+				part_type = /obj/item/parts/robot_parts/arm/left/light
 
-			apply_to(mob/living/carbon/human/human)
-				var/limb_type = human.mutantrace.r_limb_leg_type_mutantrace
-				if (human.gender == FEMALE)
-					limb_type = human.mutantrace.r_limb_leg_type_mutantrace_f || limb_type
-				if (!limb_type)
-					limb_type = src.part_type
-				if(human.limbs.r_leg?.type != limb_type)
-					human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
+			robo_right
+				id = "arm_robo_right"
+				slot = "r_arm"
+				part_type = /obj/item/parts/robot_parts/arm/right/light
 
-		plant_left
-			id = "leg_plant_left"
-			slot = "l_leg"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/left/synth)
+			robo_standard_left
+				id = "arm_robo_standard_left"
+				slot = "l_arm"
+				part_type = /obj/item/parts/robot_parts/arm/left/standard
+				trait_cost = 1
+				incompatible_parts = list("arm_robo_standard_right")
 
-		plant_right
-			id = "leg_plant_right"
-			slot = "r_leg"
-			trait_cost = 1
-			part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
+			robo_standard_right
+				id = "arm_robo_standard_right"
+				slot = "r_arm"
+				part_type = /obj/item/parts/robot_parts/arm/right/standard
+				trait_cost = 1
+				incompatible_parts = list("arm_robo_standard_left")
 
-	organ
-		eye_default_left
+			plant_left
+				id = "arm_plant_left"
+				slot = "l_arm"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth)
+
+			plant_right
+				id = "arm_plant_right"
+				slot = "r_arm"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
+
+		leg
+			plant_left
+				id = "leg_plant_left"
+				slot = "l_leg"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/left/synth)
+
+			plant_right
+				id = "leg_plant_right"
+				slot = "r_leg"
+				trait_cost = 1
+				part_type = list(/obj/item/parts/human_parts/leg/right/synth/bloom, /obj/item/parts/human_parts/leg/right/synth)
+
+			robo_left
+				id = "leg_robo_left"
+				slot = "l_leg"
+				trait_cost = 1
+				part_type = /obj/item/parts/robot_parts/leg/left/light
+
+			robo_right
+				id = "leg_robo_right"
+				slot = "r_leg"
+				trait_cost = 1
+				part_type = /obj/item/parts/robot_parts/leg/right/light
+
+			robo_standard_left
+				id = "leg_robo_standard_left"
+				slot = "l_leg"
+				part_type = /obj/item/parts/robot_parts/leg/left/standard
+				trait_cost = 2
+				incompatible_parts = list("leg_robo_standard_right")
+
+			robo_standard_right
+				id = "leg_robo_standard_right"
+				slot = "r_leg"
+				part_type = /obj/item/parts/robot_parts/leg/right/standard
+				trait_cost = 2
+				incompatible_parts = list("leg_robo_standard_left")
+
+	missing
+		custom_icon = 'icons/ui/character_editor.dmi'
+		custom_icon_state = "missing"
+
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
+			var/obj/item/parts/limb = human.limbs.get_limb(src.slot)
+			limb?.remove(show_message=FALSE)
+			qdel(limb)
+
+		arm
+			left
+				id = "arm_missing_left"
+				slot = "l_arm"
+				incompatible_parts = list("arm_missing_right")
+
+				get_name()
+					return "missing left arm"
+
+			right
+				id = "arm_missing_right"
+				slot = "r_arm"
+				incompatible_parts = list("arm_missing_left")
+
+				get_name()
+					return "missing right arm"
+		leg
+
+			left
+				id = "leg_missing_left"
+				slot = "l_leg"
+
+				get_name()
+					return "missing left leg"
+
+			right
+				id = "leg_missing_right"
+				slot = "r_leg"
+
+				get_name()
+					return "missing right leg"
+
+
+ABSTRACT_TYPE(/datum/part_customization/human/organ)
+/datum/part_customization/human/organ
+
+	default
+
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
+			var/obj/item/organ/chosen_part_type = human.mutantrace.mutant_organs[src.slot]
+			if (!chosen_part_type) // fall back to default organs if we don't get any special ones
+				chosen_part_type = pick(src.part_type)
+			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
+				var/obj/item/organ/new_organ = new chosen_part_type()
+				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
+
+		eye_left
 			id = "eye_default_left"
 			slot = "left_eye"
 			part_type = /obj/item/organ/eye/left
 
-		eye_default_right
+		eye_right
 			id = "eye_default_right"
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/right
+
+	replacement
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
+			var/chosen_part_type = pick(src.part_type)
+			if(!istype(human.organHolder?.get_organ(src.slot), chosen_part_type))
+				var/obj/item/organ/new_organ = new chosen_part_type()
+				human.organHolder.receive_organ(new_organ, src.slot, force = TRUE)
 
 		eye_plant_left
 			id = "eye_plant_left"
@@ -201,57 +304,22 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/cyber/configurable
 
-ABSTRACT_TYPE(/datum/part_customization/human/missing)
-/datum/part_customization/human/missing
-	custom_icon = 'icons/ui/character_editor.dmi'
-	custom_icon_state = "missing"
+	missing
+		custom_icon = 'icons/ui/character_editor.dmi'
+		custom_icon_state = "missing"
 
-	apply_to(mob/living/carbon/human/human)
-		if (istype(src, /datum/part_customization/human/missing/organ))
+
+		apply_to(mob/living/carbon/human/human)
+			. = ..()
 			var/obj/item/organ/old_organ = human.organHolder?.get_organ(src.slot)
 			if(old_organ)
 				human.organHolder.drop_organ(src.slot)
 				qdel(old_organ)
-		else
-			var/obj/item/parts/limb = human.limbs.get_limb(src.slot)
-			limb?.remove(0)
-			qdel(limb)
-	arm
-		left
-			id = "arm_missing_left"
-			slot = "l_arm"
-			incompatible_parts = list("arm_missing_right")
 
-			get_name()
-				return "missing left arm"
-
-		right
-			id = "arm_missing_right"
-			slot = "r_arm"
-			incompatible_parts = list("arm_missing_left")
-
-			get_name()
-				return "missing right arm"
-
-	leg
-		left
-			id = "leg_missing_left"
-			slot = "l_leg"
-
-			get_name()
-				return "missing left leg"
-
-		right
-			id = "leg_missing_right"
-			slot = "r_leg"
-
-			get_name()
-				return "missing right leg"
-
-	organ
 		eye_left
 			id = "eye_missing_left"
 			slot = "left_eye"
+			associated_trait_id = "eye_missing_left"
 			trait_cost = 1
 
 			get_name()
@@ -260,6 +328,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 		eye_right
 			id = "eye_missing_right"
 			slot = "right_eye"
+			associated_trait_id = "eye_missing_right"
 			trait_cost = 1
 
 			get_name()

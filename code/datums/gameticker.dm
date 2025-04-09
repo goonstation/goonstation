@@ -298,6 +298,9 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(10 MINUTES) // standard engine warning
 		for_by_tcl(E, /obj/machinery/computer/power_monitor/smes)
 			LAGCHECK(LAG_LOW)
+			var/area/A = get_area(E) // only check the main (engine) pnet
+			if (!istype(A, /area/station) || istype(A, /area/station/engine/substation) || istype(A, /area/station/solar) || istype(A, /area/station/maintenance/solar))
+				continue
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)

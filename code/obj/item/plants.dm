@@ -309,19 +309,19 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb/ipecacuanha
 	name = "ipecacuanha root"
 	crop_suffix	= " root"
-	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it."
+	desc = "This thick root is covered in abnormal amounts of bark. A powerful emetic can be extracted from it."
 	icon_state = "ipecacuanha"
 
 /obj/item/plant/herb/ipecacuanha/invigorating
 	name = "ipecacuanha root"
 	crop_suffix	= " root"
-	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one is strangely veinous"
+	desc = "This thick root is covered in abnormal amounts of bark. A powerful emetic can be extracted from it. This one is strangely veinous"
 	icon_state = "ipecacuanhainvigorating"
 
 /obj/item/plant/herb/ipecacuanha/bilious
 	name = "ipecacuanha root"
 	crop_suffix = " root"
-	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
+	desc = "This thick root is covered in abnormal amounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
 	icon_state = "ipecacuanhabilious"
 	brew_result = list("gvomit"=20)
 

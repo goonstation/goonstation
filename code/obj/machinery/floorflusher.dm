@@ -22,6 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/flushing = 0	// true if flushing in progress
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
+	var/emagged = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
@@ -91,6 +92,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			air_contents = null
 		..()
 		STOP_TRACKING
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, SPAN_NOTICE("You short out the locking mechanism on \the [src]."))
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -275,7 +281,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		if(status & NOPOWER)			// won't charge if no power
 			return
-
+		if (!src.open && src.emagged && prob(10))
+			src.openup()
 		..()
 		if(mode != 1)		// if off or ready, no need to charge
 			return

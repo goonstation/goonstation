@@ -1,4 +1,111 @@
+
+(t)tue apr 08 25
+(u)RubberRats
+(p)22914
+(e)|
+(+)Rockworms no longer eat their own poop.
+(u)Facsimile
+(p)22830
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Increases the Glockenspiel's loudness.
+(u)glowbold
+(p)22892
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SMES units broken by explosions will emit dangerous shocks and stop charging. They can be repaired with common engineering tools and wires.
+(t)mon apr 07 25
+(u)RubberRats
+(p)22895
+(e)🔎🍝|C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed internally, please report any issues that crop up
+(u)CalliopeSoups
+(p)22818
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)Type *nudge or *adjust to do the funny nerd glasses push up. Further fx support for basic glasses and most goggles.
+(t)sun apr 06 25
+(u)sunnyaries
+(p)22665
+(e)🆕|C-Feature
+(+)Added cyborg legs as part of character customization.
+(u)sunnyaries
+(p)22664
+(e)⚖|C-Balance
+(+)Light borg legs no longer negate speed penalties.
+(u)Xenomni, Ribbie
+(p)22690
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Added denim dresses to clothing booth.
+(+)Added six different colored denim dresses to the clothing booth; blue, turquoise, white, black, grey and khaki, purchasable for 50 credits.
+(u)glowbold
+(p)22737
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Journalists, Hollywood Actors, and Influencers spawn on the NSV Renanin with the Radio Show Host.
+(+)The NSV Renanin is outfitted with a printing press, TV studio, green room, cargo pad, and emergency pod manufacturer.
+(u)JORJ949
+(p)22778
+(e)⚖⛔🐣|C-Balance, C-Removal, A-Respawning
+(+)Chaplains can roll roundstart vampire again (They are immune to burning in the chapel).
+(u)Colossusqw
+(p)21781
+(e)🆕🎨⚖🧛🔨|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions
+(*)Changelings now have a variety of sting options to choose from, sharing a collective cooldown. (Minor changes for details)
+(+)Now changelings can swap between a neurotoxin sting(50us, 140s cooldown), a neurodepressant (5u, 20s), hemotoxin (9u, 30s), and madness toxin sting (15u, 240s cooldown, 5 DNA points).
+(+)Neurotoxin now paralyses instead of causing a KO, and is a changeling sting both in the classic and RP server.
+(u)Vic
+(p)22779
+(e)💅🐁|C-QoL, A-Critters
+(+)Ghostcritters no longer get hurt by ants. Go for that floor pickle!
+(t)sat apr 05 25
+(u)glowbold
+(p)22872
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Footprints in snow.
+(u)FlameArrow57
+(p)22855
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)SMES units are now mechscannable
+(u)FlameArrow57
+(p)22422
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod gunner module component. It allows passengers to fire weak phaser bolts while the ship's main weapon is active in an ordinal direction through left clicking. Shared cooldown among all passengers
+(u)Jan.antilles
+(p)22853
+(e)⚖|C-Balance
+(+)Securitrons can no longer be printed from the robotics fabricator, and have to be assembled by hand.
+(t)fri apr 04 25
+(u)RubberRats
+(p)22806
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Silver has been given a unique overdose effect
+(t)thu apr 03 25
+(u)LeahTheTech
+(+)Stinging nettles will no longer sting maneaters.
+(u)glowbold
+(p)22838
+(e)🆕🔊🔨|C-Feature, C-Sound, A-Player-Actions
+(+)The wonderful sound of snow crushed under foot.
+(u)glowbold
+(p)22794
+(e)🆕💪|C-Feature, A-Traits
+(+)Characters with a missing eye get an eyepatch on spawn.
+(u)Cogwerks
+(e)📦|B-Game-objects
+(+)Detective's forensics closet now has a version of the camera with a scope component for telephoto surveillance
+(t)tue apr 1 25
+(u)LeahTheTech
+(*)Improved workplace flow.
+(+)Removed Herobrine.
+(u)Azrun
+(e)🆕📦💳|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers got their hands on some ID cards.
 (t)mon mar 31 25
+(u)CalliopeSoups
+(p)22753
+(e)|
+(+)You can now put heads ontop of mechcomp cabinets like hats.
+(u)LeahTheTech
+(p)22804
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added flapjack, made with oatmeal, syrup and butter.
 (u)Dr. Cogwerks
 (e)📦🔊🎨|B-Game-Objects, C-Sound, C-Sprites
 (*)Updated hunting rifle to actually have a scope - wasn't meant to be a pointblank gun

@@ -404,6 +404,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 
 var/list/oven_recipes = list()
 
+
 TYPEINFO(/obj/submachine/chef_oven)
 	mats = 18
 
@@ -517,22 +518,10 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (!possible)
 			return
 
-		if (possible.item1)
-			var/atom/item_path = possible.item1
+		for(var/I in possible.ingredients)
+			var/atom/item_path = I
 			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.amt1 > 1 ? " x[possible.amt1]" : ""]"
-		if (possible.item2)
-			var/atom/item_path = possible.item2
-			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.amt2 > 1 ? " x[possible.amt2]" : ""]"
-		if (possible.item3)
-			var/atom/item_path = possible.item3
-			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.amt3 > 1 ? " x[possible.amt3]" : ""]"
-		if (possible.item4)
-			var/atom/item_path = possible.item4
-			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
-			src.possible_recipe_names += "[initial(item_path.name)][possible.amt4 > 1 ? " x[possible.amt4]" : ""]"
+			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
 		if (ispath(possible.output))
 			var/atom/item_path = possible.output
@@ -782,6 +771,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
+			src.recipes += new /datum/cookingrecipe/oven/flapjack_batch(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
@@ -1046,14 +1036,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 		return null
 
 	proc/OVEN_can_cook_recipe(datum/cookingrecipe/recipe)
-		if (recipe.item1)
-			if (!OVEN_checkitem(recipe.item1, recipe.amt1)) return FALSE
-		if (recipe.item2)
-			if (!OVEN_checkitem(recipe.item2, recipe.amt2)) return FALSE
-		if (recipe.item3)
-			if (!OVEN_checkitem(recipe.item3, recipe.amt3)) return FALSE
-		if (recipe.item4)
-			if (!OVEN_checkitem(recipe.item4, recipe.amt4)) return FALSE
+		for(var/I in recipe.ingredients)
+			if (!OVEN_checkitem(I, recipe.ingredients[I])) return FALSE
 
 		return TRUE
 
