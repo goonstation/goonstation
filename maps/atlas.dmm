@@ -10681,6 +10681,7 @@
 	id = "chapel";
 	req_access_txt = "1"
 	},
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
