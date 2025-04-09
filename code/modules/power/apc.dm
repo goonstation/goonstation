@@ -1451,6 +1451,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
 	operating = 0

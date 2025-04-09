@@ -2,7 +2,7 @@
 TODO:
 
 Contributing:
-- Authors: Mr. Moriarty, Amylizzle, LeahTheTech, DisturbHerb, Romayne, & Skeletonman0
+- Authors: Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
 - If you make a PR to the say rework branch, feel free to add your name to the above list.
 - Please make an effort to adhere to the set out code style, primarily the following:
 	Absolute pathing,

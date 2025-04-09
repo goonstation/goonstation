@@ -5438,7 +5438,7 @@
 	req_access_txt = "19"
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "arK" = (
 /obj/noticeboard,
 /turf/simulated/wall/r_wall,
@@ -5611,20 +5611,20 @@
 "asu" = (
 /obj/stool/bed,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asv" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asw" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asx" = (
 /obj/machinery/light{
 	dir = 1;
@@ -5639,7 +5639,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asy" = (
 /obj/machinery/computer/ATM{
 	dir = 8;
@@ -5651,7 +5651,7 @@
 	name = "autoname  - SS13"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asz" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced/west,
@@ -5661,7 +5661,7 @@
 	reinf = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "asA" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced/north,
@@ -5954,23 +5954,23 @@
 /area/station/bridge)
 "aty" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "atz" = (
 /turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "atB" = (
 /obj/stool/chair{
 	dir = 8
 	},
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "atC" = (
 /obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "atD" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced/west,
@@ -6369,32 +6369,32 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "avj" = (
 /obj/storage/secure/closet/command/hos,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "avk" = (
 /obj/table/wood{
 	dir = 9
 	},
 /obj/machinery/light/lamp,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "avl" = (
 /obj/table/wood{
 	dir = 9
 	},
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "avm" = (
 /obj/table/wood{
 	dir = 9
 	},
 /obj/machinery/recharger,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "avn" = (
 /obj/machinery/flasher{
 	id = "cell4";
@@ -6732,16 +6732,16 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "awj" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "awk" = (
 /turf/simulated/wall/r_wall,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "awl" = (
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/north)
@@ -30468,7 +30468,7 @@
 /obj/item/currency/spacecash,
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "sOw" = (
 /obj/machinery/camera{
 	c_tag = "Southwest firesuit storage";

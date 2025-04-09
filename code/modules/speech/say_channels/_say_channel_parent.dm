@@ -14,6 +14,10 @@ ABSTRACT_TYPE(/datum/say_channel)
 	var/disabled_message = "This say channel is currently disabled."
 	/// An associative list of listeners registered to this channel, indexed by input module type.
 	var/list/list/datum/listen_module/input/listeners
+	/// Whether this local channel should request registered input modules to track their outermost listeners.
+	var/track_outermost_listener = FALSE
+	/// An associative list of module trees, with the associated number of times a signal has been registered to them.
+	var/list/module_tree_signal_registrations
 	/// Whether messages sent through this channel should be affected by say or listen modifiers.
 	var/affected_by_modifiers = TRUE
 	/// Whether the speaker of a message sent through this channel should make a sound on sending a message.
@@ -27,6 +31,12 @@ ABSTRACT_TYPE(/datum/say_channel)
 	. = ..()
 
 	src.listeners = list()
+	src.module_tree_signal_registrations = list()
+
+/datum/say_channel/disposing()
+	src.module_tree_signal_registrations = null
+
+	. = ..()
 
 /// The primary entry point for say message datums; they will be passed to this channel through this proc.
 /datum/say_channel/proc/PassToChannel(datum/say_message/message)
@@ -84,20 +94,51 @@ ABSTRACT_TYPE(/datum/say_channel)
 
 /// Set up an output module for sending messages over this channel.
 /datum/say_channel/proc/RegisterOutput(datum/speech_module/output/registree)
-	return
+	if (src.track_outermost_listener)
+		registree.parent_tree.speaker_origin.ensure_outermost_listener_tracker().request_track()
+
+		src.module_tree_signal_registrations[registree.parent_tree] += 1
+		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
+			src.RegisterSignal(registree.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
 
 /// Remove any setup applied to an output module that was sending messages over this channel.
 /datum/say_channel/proc/UnregisterOutput(datum/speech_module/output/registered)
-	return
+	if (src.track_outermost_listener)
+		registered.parent_tree.speaker_origin.ensure_outermost_listener_tracker().unrequest_track()
+
+		src.module_tree_signal_registrations[registered.parent_tree] -= 1
+		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
+			src.UnregisterSignal(registered.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
+			src.module_tree_signal_registrations -= registered.parent_tree
 
 /// Register a listener for hearing messages on a channel.
 /datum/say_channel/proc/RegisterInput(datum/listen_module/input/registree)
 	src.listeners[registree.type] ||= list()
 	src.listeners[registree.type] += registree
 
+	if (src.track_outermost_listener)
+		registree.parent_tree.listener_origin.ensure_outermost_listener_tracker().request_track()
+
+		src.module_tree_signal_registrations[registree.parent_tree] += 1
+		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
+			src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
+
 /// Unregister a listener so it no longer receieves messages from this channel.
 /datum/say_channel/proc/UnregisterInput(datum/listen_module/input/registered)
 	src.listeners[registered.type] -= registered
+
+	if (src.track_outermost_listener)
+		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
+
+		src.module_tree_signal_registrations[registered.parent_tree] -= 1
+		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
+			src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
+			src.module_tree_signal_registrations -= registered.parent_tree
+
+/datum/say_channel/proc/rerequest_track(tree, atom/old_parent, atom/new_parent)
+	var/count = src.module_tree_signal_registrations[tree]
+	old_parent.ensure_outermost_listener_tracker().unrequest_track(count)
+	new_parent.ensure_outermost_listener_tracker().request_track(count)
 
 
 
@@ -167,10 +208,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
  *	basis of range. How this range is calculated may be altered by overriding `GetAtomListeners()`.
  */
 /datum/say_channel/delimited/local
-	/// Whether this local channel should request registered input modules to track their outermost listeners.
-	var/track_outermost_listener = TRUE
-	/// An associative list of module trees, with the associated number of times a signal has been registered to them.
-	var/list/module_tree_signal_registrations
+	track_outermost_listener = TRUE
 	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
 	var/datum/listener_tick_cache/listener_tick_cache
 	/// The type of listener tick cache that this say channel should use.
@@ -179,13 +217,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 /datum/say_channel/delimited/local/New()
 	. = ..()
 
-	src.module_tree_signal_registrations = list()
 	src.listener_tick_cache = new src.listener_tick_cache_type
-
-/datum/say_channel/delimited/local/disposing()
-	src.module_tree_signal_registrations = null
-
-	. = ..()
 
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = src.listener_tick_cache.read_from_cache(message)
@@ -237,53 +269,6 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
-
-/datum/say_channel/delimited/local/RegisterOutput(datum/speech_module/output/registree)
-	. = ..()
-
-	if (src.track_outermost_listener)
-		registree.parent_tree.speaker_origin.ensure_outermost_listener_tracker().request_track()
-
-		src.module_tree_signal_registrations[registree.parent_tree] += 1
-		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
-			src.RegisterSignal(registree.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
-
-/datum/say_channel/delimited/local/UnregisterOutput(datum/speech_module/output/registered)
-	if (src.track_outermost_listener)
-		registered.parent_tree.speaker_origin.ensure_outermost_listener_tracker().unrequest_track()
-
-		src.module_tree_signal_registrations[registered.parent_tree] -= 1
-		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
-			src.UnregisterSignal(registered.parent_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
-			src.module_tree_signal_registrations -= registered.parent_tree
-
-	. = ..()
-
-/datum/say_channel/delimited/local/RegisterInput(datum/listen_module/input/registree)
-	. = ..()
-
-	if (src.track_outermost_listener)
-		registree.parent_tree.listener_origin.ensure_outermost_listener_tracker().request_track()
-
-		src.module_tree_signal_registrations[registree.parent_tree] += 1
-		if (src.module_tree_signal_registrations[registree.parent_tree] == 1)
-			src.RegisterSignal(registree.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(rerequest_track))
-
-/datum/say_channel/delimited/local/UnregisterInput(datum/listen_module/input/registered)
-	if (src.track_outermost_listener)
-		registered.parent_tree.listener_origin.ensure_outermost_listener_tracker().unrequest_track()
-
-		src.module_tree_signal_registrations[registered.parent_tree] -= 1
-		if (src.module_tree_signal_registrations[registered.parent_tree] == 0)
-			src.UnregisterSignal(registered.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
-			src.module_tree_signal_registrations -= registered.parent_tree
-
-	. = ..()
-
-/datum/say_channel/delimited/local/proc/rerequest_track(tree, atom/old_parent, atom/new_parent)
-	var/count = src.module_tree_signal_registrations[tree]
-	old_parent.ensure_outermost_listener_tracker().unrequest_track(count)
-	new_parent.ensure_outermost_listener_tracker().request_track(count)
 
 
 

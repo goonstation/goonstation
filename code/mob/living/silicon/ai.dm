@@ -366,14 +366,17 @@ or don't if it uses a custom topopen overlay
 		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
+		src.radio1.icon_tooltip = "AI"
 		src.radio1.toggle_microphone(FALSE)
 		src.radio1.toggle_speaker(FALSE)
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.icon_tooltip = "AI"
 		src.radio2.device_color = "#7F7FE2"
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
 		src.radio2.toggle_microphone(FALSE)
 		src.radio2.toggle_speaker(FALSE)
 		src.radio3.name = "Secure Channels Monitor"
+		src.radio3.icon_tooltip = "AI"
 		src.radio3.toggle_microphone(FALSE)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"

@@ -99,7 +99,12 @@
 			src.mind.transfer_to(master)
 			var/datum/targetable/ability = master_ability_holder.getAbility(/datum/targetable/wraithAbility/haunt)
 			ability.doCooldown()
+
+			for (var/mob/dead/target_observer/observer as anything in src.observers)
+				observer.set_observe_target(src.master)
+
 			src.master = null
+
 		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
 		. = ..()
 

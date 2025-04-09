@@ -2306,13 +2306,10 @@
 /turf/simulated/floor/grey,
 /area/station/science/tenebrae)
 "fL" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "fM" = (
@@ -7923,25 +7920,19 @@
 	name = "Dionysus Cryocore"
 	})
 "sk" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/locker{
 	name = "Hammer Crew Quarters"
 	})
 "sl" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8192,13 +8183,10 @@
 	name = "Dionysus Cryocore"
 	})
 "sN" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -8839,10 +8827,6 @@
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
 	})
-"uf" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/bridge/hos)
 "ug" = (
 /obj/storage/closet/wardrobe/black/formalwear,
 /obj/machinery/light/small{
@@ -9142,7 +9126,7 @@
 /obj/storage/secure/closet/command/hop,
 /obj/item/cargotele,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "uP" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -9160,7 +9144,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "uQ" = (
 /obj/table/wood/auto,
 /obj/item/clipboard,
@@ -9186,7 +9170,7 @@
 	pixel_x = -12
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "uR" = (
 /obj/storage/crate{
 	desc = "Various supplies for the bar.";
@@ -9611,16 +9595,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "vI" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "vJ" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "vK" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -9633,7 +9617,7 @@
 	},
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "vL" = (
 /obj/table/auto,
 /obj/item/storage/box/glassbox,
@@ -9951,7 +9935,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "wv" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9972,10 +9956,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "wx" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "wy" = (
 /obj/machinery/door_control{
 	id = "dionysus_hoptalk";
@@ -9986,7 +9970,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "wz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10260,7 +10244,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "wZ" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -10272,13 +10256,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xa" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10287,7 +10271,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -10298,7 +10282,7 @@
 	name = "Personnel Desk"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
-/area/space)
+/area/station/crew_quarters/hop)
 "xd" = (
 /obj/machinery/light{
 	dir = 1;
@@ -10530,18 +10514,18 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xD" = (
 /obj/shrub,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xE" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "xH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10734,9 +10718,6 @@
 /area/station/medical/maintenance{
 	name = "Asclepius Equipment Room"
 	})
-"yc" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "yd" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/wood,
@@ -18229,7 +18210,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "Or" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -21119,10 +21100,7 @@
 	pixel_x = -12
 	},
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
 /turf/simulated/floor/grass,
@@ -21150,7 +21128,7 @@
 	})
 "Ut" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "Uu" = (
 /obj/cable,
 /obj/cable{
@@ -21408,13 +21386,10 @@
 	name = "Erebus Primary Zone"
 	})
 "Ve" = (
-/obj/machinery/macrofab{
-	createdObject = /obj/item/tank/emergency_oxygen;
-	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks.";
-	name = "Tank Fabricator";
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/macrofab/portable_oxygen{
 	pixel_y = -4
 	},
-/obj/decal/tile_edge/line/blue,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/tenebrae)
 "Vf" = (
@@ -22851,7 +22826,7 @@
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
-/area/space)
+/area/station/crew_quarters/hop)
 "YK" = (
 /obj/decal/tile_edge/line/blue,
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -23057,6 +23032,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/mining/magnet)
+"Zf" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hop)
 "Zg" = (
 /obj/decal/poster/wallsign/stencil/left/u{
 	pixel_x = -2
@@ -52859,11 +52838,11 @@ aa
 aa
 aa
 aa
-uf
-uf
+Zf
+Zf
 wu
-uf
-uf
+Zf
+Zf
 aa
 aa
 aa
@@ -53160,13 +53139,13 @@ aa
 aa
 aa
 aa
-uf
-uf
+Zf
+Zf
 vH
 Oq
 wY
-uf
-uf
+Zf
+Zf
 aa
 aa
 aa
@@ -53462,13 +53441,13 @@ aa
 aa
 aa
 aa
-uf
+Zf
 uO
 vI
 ww
 wZ
 xC
-uf
+Zf
 aa
 aa
 aa
@@ -53764,13 +53743,13 @@ aa
 aa
 aa
 aa
-uf
+Zf
 uP
 vJ
 wx
 xa
 xD
-uf
+Zf
 aa
 aa
 aa
@@ -54374,7 +54353,7 @@ tG
 tG
 xc
 YJ
-yc
+Ut
 aa
 aa
 aa

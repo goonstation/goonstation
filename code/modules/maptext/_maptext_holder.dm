@@ -28,11 +28,9 @@
 	. = ..()
 
 	src.parent = parent
+	src.parent.vis_contents += src
 	src.client = client
 	src.lines = list()
-
-	src.loc = src.parent
-	src.parent.vis_contents += src
 
 /atom/movable/maptext_holder/disposing()
 	for (var/image/line as anything in src.lines)

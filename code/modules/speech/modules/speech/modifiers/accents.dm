@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = SPEECH_MODIFIER_ACCENT_REVERSED
 
 /datum/speech_module/modifier/accent/reversed_speech/process(datum/say_message/message)
-	message.content = reverse_text(message.content)
+	message.content = html_encode(reverse_text(html_decode(message.content)))
 	. = message
 
 
