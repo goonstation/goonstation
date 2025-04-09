@@ -370,7 +370,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if(!src.emagged)
 			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
 			src.name = "buclear nomb"
-			emagged = TRUE
+			src.emagged = TRUE
 			return TRUE
 		return FALSE
 
