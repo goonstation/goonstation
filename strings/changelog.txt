@@ -1,4 +1,26 @@
 
+(t)tue apr 08 25
+(u)RubberRats
+(p)22914
+(e)|
+(+)Rockworms no longer eat their own poop.
+(u)Facsimile
+(p)22830
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Increases the Glockenspiel's loudness.
+(u)glowbold
+(p)22892
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SMES units broken by explosions will emit dangerous shocks and stop charging. They can be repaired with common engineering tools and wires.
+(t)mon apr 07 25
+(u)RubberRats
+(p)22895
+(e)🔎🍝|C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed internally, please report any issues that crop up
+(u)CalliopeSoups
+(p)22818
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)Type *nudge or *adjust to do the funny nerd glasses push up. Further fx support for basic glasses and most goggles.
 (t)sun apr 06 25
 (u)sunnyaries
 (p)22665

@@ -669,7 +669,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "abZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19883,7 +19883,7 @@
 /area/station/bridge)
 "bvL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bvN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/info)
@@ -20019,7 +20019,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bwr" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/junction/right/west,
@@ -20179,7 +20179,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxa" = (
 /mob/living/critter/small_animal/dog/blair,
 /obj/cable{
@@ -20192,19 +20192,19 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxb" = (
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxc" = (
 /obj/stool/chair/comfy/blue,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxd" = (
 /obj/table/wood/round/auto,
 /obj/item/stamp/hop,
@@ -20219,7 +20219,7 @@
 	dir = 4;
 	icon_state = "fgreen3"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxe" = (
 /obj/storage/crate,
 /obj/item/clothing/suit/johnny_coat{
@@ -20503,14 +20503,14 @@
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "bxX" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "byb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29748,7 +29748,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "ceO" = (
 /obj/storage/secure/closet/engineering/engineer,
 /obj/cable{
@@ -32379,7 +32379,7 @@
 	dir = 4;
 	icon_state = "fgreen3"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "dFX" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -34108,7 +34108,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "fEz" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -34672,7 +34672,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "gqz" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 8;
@@ -38352,7 +38352,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "lvP" = (
 /obj/stool/chair/comfy/yellow{
 	dir = 4
@@ -38701,7 +38701,7 @@
 	dir = 10;
 	icon_state = "fgreen1"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "lTa" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -44852,7 +44852,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/bridge/hos)
+/area/station/crew_quarters/hop)
 "uay" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/grass{
