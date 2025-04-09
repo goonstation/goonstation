@@ -87,7 +87,7 @@
 #define MACHINES_ELEVATORBIODOME		24 // /obj/machinery/computer/elevator/biodome
 #define MACHINES_ELEVATORCENTCOM		25 // /obj/machinery/computer/elevator/centcomm
 
-// misc objects that get looped for that have relatively few instances and the loops are not performance critical: /obj/machinery/tripod, /obj/machinery/compressor, /obj/machinery/noise_maker, /obj/machinery/engine_laser_spawner
+// misc objects that get looped for that have relatively few instances and the loops are not performance critical: /obj/machinery/tripod, /obj/machinery/computer/tetris
 #define MACHINES_MISC							23
 
 #define MACHINES_BEACONS					24 // /obj/machinery/beacon

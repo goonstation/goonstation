@@ -16,12 +16,16 @@
 	/// how much direct burn damage this attack deals, on top of any damage from the shock itself
 	var/direct_burn_damage = 15
 
+	tryCast(atom/target, params)
+		if (target == src.holder.owner)
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
+			boutput(src.holder.owner, SPAN_ALERT("That is too far away!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
-		if (target == src.holder.owner)
-			return TRUE
-		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return TRUE
 		if (ismob(target))
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
@@ -39,13 +43,13 @@
 			var/obj/machinery/door/airlock/airlock = target
 			if (airlock.hardened)
 				boutput(src.holder.owner, SPAN_ALERT("[target] is hardened against your electrical attacks, your [name] skill has no effect!"))
-				return TRUE
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
 			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 			boutput(src.holder.owner, SPAN_ALERT("You run a powerful current into [target], temporarily cutting its power!"))
 		else
-			return TRUE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
 		S.set_up(2, FALSE, target)
 		S.start()

@@ -1408,13 +1408,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"dD" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/landmark/supply_delivery,
-/turf/space,
-/area/station/crew_quarters/clown)
 "dE" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -2998,25 +2991,6 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"hu" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint/customs)
-"hv" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	name = "Customs";
-	req_access = null
-	},
-/obj/mapping_helper/access/heads,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "hw" = (
 /obj/machinery/bathtub{
 	dir = 4
@@ -3140,17 +3114,6 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"hK" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "hL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -3321,31 +3284,6 @@
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"ih" = (
-/obj/table/wood/auto,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
-"ii" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/head_of_personnel,
-/obj/stool/chair/comfy/blue{
-	dir = 8;
-	icon_state = "chair_comfy-blue"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "ij" = (
 /obj/mesh/catwalk{
 	dir = 10;
@@ -3656,17 +3594,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"iJ" = (
-/obj/machinery/computer/card{
-	dir = 4;
-	icon_state = "id"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "iK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -5372,14 +5299,6 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"mx" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 4
-	},
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "my" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -6220,21 +6139,6 @@
 /obj/storage/closet/wardrobe/yellow,
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
-"ot" = (
-/obj/mesh/catwalk{
-	dir = 4
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/magnet)
 "ou" = (
 /obj/mesh/catwalk{
 	dir = 6;
@@ -6474,6 +6378,17 @@
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
+"BD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "BJ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -6529,6 +6444,27 @@
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"Nq" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
+"Nu" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "NA" = (
 /obj/strip_door,
 /obj/machinery/door/poddoor{
@@ -6546,11 +6482,54 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"RB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	name = "Customs";
+	req_access = null
+	},
+/obj/mapping_helper/access/heads,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
+"Tj" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "UN" = (
 /obj/table/wood/auto,
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
+"VN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/head_of_personnel,
+/obj/stool/chair/comfy/blue{
+	dir = 8;
+	icon_state = "chair_comfy-blue"
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "WP" = (
 /obj/stool/chair/dining/wood,
 /obj/cable{
@@ -6561,6 +6540,27 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"YI" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/landmark/supply_delivery,
+/turf/space,
+/area/station/crew_quarters/clown)
+"YJ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge/customs)
+"YU" = (
+/obj/machinery/computer/card{
+	dir = 4;
+	icon_state = "id"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "ZG" = (
 /obj/item/room_planner,
 /obj/item/clothing/glasses/toggleable/meson,
@@ -46881,11 +46881,11 @@ fF
 fF
 gB
 gB
-hu
-hu
-ih
-hu
-hu
+YJ
+YJ
+Nu
+YJ
+YJ
 jF
 kb
 bX
@@ -47183,11 +47183,11 @@ eJ
 eJ
 gC
 hc
-hv
-hK
-ii
-iJ
-hu
+RB
+BD
+VN
+YU
+YJ
 oz
 oB
 bX
@@ -50809,7 +50809,7 @@ fo
 fo
 fo
 fo
-ot
+Nq
 oy
 jn
 dl
@@ -51111,7 +51111,7 @@ fo
 fo
 fo
 fo
-ot
+Nq
 en
 ad
 dl
@@ -54446,7 +54446,7 @@ lG
 lN
 ma
 mo
-mx
+Tj
 nz
 og
 ne
@@ -57744,7 +57744,7 @@ aa
 aa
 aa
 da
-dD
+YI
 da
 aa
 aa
