@@ -8678,7 +8678,7 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/railway_vehicle/lunar_cab,
+/obj/railway_vehicle/flatbed/lunar_cab,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "GJ" = (
@@ -10426,7 +10426,7 @@
 /obj/railway/adaptive{
 	icon_state = "4-8"
 	},
-/obj/railway_vehicle/passenger/end,
+/obj/railway_vehicle/flatbed/passenger/end,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "NN" = (

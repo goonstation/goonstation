@@ -4949,7 +4949,7 @@
 /area/station/crew_quarters/lounge)
 "aBK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aBN" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -5194,7 +5194,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aCV" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/random,
@@ -7575,7 +7575,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aQy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7639,7 +7639,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aRf" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -7777,7 +7777,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aRM" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -7852,7 +7852,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aSl" = (
 /obj/storage/secure/closet/command/captain,
 /obj/machinery/phone/wall{
@@ -7895,7 +7895,7 @@
 /area/station/chapel/office)
 "aSA" = (
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aSB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7979,7 +7979,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aTb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -7988,7 +7988,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aTc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -8337,7 +8337,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aVr" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor/orangeblack,
@@ -8478,7 +8478,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aWr" = (
 /obj/machinery/vending/pizza/fallen{
 	color = "#b0a060";
@@ -8781,7 +8781,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aYo" = (
 /obj/shrub{
 	dir = 1
@@ -8838,7 +8838,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aYK" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME";
@@ -8960,7 +8960,7 @@
 	},
 /mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aZH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14600,7 +14600,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "jgk" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/science/testchamber/bombchamber{
@@ -19027,7 +19027,7 @@
 	},
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "pri" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/tile_edge/line/black{
@@ -23244,7 +23244,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vMX" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -23686,7 +23686,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "wux" = (
 /obj/cable{
 	icon_state = "4-8"

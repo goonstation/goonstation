@@ -1488,7 +1488,7 @@ datum
 			fluid_b = 110
 			depletion_rate = 1
 			var/counter = 1
-			var/fainted = 0
+			var/fainted = FALSE
 			blob_damage = 1
 			value = 4 // 3c + heat
 
@@ -1508,11 +1508,12 @@ datum
 						M.change_misstep_chance(20 * mult)
 						if (probmult(35)) M.emote("drool")
 					if (18 to INFINITY)
-						if (!fainted)
-							M.emote("faint")
-							fainted = 1
-						M.setStatusMin("unconscious", 10 SECONDS * mult)
+						M.changeStatus("paralysis", 10 SECONDS * mult)
+						M.changeStatus("muted", 10 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
+						if (!fainted)
+							M.force_laydown_standup()
+							fainted = TRUE
 
 				M.jitteriness = max(M.jitteriness-30,0)
 				if (M.get_brain_damage() <= 80)
