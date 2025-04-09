@@ -1338,3 +1338,32 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		src.on_hit(target, O = O)
+
+/datum/projectile/special/psi_bolt
+	name = "psionic-kinetic paralysis bolt"
+	sname = "psi bolt"
+	icon_state = "psi_bolt"
+	damage = 0
+	dissipation_delay = 6
+	hit_ground_chance = 50
+	shot_sound = 'sound/weapons/psi_bolt.ogg'
+
+	on_launch(obj/projectile/O)
+		var/mob/living/critter/mindeater/mindeater = O.shooter || O.mob_shooter
+		mindeater.reveal()
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if (istype(hit, /mob/living/critter/mindeater))
+			return TRUE
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		..()
+		if (!istype(hit, /mob/living/critter/mindeater))
+			hit.changeStatus("staggered", 0.25 SECONDS)
+
+	on_pointblank(obj/projectile/O, mob/target)
+		if (istype(target))
+			qdel(O) // otherwise projectile sprite is left floating in the air
+		else
+			return ..()
