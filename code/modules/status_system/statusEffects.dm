@@ -3680,3 +3680,29 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/mindeater_becoming_visible
+	id = "mindeater_appearing"
+	name = "Appearing"
+	icon_state = "mindeater_appearing"
+	desc = "While in light you are becoming visible!"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (mindeater.on_bright_turf())
+			mindeater.reveal()
+
+/datum/statusEffect/mindeater_becoming_invisible
+	id = "mindeater_cloaking"
+	name = "Cloaking"
+	icon_state = "mindeater_cloaking"
+	desc = "You are starting to cloak. Stay out of light and combat!"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (!mindeater.on_bright_turf())
+			mindeater.set_invisible()
