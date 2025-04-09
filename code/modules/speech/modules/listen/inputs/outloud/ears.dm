@@ -65,3 +65,4 @@
 SET_UP_LISTEN_CONTROL(/datum/listen_module/input/outloud/ears/ghost, LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_GHOST)
 /datum/listen_module/input/outloud/ears/ghost
 	id = LISTEN_INPUT_EARS_GHOST
+	ignore_line_of_sight_checks = TRUE
