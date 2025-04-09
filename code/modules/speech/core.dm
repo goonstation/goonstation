@@ -1,31 +1,3 @@
-/*
-TODO:
-
-Contributing:
-- Authors: Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
-- If you make a PR to the say rework branch, feel free to add your name to the above list.
-- Please make an effort to adhere to the set out code style, primarily the following:
-	Absolute pathing,
-	Thorough documentation,
-	The use of `src` and `global` when accessing applicable variables.
-
-Old Code To Remove:
-- Check span defines in `chat_output.dm`. Some may now be unused.
-
-Unfixable:
-- Living mobs that are dead can no longer send and receive messages to and from deadchat. This is a limitation of death/revive code.
-
-Follow-Up PRs:
-- Admin panel for enabling/disabling say channels. OOC/LOOC/Deadchat are currently done through procs:
-	- `toggledeadchat()` / `toggle_deadchat_allowed()`
-	- `toggleooc()` / `toggle_ooc_allowed()`
-	- `togglelooc()` / `toggle_looc_allowed()`
-- Removal of `/obj/item/device/radio/var/broadcasting` from maps.
-- Removal of `/obj/machinery/computer/announcement/var/voice_name` from maps.
-
-*/
-
-
 TYPEINFO(/atom)
 	// Default Listen Modules:
 	/// The listen controls that this atom *starts* with. It will not be updated nor used again after initialisation.
