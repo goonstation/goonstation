@@ -1722,8 +1722,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aie" = (
-/obj/machinery/launcher_loader/east,
-/turf/simulated/floor/plating,
+/obj/machinery/activation_button/driver_button{
+	id = "chapelgun";
+	name = "Funerary Driver Button"
+	},
+/turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "aii" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -3782,13 +3785,6 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai)
-"avN" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "avP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
@@ -10672,10 +10668,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "dzn" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	id = "chapel";
@@ -10860,15 +10852,6 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/engine/combustion_chamber)
-"dOL" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "dOP" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -12657,21 +12640,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "gsT" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
-	},
-/obj/machinery/door_control{
-	id = "chapel";
-	name = "Chapel Airlock Control";
-	pixel_y = 28
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -82357,8 +82331,8 @@ acz
 aey
 chL
 afO
-ahi
-dOL
+aie
+akI
 ajR
 aiG
 ajN
@@ -82962,7 +82936,7 @@ aaa
 aaa
 aaa
 ahf
-avN
+ahb
 ahf
 aaa
 aaa
@@ -83264,7 +83238,7 @@ aaa
 aaa
 aaa
 ahf
-aie
+ahc
 ahf
 aaa
 aaa
@@ -83565,9 +83539,9 @@ aaa
 aaa
 aaa
 aaa
-ahf
-ahb
-ahf
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -83867,9 +83841,9 @@ aaa
 aaa
 aaa
 aaa
-ahf
-ahc
-ahf
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
