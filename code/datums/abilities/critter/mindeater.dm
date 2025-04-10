@@ -169,7 +169,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 	cast(atom/target)
 		. = ..()
-		new /obj/dummy/fake_mindeater(get_turf(target))
+		var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(target))
+		fake.set_dir(src.holder.owner.dir)
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
