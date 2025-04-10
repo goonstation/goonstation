@@ -393,7 +393,7 @@
 				A.transform = initial(A.transform)
 				REMOVE_ATOM_PROPERTY(A, PROP_ATOM_REALITY_BROKEN, src)
 		src.broken_atoms = list()
-		for (var/atom/A as anything in range(O, radius))
+		for (var/atom/A in range(O, radius))
 			if (ismob(A))
 				continue
 			if (!isturf(A) && !isitem(A))
