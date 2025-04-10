@@ -3,11 +3,11 @@
 /// How fast does this drain SMES units
 #define SMES_DRAIN_RATE 100 KILO WATTS
 /// Maximum points from sapping an APC
-#define SAP_LIMIT_APC 30 WATTS
+#define SAP_LIMIT_APC 15 WATTS
 /// Maximum points gained from sapping a machine
 #define SAP_LIMIT_MACHINE (SAP_LIMIT_APC - 5)
 /// Maximum points gained from sapping a mob
-#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 10)
+#define SAP_LIMIT_MOB (SAP_LIMIT_APC + 25)
 /// Multiplier applied to machinery power usage to determine how much power the arcfiend gets per sap
 #define SAP_MACHINERY_MULT 0.1
 /// Multipler given when sapping broken machines
@@ -180,8 +180,8 @@
 					boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
 					interrupt(INTERRUPT_ALWAYS)
 					return
-				var/obj/machinery/M = src.target
-				points_gained = clamp(round((M.power_usage * SAP_MACHINERY_MULT)), 0, SAP_LIMIT_MACHINE) * broken_mult
+				var/obj/machinery/machinery = src.target
+				points_gained = clamp(round((machinery.power_usage * SAP_MACHINERY_MULT)), 0, SAP_LIMIT_MACHINE) * broken_mult
 
 			if (!points_gained)
 				boutput(src.holder.owner, SPAN_ALERT("[src.target] doesn't have enough energy for you to absorb!"))
