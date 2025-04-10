@@ -44297,7 +44297,7 @@
 	},
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "qbK" = (

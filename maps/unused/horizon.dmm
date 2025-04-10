@@ -49226,7 +49226,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	dir = 4
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "hJn" = (

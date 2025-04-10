@@ -52938,19 +52938,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"enP" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "epL" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Brig Visitation Area";
@@ -61395,10 +61382,10 @@
 	req_access = null
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "rdX" = (
@@ -125479,7 +125466,7 @@ crq
 crq
 crq
 avK
-enP
+rdk
 bEt
 bLF
 cqS
