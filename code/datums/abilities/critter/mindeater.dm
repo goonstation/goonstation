@@ -9,13 +9,13 @@
 		.["Brain:"] = "[src.points]/100"
 
 	addPoints(add_points, target_ah_type)
-		add_points = min(src.points + add_points, 100)
 		..()
+		src.points = min(src.points, 100)
 		src.updateText()
 
 	deductPoints(cost, target_ah_type)
-		cost = max(src.points - cost, 0)
 		..()
+		src.points = max(src.points, 0)
 		src.updateText()
 
 ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
@@ -31,11 +31,18 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			var/mob/living/critter/mindeater/mindeater = src.holder.owner
 			mindeater.reveal()
 
+	proc/get_nearest_target(atom/target)
+		if (isliving(target))
+			return target
+		for (var/mob/living/L in view(1, get_turf(target)))
+			if (!(ishuman(L) || issilicon(L)))
+				continue
+			return L
+
 /datum/targetable/critter/mindeater/become_tangible
 	name = "Manifest"
-	desc = "One time use to become manifest with reality."
+	desc = "Merge yourself into reality, becoming tangible."
 	icon_state = "manifest"
-	cooldown = 0 SECONDS
 
 	cast(atom/target)
 		. = ..()
@@ -46,37 +53,47 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Regenerate"
 	desc = "Consume Brain to regenerate health."
 	icon_state = "regenerate"
-	cooldown = 0 SECONDS
 	pointCost = 1
 
-	//tryCast()
-	//	var/datum/abilityHolder/abil_holder = src.holder.owner.get_ability_holder(/datum/abilityHolder/mindeater)
-	//	if (!abil_holder.pointCheck(1))
-	//		return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-	//	return ..()
-
-	cast(atom/target)
-		. = ..()
-		actions.start(new /datum/action/bar/mindeater_regenerate(), src.holder.owner)
-
-/datum/targetable/critter/mindeater/brain_drain
-	name = "Brain Drain"
-	desc = "Drain 3 brain power per second from a human in range. Does not interrupt on move."
-	icon_state = "brain_drain"
-	cooldown = 15 SECONDS
-	cooldown_after_action = TRUE
-	targeted = TRUE
-
-	tryCast(atom/target)
-		var/mob/living/carbon/human/H = target
-		if (!istype(H))
-			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+	tryCast()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		if (mindeater.get_health_percentage() >= 1)
+			boutput(mindeater, SPAN_ALERT("You're already at full health!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
 		. = ..()
-		actions.start(new /datum/action/bar/mindeater_brain_drain(target), src.holder.owner)
+		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_regenerate))
+			actions.stop(/datum/action/bar/private/mindeater_regenerate, src.holder.owner)
+		else
+			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
+
+/datum/targetable/critter/mindeater/brain_drain
+	name = "Brain Drain"
+	desc = "Drain 3 brain per second from a human in range."
+	icon_state = "brain_drain"
+	targeted = TRUE
+	target_anything = TRUE
+	max_range = 6
+
+	tryCast(atom/target)
+		target = src.get_nearest_target(target)
+		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_brain_drain))
+			actions.stop(/datum/action/bar/private/mindeater_brain_drain, src.holder.owner)
+			return
+		var/mob/living/carbon/human/H = target
+		if (!istype(H))
+			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (H.get_brain_damage() > 100)
+			boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		. = ..()
+		actions.start(new /datum/action/bar/private/mindeater_brain_drain(target), src.holder.owner)
 
 /datum/targetable/critter/mindeater/telekinesis
 	name = "Telekinesis"
@@ -86,6 +103,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	reveals_on_use = TRUE
+	max_range = 6
 
 	cast(atom/target)
 		. = ..()
@@ -141,9 +159,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Cause a target's chem metabolism to be set to near zero for a short duration."
 	icon_state = "overload"
 	targeted = TRUE
-	reveals_on_use = TRUE
+	max_range = 6
 
 	tryCast(atom/target)
+		target = src.get_nearest_target(target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
@@ -228,7 +247,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 
 
-/datum/action/bar/mindeater_regenerate
+/datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
 	duration = 1 SECONDS
 	resumable = FALSE
@@ -261,9 +280,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	proc/check_for_interrupt()
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
-		return !abil_holder.pointCheck(1, TRUE)
+		return !abil_holder.pointCheck(1, TRUE) || mindeater.get_health_percentage() >= 1
 
-/datum/action/bar/mindeater_brain_drain
+/datum/action/bar/private/mindeater_brain_drain
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
 	duration = 1 SECONDS
 	resumable = FALSE
@@ -274,23 +293,32 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		..()
 		src.target = target
 
+	onStart()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onUpdate()
+		..()
+		if (src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 	onEnd()
 		..()
-		src.target.brainloss += 3
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.target.take_brain_damage(3)
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		abil_holder.addPoints(3)
 		src.onRestart()
 
-/*
-	on_hit(atom/hit, angle, obj/projectile/O)
-		..()
-		if (ishuman(hit) || issilicon(hit))
-			hit.changeStatus("staggered", 0.25 SECONDS)
-			var/mob/living/carbon/human/H = hit
-			H.brainloss -= 1
-			var/mob/living/critter/mindeater/mindeater = O.shooter || O.mob_shooter
-			mindeater.reveal()
-			var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
-			abil_holder.addPoints(1)
-*/
+	proc/check_for_interrupt()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
+		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
+		return GET_DIST(src.owner, src.target) > abil.max_range || src.target.get_brain_damage() > 100

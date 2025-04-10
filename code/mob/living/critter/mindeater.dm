@@ -191,6 +191,7 @@
 		src.flags &= ~UNCRUSHABLE
 		src.density = TRUE
 		src.set_invisible()
+		src.alpha = 255
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
@@ -206,6 +207,7 @@
 		src.flags |= UNCRUSHABLE
 		src.density = FALSE
 		src.set_invisible()
+		src.alpha = 150
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
