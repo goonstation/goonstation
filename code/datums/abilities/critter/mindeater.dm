@@ -1,16 +1,17 @@
 /datum/abilityHolder/mindeater
 	usesPoints = TRUE
+	var/max_points = 100
 
 	var/brain_stored = 0
 
 	onAbilityStat()
 		..()
 		. = list()
-		.["Brain:"] = "[src.points]/100"
+		.["Brain:"] = "[src.points]/[src.max_points]"
 
 	addPoints(add_points, target_ah_type)
 		..()
-		src.points = min(src.points, 100)
+		src.points = min(src.points, src.max_points)
 		src.updateText()
 
 	deductPoints(cost, target_ah_type)
@@ -117,42 +118,27 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			else if (istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = A
 				if (H.l_hand)
-					item_candidates += H.l_hand
+					item_candidates |= H.l_hand
 				if (H.r_hand)
-					item_candidates += H.r_hand
+					item_candidates |= H.r_hand
 			else if (istype(A, /mob/living/critter))
 				var/mob/living/critter/C = A
 				for (var/datum/handHolder/handholder as anything in C.hands)
 					if (handholder.item)
-						item_candidates += handholder.item
+						item_candidates |= handholder.item
 
 		shuffle_list(item_candidates)
 		for (var/i in 1 to min(5, length(item_candidates)))
 			chosen_items += item_candidates[i]
 
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		for (var/obj/item/I as anything in chosen_items)
-			var/mob/living/L = I.loc
-			if (istype(L))
-				L.drop_item(I)
-
 			animate(I, 1 SECOND, easing = LINEAR_EASING, alpha = 0)
 			SPAWN(1 SECOND)
 				animate(I, 0.5 SECONDS, alpha = 255)
-
-				I.set_loc(src.holder.owner)
-				src.holder.owner.vis_contents += I
-				I.Scale(2 / 3, 2 / 3)
-				if (prob(50))
-					I.pixel_x = 12 + rand(-4, 4)
-				else
-					I.pixel_x = -12 + rand(-4, 4)
-				I.pixel_y = rand(-8, 16)
-				animate_levitate(I)
+				mindeater.levitate_item(I)
 				sleep(10 SECONDS)
-				I.set_loc(get_turf(src.holder.owner))
-				src.holder.owner.vis_contents -= I
-				animate(I)
-				I.Scale(3 / 2, 3 / 2)
+				mindeater.drop_levitated_item(I)
 
 /datum/targetable/critter/mindeater/metabolic_overload
 	name = "Metabolic Overload"

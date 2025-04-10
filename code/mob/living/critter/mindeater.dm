@@ -25,6 +25,8 @@
 	var/image/mindeater_health_indicator/hp_indicator
 	/// fake mindeaters created through associated ability
 	var/list/fake_mindeaters = null
+	/// items being levitated through associated ability
+	var/list/levitated_items = list()
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
@@ -236,6 +238,29 @@
 		for (var/atom/A as anything in src.fake_mindeaters)
 			SPAWN(0.05 SECONDS) // since they tend to glide faster
 				step(A, direct)
+
+	/// levitate an item with associated ability
+	proc/levitate_item(obj/item/I)
+		src.levitated_items += I
+		I.set_loc(src)
+		src.vis_contents += I
+		I.Scale(2 / 3, 2 / 3)
+		if (prob(50))
+			I.pixel_x = 12 + rand(-4, 4)
+		else
+			I.pixel_x = -12 + rand(-4, 4)
+		I.pixel_y = rand(-8, 16)
+		animate_levitate(I)
+
+	/// drop a levitated item
+	proc/drop_levitated_item(obj/item/I)
+		if (!(I in src.levitated_items))
+			return
+		src.levitated_items -= I
+		I.set_loc(get_turf(src))
+		src.vis_contents -= I
+		animate(I)
+		I.Scale(3 / 2, 3 / 2)
 
 	/// disguise as an entity
 	proc/disguise()
