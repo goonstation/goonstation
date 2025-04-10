@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (H.get_brain_damage() > 100)
 			boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (isdead(H))
+			boutput(src.holder.owner, SPAN_ALERT("You can only use this ability on alive targets!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
@@ -103,6 +106,33 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	target_anything = TRUE
 	reveals_on_use = TRUE
 	max_range = 6
+
+	tryCast(atom/target)
+		. = ..()
+		var/found_item = FALSE
+		for (var/atom/A in view(1, get_turf(target)))
+			if (istype(A, /obj/item))
+				var/obj/item/I = A
+				if (!I.anchored)
+					found_item = TRUE
+					break
+			else if (istype(A, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = A
+				if (H.l_hand)
+					found_item = TRUE
+					break
+				if (H.r_hand)
+					found_item = TRUE
+					break
+			else if (istype(A, /mob/living/critter))
+				var/mob/living/critter/C = A
+				for (var/datum/handHolder/handholder as anything in C.hands)
+					if (handholder.item)
+						found_item = TRUE
+						break
+
+		if (!found_item)
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 	cast(atom/target)
 		. = ..()
@@ -175,7 +205,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
-	desc = "Disguise yourself as a human."
+	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
 
 	cast(atom/target)
