@@ -1420,12 +1420,22 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			return TRUE
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		..()
-		if (!istype(hit, /mob/living/critter/mindeater))
-			hit.changeStatus("staggered", 0.25 SECONDS)
+		. = ..()
+		var/mob/living/L = hit
+		if (!istype(L))
+			return
+		if (!istype(L, /mob/living/critter/mindeater))
+			L.changeStatus("staggered", 0.75 SECONDS)
+			L.setStatus("psi_bolt_slow", 5 SECONDS)
+			var/datum/reagents/reagents = L.reagents
+			if (reagents)
+				var/amt = min(L.reagents.total_volume, 5)
+				L.reagents.remove_any_except(amt, "toxin")
+				L.reagents.add_reagent("toxin", amt)
+
 
 	on_pointblank(obj/projectile/O, mob/target)
 		if (istype(target))
-			qdel(O) // otherwise projectile sprite is left floating in the air
+			qdel(O) // otherwise projectile sprite is left floating in the air if you target yourself
 		else
 			return ..()

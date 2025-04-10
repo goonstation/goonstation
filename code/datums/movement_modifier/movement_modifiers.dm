@@ -326,3 +326,7 @@
 
 /datum/movement_modifier/healbot
 	additive_slowdown = -0.4
+
+// projectiles
+/datum/movement_modifier/psi_bolt
+	multiplicative_slowdown = 1.25
