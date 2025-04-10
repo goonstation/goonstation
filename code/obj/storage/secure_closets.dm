@@ -451,7 +451,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/detective_scanner/detective,
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
-	/obj/item/camera/large,
+	/obj/item/camera_film/large,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)

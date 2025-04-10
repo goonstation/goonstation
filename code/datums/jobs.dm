@@ -594,7 +594,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_suit = list(/obj/item/clothing/suit/det_suit)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
-	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
+	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun,/obj/item/camera/large)
 	map_can_autooverride = FALSE
 	rounds_needed_to_play = ROUNDS_MIN_DETECTIVE
 	wiki_link = "https://wiki.ss13.co/Detective"

@@ -46,7 +46,6 @@ TYPEINFO(/obj/item/camera/large)
 		icon_state = "camera_zoom"
 		rarity = 3
 		pictures_left = 24
-		w_class = W_CLASS_NORMAL
 
 		New()
 			..()
