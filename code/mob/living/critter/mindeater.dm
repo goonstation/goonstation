@@ -35,7 +35,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		remove_lifeprocess(/datum/lifeprocess/chems)
@@ -262,27 +261,42 @@
 
 	/// disguise as an entity
 	proc/disguise()
-		var/mob/living/carbon/human/H = new /mob/living/carbon/human/normal/assistant
-		H.invisibility = INVIS_ALWAYS
-		H.set_loc(get_turf(src)) // so that there's no zip up sound
-		randomize_look(H, change_name = FALSE)
-		var/icon/front = getFlatIcon(H, SOUTH)
-		var/icon/back = getFlatIcon(H, NORTH)
-		var/icon/left = getFlatIcon(H, WEST)
-		var/icon/right = getFlatIcon(H, EAST)
+		//var/option = tgui_input_list(src, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
+		var/option = "Human"
+		if (!option)
+			return
+
+		var/mob/living/temp
+		if (option == "Mouse")
+			temp = new /mob/living/critter/small_animal/mouse
+		else if (option == "Cockroach")
+			temp = new /mob/living/critter/small_animal/cockroach
+		else if (option == "Human")
+			temp = new /mob/living/carbon/human/normal/assistant
+			randomize_look(temp, change_name = FALSE)
+
+		var/icon/front = getFlatIcon(temp, SOUTH)
+		var/icon/back = getFlatIcon(temp, NORTH)
+		var/icon/left = getFlatIcon(temp, WEST)
+		var/icon/right = getFlatIcon(temp, EAST)
 		var/icon/guise = new
 		guise.Insert(front, dir = SOUTH)
 		guise.Insert(back, dir = NORTH)
 		guise.Insert(left, dir = WEST)
 		guise.Insert(right, dir = EAST)
+
 		src.icon = guise
-		src.name = H.real_name
-		src.desc = H.get_desc(TRUE, TRUE)
-		src.bioHolder.mobAppearance.gender = H.bioHolder.mobAppearance.gender
+		src.name = temp.real_name
+		if (ishuman(temp))
+			src.desc = temp.get_desc(TRUE, TRUE)
+		else
+			src.desc = temp.get_desc(0, src)
+		src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 		src.update_name_tag(src.name)
-		qdel(H)
+		qdel(temp)
 
 		src.disguised = TRUE
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	/// undisguise as disguised entity
 	proc/undisguise()
@@ -294,6 +308,7 @@
 		src.update_name_tag(src.name)
 
 		src.disguised = FALSE
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 /obj/dummy/fake_mindeater
 	name = "???"
