@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Regenerate"
 	desc = "Consume Brain to regenerate health."
 	icon_state = "regenerate"
-	pointCost = 1
+	pointCost = 5
 
 	tryCast()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (!istype(H))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (H.get_brain_damage() > 100)
+		if (H.get_brain_damage() > MAX_TARGET_BRAIN_THRESHOLD)
 			boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isdead(H))
@@ -114,6 +114,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	target_anything = TRUE
 	reveals_on_use = TRUE
 	max_range = 6
+	pointCost = 10
 
 	tryCast(atom/target)
 		. = ..()
@@ -180,9 +181,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Spatial Swap"
 	desc = "Swap the location of yourself and another living creature."
 	icon_state = "spatial_swap"
+	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 7
+	pointCost = 25
 
 	tryCast(atom/target)
 		target = src.get_nearest_living(target)
@@ -203,9 +206,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Create"
 	desc = "Create a fake Mindeater at the target location."
 	icon_state = "create"
-	cooldown = 60 SECONDS
+	cooldown = 45 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	pointCost = 15
 
 	cast(atom/target)
 		. = ..()
@@ -216,6 +220,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Disguise"
 	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
+	pointCost = 50
 
 	cast(atom/target)
 		. = ..()
@@ -231,8 +236,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Shades"
 	desc = "Create shades of yourself, swapping places with one, that move when you do."
 	icon_state = "shades"
-	cooldown = 0//60 SECONDS
+	cooldown = 30 SECONDS
 	reveals_on_use = TRUE
+	pointCost = 25
 
 	cast(atom/target)
 		. = ..()
@@ -270,15 +276,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			fake.set_loc(T2)
 			fake.set_dir(src.holder.owner.dir)
 
-/datum/targetable/critter/mindeater/abduct
-
-	cast(atom/target)
-		. = ..()
-
-
 /datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
-	duration = 1 SECONDS
+	duration = 1 SECOND
 	resumable = FALSE
 	color_success = "#4444FF"
 
@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			return
 
 		var/mob/living/critter/mindeater/mindeater = src.owner
-		mindeater.HealDamage("All", 1, 1, 1)
+		mindeater.HealDamage("All", 5, 5)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		abil_holder.deductPoints(1)
 		src.onRestart()

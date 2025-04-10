@@ -1406,7 +1406,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "psi bolt"
 	icon_state = "psi_bolt"
 	damage = 0
-	dissipation_delay = 6
+	dissipation_delay = 7
 	hit_ground_chance = 50
 	shot_sound = 'sound/weapons/psi_bolt.ogg'
 
