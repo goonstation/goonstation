@@ -32,11 +32,19 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			var/mob/living/critter/mindeater/mindeater = src.holder.owner
 			mindeater.reveal()
 
-	proc/get_nearest_target(atom/target)
+	proc/get_nearest_human_or_silicon(atom/target)
 		if (isliving(target))
 			return target
 		for (var/mob/living/L in view(1, get_turf(target)))
 			if (!(ishuman(L) || issilicon(L)))
+				continue
+			return L
+
+	proc/get_nearest_living(atom/target)
+		if (isliving(target))
+			return target
+		for (var/mob/living/L in view(1, get_turf(target)))
+			if (!(ishuman(L) || issilicon(L) || (iscritter(L) && !istype(L, /mob/living/critter/mindeater))))
 				continue
 			return L
 
@@ -80,7 +88,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	max_range = 6
 
 	tryCast(atom/target)
-		target = src.get_nearest_target(target)
+		target = src.get_nearest_human_or_silicon(target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
@@ -168,27 +176,28 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				sleep(10 SECONDS)
 				mindeater.drop_levitated_item(I)
 
-/datum/targetable/critter/mindeater/metabolic_overload
-	name = "Metabolic Overload"
-	desc = "Cause a target's chem metabolism to be set to near zero for a short duration."
-	icon_state = "overload"
+/datum/targetable/critter/mindeater/spatial_swap
+	name = "Spatial Swap"
+	desc = "Swap the location of yourself and another living creature."
+	icon_state = "spatial_swap"
 	targeted = TRUE
 	target_anything = TRUE
-	max_range = 6
+	max_range = 7
 
 	tryCast(atom/target)
-		target = src.get_nearest_target(target)
-		var/mob/living/carbon/human/H = target
-		if (!istype(H))
-			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+		target = src.get_nearest_living(target)
+		if (!target)
+			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
 		. = ..()
-		APPLY_ATOM_PROPERTY(target, PROP_MOB_METABOLIC_RATE, src, 0.1)
-		SPAWN(100 SECONDS)
-			REMOVE_ATOM_PROPERTY(target, PROP_MOB_METABOLIC_RATE, src)
+		var/mob/living/L = target
+		var/turf/T1 = get_turf(src.holder.owner)
+		var/turf/T2 = get_turf(L)
+		L.set_loc(T1)
+		src.holder.owner.set_loc(T2)
 
 /datum/targetable/critter/mindeater/create
 	name = "Create"
