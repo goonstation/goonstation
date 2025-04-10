@@ -23,4 +23,6 @@ proc/generate_teleareas() //Turns out nukies could deploy to the wizards den all
 				teleareas[area.name] = area
 		if(istype(area, /area/wizard_station))
 			teleareas[area.name] = area
+		if (istype(area, /area/radiostation))
+			teleareas[area.name] = area
 	sortList(teleareas, /proc/cmp_text_asc)
