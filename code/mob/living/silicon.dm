@@ -267,8 +267,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
 	. = ..()
-	if (src.cell && ismob(target))
-		src.cell.use(W.stamina_cost)
+	if (ismob(target))
+		src.cell?.use(W.stamina_cost)
 
 /mob/living/proc/process_killswitch()
 	return
