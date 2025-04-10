@@ -397,9 +397,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			third.Turn(rand(-90, 90))
 
 			if(!istype(par)) return
-			animate(par, time = 1, transform = first, alpha = 250)
-			animate(transform = second, time = 10, pixel_y = rand(-32, 32), pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
-			animate(transform = third, time = 7, pixel_y = 0, easing = LINEAR_EASING|EASE_OUT, alpha = 0)
+			animate(par, time = 0, transform = first, alpha = 250)
+			var/pix_Y = rand(-32, 32)
+			animate(transform = second, time = 5, pixel_y = pix_Y, pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
+			animate(transform = third, time = 7, pixel_y = pix_Y-rand(22,30), easing = LINEAR_EASING|EASE_OUT, alpha = 0)
 
 			MatrixInit()
 
