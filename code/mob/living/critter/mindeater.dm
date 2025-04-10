@@ -30,6 +30,8 @@
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
+	var/lives = 3 // temporary lives for playtesting
+
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
@@ -75,6 +77,22 @@
 			src.delStatus("mindeater_appearing")
 			if (!src.hasStatus("mindeater_cloaking") && src.is_visible())
 				src.setStatus("mindeater_cloaking", 5 SECONDS)
+
+	death(gibbed)
+		gibbed = FALSE
+		if (src.lives < 0)
+			return ..()
+		src.lives--
+		. = ..()
+		src.full_heal()
+		src.demanifest()
+		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+		var/datum/targetable/critter/mindeater/become_tangible/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/become_tangible/)
+		abil_holder.deductPoints(abil_holder.points)
+		abil.doCooldown()
+
+	gib()
+		src.death(FALSE)
 
 	setup_healths()
 		add_hh_flesh(100, 1)
