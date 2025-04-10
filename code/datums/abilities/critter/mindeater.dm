@@ -44,6 +44,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Manifest"
 	desc = "Merge yourself into reality, becoming tangible."
 	icon_state = "manifest"
+	cooldown = 60 SECONDS
 
 	cast(atom/target)
 		. = ..()

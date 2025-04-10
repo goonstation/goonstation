@@ -390,6 +390,26 @@
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
 		..()
 
+/image/intrusion_brain_level
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "brain-0"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 18
+	pixel_y = -20
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
+
+	proc/set_icon_state(pct)
+		src.icon_state = "brain-[pct]"
+
 /*
 /obj/machinery/artifact/reality_breaker
 	name = "artifact reality breaker"
