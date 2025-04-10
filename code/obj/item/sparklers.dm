@@ -95,6 +95,7 @@
 			src.force = 3
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
+			light.enable()
 			processing_items |= src
 			if(user)
 				user.update_inhands()
