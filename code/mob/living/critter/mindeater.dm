@@ -69,6 +69,8 @@
 			return
 		if (src.disguised)
 			return
+		if (istype(get_turf(src), /turf/space))
+			src.TakeDamage("All", 10, 10)
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")
 			if (!src.hasStatus("mindeater_appearing") && !src.is_visible())
