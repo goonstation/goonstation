@@ -1,7 +1,7 @@
 /datum/targetable/vampire/vamp_cloak
-	name = "Toggle cloak"
-	desc = "Toggles your cloak of darkness, which is only effective in dark areas."
-	icon_state = "darkcloak"
+	name = "Turn on illusory shroud"
+	desc = "Toggles an illusory shroud, shielding you from being closely examined in dim lighting."
+	icon_state = "darkcloak_cd"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
@@ -9,36 +9,88 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 0
-	unlock_message = "You have gained cloak of darkness. It makes you invisible in dark areas and is a toggleable, permanent effect."
 	interrupt_action_bars = FALSE
 	do_logs = FALSE
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		if (!src.holder) return 1
 
 		var/mob/living/M = holder.owner
+		if (!M) return 1
 
-		if (!M)
-			return 1
-
-		if (!ishuman(M)) // Only humans use bioeffects at the moment.
+		if (!M.bioHolder)
 			boutput(M, SPAN_ALERT("You can't use this ability in your current form."))
 			return 1
 
-		var/mob/living/carbon/human/MM = M
-		if (!MM.bioHolder)
-			boutput(MM, SPAN_ALERT("You can't use this ability in your current form."))
-			return 1
-
 		. = ..()
-		if (MM.bioHolder.HasEffect("cloak_of_darkness"))
-			MM.bioHolder.RemoveEffect("cloak_of_darkness")
-			MM.set_body_icon_dirty() // Might help to get rid of those overlay issues.
-		else
-			var/datum/bioEffect/power/darkcloak/DC = MM.bioHolder.AddEffect("cloak_of_darkness")
-			if (DC && istype(DC))
-				DC.active = 1 // Important!
-				MM.set_body_icon_dirty()
 
-		return 0
+		if (M.bioHolder.HasEffect("dark_examine_stopper"))
+			M.bioHolder.RemoveEffect("dark_examine_stopper")
+			src.name = "Turn on illusory shroud"
+			src.icon_state = "darkcloak_cd"
+		else
+			M.bioHolder.AddEffect("dark_examine_stopper")
+			src.name = "Turn off illusory shroud"
+			src.icon_state = "darkcloak"
+		return
+
+/datum/bioEffect/dark_examine_stopper
+	name = "Illusory Shroud"
+	desc = "Allows the subject to blend in with dark enviornments, making identification all but impossible."
+	id = "dark_examine_stopper"
+	effectType = EFFECT_TYPE_POWER
+	isBad = 0
+	probability = 0
+	msgGain = "The shadows conceal you."
+	msgLose = "You allow your true form to be known."
+	var/is_active = FALSE
+	var/obj/effect/mist = null
+
+	proc/apply_shroud()
+		if (src.is_active) return
+		src.is_active = TRUE
+		src.mist.alpha = 255
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, 2)
+
+	proc/remove_shroud()
+		if (!src.is_active) return
+		src.is_active = FALSE
+		src.mist.alpha = 0
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
+	OnAdd()
+		src.is_active = FALSE
+		src.mist = new(src.owner)
+		src.mist.icon = 'icons/effects/genetics.dmi'
+		src.mist.icon_state = "outline"
+		src.mist.layer = MOB_LIMB_LAYER
+		src.mist.alpha = 0
+		src.mist.color = "#ccc"
+		src.mist.appearance_flags = VIS_INHERIT_DIR & VIS_UNDERLAY & VIS_INHERIT_LAYER
+		animate_wave(src.mist)
+		src.owner.vis_contents.Add(src.mist)
+		var/turf/T = get_turf(src.owner)
+		if (isturf(T) && !T.is_lit())
+			src.apply_shroud()
+		. = ..()
+
+	OnRemove()
+		src.remove_shroud()
+		src.owner.vis_contents.Remove(src.mist)
+		qdel(src.mist)
+		. = ..()
+
+	OnLife(mult)
+		if(..())
+			return
+		if (!isliving(owner))
+			src.remove_shroud()
+			return
+
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
+
+		if (!isturf(T) || T.is_lit())
+			src.remove_shroud()
+		else if (can_act(src.owner))
+			src.apply_shroud()
