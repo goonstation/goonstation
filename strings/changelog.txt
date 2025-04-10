@@ -2,6 +2,9 @@
 (t)wed apr 09 25
 (u)tarmunora
 (+)Added glass eyes.
+(u)Dr. Cogwerks
+(+)Detectives now start with a zoomable fancy camera in their bag
+(+)Press Shift to zoom, like the sniper rifle
 (t)tue apr 08 25
 (u)RubberRats
 (p)22914
