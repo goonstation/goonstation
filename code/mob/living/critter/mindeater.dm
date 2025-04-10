@@ -37,7 +37,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		remove_lifeprocess(/datum/lifeprocess/chems)
 		remove_lifeprocess(/datum/lifeprocess/blood)
@@ -49,11 +48,9 @@
 
 		src.see_invisible = INVIS_INTRUDER
 
-		src.vis_indicator = new
-		src.vis_indicator.loc = src
+		src.vis_indicator = new (loc = src)
 
-		src.hp_indicator = new
-		src.hp_indicator.loc = src
+		src.hp_indicator = new (loc = src)
 
 		src.demanifest()
 
@@ -195,6 +192,7 @@
 		src.set_invisible()
 		src.alpha = 255
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/telekinesis)
@@ -211,6 +209,7 @@
 		src.set_invisible()
 		src.alpha = 150
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/telekinesis)
@@ -234,10 +233,9 @@
 			qdel(fake)
 			src.fake_mindeaters -= fake
 
-	proc/move_fake_mindeaters(atom/thing, previous_loc, direct)
-		for (var/atom/A as anything in src.fake_mindeaters)
-			SPAWN(0.05 SECONDS) // since they tend to glide faster
-				step(A, direct)
+	proc/move_fake_mindeaters(atom/thing, new_loc, direct)
+		for (var/atom/movable/AM as anything in src.fake_mindeaters)
+			AM.Move(get_step(AM, direct))
 
 	/// levitate an item with associated ability
 	proc/levitate_item(obj/item/I)
@@ -303,8 +301,23 @@
 	desc = "What sort of eldritch abomination is this thing???"
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
 	icon_state = "intruder"
+	flags = LONG_GLIDE
 	density = FALSE
 	anchored = UNANCHORED
+
+	attack_hand(mob/user)
+		..()
+		src.reveal_fake()
+
+	attackby(obj/item/I, mob/user)
+		..()
+		src.reveal_fake()
+
+	proc/reveal_fake()
+		animate_wave(src, 5)
+		animate(src, 1 SECOND, flags = ANIMATION_PARALLEL, alpha = 0)
+		SPAWN(1 SECOND)
+			qdel(src)
 
 	bump(atom/A)
 		..()
@@ -313,6 +326,12 @@
 		else if (istype(A, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = A
 			airlock.open()
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/obj/projectile/P = AM
+		if (istype(P) && !istype(P.proj_data, /datum/projectile/special/psi_bolt))
+			src.reveal_fake()
 
 /image/mindeater_visibility_indicator
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
@@ -323,7 +342,7 @@
 	pixel_x = 16
 	pixel_y = -16
 
-	New()
+	New(icon, loc, icon_state, layer, dir)
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
 
@@ -343,7 +362,7 @@
 	pixel_x = 30
 	pixel_y = -16
 
-	New()
+	New(icon, loc, icon_state, layer, dir)
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
 
@@ -353,6 +372,23 @@
 
 	proc/set_icon_state(pct)
 		src.icon_state = "health-[pct]"
+
+/image/mindeater_brain_drain_targeted
+	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
+	icon_state = "brain_drain_targeted"
+	plane = PLANE_HUD
+	layer = HUD_LAYER_BASE
+	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
+	pixel_x = 0
+	pixel_y = -20
+
+	New(icon, loc, icon_state, layer, dir)
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_image(src)
+
+	disposing()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_image(src)
+		..()
 
 /*
 /obj/machinery/artifact/reality_breaker

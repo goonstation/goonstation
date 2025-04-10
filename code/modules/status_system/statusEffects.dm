@@ -3707,3 +3707,17 @@
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		if (!mindeater.on_bright_turf())
 			mindeater.set_invisible()
+
+/datum/statusEffect/mindeater_brain_draining
+	id = "mindeater_brain_draining"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/image/mindeater_brain_drain_targeted/target_image
+
+	onAdd()
+		..()
+		src.target_image = new /image/mindeater_brain_drain_targeted(loc = src.owner)
+
+	onRemove()
+		..()
+		QDEL_NULL(src.target_image)

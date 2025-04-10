@@ -80,9 +80,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 	tryCast(atom/target)
 		target = src.get_nearest_target(target)
-		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_brain_drain))
-			actions.stop(/datum/action/bar/private/mindeater_brain_drain, src.holder.owner)
-			return
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
@@ -145,6 +142,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Cause a target's chem metabolism to be set to near zero for a short duration."
 	icon_state = "overload"
 	targeted = TRUE
+	target_anything = TRUE
 	max_range = 6
 
 	tryCast(atom/target)
@@ -212,10 +210,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		var/list/fake_mindeaters = list()
 		for (var/turf/T as anything in adjacent_turfs)
-			fake_mindeaters += new /obj/dummy/fake_mindeater(get_turf(src.holder.owner))
+			var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(src.holder.owner))
+			fake.glide_size = src.holder.owner.glide_size
+			fake_mindeaters += fake
 		for (var/i in 1 to length(fake_mindeaters))
 			var/obj/dummy/fake_mindeater/fake = fake_mindeaters[i]
 			fake.set_loc(adjacent_turfs[i])
+			fake.set_dir(src.holder.owner.dir)
 
 		mindeater.setup_fake_mindeaters(fake_mindeaters)
 
@@ -226,6 +227,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			mindeater.set_loc(T1)
 			var/obj/dummy/fake_mindeater/fake = fake_mindeaters[1]
 			fake.set_loc(T2)
+			fake.set_dir(src.holder.owner.dir)
 
 /datum/targetable/critter/mindeater/abduct
 
@@ -284,6 +286,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if(src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		src.target.setStatus("mindeater_brain_draining", INFINITE_STATUS)
 
 	onUpdate()
 		..()
@@ -302,6 +305,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		abil_holder.addPoints(3)
 		src.onRestart()
+
+
+	onInterrupt(flag)
+		..()
+		if (flag & INTERRUPT_ALWAYS)
+			src.target.delStatus("mindeater_brain_draining")
 
 	proc/check_for_interrupt()
 		var/mob/living/critter/mindeater/mindeater = src.owner
