@@ -4128,6 +4128,10 @@ ABSTRACT_TYPE(/area/mining)
 	permarads = 1
 	irradiated = 1
 
+/area/plasma_reef
+	name = "Plasma Reef"
+	icon_state = "purple"
+
 // // // // // // // // // // // //
 
 /// Used for the admin holding cells.

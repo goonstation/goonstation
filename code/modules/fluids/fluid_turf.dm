@@ -122,6 +122,12 @@
 		if (generateLight)
 			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
 
+	remove_air(amount)
+		return null
+
+	assume_air(datum/gas_mixture/giver)
+		new /obj/bubble(src, giver)
+
 	make_light()
 		if (!light)
 			light = new
