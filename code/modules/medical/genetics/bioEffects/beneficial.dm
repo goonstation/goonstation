@@ -94,6 +94,7 @@
 	msgLose = "The tingling in your skin fades."
 	degrade_to = "funky_limb"
 	icon_state  = "elec_res"
+	effect_group = "elec"
 
 	OnAdd()
 		if (ishuman(owner))
@@ -1130,6 +1131,7 @@ var/list/radio_brains = list()
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a sudden hunger for plasma..."
 	msgLose = "Your hunger for purple recedes."
+	effect_group = "elec"
 	///Absorbed plasma material
 	VAR_PRIVATE/material = 0
 	///Separate counter between burps
