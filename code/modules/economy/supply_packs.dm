@@ -603,6 +603,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
 
+/datum/supply_packs/weapons5
+	name = "Weapons Crate - Phaser SMGs (Cardlocked \[Security Equipment])"
+	desc = "x2 Phaser SMGs"
+	category = "Security Department"
+	contains = list(/obj/item/gun/energy/phaser_smg = 2)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate/weapon
+	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
+	access = access_securitylockers
+
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
 	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"

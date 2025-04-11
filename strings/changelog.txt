@@ -1,5 +1,7 @@
 
 (t)fri apr 11 25
+(u)Sord
+(+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
 (u)RubberRats
 (p)22936
 (e)🪲🍝|C-Bug, A-Catering
