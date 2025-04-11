@@ -1,0 +1,4 @@
+/obj/storage/secure/crate/gear{req_access_txt="52"} : /obj/storage/secure/crate/gear/syndicate
+/obj/storage/secure/crate/gear/saxitoxin_grenades : /obj/storage/secure/crate/gear/syndicate/saxitoxin_grenades{@OLD}
+/obj/storage/secure/crate/gear{req_access_txt="1"} : /obj/storage/secure/crate/gear/transfer
+/obj/storage/secure/crate/plasma{req_access_txt="24"} : /obj/storage/secure/crate/gplasma/hazard
