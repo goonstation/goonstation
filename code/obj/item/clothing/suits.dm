@@ -2202,7 +2202,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
-	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
 
@@ -2252,6 +2251,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "Hall Monitor Badge"
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
+
+/obj/item/clothing/suit/security_badge/nanotrasen
+	name = "Nanotrasen Badge"
+	desc = "An official badge for a Nanotrasen Responder."
+	icon_state = "security_badge_nanotrasen"
 
 /obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"
