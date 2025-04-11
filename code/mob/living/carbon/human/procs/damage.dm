@@ -641,7 +641,7 @@
 		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
-	src.brain_level.set_icon_state(min(round(src.get_brain_damage(), 10), MAX_TARGET_BRAIN_THRESHOLD))
+	src.brain_level.set_icon_state(min(round(src.get_brain_damage(), 10), INTRUDER_MAX_BRAIN_THRESHOLD))
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

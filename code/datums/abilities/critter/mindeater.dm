@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (!istype(H))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (H.get_brain_damage() > MAX_TARGET_BRAIN_THRESHOLD)
+		if (H.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD)
 			boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isdead(H))
