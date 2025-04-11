@@ -357,6 +357,12 @@
 /obj/machinery/proc/on_add_contents(obj/item/I)
 	return
 
+/// Called when machines are overloaded with power.
+///
+/// Returns TRUE if it did something, or FALSE if it did not.
+/obj/machinery/proc/overload_act()
+	return FALSE
+
 /obj/machinery/bug_reporter
 	name = "bug reporter"
 	desc = "Creates bug reports."

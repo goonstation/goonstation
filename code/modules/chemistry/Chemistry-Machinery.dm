@@ -109,6 +109,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 				src.set_broken()
 		..()
 
+	overload_act()
+		return !src.set_broken()
+
 	meteorhit()
 		qdel(src)
 		return

@@ -360,6 +360,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					if (!(status & BROKEN))
 						src.set_broken()
 
+	overload_act()
+		return !src.set_broken()
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)

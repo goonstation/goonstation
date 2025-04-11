@@ -198,6 +198,12 @@
 /obj/machinery/camera/blob_act(var/power)
 	return
 
+/obj/machinery/camera/overload_act()
+	if(!src.network)
+		return FALSE
+	src.emp_act()
+	return TRUE
+
 /obj/machinery/camera/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	src.set_camera_status(FALSE)
