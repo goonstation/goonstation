@@ -121,7 +121,7 @@
 
 	bump(atom/A)
 		..()
-		if (istype(A, /obj/window) || (A.density && (A.material?.getID() == "glass" || A.material?.getProperty("reflective") > 7)))
+		if (A.density && A.material?.getProperty("reflective") > 7)
 			src.set_loc(get_turf(A))
 		else if (istype(A, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = A
@@ -174,6 +174,11 @@
 		src.reveal()
 		return ..()
 
+	set_dir(new_dir) // had issues with COMSIG_MOVABLE_DIR_CHANGED
+		..()
+		for (var/atom/movable/AM as anything in src.fake_mindeaters)
+			AM.set_dir(new_dir)
+
 	/// returns if the turf is bright enough to reveal the mindeater
 	proc/on_bright_turf()
 		var/turf/T = get_turf(src)
@@ -189,18 +194,18 @@
 
 	/// reveal the mindeater's true form to all
 	proc/reveal()
-		src.vis_indicator.set_visible(TRUE)
-		src.invisibility = INVIS_NONE
 		src.delStatus("mindeater_appearing")
 		src.delStatus("mindeater_cloaking")
+		src.vis_indicator.set_visible(TRUE)
+		src.invisibility = INVIS_NONE
 		src.undisguise()
 
 	/// set the mindeater invisible to humans
 	proc/set_invisible()
-		src.vis_indicator.set_visible(FALSE)
-		src.invisibility = INVIS_INTRUDER
 		src.delStatus("mindeater_appearing")
 		src.delStatus("mindeater_cloaking")
+		src.vis_indicator.set_visible(FALSE)
+		src.invisibility = INVIS_INTRUDER
 
 	/// move from intangible to tangible state
 	proc/manifest()
@@ -281,31 +286,35 @@
 
 	/// disguise as an entity
 	proc/disguise()
-		//var/option = tgui_input_list(src, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
-		var/option = "Human"
+		var/option = tgui_input_list(src, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
 		if (!option)
 			return
 
 		var/mob/living/temp
 		if (option == "Mouse")
 			temp = new /mob/living/critter/small_animal/mouse
+			src.icon = temp.icon
+			src.icon_state = temp.icon_state
 		else if (option == "Cockroach")
 			temp = new /mob/living/critter/small_animal/cockroach
+			src.icon = temp.icon
+			src.icon_state = temp.icon_state
 		else if (option == "Human")
 			temp = new /mob/living/carbon/human/normal/assistant
 			randomize_look(temp, change_name = FALSE)
 
-		var/icon/front = getFlatIcon(temp, SOUTH)
-		var/icon/back = getFlatIcon(temp, NORTH)
-		var/icon/left = getFlatIcon(temp, WEST)
-		var/icon/right = getFlatIcon(temp, EAST)
-		var/icon/guise = new
-		guise.Insert(front, dir = SOUTH)
-		guise.Insert(back, dir = NORTH)
-		guise.Insert(left, dir = WEST)
-		guise.Insert(right, dir = EAST)
+			var/icon/front = getFlatIcon(temp, SOUTH)
+			var/icon/back = getFlatIcon(temp, NORTH)
+			var/icon/left = getFlatIcon(temp, WEST)
+			var/icon/right = getFlatIcon(temp, EAST)
+			var/icon/guise = new
+			guise.Insert(front, dir = SOUTH)
+			guise.Insert(back, dir = NORTH)
+			guise.Insert(left, dir = WEST)
+			guise.Insert(right, dir = EAST)
 
-		src.icon = guise
+			src.icon = guise
+
 		src.name = temp.real_name
 		if (ishuman(temp))
 			src.desc = temp.get_desc(TRUE, TRUE)
@@ -317,6 +326,7 @@
 
 		src.disguised = TRUE
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 
 	/// undisguise as disguised entity
 	proc/undisguise()
@@ -328,7 +338,8 @@
 		src.update_name_tag(src.name)
 
 		src.disguised = FALSE
-		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 
 /obj/dummy/fake_mindeater
 	name = "???"
@@ -356,7 +367,7 @@
 
 	bump(atom/A)
 		..()
-		if (istype(A, /obj/window) || (A.density && (A.material?.getID() == "glass" || A.material?.getProperty("reflective") > 7)))
+		if (A.density && A.material?.getProperty("reflective") > 7)
 			src.set_loc(get_turf(A))
 		else if (istype(A, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = A
@@ -414,8 +425,8 @@
 	plane = PLANE_HUD
 	layer = HUD_LAYER_BASE
 	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
-	pixel_x = 0
-	pixel_y = -20
+	pixel_x = 18
+	pixel_y = 0
 
 	New(icon, loc, icon_state, layer, dir)
 		..()
@@ -432,7 +443,7 @@
 	layer = HUD_LAYER_BASE
 	appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	pixel_x = 18
-	pixel_y = -20
+	pixel_y = 10
 
 	New(icon, loc, icon_state, layer, dir)
 		..()
