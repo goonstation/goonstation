@@ -375,6 +375,35 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			MatrixInit()
 
+
+/datum/particleType/fireworks_pop
+	name = "fireworks_pop"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wpart"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+		third = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.blend_mode = BLEND_ADD
+			par.color = rgb(rand(0, 255),rand(0, 255),rand(0, 255))
+
+			first.Turn(rand(-180, 180))
+			second.Turn(rand(-90, 90))
+			second.Scale(0.5,0.5)
+			third.Turn(rand(-90, 90))
+
+			if(!istype(par)) return
+			animate(par, time = 0, transform = first, alpha = 250)
+			var/pix_Y = rand(-32, 32)
+			animate(transform = second, time = 5, pixel_y = pix_Y, pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
+			animate(transform = third, time = 7, pixel_y = pix_Y-rand(22,30), easing = LINEAR_EASING|EASE_OUT, alpha = 0)
+
+			MatrixInit()
+
 /datum/particleType/confetti
 	name = "confetti"
 	icon = 'icons/effects/effects.dmi'
@@ -1104,6 +1133,16 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/fireworks
 	New(var/atom/location = null)
 		..(location, "fireworks", 35)
+
+	Run()
+		if (..())
+			for(var/i=0, i<rand(40,50), i++)
+				SpawnParticle()
+			Die()
+
+/datum/particleSystem/fireworks_pop
+	New(var/atom/location = null)
+		..(location, "fireworks_pop", 35)
 
 	Run()
 		if (..())
