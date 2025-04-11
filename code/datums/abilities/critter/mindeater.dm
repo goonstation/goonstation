@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Drain 3 brain per second from a human in range."
+	desc = "Drain 3 brain per second from a target in range."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -89,14 +89,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 	tryCast(atom/target)
 		target = src.get_nearest_human_or_silicon(target)
-		var/mob/living/carbon/human/H = target
-		if (!istype(H))
-			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+		var/mob/living/L = target
+		if (!(istype(L, /mob/living/carbon/human) || istype(L, /mob/living/silicon)))
+			boutput(src.holder.owner, SPAN_ALERT("You can only target humans and silicons!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (H.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD)
-			boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (isdead(H))
+		if (istype(L, /mob/living/carbon/human))
+			if (L.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD)
+				boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only use this ability on alive targets!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
@@ -316,7 +317,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	duration = 1 SECONDS
 	resumable = FALSE
 	color_success = "#4444FF"
-	var/mob/living/carbon/human/target
+	var/mob/living/target
 
 	New(atom/target)
 		..()
@@ -341,12 +342,16 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.target.take_brain_damage(3)
+		if (ishuman(src.target))
+			src.target.take_brain_damage(3)
+		else if (istype(src.target, /mob/living/silicon/ai))
+			src.target.TakeDamage("All", 15, damage_type = DAMAGE_CRUSH) // 15 - 20 seconds to kill
+		else
+			src.target.TakeDamage("head", 10, damage_type = DAMAGE_CRUSH) // ~15 seconds to kill a standard cyborg
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		abil_holder.addPoints(3)
 		src.onRestart()
-
 
 	onInterrupt(flag)
 		..()
@@ -357,4 +362,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
-		return GET_DIST(src.owner, src.target) > abil.max_range || src.target.get_brain_damage() > 100
+		return GET_DIST(src.owner, src.target) > abil.max_range || \
+				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD) || isdead(src.target)
