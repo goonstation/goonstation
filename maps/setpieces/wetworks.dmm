@@ -3264,7 +3264,7 @@
 /obj/decal/stage_edge/alt{
 	color = "aqua"
 	},
-/obj/storage/secure/crate/gear/saxitoxin_grenades,
+/obj/storage/secure/crate/gear/syndicate/saxitoxin_grenades,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
