@@ -1484,18 +1484,25 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
-		if (!new_rights || new_rights == src.mind.miranda)
-			src.show_text("Miranda rights not changed.", "red")
-			return
+		var/choice = tgui_alert(usr, "Edit Miranda's rights?", "Miranda Rights", list("Edit", "Reset", "Cancel"))
+		switch(choice)
+			if("Edit")
+				var/new_rights = tgui_input_text(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA)
+				if (!new_rights || new_rights == src.mind.miranda)
+					src.show_text("Miranda rights not changed.", "red")
+					return
 
-		new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
-		new_rights = sanitize(strip_html(new_rights))
+				new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
+				new_rights = sanitize(strip_html(new_rights))
 
-		src.mind.set_miranda(new_rights)
+				src.mind.set_miranda(new_rights)
 
-		logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
-		src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+				logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
+				src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+			if("Reset")
+				src.mind.set_miranda(null)
+				logTheThing(LOG_TELEPATHY, src, "has reset their miranda rights.")
+				src.show_text("Miranda rights reset.", "blue")
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
