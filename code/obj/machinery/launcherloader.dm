@@ -508,7 +508,7 @@
 			boutput(user, SPAN_ALERT("You must select a destination before attaching a barcode!"))
 			return
 	if (ON_COOLDOWN(src, "barcode_print", 1.75 SECONDS))
-		boutput(user, SPAN_NOTICE("The barcoder is spooling a new barcode!"))
+		boutput(user, SPAN_NOTICE("\The [src] is spooling a new barcode!"))
 		return
 
 	var/obj/item/sticker/barcode/barcode = new /obj/item/sticker/barcode
