@@ -2436,12 +2436,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
 	src.organHolder.create_organs()
-	if (src.organHolder.chest)
-		src.organHolder.chest.op_stage = 0
-	if (src.organHolder.heart)
-		src.organHolder.heart.op_stage = 0
-	if (src.organHolder.brain)
-		src.organHolder.brain.op_stage = 0
+	if (src.surgeryHolder)
+		src.surgeryHolder.cancel_all()
 
 	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
 		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
