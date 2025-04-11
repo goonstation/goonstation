@@ -9790,7 +9790,7 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)

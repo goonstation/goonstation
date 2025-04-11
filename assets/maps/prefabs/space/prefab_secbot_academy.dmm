@@ -565,7 +565,7 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/secbot_academy)
 "Ai" = (
-/obj/item/wrestlingbell{
+/obj/machinery/wrestlingbell{
 	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
 	name = "School bell"
 	},
