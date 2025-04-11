@@ -3681,3 +3681,49 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/mindeater_becoming_visible
+	id = "mindeater_appearing"
+	name = "Appearing"
+	icon_state = "mindeater_appearing"
+	desc = "While in light you are becoming visible!"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (mindeater.on_bright_turf())
+			mindeater.reveal()
+
+/datum/statusEffect/mindeater_becoming_invisible
+	id = "mindeater_cloaking"
+	name = "Cloaking"
+	icon_state = "mindeater_cloaking"
+	desc = "You are starting to cloak. Stay out of light and combat!"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (!mindeater.on_bright_turf())
+			mindeater.set_invisible()
+
+/datum/statusEffect/mindeater_brain_draining
+	id = "mindeater_brain_draining"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/image/mindeater_brain_drain_targeted/target_image
+
+	onAdd()
+		..()
+		src.target_image = new /image/mindeater_brain_drain_targeted(loc = src.owner)
+
+	onRemove()
+		..()
+		QDEL_NULL(src.target_image)
+
+/datum/statusEffect/psi_bolt_slown
+	id = "mindeater_psi_slow"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	movement_modifier = /datum/movement_modifier/psi_bolt

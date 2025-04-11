@@ -394,6 +394,21 @@
 		spread_angle = 2
 		has_space_pushback = FALSE
 
+	mindeater
+		proj = new/datum/projectile/special/psi_bolt
+		shots = INFINITY
+		current_shots = 1
+		cooldown = 0.25 SECONDS
+		reload_time = 0
+		spread_angle = 1
+		has_space_pushback = FALSE
+
+		shoot(atom/target, mob/user, pointblank = FALSE, params)
+			var/mob/living/critter/mindeater/mindeater = user
+			if (mindeater.is_intangible())
+				return
+			return ..()
+
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1

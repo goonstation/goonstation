@@ -1,7 +1,7 @@
 
-/mob/living/carbon/human/get_desc()
+/mob/living/carbon/human/get_desc(ignore_all_checks, skip_afk_check)
 
-	var/ignore_checks = isobserver(usr)
+	var/ignore_checks = isobserver(usr) || ignore_all_checks
 	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
 	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br>[SPAN_ALERT("You can't seem to make yourself look at [src.name] long enough to observe anything!")]"
@@ -366,7 +366,7 @@
 				if (using_vr_goggles)
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
-				else
+				else if (!skip_afk_check)
 					. += "<br>[src.name] seems to be staring blankly into space. "
 					if (src.last_ckey && src.logout_at)
 						var/gone_time_s = floor((TIME - src.logout_at) / 10)
