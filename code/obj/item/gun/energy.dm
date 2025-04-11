@@ -1222,7 +1222,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-			flick("[src.base_item_state]-tele", src)
+			FLICK("[src.base_item_state]-tele", src)
 
 	disposing()
 		. = ..()
@@ -1393,6 +1393,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	rechargeable = 0
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
+	tooltip_flags = REBUILD_USER
 	var/emagged = FALSE
 
 	New(var/mob/M)
@@ -1417,6 +1418,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	disposing()
 		indicator_display = null
 		..()
+
+	get_desc(dist, mob/user)
+		if (user.mind.is_antagonist())
+			. += SPAN_ALERT("<b>It doesn't seem to like you...</b>")
 
 	attack_hand(mob/user)
 		if (!owner_prints)
@@ -1920,7 +1925,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 		src.extended = !src.extended
 		UpdateIcon()
 		if(src.extended)
-			flick("cornicen_open", src)
+			FLICK("cornicen_open", src)
 		M.update_inhands()
 
 TYPEINFO(/obj/item/gun/energy/vexillifer4)
@@ -1989,7 +1994,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 
 		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 			if(src.canshoot(user))
-				flick("lasercannon-fire", src)
+				FLICK("lasercannon-fire", src)
 			. = ..()
 
 /obj/item/gun/energy/tasersmg
@@ -2362,8 +2367,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			..()
-			flick("burst_laser", src)
-			flick(src.charge_image, src.charge_image)
+			FLICK("burst_laser", src)
+			FLICK(src.charge_image, src.charge_image)
 			SPAWN(6 DECI SECONDS)
 				playsound(user, 'sound/effects/tinyhiss.ogg', 60, TRUE)
 			return

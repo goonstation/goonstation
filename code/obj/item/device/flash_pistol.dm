@@ -78,7 +78,7 @@
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = user
-				flick("blspell", animation)
+				FLICK("blspell", animation)
 				sleep(0.5 SECONDS)
 				qdel(animation)
 

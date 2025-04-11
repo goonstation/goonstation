@@ -157,7 +157,7 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 			O.set_dir(pick(cardinal))
 			O.icon = 'icons/effects/effects.dmi'
 			O.icon_state = "nothing"
-			flick("empdisable",O)
+			FLICK("empdisable",O)
 			sleep(0.5 SECONDS)
 			qdel(O)
 

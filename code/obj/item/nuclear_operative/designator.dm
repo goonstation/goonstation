@@ -154,11 +154,11 @@
 		animation.Turn(-90)
 		animation.pixel_y = -64
 		SPAWN(0)
-			flick("explosion", animation)
+			FLICK("explosion", animation)
 			sleep(3.2 SECONDS)
 			qdel(animation)
 		playsound(sound_turf, 'sound/weapons/energy/howitzer_shot.ogg', 50, TRUE)
-		flick("305mm-firing", src)
+		FLICK("305mm-firing", src)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
 	proc/fire()
 
 		if(src.icon_firing)
-			flick(src.icon_firing, src)
+			FLICK(src.icon_firing, src)
 
 		if(src.flash_icon && src.flash_icon_state)
 			var/turf/firing_turf = get_turf(src)
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
 			animation.plane = PLANE_ABOVE_LIGHTING
 			animation.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			SPAWN(0)
-				flick(src.flash_icon_state, animation)
+				FLICK(src.flash_icon_state, animation)
 				sleep(1.2 SECONDS)
 				qdel(animation)
 
@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
 		fire()
 
 			if(src.icon_firing)
-				flick(src.icon_firing, src)
+				FLICK(src.icon_firing, src)
 
 			if(src.flash_icon && src.flash_icon_state)
 				var/turf/firing_turf = get_turf(src)
@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
 				animation.Turn(-90)
 				animation.pixel_y = -64
 				SPAWN(0)
-					flick(src.flash_icon_state, animation)
+					FLICK(src.flash_icon_state, animation)
 					sleep(1.2 SECONDS)
 					qdel(animation)
 

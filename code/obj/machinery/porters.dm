@@ -153,12 +153,12 @@ TYPEINFO(/obj/item/remote/porter)
 
 				if (machinery_loc == home_loc)
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
-					flick("[P.icon_state]-tele", P)
+					FLICK("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
 					logTheThing(LOG_STATION, user, "teleports [P] to [log_loc(our_loc)].")
 				else
 					P.set_loc(home_loc) // Send back to home location.
-					flick("[P.icon_state]-tele", P)
+					FLICK("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] sent to home turf.", "blue")
 					logTheThing(LOG_STATION, user, "teleports [P] to its home turf [log_loc(home_loc)].")
 

@@ -246,10 +246,11 @@
 	},
 /area/space)
 "aK" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	icon_state = "glass_closed"
+	
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/circuit/red,
 /area/space)
 "aL" = (

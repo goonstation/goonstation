@@ -303,6 +303,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 	proc/reroll_commodity()
 		if(length(targets))
 			comtype = pick(targets)
+			targets -= comtype
 			var/obj/object_type = comtype
 			comname = initial(object_type.name)
 			var/value = targets[comtype]
@@ -310,7 +311,6 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 			baseprice = value
 			upperfluc = value * 0.10
 			lowerfluc = value * -0.05
-			targets -= comtype
 		else
 			comtype = null
 			hidden = TRUE

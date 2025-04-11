@@ -80,6 +80,12 @@ TYPEINFO(/obj/machinery/power/tracker)
 	power_change()
 		return
 
+	disposing() // it would probably be best if we unlink all our panels
+		if(control)
+			control.tracker = null
+			control = null
+		..()
+
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
@@ -307,6 +313,7 @@ TYPEINFO(/obj/machinery/power/solar)
 				Solar.control = null
 		if (tracker) // we track the solar tracker now
 			tracker.control = null
+			tracker = null
 	..()
 
 /obj/machinery/computer/solar_control/process()
@@ -338,7 +345,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	active = !active
 	user.show_text("You [active ? "activate" : "deactivate"] [src]'s solar tracking.", "blue")
 	if (src.is_active_and_powered())
-		src.tracker_update(tracker.sun_angle)
+		src.tracker_update(!QDELETED(tracker) ? tracker.sun_angle : cdir)
 
 	src.UpdateIcon()
 
@@ -346,7 +353,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	. = "<br />It is currently <em>[src.is_active_and_powered() ? "tracking the sun" : "disabled"]</em>"
 	. += "<br />Generated power: [round(lastgen)] W"
 	. += "<br />Current Orientation: [cdir]&deg; ([angle2text(cdir)])"
-	. += "<br />Sun Orientation: [tracker.sun_angle]&deg; ([angle2text(tracker.sun_angle)])"
+	. += "<br />Sun Orientation: [!QDELETED(src.tracker) ? "[tracker.sun_angle]&deg; ([angle2text(tracker.sun_angle)])" : "Unknown"]"
 
 /obj/machinery/computer/solar_control/proc/is_active_and_powered()
 	. = active && !(status & (NOPOWER | BROKEN))
@@ -370,7 +377,7 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	src.emagged = TRUE
 	user.show_text("You short out the control circuit on [src]!", "blue")
-	if (active)
+	if (active && !QDELETED(tracker))
 		src.tracker_update(tracker.sun_angle)
 
 /obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
@@ -383,9 +390,10 @@ TYPEINFO(/obj/machinery/power/solar)
 		Solar.control = src
 		Solar.ndir = src.cdir
 
-	if (!src.tracker)
+	if (QDELETED(src.tracker))
 		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
 			if(Tracker.control != src && Tracker.control) continue
+			if(QDELETED(Tracker)) continue
 			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
 				continue // some solars are weird
 			Tracker.control = src

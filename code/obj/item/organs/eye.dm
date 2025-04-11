@@ -109,6 +109,15 @@
 
 		return 1
 
+	// dead eyes stop working
+	breakme()
+		. = ..()
+		src.provides_sight = FALSE
+
+	unbreakme()
+		. = ..()
+		src.provides_sight = TRUE
+
 /obj/item/organ/eye/left
 	name = "left eye"
 	body_side = L_ORGAN
@@ -543,3 +552,13 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/glass
+	name = "glass eye"
+	organ_name = "glass eye"
+	desc = "Straight out of the sixteenth century. Surprisingly lifelike!"
+	show_on_examine = TRUE
+	provides_sight = FALSE
+	created_decal = null
+	default_material = "glass"
+	blood_reagent = null

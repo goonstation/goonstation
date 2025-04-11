@@ -366,7 +366,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			if (user)
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
-			flick("apc-spark", src)
+			FLICK("apc-spark", src)
 			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
@@ -1451,6 +1451,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
 	operating = 0

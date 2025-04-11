@@ -89,22 +89,23 @@
 
 		update_shipping_data()
 
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
+
+	proc/init()
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
 			spawnpoint = T
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
-
-		//set up pressure crystal market peaks
-		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
-			var/value = rand(1, 230)
-			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -679,7 +680,7 @@
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
@@ -715,7 +716,9 @@
 #endif
 
 	proc/get_path_to_market()
-		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		var/list/bounds = list()
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
+			bounds += T
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
 		var/min_x = INFINITY

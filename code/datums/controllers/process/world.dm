@@ -143,19 +143,9 @@ input:checked + div { display: block; }
 			tmp2 += "<th>[bicon(R.output)][initial(item_path.name)]</th><td>"
 		else
 			tmp2 += "<th>???</th><td>"
-
-		if (R.item1)
-			var/atom/item_path = R.item1
-			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item1)][R.amt1 > 1 ? "<span>x[R.amt1]</span>" : ""]</div>"
-		if (R.item2)
-			var/atom/item_path = R.item2
-			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item2)][R.amt2 > 1 ? "<span>x[R.amt2]</span>" : ""]</div>"
-		if (R.item3)
-			var/atom/item_path = R.item3
-			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item3)][R.amt3 > 1 ? "<span>x[R.amt3]</span>" : ""]</div>"
-		if (R.item4)
-			var/atom/item_path = R.item4
-			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item4)][R.amt4 > 1 ? "<span>x[R.amt4]</span>" : ""]</div>"
+		for(var/I in R.ingredients)
+			var/atom/item_path = I
+			tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(I)][R.ingredients[I] > 1 ? "<span>x[R.ingredients[I]]</span>" : ""]</div>"
 
 		tmp2 += "</td><td class='x'>[R.cookbonus >= 10 ? "[round(R.cookbonus / 2)] HI" : "[round(R.cookbonus)] LO"]</td></tr>"
 

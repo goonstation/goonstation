@@ -235,7 +235,7 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
-						flick("[P4.icon_state]-tele", P4)
+						FLICK("[P4.icon_state]-tele", P4)
 						elecflash(P4)
 						logTheThing(LOG_STATION, usr, "teleports [P4] to [log_loc(our_loc)].")
 
@@ -283,7 +283,7 @@
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
-						flick("[P5.icon_state]-tele", P5)
+						FLICK("[P5.icon_state]-tele", P5)
 						elecflash(P5)
 						logTheThing(LOG_STATION, usr, "teleports [P5] to its home turf [log_loc(dest_loc)].")
 

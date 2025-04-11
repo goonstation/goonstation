@@ -2428,12 +2428,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.limbs = new /datum/human_limbs(src)
 	else
 		src.limbs.mend()
-	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
-	for (var/organ_slot in src.organHolder.organ_list)
-		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
-		if(istype(O))
-			O.unbreakme()
-	if (!src.organHolder)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+	else
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
@@ -2611,7 +2609,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		animation.icon_state = "blank"
 		animation.icon = 'icons/mob/mob.dmi'
 		animation.master = src
-		flick("spidergib", animation)
+		FLICK("spidergib", animation)
 		src.visible_message(SPAN_ALERT("<font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font>"), SPAN_ALERT("<font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font>"), SPAN_ALERT("You hear a vile chittering sound."))
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN(1 SECOND)

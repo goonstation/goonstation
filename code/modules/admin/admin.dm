@@ -934,6 +934,14 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
 
+		if ("animate")
+			if (src.level >= LEVEL_BABBY)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", animations)
+					if (animationpick)
+						call(animationpick)(M)
+
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -1393,6 +1401,9 @@ var/global/noir = 0
 					var/string_version
 					for(pick in picklist)
 						M.onProcCalled("addBioEffect", list("idToAdd" = pick, "magical" = 1))
+						if(!bioEffectList[pick])
+							boutput(usr, SPAN_ALERT("Invalid bioEffect ID [pick]"))
+							continue
 						if(M.bioHolder.AddEffect(pick, magical = 1))
 							successes++
 
