@@ -2,6 +2,7 @@
 (t)fri apr 11 25
 (u)Sord
 (+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
+(+)The phaser rack in the armory now has a chance to be a phaser SMG rack or normal phaser rack.
 (u)RubberRats
 (p)22936
 (e)🪲🍝|C-Bug, A-Catering

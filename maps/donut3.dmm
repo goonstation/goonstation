@@ -25917,7 +25917,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "hLQ" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
