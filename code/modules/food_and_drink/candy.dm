@@ -620,6 +620,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	real_name = "hard candy"
 	icon_state = "hardcandy"
 	var/flavor_name
+	var/wrapper_color
 
 	on_reagent_change()
 		..()
@@ -633,12 +634,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 	unwrap_candy(mob/user)
 		..()
+		if (src.wrapper_color)
+			var/image/image_wrapper = image(src.icon, "hardcandy-unwrapped")
+			image_wrapper.color = src.wrapper_color
+			src.UpdateOverlays(image_wrapper, "hardcandy-wrapper")
 		var/datum/color/average = src.reagents.get_average_color()
 		var/image/image_candy = image(src.icon, "hardcandy-nowrap")
 		image_candy.color = average.to_rgb()
 		image_candy.alpha = round(average.a / 1.2)
 		src.UpdateOverlays(image_candy, "hardcandy-nowrap")
 		src.update_name()
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen))
+			if (src.unwrapped == 0)
+				var/obj/item/pen/P = W
+				if (P.font_color)
+					boutput(user, SPAN_NOTICE("You color in the candy wrapper."))
+					var/image/image_wrapper = image(src.icon, "hardcandy")
+					image_wrapper.color = P.font_color
+					src.wrapper_color = P.font_color
+					src.UpdateOverlays(image_wrapper, "hardcandy-wrapper")
+			else
+				boutput(user, SPAN_ALERT("The candy's already been unwrapped!"))
+				return
+
 
 /obj/item/reagent_containers/food/snacks/candy/rock_candy
 	name = "rock candy"
