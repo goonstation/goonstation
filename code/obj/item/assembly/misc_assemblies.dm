@@ -235,11 +235,12 @@ Contains:
 /obj/item/assembly/material_on_drop(mob/user)
 	//we pick one item here the person is touching
 	. = ..()
-	var/list/item_selection = list(src.trigger, src.applier)
-	if(src.target)
-		item_selection += src.target
-	var/obj/item/picked_item = pick(item_selection)
-	picked_item.material_on_drop(user)
+	if(!src.qdeled && !src.disposed)
+		var/list/item_selection = list(src.trigger, src.applier)
+		if(src.target)
+			item_selection += src.target
+		var/obj/item/picked_item = pick(item_selection)
+		picked_item.material_on_drop(user)
 ///------ ------------------------------------------ ---------
 
 /obj/item/assembly/disposing()
