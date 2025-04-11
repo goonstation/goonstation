@@ -2306,7 +2306,6 @@
 #include "code\obj\machinery\printing_press.dm"
 #include "code\obj\machinery\recharger.dm"
 #include "code\obj\machinery\science_teleporter.dm"
-#include "code\obj\machinery\sec_lock.dm"
 #include "code\obj\machinery\secscanner.dm"
 #include "code\obj\machinery\shipalert.dm"
 #include "code\obj\machinery\shitty_grill.dm"

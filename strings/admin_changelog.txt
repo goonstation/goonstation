@@ -1,3 +1,6 @@
+(t)fri apr 11 25
+(u)glowbold
+(*)Added a "Stabilize" option to admin mob interaction and player panel. Heals people just above crit and cures them of most immediately fatal issues.
 (t)fri mar 07 25
 (u)LeahTheTech
 (*)Added throw mode flags to the throw buildmode. Ever wanted to throw someone through a wall? Now you can!
