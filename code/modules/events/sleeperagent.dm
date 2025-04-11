@@ -135,7 +135,7 @@
 					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
 					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref) && isalive(H))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
-						if (J?.allow_traitors)
+						if (J.can_be_antag(ROLE_SLEEPER_AGENT))
 							src.candidates.Add(H)
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
