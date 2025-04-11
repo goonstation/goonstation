@@ -223,14 +223,36 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
 	pointCost = 50
+	var/chosen_option
+
+	tryCast(atom/target)
+		src.chosen_option = null
+		var/option = tgui_input_list(src.holder.owner, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
+		if (!option)
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		src.chosen_option = option
+		return ..()
 
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		if (mindeater.disguised)
-			mindeater.undisguise()
-		else
-			mindeater.disguise()
+		mindeater.disguise(src.chosen_option)
+
+		mindeater.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
+		mindeater.abilityHolder.addAbility(/datum/targetable/critter/mindeater/clear_disguise)
+
+/datum/targetable/critter/mindeater/clear_disguise
+	name = "Clear Disguise"
+	desc = "Clear your disguise."
+	icon_state = "clear_disguise"
+
+	cast(atom/target)
+		. = ..()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		mindeater.undisguise()
+
+		mindeater.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
+		mindeater.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 /datum/targetable/critter/mindeater/confuse
 

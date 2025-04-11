@@ -38,6 +38,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		remove_lifeprocess(/datum/lifeprocess/chems)
 		remove_lifeprocess(/datum/lifeprocess/blood)
@@ -216,7 +217,6 @@
 		src.set_invisible()
 		src.alpha = 255
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/telekinesis)
@@ -233,7 +233,6 @@
 		src.set_invisible()
 		src.alpha = 150
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
-		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/telekinesis)
@@ -285,11 +284,7 @@
 		I.Scale(3 / 2, 3 / 2)
 
 	/// disguise as an entity
-	proc/disguise()
-		var/option = tgui_input_list(src, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
-		if (!option)
-			return
-
+	proc/disguise(option)
 		var/mob/living/temp
 		if (option == "Mouse")
 			temp = new /mob/living/critter/small_animal/mouse
