@@ -51064,7 +51064,7 @@
 /area/centcom/lounge)
 "dHW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHX" = (
