@@ -67,6 +67,7 @@
 	name = "Atrium Station Map"
 	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of stolen structural data."
 	map_type = MAP_SYNDICATE
+	map_path = /datum/minimap/area_map/broadcast/carnigorm
 
 	light_r = 1
 	light_g = 0.3
@@ -132,6 +133,7 @@
 	name = "Station Map"
 	desc = "A cutting-edge cathode ray tube monitor, actively rendering a visualization of the target station."
 	map_type = MAP_HTR_TEAM
+	map_path = /datum/minimap/area_map/broadcast/htr
 
 	light_r = 0.3
 	light_g = 0.3

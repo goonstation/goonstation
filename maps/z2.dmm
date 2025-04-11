@@ -7824,6 +7824,12 @@
 	},
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
+"aMi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "aMk" = (
 /obj/decal/stalagmite,
 /turf/unsimulated/floor/cave,
@@ -16793,6 +16799,14 @@
 "boH" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/iomoon)
+"boK" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/hearing_connector/origin/syndicate,
+/obj/machinery/light/small/floor/warm,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate/office_set)
 "boM" = (
 /turf/unsimulated/floor/red/side{
 	dir = 8
@@ -18097,6 +18111,18 @@
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
+"btl" = (
+/obj/machinery/light/lamp/black{
+	pixel_x = 13
+	},
+/obj/table/nanotrasen/auto,
+/obj/machinery/phone/unlisted{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/area/high_command/nanotrasen/office_set)
 "btp" = (
 /obj/item/sea_ladder,
 /obj/item/sea_ladder,
@@ -36509,6 +36535,11 @@
 "cHS" = (
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
+"cHT" = (
+/obj/table/nanotrasen/auto,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/south,
+/area/high_command/nanotrasen/office_set)
 "cHU" = (
 /obj/table/reinforced/bar/auto,
 /obj/fakeobject{
@@ -56092,6 +56123,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
+"eUn" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "eUA" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -56333,6 +56370,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"ffO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen)
 "ffY" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -57847,6 +57893,12 @@
 	},
 /turf/unsimulated/floor/plating/damaged2,
 /area/owlery/Owlmait2)
+"gqZ" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "gsH" = (
 /mob/living/critter/small_animal/crab/lava/deep,
 /turf/unsimulated/iomoon/floor{
@@ -58405,6 +58457,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gLq" = (
+/obj/table/syndicate/auto,
+/obj/item/device/audio_log/radioship/large,
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/carpet/red/fancy/edge/sw,
+/area/high_command/syndicate/office_set)
 "gLr" = (
 /obj/map/light/dimreddish,
 /obj/fakeobject/cultiststatue,
@@ -59079,6 +59137,16 @@
 /obj/item/clothing/mask/anime,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo)
+"hsV" = (
+/obj/table/syndicate/auto,
+/obj/machinery/phone/unlisted{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/megaphone/syndicate,
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/carpet/red/fancy/edge/ne,
+/area/high_command/syndicate/office_set)
 "htI" = (
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -59142,6 +59210,12 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"huq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "huB" = (
 /obj/mesh/grille/steel,
 /obj/fakeobject{
@@ -59663,6 +59737,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"hQR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "hRy" = (
 /obj/table/auto,
 /obj/item/stimpack,
@@ -59784,6 +59864,10 @@
 	dir = 10
 	},
 /area/owlery/staffhall)
+"hWX" = (
+/obj/decal/poster/wallsign/security,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate/office_set)
 "hXz" = (
 /obj/mesh/catwalk,
 /obj/cable/green{
@@ -60477,6 +60561,10 @@
 	dir = 8
 	},
 /area/centcom/offices/cogwerks)
+"izz" = (
+/obj/decoration/clock,
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen/office_set)
 "izT" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base)
@@ -60504,6 +60592,10 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/crunch)
+"iBJ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "iBN" = (
 /obj/fakeobject/dreambeach/seashells,
 /obj/fakeobject/dreambeach/palm_leaf,
@@ -61296,6 +61388,15 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
+"jdX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "jej" = (
 /obj/storage/crate/bin{
 	pixel_x = 5
@@ -61766,6 +61867,9 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
+"juV" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate/office_set)
 "jvd" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -61810,6 +61914,15 @@
 	},
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
+"jvx" = (
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen/office_set)
+"jvD" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "jvG" = (
 /obj/fakeobject/cargopad,
 /obj/machinery/light,
@@ -62096,6 +62209,14 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"jHx" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/hearing_connector/origin/syndicate,
+/obj/machinery/light/small/floor/warm,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate/office_set)
 "jHy" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/fakeobject/microscope,
@@ -63642,6 +63763,11 @@
 	dir = 4
 	},
 /area/dojo/sakura)
+"kTd" = (
+/obj/table/nanotrasen/auto,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/se,
+/area/high_command/nanotrasen/office_set)
 "kTs" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -63722,6 +63848,9 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"kWx" = (
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "kWN" = (
 /obj/table/auto/desk,
 /obj/item/pen/fancy{
@@ -64613,6 +64742,13 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
+"lJB" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate/office_set)
 "lJF" = (
 /turf/unsimulated/floor/wood/eight,
 /area/centcom/offices/bilo)
@@ -65079,6 +65215,13 @@
 "mef" = (
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
+"meL" = (
+/obj/decal/poster{
+	icon = 'icons/obj/decals/posters.dmi';
+	icon_state = "pack_smart"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate/office_set)
 "mfw" = (
 /obj/machinery/vending/meat/prefab_grill,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -65131,6 +65274,12 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"mhQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "mie" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -65486,6 +65635,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mxX" = (
+/obj/decal/poster,
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen/office_set)
 "myh" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
@@ -66953,6 +67106,15 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
+"nKo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen)
 "nKN" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -67990,6 +68152,13 @@
 	temperature = 313.15
 	},
 /area/iomoon/caves)
+"oye" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate/office_set)
 "oyo" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -68103,6 +68272,12 @@
 /obj/mesh/catwalk,
 /turf/space,
 /area/watchful_eye_sensor)
+"oEt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "oEX" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/lawyers,
@@ -68155,6 +68330,12 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
+"oHw" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "oHI" = (
 /obj/machinery/vending/medical,
 /obj/machinery/light{
@@ -68244,6 +68425,12 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"oJo" = (
+/obj/fakeobject/barbuddy_dispenser{
+	pixel_y = -9
+	},
+/turf/unsimulated/wall/auto/supernorn,
+/area/high_command/nanotrasen/office_set)
 "oJy" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -69821,6 +70008,20 @@
 	},
 /turf/unsimulated/dirt,
 /area/crypt/graveyard/swamp)
+"pSI" = (
+/obj/table/nanotrasen/auto,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/sw,
+/area/high_command/nanotrasen/office_set)
+"pSL" = (
+/obj/fakeobject{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "bonsai";
+	pixel_y = 11
+	},
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/marble/black,
+/area/high_command/nanotrasen/office_set)
 "pSW" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -70167,6 +70368,9 @@
 /obj/machinery/portable_reclaimer,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"qfA" = (
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "qfG" = (
 /obj/shrub{
 	dir = 10;
@@ -70220,6 +70424,10 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"qgW" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "qhR" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -70835,6 +71043,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"qGy" = (
+/obj/decoration/clock,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate/office_set)
 "qGG" = (
 /obj/machinery/vehicle/pod_smooth/syndicate,
 /obj/decal/tile_edge/stripe{
@@ -71076,6 +71288,10 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"qOz" = (
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate/office_set)
 "qOB" = (
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
@@ -72131,6 +72347,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"rEn" = (
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/marble/black,
+/area/high_command/nanotrasen/office_set)
 "rEI" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -72260,6 +72480,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"rHU" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "rIo" = (
 /obj/overlay{
 	density = 1;
@@ -72888,6 +73114,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"shq" = (
+/obj/machinery/light/small/floor/cool,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/marble/black,
+/area/high_command/nanotrasen/office_set)
 "shs" = (
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/stool/bed,
@@ -72943,6 +73174,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"siR" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/syndicate)
 "sjB" = (
 /obj/lattice{
 	dir = 1;
@@ -73133,6 +73370,15 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"sps" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate)
 "spy" = (
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 8
@@ -74112,6 +74358,16 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
+"tqz" = (
+/obj/table/syndicate/auto,
+/obj/item/cash_briefcase/syndicate/loaded,
+/obj/hearing_connector/origin/syndicate,
+/obj/item/paper/businesscard/mabinogi{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/carpet/red/fancy/edge/se,
+/area/high_command/syndicate/office_set)
 "tqB" = (
 /turf/unsimulated/floor/marble,
 /area/centcom/gallery)
@@ -74293,6 +74549,10 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"txp" = (
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/redblack,
+/area/high_command/syndicate/office_set)
 "txy" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/caves)
@@ -74378,6 +74638,15 @@
 "tFG" = (
 /turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/centcom/gallery)
+"tFW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "tGw" = (
 /obj/item/cigbutt{
 	pixel_x = 6
@@ -74524,6 +74793,11 @@
 "tMB" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/sim/racing_entry)
+"tMT" = (
+/obj/hearing_connector/origin/syndicate,
+/obj/stool/chair/office/syndie,
+/turf/unsimulated/floor/redblack,
+/area/high_command/syndicate/office_set)
 "tMW" = (
 /obj/fakeobject/pipe{
 	density = 1;
@@ -74990,6 +75264,15 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
+"ufo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/high_command/syndicate)
 "ufy" = (
 /obj/geode/crystal/uqill,
 /turf/unsimulated/floor/cave,
@@ -75277,6 +75560,12 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/circuit/white,
 /area/centcom/offices/bilo)
+"uuV" = (
+/obj/table/nanotrasen/auto,
+/obj/item/device/audio_log,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/ne,
+/area/high_command/nanotrasen/office_set)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -75460,6 +75749,11 @@
 /mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"uCb" = (
+/obj/stool/chair/comfy/blue,
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/marble/black,
+/area/high_command/nanotrasen/office_set)
 "uCm" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
 	dir = 8
@@ -75891,6 +76185,16 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"uRG" = (
+/obj/table/nanotrasen/auto,
+/obj/item/paper,
+/obj/item/pen/fancy{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/hearing_connector/origin/nanotrasen,
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/area/high_command/nanotrasen/office_set)
 "uRP" = (
 /obj/map/light/graveyard,
 /mob/living/critter/zombie,
@@ -77432,6 +77736,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
+"wac" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "wao" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/white,
@@ -77629,6 +77939,11 @@
 /obj/item/ammo/ammobox/shootingrange,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
+"wjO" = (
+/obj/table/syndicate/auto,
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/carpet/red/fancy/edge/south,
+/area/high_command/syndicate/office_set)
 "wjW" = (
 /obj/indestructible/shuttle_corner{
 	icon = 'icons/turf/walls/silicate.dmi';
@@ -78813,6 +79128,12 @@
 /obj/geode/crystal/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
+"xdd" = (
+/obj/table/syndicate/auto,
+/obj/machinery/light/lamp/black,
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/carpet/red/fancy/edge/nw,
+/area/high_command/syndicate/office_set)
 "xdm" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/meat_derelict/main)
@@ -78931,6 +79252,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"xiJ" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "xiM" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/decal/stripe_delivery,
@@ -80025,6 +80352,11 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
+"xUv" = (
+/obj/table/podium_wood/syndicate,
+/obj/hearing_connector/origin/syndicate,
+/turf/unsimulated/floor/carpet/red/fancy/edge/north,
+/area/high_command/syndicate/office_set)
 "xUA" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -80332,6 +80664,12 @@
 "ybJ" = (
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
+"ybM" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/unsimulated/floor/black,
+/area/high_command/nanotrasen)
 "ybN" = (
 /obj/mapping_helper/turf/floor/darkener{
 	dir = 5
@@ -80374,6 +80712,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
 "yea" = (
+/obj/hearing_connector/target/syndicate,
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm11"
 	},
@@ -115319,16 +115658,16 @@ bVT
 bVT
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -115621,16 +115960,16 @@ bVU
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+siR
+sps
+huq
+huq
+huq
+huq
+jvD
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -115923,16 +116262,16 @@ bVU
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+qgW
+juV
+txp
+boK
+oye
+qOz
+jdX
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -116225,16 +116564,16 @@ pZn
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+qgW
+meL
+txp
+xdd
+gLq
+qOz
+aMi
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -116527,16 +116866,16 @@ slS
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+qgW
+juV
+tMT
+xUv
+wjO
+qOz
+aMi
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -116829,16 +117168,16 @@ hzi
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+qgW
+qGy
+txp
+hsV
+tqz
+qOz
+aMi
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -117131,16 +117470,16 @@ rKO
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+qgW
+hWX
+txp
+jHx
+lJB
+qOz
+aMi
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -117433,16 +117772,16 @@ rRv
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+oHw
+ufo
+mhQ
+mhQ
+mhQ
+mhQ
+eUn
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -117735,16 +118074,16 @@ oKc
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+kWx
+aaa
 cnw
 cnw
 cnw
@@ -118037,16 +118376,16 @@ lvP
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -118339,16 +118678,16 @@ tmM
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -118641,16 +118980,16 @@ bVU
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qfA
+xiJ
+ffO
+hQR
+hQR
+hQR
+hQR
+rHU
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -118943,16 +119282,16 @@ bVU
 bVU
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qfA
+iBJ
+jvx
+pSL
+rEn
+shq
+rEn
+tFW
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -119245,16 +119584,16 @@ bVT
 bVT
 bVT
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qfA
+iBJ
+mxX
+rEn
+btl
+pSI
+rEn
+oEt
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -119547,16 +119886,16 @@ aaa
 aaa
 aaa
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qfA
+iBJ
+jvx
+uCb
+uRG
+cHT
+rEn
+oEt
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -119848,17 +120187,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+qfA
+iBJ
+izz
+rEn
+uuV
+kTd
+rEn
+oEt
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -120150,17 +120489,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+qfA
+iBJ
+oJo
+rEn
+rEn
+shq
+rEn
+oEt
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -120452,17 +120791,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+qfA
+ybM
+nKo
+wac
+wac
+wac
+wac
+gqZ
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -120754,17 +121093,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+qfA
+aaa
 cnw
 cnw
 cnw
@@ -121056,17 +121395,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
