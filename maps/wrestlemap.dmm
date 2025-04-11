@@ -18582,9 +18582,7 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/bluewhite{
 	dir = 4
