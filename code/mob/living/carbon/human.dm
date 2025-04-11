@@ -2467,6 +2467,44 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	update_face()
 	return
 
+/mob/living/carbon/human/stabilize()
+	src.blinded = 0
+	src.bleeding = min(src.bleeding, 1)
+	src.blood_volume = clamp(src.blood_volume, 450, 550)
+
+	var/desired_damage = src.max_health * (1-0.05) // should have ~5% health left
+	var/current_damage = src.max_health - src.health
+	var/type_multi = 0
+	if (current_damage > 0)
+		type_multi = max(0,1-(desired_damage/current_damage)) //what to multiply all damage by to get to desired HP
+	src.HealDamage("All", src.get_brute_damage()*type_multi, src.get_burn_damage()*type_multi, src.get_toxin_damage()*type_multi)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+
+	if (!src.organHolder)
+		src.organHolder = new(src)
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, src.organHolder.organ_list)
+
+	src.organHolder.create_organs()
+
+	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
+		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+
+	..()
+
+	if (implant)
+		for (var/obj/item/implant/I in implant)
+			if (istype(I, /obj/item/implant/projectile))
+				boutput(src, "[I] falls out of you!")
+				I.on_remove(src)
+				implant.Remove(I)
+				I.set_loc(get_turf(src))
+				continue
+
+	update_face()
+	return
+
 /mob/living/carbon/human/get_equipped_ore_scoop()
 	if (istype(src.l_hand,/obj/item/ore_scoop))
 		return src.l_hand
