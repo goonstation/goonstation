@@ -1147,7 +1147,6 @@ var/list/radio_brains = list()
 			src.update_eyes()
 			return
 		src.do_madness()
-		boutput(world, "Plasma count: [src.material]") //TODO: remove this
 		//too little or too often
 		if (src.material < 10 || GET_COOLDOWN(src.owner, "plasma_electricity"))
 			return
