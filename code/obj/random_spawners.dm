@@ -2508,3 +2508,43 @@
 	lots
 		min_amt2spawn = 5
 		max_amt2spawn = 7
+
+
+/obj/random_item_spawner/gross
+	name = "random gross/mess spawner"
+	icon_state = "rand_junk" // TODO
+	color = "#a79700"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(
+	/obj/decal/cleanable/vomit,
+	/obj/decal/cleanable/vomit,
+	/obj/decal/cleanable/vomit/spiders,
+	/obj/decal/cleanable/greenpuke,
+	/obj/decal/cleanable/tomatosplat,
+	/obj/decal/cleanable/eggsplat,
+	/obj/decal/cleanable/ash,
+	/obj/decal/cleanable/ash,
+	/obj/decal/cleanable/slime,
+	/obj/decal/cleanable/dirt,
+	/obj/decal/cleanable/dirt,
+	/obj/decal/cleanable/machine_debris,
+	/obj/decal/cleanable/robot_debris,
+	/obj/decal/cleanable/oil,
+	/obj/decal/cleanable/oil,
+	/obj/decal/cleanable/saltpile,
+	/obj/decal/cleanable/blood,
+	/obj/decal/cleanable/glitter/harmless,
+	/obj/decal/cleanable/ketchup,
+	/obj/decal/cleanable/paper,
+	/obj/decal/cleanable/wood_debris,
+	/obj/decal/cleanable/balloon)
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one
+		min_amt2spawn = 1
+		max_amt2spawn = 1

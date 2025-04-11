@@ -1431,6 +1431,11 @@ TYPEINFO(/area/diner)
 	requires_power = FALSE
 #endif
 
+/area/heated_pool
+	name = "Heated Pool"
+	requires_power = FALSE
+	icon_state = "red"
+
 /area/watchful_eye_sensor
 	name = "Watchful Eye Sensor Satellite"
 	icon_state = "red"
