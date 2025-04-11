@@ -49,12 +49,14 @@
 	proc/apply_shroud()
 		if (src.is_active) return
 		src.is_active = TRUE
+		src.owner.alpha = 0
 		src.mist.alpha = 255
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, 3)
 
 	proc/remove_shroud()
 		if (!src.is_active) return
 		src.is_active = FALSE
+		src.owner.alpha = 255
 		src.mist.alpha = 0
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
 
@@ -66,7 +68,8 @@
 		src.mist.layer = MOB_OVERLAY_BASE
 		src.mist.alpha = 0
 		src.mist.color = "#666"
-		src.mist.appearance_flags = VIS_INHERIT_DIR & VIS_INHERIT_LAYER
+		src.mist.vis_flags = VIS_INHERIT_DIR
+		src.mist.appearance_flags = RESET_ALPHA | KEEP_APART
 		animate_wave(src.mist)
 		src.owner.vis_contents.Add(src.mist)
 		var/turf/T = get_turf(src.owner)

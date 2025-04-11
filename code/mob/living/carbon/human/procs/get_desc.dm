@@ -440,3 +440,10 @@
 			update_medical_record(src)
 
 	return jointext(., "")
+
+/mob/living/carbon/human/special_desc(dist, mob/user)
+	var/ignore_checks = isobserver(usr)
+	var/examine_stopper = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) || 0
+	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
+		return "[SPAN_ALERT("You can't seem to make yourself look at [examine_stopper >= 3 ? "this person" : src.name] long enough to observe anything!")]"
+	. = ..()
