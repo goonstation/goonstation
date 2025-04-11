@@ -158,7 +158,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			M.set_loc(src)
 			if(istype(get_area(src), /area/station/security/brig))
 				M.unlock_medal("Suitable? How about the Oubliette?!", 1)
-				boutput(world,SPAN_SUCCESS("IT WORKED"))
 			flush = 1
 			update()
 
