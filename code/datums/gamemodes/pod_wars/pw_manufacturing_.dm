@@ -516,7 +516,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		 "salbutamol", "anti_rad",\
 		"oculine", "mannitol", "saline",\
 		"salicylic_acid", "blood",\
-		"menthol", "antihistamine")
+		"menthol", "antihistamine", "oculine")
 
 	icon_state = "dispenser"
 	icon_base = "dispenser"
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
 	"oculine", "mannitol", "penteticacid", "saline",\
 	"salicylic_acid", "blood", \
-	"menthol", "antihistamine", "smelling_salt")
+	"menthol", "antihistamine", "smelling_salt", "oculine")
 
 /obj/machinery/manufacturer/general/pod_wars
 	New()
