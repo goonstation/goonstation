@@ -118,7 +118,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	pointCost = 10
 
 	tryCast(atom/target)
-		. = ..()
 		var/found_item = FALSE
 		for (var/atom/A in view(1, get_turf(target)))
 			if (istype(A, /obj/item))
@@ -143,6 +142,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 		if (!found_item)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		return ..()
 
 	cast(atom/target)
 		. = ..()
