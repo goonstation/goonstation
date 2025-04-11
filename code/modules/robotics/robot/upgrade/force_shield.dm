@@ -4,6 +4,7 @@
 	icon_state = "up-Pshield"
 	drainrate = 100
 	borg_overlay = "up-pshield"
+	borg_overlay_alpha = 125
 	var/damage_reduction = 4
 	var/cell_drain_per_damage_reduction = 100
 
