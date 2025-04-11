@@ -1,3 +1,8 @@
+#define SECURED_STATE_UNSECURED 0
+#define SECURED_STATE_BOLTED 1
+#define SECURED_STATE_SCREWED 2
+#define SECURED_STATE_UNCHANGABLE 3
+
 /obj/machinery/camera/television
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
@@ -8,7 +13,8 @@
 	anchored = ANCHORED
 	density = 1
 	reinforced = TRUE
-	var/securedstate = 2
+	/// how anchored-to-the-floor is this camera
+	var/secured_state = SECURED_STATE_SCREWED
 
 /obj/machinery/camera/television/auto
 	name = "autoname - television"
@@ -17,20 +23,33 @@
 /obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
 	if (isscrewingtool(W)) //to move them
-		if (securedstate && src.securedstate >= 1)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
-			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
-		else if (securedstate)
-			boutput(user, SPAN_ALERT("You need to secure the floor bolts!"))
-	else if (iswrenchingtool(W))
-		if (src.securedstate <= 1)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
-			boutput(user, SPAN_ALERT("You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src]."))
-			src.securedstate = (securedstate == 1) ? 0 : 1
+		switch (src.secured_state)
+			if(SECURED_STATE_UNCHANGABLE)
+				boutput(user, SPAN_ALERT("This camera cannot be secured or unsecured!"))
+			if(SECURED_STATE_SCREWED)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
+				actions.start(new/datum/action/bar/icon/cameraSecure(src, src.secured_state), user)
+			if (SECURED_STATE_BOLTED)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
+				actions.start(new/datum/action/bar/icon/cameraSecure(src, src.secured_state), user)
+			if (SECURED_STATE_UNSECURED)
+				boutput(user, SPAN_ALERT("You need to secure the floor bolts first!"))
 
-			if (securedstate == 0)
+	else if (iswrenchingtool(W))
+		switch (src.secured_state)
+			if(SECURED_STATE_UNCHANGABLE)
+				boutput(user, SPAN_ALERT("This camera cannot be secured or unsecured!"))
+			if(SECURED_STATE_SCREWED)
+				boutput(user, SPAN_ALERT("You need to undo the camera hookups on [src] first!"))
+			if (SECURED_STATE_BOLTED)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
+				boutput(user, SPAN_ALERT("You unsecure the floor bolts on the [src]."))
+				src.secured_state = SECURED_STATE_UNSECURED
 				src.anchored = UNANCHORED
-			else
+			if (SECURED_STATE_UNSECURED)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
+				boutput(user, SPAN_ALERT("You secure the floor bolts on the [src]."))
+				src.secured_state = SECURED_STATE_BOLTED
 				src.anchored = ANCHORED
 
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
@@ -49,7 +68,7 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(SPAN_NOTICE("[owner] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam]."), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins [secstate == SECURED_STATE_SCREWED ? "un" : ""]securing the camera hookups on the [cam]."), 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -57,11 +76,13 @@
 
 	onEnd()
 		..()
-		owner.visible_message(SPAN_NOTICE("[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam]."))
-		cam.securedstate = (secstate == 2) ? 1 : 2
-		if (cam.securedstate != 2)
+		owner.visible_message(SPAN_NOTICE("[owner.name] [secstate == SECURED_STATE_SCREWED ? "un" : ""]secures the camera hookups on the [cam]."))
+		cam.secured_state = (secstate == SECURED_STATE_SCREWED) ? SECURED_STATE_BOLTED : SECURED_STATE_SCREWED
+		if (cam.secured_state != SECURED_STATE_SCREWED)
+			cam.break_camera()
 			cam.UnsubscribeProcess()
 		else
+			cam.repair_camera()
 			cam.SubscribeToProcess()
 
 /obj/machinery/camera/television/mobile
@@ -69,9 +90,15 @@
 	desc = "A bulky mobile camera for wireless broadcasting of live feeds."
 	anchored = UNANCHORED
 	icon_state = "mobilevision"
-	securedstate = null //No bugginess thank you
+	reinforced = FALSE
+	secured_state = SECURED_STATE_UNCHANGABLE
 
 /obj/machinery/camera/television/mobile/science
 	name = "mobile television - science"
 	c_tag = "science mobile"
 	network = "telesci"
+
+#undef SECURED_STATE_UNSECURED
+#undef SECURED_STATE_BOLTED
+#undef SECURED_STATE_SCREWED
+#undef SECURED_STATE_UNCHANGABLE
