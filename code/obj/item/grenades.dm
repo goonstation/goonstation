@@ -1665,9 +1665,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		// unwelded frame + welder -> hollow frame
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
 		// unwelded frame + hollow frame -> slamgun
-		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE, new /datum/assembly_comp_helper/consumes_all)
 		// unwelded frame + mousetrap -> mousetrap roller
-		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE, new /datum/assembly_comp_helper/consumes_all)
 
 	// Pipebomb/shot assembly procs
 
@@ -1687,11 +1687,11 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		//Since we changed the state, remove all assembly components and add the next state ones
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		// hollow frame + cutters  -> unfilled pipeshot
-		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE)
+		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE, new /datum/assembly_comp_helper/consumes_self)
 		// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
-		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE, new /datum/assembly_comp_helper/consumes_other)
 		// hollow frame + staple gun  -> zipgun
-		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE, new /datum/assembly_comp_helper/consumes_all)
 		// hollow frame + fuel  -> unwired pipebombs
 		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
 		// Since the assembly was done, return TRUE
@@ -1768,9 +1768,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (length(item_mods) == 1)
 				src.RemoveComponentsOfType(/datum/component/assembly)
 				// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
-				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE, new /datum/assembly_comp_helper/consumes_other)
 				// hollow frame + fuel  -> unwired pipebombs
-				src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
+				src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE, new /datum/assembly_comp_helper/consumes_self)
 			// Since the assembly was done, return TRUE
 			return TRUE
 		else
@@ -1865,7 +1865,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		//Since we changed the state, remove all assembly components and add the next state ones
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		// timer + wired pipebomb -> standard pipebomb
-		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
+		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE, new /datum/assembly_comp_helper/consumes_all)
 		// Since the assembly was done, return TRUE
 		return TRUE
 
