@@ -352,7 +352,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 							src.visible_message("<b>[src]</b> drops \a [D] on the floor in an attempt to cheer [user] up!")
 							playsound(D.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg' , 30, 1)
 			else
-				E.icon_state = "gold"
+				E.icon_state = "id_gold"
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"

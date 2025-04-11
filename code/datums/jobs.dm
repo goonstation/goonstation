@@ -75,6 +75,7 @@
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
 	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
+	var/id_band_override = null //Override ID band colour to whatever you want
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = FALSE
@@ -485,7 +486,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
-	slot_card = /obj/item/card/id/command
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/heads)
@@ -1477,7 +1477,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
@@ -2453,7 +2453,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
-	slot_card = /obj/item/card/id/nt_specialist
+	slot_card = /obj/item/card/id/nanotrasen
 	faction = list(FACTION_NANOTRASEN)
 
 /datum/job/special/nt/special_operative
