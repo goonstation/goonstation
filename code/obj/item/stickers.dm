@@ -434,6 +434,9 @@
 
 	var/HTML = null
 
+	HELP_MESSAGE_OVERRIDE({"Can be used in-hand to change radio and camera settings.\
+							The internal radio automatically activates when stuck to something."})
+
 	New()
 		..()
 		if (islist(src.skins))
@@ -491,7 +494,7 @@
 			qdel(src.radio)
 		..()
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
+	stick_to(var/atom/A, var/pox, var/poy, user, silent = FALSE)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
 			src.camera.set_camera_status(TRUE)
@@ -506,6 +509,8 @@
 
 		if (src.radio)
 			src.loc.open_to_sound = 1
+			src.radio.broadcasting = TRUE
+			boutput(user, "The [src] activates its radio.")
 
 		if(!isnull(pinpointer_category))
 			START_TRACKING_CAT(pinpointer_category)
@@ -578,6 +583,8 @@
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals an interface on the back with radio options."
 	has_camera = 0
 	has_selectable_skin = 0
+	HELP_MESSAGE_OVERRIDE({"Can be used in-hand to change radio settings.\
+							The internal radio automatically activates when stuck to something."})
 
 /obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
