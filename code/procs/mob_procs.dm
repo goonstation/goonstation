@@ -835,67 +835,6 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/saylist(var/message, var/list/heard, var/list/olocs, var/thickness, var/italics, var/list/processed, var/use_voice_name = 0, var/image/chat_maptext/assoc_maptext = null)
-	var/message_a
-
-	message_a = src.say_quote(message)
-
-	if (italics)
-		message_a = "<i>[message_a]</i>"
-
-	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
-	if (!use_voice_name)
-		my_name = src.get_heard_name()
-	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
-
-	var/rendered_outside = null
-	if (length(olocs))
-		/// outermost movable atom in the chain our mob is in, used to determine how text will look
-		var/atom/movable/outermost = olocs[length(olocs)]
-
-		/// determines if we're located on a spike for special handling
-		var/obj/head_on_spike/spike = locate() in olocs
-		if (spike)
-			outermost = spike
-			thickness = -1 // dont muffle at all for heads on spikes
-		else
-			/// determine if we're atleast in an item held by a mob, such as a backpack
-			for (var/obj/item/I in olocs)
-				if (ismob(I.loc))
-					outermost = I // set it so it appears as what we're in when talking
-
-		if (thickness < 0)
-			rendered_outside = rendered
-		else if (thickness == 0)
-			rendered_outside = SPAN_SAY("[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-		else if (thickness < 10)
-			rendered_outside = SPAN_SAY("[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-		else if (thickness < 20)
-			rendered_outside = SPAN_SAY("muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-
-	for (var/mob/M in heard)
-		if (M in processed)
-			continue
-		processed += M
-		var/thisR = rendered
-
-		if (olocs.len && !(M.loc in olocs))
-			if (rendered_outside)
-				thisR = rendered_outside
-			else
-				continue
-		else
-			if (isghostdrone(M) && !isghostdrone(src) && !istype(M, /mob/living/silicon/ghostdrone/deluxe))
-				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
-
-		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
-		M.heard_say(src, message)
-		M.show_message(thisR, 2, assoc_maptext = assoc_maptext)
-
-	return processed
-
-
 /mob/proc/clothing_protects_from_chems()
 	.=0
 

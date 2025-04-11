@@ -701,6 +701,10 @@
 			name = "Not so Disabled Animatronic Owl"
 			src.flash()
 
+TYPEINFO(/obj/critter/owl_presentor)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/owl_presentor
 	name = "Professor Hootens"
 	desc = "It's Professor Hootens! The leading expert on Space Owls, if it was the real Hootens of course. This is just an animatronic stand-in."
@@ -720,7 +724,7 @@
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
 	is_pet = 0
-
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
 
@@ -732,7 +736,7 @@
 
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\""))
+			src.say("[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]")
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("turns", "pivots", "twitches", "spins")]."))
@@ -1429,12 +1433,18 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 		pickupdialoguefailure = "I don't believe you have added anything to your virtu-cart."
 
+TYPEINFO(/obj/item/lilgreg)
+	start_listen_effects = list(LISTEN_EFFECT_LIL_GREG)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/item/lilgreg
 	name = "Greg Jr"
 	desc = "Gregs adopted son! He seems to have gotten caught up with a bad crowd."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "gregjr"
-
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	var/seensol = 0
 	var/cantalk = 1
 
@@ -1450,21 +1460,16 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				user.visible_message(SPAN_ALERT("[user] pull the string located at the back of Greg Jr."))
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
-					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\""))
+					src.say("Woah, so thats what the sun looks like. It's kind of smaller then I expected though?")
 					sleep(1 SECOND)
-					user.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
+					src.say("Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?")
 					new /obj/item/audio_tape/beepoker(get_turf(user))
 					seensol = 1
 					cantalk = 1
 					return
 				else
-					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\""))
+					src.say("[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]")
 					sleep(3 SECONDS)
 					cantalk = 1
 					sleep(2 SECONDS)
 					return
-
-	hear_talk(var/mob/living/carbon/speaker, text, real_name)
-		if(prob(10))
-			usr.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))
-			return

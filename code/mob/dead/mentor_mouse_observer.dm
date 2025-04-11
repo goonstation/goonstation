@@ -1,11 +1,18 @@
+TYPEINFO(/mob/dead/target_observer/mentor_mouse_observer)
+	start_listen_inputs = list(LISTEN_INPUT_MENTOR_MOUSE)
+	start_speech_outputs = list(SPEECH_OUTPUT_MENTOR_MOUSE)
+
 /mob/dead/target_observer/mentor_mouse_observer
 	name = "mentor mouse"
 	real_name = "mentor mouse"
 	is_respawnable = FALSE
 	locked = TRUE
+	default_speech_output_channel = SPEECH_OUTPUT_MENTOR_MOUSE
+	emote_allowed = FALSE
+
 	var/image/ping
 	var/ping_id
-	var/mob/the_guy
+	var/mob/mentee
 	var/mob/living/critter/small_animal/mouse/weak/mentor/my_mouse
 	var/is_admin = 0
 
@@ -15,7 +22,7 @@
 		..()
 		src.is_admin = is_admin
 		if(istype(L, /mob))
-			src.the_guy = L
+			src.mentee = L
 		src.ping = new('icons/effects/64x64.dmi', icon_state="thick_ring")
 		src.ping.color = "#b954e0"
 		if(src.is_admin)
@@ -41,7 +48,7 @@
 		if(!params["ctrl"]) // mouse ping is now ctrl+click
 			return ..()
 
-		src.the_guy << src.ping
+		src.mentee << src.ping
 		src << src.ping
 
 		var/my_id = world.time
@@ -74,56 +81,11 @@
 		if(istype(A, /obj/machinery/computer3))
 			A.Attackhand(src)
 
-	say_understands(var/other)
-		return 1
-
-	say(var/message)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return
-
-		if(src.is_admin)
-			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
-		else
-			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-#ifdef DATALOGGER
-		game_stats.ScanText(message)
-#endif
-
-		var/more_class = " mhelp"
-		if(src.is_admin)
-			more_class = " adminooc"
-		var/rendered = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> whispers, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		var/rendered_admin = "<span class='game say[more_class]'><span class='name' data-ctx='\ref[src.mind]'>[src.name] ([src.ckey])</span> whispers, [SPAN_MESSAGE("\"[message]\"")]</span>"
-
-		//show message to admins
-		for (var/client/C)
-			if (!C.mob) continue
-			var/mob/M = C.mob
-			if(M == src || M == src.the_guy)
-				continue
-			if (C.holder && !C.player_mode)
-				var/thisR = rendered
-				if ((istype(M, /mob/dead/observer)||C.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered_admin]</span>"
-				boutput(M, thisR)
-
-		boutput(src, rendered)
-		boutput(src.the_guy, rendered)
-		src.the_guy.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 60, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
-
 	emote(act, voluntary=0)
-		..()
-		src.my_mouse.emote(act, voluntary)
+		if (src.mentee)
+			src.my_mouse.emote(act, voluntary)
+		else
+			. = ..()
 
 	stop_observing()
 		boot()
@@ -136,7 +98,7 @@
 			src.mind?.transfer_to(src.my_mouse)
 			if(!get_turf(src))
 				src.my_mouse.gib()
-		src.the_guy = null
+		src.mentee = null
 		src.my_mouse = null
 		..()
 
@@ -154,4 +116,5 @@
 		if(!get_turf(src))
 			src.my_mouse.gib()
 		src.my_mouse = null
+		src.target.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		qdel(src)

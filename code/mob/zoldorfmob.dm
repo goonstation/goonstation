@@ -1,3 +1,10 @@
+TYPEINFO(/mob/zoldorf)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 //Zoldorf Player Mob
 /mob/zoldorf
 	name = "Zoldorf"
@@ -11,6 +18,9 @@
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
+	default_speech_output_channel = null
+	can_use_say = FALSE
+
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -150,22 +160,6 @@
 	Cross(atom/movable/mover)
 		return 1
 
-	say_understands(var/other)
-
-		if (isAI(other))
-			return 1
-
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace || !H.mutantrace.exclusive_language)
-				return 1
-			else
-				return 0
-
-		if (isrobot(other) || isshell(other))
-			return 1
-		return ..()
-
 	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
@@ -207,23 +201,6 @@
 
 	equipped()
 		return 0
-
-	say(var/message)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if(free)
-			if (dd_hasprefix(message, "*"))
-				return src.emote(copytext(message, 2),1)
-
-			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_dead(message, 1)
-		else if(message)
-			return
 
 	emote(var/act, var/voluntary) //souldorf emotes!
 		if(!src.free)
