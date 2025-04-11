@@ -248,6 +248,7 @@
 "aK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
+	
 	},
 /obj/mapping_helper/access/brig,
 /turf/simulated/floor/circuit/red,
@@ -10003,7 +10004,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10387,7 +10388,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-
+	
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;

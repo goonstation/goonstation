@@ -36,22 +36,25 @@
 			cimg.plane = PLANE_ABOVE_BLACKNESS
 			src.cable_images[i] = cimg
 
+	tryCast(atom/target, params)
+		if (!src.active)
+			var/turf/T = get_turf(src.holder.owner)
+			if (!T.z || isrestrictedz(T.z))
+				boutput(src.holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			if (T != src.holder.owner.loc) // See: no escaping port-a-brig
+				boutput(src.holder.owner, SPAN_ALERT("You cannot use this ability while inside [src.holder.owner.loc]!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+			if (!(locate(/obj/cable) in T))
+				boutput(src.holder.owner, SPAN_ALERT("You must use this ability on top of a cable!"))
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
 		if (src.active)
 			src.deactivate()
-			return TRUE
 		else
-			var/turf/T = get_turf(src.holder.owner)
-			if (!T.z || isrestrictedz(T.z))
-				boutput(src.holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
-				return TRUE
-			if (T != src.holder.owner.loc) // See: no escaping port-a-brig
-				boutput(src.holder.owner, SPAN_ALERT("You cannot use this ability while inside [src.holder.owner.loc]!"))
-				return TRUE
-			if (!(locate(/obj/cable) in T))
-				boutput(src.holder.owner, SPAN_ALERT("You must use this ability on top of a cable!"))
-				return TRUE
 			playsound(src.holder.owner, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), src.holder.owner)
 
