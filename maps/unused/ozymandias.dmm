@@ -4116,7 +4116,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfB" = (
-/obj/storage/secure/crate/gplasma/hazard,
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -51285,7 +51285,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nDO" = (
-/obj/storage/secure/crate/gplasma/hazard,
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -52826,7 +52826,7 @@
 	},
 /area/ghostdrone_factory)
 "nWW" = (
-/obj/storage/secure/crate/gplasma/hazard,
+/obj/storage/secure/crate/plasma/hazard,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)

@@ -34615,7 +34615,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/storage/secure/crate/gplasma/hazard,
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/light/small,
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
