@@ -5201,6 +5201,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.color = random_saturated_hex_color()
 		var/list/color_list = rgb2num(src.color || "#ffffff")
 		src.add_medium_light("jellyglow", color_list + list(100))
+		src.bioHolder.AddNewPoolEffect("plasma_metabolism", scramble=TRUE)
 		#ifdef MAP_OVERRIDE_NEON // they need to be immune to plasma coral on neon, otherwise *shrug
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		#endif
