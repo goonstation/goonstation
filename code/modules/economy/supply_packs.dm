@@ -2074,6 +2074,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/keytar
+	name = "Keytar Kit"
+	desc = "1x Keytar"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*2
+	containername = "Keytar Kit"
+	contains = list(/obj/item/instrument/keytar)
+	containertype = /obj/storage/crate/wooden
+
 /datum/supply_packs/complex/player_piano
 	name = "Player Piano Kit"
 	desc = "1x Player Piano Kit"
