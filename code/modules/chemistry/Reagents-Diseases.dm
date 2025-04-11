@@ -169,6 +169,12 @@ datum
 			transparency = 80
 			disease = /datum/ailment/disease/plasmatoid
 
+			on_mob_life(mob/M, mult = 1)
+				. = ..()
+				var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+				if (plasma_bioeffect)
+					plasma_bioeffect.absorb_liquid_plasma(mult * 2)
+
 		disease/hootonium // Owlstone juice
 			name = "Hootonium"
 			id = "hootonium"
