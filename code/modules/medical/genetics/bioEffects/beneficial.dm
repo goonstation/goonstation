@@ -424,6 +424,19 @@
 	icon_state  = "haze"
 	isBad = 1
 
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+
+	OnRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
+
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
 	desc = "Causes the subject's cells to mimic a death-like state."
