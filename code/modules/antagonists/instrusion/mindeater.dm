@@ -7,5 +7,4 @@
 	antagonist_icon = "mindeater"
 	//objectives = list(/datum/objective/specialist/phoenix_collect_humans, /datum/objective/specialist/phoenix_collect_critters, /datum/objective/specialist/phoenix_permafrost_areas)
 	//success_medal = "Territorial Defender"
-	has_info_popup = FALSE
 	//faction = list()
