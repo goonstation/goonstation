@@ -149,21 +149,20 @@ Contains:
 		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
 		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		return
-	if (!ON_COOLDOWN(src, "anti_spam_cooldown", 3 SECONDS)) //don't spam bikehorn assemblies -that- hard
-		if(src.override_upstream && src.master)
-			//if we should just relay signals, we do so, no matter where they come from
-			src.master.receive_signal(signal)
-			return
-		//only secured assemblies should fire and only if the signal is not from the applier.
-		if (src.secured && (signal && signal.source != src.applier))
-			for(var/mob/O in hearers(1, src.loc))
-				O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-			//Some Admin logging/messaging
-			logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
-			if(src.requires_admin_messaging())
-				message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-			//now lets blow some shit up
-			SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
+	if(src.override_upstream && src.master)
+		//if we should just relay signals, we do so, no matter where they come from
+		src.master.receive_signal(signal)
+		return
+	//only secured assemblies should fire and only if the signal is not from the applier.
+	if (src.secured && (signal && signal.source != src.applier))
+		for(var/mob/O in hearers(1, src.loc))
+			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+		//Some Admin logging/messaging
+		logTheThing(LOG_BOMBING, src.last_armer, "A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"];[src.get_additional_logging_information(src.last_armer)]")
+		if(src.requires_admin_messaging())
+			message_admins("A [src.name] was activated at [log_loc(src)]. Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		//now lets blow some shit up
+		SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_APPLY, src, src.target)
 
 
 /obj/item/assembly/proc/on_part_disposing(var/affected_assembly, var/datum/removed_datum)

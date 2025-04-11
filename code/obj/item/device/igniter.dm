@@ -47,28 +47,26 @@ TYPEINFO(/obj/item/device/igniter)
 		if(istype(assembly_target, /obj/item/pipebomb/frame))
 			//fuck pipebomb-code
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
-			SPAWN(1 SECONDS)
-				var/obj/item/pipebomb/frame/manipulated_pipebomb = assembly_target
-				var/obj/item/pipebomb/bomb/the_real_bomb = new /obj/item/pipebomb/bomb
-				the_real_bomb.master = parent_assembly
-				the_real_bomb.set_loc(src)
-				the_real_bomb.strength = manipulated_pipebomb.strength
-				if (manipulated_pipebomb.material)
-					the_real_bomb.setMaterial(manipulated_pipebomb.material)
-				//add properties from item mods to the finished pipe bomb
-				the_real_bomb.set_up_special_ingredients(manipulated_pipebomb.item_mods)
-				//And now after we build a real pipebomb inside of an assembly, lets set ot up properly blow it up!
-				qdel(manipulated_pipebomb)
-				parent_assembly.target = the_real_bomb
-				the_real_bomb.do_explode()
-				qdel(parent_assembly)
+			var/obj/item/pipebomb/frame/manipulated_pipebomb = assembly_target
+			var/obj/item/pipebomb/bomb/the_real_bomb = new /obj/item/pipebomb/bomb
+			the_real_bomb.master = parent_assembly
+			the_real_bomb.set_loc(src)
+			the_real_bomb.strength = manipulated_pipebomb.strength
+			if (manipulated_pipebomb.material)
+				the_real_bomb.setMaterial(manipulated_pipebomb.material)
+			//add properties from item mods to the finished pipe bomb
+			the_real_bomb.set_up_special_ingredients(manipulated_pipebomb.item_mods)
+			//And now after we build a real pipebomb inside of an assembly, lets set ot up properly blow it up!
+			qdel(manipulated_pipebomb)
+			parent_assembly.target = the_real_bomb
+			the_real_bomb.do_explode()
+			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/pipebomb/bomb))
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
-			SPAWN(1 SECONDS)
-				var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
-				manipulated_pipebomb.do_explode()
-				qdel(parent_assembly)
+			var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
+			manipulated_pipebomb.do_explode()
+			qdel(parent_assembly)
 			return
 		if(istype(assembly_target, /obj/item/reagent_containers/glass/beaker))
 			var/obj/item/reagent_containers/glass/beaker/manipulated_beaker = assembly_target
