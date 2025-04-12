@@ -1,4 +1,9 @@
 
+(t)sat apr 12 25
+(u)Facsimile, swinglow20
+(p)21058
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Adds the Text to Music component, a smaller version of the Player Piano. See the book in the MechComp vendor for more details.
 (t)fri apr 11 25
 (u)Sord
 (+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
