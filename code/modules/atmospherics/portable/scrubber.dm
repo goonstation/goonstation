@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	New()
 		..()
 		src.buffer = new(src)
-		src.buffer.reagents.maximum_volume = 500
+		src.buffer.reagents.maximum_volume = 100
 
 		src.create_reagents(500)
 
@@ -81,16 +81,14 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		return
 
 	if(on)
-		var/active_power_usage = 1 KILO WATT + src.inlet_flow * 10 WATTS // up to 2 Kilowatts just to run it
+		var/active_power_usage = 1 KILO WATT + src.inlet_flow * 10 WATTS // up to 2 kilowatts per tick just to run it
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
-				var/pre_drain_fluid_volume = src.buffer.reagents.total_volume
 				F.group.drain(F, src.inlet_flow / 8, src.buffer, remove_reagent = FALSE)
-				var/butt = src.buffer.reagents.total_volume - pre_drain_fluid_volume
-				active_power_usage += (butt) * 50 WATTS // max 500 reagents * 50 = 25 Kilowatts
+				active_power_usage += src.buffer.reagents.total_volume * 50 WATTS // max 100 reagents * 50 = 5 Kilowatts per tick of fluid usage
 				var/amount_to_transfer = src.reagents.maximum_volume - src.reagents.total_volume
 				src.buffer.reagents.trans_to(src, amount_to_transfer)
 				if (src.buffer.reagents.total_volume) // whatever's left, dump it on the ground
@@ -105,7 +103,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 				if(issimulatedturf(T) && isfloor(T))
 					src.scrub_turf(T, T == src.loc ? src.inlet_flow : src.inlet_flow / 2)
 		var/filtered_out_moles = TOTAL_MOLES(src.air_contents) - original_my_moles
-		active_power_usage += filtered_out_moles * 20 WATTS
+		active_power_usage += filtered_out_moles * 70 WATTS
 		src.use_power(active_power_usage, ENVIRON)
 		src.updateDialog()
 	src.UpdateIcon()
