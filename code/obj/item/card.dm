@@ -195,7 +195,7 @@ TYPEINFO(/obj/item/card/emag)
 		assignment = "Space Pirate Captain"
 
 /obj/item/card/id/salvager
-	keep_icon = TRUE
+	no_stripe = TRUE
 
 	New()
 		..()
