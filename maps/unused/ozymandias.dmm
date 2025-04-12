@@ -83141,13 +83141,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/caution/northsouth,
 /area/station/ai_monitored/armory)
 "vya" = (

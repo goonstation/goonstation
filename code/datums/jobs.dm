@@ -1453,7 +1453,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
-	receives_badge = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
@@ -2411,6 +2411,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY_IMPORTANT
 	//Emergency responders shouldn't be antags
 	can_roll_antag = FALSE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
@@ -2426,7 +2427,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Special Operative"
 	trait_list = list("training_security")
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
@@ -2442,7 +2442,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_security", "training_medical")
 	wages = PAY_EXECUTIVE //The big boss
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
 	slot_belt = list(/obj/item/swords_sheaths/ntboss)
@@ -2518,7 +2517,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
-	receives_badge = TRUE
 
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
