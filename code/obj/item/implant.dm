@@ -424,6 +424,8 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 		mailgroups.Remove(MGD_SECURITY)
+		src.on_remove(src.owner)
+		qdel(src)
 
 /obj/item/implant/anti_mindhack
 	name = "mind protection implant"
