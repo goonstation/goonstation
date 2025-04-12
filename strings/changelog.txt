@@ -1,5 +1,9 @@
 
 (t)sat apr 12 25
+(u)glowbold
+(p)22928
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Silicons use power when attacking mobs with tools.
 (u)JORJ949
 (p)22911
 (e)🎨🎩|C-Sprites, A-Clothing
