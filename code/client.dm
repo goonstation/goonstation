@@ -91,7 +91,7 @@
 
 	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
-	var/datum/tooltipHolder/tooltipHolder = null
+	var/datum/tooltips/tooltips = null
 
 	var/datum/keybind_menu/keybind_menu = null
 
@@ -424,9 +424,7 @@
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
 	src.initSizeHelpers()
-
-	src.tooltipHolder = new /datum/tooltipHolder(src)
-	src.tooltipHolder.clearOld()
+	src.tooltips = new /datum/tooltips(src)
 
 	createRenderSourceHolder()
 	screen += renderSourceHolder
@@ -1549,7 +1547,7 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "window-resize-event"
 
-	src.resizeTooltipEvent()
+	src.tooltips?.onResize()
 
 	//tell the interface helpers to recompute data
 	src.mapSizeHelper?.update()

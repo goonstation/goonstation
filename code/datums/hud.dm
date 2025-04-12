@@ -42,7 +42,8 @@
 	plane = PLANE_HUD
 	var/datum/hud/master
 	var/id = ""
-	var/tooltipTheme
+	var/show_tooltip = FALSE
+	var/list/tooltip_options = list()
 	var/obj/item/item
 
 /atom/movable/screen/hud/disposing()
@@ -64,22 +65,22 @@
 	if (src.id == "stats" && istype(master, /datum/hud/human))
 		var/datum/hud/human/H = master
 		H.update_stats()
-	if (usr.client.tooltipHolder && src.tooltipTheme)
-		usr.client.tooltipHolder.showHover(src, list(
-			"params" = params,
+	if (usr.client.tooltips && src.show_tooltip)
+		usr.client.tooltips.show(arglist(list(
+			"type" = TOOLTIP_HOVER,
+			"target" = src,
+			"mouse" = params,
 			"title" = src.name,
-			"content" = (src.desc ? src.desc : null),
-			"theme" = src.tooltipTheme
-		))
-	else
-		if (master && (!master.click_check || (usr in master.mobs)))
-			master.MouseEntered(src, location, control, params)
+			"content" = src.desc ? src.desc : null,
+		) + src.tooltip_options))
+	else if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseEntered(src, location, control, params)
 
-/atom/movable/screen/hud/MouseExited()
-	if (usr.client.tooltipHolder)
-		usr.client.tooltipHolder.hideHover()
-	if (master && (!master.click_check || (usr in master.mobs)))
-		master.MouseExited(src)
+/atom/movable/screen/hud/MouseExited(location, control, params)
+	if (usr.client.tooltips && src.show_tooltip)
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
+	else if (master && (!master.click_check || (usr in master.mobs)))
+		master.MouseExited(src, location, control, params)
 
 /atom/movable/screen/hud/MouseWheel(dx, dy, loc, ctrl, parms)
 	if (master && (!master.click_check || (usr in master.mobs)))
@@ -153,7 +154,7 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltip_options = list(), desc = null, customType = null, mouse_opacity = 1)
 		if(QDELETED(src))
 			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
@@ -173,7 +174,8 @@
 		S.screen_loc = loc
 		S.layer = layer
 		S.set_dir(dir)
-		S.tooltipTheme = tooltipTheme
+		S.show_tooltip = tooltip_options && length(tooltip_options)
+		S.tooltip_options = tooltip_options
 		S.mouse_opacity = mouse_opacity
 		src.objects += S
 
@@ -187,6 +189,7 @@
 			A.screen_loc = do_hud_offset_thing(A, loc)
 		A.layer = layer
 		A.plane = PLANE_HUD
+		if (isitem(A)) A.mouse_opacity = 2
 		if (!(A in src.objects))
 			src.objects += A
 			for (var/client/C in src.clients)
@@ -194,6 +197,7 @@
 
 	proc/remove_object(atom/movable/A)
 		A.plane = initial(A.plane) // object should really be restoring this by itself, but we'll just make sure it doesnt get trapped in the HUD plane
+		if (isitem(A)) A.mouse_opacity = initial(A.mouse_opacity)
 		if (src.objects)
 			src.objects -= A
 		for (var/client/C in src.clients)
@@ -244,7 +248,7 @@
 
 	proc/relay_click(id)
 	proc/scrolled(id, dx, dy, user, parms)
-	proc/MouseEntered(id,location, control, params)
-	proc/MouseExited(id)
+	proc/MouseEntered(id, location, control, params)
+	proc/MouseExited(id, location, control, params)
 	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob, params)

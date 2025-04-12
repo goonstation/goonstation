@@ -833,10 +833,10 @@ ABSTRACT_TYPE(/datum/projectile)
 				disrupt = "Pod disruption: [round(src.disruption, 1)]% chance"
 
 			if (stam)
-				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stamina.png")]\" width=\"10\" height=\"10\" /> [stam]"
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+				. += "<br><img src=\"[resource("images/tooltips/stamina.png")]\" class='icon' style='width: .8em; height: .8em;' /> [stam]"
+			. += "<br><img src=\"[resource("images/tooltips/ranged.png")]\" class='icon' style='width: .8em; height: .8em;' /> [b_force]"
 			if (disrupt)
-				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
+				. += "<br><img src=\"[resource("images/tooltips/stun.png")]\" class='icon' style='width: .8em; height: .8em;' /> [disrupt]"
 
 		///copies the name, visuals, and sfx of another projectile datum - for varedit shenanigans
 		copy_appearance_of(datum/projectile/P)

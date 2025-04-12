@@ -146,6 +146,8 @@ ABSTRACT_TYPE(/obj/item)
 
 	var/brew_result = null //! What reagent will it make if it's brewable?
 
+	var/list/tooltip_options = list()
+
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
 		if(ismob(src.loc))
@@ -165,47 +167,49 @@ ABSTRACT_TYPE(/obj/item)
 
 		. += "<hr>"
 		if(rarity >= 4)
-			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /><span>Rare item</span></div>"
+			. += "<div><img src='[resource("images/tooltips/rare.gif")]' alt='' class='icon' /> Rare item</div>"
 		//combat stats
-		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /><span>Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</span></div>"
+		. += "<div><img src='[resource("images/tooltips/attack.png")]' alt='' class='icon' /> Damage: [src.force ? src.force : "0"] dmg[src.force ? "("+DAMAGE_TYPE_TO_STRING(src.hit_type)+")" : ""], [round((1 / (max(src.click_delay,src.combat_click_delay) / 10)), 0.1)] atk/s, [src.throwforce ? src.throwforce : "0"] thrown dmg</div>"
 		if (src.stamina_cost || src.stamina_damage)
-			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
+			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /> Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</div>"
 
 		//standard object properties
 		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
-					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+					. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]</div>"
 
 		//unarmed block
 		if(istype(src, /obj/item/grab/block))
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: "
 			//inline-blocking-based properties (disorient resist and damage-type blocks)
 			for(var/datum/objectProperty/P in src.properties)
 				if(P.inline)
-					. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+					. += "<img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> "
 			//blocking-based properties
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
-					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+					. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]</div>"
+			. += "</div>"
 			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 
 		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: "
 			for(var/obj/item/grab/block/B in src)
 				if(B.properties && length(B.properties))
 					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
-							. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+							. += "<img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> "
 					//blocking-based properties
 					for(var/datum/objectProperty/P in B.properties)
 						if(!P.hidden)
-							. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]"
+							. += "<div><img src=\"[resource("images/tooltips/[P.tooltipImg]")]\" class='icon' /> [P.name]: [P.getTooltipDesc(B, B.properties[P])]</div>"
+			. += "</div>"
 			SEND_SIGNAL(src, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .)
 		else if(src.c_flags & BLOCK_TOOLTIP)
-			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: RESIST with this item for more info"
+			. += "<div><img src=\"[resource("images/tooltips/prot.png")]\" class='icon' /> Block+: RESIST with this item for more info</div>"
 
 		//item specials
 		//unarmed special overrides from gloves
@@ -213,68 +217,72 @@ ABSTRACT_TYPE(/obj/item)
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
-				. += "<br>Unarmed special attack override:<br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
+				. += "<br>Unarmed special attack override:<div><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em;' /></div><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
 			. = jointext(., "")
 		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
-			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
+			. += "<br><div><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em;' /></div><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
 		. += src.storage?.get_capacity_string()
 
 		lastTooltipContent = .
 
-	MouseEntered(location, control, params)
-		if (showTooltip && usr.client.tooltipHolder)
-			var/show = 1
+	proc/tooltipHook(datum/tooltipOptions/options)
+		var/bottom = options.mouse["bottom"]["tiles"]
+		if (bottom == 1) options.pushTiles("up", 1)
 
-			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
-			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
-			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
-			 || (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
-				tooltip_rebuild = 1
+	MouseEntered(location, control, params)
+		if (showTooltip && usr.client.tooltips)
+			var/show = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			//z == 0 seems to be a good way to check if something is inworld or not... removed some ismob checks.
 			if (usr.client.preferences.tooltip_option == TOOLTIP_ALWAYS && z != 0 && !usr.client.check_key(KEY_EXAMINE))
 				show = 0
 
-			var/title
-			if (tooltip_rebuild || lastTooltipName != src.name)
-				if(rarity >= 7)
-					title = "<span class='rainbow'>[capitalize(src.name)]</span>"
-				else
-					title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
-				lastTooltipTitle = title
-				lastTooltipName = src.name
-			else
-				title = lastTooltipTitle
+			if (show)
+				if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
+				|| (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
+				|| (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
+				|| (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+					tooltip_rebuild = 1
 
-			if(show)
-				var/list/tooltipParams = list(
-					"params" = params,
+				var/title
+				if (tooltip_rebuild || lastTooltipName != src.name)
+					if(rarity >= 7)
+						title = "<span class='rainbow'>[capitalize(src.name)]</span>"
+					else
+						title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
+					lastTooltipTitle = title
+					lastTooltipName = src.name
+				else
+					title = lastTooltipTitle
+
+				var/tooltipAlign = 0
+				if (src.z == 0)
+					if (src.loc == usr) tooltipAlign = TOOLTIP_TOP
+					// If we're over an item that's stored in a container the user has equipped
+					if (src.stored?.linked_item.loc == usr) tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
+
+				usr.client.tooltips.show(arglist(list(
+					"type" = TOOLTIP_HOVER,
+					"target" = src,
+					"mouse" = params,
 					"title" = title,
 					"content" = tooltip_rebuild ? buildTooltipContent() : lastTooltipContent,
-					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item"
-				)
-
-				if (src.z == 0 && src.loc == usr)
-					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
-
-				//If we're over an item that's stored in a container the user has equipped
-				if (src.z == 0 && src.stored?.linked_item.loc == usr)
-					tooltipParams["flags"] = TOOLTIP_RIGHT
-
-				usr.client.tooltipHolder.showHover(src, tooltipParams)
+					"theme" = usr.client?.preferences.hud_style == "New" ? "newhud" : "item",
+					"align" = tooltipAlign
+				) + src.tooltip_options))
 
 				tooltip_rebuild = 0
 
 		usr.moused_over(src)
 
-	MouseExited()
-		if(showTooltip && usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+	MouseExited(location, control, params)
+		if (showTooltip && usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		usr.moused_exit(src)
 
 	onMaterialChanged()
@@ -1585,16 +1593,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)
-
-			//mbc GC tooltips (this wont 100% kill tooltip deletions but itll help?
-			if	(M.client && M.client.tooltipHolder)
-				for (var/datum/tooltip/tip in M.client.tooltipHolder.tooltips)
-					if (tip.A == src)
-						tip.A = null
-				if (M.client.tooltipHolder.transient)
-					if (M.client.tooltipHolder.transient.A == src)
-						M.client.tooltipHolder.transient.A = null
-
 		return ..()
 	var/area/Ar = T.loc
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))

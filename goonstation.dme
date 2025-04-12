@@ -132,7 +132,7 @@
 #include "code\datums\teleport.dm"
 #include "code\datums\tgs_event_handler.dm"
 #include "code\datums\titlecard.dm"
-#include "code\datums\tooltip.dm"
+#include "code\datums\tooltips.dm"
 #include "code\datums\traits.dm"
 #include "code\datums\traits_disused.dm"
 #include "code\datums\viewport.dm"

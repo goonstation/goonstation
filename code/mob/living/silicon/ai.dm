@@ -2077,10 +2077,8 @@ or don't if it uses a custom topopen overlay
 	camera_overlay_check(C) //Add static if the camera is disabled
 
 	var/mob/message_mob = src.get_message_mob()
-	if (message_mob.client && message_mob.client.tooltipHolder)
-		for (var/datum/tooltip/t in message_mob.client.tooltipHolder.tooltips)
-			if (t.isStuck)
-				t.hide()
+	if (message_mob.client && message_mob.client.tooltips)
+		message_mob.client.tooltips.hideAllClickTips()
 
 	if (!src.deployed_to_eyecam)
 		src.eye_view()

@@ -66,16 +66,17 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			ownerStatus.clicked(params)
 
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && ownerStatus)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = ownerStatus.name,
-				"content" = ownerStatus.getTooltip() + "<br>[ownerStatus.duration != null ? "[round(ownerStatus.duration/10)] sec.":""]",
-				"theme" = "stamina"
-			))
+		if (usr.client.tooltips && ownerStatus)
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = ownerStatus.name,
+				content = ownerStatus.getTooltip() + "<br>[ownerStatus.duration != null ? "[round(ownerStatus.duration/10)] sec.":""]",
+				theme = "stamina"
+			)
 
 	MouseExited()
-		usr.client.tooltipHolder?.hideHover()
+		usr.client.tooltips?.hide(TOOLTIP_HOVER)
 
 	proc/update_value()
 		if(!ownerStatus)

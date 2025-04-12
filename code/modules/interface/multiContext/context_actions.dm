@@ -4,7 +4,7 @@
 	var/icon_background = "bg"
 	var/name = ""
 	var/desc = ""
-	var/tooltip_flags = null
+	var/list/tooltip_options = list()
 	var/use_tooltip = TRUE
 	var/close_clicked = TRUE
 	///Does the action close when the mob moves
@@ -40,8 +40,8 @@
 	proc/getDesc(atom/target, mob/user)
 		. = desc
 
-	proc/getTooltipFlags()
-		. = tooltip_flags
+	proc/getTooltipOptions()
+		. = tooltip_options
 
 	expandadd
 		name = "expandadd"
@@ -192,13 +192,13 @@
 	name = "Close"
 	desc = "Close the menu"
 	icon_state = "ghost-close"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 /datum/contextAction/ghost_respawn/virtual_reality
 	name = "Ghost VR"
 	desc = "Enter ghost virtual reality"
 	icon_state = "ghost-vr"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -211,7 +211,7 @@
 	name = "Respawn Animal"
 	desc = "Respawn as a tiny critter"
 	icon_state = "respawn-animal"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -224,7 +224,7 @@
 	name = "Respawn As a Mentor Mouse"
 	desc = "Respawn as a mentor mouse that people can pick up. You can whisper in their ears and click on their screen to point them in the right direction. Please don't abuse this."
 	icon_state = "respawn-mentor-mouse"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	checkRequirements(atom/target, mob/user)
 		. = user?.client && (user.client.holder || user.client.player.mentor)
@@ -240,7 +240,7 @@
 	name = "Respawn As an Admin Mouse"
 	desc = "Respawn as an admin mouse that people can pick up (or click on them to climb into their pockets). You can whisper in their ears and click on their screen to point them in the right direction. Be a little critter friend!"
 	icon_state = "respawn-admin-mouse"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	checkRequirements(atom/target, mob/user)
 		. = user?.client?.holder
@@ -256,7 +256,7 @@
 	name = "Ghost Drone"
 	desc = "Step on the ghost catcher and be added to the ghost drone queue"
 	icon_state = "ghost-drone"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -269,7 +269,7 @@
 	name = "Afterlife Bar"
 	desc = "Enter the afterlife Bar"
 	icon_state = "afterlife-bar"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -282,11 +282,11 @@
 	// 	name = "Blob Tutorial"
 	// 	desc = "Practice blobbing around"
 	// 	icon_state = "blob-tutorial"
-	// 	tooltip_flags = TOOLTIP_LEFT
+	// 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 /datum/contextAction/wraith_spook_button
 	name = "wraith"
-	desc = "Test"
+	desc = ""
 	icon = 'icons/ui/context32x32.dmi'
 	icon_state = "minus"
 	icon_background = ""
@@ -295,6 +295,7 @@
 	New(code as num)
 		..()
 		src.ability_code = code
+		src.tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER, "theme" = "wraith")
 		switch(code)
 			if (1)
 				name = "Flip light switches"
@@ -325,8 +326,8 @@
 				desc = "Open doors, lockers, crates"
 				icon_state = "wraith-doors"
 			if (8)
-				name = "random"
-				desc = "selects one of the other choices at random to perform."
+				name = "Random"
+				desc = "Selects one of the other choices at random to perform."
 				icon_state = "wraith-random"
 
 	checkRequirements(atom/target, mob/user)

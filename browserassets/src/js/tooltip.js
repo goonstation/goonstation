@@ -1,426 +1,631 @@
-var triggerError = attachErrorHandler('tooltipDebug', true, function(msg) {
-	//I am sick and tired of the billions of absolutely useless error messages tooltips produce
-	if (msg === 'Script error.') {
-		return true;
-	}
+const $root = document.querySelector(":root");
+const $sizer = document.getElementById("tt-sizer");
+const $wrap = document.getElementById("tt-wrap");
+
+function boutput(msg) {
+	BYOND.winset(0, {
+		command: `.output browseroutput:output "${encodeURIComponent(msg)}"`,
+	});
+}
+
+function handleError(message) {
+	window.tooltip.callByond({ action: "error", message });
+}
+
+window.addEventListener("error", function (e) {
+	handleError(e.error?.message || e?.message);
 });
-var animatePopup = window._animatePopup;
 
-var escaper = encodeURIComponent || escape;
-var decoder = decodeURIComponent || unescape;
+window.addEventListener("unhandledrejection", function (e) {
+	handleError(e.reason.stack);
+});
 
-function getParameterByName(name, params) {
-	name = name.replace(/[\[\]]/g, '\\$&');
-	var regex = new RegExp(name + '(=([^&;#]*)|&|#|$)');
-	var results = regex.exec(params);
-	if (!results) {
-		return null;
+class PerformanceTracking {
+	timings = new Map();
+	created = null;
+
+	constructor() {
+		this.created = performance.now();
 	}
-	if (!results[2]) {
-		return '';
+
+	start(label, caller) {
+		const id = this.timings.size + 1;
+		caller = caller.split(".");
+		this.timings.set(id, {
+			label,
+			start: performance.now(),
+			caller: caller[0] === "Tooltip" ? caller[1] : "",
+		});
+		return id;
 	}
-	return decoder(results[2].replace(/\+/g, ' '));
-}
 
-function htmlEntities(str) {
-	return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function htmlDecode(str) {
-	return $('<textarea/>').html(str).text();
-}
-
-var tooltip = {
-	loaded: false,
-	mapInterface: {
-		parent: '',
-		control: '',
-		helper: ''
-	},
-	map: null,
-	tileSize: 32,
-	interface: '',
-	params: {},
-	options: {},
-	pinned: false,
-	clientViewX: 0,
-	clientViewY: 0,
-	padding: 2,
-	maxWidth: 0,
-	$docBody: null,
-	$wrap: null,
-	$content: null,
-	$title: null,
-	$body: null,
-	mapOffsets: { //Where the map is located on the screen
-		x: 0,
-		y: 0,
-		w: 0,
-		h: 0
-	},
-	screenProperties: { //What the user's screen looks like (not counting offsets like OS toolbars)
-		x: 0,
-		y: 0
-	},
-	showDelay: 100,
-	showDelayInt: 0,
-	interrupt: false,
-
-	init: function(screen, tileSize, tInterface, map) {
-		tooltip.screenProperties = screen;
-		tooltip.tileSize = parseInt(tileSize);
-		tooltip.interface = tInterface;
-
-		try {
-			tooltip.mapInterface = $.parseJSON(map);
-		} catch (e) {
-			triggerError('(init map) JSON parse error for: ' + map + '. ' + e);
-			return;
-		}
-
-		tooltip.maxWidth = parseInt(tooltip.$wrap.css('max-width'));
-	},
-
-	getMapControlFor: function(control) {
-		var string = tooltip.mapInterface.parent + '.';
-		switch(control) {
-			case 'map':
-				string += tooltip.mapInterface.control;
-				break;
-
-			case 'helper':
-				string += tooltip.mapInterface.helper;
-				break;
-		}
-		return string;
-	},
-
-	removeDelays: function() {
-		clearTimeout(tooltip.showDelayInt);
-	},
-
-	unInterrupt: function() {
-		tooltip.interrupt = false;
-		tooltip.removeDelays();
-	},
-
-	setInterrupt: function(which) {
-		tooltip.interrupt = which === '1';
-	},
-
-	hide: function() {
-		tooltip.removeDelays();
-		animatePopup.stop();
-		window.location = '?src=' + window.tooltipRef + ';action=hide;force=1';
-	},
-
-	log: function(text) {
-		window.location = '?src=' + window.tooltipRef + ';action=log&msg='+escaper(text);
-	},
-
-	debugLog: function(text) {
-		if (window.tooltipDebug) {
-			tooltip.log(text);
-		}
-	},
-
-	show: function(docWidth, docHeight, posX, posY) {
-		if (tooltip.interrupt) {
-			return tooltip.unInterrupt();
-		}
-
-		//Show the thing
-		window.location = 'byond://winset?id='+tooltip.interface+';size='+docWidth+'x'+docHeight+';pos='+posX+','+posY+';alpha=255';
-
-		//Animate in if set
-		if (tooltip.options.hasOwnProperty('transition') && animatePopup.isValidAnimation(tooltip.options.transition)) {
-			animatePopup.run(tooltip.options.transition, {
-				logger: tooltip.log, //DEBUG
-				interface: tooltip.interface,
-				duration: 500,
-				complete: function() {
-					tooltip.debugLog(tooltip.options.transition + ' animation complete');
-				}
-			});
-		}
-
-		//On an appropriate keypress, move focus back to the map
-		$(window).off('keypress').one('keypress', function(e) {
-			if (!$(e.target).is('input, textarea, select, option, button')) {
-				window.location = 'byond://winset?'+tooltip.getMapControlFor('map')+'.focus=true';
-			}
+	end(id) {
+		const timing = this.timings.get(id);
+		this.timings.set(id, {
+			...timing,
+			duration: performance.now() - timing.start,
 		});
+	}
 
-		if (tooltip.pinned) {
-			var $closeTip = $('.close-tip');
-			$closeTip.show().off('click').one('click', function(e) {
-				e.preventDefault();
-				tooltip.debugLog('tooltip hide called from click event');
-				tooltip.hide();
-			});
+	round(num) {
+		return num ? num.toFixed(2) : 0;
+	}
 
-			//Clicking on stuff should switch focus back to the map so the player can move etc
-			$(window).off('click').on('click', function(e) {
-				if (!$(e.target).is('input, textarea, select, option, button')) {
-					window.location = 'byond://winset?'+tooltip.getMapControlFor('map')+'.focus=true';
-				}
-			});
-		} else {
-			tooltip.$content.off('mouseover').one('mouseover', function() {
-				tooltip.debugLog('tooltip hide called from mouseover event');
-				tooltip.hide();
-			});
-		}
-	},
-
-	position: function(params) {
-		if (typeof params !== undefined && params) {
-			try {
-				tooltip.params = $.parseJSON(params);
-			} catch (e) {
-				triggerError('(position params) JSON parse error for: ' + params + '. ' + e);
-				return;
+	report() {
+		let html = `
+		<style>
+			.tooltip-perf-report {
+				border-collapse: collapse;
 			}
-		}
-
-		//Get the real icon size according to the client view
-		var mapWidth 		= tooltip.map.viewSize.x,
-			mapHeight 		= tooltip.map.viewSize.y,
-			tilesShownX		= (tooltip.clientViewX * 2) + 1,
-			tilesShownY		= (tooltip.clientViewY * 2) + 1,
-			realIconSizeX	= mapWidth / tilesShownX,
-			realIconSizeY	= mapHeight / tilesShownY,
-			resizeRatioX	= realIconSizeX / tooltip.tileSize,
-			resizeRatioY	= realIconSizeY / tooltip.tileSize,
-			//Calculate letterboxing offsets
-			leftOffset		= (tooltip.map.size.x - mapWidth) / 2,
-			topOffset		= (tooltip.map.size.y - mapHeight) / 2;
-
-		//Parse out the tile and cursor locations from params (e.g. "icon-x=32;icon-y=29;screen-loc=3:10,15:29")
-		var cursor = tooltip.params.cursor;
-		var iconX = parseInt(getParameterByName('icon-x', cursor));
-		var iconY = parseInt(getParameterByName('icon-y', cursor));
-		var screenLoc = getParameterByName('screen-loc', cursor);
-
-		if (!iconX || !iconY || !screenLoc) {return false;} //Sometimes screen-loc is never sent ahaha fuck you byond
-
-		//screen-loc has special byond formatting
-		screenLoc = screenLoc.split(',');
-		if (screenLoc.length < 2) {return false;}
-		var left = screenLoc[0];
-		var top = screenLoc[1];
-		if (!left || !top) {return false;}
-		screenLoc = left.split(':');
-		left = parseInt(screenLoc[0]);
-		var enteredX = parseInt(screenLoc[1]);
-		screenLoc = top.split(':');
-		top = parseInt(screenLoc[0]);
-		var enteredY = parseInt(screenLoc[1]);
-
-		//Handle special cases (for fuck sake)
-		if (tooltip.options.hasOwnProperty('special')) {
-			if (tooltip.options.special === 'pod') {
-				top--; //Pods do some weird funky shit with view and well just trust me that this is needed
+			.tooltip-perf-report,
+			.tooltip-perf-report th,
+			.tooltip-perf-report td {
+				border: 1px solid;
 			}
-		}
-
-		var yloc = top;
-
-		//Handle manually set offsets (whether to adjust the tooltip along an axis by a pixel amount)
-		if (tooltip.options.hasOwnProperty('offset')) {
-			if (tooltip.options.offset.hasOwnProperty('x')) {
-				var manualOffsetX = parseInt(tooltip.options.offset.x);
-				leftOffset = leftOffset + (manualOffsetX * resizeRatioX);
-				tooltip.debugLog('Manually adjusted leftOffset by ' + manualOffsetX + ' amount. Real pixel offset value: ' + (manualOffsetX * resizeRatioX));
+			.tooltip-perf-report th,
+			.tooltip-perf-report td {
+				padding: 2px 10px;
 			}
-			if (tooltip.options.offset.hasOwnProperty('y')) {
-				var manualOffsetY = parseInt(tooltip.options.offset.y);
-				topOffset = topOffset + (manualOffsetY * resizeRatioY);
-				tooltip.debugLog('Manually adjusted topOffset by ' + manualOffsetY + ' amount. Real pixel offset value: ' + (manualOffsetY * resizeRatioY));
-			}
-		}
+		</style>
+		<table class="tooltip-perf-report">
+			<thead>
+				<tr>
+					<th colspan="100%">Tooltip Performance Report</th>
+				</tr>
+				<tr>
+					<th>Function</th>
+					<th>Duration</th>
+				</tr>
+			</thead>
+			<tbody>`;
 
-		//Clamp values
-		left = (left < 0 ? 0 : (left > tilesShownX ? tilesShownX : left));
-		top = (top < 0 ? 0 : (top > tilesShownY ? tilesShownY : top));
-
-		//Calculate where on the screen the popup should appear (below the hovered tile)
-		var posX = Math.round(((left - 1) * realIconSizeX) + leftOffset + tooltip.padding); //-1 to position at the left of the target tile
-		var posY = Math.round(((tilesShownY - top + 1) * realIconSizeY) + topOffset + tooltip.padding); //+1 to position at the bottom of the target tile
-
-		var docWidth  = 0,
-			docHeight = 0;
-
-		tooltip.$wrap.attr('style', ''); //reset
-
-		//We're forcing a certain size
-		if (tooltip.options.hasOwnProperty('size') && typeof tooltip.options.size === 'string') {
-			var size = tooltip.options.size.split('x');
-			var widthString = size[0].toLowerCase();
-			var heightString = size[1].toLowerCase();
-			docWidth = widthString === 'auto' ? tooltip.$wrap.outerWidth() : parseInt(size[0]);
-			docHeight = heightString === 'auto' ? tooltip.$wrap.outerHeight() : parseInt(size[1]);
-
-			if (widthString !== 'auto') {
-				tooltip.$wrap.css('min-width', docWidth);
-			}
-
-		//Otherwise, auto-size according to content
-		} else {
-			//the +2 is to fix some incredibly strange text wrapping bug that occurs AFTER sizing is complete
-			docWidth = tooltip.$wrap.outerWidth() + 2;
-			docHeight = tooltip.$wrap.outerHeight();
-		}
-
-		//Apply our sizing
-		tooltip.$wrap.attr('style', 'width: ' + docWidth + 'px; height: ' + docHeight + 'px;');
-
-		//Handle special flags
-		if (tooltip.params.hasOwnProperty('flags') && tooltip.params.flags.length > 0) {
-			var alignment = 'bottom';
-			if ($.inArray('top', tooltip.params.flags) !== -1) { //TOOLTIP_TOP
-				alignment = 'top';
-				posY = (posY - docHeight) - realIconSizeY - (tooltip.padding * 2);
-			}
-			if ($.inArray('top2', tooltip.params.flags) !== -1) { //TOOLTIP_TOP_2 (give 1 tile of margin if tooltipping something at the bottom of view  (hud))
-				alignment = 'top';
-				posY = (posY - docHeight) - realIconSizeY - (tooltip.padding * 2);
-				if (yloc<=1){
-					posY = posY - (realIconSizeY)
-				}
-			}
-			if ($.inArray('right', tooltip.params.flags) !== -1) { //TOOLTIP_RIGHT
-				alignment = 'right';
-				posX = posX + realIconSizeX;
-				posY = posY - realIconSizeY;
-			}
-			if ($.inArray('left', tooltip.params.flags) !== -1) { //TOOLTIP_LEFT
-				alignment = 'left';
-				posX = posX - docWidth - (tooltip.padding * 2);
-				posY = posY - realIconSizeY;
-			}
-			if ($.inArray('center', tooltip.params.flags) !== -1) { //TOOLTIP_CENTER
-				if (alignment === 'bottom' || alignment === 'top') { //Horizontal centering
-					posX = (posX + (realIconSizeX / 2)) - (docWidth / 2);
-					if (posX < tooltip.padding) {
-						posX = tooltip.padding;
-					}
-				} else { //Vertical centering
-					var gap = realIconSizeY - docHeight;
-					if (gap > 0) {
-						posY = posY + (gap / 2);
-					}
-				}
-			}
-		}
-
-		//Handle window offsets
-		posX = posX + tooltip.mapOffsets.x - tooltip.screenProperties.x;
-		posY = posY + tooltip.mapOffsets.y - tooltip.screenProperties.y;
-
-		var boundaryY = tooltip.map.size.y + (tooltip.mapOffsets.y - tooltip.screenProperties.y);
-		if (posY + docHeight > boundaryY) { //Is the bottom edge below the window? Snap it up if so
-			posY = (posY - docHeight) - realIconSizeY - tooltip.padding;
-		}
-
-		var boundaryX = tooltip.map.size.x + (tooltip.mapOffsets.x - tooltip.screenProperties.x);
-		if (posX + docWidth > boundaryX) { //Is the right edge outside the map area? Snap it back left if so
-			posX = posX - ((posX + docWidth) - boundaryX) - (tooltip.padding * 2);
-		}
-
-		tooltip.debugLog('Position called. Width: ' + docWidth + '. Height: ' + docHeight + '. PosX: ' + posX + '. PosY: ' + posY);
-		tooltip.show(docWidth, docHeight, posX, posY);
-	},
-
-	changeContent: function(title, content) {
-		tooltip.options.title = title;
-		tooltip.options.content = content;
-
-		tooltip.$content.empty();
-
-		if (typeof title !== 'undefined') {
-			tooltip.$title = $('<h1>', {'class': 'title', html: title});
-			tooltip.$content.append(tooltip.$title);
-		}
-
-		if (typeof content !== 'undefined') {
-			tooltip.$body = $('<div>', {html: content});
-			tooltip.$content.append(tooltip.$body);
-		}
-
-		//Images affect sizing, so we have to wait until they all load first
-		tooltip.showDelayInt = tooltip.$content.waitForImages(function() {
-			tooltip.showDelayInt = setTimeout(function() {
-				tooltip.position();
-			}, tooltip.showDelay);
-		});
-	},
-
-	updateCallback: function(map) {
-		if (typeof map === 'undefined' || !map) {return false;}
-
-		tooltip.map = {
-			size: map[tooltip.getMapControlFor('helper')+'.size'],
-			viewSize: map[tooltip.getMapControlFor('map')+'.view-size']
+		const findTiming = (label) => {
+			let item = null;
+			this.timings.forEach((timing) =>
+				timing.label === label ? (item = timing) : null,
+			);
+			return item;
 		};
 
-		try {
-			tooltip.mapOffsets = $.parseJSON(map[tooltip.getMapControlFor('helper')+'.saved-params']);
-		} catch (e) {
-			triggerError('(updateCallback helper saved-params) JSON parse error for: ' + map[tooltip.getMapControlFor('helper')+'.saved-params'] + '. ' + e);
-			return;
-		}
+		const getIndent = (timing) => {
+			let indent = 0;
+			while (timing.caller) {
+				timing = findTiming(timing.caller);
+				if (timing) indent++;
+			}
+			return indent;
+		};
 
-		tooltip.debugLog('updateCallback called. map: '+JSON.stringify(map)+'. params: '+JSON.stringify(tooltip.params)+'. clientViewX: '+tooltip.clientViewX+'. clientViewY: '+tooltip.clientViewY+
-				'. title: '+htmlEntities(tooltip.options.title)+'. theme: '+tooltip.options.theme + '. interrupt: ' + tooltip.interrupt);
+		this.timings.forEach((timing) => {
+			const indent = getIndent(timing) * 20;
+			html += `<tr>
+				<td style="padding-left: ${indent || 10}px;">${timing.label}</td>
+				<td>${this.round(timing.duration)}ms</td>
+			</tr>`;
+		});
 
-		//Some reset stuff to avoid fringe issues with sizing
-		window.location = 'byond://winset?id='+tooltip.interface+';pos='+tooltip.map.viewSize.x+',0;size=999x999;alpha=0';
+		html += `<tr>
+			<td><strong>Total</strong></td>
+			<td>${this.round(performance.now() - this.created)}ms</td>
+		</tr>`;
 
-		tooltip.$docBody.attr('class', tooltip.options.theme + (tooltip.pinned ? ' pinned' : ''));
-		tooltip.$wrap.attr('style', '');
-		tooltip.changeContent(tooltip.options.title, tooltip.options.content); //calls position, which calls show
-	},
-
-	update: function(params, options, clientViewX, clientViewY, stuck) {
-		try {
-			tooltip.params = $.parseJSON(params);
-		} catch (e) {
-			triggerError('(update params) JSON parse error for: ' + params + '. ' + e);
-			return;
-		}
-
-		if (tooltip.params.hasOwnProperty('init')) {
-			tooltip.init(tooltip.params.init.screen, tooltip.params.init.iconSize, tooltip.params.init.window, tooltip.params.init.map);
-		}
-
-		try {
-			tooltip.options = $.parseJSON(options);
-		} catch (e) {
-			triggerError('(update options) JSON parse error for: ' + options + '. ' + e);
-			return;
-		}
-
-		tooltip.removeDelays();
-		tooltip.interrupt = false;
-		tooltip.clientViewX = parseInt(clientViewX);
-		tooltip.clientViewY = parseInt(clientViewY);
-		tooltip.pinned = stuck === '1' ? true : false;
-
-		//Go get the map details
-		window.location = 'byond://winget?callback='+tooltip.interface+':tooltip.updateCallback;id='+tooltip.getMapControlFor('map')+','+tooltip.getMapControlFor('helper')+';property=pos,size,view-size,saved-params';
-	},
-};
-
-//WE READY YO
-$(window).on('load', function() {
-	if (tooltip.loaded === false) {
-		tooltip.loaded = true;
-		tooltip.debugLog('JS loaded, calling topic show');
-		window.location = '?src=' + window.tooltipRef + ';action=show';
-
-		tooltip.$docBody = $('body');
-		tooltip.$wrap = $('#wrap');
-		tooltip.$content = $('#content');
+		html += `</tbody></table>`;
+		boutput(html);
 	}
-});
+}
+
+class Tooltip {
+	global = {};
+	showing = false;
+	hiding = false;
+	moveTimeout = null;
+	tracking = null;
+
+	world = {};
+	client = {};
+	map = {};
+	scaled = {};
+	size = {};
+	target = {};
+	offsets = {};
+
+	constructor(options, args) {
+		this.global = options;
+		if (this.global.debug) this.tracking = new PerformanceTracking();
+		this.args = args;
+		this.options = args.options;
+		this.world = args.world;
+		this.client = args.client;
+	}
+
+	hookBefore(method) {
+		if (this.isHiding()) return false;
+		if (this.tracking) {
+			const caller = new Error().stack?.split("\n")[3]?.trim()?.split(" ")[1];
+			const invokation = this.tracking.start(method, caller);
+			return invokation;
+		}
+		return true;
+	}
+
+	hookAfter(method, invokation) {
+		if (this.tracking) this.tracking.end(invokation);
+	}
+
+	onFinished() {
+		if (this.tracking) this.tracking.report();
+	}
+
+	isHiding() {
+		if (this.hiding) {
+			this.moveTimeout && clearTimeout(this.moveTimeout);
+			return true;
+		}
+		return false;
+	}
+
+	elementIsInteractive(el) {
+		return ["input", "textarea", "select", "option"].includes(
+			el.nodeName.toLowerCase(),
+		);
+	}
+
+	onContentClick(e, handler) {
+		if (!handler.elementIsInteractive(e.target)) {
+			handler.focusMap();
+		}
+	}
+
+	onCloseClick(e, handler) {
+		e.preventDefault();
+		e.stopPropagation();
+		handler.focusMap();
+		handler.hide();
+	}
+
+	onKeyDown(e, handler) {
+		if (!handler.elementIsInteractive(e.target)) {
+			handler.focusMap();
+			if (e.key === "Escape") {
+				handler.hide();
+			}
+		}
+	}
+
+	async getMapSizes() {
+		return await BYOND.winget(this.global.mapControlId, ["size", "view-size"]);
+	}
+
+	async setMapSizes() {
+		const mapSizes = await this.getMapSizes();
+		this.map.pane = mapSizes["size"];
+		this.map.view = mapSizes["view-size"];
+
+		// Determine how many icons are displayed on the users map
+		this.map.icons = {
+			x: Math.min(this.client.view.x * 2 + 1, this.world.maxx),
+			y: Math.min(this.client.view.y * 2 + 1, this.world.maxy),
+		};
+
+		// Determine how much map icons are stretched
+		this.map.scale = {
+			width: this.map.view.x / this.client.bounds.width,
+			height: this.map.view.y / this.client.bounds.height,
+		};
+
+		// Constrain scale to lowest axis value (aka assume icons maintain aspect ratio when stretched)
+		if (this.map.scale.width < this.map.scale.height)
+			this.map.scale.height = this.map.scale.width;
+		else this.map.scale.width = this.map.scale.height;
+
+		// Determine if the map view has been expanded (e.g. by HUD icon offsets like NORTH+1)
+		const extraWidth = Math.round(
+			this.map.view.x / this.map.scale.width - this.client.bounds.width,
+		);
+		if (extraWidth)
+			this.map.icons.x += Math.ceil(extraWidth / this.world.icon_size.width);
+		const extraHeight = Math.round(
+			this.map.view.y / this.map.scale.height - this.client.bounds.height,
+		);
+		if (extraHeight)
+			this.map.icons.y += Math.ceil(extraHeight / this.world.icon_size.height);
+	}
+
+	setContent() {
+		$wrap.replaceChildren();
+		$wrap.style.setProperty("--map-width", `${this.map.pane.x}px`);
+		$wrap.style.setProperty("--map-height", `${this.map.pane.y}px`);
+		$wrap.style.setProperty("--scaling-factor", this.map.scale.width); // TODO: width?
+		$wrap.style.setProperty("--dpr", window.devicePixelRatio);
+		$wrap.setAttribute("data-theme", this.options.theme || "default");
+
+		const $wrapContent = document.createElement("div");
+		$wrapContent.classList.add("tt-content");
+		$wrap.append($wrapContent);
+
+		const $title = document.createElement("h1");
+		if (this.options.title)
+			$title.innerHTML = `<span>${this.options.title}</span>`;
+		$wrapContent.append($title);
+
+		if (this.options.pinned) {
+			const $close = document.createElement("button");
+			$close.setAttribute("type", "button");
+			$close.setAttribute("data-close-tooltip", true);
+			$close.classList.add("tt-close");
+			$close.innerHTML = `&#10005;`;
+			$title.append($close);
+		}
+
+		if (this.options.content) {
+			const $content = document.createElement("div");
+			$content.innerHTML = this.options.content;
+			$wrapContent.append($content);
+		}
+
+		const box = $wrapContent.getBoundingClientRect();
+		this.size = {
+			width: Math.ceil(box.width * window.devicePixelRatio),
+			height: Math.ceil(box.height * window.devicePixelRatio),
+		};
+	}
+
+	/*
+    | xx yx xo | = | a b c |
+    | xy yy yo |   | d e f |
+  */
+	transformPoint(x, y) {
+		const matrix = this.options.transform;
+		return {
+			x: matrix[0] * x + matrix[1] * y + matrix[2],
+			y: matrix[3] * x + matrix[4] * y + matrix[5],
+		};
+	}
+
+	getPosition() {
+		// Gather point coordinates for each corner
+		const corners = [
+			[-(this.options.bounds.width / 2), -(this.options.bounds.height / 2)], // bl
+			[this.options.bounds.width / 2, -(this.options.bounds.height / 2)], // br
+			[this.options.bounds.width / 2, this.options.bounds.height / 2], // tr
+			[-(this.options.bounds.width / 2), this.options.bounds.height / 2], // tl
+		];
+
+		// Transform each corner point and group them by axis
+		const edges = { x: [], y: [] };
+		for (const corner of corners) {
+			const point = this.transformPoint(corner[0], corner[1]);
+			edges.x.push(point.x);
+			edges.y.push(point.y);
+		}
+
+		// Determine the resultant bounds
+		this.scaled.bounds = {
+			top: Math.max(...edges.y),
+			bottom: Math.min(...edges.y),
+			left: Math.min(...edges.x),
+			right: Math.max(...edges.x),
+		};
+
+		// Get the real dimensions considering transformation
+		this.scaled.width = this.scaled.bounds.right - this.scaled.bounds.left;
+		this.scaled.height = this.scaled.bounds.top - this.scaled.bounds.bottom;
+
+		// Top left of tile the mouse entered into
+		// (unscaled map pixels)
+		let target = {
+			x:
+				this.options.mouse.left.tiles * this.world.icon_size.width -
+				this.world.icon_size.width,
+			y:
+				(this.map.icons.y - this.options.mouse.bottom.tiles) *
+					this.world.icon_size.height +
+				this.world.icon_size.height,
+		};
+
+		// Cumulative pixel offsets to apply to the target position later
+		// (real screen pixels, not unscaled map pixels)
+		let offsets = { x: 0, y: 0 };
+
+		// Apply letterbox offsets
+		offsets.x += Math.max((this.map.pane.x - this.map.view.x) / 2, 0);
+		offsets.y += Math.max((this.map.pane.y - this.map.view.y) / 2, 0);
+
+		// Move to the center of the object, considering scale
+		const leftMousePos = isNaN(this.options.mouse.left.vis)
+			? this.options.mouse.left.icon
+			: this.options.mouse.left.vis;
+		const bottomMousePos = isNaN(this.options.mouse.bottom.vis)
+			? this.options.mouse.bottom.icon
+			: this.options.mouse.bottom.vis;
+		target.x +=
+			this.options.mouse.left.pixels - leftMousePos + this.scaled.width / 2;
+		target.y +=
+			bottomMousePos -
+			this.options.mouse.bottom.pixels -
+			this.scaled.height / 2;
+
+		// Apply user size overrides
+		if (this.options.size?.width)
+			this.size.width = parseInt(this.options.size.width);
+		if (this.options.size?.height)
+			this.size.height = parseInt(this.options.size.height);
+
+		// Apply user offsets
+		if (this.options.offset?.x) target.x += parseFloat(this.options.offset.x);
+		if (this.options.offset?.y) target.y += parseFloat(this.options.offset.y);
+		if (Object.entries(this.options.offset?.tiles).length) {
+			for (const dir in this.options.offset.tiles) {
+				const tiles = parseInt(this.options.offset.tiles[dir]);
+				if (dir === "up") target.y -= tiles * this.world.icon_size.height;
+				else if (dir === "down")
+					target.y += tiles * this.world.icon_size.height;
+				else if (dir === "left") target.x -= tiles * this.world.icon_size.width;
+				else if (dir === "right")
+					target.x += tiles * this.world.icon_size.width;
+			}
+		}
+
+		// Little margins to push the tooltip away from the target slightly
+		const margins = { x: 2, y: 2 };
+
+		// Determine where to place the tooltip around the target
+		this.options.align = this.options.align || { x: "left", y: "bottom" };
+		if (this.options.align.y === "top") {
+			// Align bottom edge of tooltip to top edge of target
+			target.y -= this.scaled.height / 2 + margins.y;
+			offsets.y -= this.size.height;
+		} else if (this.options.align.y === "bottom") {
+			// Align top edge of tooltip to bottom edge of target
+			target.y += this.scaled.height / 2 + margins.y;
+		} else if (this.options.align.y === "center") {
+			// Align vertical middle of tooltip to middle of target
+			offsets.y -= this.size.height / 2;
+		}
+
+		if (this.options.align.x === "left") {
+			// Align left edge of tooltip to left edge of target
+			target.x -= this.scaled.width / 2;
+			if (this.options.align.y !== "top" && this.options.align.y !== "bottom") {
+				// Align right edge of tooltip to left edge of target
+				offsets.x -= this.size.width;
+				target.x -= margins.x;
+			}
+		} else if (this.options.align.x === "right") {
+			if (this.options.align.y === "top" || this.options.align.y === "bottom") {
+				// Align right edge of tooltip to right edge of target
+				target.x += this.scaled.width / 2;
+				offsets.x -= this.size.width;
+			} else {
+				// Align left edge of tooltip to right edge of target
+				target.x += this.scaled.width / 2 + margins.x;
+			}
+		} else if (this.options.align.x === "center") {
+			// Align horizontal middle of tooltip to middle of target
+			offsets.x -= this.size.width / 2;
+		}
+
+		this.target = { ...target };
+		this.offsets = { ...offsets };
+		// const pos = this.position(target, offsets);
+
+		// Where to position the tooltip, in scaled pixels relative to screen map view
+		const pos = {
+			x: target.x * this.map.scale.width + offsets.x,
+			y: target.y * this.map.scale.height + offsets.y,
+		};
+
+		// Avoid overflowing outside the map area
+		const overflow = {
+			left: pos.x < 0 ? pos.x * -1 : 0,
+			top: pos.y < 0 ? pos.y * -1 : 0,
+			right: pos.x + this.size.width - this.map.pane.x,
+			bottom: pos.y + this.size.height - this.map.pane.y,
+		};
+		if (overflow.left > 0) pos.x = 0;
+		if (overflow.top > 0) pos.y = 0;
+		if (overflow.right > 0) pos.x -= overflow.right;
+		if (overflow.bottom > 0) pos.y -= overflow.bottom;
+
+		return pos;
+	}
+
+	attachEvents() {
+		if (this.options.pinned) {
+			const onCloseClick = (e) => this.onCloseClick(e, this);
+			$wrap.querySelectorAll("[data-close-tooltip]").forEach((el) => {
+				el.removeEventListener("click", onCloseClick);
+				el.addEventListener("click", onCloseClick);
+			});
+
+			const onContentClick = (e) => this.onContentClick(e, this);
+			$wrap.removeEventListener("click", onContentClick);
+			$wrap.addEventListener("click", onContentClick);
+		}
+
+		const onKeyDown = (e) => this.onKeyDown(e, this);
+		$root.removeEventListener("keydown", onKeyDown);
+		$root.addEventListener("keydown", onKeyDown);
+	}
+
+	position(size, pos) {
+		const $wrapContent = $wrap.firstElementChild;
+		$wrapContent.style.setProperty("width", `${this.size.width}px`);
+		$wrapContent.style.setProperty("height", `${this.size.height}px`);
+
+		BYOND.winset(this.global.windowId, {
+			isVisible: true,
+			size: `${size.width}x${size.height}`,
+			pos: `${pos.x},${pos.y}`,
+		});
+		window.tooltip.callByond({ action: "showing" });
+		this.showing = true;
+	}
+
+	async show() {
+		await this.setMapSizes();
+		this.setContent();
+		const pos = this.getPosition();
+		this.attachEvents();
+		this.position(this.size, pos);
+	}
+
+	// move({ startingPos, endingPos, fps, glide_size, glide }) {
+	// 	const diffs = {
+	// 		x: endingPos.x - startingPos.x,
+	// 		y: endingPos.y - startingPos.y,
+	// 	};
+
+	// 	function splitInt(num, parts, start, end, invert = false) {
+	// 		const rem = num % parts;
+	// 		const div = (num - rem) / parts;
+	// 		return new Array(parts)
+	// 			.fill(div)
+	// 			.fill(div + 1, parts - rem)
+	// 			.map((v, i) => {
+	// 				let frame = start + (invert ? v * -1 : v) * (i + 1);
+	// 				if (invert) frame = Math.max(frame, end);
+	// 				else frame = Math.min(frame, end);
+	// 				return frame;
+	// 			});
+	// 	}
+
+	// 	const frameCounts = {
+	// 		x: Math.ceil(Math.abs(diffs.x / glide.x)) || 0,
+	// 		y: Math.ceil(Math.abs(diffs.y / glide.y)) || 0,
+	// 		total: 0,
+	// 	};
+	// 	frameCounts.total = Math.max(frameCounts.x, frameCounts.y);
+	// 	// const totalDuration = (1 / fps) * frameCounts.total * 1000; // in ms
+	// 	const totalDuration = glide_size * 10; // in ms
+	// 	const minFrameDuration = 1; // in ms
+	// 	let frameDuration = totalDuration / frameCounts.total;
+	// 	if (frameDuration < minFrameDuration) {
+	// 		frameCounts.total = Math.floor(totalDuration / minFrameDuration);
+	// 		frameDuration = totalDuration / frameCounts.total;
+	// 	}
+
+	// 	const axisFrames = {
+	// 		x: splitInt(
+	// 			Math.abs(diffs.x),
+	// 			frameCounts.total,
+	// 			startingPos.x,
+	// 			endingPos.x,
+	// 			diffs.x < 0,
+	// 		),
+	// 		y: splitInt(
+	// 			Math.abs(diffs.y),
+	// 			frameCounts.total,
+	// 			startingPos.y,
+	// 			endingPos.y,
+	// 			diffs.y < 0,
+	// 		),
+	// 	};
+
+	// 	const partialMove = (frame = 0) => {
+	// 		BYOND.winset(this.global.windowId, {
+	// 			pos: `${axisFrames.x[frame]},${axisFrames.y[frame]}`,
+	// 		});
+	// 		if (frame < frameCounts.total - 1) {
+	// 			this.moveTimeout = setTimeout(() => {
+	// 				partialMove(frame + 1);
+	// 			}, frameDuration);
+	// 		}
+	// 	};
+
+	// 	partialMove();
+	// }
+
+	hide() {
+		if (this.hiding) return;
+		this.showing = false;
+		this.hiding = true;
+		BYOND.winset(this.global.windowId, { isVisible: false });
+		window.tooltip.callByond({ action: "hidden" });
+	}
+
+	focusMap() {
+		BYOND.winset(this.global.mapControlId, { focus: true });
+	}
+}
+
+class TooltipOrchestrator {
+	options = {};
+	pool = new Set();
+
+	constructor(options) {
+		this.options = options;
+		this.callByond({ action: "loaded" });
+	}
+
+	initTooltip(args) {
+		args = JSON.parse(args);
+		const tooltip = new Tooltip(this.options, args);
+
+		for (const key of Object.getOwnPropertyNames(Tooltip.prototype)) {
+			if (
+				key === "constructor" ||
+				key === "hookBefore" ||
+				key === "hookAfter" ||
+				key === "isHiding" ||
+				key === "onFinished"
+			)
+				continue;
+			if (Tooltip.prototype[key].constructor.name === "AsyncFunction") {
+				tooltip[key] = async function (...args) {
+					const invokation = tooltip.hookBefore(key);
+					if (!invokation) return;
+					const ret = await Tooltip.prototype[key].apply(this, args);
+					tooltip.hookAfter(key, invokation);
+					return ret;
+				};
+			} else {
+				tooltip[key] = function (...args) {
+					const invokation = tooltip.hookBefore(key);
+					if (!invokation) return;
+					const ret = Tooltip.prototype[key].apply(this, args);
+					tooltip.hookAfter(key, invokation);
+					return ret;
+				};
+			}
+		}
+
+		this.pool.add(tooltip);
+		tooltip.show().then(() => {
+			tooltip.onFinished();
+		});
+	}
+
+	hideTooltips() {
+		for (const tooltip of this.pool) {
+			tooltip.hide();
+			this.pool.delete(tooltip);
+		}
+	}
+
+	init(args) {
+		try {
+			this.initTooltip(args);
+		} catch (e) {
+			handleError(e);
+		}
+	}
+
+	hide() {
+		try {
+			this.hideTooltips();
+		} catch (e) {
+			handleError(e);
+		}
+	}
+
+	callByond(params) {
+		const arrayParams = [`src=${this.options.ref}`, `tooltip=1`];
+		for (const param in params) {
+			arrayParams.push(`${param}=${encodeURIComponent(params[param])}`);
+		}
+		window.location = `byond://?${arrayParams.join("&")}`;
+	}
+}
+
+window.tooltip = new TooltipOrchestrator(window.tooltip);

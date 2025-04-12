@@ -315,6 +315,8 @@
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 0
+	show_tooltip = TRUE
+	tooltip_options = list("theme" = "flock")
 
 /// Update everything about the icon and description
 /atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null, new_desc = null)
@@ -342,12 +344,7 @@
 	if (src.alpha < 50)
 		return // if you can't see the icon why bother
 	src.update_value()
-	usr.client.tooltipHolder.showHover(src, list(
-		"params" = params,
-		"title" = src.name,
-		"content" = (src.desc ? src.desc : null),
-		"theme" = "flock"
-	))
+	..()
 
 /// Back of the relay HUD icon
 /atom/movable/screen/hud/relay_back
