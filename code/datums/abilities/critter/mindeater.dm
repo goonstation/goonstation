@@ -223,6 +223,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
 	pointCost = 50
+	reveals_on_use = TRUE
 	var/chosen_option
 
 	tryCast(atom/target)
