@@ -48,7 +48,7 @@
 				var/atom/movable/overlay/gibs/animation = null
 				animation = new(hit.loc)
 				animation.master = hit
-				flick("implode", animation)
+				FLICK("implode", animation)
 
 				H.unequip_all()
 				logTheThing(LOG_COMBAT, H, "is transformed into a crab by the crab gun at [log_loc(H)].")

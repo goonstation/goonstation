@@ -385,8 +385,8 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
-	ice_phoenix
-		proj = new/datum/projectile/bullet/ice_phoenix_icicle
+	space_phoenix
+		proj = new/datum/projectile/bullet/space_phoenix_icicle
 		shots = INFINITY
 		current_shots = 1
 		cooldown = 1 SECOND
@@ -1474,7 +1474,7 @@
 
 			msgs.played_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 			msgs.damage = rand(8, 17)
-			flick("hastur-attack", user)
+			FLICK("hastur-attack", user)
 			msgs.damage_type = DAMAGE_CUT // Nasty tentacles with sharp spikes!
 
 		else
@@ -1824,7 +1824,7 @@
 	dam_low = 0
 	dam_high = 0
 
-/datum/limb/small_critter/ice_phoenix
+/datum/limb/small_critter/space_phoenix
 	dam_low = 5
 	dam_high = 10
 	dmg_type = DAMAGE_CUT

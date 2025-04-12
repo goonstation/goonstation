@@ -973,16 +973,17 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 /datum/objective/specialist/salvager
 	proc/check_on_magpie(targetType, frameType=null)
 		. = 0
-		for(var/areaType in typesof(/area/salvager))
-			for (var/turf/T in get_area_turfs(areaType))
-				for (var/obj/O in T.contents)
-					if(istype(O, targetType))
-						if(frameType && targetType == /obj/item/electronics/frame )
-							var/obj/item/electronics/frame/F = O
-							if (istype(F.deconstructed_thing, frameType))
-								. += 1
-						else
+		for (var/turf/T in get_area_turfs(/area/salvager))
+			for (var/obj/O in T.contents)
+				if(istype(O, targetType))
+					if(frameType && targetType == /obj/item/electronics/frame )
+						var/obj/item/electronics/frame/F = O
+						if (istype(F.deconstructed_thing, frameType))
 							. += 1
+					else
+						. += 1
+				else if(frameType && istype(O, frameType))
+					. += 1
 
 /datum/objective/specialist/salvager/machinery
 	var/target_equipment = null
@@ -1034,9 +1035,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			var/list/L = owner.current.get_all_items_on_mob()
 			if (length(L))
 				for (var/obj/item/electronics/frame/F in L)
-					if (istype(F.deconstructed_thing, target_equipment))
+					if (istype(F.deconstructed_thing, src.target_equipment))
 						count++
-			count += check_on_magpie(/obj/item/electronics/frame, target_equipment)
+			count += check_on_magpie(/obj/item/electronics/frame, src.target_equipment)
 			return count >= target_count
 		else
 			return FALSE
@@ -1063,9 +1064,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		return target_equipment
 
 	check_completion()
-		if(owner.current && owner.current.check_contents_for_num(target_equipment, 1, TRUE))
+		if(owner.current && owner.current.check_contents_for_num(src.target_equipment, 1, TRUE))
 			return TRUE
-		else if(check_on_magpie(target_equipment))
+		else if(check_on_magpie(src.target_equipment))
 			return TRUE
 		else
 			return FALSE
@@ -1083,21 +1084,21 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	explanation_text = "Collect 5 dead humans in your nest."
 
 	check_completion()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
 		return length(phoenix?.collected_humans) >= 5
 
 /datum/objective/specialist/phoenix_collect_critters
 	explanation_text = "Collect 5 dead critters in your nest."
 
 	check_completion()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
 		return length(phoenix?.collected_critters) >= 5
 
 /datum/objective/specialist/phoenix_permafrost_areas
 	explanation_text= "Use Permafrost on 5 station areas."
 
 	check_completion()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner.current
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
 		return length(phoenix?.permafrosted_areas) >= 5
 
 /////////////////////////////

@@ -48,6 +48,8 @@
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/salvager(H), SLOT_BELT)
 		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), SLOT_WEAR_ID)
+		var/obj/item/device/pda2/salvager_pda = locate() in H
+		salvager_pda.insert_id_card(new /obj/item/card/id/salvager(H), H)
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_IN_BACKPACK)

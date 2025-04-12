@@ -1,12 +1,45 @@
-/datum/antagonist/mob/ice_phoenix
+/datum/antagonist/mob/space_phoenix
 	id = ROLE_PHOENIX
 	display_name = "space phoenix"
-	mob_path = /mob/living/critter/ice_phoenix
+	mob_path = /mob/living/critter/space_phoenix
 	mutually_exclusive = TRUE
 	assigned_by = ANTAGONIST_SOURCE_RANDOM_EVENT
 	objectives = list(/datum/objective/specialist/phoenix_collect_humans, /datum/objective/specialist/phoenix_collect_critters, /datum/objective/specialist/phoenix_permafrost_areas)
 	success_medal = "Territorial Defender"
+	/// How far from the map edge does our nest need to be
 	var/map_edge_margin = 35
+	/// The ability holder of this space phoenix
+	var/datum/abilityHolder/space_phoenix/ability_holder
+
+	give_equipment()
+		. = ..()
+		var/datum/abilityHolder/space_phoenix/abil_holder = src.owner.current.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		src.ability_holder = abil_holder || src.owner.current.add_ability_holder(/datum/abilityHolder/space_phoenix)
+
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/sail)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/thermal_shock)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/ice_barrier)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/glacier)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/wind_chill)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/touch_of_death)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/permafrost)
+
+		src.owner.current.setStatus("phoenix_mobs_collected", INFINITE_STATUS)
+
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_mob(src.owner.current)
+
+	remove_equipment()
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/sail)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/thermal_shock)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/ice_barrier)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/glacier)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/wind_chill)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/touch_of_death)
+		src.ability_holder.addAbility(/datum/targetable/critter/space_phoenix/permafrost)
+
+		src.owner.current.delStatus("phoenix_mobs_collected")
+
+		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).remove_mob(src.owner.current)
 
 	relocate()
 		..()

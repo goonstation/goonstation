@@ -1418,7 +1418,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		flick("ectoplasm-a", src)
+		FLICK("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
 
 	heal(mob/M)
@@ -3013,24 +3013,30 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/brownie_batch
-	name = "brownies"
-	desc = "A whole batch of freshly baked and chewy brownies."
+/obj/item/reagent_containers/food/snacks/flapjack
+	name = "flapjack"
+	desc = "A golden brown square of syrupy goodness. Yum!"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "brownie_batch"
+	icon_state = "flapjack"
+	bites_left = 3
+	heal_amt = 2
+	food_color = "#CE8F40"
+	initial_volume = 10
+	initial_reagents = list("sugar" = 5)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
+/obj/item/reagent_containers/food/snacks/dessert_batch
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	bites_left = 12
 	heal_amt = 2
-	food_color = "#38130C"
 	initial_volume = 40
-	initial_reagents = list("chocolate" = 20)
-	food_effects = list("food_warm","food_energized")
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/brownie
 	slice_amount = 4
 	slice_suffix = "square"
 	w_class = W_CLASS_BULKY
 	use_bite_mask = FALSE
-
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user == target)
 			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
@@ -3042,3 +3048,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 
 	attack_self(mob/user as mob)
 		attack(user, user)
+
+
+/obj/item/reagent_containers/food/snacks/dessert_batch/brownie
+	name = "brownies"
+	desc = "A whole batch of freshly baked and chewy brownies."
+	icon_state = "brownie_batch"
+	food_color = "#38130C"
+	initial_reagents = list("chocolate" = 20)
+	food_effects = list("food_warm","food_energized")
+	slice_product = /obj/item/reagent_containers/food/snacks/brownie
+
+/obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
+	name = "flapjack tray"
+	desc = "A whole batch of freshly baked golden flapjacks."
+	icon_state = "flapjack_batch"
+	food_color = "#CE8F40"
+	initial_reagents = list("sugar" = 20)
+	food_effects = list("food_warm","food_energized")
+	slice_product = /obj/item/reagent_containers/food/snacks/flapjack

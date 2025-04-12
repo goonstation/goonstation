@@ -75,7 +75,7 @@
 		y_blur = 2
 
 		proc/activate_glimmer()
-			flick("glimmer", src)
+			FLICK("glimmer", src)
 
 /obj/decal/floatingtiles
 	name = "floating tiles"

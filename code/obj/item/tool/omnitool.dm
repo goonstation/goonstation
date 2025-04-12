@@ -102,42 +102,42 @@
 				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-prying"), src)
+					FLICK(("[prefix]-swap-prying"), src)
 
 			if (OMNI_MODE_PULSING)
 				set_icon_state("[prefix]-pulsing")
 				src.setItemSpecial(/datum/item_special/elecflash)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-pulsing"), src)
+					FLICK(("[prefix]-swap-pulsing"), src)
 
 			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
 				src.setItemSpecial(/datum/item_special/jab)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-screwing"), src)
+					FLICK(("[prefix]-swap-screwing"), src)
 
 			if (OMNI_MODE_SNIPPING)
 				set_icon_state("[prefix]-snipping")
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-snipping"), src)
+					FLICK(("[prefix]-swap-snipping"), src)
 
 			if (OMNI_MODE_WRENCHING)
 				set_icon_state("[prefix]-wrenching")
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-wrenching"), src)
+					FLICK(("[prefix]-swap-wrenching"), src)
 
 			if (OMNI_MODE_CUTTING)
 				set_icon_state("[prefix]-cutting")
 				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-cutting"), src)
+					FLICK(("[prefix]-swap-cutting"), src)
 
 			if(OMNI_MODE_WELDING)
 				src.setItemSpecial(/datum/item_special/flame)
