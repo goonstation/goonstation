@@ -3,6 +3,8 @@
 (u)Sord
 (+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
 (+)The phaser rack in the armory now has a chance to be a phaser SMG rack or normal phaser rack.
+(u)LeahTheTech
+(*)All pod wars manufacturers on the same team now share their resources.
 (u)RubberRats
 (p)22936
 (e)🪲🍝|C-Bug, A-Catering

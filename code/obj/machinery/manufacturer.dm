@@ -123,8 +123,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/static/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/datum/action/action_bar = null
 
+	///!!very hacky and dumb!! All manufacturers with the same share_id have the same storage datum, ie share materials inherently
+	var/share_id = null
+
 	New()
 		START_TRACKING
+		if (src.share_id)
+			var/tracking_id = TR_CAT_MANUFACTURER_LINK + src.share_id
+			for (var/obj/machinery/manufacturer/other as anything in by_cat[tracking_id])
+				if (other.share_id == src.share_id)
+					src.storage = other.storage //lalala I cant hear youu I'm too busy committing code crimess
+					break
+			src.ensure_contents() //so that the first one consistently makes its contents
+			src.claim_free_resources() //add them to the pool
+			START_TRACKING_CAT(tracking_id)
+			src.UpdateOverlays(image(src.icon, "fab-dish", layer=src.layer + 0.1), "share-dish")
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
@@ -153,6 +166,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	disposing()
 		STOP_TRACKING
+		if (src.share_id)
+			STOP_TRACKING_CAT(TR_CAT_MANUFACTURER_LINK + src.share_id)
 		src.remove_storage()
 		manuf_controls.manufacturing_units -= src
 		src.work_display = null
@@ -1930,6 +1945,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/add_contents(obj/item/W, mob/user = null)
 		src.ensure_contents()
 		src.storage.add_contents(W, user, visible=FALSE)
+
+	remove_storage()
+		if (src.share_id) //don't qdel shared storages
+			src.storage = null
+			return
+		. = ..()
 
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
