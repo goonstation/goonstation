@@ -1,5 +1,12 @@
 
 (t)sat apr 12 25
+(u)glowbold
+(p)22871
+(e)🧫🔄📄🧛|C-Experimental, C-Rework, A-UI, A-Gamemodes
+(*)Arcfiend Sap Power and Discharge have been reworked. More details in minor notes.
+(+)Sap Power pulls from APCs, SMESs, and Machines at roughly half the current rate.
+(+)Sapping power from a broken machine/APC/SMES doubles the amount of power you receive.
+(+)Discharge can target machines, including APCs and SMESs, to overload and break them.
 (u)Facsimile, swinglow20
 (p)21058
 (e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
