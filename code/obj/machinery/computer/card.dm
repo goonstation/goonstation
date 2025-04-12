@@ -599,6 +599,7 @@
 	color = "#ffffcc" // look there's a lot of icons to edit just to add a single stripe of color to these computers
 	department = ID_COMPUTER_DEPARTMENT_ENGINEERING
 	req_access = list(access_engineering_chief)
+	circuit_type = /obj/item/circuitboard/card/engineering
 
 	civilian_access_list = list(access_maint_tunnels, access_tech_storage)
 	// stock engineering_access_list
@@ -612,6 +613,7 @@
 	color = "#99ccff"
 	department = ID_COMPUTER_DEPARTMENT_MEDICAL
 	req_access = list(access_medical_director)
+	circuit_type = /obj/item/circuitboard/card/medical
 
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage)
 	engineering_access_list = null
@@ -626,6 +628,7 @@
 	color = "#cc99ff"
 	department = ID_COMPUTER_DEPARTMENT_RESEARCH
 	req_access = list(access_research_director)
+	circuit_type = /obj/item/circuitboard/card/research
 
 	civilian_access_list = list(access_maint_tunnels, access_tech_storage)
 	engineering_access_list = null
@@ -640,6 +643,7 @@
 	color = "#ff9999"
 	department = ID_COMPUTER_DEPARTMENT_SECURITY
 	req_access = list(access_maxsec)
+	circuit_type = /obj/item/circuitboard/card/security
 
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage, access_bar, access_crematorium, access_kitchen, access_hydro)
 	engineering_access_list = list(access_engineering, access_engineering_control)

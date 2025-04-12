@@ -148,6 +148,21 @@
 		valid_item(obj/item/I)
 			return istype(I, /obj/item/gun/energy/phaser_gun)
 
+	phaser_smg_rack
+		name = "phaser smg rack"
+		desc = "A rack that charges up to 3 phaser smgs."
+		icon_state = "phaser_rack"
+		amount = 3
+		max_amount = 3
+		stand_type = "phaser_rack"
+		contained_weapon = /obj/item/gun/energy/phaser_smg/extended_mag
+		contained_weapon_name = "phaser"
+		req_access = list(access_security)
+		recharges_contents = TRUE
+
+		valid_item(obj/item/I)
+			return istype(I, /obj/item/gun/energy/phaser_smg)
+
 
 	New()
 		..()
@@ -198,6 +213,7 @@
 				src.amount ++
 				boutput(user, "You place [W] into [src].")
 				src.update()
+				logTheThing(LOG_STATION, user, "returns [W] to [src] [log_loc(src)].")
 			else return ..()
 
 //no, this isnt even an item its not allowed. if you wanna move racks around, code an unscrew behavior or something
@@ -263,14 +279,14 @@
 				src.amount--
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
-			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from [src] [log_loc(src)].")
 		else
 			if (src.amount >= 1)
 				src.amount--
 				myWeapon = new src.contained_weapon(src.loc)
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
-				logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "takes [myWeapon] from [src] [log_loc(src)].")
 		src.update()
 		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
 		if (src.amount <= 0) //prevents a runtime if it's empty
@@ -368,3 +384,9 @@
 			if(user)
 				boutput(user, "The [src] is already unlocked!")
 			return 0
+
+	overload_act()
+		if (src.hacked)
+			return FALSE
+		src.hacked = TRUE
+		return TRUE

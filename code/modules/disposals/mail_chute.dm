@@ -91,8 +91,8 @@
 			return
 
 		flushing = TRUE
-		if (istype(src, /obj/machinery/disposal/mail)) flick("[src.icon_state]-flush", src)
-		else flick("disposal-flush", src)
+		if (istype(src, /obj/machinery/disposal/mail)) FLICK("[src.icon_state]-flush", src)
+		else FLICK("disposal-flush", src)
 
 		ZERO_GASES(air_contents)
 

@@ -185,7 +185,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		if (!attached)
 			return
 		icon_state = ""
-		flick("antitamper-break", src)
+		FLICK("antitamper-break", src)
 		var/obj/storage/crate/C = attached
 		attached = null
 		SPAWN(1 SECOND)

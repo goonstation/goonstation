@@ -715,6 +715,9 @@
 				else
 					src.set_broken()
 
+/obj/machinery/computer3/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer3/disposing()
 	if (hd)
 		if (hd.loc == src)

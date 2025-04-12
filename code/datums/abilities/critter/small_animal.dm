@@ -308,7 +308,7 @@
 		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] hoots seductively!</b>"),\
 		SPAN_COMBAT("You hoot seductively!"))
 		playsound(holder.owner, 'sound/voice/animal/hoot.ogg', 90, 0)
-		flick("bhooty-flap", holder.owner)
+		FLICK("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""
 		D.icon = 'icons/effects/effects.dmi'

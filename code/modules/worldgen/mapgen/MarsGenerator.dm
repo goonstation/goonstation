@@ -138,7 +138,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		src.lag_check()
+		src.lag_check(flags)
 
 /turf/unsimulated/floor/setpieces/martian/station_duststorm
 

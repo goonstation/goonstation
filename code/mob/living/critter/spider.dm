@@ -182,7 +182,7 @@
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && drain && (!drain.disabled && drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)

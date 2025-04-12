@@ -351,6 +351,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	src.emagged = 0
 	return 1
 
+/obj/machinery/vending/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
@@ -656,22 +659,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
 					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
-					flick(src.icon_deny,src)
+					FLICK(src.icon_deny,src)
 					return
 				if (src.pay)
 					if (src.acceptcard && src.scan)
 						if (!account)
 							boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 						if (account["current_money"] < params["cost"])
 							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 					else
 						if (src.credit < params["cost"])
 							boutput(usr, SPAN_ALERT("Insufficient Credit."))
-							flick(src.icon_deny,src)
+							FLICK(src.icon_deny,src)
 							return
 
 				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
@@ -776,7 +779,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
 				boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
-				flick(src.icon_deny,src)
+				FLICK(src.icon_deny,src)
 				return
 
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
@@ -809,16 +812,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 					account = FindBankAccountByName(src.scan.registered)
 					if (!account)
 						boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 					if (account["current_money"] < R.product_cost)
 						boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 				else
 					if (src.credit < R.product_cost)
 						boutput(usr, SPAN_ALERT("Insufficient Credit."))
-						flick(src.icon_deny,src)
+						FLICK(src.icon_deny,src)
 						return
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
@@ -828,7 +831,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 			use_power(10)
 			if (src.icon_vend) //Show the vending animation if needed
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 
 			src.vend_ready = 0
 			src.prevend_effect()
@@ -1123,7 +1126,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			R.product_amount--
 		use_power(10)
 		if (src.icon_vend) //Show the vending animation if needed
-			flick(src.icon_vend,src)
+			FLICK(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
@@ -1585,7 +1588,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = 0
+	req_access = null
 	acceptcard = 0
 
 	light_r =0.8
@@ -1700,6 +1703,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/mechanicbook, 30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/text_to_music_com, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
@@ -1738,6 +1742,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/textmanip, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/text_to_music, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)
@@ -2794,18 +2799,18 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting_broken, 65, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			speak("F*!@$*(9HZZZZ9**###!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] spasms violently!"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1 SECOND)
 			src.visible_message(SPAN_NOTICE("[src] makes an obscene gesture!</b>"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh_broken, 65, 1)
 			speak("AHHH#######!")
@@ -2816,18 +2821,18 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting, 65, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			speak("The great wizard Zoldorf is here!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] rocks back and forth!"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1 SECOND)
 			src.visible_message(SPAN_NOTICE("[src] makes a mystical gesture!</b>"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
-				flick(src.icon_vend,src)
+				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh, 65, 1)
 			speak("Ha ha ha ha ha!")

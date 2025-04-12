@@ -9,7 +9,7 @@
 
 /datum/game_mode/extended/pre_setup()
 	. = ..()
-#ifndef LIVE_SERVER
+#ifdef LIVE_SERVER
 	if (global.ticker.roundstart_player_count(FALSE) < 20)
 		return FALSE
 #endif
