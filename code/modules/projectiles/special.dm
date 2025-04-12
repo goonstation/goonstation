@@ -1428,11 +1428,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			return
 		L.changeStatus("staggered", 0.75 SECONDS)
 		L.setStatus("mindeater_psi_slow", 5 SECONDS)
-		var/datum/reagents/reagents = L.reagents
-		if (reagents)
-			var/amt = min(L.reagents.total_volume, 5)
-			L.reagents.remove_any_except(amt, "toxin")
-			L.reagents.add_reagent("toxin", amt)
+		if (L.reagents)
+			var/amt = min(max(L.reagents.total_volume - L.reagents.get_reagent_amount("toxin"), 0), 5)
+			if (amt > 0)
+				L.reagents.remove_any_except(amt, "toxin")
+				L.reagents.add_reagent("toxin", amt)
 
 	on_pointblank(obj/projectile/O, mob/target)
 		if (istype(target))
