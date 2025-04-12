@@ -8978,7 +8978,7 @@
 /area/station/bridge/reception)
 "dZK" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /obj/cable{
 	icon_state = "0-8"
 	},

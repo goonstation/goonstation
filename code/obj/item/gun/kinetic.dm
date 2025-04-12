@@ -3403,7 +3403,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "A ruthlessly powerful rifle firing .50 caliber frag rounds. Built to swat down UFOs out of the sky."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "antiair"
-	item_state = "missile_launcher"
+	item_state = "antiair"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
 	contraband = 50

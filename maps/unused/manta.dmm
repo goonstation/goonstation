@@ -1755,10 +1755,10 @@
 	name = "Explosives Storage"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ags" = (
@@ -6511,7 +6511,7 @@
 	name = "Armory"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "atW" = (

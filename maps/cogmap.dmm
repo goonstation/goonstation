@@ -57283,7 +57283,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "sgN" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "shp" = (
