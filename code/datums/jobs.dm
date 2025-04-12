@@ -262,7 +262,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security, /obj/item/implant/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
 	slot_card = /obj/item/card/id/gold
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	receives_badge = TRUE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security, /obj/item/implant/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 
@@ -519,7 +519,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	can_join_gangs = FALSE
 	cant_spawn_as_con = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security, /obj/item/implant/anti_mindhack)
 	receives_disk = /obj/item/disk/data/floppy/security
 	receives_badge = TRUE
 	slot_back = list(/obj/item/storage/backpack/security)
@@ -2445,7 +2445,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	receives_implants = list(/obj/item/implant/health/security, /obj/item/implant/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
 	slot_back = list(/obj/item/storage/backpack/NT)

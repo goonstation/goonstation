@@ -425,12 +425,12 @@ THROWING DARTS
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack
-	name = "mind protection health implant"
+/obj/item/implant/anti_mindhack
+	name = "mind protection implant"
 	icon_state = "implant-b"
 	impcolor = "b"
 
-	death_alert()
+	on_death()
 		. = ..()
 		src.on_remove(src.owner)
 		qdel(src)
@@ -868,7 +868,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return FALSE
-		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
+		for(var/obj/item/implant/anti_mindhack/AM in H.implant)
 			boutput(user, SPAN_ALERT("[H] is protected from mindhacking by \an [AM.name]!"))
 			return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
