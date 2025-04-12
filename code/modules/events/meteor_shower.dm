@@ -23,10 +23,10 @@ var/global/meteor_shower_active = 0
 	var/list/valid_directions = list(NORTH, EAST, SOUTH, WEST)
 #ifdef UNDERWATER_MAP
 	var/shower_name = "cybershark attack"
-	var/meteor_type = /obj/newmeteor/massive/shark
+	var/meteor_typepath = /obj/newmeteor/massive/shark
 #else
 	var/shower_name = "meteor shower"
-	var/meteor_type = /obj/newmeteor/massive
+	var/meteor_typepath = /obj/newmeteor/massive
 #endif
 
 	is_event_available(var/ignore_time_lock = 0)
@@ -37,26 +37,30 @@ var/global/meteor_shower_active = 0
 			if (global.is_map_on_ground_terrain)
 				. = FALSE
 
-	event_effect(source, amount, direction, delay, warning_time, speed, datum/material/transmute_material_instead="random")
+	event_effect(source, amount, direction, delay, warning_time, speed, datum/material/transmute_material_instead="random", custom_typepath = null, throw_flag=THROW_NORMAL, custom_name = null)
 		..()
-		//var/timer = ticker.round_elapsed_ticks / 600
-
-		if(transmute_material_instead == "random")
-			#ifdef APRIL_FOOLS
-			transmute_material_instead = "jean"
-			#else
-			if(prob(97))
-				transmute_material_instead = null
-			else
-				if(prob(50))
-					transmute_material_instead = "jean"
+		var/thrown_thing_typepath = isnull(custom_typepath) ? meteor_typepath : custom_typepath
+		// transmute effects only needed for `/obj/newmeteor`
+		if (ispath(thrown_thing_typepath, /obj/newmeteor))
+			if(transmute_material_instead == "random")
+				#ifdef APRIL_FOOLS
+				transmute_material_instead = "jean"
+				#else
+				if(prob(97))
+					transmute_material_instead = null
 				else
-					transmute_material_instead = pick(material_cache)
-			#endif
-		if(istext(transmute_material_instead))
-			transmute_material_instead = getMaterial(transmute_material_instead)
-		if(transmute_material_instead?.getID() == "jean")
-			shower_name = "jeteor jower"
+					if(prob(50))
+						transmute_material_instead = "jean"
+					else
+						transmute_material_instead = pick(material_cache)
+				#endif
+			if(istext(transmute_material_instead))
+				transmute_material_instead = getMaterial(transmute_material_instead)
+			if(transmute_material_instead?.getID() == "jean")
+				shower_name = "jeteor jower"
+
+		if (!isnull(custom_name))
+			shower_name = custom_name
 
 		if (isnum(direction) && direction == -1)
 			// dear station: get fucked
@@ -188,16 +192,15 @@ var/global/meteor_shower_active = 0
 
 				var/turf/pickedstart = locate(start_x, start_y, 1)
 				var/target = locate(targ_x, targ_y, 1)
-				var/thrown_thing = new meteor_type(pickedstart,target)
-				if (istype(thrown_thing, /obj/newmeteor))
-					var/obj/newmeteor/meteor = thrown_thing
+				if (ispath(thrown_thing_typepath, /obj/newmeteor))
+					var/obj/newmeteor/meteor = new thrown_thing_typepath(pickedstart, target)
 					if(transmute_material_instead)
 						meteor.set_transmute(transmute_material_instead)
 						meteor.meteorhit_chance = 20
 					meteor.pix_speed = meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance)
-				if (istype(thrown_thing, /mob))
-					var/mob/meat = thrown_thing
-					meat.throw_at(target, 300, meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance), throw_type=THROW_GIB)
+				else
+					var/atom/movable/thrown_thing = new thrown_thing_typepath(pickedstart)
+					thrown_thing.throw_at(target, 300, meteor_speed + rand(0 - meteor_speed_variance,meteor_speed_variance), throw_type=throw_flag)
 
 				sleep(delay_between_meteors)
 
@@ -215,6 +218,12 @@ var/global/meteor_shower_active = 0
 	admin_call(var/source)
 		if (..())
 			return
+
+		var/used_meteor_typepath = src.meteor_typepath
+		var/is_custom_type = alert(usr, "Specify a custom mob/obj path as meteor?", src.name, "Yes", "No")
+
+		if (is_custom_type == "Yes")
+			used_meteor_typepath = get_one_match(input("Type path", "Type path", "[used_meteor_typepath]"), /atom)
 
 		var/amtinput = input(usr,"How many meteors? (10~50++)",src.name) as num|null
 		if (!isnum(amtinput) || amtinput < 1)
@@ -239,21 +248,24 @@ var/global/meteor_shower_active = 0
 		if (!isnum(spdinput) || spdinput < 1)
 			return
 
-		var/transmute_material_instead = null
-		if (istype_exact(src, /datum/random_event/major/meteor_shower))
+		var/transmute_material_instead = "random"
+		var/throw_flag = THROW_NORMAL
+		if (ispath(used_meteor_typepath, /obj/newmeteor))
 			if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
 				var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
 				transmute_material_instead = getMaterial(matid)
+		else
+			var/throw_flag_string = tgui_input_list(usr, "Choose throw flag", "Throw flag", global.throwflags, "THROW_NORMAL")
+			throw_flag = global.throwflags[throw_flag_string]
 
-		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput,  transmute_material_instead)
+
+		var/custom_name = null
+		var/use_custom_name = alert(usr, "Specify a custom name to replace 'meteor shower'?", src.name, "Yes", "No")
+		if (use_custom_name == "Yes")
+			custom_name = input(usr, "Custom name to replace 'meteor shower':", src.name, src.shower_name)
+
+		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput,transmute_material_instead,used_meteor_typepath,throw_flag,custom_name)
 		return
-
-
-/datum/random_event/major/meteor_shower/meatier
-	name = "Meatier Shower"
-	shower_name = "Meatier Shower"
-	meteor_type = /mob/living/carbon/human/normal
-	disabled = TRUE // maybe a little silly
 
 ////////////////////////////////////////
 // Defines for the meteors themselves //
