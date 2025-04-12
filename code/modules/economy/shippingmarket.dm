@@ -397,7 +397,7 @@
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
-		price *= randfloat(0.9, 1.3)
+		price *= randfloat(0.9, 1.3) * (1 + length(sell_art.combined_artifacts))
 		price = round(price, 4)
 
 		// track score
