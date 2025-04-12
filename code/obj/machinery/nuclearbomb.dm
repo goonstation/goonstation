@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
+	var/emagged = FALSE
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
 	var/obj/item/record/record = null
@@ -364,6 +365,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!isnum(power) || power < 1) power = 1
 		src.take_damage(power)
 		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
+			src.name = "buclear nomb"
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
 
 	meteorhit()
 		src.take_damage(rand(30,60))

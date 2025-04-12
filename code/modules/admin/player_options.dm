@@ -195,6 +195,7 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
+						<a href='[playeropt_link(M, "stabilize")]'>Stabilize</a> &bull;
 						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
 						<a href='[playeropt_link(M, "max_health")]'>Max Health</a>: [M.max_health] &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
@@ -265,7 +266,8 @@
 					<div class='l'>Misc</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
-						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a> &bull;
+						<a href='[playeropt_link(M, "animate")]'>Animate</a>
 					</div>
 				</div>
 			</div>

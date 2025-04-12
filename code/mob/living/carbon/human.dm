@@ -2428,12 +2428,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.limbs = new /datum/human_limbs(src)
 	else
 		src.limbs.mend()
-	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
-	for (var/organ_slot in src.organHolder.organ_list)
-		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
-		if(istype(O))
-			O.unbreakme()
-	if (!src.organHolder)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+	else
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
@@ -2456,6 +2454,44 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (src.sims)
 		for (var/name in sims.motives)
 			sims.affectMotive(name, 100)
+
+	if (implant)
+		for (var/obj/item/implant/I in implant)
+			if (istype(I, /obj/item/implant/projectile))
+				boutput(src, "[I] falls out of you!")
+				I.on_remove(src)
+				implant.Remove(I)
+				I.set_loc(get_turf(src))
+				continue
+
+	update_face()
+	return
+
+/mob/living/carbon/human/stabilize()
+	src.blinded = 0
+	src.bleeding = min(src.bleeding, 1)
+	src.blood_volume = clamp(src.blood_volume, 450, 550)
+
+	var/desired_damage = src.max_health * (1-0.05) // should have ~5% health left
+	var/current_damage = src.max_health - src.health
+	var/type_multi = 0
+	if (current_damage > 0)
+		type_multi = max(0,1-(desired_damage/current_damage)) //what to multiply all damage by to get to desired HP
+	src.HealDamage("All", src.get_brute_damage()*type_multi, src.get_burn_damage()*type_multi, src.get_toxin_damage()*type_multi)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+
+	if (!src.organHolder)
+		src.organHolder = new(src)
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, src.organHolder.organ_list)
+
+	src.organHolder.create_organs()
+
+	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
+		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+
+	..()
 
 	if (implant)
 		for (var/obj/item/implant/I in implant)

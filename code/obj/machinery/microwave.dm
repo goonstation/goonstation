@@ -227,6 +227,9 @@ TYPEINFO(/obj/machinery/microwave)
 				src.set_broken()
 				return
 
+/obj/machinery/microwave/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/microwave/set_broken()
 	. = ..()
 	if (.) return

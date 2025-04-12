@@ -8974,7 +8974,7 @@
 /area/station/bridge/reception)
 "dZK" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -56198,9 +56198,7 @@
 /area/station/crew_quarters/lounge)
 "yjc" = (
 /obj/machinery/light_switch/west,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},

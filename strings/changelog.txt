@@ -1,4 +1,53 @@
 
+(t)sat apr 12 25
+(u)JORJ949
+(p)22911
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Nanotrasen Officials now have special badges!
+(u)JORJ949
+(p)22910
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Whistles can now be worn on the belt!
+(u)glowbold
+(p)22924
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Mechanics Reconstruction Kit requires Chief Engineer access to unlock.
+(u)CalliopeSoups
+(p)22942
+(e)🎨|C-Sprites
+(+)You can now play basketball with skeleton crew's heads.
+(u)glowbold
+(p)22871
+(e)🧫🔄📄🧛|C-Experimental, C-Rework, A-UI, A-Gamemodes
+(*)Arcfiend Sap Power and Discharge have been reworked. More details in minor notes.
+(+)Sap Power pulls from APCs, SMESs, and Machines at roughly half the current rate.
+(+)Sapping power from a broken machine/APC/SMES doubles the amount of power you receive.
+(+)Discharge can target machines, including APCs and SMESs, to overload and break them.
+(u)Facsimile, swinglow20
+(p)21058
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Adds the Text to Music component, a smaller version of the Player Piano. See the book in the MechComp vendor for more details.
+(t)fri apr 11 25
+(u)Sord
+(+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
+(+)The phaser rack in the armory now has a chance to be a phaser SMG rack or normal phaser rack.
+(u)LeahTheTech
+(*)All pod wars manufacturers on the same team now share their resources.
+(u)RubberRats
+(p)22936
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unbreaks several cooking recipes, whoops!
+(t)thu apr 10 25
+(u)RubberRats
+(p)22921
+(e)📦|A-Game-Objects
+(+)Adds the buclear nomb.
+(t)wed apr 09 25
+(u)tarmunora
+(+)Added glass eyes.
+(u)Dr. Cogwerks
+(+)Detectives now start with a zoomable fancy camera in their bag
+(+)Press Shift to zoom, like the sniper rifle
 (t)tue apr 08 25
 (u)RubberRats
 (p)22914
