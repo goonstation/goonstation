@@ -1,5 +1,9 @@
 
 (t)sat apr 12 25
+(u)JORJ949
+(p)22910
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Whistles can now be worn on the belt!
 (u)glowbold
 (p)22924
 (e)⚖📦|C-Balance, A-Game-Objects
