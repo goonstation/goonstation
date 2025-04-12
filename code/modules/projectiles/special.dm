@@ -1427,7 +1427,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (istype(L, /mob/living/critter/mindeater))
 			return
 		L.changeStatus("staggered", 0.75 SECONDS)
-		L.setStatus("psi_bolt_slow", 5 SECONDS)
+		L.setStatus("mindeater_psi_slow", 5 SECONDS)
 		var/datum/reagents/reagents = L.reagents
 		if (reagents)
 			var/amt = min(L.reagents.total_volume, 5)
