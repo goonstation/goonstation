@@ -246,8 +246,10 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
