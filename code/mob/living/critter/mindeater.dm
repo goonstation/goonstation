@@ -323,6 +323,10 @@
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 
+		if (src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise))
+			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
+			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/clear_disguise)
+
 	/// undisguise as disguised entity
 	proc/undisguise()
 		src.name = initial(src.name)
@@ -335,6 +339,10 @@
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+
+		if (src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/clear_disguise))
+			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
+			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 /obj/dummy/fake_mindeater
 	name = "???"

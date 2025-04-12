@@ -239,9 +239,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		mindeater.disguise(src.chosen_option)
 
-		mindeater.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
-		mindeater.abilityHolder.addAbility(/datum/targetable/critter/mindeater/clear_disguise)
-
 /datum/targetable/critter/mindeater/clear_disguise
 	name = "Clear Disguise"
 	desc = "Clear your disguise."
@@ -251,9 +248,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		mindeater.undisguise()
-
-		mindeater.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
-		mindeater.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 /datum/targetable/critter/mindeater/shades
 	name = "Shades"
