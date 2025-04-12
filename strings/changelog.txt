@@ -1,5 +1,9 @@
 
 (t)sat apr 12 25
+(u)glowbold
+(p)22924
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Mechanics Reconstruction Kit requires Chief Engineer access to unlock.
 (u)CalliopeSoups
 (p)22942
 (e)🎨|C-Sprites
