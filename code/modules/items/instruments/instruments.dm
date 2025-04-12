@@ -640,7 +640,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
+	wear_state = "whistle"
 	w_class = W_CLASS_TINY
+	c_flags = ONBELT
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -678,6 +680,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "security whistle"
 	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
+	wear_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
 
@@ -698,6 +701,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "janitor whistle"
 	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
 	icon_state = "whistle-jani"
+	wear_state = "whistle-jani"
 	var/commandtime = 5 SECONDS
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
