@@ -137,7 +137,6 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
 				if (istext(O.artifact.examine_hint))
@@ -244,7 +243,6 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
 		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
 				if (istext(O.artifact.examine_hint))
