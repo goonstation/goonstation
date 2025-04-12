@@ -31258,7 +31258,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},

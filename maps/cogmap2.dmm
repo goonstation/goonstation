@@ -27183,7 +27183,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bFf" = (
