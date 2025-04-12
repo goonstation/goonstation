@@ -1106,3 +1106,13 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/machinery/oreaccumulator/pod_wars/nanotrasen
 	name = "\improper NanoTrasen mineral accumulator"
 	group = "nanotrasen"
+
+
+/obj/item/storage/belt/medical/podwars
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+	/obj/item/reagent_containers/mender/burn,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/robodefibrillator,
+	/obj/item/clothing/glasses/healthgoggles/upgraded,
+	/obj/item/suture )
