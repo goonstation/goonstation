@@ -944,6 +944,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
+				if(istype(chute, /obj/machinery/disposal/brig))
+					user.unlock_medal("Suitable? How about the Oubliette?!", 1)
 				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
 			else
 				..()
