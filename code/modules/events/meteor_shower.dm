@@ -223,7 +223,7 @@ var/global/meteor_shower_active = 0
 		var/is_custom_type = alert(usr, "Specify a custom mob/obj path as meteor?", src.name, "Yes", "No")
 
 		if (is_custom_type == "Yes")
-			used_meteor_typepath = get_one_match(input("Type path", "Type path", "[used_meteor_typepath]"), /atom)
+			used_meteor_typepath = get_one_match(input("Type path", src.name, "[used_meteor_typepath]"), /atom)
 
 		var/amtinput = input(usr,"How many meteors? (10~50++)",src.name) as num|null
 		if (!isnum(amtinput) || amtinput < 1)
