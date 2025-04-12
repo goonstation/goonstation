@@ -1,6 +1,10 @@
 
 (t)sat apr 12 25
 (u)JORJ949
+(p)22911
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Nanotrasen Officials now have special badges!
+(u)JORJ949
 (p)22910
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
 (+)Whistles can now be worn on the belt!
