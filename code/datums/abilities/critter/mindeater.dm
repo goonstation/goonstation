@@ -255,8 +255,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		mindeater.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
 		mindeater.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
-/datum/targetable/critter/mindeater/confuse
-
 /datum/targetable/critter/mindeater/shades
 	name = "Shades"
 	desc = "Create shades of yourself, swapping places with one, that move when you do."
