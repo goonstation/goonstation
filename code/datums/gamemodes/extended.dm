@@ -10,7 +10,7 @@
 /datum/game_mode/extended/pre_setup()
 	. = ..()
 #ifdef LIVE_SERVER
-	if (global.ticker.roundstart_player_count(FALSE) < 20)
+	if (!global.game_force_started && global.ticker.roundstart_player_count(FALSE) < 20)
 		return FALSE
 #endif
 	for(var/datum/random_event/event in random_events.major_events)

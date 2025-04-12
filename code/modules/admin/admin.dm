@@ -4050,6 +4050,7 @@ var/global/noir = 0
 		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
 	if(current_state <= GAME_STATE_PREGAME)
+		global.game_force_started = TRUE
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing(LOG_ADMIN, usr, "has started the game.")
 		logTheThing(LOG_DIARY, usr, "has started the game.", "admin")

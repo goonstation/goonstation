@@ -1,5 +1,6 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_INVALID
+var/global/game_force_started = FALSE
 
 #define LATEJOIN_FULL_WAGE_GRACE_PERIOD 9 MINUTES
 /datum/controller/gameticker
