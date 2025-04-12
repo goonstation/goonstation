@@ -13,6 +13,9 @@
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	react_xray = list(15,75,90,3,"ANOMALOUS")
+	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/recall_delay = 10
 
 	New()

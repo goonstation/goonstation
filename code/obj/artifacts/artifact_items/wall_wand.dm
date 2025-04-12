@@ -26,6 +26,8 @@
 	var/icon_state = "shieldsparkles"
 	var/sound/wand_sound = 'sound/effects/mag_forcewall.ogg'
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
+	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()

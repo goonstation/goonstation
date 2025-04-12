@@ -13,6 +13,7 @@
 	activ_text = "whirs to life!"
 	deact_text = "becomes eerily still."
 	react_xray = list(50,20,90,8,"MECHANICAL")
+	combine_flags = ARTIFACT_DOES_NOT_COMBINE
 	// possible AI types that the robot can have
 	var/static/list/datum/aiHolder/possible_ais = list(/datum/aiHolder/artifact_wallplacer, /datum/aiHolder/artifact_wallsmasher, /datum/aiHolder/artifact_floorplacer, /datum/aiHolder/wanderer, /datum/aiHolder/aggressive, /datum/aiHolder/artifact_recycler)
 	// possible floor types for the floor placing robots
