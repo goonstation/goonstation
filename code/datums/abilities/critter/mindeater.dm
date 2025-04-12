@@ -334,6 +334,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	resumable = FALSE
 	color_success = "#4444FF"
 	var/mob/living/target
+	var/static/list/possible_messages = list("You feel your memories fading!",
+											 "Something is feasting on your mind!",
+											 "Your mind is being sucked away!",
+											 "You see visions of an eldritch being!",
+											 "Something is trying to take control of your mind!"
+											)
 
 	New(atom/target)
 		..()
@@ -351,6 +357,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (src.target.get_brain_damage() >= 60)
+			if (!ON_COOLDOWN(src.target, "mindeater_brain_drain_msg", 5 SECONDS))
+				boutput(src.target, SPAN_ALERT("<b>[pick(src.possible_messages)]</b>"))
 
 	onEnd()
 		..()
@@ -378,5 +387,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
-		return GET_DIST(src.owner, src.target) > abil.max_range || \
+		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) \
 				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD) || isdead(src.target)
