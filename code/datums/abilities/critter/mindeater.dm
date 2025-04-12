@@ -387,5 +387,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
-		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) \
+		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || \
 				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD) || isdead(src.target)
