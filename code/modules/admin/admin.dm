@@ -2993,7 +2993,8 @@ var/global/noir = 0
 								return
 
 							for(var/mob/living/carbon/human/M in mobs)
-								call(animationpick)(M)
+								SPAWN(0)
+									call(animationpick)(M)
 
 							message_admins("[key_name(usr)] added animation [animationpick] to everyone.")
 							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to everyone.")
