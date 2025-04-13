@@ -13,6 +13,7 @@
 	A.alpha = 255
 	A.pixel_x = 0
 	A.pixel_y = 0
+	A.pixel_z = 0
 	animate(A)
 
 /proc/animate_buff_in(var/atom/A)
