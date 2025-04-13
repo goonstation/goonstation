@@ -264,6 +264,8 @@ var/global/meteor_shower_active = 0
 		if (use_custom_name == "Yes")
 			custom_name = input(usr, "Custom name to replace 'meteor shower':", src.name, src.shower_name)
 
+		message_admins("[key_name(usr)] created a custom meteor event throwing [amtinput] [used_meteor_typepath] at [delinput] ticks apart.")
+		logTheThing(LOG_ADMIN, usr, "created a custom meteor event throwing [amtinput] [used_meteor_typepath] at [delinput] ticks apart.")
 		src.event_effect(source,amtinput,dirinput,delinput,timinput,spdinput,transmute_material_instead,used_meteor_typepath,throw_flag,custom_name)
 		return
 
