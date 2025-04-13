@@ -124,10 +124,10 @@
 		for (var/turf/T as anything in block(src.loc.x - 11, src.loc.y - 8, src.loc.z, src.loc.x + 11, src.loc.y + 8, src.loc.z))
 			src.client.images += T.aiImage
 
-	proc/remove_all_statics(atom/center)
+	proc/remove_all_statics()
 		if (!src.last_client)
 			return
-		center = center || src.last_loc
+		var/atom/center = src.last_loc
 		for (var/turf/T as anything in block(center?.x - 11, center?.y - 8, center?.z, center?.x + 11, center?.y + 8, center?.z))
 			src.last_client.images -= T.aiImage
 
