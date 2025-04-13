@@ -39,8 +39,6 @@
 
 	var/outer_eye_atom = null
 
-	var/statics_added = FALSE
-
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
