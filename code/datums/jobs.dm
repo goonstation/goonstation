@@ -2855,7 +2855,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
-		access = list(access_heads, access_medical, access_medical_lockers)
+		access = list(access_heads, access_medical, access_medical_lockers, access_mining)
 		team = 1
 		overlay_icon = "nanotrasen"
 
@@ -2863,7 +2863,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/nanotrasen)
 		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_belt = list(/obj/item/device/pda2/pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/helmet/space/nanotrasen/pilot)
 		slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot)
@@ -2886,7 +2885,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			high_priority_job = TRUE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "nanocomm"
-			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power)
+			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power, access_mining)
 
 			slot_head = list(/obj/item/clothing/head/NTberet/commander)
 			slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot/commander)
@@ -2899,7 +2898,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
-		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
+		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers, access_mining)
 		team = 2
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
@@ -2908,7 +2907,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/syndicate)
 		slot_back = list(/obj/item/storage/backpack/syndie)
-		slot_belt = list(/obj/item/device/pda2/pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)
 		slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 		slot_suit = list(/obj/item/clothing/suit/space/syndicate)
@@ -2931,7 +2929,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			high_priority_job = TRUE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "syndcomm"
-			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
+			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power, access_mining)
 
 			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
 			slot_suit = list(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)

@@ -1116,3 +1116,58 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	/obj/item/robodefibrillator,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
 	/obj/item/suture )
+
+
+/obj/reagent_dispensers/fueltank/pod_wars
+	capacity = 10000
+	bullet_act()
+		return
+	ex_act()
+		return
+	electric_expose()
+		return
+	meteorhit()
+		return
+	temperature_expose()
+		return
+	blob_act()
+		return
+
+	anchored
+		anchored = ANCHORED_ALWAYS
+
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars
+	volume = 10000 // what could go wrong
+	bullet_act()
+		return
+	ex_act()
+		return
+	electric_expose()
+		return
+	meteorhit()
+		return
+	temperature_expose()
+		return
+	blob_act()
+		return
+
+	anchored
+		anchored = ANCHORED_ALWAYS
+
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars
+	volume = 10000
+	bullet_act()
+		return
+	ex_act()
+		return
+	electric_expose()
+		return
+	meteorhit()
+		return
+	temperature_expose()
+		return
+	blob_act()
+		return
+
+	anchored
+		anchored = ANCHORED_ALWAYS
