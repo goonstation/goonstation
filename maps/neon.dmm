@@ -593,7 +593,7 @@
 "axs" = (
 /mob/living/critter/small_animal/large_jellyfish,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "ays" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -2030,7 +2030,7 @@
 "bCP" = (
 /obj/critter/gunbot/drone,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "bDj" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/blue/side,
@@ -3141,7 +3141,7 @@
 "czk" = (
 /obj/plasma_coral/coralfingers,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "cAG" = (
 /obj/machinery/computer/announcement/station/bridge{
 	dir = 8
@@ -10426,7 +10426,7 @@
 	name = "caution sign"
 	},
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "hww" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
@@ -10699,7 +10699,7 @@
 /area/station/maintenance/northeast)
 "hIe" = (
 /turf/simulated/wall/auto/asteroid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "hIw" = (
 /obj/submachine/cargopad{
 	name = "Artifact Lab Pad"
@@ -11882,7 +11882,7 @@
 "ivS" = (
 /mob/living/critter/aquatic/fish/jellyfish,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "iwq" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/machinery/power/data_terminal,
@@ -12875,7 +12875,7 @@
 "jlM" = (
 /obj/structure/woodwall,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "jlN" = (
 /obj/fakeobject/oven,
 /turf/simulated/floor/grime,
@@ -13907,7 +13907,7 @@
 /area/station/hallway/primary/north)
 "jPy" = (
 /turf/unsimulated/wall/trench,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "jPU" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -14355,7 +14355,7 @@
 /area/station/security/detectives_office)
 "kkF" = (
 /turf/unsimulated/wall/auto/plasmacoral,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "klg" = (
 /obj/item/organ/brain/flockdrone,
 /obj/table/flock/auto,
@@ -15503,14 +15503,14 @@
 /area/radiostation/bedroom)
 "lbM" = (
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "lbQ" = (
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/ghostdrone_factory)
 "lco" = (
 /obj/landmark/spawner/loot,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "lcQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19104,7 +19104,7 @@
 "nOi" = (
 /obj/landmark/spawner/artifact,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "nOt" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/redblack{
@@ -19178,7 +19178,7 @@
 "nRD" = (
 /obj/item/mine/stun/armed,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "nRZ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -21778,7 +21778,7 @@
 "pMU" = (
 /obj/plasma_coral/bulbous,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "pNa" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -23638,7 +23638,7 @@
 /area/station/science/chemistry)
 "rej" = (
 /turf/space/fluid/warp_z5/realwarp,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "reD" = (
 /obj/item/implant/projectile/staple,
 /turf/simulated/floor/white/grime,
@@ -24734,7 +24734,7 @@
 "rVg" = (
 /obj/lattice,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "rVy" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -25630,7 +25630,7 @@
 "syu" = (
 /mob/living/critter/small_animal/large_jellyfish/grabby,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "szp" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent/warm,
@@ -31244,7 +31244,7 @@
 "wkU" = (
 /obj/plasma_coral/branching,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "wlg" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/bluewhite{
@@ -31350,7 +31350,7 @@
 "wqb" = (
 /mob/living/critter/aquatic/shark,
 /turf/space/fluid,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "wql" = (
 /obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
@@ -31626,7 +31626,7 @@
 /area/station/engine/substation/southeast)
 "wAm" = (
 /turf/unsimulated/wall/trench/side,
-/area/plasma_reef)
+/area/space/plasma_reef)
 "wAy" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/corner,
