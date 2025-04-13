@@ -1,5 +1,8 @@
 //Collection of animations we can reuse for stuff.
 //Try to isolate animations you create an put them in here.
+/proc/animate_stop(atom/A)
+	animate(A)
+
 /proc/animate_buff_in(var/atom/A)
 	var/matrix/M = matrix(A.transform)
 	A.transform = A.transform.Scale(0.001)
