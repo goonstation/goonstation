@@ -474,7 +474,12 @@
 
 /obj/item/portable_barcoder/New()
 	. = ..()
+	START_TRACKING
 	src.update_destinations()
+
+/obj/item/portable_barcoder/disposing()
+	. = ..()
+	STOP_TRACKING
 
 /obj/item/portable_barcoder/proc/update_destinations()
 	src.destinations = list()
