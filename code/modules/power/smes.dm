@@ -141,6 +141,9 @@ TYPEINFO(/obj/machinery/power/smes)
 			if (prob(25))
 				src.set_broken()
 
+/obj/machinery/power/smes/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 

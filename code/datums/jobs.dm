@@ -141,8 +141,6 @@
 		if (src.receives_miranda)
 			M.verbs += /mob/proc/recite_miranda
 			M.verbs += /mob/proc/add_miranda
-			if (!isnull(M.mind))
-				M.mind.miranda = DEFAULT_MIRANDA
 		LAZYLISTADDUNIQUE(M.faction, src.faction)
 		for (var/T in src.trait_list)
 			M.traitHolder.addTrait(T)
@@ -201,6 +199,10 @@
 	/// Is this job highlighted for priority latejoining
 	proc/is_highlighted()
 		return global.priority_job == src
+
+	/// The default miranda's rights for this job
+	proc/get_default_miranda()
+		return DEFAULT_MIRANDA
 
 	///Check if a string matches this job's name or alias with varying case sensitivity
 	proc/match_to_string(string, case_sensitive)
@@ -594,7 +596,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_suit = list(/obj/item/clothing/suit/det_suit)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
-	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
+	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun,/obj/item/camera/large)
 	map_can_autooverride = FALSE
 	rounds_needed_to_play = ROUNDS_MIN_DETECTIVE
 	wiki_link = "https://wiki.ss13.co/Detective"
@@ -1474,7 +1476,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
@@ -1489,7 +1491,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 
-	proc/inspector_miranda()
+	get_default_miranda()
 		return "You have been found to be in breach of Nanotrasen corporate regulation [rand(1,100)][pick(uppercase_letters)]. You are allowed a grace period of 5 minutes to correct this infringement before you may be subjected to disciplinary action including but not limited to: strongly worded tickets, reduction in pay, and being buried in paperwork for the next [rand(10,20)] standard shifts."
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1503,7 +1505,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
-		M.mind?.set_miranda(list(PROC_REF(inspector_miranda)))
 		return
 
 /datum/job/special/random/diplomat
@@ -2144,7 +2145,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
 		be.safety = 1
 		be.altered = 1
-		M?.mind?.miranda = "Evildoer! You have been apprehended by a hero of space justice!"
+
+	get_default_miranda()
+		return "Evildoer! You have been apprehended by a hero of space justice!"
 
 /datum/job/special/halloween/pickle
 	name = "Pickle"
@@ -2442,6 +2445,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
@@ -2457,7 +2461,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Special Operative"
 	trait_list = list("training_security")
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
@@ -2473,7 +2476,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_security", "training_medical")
 	wages = PAY_EXECUTIVE //The big boss
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
 	slot_belt = list(/obj/item/swords_sheaths/ntboss)
@@ -2549,7 +2551,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
-	receives_badge = TRUE
 
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)

@@ -270,6 +270,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		return src.real_name
 	return . = "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
 
+/mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
+	. = ..()
+	if (ismob(target))
+		src.cell?.use(W.stamina_cost)
+
 /mob/living/proc/process_killswitch()
 	return
 

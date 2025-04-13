@@ -2171,6 +2171,15 @@
 			pixel_y = 5
 		}(src.loc)
 
+/obj/random_item_spawner/armory_phasers
+	name = "armory phaser rack spawner"
+	icon_state = "armory_phaser"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/machinery/weapon_stand/phaser_rack,
+	/obj/machinery/weapon_stand/phaser_smg_rack
+	)
+
 /obj/random_item_spawner/fruits
 	name = "random fruit spawner"
 	icon_state = "rand_fruits"

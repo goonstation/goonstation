@@ -1097,8 +1097,9 @@
 	},
 /area/station/devzone)
 "wg" = (
+/obj/landmark/supply_delivery,
 /turf/simulated/floor,
-/area/supply/delivery_point)
+/area/station/devzone)
 "wj" = (
 /mob/living/critter/small_animal/ranch_base/chicken,
 /turf/simulated/floor/grass/leafy,
