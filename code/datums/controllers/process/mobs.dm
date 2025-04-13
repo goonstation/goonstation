@@ -29,7 +29,12 @@
 	doWork()
 		src.mobs = global.mobs
 		var/c
-
+		for_by_tcl(door, /obj/machinery/door)
+			if (prob(50))
+				door.open()
+		for_by_tcl(door, /obj/machinery/door)
+			if (prob(50))
+				door.close()
 		if (TIME > nextpopcheck)
 			nextpopcheck = TIME + 4 MINUTES
 			var/clients_num = total_clients()
