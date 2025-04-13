@@ -288,6 +288,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
+	overload_act()
+		if (src.is_broken())
+			return FALSE
+		src.health = 25
+		src.visible_message(SPAN_ALERT("<b>[src] breaks down and stops working!</b>"))
+		src.status |= BROKEN
+		src.power_change()
+		return TRUE
+
 	power_change()
 		if (QDELETED(src))
 			return
