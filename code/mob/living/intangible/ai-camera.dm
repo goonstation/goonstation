@@ -122,7 +122,7 @@
 		if (!src.loc)
 			return
 		for (var/turf/T as anything in block(src.loc.x - 11, src.loc.y - 8, src.loc.z, src.loc.x + 11, src.loc.y + 8, src.loc.z))
-			src.client.images += T.aiImage
+			src.client.images |= T.aiImage
 
 	proc/remove_all_statics()
 		if (!src.last_client)
@@ -140,7 +140,7 @@
 				src.client.images -= T.aiImage
 
 			for (var/turf/T as anything in (add_block - remove_block))
-				src.client.images += T.aiImage
+				src.client.images |= T.aiImage
 
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return
