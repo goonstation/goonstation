@@ -801,6 +801,21 @@
 	max_amount = 4
 	ammo_cat = AMMO_DEAGLE
 
+/obj/item/ammo/bullets/fivehundred
+	sname = ".500 Mag"
+	name = ".500 speedloader"
+	desc = "A speedloader of .500 magnum revolver bullets. Good lord."
+	icon_state = "38-7"
+	amount_left = 7
+	max_amount = 7
+	ammo_type = new/datum/projectile/bullet/deagle50cal
+	ammo_cat = AMMO_DEAGLE
+	icon_dynamic = 1
+	icon_short = "38"
+	icon_empty = "speedloader_empty"
+
+
+
 //0.58
 /obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"

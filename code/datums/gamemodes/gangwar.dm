@@ -2408,11 +2408,7 @@
 		H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 		H.vomit()
 		H.nauseate(6)
-		//un-kill organs
-		for (var/organ_slot in H.organHolder.organ_list)
-			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
-			if(istype(O))
-				O.unbreakme()
+		H.organHolder.unbreak_all_organs()
 		if (H.organHolder) //would be nice to make these heal to desired_health_pct but requires new organHolder functionality...
 			H.organHolder.heal_organs(1000,1000,1000, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
 		H.remove_ailments()

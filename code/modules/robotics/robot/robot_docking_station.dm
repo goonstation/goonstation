@@ -87,6 +87,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.set_broken()
 	. = ..()
 
+/obj/machinery/recharge_station/overload_act()
+	if (src.conversion_chamber)
+		return FALSE
+	return !src.set_broken()
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)

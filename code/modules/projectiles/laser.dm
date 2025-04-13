@@ -348,6 +348,17 @@ toxic - poisons
 				icon_state = "phaser_med"
 			else
 				icon_state = "phaser_light"
+	smg
+		name = "micro phaser bolt"
+		icon_state = "phaser_light"
+		sname = "micro phaser bolt"
+		damage = 8
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
+		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"

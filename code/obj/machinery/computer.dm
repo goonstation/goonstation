@@ -153,6 +153,9 @@
 		set_broken()
 		src.set_density(0)
 
+/obj/machinery/computer/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer/power_change()
 	//if(!istype(src,/obj/machinery/computer/security/telescreen))
 	if(status & BROKEN)

@@ -635,6 +635,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		update_light_color()
 
 		ctrl_pt.capture(user, team_num)
+		switch(get_pod_wars_team_num(user))
+			if (TEAM_NANOTRASEN)
+				message_ghosts("<b>[user]</b> successfully captured [src] for Nanotrasen! [log_loc(src, ghostjump=TRUE)].")
+			if (TEAM_SYNDICATE)
+				message_ghosts("<b>[user]</b> successfully captured [src] for the Syndicate! [log_loc(src, ghostjump=TRUE)].")
 
 	attack_hand(mob/user)
 		if (!can_be_captured)
@@ -653,6 +658,8 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
 			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
+			if(!ON_COOLDOWN(src, "ghostalert", 10 SECONDS))
+				message_ghosts("<b>[user]</b> is trying to capture <b>[src]</b>! [log_loc(src, ghostjump=TRUE)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
@@ -1099,3 +1106,13 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/machinery/oreaccumulator/pod_wars/nanotrasen
 	name = "\improper NanoTrasen mineral accumulator"
 	group = "nanotrasen"
+
+
+/obj/item/storage/belt/medical/podwars
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+	/obj/item/reagent_containers/mender/burn,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/robodefibrillator,
+	/obj/item/clothing/glasses/healthgoggles/upgraded,
+	/obj/item/suture )

@@ -352,6 +352,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	src.emagged = 0
 	return 1
 
+/obj/machinery/vending/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
@@ -1667,6 +1670,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/mechanicbook, 30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/text_to_music_com, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
@@ -1705,6 +1709,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/textmanip, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/text_to_music, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)

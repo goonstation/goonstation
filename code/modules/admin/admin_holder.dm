@@ -148,6 +148,7 @@
 			"Subtle Message",\
 			"Check Health",\
 			"Heal",\
+			"Stabilize",\
 
 			"Manage Bioeffects",\
 			"Manage Abilities",\
