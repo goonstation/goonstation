@@ -29592,9 +29592,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pFY" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/turretid{
 	name = "Armory Perimeter Turret deactivation control";
 	req_access = list(37);
