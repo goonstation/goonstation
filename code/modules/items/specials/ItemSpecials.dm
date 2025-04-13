@@ -40,7 +40,7 @@
 
 /proc/get_dir_accurate(var/atom/source, var/atom/target) // Get the closest direction rather than prioritizing a certain axis
 	if(!source || !target)
-		CRASH("Invalid Params for get_dir_alt: Source:[identify_object(source)] Target:[identify_object(target)]")
+		CRASH("Invalid Params for get_dir_accurate: Source:[identify_object(source)] Target:[identify_object(target)]")
 	var/dir_angle = get_angle(source, target)
 	switch(dir_angle)
 		if(22.5 to 67.5)
