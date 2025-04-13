@@ -69,6 +69,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	parent_assembly.applier_icon_prefix = "chem_grenade"
 
 /obj/item/chem_grenade/proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	parent_assembly.expended = TRUE
 	src.explode() //we don't delete the assembly here because its happening in explode() because of chem-shenanigans
 
 /// ----------------------------------------------

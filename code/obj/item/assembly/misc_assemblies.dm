@@ -38,6 +38,7 @@ Contains:
 	force = 2
 	stamina_damage = 10
 	stamina_cost = 10
+	var/expended = FALSE //! set this to true to disable the assembly from firing. Use this for one-time-use parts that remove the assembly on a delay, e.g. gimmickbombs....
 	var/force_dud = 0 //! can be set within bomb_monitor to make the assembly in question never fire
 	var/obj/item/trigger = null //! This is anything that causes the Applier to fire, e.g. a signaler, mouse trap or a timer
 	var/trigger_icon_prefix = null
@@ -145,6 +146,9 @@ Contains:
 	return SEND_SIGNAL(src.trigger, COMSIG_ITEM_ON_OWNER_DEATH, dying_mob)
 
 /obj/item/assembly/receive_signal(datum/signal/signal)
+	if(src.expended)
+		//we don't want stuff to happen like e.g. buttbombs triggering 50 more times before being qdel'ed, potentially crashing the server... yeah, that happened
+		return
 	if(src.force_dud == TRUE)
 		message_admins("A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [key_name(src.fingerprintslast)]")
 		logTheThing(LOG_BOMBING, null, "A [src.name] would have activated at [log_loc(src)] but was forced to dud! Armed by: [key_name(src.last_armer)]; Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
