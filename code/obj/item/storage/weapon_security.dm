@@ -173,9 +173,9 @@
 	desc = "A box containing an absurdly large revolver and some .500 magnum ammo."
 	slots = 3
 	check_wclass = TRUE
-	can_hold = list(/obj/item/gun/kinetic/maelor,\
+	can_hold = list(/obj/item/gun/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred)
-	spawn_contents = list(/obj/item/gun/kinetic/maelor,\
+	spawn_contents = list(/obj/item/gun/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred = 2)
 
 /* -------------------- Grenades -------------------- */
