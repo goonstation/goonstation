@@ -451,6 +451,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/detective_scanner/detective,
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
+	/obj/item/camera_film/large,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
@@ -769,6 +770,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B7.pixel_y = 0
 			B7.pixel_x = 0
 			return 1
+
+/obj/storage/secure/closet/research/chemical/pharmacy
+	name = "pharmacy chemical locker"
+	icon_closed = "medical_chemical"
+	icon_state = "medical_chemical"
+	req_access = list(access_medical_lockers)
 
 /* ======================= */
 /* ----- Engineering ----- */

@@ -3588,11 +3588,13 @@
 
 	onUpdate(timePassed)
 		..()
-		var/area/A = get_area(src.owner)
-		if (istype(A, /area/station) && !A.permafrosted)
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		if (!istype(phoenix))
+			return // ???
+
+		if (phoenix.in_dangerous_place())
 			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
 			if (src.time_passed >= 30 SECONDS)
-				var/mob/living/critter/space_phoenix/phoenix = src.owner
 				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
 					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
 					phoenix.TakeDamage("All", burn = 4 * mult)
@@ -3665,12 +3667,13 @@
 	name = "Extra Health Regneration"
 	icon_state = "phoenix_health_regen"
 	effect_quality = STATUS_QUALITY_POSITIVE
-	var/critters_collected = 0
-	var/humans_collected = 0
 
 	getTooltip()
 		var/mob/living/critter/space_phoenix/phoenix = src.owner
-		return "You have [src.critters_collected]/5 critters and [src.humans_collected]/5 humans collected in your nest, giving you an extra [phoenix.extra_life_regen] points of out of combat health regeneration."
+		var/datum/abilityHolder/space_phoenix/ability_holder = phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		if (!ability_holder)
+			return "Cannot connect to ability holder, please file a bug report!"
+		return "Extra [phoenix.extra_life_regen] out of combat health regeneration from [min(ability_holder.stored_critter_count, 5)] / 5 critters and [min(ability_holder.stored_human_count, 5)] / 5 humans collected in your nest."
 
 /datum/statusEffect/phoenix_revive_ready
 	id = "phoenix_revive_ready"

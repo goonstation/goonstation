@@ -50,69 +50,111 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/security
 	name = "circuit board (security cameras)"
 	computertype = /obj/machinery/computer/security
+	icon_state = "circuit_security"
 /obj/item/circuitboard/security_tv
 	name = "circuit board (security television)"
 	computertype = /obj/machinery/computer/security/wooden_tv
+	icon_state = "circuit_security"
 /obj/item/circuitboard/small_tv
 	name = "circuit board (television)"
 	computertype = /obj/machinery/computer/security/wooden_tv/small
+	icon_state = "circuit_civilian"
 /obj/item/circuitboard/communications
 	name = "circuit board (communications)"
 	computertype = /obj/machinery/computer/communications
+
+// ID Card computers
 /obj/item/circuitboard/card
 	name = "circuit board (ID computer)"
 	computertype = /obj/machinery/computer/card
+
+/obj/item/circuitboard/card/engineering
+	name = "circuit board (engineering ID computer)"
+	computertype = /obj/machinery/computer/card/department/engineering
+	icon_state = "circuit_engineering"
+
+/obj/item/circuitboard/card/medical
+	name = "circuit board (medical ID computer)"
+	computertype = /obj/machinery/computer/card/department/medical
+	icon_state = "circuit_medical"
+
+/obj/item/circuitboard/card/research
+	name = "circuit board (research ID computer)"
+	computertype = /obj/machinery/computer/card/department/research
+	icon_state = "circuit_research"
+
+/obj/item/circuitboard/card/security
+	name = "circuit board (security ID computer)"
+	computertype = /obj/machinery/computer/card/department/security
+	icon_state = "circuit_security"
+
+
 /obj/item/circuitboard/teleporter
 	name = "circuit board (teleporter)"
 	computertype = /obj/machinery/computer/teleporter
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data
+	icon_state = "circuit_security"
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/air_management
 	name = "circuit board (atmospheric monitor)"
 	computertype = /obj/machinery/computer/general_air_control
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/injector_control
 	name = "circuit board (injector control)"
 	computertype = /obj/machinery/computer/general_air_control/fuel_injection
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/general_alert
 	name = "circuit board (general alert)"
 	computertype = /obj/machinery/computer/general_alert
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/pod
 	name = "circuit board (massdriver control)"
 	computertype = /obj/machinery/computer/pod
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/atm
 	name = "circuit board (ATM)"
 	computertype = /obj/machinery/computer/ATM
+	icon_state = "circuit_civilian"
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics
 /obj/item/circuitboard/robot_module_rewriter
 	name = "circuit board (cyborg module rewriter)"
 	computertype = /obj/machinery/computer/robot_module_rewriter
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/cloning
 	name = "circuit board (cloning)"
 	computertype = /obj/machinery/computer/cloning
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/genetics
 	name = "circuit board (genetics)"
 	computertype = /obj/machinery/computer/genetics
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/tetris
 	name = "circuit board (Robustris Pro)"
 	computertype = /obj/machinery/computer/tetris
+	icon_state = "circuit_civilian"
 /obj/item/circuitboard/arcade
 	name = "circuit board (arcade)"
 	computertype = /obj/machinery/computer/arcade
+	icon_state = "circuit_civilian"
 /obj/item/circuitboard/solar_control
 	name = "circuit board (solar control)"
 	computertype = /obj/machinery/computer/solar_control
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/powermonitor
 	name = "circuit board (power monitoring computer)"
 	computertype = /obj/machinery/computer/power_monitor
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/powermonitor_smes
 	name = "circuit board (engine monitoring computer)"
 	computertype = /obj/machinery/computer/power_monitor/smes
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/olddoor
 	name = "circuit board (DoorMex)"
 	computertype = /obj/machinery/computer/pod/old
@@ -128,27 +170,34 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/barcode_qm
 	name = "circuit board (QM barcode computer)"
 	computertype = /obj/machinery/computer/barcode/qm
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/operating
 	name = "circuit board (operating computer)"
 	computertype = /obj/machinery/computer/operating
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/qmorder
 	name = "circuit board (supply request console)"
 	computertype = /obj/machinery/computer/ordercomp
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/qmsupply
 	name = "circuit board (quartermaster's console)"
 	computertype = /obj/machinery/computer/supplycomp
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/stockexchange
 	name = "circuit board (stock exchange)"
 	computertype = /obj/machinery/computer/stockexchange
 /obj/item/circuitboard/transception
 	name = "circuit board (transception interlink)"
 	computertype = /obj/machinery/computer/transception
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/mining_magnet
 	name = "circuit board (mining magnet computer)"
 	computertype = /obj/machinery/computer/magnet
+	icon_state = "circuit_engineering"
 /obj/item/circuitboard/telescope
 	name = "circuit board (quantum telescope)"
 	computertype = /obj/machinery/computer/telescope
+	icon_state = "circuit_engineering"
 
 // Announcement Computers
 /obj/item/circuitboard/announcement
@@ -173,22 +222,27 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 /obj/item/circuitboard/announcement/security
 	name = "circuit board (security announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/security
+	icon_state = "circuit_security"
 
 /obj/item/circuitboard/announcement/research
 	name = "circuit board (research announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/research
+	icon_state = "circuit_research"
 
 /obj/item/circuitboard/announcement/medical
 	name = "circuit board (medical announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/medical
+	icon_state = "circuit_medical"
 
 /obj/item/circuitboard/announcement/engineering
 	name = "circuit board (engineering announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/engineering
+	icon_state = "circuit_engineering"
 
 /obj/item/circuitboard/announcement/cargo
 	name = "circuit board (qm announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/cargo
+	icon_state = "circuit_engineering"
 
 /obj/item/circuitboard/announcement/ai
 	name = "circuit board (ai announcement computer)"
@@ -197,10 +251,12 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 /obj/item/circuitboard/announcement/catering
 	name = "circuit board (catering announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/catering
+	icon_state = "circuit_civilian"
 
 /obj/item/circuitboard/announcement/syndicate
 	name = "circuit board (syndicate announcement computer)"
 	computertype = /obj/machinery/computer/announcement/syndicate
+	icon_state = "circuit_security"
 	is_syndicate = TRUE
 
 TYPEINFO(/obj/item/circuitboard/announcement/clown)
@@ -208,18 +264,22 @@ TYPEINFO(/obj/item/circuitboard/announcement/clown)
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown
+	icon_state = "circuit_medical"
 
 //--------------------------------------------------//
 
 /obj/item/circuitboard/siphon_control
 	name = "circuit board (siphon control)"
 	computertype = /obj/machinery/computer/siphon_control
+	icon_state = "circuit_research"
 /obj/item/circuitboard/chem_request
 	name = "circuit board (chemical request console)"
 	computertype = /obj/machinery/computer/chem_requester
+	icon_state = "circuit_research"
 /obj/item/circuitboard/chem_request_receiver
 	name = "circuit board (chemical request receiver)"
 	computertype = /obj/machinery/computer/chem_request_receiver
+	icon_state = "circuit_research"
 /obj/item/circuitboard/sea_elevator
 	name = "circuit board (sea elevator control)"
 	computertype = /obj/machinery/computer/elevator/sea

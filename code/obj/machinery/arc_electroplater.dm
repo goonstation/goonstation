@@ -242,6 +242,11 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			src.set_broken()
 	..()
 
+/obj/machinery/arc_electroplater/overload_act()
+	if (src.set_broken())
+		return FALSE
+	return TRUE
+
 /obj/machinery/arc_electroplater/power_change()
 	..()
 	if (src.status & (BROKEN|NOPOWER))

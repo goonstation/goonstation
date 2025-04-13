@@ -283,6 +283,26 @@ var/global/list/job_start_locations = list()
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
 
+/obj/landmark/latejoin_job
+	name = "latejoin spawn marker"
+	icon_state = "x"
+
+/obj/landmark/latejoin_job/radio_show_host
+	name = "Radio Show Host Spawn"
+	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
+
+/obj/landmark/latejoin_job/journalist
+	name = "Journalist Spawn"
+	name_override = LANDMARK_JOURNALIST_SPAWN
+
+/obj/landmark/latejoin_job/actor
+	name = "Actor Spawn"
+	name_override = LANDMARK_ACTOR_SPAWN
+
+/obj/landmark/latejoin_job/influencer
+	name = "Influencer Spawn"
+	name_override = LANDMARK_INFLUENCER_SPAWN
+
 /* ===== Misc Spawn/Start ===== */
 
 /obj/landmark/pest

@@ -317,7 +317,7 @@
 			P.gib()
 
 		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && src.armed) //The admin mouse fears not your puny attempt to squish it.
-			AM.visible_message(SPAN_ALERT("[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life."))
+			AM.visible_message(SPAN_ALERT("[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on its life."))
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			qdel(src)
