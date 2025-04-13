@@ -486,12 +486,6 @@
 	default_material = "gold"
 	dense = 2
 
-/obj/item/raw_material/plutonium
-	name = "plutonium ore"
-	desc = "A rock containing just enough radioactive plutonium that it can be smelted."
-	material_name = "Plutonium"
-	default_material = "plutonium"
-
 /obj/item/raw_material/neutronium
 	name = "neutronium ore"
 	desc = "An ore containing deadly neutronium metal."
