@@ -447,6 +447,12 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "rod"
 	default_material = "plutonium"
 
+/obj/item/material_piece/plutonium_scrap
+	name = "scrap"
+	icon_state = "plutonium"
+	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
+	default_material = "plutonium"
+
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"

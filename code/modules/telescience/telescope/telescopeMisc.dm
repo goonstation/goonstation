@@ -232,8 +232,8 @@ TYPEINFO(/obj/machinery/lrteleporter)
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
 	smashes_shit = FALSE
-	var/iridium_drop_chance = 5
-	var/iridium_drop_path = /obj/item/material_piece/iridiumalloy
+	var/rare_metal_drop_chance = 5
+	var/rare_metal_drop_path = /obj/item/material_piece/iridiumalloy
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)
@@ -272,11 +272,17 @@ TYPEINFO(/obj/machinery/lrteleporter)
 				if(src)
 					qdel(src)
 
-		if(prob(src.iridium_drop_chance) && alive && !dying)
-			new src.iridium_drop_path(src.loc)
+		if(prob(src.rare_metal_drop_chance) && alive && !dying)
+			new src.rare_metal_drop_path(src.loc)
 
 		..()
 
-/obj/critter/gunbot/drone/buzzdrone/naniteswarm/iridium
-	iridium_drop_chance = 100
-	iridium_drop_path = /obj/item/material_piece/iridiumalloy/small
+ABSTRACT_TYPE(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal)
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal
+	rare_metal_drop_chance = 100
+
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/iridium
+	rare_metal_drop_path = /obj/item/material_piece/iridiumalloy/small
+
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium // plutonium power source
+	rare_metal_drop_path = /obj/item/material_piece/plutonium_scrap
