@@ -277,7 +277,6 @@ TYPEINFO(/obj/machinery/lrteleporter)
 
 		..()
 
-ABSTRACT_TYPE(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal)
 /obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal
 	rare_metal_drop_chance = 100
 
