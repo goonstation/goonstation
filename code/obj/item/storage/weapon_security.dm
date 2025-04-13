@@ -167,15 +167,15 @@
 	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
 	/obj/item/ammo/bullets/antiair = 2)
 
-/obj/item/storage/box/maelor
+/obj/item/storage/box/bigiron
 	name = ".500 revolver box"
 	icon_state = "hard_case"
 	desc = "A box containing an absurdly large revolver and some .500 magnum ammo."
 	slots = 3
 	check_wclass = TRUE
-	can_hold = list(/obj/item/gun/kinetic/maelor,\
+	can_hold = list(/obj/item/gun/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred)
-	spawn_contents = list(/obj/item/gun/kinetic/maelor,\
+	spawn_contents = list(/obj/item/gun/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred = 2)
 
 /* -------------------- Grenades -------------------- */

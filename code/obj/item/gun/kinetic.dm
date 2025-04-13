@@ -1727,7 +1727,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.50
 
-/obj/item/gun/kinetic/maelor
+/obj/item/gun/kinetic/bigiron
 	name = "Maelor 500 magnum"
 	desc = "An immense revolver from Mabinogi Firearms Company. You could probably stop a charging space bear with this thing. Or a bus."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
