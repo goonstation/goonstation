@@ -28,7 +28,7 @@
 	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	var/mob/living/silicon/ai/mainframe = null
-	var/last_loc = 0
+	var/atom/last_loc = 0
 
 	var/list/last_range = list()
 	var/list/current_range = list()
@@ -38,6 +38,8 @@
 	var/turf/T = 0
 
 	var/outer_eye_atom = null
+
+	var/statics_added = FALSE
 
 	New()
 		src.cancel_camera()
@@ -58,34 +60,25 @@
 		src.client.show_popup_menus = 1
 		var/client_color = src.client.color
 		src.client.color = "#000000"
-		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
-			if (!src.client) // just client things
-				return
-			src.client.images += aiImages
-			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.update_name_tag()
-			src.job = "AI"
-			if (src.mind)
-				src.mind.assigned_role = "AI"
-			animate(src.client, 0.3 SECONDS, color = client_color)
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				src.client << I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
+		if (!src.client) // just client things
+			return
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+		src.update_name_tag()
+		src.job = "AI"
+		if (src.mind)
+			src.mind.assigned_role = "AI"
+		animate(src.client, 0.3 SECONDS, color = client_color)
+		SPAWN(0)
+			src.add_all_statics()
+
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(src_turf_changed))
 
 	Logout()
-		var/client/cl = src.last_client
-		if (!cl)
+		if (!src.last_client)
 			return ..()
 		SPAWN(0)
-			cl?.images -= aiImages
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				cl?.images -= I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
-
+			src.remove_all_statics()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		.=..()
 
 	isAIControlled()
@@ -126,6 +119,30 @@
 
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()
+
+	proc/add_all_statics()
+		if (!src.loc)
+			return
+		for (var/turf/T as anything in block(src.loc.x - 11, src.loc.y - 8, src.loc.z, src.loc.x + 11, src.loc.y + 8, src.loc.z))
+			src.client.images += T.aiImage
+
+	proc/remove_all_statics(atom/center)
+		if (!src.last_client)
+			return
+		center = center || src.last_loc
+		for (var/turf/T as anything in block(center?.x - 11, center?.y - 8, center?.z, center?.x + 11, center?.y + 8, center?.z))
+			src.last_client.images -= T.aiImage
+
+	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		SPAWN(0)
+			var/list/add_block = block(new_turf.x - 11, new_turf.y - 8, new_turf.z, new_turf.x + 11, new_turf.y + 8, new_turf.z)
+			var/list/remove_block = block(old_turf.x - 11, old_turf.y - 8, old_turf.z, old_turf.x + 11, old_turf.y + 8, old_turf.z)
+
+			for (var/turf/T as anything in (remove_block - add_block))
+				src.client.images -= T.aiImage
+
+			for (var/turf/T as anything in (add_block - remove_block))
+				src.client.images += T.aiImage
 
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return
