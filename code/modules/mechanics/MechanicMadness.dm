@@ -32,6 +32,7 @@
 	var/can_be_anchored = UNANCHORED
 	var/default_hat_y = 0
 	var/default_hat_x = 0
+	var/amount_of_prevent_move_comps = 0
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -194,6 +195,21 @@
 					SEND_SIGNAL(M, _COMSIG_MECHCOMP_RM_OUTGOING, comp)
 					discons++
 			return discons
+		unanchor_movement_comps()
+			// called when a cabinet_prevent_move comp is first added
+			var/removed_comp_amount = 0
+			for (var/atom/comp in src.contents)
+				var/obj/item/mechanics/movement/mov_comp = comp
+				if (!istype(mov_comp))
+					continue
+				if (mov_comp.level == UNDERFLOOR)
+					mov_comp.level = OVERFLOOR
+					mov_comp.anchored = UNANCHORED
+					mov_comp.clear_owner()
+					mov_comp.loosen()
+					removed_comp_amount++
+			return removed_comp_amount
+
 	disposing()
 		..()
 		processing_items.Remove(src)
@@ -365,6 +381,8 @@
 	var/cabinet_banned = FALSE
 	/// whether or not this component can only be used in cabinets
 	var/cabinet_only = FALSE
+	/// whether or not this component prevents the Movement Component from being anchored in cabinets
+	var/cabinet_prevent_move = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
 	// override disconnect all on unanchor/anchor. this is mostly for the bomb :|
@@ -459,12 +477,20 @@
 					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = OVERFLOOR
 					anchored = UNANCHORED
+					if (src.cabinet_prevent_move && IN_CABINET)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps--
 					clear_owner()
 					loosen()
 				if(OVERFLOOR) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
 						boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
 						return 0
+					if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						if (cabinet.amount_of_prevent_move_comps > 0)
+							boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
+							return
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
 						return
@@ -479,6 +505,11 @@
 					if(anchored)
 						boutput(user,SPAN_ALERT("[src] is already attached to something somehow."))
 						return
+					if (IN_CABINET && src.cabinet_prevent_move)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps++
+						if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
+							boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
 					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = UNDERFLOOR
@@ -654,7 +685,7 @@
 
 				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
-				flick("comp_money1", src)
+				FLICK("comp_money1", src)
 				return 1
 			else
 				componentSay("Insufficient funds. Price: [src.price].")
@@ -681,7 +712,7 @@
 
 					logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
-					flick("comp_money1", src)
+					FLICK("comp_money1", src)
 					return 1
 				else
 					componentSay("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
@@ -743,7 +774,8 @@
 		if(level == OVERFLOOR) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isAI(M)) continue
+				if(M == src || M.anchored || isAI(M) || istype(M, /obj/projectile))
+					continue
 				if(count == src.max_capacity)
 					break
 				M.set_loc(src)
@@ -762,7 +794,7 @@
 
 		ZERO_GASES(air_contents)
 
-		flick("comp_flush1", src)
+		FLICK("comp_flush1", src)
 		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 
@@ -805,7 +837,7 @@
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
 			LIGHT_UP_HOUSING
-			flick("comp_tprint1",src)
+			FLICK("comp_tprint1",src)
 			if(paper_left > 0)
 				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
 				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
@@ -875,7 +907,7 @@
 				boutput(user, SPAN_ALERT("This scanner only accepts thermal paper."))
 				return 0
 			LIGHT_UP_HOUSING
-			flick("comp_pscan1",src)
+			FLICK("comp_pscan1",src)
 			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
 			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
@@ -1006,7 +1038,7 @@
 		if(level == UNDERFLOOR && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
-				flick("comp_hscan1",src)
+				FLICK("comp_hscan1",src)
 				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
@@ -1813,7 +1845,7 @@
 	proc/relay(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
-		flick("[under_floor ? "u":""]comp_relay1", src)
+		FLICK("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN(0) SEND_SIGNAL(src,transmissionStyle,input)
 		return
@@ -1994,7 +2026,7 @@
 			if(isnull(signal)) return
 
 			LIGHT_UP_HOUSING
-			flick("[under_floor ? "u":""]comp_buffer1", src)
+			FLICK("[under_floor ? "u":""]comp_buffer1", src)
 			var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 			SPAWN(0) SEND_SIGNAL(src,transmissionStyle,signal)
 
@@ -2664,7 +2696,7 @@
 		var/turf/myTurf = get_turf(src)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) || isrestrictedz(myTurf.z)) return
 		LIGHT_UP_HOUSING
-		flick("[under_floor ? "u":""]comp_tele1", src)
+		FLICK("[under_floor ? "u":""]comp_tele1", src)
 		var/list/destinations = new/list()
 
 		// if we're using the signal id and this matches the signal, use the signal id
@@ -2996,7 +3028,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/press(mob/user)
 		set name = "Press"
-		flick(icon_down, src)
+		FLICK(icon_down, src)
 		LIGHT_UP_HOUSING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 		logTheThing(LOG_STATION, user || usr, "presses the mechcomp button at [log_loc(src)].")
@@ -3193,7 +3225,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
 				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, user)) return
 				LIGHT_UP_HOUSING
-				flick(icon_down, src)
+				FLICK(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
 				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
@@ -3452,18 +3484,18 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			volume_channel = VOLUME_CHANNEL_EMOTE
 		if (islist(sounds) && length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(get_turf(src), sounds[index], volume, 0, channel=volume_channel)
 		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, mod_delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(src, sounds, volume, 0, 0, signum, channel=volume_channel)
 		else
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
-			flick("comp_instrument1", src)
+			FLICK("comp_instrument1", src)
 			playsound(src, sounds, volume, 1, channel=volume_channel)
 			return
 

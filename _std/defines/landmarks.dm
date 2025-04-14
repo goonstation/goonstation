@@ -15,7 +15,13 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 #define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
-#define LANDMARK_RADIO_SHOW_HOST "Radio-Show-Host-Spawn"
+#define LANDMARK_SUPPLY_DELIVERY "Supply-Delivery-Point"
+
+// station job special_spawn_location landmarks
+#define LANDMARK_RADIO_SHOW_HOST_SPAWN "Radio-Show-Host-Spawn"
+#define LANDMARK_JOURNALIST_SPAWN "Journalist-Spawn"
+#define LANDMARK_ACTOR_SPAWN "Actor-Spawn"
+#define LANDMARK_INFLUENCER_SPAWN "Influencer-Spawn"
 
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"

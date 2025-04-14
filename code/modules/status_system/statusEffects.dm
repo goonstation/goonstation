@@ -1730,12 +1730,12 @@
 	visible = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/shiver
-	/// chilled by an ice phoenix
+	/// chilled by a space phoenix
 	var/phoenix_chill = FALSE
 
 	preCheck(atom/A)
 		. = ..()
-		if (istype(A, /mob/living/critter/ice_phoenix))
+		if (istype(A, /mob/living/critter/space_phoenix))
 			. = FALSE
 
 	onAdd(optional)
@@ -3536,15 +3536,15 @@
 		if (src.stacks <= 0)
 			src.owner.delStatus(src)
 
-/datum/statusEffect/ice_phoenix_empowered_feather
+/datum/statusEffect/space_phoenix_empowered_feather
 	id = "phoenix_empowered_feather"
 	name = "Empowered Feather"
 	desc = "Your next feather attack against a pod will deal an extra 10% of its current life on hit, as well as gain a 25% disruption chance."
 	icon_state = "phoenix_feather_emp"
 	effect_quality = STATUS_QUALITY_POSITIVE
 
-/datum/statusEffect/ice_phoenix_sail
-	id = "ice_phoenix_sail"
+/datum/statusEffect/space_phoenix_sail
+	id = "space_phoenix_sail"
 	name = "Sailing"
 	desc = "You are sailing the solar winds, granting a large movement speed buff while in space."
 	icon_state = "phoenix_sail"
@@ -3556,7 +3556,7 @@
 		if (!istype(get_turf(src.owner), /turf/space))
 			src.owner.delStatus(src)
 
-/datum/statusEffect/ice_phoenix_ice_barrier
+/datum/statusEffect/space_phoenix_ice_barrier
 	id = "phoenix_ice_barrier"
 	name = "Ice Barrier"
 	desc = "Attacks against you can only do up to 10 damage."
@@ -3571,7 +3571,7 @@
 		..()
 		src.owner.remove_filter("phoenix_barrier_outline")
 
-/datum/statusEffect/ice_phoenix_vulnerable
+/datum/statusEffect/space_phoenix_vulnerable
 	id = "phoenix_vulnerable"
 	name = "Vulnerable"
 	desc = "You've been made vulnerable, causing you to radiate ice and have halted health regeneration."
@@ -3579,7 +3579,7 @@
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	maxDuration = 30 SECONDS
 
-/datum/statusEffect/ice_phoenix_warmth_counter
+/datum/statusEffect/space_phoenix_warmth_counter
 	id = "phoenix_warmth_counter"
 	name = "Station Warming"
 	icon_state = "phoenix_warmth"
@@ -3588,11 +3588,13 @@
 
 	onUpdate(timePassed)
 		..()
-		var/area/A = get_area(src.owner)
-		if (istype(A, /area/station) && !A.permafrosted)
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		if (!istype(phoenix))
+			return // ???
+
+		if (phoenix.in_dangerous_place())
 			src.time_passed = min(src.time_passed + timePassed, 30 SECONDS)
 			if (src.time_passed >= 30 SECONDS)
-				var/mob/living/critter/ice_phoenix/phoenix = src.owner
 				if (!ON_COOLDOWN(phoenix, "warmth_damage", 1 SECOND))
 					var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
 					phoenix.TakeDamage("All", burn = 4 * mult)
@@ -3620,7 +3622,7 @@
 /datum/statusEffect/cold_snap
 	id = "cold_snap"
 	name = "Cold Snap"
-	desc = "You've been chilled to a dangerous temperature by an ice phoenix!"
+	desc = "You've been chilled to a dangerous temperature by a space phoenix!"
 	icon_state = "phoenix_cold_snap"
 	effect_quality = STATUS_QUALITY_NEGATIVE
 
@@ -3665,12 +3667,13 @@
 	name = "Extra Health Regneration"
 	icon_state = "phoenix_health_regen"
 	effect_quality = STATUS_QUALITY_POSITIVE
-	var/critters_collected = 0
-	var/humans_collected = 0
 
 	getTooltip()
-		var/mob/living/critter/ice_phoenix/phoenix = src.owner
-		return "You have [src.critters_collected]/5 critters and [src.humans_collected]/5 humans collected in your nest, giving you an extra [phoenix.extra_life_regen] points of out of combat health regeneration."
+		var/mob/living/critter/space_phoenix/phoenix = src.owner
+		var/datum/abilityHolder/space_phoenix/ability_holder = phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
+		if (!ability_holder)
+			return "Cannot connect to ability holder, please file a bug report!"
+		return "Extra [phoenix.extra_life_regen] out of combat health regeneration from [min(ability_holder.stored_critter_count, 5)] / 5 critters and [min(ability_holder.stored_human_count, 5)] / 5 humans collected in your nest."
 
 /datum/statusEffect/phoenix_revive_ready
 	id = "phoenix_revive_ready"

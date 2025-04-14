@@ -859,12 +859,12 @@ TYPEINFO(/obj/machinery/conveyor) {
 	use_power(50)
 	operating = 1
 	if(deployed)
-		flick("diverter10",src)
+		FLICK("diverter10",src)
 		icon_state = "diverter0"
 		sleep(1 SECOND)
 		deployed = 0
 	else
-		flick("diverter01",src)
+		FLICK("diverter01",src)
 		icon_state = "diverter1"
 		sleep(1 SECOND)
 		deployed = 1

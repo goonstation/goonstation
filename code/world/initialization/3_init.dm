@@ -142,6 +142,8 @@
 	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
+	Z_LOG_DEBUG("World/Init", "Calculating shipping throw distance...")
+	global.shippingmarket.init()
 
 	//QM Categories by ZeWaka
 	build_qm_categories()

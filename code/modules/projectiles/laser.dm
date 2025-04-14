@@ -348,6 +348,17 @@ toxic - poisons
 				icon_state = "phaser_med"
 			else
 				icon_state = "phaser_light"
+	smg
+		name = "micro phaser bolt"
+		icon_state = "phaser_light"
+		sname = "micro phaser bolt"
+		damage = 8
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
+		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
@@ -464,7 +475,7 @@ toxic - poisons
 		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 		I.set_loc(get_turf(P))
 		I.set_dir(P.dir)
-		flick("ion_fade", I)
+		FLICK("ion_fade", I)
 		I.icon_state = "blank"
 		I.pixel_x = P.pixel_x
 		I.pixel_y = P.pixel_y

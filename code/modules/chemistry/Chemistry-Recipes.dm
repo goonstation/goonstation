@@ -925,6 +925,10 @@
 		id = "laurapalmer_fresh"
 		required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
 
+	laurapalmer/espresso
+		id = "laurapalmer_espresso"
+		required_reagents = list("lemonade" = 1, "espresso" = 1)
+
 	eggnog
 		name = "Eggnog"
 		id = "eggnog"
@@ -1046,6 +1050,10 @@
 	cafe_gele/fresh
 		id = "cafe_gele_fresh"
 		required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
+
+	cafe_gele/espresso
+		id = "cafe_gele_espresso"
+		required_reagents = list("espresso" = 6, "vanilla" = 1, "sugar" = 1)
 
 	sodawater
 		name = "soda water"
@@ -1570,7 +1578,11 @@
 
 	cocktail_w_russian/fresh
 		id = "w_russian_fresh"
-		required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
+		required_reagents = list("vodka" = 1, "coffee_fresh" = 1, "milk" = 1)
+
+	cocktail_w_russian/espresso
+		id = "w_russian_espresso"
+		required_reagents = list("vodka" = 1, "espresso" = 1, "milk" = 1)
 
 	cocktail_w_russian/w_russian2
 		id = "w_russian2"
@@ -1589,6 +1601,10 @@
 	cocktail_irishcoffee/fresh
 		id = "irishcoffee_fresh"
 		required_reagents = list("coffee_fresh" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
+
+	cocktail_irishcoffee/espresso
+		id = "irishcoffee_espresso"
+		required_reagents = list("espresso" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
 
 	cocktail_dbreath
 		name = "Dragon's Breath"
@@ -1648,6 +1664,10 @@
 	cocktail_eraser/fresh
 		id = "eraser_fresh"
 		required_reagents = list("vtonic" = 1, "coffee_fresh" = 1)
+
+	cocktail_eraser/espresso
+		id = "eraser_espresso"
+		required_reagents = list("vtonic" = 1, "espresso" = 1)
 
 	cocktail_madmen
 		name = "Old Fashioned"
@@ -1747,6 +1767,10 @@
 	cocktail_bull/fresh
 		id = "bull_fresh"
 		required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
+
+	cocktail_bull/espresso
+		id = "bull_espresso"
+		required_reagents = list("tequila" = 1, "espresso" = 1)
 
 	cocktail_longisland_rcola
 		name = "Long Island Iced Tea"
@@ -2175,6 +2199,10 @@
 		id = "duckfart_fresh"
 		required_reagents = list("bourbon" = 1, "coffee_fresh" =1 , "milk" = 1)
 
+	duck_fart/espresso
+		id = "duckfart_espresso"
+		required_reagents = list("bourbon" = 1, "espresso" =1 , "milk" = 1)
+
 	pink_lemonade
 		name = "Pink lemonade"
 		id = "pinklemonade"
@@ -2270,6 +2298,10 @@
 	iced/thaiicedcoffee/fresh
 		id = "thaiicedcoffee_fresh"
 		required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+
+	iced/thaiicedcoffee/espresso
+		id = "thaiicedcoffee_espresso"
+		required_reagents = list("espresso" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
 
 	pepperminthotchocolate
 		name = "Peppermint Hot Chocolate"
@@ -4707,6 +4739,10 @@
 	energydrink/fresh
 		id = "energydrink_fresh"
 		required_reagents = list("voltagen" = 1, "coffee_fresh" = 1, "cola" = 3)
+
+	energydrink/espresso
+		id = "energydrink_espresso"
+		required_reagents = list("voltagen" = 1, "espresso" = 1, "cola" = 3)
 
 	voltagen_arc
 		name = "Voltagen Arc"
