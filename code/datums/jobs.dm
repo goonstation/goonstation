@@ -92,10 +92,14 @@
 	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
 	var/wiki_link = null //! Link to the wiki page for this job
 
+	///If this job should show in the ID computer (only works for staple jobs)
+	var/show_in_id_comp = TRUE
+
 	var/counts_as = null //! Name of a job that we count towards the cap of
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
+
 
 	New()
 		..()
@@ -341,6 +345,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	receives_badge = TRUE
+	show_in_id_comp = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
@@ -1031,6 +1036,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list()
 	items_in_backpack = list()
 	uses_character_profile = FALSE
+	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Artificial_Intelligence"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1052,6 +1058,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list()
 	items_in_backpack = list()
 	uses_character_profile = FALSE
+	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Cyborg"
 
 	special_setup(var/mob/living/carbon/human/M)
