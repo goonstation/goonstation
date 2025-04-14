@@ -697,7 +697,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	var/static/camera_counter = 0
 
 	New()
@@ -719,7 +719,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "telescience camera helmet"
 	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
 	camera_tag = "Telescience Helmet Cam"
-	camera_network = "telesci"
+	camera_network = CAMERA_NETWORK_TELESCI
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"

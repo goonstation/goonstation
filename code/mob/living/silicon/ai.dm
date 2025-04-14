@@ -92,7 +92,14 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	/// Camera networks we can connect to
-	var/list/camera_networks = list("SS13", "Robots", "Zeta", "ranch", "telesci", "public")
+	var/list/camera_networks = list(
+		CAMERA_NETWORK_STATION,
+		CAMERA_NETWORK_PUBLIC,
+		CAMERA_NETWORK_ROBOTS,
+		CAMERA_NETWORK_RANCH,
+		CAMERA_NETWORK_SCIENCE,
+		CAMERA_NETWORK_CARGO,
+	)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
@@ -387,7 +394,7 @@ or don't if it uses a custom topopen overlay
 
 		src.camera = new /obj/machinery/camera/auto/AI(src)
 		src.camera.c_tag = src.real_name
-		src.camera.network = "Robots"
+		src.camera.network = CAMERA_NETWORK_ROBOTS
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()

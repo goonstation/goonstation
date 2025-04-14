@@ -1,14 +1,14 @@
 /obj/machinery/computer/security
-	name = "security cameras"
+	name = "security camera viewer"
 	icon_state = "security"
 	circuit_type = /obj/item/circuitboard/security
 	var/obj/machinery/camera/current = null
 	var/mob/last_viewer = null
 	var/list/obj/machinery/camera/favorites = list()
 	var/const/favorites_Max = 8
-	var/network = "SS13"
+	var/list/camera_networks = list(CAMERA_NETWORK_STATION)
 	var/maplevel = 1
-	desc = "A computer that allows one to connect to a security camera network and view camera images."
+	desc = "A computer that allows one to connect to a camera network and view camera images."
 	deconstruct_flags = DECON_MULTITOOL
 	var/chui/window/security_cameras/window
 	var/first_click = 1				//for creating the chui on first use
@@ -44,7 +44,7 @@
 			src.current = null
 			return FALSE
 
-		if (isdead(user) || C.network != src.network)
+		if (isdead(user) || !(C.network in src.camera_networks))
 			return FALSE
 		if (src.current)
 			src.current.move_viewer_to(user, C)
@@ -108,14 +108,32 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "cameras2"
 
+/obj/machinery/computer/security/research
+	name = "research outpost camera viewer"
+	camera_networks = list(CAMERA_NETWORK_SCIENCE)
+	circuit_type = /obj/item/circuitboard/security_research
+
 /obj/machinery/computer/security/wooden_tv
+	name = "security television"
 	icon_state = "security_det"
 	circuit_type = /obj/item/circuitboard/security_tv
 
-/obj/machinery/computer/security/wooden_tv/small
+/obj/machinery/computer/security/wooden_tv/public
 	name = "television"
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
-	network = "public"
+	camera_networks = list(CAMERA_NETWORK_PUBLIC, CAMERA_NETWORK_VSPACE)
+	circuit_type = /obj/item/circuitboard/public_tv
+
+/obj/machinery/computer/security/wooden_tv/cargo
+	name = "routing depot monitor"
+	desc = "A monitor connected to the cargo routing depot camera network."
+	camera_networks = list(CAMERA_NETWORK_CARGO)
+	circuit_type = /obj/item/circuitboard/cargo_tv
+
+/obj/machinery/computer/security/wooden_tv/small
+	name = "small television"
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
+	camera_networks = list(CAMERA_NETWORK_PUBLIC, CAMERA_NETWORK_VSPACE)
 	icon_state = "security_tv"
 	circuit_type = /obj/item/circuitboard/small_tv
 	density = FALSE
@@ -127,13 +145,13 @@
 /obj/machinery/computer/security/wooden_tv/small/virtual
 	desc = "It's making you feel kinda twitchy for some reason."
 	icon = 'icons/effects/VR.dmi'
+	camera_networks = list(CAMERA_NETWORK_VSPACE)
 // --------------------------------------------
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
-	network = "thunder"
 	density = 0
 
 	power_change()

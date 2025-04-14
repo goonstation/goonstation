@@ -3470,10 +3470,7 @@
 	pixel_x = -1;
 	pixel_y = 31
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "A monitor connected to the cargo routing depot camera network.";
-	name = "Routing Depot Monitor";
-	network = "Cargo";
+/obj/machinery/computer/security/wooden_tv/cargo{
 	pixel_y = 10
 	},
 /obj/table/round/auto,
@@ -17984,12 +17981,9 @@
 /area/station/turret_protected/ai)
 "fqg" = (
 /obj/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Routing Depot";
+/obj/machinery/camera/auto/cargo{
 	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
+	c_tag = "Routing Depot - internal"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
@@ -51951,12 +51945,9 @@
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/crew_quarters/cafeteria)
 "pLc" = (
-/obj/machinery/camera{
-	c_tag = "Routing Depot - external";
+/obj/machinery/camera/auto/cargo{
 	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
+	c_tag = "Routing Depot - external"
 	},
 /turf/space,
 /area/space)
@@ -76863,10 +76854,7 @@
 "xeF" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
+	dir = 10
 	},
 /obj/railing/yellow{
 	dir = 4
