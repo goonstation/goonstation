@@ -1177,7 +1177,6 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 //Suits
-ABSTRACT_TYPE(/obj/item/clothing/suit/space/pod_wars)
 /obj/item/clothing/suit/space/pod_wars
 	name = "pod wars space suit"
 
@@ -1268,7 +1267,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/space/pod_wars)
 		setProperty("rangedprot", 1)
 
 //Helmets
-ABSTRACT_TYPE(/obj/item/clothing/head/helmet/space/pod_wars)
 /obj/item/clothing/head/helmet/space/pod_wars
 	name = "pod wars space helmet"
 
