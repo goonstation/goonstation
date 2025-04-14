@@ -296,7 +296,9 @@
 	},
 /area/pod_wars/team2/magnet)
 "aZ" = (
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/machinery/manufacturer/medical/pod_wars{
+	share_id = "nt"
+	},
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},
@@ -828,7 +830,7 @@
 	},
 /area/pod_wars/team1/medbay)
 "cK" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/hangar)
 "cL" = (
@@ -1705,7 +1707,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "fD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 6
 	},
@@ -1927,7 +1929,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "gl" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2628,7 +2630,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
 "iD" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -3374,7 +3376,9 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_6)
 "lf" = (
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/manufacturer/general/pod_wars{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
@@ -3490,7 +3494,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/medbay)
 "lz" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/red/side{
 	dir = 1
@@ -4997,7 +5001,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant)
 "qd" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -5831,14 +5835,6 @@
 	dir = 4
 	},
 /area/pod_wars/team2/bridge)
-"sH" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/pod_wars/spacejunk/fstation/medbay)
 "sI" = (
 /obj/machinery/vending/medical,
 /turf/unsimulated/floor/redwhite{
@@ -6248,7 +6244,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "uf" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6279,7 +6275,9 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "um" = (
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/manufacturer/general/pod_wars{
+	share_id = "synd"
+	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/red/side{
 	dir = 5
@@ -6787,7 +6785,9 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_22)
 "vW" = (
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/machinery/manufacturer/medical/pod_wars{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
@@ -6852,7 +6852,7 @@
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
 "we" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6989,7 +6989,7 @@
 /turf/space,
 /area/pod_wars/team2/power)
 "wy" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -7121,7 +7121,9 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "wV" = (
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/manufacturer/general/pod_wars{
+	share_id = "nt"
+	},
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
@@ -7362,7 +7364,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/uvb67/power)
 "xH" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/manufacturer/pod_wars/syndicate{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -8094,7 +8098,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "Aa" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -8413,6 +8417,8 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools/maybe_few,
 /obj/item/storage/belt/utility,
+/obj/item/storage/box/lightbox/tubes,
+/obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -9714,7 +9720,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "EW" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -10103,6 +10109,12 @@
 	dir = 4
 	},
 /area/pod_wars/team2/mining)
+"FZ" = (
+/obj/machinery/manufacturer/pod_wars/syndicate,
+/turf/unsimulated/floor/red/side{
+	dir = 1
+	},
+/area/pod_wars/team2/hangar)
 "Ga" = (
 /obj/machinery/computer/pod_wars_minimap_controller/nanotrasen,
 /turf/unsimulated/floor/blue,
@@ -10692,7 +10704,9 @@
 	},
 /area/pod_wars/team2/medbay)
 "Ie" = (
-/obj/machinery/manufacturer/pod_wars/nanotrasen,
+/obj/machinery/manufacturer/pod_wars/nanotrasen{
+	share_id = "nt"
+	},
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
@@ -11039,7 +11053,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/fstation)
 "Ji" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -11320,7 +11334,7 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
 "Kc" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -11534,7 +11548,9 @@
 	},
 /area/pod_wars/team1/mining)
 "KL" = (
-/obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
+/obj/machinery/manufacturer/mining/pod_wars/syndicate{
+	share_id = "synd"
+	},
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side{
 	dir = 8
@@ -11960,7 +11976,9 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/uvb67/central)
 "Mo" = (
-/obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
+/obj/machinery/manufacturer/mining/pod_wars/nanotrasen{
+	share_id = "nt"
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -12955,7 +12973,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/powergen)
 "PK" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -13018,7 +13036,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "PV" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -13144,7 +13162,9 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "Qt" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/manufacturer/pod_wars/syndicate{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -13275,7 +13295,7 @@
 	},
 /area/space)
 "QR" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -13555,7 +13575,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "RJ" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -14204,7 +14224,9 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "TD" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/manufacturer/pod_wars/syndicate{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/yellow/corner,
 /area/pod_wars/team2/hangar)
 "TE" = (
@@ -14825,7 +14847,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/fstation/primary)
 "VN" = (
-/obj/machinery/manufacturer/mining/pod_wars/nanotrasen,
+/obj/machinery/manufacturer/mining/pod_wars/nanotrasen{
+	share_id = "nt"
+	},
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
@@ -15032,7 +15056,9 @@
 	},
 /area/pod_wars/team2/magnet)
 "Wt" = (
-/obj/machinery/manufacturer/general/pod_wars,
+/obj/machinery/manufacturer/general/pod_wars{
+	share_id = "nt"
+	},
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
@@ -15785,13 +15811,15 @@
 	},
 /area/pod_wars/team2/aftprimaryhall)
 "YD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
 /area/pod_wars/team2/hangar)
 "YE" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/manufacturer/pod_wars/syndicate{
+	share_id = "synd"
+	},
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -15929,7 +15957,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "YY" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -16262,7 +16290,7 @@
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
 "ZZ" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -77931,9 +77959,9 @@ jN
 DY
 jb
 rt
-sH
+rt
 SL
-sH
+rt
 rt
 rt
 xC
@@ -78745,7 +78773,7 @@ eC
 eC
 eC
 eC
-dU
+fY
 Zm
 Zm
 Zm
@@ -78953,7 +78981,7 @@ XC
 wK
 af
 dU
-dU
+fY
 dU
 dU
 eC
@@ -79151,8 +79179,8 @@ eC
 eC
 dU
 dU
-fY
-fY
+dU
+dU
 dU
 dU
 eC
@@ -123627,7 +123655,7 @@ Ch
 cS
 Ee
 nh
-oh
+FZ
 Hc
 qa
 LJ

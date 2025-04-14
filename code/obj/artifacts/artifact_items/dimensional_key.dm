@@ -112,7 +112,7 @@
 
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
-	type_name = "Dimensional key"
+	type_name = "Dimensional Key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
 	validtypes = list("eldritch", "precursor")
