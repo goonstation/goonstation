@@ -176,16 +176,15 @@
 			if (QDELETED(message))
 				return
 
-	src.add_message_to_buffer(message)
-
+	// Add a copy of the message to the message buffers of all importing listen module trees.
 	if (message.flags & SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES)
-		return
+		for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
+			if (!tree.enabled)
+				continue
 
-	for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
-		if (!tree.enabled)
-			continue
+			tree.add_message_to_buffer(message.Copy())
 
-		tree.add_message_to_buffer(message.Copy())
+	src.add_message_to_buffer(message)
 
 /// Adds a message to the message buffer, and registers the appropriate signals to the tree.
 /datum/listen_module_tree/proc/add_message_to_buffer(datum/say_message/message)

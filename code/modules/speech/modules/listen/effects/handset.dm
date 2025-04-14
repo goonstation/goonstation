@@ -10,7 +10,7 @@
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = handset.parent
 	signal.encryption = "\ref[handset.parent]"
-	signal.data["message"] = message.Copy()
+	signal.data["message"] = message
 	signal.data["address_1"] = handset.parent.linked.net_id
 
 	SEND_SIGNAL(handset.parent, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, handset.parent.frequency)

@@ -26,7 +26,7 @@
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = radio
 	signal.encryption = "\ref[radio]"
-	signal.data["message"] = message.Copy()
+	signal.data["message"] = message
 
 	radio.last_transmission = world.time
 
