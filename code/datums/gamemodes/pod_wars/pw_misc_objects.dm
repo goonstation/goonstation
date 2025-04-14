@@ -1354,3 +1354,15 @@ ABSTRACT_TYPE(/obj/item/clothing/head/helmet/space/pod_wars)
 		setProperty("meleeprot_head", 4)
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
+
+//End of Pod Wars space suits and helmets
+
+/obj/item/storage/pouch/highcap/pod_wars
+	name = "tactical pouch"
+	desc = "A large pouch for carrying multiple miscellaneous things at once."
+	icon_state = "ammopouch-quad"
+	w_class = W_CLASS_SMALL
+	max_wclass = W_CLASS_NORMAL
+	slots = 4
+	opens_if_worn = TRUE
+	can_hold = null
