@@ -1426,10 +1426,6 @@
 /obj/machinery/ghostdrone_factory/part2,
 /turf/simulated/floor,
 /area/station/devzone)
-"AX" = (
-/obj/item/device/radio/headset/pod_wars/syndicate,
-/turf/simulated/floor/orangeblack,
-/area/station/devzone)
 "Be" = (
 /obj/cryotron,
 /turf/unsimulated/floor/blue,
@@ -2537,10 +2533,6 @@
 /area/station/devzone)
 "Vk" = (
 /turf/simulated/floor/grass/random,
-/area/station/devzone)
-"VE" = (
-/obj/item/device/radio/headset/pod_wars/nanotrasen,
-/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "VJ" = (
 /obj/machinery/atmospherics/unary/tank{
@@ -4569,7 +4561,7 @@ Yx
 Yx
 Yx
 Yx
-VE
+ng
 ng
 ng
 ng
@@ -4612,7 +4604,7 @@ qH
 qH
 Ap
 Yx
-AX
+ng
 Yx
 cD
 Yx
