@@ -9,11 +9,46 @@
 	desc = "A pretty nice flower... you shouldn't see this, though."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
+	flags = SUPPRESSATTACK
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
+	var/datum/forensic_id/sleuth_scent = null // What the flower smells like
+
+	New()
+		var/s_color = src.pick_sleuth_scent()
+		if(s_color)
+			src.sleuth_scent = register_id(s_color)
+			apply_scent(src, src.sleuth_scent)
+		..()
+
+	equipped(mob/user, slot)
+		..()
+		apply_scent(user, src.sleuth_scent)
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		apply_scent(target, src.sleuth_scent)
+		var/waves = pick("waves","shakes","flutters","twirls","whirls","dances")
+		var/around = pick("around","by","about","all over","beside","throughout")
+		user.visible_message("[user] [waves] \the [src] [around] \the [target].")
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 20, TRUE, 0, 2)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
 		return src
 
+	proc/pick_sleuth_scent()
+		return null
+
+	proc/apply_scent(var/atom/target, var/datum/forensic_id/scent)
+		if(!scent)
+			return
+		var/datum/forensic_data/basic/f_data
+		if(src == target)
+			f_data = new(scent, flags = IS_FAKE)
+			f_data.time_end = INFINITY
+		else
+			f_data = new(scent, flags = IS_FAKE | REMOVE_CLEANING)
+		target.add_evidence(f_data, FORENSIC_GROUP_SLEUTH)
 
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
@@ -21,32 +56,66 @@
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
 
+	pick_sleuth_scent()
+		return pick_string("colors.txt", "colors") // White flowers == any color?
+
 /obj/item/clothing/head/flower/bird_of_paradise
 	name = "bird of paradise"
 	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
 
+	pick_sleuth_scent()
+		return pick("fuzzy orange", "sky blue")
+
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
 	desc = " Hydrangeas act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. They are popular ornamental flowers due to their colorful pastel blooms; this one has been trimmed nicely for wear as an accessory."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
+	var/datum/forensic_id/sleuth_scent_B = null // This flower's subtypes can have two scents at once
+
+	New()
+		..()
+		apply_scent(src, src.sleuth_scent_B)
+
+	equipped(mob/user, slot)
+		..()
+		apply_scent(user, src.sleuth_scent_B)
+
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		apply_scent(target, src.sleuth_scent_B)
+
+	pick_sleuth_scent()
+		return "dusty grey"
 
 /obj/item/clothing/head/flower/hydrangea/pink
 	name = "pink hydrangea"
 	icon_state = "flower_hyd-pink"
 	item_state = "flower_hyd-pink"
 
+	New()
+		src.sleuth_scent_B = register_id("candy pink")
+		..()
+
 /obj/item/clothing/head/flower/hydrangea/blue
 	name = "blue hydrangea"
 	icon_state = "flower_hyd-blue"
 	item_state = "flower_hyd-blue"
 
+	New()
+		src.sleuth_scent_B = register_id("sapphire blue")
+		..()
+
 /obj/item/clothing/head/flower/hydrangea/purple
 	name = "purple hydrangea"
 	icon_state = "flower_hyd-purple"
 	item_state = "flower_hyd-purple"
+
+	New()
+		src.sleuth_scent_B = register_id("amethyst purple")
+		..()
 
 /obj/item/clothing/head/flower/lavender
 	name = "lavender"
@@ -57,6 +126,9 @@
 	New()
 		src.create_reagents(100)
 		..()
+
+	pick_sleuth_scent()
+		return "lavender purple"
 
 /obj/item/clothing/head/flower/rose
 	name = "rose"
@@ -140,8 +212,13 @@
 			SPAWN(0.1 SECONDS)
 				user.drop_item(src, FALSE)
 
+	pick_sleuth_scent()
+		return "blood red"
+
 /obj/item/clothing/head/flower/rose/poisoned
 	///Trick roses don't poison on attack, only on pickup
+	flags = 0
+	hide_attack = ATTACK_VISIBLE
 	var/trick = FALSE
 	attack(mob/M, mob/user, def_zone)
 		if (!..() || is_incapacitated(M) || src.trick)
@@ -164,6 +241,9 @@
 		//DO NOT add the SECONDS define to this, bioHolders are cursed and don't believe in ticks
 		M.bioHolder?.AddEffect("mute", timeleft = 40, do_stability = FALSE, magical = TRUE)
 
+	pick_sleuth_scent()
+		return "jade green"
+
 /obj/item/clothing/head/flower/rose/holorose
 	name = "holo rose"
 	desc = "A holographic display of a Rose. This one likes to be called "
@@ -175,6 +255,9 @@
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+	pick_sleuth_scent()
+		return null
 
 // Pumpkin hats
 

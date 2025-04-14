@@ -66,6 +66,7 @@
 #include "defines\faith.dm"
 #include "defines\floors.dm"
 #include "defines\fluid.dm"
+#include "defines\forensics.dm"
 #include "defines\gang.dm"
 #include "defines\food.dm"
 #include "defines\hydroponics.dm"
