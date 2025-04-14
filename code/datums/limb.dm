@@ -403,6 +403,7 @@
 		cooldown = 0.25 SECONDS
 		reload_time = 0
 		spread_angle = 1
+		use_lastattacked_click_delay = FALSE
 		has_space_pushback = FALSE
 
 		shoot(atom/target, mob/user, pointblank = FALSE, params)
