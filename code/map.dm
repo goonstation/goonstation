@@ -387,7 +387,7 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo office (QM)" = list(/area/station/quartermaster/office),
-		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the engineering control room" = list(/area/station/engine/monitoring, /area/station/engine/power),
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
@@ -1001,10 +1001,10 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/clown = 2,
 		/datum/job/security/security_officer = 6,
 		/datum/job/security/detective = 1,
-		/datum/job/research/geneticist = 3,
-		/datum/job/research/roboticist = 3,
+		/datum/job/medical/geneticist = 3,
+		/datum/job/medical/roboticist = 3,
 		/datum/job/research/scientist = 6,
-		/datum/job/research/medical_doctor = 7,
+		/datum/job/medical/medical_doctor = 7,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,
@@ -1137,7 +1137,7 @@ var/global/list/mapNames = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/hairdresser = 1,
 		/datum/job/research/research_assistant = 2,
-		/datum/job/research/medical_assistant = 2
+		/datum/job/medical/medical_assistant = 2
 	)
 
 	windows = /obj/window/auto

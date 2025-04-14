@@ -76,20 +76,20 @@
 	switch(animation)
 		if("opening")
 			if (src.vertical)
-				flick("vopen", src)
+				FLICK("vopen", src)
 			else
-				flick("open", src)
+				FLICK("open", src)
 		if("closing")
 			if (src.vertical)
-				flick("vclose", src)
+				FLICK("vclose", src)
 			else
-				flick("close", src)
+				FLICK("close", src)
 		if("deny")
 			if (!src.panel_open)
 				if (src.vertical)
-					flick("vdeny", src)
+					FLICK("vdeny", src)
 				else
-					flick("deny", src)
+					FLICK("deny", src)
 				playsound(src, 'sound/machines/airlock_deny_temp.ogg', 100, FALSE) // kinda hacky, oh well
 	src.UpdateIcon()
 

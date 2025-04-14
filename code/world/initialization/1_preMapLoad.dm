@@ -63,6 +63,12 @@
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 
+#ifdef RP_MODE
+	config.load("config/gamemodes_rp.txt")
+#else
+	config.load("config/gamemodes.txt")
+#endif
+
 	if (config.server_specific_configs && world.port > 0)
 		var/specific_config = "config/config-[world.port].txt"
 		if (fexists(specific_config))
@@ -90,7 +96,7 @@
 	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
-		recursiveFileLoader("browserassets/")
+		recursiveFileLoader("browserassets/src/")
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()

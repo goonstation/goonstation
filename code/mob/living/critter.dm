@@ -704,7 +704,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
 		HH.limb.attack_range(target, src, params)
 		HH.set_cooldown_overlay()
-		src.lastattacked = get_weakref(src)
+		if (HH.limb.use_lastattacked_click_delay)
+			src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 

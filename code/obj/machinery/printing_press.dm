@@ -117,7 +117,7 @@
 			var/image/I = SafeGetOverlayImage("ink", src.icon, "ink-[ink_num]")
 			src.UpdateOverlays(I, "ink")
 		if (src.is_running)
-			flick("printing_press-work", src)
+			FLICK("printing_press-work", src)
 			return
 		icon_state = "printing_press-idle"
 

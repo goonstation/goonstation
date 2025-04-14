@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
 
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
-	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	desc = "Made from real Space Bovine, but don't call it cowhide."
 	icon_state = "ljacket"
 	item_state = "ljacket"
 
@@ -427,12 +427,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 
 	para_troop
 		name = "rapid response armor"
-		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vaccuum rated. This one bears security insignia."
+		desc = "A protective padded suit for emergency reponse personnel. Tailored for ground operations, not vacuum rated. This one bears security insignia."
 		armor_icon = "para_sec"
 
 	para_eng
 		name = "rapid response armor"
-		desc = "A protective padded suit for emergency response personnel. Tailored for ground operations, not vaccuum rated. This one bears engineering insignia."
+		desc = "A protective padded suit for emergency response personnel. Tailored for ground operations, not vacuum rated. This one bears engineering insignia."
 		armor_icon = "para_eng"
 
 /obj/item/clothing/suit/space/suv
@@ -1207,7 +1207,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/lshirt
 	name = "long sleeved shirt"
-	desc = "A long sleeved shirt. It has a sinister looking cyborg head printed on the front."
+	desc = "A long sleeved shirt. It has a sinister-looking cyborg head printed on the front."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "lshirt"
@@ -1222,13 +1222,13 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "long sleeved logo shirt"
 		icon_state = "dan_red"
 		item_state = "dan_red"
-		desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+		desc = "A comfy-looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
 
 	dan_blue
 		name = "long sleeved logo shirt"
 		icon_state = "dan_blue"
 		item_state = "dan_blue"
-		desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+		desc = "A comfy-looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
 
 // SPACE SUITS
 
@@ -1315,10 +1315,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	blue
 		icon_state = "spacecap-blue"
 		item_state = "spacecap-blue"
+		desc = "A suit that protects against low pressure environments and is blue."
 
 	red
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
+		desc = "A suit that protects against low pressure environments and is red."
 
 /obj/item/clothing/suit/space/syndicate_worn
 	name = "worn syndicate space suit"
@@ -1333,7 +1335,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
-	team_num = TEAM_SYNDICATE
 	item_function_flags = IMMUNE_TO_ACID
 
 	New()
@@ -1343,18 +1344,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	setupProperties()
 		..()
 		setProperty("heatprot", 35)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 
 	setupProperties()
 		..()
@@ -1369,19 +1358,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
-		team_num = TEAM_SYNDICATE
 		hides_from_examine = C_UNIFORM|C_SHOES
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 		setupProperties()
 			..()
@@ -1750,18 +1727,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	pilot
 		name = "NT space suit"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
-		team_num = TEAM_NANOTRASEN
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 		setupProperties()
 			..()
@@ -1772,19 +1737,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			name = "commander's great coat"
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
-			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
-			team_num = TEAM_NANOTRASEN
-			#ifdef MAP_OVERRIDE_POD_WARS
-			attack_hand(mob/user)
-				if (get_pod_wars_team_num(user) == team_num)
-					..()
-				else
-					boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-					make_fake_explosion(src)
-					user.u_equip(src)
-					src.dropped(user)
-					qdel(src)
-			#endif
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been painted blue?"
 
 			setupProperties()
 				..()
@@ -2200,7 +2153,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
-	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
 
@@ -2250,6 +2202,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "Hall Monitor Badge"
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
+
+/obj/item/clothing/suit/security_badge/nanotrasen
+	name = "Nanotrasen Badge"
+	desc = "An official badge for a Nanotrasen Responder."
+	icon_state = "security_badge_nanotrasen"
 
 /obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"
@@ -2610,3 +2567,45 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "naturerobe"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
+
+// Denim Dresses
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
+/obj/item/clothing/suit/dress/denim
+	name = "denim dress"
+	desc = "A pair of overalls with legs lopped off! Breezy and stylish."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/suit/dress/denim/blue
+	name = "blue denim dress"
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+
+/obj/item/clothing/suit/dress/denim/turquoise
+	name = "turquoise denim dress"
+	icon_state = "denim_dress-turquoise"
+	item_state = "denim_dress-turquoise"
+
+/obj/item/clothing/suit/dress/denim/white
+	name = "white denim dress"
+	icon_state = "denim_dress-white"
+	item_state = "denim_dress-white"
+
+/obj/item/clothing/suit/dress/denim/black
+	name = "black denim dress"
+	icon_state = "denim_dress-black"
+	item_state = "denim_dress-black"
+
+/obj/item/clothing/suit/dress/denim/grey
+	name = "grey denim dress"
+	icon_state = "denim_dress-grey"
+	item_state = "denim_dress-grey"
+
+/obj/item/clothing/suit/dress/denim/khaki
+	name = "khaki denim dress"
+	icon_state = "denim_dress-khaki"
+	item_state = "denim_dress-khaki"

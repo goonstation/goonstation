@@ -66,7 +66,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("[src.icon_state]-act", src)
+			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("[src.icon_state]-act", src)
+			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored)

@@ -12,11 +12,6 @@
 	var/commander_job_title			//for commander selection
 	var/datum/game_mode/pod_wars/mode
 
-	var/list/datum/resources = list(
-		/obj/item/material_piece/mauxite = 20,
-		/obj/item/material_piece/pharosium = 20,
-		/obj/item/material_piece/molitz = 20) // List of material resources
-
 	//These two are for playing sounds, they'll only play for the first death or system destruction.
 	var/first_system_destroyed = 0
 	var/first_commander_death = 0
@@ -41,11 +36,11 @@
 		switch(team_num)
 			if (TEAM_NANOTRASEN)
 				name = "NanoTrasen"
-				commander_job_title = "NanoTrasen Commander"
+				commander_job_title = "NanoTrasen Pod Commander"
 				base_area = /area/pod_wars/team1 //area north, NT crew
 			if (TEAM_SYNDICATE)
 				name = "Syndicate"
-				commander_job_title = "Syndicate Commander"
+				commander_job_title = "Syndicate Pod Commander"
 				base_area = /area/pod_wars/team2 //area south, Syndicate crew
 
 		setup_voice_line_alt_amounts()
@@ -101,8 +96,8 @@
 			var/mob/new_player/M = mind.current
 			if (!istype(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
-			if(jobban_isbanned(M, "NanoTrasen Commander")) continue
-			if(jobban_isbanned(M, "Syndicate Commander")) continue
+			if(jobban_isbanned(M, "NanoTrasen Pod Commander")) continue
+			if(jobban_isbanned(M, "Syndicate Pod Commander")) continue
 
 			if ((M.ready) && !candidates.Find(M.mind))
 				switch(priority)
@@ -144,14 +139,14 @@
 			var/mob/new_player/N = M
 			if (team_num == TEAM_NANOTRASEN)
 				if (M.mind == commander)
-					H.mind.assigned_role = "NanoTrasen Commander"
+					H.mind.assigned_role = "NanoTrasen Pod Commander"
 				else
 					H.mind.assigned_role = "NanoTrasen Pod Pilot"
 				H.mind.special_role = "NanoTrasen"
 
 			else if (team_num == TEAM_SYNDICATE)
 				if (M.mind == commander)
-					H.mind.assigned_role = "Syndicate Commander"
+					H.mind.assigned_role = "Syndicate Pod Commander"
 				else
 					H.mind.assigned_role = "Syndicate Pod Pilot"
 				H.mind.special_role = "Syndicate"

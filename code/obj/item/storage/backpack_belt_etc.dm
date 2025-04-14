@@ -336,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -1217,5 +1217,7 @@ TYPEINFO(/obj/item/inner_tube)
 	item_state = "secbelt"
 	check_wclass = 0
 	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
 
 // End of pod wars belts and holsters

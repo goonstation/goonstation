@@ -34,7 +34,7 @@
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
 				animation.master = src
-				flick("monkey2h", animation)
+				FLICK("monkey2h", animation)
 				sleep(1 SECOND)
 				qdel(animation)
 				qdel(H.mutantrace)
