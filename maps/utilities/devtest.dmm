@@ -911,6 +911,10 @@
 "rz" = (
 /turf/simulated/floor/engine/glow/blue,
 /area/space)
+"rF" = (
+/obj/item/card/id/captains_spare,
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "rG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -1012,6 +1016,10 @@
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
+/area/station/devzone)
+"uu" = (
+/obj/machinery/computer/card/department/medical,
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "ux" = (
 /obj/machinery/light,
@@ -1130,6 +1138,10 @@
 "wy" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/blue/checker,
+/area/station/devzone)
+"wI" = (
+/obj/storage/secure/closet/medical/medkit,
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "wY" = (
 /obj/machinery/conveyor/SN{
@@ -1272,6 +1284,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/devzone)
+"zg" = (
+/obj/machinery/computer/card,
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "zk" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -1357,6 +1373,10 @@
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
+/area/station/devzone)
+"Al" = (
+/obj/machinery/computer/card/department/security,
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Ap" = (
 /obj/forcefield/energyshield/perma{
@@ -1620,6 +1640,14 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
+/area/station/devzone)
+"Fc" = (
+/obj/item/card/id,
+/obj/item/card/id,
+/obj/item/card/id,
+/obj/item/card/id,
+/obj/item/card/id,
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Fe" = (
 /obj/machinery/chem_master,
@@ -2439,6 +2467,10 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"Tt" = (
+/obj/storage/secure/closet/security/equipment,
+/turf/simulated/floor,
+/area/station/devzone)
 "Tu" = (
 /turf/unsimulated/floor/engine/caution/east,
 /area/station/devzone)
@@ -2576,6 +2608,10 @@
 /area/station/devzone)
 "Wj" = (
 /obj/submachine/weapon_vendor/security,
+/turf/simulated/floor,
+/area/station/devzone)
+"Wk" = (
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor,
 /area/station/devzone)
 "Wm" = (
@@ -4561,10 +4597,10 @@ Yx
 Yx
 Yx
 Yx
-ng
-ng
-ng
-ng
+zg
+rF
+Fc
+wI
 ng
 ng
 ng
@@ -4604,10 +4640,10 @@ qH
 qH
 Ap
 Yx
-ng
+Al
 Yx
 cD
-Yx
+Wk
 Yx
 Yx
 Yx
@@ -4647,10 +4683,10 @@ hR
 hR
 qg
 Yx
-ng
+uu
 Yx
 Yx
-Yx
+Tt
 Yx
 Yx
 Yx
