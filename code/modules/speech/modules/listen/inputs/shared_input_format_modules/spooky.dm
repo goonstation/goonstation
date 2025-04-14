@@ -2,6 +2,8 @@
 	id = LISTEN_INPUT_GHOSTLY_WHISPER
 
 /datum/shared_input_format_module/spooky/process(datum/say_message/message)
+	. = message
+
 	message.flags |= SAYFLAG_NO_MAPTEXT | SAYFLAG_NO_SAY_VERB
 	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
 	message.speaker_to_display = ""

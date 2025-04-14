@@ -10,4 +10,5 @@ ABSTRACT_TYPE(/datum/shared_input_format_module)
 
 /// Applies shared processing and formatting to the message.
 /datum/shared_input_format_module/proc/process(datum/say_message/message)
-	return
+	RETURN_TYPE(/datum/say_message)
+	return message

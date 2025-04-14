@@ -5,7 +5,6 @@
 /datum/speech_module/modifier/test_dummy/process(datum/say_message/message)
 	var/mob/living/carbon/human/tdummy/dummy = message.speaker
 	if (!istype(dummy) || dummy.shutup)
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message

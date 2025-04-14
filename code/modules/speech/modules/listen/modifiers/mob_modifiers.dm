@@ -14,10 +14,8 @@
 	var/mob/mob_listener = src.parent_tree.listener_parent
 
 	if (!mob_listener.hearing_check(TRUE))
-		qdel(message)
-		return null
+		return NO_MESSAGE
 
 	if ((isunconscious(mob_listener) || mob_listener.sleeping || mob_listener.getStatusDuration("unconscious")) && prob(20))
 		boutput(mob_listener, "<i>... You can almost hear something ...</i>")
-		qdel(message)
-		return null
+		return NO_MESSAGE

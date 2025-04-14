@@ -3,6 +3,8 @@
 	var/is_admin = FALSE
 
 /datum/shared_input_format_module/ooc/process(datum/say_message/message)
+	. = message
+
 	if (!ismob(message.speaker))
 		return
 

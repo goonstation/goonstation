@@ -5,8 +5,7 @@
 /datum/speech_module/modifier/bot/process(datum/say_message/message)
 	var/obj/machinery/bot/bot = message.speaker
 	if (!istype(bot) || !bot.on || bot.muted)
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message
 	message.maptext_css_values["color"] = bot.bot_speech_color
@@ -52,7 +51,7 @@
 
 		if (3)
 			message.speaker.visible_message("<span class='combat'><b>[message.speaker]'s speaker crackles oddly!</b></span>")
-			return null
+			return NO_MESSAGE
 
 		if (4)
 			message.content = uppertext(message.content)

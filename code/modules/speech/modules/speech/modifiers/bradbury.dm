@@ -5,7 +5,6 @@
 /datum/speech_module/modifier/bradbury/process(datum/say_message/message)
 	var/obj/machinery/derelict_aiboss/ai/bradbury = message.speaker
 	if (!istype(bradbury) || !bradbury.on)
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message

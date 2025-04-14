@@ -12,8 +12,7 @@
 
 	// Prevent speech if the speaker is dead or unconscious.
 	if (speaker.stat != STAT_ALIVE)
-		qdel(message)
-		return null
+		return NO_MESSAGE
 
 	// Handle breath modifiers.
 	if (iscarbon(speaker))

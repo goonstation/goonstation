@@ -5,7 +5,6 @@
 /datum/speech_module/modifier/machinery/process(datum/say_message/message)
 	var/obj/machinery/machinery_speaker = message.speaker
 	if (!istype(machinery_speaker) || (machinery_speaker.status & NOPOWER))
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message

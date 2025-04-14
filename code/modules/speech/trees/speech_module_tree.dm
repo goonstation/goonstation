@@ -131,13 +131,13 @@
 		for (var/modifier_id in src.speech_modifiers_by_id)
 			message = src.speech_modifiers_by_id[modifier_id].process(message)
 			// If the module consumed the message, no need to process any further.
-			if (QDELETED(message))
+			if (!message)
 				return
 	else
 		for (var/modifier_id in src.persistent_speech_modifiers_by_id)
 			message = src.persistent_speech_modifiers_by_id[modifier_id].process(message)
 			// If the module consumed the message, no need to process any further.
-			if (QDELETED(message))
+			if (!message)
 				return
 
 	// If a combination of message modifiers caused the message's content to become uncool, log the modifier combination and garble the uncool words.

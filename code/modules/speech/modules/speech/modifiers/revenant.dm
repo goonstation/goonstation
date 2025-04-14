@@ -7,4 +7,4 @@
 		return message
 
 	message.speaker.visible_message(SPAN_ALERT("[message.speaker] makes some [pick("eldritch", "eerie", "otherworldly", "netherly", "spooky", "demonic", "haunting")] noises!"))
-	qdel(message)
+	return NO_MESSAGE

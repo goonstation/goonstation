@@ -7,4 +7,4 @@
 		return message
 
 	boutput(message.speaker, SPAN_ALERT("You seem to be unable to speak."))
-	qdel(message)
+	return NO_MESSAGE

@@ -6,8 +6,7 @@
 	message.flags |= SAYFLAG_NO_MAPTEXT
 
 	if (message.prefix == ";")
-		src.parent_tree.GetOutputByID(SPEECH_OUTPUT_DEADCHAT)?.process(message)
-		return
+		return src.parent_tree.GetOutputByID(SPEECH_OUTPUT_DEADCHAT)?.process(message)
 
 	var/mind_ref = ""
 	if (ismob(message.speaker))

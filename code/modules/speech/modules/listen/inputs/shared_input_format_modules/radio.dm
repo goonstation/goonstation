@@ -2,6 +2,8 @@
 	id = LISTEN_INPUT_RADIO_DISTORTED
 
 /datum/shared_input_format_module/distorted_radio/process(datum/say_message/message)
+	. = message
+
 	if (isnull(message.speaker_to_display))
 		message.speaker_to_display = message.real_ident
 

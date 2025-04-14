@@ -4,8 +4,7 @@
 /datum/listen_module/modifier/radio/process(datum/say_message/message)
 	// If this message has already been relayed by a radio, don't receive it.
 	if (!CAN_RELAY_MESSAGE(message, SAY_RELAY_RADIO))
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message
 

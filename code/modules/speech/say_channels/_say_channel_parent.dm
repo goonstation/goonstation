@@ -48,8 +48,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 		var/datum/say_message/module_message = message.Copy()
 		var/datum/shared_input_format_module/format_module = global.SpeechManager.GetSharedInputFormatModuleInstance(initial(type.id))
 		if (format_module)
-			format_module.process(module_message)
-			if (QDELETED(module_message))
+			module_message = format_module.process(module_message)
+			if (!module_message)
 				continue
 
 		for (var/datum/listen_module/input/heard as anything in listen_modules_by_type[type])
@@ -77,8 +77,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 		var/datum/say_message/module_message = message.Copy()
 		var/datum/shared_input_format_module/format_module = global.SpeechManager.GetSharedInputFormatModuleInstance(initial(type.id))
 		if (format_module)
-			format_module.process(module_message)
-			if (QDELETED(module_message))
+			module_message = format_module.process(module_message)
+			if (!module_message)
 				continue
 
 		for (var/datum/listen_module/input/heard as anything in listen_modules_by_type[type])

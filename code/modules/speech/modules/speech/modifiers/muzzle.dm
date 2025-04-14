@@ -7,4 +7,4 @@
 		return message
 
 	boutput(message.speaker, SPAN_ALERT("Your muzzle prevents you from speaking."))
-	qdel(message)
+	return NO_MESSAGE

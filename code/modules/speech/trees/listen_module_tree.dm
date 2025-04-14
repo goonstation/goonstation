@@ -161,19 +161,19 @@
 		else
 			message = message.language.heard_not_understood(message)
 
-		if (QDELETED(message))
+		if (!message)
 			return
 
 		for (var/modifier_id in src.listen_modifiers_by_id)
 			message = src.listen_modifiers_by_id[modifier_id].process(message)
 			// If the module consumed the message, no need to process any further.
-			if (QDELETED(message))
+			if (!message)
 				return
 	else
 		for (var/modifier_id in src.persistent_listen_modifiers_by_id)
 			message = src.persistent_listen_modifiers_by_id[modifier_id].process(message)
 			// If the module consumed the message, no need to process any further.
-			if (QDELETED(message))
+			if (!message)
 				return
 
 	// Add a copy of the message to the message buffers of all importing listen module trees.
@@ -190,7 +190,6 @@
 /datum/listen_module_tree/proc/add_message_to_buffer(datum/say_message/message)
 	// If a message of this ID already exists in the buffer, do not buffer the new message unless it was heard by a higher priority module.
 	if (src.message_buffer[message.id] && (message.received_module.priority <= src.message_buffer[message.id].received_module.priority))
-		qdel(message)
 		return
 
 	src.message_buffer[message.id] = message
@@ -209,8 +208,6 @@
 		if (src.signal_recipients[message.signal_recipient])
 			src.UnregisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
 			src.signal_recipients -= message.signal_recipient
-
-		qdel(message)
 
 	src.message_buffer = list()
 

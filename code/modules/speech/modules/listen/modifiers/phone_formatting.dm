@@ -4,8 +4,7 @@
 /datum/listen_module/modifier/phone/process(datum/say_message/message)
 	// If this message has already been relayed by a phone, don't receive it.
 	if (!CAN_RELAY_MESSAGE(message, SAY_RELAY_PHONE))
-		qdel(message)
-		return
+		return NO_MESSAGE
 
 	. = message
 

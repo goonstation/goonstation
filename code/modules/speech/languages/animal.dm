@@ -2,4 +2,4 @@
 	id = LANGUAGE_ANIMAL
 
 /datum/language/animal/heard_not_understood(datum/say_message/message, datum/listen_module_tree/listen_tree)
-	qdel(message)
+	return NO_MESSAGE
