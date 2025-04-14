@@ -2982,7 +2982,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to [M].")
 							logTheThing(LOG_DIARY, usr, "added animation [animationpick] to [M].", "admin")
 						else
-							tgui_alert(usr,"You must be at least a Primary Administrator to affect player reagents.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to animate mobs.")
 							return
 
 					if ("animate_all")
@@ -3000,7 +3000,7 @@ var/global/noir = 0
 							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to everyone.")
 							logTheThing(LOG_DIARY, usr, "added animation [animationpick] to everyone.", "admin")
 						else
-							tgui_alert(usr,"You must be at least a Primary Administrator to affect player reagents.")
+							tgui_alert(usr,"You must be at least a Primary Administrator to animate mobs.")
 							return
 
 					if ("ballpit")
