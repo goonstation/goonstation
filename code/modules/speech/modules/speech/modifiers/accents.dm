@@ -383,9 +383,9 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = SPEECH_MODIFIER_ACCENT_EMOJI_ONLY
 
 /datum/speech_module/modifier/accent/emoji/only/process(datum/say_message/message)
-	var/datum/say_message/processed_message = ..(message)
+	message = ..()
 
-	var/processed = processed_message.content
+	var/processed = message.content
 	var/list/output = list()
 
 	for (var/i in 1 to length(processed))
@@ -395,7 +395,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 		else if (char > 127)
 			output += ascii2text(char)
 
-	processed_message.content = jointext(output, "")
+	message.content = jointext(output, "")
 
 
 /datum/speech_module/modifier/accent/error

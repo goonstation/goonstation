@@ -191,7 +191,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited)
 	var/datum/say_channel/global_channel/global_channel
 
 /datum/say_channel/delimited/PassToListeners(datum/say_message/message, list/list/datum/listen_module/input/listen_modules_by_type, from_global_channel = FALSE)
-	. = ..(message, listen_modules_by_type)
+	. = ..()
 
 	if (!src.global_channel || from_global_channel || (message.flags & SAYFLAG_DELIMITED_CHANNEL_ONLY))
 		return
