@@ -92,10 +92,14 @@
 	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
 	var/wiki_link = null //! Link to the wiki page for this job
 
+	///If this job should show in the ID computer (only works for staple jobs)
+	var/show_in_id_comp = TRUE
+
 	var/counts_as = null //! Name of a job that we count towards the cap of
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
+
 
 	New()
 		..()
@@ -341,6 +345,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	receives_badge = TRUE
+	show_in_id_comp = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
@@ -1031,6 +1036,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list()
 	items_in_backpack = list()
 	uses_character_profile = FALSE
+	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Artificial_Intelligence"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1052,6 +1058,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list()
 	items_in_backpack = list()
 	uses_character_profile = FALSE
+	show_in_id_comp = FALSE
 	wiki_link = "https://wiki.ss13.co/Cyborg"
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1476,7 +1483,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
@@ -2445,6 +2452,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
@@ -2460,7 +2468,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Special Operative"
 	trait_list = list("training_security")
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
@@ -2476,7 +2483,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_security", "training_medical")
 	wages = PAY_EXECUTIVE //The big boss
 	receives_miranda = TRUE
-	receives_badge = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
 	slot_belt = list(/obj/item/swords_sheaths/ntboss)
@@ -2552,7 +2558,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
-	receives_badge = TRUE
 
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
@@ -2857,7 +2862,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
-		access = list(access_heads, access_medical, access_medical_lockers)
+		access = list(access_heads, access_medical, access_medical_lockers, access_mining)
 		team = 1
 		overlay_icon = "nanotrasen"
 
@@ -2865,10 +2870,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/nanotrasen)
 		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_belt = list(/obj/item/device/pda2/pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
-		slot_head = list(/obj/item/clothing/head/helmet/space/nanotrasen/pilot)
-		slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot)
+		slot_head = list(/obj/item/clothing/head/helmet/space/pod_wars/NT)
+		slot_suit = list(/obj/item/clothing/suit/space/pod_wars/NT)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
@@ -2888,10 +2892,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			high_priority_job = TRUE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "nanocomm"
-			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power)
+			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power, access_mining)
 
-			slot_head = list(/obj/item/clothing/head/NTberet/commander)
-			slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot/commander)
+			slot_head = list(/obj/item/clothing/head/helmet/space/pod_wars/NT/commander)
+			slot_suit = list(/obj/item/clothing/suit/space/pod_wars/NT/commander)
 			slot_card = /obj/item/card/id/pod_wars/nanotrasen/commander
 			slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen/commander)
 
@@ -2901,7 +2905,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		no_jobban_from_this_job = TRUE
 		low_priority_job = TRUE
 		cant_allocate_unwanted = TRUE
-		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
+		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers, access_mining)
 		team = 2
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
@@ -2910,10 +2914,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		receives_implants = list(/obj/item/implant/pod_wars/syndicate)
 		slot_back = list(/obj/item/storage/backpack/syndie)
-		slot_belt = list(/obj/item/device/pda2/pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)
-		slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
-		slot_suit = list(/obj/item/clothing/suit/space/syndicate)
+		slot_head = list(/obj/item/clothing/head/helmet/space/pod_wars/SY)
+		slot_suit = list(/obj/item/clothing/suit/space/pod_wars/SY)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/syndicate
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
@@ -2933,10 +2936,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			high_priority_job = TRUE
 			cant_allocate_unwanted = TRUE
 			overlay_icon = "syndcomm"
-			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
+			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power, access_mining)
 
-			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
-			slot_suit = list(/obj/item/clothing/suit/space/syndicate/commissar_greatcoat)
+			slot_head = list(/obj/item/clothing/head/helmet/space/pod_wars/SY/commander)
+			slot_suit = list(/obj/item/clothing/suit/space/pod_wars/SY/commander)
 			slot_card = /obj/item/card/id/pod_wars/syndicate/commander
 			slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate/commander)
 

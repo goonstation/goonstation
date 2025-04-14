@@ -9,6 +9,8 @@
 	var/obj/item/parts/holder = null
 	/// used for ON_COOLDOWN stuff
 	var/cooldowns
+	/// this limb's click usage is limited by lastattacked. set to false for custom cooldowns.
+	var/use_lastattacked_click_delay = TRUE
 	var/special_next = 0
 	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/disarm_special = null

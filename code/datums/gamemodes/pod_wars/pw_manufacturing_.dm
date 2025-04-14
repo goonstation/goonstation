@@ -358,7 +358,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		START_TRACKING
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
-
+		available -= /datum/manufacture/industrialarmor
 		available -= /datum/manufacture/industrialboots
 		available += /datum/manufacture/pod_wars/industrialboots
 
@@ -375,6 +375,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
+		available += /datum/manufacture/pod_wars_industrialarmor_SY
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
@@ -383,6 +384,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack
+		available += /datum/manufacture/pod_wars_industrialarmor_NT
 		..()
 
 /obj/machinery/manufacturer/medical/pod_wars
@@ -497,7 +499,25 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	time = 2 SECONDS
 	category = "Weapon"
 
+/datum/manufacture/pod_wars_industrialarmor_NT
+	name = "Industrial Space Armor Set"
+	item_requirements = list("metal_superdense" = 15,
+							 "conductive_high" = 10,
+							 "crystal_dense" = 5)
+	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/NT/industrial, /obj/item/clothing/head/helmet/space/pod_wars/NT/industrial)
+	create = 1
+	time = 90 SECONDS
+	category = "Clothing"
 
+/datum/manufacture/pod_wars_industrialarmor_SY
+	name = "Industrial Space Armor Set"
+	item_requirements = list("metal_superdense" = 15,
+							 "conductive_high" = 10,
+							 "crystal_dense" = 5)
+	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/SY/industrial, /obj/item/clothing/head/helmet/space/pod_wars/SY/industrial)
+	create = 1
+	time = 90 SECONDS
+	category = "Clothing"
 
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"

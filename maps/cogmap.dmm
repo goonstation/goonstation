@@ -57262,9 +57262,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "sgg" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15

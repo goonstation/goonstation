@@ -11317,9 +11317,7 @@
 	},
 /area/station/security/hos)
 "biT" = (
-/obj/storage/secure/closet/command/hos{
-	req_access_txt = "37"
-	},
+/obj/storage/secure/closet/command/hos,
 /obj/item/device/radio/intercom/brig{
 	dir = 1
 	},
@@ -17879,9 +17877,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/crate/gear/armory/equipment{
-	req_access_txt = "37"
-	},
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -22978,9 +22974,7 @@
 	},
 /area/station/bridge)
 "grF" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "37"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet{
 	dir = 1;

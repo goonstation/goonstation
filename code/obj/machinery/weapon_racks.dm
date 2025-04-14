@@ -384,3 +384,9 @@
 			if(user)
 				boutput(user, "The [src] is already unlocked!")
 			return 0
+
+	overload_act()
+		if (src.hacked)
+			return FALSE
+		src.hacked = TRUE
+		return TRUE

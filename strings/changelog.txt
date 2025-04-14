@@ -1,4 +1,42 @@
 
+(t)mon apr 14 25
+(u)glowbold
+(p)22943
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Click-dragging barcodes will not attach them to objects or mobs.
+(*)The cyborg Mining module now has a portable barcoder.
+(t)sat apr 12 25
+(u)glowbold
+(p)22928
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Silicons use power when attacking mobs with tools.
+(u)JORJ949
+(p)22911
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Nanotrasen Officials now have special badges!
+(u)JORJ949
+(p)22910
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Whistles can now be worn on the belt!
+(u)glowbold
+(p)22924
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Mechanics Reconstruction Kit requires Chief Engineer access to unlock.
+(u)CalliopeSoups
+(p)22942
+(e)🎨|C-Sprites
+(+)You can now play basketball with skeleton crew's heads.
+(u)glowbold
+(p)22871
+(e)🧫🔄📄🧛|C-Experimental, C-Rework, A-UI, A-Gamemodes
+(*)Arcfiend Sap Power and Discharge have been reworked. More details in minor notes.
+(+)Sap Power pulls from APCs, SMESs, and Machines at roughly half the current rate.
+(+)Sapping power from a broken machine/APC/SMES doubles the amount of power you receive.
+(+)Discharge can target machines, including APCs and SMESs, to overload and break them.
+(u)Facsimile, swinglow20
+(p)21058
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Adds the Text to Music component, a smaller version of the Player Piano. See the book in the MechComp vendor for more details.
 (t)fri apr 11 25
 (u)Sord
 (+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
