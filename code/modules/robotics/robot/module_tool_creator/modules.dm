@@ -181,7 +181,7 @@
 		/obj/item/oreprospector,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,
-		// TODO: make barcode machine
+		/obj/item/portable_barcoder,
 		// TODO: make versatile satchel (same as civilian module's satchel)
 		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
 	)

@@ -319,19 +319,6 @@
 		setProperty("space_movespeed", 0)
 		setProperty("chemprot",30)
 		setProperty("heatprot", 15)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("[src]] <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
-
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
@@ -478,18 +465,6 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
-	team_num = TEAM_NANOTRASEN
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 
 	setupProperties()
 		..()

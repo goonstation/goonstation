@@ -40,6 +40,7 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+	var/static/datum/instrument_sound_bank/sound_bank = new()
 
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
@@ -72,14 +73,10 @@
 				contextActions += newcontext
 
 		if (src.use_new_interface)
-			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
-			src.note_keys_string = src.generate_keybinds(src.notes)
-			if(!src.note_keys_string)
-				src.note_keys_string = src.default_keys_string
-			src.sounds_instrument = list()
-			for (var/i in 1 to length(src.notes))
-				src.note = src.notes[i]
-				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
+			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
+			src.notes = instr_data.notes
+			src.note_keys_string = instr_data.note_keys_string
+			src.sounds_instrument = instr_data.sounds_instrument
 
 	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
@@ -643,7 +640,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
+	wear_state = "whistle"
 	w_class = W_CLASS_TINY
+	c_flags = ONBELT
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -681,6 +680,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "security whistle"
 	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
+	wear_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
 
@@ -701,6 +701,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "janitor whistle"
 	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
 	icon_state = "whistle-jani"
+	wear_state = "whistle-jani"
 	var/commandtime = 5 SECONDS
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
