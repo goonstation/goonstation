@@ -57,7 +57,7 @@
 		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
 		src.fingerprintslast = M.key
 	if(M.mind?.color)
-		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = REMOVE_CLEANING)
+		var/datum/forensic_data/basic/color_data = new(M.mind.color, flags = 0)
 		src.forensic_holder.add_evidence(color_data, FORENSIC_GROUP_SLEUTH)
 
 /// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
@@ -157,7 +157,7 @@
 		return
 	if (src.flags & NOFPRINT)
 		return
-	src.forensic_holder?.remove_evidence(REMOVE_CLEANING)
+	src.forensic_holder?.remove_evidence(FORENSIC_REMOVAL_CLEAN)
 
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.

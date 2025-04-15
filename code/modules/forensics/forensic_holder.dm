@@ -9,6 +9,19 @@ datum/forensic_holder
 	var/ignore_flags = 0 // Do not add evidence with these flags
 	var/ignore_flags_removal = 0 // These ways of removing evidence have no power here
 
+	disposing()
+		if(src.group_list)
+			for(var/group in src.group_list)
+				qdel(group)
+			src.group_list.len = 0
+			src.group_list = null
+		if(src.admin_list)
+			for(var/group in src.admin_list)
+				qdel(group)
+			src.admin_list.len = 0
+			src.admin_list = null
+		..()
+
 	proc/get_group(var/category = FORENSIC_GROUP_NOTE, var/admin = FALSE)
 		// Should I change this to a dictionary lookup?
 		var/list/datum/forensic_group/E_list
@@ -16,22 +29,20 @@ datum/forensic_holder
 			E_list = src.admin_list
 		else
 			E_list = src.group_list
-		var/datum/forensic_group/group = null
-		for(var/i=1, i<= length(E_list), i++)
-			if(E_list[i].category == category)
-				group = E_list[i]
-				break
-		return group
+		for(var/datum/forensic_group/G in E_list)
+			if(G.category == category)
+				return G
+		return null
 
 	proc/cut_group(var/category)
-		for(var/i=1, i<= length(src.group_list), i++)
+		for(var/i in 1 to src.group_list)
 			if(src.group_list[i].category == category)
 				src.group_list.Cut(i, i+1)
 				return
 
 	proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTE, var/admin_only = FALSE)
 		data.category = category
-		if(!HAS_FLAG(data.flags, IS_FAKE))
+		if(!HAS_FLAG(data.flags, FORENSIC_FAKE))
 			var/datum/forensic_group/h_group = get_group(category, TRUE)
 			if(!h_group)
 				h_group = forensic_group_create(category)
@@ -52,12 +63,12 @@ datum/forensic_holder
 		for(var/i= length(src.group_list); i>= 1; i--)
 			src.group_list[i].remove_evidence(src, removal_flags)
 		return
-	proc/remove_group(var/category, var/removal_flags = REMOVE_ALL_EVIDENCE)
-		for(var/i=1, i<= length(src.group_list), i++)
-			if(src.group_list[i].category == category)
-				src.group_list[i].remove_evidence(src, removal_flags)
+	proc/remove_group(var/category, var/removal_flags = FORENSIC_REMOVAL_ALL)
+		for(var/datum/forensic_group/G in src.group_list)
+			if(G.category == category)
+				G.remove_evidence(src, removal_flags)
 				return
 
 	proc/copy_evidence(var/datum/forensic_holder/target, var/copy_flags = ~0) // Copy evidence from this holder to another
-		for (var/i=1; i<= length(src.group_list); i++)
-			src.group_list[i].copy_group(target)
+		for(var/datum/forensic_group/G in src.group_list)
+			G.copy_group(target)

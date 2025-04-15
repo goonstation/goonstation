@@ -1,6 +1,6 @@
 
 // Note: multiple forensic_holders should not share any forensic_data, each should have their own instance of the evidence
-// Unless if the evidence is supposed to be synced for some reason, I guess
+// Unless if the evidence is supposed to be synced for some reason I guess
 
 /datum/forensic_data
 	var/category = FORENSIC_GROUP_NONE
@@ -9,7 +9,7 @@
 	var/perc_offset = 0 // Error offset multiplier for time estimations
 	var/accuracy_mult = 1 // Individual accuracy multiplier for this piece of evidence
 	var/flags = 0
-	// var/user = null // The player responsible for this evidence (for admins)
+
 	New()
 		..()
 		src.time_start = TIME
@@ -19,11 +19,11 @@
 	proc/get_text() // The text to display when scanned
 		return ""
 	proc/should_remove(var/remove_flags) // Should this evidence be removed?
-		var/remove = HAS_ANY_FLAGS(src.flags & (REMOVE_ALL_EVIDENCE & !REMOVE_HEAL), remove_flags)
-		remove |= HAS_ALL_FLAGS(src.flags & REMOVE_HEAL, remove_flags & REMOVE_HEAL) // Need full healing to remove
+		var/remove = HAS_ANY_FLAGS(src.flags & (FORENSIC_REMOVAL_ALL & !FORENSIC_REMOVAL_HEAL), remove_flags)
+		remove |= HAS_ALL_FLAGS(src.flags & FORENSIC_REMOVAL_HEAL, remove_flags & FORENSIC_REMOVAL_HEAL) // Need full healing to remove
 		return remove
 	proc/mark_as_junk()
-		flags = flags | IS_FAKE
+		flags = flags | FORENSIC_FAKE
 	proc/get_copy()
 		RETURN_TYPE(/datum/forensic_data)
 		return null

@@ -44,10 +44,10 @@
 			return
 		var/datum/forensic_data/basic/f_data
 		if(src == target)
-			f_data = new(scent, flags = IS_FAKE)
+			f_data = new(scent, flags = FORENSIC_FAKE)
 			f_data.time_end = INFINITY
 		else
-			f_data = new(scent, flags = IS_FAKE | REMOVE_CLEANING)
+			f_data = new(scent, flags = FORENSIC_FAKE | FORENSIC_REMOVAL_CLEAN)
 		target.add_evidence(f_data, FORENSIC_GROUP_SLEUTH)
 
 /obj/item/clothing/head/flower/gardenia

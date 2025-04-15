@@ -1,5 +1,5 @@
 
-#define EVIDENCE_MAX 20
+#define FORENSIC_EVIDENCE_MAX 20
 
 ABSTRACT_TYPE(/datum/forensic_group)
 ABSTRACT_TYPE(/datum/forensic_group/basic_list)
@@ -20,12 +20,17 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 	proc/remove_evidence(var/datum/forensic_holder/parent, var/removal_flags)
 		return
 	proc/matching_flags(var/flags_A, var/flags_B)
-		return (flags_A & ~IS_FAKE) == (flags_B & ~IS_FAKE)
+		return (flags_A & ~FORENSIC_FAKE) == (flags_B & ~FORENSIC_FAKE)
 
 /datum/forensic_group/notes
 	category = FORENSIC_GROUP_NOTE
-	group_flags = REMOVE_ALL_EVIDENCE
+	group_flags = FORENSIC_REMOVAL_ALL
 	var/list/datum/forensic_data/basic/notes_list = new/list()
+
+	disposing()
+		src.notes_list.len = 0
+		src.notes_list = null
+		..()
 
 	apply_evidence(var/datum/forensic_data/data)
 		if(istype(data, /datum/forensic_data/basic))
@@ -33,29 +38,34 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 			apply_basic(E)
 
 	copy_group(var/datum/forensic_holder/new_holder, var/include_trace = FALSE)
-		for(var/i=1; i<= length(src.notes_list); i++)
-			if(!HAS_FLAG(src.notes_list[i].flags, IS_TRACE) || include_trace)
-				new_holder.add_evidence(src.notes_list[i].get_copy(), src.category)
+		for(var/datum/forensic_data/basic/note in src.notes_list)
+			if(!HAS_FLAG(note.flags, FORENSIC_TRACE) || include_trace)
+				new_holder.add_evidence(note.get_copy(), src.category)
 
 	get_header()
-		return HEADER_NOTES
+		return FORENSIC_HEADER_NOTES
 
 	remove_evidence(var/datum/forensic_holder/parent, var/removal_flags)
-		for(var/i=1, i<= length(src.notes_list); i++)
+		for(var/i in 1 to length(src.notes_list))
 			if(src.notes_list[i].should_remove(removal_flags))
 				src.notes_list.Cut(i, i+1)
 
 	proc/apply_basic(var/datum/forensic_data/basic/E)
-		for(var/i=1, i<= length(notes_list); i++)
-			if(E.evidence == src.notes_list[i].evidence && matching_flags(E.flags, src.notes_list[i].flags))
-				notes_list[i].time_end = max(notes_list[i].time_end, E.time_end)
+		for(var/datum/forensic_data/basic/note in src.notes_list)
+			if(E.evidence == note.evidence && matching_flags(E.flags, note.flags))
+				note.time_end = max(note.time_end, E.time_end)
 				return
 		src.notes_list += E
 
 /datum/forensic_group/basic_list
 	var/list/datum/forensic_data/basic/evidence_list = new/list()
 	var/value_usage = FORENSIC_VALUE_IGNORE
-	group_flags = REMOVE_ALL_EVIDENCE
+	group_flags = FORENSIC_REMOVAL_ALL
+
+	disposing()
+		src.evidence_list.len = 0
+		src.evidence_list = null
+		..()
 
 	apply_evidence(var/datum/forensic_data/data)
 		if(!istype(data))
@@ -63,14 +73,14 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 		var/datum/forensic_data/basic/E = data
 
 		var/oldest = 1
-		for(var/i=1, i<= length(evidence_list); i++)
+		for(var/i in 1 to length(src.evidence_list))
 			if(E.evidence == src.evidence_list[i].evidence)
 				evidence_list[i].time_end = max(evidence_list[i].time_end, E.time_end)
 				update_value(evidence_list[i], E)
 				return
 			if(evidence_list[i].time_end < evidence_list[oldest].time_end)
 				oldest = i
-		if(length(src.evidence_list) < EVIDENCE_MAX)
+		if(length(src.evidence_list) < FORENSIC_EVIDENCE_MAX)
 			src.evidence_list.Insert(rand(length(evidence_list) + 1), E) // Randomize the order
 		else
 			src.evidence_list[oldest] = E
@@ -89,50 +99,55 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 				data_old.value = max(data_old.value, data_new.value)
 
 	copy_group(var/datum/forensic_holder/new_holder, var/include_trace = FALSE)
-		for(var/i=1; i<= length(src.evidence_list); i++)
-			if(!HAS_FLAG(src.evidence_list[i].flags, IS_TRACE) || include_trace)
-				new_holder.add_evidence(src.evidence_list[i].get_copy(), src.category)
+		for(var/datum/forensic_data/basic/G in src.evidence_list)
+			if(!HAS_FLAG(G.flags, FORENSIC_TRACE) || include_trace)
+				new_holder.add_evidence(G.get_copy(), src.category)
 
 	remove_evidence(var/datum/forensic_holder/parent, var/removal_flags)
 		if(!HAS_ANY_FLAGS(src.group_flags, removal_flags))
 			return
-		for(var/i=1, i<= length(src.evidence_list); i++)
+		for(var/i in 1 to length(src.evidence_list))
 			if(src.evidence_list[i].should_remove(removal_flags))
 				src.evidence_list.Cut(i, i+1)
 
 /datum/forensic_group/basic_list/sleuth // Used to store smells for Pug sleuthing
 	category = FORENSIC_GROUP_SLEUTH
-	group_flags = REMOVE_CLEANING
+	group_flags = FORENSIC_REMOVAL_CLEAN
 
 	get_header()
 		return "Sleuth"
 
-	proc/get_sleuth_text(var/atom/A)
-		var/data_text = ""
-		var/sleuth_accuracy = FORENSIC_BASE_ACCURACY * 0.5
+	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE, var/accuracy = -1)
+		if(length(src.evidence_list) == 0)
+			return null
+		if(!sleuth_all)
+			return sleuth_data(A, src.evidence_list[rand(1, length(src.evidence_list))], accuracy, TRUE)
 
-		for(var/i=1, i<= length(src.evidence_list); i++)
-			var/color = src.evidence_list[i].evidence.id
-			var/time_since = TIME - src.evidence_list[i].time_end
-			var/time = src.evidence_list[i].get_time_estimate(sleuth_accuracy)
-			var/c_text
-			if(i == 1)
-				var/list/intensity_list = list("faintly","acutely","strongly","mildly","kind","trace")
-				var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))
-				var/intensity = get_intensity(intensity_list, time_since_list, time_since)
-				c_text = "\The [A] smells [intensity] of \a [color]."
-			else
-				var/list/intensity_list = list("a faint","an acute","a strong","a mild","kind of a","a trace")
-				var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))
-				var/intensity = get_intensity(intensity_list, time_since_list, time_since)
-				var/scent = pick("scent", "hint", "taste", "aroma", "fragrance")
-				var/detect = pick("detect","notice","note","find","pick up","smell","locate","track","discover","acertain","inhale","sense")
-				c_text = "You also [detect] [intensity] [scent] of [color]."
-			data_text += "<li>[SPAN_NOTICE(c_text)] [time]</li>"
+		var/data_text = ""
+		for(var/i in 1 to length(src.evidence_list))
+			data_text += sleuth_data(A, src.evidence_list[i], accuracy, i == 1)
 		return data_text
 
+	proc/sleuth_data(var/atom/A, var/datum/forensic_data/basic/slueth_data, var/accuracy, var/is_first)
+		var/color = slueth_data.evidence.id
+		var/time_since = TIME - slueth_data.time_end
+		var/time = slueth_data.get_time_estimate(accuracy * FORENSIC_BASE_ACCURACY)
+		var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))
+		var/c_text
+		if(is_first)
+			var/list/intensity_list = list("faintly","acutely","strongly","mildly","kind","trace")
+			var/intensity = get_intensity(intensity_list, time_since_list, time_since)
+			c_text = "\The [A] smells [intensity] of \a [color]."
+		else
+			var/list/intensity_list = list("a faint","an acute","a strong","a mild","kind of a","a trace")
+			var/scent = pick("scent", "hint", "taste", "aroma", "fragrance")
+			var/detect = pick("detect","notice","note","find","pick up","smell","locate","track","discover","acertain","inhale","sense")
+			var/intensity = get_intensity(intensity_list, time_since_list, time_since)
+			c_text = "You also [detect] [intensity] [scent] of [color]."
+		return "<li>[SPAN_NOTICE(c_text)] [time]</li>"
+
 	proc/get_intensity(var/list/intensity_list, var/list/time_since_list, var/time_since)
-		for(var/i=2, i<= length(intensity_list); i++)
+		for(var/i in 2 to length(intensity_list))
 			if(time_since < time_since_list[i] MINUTES)
 				return intensity_list[i]
 		return intensity_list[1]
@@ -140,19 +155,24 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 /datum/forensic_group/multi_list // Two or three pieces of evidence grouped together
 	var/list/datum/forensic_data/multi/evidence_list = new/list()
 
+	disposing()
+		src.evidence_list.len = 0
+		src.evidence_list = null
+		..()
+
 	apply_evidence(var/datum/forensic_data/data)
 		if(!istype(data, /datum/forensic_data/multi))
 			return
 		var/datum/forensic_data/multi/E = data
 
 		var/oldest = 1
-		for(var/i=1, i<= length(evidence_list); i++)
+		for(var/i in 1 to length(src.evidence_list))
 			if(src.evidence_list[i].is_same(E))
 				evidence_list[i].time_end = max(evidence_list[i].time_end, E.time_end)
 				return
 			if(evidence_list[i].time_end < evidence_list[oldest].time_end)
 				oldest = i
-		if(length(src.evidence_list) < EVIDENCE_MAX)
+		if(length(src.evidence_list) < FORENSIC_EVIDENCE_MAX)
 			src.evidence_list.Insert(rand(length(evidence_list) + 1), E) // Randomize the order
 		else
 			var/datum/D = src.evidence_list[oldest]
@@ -160,13 +180,13 @@ ABSTRACT_TYPE(/datum/forensic_group/multi_list)
 			qdel(D)
 
 	copy_group(var/datum/forensic_holder/new_holder, var/include_trace = FALSE)
-		for(var/i=1; i<= length(src.evidence_list); i++)
-			if(!HAS_FLAG(src.evidence_list[i].flags, IS_TRACE) || include_trace)
-				new_holder.add_evidence(src.evidence_list[i].get_copy(), src.category)
+		for(var/datum/forensic_data/basic/current_data in src.evidence_list)
+			if(!HAS_FLAG(current_data.flags, FORENSIC_TRACE) || include_trace)
+				new_holder.add_evidence(current_data.get_copy(), src.category)
 
 	remove_evidence(var/datum/forensic_holder/parent, var/removal_flags)
-		for(var/i=1, i<= length(src.evidence_list); i++)
+		for(var/i in 1 to length(src.evidence_list))
 			if(src.evidence_list[i].should_remove(removal_flags))
 				src.evidence_list.Cut(i, i+1)
 
-#undef EVIDENCE_MAX
+#undef FORENSIC_EVIDENCE_MAX
