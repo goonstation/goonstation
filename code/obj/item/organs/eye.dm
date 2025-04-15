@@ -557,6 +557,9 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 	name = "glass eye"
 	organ_name = "glass eye"
 	desc = "Straight out of the sixteenth century. Surprisingly lifelike!"
+	icon_state = "eye-glass"
+	edible = FALSE
+	iris_state_override = "eye"
 	show_on_examine = TRUE
 	provides_sight = FALSE
 	created_decal = null
