@@ -189,6 +189,7 @@ var/maniac_previous_victim = "Unknown"
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
 #elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif

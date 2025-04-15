@@ -832,6 +832,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
 #ifdef MAP_OVERRIDE_OSHAN
+	/obj/item/clothing/shoes/stomp_boots,
 #elif defined(MAP_OVERRIDE_NEON)
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
