@@ -1012,6 +1012,17 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/mode = 0
 	var/message = null
 
+	proc/get_ticket_level()
+		var/obj/item/card/id/ID = src.master.ID_card
+		if(!ID || !istype(ID))
+			return 0
+		if(access_ticket in ID.access)
+			. = 1
+		if(access_fine_small in ID.access)
+			. = 2
+		if(access_fine_large in ID.access)
+			. = 3
+
 	return_text()
 		if(..())
 			return
@@ -1019,6 +1030,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		var/dat = src.return_text_header()
 
 		if(!message)
+			if (!src.master.ID_card)
+				dat += "<br><br>You must insert an ID to use this program.<br><br>"
+				return dat
 			switch(mode)
 				if(0) //menu
 					dat += "<br><br>\[ <a href='byond://?src=\ref[src];ticket=1'>Issue Ticket</a> \]<br>"
@@ -1043,18 +1057,18 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								dat += "[T.text]<br>"
 
 				if(2) //requested fines
-
-					var/PDAowner = src.master.owner
-					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Fine Request List</h4>"
+					var/ticket_level = src.get_ticket_level()
+					if (ticket_level < 2)
+						dat += "<br><br>Please insert a security ID to approve fines.<br><br>"
+						dat += "<br><br>"
 
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((ticket_level == 3) || ((ticket_level == 2) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1086,7 +1100,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
+			if(!src.get_ticket_level())
+				message = "Error: You are not authorised to issue tickets."
+				src.master.updateSelfDialog()
+				return
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text | null
 			if(!ticket_target) return
@@ -1126,7 +1144,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text | null
 			if(!ticket_target) return
@@ -1153,13 +1171,14 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.target_byond_key = get_byond_key(F.target)
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
+			var/ticket_level = src.get_ticket_level()
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
+			if((fine_amount <= MAX_FINE_NO_APPROVAL && (ticket_level == 2)) || (ticket_level == 3))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
-					F.approve(PDAowner,PDAownerjob)
+					F.approve(PDAowner,PDAownerjob,ticket_level)
 					var/obj/item/paper/p = new /obj/item/paper
 					usr.put_in_hand_or_drop(p)
 					p.name = "Official Fine Notification - [ticket_target]"
@@ -1167,19 +1186,19 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.icon_state = "paper_caution"
 
 			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
-				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
+				message = "Fine request created, awaiting approval for a small fine."
 			else
-				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
+				message = "Fine request created, awaiting approval for a large fine."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
 
 			var/datum/fine/F = locate(href_list["approve"])
 
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
-				F.approve(PDAowner,PDAownerjob)
+				F.approve(PDAowner,PDAownerjob,src.get_ticket_level())
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = new /obj/item/paper
 				usr.put_in_hand_or_drop(p)

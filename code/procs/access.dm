@@ -205,7 +205,7 @@
 			return get_all_accesses()
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_forensics_lockers, access_ticket,
-						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
+						access_fine_small, access_fine_large, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_change_ids, access_eva, access_heads, access_head_of_personnel, access_medical_lockers,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_supply_console,
@@ -216,7 +216,7 @@
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
 						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab,
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
-						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
+						access_fine_small, access_fine_large, access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
 						access_mining, access_pathology, access_researchfoyer, access_chapel_office, access_telesci,
@@ -245,11 +245,11 @@
 
 		// --------------------------- Security
 		if("Nanotrasen Security Consultant")
-			return get_access("Security Officer") + list(access_heads, access_eva)
+			return get_access("Security Officer") + list(access_heads, access_eva, access_fine_large)
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig,  access_ticket,
 			access_maint_tunnels, access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
-			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
+			access_fine_small, access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
 			)
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_ticket, access_maint_tunnels,
@@ -342,7 +342,7 @@
 			return list(access_security, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
-						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+						access_researchfoyer, access_artlab, access_telesci, access_robotdepot, access_fine_small)
 		if("Hall Monitor")
 			return list(access_ticket)
 		if("Admin")
@@ -354,7 +354,7 @@
 #if defined(I_MEAN_ALL_ACCESS)
 	return access_all_actually
 #else
-	return list(access_security, access_brig, access_forensics_lockers, access_ticket,
+	return list(access_security, access_brig, access_forensics_lockers, access_ticket, access_fine_small, access_fine_large,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
 				access_change_ids, access_ai_upload,
@@ -527,6 +527,10 @@ var/list/access_all_actually = null
 			return "Budget Control"
 		if (access_ticket)
 			return "Ticketing"
+		if (access_fine_small)
+			return "Small Fines"
+		if (access_fine_large)
+			return "Large Fines"
 
 
 proc/colorAirlock(access)

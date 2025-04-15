@@ -459,10 +459,10 @@
 			var/datum/eventRecord/Fine/fineEvent = new()
 			fineEvent.buildAndSend(src, usr)
 
-/datum/fine/proc/approve(var/approved_by,var/their_job)
+/datum/fine/proc/approve(var/approved_by,var/their_job,var/ticket_level)
 	if(approver || paid) return
-	if (amount > MAX_FINE_NO_APPROVAL && !(JOBS_CAN_TICKET_BIG)) return
-	if (!(their_job in JOBS_CAN_TICKET_SMALL)) return
+	if (amount > MAX_FINE_NO_APPROVAL && !(ticket_level == 3)) return
+	if (ticket_level < 2)
 
 	approver = approved_by
 	approver_job = their_job
