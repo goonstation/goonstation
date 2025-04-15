@@ -1,4 +1,14 @@
 
+(t)mon apr 14 25
+(u)JORJ949
+(p)22946
+(e)🔄🏅|C-Rework, A-Medal
+(*)Changed how the "Suitable? How about the Oubliette?!" medal is obtained. See the PR or Wiki for details!
+(u)glowbold
+(p)22943
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Click-dragging barcodes will not attach them to objects or mobs.
+(*)The cyborg Mining module now has a portable barcoder.
 (t)sat apr 12 25
 (u)glowbold
 (p)22928

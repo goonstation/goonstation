@@ -1111,7 +1111,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/item/storage/belt/medical/podwars
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
 	/obj/item/reagent_containers/mender/burn,
-	/obj/item/reagent_containers/hypospray,
+	/obj/item/reagent_containers/hypospray/emagged, // maybe fine. it'll be fine. i'm sure it's fine.
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
@@ -1171,3 +1171,196 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	anchored
 		anchored = ANCHORED_ALWAYS
+
+
+//Pod Wars space suits and helmets
+
+
+//Suits
+/obj/item/clothing/suit/space/pod_wars
+	name = "pod wars space suit"
+
+	setupProperties()
+		..()
+		setProperty("chemprot",60)
+		setProperty("space_movespeed", 0)
+
+	#ifdef MAP_OVERRIDE_POD_WARS // probably dont need this but just in case someone spawns it in normal round i guess
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, SPAN_ALERT("[src] <b>explodes</b> as you reach out to grab it!"))
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
+
+/obj/item/clothing/suit/space/pod_wars/NT
+	name = "nanotrasen pod pilot suit"
+	desc = "A space suit worn by Nanotrasen pod pilots."
+	icon_state = "nanotrasen_pilot"
+	item_state = "nanotrasen_pilot"
+	team_num = TEAM_NANOTRASEN
+
+/obj/item/clothing/suit/space/pod_wars/NT/commander
+	name = "commander's great coat"
+	icon_state = "ntcommander_coat"
+	item_state = "ntcommander_coat"
+	desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander."
+
+	setupProperties()
+		..()
+		setProperty("exploprot", 40)
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 3)
+		setProperty("radprot", 50)
+
+/obj/item/clothing/suit/space/pod_wars/NT/industrial
+	name = "nanotrasen industrial space suit"
+	item_state = "indus_specialist"
+	icon_state = "indus_specialist"
+	desc = "A durable space suit designed to protect from explosions and radiation. It is in Nanotrasen blue."
+
+	setupProperties()
+		..()
+		setProperty("radprot", 50)
+		setProperty("coldprot", 75)
+		setProperty("heatprot", 25)
+		setProperty("exploprot", 30)
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+
+/obj/item/clothing/suit/space/pod_wars/SY
+	name = "syndicate pod pilot suit"
+	desc = "A space suit worn by Syndicate pod pilots."
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	team_num = TEAM_SYNDICATE
+
+/obj/item/clothing/suit/space/pod_wars/SY/commander
+	name = "commander's great coat"
+	icon_state = "commissar_greatcoat"
+	desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Pod Commander."
+
+	setupProperties()
+		..()
+		setProperty("exploprot", 40)
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 3)
+		setProperty("radprot", 50)
+
+/obj/item/clothing/suit/space/pod_wars/SY/industrial
+	name = "syndicate industrial space suit"
+	item_state = "indusred"
+	icon_state = "indusred"
+	desc = "A durable space suit designed to protect from explosions and radiation. It is in Syndicate red."
+
+	setupProperties()
+		..()
+		setProperty("radprot", 50)
+		setProperty("coldprot", 75)
+		setProperty("heatprot", 25)
+		setProperty("exploprot", 30)
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+
+//Helmets
+/obj/item/clothing/head/helmet/space/pod_wars
+	name = "pod wars space helmet"
+
+	New()
+		..()
+		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
+		setProperty("space_movespeed", 0)
+
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, SPAN_ALERT("[src] <b>explodes</b> as you reach out to grab it!"))
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
+
+/obj/item/clothing/head/helmet/space/pod_wars/NT
+	name = "nanotrasen pilot helmet"
+	icon_state = "nanotrasen_pilot"
+	item_state = "nanotrasen_pilot"
+	desc = "A space helmet used by certain Nanotrasen pod pilots."
+	team_num = TEAM_NANOTRASEN
+
+/obj/item/clothing/head/helmet/space/pod_wars/NT/commander
+	name = "nanotrasen commander's beret"
+	desc = "For the inner space commander in you."
+	icon_state = "ntberet_commander"
+	item_state = "ntberet_commander"
+	seal_hair = 0
+	see_face = TRUE
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
+
+/obj/item/clothing/head/helmet/space/pod_wars/NT/industrial
+	name = "nanotrasen industrial mining helmet"
+	desc = "A reinforced mining space helmet used by Nanotrasen miners."
+	icon_state = "EOD"
+	item_state = "EOD"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 4)
+		setProperty("radprot", 50)
+		setProperty("exploprot", 10)
+
+/obj/item/clothing/head/helmet/space/pod_wars/SY
+	name = "syndicate pilot helmet"
+	desc = "A space helmet used by certain Syndicate pod pilots."
+	icon_state = "syndie_specialist"
+	item_state = "syndie_specialist"
+	team_num = TEAM_SYNDICATE
+
+/obj/item/clothing/head/helmet/space/pod_wars/SY/commander
+	name = "syndicate commander's cap"
+	icon_state = "syndie_commander"
+	desc = "For the inner space commander in you."
+	seal_hair = 0
+	see_face = TRUE
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
+
+/obj/item/clothing/head/helmet/space/pod_wars/SY/industrial
+	name = "syndicate industrial mining helmet"
+	desc = "A reinforced mining space helmet used by Syndicate miners."
+	icon_state = "indusred"
+	item_state = "indusred"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 4)
+		setProperty("radprot", 50)
+		setProperty("exploprot", 10)
+
+//End of Pod Wars space suits and helmets
+
+/obj/item/storage/pouch/highcap/pod_wars
+	name = "tactical pouch"
+	desc = "A large pouch for carrying multiple miscellaneous things at once."
+	icon_state = "ammopouch-quad"
+	w_class = W_CLASS_SMALL
+	max_wclass = W_CLASS_NORMAL
+	slots = 4
+	opens_if_worn = TRUE
+	can_hold = null

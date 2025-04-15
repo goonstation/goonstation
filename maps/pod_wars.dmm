@@ -5835,14 +5835,6 @@
 	dir = 4
 	},
 /area/pod_wars/team2/bridge)
-"sH" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/pod_wars/spacejunk/fstation/medbay)
 "sI" = (
 /obj/machinery/vending/medical,
 /turf/unsimulated/floor/redwhite{
@@ -8425,6 +8417,8 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools/maybe_few,
 /obj/item/storage/belt/utility,
+/obj/item/storage/box/lightbox/tubes,
+/obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -13042,7 +13036,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "PV" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -77965,9 +77959,9 @@ jN
 DY
 jb
 rt
-sH
+rt
 SL
-sH
+rt
 rt
 rt
 xC
@@ -78779,7 +78773,7 @@ eC
 eC
 eC
 eC
-dU
+fY
 Zm
 Zm
 Zm
@@ -78987,7 +78981,7 @@ XC
 wK
 af
 dU
-dU
+fY
 dU
 dU
 eC
@@ -79185,8 +79179,8 @@ eC
 eC
 dU
 dU
-fY
-fY
+dU
+dU
 dU
 dU
 eC
