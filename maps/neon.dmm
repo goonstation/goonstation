@@ -14354,7 +14354,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "kkF" = (
-/turf/unsimulated/wall/auto/plasmacoral,
+/turf/simulated/wall/auto/asteroid/plasma_reef,
 /area/space/plasma_reef)
 "klg" = (
 /obj/item/organ/brain/flockdrone,
@@ -25867,7 +25867,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "sFt" = (
-/turf/unsimulated/wall/auto/plasmacoral,
+/turf/simulated/wall/auto/asteroid/plasma_reef,
 /area/space)
 "sFN" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{

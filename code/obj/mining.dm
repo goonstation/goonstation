@@ -1045,6 +1045,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
 
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
+
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
