@@ -1087,10 +1087,10 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 		if (istype(W, /obj/item/card/emag))
 			return
-		if (user.a_intent == INTENT_HARM)
+		if (user.a_intent == INTENT_HARM || is_special)
 			..()
 			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
