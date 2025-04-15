@@ -11178,6 +11178,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "hYt" = (
@@ -32969,6 +32970,12 @@
 	dir = 8
 	},
 /area/station/storage/warehouse)
+"xzs" = (
+/obj/storage/cart/medcart/crash,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "xzv" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
@@ -76779,7 +76786,7 @@ faI
 kBZ
 kGZ
 pxR
-cmj
+xzs
 yjx
 guR
 eBb
