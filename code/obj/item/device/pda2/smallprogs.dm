@@ -1013,6 +1013,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/message = null
 
 	proc/get_ticket_level()
+		. = 0
 		var/obj/item/card/id/ID = src.master.ID_card
 		if(!ID || !istype(ID))
 			return 0
