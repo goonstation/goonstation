@@ -1267,6 +1267,7 @@ ABSTRACT_TYPE(/area/adventure)
 	sound_environment = 8
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
 #elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif

@@ -139,13 +139,13 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
 //#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
 //#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
 //#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes

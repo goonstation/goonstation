@@ -29,7 +29,7 @@ var/global/list/mapNames = list(
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
-	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
+	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
@@ -47,7 +47,7 @@ var/global/list/mapNames = list(
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
 	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69),
-	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 35)
+	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30)
 )
 
 /obj/landmark/map
@@ -1249,8 +1249,8 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/neon
 	name = "NEON"
-	display_name = "Neon Research Laboratory, Abzu"
-	goonhub_map = "https://goonhub.com/maps/oshan"
+	display_name = "Neon Deepwater Research Facility, Abzu"
+	goonhub_map = "https://goonhub.com/maps/oshan" //TODO
 
 	arrivals_type = MAP_SPAWN_CRYO
 
