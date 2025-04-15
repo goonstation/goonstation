@@ -372,6 +372,12 @@
 		src.ArtifactStimulus("data", 1)
 		return 0
 
+	if (istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/credits = W
+		src.visible_message(SPAN_NOTICE("<b>[user.name]</b> offers \the [credits] to the artifact."))
+		src.ArtifactStimulus("credits", credits.amount)
+		return 0
+
 	if (W.force)
 		src.ArtifactStimulus("force", W.force)
 

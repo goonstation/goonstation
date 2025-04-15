@@ -9,7 +9,7 @@
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
-	/datum/artifact_trigger/silicon_touch)
+	/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/credits)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "comes to life, projecting out a wall of force!"

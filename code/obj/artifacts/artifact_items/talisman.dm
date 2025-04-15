@@ -174,7 +174,8 @@
 	rarity_weight = 275
 	validtypes = list("wizard", "precursor")
 	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
-		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/data)
+		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/data,
+		/datum/artifact_trigger/credits)
 	react_xray = list(30, 25, 97, 95, "ANOMALOUS")
 	examine_hint = "It seems magical somehow."
 
