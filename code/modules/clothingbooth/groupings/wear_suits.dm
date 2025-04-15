@@ -160,3 +160,18 @@
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
+
+
+/datum/clothingbooth_grouping/denim_dress
+	name = "Denim Dress"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/denim_dress/blue,
+		/datum/clothingbooth_item/wear_suit/denim_dress/turquoise,
+		/datum/clothingbooth_item/wear_suit/denim_dress/white,
+		/datum/clothingbooth_item/wear_suit/denim_dress/black,
+		/datum/clothingbooth_item/wear_suit/denim_dress/grey,
+		/datum/clothingbooth_item/wear_suit/denim_dress/khaki,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/casual
+	)

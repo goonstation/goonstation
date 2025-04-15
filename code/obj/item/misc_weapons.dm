@@ -361,7 +361,7 @@ TYPEINFO(/obj/item/sword)
 		else
 			src.icon_state = "[state_name]1-[src.bladecolor]"
 			src.item_state = "[state_name]1-[src.bladecolor]"
-			flick("sword_extend-[src.bladecolor]", src)
+			FLICK("sword_extend-[src.bladecolor]", src)
 		light_c.update(TRUE)
 	else
 		if(robusted)
@@ -371,7 +371,7 @@ TYPEINFO(/obj/item/sword)
 
 			src.icon_state = "[state_name]0"
 			src.item_state = "[state_name]0"
-			flick("sword_retract-[src.bladecolor]", src)
+			FLICK("sword_retract-[src.bladecolor]", src)
 		light_c.update(FALSE)
 
 /obj/item/sword/red
@@ -705,7 +705,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
-	desc = "A cheap replica of an ancient japanese throwing star."
+	desc = "A cheap replica of an ancient Japanese throwing star."
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
@@ -920,7 +920,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-			flick("[src.icon_state]-tele", src)
+			FLICK("[src.icon_state]-tele", src)
 
 	disposing()
 		. = ..()
@@ -1403,6 +1403,17 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
+/obj/item/swords/ntboss
+	icon_state = "ntboss_sword"
+	name = "NanoTrasen Commander's Sabre"
+	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
+	force = 20
+	contraband = 4
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
 /obj/item/swords/nukeop/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
@@ -1622,6 +1633,18 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/swords/nukeop
 
+/obj/item/swords_sheaths/ntboss
+	name = "Nanotrasen Commander's Scabbard"
+	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The blue paint is peeling a bit..."
+	icon_state = "ntboss_sword_scabbard"
+	item_state = "scabbard-ntboss1"
+
+	sheathed_state = "ntboss_sword_scabbard"
+	sheath_state = "ntboss_scabbard"
+	ih_sheathed_state = "scabbard-ntboss1"
+	ih_sheath_state = "scabbard-ntboss0"
+	sword_path = /obj/item/swords/ntboss
+
 /obj/item/swords_sheaths/pirate
 	name = "Pirate's Scabbard"
 	desc = "A nifty container for a ruthless sword. Given to the most feared space pirates, or stolen from the previous most feared space pirate. The scabbard bears the insignia 'I.B.B'."
@@ -1747,7 +1770,7 @@ obj/item/swords/fragile_sword
 
 obj/item/whetstone
 	name = "whetstone"
-	desc = "A stone that can sharpen a blade and restore it to it's former glory."
+	desc = "A stone that can sharpen a blade and restore it to its former glory."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "whetstone"
 

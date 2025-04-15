@@ -81,7 +81,7 @@
 
 		gen_turf.temperature = 330 // 56.9C
 
-		src.lag_check()
+		src.lag_check(flags)
 
 
 ///for the mapgen mountains, temp until we get something better

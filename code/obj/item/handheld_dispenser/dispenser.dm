@@ -14,7 +14,6 @@
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
 		/obj/machinery/atmospherics/binary/reactor_turbine,
-		/obj/machinery/atmospherics/unary/cold_sink/freezer,
 		/obj/machinery/atmospherics/unary/cryo_cell))
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
@@ -96,7 +95,7 @@
 			 null, null, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
 
 	else
-		if(!isturf(target))
+		if(!issimulatedturf(target) && !istype(target, /turf/space))
 			return
 		var/directs = selection.get_directions(direction)
 		for(var/obj/machinery/atmospherics/device in target)
@@ -377,6 +376,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/unary)
 		path = /obj/machinery/atmospherics/unary/tank
 		icon_state = "tank"
 		desc = "A 1620 litre pressurized storage tank."
+	freezer
+		cost = 10
+		name = "Freezer"
+		path = /obj/machinery/atmospherics/unary/cold_sink/freezer
+		icon_state = "freezer"
+		desc = "A freezing unit that cools connected gases to a set temperature."
 	connector
 		name = "Portable Connector"
 		path = /obj/machinery/atmospherics/unary/portables_connector

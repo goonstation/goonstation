@@ -366,7 +366,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	// an intercom receives a message. all the other logic is handled in talk_into of the sending radio.
 	showMapText(mob/target, mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
 		. = ..()
-		flick("wallfish_move", src)
+		FLICK("wallfish_move", src)
 
 	update_pixel_offset_dir()
 		return // no

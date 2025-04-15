@@ -484,19 +484,19 @@ var/global/list/cycling_airlocks = list()
 		if ("opening")
 			src.UpdateIcon()
 			if (src.panel_open)
-				flick("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
+				FLICK("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
 			else
-				flick("[icon_base]_opening", src)
+				FLICK("[icon_base]_opening", src)
 		if ("closing")
 			src.UpdateIcon()
 			if (src.panel_open)
-				flick("o_[icon_base]_closing", src)
+				FLICK("o_[icon_base]_closing", src)
 			else
-				flick("[icon_base]_closing", src)
+				FLICK("[icon_base]_closing", src)
 		if ("spark")
-			flick("[icon_base]_spark", src)
+			FLICK("[icon_base]_spark", src)
 		if ("deny")
-			flick("[icon_base]_deny", src)
+			FLICK("[icon_base]_deny", src)
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
@@ -1167,6 +1167,14 @@ TYPEINFO(/obj/machinery/door/airlock)
 /obj/machinery/door/demag(var/mob/user)
 	. = ..()
 	src.deconstruct_flags &= ~DECON_NO_ACCESS //well, ya got it fixed, somehow
+
+/obj/machinery/door/airlock/overload_act(mob/user)
+	if (src.hardened)
+		return FALSE
+	if (src.secondsMainPowerLost > 0)
+		return FALSE
+	src.loseMainPower()
+	return TRUE
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()

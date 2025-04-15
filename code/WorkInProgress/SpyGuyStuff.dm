@@ -93,7 +93,7 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			flick("skull_ominous_explode", src)
+			FLICK("skull_ominous_explode", src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			sleep(1.5 SECONDS)

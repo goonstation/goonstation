@@ -842,7 +842,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		desc = "This Syndicate drone is equipped with a corrosive chemical weapon. Rude!"
 		icon = 'icons/mob/critter/robotic/drone/acid.dmi'
 		icon_state = "drone_acid"
-		dead_state = "drone_acid"
+		dead_state = "drone_acid-dead"
 		health = 200
 		maxhealth = 200
 		score = 65

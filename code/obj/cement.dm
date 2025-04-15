@@ -60,7 +60,7 @@
 	New()
 		..()
 
-		flick("concrete_drying", src)
+		FLICK("concrete_drying", src)
 
 		if(istype(loc, /turf/space))
 			loc:ReplaceWithConcreteFloor()

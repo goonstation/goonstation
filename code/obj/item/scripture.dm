@@ -116,7 +116,7 @@
 	name = "cursed prophecy of the fatal laughter"
 	icon_state = "cluwnehb"
 	item_state = "cluwnehb"
-	desc = "Every word inside makes you want to wretch."
+	desc = "Every word inside makes you want to retch."
 	item_state_base = "cluwnehb"
 
 /obj/item/scripture/tidehb

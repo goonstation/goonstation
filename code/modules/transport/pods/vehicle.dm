@@ -452,7 +452,6 @@
 					src.fueltank = W
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine?.activate()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
@@ -485,13 +484,13 @@
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
+	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1, num_shots = 1)
 		if (src.m_w_system?.muzzle_flash && src.allow_muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
-		for (var/i in 1 to (src.m_w_system.shots_to_fire - 1))
+		for (var/i in 1 to (num_shots - 1))
 			sleep(PROJ.shot_delay)
 			src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
@@ -1100,7 +1099,7 @@
 		boutput(boarder, SPAN_ALERT("You can't squeeze your wide cube body through the access door!"))
 		return
 
-	if(isflockmob(boarder))
+	if(isflockmob(boarder) || istype(boarder, /mob/living/critter/space_phoenix))
 		boutput(boarder, SPAN_ALERT("You're unable to use this vehicle!"))
 		return
 
@@ -1528,14 +1527,15 @@
 			dat += {"<BR><A href='?src=\ref[src];alights=1'>(Activate)</A>"}
 		dat+= {"([src.lights.power_used])"}
 	if(src.lock)
+		dat += "<HR><B>Lock</B>:<br>"
 		if(src.locked)
-			dat += "<HR><B>Lock</B>:<br><a href='?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
+			dat += "<a href='?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
 		else
-			dat += "<HR><B>Lock</B>:"
-			if (src.lock.code)
-				dat += "<br><a href='?src=\ref[src.lock];lock=1'>(Lock)</a>"
-
-			dat += " <a href='?src=\ref[src.lock];setcode=1;'>(Set Code)</a>"
+			if (src.lock.is_set())
+				dat += "<a href='?src=\ref[src.lock];lock=1'>(Lock)</a>"
+			// if the lock is not set OR it is set and can be reset, show the set code button
+			if (!src.lock.is_set() || (src.lock.is_set() && src.lock.can_reset))
+				dat += " <a href='?src=\ref[src.lock];setcode=1;'>(Set Code)</a>"
 	user.Browse(dat, "window=ship_main")
 	onclose(user, "ship_main")
 	return

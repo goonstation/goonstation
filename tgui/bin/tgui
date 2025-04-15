@@ -30,7 +30,7 @@ root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
 root_dir="$(tgui-realpath "${root_dir}")"
 ## Find a canonical path to build target folder
 target_dir_name="tgui"
-target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/${target_dir_name}"
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/src/${target_dir_name}"
 target_dir="$(tgui-realpath "${target_dir}")"
 
 ## Fall back to running Yarn from the repo
@@ -94,11 +94,11 @@ task-sonar() {
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
-  rm -rf ../browserassets/tgui/.tmp
-  rm -f ../browserassets/tgui/*.map
-  rm -f ../browserassets/tgui/*.chunk.*
-  rm -f ../browserassets/tgui/*.bundle.*
-  rm -f ../browserassets/tgui/*.hot-update.*
+  rm -rf ../browserassets/src/tgui/.tmp
+  rm -f ../browserassets/src/tgui/*.map
+  rm -f ../browserassets/src/tgui/*.chunk.*
+  rm -f ../browserassets/src/tgui/*.bundle.*
+  rm -f ../browserassets/src/tgui/*.hot-update.*
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged

@@ -157,7 +157,7 @@
 			P.die()
 			return
 		P.layer = EFFECTS_LAYER_BASE
-		flick("bloodproj",P)
+		FLICK("bloodproj",P)
 		..()
 
 	on_hit(atom/hit, direction, var/obj/projectile/P)

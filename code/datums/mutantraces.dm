@@ -2065,6 +2065,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 					var/datum/abilityHolder/composite/ch = H.abilityHolder
@@ -2075,6 +2076,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			var/mob/living/carbon/human/H = src.mob
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)

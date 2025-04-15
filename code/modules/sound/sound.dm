@@ -527,6 +527,7 @@ var/global/number_of_sound_generated = 0
 			if ("step_flipflop") soundin = pick(sounds_step_flipflop)
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
+			if ("step_snow") soundin = pick(sounds_step_snow)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -791,6 +792,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
 /var/global/list/sounds_step_heavyboots = 	list(sound('sound/misc/step/step_heavyboots_1.ogg'),sound('sound/misc/step/step_heavyboots_2.ogg'),sound('sound/misc/step/step_heavyboots_3.ogg'))
 /var/global/list/sounds_step_military = 	list(sound('sound/misc/step/step_military_1.ogg'),sound('sound/misc/step/step_military_2.ogg'),sound('sound/misc/step/step_military_3.ogg'),sound('sound/misc/step/step_military_4.ogg'))
+/var/global/list/sounds_step_snow = 	    list(sound('sound/misc/step/step_snow_01.ogg'),sound('sound/misc/step/step_snow_02.ogg'),sound('sound/misc/step/step_snow_03.ogg'))
 
 
 
