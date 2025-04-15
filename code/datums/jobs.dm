@@ -2339,6 +2339,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/syndicate_specialist
 	linkcolor = SYNDICATE_LINK_COLOR
 	name = "Syndicate Special Operative"
+	access_string = "Syndicate Operative" // "All Access" + Syndie Shuttle
 	limit = 0
 	wages = 0
 	allow_traitors = FALSE
@@ -2369,10 +2370,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
-
-	New()
-		..()
-		src.access = syndicate_spec_ops_access()
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
