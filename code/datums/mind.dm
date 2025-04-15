@@ -45,7 +45,7 @@ datum/mind
 	var/list/intrinsic_verbs = list()
 
 	var/handwriting = null
-	var/color = null
+	var/datum/forensic_id/color = null // What color this player smells like to pugs.
 
 	var/obj/item/organ/brain/brain
 
@@ -69,7 +69,8 @@ datum/mind
 			ckey = M.ckey
 			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
-			src.color = pick_string("colors.txt", "colors")
+			var/color_string = pick_string("colors.txt", "colors")
+			src.color = register_id(color_string)
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
 
 	proc/transfer_to(mob/new_character)

@@ -333,6 +333,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			P.mob_shooter = user
 
 		P.forensic_ID = src.forensic_ID // Was missing (Convair880).
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder
 		if(BOUNDS_DIST(user, target) == 0)
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target) // Includes log entry.
@@ -416,6 +419,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
 		P.forensic_ID = src.forensic_ID
+		if(isobj(P.implanted))
+			var/obj/O = P.implanted
+			O.forensic_holder = P.forensic_holder
 	P.spread = spread
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)

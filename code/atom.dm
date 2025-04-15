@@ -196,6 +196,9 @@ TYPEINFO(/atom)
 
 		fingerprints_full = null
 		tag = null
+		if(!isnull(forensic_holder))
+			qdel(forensic_holder)
+			forensic_holder = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
