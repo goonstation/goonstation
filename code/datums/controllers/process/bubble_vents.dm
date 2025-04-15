@@ -7,7 +7,7 @@
 			var/turf/T = null
 			while (!T || !istype_exact(T, /turf/space/fluid))
 				T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
-			if (!istype(get_area(T), /area/plasma_reef) && prob(70)) //to make them more common in reefs
+			if (!istype(get_area(T), /area/space/plasma_reef) && prob(70)) //to make them more common in reefs
 				continue
 			var/vent_type = pick(\
 				prob(150); /obj/bubble_vent/plasma,\
