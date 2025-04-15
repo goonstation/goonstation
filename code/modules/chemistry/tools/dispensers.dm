@@ -685,16 +685,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 			var/itemtype = O.type
 			var/staystill = user.loc
-			var/user_hat = null
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				user_hat = H.head // Fix for worn flowers being composted
 			for(var/obj/item/P in view(1,user))
 				if (src.reagents.total_volume >= src.reagents.maximum_volume)
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (user.loc != staystill) break
-				if (P.type != itemtype || P == user_hat) continue
+				if (P.type != itemtype || P.equipped_in_slot) continue
 				var/amount = 20
 				if (istype(P,/obj/item/reagent_containers/food/snacks/mushroom/))
 					amount = 25
