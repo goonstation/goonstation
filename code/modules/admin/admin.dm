@@ -934,6 +934,14 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
 
+		if ("animate")
+			if (src.level >= LEVEL_BABBY)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+					if (animationpick)
+						call(animationpick)(M)
+
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -989,6 +997,24 @@ var/global/noir = 0
 						tgui_alert(usr,"Reviving is currently disabled.")
 			else
 				tgui_alert(usr,"You need to be at least a Primary Adminstrator to revive players.")
+
+		if ("stabilize")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (ismob(M))
+					if(isobserver(M))
+						tgui_alert(usr,"You can't stabilize a ghost! How does that even work?!")
+						return
+
+					if(isdead(M))
+						tgui_alert("Cannot stabilize a dead mob")
+						return
+
+					M.stabilize()
+
+					logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
+					logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
+					message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
 
 		if ("makeai")
 			if (src.level >= LEVEL_SA)
@@ -2941,6 +2967,42 @@ var/global/noir = 0
 							tgui_alert(usr,"You must be at least a Primary Administrator to affect player reagents.")
 							return
 
+					if ("animate_one")
+						if (src.level >= LEVEL_PA)
+							var/mob/M = input("Which mob?","Adding animation") as null|mob in world
+							if (!M)
+								return
+
+							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+							if (!animationpick)
+								return
+							call(animationpick)(M)
+
+							message_admins("[key_name(usr)] added animation [animationpick] to [M].")
+							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to [M].")
+							logTheThing(LOG_DIARY, usr, "added animation [animationpick] to [M].", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator to animate mobs.")
+							return
+
+					if ("animate_all")
+						if (src.level >= LEVEL_PA)
+
+							var/animationpick = tgui_input_list(usr, "Select animation.", "Animation", global.animations)
+							if (!animationpick)
+								return
+
+							for(var/mob/living/carbon/human/M in mobs)
+								SPAWN(0)
+									call(animationpick)(M)
+
+							message_admins("[key_name(usr)] added animation [animationpick] to everyone.")
+							logTheThing(LOG_ADMIN, usr, "added animation [animationpick] to everyone.")
+							logTheThing(LOG_DIARY, usr, "added animation [animationpick] to everyone.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator to animate mobs.")
+							return
+
 					if ("ballpit")
 						if (src.level >= LEVEL_SA)
 							message_admins("[key_name(usr)] began replacing all Z1 pools will ballpits.")
@@ -3937,6 +3999,9 @@ var/global/noir = 0
 					<b>Remove Reagent:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_all'>All</A><BR>
+					<b>Add Mob Animation:</b>
+						<A href='?src=\ref[src];action=secretsfun;type=animate_one'>One</A> *
+						<A href='?src=\ref[src];action=secretsfun;type=animate_all'>All</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=traitor_all'>Make everyone an Antagonist</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=critterize_all'>Critterize everyone</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=stupify'>Give everyone severe brain damage</A><BR>
@@ -4024,6 +4089,7 @@ var/global/noir = 0
 		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
 	if(current_state <= GAME_STATE_PREGAME)
+		global.game_force_started = TRUE
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing(LOG_ADMIN, usr, "has started the game.")
 		logTheThing(LOG_DIARY, usr, "has started the game.", "admin")

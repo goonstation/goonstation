@@ -1443,7 +1443,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/plating,
-/area/station/chapel/office)
+/area/station/routing/depot)
 "il" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
@@ -3233,8 +3233,9 @@
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "uh" = (
 /obj/machinery/arc_electroplater{
 	dir = 4

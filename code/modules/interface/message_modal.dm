@@ -59,6 +59,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MessageModal")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/message_modal/ui_data(mob/user)

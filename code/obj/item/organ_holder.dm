@@ -1494,6 +1494,13 @@
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
 
+	/// Unbreak all organs. Use sparingly.
+	proc/unbreak_all_organs()
+		for (var/organ_slot in src.organ_list)
+			var/obj/item/organ/O = src.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
+
 /*=================================*/
 /*---------- Human Procs ----------*/
 /*=================================*/
