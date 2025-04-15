@@ -13227,7 +13227,8 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
-/turf/simulated/floor/sanitary)
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/hop)
 "jwo" = (
 /obj/shrub{
 	dir = 10
