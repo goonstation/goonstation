@@ -310,17 +310,11 @@ ABSTRACT_TYPE(/datum/part_customization/human/organ)
 			associated_trait_id = "eye_missing_left"
 			part_type = /obj/item/organ/eye/glass
 
-			get_name()
-				return "glass eye"
-
 		eye_missing_right
 			id = "eye_missing_right"
 			slot = "right_eye"
 			associated_trait_id = "eye_missing_right"
 			part_type = /obj/item/organ/eye/glass
-
-			get_name()
-				return "glass eye"
 
 ///Lazy init singleton list
 var/list/datum/part_customization/part_customizations = null
