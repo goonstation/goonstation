@@ -378,28 +378,19 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 		if (user.client?.tooltips)
 			update_status()
-			var/state_has_error = startswith(state_str, "ERROR")
-			var/buttons = ""
-			if (established)
-				buttons += {"
-					<a href='?src=\ref[src];remove=1' class='btn'>Retract</a>
-					<a href='?src=\ref[src];air=1' class='btn'>Pressurize</a>
-				"}
-			else
-				buttons += "<a href='?src=\ref[src];create=1' class='btn'>Establish</a>"
-
-			var/dat = {"
-				<div class='box[state_has_error ? " box--error" : ""]' style='text-align: center;'>
-					[state_str]
-				</div>
-				<div class='btn-group'>[buttons]</div>
-				[working ? "<div class='loading-overlay'></div>" : ""]
-			"}
-
 			user.client.tooltips.show(
 				TOOLTIP_PINNED, src,
 				title = src.name,
-				content = dat,
+				content = alist(
+					"file" = resource("html/tooltips/airbridge_controller.eta"),
+					"data" = alist(
+						"src" = "\ref[src]",
+						"state_has_error" = startswith(state_str, "ERROR"),
+						"established" = established,
+						"state_str" = state_str,
+						"working" = working,
+					)
+				),
 			)
 
 		return

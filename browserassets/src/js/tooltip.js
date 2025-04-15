@@ -1,30 +1,40 @@
-const $root = document.querySelector(":root");
-const $sizer = document.getElementById("tt-sizer");
-const $wrap = document.getElementById("tt-wrap");
-
 function boutput(msg) {
 	BYOND.winset(0, {
 		command: `.output browseroutput:output "${encodeURIComponent(msg)}"`,
 	});
 }
 
-function handleError(message) {
-	window.tooltip.callByond({ action: "error", message });
+function callByond(params, src) {
+	src = src || window.tooltip_config.ref;
+	const arrayParams = [`src=${src}`, `from_tooltip=1`];
+	if (typeof params === "object") {
+		for (const param in params) {
+			arrayParams.push(`${param}=${encodeURIComponent(params[param])}`);
+		}
+	} else if (typeof params === "string") {
+		arrayParams.push(params);
+	}
+	window.location = `byond://?${arrayParams.join("&")}`;
 }
 
-window.addEventListener("error", function (e) {
+function handleError(message) {
+	callByond({ action: "error", message });
+}
+
+window.addEventListener("error", (e) => {
 	handleError(e.error?.message || e?.message);
 });
 
-window.addEventListener("unhandledrejection", function (e) {
+window.addEventListener("unhandledrejection", (e) => {
 	handleError(e.reason.stack);
 });
 
-class PerformanceTracking {
+class TooltipPerformanceTracking {
 	timings = new Map();
 	created = null;
 
-	constructor() {
+	create() {
+		this.timings.clear();
 		this.created = performance.now();
 	}
 
@@ -114,6 +124,42 @@ class PerformanceTracking {
 	}
 }
 
+class TooltipUI {
+	eta = null;
+	debug = false;
+	options = {};
+
+	constructor(debug = false) {
+		this.debug = debug;
+		this.eta = new window.eta.Eta();
+		if (debug) {
+			window.domainStorage.clear();
+		}
+	}
+
+	async getContent(path) {
+		let content = window.domainStorage.getItem(path);
+		if (content && !this.debug) return content;
+
+		const res = await fetch(path);
+		if (!res.ok) {
+			const err = `Unable to load ${path} (${res.status})`;
+			handleError(err);
+			throw new Error(err);
+		}
+		content = await res.text();
+		if (content && !this.debug) window.domainStorage.setItem(path, content);
+		return content;
+	}
+
+	async build(options) {
+		this.options = options;
+		const content = await this.getContent(options.file);
+		if (!content) return;
+		return this.eta.renderString(content, options.data);
+	}
+}
+
 class Tooltip {
 	global = {};
 	showing = false;
@@ -129,13 +175,20 @@ class Tooltip {
 	target = {};
 	offsets = {};
 
+	UIBuilder = null;
+	$root = null;
+	$wrap = null;
+
 	constructor(options, args) {
 		this.global = options;
-		if (this.global.debug) this.tracking = new PerformanceTracking();
-		this.args = args;
+		if (this.global.debug) this.tracking = new TooltipPerformanceTracking();
 		this.options = args.options;
 		this.world = args.world;
 		this.client = args.client;
+
+		this.UIBuilder = new TooltipUI(this.global.debug);
+		this.$root = document.querySelector(":root");
+		this.$wrap = document.getElementById("tt-wrap");
 	}
 
 	hookBefore(method) {
@@ -170,26 +223,40 @@ class Tooltip {
 		);
 	}
 
-	onContentClick(e, handler) {
-		if (!handler.elementIsInteractive(e.target)) {
-			handler.focusMap();
+	onContentClick(e) {
+		if (!this.elementIsInteractive(e.target)) {
+			this.focusMap();
 		}
 	}
 
-	onCloseClick(e, handler) {
+	onCloseClick(e) {
 		e.preventDefault();
 		e.stopPropagation();
-		handler.focusMap();
-		handler.hide();
+		this.focusMap();
+		this.hide();
 	}
 
-	onKeyDown(e, handler) {
-		if (!handler.elementIsInteractive(e.target)) {
-			handler.focusMap();
+	onKeyDown(e) {
+		if (!this.elementIsInteractive(e.target)) {
+			this.focusMap();
 			if (e.key === "Escape") {
-				handler.hide();
+				this.hide();
 			}
 		}
+	}
+
+	onSrcClick(e) {
+		e.preventDefault();
+		this.focusMap();
+		const src = this.options.content?.data?.src;
+		if (!src) return;
+		let params = ``;
+		const call = e.target.dataset.callSrc;
+		if (call) {
+			if (call === "href") params += e.target.getAttribute(call);
+			else params += call;
+		}
+		callByond(params, src);
 	}
 
 	async getMapSizes() {
@@ -222,32 +289,62 @@ class Tooltip {
 		const extraWidth = Math.round(
 			this.map.view.x / this.map.scale.width - this.client.bounds.width,
 		);
-		if (extraWidth)
+		if (extraWidth) {
 			this.map.icons.x += Math.ceil(extraWidth / this.world.icon_size.width);
+		}
+
 		const extraHeight = Math.round(
 			this.map.view.y / this.map.scale.height - this.client.bounds.height,
 		);
-		if (extraHeight)
+		if (extraHeight) {
 			this.map.icons.y += Math.ceil(extraHeight / this.world.icon_size.height);
+		}
 	}
 
-	setContent() {
-		$wrap.replaceChildren();
-		$wrap.style.setProperty("--map-width", `${this.map.pane.x}px`);
-		$wrap.style.setProperty("--map-height", `${this.map.pane.y}px`);
-		$wrap.style.setProperty("--scaling-factor", this.map.scale.width); // TODO: width?
-		$wrap.style.setProperty("--dpr", window.devicePixelRatio);
-		$wrap.setAttribute("data-theme", this.options.theme || "default");
+	async setContent() {
+		// The clone places the old content over the new content while it renders
+		// which avoids a "flash" of an empty tooltip during this process
+		const $wrapClone = this.$wrap.cloneNode(true);
+		$wrapClone.removeAttribute("id");
+		$wrapClone.classList.add("tt-wrap-clone");
+		this.$wrap.insertAdjacentElement("afterend", $wrapClone);
+
+		this.$wrap.replaceChildren();
+		this.$wrap.style.setProperty("--map-width", `${this.map.pane.x}px`);
+		this.$wrap.style.setProperty("--map-height", `${this.map.pane.y}px`);
+		this.$wrap.style.setProperty(
+			"--scaling-factor",
+			Math.min(this.map.scale.width, this.map.scale.height),
+		);
+		this.$wrap.style.setProperty("--dpr", window.devicePixelRatio);
+		this.$wrap.setAttribute("data-theme", this.options.theme || "default");
+
+		let title = this.options.title;
+		let content = this.options.content;
+		let showError = !title && !content;
 
 		const $wrapContent = document.createElement("div");
 		$wrapContent.classList.add("tt-content");
-		$wrap.append($wrapContent);
+		this.$wrap.append($wrapContent);
+
+		if (content && typeof content === "object") {
+			try {
+				content = await this.UIBuilder.build(content);
+			} catch {
+				showError = true;
+			}
+		}
+
+		if (showError) {
+			title = "Error";
+			content = `<div class="box" style="margin-bottom: 0; text-align: center;">
+				Unable to display tooltip
+			</div>`;
+			this.$wrap.setAttribute("data-theme", "error");
+		}
 
 		const $title = document.createElement("h1");
-		if (this.options.title)
-			$title.innerHTML = `<span>${this.options.title}</span>`;
-		$wrapContent.append($title);
-
+		if (title) $title.innerHTML = `<span>${title}</span>`;
 		if (this.options.pinned) {
 			const $close = document.createElement("button");
 			$close.setAttribute("type", "button");
@@ -256,14 +353,16 @@ class Tooltip {
 			$close.innerHTML = `&#10005;`;
 			$title.append($close);
 		}
+		$wrapContent.append($title);
 
-		if (this.options.content) {
+		if (content) {
 			const $content = document.createElement("div");
-			$content.innerHTML = this.options.content;
+			$content.innerHTML = content;
 			$wrapContent.append($content);
 		}
 
 		const box = $wrapContent.getBoundingClientRect();
+		$wrapClone.remove();
 		this.size = {
 			width: Math.ceil(box.width * window.devicePixelRatio),
 			height: Math.ceil(box.height * window.devicePixelRatio),
@@ -325,7 +424,10 @@ class Tooltip {
 
 		// Cumulative pixel offsets to apply to the target position later
 		// (real screen pixels, not unscaled map pixels)
-		let offsets = { x: 0, y: 0 };
+		let offsets = {
+			x: Math.min((this.map.pane.x - this.map.view.x) / 2, 0),
+			y: Math.min((this.map.pane.y - this.map.view.y) / 2, 0),
+		};
 
 		// Apply letterbox offsets
 		offsets.x += Math.max((this.map.pane.x - this.map.view.x) / 2, 0);
@@ -407,7 +509,6 @@ class Tooltip {
 
 		this.target = { ...target };
 		this.offsets = { ...offsets };
-		// const pos = this.position(target, offsets);
 
 		// Where to position the tooltip, in scaled pixels relative to screen map view
 		const pos = {
@@ -432,24 +533,28 @@ class Tooltip {
 
 	attachEvents() {
 		if (this.options.pinned) {
-			const onCloseClick = (e) => this.onCloseClick(e, this);
-			$wrap.querySelectorAll("[data-close-tooltip]").forEach((el) => {
-				el.removeEventListener("click", onCloseClick);
-				el.addEventListener("click", onCloseClick);
+			this.$wrap.querySelectorAll("[data-close-tooltip]").forEach((el) => {
+				el.addEventListener("click", this.onCloseClick.bind(this));
 			});
 
-			const onContentClick = (e) => this.onContentClick(e, this);
-			$wrap.removeEventListener("click", onContentClick);
-			$wrap.addEventListener("click", onContentClick);
+			this.$wrap.firstElementChild.addEventListener(
+				"click",
+				this.onContentClick.bind(this),
+			);
 		}
 
-		const onKeyDown = (e) => this.onKeyDown(e, this);
-		$root.removeEventListener("keydown", onKeyDown);
-		$root.addEventListener("keydown", onKeyDown);
+		this.$wrap.firstElementChild.addEventListener(
+			"keydown",
+			this.onKeyDown.bind(this),
+		);
+
+		this.$wrap.querySelectorAll("[data-call-src]").forEach((el) => {
+			el.addEventListener("click", this.onSrcClick.bind(this));
+		});
 	}
 
 	position(size, pos) {
-		const $wrapContent = $wrap.firstElementChild;
+		const $wrapContent = this.$wrap.firstElementChild;
 		$wrapContent.style.setProperty("width", `${this.size.width}px`);
 		$wrapContent.style.setProperty("height", `${this.size.height}px`);
 
@@ -458,13 +563,21 @@ class Tooltip {
 			size: `${size.width}x${size.height}`,
 			pos: `${pos.x},${pos.y}`,
 		});
-		window.tooltip.callByond({ action: "showing" });
+		callByond({ action: "showing" });
 		this.showing = true;
 	}
 
 	async show() {
 		await this.setMapSizes();
-		this.setContent();
+		await this.setContent();
+		const pos = this.getPosition();
+		this.attachEvents();
+		this.position(this.size, pos);
+	}
+
+	async update(args) {
+		this.options = args.options;
+		await this.setContent();
 		const pos = this.getPosition();
 		this.attachEvents();
 		this.position(this.size, pos);
@@ -541,7 +654,7 @@ class Tooltip {
 		this.showing = false;
 		this.hiding = true;
 		BYOND.winset(this.global.windowId, { isVisible: false });
-		window.tooltip.callByond({ action: "hidden" });
+		callByond({ action: "hidden" });
 	}
 
 	focusMap() {
@@ -553,14 +666,24 @@ class TooltipOrchestrator {
 	options = {};
 	pool = new Set();
 
-	constructor(options) {
-		this.options = options;
-		this.callByond({ action: "loaded" });
+	constructor() {
+		this.options = window.tooltip_config;
+
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", () => {
+				this.onLoaded();
+			});
+		} else {
+			this.onLoaded();
+		}
+	}
+
+	onLoaded() {
+		callByond({ action: "loaded" });
 	}
 
 	initTooltip(args) {
-		args = JSON.parse(args);
-		const tooltip = new Tooltip(this.options, args);
+		const tooltip = new Tooltip(this.options, JSON.parse(args));
 
 		for (const key of Object.getOwnPropertyNames(Tooltip.prototype)) {
 			if (
@@ -591,9 +714,20 @@ class TooltipOrchestrator {
 		}
 
 		this.pool.add(tooltip);
+		if (this.options.debug) tooltip.tracking.create();
 		tooltip.show().then(() => {
 			tooltip.onFinished();
 		});
+	}
+
+	updateTooltip(args) {
+		const tooltip = this.findActiveTooltip();
+		if (tooltip) {
+			if (this.options.debug) tooltip.tracking.create();
+			tooltip.update(JSON.parse(args)).then(() => {
+				tooltip.onFinished();
+			});
+		}
 	}
 
 	hideTooltips() {
@@ -611,6 +745,14 @@ class TooltipOrchestrator {
 		}
 	}
 
+	update(args) {
+		try {
+			this.updateTooltip(args);
+		} catch (e) {
+			handleError(e);
+		}
+	}
+
 	hide() {
 		try {
 			this.hideTooltips();
@@ -619,13 +761,13 @@ class TooltipOrchestrator {
 		}
 	}
 
-	callByond(params) {
-		const arrayParams = [`src=${this.options.ref}`, `tooltip=1`];
-		for (const param in params) {
-			arrayParams.push(`${param}=${encodeURIComponent(params[param])}`);
+	findActiveTooltip() {
+		for (const tooltip of this.pool) {
+			if (tooltip.showing) {
+				return tooltip;
+			}
 		}
-		window.location = `byond://?${arrayParams.join("&")}`;
 	}
 }
 
-window.tooltip = new TooltipOrchestrator(window.tooltip);
+window.tooltip = new TooltipOrchestrator();

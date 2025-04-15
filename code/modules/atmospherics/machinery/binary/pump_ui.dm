@@ -53,29 +53,16 @@
 	user.client?.tooltips?.show(
 		TOOLTIP_PINNED, src.get_atom(),
 		title = src.pump_name,
-		content = src.render(),
+		content = alist(
+			"file" = resource("html/tooltips/pump.eta"),
+			"data" = alist(
+				"src" = "\ref[src]",
+				"is_on" = is_on(),
+				"value_name" = value_name,
+				"value_units" = value_units,
+				"value" = get_value(),
+				"incr_lg" = incr_lg,
+				"incr_sm" = incr_sm,
+			)
+		),
 	)
-
-/// Generates the HTML
-/datum/pump_ui/proc/render()
-	return {"
-<style>
-.btn-group > .btn {
-	white-space: nowrap;
-}
-</style>
-<div style="display: flex; margin-bottom: .75em;">
-	<div class='box [is_on() ? "box--success" : "box--error"]' style="width: 100%; margin: 0 .5em 0 0;">
-		[is_on() ? "Active" : "Inactive"]
-	</div>
-	<a class="btn btn--small" href="?src=\ref[src]&ui_target=pump_ui&ui_action=toggle_power">Toggle</a>
-</div>
-<div style="margin-bottom: .25em;">[value_name]</div>
-<div class='btn-group'>
-	<a class='btn btn--small' href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_lg]">--</a>
-	<a class='btn btn--small' href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[-incr_sm]">-</a>
-	<a class='btn btn--small' href="?src=\ref[src]&ui_target=pump_ui&ui_action=set_value">[get_value()] [value_units]</a>
-	<a class='btn btn--small' href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_sm]">+</a>
-	<a class='btn btn--small' href="?src=\ref[src]&ui_target=pump_ui&ui_action=bump_value&bump_value=[incr_lg]">++</a>
-</div>
-"}

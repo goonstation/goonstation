@@ -230,8 +230,9 @@ ABSTRACT_TYPE(/obj/item)
 		lastTooltipContent = .
 
 	proc/tooltipHook(datum/tooltipOptions/options)
-		var/bottom = options.mouse["bottom"]["tiles"]
-		if (bottom == 1) options.pushTiles("up", 1)
+		if (!usr?.client?.tg_layout)
+			var/bottom = options.mouse["bottom"]["tiles"]
+			if (bottom == 1) options.pushTiles("up", 1)
 
 	MouseEntered(location, control, params)
 		if (showTooltip && usr.client.tooltips)

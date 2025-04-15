@@ -9,8 +9,6 @@
 	var/mapControl = "map"
 	/// The tooltip HTML, for caching
 	var/html = ""
-	/// Have tooltip browser assets been sent to the client
-	var/assetsLoaded = FALSE
 	/// Whether tooltip debugging enabled
 	var/debug = FALSE
 	/// The tooltip used for hovering over a target (we assume clients can only hover over one thing at a time)
@@ -37,14 +35,13 @@
 	/// Send browser assets to the client
 	proc/loadAssets()
 		PRIVATE_PROC(TRUE)
-		if (src.assetsLoaded) return
 		if (!cdn)
 			src.owner.loadResourcesFromList(list(
 				"browserassets/src/css/tooltip.css",
+				"browserassets/src/vendor/js/eta.min.js",
 				"browserassets/src/js/tooltip.js",
-			))
+			) + recursiveFileList("browserassets/src/html/tooltips/"))
 		src.html = grabResource("html/tooltip.html")
-		src.assetsLoaded = TRUE
 
 	/**
 	 * Show a tooltip
@@ -124,7 +121,6 @@
 
 	/// Escape hatch to completely reset in case of a broken state
 	proc/reset()
-		src.assetsLoaded = FALSE
 		src.loadAssets()
 		src.hoverTip?.remove()
 		src.hideAllClickTips()
@@ -186,9 +182,9 @@
 			"background-color" = "#000",
 		)))
 
-		var/html = replacetext(src.holder.html, "<!-- TOOLTIP_OPTIONS -->", {"
+		var/html = replacetext(src.holder.html, "<!-- TOOLTIP_CONFIG -->", {"
 			<script>
-				window.tooltip = {
+				window.tooltip_config = {
 					ref: '\ref[src]',
 					windowId: '[src.window]',
 					mapControlId: '[src.holder.mapId].[src.holder.mapControl]',
@@ -231,6 +227,12 @@
 			"left" = alist("tiles" = tilesLeft, "pixels" = 1, "icon" = refTarget.pixel_x * -1),
 			"bottom" = alist("tiles" = tilesBottom, "pixels" = 1, "icon" = refTarget.pixel_y * -1),
 		)
+
+	proc/shouldUpdate(atom/target)
+		PRIVATE_PROC(TRUE)
+		if (!src.target) return FALSE
+		var/atom/refTarget = src.target.deref()
+		return src.showing && !src.hiding && src.loaded && target == refTarget
 
 	proc/build()
 		PRIVATE_PROC(TRUE)
@@ -275,6 +277,13 @@
 		if (src.hiding) return
 		src.holder.owner << output(params, "[src.window]:tooltip.init")
 
+	proc/update()
+		PRIVATE_PROC(TRUE)
+		if (src.hiding) return
+		src.holder.owner << output(list2params(list(json_encode(alist(
+			"options" = src.options.toList(),
+		)))), "[src.window]:tooltip.update")
+
 	// proc/move(move_dir)
 	// 	if (!src.showing || src.options.hud) return
 	// 	src.holder.owner << output(list2params(list(
@@ -286,10 +295,11 @@
 
 	proc/show(atom/target, mouse, title, content, theme, list/align, list/size, list/offset, list/bounds, list/extra)
 		if (!src.holder) return
+		var/update = src.shouldUpdate(target)
 		src.hiding = FALSE
 		src.target = get_weakref(target)
 
-		src.options.reset()
+		if (!update) src.options.reset()
 		if (mouse) src.options.setMouse(mouse)
 		if (title) src.options.title = title
 		if (content) src.options.content = content
@@ -300,10 +310,13 @@
 		if (bounds) src.options.setBounds(bounds)
 		if (extra) src.options.extra = extra
 
-		RegisterSignal(src.holder.owner.mob, COMSIG_MOB_DEATH, PROC_REF(hide), TRUE)
-		RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(hide), TRUE)
-		src.updateObjDialog(TRUE)
-		src.loaded ? src.build() : src.create()
+		if (update)
+			src.update()
+		else
+			RegisterSignal(src.holder.owner.mob, COMSIG_MOB_DEATH, PROC_REF(hide), TRUE)
+			RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(hide), TRUE)
+			src.updateObjDialog(TRUE)
+			src.loaded ? src.build() : src.create()
 
 	proc/hide()
 		if (src.hiding || !src.holder) return

@@ -189,7 +189,7 @@ img {
  * Wrappers
  *****************************/
 
-#tt-wrap {
+.tt-wrap {
 	/*
 	 Represents scaling of map icons.
 	 E.g. a 32x32 tile that is stretched to 64x64 on the users screen would have a scale factor of 2
@@ -302,6 +302,12 @@ img {
 /*****************************
  * Themes
  *****************************/
+
+[data-theme="error"] .tt-content {
+	--theme-highlight: #c70d08;
+	--theme-secondary: #303012;
+	--theme-primary: #6e0000;
+}
 
 [data-theme="default"] .tt-content,
 [data-theme="newhud"] .tt-content {
