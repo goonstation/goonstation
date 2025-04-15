@@ -1851,6 +1851,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "bwn" = (
@@ -3415,6 +3416,7 @@
 /area/station/security/processing)
 "cIE" = (
 /obj/machinery/drainage,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "cIM" = (
@@ -3845,6 +3847,7 @@
 /area/evilreaver/genetics)
 "cYT" = (
 /obj/machinery/light/incandescent/cool,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "cYV" = (
@@ -7578,6 +7581,7 @@
 	dir = 8;
 	pixel_x = 6
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "fsD" = (
@@ -8335,6 +8339,7 @@
 	dir = 8;
 	pixel_x = 6
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "fVX" = (
@@ -11989,6 +11994,10 @@
 /obj/item/trench_map,
 /obj/item/trench_map,
 /obj/machinery/light/incandescent/warm,
+/obj/item/trench_map,
+/obj/item/trench_map,
+/obj/item/trench_map,
+/obj/item/trench_map,
 /turf/unsimulated/floor/green/side,
 /area/station/crewquarters/cryotron)
 "iBd" = (
@@ -14390,6 +14399,7 @@
 /area/station/engine/engineering)
 "kmh" = (
 /obj/machinery/drainage,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/medical/head)
 "kmn" = (
@@ -14470,6 +14480,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "kqc" = (
@@ -14900,6 +14911,7 @@
 /turf/space/fluid,
 /area/space)
 "kFL" = (
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "kGx" = (
@@ -17209,6 +17221,7 @@
 	layer = 3;
 	pixel_y = 8
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/medical/head)
 "mnT" = (
@@ -17946,6 +17959,7 @@
 	dir = 8;
 	pixel_x = -8
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "mUZ" = (
@@ -17999,6 +18013,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/medical/head)
 "mXe" = (
@@ -22351,6 +22366,7 @@
 /area/station/science/lab)
 "qfP" = (
 /obj/machinery/light/incandescent/warm,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "qgc" = (
@@ -25257,6 +25273,7 @@
 /area/station/ranch)
 "skW" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "sld" = (
@@ -28640,6 +28657,7 @@
 /area/evilreaver/chapel)
 "uyS" = (
 /obj/machinery/drainage,
+/obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "uzn" = (
