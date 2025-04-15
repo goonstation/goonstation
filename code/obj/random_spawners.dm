@@ -2374,8 +2374,7 @@
 
 /obj/random_item_spawner/gross_with_junk
 	name = "random gross/junk spawner"
-	icon_state = "rand_junk"
-	color = "#699a00"
+	icon_state = "rand_trash-vomit"
 	min_amt2spawn = 2
 	max_amt2spawn = 7
 	rare_chance = 5
@@ -2512,8 +2511,7 @@
 
 /obj/random_item_spawner/gross
 	name = "random gross/mess spawner"
-	icon_state = "rand_junk" // TODO
-	color = "#a79700"
+	icon_state = "rand_vomit"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
 
