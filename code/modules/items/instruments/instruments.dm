@@ -72,6 +72,7 @@
 				newcontext.note = i
 				contextActions += newcontext
 
+	initialize(player_caused_init)
 		if (src.use_new_interface)
 			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
 			src.notes = instr_data.notes
