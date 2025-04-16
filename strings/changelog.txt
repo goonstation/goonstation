@@ -1,4 +1,10 @@
 
+(t)wed apr 16 25
+(u)Lord_Earthfire
+(p)22115
+(e)🪲🎨🔄📦|C-Bug, C-Sprites, C-Rework, A-Game-Objects
+(*)The way of constructing igniter/pipebomb/whatever-assemblies has been completely reworked. Check out the PR page for full details.
+(*)The assembly of canbombs has been changed. You start their construction with a timer/multitool/plasma-tank-assembly, add an igniter to it, add some cabling and then you can complete the construction or add additions like bikehorns or signalers to it.
 (t)mon apr 14 25
 (u)JORJ949
 (p)22946
