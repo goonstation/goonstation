@@ -1,5 +1,6 @@
 
 (t)wed apr 16 25
+(+)It is with great sadness I must inform you that foam darts no longer cook off due to intense heat.
 (u)Lord_Earthfire
 (p)22115
 (e)🪲🎨🔄📦|C-Bug, C-Sprites, C-Rework, A-Game-Objects
