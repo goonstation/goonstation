@@ -299,9 +299,13 @@ TYPEINFO(/obj/item/card/emag)
 		return FALSE
 	var/list/all_accesses = get_all_accesses()
 	var/bonus_access = list() // preserve accesses which are otherwise unobtainable
+	var/special_accesses = list(access_maxsec, access_armory)
 	for (var/access in src.access)
 		if (!(access in all_accesses))
-			bonus_access += list(access)
+			if((access in special_accesses) && prob(33))
+				bonus_access += list(access)
+			else
+				bonus_access += list(access)
 	src.access = bonus_access // clear what used to be there
 	for (var/i = rand(2,25), i > 0, i--)
 		var/new_access = pick(all_accesses)
