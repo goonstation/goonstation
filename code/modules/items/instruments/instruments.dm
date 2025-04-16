@@ -503,6 +503,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -510,6 +511,27 @@
 	desc_verb = list("honks")
 	note_time = 0.8 SECONDS
 	pick_random_note = 1
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the bike-horn
+		parent_assembly.target_item_prefix = "bike-horn"
+
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
+
+	/// ----------------------------------------------
 
 	show_play_message(mob/user as mob)
 		return
@@ -541,10 +563,7 @@
 					JOB_XP(user, "Clown", 2)
 					break
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
 			if ("pulse")
@@ -742,10 +761,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("pulse")
 				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
