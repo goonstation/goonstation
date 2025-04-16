@@ -3,6 +3,11 @@
 	name = "Mass Madness"
 	centcom_headline = "Abzu Sonar Array Warning"
 	centcom_message = ""
+#ifdef MAP_OVERRIDE_NEON
+	disabled = FALSE
+#else
+	disabled = TRUE
+#endif
 	var/num_victims = 0
 
 	admin_call(source)
