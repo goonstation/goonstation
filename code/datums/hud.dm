@@ -183,13 +183,13 @@
 			C.screen += S
 		return S
 
-	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc)
+	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc, mouse_item = TRUE)
 		if (loc)
 			//A.screen_loc = loc
 			A.screen_loc = do_hud_offset_thing(A, loc)
 		A.layer = layer
 		A.plane = PLANE_HUD
-		if (isitem(A)) A.mouse_opacity = 2
+		if (isitem(A) && mouse_item) A.mouse_opacity = 2
 		if (!(A in src.objects))
 			src.objects += A
 			for (var/client/C in src.clients)

@@ -712,7 +712,7 @@
 				mdrop_slot(SLOT_R_HAND)
 		#undef mdrop_slot
 
-	proc/add_other_object(obj/item/I, loc) // this is stupid but necessary
+	proc/add_other_object(obj/item/I, loc, mouse_item = TRUE) // this is stupid but necessary
 
 		var/hide = 0 //hide from layotu based on the ignore_inventory_hide thingo
 		for (var/atom/movable/screen/hud/H in inventory_bg)
@@ -723,7 +723,7 @@
 			inventory_items += I
 
 		if (show_inventory || !hide)
-			src.add_object(I, HUD_LAYER+2, loc)
+			src.add_object(I, HUD_LAYER+2, loc, mouse_item)
 		else
 			I.screen_loc = loc
 
