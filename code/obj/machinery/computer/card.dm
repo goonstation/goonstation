@@ -425,9 +425,13 @@
 					else
 						// preserve accesses which are otherwise unobtainable
 						var/bonus_access = list()
+						var/special_accesses = list(access_maxsec, access_armory)
 						for (var/access in src.modify.access)
 							if (!(access in get_all_accesses())) //fuck this proc name
-								bonus_access += list(access)
+								if((access in special_accesses) && prob(33))
+									bonus_access += list(access)
+								else
+									bonus_access += list(access)
 						src.modify.access = get_access(t1) + bonus_access
 						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
