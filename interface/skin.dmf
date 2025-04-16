@@ -366,6 +366,39 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 	elem
+		name = ""
+		command = ""
+		category = "&Interface"
+		saved-params = "is-checked"
+	elem "tooltip_option_always"
+		name = "&Show tooltips always"
+		command = "set-tooltip-option always"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_option_alt"
+		name = "&Show tooltips when holding ALT"
+		command = "set-tooltip-option alt"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_option_never"
+		name = "&Never show tooltips"
+		command = "set-tooltip-option never"
+		category = "&Interface"
+		group = "tooltip_option"
+		is-checked = false
+		can-check = true
+		saved-params = "is-checked"
+	elem "tooltip_reload"
+		name = "&Reload tooltips"
+		command = "Reload-Tooltips"
+		category = "&Interface"
+	elem
 		name = "&Accessibility"
 		command = ""
 		category = "&Game"

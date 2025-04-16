@@ -1460,11 +1460,20 @@ var/global/curr_day = null
 	else
 		src.ignore_sound_flags |= SOUND_VOX
 
-
 /client/verb/set_hand_ghosts()
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/set_tooltip_option(val as text)
+	set hidden = 1
+	set name = "set-tooltip-option"
+	if (val == "always")
+		src.preferences.tooltip_option = TOOLTIP_ALWAYS
+	else if (val == "alt")
+		src.preferences.tooltip_option = TOOLTIP_ALT
+	else if (val == "never")
+		src.preferences.tooltip_option = TOOLTIP_NEVER
 
 /client/verb/disable_colorblind_modes()
 	set hidden = TRUE

@@ -450,6 +450,9 @@
 		src.tooltip_option = (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS) //For fucks sake.
 		src.keybind_prefs_updated(user)
 
+		winset(user, "tooltip_option_always", "is-checked=[src.tooltip_option == TOOLTIP_ALWAYS]")
+		winset(user, "tooltip_option_alt", "is-checked=[src.tooltip_option == TOOLTIP_ALT]")
+		winset(user, "tooltip_option_never", "is-checked=[src.tooltip_option == TOOLTIP_NEVER]")
 
 		return 1
 

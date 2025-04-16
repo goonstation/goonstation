@@ -43,6 +43,19 @@
 			) + recursiveFileList("browserassets/src/html/tooltips/"))
 		src.html = grabResource("html/tooltip.html")
 
+	/// Determine if we're allowed to show hover tooltips to a client
+	proc/canShowHover()
+		PRIVATE_PROC(TRUE)
+		// Never show tooltips
+		if (src.owner.preferences.tooltip_option == TOOLTIP_NEVER)
+			return FALSE
+
+		// Only show tooltips if ALT key pressed
+		if (src.owner.preferences.tooltip_option == TOOLTIP_ALT && !src.owner.check_key(KEY_EXAMINE))
+			return FALSE
+
+		return TRUE
+
 	/**
 	 * Show a tooltip
 	 *
@@ -63,7 +76,7 @@
 	 */
 	proc/show(type = TOOLTIP_HOVER, atom/target, mouse, title, content, theme, list/align, list/size, list/offset, list/bounds, list/extra)
 		var/datum/tooltip/toShow = null
-		if (type == TOOLTIP_HOVER)
+		if (type == TOOLTIP_HOVER && src.canShowHover())
 			if (!src.hoverTip) src.hoverTip = new /datum/tooltip(src)
 			toShow = src.hoverTip
 		else if (type == TOOLTIP_PINNED)
@@ -522,11 +535,11 @@
 		src.offset["tiles"][direction] = amount
 
 
-/client/verb/resetTooltips()
-	set name = "Reset Tooltips"
+/client/verb/reloadTooltips()
+	set name = "Reload Tooltips"
 	set desc = "Use this if your tooltips are broken"
 	src.tooltips.reset()
-	boutput(src, "Tooltips reset")
+	boutput(src, "Tooltips reloaded")
 
 /client/verb/debugTooltips()
 	set hidden = TRUE
