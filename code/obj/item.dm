@@ -1594,6 +1594,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.u_equip(src)
+		if(src.master)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, src)
+
 		return ..()
 	var/area/Ar = T.loc
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))
@@ -1806,3 +1809,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// Override to implement custom logic for determining whether the item should be placed onto a target object
 /obj/item/proc/should_place_on(obj/target, params)
 	return TRUE
+
+///This will be called when the item is build into a /obj/item/assembly on get_help_message()
+/obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	return
+
+///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
+/obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+

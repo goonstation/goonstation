@@ -136,11 +136,8 @@
 
 	user.u_equip(src)
 	user.put_in_hand_or_drop(src.gift)
-	if(istype(src.gift, /obj/item/mousetrap))
-		var/obj/item/mousetrap/MT = src.gift
-		if(MT.armed)
-			modify_christmas_cheer(-4)
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
+	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
+		modify_christmas_cheer(-4)
 
 
 	modify_christmas_cheer(2)

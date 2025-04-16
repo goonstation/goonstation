@@ -18583,9 +18583,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "fAO" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/cable{
 	icon_state = "0-2"
 	},

@@ -585,11 +585,29 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
+	item_function_flags = ASSEMBLY_NEEDS_MESSAGING
 
 	New()
 		..()
 		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		return
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+		return " [log_atmos(src)]"
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the plasma tank
+		parent_assembly.target_item_prefix = "plasma"
+
+	/// ----------------------------------------------
+
 
 	proc/release()
 		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
@@ -645,80 +663,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src.master) qdel(src.master)
 		qdel(src)
-
-	attackby(obj/item/W, mob/user)
-		..()
-		if (istype(W, /obj/item/assembly/rad_ignite))
-			var/obj/item/assembly/rad_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/radio_bomb/R = new /obj/item/assembly/radio_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
-
-		if (istype(W, /obj/item/assembly/prox_ignite))
-			var/obj/item/assembly/prox_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/proximity_bomb/R = new /obj/item/assembly/proximity_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
-
-		if (istype(W, /obj/item/assembly/time_ignite))
-			var/obj/item/assembly/time_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/time_bomb/R = new /obj/item/assembly/time_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
 
 /obj/item/tank/mini_plasma
 	name = "mini plasma tank"
