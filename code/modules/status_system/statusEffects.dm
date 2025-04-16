@@ -3681,3 +3681,21 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/broken
+	id = "broken_madness"
+	name = "Broken"
+	desc = "You have been driven to madness by the immense psychic pressure of the unknowable minds drifting far above."
+	visible = TRUE
+	icon_state = "madness"
+
+	onAdd(optional)
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.addOverlayComposition(/datum/overlayComposition/insanity/large)
+
+	onRemove()
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		mob_owner.mind?.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)

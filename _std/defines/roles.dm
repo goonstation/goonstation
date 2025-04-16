@@ -43,6 +43,7 @@
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
 #define ROLE_ZOMBIE "zombie"
+#define ROLE_BROKEN "broken"
 
 // gimmicks
 #define ROLE_BATTLER "battler"

@@ -649,6 +649,16 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 		return 0
 
+ABSTRACT_TYPE(/datum/objective/madness)
+/datum/objective/madness
+
+/datum/objective/madness/hate_department
+	set_up()
+		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department", "the engine")]."
+
+/datum/objective/madness/fear
+	set_up()
+		src.explanation_text = "You are filled with an overwhelming need for [pick("blood", "money", "weapons", "sharp things")]."
 
 /*
 /datum/objective/regular/borgdeath
