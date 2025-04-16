@@ -605,6 +605,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	if(src.single_use)
 		qdel(src)
+		return
 
 	if(src.cooldown)
 		inuse = TRUE
