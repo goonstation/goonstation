@@ -17,6 +17,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
+	///Can this ammo be cooked off by heating?
+	var/cookable = TRUE
 
 	proc
 		swap(var/obj/item/ammo/A)
@@ -299,6 +301,8 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		. = ..()
+		if (!src.cookable)
+			return
 		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
@@ -725,6 +729,7 @@
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
 	throwforce = 0
+	cookable = FALSE
 
 //0.40
 /obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
