@@ -69,8 +69,17 @@ TYPEINFO(/obj/machinery/power/smes)
 	if (newly_built)
 		src.charge = 0
 		deconstruct_flags = DECON_SIMPLE
-	var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(get_step(src, src.dir))
-	term.set_dir(get_dir(term, src))
+	var/obj/machinery/power/terminal/term
+	for (var/direction in cardinal)
+		for (var/obj/machinery/power/terminal/potential_term in get_turf(get_step(src, direction)))
+			if (potential_term.dir == get_dir(potential_term, src))
+				term = potential_term
+				break
+		if (term)
+			break
+	if (!term)
+		term = new /obj/machinery/power/terminal(get_step(src, src.dir))
+		term.set_dir(get_dir(term, src))
 	src.terminal = term
 	. = ..()
 
