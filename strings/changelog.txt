@@ -1,9 +1,4 @@
 
-(t)thu apr 17 25
-(u)Facsimile
-(p)23017
-(e)🪲🐛⚙|C-Bug, C-Runtime, A-Internal
-(+)Fixed a runtime error that occurs when initializing the Instrument Sound Bank.
 (t)wed apr 16 25
 (u)LeahTheTech
 (+)It is with great sadness I must inform you that foam darts no longer cook off due to intense heat.
