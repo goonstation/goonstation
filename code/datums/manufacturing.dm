@@ -868,7 +868,7 @@
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
-	item_requirements = list("molitz" = 5)
+	item_requirements = list("crystal" = 5)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
@@ -876,7 +876,7 @@
 
 /datum/manufacture/fractionalcondenser
 	name = "Fractional Condenser"
-	item_requirements = list("molitz" = 6)
+	item_requirements = list("crystal" = 6)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser/fractional)
 	create = 1
 	time = 5 SECONDS
@@ -884,7 +884,7 @@
 
 /datum/manufacture/dropper_funnel
 	name = "Dropper Funnel"
-	item_requirements = list("molitz" = 3)
+	item_requirements = list("crystal" = 3)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
 	create = 1
 	time = 5 SECONDS
@@ -892,7 +892,7 @@
 
 /datum/manufacture/portable_dispenser
 	name = "Portable Dispenser"
-	item_requirements = list("molitz" = 3,
+	item_requirements = list("crystal" = 3,
 							 "metal" = 2,
 							 "miracle" = 2)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dispenser)
