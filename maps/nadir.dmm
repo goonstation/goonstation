@@ -46984,8 +46984,8 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tYz" = (
-/obj/submachine/cargopad{
-	name = "Mining Gear Room Pad"
+/obj/submachine/cargopad/magnet{
+	name = "Mining Staff Room"
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
