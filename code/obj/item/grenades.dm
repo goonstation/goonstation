@@ -239,15 +239,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	proc/before_throwing(var/thing, var/turf/target)
 		return
 
-/obj/item/old_grenade/thing_thrower/shuriken
-	desc = "It is set to detonate in 3 seconds."
-	name = "aconite grenade"
-	icon_state = "smoke"
-	icon_state_armed = "smoke1"
-	throw_radius = 6
-	payload = /obj/item/implant/projectile/shuriken
-	count = 10
-
 /obj/item/old_grenade/thing_thrower/aconite
 	desc = "It is set to detonate in 3 seconds."
 	name = "aconite grenade"
