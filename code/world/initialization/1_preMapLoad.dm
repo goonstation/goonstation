@@ -5,6 +5,7 @@
  * YOU WILL BE SENT TO THE CRUSHER IF YOU TOUCH THIS UNNECESSAIRLY
  */
 /world/proc/Genesis()
+	global.runtimeDetails = list()
 #ifdef LIVE_SERVER
 	world.log = file("data/errors.log")
 #endif
