@@ -298,14 +298,10 @@ TYPEINFO(/obj/item/card/emag)
 			user.show_text("You run [E] over [src], but nothing seems to happen.", "red")
 		return FALSE
 	var/list/all_accesses = get_all_accesses()
-	var/bonus_access = list() // preserve accesses which are otherwise unobtainable
-	var/special_accesses = list(access_maxsec, access_armory)
+	var/bonus_access = list() // have a chance to keep some special accesses
 	for (var/access in src.access)
-		if (!(access in all_accesses))
-			if((access in special_accesses) && prob(33))
-				bonus_access += list(access)
-			else
-				bonus_access += list(access)
+		if (!(access in all_accesses) && prob(20))
+			bonus_access += list(access)
 	src.access = bonus_access // clear what used to be there
 	for (var/i = rand(2,25), i > 0, i--)
 		var/new_access = pick(all_accesses)
