@@ -72,7 +72,7 @@ TYPEINFO(/obj/machinery/power/smes)
 	var/obj/machinery/power/terminal/term
 	for (var/direction in cardinal)
 		for (var/obj/machinery/power/terminal/potential_term in get_turf(get_step(src, direction)))
-			if (potential_term.dir == get_dir(potential_term, src))
+			if (isnull(potential_term.master) && potential_term.dir == get_dir(potential_term, src))
 				term = potential_term
 				break
 		if (term)
@@ -124,6 +124,11 @@ TYPEINFO(/obj/machinery/power/smes)
 
 		UpdateIcon()
 
+/obj/machinery/power/smes/disposing()
+	. = ..()
+	if (src.terminal)
+		src.terminal.master = null
+		src.terminal = null
 
 /obj/machinery/power/smes/update_icon()
 	if (status & (BROKEN|POWEROFF))
