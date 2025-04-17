@@ -449,7 +449,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/mech_comp/proc/build_allow_list()
 	src.allow_list = list()
 
-	for (var/key in global.instrument_sound_bank)
+	for (var/key in global.instrument_sound_bank.bank)
 		if (key in src.deny_list)
 			continue
 
