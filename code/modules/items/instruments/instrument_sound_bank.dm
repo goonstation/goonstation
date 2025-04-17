@@ -22,7 +22,7 @@
 	var/list/intruments = filtered_concrete_typesof(/obj/item/instrument, /datum/instrument_sound_bank/proc/does_instr_use_new_interface)
 	for (var/instr_type as anything in intruments)
 		if (!isnull(instr_type))
-			var/obj/item/instrument/instr = new instr_type()
+			var/obj/item/instrument/instr = new instr_type(FALSE)
 			var/datum/instrument_data/instr_dat = new()
 			instr_dat.notes = instr.generate_note_range(instr.note_range[1], instr.note_range[length(instr.note_range)])
 			instr_dat.note_keys_string = instr.generate_keybinds(instr_dat.notes)

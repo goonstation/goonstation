@@ -51,7 +51,7 @@
 	/// Can it go in a mechcomp component?
 	var/automatable = TRUE
 
-	New()
+	New(var/set_data = TRUE)
 		..()
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
@@ -72,7 +72,7 @@
 				newcontext.note = i
 				contextActions += newcontext
 
-		if (src.use_new_interface)
+		if (src.use_new_interface && set_data)
 			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
 			src.notes = instr_data.notes
 			src.note_keys_string = instr_data.note_keys_string
