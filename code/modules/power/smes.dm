@@ -81,6 +81,7 @@ TYPEINFO(/obj/machinery/power/smes)
 		term = new /obj/machinery/power/terminal(get_step(src, src.dir))
 		term.set_dir(get_dir(term, src))
 	src.terminal = term
+	term.master = src
 	. = ..()
 
 /obj/machinery/power/smes/emp_act()
