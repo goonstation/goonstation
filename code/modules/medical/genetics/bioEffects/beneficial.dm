@@ -374,9 +374,6 @@
 			var/mob/living/carbon/human/H = owner
 			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
 				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,0) // awoo
-	OnLife(var/mult)
-		if(..()) return
-		var/mob/living/L = owner
 
 /datum/bioEffect/detox
 	name = "Natural Anti-Toxins"

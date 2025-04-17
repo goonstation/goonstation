@@ -425,6 +425,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (iswerewolf(user))
 			user.changeStatus("knockdown", 4 SECONDS)
 			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+			user.changeStatus("werewolf_bane", 20 SECONDS)
+
 			boutput(user, SPAN_ALERT("You try to pick up [src], but it hurts and you fall over!"))
 			return
 		else ..()
@@ -436,6 +438,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			if (!GET_COOLDOWN(M, "aconite_stun"))
 				var/datum/statusEffect/stun_effect = M.changeStatus("knockdown", 4 SECONDS)
 				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+				M.changeStatus("werewolf_bane", 20 SECONDS)
+
 				M.visible_message(SPAN_ALERT("The [M] steps too close to [src] and falls down!"))
 				if (stun_effect)
 					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
@@ -461,10 +465,12 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	//stolen from dagger, not much too it
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iswerewolf(A))
+			var/mob/living/carbon/human/H = A
+			H.changeStatus("staggered", 2 SECONDS)
+
 			if (istype(usr, /mob))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			A:weakened += 15
 
 	pull(mob/user)
 		if (!istype(user))

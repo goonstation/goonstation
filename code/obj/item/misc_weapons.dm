@@ -667,6 +667,11 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		..()
 		src.setMaterial(getMaterial("silver"))
 
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		..()
+		if (iswerewolf(target))
+			target.changeStatus("werewolf_bane", 6 SECONDS)
+
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -678,22 +683,21 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
-		if (ishuman(A))
+		if(iswerewolf(A))
 			var/mob/living/carbon/human/H = A
-			if (istype(H.mutantrace, /datum/mutantrace/werewolf))
-				H.changeStatus("knockdown", 4 SECONDS)
-				H.force_laydown_standup()
+			H.changeStatus("knockdown", 4 SECONDS)
+			H.force_laydown_standup()
+			H.changeStatus("werewolf_bane", 15 SECONDS)
 
 
 	attack_hand(var/mob/user)
-		if (ishuman(user))
+		if(iswerewolf(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/werewolf))
-				H.emote("scream")
-				H.changeStatus("knockdown", 1 SECONDS)
-				H.force_laydown_standup()
-				H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
-				return
+			H.emote("scream")
+			H.changeStatus("knockdown", 1 SECONDS)
+			H.force_laydown_standup()
+			H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
+			return
 
 		return ..(user)
 
