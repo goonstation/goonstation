@@ -118,6 +118,8 @@ TYPEINFO(/obj/machinery/power/smes)
 
 		if (!terminal)
 			status |= POWEROFF
+			src.charging = FALSE
+			src.online = FALSE
 			return
 
 		terminal.master = src
@@ -156,6 +158,8 @@ TYPEINFO(/obj/machinery/power/smes)
 
 /obj/machinery/power/smes/set_broken()
 	if(..()) return
+	src.online = FALSE
+	src.charging = FALSE
 	AddComponent(/datum/component/equipment_fault/dangerously_shorted, tool_flags = TOOL_WIRING | TOOL_SOLDERING | TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
 
 /obj/machinery/power/smes/ex_act(severity)
@@ -220,6 +224,8 @@ TYPEINFO(/obj/machinery/power/smes)
 		charge(mult)
 	else
 		status |= POWEROFF
+		src.online = FALSE
+		src.charging = FALSE
 		src.UpdateIcon()
 		return
 
