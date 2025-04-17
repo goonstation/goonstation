@@ -670,7 +670,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = 60, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 			A:lastattacker = usr
 			A:lastattackertime = world.time
@@ -680,10 +680,22 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 		if (ishuman(A))
 			var/mob/living/carbon/human/H = A
-			if (istype(H.mutantrace, /datum/mutation/werewolf))
-				H.remove_status("vampire")
-				H.add_status("vampire_silver", 5 SECONDS)
+			if (istype(H.mutantrace, /datum/mutantrace/werewolf))
+				H.changeStatus("knockdown", 4 SECONDS)
+				H.force_laydown_standup()
+
+
+	attack_hand(var/mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/werewolf))
+				H.emote("scream")
+				H.changeStatus("knockdown", 1 SECONDS)
+				H.force_laydown_standup()
 				H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
+				return
+
+		return ..(user)
 
 // Revolutionary sign.
 /obj/item/revolutionary_sign

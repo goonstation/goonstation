@@ -3009,7 +3009,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_back = list(/obj/item/quiver/leather/stocked)
 	slot_belt = list(/obj/item/storage/belt/crossbow)
 	items_in_belt = list(
-		/obj/item/dagger/throwing_knife/silver,
+		/obj/item/dagger/silver,
 		/obj/item/gun/bow/crossbow/wooden,
 		/obj/item/gun/bow/crossbow/wooden,
 		/obj/item/handcuffs/silver,
