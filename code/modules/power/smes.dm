@@ -59,6 +59,21 @@ TYPEINFO(/obj/machinery/power/smes)
 			term.set_dir(get_dir(Q, iloc))
 		..()
 
+/obj/machinery/power/smes/was_deconstructed_to_frame(mob/user)
+	if (src.terminal)
+		qdel(src.terminal)
+		src.terminal = null
+	. = ..()
+
+/obj/machinery/power/smes/was_built_from_frame(mob/user, newly_built)
+	if (newly_built)
+		src.charge = 0
+		deconstruct_flags = DECON_SIMPLE
+	var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(get_step(src, src.dir))
+	term.set_dir(get_dir(term, src))
+	src.terminal = term
+	. = ..()
+
 /obj/machinery/power/smes/emp_act()
 	..()
 	src.online = 0
