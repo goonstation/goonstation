@@ -1650,7 +1650,6 @@ var/global/list/soundCache = list(
  	"sound/musical_instruments/WeirdHorn_7.ogg" = 'sound/musical_instruments/WeirdHorn_7.ogg',\
  	"sound/musical_instruments/WeirdHorn_8.ogg" = 'sound/musical_instruments/WeirdHorn_8.ogg',\
  	"sound/musical_instruments/WeirdHorn_9.ogg" = 'sound/musical_instruments/WeirdHorn_9.ogg',\
- 	"sound/voice/animal/alpaca.ogg" = 'sound/voice/animal/alpaca.ogg',\
  	"sound/voice/animal/brullbar_cry.ogg" = 'sound/voice/animal/brullbar_cry.ogg',\
  	"sound/voice/animal/brullbar_laugh.ogg" = 'sound/voice/animal/brullbar_laugh.ogg',\
  	"sound/voice/animal/brullbar_maul.ogg" = 'sound/voice/animal/brullbar_maul.ogg',\

@@ -109,7 +109,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 /datum/biome/snow/forest/thick
 	flora_density = 30
 
-	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=20, /mob/living/critter/small_animal/jackalope=1, /mob/living/critter/small_animal/wolf=1)
+	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=25, /mob/living/critter/small_animal/jackalope=1)
 	fauna_density = 0.2
 	minimum_fauna_distance = 10
 
@@ -118,7 +118,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/stone/snow/random = 100, /obj/fakeobject/smallrocks = 50, /obj/stone/random = 5)
 	flora_density = 3
 
-	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=10, /mob/living/critter/small_animal/goat=1, /mob/living/critter/small_animal/wolf=1)
+	fauna_types = list(/mob/living/critter/small_animal/bunny/hare=15, /mob/living/critter/small_animal/goat=1)
 	fauna_density = 0.2
 	minimum_fauna_distance = 20
 
