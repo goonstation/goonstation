@@ -603,7 +603,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
-	// icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
@@ -654,6 +653,37 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			return
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
+
+/obj/item/dagger/silver
+	name = "silver dagger"
+	icon_state = "dagger-silver"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "dagger-silver"
+	force = 8
+	desc = "A silver dagger made to be used against creatures of the night."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+
+	New()
+		..()
+		src.setMaterial(getMaterial("silver"))
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+			C.do_disorient(stamina_damage = 60, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			C.emote("twitch_v")
+			A:lastattacker = usr
+			A:lastattackertime = world.time
+			random_brute_damage(C, throwforce, 1)
+
+			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+		if (ishuman(A))
+			var/mob/living/carbon/human/H = A
+			if (istype(H.mutantrace, /datum/mutation/werewolf))
+				H.remove_status("vampire")
+				H.add_status("vampire_silver", 5 SECONDS)
+				H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
 
 // Revolutionary sign.
 /obj/item/revolutionary_sign
