@@ -40,7 +40,6 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
-	var/static/datum/instrument_sound_bank/sound_bank = new()
 
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
@@ -51,7 +50,7 @@
 	/// Can it go in a mechcomp component?
 	var/automatable = TRUE
 
-	New(var/set_data = TRUE)
+	New(loc)
 		..()
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
@@ -71,9 +70,12 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			initialize()
 
-		if (src.use_new_interface && set_data)
-			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
+	initialize()
+		if (src.use_new_interface)
+			var/datum/instrument_data/instr_data = global.instrument_sound_bank.bank[initial(src.name)]
 			src.notes = instr_data.notes
 			src.note_keys_string = instr_data.note_keys_string
 			src.sounds_instrument = instr_data.sounds_instrument

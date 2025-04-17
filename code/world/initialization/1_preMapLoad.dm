@@ -171,6 +171,8 @@
 	cargo_pad_manager = new /datum/cargo_pad_manager()
 	Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 	camera_coverage_controller = new /datum/controller/camera_coverage()
+	Z_LOG_DEBUG("Preload", " instrumnt_sound_bank")
+	instrument_sound_bank = new()
 
 	Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 	hydro_controls.set_up()
