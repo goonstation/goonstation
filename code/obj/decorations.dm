@@ -426,6 +426,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 	is_syndicate = TRUE
+	tooltip_rebuild = REBUILD_USER
 
 	New()
 		. = ..()
