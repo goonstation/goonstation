@@ -30,25 +30,6 @@ limbs are their own thing not included here.
 var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gnomechompski/elf, /obj/item/gnomechompski/mummified)
 
 // ~make procs 4 everything~
-/proc/surgeryCheck(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob)
-	. = 1
-	if (!patient) // did we not get passed a patient?
-		return FALSE // surgery is not okay
-	if (!ishuman(patient)) // is the patient not a human?
-		return FALSE // surgery is not okay
-	if(patient == surgeon) //self-surgery hurts a lot more
-		. = 3.5
-	if (locate(/obj/machinery/optable, patient.loc)) // is the patient on an optable and lying?
-		if(patient.lying || patient == surgeon)
-			return . // surgery is okay
-
-	else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("unconscious") || patient.stat)) // is the patient on a table and paralyzed or dead?
-		return . // surgery is okay
-	else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying))) // is the patient really drunk and also the surgeon?
-		return . // surgery is okay
-
-	else // if all else fails?
-		return FALSE // surgery is not okay
 
 /proc/headSurgeryCheck(var/mob/living/carbon/human/patient as mob)
 	if (!patient) // did we not get passed a patient?
@@ -1259,13 +1240,14 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	var/rip_out_organ = FALSE //I don't care that i lack tools, i'm gonna rip out this heart with my bare hands!
 	///How long does it take to rip out an organ?
 	var/rip_out_duration = 10 SECONDS
-
-	New(mob, patient, organ, name, hand_surgery = FALSE, new_icon = null, new_icon_state = null)
+	var/datum/surgery/surgery = null
+	New(mob, patient, organ, name, surgery, hand_surgery = FALSE, new_icon = null, new_icon_state = null)
 		src.surgeon = mob
 		src.target = patient
 		src.organ_path = organ
 		src.organ_name = name
-		if (!surgeryCheck(src.target, src.surgeon))
+		src.surgery = surgery
+		if (!src.surgery.surgery_conditions_met(src.surgeon))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (hand_surgery)
@@ -1291,7 +1273,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !surgeryCheck(src.target, src.surgeon))
+		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !surgery.surgery_conditions_met(src.surgeon))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1346,11 +1328,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	var/mob/surgeon = null
 	var/mob/living/carbon/human/target = null
 	var/surgeon_duration = 1.5 SECONDS
+	var/datum/surgery/surgery = null
 
-	New(mob, patient)
+	New(mob, patient, surgery)
 		src.surgeon = mob
 		src.target = patient
-		if (!surgeryCheck(src.target, src.surgeon))
+		src.surgery = surgery
+		if (!src.surgery.surgery_conditions_met(src.surgeon))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (src.surgeon.traitHolder.hasTrait("training_medical"))
@@ -1367,7 +1351,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !surgeryCheck(src.target, src.surgeon))
+		if(BOUNDS_DIST(surgeon, target) > 0 || surgeon == null || target == null || !surgery.surgery_conditions_met(src.surgeon))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

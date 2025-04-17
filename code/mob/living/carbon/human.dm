@@ -2862,7 +2862,7 @@
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
-	if (!surgeryCheck(src, M))
+	if (!surgeryHolder.will_perform_surgery(M,null))
 		src.activate_chest_item_on_attack(M)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
@@ -2875,7 +2875,7 @@
 			boutput(H, "You can't bring yourself to attack yourself!")
 			return
 	..()
-	if (!surgeryCheck(src, M))
+	if (!surgeryHolder.will_perform_surgery(M,W))
 		src.activate_chest_item_on_attack(M)
 
 /mob/living/carbon/human/understands_language(var/langname)

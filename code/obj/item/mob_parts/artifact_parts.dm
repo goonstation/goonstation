@@ -93,9 +93,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		if(user.zone_sel.selecting != src.slot)
 			return ..()
 
-		if (!surgeryCheck(target, user))
-			return ..()
-
 		var/mob/living/carbon/human/H = target
 
 		attach(H, user)

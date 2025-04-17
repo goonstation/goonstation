@@ -14,6 +14,7 @@
 /datum/surgery/limb
 	name = "Base Limb Surgery"
 	desc = "Call a coder if you see this!"
+	id = "limb_surgery"
 	icon_state = "heart"
 	var/limb_var_name = "limb_var_name"
 	exit_when_finished = TRUE
@@ -73,14 +74,14 @@
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)
 		l_arm
-			id = "left_arm_surgery"
+			id = "l_arm_surgery"
 			name = "Left Arm Surgery"
 			desc = "Remove the patients' left arm."
 			icon_state = "left_arm"
 			limb_var_name = "l_arm"
 			affected_zone = "l_arm"
 		r_arm
-			id = "right_arm_surgery"
+			id = "r_arm_surgery"
 			name = "Right Arm Surgery"
 			desc = "Remove the patients' right arm."
 			icon_state = "right_arm"
@@ -95,14 +96,14 @@
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)
 		l_leg
-			id = "left_leg_surgery"
+			id = "l_leg_surgery"
 			name = "Left Leg Surgery"
 			desc = "Remove the patients' left leg."
 			icon_state = "left_leg"
 			limb_var_name = "l_leg"
 			affected_zone = "l_leg"
 		r_leg
-			id = "right_leg_surgery"
+			id = "r_leg_surgery"
 			name = "Right Leg Surgery"
 			desc = "Remove the patients' right leg."
 			icon_state = "right_leg"

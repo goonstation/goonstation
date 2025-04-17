@@ -299,9 +299,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 			if(!can_act(attacher))
 				return
-			if(!src.easy_attach)
-				if(!surgeryCheck(attachee, attacher))
-					return
 			if(attacher.zone_sel.selecting != slot)
 				return ..()
 

@@ -379,9 +379,6 @@
 		if (!can_act(user))
 			return FALSE
 
-		if (!surgeryCheck(M, user))
-			return FALSE
-
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return FALSE

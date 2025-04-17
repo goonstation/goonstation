@@ -550,9 +550,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(target,user))
-			return ..()
-
 		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
@@ -763,8 +760,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(target,user))
-			return ..()
+		// if (!surgeryCheck(target,user))
+		// 	return ..()
 
 		var/mob/living/carbon/human/H = target
 

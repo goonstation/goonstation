@@ -150,17 +150,25 @@
 
 	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
+		var/datum/surgery_step/step = get_shortcut(surgeon, I)
+		if (step)
+			step.perform_step(surgeon, I)
+			return TRUE
+		return FALSE
+
+	/// Ditto, but returns the surgery step that would have been performed.
+	proc/get_shortcut(mob/surgeon, obj/item/I)
 		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
 			if (step)
-				step.perform_step(surgeon, I)
-				return TRUE
+				return step
 		if (sub_surgery_possible(surgeon)) // only attempt subsurgeries if this surgery is done.
 			// do the next implicit step if subsurgeries are implicit
 			for(var/datum/surgery/surgery in current_sub_surgeries)
 				surgery.infer_surgery_stage()
-				if (surgery.do_shortcut(surgeon, I))
-					return TRUE
+				var/result = surgery.get_shortcut(surgeon, I)
+				if (result)
+					return result
 		return FALSE
 
 	/// Can this step be performed - Are all previous steps complete?
@@ -340,7 +348,7 @@
 	proc/generate_surgery_steps()
 
 	///Whether this surgery is possible on the target - Otherwise, will be hidden from the context menu
-	proc/surgery_possible()
+	proc/surgery_possible(mob/living/surgeon)
 		return TRUE
 
 	/// Called on completion of the surgery.
@@ -361,10 +369,13 @@
 	var/datum/surgery/parent_surgery = null //! The surgery this step is a part of
 	var/hide_when_finished = TRUE //! Whether this step should be hidden when finished
 	var/finished = FALSE //! Whether this step is finished
+
 	var/success_chance = 90 //! The chance of success for this step, before modifiers
-	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
-	var/damage_dealt = 5 //! The damage dealt by this step
+	var/failure_damage = 10 //! The damage this step deals on failure
+	var/failure_variance = 5 //! The variance of the damage dealt on failure
+	var/damage_dealt = 5 //! The damage dealt by this step on success
 	var/damage_type = DAMAGE_CUT
+	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
 	New(datum/surgery/parent_surgery)
 		src.parent_surgery = parent_surgery
 		..()
@@ -374,6 +385,13 @@
 		for(var/type in tools_required)
 			if (istype(tool,type))
 				return TRUE
+	proc/get_mess_up_text(damage)
+		var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut")
+		var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
+		if (damage > 10)
+			return fluff2
+		else
+			return fluff
 
 	/// Whether this step is actually possible.
 	proc/step_possible(mob/surgeon, obj/item/tool)
@@ -535,9 +553,11 @@
 					return FALSE
 
 		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
-		if (prob(mess_up_odds))
+		if (surgeon.a_intent == INTENT_DISARM)
+			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
+			on_mess_up(surgeon,tool, forced=TRUE)
+		else if (prob(mess_up_odds))
 			on_mess_up(surgeon,tool)
-			boutput(world, "mess up")
 			return FALSE
 
 		var/success = do_surgery_step(surgeon, tool)
@@ -547,7 +567,15 @@
 				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = damage_dealt, damage_type = damage_type, surgery_bleed = TRUE)
 		return success
 
-	proc/on_mess_up(mob/surgeon, obj/item/tool)
+	proc/on_mess_up(mob/surgeon, obj/item/tool, forced = FALSE)
+		var/damage_value = failure_damage + rand(-failure_variance, failure_variance)
+		if (forced && failure_damage < 25)
+			damage_value = failure_damage + rand(-failure_variance, failure_variance)
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value)]!</b>"))
+		parent_surgery.patient.TakeDamage(parent_surgery.affected_zone, damage_value, 0)
+		take_bleeding_damage(parent_surgery.patient, surgeon, damage_value, surgery_bleed = TRUE)
+		create_blood_sploosh(parent_surgery.patient)
+		display_slipup_image(surgeon, parent_surgery.patient.loc)
 		return
 
 	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step

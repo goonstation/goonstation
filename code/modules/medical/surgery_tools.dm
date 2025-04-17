@@ -49,17 +49,24 @@ CONTAINS:
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 
-	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	// 	if (src.reagents && src.reagents.total_volume)
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-	// 	else
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		// if (is_special || !scalpel_surgery(target, user))
-		// 	return ..()
-		// else
-		// 	if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-		// 		src.reagents.trans_to(target,5)
-		// 	return
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.reagents && src.reagents.total_volume)
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		else
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+
+		if (is_special)
+			return ..()
+
+		if (isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
@@ -117,17 +124,21 @@ CONTAINS:
 		src.create_reagents(5)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	// 	if (src.reagents && src.reagents.total_volume)
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-	// 	else
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		// if (is_special || !saw_surgery(target,user))
-		// 	return ..()
-		// else
-		// 	if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-		// 		src.reagents.trans_to(target,5)
-		// 	return
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.reagents && src.reagents.total_volume)
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		else
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!is_special && isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
+		return ..()
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -184,18 +195,21 @@ CONTAINS:
 		setProperty("piercing", 80)
 
 
-	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	// 	if (src.reagents && src.reagents.total_volume)
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
-	// 	else
-	// 		logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		// if (is_special || !spoon_surgery(target, user))
-		// 	return ..()
-		// else
-		// 	if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-		// 		src.reagents.trans_to(target,5)
-		// 	return
-
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.reagents && src.reagents.total_volume)
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+		else
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!is_special && isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
+		return ..()
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -298,8 +312,7 @@ CONTAINS:
 				logTheThing(LOG_COMBAT, user, "staples [K] to [constructTarget(H,"combat")]'s head")
 				return
 
-		if (!surgeryCheck(H, user))
-			return ..()
+		return ..()
 
 
 
@@ -885,22 +898,22 @@ TYPEINFO(/obj/machinery/defib_mount)
 				target.visible_message(SPAN_SUCCESS("[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool]."),
 				SPAN_SUCCESS("[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool]."))
 				target.surgeryHolder.cancel_all()
-				// if (target.organHolder)
-				// 	if (zone == "chest")
-				// 		if (target.organHolder.heart)
-				// 			target.organHolder.heart.op_stage = 0
-				// 		if (target.organHolder.chest)
-				// 			target.organHolder.chest.op_stage = 0
-				// 		if (target.organHolder.back_op_stage)
-				// 			target.organHolder.back_op_stage = BACK_SURGERY_CLOSED
-				// 		target.TakeDamage("chest", 2, 0)
-				// 	else if (zone == "head")
-				// 		if (target.organHolder.head)
-				// 			target.organHolder.head.op_stage = 0
-				// 		if (target.organHolder.skull)
-				// 			target.organHolder.skull.op_stage = 0
-				// 		if (target.organHolder.brain)
-				// 			target.organHolder.brain.op_stage = 0
+				if (target.organHolder)
+					if (zone == "chest")
+						if (target.organHolder.heart)
+							target.organHolder.heart.op_stage = 0
+						if (target.organHolder.chest)
+							target.organHolder.chest.op_stage = 0
+						target.surgeryHolder.cancel_surgery("lower_back_surgery")
+
+						target.TakeDamage("chest", 2, 0)
+					else if (zone == "head")
+						if (target.organHolder.head)
+							target.organHolder.head.op_stage = 0
+						if (target.organHolder.skull)
+							target.organHolder.skull.op_stage = 0
+						if (target.organHolder.brain)
+							target.organHolder.brain.op_stage = 0
 				if (target.bleeding)
 					repair_bleeding_damage(target, 100, repair_amount)
 			else

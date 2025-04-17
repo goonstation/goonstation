@@ -87,14 +87,17 @@ TYPEINFO(/obj/item/saw)
 			target.lastattacker = user
 			target.lastattackertime = world.time
 
-			// if (ishuman(target))
-			// 	if (ishuman(user) && (!is_special && saw_surgery(target,user)))
-			// 		take_bleeding_damage(target, user, 2, DAMAGE_CUT)
-			// 		return
-			// 	else if (!isdead(target))
-			// 		take_bleeding_damage(target, user, 5, DAMAGE_CUT)
-			// 		if (prob(80))
-			// 			target.emote("scream")
+
+			if (ishuman(target))
+				var/mob/living/H = target
+				if (H.surgeryHolder && !is_special)
+					if (H.surgeryHolder.perform_surgery(user, src))
+						take_bleeding_damage(target, user, 2, DAMAGE_CUT)
+						return
+			else if (!isdead(target))
+				take_bleeding_damage(target, user, 5, DAMAGE_CUT)
+				if (prob(80))
+					target.emote("scream")
 		..()
 		return
 

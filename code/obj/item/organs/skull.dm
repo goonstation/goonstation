@@ -155,9 +155,6 @@
 		if (!(user.zone_sel.selecting == "head"))
 			return 0
 
-		if (!surgeryCheck(M, user))
-			return 0
-
 		if (!can_act(user))
 			return 0
 

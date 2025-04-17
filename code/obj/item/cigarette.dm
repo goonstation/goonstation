@@ -1219,19 +1219,19 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
-			var/mob/living/carbon/human/fella = target
+			var/mob/living/carbon/human/human = target
 
 			if (is_special)
 				return ..()
 			if (src.on)
-				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
-					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
-					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [fella]'s [smoke] with [src]."))
-					fella.set_clothing_icon_dirty()
+				if (human.wear_mask && istype(human.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/smoke = human.wear_mask // aaaaaaa
+					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [human]'s [smoke] with [src]."))
+					human.set_clothing_icon_dirty()
 					return
-			if (fella.surgeryHolder)
-				var/datum/surgeryHolder/holder = fella.surgeryHolder
-				if (holder.shortcut(user,src))
+			if (human.surgeryHolder)
+				var/datum/surgeryHolder/holder = human.surgeryHolder
+				if (holder.do_shortcut(user,src))
 					src.add_fingerprint(user)
 					return
 				if (holder.start_surgery(user,src))

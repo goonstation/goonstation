@@ -21,6 +21,23 @@
 		add_surgeries()
 		populate_child_surgeries()
 
+	proc/will_perform_surgery(var/mob/living/user, var/obj/item/tool)
+		if (get_shortcut(user,tool))
+			return TRUE
+		if (tool_relevant(user,tool))
+			return TRUE
+		return FALSE
+
+	proc/perform_surgery(var/mob/living/user, var/obj/item/tool)
+		if (do_shortcut(user,tool))
+			tool.add_fingerprint(user)
+			return TRUE
+
+		if (tool_relevant(user,tool) && start_surgery(user,tool))
+			tool.add_fingerprint(user)
+			return TRUE
+		return FALSE
+
 	/// Naively populate all surgeries under this holder. For indexing surgeries.
 	proc/populate_child_surgeries()
 		all_surgeries = list()
@@ -110,12 +127,20 @@
 
 	// 'Shortcuts' are for implicit surgeries that don't use a context menu. For example. Cramming an organ inside someone's chest.
 	/// Determine if this surgery will use the item without needing a context popup.
-	proc/shortcut(mob/surgeon, obj/item/tool)
+	proc/do_shortcut(mob/surgeon, obj/item/tool)
+		var/datum/surgery_step/step = get_shortcut(surgeon, tool)
+		if (step)
+			step.perform_step(surgeon, tool)
+			return TRUE
+		return FALSE
+	/// Get the surgery step that will be performed. Returns FALSE if no surgery step is possible.
+	proc/get_shortcut(mob/surgeon, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
 			surgery.infer_surgery_stage()
 		for (var/datum/surgery/surgery in base_surgeries)
-			if ( surgery.do_shortcut(surgeon, tool))
-				return TRUE
+			var/result = surgery.get_shortcut(surgeon, tool)
+			if (result)
+				return result
 		return FALSE
 
 	/// called when wanting to 'go up' a level

@@ -90,7 +90,7 @@
 				SPAN_ALERT("You begin clamping the bleeders in [surgeon == patient ? "your" : "[patient]'s"] incision with [src]."),\
 				SPAN_ALERT("[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] clamping the bleeders in your incision with [src]."))
 
-			actions.start(new/datum/action/bar/icon/clamp_bleeders(surgeon, patient), surgeon)
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(surgeon, patient, src.parent_surgery), surgeon)
 			return
 
 /datum/surgery_step/organ

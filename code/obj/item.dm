@@ -1274,14 +1274,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		return
 
 	if (isliving(target))
+		// if we're used in a surgery step, cancel the remaining attack
 		var/mob/living/H = target
 		if (H.surgeryHolder)
-			var/datum/surgeryHolder/holder = H.surgeryHolder
-			if (holder.shortcut(user,src))
-				src.add_fingerprint(user)
-				return
-			if (holder.tool_relevant(user,src) && holder.start_surgery(user,src))
-				src.add_fingerprint(user)
+			if (H.surgeryHolder.perform_surgery(user, src))
 				return
 
 	if (src.Eat(target, user)) // All those checks were done in there anyway

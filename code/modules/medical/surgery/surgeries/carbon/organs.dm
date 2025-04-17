@@ -199,7 +199,7 @@
 	surgery_clicked(mob/living/surgeon, obj/item/tool)
 		var/obj/item/organ = patient.organHolder.get_organ(organ_var_name)
 		if (!tool)
-			actions.start(new/datum/action/bar/icon/remove_organ(surgeon, patient, organ_var_name, src.name, TRUE, organ.icon, organ.icon_state), surgeon)
+			actions.start(new/datum/action/bar/icon/remove_organ(surgeon, patient, organ_var_name, src.name, src, TRUE, organ.icon, organ.icon_state), surgeon)
 			return
 		..()
 	heart
