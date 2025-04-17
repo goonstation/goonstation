@@ -200,10 +200,15 @@ TYPEINFO(/obj/machinery/power/smes)
 		src.output = clamp((newoutput), 0 , SMESMAXCHARGELEVEL)
 
 /obj/machinery/power/smes/process(mult)
-
-	if (status & (BROKEN|POWEROFF))
+	if (status & BROKEN)
 		return
 
+	if (status & POWEROFF)
+		if (src.terminal)
+			status &= ~POWEROFF
+			src.UpdateIcon()
+		else
+			return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -215,6 +220,7 @@ TYPEINFO(/obj/machinery/power/smes)
 		charge(mult)
 	else
 		status |= POWEROFF
+		src.UpdateIcon()
 		return
 
 	if (online)		// if outputting
