@@ -32,6 +32,7 @@ TYPEINFO(/obj/item/device/timer)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME)
+	STOP_TRACKING_CAT(TR_CAT_TIMING_TIMERS) //just to be safe
 	..()
 
 
@@ -46,7 +47,7 @@ TYPEINFO(/obj/item/device/timer)
 		parent_assembly.last_armer = user
 		src.timing = TRUE
 		src.c_state(1)
-		processing_items |= src
+		START_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
 		logTheThing(LOG_BOMBING, usr, "initiated a timer on a [src.master.name] at [log_loc(src.master)].")
 		//missing log about contents of beakers
 		return TRUE
@@ -119,7 +120,7 @@ TYPEINFO(/obj/item/device/timer)
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
 		src.c_state(0)
-		processing_items.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
 		src.last_tick = 0
 	src.time = max(src.time, 0)
 
@@ -156,7 +157,7 @@ TYPEINFO(/obj/item/device/timer)
 			src.timing = !src.timing
 			if(src.timing)
 				src.c_state(1)
-				processing_items |= src
+				START_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
 
 			if (istype(master, /obj/item/device/transfer_valve))
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
