@@ -656,10 +656,35 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	set_up()
 		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department", "the engine")]."
 
-/datum/objective/madness/fear
+/datum/objective/madness/greed
 	set_up()
-		src.explanation_text = "You are filled with an overwhelming need for [pick("blood", "money", "weapons", "sharp things")]."
+		src.explanation_text = "You are filled with an overwhelming need for [pick("blood", "money", "sharp things", "welding fuel", "plasma")]."
 
+/datum/objective/madness/kill
+	set_up()
+		var/list/valid_targets = list()
+		for (var/mob/living/M in mobs)
+			if (!isalive(M))
+				continue
+			if (istype(M, /mob/living/critter/small_animal/cat/jones))
+				valid_targets |= "Jones, the captain's cat"
+			else if (istype(M, /mob/living/critter/small_animal/turtle/sylvester))
+				valid_targets |= "Sylvester, the HoS's turtle"
+			else if (istype(M, /mob/living/critter/small_animal/opossum/morty))
+				//might be a little hard to kill this one but also we're insane so it fits
+				valid_targets |= "Morty, the morgue opossum"
+			else if (istype(M, /mob/living/carbon/human/npc/monkey/stirstir))
+				valid_targets |= "Monsieur Stirstir, security's prisoner"
+			else if (istype(M, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/ai = M
+				if (ai.client || ai.deployed_to_eyecam || ai.deployed_shell) //they're probably logged in somewhere
+					valid_targets |= "[M.real_name], the AI"
+			else if (istype(M, /mob/living/carbon/human))
+				if (M.job == "Captain" && M.client)
+					valid_targets |= "[M.real_name], the captain"
+		if (!length(valid_targets))
+			valid_targets += "an innocent"
+		src.explanation_text = "You see it now, the only way to prevent total calamity is to offer up the death of [pick(valid_targets)]."
 /*
 /datum/objective/regular/borgdeath
 	explanation_text = "Deactivate or destroy all Cyborgs on the station. If you end up borged, you do not need to kill yourself or be un-borged to win."
