@@ -15527,9 +15527,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
 	},
 /obj/item/clipboard,
 /turf/simulated/floor/darkblue,
@@ -38903,10 +38902,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -40065,10 +40061,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "clJ" = (
@@ -48750,10 +48743,10 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "hlM" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station{
 	dir = 4
 	},
+/obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/bridge/customs)
@@ -57404,10 +57397,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/hallway/primary/central)
 "vbj" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 1

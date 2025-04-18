@@ -2700,7 +2700,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
-/obj/machinery/computer/announcement/console_upper{
+/obj/machinery/computer/announcement/station/engineering{
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "announcement1";
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -13951,14 +13953,14 @@
 /turf/simulated/floor/black,
 /area/station/engine/power)
 "gan" = (
-/obj/machinery/computer/announcement{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area/station/bridge)
 "gaq" = (
@@ -15333,15 +15335,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "gKZ" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer"
-	},
 /obj/machinery/light/emergency{
 	dir = 8
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "gLc" = (
@@ -15814,11 +15815,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gUW" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -15832,6 +15828,9 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -50327,13 +50326,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "wdv" = (
-/obj/machinery/computer/announcement{
-	dir = 4
-	},
 /obj/machinery/light_switch/west,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/orange/side{
 	dir = 8

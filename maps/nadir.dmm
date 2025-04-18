@@ -20790,7 +20790,6 @@
 	dir = 8;
 	icon_state = "commb";
 	name = "Pasiphae Announcement Computer";
-	req_access_txt = "19";
 	status = 1
 	},
 /obj/cable{

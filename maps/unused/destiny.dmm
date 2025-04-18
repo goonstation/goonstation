@@ -399,10 +399,8 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Captain's Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -3502,9 +3500,7 @@
 	name = "West Central Maintenance"
 	})
 "aqw" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1
-	},
+/obj/machinery/computer/announcement/station/bridge,
 /obj/machinery/camera,
 /obj/cable{
 	icon_state = "1-4"
@@ -21877,10 +21873,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
 "eMD" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23164,10 +23158,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/cargo,
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -24765,10 +24756,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fZW" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -53071,10 +53060,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/computer/announcement{
-	dir = 1;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -57817,10 +57804,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
