@@ -732,7 +732,7 @@ Contains:
 /obj/item/assembly/timer_ignite_pipebomb/New()
 	..()
 	var/obj/item/device/timer/new_trigger = new /obj/item/device/timer(src)
-	new_trigger.time = 3 SECONDS //have a time already set up and don't blow up unsuspecting users on use
+	new_trigger.time = 5 SECONDS //have a time already set up and don't blow up unsuspecting users on use
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/pipebomb/bomb/new_target = new src.pipebomb_path(src)
 	if(src.bomb_strength)
