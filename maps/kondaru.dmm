@@ -58278,8 +58278,7 @@
 "wFB" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
+	name = "breach repair cart"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
