@@ -20410,9 +20410,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvE" = (
-/obj/submachine/cargopad{
-	name = "Pod Bay Pad"
-	},
+/obj/submachine/cargopad/podbay,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvF" = (
@@ -22106,9 +22104,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bEq" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bEs" = (
@@ -23147,10 +23143,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bJJ" = (
@@ -24658,9 +24652,7 @@
 	},
 /area/station/crew_quarters/bar)
 "bOR" = (
-/obj/submachine/cargopad{
-	name = "Mechanical Workshop Pad"
-	},
+/obj/submachine/cargopad/mechanics,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bOT" = (
@@ -31388,9 +31380,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "clR" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "clT" = (
@@ -31570,12 +31560,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cmr" = (
@@ -49041,9 +49029,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "mlq" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "mlt" = (
