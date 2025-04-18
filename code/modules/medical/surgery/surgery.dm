@@ -28,6 +28,7 @@
 	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
 	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
+	var/cancel_button = FALSE //! If TRUE, the surgery will show a cancel button in the context menu.
 	var/datum/surgeryHolder/holder = null
 	var/mob/living/patient = null
 
@@ -258,8 +259,8 @@
 			if (super_surgery != null || length(holder.get_contexts(surgeon)) > 1)
 				contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
-			if (cancel_possible() && get_surgery_progress() > 0)
-				contexts += new/datum/contextAction/surgery/cancel(holder,src)
+		if (cancel_button && cancel_possible() && get_surgery_progress() > 0)
+			contexts += new/datum/contextAction/surgery/cancel(holder,src)
 
 		//place the always-optional steps to the left of the top step.
 		contexts += optional_contexts
