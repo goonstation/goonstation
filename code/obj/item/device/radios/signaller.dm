@@ -12,11 +12,43 @@ TYPEINFO(/obj/item/device/radio/signaler)
 	icon_state = "signaller"
 	item_state = "signaler"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
 	var/code = 30
 	var/delay = 0
 	var/airlock_wire = null
+
+/obj/item/device/radio/signaler/New()
+	. = ..()
+
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+
+	// Timer + Assembly-Applier -> Timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/obj/item/device/radio/signaler/disposing()
+	src.UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	src.UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	src.UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	src.UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+
+	. = ..()
+
+/obj/item/device/radio/signaler/proc/assembly_manipulation(manipulated_signaler, obj/item/assembly/parent_assembly, mob/user)
+	src.AttackSelf(user)
+
+/obj/item/device/radio/signaler/proc/assembly_application(manipulated_signaler, obj/item/assembly/parent_assembly, obj/assembly_target)
+	src.send_signal()
+
+/obj/item/device/radio/signaler/proc/assembly_setup(manipulated_signaler, obj/item/assembly/parent_assembly, mob/user, is_build_in)
+	src.b_stat = 0
+
+/obj/item/device/radio/signaler/proc/assembly_get_state(manipulated_signaler, obj/item/assembly/parent_assembly)
+	return TRUE
 
 /obj/item/device/radio/signaler/receive_signal(datum/signal/signal)
 	if (!(src.wires & WIRE_RECEIVE) || !signal || !signal.data || ("[signal.data["code"]]" != "[code]"))
@@ -39,18 +71,16 @@ TYPEINFO(/obj/item/device/radio/signaler)
 			message_admins("[key_name(usr)] signalled a radio on a tank transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
-		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
-			var/obj/item/assembly/rad_ignite/RI = src.master
-			logTheThing(LOG_BOMBING, usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency]. Contents: [log_reagents(RI.part3)]")
-			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
-
 		else if (src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
 			logTheThing(LOG_BOMBING, usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		SPAWN(0)
-			src.master.receive_signal(signal)
+			var/datum/signal/new_signal = get_free_signal()
+			new_signal.source = src
+			new_signal.data["message"] = "ACTIVATE"
+			src.master.receive_signal(new_signal)
 
 
 /obj/item/device/radio/signaler/proc/send_signal(message = "ACTIVATE")
@@ -70,26 +100,6 @@ TYPEINFO(/obj/item/device/radio/signaler)
 	signal.data["message"] = message
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, src.frequency)
-
-/obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/instrument/bikehorn))
-		var/obj/item/assembly/radio_horn/horn_assembly = new /obj/item/assembly/radio_horn(user)
-		W.set_loc(horn_assembly)
-		horn_assembly.part2 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(horn_assembly)
-		W.master = horn_assembly
-		src.master = horn_assembly
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(horn_assembly)
-		horn_assembly.part1 = src
-		src.add_fingerprint(user)
-		boutput(user, "You open the signaller and cram the [W.name] in there!")
-
-	else
-		. = ..()
 
 /obj/item/device/radio/signaler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

@@ -1301,11 +1301,11 @@
 	dir = 1;
 	light_type = /obj/item/light/tube/yellowish
 	},
-/obj/submachine/cargopad,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "afv" = (
@@ -12195,14 +12195,12 @@
 /turf/simulated/floor,
 /area/station/ranch)
 "fOM" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
 /obj/machinery/oreaccumulator,
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "fPi" = (
@@ -17508,13 +17506,11 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "nol" = (
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
 /obj/machinery/light/incandescent,
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "nqV" = (

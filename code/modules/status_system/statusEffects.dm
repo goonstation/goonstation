@@ -3347,6 +3347,8 @@
 		. = ..()
 		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
 		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+		var/mob/mob_owner = src.owner
+		src.standup(null, mob_owner.lying)
 
 	proc/check_valid()
 		var/obj/table/table = locate() in src.owner.loc

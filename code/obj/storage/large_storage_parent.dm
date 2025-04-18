@@ -784,10 +784,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
-			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/our_trap = O
-				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
+			if(user)
+				SEND_SIGNAL(O, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)

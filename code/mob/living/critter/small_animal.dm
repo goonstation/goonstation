@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn_vuln = 1
 	void_mindswappable = TRUE
 	is_npc = TRUE
-	ai_type = /datum/aiHolder/wanderer
+	ai_type = /datum/aiHolder/wanderer/floor_only
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE

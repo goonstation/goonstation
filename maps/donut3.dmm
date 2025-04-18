@@ -11823,13 +11823,11 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Teleport Pad"
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "duo" = (
@@ -23091,14 +23089,12 @@
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
 "gSY" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
 /obj/disposalpipe/segment,
 /obj/item/cargotele{
 	pixel_x = 5;
 	pixel_y = 8
 	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
 "gTe" = (
@@ -46687,15 +46683,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ohz" = (
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/circuit/off,
 /area/station/medical/robotics)
 "ohB" = (
@@ -58091,10 +58085,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rGw" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
 /obj/storage/secure/crate/bee/loaded,
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "rGI" = (
@@ -65528,9 +65520,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "tQv" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "tQG" = (

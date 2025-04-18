@@ -44355,9 +44355,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/submachine/cargopad{
-	name = "Mining Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
 "mys" = (

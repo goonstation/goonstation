@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/door_control)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
+	speech_verb_say = "beeps"
 	/// Match to a door to have it be controlled.
 	var/id = null
 	var/timer = 0
@@ -28,7 +29,8 @@ TYPEINFO(/obj/machinery/door_control)
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open), 3 = nulls access (non-reversable!) - Does not change behavior for poddoors or conveyors
-	speech_verb_say = "beeps"
+	var/single_use = FALSE //If TRUE will qdel self after use
+
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
@@ -603,6 +605,10 @@ TYPEINFO(/obj/machinery/door_control)
 					SPAWN(src.timer)
 						M.operating = 0
 			M.setdir()
+
+	if(src.single_use)
+		qdel(src)
+		return
 
 	if(src.cooldown)
 		inuse = TRUE
@@ -1284,6 +1290,14 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	name = "Remote Door Bolt Control"
 	desc = "A remote control switch for a door's locking bolts."
 	controlmode = 2
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	new_walls
 		north

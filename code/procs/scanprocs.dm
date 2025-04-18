@@ -464,6 +464,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/F = A
 		reagents = F.group.reagents
+	else if (istype(A, /obj/item/assembly))
+		var/obj/item/assembly/checked_assembly = A
+		reagents = checked_assembly.get_first_component_reagents()
 	else if (istype(A, /obj/machinery/clonepod))
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
