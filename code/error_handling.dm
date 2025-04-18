@@ -15,7 +15,7 @@ var/global/blame_for_runtimes = FALSE
 	var/invalid = !istype(E) //what the fuck is this byond
 	runtime_count++
 
-	if (!runtimeDetails) runtimeDetails = list()
+	if (!runtimeDetails) CRASH("runtimeDetails list not initialized, how the fuck did this happen?")
 
 	//Save the runtime into our persistent, uh, "storage"
 	runtimeDetails["[length(runtimeDetails) + 1]"] = list(
