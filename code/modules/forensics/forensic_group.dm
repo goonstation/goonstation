@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 /datum/forensic_group/basic_list
 	var/list/datum/forensic_data/basic/evidence_list = new/list()
 	var/value_usage = FORENSIC_VALUE_IGNORE
-	group_flags = FORENSIC_REMOVAL_ALL
+	group_flags = 0
 
 	disposing()
 		src.evidence_list.len = 0
@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 
 /datum/forensic_group/basic_list/sleuth // Used to store smells for Pug sleuthing
 	category = FORENSIC_GROUP_SLEUTH
-	group_flags = FORENSIC_REMOVAL_CLEAN
+	group_flags = 0
 
 	// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner
 	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE, var/accuracy = -1)
