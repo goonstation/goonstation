@@ -1363,7 +1363,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-	if(!src.link || !target_id)
+	if(!src.link || src.emagged || !target_id)
 		return
 
 	var/datum/signal/signal = get_free_signal()
