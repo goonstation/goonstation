@@ -2465,7 +2465,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Special Operative"
 	trait_list = list("training_security")
 	receives_miranda = TRUE
-	badge = /obj/item/clothing/suit/security_badge/shielded
 	slot_belt = list(/obj/item/storage/belt/security/ntso)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
