@@ -5,7 +5,7 @@
 	icon_state = "torso"
 	implicit = TRUE
 	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp)
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
@@ -68,7 +68,7 @@
 	default_sub_surgeries = list(/datum/surgery/organ/heart, /datum/surgery/organ/replace/heart,
 	/datum/surgery/organ/left_lung, /datum/surgery/organ/replace/left_lung,
 	/datum/surgery/organ/right_lung, /datum/surgery/organ/replace/right_lung)
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/saw(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -82,7 +82,7 @@
 	default_sub_surgeries = list(/datum/surgery/organ/liver, /datum/surgery/organ/replace/liver,
 	/datum/surgery/organ/spleen, /datum/surgery/organ/replace/spleen,
 	/datum/surgery/organ/pancreas, /datum/surgery/organ/replace/pancreas)
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
@@ -96,7 +96,7 @@
 	affected_zone = "chest"
 	default_sub_surgeries = list(/datum/surgery/organ/left_kidney, /datum/surgery/organ/replace/left_kidney,
 	/datum/surgery/organ/right_kidney, /datum/surgery/organ/replace/right_kidney)
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
@@ -109,7 +109,7 @@
 	default_sub_surgeries = list(/datum/surgery/organ/stomach, /datum/surgery/organ/replace/stomach,
 	/datum/surgery/organ/intestine, /datum/surgery/organ/replace/intestine,
 	/datum/surgery/organ/appendix, /datum/surgery/organ/replace/appendix)
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
 
@@ -123,7 +123,7 @@
 	)
 	implicit = TRUE
 	visible = FALSE
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/fluff/back_cut(src))
 		add_next_step(new /datum/surgery_step/fluff/back_saw(src))
 		add_next_step(new /datum/surgery_step/fluff/back_cut_2(src))
@@ -192,7 +192,7 @@
 		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
 		return (O != null && O.op_stage > 0)
 
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/organ/cut(src, organ_var_name)) // Makes the organ count as 'in surgery'
 		add_next_step(new /datum/surgery_step/organ/snip(src, organ_var_name)) // Makes the organ unsecure
 		add_next_step(new /datum/surgery_step/organ/remove(src, organ_var_name)) // Removes the organ
@@ -278,7 +278,7 @@
 			..()
 			surgery_steps[4].finished = (patient.organHolder.get_organ(organ_var_name) != null)
 
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/eye/dislodge(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/eye/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/eye/scoop(src, organ_var_name))
@@ -345,7 +345,7 @@
 			if (surgeon?.a_intent != INTENT_GRAB)
 				return FALSE
 			return ..()
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/remove/saw(src, organ_var_name))
 	skull
 		id = "skull_surgery"
@@ -376,7 +376,7 @@
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			surgery_steps[2].finished = (organ == null)
 			return
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/skull/cut(src))
 			add_next_step(new /datum/surgery_step/skull/remove(src))
 			add_next_step(new /datum/surgery_step/organ/add/skull(src, organ_var_name))
@@ -398,7 +398,7 @@
 			if (surgeon?.a_intent != INTENT_GRAB)
 				return FALSE
 			return ..()
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/remove/saw(src, organ_var_name))
 	brain
 		id = "brain_surgery"
@@ -418,7 +418,7 @@
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
 
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/brain/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/cut2(src, organ_var_name))
@@ -450,7 +450,7 @@
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
 			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/head/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/cut2(src, organ_var_name))
@@ -475,7 +475,7 @@
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		surgery_steps[1].finished = (organ != null)
 
-	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/organ/add(src,organ_var_name))
 	surgery_possible(mob/living/surgeon)
 		if (implicit && surgeon.zone_sel.selecting != "chest")
@@ -602,7 +602,7 @@
 		affected_zone = "head"
 		organ_var_name = "brain"
 		implicit = TRUE
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
@@ -619,7 +619,7 @@
 		affected_zone = "head"
 		organ_var_name = "skull"
 		implicit = TRUE
-		generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
+		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
