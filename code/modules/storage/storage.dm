@@ -254,7 +254,7 @@
 		for (var/obj/item/I as anything in src.get_contents())
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
-			if((!src.linked_item.material_property_below_equal_value("hard", 1)) && SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
+			if(!(src.linked_item.material && src.linked_item.material.getProperty("hard") <= 1) && SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
 				I.visible_message(SPAN_ALERT("[I] triggers as it falls on the ground!"))
 
 /// using storage item in hand
@@ -299,7 +299,7 @@
 /datum/storage/proc/mousetrap_check(mob/user)
 	if (!ishuman(user) || is_incapacitated(user))
 		return FALSE
-	if(src.linked_item.material_property_below_equal_value("hard", 1))
+	if(src.linked_item.material && src.linked_item.material.getProperty("hard") <= 1)
 		//too soft to trigger mousetrap bombs :)
 		return FALSE
 	for (var/obj/item/checked_item in src.get_contents())

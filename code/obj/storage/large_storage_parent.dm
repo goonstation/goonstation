@@ -783,7 +783,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
-			if(user && !src.material_property_below_equal_value("hard", 1))
+			if(user && !(src.material && src.material.getProperty("hard") <= 1))
 				SEND_SIGNAL(O, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 		for (var/mob/M in src)
