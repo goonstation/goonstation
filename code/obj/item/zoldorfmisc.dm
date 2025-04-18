@@ -381,7 +381,7 @@
 							pack.storage.add_contents(new item(pack))
 						user.put_in_hand_or_drop(pack)
 					if("oxy")
-						user.put_in_hand_or_drop(new /obj/item/tank/emergency_oxygen)
+						user.put_in_hand_or_drop(new /obj/item/tank/pocket/oxygen)
 					if("med")
 						user.put_in_hand_or_drop(new /obj/item/storage/firstaid/regular)
 			if("Staff Assistant")

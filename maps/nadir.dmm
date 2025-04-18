@@ -6206,7 +6206,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/shoes/flippers{
@@ -9398,7 +9398,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -9588,7 +9588,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -11500,7 +11500,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "fgz" = (
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -15903,7 +15903,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -19736,7 +19736,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -26440,7 +26440,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -32536,7 +32536,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/security{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -36545,7 +36545,7 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/head/helmet/space/engineer/diving/command{
@@ -38365,7 +38365,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/shoes/flippers{
@@ -40860,7 +40860,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -42312,7 +42312,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -43077,10 +43077,10 @@
 	},
 /obj/rack,
 /obj/item/storage/toolbox/emergency,
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = -7
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -46472,7 +46472,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -53654,7 +53654,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -54672,7 +54672,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/command{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,
@@ -55336,7 +55336,7 @@
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{
 	pixel_x = -4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 8
 	},
 /obj/item/clothing/mask/breath,

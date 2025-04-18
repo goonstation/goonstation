@@ -2574,8 +2574,8 @@
 "apv" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -4218,7 +4218,7 @@
 	pixel_y = 10
 	},
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = -8
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -4425,7 +4425,7 @@
 /obj/item/storage/firstaid/oxygen{
 	pixel_y = -4
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = -8
 	},
 /turf/simulated/floor/plating,
@@ -13231,7 +13231,7 @@
 /area/station/janitor/office)
 "bva" = (
 /obj/rack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/plating,
@@ -14690,7 +14690,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bED" = (
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bEE" = (
@@ -27875,10 +27875,10 @@
 /area/station/maintenance/southeast)
 "jpr" = (
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/crowbar,
 /obj/item/crowbar,
 /turf/unsimulated/floor{
@@ -30367,7 +30367,7 @@
 	},
 /obj/item/clothing/mask/breath,
 /obj/item/device/radio/intercom,
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = -8
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -48998,7 +48998,7 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "vtA" = (
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/space,
 /area/space)
 "vuf" = (

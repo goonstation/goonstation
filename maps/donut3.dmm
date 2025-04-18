@@ -33595,8 +33595,8 @@
 /area/station/security/main)
 "kfu" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/mini_oxygen,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "kfw" = (
@@ -60854,34 +60854,34 @@
 /area/station/hangar/main)
 "sww" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = -10;
 	pixel_y = 10
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = -5;
 	pixel_y = 10
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_y = 10
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 10;
 	pixel_y = 10
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "swx" = (
