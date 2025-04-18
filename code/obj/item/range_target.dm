@@ -15,7 +15,7 @@
 	bullet_act(obj/projectile/P)
 		. = ..()
 		if(!ON_COOLDOWN(src, "target_range_hit", 0.5 SECONDS))
-			flick("[icon_state]2", src)
+			FLICK("[icon_state]2", src)
 
 	ex_act(severity)
 		return

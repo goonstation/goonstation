@@ -389,7 +389,9 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
+	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
+	datum/admin_changelog/legacy_admin_changelog = null
 	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
@@ -464,6 +466,7 @@ var/global
 	list/localResources = list()
 	list/cachedResources = list()
 	cdn = "" //Contains link to CDN as specified in the config (if not locally testing)
+	list/cdnManifest = list()
 	disableResourceCache = 0
 
 	// for translating a zone_sel's id to its name
@@ -482,7 +485,7 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
+	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 
@@ -498,6 +501,8 @@ var/global
 
 	list/allowed_favorite_ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter) - list(
 		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/burger/plague,
+		/obj/item/reagent_containers/food/snacks/burger/burgle,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,

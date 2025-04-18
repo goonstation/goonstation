@@ -41,7 +41,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		..()
 		icon_state = "[src.icon_state_base]-[appearanceString]"
 
-
 	examine()
 		. = ..()
 		switch(ropart_get_damage_percentage(1))
@@ -241,14 +240,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			var/obj/item/organ/brain/B = W
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
-				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-				boutput(user, SPAN_ALERT("The brain disintigrates in your hands!"))
-				user.drop_item()
-				qdel(B)
-				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-				smoke.set_up(1, 0, user.loc)
-				smoke.start()
 				return
 			user.drop_item()
 			B.set_loc(src)
@@ -535,11 +526,22 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	material_amt = ROBOT_LIMB_COST
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
 	var/add_to_tools = FALSE
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -631,6 +633,54 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		robot.equip_slot(robo_slot, chosen_tool)
 		if (last_active)
 			robot.swap_hand(last_active)
+
+/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+		if(!parent_assembly.target)
+			return " You can add a pie onto this assembly in order to modify it further."
+
+	proc/assembly_setup(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have different robot arms (including left and right versions)
+		parent_assembly.applier_icon_prefix = "robot_arm"
+		if (!parent_assembly.target)
+			// trigger-robotarm-Assembly + pie -> trigger-robotarm-pie-assembly
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/food/snacks/pie), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+	proc/assembly_application(var/manipulated_arm, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		var/mob/mob_target = null
+		var/turf/current_turf = get_turf(src)
+		for(var/mob/iterated_mob in viewers(6, current_turf))
+			//the first mob within the return of view() should also be the nearest
+			if (!isintangible(iterated_mob))
+				mob_target = iterated_mob
+				break
+		if(!assembly_target)
+			//if there is no target, we don't do anything. Else, we give them the finger.
+			if(mob_target)
+				mob_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips [mob_target] off! How rude...</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] flips you off! How rude...</b>"))
+		else
+			var/atom/throw_target = mob_target
+			var/obj/item/pie_to_throw = parent_assembly.target
+			//if no target is found, we throw at a random turf which is 6 tiles away instead
+			if(!throw_target)
+				throw_target = get_ranged_target_turf(current_turf, pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST), 6 * 32)
+			else
+				throw_target.visible_message(SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at [throw_target]!</b>"),\
+				SPAN_ALERT("<b>[parent_assembly.name]'s [src] launches [pie_to_throw] at you!</b>"))
+			parent_assembly.remove_until_minimum_components()
+			//after the pie is removed from the assembly and positioned at the ground, lets launch it!
+			if(mob_target && get_turf(mob_target) == current_turf)
+				//if the pie and the person is on the same tile, we gotta make them meet directly
+				var/datum/thrown_thing/simulated_throw = new
+				simulated_throw.user = parent_assembly.last_armer
+				simulated_throw.thing = pie_to_throw
+				pie_to_throw.throw_impact(throw_target, simulated_throw)
+			else
+				pie_to_throw.throw_at(throw_target, 6, 2, thrown_by = parent_assembly.last_armer)
+
+/// ----------- ---------------------------------------------- -----------
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
@@ -847,6 +897,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	partlistPart = "legL-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
@@ -885,6 +936,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	partlistPart = "legR-light"
 	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
+	movement_modifier = null
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
@@ -1201,23 +1253,34 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 		if(borg.part_head.brain?.owner?.key)
-			if(borg.part_head.brain.owner.current)
-				borg.gender = borg.part_head.brain.owner.current.gender
-				if(borg.part_head.brain.owner.current.client)
-					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
+			var/obj/item/organ/brain/brain = borg.part_head.brain
+			if(brain.owner.current)
+				borg.gender = brain.owner.current.gender
+				if(brain.owner.current.client)
+					borg.lastKnownIP = brain.owner.current.client.address
+			var/mob/M = find_ghost_by_key(brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached."))
 				borg.death()
 				qdel(src)
 				return
+			if ( brain.owner  &&  (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
+				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
+				borg.part_head.brain = null
+				qdel(brain)
+				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				smoke.set_up(1, 0, src.loc)
+				smoke.start()
+				borg.death()
+				qdel(src)
+				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
 				boutput(M, SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
-				borg.part_head.brain.owner = M.ghostize()?.mind
+				brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
 				boutput(M, SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
-			borg.part_head.brain.owner.transfer_to(borg)
+			brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
 

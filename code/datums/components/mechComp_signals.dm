@@ -308,7 +308,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		boutput(user, SPAN_ALERT("Components need to be within a range of 14 meters to connect."))
 		return
 
-	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
+	var/typesel = tgui_alert(user, "Use [parent] as:", "Connection Type", list("Trigger", "Receiver", "*CANCEL*"))
 	switch(typesel)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
@@ -360,7 +360,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/pointer_container[1] //A list of size 1, to store the address of the list we want
 	SEND_SIGNAL(trigger, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
-	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
+	var/selected_input = tgui_input_list(user, "Select \"[receiver.name]\" Input", "Input Selection", inputs + "*CANCEL*")
 	if(selected_input == "*CANCEL*")
 		return
 
@@ -417,13 +417,16 @@ TYPEINFO(/datum/component/mechanics_holder)
 		var/obj/machinery/vending/hacked_vendor = comsig_target
 		if(hacked_vendor.panel_open)
 			return
+	//slightly cursed pattern here, maybe factor out into a signal/init var if we add any more of these
+	if (istype(comsig_target, /obj/machinery/shieldgenerator))
+		return
 	if(length(src.configs))
-		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
+		var/selected_config = tgui_input_list(user, "Select a config to modify!", "Config", src.configs)
 		if (!in_interact_range(parent, user)) return TRUE
 		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
-					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
+					var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", defaultSignal)
 					if(!in_interact_range(parent, user) || user.stat)
 						return
 					inp = trimtext(strip_html_tags(inp))

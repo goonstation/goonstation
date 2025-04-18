@@ -13,7 +13,7 @@ on:
 jobs:
   runtime:
     name: Runtime Checker
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     strategy:
       fail-fast: false
@@ -32,6 +32,7 @@ jobs:
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
             "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -77,7 +78,7 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
@@ -96,6 +97,11 @@ jobs:
         run: |
           tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
+      - name: Compile with RP_MODE
+        if: "matrix.map == 'RP_MODE'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
+
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
@@ -107,7 +113,7 @@ jobs:
 
   runtime_full:
     name: "Runtime Checker with Secret Submodule"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     strategy:
@@ -126,6 +132,8 @@ jobs:
             "ATLAS",
             "SPACE_PREFAB",
             "UNDERWATER_PREFAB",
+            "RANDOM_ROOMS",
+            "RP_MODE",
             "FULL",
           ]
         compiletype: ["default"]
@@ -175,7 +183,7 @@ jobs:
           tools/ci/install_rust_g.sh
 
       - name: Compile map
-        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'FULL'"
+        if: "matrix.map != 'SPACE_PREFAB' && matrix.map != 'UNDERWATER_PREFAB' && matrix.map != 'RANDOM_ROOMS' && matrix.map != 'RP_MODE' && matrix.map != 'FULL'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DMAP_OVERRIDE_${{ matrix.map}} -DCI_RUNTIME_CHECKING -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
@@ -189,6 +197,16 @@ jobs:
         run: |
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
+      - name: Compile random rooms
+        if: "matrix.map == 'RANDOM_ROOMS'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile with RP_MODE
+        if: "matrix.map == 'RP_MODE'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DCI_RUNTIME_CHECKING -DRP_MODE goonstation.dme
+
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"
         run: |
@@ -200,7 +218,7 @@ jobs:
 
   unit_test:
     name: Unit Tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v4

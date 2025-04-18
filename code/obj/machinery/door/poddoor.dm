@@ -968,7 +968,7 @@
 			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
 		src.open()
 	else if (C && src.density && !src.operating)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(C.force)
@@ -979,10 +979,10 @@
 /obj/machinery/door/poddoor/play_animation(animation)
 	switch(animation)
 		if("opening")
-			flick("[icon_base]c0", src)
+			FLICK("[icon_base]c0", src)
 			src.icon_state = "[icon_base]0"
 		if("closing")
-			flick("[icon_base]c1", src)
+			FLICK("[icon_base]c1", src)
 			src.icon_state = "[icon_base]1"
 	return
 
@@ -1037,10 +1037,10 @@
 /obj/machinery/door/poddoor/blast/play_animation(animation)
 	switch(animation)
 		if("opening")
-			flick("[icon_base][doordir]c0", src)
+			FLICK("[icon_base][doordir]c0", src)
 			src.icon_state = "[icon_base][doordir]0"
 		if("closing")
-			flick("[icon_base][doordir]c1", src)
+			FLICK("[icon_base][doordir]c1", src)
 			src.icon_state = "[icon_base][doordir]1"
 	return
 

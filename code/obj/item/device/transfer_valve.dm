@@ -118,34 +118,44 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 		return
 
-	/// Attach the tank the mob is currently holding
+	/**
+	Attach the tank (or butt) the mob is currently holding to the transfer valve.
+
+	* @param `mob/user` The mob holding the tank to attach.
+
+	* @param `tank_preference` The tank slot to attach the tank to. If null, the tank will be attached to the first available slot.
+	**/
 	proc/attach_tank(mob/user, tank_preference=null)
 		if (!user) return
 		var/obj/item/I = user.equipped()
-		if (!istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)) return
-		var/obj/item/tank/myTank = I
-		if (!myTank.compatible_with_TTV) return
+		if (istype(I, /obj/item/tank))
+			var/obj/item/tank/myTank = I
+			if (!myTank.compatible_with_TTV) return
+		else if (istype(I, /obj/item/clothing/head/butt))
+			; // butts allowed without additional checks
+		else
+			return
 		// Handle UI tank attachment
 		if (tank_preference == 1)
 			// This check should always pass
 			if (!src.tank_one)
-				src.tank_one = myTank
+				src.tank_one = I
 		else if (tank_preference == 2)
 			// As should this one
 			if (!src.tank_two)
-				src.tank_two = myTank
+				src.tank_two = I
 		// Handle attackby tank attachment (wherever fits)
 		else if (!tank_preference && !src.tank_one)
-			src.tank_one = myTank
+			src.tank_one = I
 		else if (!tank_preference && !src.tank_two)
-			src.tank_two = myTank
+			src.tank_two = I
 		else
 			// it did not fit, clearly. dummy.
-			boutput(user, SPAN_NOTICE("\the [myTank] cannot fit on the [src]!"))
+			boutput(user, SPAN_NOTICE("\the [I] cannot fit on the [src]!"))
 			return
 		user.drop_item()
-		myTank.set_loc(src)
-		boutput(user, SPAN_NOTICE("You attach \the [myTank] to the transfer valve"))
+		I.set_loc(src)
+		boutput(user, SPAN_NOTICE("You attach \the [I] to the transfer valve"))
 		if(src.tank_one && src.tank_two)
 			var/turf/T = get_turf(src)
 			var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
@@ -185,7 +195,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 	ui_act(action, params)
 		..()
-		if (isghostdrone(usr) || usr.stat || usr.restrained())
+		if (isghostdrone(usr) || !can_act(usr))
 			return
 		switch(action)
 			if ("add_item")
@@ -215,10 +225,16 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
-	proc/remove_tank(var/T)
-		if (!istype(T, /obj/item/tank)) return
-		var/obj/item/tank/removed = T
-		boutput(usr, SPAN_NOTICE("You remove the [removed] from [src]."))
+	/**
+	Remove a tank (or butt) from the transfer valve.
+
+	 * @param `tank_or_butt` The tank or butt to remove.
+
+	**/
+	proc/remove_tank(tank_or_butt)
+		var/obj/item/removed = tank_or_butt
+		if (!istype(removed)) return // huh, must have been the wind
+		boutput(usr, SPAN_NOTICE("You remove \the [removed] from [src]."))
 		removed.set_loc(get_turf(src))
 		removed = null
 		UpdateIcon()

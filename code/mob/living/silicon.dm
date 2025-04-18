@@ -70,6 +70,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/can_drink()
 	return FALSE
 
+/mob/living/silicon/nauseate(stacks)
+	return
+
 ///mob/living/silicon/proc/update_canmove()
 //	..()
 	//canmove = !(src.hasStatus(list("knockdown", "unconscious", "stunned")) || buckled)
@@ -261,6 +264,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/silicon/say_decorate(message)
 	. = monospace_say_regex.Replace(message, SPAN_MONOSPACE("$1"))
+
+/mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
+	. = ..()
+	if (ismob(target))
+		src.cell?.use(W.stamina_cost)
 
 /mob/living/proc/process_killswitch()
 	return
@@ -718,3 +726,12 @@ var/global/list/module_editors = list()
 	if (!src.alertmap_controller || !src.alert_minimap_ui)
 		src.connect_to_alert_minimap()
 	src.alert_minimap_ui.ui_interact(user)
+
+/mob/living/silicon/take_radiation_dose(Sv, internal)
+	if (src.client)
+		src.setStatusMin("silicon_radiation", 6 SECONDS, Sv)
+		src.geigerclick(geiger_stage(Sv))
+
+/mob/living/silicon/proc/geigerclick(stage)
+	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
+		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)

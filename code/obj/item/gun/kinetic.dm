@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
-				flick(flick_state, src)
+				FLICK(flick_state, src)
 
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)
@@ -674,6 +674,34 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
 		..()
 
+/obj/item/gun/kinetic/capella
+	name = "\improper Capella Mk. 8 competition pistol"
+	desc = "A match-grade competition pistol, expertly machined for extreme accuracy and speed. Produced by Almagest Weapons Fabrication."
+	icon_state = "capella"
+	item_state = "pw_pistol_sy"
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	contraband = 25
+	rarity = 4
+	ammo_cats = list(AMMO_PISTOL_22)
+	max_ammo_capacity = 10
+	auto_eject = 1
+	has_empty_state = 1
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/bullet_22match
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22match)
+	ammobag_restock_cost = 1
+	recoil_strength = 0.1
+	icon_recoil_cap = 3
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/bullet_22/match)
+		..()
+
+
+
 
 //0.308
 /obj/item/gun/kinetic/minigun // it is now STRONK
@@ -743,7 +771,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
-	desc = "The Kittiwake .308 from Cormorant Precision Arms, a classic high-powered hunting and police rifle, reliable in almost any environment. This one shows years of use."
+	desc = "The Kittiwake .308 from Cormorant Precision Arms, a classic high-powered hunting and police rifle, reliable in almost any environment. The scope is in fine condition."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
@@ -765,10 +793,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 14
 	recoil_max = 14
 	recoil_inaccuracy_max = 20
+	rarity = 3
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 /obj/item/gun/kinetic/dart_rifle
@@ -1694,6 +1724,29 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/revolver_45)
 		..()
 
+
+//0.50
+
+/obj/item/gun/kinetic/bigiron
+	name = "Maelor 500 magnum"
+	desc = "An immense revolver from Mabinogi Firearms Company. You could probably stop a charging space bear with this thing. Or a bus."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "maelor"
+	item_state = "colt_saa"
+	w_class = W_CLASS_NORMAL
+	force = MELEE_DMG_RIFLE
+	ammo_cats = list(AMMO_DEAGLE)
+	rarity = 5
+	spread_angle = 1
+	max_ammo_capacity = 7
+	default_magazine = /obj/item/ammo/bullets/fivehundred
+	recoil_strength = 25
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
+		..()
+
 //0.58
 /obj/item/gun/kinetic/single_action/flintlock
 	name = "flintlock pistol"
@@ -1733,7 +1786,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "spas"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
@@ -1891,7 +1944,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 8
 	auto_eject = FALSE
 	can_dual_wield = FALSE
@@ -1958,7 +2011,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 5
 	auto_eject = FALSE
 	can_dual_wield = FALSE
@@ -1967,13 +2020,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	has_uncocked_state = TRUE
 	fire_animation = TRUE
 	gildable = TRUE
-	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
+	default_magazine = /obj/item/ammo/bullets/a12/bird/five
 	recoil_strength = 10
 	recoil_max = 60
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 		..()
 
 /obj/item/gun/kinetic/striker
@@ -1987,7 +2040,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 7
 	max_move_amount = 1
 	reload_cooldown = 8 DECI SECONDS
@@ -2549,6 +2602,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			return
 		..()
 
+	emag_act(mob/user)
+		var/datum/component/holdertargeting/smartgun/homing/pod/targeting_comp = src.GetComponent(/datum/component/holdertargeting/smartgun/homing/pod)
+		if(istype(targeting_comp, /datum/component/holdertargeting/smartgun/homing/pod/emagged))
+			boutput(user, SPAN_ALERT("[src]'s targeting system is already malfunctioning!"))
+		else
+			targeting_comp.RemoveComponent()
+			AddComponent(/datum/component/holdertargeting/smartgun/homing/pod/emagged, 1)
+			boutput(user, SPAN_ALERT("You short circuit [src]'s targeting circuit!"))
+
 	proc/set_collapsed_state(var/collapsed)
 		if (src.setTwoHanded(!collapsed))
 			src.collapsed = collapsed
@@ -2625,6 +2687,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/rpg)
+		AddComponent(/datum/component/holdertargeting/windup, 0.2 SECOND)
 		..()
 
 	update_icon()
@@ -2677,7 +2740,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/homing/mrl)
+		set_current_projectile(new /datum/projectile/bullet/homing/rocket/mrl)
+		AddComponent(/datum/component/holdertargeting/windup, 0.2 SECOND)
 		..()
 
 	disposing()
@@ -2957,11 +3021,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
 	max_ammo_capacity = 5
 	auto_eject = 1
-	two_handed = 1
-	can_dual_wield = 0
+	two_handed = 0
+	can_dual_wield = 1
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 	fire_animation = TRUE
 	has_empty_state = TRUE
@@ -3173,6 +3237,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	auto_eject = 1
 	fire_animation = TRUE
+	rarity = 4
 
 	recoil_strength = 20
 	recoil_max = 25 //seriously how are you going to fire this more than once
@@ -3199,6 +3264,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/cannon)
+		AddComponent(/datum/component/holdertargeting/windup, 0.2 SECOND)
 		..()
 
 	disposing()
@@ -3207,7 +3273,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("carried_movespeed", 0.3)
+		setProperty("carried_movespeed", 0.5)
 
 /obj/item/gun/kinetic/recoilless
 	name = "\improper Carinae RCL/120"
@@ -3242,6 +3308,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/howitzer)
+		AddComponent(/datum/component/holdertargeting/windup, 0.2 SECOND)
+
 		..()
 
 	disposing()
@@ -3353,17 +3421,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.8)
 
 // WIP //////////////////////////////////
-/*/obj/item/gun/kinetic/sniper/antimateriel
-	name = "M20-S antimateriel cannon"
-	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
-	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "antimateriel"
-	item_state = "cannon"
+/obj/item/gun/kinetic/antiair
+	name = "MORS-X anti-air rifle"
+	desc = "A ruthlessly powerful rifle firing .50 caliber frag rounds. Built to swat down UFOs out of the sky."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "antiair"
+	item_state = "antiair"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
-	ammo_cats = list(AMMO_CANNON_20MM)
-	max_ammo_capacity = 5
+	contraband = 50
+	rarity = 5
+	ammo_cats = list(AMMO_DEAGLE) // whatever close enough
+	max_ammo_capacity = 4
 	auto_eject = 1
+	gildable = 1
 
 	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
@@ -3373,21 +3444,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	slowdown = 5
 	slowdown_time = 10
 
+	recoil_strength = 19
+	recoil_inaccuracy_max = 12
+	icon_recoil_cap = 30
+
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 
 
 	New()
-		ammo = new/obj/item/ammo/bullets/cannon
-		set_current_projectile(new/datum/projectile/bullet/cannon)
-		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		ammo = new/obj/item/ammo/bullets/antiair
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/antiair)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 10, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 
 	setupProperties()
 		..()
-		setProperty("carried_movespeed", 0.3)*/
+		setProperty("carried_movespeed", 1)
 
 /obj/item/gun/kinetic/sawnoff
 	name = "\improper Fulmar 1881 coach gun"

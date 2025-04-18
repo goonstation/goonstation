@@ -66,7 +66,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Output", PROC_REF(_toggle_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if(!terminal)
@@ -431,7 +431,10 @@
 				animate_meltspark(A)
 		else
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
-			if (prob(melt_prob))
+			if (istype(A, /obj/blob))
+				var/obj/blob/blob = A
+				blob.take_damage(min(100, round(melt_prob/2)), damtype = "laser")
+			else if (prob(melt_prob))
 				if (istype(A, /obj/geode))
 					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
 				else

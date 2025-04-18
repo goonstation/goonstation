@@ -35,11 +35,40 @@ TYPEINFO(/datum/component/equipment_fault)
 		RegisterSignal(parent, COMSIG_MACHINERY_PROCESS, PROC_REF(ef_process))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
+/datum/component/equipment_fault/RegisterWithParent()
+	. = ..()
+	var/atom/movable/object = src.parent
+	RegisterHelpMessageHandler(object, PROC_REF(get_help_msg))
+
+/datum/component/equipment_fault/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] is broken and requires [english_list(src.tool_flags_to_list())] to be repaired."
+
+/datum/component/equipment_fault/proc/tool_flags_to_list()
+	var/tool_list = list()
+	if (src.interactions & (TOOL_CUTTING|TOOL_SNIPPING))
+		tool_list += "cutting"
+	if (src.interactions & TOOL_PRYING)
+		tool_list += "prying"
+	if (src.interactions & TOOL_PULSING)
+		tool_list += "pulsing"
+	if (src.interactions & TOOL_SCREWING)
+		tool_list += "screwing"
+	if (src.interactions & TOOL_WELDING)
+		tool_list += "welding"
+	if (src.interactions & TOOL_WRENCHING)
+		tool_list += "wrenching"
+	if (src.interactions & TOOL_SOLDERING)
+		tool_list += "soldering"
+	if (src.interactions & TOOL_WIRING)
+		tool_list += "wiring"
+	return tool_list
+
 /datum/component/equipment_fault/proc/examined(obj/O, mob/examiner, list/lines)
-	return
+	lines += "This one looks broken, but it could be repaired."
 
 /datum/component/equipment_fault/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ATTACKHAND, COMSIG_MACHINERY_PROCESS, COMSIG_ATOM_EXAMINE))
+	UnregisterHelpMessageHandler(parent)
 	. = ..()
 
 /datum/component/equipment_fault/proc/ef_process(obj/machinery/M, mult)
@@ -49,11 +78,14 @@ TYPEINFO(/datum/component/equipment_fault)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!ON_COOLDOWN(O, "equip_fault_[ref(src)]",src.fault_delay))
 		. = TRUE
+		if(istype(O, /obj/machinery))
+			var/obj/machinery/machine = O
+			if(machine.status & NOPOWER)
+				. = FALSE
 
 /datum/component/equipment_fault/proc/ef_attackby(obj/O, obj/item/I, mob/user = null)
 	var/attempt = FALSE
 	var/interaction_type = 0
-	var/duration = 2 SECONDS
 	if( (src.interactions & (TOOL_CUTTING | TOOL_SNIPPING) ) && (iscuttingtool(I) || issnippingtool(I)))
 		attempt = TRUE
 		interaction_type = TOOL_CUTTING | TOOL_SNIPPING
@@ -81,8 +113,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		interaction_type = TOOL_WIRING
 
 	if(attempt)
-		actions.start(new /datum/action/bar/icon/callback(user, O, duration, PROC_REF(complete_stage), list(user, I, interaction_type), I.icon, I.icon_state,
-			null, null, src), user)
+		src.complete_stage(user, I, interaction_type)
 	else
 		showContextActions(user)
 		ef_perform_fault(O)
@@ -132,6 +163,9 @@ TYPEINFO(/datum/component/equipment_fault)
 				var/obj/machinery/machine = src.parent
 				machine.status &= ~BROKEN
 				machine.power_change()
+			user.closeContextActions()
+			RemoveComponent()
+			qdel(src)
 		else
 			showContextActions(user)
 
@@ -344,6 +378,44 @@ TYPEINFO(/datum/component/equipment_fault)
 			if (zamus_dumb_power_popups)
 				new /obj/maptext_junk/power(get_turf(M), change = -M.power_usage * mult, channel = M.power_channel)
 
+/datum/component/equipment_fault/dangerously_shorted
+	///base probability to shock each tick
+	var/static/base_probability = 10
+	///current probability to shock on this process tick
+	var/current_prob
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+
+/datum/component/equipment_fault/dangerously_shorted/Initialize(tool_flags)
+	. = COMPONENT_INCOMPATIBLE
+	if(istype(parent, /obj/machinery/power))
+		. = ..()
+
+/datum/component/equipment_fault/dangerously_shorted/ef_process(obj/machinery/M, mult)
+	. = TRUE
+	elecflash(M)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = src.base_probability
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/dangerously_shorted/ef_perform_fault(obj/machinery/M)
+	if(..())
+		M.visible_message(SPAN_ALERT("[M] sparks violently!"))
+
+		var/list/mob/targets = list()
+		for (var/mob/mob in hearers(8, M.loc))
+			if (mob.invisibility >= INVIS_AI_EYE) continue
+			targets.Add(mob)
+
+		if (!length(targets))
+			elecflash(M.loc, power=5, exclude_center=FALSE)
+			return
+
+		var/target = pick(targets)
+		arcFlash(M, target, 200000) // TODO: maybe some sort of PNET check?
+
 
 /datum/component/equipment_fault/faulty_wiring
 	fault_delay = 45 SECONDS
@@ -389,3 +461,134 @@ TYPEINFO(/datum/component/equipment_fault)
 			var/obj/machinery/power/apc/target_apc = O
 			if(!target_apc.isWireColorCut(wire))
 				target_apc.pulse(wire)
+
+/// uses item_special/flame special attack fx, weighted towards harmless embers
+/datum/component/equipment_fault/embers
+/datum/component/equipment_fault/embers/ef_perform_fault(obj/O)
+	if(..())
+		var/list/valid_dirs = list()
+		for (var/dir in alldirs)
+			var/turf/T = get_step(O, dir)
+			if (T.gas_cross(T))
+				valid_dirs += dir
+		if (length(valid_dirs) == 0)
+			return
+		var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
+		S.set_dir(pick(valid_dirs))
+		var/turf/flame_turf = get_step(O, S.dir)
+		S.setup(flame_turf)
+
+		if (prob(20))
+			FLICK("flame",S)
+			flame_turf.hotspot_expose(T0C + 400, 400)
+			playsound(flame_turf, 'sound/effects/flame.ogg', 50, FALSE)
+			O.visible_message(SPAN_ALERT("A tuft of flame erupts from [O]!"))
+			for (var/mob/M in flame_turf)
+				M.changeStatus("burning", 2 SECONDS)
+		else
+			FLICK("spark",S)
+			flame_turf.hotspot_expose(T0C + 50, 50)
+			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
+			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))
+
+TYPEINFO(/datum/component/equipment_fault/leaky)
+	initialization_args = list(
+		ARG_INFO("tool_flags", DATA_INPUT_BITFIELD, "Tools Required", TOOL_PULSING | TOOL_SCREWING),
+		ARG_INFO("reagent_list", DATA_INPUT_LIST_PROVIDED, "Reagent List", list("carbon", "copper", "iron", "nickel", "oil")),
+	)
+
+///leaks chemicals to nearby tiles
+/datum/component/equipment_fault/leaky
+	///base probability to spawn fluids each tick
+	var/static/base_probability = 30
+	///current probability to spawn fluids on this process tick
+	var/current_prob
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+	///list of reagents IDs to leak
+	var/list/reagent_list = list("carbon", "copper", "iron", "nickel", "oil")
+	var/static/list/sounds = list(
+		'sound/machines/vending_dispense_small.ogg',
+		'sound/machines/decompress.ogg',
+		'sound/effects/splort.ogg',
+		'sound/effects/zzzt.ogg',
+	)
+
+/datum/component/equipment_fault/leaky/Initialize(tool_flags, reagent_list)
+	. = ..()
+	if (!islist(reagent_list))
+		return COMPONENT_INCOMPATIBLE
+	src.reagent_list = reagent_list
+	src.current_prob = src.base_probability
+
+/datum/component/equipment_fault/leaky/ef_process(obj/machinery/M, mult)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = src.base_probability
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/leaky/ef_perform_fault(obj/O)
+	if(..())
+		var/target_dir = pick(alldirs)
+		var/turf/object_turf = get_turf(O)
+		var/turf/target_turf = get_step(O.loc, target_dir)
+		if (!test_click(object_turf, target_turf))
+			target_turf = object_turf
+		else
+			var/obj/effects/spray/spray = new(target_turf)
+			SPAWN(1 SECOND) qdel(spray)
+			spray.set_dir(target_dir)
+		playsound(O, pick(sounds), 50, 2)
+		O.visible_message(SPAN_NOTICE("Some of the contents of [O] leaks onto the floor."))
+
+		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
+		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
+		target_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
+
+TYPEINFO(/datum/component/equipment_fault/messy)
+	initialization_args = list(
+		ARG_INFO("tool_flags", DATA_INPUT_BITFIELD, "Tools Required", TOOL_PULSING | TOOL_SCREWING),
+		ARG_INFO("cleanables", DATA_INPUT_LIST_PROVIDED, "Cleanable List", list(\
+			/obj/decal/cleanable/machine_debris=40,\
+			/obj/decal/cleanable/oil=10,\
+			/obj/decal/cleanable/oil/streak=20,\
+			/obj/decal/cleanable/generic=10,\
+			/obj/decal/cleanable/glitter/harmless=5,\
+		)),
+	)
+
+///streaks one of a list of weighted cleanables near the machine
+/datum/component/equipment_fault/messy
+	///list of cleanables picked to spawn when a fault is triggered
+	var/list/obj/decal/cleanable/cleanable_types = list(
+		/obj/decal/cleanable/machine_debris=40,
+		/obj/decal/cleanable/oil=10,
+		/obj/decal/cleanable/oil/streak=20,
+		/obj/decal/cleanable/generic=10,
+		/obj/decal/cleanable/glitter/harmless=5,
+	)
+	var/static/list/sounds = list(
+		'sound/machines/windup.ogg',
+		'sound/machines/hydraulic.ogg',
+		'sound/machines/seed_destroyed.ogg',
+		'sound/machines/ArtifactBee1.ogg',
+		'sound/machines/constructor_work.ogg',
+	)
+
+/datum/component/equipment_fault/messy/Initialize(tool_flags, cleanables)
+	. = ..()
+	if (!islist(cleanables))
+		return COMPONENT_INCOMPATIBLE
+	src.cleanable_types = cleanables
+
+/datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
+	src.ef_perform_fault(M)
+
+/datum/component/equipment_fault/messy/ef_perform_fault(obj/O)
+	if(..())
+		playsound(O, pick(sounds), 30, 2)
+		var/obj/decal/cleanable/junk = make_cleanable(pick(src.cleanable_types), O.loc)
+		junk.streak_cleanable(cardinal, dist_upper=1)
+		hit_twitch(O)
+		O.visible_message(SPAN_NOTICE("[O] spews out some of its internals."))

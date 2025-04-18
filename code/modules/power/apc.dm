@@ -294,7 +294,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
 	ClearAllOverlays(1)
-	if(opened)
+	if(src.status & BROKEN)
+		icon_state = "apc-b"
+	else if(opened)
 		icon_state = "apc1"
 
 		if (cell)
@@ -364,7 +366,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			if (user)
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
-			flick("apc-spark", src)
+			FLICK("apc-spark", src)
 			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
@@ -1449,13 +1451,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
-	icon_state = "apc-b"
-	ClearAllOverlays() //no need to cache since nobody repairs these
-
 	operating = 0
 	update()
+
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
 
 // overload all the lights in this APC area
 

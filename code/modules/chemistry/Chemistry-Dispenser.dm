@@ -93,7 +93,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (!istype(B, glass_path))
 			var/damage = B.force
 			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				attack_particle(user,src)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
@@ -159,6 +159,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		src.UpdateIcon()
 		src.ui_interact(user)
 
+	bullet_act(obj/projectile/P)
+		if(P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
+			src.take_damage(P.power * P.proj_data?.ks_ratio)
+
 	ex_act(severity)
 		switch(severity)
 			if(1)
@@ -169,10 +173,18 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				SPAWN(0)
 					src.take_damage(150)
 				return
+			if(3)
+				SPAWN(0)
+					src.take_damage(50)
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
 			qdel(src)
+		else
+			src.take_damage(power*5)
+
+	overload_act()
+		return !src.set_broken()
 
 	meteorhit()
 		qdel(src)
@@ -211,7 +223,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			src.current_account = new_account
 
 	update_icon()
-		if (!beaker)
+		if (src.status & BROKEN)
+			src.icon_state = "[src.icon_base]-broken"
+		else if (!beaker)
 			src.icon_state = src.icon_base
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
@@ -239,6 +253,12 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
+		if (damage_amount > 0 && src.health < 300)
+			if (prob(((400-src.health)/400)*100)) // probability of breaking increases with damage taken
+				src.set_broken()
+		if (damage_amount > 50) // additional break roll for high-damage hits
+			if (prob(damage_amount))
+				src.set_broken()
 		if (src.health <= 0)
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
@@ -443,6 +463,24 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		. = ..()
 		if(src.beaker?.loc != src)
 			src.remove_distant_beaker(force = TRUE)
+
+	set_broken()
+		. = ..()
+		if (.) return
+		if (src.beaker && src.beaker.loc == src)
+			src.beaker.set_loc(src.loc)
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+			src.beaker = null
+		if (src.user_id && src.user_id.loc == src)
+			src.user_id.set_loc(src.loc)
+			src.user_id = null
+
+		AddComponent(/datum/component/equipment_fault/leaky, tool_flags = TOOL_SCREWING | TOOL_WRENCHING, reagent_list = src.dispensable_reagents)
+		src.UpdateIcon()
+
+	power_change()
+		. = ..()
+		src.UpdateIcon()
 
 /obj/machinery/chem_dispenser/chemical
 	New()

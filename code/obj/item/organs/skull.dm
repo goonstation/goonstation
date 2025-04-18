@@ -102,7 +102,32 @@
 			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
-			var/obj/item/reagent_containers/food/drinks/skull_chalice/C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
+			var/obj/item/reagent_containers/food/drinks/skull_chalice/C 
+
+			if (src.icon_state == "skull_crystal" || istype(src, /obj/item/skull/crystal))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/crystal(src.loc)
+
+			else if (src.icon_state == "skullP" || istype(src, /obj/item/skull/strange))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/strange(src.loc)
+
+			else if (src.icon_state == "skull_strange" || istype(src, /obj/item/skull/peculiar))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/peculiar(src.loc)
+
+			else if (src.icon_state == "skullA" || istype(src, /obj/item/skull/odd))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/odd(src.loc)
+
+			else if (src.icon_state == "skull_noface" || istype(src, /obj/item/skull/noface))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/noface(src.loc)
+
+			else if (src.icon_state == "skull_gold" || istype(src, /obj/item/skull/gold))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/gold(src.loc)
+
+			else if (src.icon_state == "skull_menacing" || istype(src, /obj/item/skull/menacing))
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/menacing(src.loc)
+				playsound(user.loc, 'sound/effects/screech_tone.ogg', 50, 1)
+
+			else
+				C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
 			user.put_in_hand_or_drop(C)
 			qdel(src)
 			return

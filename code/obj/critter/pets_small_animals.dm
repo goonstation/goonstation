@@ -1,59 +1,3 @@
-/obj/critter/opossum
-	name = "space opossum"
-	desc = "A possum that came from space. Or maybe went to space. Who knows how it got here?"
-	icon_state = "possum"
-	density = FALSE
-	health = 15
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 1
-	brutevuln = 1
-	butcherable = BUTCHER_ALLOWED
-	pet_text = list("gently baps", "pets", "cuddles")
-	feed_text = "chatters happily!"
-
-	skinresult = /obj/item/material_piece/cloth/leather
-	max_skins = 1
-
-	New()
-		. = ..()
-		START_TRACKING
-
-	disposing()
-		. = ..()
-		STOP_TRACKING
-
-	on_revive()
-		..()
-		src.alive = TRUE
-		src.visible_message(SPAN_NOTICE("<b>[src]</b> stops playing dead and gets back up!"))
-		src.health = initial(src.health)
-		src.icon_state = src.living_state ? src.living_state : initial(src.icon_state)
-		src.target = null
-		src.task = "wandering"
-
-	CritterDeath()
-		..()
-		SPAWN(rand(20 SECONDS, 80 SECONDS))
-			if (src && !src.alive)
-				src.on_revive()
-
-	attackby(obj/item/W, mob/living/user)
-		if (!src.alive)
-			if (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))
-				src.on_revive()
-				. = ..()
-		else
-			. = ..()
-
-/obj/critter/opossum/morty
-	name = "Morty"
-	generic = 0
-
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 
@@ -125,7 +69,7 @@
 					if(BOUNDS_DIST(src, M) == 0)
 						src.CritterAttack(M)
 					else
-						flick("[src.species]-flaploop", src)
+						FLICK("[src.species]-flaploop", src)
 			else
 				spawn(rand(4,10))
 					chatter(1)
@@ -320,7 +264,7 @@
 			if (prob(5) && !src.muted)
 				src.audible_message(SPAN_NOTICE("<b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!"))
 			if (prob(15))
-				flick("[src.species]-flaploop", src)
+				FLICK("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
 				//src.create_feather()
 		return ..()
@@ -328,7 +272,7 @@
 	seek_target()
 		..()
 		if (src.target)
-			flick("[src.species]-flaploop", src)
+			FLICK("[src.species]-flaploop", src)
 
 	patrol_to(var/turf/towhat)
 		.=..()
@@ -343,7 +287,7 @@
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
-		flick("[src.species]-flaploop", src)
+		FLICK("[src.species]-flaploop", src)
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message(SPAN_COMBAT("<B>[src]</B> pecks [M] in the eyes!"))
@@ -602,7 +546,7 @@
 			src.dance()
 		else
 			src.visible_message(SPAN_NOTICE("\The [src] flaps and bobs [pick("to the beat", "in tune", "approvingly", "happily")]."))
-			flick("[src.species]-flaploop", src)
+			FLICK("[src.species]-flaploop", src)
 		if (prob(3))
 			src.create_feather()
 
@@ -945,7 +889,7 @@
 
 	CritterAttack(mob/M as mob)
 		src.attacking = 1
-		flick("crow-flaploop", src)
+		FLICK("crow-flaploop", src)
 		if (iscarbon(M))
 			if (prob(60)) //Go for the eyes!
 				src.visible_message(SPAN_COMBAT("<B>[src]</B> pecks [M] in the eyes!"))

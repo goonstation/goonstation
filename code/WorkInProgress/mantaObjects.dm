@@ -519,7 +519,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if (broken == 0)
 			change_health(-I.force)
@@ -564,7 +564,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if (broken == 0)
 			change_health(-I.force)
@@ -643,7 +643,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
-		flick("englrt-act", src)
+		FLICK("englrt-act", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 		animate_teleport(user)
 		SPAWN(1 SECOND)

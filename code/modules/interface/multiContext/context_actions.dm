@@ -610,7 +610,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target) && can_act(user)
+		. = (user.loc == target) && can_act(user) && user.can_interface_with_pods
 
 	board
 		name = "Board"
@@ -619,7 +619,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -633,7 +633,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -648,7 +648,7 @@
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
 			if (V.locked && V.lock)
-				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -662,7 +662,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -707,12 +707,12 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/lateral_thrusters)
+			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			var/obj/item/shipcomponent/secondary_system/lateral_thrusters/thrusters = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
 			thrusters.change_thruster_direction()
 			if (src.icon_state == "thrusters_right")
 				src.desc = "Change the lateral thrusters to move the ship left"

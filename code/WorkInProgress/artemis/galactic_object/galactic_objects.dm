@@ -633,7 +633,7 @@
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		boutput(pilot,"fuck")
-		flick("arjuna_thruster_back_l",ship)
+		FLICK("arjuna_thruster_back_l",ship)
 		return
 
 /obj/background_star/galactic_object/large/eyesenhower_ship
@@ -646,7 +646,7 @@
 		if(!istype(E))
 			return
 		if(!E.intro_played)
-			flick("eh_intro",src.my_map_body)
+			FLICK("eh_intro",src.my_map_body)
 			E.intro_played = 1
 			src.my_map_body.icon_state = "eh_idle_open"
 

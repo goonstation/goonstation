@@ -693,7 +693,7 @@
 
 /obj/item/cigarbox
 	name = "cigar box"
-	desc = "The not-so-prestigeous brand of Space Cigars."
+	desc = "The not-so-prestigious brand of Space Cigars."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
@@ -756,7 +756,7 @@
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
-	desc = "The most prestigeous brand of Space Cigars, made in Space Cuba."
+	desc = "The most prestigious brand of Space Cigars, made in Space Cuba."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
@@ -820,7 +820,7 @@
 /obj/item/cigpacket/cigarillo
 	max_cigs = 2
 	name = "Discount Dan's Last-Ditch Doinks"
-	desc = "These claim to be '100% all natoural* tobacco**'."
+	desc = "These claim to be '100% all natoural* tobacco**'."  // dunno if the typo was intentional but I'm keeping it - Mouse
 	cigtype = /obj/item/clothing/mask/cigarette/cigarillo/flavoured
 	icon_state = "cigarillopacket"
 	package_style = "cigarillopacket"
@@ -919,7 +919,7 @@
 
 /obj/item/match
 	name = "match"
-	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either or."
+	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either/or."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	w_class = W_CLASS_TINY
@@ -1197,7 +1197,7 @@
 		src.tool_flags = TOOL_CAUTERY
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
-		flick("[icon_state]_open", src)
+		FLICK("[icon_state]_open", src)
 		light.enable()
 		processing_items |= src
 		if (user != null)
@@ -1210,7 +1210,7 @@
 		src.tool_flags = 0
 		set_icon_state(src.icon_off)
 		src.item_state = "[item_state_base]"
-		flick("[icon_state]_close", src)
+		FLICK("[icon_state]_close", src)
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)

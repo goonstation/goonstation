@@ -132,10 +132,6 @@
 	. = list()
 	if (timeout)
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
-	// |GOONSTATION-ADD|
-	if (cant_interact)
-		.["cant_interact"] = clamp(((cant_interact - (TIME - start_time)) / cant_interact), 0, 1)
-		.["cant_interact_value"] = cant_interact
 
 /datum/tgui_modal/ui_static_data(mob/user)
 	. = list(
@@ -147,7 +143,7 @@
 		"content_window" = content_window,
 		"theme" = theme,
 		"cdn" = cdn,
-		"VCS_REVISION" = VCS_REVISION,
+		"cant_interact" = cant_interact
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)

@@ -1143,6 +1143,7 @@
 				newtail.holder = src
 				organ_list["tail"] = newtail
 				src.donor.update_body()
+				src.donor.bioHolder.RemoveEffect(newtail.failure_ability)
 				success = 1
 
 		if (success)
@@ -1213,6 +1214,13 @@
 					REMOVE_ATOM_PROPERTY(donor, PROP_MOB_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
+
+	/// Unbreak all organs. Use sparingly.
+	proc/unbreak_all_organs()
+		for (var/organ_slot in src.organ_list)
+			var/obj/item/organ/O = src.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
 
 /*=================================*/
 /*---------- Human Procs ----------*/

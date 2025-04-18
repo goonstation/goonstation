@@ -65,6 +65,12 @@
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
 
+	NT
+		name = "\improper NT backpack"
+		desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+		icon_state = "NTbackpack"
+		item_state = "NTbackpack"
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -330,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -883,6 +889,17 @@
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
 
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
+
 /obj/item/storage/belt/security
 	name = "security toolbelt"
 	desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
@@ -1200,5 +1217,7 @@ TYPEINFO(/obj/item/inner_tube)
 	item_state = "secbelt"
 	check_wclass = 0
 	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
 
 // End of pod wars belts and holsters

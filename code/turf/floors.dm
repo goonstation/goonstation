@@ -16,6 +16,8 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	/// if this floor can be pried up
+	var/pryable = TRUE
 	var/has_material = TRUE
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
@@ -1399,7 +1401,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	name = "snow"
 	default_material = null
 	icon_state = "snow1"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 
 	New()
@@ -1411,6 +1413,10 @@ TYPEINFO(/turf/simulated/floor/snow)
 		else if (prob(5))
 			icon_state = "snow4"
 		src.set_dir(pick(cardinal))
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/simulated/floor/snow/snowball
 
@@ -1430,7 +1436,7 @@ DEFINE_FLOORS(snowcalm,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
-	step_material = "step_outdoors";\
+	step_material = "step_snow";\
 	step_priority = STEP_PRIORITY_MED)
 
 DEFINE_FLOORS(snowcalm/border,
@@ -1440,7 +1446,7 @@ DEFINE_FLOORS(snowrough,
 	name = "snow";\
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
-	step_material = "step_outdoors";\
+	step_material = "step_snow";\
 	step_priority = STEP_PRIORITY_MED)
 
 DEFINE_FLOORS(snowrough/border,
@@ -1542,6 +1548,65 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/proc/grassify()
 	.=0
 
+/turf/proc/snow_prints(atom/movable/AM)
+	if (isliving(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+		var/mob/living/M = AM
+		if (M.lying)
+			var/obj/effect/snow_step/dragged = new(src)
+			dragged.icon_state = "tracks" // TODO: tracks but the middle is filled in a little
+			dragged.dir = AM.dir
+			return
+
+
+		var/l_leg_icon_state
+		var/r_leg_icon_state
+
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if (H.limbs?.l_leg)
+				if (H.limbs.l_leg.kind_of_limb & LIMB_TREADS)
+					l_leg_icon_state = "tracks"
+				else
+					l_leg_icon_state = "footprints"
+			if (H.limbs?.r_leg)
+				if (H.limbs.r_leg.kind_of_limb & LIMB_TREADS)
+					r_leg_icon_state = "tracks"
+				else
+					r_leg_icon_state = "footprints"
+
+		else if (isrobot(AM))
+			var/mob/living/silicon/robot/R = AM
+			if (R.part_leg_l)
+				if (R.part_leg_l.kind_of_limb & LIMB_TREADS)
+					l_leg_icon_state = "tracks"
+				else
+					l_leg_icon_state = "footprints"
+			if (R.part_leg_r)
+				if (R.part_leg_r.kind_of_limb & LIMB_TREADS)
+					r_leg_icon_state = "tracks"
+				else
+					r_leg_icon_state = "footprints"
+
+		// both legs are the same, use a single combined iconstate
+		if (l_leg_icon_state == r_leg_icon_state)
+			var/obj/effect/snow_step/both_steppy = new(src)
+			if(l_leg_icon_state == "footprints")
+				l_leg_icon_state = pick("footprints1","footprints2")
+			both_steppy.icon_state = l_leg_icon_state
+			both_steppy.dir = AM.dir
+			return
+
+		// separate or one leg
+		if (l_leg_icon_state)
+			var/obj/effect/snow_step/left_steppy = new(src)
+			left_steppy.icon_state = "[l_leg_icon_state]L"
+			left_steppy.dir = AM.dir
+		if (r_leg_icon_state)
+			var/obj/effect/snow_step/right_steppy = new(src)
+			right_steppy.icon_state = "[r_leg_icon_state]R"
+			right_steppy.dir = AM.dir
+		return
+
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /// silent: makes the overlay invisible and prevents the sound effect
 /turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
@@ -1580,24 +1645,55 @@ TYPEINFO(/turf/simulated/floor/grass)
 		catwalk?.ClearSpecificOverlays("wet_overlay")
 	src.wet = 0
 
+
+/obj/effect/snow_step
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	layer = DECAL_LAYER
+	plane = PLANE_FLOOR
+	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
+	color = "#91b8d0"
+
+	New()
+		. = ..()
+		var/weather_severity = 0
+		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
+		return
+
+	proc/weather_fade()
+		var/weather_severity = 0
+		if (isnull(weather_severity) || weather_severity < 1)
+			return
+
+		// todo: Add dynamic selection of weather severity
+		// Using active events, parallax, or other indicators
+		// sev0 = 10 seconds (clear skies)
+		// sev1 = 7 seconds (light snow)
+		// sev2 = 4 seconds (heavy snow)
+		// sev3 = 1 second (blizzard)
+		src.fade_away((10-(weather_severity*3)) * 10 DECI SECONDS)
+
+	proc/fade_away(time)
+		animate_buff_out_time(src, time)
+		SPAWN(time)
+			qdel(src)
+
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
 	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
-	src.icon_state = "grass"
+	src.icon_state = pick("grass", "grass_1", "grass_2", "grass_3")
+	src.UpdateIcon()
 	if(prob(30))
-		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
+		src.icon_state = pick("grass_p", "grass_w", "grass_b", "grass_y", "grass_r", "grass_a")
 	src.name = "grass"
-	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1988,6 +2084,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
+	if (!src.pryable)
+		return
 	if(src.reinforced)
 		boutput(user, SPAN_ALERT("You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead."))
 		return
@@ -2028,6 +2126,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		return 0
 
 	if (ispryingtool(C))
+		if(src.name == "grass")
+			src.step_material = initial(step_material)
 		src.pry_tile(C,user,params)
 		return
 
@@ -2067,6 +2167,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			newParams["quick_replace"] = TRUE
 			src.Attackby(P, user, newParams)
 			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
+			if(src.name == "grass")
+				src.step_material = initial(step_material)
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
@@ -2717,13 +2819,17 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state = "snow1"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
 	icon_state_edge = "snow_edge"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 
 	New()
 		. = ..()
 		if(src.type == /turf/simulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/simulated/floor/auto/snow/rough
 	name = "snow"

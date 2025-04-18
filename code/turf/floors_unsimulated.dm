@@ -980,6 +980,8 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /turf/unsimulated/floor/snow
 	name = "snow"
 	icon_state = "snow1"
+	step_material = "step_snow"
+	turf_flags = MOB_STEP
 
 	New()
 		..()
@@ -990,6 +992,10 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 		else if (prob(5))
 			icon_state = "snow4"
 		src.set_dir(pick(cardinal))
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/unsimulated/floor/snow/green
 	name = "snow-covered floor"
@@ -1322,13 +1328,18 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	icon_state = "snow1"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
 	icon_state_edge = "snow_edge"
-	step_material = "step_outdoors"
+	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	turf_flags = MOB_STEP
 
 	New()
 		. = ..()
 		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		src.snow_prints(AM)
 
 /turf/unsimulated/floor/auto/snow/rough
 	name = "snow"

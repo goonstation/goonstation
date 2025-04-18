@@ -4,14 +4,24 @@
 #define SMESMAXCHARGELEVEL 200000
 #define SMESMAXOUTPUT 200000
 
+TYPEINFO(/obj/machinery/power/smes/magical)
+	mats = null
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power, using magic."
+	deconstruct_flags = DECON_NONE
 	process()
 		capacity = INFINITY
 		charge = INFINITY
 		..()
 
+	set_broken()
+		return TRUE
+
+TYPEINFO(/obj/machinery/power/smes)
+	mats = list("metal" = 40,
+				"conductive_high" = 30,
+				"energy_extreme" = 30)
 /obj/machinery/power/smes
 	name = "Dianmu power storage unit"
 	desc = "The XIANG|GIESEL model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
@@ -19,6 +29,7 @@
 	density = 1
 	anchored = ANCHORED
 	requires_power = FALSE
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL | DECON_CROWBAR | DECON_WELDER
 	var/output = 30000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -81,7 +92,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if (!terminal)
-			status |= BROKEN
+			status |= POWEROFF
 			return
 
 		terminal.master = src
@@ -90,7 +101,7 @@
 
 
 /obj/machinery/power/smes/update_icon()
-	if (status & BROKEN)
+	if (status & (BROKEN|POWEROFF))
 		ClearAllOverlays()
 		return
 
@@ -112,6 +123,26 @@
 	if (clevel>0)
 		I = SafeGetOverlayImage("chargedisp",'icons/obj/power.dmi',"smes-og[clevel]")
 		UpdateOverlays(I, "chargedisp")
+
+/obj/machinery/power/smes/set_broken()
+	if(..()) return
+	AddComponent(/datum/component/equipment_fault/dangerously_shorted, tool_flags = TOOL_WIRING | TOOL_SOLDERING | TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+
+/obj/machinery/power/smes/ex_act(severity)
+	. = ..()
+	if (QDELETED(src))
+		return
+	switch(severity)
+		if(2)
+			if (prob(50))
+				src.set_broken()
+				return
+		if(3)
+			if (prob(25))
+				src.set_broken()
+
+/obj/machinery/power/smes/overload_act()
+	return !src.set_broken()
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
@@ -140,7 +171,7 @@
 
 /obj/machinery/power/smes/process(mult)
 
-	if (status & BROKEN)
+	if (status & (BROKEN|POWEROFF))
 		return
 
 
@@ -152,6 +183,9 @@
 	// Had to revert a hack here that caused SMES to continue charging despite insufficient power coming in on the input (terminal) side.
 	if (terminal)
 		charge(mult)
+	else
+		status |= POWEROFF
+		return
 
 	if (online)		// if outputting
 		if (prob(5))

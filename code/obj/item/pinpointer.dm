@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/pinpointer)
 	/// do not set directly, use turn_on and turn_off
 	var/active = FALSE
 	var/icon_type = "disk"
-	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technologically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)
@@ -394,7 +394,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technologically advanced arrow."
 
 	proc/track(var/list/L)
 		itemrefs = list()

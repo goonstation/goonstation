@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
+	var/emagged = FALSE
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
 	var/obj/item/record/record = null
@@ -151,7 +152,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
@@ -256,7 +257,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 			if (src.disk && istype(src.disk))
@@ -364,6 +365,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!isnum(power) || power < 1) power = 1
 		src.take_damage(power)
 		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
+			src.name = "buclear nomb"
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
 
 	meteorhit()
 		src.take_damage(rand(30,60))
@@ -628,7 +637,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.anchored = !src.anchored
 			boutput(user, SPAN_NOTICE("[src] is now [src.anchored ? "anchored" : "unanchored"]."))
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src._health -= W.force
 		checkhealth()

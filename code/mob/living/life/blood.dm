@@ -30,7 +30,8 @@
 			var/decrease_chance = 0
 			var/surgery_increase_chance = 5 //likelihood we bleed more bc we are being surgeried or have open cuts
 
-			if (owner.bleeding < 4) //let small bleeds passively heal
+			//let small bleeds passively heal, but let critters always heal bleeds because they won't have ways to fix it
+			if (owner.bleeding < 4 || critter_owner)
 				decrease_chance += 3
 			else
 				surgery_increase_chance += 10
@@ -76,10 +77,9 @@
 						if (5)
 							bleed(owner, final_bleed, 4)
 
-		if (critter_owner)
+		if (critter_owner && !HAS_ATOM_PROPERTY(critter_owner, PROP_MOB_NO_BLOOD_REGEN))
 			if (critter_owner.blood_volume < 500 && critter_owner.blood_volume > 0) // if we're full or empty, don't bother v
-				if (prob(66))
-					critter_owner.blood_volume += 1 * mult // maybe get a little blood back ^
+				critter_owner.blood_volume += 2 * mult // get a little blood back ^
 			else if (critter_owner.blood_volume > 500)
 				if (prob(20))
 					critter_owner.blood_volume -= 1 * mult

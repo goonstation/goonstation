@@ -515,7 +515,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
@@ -812,7 +812,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
-		flick("Field_Gen_Flash", src)
+		FLICK("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -984,6 +984,9 @@ TYPEINFO(/obj/machinery/field_generator)
 /obj/machinery/field_generator/activated
 	Varedit_start = TRUE
 	power = 50
+
+/obj/machinery/field_generator/does_impact_particles(kinetic_impact)
+	return kinetic_impact
 
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 

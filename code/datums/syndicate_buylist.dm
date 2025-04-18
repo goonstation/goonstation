@@ -92,6 +92,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/generic/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/storage/box/hunting_rifle)
+	cost = 7
+	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
 	items = list(/obj/item/gun/energy/crossbow)
@@ -208,7 +215,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Signal Jammer"
 	items = list(/obj/item/radiojammer)
 	cost = 3
-	desc = "Silences radios in an area around you while activated. No one will hear them scream."
+	desc = "Silences radios and PDAs in an area around you while activated. No one will hear them scream."
 
 /datum/syndicate_buylist/generic/psink
 	name = "Power Sink"
@@ -352,7 +359,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	items = list(/obj/item/device/chameleon)
-	cost = 5
+	cost = 3
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
@@ -1027,10 +1034,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/syndicate_radio_upgrade
-	name = "Syndicate Radio Upgrade"
-	items = list(/obj/item/device/radio_upgrade/syndicatechannel)
+	name = "Syndicate Radio Upgrades"
+	items = list(/obj/item/device/radio_upgrade/syndicatechannel,
+				/obj/item/device/radio_upgrade/syndicatechannel)
 	cost = 1
-	desc = "A small device that may be installed in a headset to grant access to a radio channel reserved for Syndicate operatives."
+	desc = "A pair of small devices that may be installed in a headset to grant access to a secure radio channel reserved for Syndicate operatives."
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
@@ -1051,7 +1059,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/rose
 	name = "Poison rose"
-	items = list(/obj/item/plant/flower/rose/poisoned)
+	items = list(/obj/item/clothing/head/flower/rose/poisoned)
 	cost = 4
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
@@ -1114,6 +1122,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/barberang
+	name = "Barberang"
+	items = list(/obj/item/razor_blade/barberang)
+	cost = 5
+	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
+	job = list("Barber")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
@@ -1156,19 +1172,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	br_allowed = TRUE
 
-/datum/syndicate_buylist/traitor/rifle
-	name = "Old Hunting Rifle"
-	items = list(/obj/item/gun/kinetic/hunting_rifle)
-	cost = 7
-	job = list("Pest Control Specialist")
-	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	can_buy = UPLINK_TRAITOR
-
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
-	items = list(/obj/item/gun/kinetic/hunting_rifle)
-	cost = 3
-	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
+	items = list(/obj/item/storage/box/hunting_rifle)
+	cost = 6
+	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
@@ -1317,7 +1325,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
 	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
-	cost = 4
+	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
 
@@ -1335,6 +1343,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	cost = 3
 	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
+
+/datum/syndicate_buylist/commander/capella
+	name = "Capella Mk. 8"
+	items = list(/obj/item/storage/box/capella)
+	cost = 1
+	desc = "An extremely accurate competition pistol with two spare clips of match-grade ammo."
+	category = "Main"
+
+/datum/syndicate_buylist/commander/alphard
+	name = "Alphard recoiling cannon"
+	items = list(/obj/item/storage/box/alphard)
+	cost = 3
+	desc = "A brutally powerful antimateriel cannon on a shortened frame. Capable of piercing multiple walls and airlocks. Beware of shrapnel!"
+	category = "Main"
+
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 

@@ -30,6 +30,7 @@ TYPEINFO(/obj/item/light_parts)
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
+	var/has_bulb = TRUE
 
 	New()
 		..()
@@ -37,8 +38,11 @@ TYPEINFO(/obj/item/light_parts)
 
 	update_icon()
 		..()
-		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
-		src.AddOverlays(light_image, "light")
+		if (src.has_bulb)
+			var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+			src.AddOverlays(light_image, "light")
+			return
+		src.ClearSpecificOverlays("light")
 
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
@@ -65,6 +69,8 @@ TYPEINFO(/obj/item/light_parts)
 	installed_icon_state = target.icon_state
 	installed_base_state = target.base_state
 	light_type = target.light_type
+	if (!target.inserted_lamp)
+		has_bulb = FALSE
 	fixture_type = target.type
 	fitting = target.fitting
 	if (fitting == "tube")
@@ -131,7 +137,10 @@ TYPEINFO(/obj/item/light_parts)
 	newlight.icon_state = src.installed_icon_state
 	newlight.base_state = src.installed_base_state
 	newlight.fitting = src.fitting
-	newlight.status = LIGHT_EMPTY
+	if (!src.has_bulb)
+		newlight.current_lamp.light_status = LIGHT_EMPTY
+		newlight.inserted_lamp = null
+		newlight.update()
 	newlight.add_fingerprint(user)
 	// this does the exact pixel positioning and stuff for the walls to line up with sprites
 	if (src.install_type == INSTALL_WALL)
@@ -246,6 +255,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 					directions = cardinal
 				for (var/dir in directions)
 					T = get_step(src,dir)
+					if(istype(T, /turf/simulated/wall/false_wall))
+						continue
 					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
@@ -279,6 +290,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	bullet_act(obj/projectile/P)
 		. = ..()
 		src.broken(explode_rigged = TRUE)
+
+	overload_act()
+		if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
+			return FALSE
+		src.broken(nospark=FALSE, explode_rigged=TRUE)
+		return TRUE
 
 //big standing lamps
 /obj/machinery/light/flamp
@@ -493,6 +510,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		..()
 		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
+	overload_act()
+		return FALSE
+
 	exitsign
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
@@ -511,6 +531,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	removable_bulb = 0
 	install_type = INSTALL_WALL
 
+	overload_act()
+		return FALSE
+
 /obj/machinery/light/runway_light
 	name = "runway light"
 	desc = "A small light used to guide pods into hangars."
@@ -525,6 +548,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	wallmounted = 0
 	removable_bulb = 0
 	install_type = INSTALL_FLOOR
+
+	overload_act()
+		return FALSE
+
 	delay2
 		icon_state = "runway20"
 		base_state = "runway2"
@@ -585,6 +612,9 @@ _PATH/delay5{icon_state = "runway50"; base_state = "runway5"}
 	ex_act(severity)
 		if(severity == 1)
 			..()
+
+	overload_act()
+		return FALSE
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
@@ -901,10 +931,12 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
 						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 					explode()
+				#ifndef STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT
 				if(prob(current_lamp.breakprob))
 					src.do_break()
 				if(prob(current_lamp.burnprob))
 					src.do_burn_out()
+				#endif
 			if (LIGHT_BURNED)
 				if(prob(current_lamp.breakprob))
 					src.do_break()
@@ -1094,7 +1126,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 
 		boutput(user, "You stick \the [W.name] into the light socket!")
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(has_power() && (W.flags & CONDUCT))
 			if(!user.bioHolder.HasEffect("resist_electric"))
 				src.electrocute(user, 75, null, 20000)
@@ -1102,7 +1134,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 
 	// attempt to break the light
 	else if(current_lamp.light_status != LIGHT_BROKEN)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")

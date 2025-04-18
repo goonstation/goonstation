@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		else if (user.a_intent == INTENT_HELP)
 			..()
 		else if (I.force > 0)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src.reinforced)
 				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
 				attack_particle(user,src)
@@ -110,9 +110,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		if (ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
 			return
 		if (block)
-			flick("block_spark_armor",src.attack_particle)
+			FLICK("block_spark_armor",src.attack_particle)
 		else
-			flick("block_spark",src.attack_particle)
+			FLICK("block_spark",src.attack_particle)
 		src.attack_particle.alpha = 255
 		src.attack_particle.loc = src.loc
 		src.attack_particle.pixel_x = 0
@@ -406,13 +406,36 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
-	spawn_contents = list(/obj/item/clothing/suit/armor/vest,
+	spawn_contents = list(/obj/item/clothing/under/rank/security,
+	/obj/item/device/radio/headset/security,
+	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/shoes/swat,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
 	/obj/item/barrier)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(15))
+				new /obj/item/gun/kinetic/riot40mm(src)
+			else
+				new /obj/item/chem_grenade/flashbang(src)
+			return 1
+
+/obj/storage/secure/closet/security/equipment/derelict
+	name = "derelict Security equipment locker"
+	spawn_contents = list(/obj/item/clothing/head/helmet/hardhat/security,
+	/obj/item/clothing/glasses/sunglasses/sechud,
+	/obj/item/handcuffs,
+	/obj/item/handcuffs,
+	/obj/item/device/flash,
+	/obj/item/barrier)
+
+	make_my_stuff()
+		..()
 
 /obj/storage/secure/closet/security/forensics
 	name = "Forensics equipment locker"
@@ -428,6 +451,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/detective_scanner/detective,
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
+	/obj/item/camera_film/large,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
@@ -686,7 +710,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
 	/obj/item/clothing/glasses/blindfold = 2,
-	/obj/item/clothing/mask/monkey_translator = 2)
+	/obj/item/clothing/mask/monkey_translator = 2,
+	/obj/item/pet_carrier)
 
 /* ==================== */
 /* ----- Research ----- */
@@ -745,6 +770,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B7.pixel_y = 0
 			B7.pixel_x = 0
 			return 1
+
+/obj/storage/secure/closet/research/chemical/pharmacy
+	name = "pharmacy chemical locker"
+	icon_closed = "medical_chemical"
+	icon_state = "medical_chemical"
+	req_access = list(access_medical_lockers)
 
 /* ======================= */
 /* ----- Engineering ----- */
@@ -808,6 +839,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/pen/infrared,
+	/obj/item/pen/crayon/infrared,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)

@@ -5,6 +5,7 @@
  * YOU WILL BE SENT TO THE CRUSHER IF YOU TOUCH THIS UNNECESSAIRLY
  */
 /world/proc/Genesis()
+	global.runtimeDetails = list()
 #ifdef LIVE_SERVER
 	world.log = file("data/errors.log")
 #endif
@@ -63,6 +64,12 @@
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 
+#ifdef RP_MODE
+	config.load("config/gamemodes_rp.txt")
+#else
+	config.load("config/gamemodes.txt")
+#endif
+
 	if (config.server_specific_configs && world.port > 0)
 		var/specific_config = "config/config-[world.port].txt"
 		if (fexists(specific_config))
@@ -85,11 +92,12 @@
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 	cdn = config.cdn
+	cdnManifest = loadCdnManifest()
 	disableResourceCache = config.disableResourceCache
 	chui = new()
 	if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 		Z_LOG_DEBUG("Preload", "Loading local browserassets...")
-		recursiveFileLoader("browserassets/")
+		recursiveFileLoader("browserassets/src/")
 
 	Z_LOG_DEBUG("Preload", "Z-level datums...")
 	init_zlevel_datums()
@@ -164,6 +172,8 @@
 	cargo_pad_manager = new /datum/cargo_pad_manager()
 	Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 	camera_coverage_controller = new /datum/controller/camera_coverage()
+	Z_LOG_DEBUG("Preload", " instrumnt_sound_bank")
+	instrument_sound_bank = new()
 
 	Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 	hydro_controls.set_up()

@@ -1443,7 +1443,7 @@
 	},
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/plating,
-/area/station/chapel/office)
+/area/station/routing/depot)
 "il" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
@@ -2988,9 +2988,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "sw" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "sz" = (
@@ -3233,8 +3231,9 @@
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/office)
 "uh" = (
 /obj/machinery/arc_electroplater{
 	dir = 4
@@ -3470,9 +3469,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "vO" = (
@@ -3890,7 +3887,7 @@
 /area/station/crew_quarters/clown)
 "yF" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer/bank_data,
+/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"

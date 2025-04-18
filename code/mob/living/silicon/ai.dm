@@ -294,7 +294,7 @@ or don't if it uses a custom topopen overlay
 
 	ai_station_map = new /obj/minimap/ai
 	ai_station_map.initialise_minimap()
-	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE | MAP_OBSERVER, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
 			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
@@ -762,7 +762,7 @@ or don't if it uses a custom topopen overlay
 					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("knockdown", 2 SECONDS)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 	src.update_appearance()
 
 /mob/living/silicon/ai/blob_act(var/power)
@@ -940,6 +940,9 @@ or don't if it uses a custom topopen overlay
 
 	if (deployed_shell)
 		src.return_to(deployed_shell)
+
+	for(var/datum/viewport/viewport as anything in src.client?.getViewportsByType(VIEWPORT_ID_AI))
+		viewport.Close()
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
@@ -1215,12 +1218,10 @@ or don't if it uses a custom topopen overlay
 
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				if (isdead(src))
-					src.emote_allowed = 0
 				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
-				//flick("ai-flip", src)
+				//FLICK("ai-flip", src)
 				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
 					AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
@@ -1320,8 +1321,6 @@ or don't if it uses a custom topopen overlay
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
 	#endif
-				SPAWN(1 SECOND)
-					src.emote_allowed = 1
 		else
 			if (voluntary) src.show_text("Invalid Emote: [act]")
 			return

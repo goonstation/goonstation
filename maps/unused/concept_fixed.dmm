@@ -4091,9 +4091,6 @@
 "aim" = (
 /turf/space,
 /area/supply/spawn_point)
-"ain" = (
-/turf/space,
-/area/supply/delivery_point)
 "aio" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -29593,9 +29590,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/hos)
-"bgH" = (
-/turf/simulated/wall/r_wall,
-/area/station/crew_quarters/heads)
 "bgI" = (
 /obj/storage/secure/closet/courtroom,
 /turf/simulated/floor,
@@ -29659,29 +29653,6 @@
 	dir = 2
 	},
 /area/station/security/hos)
-"bgP" = (
-/obj/table/wood{
-	dir = 9
-	},
-/obj/machinery/light/lamp,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bgQ" = (
-/obj/table/wood{
-	dir = 5
-	},
-/obj/item/storage/firstaid/regular,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-2";
-	
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
 "bgR" = (
 /obj/machinery/door/airlock/glass{
 	name = "Bridge Checkpoint";
@@ -29803,51 +29774,6 @@
 	},
 /turf/space,
 /area/space)
-"bhc" = (
-/obj/cable{
-	icon_state = "0-2";
-	
-	},
-/obj/mesh/grille/steel,
-/obj/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
-	dir = 8
-	},
-/obj/window/reinforced{
-	tag = "icon-rwindow (NORTH)";
-	icon_state = "rwindow";
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
-"bhe" = (
-/obj/cable{
-	icon_state = "2-4";
-	
-	},
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2";
-	
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhf" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/ATM,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
 "bhg" = (
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -29994,69 +29920,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"bhr" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2";
-	
-	},
-/obj/mesh/grille/steel,
-/obj/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
-"bhs" = (
-/obj/table/wood{
-	tag = "icon-woodentable (WEST)";
-	icon_state = "woodentable";
-	dir = 8
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bht" = (
-/obj/cable{
-	icon_state = "2-4";
-	
-	},
-/obj/cable{
-	icon_state = "1-2";
-	
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhu" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/bank_data,
-/obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Head Office";
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
 "bhv" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -30117,75 +29980,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"bhB" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4";
-	
-	},
-/obj/cable{
-	icon_state = "0-2";
-	
-	},
-/obj/mesh/grille/steel,
-/obj/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
-"bhC" = (
-/obj/cable{
-	icon_state = "4-8";
-	
-	},
-/obj/table/wood{
-	dir = 10
-	},
-/obj/item/reagent_containers/food/drinks/rum_spaced,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhD" = (
-/obj/cable{
-	icon_state = "4-8";
-	
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhE" = (
-/obj/cable{
-	icon_state = "4-8";
-	
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhF" = (
-/obj/cable{
-	icon_state = "4-8";
-	
-	},
-/obj/machinery/door/firedoor/border_only{
-	tag = "icon-door0 (EAST)";
-	icon_state = "door0";
-	dir = 4
-	},
-/obj/machinery/door/airlock/command{
-	name = "Head Office";
-	req_access_txt = "19"
-	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/station/crew_quarters/heads)
 "bhG" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30248,51 +30042,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
-"bhN" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2";
-	
-	},
-/obj/mesh/grille/steel,
-/obj/window/reinforced{
-	tag = "icon-rwindow (EAST)";
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/window/reinforced{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
-	dir = 8
-	},
-/obj/window/reinforced,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/heads)
-"bhO" = (
-/obj/storage/secure/closet/command/hop,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhP" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
-"bhQ" = (
-/obj/stool/bed,
-/obj/machinery/status_display{
-	pixel_x = 30
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
 "bhR" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
@@ -30309,16 +30058,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
-"bhT" = (
-/obj/cable{
-	icon_state = "1-2";
-	
-	},
-/turf/simulated/wall/r_wall,
-/area/station/crew_quarters/heads)
-"bhU" = (
-/turf/simulated/wall,
-/area/station/crew_quarters/heads)
 "bhV" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -34988,6 +34727,13 @@
 	},
 /turf/space,
 /area/space)
+"caI" = (
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/wall/r_wall,
+/area/station/crew_quarters/hop)
 "cfX" = (
 /obj/machinery/beacon{
 	anchored = 1;
@@ -35170,6 +34916,38 @@
 "cqb" = (
 /turf/space,
 /area/space)
+"cPM" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/machinery/door/firedoor/border_only{
+	tag = "icon-door0 (EAST)";
+	icon_state = "door0";
+	dir = 4
+	},
+/obj/machinery/door/airlock/command{
+	name = "Head Office";
+	req_access_txt = "19"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/station/crew_quarters/hop)
+"cTe" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "dmQ" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -35180,11 +34958,30 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
+"eEd" = (
+/turf/simulated/wall,
+/area/station/crew_quarters/hop)
+"fzY" = (
+/obj/stool/bed,
+/obj/machinery/status_display{
+	pixel_x = 30
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "gcn" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/space)
+"gGn" = (
+/turf/simulated/wall/r_wall,
+/area/station/crew_quarters/hop)
 "hkr" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35193,10 +34990,46 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"idr" = (
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/light{
+	tag = "icon-tube1 (EAST)";
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Head Office";
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"iok" = (
+/obj/cable{
+	icon_state = "2-4";
+	
+	},
+/obj/cable{
+	icon_state = "1-2";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "mjU" = (
 /obj/strip_door,
 /turf/simulated/floor/caution/northsouth,
 /area/space)
+"mrC" = (
+/obj/landmark/supply_delivery,
+/turf/space)
 "nhs" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35226,6 +35059,26 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
+"oLy" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/mesh/grille/steel,
+/obj/window/reinforced{
+	tag = "icon-rwindow (EAST)";
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/window/reinforced{
+	tag = "icon-rwindow (WEST)";
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/window/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hop)
 "oRJ" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/cable{
@@ -35236,6 +35089,14 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"oSf" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	frequency = 1485;
+	name = "Station Intercom (Security)"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "pcx" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -35244,10 +35105,39 @@
 /obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"qxm" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "qyw" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/space)
+"rlq" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/mesh/grille/steel,
+/obj/window/reinforced{
+	tag = "icon-rwindow (EAST)";
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/window/reinforced{
+	tag = "icon-rwindow (WEST)";
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hop)
 "rRp" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/door_control{
@@ -35260,6 +35150,40 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"rVY" = (
+/obj/table/wood{
+	dir = 5
+	},
+/obj/item/storage/firstaid/regular,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"sev" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"taF" = (
+/obj/table/wood{
+	tag = "icon-woodentable (WEST)";
+	icon_state = "woodentable";
+	dir = 8
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "tBe" = (
 /obj/fakeobject/skeleton,
 /obj/item/clothing/suit/chef,
@@ -35267,6 +35191,28 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/aprilfools,
 /area/station/hallway/primary/west)
+"uhe" = (
+/obj/cable{
+	icon_state = "4-8";
+	
+	},
+/obj/table/wood{
+	dir = 10
+	},
+/obj/item/reagent_containers/food/drinks/rum_spaced,
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"voa" = (
+/obj/storage/secure/closet/command/hop,
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"vuf" = (
+/obj/table/wood{
+	dir = 9
+	},
+/obj/machinery/light/lamp,
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
 "vEx" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
@@ -35283,7 +35229,30 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"vNr" = (
+"vWg" = (
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/mesh/grille/steel,
+/obj/window/reinforced{
+	tag = "icon-rwindow (EAST)";
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/window/reinforced{
+	tag = "icon-rwindow (WEST)";
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/window/reinforced{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hop)
+"wdf" = (
 /obj/table/wood{
 	tag = "icon-woodentable (WEST)";
 	icon_state = "woodentable";
@@ -35293,7 +35262,38 @@
 /obj/item/coin,
 /obj/item/coin,
 /turf/simulated/floor,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
+"wtM" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/ATM,
+/turf/simulated/floor,
+/area/station/crew_quarters/hop)
+"wyM" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4";
+	
+	},
+/obj/cable{
+	icon_state = "0-2";
+	
+	},
+/obj/mesh/grille/steel,
+/obj/window/reinforced{
+	tag = "icon-rwindow (EAST)";
+	icon_state = "rwindow";
+	dir = 4
+	},
+/obj/window/reinforced{
+	tag = "icon-rwindow (WEST)";
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hop)
 "xTf" = (
 /obj/machinery/conveyor/WE{
 	id = "cargo"
@@ -36723,7 +36723,7 @@ cqb
 cqb
 cqb
 cqb
-ain
+mrC
 cqb
 cqb
 cqb
@@ -57251,12 +57251,12 @@ bez
 cqb
 cqb
 cqb
-bgH
+gGn
 bhb
 bhb
 bhb
 bhb
-bgH
+gGn
 cqb
 cqb
 cqb
@@ -57477,13 +57477,13 @@ bez
 bez
 bZO
 bZO
-bgH
-bgH
-bhc
-bhr
-bhB
-bhN
-bhT
+gGn
+gGn
+vWg
+rlq
+wyM
+oLy
+caI
 bic
 bim
 biu
@@ -57704,13 +57704,13 @@ bfR
 bez
 cqb
 cqb
-bgH
-bgP
-vNr
-bhs
-bhC
-bhO
-bhU
+gGn
+vuf
+wdf
+taF
+uhe
+voa
+eEd
 bid
 bin
 biv
@@ -57931,13 +57931,13 @@ bfS
 bga
 cqb
 cqb
-bgH
-bgQ
-bhe
-bht
-bhD
-bhP
-bhU
+gGn
+rVY
+cTe
+iok
+qxm
+oSf
+eEd
 bie
 bio
 biw
@@ -58158,13 +58158,13 @@ bfT
 bga
 bgn
 bgn
-bgH
-bgH
-bhf
-bhu
-bhE
-bhQ
-bhU
+gGn
+gGn
+wtM
+idr
+sev
+fzY
+eEd
 bif
 bio
 bix
@@ -58386,12 +58386,12 @@ bgb
 bgo
 bgz
 bgI
-bgH
-bgH
-bgH
-bhF
-bgH
-bgH
+gGn
+gGn
+gGn
+cPM
+gGn
+gGn
 big
 bip
 big

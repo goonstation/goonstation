@@ -136,11 +136,8 @@
 
 	user.u_equip(src)
 	user.put_in_hand_or_drop(src.gift)
-	if(istype(src.gift, /obj/item/mousetrap))
-		var/obj/item/mousetrap/MT = src.gift
-		if(MT.armed)
-			modify_christmas_cheer(-4)
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
+	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
+		modify_christmas_cheer(-4)
 
 
 	modify_christmas_cheer(2)
@@ -315,6 +312,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/shoes/moon,
 	/obj/item/clothing/suit/armor/sneaking_suit/costume,
 	/obj/item/clothing/suit/hoodie,
+	/obj/item/clothing/suit/hoodie/large,
 	/obj/item/clothing/suit/robuddy,
 	/obj/item/clothing/suit/scarf,
 	/obj/item/clothing/under/gimmick/rainbow,

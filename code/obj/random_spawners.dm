@@ -1100,7 +1100,7 @@
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
 	/mob/living/critter/small_animal/mouse,
-	/obj/critter/opossum,
+	/mob/living/critter/small_animal/opossum,
 	/mob/living/critter/small_animal/dog,
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
@@ -1342,7 +1342,6 @@
 		/obj/item/clothing/under/gimmick/merchant,
 		/obj/item/clothing/under/gimmick/spiderman,
 		/obj/item/clothing/under/gimmick/birdman,
-		/obj/item/clothing/under/gimmick/dawson,
 		/obj/item/clothing/under/gimmick/chav,
 		/obj/item/clothing/under/gimmick/safari,
 		/obj/item/clothing/under/gimmick/utena,
@@ -1928,6 +1927,33 @@
 		min_amt2spawn = 5
 		max_amt2spawn = 7
 
+/obj/random_item_spawner/armoryweapon
+	name = "armory special weapon spawner"
+	icon_state = "rand_gun"
+	amt2spawn = 1
+
+	items2spawn = list(/obj/item/gun/energy/stasis,
+	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun_jr,
+	/obj/item/gun/energy/phaser_huge)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	bunch
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
 
@@ -2145,6 +2171,15 @@
 			pixel_y = 5
 		}(src.loc)
 
+/obj/random_item_spawner/armory_phasers
+	name = "armory phaser rack spawner"
+	icon_state = "armory_phaser"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/machinery/weapon_stand/phaser_rack,
+	/obj/machinery/weapon_stand/phaser_smg_rack
+	)
+
 /obj/random_item_spawner/fruits
 	name = "random fruit spawner"
 	icon_state = "rand_fruits"
@@ -2302,7 +2337,7 @@
 		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
 
 		// Exclude the non-natural ones
-		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		items2spawn -= list(/obj/item/clothing/head/flower/rose/holorose)
 		..()
 
 	one

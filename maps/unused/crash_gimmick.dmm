@@ -14965,23 +14965,6 @@
 	name_old = "steel floor"
 	},
 /area/russian/radiation)
-"bYR" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/brig,
-/obj/machinery/door/airlock/pyro/glass/brig{
-	name = "Brig"
-	},
-/obj/mapping_helper/access/brig,
-/turf/simulated/floor/black{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "dark";
-	icon_state = "damaged3";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "bYU" = (
 /obj/machinery/alarm{
 	pixel_y = 20
@@ -19456,7 +19439,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/cable{
@@ -32383,7 +32366,7 @@
 	},
 /area/russian/radiation)
 "dgG" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
@@ -33464,23 +33447,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_old = "fpurple2";
 	icon_state = "damaged4"
-	},
-/area/russian/radiation)
-"dkk" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	name = "Solitary"
-	},
-/obj/mapping_helper/access/brig,
-/turf/simulated/floor/black{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "dark";
-	icon_state = "damaged4";
-	name = "steel floor"
 	},
 /area/russian/radiation)
 "dkm" = (
@@ -51943,6 +51909,20 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"lGP" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "microbrig"
+	},
+/obj/mapping_helper/access/brig,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/red/checker{
+	burnt = 1;
+	desc = " It is made of steel.";
+	icon_old = "redchecker";
+	icon_state = "floorscorched1";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "lHi" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -55791,6 +55771,16 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"nzg" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/conveyor/SN{
+	name = "cargo belt - north";
+	operating = 1
+	},
+/obj/landmark/supply_delivery,
+/turf/space)
 "nzs" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/junction/middle/east,
@@ -65555,20 +65545,6 @@
 	name = "steel shuttle floor"
 	},
 /area/station/hallway/secondary/exit)
-"sfw" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
-	name = "microbrig"
-	},
-/obj/mapping_helper/access/brig,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/red/checker{
-	burnt = 1;
-	desc = " It is made of steel.";
-	icon_old = "redchecker";
-	icon_state = "floorscorched1";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "sfx" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -65882,6 +65858,23 @@
 	layer = 1.8;
 	name = "steel floor";
 	name_old = "steel floor"
+	},
+/area/russian/radiation)
+"slF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/brig,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Brig"
+	},
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "dark";
+	icon_state = "damaged3";
+	name = "steel floor"
 	},
 /area/russian/radiation)
 "slP" = (
@@ -67603,6 +67596,23 @@
 	icon_old = "plating";
 	icon_state = "platingdmg2";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"toM" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Solitary"
+	},
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "dark";
+	icon_state = "damaged4";
+	name = "steel floor"
 	},
 /area/russian/radiation)
 "toN" = (
@@ -69671,6 +69681,20 @@
 	name = "steel shuttle floor"
 	},
 /area/russian/radiation)
+"uqn" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Solitary"
+	},
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "uqv" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -70219,20 +70243,6 @@
 	desc = " It is made of steel.";
 	icon_state = "platingdmg3";
 	name = "steel plating"
-	},
-/area/russian/radiation)
-"uIZ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	name = "Solitary"
-	},
-/obj/mapping_helper/access/brig,
-/turf/simulated/floor/black{
-	desc = " It is made of steel.";
-	name = "steel floor"
 	},
 /area/russian/radiation)
 "uJD" = (
@@ -75868,16 +75878,6 @@
 	},
 /turf/space,
 /area/space)
-"xTK" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/conveyor/SN{
-	name = "cargo belt - north";
-	operating = 1
-	},
-/turf/space,
-/area/supply/delivery_point)
 "xUd" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -92125,7 +92125,7 @@ cIy
 xHj
 cQF
 cUH
-sfw
+lGP
 dfk
 dgZ
 diJ
@@ -120683,7 +120683,7 @@ xlT
 xrr
 xBw
 xIW
-xTK
+nzg
 ydD
 ydD
 xIW
@@ -145399,7 +145399,7 @@ ipo
 jdG
 jMO
 kHp
-bYR
+slF
 lYJ
 mLW
 nxL
@@ -146609,9 +146609,9 @@ lMf
 kIw
 lsL
 kIw
-dkk
+toM
 xnI
-uIZ
+uqn
 xwv
 wnr
 pQI

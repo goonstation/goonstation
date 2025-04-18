@@ -153,12 +153,12 @@ TYPEINFO(/obj/item/remote/porter)
 
 				if (machinery_loc == home_loc)
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
-					flick("[P.icon_state]-tele", P)
+					FLICK("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
 					logTheThing(LOG_STATION, user, "teleports [P] to [log_loc(our_loc)].")
 				else
 					P.set_loc(home_loc) // Send back to home location.
-					flick("[P.icon_state]-tele", P)
+					FLICK("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] sent to home turf.", "blue")
 					logTheThing(LOG_STATION, user, "teleports [P] to its home turf [log_loc(home_loc)].")
 
@@ -420,6 +420,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	Exited(atom/movable/Obj)
 		..()
 		if(Obj == src.occupant)
+			logTheThing(LOG_STATION, Obj, "exits [src.name] at [log_loc(src)].")
 			src.occupant = null
 			build_icon()
 			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
@@ -661,21 +662,20 @@ TYPEINFO(/obj/machinery/port_a_brig)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-								M.vomit(0, null, vomit_message)
+								M.nauseate(8,11)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
 
 					if(51 to 70) //A nice tan
-						for(var/mob/living/carbon/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(0.5 SIEVERTS)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
-						for(var/mob/living/carbon/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(1.25 SIEVERTS)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
-						for(var/mob/living/carbon/human/M in src.contents)
+						for(var/mob/living/M in src.contents)
 							M.take_radiation_dose(2 SIEVERTS)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol

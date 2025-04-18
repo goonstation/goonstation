@@ -41,6 +41,7 @@
 	var/symbol_setting = null
 	var/material_uses = 10
 	var/can_dip = TRUE // can we dip this in reagents to write with them?
+	var/obj/decal/cleanable/writing/default_cleanable = /obj/decal/cleanable/writing
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -123,7 +124,7 @@
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
-		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
+		var/obj/decal/cleanable/writing/G = make_cleanable(src.default_cleanable, T)
 		G.artist = user.key
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
@@ -234,6 +235,13 @@
 	desc = "The horrible, the unspeakable, the dreaded <span class='alert'><b>RED PEN!!</b></span>"
 	color = "red"
 	font_color = "red"
+
+/obj/item/pen/infrared
+	name = "infrared pen"
+	desc = "A pen that can write in infrared."
+	color = "#FFEE44" // color var owns
+	font_color = "#D20040"
+	default_cleanable = /obj/decal/cleanable/writing/infrared
 
 /obj/item/pen/pencil // god this is a dumb path
 	name = "pencil"
@@ -521,6 +529,13 @@
 			..()
 			src.setMaterial(getMaterial("gold"))
 
+	infrared
+		name = "infrared crayon"
+		desc = "A crayon that can write in infrared."
+		color = "#FFEE44" // color var owns
+		font_color = "#D20040"
+		default_cleanable = /obj/decal/cleanable/writing/infrared
+
 	random
 		var/picked_color
 
@@ -699,7 +714,7 @@
 		if(src.maptext_crayon)
 			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
 		else
-			G = make_cleanable(/obj/decal/cleanable/writing, T)
+			G = make_cleanable(src.default_cleanable, T)
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
@@ -835,51 +850,6 @@
 		qdel(src)
 		return 1
 
-/* =============== INFRARED PENS =============== */
-
-/obj/item/pen/infrared
-	desc = "A pen that can write in infrared."
-	name = "infrared pen"
-	color = "#FFEE44" // color var owns
-	font_color = "#D20040"
-
-	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
-			return
-		if(!user.literate)
-			boutput(user, SPAN_ALERT("You don't know how to write."))
-			return
-		src.in_use = 1
-		var/t = tgui_input_text(user, "What do you want to write?", "Write")
-		if (!t || BOUNDS_DIST(T, user) > 0)
-			src.in_use = 0
-			return
-		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
-		G.artist = user.key
-
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
-		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-		if (src.font_color)
-			G.color = src.font_color
-		if(apply_material_to_drawing(G, user))
-			;
-		/*if (src.uses_handwriting && user?.mind?.handwriting)
-			G.font = user.mind.handwriting
-			G.webfont = 1
-		*/
-		else if (src.font)
-			G.font = src.font
-			//if (src.webfont)
-				//G.webfont = 1
-		G.words = "[t]"
-		if (islist(params) && params["icon-y"] && params["icon-x"])
-			G.pixel_x = text2num(params["icon-x"]) - 16
-			G.pixel_y = text2num(params["icon-y"]) - 16
-		else
-			G.pixel_x = rand(-4,4)
-			G.pixel_y = rand(-4,4)
-		src.in_use = 0
-
 /* =============== HAND LABELERS =============== */
 
 /obj/item/hand_labeler
@@ -1007,7 +977,6 @@
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "clipboard"
-	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
 	throwforce = 1
@@ -1018,6 +987,8 @@
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/obj/item/pen/pen = null
+	var/max_items = 15
 	var/tmp/list/image/overlay_images = null
 
 	New()
@@ -1026,6 +997,12 @@
 		src.overlay_images = list()
 		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
 		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
+
+	disposing()
+		. = ..()
+		if(src.pen)
+			qdel(src.pen)
+			src.pen = null
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -1117,28 +1094,56 @@
 		else
 			return ..()
 
-	attackby(obj/item/P, mob/user)
+	attackby(obj/item/I, mob/user)
+		if (in_interact_range(I, user))
+			src.add_stuff(I, user)
 
-		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
-			if (length(src.contents) < 15)
-				user.drop_item()
-				P.set_loc(src)
-			else
-				boutput(user, SPAN_NOTICE("Not enough space!!!"))
-		else
-			if (istype(P, /obj/item/pen))
-				if (!src.pen)
-					user.drop_item()
-					P.set_loc(src)
-					src.pen = P
-			else
+	MouseDrop_T(atom/movable/O, mob/user)
+		if (!in_interact_range(src, user) || !in_interact_range(O, user) || !IN_RANGE(O, src, 1))
+			return
+		if (O == src)
+			SPAWN(0)
+				src.AttackSelf(user)
+			return
+		src.add_stuff(O, user)
+
+	proc/add_stuff(obj/item/I, mob/user)
+		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
 				return
+			user.drop_item()
+			I.set_loc(src)
+		else if (istype(I, /obj/item/pen))
+			if (src.pen)
+				boutput(user, SPAN_NOTICE("[src] already has a pen!"))
+				return
+			user.drop_item()
+			I.set_loc(src)
+			src.pen = I
+		else if (istype_exact(I, /obj/item/paper_bin))
+			var/obj/item/paper_bin/bin = I
+			if (length(src.contents) >= src.max_items)
+				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
+				return
+			while (length(src.contents) < max_items)
+				var/obj/item/paper = locate(/obj/item/paper) in bin
+				if (paper)
+					paper.set_loc(src)
+				else
+					if (bin.amount_left <= 0)
+						break
+					bin.amount_left--
+					new /obj/item/paper(src)
+			bin.update()
+		else
+			boutput(user, SPAN_NOTICE("You're not quite sure how to fit [I] into [src]."))
+			return
+		src.add_fingerprint(user)
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
 			src.AttackSelf(user)
-			return
-		return
 
 	proc/update()
 		if (locate(/obj/item/paper) in src)

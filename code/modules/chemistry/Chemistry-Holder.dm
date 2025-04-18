@@ -199,10 +199,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return R
 
 	proc/remove_any_except(var/amount=1, var/exception)
-		if(amount > total_volume) amount = total_volume
+		if (!(exception in src.reagent_list))
+			src.remove_any(amount)
+			return
+
+		var/datum/reagent/exception_reagent = reagent_list[exception]
+		var/effective_total_volume = total_volume - exception_reagent.volume
+		if(amount > effective_total_volume) amount = effective_total_volume
 		if(amount <= 0) return
 
-		var/remove_ratio = amount/total_volume
+		var/remove_ratio = amount/effective_total_volume
 
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)
@@ -345,16 +351,17 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
-						return 0
+						break
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
 					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
 					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
-					return 0
+					break
 
 		if (update_self_reagents)
 			src.update_total()
+			src.temperature_react()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
 			src.reagents_changed()
@@ -364,8 +371,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if (update_target_reagents)
 			target_reagents.update_total()
+			target_reagents.temperature_react()
 			target_reagents.handle_reactions()
-			target_reagents.reagents_changed()
+			target_reagents.reagents_changed(TRUE)
 
 		reagents_transferred()
 		return amount
