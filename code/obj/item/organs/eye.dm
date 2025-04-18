@@ -552,3 +552,16 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/glass
+	name = "glass eye"
+	organ_name = "glass eye"
+	desc = "Straight out of the sixteenth century. Surprisingly lifelike!"
+	icon_state = "eye-glass"
+	edible = FALSE
+	iris_state_override = "eye"
+	show_on_examine = TRUE
+	provides_sight = FALSE
+	created_decal = null
+	default_material = "glass"
+	blood_reagent = null

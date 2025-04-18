@@ -88,7 +88,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -280,7 +280,7 @@
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
-	firerate = 5 SECONDS
+	firerate = 10 SECONDS
 	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE
@@ -1225,6 +1225,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 /datum/projectile/laser/light/pod/burst
 	damage = 25
 	shot_delay = 0.2 SECONDS
+
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4

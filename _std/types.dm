@@ -207,6 +207,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_POSSIBLE_DEAD_DROP "dead_drops"
 #define TR_CAT_SINGULO_MAGNETS "singulo_magnets"
 #define TR_CAT_PORTABLE_MACHINERY "portable_machinery"
+#define TR_CAT_MANUFACTURER_LINK "manufacturer_link"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
