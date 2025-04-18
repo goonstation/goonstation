@@ -1021,6 +1021,15 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/devzone)
+"uF" = (
+/obj/machinery/computer/atmosphere/mixercontrol{
+	frequency = 1225;
+	id = "burn_mixer_control";
+	mixerid = "burn_mixer";
+	name = "Gas Mixer Control (Combustion Chamber)"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "uG" = (
 /obj/machinery/bot/firebot,
 /turf/simulated/floor,
@@ -4381,7 +4390,7 @@ Yx
 Yx
 ng
 Yx
-Yx
+uF
 Id
 Wg
 iP
