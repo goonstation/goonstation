@@ -312,7 +312,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	// unsecured grenade + beaker  -> unsecured grenade with beaker
 	src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass), PROC_REF(chem_grenade_filling), TRUE)
 	// unsecured grenade + wrench -> disassembling of the grenade
-	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE, new /datum/assembly_comp_helper/consumes_self)
 	src.tooltip_rebuild = 1
 
 /// chem grenade filling proc
@@ -357,7 +357,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	// completed grenade + screwdriver -> adjusting of the arming time
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 	// completed grenade + wrench -> disassembling of the grenade
-	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE, new /datum/assembly_comp_helper/consumes_self)
 	logTheThing(LOG_CHEMISTRY, user, "Assembles a custom chemical grenade (beaker 1: [beakers[1]]; beaker 2: [beakers[2]])")
 	return TRUE
 
