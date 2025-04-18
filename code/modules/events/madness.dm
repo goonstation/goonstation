@@ -40,6 +40,16 @@
 		sleep(rand(10, 20) SECONDS)
 
 		src.sound_event()
+
+		if (prob(80)) //sometimes all the paranoia was for nothing...
+			src.cause_madness()
+
+		var/start_time = TIME
+		while (TIME - start_time < 4 MINUTES)
+			sleep(rand(20, 60) SECONDS)
+			src.sound_event()
+
+	proc/cause_madness()
 		var/list/potential_victims = list()
 		for (var/mob/living/carbon/human/H in global.mobs)
 			if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && H.client.preferences.be_misc && isalive(H)) //using "misc" prefs for now
@@ -56,11 +66,6 @@
 			var/mob/living/carbon/human/victim = pick(potential_victims)
 			victim.mind.add_antagonist(ROLE_BROKEN)
 			potential_victims -= victim
-
-		var/start_time = TIME
-		while (TIME - start_time < 4 MINUTES)
-			sleep(rand(20, 60) SECONDS)
-			src.sound_event()
 
 	proc/shake_event()
 		for (var/mob/M in mobs)
