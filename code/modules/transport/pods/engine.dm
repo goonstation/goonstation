@@ -38,7 +38,8 @@
 	deactivate()
 		..()
 		ship.powercapacity = 0
-		src.ship.speedmod /= src.engine_speed
+		if (src.active)
+			src.ship.speedmod /= src.engine_speed
 		for(var/obj/item/shipcomponent/S in ship.components)
 			if(S.active)
 				S.deactivate()

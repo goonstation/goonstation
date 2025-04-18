@@ -60,8 +60,8 @@
 
 /obj/effects/explosion/New()
 	..()
-	SPAWN(3 SECONDS)
-		dispose()
+	SPAWN(3.2 SECONDS) //the explosion animation is 31.8 ticks long for some reason
+		qdel(src)
 	return
 
 /datum/effects/system/explosion

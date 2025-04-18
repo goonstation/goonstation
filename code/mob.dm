@@ -1484,18 +1484,25 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
-		if (!new_rights || new_rights == src.mind.miranda)
-			src.show_text("Miranda rights not changed.", "red")
-			return
+		var/choice = tgui_alert(usr, "Edit Miranda's rights?", "Miranda Rights", list("Edit", "Reset", "Cancel"))
+		switch(choice)
+			if("Edit")
+				var/new_rights = tgui_input_text(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA)
+				if (!new_rights || new_rights == src.mind.miranda)
+					src.show_text("Miranda rights not changed.", "red")
+					return
 
-		new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
-		new_rights = sanitize(strip_html(new_rights))
+				new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
+				new_rights = sanitize(strip_html(new_rights))
 
-		src.mind.set_miranda(new_rights)
+				src.mind.set_miranda(new_rights)
 
-		logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
-		src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+				logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
+				src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+			if("Reset")
+				src.mind.set_miranda(null)
+				logTheThing(LOG_TELEPATHY, src, "has reset their miranda rights.")
+				src.show_text("Miranda rights reset.", "blue")
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -2546,6 +2553,22 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
+	src.update_body()
+
+/// Attempt to bring a mob just out of crit without immediately dropping back into crit
+/mob/proc/stabilize()
+	SHOULD_CALL_PARENT(TRUE)
+	src.losebreath = min(src.losebreath, 2)
+	src.delStatus("burning")
+	src.delStatus("radiation")
+	src.take_radiation_dose(-INFINITY)
+	src.change_eye_blurry(-INFINITY)
+	src.take_eye_damage(-INFINITY)
+	src.take_eye_damage(-INFINITY, 1)
+	src.take_ear_damage(-INFINITY)
+	src.take_ear_damage(-INFINITY, 1)
+	src.take_brain_damage(-(max(src.get_brain_damage()-10, 0))) // leave them with up to 10 brain damage
+	src.health = max(src.health, 10)
 	src.update_body()
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)

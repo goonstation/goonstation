@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/camera/large)
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
-	desc = "A reusable instant-print camera."
+	desc = "The Asteroid 120, a popular reusable instant-print camera."
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
@@ -30,7 +30,7 @@ TYPEINFO(/obj/item/camera/large)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
+	var/pictures_left = 12 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
@@ -41,13 +41,15 @@ TYPEINFO(/obj/item/camera/large)
 		src.setItemSpecial(null)
 
 	large
-		name = "telephoto camera"
-		desc = "A long-range surveillance and observation camera with self-printing instant film."
-		pictures_left = 30
+		name = "camera deluxe"
+		desc = "The Asteroid 220 Pro, a surveillance and forensics camera with a superzoom lens and self-printing instant film."
+		icon_state = "camera_zoom"
+		rarity = 3
+		pictures_left = 24
 
 		New()
 			..()
-			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/machines/mixer.ogg')
+			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/telephoto, 'sound/machines/pod_switch.ogg')
 
 
 	examine()
@@ -183,17 +185,17 @@ TYPEINFO(/obj/item/camera_film/large)
 
 /obj/item/camera_film
 	name = "film cartridge"
-	desc = "A replacement film cartridge for an instant camera."
+	desc = "A replacement film cartridge for an instant camera. Produces a six by six centimeter image."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "camera_film"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	var/pictures = 10
+	var/pictures = 12
 
 	large
 		name = "film cartridge (large)"
-		pictures = 30
+		pictures = 24
 
 	examine()
 		. = ..()

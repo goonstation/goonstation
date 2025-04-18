@@ -246,21 +246,8 @@
 					waiting--
 			else
 				if (waiting <= 0)
-					var/live = 0
 					var/pc = 0
-					for (var/obj/critter/C in gauntlet)
-						if (!C.alive)
-							showswirl(get_turf(C))
-							qdel(C)
-						else
-							live++
-					for (var/mob/living/critter/C in gauntlet)
-						if (isdead(C))
-							showswirl(get_turf(C))
-							qdel(C)
-						else
-							live++
-					if (!live)
+					if (length(src.critters_left) == 0)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
 						if (!isdead(M) && M.client)
@@ -1043,6 +1030,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
+				C.butcherable = FALSE
 				C.health *= health_multiplier //for critters that don't user health holders
 				C.faction = list(FACTION_GUANTLET)
 				for(var/damage_key in C.healthlist) //for critters that do
@@ -1239,6 +1227,66 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = 5
 		count = 2
 		types = list(/mob/living/critter/plant/maneater)
+
+	feral_hog
+		name = "Feral Hog"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/small_animal/pig/feral_hog)
+
+	trench
+		name = "The Trench"
+		point_cost = 8
+		count = 12
+		types = list(/mob/living/critter/small_animal/trilobite, /mob/living/critter/small_animal/hallucigenia, /mob/living/critter/small_animal/pikaia)
+
+	trilobite
+		name = "Trilobite"
+		point_cost = 3
+		count = 2
+		types = list(/mob/living/critter/small_animal/trilobite)
+
+	hallucigenia
+		name = "Hallucigenia"
+		point_cost = 4
+		count = 2
+		types = list(/mob/living/critter/small_animal/hallucigenia)
+
+	pikaia
+		name = "Pikaia"
+		point_cost = 3
+		count = 2
+		types = list(/mob/living/critter/small_animal/pikaia)
+
+	sawfly
+		name = "Sawfly"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/robotic/sawfly/ai_controlled)
+
+	snake
+		name = "Snake"
+		point_cost = 2
+		count = 4
+		types = list(/mob/living/critter/small_animal/snake)
+
+	scorpion
+		name = "Scorpion"
+		point_cost = 9
+		count = 2
+		types = list(/mob/living/critter/small_animal/scorpion)
+
+	wasp
+		name = "Wasp"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/small_animal/wasp)
+
+	rattlesnake
+		name = "Rattlesnake"
+		point_cost = 7
+		count = 2
+		types = list(/mob/living/critter/small_animal/rattlesnake)
 
 	fallback
 		name = "Floating Eyes"
