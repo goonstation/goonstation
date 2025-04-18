@@ -1,5 +1,9 @@
 
 (t)fri apr 18 25
+(u)JORJ949
+(p)22940
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)Armory weapons racks now require armory access unless hacked or authorised.
 (u)Lord_Earthfire
 (p)23035
 (e)🎨🔄📦|C-Sprites, C-Rework, A-Game-Objects
