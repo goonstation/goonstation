@@ -319,6 +319,7 @@ proc/get_icon_states(icon)
 		src.material.triggerDrop(user, src)
 	return
 
+
 /// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
 	var/ot = 1 - t
