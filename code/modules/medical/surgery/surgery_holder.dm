@@ -21,21 +21,28 @@
 		add_surgeries()
 		populate_child_surgeries()
 
-	proc/will_perform_surgery(var/mob/living/user, var/obj/item/tool)
-		if (get_shortcut(user,tool))
+	/// Returns TRUE if the surgery holder will perform a surgery with the given tools.
+	proc/will_perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
+		if (get_shortcut(surgeon,tool))
 			return TRUE
-		if (tool_relevant(user,tool))
+		if (tool_relevant(surgeon,tool) && length(get_contexts(surgeon, tool)) > 0)
 			return TRUE
 		return FALSE
 
-	proc/perform_surgery(var/mob/living/user, var/obj/item/tool)
-		if (do_shortcut(user,tool))
-			tool.add_fingerprint(user)
+	/// Attempt to perform surgery with the given tool. Returns TRUE if the surgery was performed.
+	proc/perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
+		if (do_shortcut(surgeon,tool))
+			tool.add_fingerprint(surgeon)
 			return TRUE
 
-		if (tool_relevant(user,tool) && start_surgery(user,tool))
-			tool.add_fingerprint(user)
-			return TRUE
+		if (tool_relevant(surgeon,tool))
+			tool.add_fingerprint(surgeon)
+			if (start_surgery(surgeon,tool))
+				return TRUE
+			else
+				if (surgery_conditions_met(surgeon, tool))
+					generic_mess_up(surgeon, tool)
+					return TRUE
 		return FALSE
 
 	/// Naively populate all surgeries under this holder. For indexing surgeries.
@@ -85,6 +92,8 @@
 
 	/// Returns TRUE if the given tool is relevant to any possible surgery.
 	proc/tool_relevant(mob/user, obj/item/tool)
+		if (!tool)
+			return FALSE
 		if (tool.tool_flags & relevant_flags)
 			return TRUE
 		return FALSE
@@ -152,7 +161,47 @@
 		else
 			//go back to the start if we've no more supersurgeries
 			src.start_surgery(surgeon, I)
+	/// Called when a surgery is reasonably expected to be performed. for missteps.
+	proc/surgery_conditions_met(mob/surgeon, obj/item/tool)
+		if (!ishuman(patient)) // is the patient not a human?
+			return FALSE
+		// is the patient on an optable and lying?
+		if (locate(/obj/machinery/optable, patient.loc))
+			if(patient.lying || patient == surgeon)
+				return TRUE
+		// is the patient on a table and paralyzed or dead?
+		else if ((locate(/obj/stool/bed, patient.loc) || locate(/obj/table, patient.loc)) && (patient.getStatusDuration("unconscious") || patient.stat))
+			return TRUE
+		// is the patient really drunk and also the surgeon?
+		else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying)))
+			return TRUE
+		return FALSE
+	/// Called when a relevant tool is used, but is not part of any surgeries.
+	proc/generic_mess_up(var/mob/living/surgeon, var/obj/item/tool)
+		var/target_area = zone_sel2name[surgeon.zone_sel.selecting]
+		var/damage = rand(20,30)
+		if (prob(33)) // if they REALLY fuck up
+			var/fluff = pick("", "confident ", "quick ", "agile ", "flamboyant ", "nimble ")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
+				SPAN_ALERT("You make a [fluff]cut into [patient]'s [target_area] with [tool]!"),\
+				SPAN_ALERT("<b>[surgeon]</b> makes a [fluff]cut into your [target_area] with [tool]!"))
 
+			patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
+			take_bleeding_damage(patient, surgeon, damage, surgery_bleed = TRUE)
+			create_blood_sploosh(patient)
+			display_slipup_image(surgeon, patient.loc)
+
+			patient.visible_message(SPAN_ALERT("<b>Blood gushes from the incision!</b> That can't have been the correct thing to do!"))
+			return
+
+		else
+			var/fluff = pick("", "gently ", "carefully ", "lightly ", "trepidly ")
+			var/fluff2 = pick("prod", "poke", "jab", "dig")
+			var/fluff3 = pick("", " [he_or_she(surgeon)] looks [pick("confused", "unsure", "uncertain")][pick("", " about what [he_or_she(surgeon)]'s doing")].")
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> [fluff][fluff2]s at [patient]'s [target_area] with [tool].[fluff3]"),\
+				SPAN_ALERT("You [fluff][fluff2] at [patient]'s [target_area] with [tool]."),\
+				SPAN_ALERT("<b>[surgeon]</b> [fluff][fluff2]s at your [target_area] with [tool].[fluff3]"))
+			return
 	/// Setup top-level surgeries. If you want to add more after this is created, you'll need a new proc that updates all_surgeries.
 	proc/add_surgeries()
 

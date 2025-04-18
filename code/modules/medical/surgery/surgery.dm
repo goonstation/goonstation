@@ -385,10 +385,10 @@
 		for(var/type in tools_required)
 			if (istype(tool,type))
 				return TRUE
-	proc/get_mess_up_text(damage)
-		var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut")
-		var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
-		if (damage > 10)
+	proc/get_mess_up_text(damage, obj/item/tool)
+		var/fluff = pick(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut")
+		var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
+		if (damage > 15)
 			return fluff2
 		else
 			return fluff
@@ -556,6 +556,7 @@
 		if (surgeon.a_intent == INTENT_DISARM)
 			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
 			on_mess_up(surgeon,tool, forced=TRUE)
+			return FALSE
 		else if (prob(mess_up_odds))
 			on_mess_up(surgeon,tool)
 			return FALSE
@@ -571,7 +572,7 @@
 		var/damage_value = failure_damage + rand(-failure_variance, failure_variance)
 		if (forced && failure_damage < 25)
 			damage_value = failure_damage + rand(-failure_variance, failure_variance)
-		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value)]!</b>"))
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value,tool)]!</b>"))
 		parent_surgery.patient.TakeDamage(parent_surgery.affected_zone, damage_value, 0)
 		take_bleeding_damage(parent_surgery.patient, surgeon, damage_value, surgery_bleed = TRUE)
 		create_blood_sploosh(parent_surgery.patient)

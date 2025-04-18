@@ -711,29 +711,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	var/in_use = 0
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	// 	if (is_special)
-	// 		return ..()
-	// 	if (!suture_surgery(target,user))
-	// 		if (ishuman(target))
-	// 			var/mob/living/carbon/human/H = target
-	// 			var/zone = user.zone_sel.selecting
-	// 			var/surgery_status = H.surgeryHolder.get_active_surgeries(zone)
-	// 			if (surgery_status && H.organHolder)
-	// 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), Vrb = "sutur"), user)
-	// 				src.in_use = 1
-	// 			else if (H.bleeding)
-	// 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, Vrb = "sutur"), user)
-	// 				src.in_use = 1
-	// 			else
-	// 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
-	// 				H.organHolder.chest.op_stage = 0
-	// 				H.organHolder.close_surgery_regions()
-	// 				src.in_use = 0
-	// 				return
-	// 	else
-	// 		return
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

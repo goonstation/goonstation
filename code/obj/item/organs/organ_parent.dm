@@ -393,7 +393,6 @@
 			return 0
 
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
 		src.removal_stage = 0
 
 		var/full_organ_name = src.organ_holder_name

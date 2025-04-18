@@ -33,7 +33,6 @@
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE
-		var/mob/living/carbon/human/C = patient
 		if (surgeon.zone_sel.selecting != limb_var_name)
 			return FALSE
 		return TRUE

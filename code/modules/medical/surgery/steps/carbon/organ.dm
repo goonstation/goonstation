@@ -232,7 +232,6 @@
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> inserts [tool] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!"),\
 					SPAN_ALERT("You insert [tool] into [surgeon == patient ? "your" : "[patient]'s"] [target_side] eye socket!"), \
 					SPAN_ALERT("[patient == surgeon ? "You insert" : "<b>[surgeon]</b> inserts"] [tool] into your [target_side] eye socket!"))
-				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
 
 		cut
 			name = "Cut"
@@ -245,7 +244,6 @@
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [tool]!"),\
 					SPAN_ALERT("You cut away the flesh holding [surgeon == patient ? "your" : "[patient]'s"] right eye in with [tool]!"), \
 					SPAN_ALERT("[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] away the flesh holding your right eye in with [tool]!"))
-				var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
 
 		scoop
 			name = "Scoop"

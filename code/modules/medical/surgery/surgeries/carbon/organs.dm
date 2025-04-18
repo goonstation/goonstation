@@ -3,6 +3,7 @@
 	name = "Torso Surgery"
 	desc = "Modify the patients' torso and organs."
 	icon_state = "torso"
+	implicit = TRUE
 	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp)
 	generate_surgery_steps(mob/living/surgeon, mob/living/surgeon)
 		add_next_step(new /datum/surgery_step/chest/cut(src))
