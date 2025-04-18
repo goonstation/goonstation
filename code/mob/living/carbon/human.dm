@@ -3005,6 +3005,15 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+			else if (istype(A, /obj/item/assembly))
+				var/obj/item/assembly/dropped_assembly = A
+				if(!dropped_assembly.secured)
+					// You're not evading death that easily, clown
+					dropped_assembly.secured = TRUE
+					dropped_assembly.add_fingerprint(src)
+					dropped_assembly.UpdateIcon()
+					dropped_assembly.last_armer = src
+				dropped_assembly.AttackSelf(src)
 		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
