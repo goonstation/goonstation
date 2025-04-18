@@ -2292,7 +2292,7 @@ TYPEINFO(/obj/item/cargotele)
 			var/obj/item/I = cargo
 			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
-		// Find a cargo pad(s) with the target name.
+		// Find cargo pad(s) with the target name.
 		var/list/obj/submachine/cargopad/target_list = new()
 		for(var/obj/submachine/cargopad/pad in global.cargo_pad_manager.pads)
 			if(pad.tele_name == target_name)
@@ -2304,19 +2304,20 @@ TYPEINFO(/obj/item/cargotele)
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
-		var/mob_teled = FALSE
-		for (var/mob/M in cargo.contents)
-			if (M)
-				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target_name)].")
-				mob_teled = TRUE
-		if(!mob_teled)
-			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target_name)].")
 
 		// Move the cargo.
 		if(length(target_list) <= 1)
 			var/obj/submachine/cargopad/main_target = pick(target_list)
 			cargo.set_loc(get_turf(main_target))
 			main_target.receive_cargo()
+			var/mob_teled = FALSE
+			for (var/mob/M in cargo.contents)
+				if(!M)
+					continue
+				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target_name)].")
+				mob_teled = TRUE
+			if(!mob_teled)
+				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target_name)].")
 		else
 			// Star Trek transporter accident
 			if(istype(cargo, /obj/storage))
@@ -2329,6 +2330,7 @@ TYPEINFO(/obj/item/cargotele)
 				ThrowRandom(cargo, dist = rand(1,3))
 				main_target.receive_cargo()
 
+		// Transport finished
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2340,6 +2342,7 @@ TYPEINFO(/obj/item/cargotele)
 			else
 				boutput(user, SPAN_NOTICE("Transfer successful."))
 
+	// Crate's contents thrown out from a transport accident
 	proc/mishap_crate(var/obj/storage/S, var/list/obj/submachine/cargopad/target_list)
 		// Crate might not have been opened yet
 		if(S.spawn_contents && S.make_my_stuff())
@@ -2362,6 +2365,7 @@ TYPEINFO(/obj/item/cargotele)
 		S.open()
 		ThrowRandom(S, dist = rand(1,3))
 
+	// Similar, but for storage items
 	proc/mishap_item_storage(var/obj/item/S, var/list/obj/submachine/cargopad/target_list)
 		var/obj/submachine/cargopad/main_pad = pick(target_list)
 		for(var/atom/movable/AM in S.contents)
@@ -2370,6 +2374,7 @@ TYPEINFO(/obj/item/cargotele)
 				AM.set_loc(get_turf(tele_pad))
 				ThrowRandom(AM, dist = rand(0,5))
 
+	// Transport accident where mobs can lose items and organs
 	proc/mishap_mob(var/mob/M, var/list/obj/submachine/cargopad/target_list)
 		if(isnull(M))
 			return
@@ -2390,28 +2395,22 @@ TYPEINFO(/obj/item/cargotele)
 		var/mob/living/L = M
 		if(!L.organHolder)
 			return
-		var/list/o_list = non_vital_organ_strings + list("tail", "butt", "left_eye", "right_eye")
+		var/list/organ_list = non_vital_organ_strings + list("tail", "butt", "left_eye", "right_eye")
 		var/splat_chance = (1 - (0.85 ** length(target_list))) * 100
-		for(var/organ_str in o_list)
+		for(var/organ_str in organ_list)
 			if(prob(splat_chance))
 				L.organHolder.drop_and_throw_organ(organ_str, get_turf(pick(target_list)), alldirs, rand(0,3))
-		if(prob(2))
-			L.organHolder.drop_and_throw_organ("heart", get_turf(pick(target_list)), alldirs, rand(0,3))
-		if(prob(2))
-			if(prob(60))
-				L.organHolder.drop_and_throw_organ("skull", get_turf(pick(target_list)), alldirs, rand(0,3))
-				L.organHolder.drop_and_throw_organ("brain", get_turf(pick(target_list)), alldirs, rand(0,3))
-			L.organHolder.drop_and_throw_organ("head", get_turf(pick(target_list)), alldirs, rand(0,3))
 		// Chance to lose limbs
 		if(!ishuman(L))
 			return
 		var/mob/living/carbon/human/H = L
 		if(!H.limbs)
 			return
-		mishap_limb(H.limbs.r_arm, pick(target_list), drop_chance)
-		mishap_limb(H.limbs.l_arm, pick(target_list), drop_chance)
-		mishap_limb(H.limbs.r_leg, pick(target_list), drop_chance)
-		mishap_limb(H.limbs.l_leg, pick(target_list), drop_chance)
+		var/delimb_chance = (1 - (0.6 ** length(target_list))) * 100
+		mishap_limb(H.limbs.r_arm, pick(target_list), delimb_chance)
+		mishap_limb(H.limbs.l_arm, pick(target_list), delimb_chance)
+		mishap_limb(H.limbs.r_leg, pick(target_list), delimb_chance)
+		mishap_limb(H.limbs.l_leg, pick(target_list), delimb_chance)
 
 	proc/mishap_limb(var/obj/item/parts/limb, var/obj/submachine/cargopad/tele_pad, var/chance)
 		if(limb && prob(chance))
