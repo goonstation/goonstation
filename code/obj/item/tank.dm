@@ -453,6 +453,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 // ==== JETPACKS ====
 
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	w_class = W_CLASS_BULKY
@@ -558,6 +560,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
