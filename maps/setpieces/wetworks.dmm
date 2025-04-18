@@ -3834,6 +3834,7 @@
 	})
 "AG" = (
 /obj/machinery/weapon_stand/phaser_rack,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red/redblackchecker,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
@@ -7173,6 +7174,7 @@
 	})
 "XT" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/twotone/black,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
