@@ -727,7 +727,7 @@ Contains:
 /obj/item/assembly/timer_ignite_pipebomb
 	secured = TRUE
 	var/pipebomb_path = /obj/item/pipebomb/bomb
-	var/bomb_strenght = null
+	var/bomb_strength = null
 
 /obj/item/assembly/timer_ignite_pipebomb/New()
 	..()
@@ -735,15 +735,15 @@ Contains:
 	new_trigger.time = 3 SECONDS //have a time already set up and don't blow up unsuspecting users on use
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/pipebomb/bomb/new_target = new src.pipebomb_path(src)
-	if(src.bomb_strenght)
-		new_target.strength = src.bomb_strenght
+	if(src.bomb_strength)
+		new_target.strength = src.bomb_strength
 	src.set_up_new(null, new_trigger, new_applier, new_target)
 
 /obj/item/assembly/timer_ignite_pipebomb/engineering
 	pipebomb_path = /obj/item/pipebomb/bomb/engineering
 
 /obj/item/assembly/timer_ignite_pipebomb/syndicate
-	bomb_strenght = 32
+	bomb_strength = 32
 
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
