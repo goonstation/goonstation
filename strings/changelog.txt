@@ -1,5 +1,15 @@
 
 (t)fri apr 18 25
+(u)JORJ949
+(p)22940
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)Armory weapons racks now require armory access unless hacked or authorised.
+(u)Lord_Earthfire
+(p)23035
+(e)🎨🔄📦|C-Sprites, C-Rework, A-Game-Objects
+(*)Removes non-assembly pipebombs from the game. Every type of pipebomb (mini-syndicates, controlled demolition pipes) spawn as timer/igniter/pipebomb-assemblies now.
+(+)Mini syndicate pipebombs and controlled demolition pipes now have been given cabled pipebomb forms that can be gained from disassembling their corresponding assemblies, ready to be used in other assemblies.
+(+)Applying cables during the pipebomb crafting process now consumes 3 pieces of the cable coil
 (u)Lord_Earthfire
 (p)23036
 (e)🆕📦|C-Feature, A-Game-Objects
