@@ -1424,6 +1424,11 @@ TYPEINFO(/obj/machinery/emitter)
 		boutput(user, SPAN_ALERT("\The [src] shorts out its remote connectivity controls!"))
 		src.emagged = TRUE
 
+/obj/machinery/emitter/demag(mob/user)
+	. = ..()
+	if (src.emagged)
+		src.emagged = FALSE
+
 /obj/machinery/emitter/assault
 	name = "prototype assault emitter"
 	desc = "Shoots a VERY high power laser when active. The ID lock appears to have been messily smashed off."
