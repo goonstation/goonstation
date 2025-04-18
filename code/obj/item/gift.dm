@@ -136,7 +136,7 @@
 
 	user.u_equip(src)
 	user.put_in_hand_or_drop(src.gift)
-	if (SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
+	if ((!src.material_property_below_equal_value("hard", 1)) && SEND_SIGNAL(src.gift, COMSIG_ITEM_STORAGE_INTERACTION, user))
 		modify_christmas_cheer(-4)
 
 

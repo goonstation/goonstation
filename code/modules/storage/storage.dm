@@ -254,13 +254,8 @@
 		for (var/obj/item/I as anything in src.get_contents())
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
-			if(SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
+			if((!src.linked_item.material_property_below_equal_value("hard", 1)) && SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
 				I.visible_message(SPAN_ALERT("[I] triggers as it falls on the ground!"))
-			else if (istype(I, /obj/item/mine))
-				var/obj/item/mine/M = I
-				if (M.armed && M.used_up != TRUE)
-					M.visible_message(SPAN_ALERT("[M] triggers as it falls on the ground!"))
-					M.triggered(user)
 
 /// using storage item in hand
 /datum/storage/proc/storage_item_attack_self(mob/user)
@@ -303,6 +298,9 @@
 /// when reaching inside the storage item, check for traps
 /datum/storage/proc/mousetrap_check(mob/user)
 	if (!ishuman(user) || is_incapacitated(user))
+		return FALSE
+	if(src.linked_item.material_property_below_equal_value("hard", 1))
+		//too soft to trigger mousetrap bombs :)
 		return FALSE
 	for (var/obj/item/checked_item in src.get_contents())
 		if (SEND_SIGNAL(checked_item, COMSIG_ITEM_STORAGE_INTERACTION, user))

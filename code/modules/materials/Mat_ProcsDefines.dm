@@ -319,6 +319,15 @@ proc/get_icon_states(icon)
 		src.material.triggerDrop(user, src)
 	return
 
+/// Matsci helper procs to check for properties
+/// Because runtimes exist if no material is given
+/atom/proc/material_property_below_equal_value(var/property_string, var/value_to_check)
+	if (src.material)
+		return src.material.getProperty(property_string) <= value_to_check
+
+/atom/proc/material_property_above_equal_value(var/property_string, var/value_to_check)
+	if (src.material)
+		return src.material.getProperty(property_string) >= value_to_check
 
 /// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
