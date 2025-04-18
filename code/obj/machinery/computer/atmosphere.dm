@@ -28,7 +28,7 @@ Mixer Control
 	var/mixer_information
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	circuit_type = /obj/item/circuitboard/air_management
+	//circuit_type = /obj/item/circuitboard/air_management <This board didn't even lead here what the fuck
 	var/last_change = 0
 	var/message_delay = 600
 
