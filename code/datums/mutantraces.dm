@@ -2412,8 +2412,6 @@ TYPEINFO(/datum/mutantrace/pug)
 			var/mob/living/L = A
 			if (L.mind?.color)
 				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
-			else
-				sleuth_text = SPAN_NOTICE("<li>Strangely, [L] \himself appears to be oderless.</li>")
 		if(A.forensic_holder)
 			var/datum/forensic_group/basic_list/sleuth/sl_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
 			if(istype(sl_group))

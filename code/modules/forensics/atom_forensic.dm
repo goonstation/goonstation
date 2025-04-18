@@ -157,7 +157,6 @@
 		return
 	if (src.flags & NOFPRINT)
 		return
-	src.forensic_holder?.remove_evidence(FORENSIC_REMOVAL_CLEAN)
 
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.

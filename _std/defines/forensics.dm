@@ -1,12 +1,13 @@
 
-#define FORENSIC_GROUP_NONE 0 // You are a bug
+#define FORENSIC_GROUP_NONE 0 // Should only be used by bugs
 #define FORENSIC_GROUP_NOTE 1 // Basically a misc section
 #define FORENSIC_GROUP_SLEUTH 2 // Pug sleuthing smells
 
-/proc/forensic_group_create(category) // Create a new group from its unique variable. Is there a better way to do this? IDK
+// Each group has a unique variable. Use that to create a new group.
+// Placed here together with the FORENSIC_GROUP variable defines
+/proc/forensic_group_create(category)
 	var/datum/forensic_group/G
 	switch(category)
-		if(FORENSIC_GROUP_NOTE) G = new/datum/forensic_group/notes
 		if(FORENSIC_GROUP_SLEUTH) G = new/datum/forensic_group/basic_list/sleuth
 	if(!G)
 		CRASH("Forensic group category [category] not found.")
@@ -23,7 +24,6 @@
 #define FORENSIC_REMOVAL_BURN (1 << 7)
 #define FORENSIC_REMOVAL_TOXIN (1 << 8)
 #define FORENSIC_REMOVAL_OXYGEN (1 << 9)
-
 #define FORENSIC_REMOVAL_HEAL (FORENSIC_REMOVAL_BRUTE | FORENSIC_REMOVAL_BURN | FORENSIC_REMOVAL_TOXIN | FORENSIC_REMOVAL_OXYGEN)
 #define FORENSIC_REMOVAL_ALL (FORENSIC_REMOVAL_CLEAN | FORENSIC_REMOVAL_DATA | FORENSIC_REMOVAL_REPAIR | FORENSIC_REMOVAL_HEAL)
 
@@ -34,15 +34,3 @@
 #define FORENSIC_VALUE_MULT 3
 #define FORENSIC_VALUE_MAX 4
 #define FORENSIC_VALUE_MIN 5
-
-#define FORENSIC_HEADER_NOTES "Notes"
-
-// Character lists that can be used for building evidence IDs
-#define CHAR_LIST_UPPER list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-#define CHAR_LIST_LOWER list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-#define CHAR_LIST_NUM list("0","1","2","3","4","5","6","7","8","9")
-#define CHAR_LIST_SYMBOLS list("#","_","%","&","+","=","-","*","~")
-#define CHAR_LIST_HEX list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
-// Remove letters that can be confused with numbers at a glance
-#define CHAR_LIST_UPPER_LIMIT (CHAR_LIST_UPPER - list("D","I","O","Q"))
-#define CHAR_LIST_LOWER_LIMIT (CHAR_LIST_LOWER - list("i","j","l","o"))

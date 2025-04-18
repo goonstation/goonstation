@@ -14,7 +14,8 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 	return new_id
 
 // -----| Forensic ID |-----
-/datum/forensic_id // A piece of forensic evidence to be passed around and referenced
+// A piece of forensic evidence to be passed around and referenced
+/datum/forensic_id
 	var/id = null // Read only!
 
 	New(var/id_text = "")
@@ -23,18 +24,10 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 			registered_id_list[id_text] = src
 		..()
 
-// -----| ID Building Procs |-----
-
-// Create a random string using the given characters
-/proc/build_id(var/length, var/list/char_list = CHAR_LIST_NUM, var/prefix = "", var/suffix = "")
-	var/list/new_id_list = new()
-	for(var/i=1, i<= length, i++)
-		new_id_list += pick(char_list)
-	return prefix + list2text(new_id_list) + suffix
-
 // -----| Forensic Display |-----
 
-datum/forensic_display // Store how the forensic text should be displayed... by reference! Might be unnecessary.
+// Store how the forensic text should be displayed... by reference! Might be unnecessary.
+datum/forensic_display
 	var/display_text = null
 
 	New(var/id_text = null)
