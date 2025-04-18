@@ -5028,6 +5028,43 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		..()
 		src.hat.name = "Mabel's beret"
 
+/obj/machinery/computer/hug_console
+	name = "Hug Console"
+	desc = "A hug console? It has a small opening on the top."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "holo_console0"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/token/hug_token))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> inserts a [W] into the [src]."), SPAN_ALERT("You insert a [W] into the [src]."))
+			qdel(W)
+
+			for (var/obj/machinery/bot/guardbot/buddy in machine_registry[MACHINES_BOTS])
+				if (buddy.z != 1) continue
+				if (buddy.charge_dock)
+					buddy.charge_dock.eject_robot()
+				else if (buddy.idle)
+					buddy.wakeup()
+				buddy.add_task(/datum/computer/file/guardbot_task/recharge/dock_sync, 1, 0)
+				var/datum/computer/file/guardbot_task/security/single_use/tohug = new
+				tohug.hug_target = user
+				buddy.add_task(tohug, 1, 0)
+				buddy.navigate_to(get_turf(user))
+
+/obj/item/token/hug_token
+	name = "Hug Token"
+	desc = "A Hug Token. Just looking at it makes you feel better."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "coin"
+	item_state = "coin"
+	w_class = W_CLASS_TINY
+
+	attack_self(var/mob/user as mob)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
+		user.visible_message("<b>[user]</b> flips the token","You flip the token")
+		SPAWN(1 SECOND)
+		user.visible_message("It came up Hugs.")
+
 #undef GUARDBOT_DOCK_RESET_DELAY
 #undef GUARDBOT_LOWPOWER_ALERT_LEVEL
 #undef GUARDBOT_LOWPOWER_IDLE_LEVEL

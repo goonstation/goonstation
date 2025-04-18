@@ -137,6 +137,12 @@
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
+		artifact_research
+			name = "Artifact Database"
+			icon_state = "resart"
+			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
+			setup_drive_size = 48
+
 		engine
 			name = "Engine Control Console"
 			icon_state = "engine"
