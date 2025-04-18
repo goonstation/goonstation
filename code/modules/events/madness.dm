@@ -58,7 +58,7 @@
 			if (length(potential_victims) <= 10) //some concession for not making everything completely insane on lowpop
 				src.num_victims = rand(2, 3)
 			else
-				src.num_victims = rand(3, 6)
+				src.num_victims = rand(4, 8)
 		src.num_victims = min(src.num_victims, length(potential_victims))
 		//frick u static
 		/datum/antagonist/broken::shared_objective_text = null
