@@ -10,7 +10,7 @@
 	rarity_weight = 450
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold,/datum/artifact_trigger/credits)
 	activ_text = "begins to emit gas!"
 	deact_text = "stops emitting gas."
 	react_xray = list(10,85,80,5,"COMPLEX")

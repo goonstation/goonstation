@@ -16,7 +16,8 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
 	validtypes = list("ancient")
-	validtriggers = list(/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	validtriggers = list(/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
+	/datum/artifact_trigger/credits)
 	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins to emit an electric hum!"

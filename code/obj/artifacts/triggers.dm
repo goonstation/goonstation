@@ -3,12 +3,19 @@
 ABSTRACT_TYPE(/datum/artifact_trigger/)
 /datum/artifact_trigger
 	var/type_name = "bad artifact code"
+	/// Stimulus string used in `ArtifactStimulus`
 	var/stimulus_required = null
+	/// If TRUE, checks the stimulus for a specific unit amount
 	var/do_amount_check = 1
+	/// Value needed to activate the trigger
 	var/stimulus_amount = null
+	/// Comparison operator used to check against stimulus
 	var/stimulus_type = ">="
+	/// Range +- the stimulous amount where hints will be given
 	var/hint_range = 0
+	/// Probability a hint will be dispensed
 	var/hint_prob = 33
+	/// Whether this artifact trigger is in use
 	var/used = 1
 
 /datum/artifact_trigger/carbon_touch
@@ -155,3 +162,13 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 		if (correct_vowels > 0)
 			return " emits [correct_vowel_msg]."
 		return " emits [misplaced_vowel_msg]."
+
+/datum/artifact_trigger/credits
+	type_name = "Credits"
+	stimulus_required = "credits"
+	hint_range = 500
+
+	New()
+		. = ..()
+		src.stimulus_amount = 100 * rand(5,15)
+		src.stimulus_type = pick("<=", ">=")

@@ -7,7 +7,7 @@
 	type_name = "Drone"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language)
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/language, /datum/artifact_trigger/credits)
 	validtypes = list("ancient")
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "whirs to life!"
