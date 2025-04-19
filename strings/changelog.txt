@@ -1,4 +1,9 @@
 
+(t)sat apr 19 25
+(u)glowbold
+(p)22865
+(e)⛔📄🔨|C-Removal, A-UI, A-Player-Actions
+(+)Zoldorf cannot be possesed by the once-living.
 (t)fri apr 18 25
 (u)JORJ949
 (p)22940
