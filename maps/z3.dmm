@@ -11553,15 +11553,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/iss)
-"aYI" = (
-/obj/storage/crate/internals,
-/obj/item/cable_coil,
-/obj/item/circuitboard/solar_control,
-/obj/item/circuitboard/air_management,
-/obj/item/skull,
-/obj/item/clothing/under/gimmick/sweater,
-/turf/space,
-/area/space)
 "aYK" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -17666,6 +17657,14 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor,
 /area/h7/crew)
+"hit" = (
+/obj/storage/crate/internals,
+/obj/item/cable_coil,
+/obj/item/circuitboard/solar_control,
+/obj/item/skull,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/space,
+/area/space)
 "hiz" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -22559,18 +22558,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"sQW" = (
-/obj/storage/crate/internals,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/pocket/oxygen,
-/obj/item/tank/pocket/oxygen,
-/obj/machinery/light/small/cool{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/simulated/floor/longtile/black,
-/area/space)
 "sRO" = (
 /obj/map/light/yellowbright,
 /turf/unsimulated/floor/plating/scorched,
@@ -23732,6 +23719,18 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"vvv" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
 "vws" = (
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
@@ -53335,7 +53334,7 @@ bkA
 bkF
 bkN
 afR
-sQW
+vvv
 afR
 afR
 aab
@@ -95724,7 +95723,7 @@ aaa
 aax
 pPj
 aaa
-aYI
+hit
 aYY
 aLq
 aLq

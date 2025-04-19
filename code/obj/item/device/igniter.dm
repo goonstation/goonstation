@@ -44,24 +44,6 @@ TYPEINFO(/obj/item/device/igniter)
 		//if there is no target, we just heat the tile we are on
 		src.ignite()
 	else
-		if(istype(assembly_target, /obj/item/pipebomb/frame))
-			//fuck pipebomb-code
-			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
-			var/obj/item/pipebomb/frame/manipulated_pipebomb = assembly_target
-			var/obj/item/pipebomb/bomb/the_real_bomb = new /obj/item/pipebomb/bomb
-			the_real_bomb.master = parent_assembly
-			the_real_bomb.set_loc(src)
-			the_real_bomb.strength = manipulated_pipebomb.strength
-			if (manipulated_pipebomb.material)
-				the_real_bomb.setMaterial(manipulated_pipebomb.material)
-			//add properties from item mods to the finished pipe bomb
-			the_real_bomb.set_up_special_ingredients(manipulated_pipebomb.item_mods)
-			//And now after we build a real pipebomb inside of an assembly, lets set ot up properly blow it up!
-			qdel(manipulated_pipebomb)
-			parent_assembly.target = the_real_bomb
-			the_real_bomb.do_explode()
-			qdel(parent_assembly)
-			return
 		if(istype(assembly_target, /obj/item/pipebomb/bomb))
 			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
 			var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
@@ -83,7 +65,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
 	if(parent_assembly.applier == src)
 		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker -> trigger-igniter pipebomb/beakerbomb
-		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/frame, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
 	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
 		//were on the way to blow everything up, so lets lock in!
 		parent_assembly.special_construction_identifier = "canbomb"

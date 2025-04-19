@@ -811,13 +811,6 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))
