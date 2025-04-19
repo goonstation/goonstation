@@ -25,3 +25,6 @@
 
 /datum/antagonist/broken/remove_self(take_gear, source)
 	src.owner.current.delStatus("broken_madness") //hopefully this doesn't infinite loop? idk
+
+/datum/antagonist/broken/announce_removal(source)
+	src.owner.current.show_antag_popup("broken_removed")
