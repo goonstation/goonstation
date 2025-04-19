@@ -868,7 +868,7 @@
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
-	item_requirements = list("molitz" = 5)
+	item_requirements = list("crystal" = 5)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
