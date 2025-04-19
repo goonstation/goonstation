@@ -887,7 +887,7 @@
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
 			if (prob(O.event_chance) && length(O.events) > 0)
-				var/new_event = pick(O.events)
+				var/new_event = weighted_pick(O.events)
 				var/datum/ore/event/E = new new_event
 				E.set_up(O)
 				AST.set_event(E)
