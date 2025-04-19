@@ -8,7 +8,6 @@
 	desc = "Well, shit."
 	organ_holder_name = "head"
 	organ_holder_location = "head"
-	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
 	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
@@ -133,16 +132,17 @@
 				else
 					. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.")]"
 
-		if (!src.skull  && src.scalp_op_stage >= 3)
+		var/head_stage = holder.donor.surgeryHolder.get_surgery_progress("brain_surgery")
+		if (!src.skull  && head_stage >= 3)
 			. += "<br>[SPAN_ALERT("<B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B>")]"
 
-		if (!src.skull && src.scalp_op_stage >= 5)
+		if (!src.skull && head_stage >= 5)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its skull is gone!</B>")]"
-		else if (!src.brain && src.scalp_op_stage >= 4)
+		else if (!src.brain && head_stage >= 4)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its brain is gone!</B>")]"
-		else if (src.scalp_op_stage >= 3)
+		else if (head_stage >= 3)
 			. += "<br>[SPAN_ALERT("<B>[src.name]'s head has been cut open!</B>")]"
-		else if (src.scalp_op_stage > 0)
+		else if (head_stage > 0)
 			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on it!</B>")]"
 
 		if (!src.right_eye)
@@ -554,7 +554,7 @@
 			H.update_equipment_screen_loc()
 
 			SPAWN(rand(50,500))
-				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
+				if (H?.organHolder?.head == src && src.op_stage >= 3) // head has not been secured
 					H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
 					SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
 					H.organHolder.drop_organ("head") // :I
@@ -569,7 +569,6 @@
 			// rebuild, start with a human head
 			src.name = "head"
 			src.desc = "Well, shit."
-			src.scalp_op_stage = 0
 			src.head_type = mutant_race
 
 			// then set the head icon

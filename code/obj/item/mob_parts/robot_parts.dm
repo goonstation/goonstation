@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 				return
 		else ..()
-
+		/*
 	surgery(var/obj/item/tool)
 		var/mob/orig_holder = holder
 
@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 						orig_holder.emote("scream")
 				orig_holder.TakeDamage("chest",20,0)
 				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
-
+*/
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
 		src.dmg_burns += burnsdmg
@@ -552,9 +552,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(target,user))
-			return ..()
-
 		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
@@ -813,8 +810,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(target,user))
-			return ..()
+		// if (!surgeryCheck(target,user))
+		// 	return ..()
 
 		var/mob/living/carbon/human/H = target
 
