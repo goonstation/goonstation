@@ -505,6 +505,7 @@
 		F = new /obj/item/electronics/frame/flatpack(target_loc)
 	else
 		F = new(target_loc)
+	F.forensic_holder = src.forensic_holder // keep forensic evidence when deconstructed
 	F.name = "[src.name] frame"
 	if(src.deconstruct_flags & DECON_DESTRUCT)
 		F.store_type = src.type
