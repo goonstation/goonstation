@@ -2785,10 +2785,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 4;
-	icon_state = "comm"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;

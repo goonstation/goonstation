@@ -25581,10 +25581,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -30318,10 +30315,8 @@
 	dir = 4;
 	tag = ""
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -33456,8 +33451,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 4
 	},
 /turf/simulated/floor/circuit,

@@ -5683,11 +5683,10 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "sp" = (
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/syndicate{
 	dir = 8;
-	icon_state = "datasec";
-	name = "Syndicate Announcement Computer";
-	req_access = null
+	req_access = null;
+	area_name = null
 	},
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)

@@ -183,7 +183,7 @@
 "aaL" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = "";
+	req_access = null;
 	dir = 1
 	},
 /obj/cable{

@@ -1879,15 +1879,15 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/science/tenebrae)
 "eJ" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Tenebrae Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/research{
+	dir = 4;
+	area_name = "Tenebrae";
+	name = "Tenebrae Announcement Computer"
+	},
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
@@ -4316,11 +4316,12 @@
 	})
 "kz" = (
 /obj/machinery/light,
-/obj/machinery/computer/announcement{
-	name = "Maru Announcement Computer"
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/engineering{
+	area_name = "Maru";
+	name = "Maru Announcement Computer"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -5333,15 +5334,15 @@
 	name = "Hammer Command"
 	})
 "mI" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Hammer Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4;
+	area_name = "Hammer";
+	name = "Hammer Announcement Computer"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -8426,14 +8427,14 @@
 	name = "Dionysus Cryocore"
 	})
 "tr" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Asclepius Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4;
+	area_name = "Asclepius";
+	name = "Asclepius Announcement Computer"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -12760,15 +12761,15 @@
 	name = "Meridian Command"
 	})
 "CO" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Meridian Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4;
+	name = "Meridian Announcement Computer";
+	area_name = "Meridian"
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain{
 	name = "Meridian Command"
@@ -23251,16 +23252,16 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "ZQ" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 4;
-	name = "Dionysus Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station{
+	dir = 4;
+	area_name = "Dionysus";
+	name = "Dionysus Announcement Computer"
+	},
+/obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/hop)
 "ZR" = (
