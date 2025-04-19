@@ -6838,9 +6838,7 @@
 /obj/item/body_bag,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "4"
-	},
+/obj/storage/cart/forensic,
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
