@@ -126,7 +126,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			if (thr.throw_type == THROW_PHASE && thr.get_throw_travelled() > 2)
 				thr.throw_type = THROW_NORMAL
-				thing.event_handler_flags &= ~MOVE_NOCLIP
+				thing.event_handler_flags = initial(thing.event_handler_flags)
 
 			if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
 				if (thr.throw_type == THROW_PHASE)
