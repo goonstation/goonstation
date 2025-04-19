@@ -758,9 +758,8 @@
 	src.set_clothing_icon_dirty()
 	src.hand = h
 
-	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
-		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
+	for (var/obj/item/checked_item in src.contents)
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 	add_lifeprocess(/datum/lifeprocess/decomposition)
@@ -3003,7 +3002,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
 				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
 			else if (istype(A, /obj/item/device/transfer_valve))
@@ -3011,6 +3010,15 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+			else if (istype(A, /obj/item/assembly))
+				var/obj/item/assembly/dropped_assembly = A
+				if(!dropped_assembly.secured)
+					// You're not evading death that easily, clown
+					dropped_assembly.secured = TRUE
+					dropped_assembly.add_fingerprint(src)
+					dropped_assembly.UpdateIcon()
+					dropped_assembly.last_armer = src
+				dropped_assembly.AttackSelf(src)
 		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			A.throw_at(get_step(src, pick(alldirs)), 1, 1)

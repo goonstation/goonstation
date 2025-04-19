@@ -322,15 +322,6 @@ TYPEINFO(/area)
 				return null
 		return R
 
-	/**
-	 * returns a list of objects matching type in an area
-	 */
-	proc/get_type(var/type)
-		. = list()
-		for (var/A in src)
-			if(istype(A, type))
-				. += A
-
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return

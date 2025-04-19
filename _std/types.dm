@@ -208,6 +208,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_SINGULO_MAGNETS "singulo_magnets"
 #define TR_CAT_PORTABLE_MACHINERY "portable_machinery"
 #define TR_CAT_MANUFACTURER_LINK "manufacturer_link"
+#define TR_CAT_TIMING_TIMERS "timing_timers" //item timers that are actively timing right now
 // powernets? processing_items?
 // mobs? ai-mobs?
 

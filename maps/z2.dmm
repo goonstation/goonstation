@@ -7424,7 +7424,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aKU" = (
-/obj/item/mousetrap/armed/cleaner,
+/obj/item/assembly/mousetrap_cleaner,
 /obj/item/tile/steel,
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -10565,12 +10565,54 @@
 /area/marsoutpost)
 "aVd" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -10
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -8
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -12
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "aVe" = (
@@ -32588,8 +32630,12 @@
 "cvZ" = (
 /obj/rack,
 /obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = 2
+	},
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm1"
 	},
@@ -32650,9 +32696,7 @@
 	},
 /area/afterlife/hell)
 "cwk" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
+/obj/storage/closet/syndicate/personal,
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
@@ -32674,9 +32718,7 @@
 	},
 /area/moon/museum)
 "cwn" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
+/obj/storage/closet/syndicate/personal,
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
@@ -44688,8 +44730,13 @@
 /area/afterlife/bar)
 "dfn" = (
 /obj/table/auto,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/item/shipcomponent/secondary_system/crash,
+/obj/item/shipcomponent/secondary_system/crash{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/shipcomponent/secondary_system/crash{
+	pixel_x = -2
+	},
 /obj/item/crowbar,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
@@ -44701,6 +44748,10 @@
 "dfp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/stripe_caution,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cairngorm_podbay";
+	single_use = 1
+	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfr" = (
@@ -45038,9 +45089,10 @@
 "dgh" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "medbay_door";
+	id = "cairngorm_armory";
 	name = "armory & firing range"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgi" = (
@@ -45078,9 +45130,15 @@
 /area/syndicate_station/battlecruiser)
 "dgr" = (
 /obj/table/auto,
-/obj/item/ammo/bullets/rpg,
-/obj/item/ammo/bullets/rpg,
-/obj/item/ammo/bullets/rpg,
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -2
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -6
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -10
+	},
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -45089,14 +45147,22 @@
 /area/syndicate_station/battlecruiser)
 "dgs" = (
 /obj/table/auto,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_x = -8
+	},
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/old_grenade/stinger/frag,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgt" = (
@@ -45105,11 +45171,19 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
+/obj/item/old_grenade/stinger{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -8
+	},
 /obj/machinery/light/small/floor,
+/obj/item/old_grenade/stinger,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgu" = (
@@ -45218,8 +45292,13 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/landmark{
-	name = "Breaching-Charges"
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
@@ -45229,10 +45308,20 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/mine/blast,
-/obj/item/mine/blast,
-/obj/item/mine/blast,
-/obj/item/mine/blast,
+/obj/item/mine/blast{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/mine/blast{
+	pixel_x = 9
+	},
+/obj/item/mine/blast{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/mine/blast{
+	pixel_x = -7
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgN" = (
@@ -45241,7 +45330,10 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/device/flash/turbo,
+/obj/item/device/flash/turbo{
+	pixel_x = -2;
+	pixel_y = 5
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
@@ -45344,17 +45436,30 @@
 /area/moon/museum)
 "dhh" = (
 /obj/table/auto,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
+/obj/item/storage/belt/utility{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -3
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 8;
+	pixel_y = 5
 	},
 /obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 6
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
@@ -45587,9 +45692,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dhN" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
+/obj/storage/closet/syndicate/personal,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -45623,9 +45726,10 @@
 "dhS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "medbay_door";
+	id = "cairngorm_medical";
 	name = "medical center"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhT" = (
@@ -45658,9 +45762,10 @@
 "dhX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "medbay_door";
+	id = "cairngorm_barracks";
 	name = "barracks"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dhY" = (
@@ -55978,9 +56083,16 @@
 /area/observatory)
 "eQW" = (
 /obj/table/auto,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/storage/toolbox/mechanical,
+/obj/item/shipcomponent/mainweapon/gun{
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/gun{
+	pixel_x = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
@@ -57530,16 +57642,17 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
 "geI" = (
-/obj/table/auto,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
+/obj/machinery/sleep_console,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cairngorm_medical";
+	single_use = 1
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/medbay)
 "geL" = (
 /obj/computer3frame/terminal{
 	anchored = 1;
@@ -63043,6 +63156,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"kwf" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cairngorm_armory";
+	single_use = 1
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "kwx" = (
 /obj/lattice{
 	dir = 10;
@@ -63513,8 +63637,14 @@
 	},
 /obj/table/auto,
 /obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 2;
+	pixel_y = 8
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "kOx" = (
@@ -63566,13 +63696,28 @@
 /area/void_diner)
 "kQq" = (
 /obj/table/auto,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/remote/syndicate_teleporter,
+/obj/item/pinpointer/nuke{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = 4
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5;
+	pixel_y = -6
+	},
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -66098,9 +66243,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "ncT" = (
-/obj/landmark{
-	name = "Nuclear-Closet"
-	},
+/obj/storage/closet/syndicate/nuclear,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -67268,6 +67411,46 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"nTJ" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 8;
+	pixel_x = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 10
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = 18;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 18
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "nTL" = (
 /obj/decal/stage_edge{
 	dir = 8
@@ -73652,6 +73835,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPo" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cairngorm_barracks";
+	single_use = 1
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/syndicate_station/battlecruiser)
 "sPM" = (
 /mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
@@ -74550,12 +74742,29 @@
 /area/meat_derelict/entry)
 "tNs" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 10;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 14;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "tNz" = (
@@ -74853,8 +75062,12 @@
 /area/iomoon/base/underground)
 "ubB" = (
 /obj/rack,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = 2
+	},
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = -4
+	},
 /obj/machinery/light,
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm3"
@@ -77619,9 +77832,10 @@
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "medbay_door";
+	id = "cairngorm_podbay";
 	name = "launch bay"
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "wiy" = (
@@ -107765,7 +107979,7 @@ lzl
 dhs
 dhG
 dhR
-dic
+geI
 dik
 lzl
 bXv
@@ -110779,13 +110993,13 @@ btf
 btf
 btf
 dgK
-cwh
+kwf
 cwg
 lzl
 dhv
 bvI
 bvI
-bvI
+sPo
 dio
 lzl
 diH
@@ -111683,7 +111897,7 @@ deG
 sFY
 nJZ
 btf
-dgL
+nTJ
 btf
 dgi
 cwg
@@ -113189,7 +113403,7 @@ lzl
 lzl
 lzl
 lzl
-gmY
+btf
 btf
 btf
 btf
@@ -113491,7 +113705,7 @@ hlE
 hlE
 hlE
 lzl
-geI
+gmY
 kQq
 aVd
 dhh
