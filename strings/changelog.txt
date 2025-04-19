@@ -1,5 +1,9 @@
 
 (t)sat apr 19 25
+(u)Nexusuxen
+(p)22908
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The glow from radioactive stuff will still shine around you even when you equip or pick them up.
 (u)glowbold
 (p)22865
 (e)⛔📄🔨|C-Removal, A-UI, A-Player-Actions
