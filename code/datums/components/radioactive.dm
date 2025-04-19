@@ -66,11 +66,7 @@ TYPEINFO(/datum/component/radioactive)
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
 		var/list/color_composition = rgb2num(color)
-		var/R = color_composition[1]
-		var/G = color_composition[2]
-		var/B = color_composition[3]
-		var/A = color_composition[4]
-		our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, R, G, B, A, TRUE)
+		our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, color_composition[1], color_composition[2], color_composition[3], color_composition[4], TRUE)
 		if(istype(PA, /turf))
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
@@ -92,7 +88,7 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Remove(parent)
 		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light_\ref[src]")
-		qdel(src.our_light)
+		QDEL_NULL(src.our_light)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
