@@ -17,16 +17,18 @@
 		src.owner.remove_antagonist(ROLE_SYNDICATE_ROBOT)
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = null
+		if(!istype(cyborg.lawset_connection, /datum/ai_lawset/corrupted))
+			cyborg.lawset_connection = new /datum/ai_lawset/corrupted
 		cyborg.emagged = TRUE
 		cyborg.show_laws()
+		logTheThing(LOG_ADMIN, cyborg, "became an emagged robot with the following laws:<br>[cyborg.lawset_connection.format_for_logs()]")
 
 	remove_equipment()
 		if (!isrobot(src.owner.current))
 			return FALSE
 
 		var/mob/living/silicon/cyborg = src.owner.current
-		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
+		cyborg.lawset_connection = ticker?.ai_law_rack_manager?.default_ai_rack.lawset
 		cyborg.emagged = FALSE
 		cyborg.show_laws()
 
@@ -34,5 +36,7 @@
 		return
 
 	announce()
+		src.owner.current.playsound_local(src.owner.current, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
-		tgui_alert(src.owner.current, "You have been emagged and now have absolute free will.", "You have been emagged!")
+		boutput(src.owner.current, SPAN_ALERT("<b>ERROR: law ROM corrupted. Unable to establish connection to law rack.</b>"))
+		tgui_alert(src.owner.current, "You have been emagged and your lawset has been corrupted.", "You have been emagged!")
