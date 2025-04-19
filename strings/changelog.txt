@@ -1,5 +1,9 @@
 
 (t)sat apr 19 25
+(u)CalliopeSoups
+(p)23049
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now throw people into open washing machines.
 (u)glowbold
 (p)22950
 (e)🪲🔄📦⚗|C-Bug, C-Rework, A-Game-Objects, A-Chemistry
