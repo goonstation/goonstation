@@ -370,8 +370,8 @@
 /area/prefab/sea_monkey_hideout)
 "bs" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/steak_h,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak/human,
+/obj/item/reagent_containers/food/snacks/steak/human,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/carpet,
 /area/prefab/sea_monkey_hideout)
