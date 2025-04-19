@@ -1572,7 +1572,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/card/id/polaris
 	name = "Sergeant's spare ID"
-	icon_state = "polaris"
+	icon_state = "id_nanotrasen"
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
@@ -1580,7 +1580,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
-	icon_state = "polaris"
+	icon_state = "id_nanotrasen"
 	keep_icon = TRUE
 
 /obj/item/broken_egun

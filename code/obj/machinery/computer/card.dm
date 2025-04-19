@@ -520,7 +520,7 @@
 	proc/update_card_style(band_color)
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (band_color == "none")
-				src.modify.icon_state = "id"
+				src.modify.icon_state = "id_basic"
 			if (band_color == "civilian")
 				src.modify.icon_state = "id_civ"
 			if (band_color == "engineering")
