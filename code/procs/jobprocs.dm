@@ -621,7 +621,11 @@ Equip items from body traits.
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
+		var/obj/item/tank/E
+		if (src.traitHolder.hasTrait("plasmalungs"))
+			E = new /obj/item/tank/mini_plasma(src.loc)
+		else
+			E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
@@ -634,7 +638,12 @@ Equip items from body traits.
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
-		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+		if(!src.wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/device/pda2/pda = locate() in src
