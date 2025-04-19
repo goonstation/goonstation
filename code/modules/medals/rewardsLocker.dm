@@ -1329,7 +1329,7 @@
 			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
 			return
 		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
-		O.say_language = "animal"
+		O.say_language = LANGUAGE_ANIMAL
 		O.literate = 0
 		return 1
 

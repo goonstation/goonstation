@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/component/bot_command)
 				if (cleanbot.target)
 					cleanbot.cleanbottargets -= coord
 					cleanbot.target = null
-				cleanbot.speak("Target dirt confirmed.")
+				cleanbot.say("Target dirt confirmed.")
 				cleanbot.cleanbottargets += coord
 				cleanbot.target = T
 				return

@@ -11,6 +11,13 @@
 //Observables /obj/observable  X
 //Cyborgs /mob/living/silicon/robot  X
 
+TYPEINFO(/mob/living/intangible/aieye)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/aieye
 	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
@@ -26,6 +33,13 @@
 	metabolizes = FALSE
 	blood_id = null
 	use_stamina = FALSE // floating ghostly eyes dont get tired
+
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -253,26 +267,6 @@
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_understands(var/other)
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-		if (isrobot(other))
-			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
-			return 1
-		return ..()
-
-	say(var/message)
-		if (src.mainframe)
-			src.mainframe.say(message)
-		else
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
-
 	say_radio()
 		src.mainframe.say_radio()
 
@@ -283,11 +277,6 @@
 		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
-
-	hearing_check(var/consciousness_check = 0, for_audio = FALSE) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
-		if (for_audio)
-			return TRUE
-		return 0
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?

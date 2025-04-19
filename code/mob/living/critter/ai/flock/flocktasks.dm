@@ -1237,7 +1237,7 @@ stare
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid conversion target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid conversion target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1256,7 +1256,7 @@ stare
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid capture target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid capture target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1286,7 +1286,7 @@ stare
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid construction target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid construction target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1305,7 +1305,7 @@ stare
 		on_reset()
 		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid deposit target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid deposit target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1324,7 +1324,7 @@ stare
 		on_reset()
 		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid repair target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid repair target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1343,7 +1343,7 @@ stare
 		on_reset()
 		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid harvest target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid harvest target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
@@ -1357,7 +1357,7 @@ stare
 		on_reset()
 		if (!isflockvalidenemy(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid elimination target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid elimination target provided by sentient level instruction.")
 			holder.interrupt()
 			return
 		var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1379,7 +1379,7 @@ stare
 		on_reset()
 		if (!src.valid_target(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
-			flock_speak(drone, "Invalid recycling target provided by sentient level instruction.", drone.flock)
+			drone.say("Invalid recycling target provided by sentient level instruction.")
 			holder.interrupt()
 
 	on_reset()
