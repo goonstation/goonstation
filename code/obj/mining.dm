@@ -2412,34 +2412,32 @@ TYPEINFO(/obj/item/cargotele)
 				if(++pad_index > length(target_list))
 					pad_index = 1
 
-		// Chance to lose organs
+		// Lose one organ/limb per cargo pad
 		if(!isliving(M))
 			return
 		var/mob/living/L = M
 		if(!L.organHolder)
 			return
 		var/list/organ_list = non_vital_organ_strings + list("tail", "butt", "left_eye", "right_eye")
-		var/chance_organ = (1 - (0.85 ** length(target_list))) * 100
-		for(var/organ_str in organ_list)
-			if(prob(chance_organ))
-				L.organHolder.drop_and_throw_organ(organ_str, get_turf(target_list[pad_index]), alldirs, rand(0,3))
-				if(++pad_index > length(target_list))
-					pad_index = 1
-
-		// Chance to lose limbs
-		if(!ishuman(L))
-			return
-		var/mob/living/carbon/human/H = L
-		if(!H.limbs)
-			return
-		var/chance_limb = (1 - (0.8 ** length(target_list))) * 100
-		for(var/obj/item/parts/limb in H.limbs.get_limb_list())
-			if(prob(chance_limb))
+		organ_list -= L.organHolder.get_missing_organs()
+		var/list/obj/item/parts/limb_list = null
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			limb_list = H.limbs?.get_limb_list()
+		for(var/obj/submachine/cargopad/pad in target_list)
+			if(!organ_list && !limb_list)
+				continue
+			var/pick_list = rand(1, length(organ_list) + length(limb_list))
+			if(pick_list <= length(organ_list))
+				var/organ = pick(organ_list)
+				L.organHolder.drop_and_throw_organ(organ, get_turf(pad), alldirs, rand(0,3))
+				organ_list -= organ
+			else
+				var/obj/item/parts/limb = pick(limb_list)
 				limb.remove()
-				limb.set_loc(get_turf(target_list[pad_index]))
+				limb.set_loc(get_turf(pad))
 				ThrowRandom(limb, dist = rand(0,3))
-				if(++pad_index > length(target_list))
-					pad_index = 1
+				limb_list -= limb
 
 #undef SILICON_POWER_COST_MOD
 
