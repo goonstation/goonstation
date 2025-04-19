@@ -21,7 +21,7 @@
 #define access_research_director 11
 #define access_maint_tunnels 12
 #define access_ticket 13 // issuing tickets
-#define access_emergency_storage 14 // Unused
+#define access_fine_small 14
 #define access_change_ids 15
 #define access_ai_upload 16
 #define access_teleporter 17
@@ -37,7 +37,7 @@
 #define access_crematorium 27
 #define access_kitchen 28
 #define access_robotics 29
-#define access_hangar 30 // Unused. Theoretically the pod hangars, but not implemented as such in practice.
+#define access_fine_large 30
 #define access_cargo 31 // QM.
 #define access_construction 32 // Unused.
 #define access_chemistry 33
