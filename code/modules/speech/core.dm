@@ -239,6 +239,9 @@ TYPEINFO(/atom)
 /mob/Login()
 	. = ..()
 
+	if (!src.client)
+		return
+
 	src.ensure_listen_tree()
 	src.ensure_speech_tree()
 
