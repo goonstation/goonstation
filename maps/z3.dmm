@@ -11557,7 +11557,6 @@
 /obj/storage/crate/internals,
 /obj/item/cable_coil,
 /obj/item/circuitboard/solar_control,
-/obj/item/circuitboard/air_management,
 /obj/item/skull,
 /obj/item/clothing/under/gimmick/sweater,
 /turf/space,

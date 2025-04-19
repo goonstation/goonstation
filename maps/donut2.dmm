@@ -1327,9 +1327,7 @@
 /area/station/science/hall)
 "agZ" = (
 /obj/landmark/spawner/artifact,
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
@@ -3616,9 +3614,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
 "auF" = (
-/obj/submachine/cargopad{
-	name = "Pod Bay Pad"
-	},
+/obj/submachine/cargopad/podbay,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "auG" = (
@@ -13527,7 +13523,7 @@
 /area/station/engine/engineering)
 "bxb" = (
 /obj/item/device/radio/beacon,
-/obj/submachine/cargopad{
+/obj/submachine/cargopad/mechanics{
 	name = "Engineering Pad"
 	},
 /turf/simulated/floor/yellow,
@@ -16026,12 +16022,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
 "cgU" = (
-/obj/submachine/cargopad{
-	name = "Research Outpost Pad"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/submachine/cargopad/researchoutpost,
 /turf/simulated/floor,
 /area/station/science/hall)
 "chE" = (
@@ -33674,9 +33668,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "mKQ" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -41436,9 +41428,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "qYg" = (
-/obj/submachine/cargopad{
-	name = "Mechanical Workshop Pad"
-	},
+/obj/submachine/cargopad/mechanics,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "qYK" = (
@@ -46940,9 +46930,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "ukm" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "ukA" = (
@@ -49144,9 +49132,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "vxl" = (
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "vxO" = (
@@ -49721,9 +49707,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/cargopad{
-	name = "Robotics Pad"
-	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},

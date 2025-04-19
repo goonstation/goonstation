@@ -3230,11 +3230,7 @@
 	name = "Nuclear Control Room"
 	})
 "buw" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -46984,8 +46980,8 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tYz" = (
-/obj/submachine/cargopad{
-	name = "Mining Gear Room Pad"
+/obj/submachine/cargopad/magnet{
+	name = "Mining Staff Room"
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)

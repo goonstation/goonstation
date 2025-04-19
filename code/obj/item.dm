@@ -881,6 +881,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
 		target = user
@@ -894,7 +898,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.r_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					. = user.put_in_hand_or_drop(src, 0)
 				else if (!user.l_hand)
 					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -902,7 +906,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(1)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 1)
+						. = user.put_in_hand_or_drop(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -911,7 +915,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.l_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					. = user.put_in_hand_or_drop(src, 1)
 				else if (!user.r_hand)
 					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -919,7 +923,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(0)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 0)
+						. = user.put_in_hand_or_drop(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
