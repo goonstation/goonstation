@@ -52,6 +52,7 @@ var/list/removed_jobs = list(
 	var/be_conspirator = FALSE
 	var/be_flock = FALSE
 	var/be_salvager = FALSE
+	var/be_mindeater = FALSE
 	var/be_misc = FALSE
 
 	var/be_random_name = FALSE
@@ -1041,6 +1042,7 @@ var/list/removed_jobs = list(
 				src.be_blob = FALSE
 				src.be_conspirator = FALSE
 				src.be_flock = FALSE
+				src.be_mindeater = FALSE
 				src.be_misc = FALSE
 				src.tooltip_option = TOOLTIP_ALWAYS
 				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
@@ -1514,6 +1516,7 @@ var/list/removed_jobs = list(
 			src.be_blob = FALSE
 			src.be_conspirator = FALSE
 			src.be_flock = FALSE
+			src.be_mindeater = FALSE
 		else
 
 			HTML += {"
@@ -1534,6 +1537,7 @@ var/list/removed_jobs = list(
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_salvager=1" class="[src.be_salvager ? "yup" : "nope"]">[crap_checkbox(src.be_salvager)] Salvager</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_mindeater=1" class="[src.be_mindeater ? "yup" : "nope"]">[crap_checkbox(src.be_mindeater)] Mindeater</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1815,6 +1819,11 @@ var/list/removed_jobs = list(
 
 		if (link_tags["b_flock"])
 			src.be_flock = !src.be_flock
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_mindeater"])
+			src.be_mindeater = !src.be_mindeater
 			src.SetChoices(user)
 			return
 

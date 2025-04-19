@@ -52,7 +52,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player) || !player.mind) continue
-		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
+		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND) || (player.mind.special_role == ROLE_MINDEATER))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
