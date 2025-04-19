@@ -100,14 +100,6 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
 	icon_state = "circuit_engineering"
-/obj/item/circuitboard/air_management
-	name = "circuit board (atmospheric monitor)"
-	computertype = /obj/machinery/computer/general_air_control
-	icon_state = "circuit_engineering"
-/obj/item/circuitboard/injector_control
-	name = "circuit board (injector control)"
-	computertype = /obj/machinery/computer/general_air_control/fuel_injection
-	icon_state = "circuit_engineering"
 /obj/item/circuitboard/general_alert
 	name = "circuit board (general alert)"
 	computertype = /obj/machinery/computer/general_alert
