@@ -118,6 +118,8 @@
 	validtypes = list("eldritch", "precursor")
 	react_xray = list(73, 90, 38, 4, "ANOMALOUS")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
+	shard_reward = ARTIFACT_SHARD_SPACETIME
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	effect_activate(obj/O)
 		. = ..()

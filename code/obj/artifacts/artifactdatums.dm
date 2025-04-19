@@ -48,6 +48,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/deact_text = null
 	/// How likely this artifact is to appear to be from an origin that it isn't from
 	var/scramblechance = 10
+	/// this artifact is currently disguised as a different origin
+	var/disguised = FALSE
 	/// used to set straight icon_states on activation instead of fx overlays
 	var/nofx = 0
 	/// special_addendum for ArtifactLogs() proc
@@ -110,6 +112,17 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based mainly on origin, but some artifact types add more descriptors.
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
+
+	/// been modified in some way by the reticulator
+	var/reticulated = FALSE
+	/// if the artifact can be loaded into the reticulator when active
+	var/can_reticulate_when_active = TRUE
+	/// the shard that is rewarded for reticulating this artifact
+	var/shard_reward = ARTIFACT_SHARD_ESSENCE
+	/// what this artifact combines with
+	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
+	/// when used in a combination effect, priority in which this artifact's effect is used
+	var/combine_effect_priority = ARTIFACT_COMBINATION_PASSIVE
 
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()
