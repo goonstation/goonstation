@@ -31,21 +31,21 @@
 		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
-		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off.")
-		wormhole = create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole", "NORTH+1,WEST+1", tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")
-		life_support = create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off", "NORTH+1,WEST+2", tooltipTheme = "pod-alt", desc = "Turn life support on or off")
-		comms = create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off", "NORTH+1,WEST+3", tooltipTheme = "pod-alt", desc = "Turn the pod's communications system on or off")
-		use_comms = create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system", "NORTH+1,WEST+4", tooltipTheme = "pod", desc = "Use the communications system to talk or whatever")
-		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
-		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")
-		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
-		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
-		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
-		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "Lock or unlock the pod.")
-		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
-		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
-		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
-		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
+		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltip_options = list("theme" = "pod-alt"), desc = "Turn the pod's engine on or off.")
+		wormhole = create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole", "NORTH+1,WEST+1", tooltip_options = list("theme" = "pod"), desc = "Open a wormhole to a beacon that you can fly through")
+		life_support = create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off", "NORTH+1,WEST+2", tooltip_options = list("theme" = "pod-alt"), desc = "Turn life support on or off")
+		comms = create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off", "NORTH+1,WEST+3", tooltip_options = list("theme" = "pod-alt"), desc = "Turn the pod's communications system on or off")
+		use_comms = create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system", "NORTH+1,WEST+4", tooltip_options = list("theme" = "pod"), desc = "Use the communications system to talk or whatever")
+		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltip_options = list("theme" = "pod-alt"), desc = "Turn the pod's sensors on or off")
+		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltip_options = list("theme" = "pod"), desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")
+		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltip_options = list("theme" = "pod-alt"), desc = "Turn the main weapon on or off, if the pod is equipped with one")
+		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltip_options = list("theme" = "pod"), desc = "Turn the pod's external lights on or off")
+		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltip_options = list("theme" = "pod"), desc = "Activate the secondary system installed in the pod, if there is one")
+		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltip_options = list("theme" = "pod-alt"), desc = "Lock or unlock the pod.")
+		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltip_options = list("theme" = "pod"), desc = "Set the code used to unlock the pod")
+		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltip_options = list("theme" = "pod"), desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
+		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltip_options = list("theme" = "pod-alt", "align" = TOOLTIP_TOP | TOOLTIP_RIGHT), desc = "Get out of the pod")
+		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltip_options = list("theme" = "pod-alt"), desc = "Reduce the pod's relative velocity")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
@@ -68,17 +68,11 @@
 		for (var/client/C in clients)
 			remove_client(C)
 
-			if (C.tooltipHolder)
-				C.tooltipHolder.inPod = 0
-
 	proc/check_clients()
 		for (var/client/C in clients)
 			var/mob/M = C.mob
 			if (M.loc != master)
 				remove_client(C)
-
-				if (C.tooltipHolder)
-					C.tooltipHolder.inPod = 0
 
 	proc/check_hud_layout(mob/user)
 		if (user.client.tg_layout)
@@ -271,9 +265,6 @@
 		if (user.loc != master)
 			boutput(user, SPAN_ALERT("You're not in the pod doofus. (Call 1-800-CODER.)"))
 			remove_client(user.client)
-
-			if (user.client.tooltipHolder)
-				user.client.tooltipHolder.inPod = 0
 
 			return
 		if (is_incapacitated(user))

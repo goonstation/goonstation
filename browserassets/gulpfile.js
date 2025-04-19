@@ -32,7 +32,7 @@ const sources = {
 	styles: `${dirs.src}/css/**/*.css`,
 	html: `${dirs.src}/html/**/*.(html|htm)`,
 	scripts: `${dirs.src}/js/**/*.js`,
-	copyable: `${dirs.src}/(css/fonts|images|misc|tgui|vendor)/**/*.*`,
+	copyable: `${dirs.src}/(html/tooltips|css/fonts|images|misc|tgui|vendor)/**/*.*`,
 	// Files that tgui includes via resource() calls
 	tguiManifest: `${dirs.src}/images/**/*.*`,
 };

@@ -517,18 +517,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
+		if (src?.owner && src.owner.show_tooltip && usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(arglist(list(
+				"type" = TOOLTIP_HOVER,
+				"target" = src,
+				"mouse" = params,
 				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
+				"content" = src.desc ? src.desc : null,
 				"theme" = src.owner.theme,
-				"flags" = src.owner.tooltip_flags
-			))
+			) + src.owner.tooltip_options))
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
 
 /atom/movable/screen/abilitystat
 	maptext_x = 6
@@ -876,7 +876,8 @@
 	var/icon_state = "blob-template"
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
-	var/tooltip_flags = null
+	var/show_tooltip = TRUE
+	var/list/tooltip_options = list()
 
 	///do we log casting this action? set false for stuff that doesn't need to be logged, like dancing
 	var/do_logs = TRUE

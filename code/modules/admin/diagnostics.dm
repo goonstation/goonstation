@@ -1663,16 +1663,17 @@ proc/info_overlay_choices()
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
 			if(im?.desc)
-				usr.client.tooltipHolder.transient.show(src, list(
-					"params" = params,
-					"title" = "Diagnostics",
-					"content" = (im.desc)
-				))
+				usr.client.tooltips.show(
+					TOOLTIP_HOVER, src,
+					mouse = params,
+					title = "Diagnostics",
+					content = (im.desc)
+				)
 		else
 			.=..()
 	MouseExited()
 		if(usr.client.activeOverlay)
-			usr.client.tooltipHolder.transient.hide()
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		else
 			.=..()
 

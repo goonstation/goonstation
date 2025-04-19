@@ -28,7 +28,7 @@
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
 					src.icon = hud_style
-					hud.tooltipTheme = hud_style
+					hud.tooltip_options = list("theme" = hud_style)
 			hud.name = name
 			hud.icon = icon
 			hud.icon_state = icon_state

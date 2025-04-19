@@ -6,7 +6,7 @@
 	New(M)
 		..()
 		master = M
-		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "revhealth-7", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "revhealth-7", "EAST, NORTH", HUD_LAYER, tooltip_options = list("theme" = "healthDam0"))
 		health.desc = "You feel almost alive!"
 		initial_health = master.health
 

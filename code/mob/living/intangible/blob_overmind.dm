@@ -625,6 +625,7 @@
 	var/image/alt_highlight = null
 	var/image/cooldown = null
 	var/image/darkener = null
+	var/list/tooltip_options = list()
 
 	var/atom/movable/screen/pseudo_overlay/point_overlay
 	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
@@ -779,24 +780,25 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder)
+		if (usr.client.tooltips)
 			var/cost = null
-			if (ability)
+			if (ability && (ability.bio_point_cost || ability.cooldown_time))
 				cost = "<BR>Cost: [ability.bio_point_cost] BP<BR>Cooldown: [ability.cooldown_time / 10] s"
-			else if (upgrade)
+			else if (upgrade && upgrade.evo_point_cost)
 				cost = "<BR>Cost: [upgrade.evo_point_cost] EP"
 
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
+			usr.client.tooltips.show(arglist(list(
+				"type" = TOOLTIP_HOVER,
+				"target" = src,
+				"mouse" = params,
 				"title" = "[src.name][cost]",
-				"content" = src.desc ,
+				"content" = src.desc,
 				"theme" = "blob"
-			))
+			) + src.tooltip_options))
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 /mob/living/intangible/blob_overmind/checkContextActions(atom/target)
 	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/

@@ -5,8 +5,8 @@
 	New(M)
 		..()
 		//recycling sprites cauze lazy
-		well_dist = create_screen("well_dist","Well Distance", 'icons/mob/wraith_ui.dmi', "poltergeist_cd", "EAST, NORTH-1", HUD_LAYER, tooltipTheme = "well_dist")
-		leave_master = create_screen("leave_master","Leave Master", 'icons/mob/wraith_ui.dmi', "leave_master", "EAST, NORTH-2", HUD_LAYER, tooltipTheme = "well_dist")
+		well_dist = create_screen("well_dist","Well Distance", 'icons/mob/wraith_ui.dmi', "poltergeist_cd", "EAST, NORTH-1", HUD_LAYER, tooltip_options = list("theme" = "well_dist"))
+		leave_master = create_screen("leave_master","Leave Master", 'icons/mob/wraith_ui.dmi', "leave_master", "EAST, NORTH-2", HUD_LAYER, tooltip_options = list("theme" = "well_dist"))
 		set_visible(leave_master, 0)
 
 	clear_master()
