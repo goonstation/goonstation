@@ -609,12 +609,8 @@ Equip items from body traits.
 
 				D.name = "data disk - '[src.real_name]'"
 
-			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/badge
-				if (ispath(JOB.receives_badge))
-					badge = new JOB.receives_badge(src)
-				else
-					badge = new /obj/item/clothing/suit/security_badge(src)
+			if(JOB.badge)
+				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
 				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
 					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
 				badge.badge_owner_name = src.real_name

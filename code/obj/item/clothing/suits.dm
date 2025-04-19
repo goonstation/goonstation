@@ -2233,6 +2233,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
 
+/obj/item/clothing/suit/security_badge/attorney
+	name = "legal license"
+	desc = "A very tasteful business card that exudes professionalism. It even has a watermark."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "businesscard"
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	item_state = "security_badge_paper"
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_state = "security_badge_paper"
+
 /obj/item/clothing/suit/snow
 	name = "snow suit"
 	desc = "A thick padded suit that protects against extreme cold temperatures."

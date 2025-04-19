@@ -50,7 +50,7 @@
 	var/receives_miranda = FALSE
 	var/list/receives_implants = null //! List of object paths of implant types given on spawn.
 	var/receives_disk = FALSE //! Job spawns with cloning data disk, can specify a type
-	var/receives_badge = FALSE
+	var/obj/item/clothing/suit/security_badge/badge = null //! Typepath of the badge to spawn the player with
 	var/announce_on_join = FALSE //! On join, send message to all players indicating who is fulfilling the role; primarily for heads of staff
 	var/radio_announcement = TRUE //! The announcement computer will send a message when the player joins after round-start.
 	var/list/alt_names = list()
@@ -344,7 +344,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge
 	show_in_id_comp = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	items_in_backpack = list(/obj/item/device/flash)
@@ -526,7 +526,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	cant_spawn_as_rev = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	receives_disk = /obj/item/disk/data/floppy/security
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/rank/security)
@@ -587,7 +587,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_drinker")
 	access_string = "Detective"
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge
 	cant_spawn_as_rev = TRUE
 	can_join_gangs = FALSE
 	allow_antag_fallthrough = FALSE
@@ -1163,7 +1163,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 0
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge/attorney
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
@@ -1185,7 +1185,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	can_join_gangs = FALSE
 	cant_spawn_as_con = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge
 	receives_miranda = TRUE
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/security)
@@ -1217,7 +1217,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	access_string = "Hall Monitor"
 	cant_spawn_as_rev = TRUE
-	receives_badge = /obj/item/clothing/suit/security_badge/paper
+	badge = /obj/item/clothing/suit/security_badge/paper
 	slot_belt = list(/obj/item/device/pda2)
 	slot_jump = list(/obj/item/clothing/under/color/red)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -1483,7 +1483,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
-	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
+	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/ntofficial)
@@ -2187,7 +2187,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	linkcolor = CIVILIAN_LINK_COLOR
 	wages = PAY_UNTRAINED
 	starting_mutantrace = /datum/mutantrace/cow
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge
 	change_name_on_spawn = TRUE
 	access_string = "Rancher" // it didnt actually have a unique string
 	slot_jump = list(/obj/item/clothing/under/rank/det)
@@ -2449,7 +2449,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
-	receives_badge = /obj/item/clothing/suit/security_badge/nanotrasen
+	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
@@ -2704,7 +2704,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	wages = PAY_DOCTORATE
 	access_string = "Lawyer"
 	limit = 4
-	receives_badge = TRUE
+	badge = /obj/item/clothing/suit/security_badge/attorney
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
