@@ -28613,12 +28613,7 @@
 	},
 /area/listeningpost)
 "cnf" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
@@ -34554,11 +34549,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/light/small,
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -36447,11 +36438,7 @@
 /turf/unsimulated/floor/circuit/vintage,
 /area/station/crewquarters/cryotron)
 "gYu" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
 	},
@@ -44355,9 +44342,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/submachine/cargopad{
-	name = "Mining Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
 "mys" = (
@@ -50974,11 +50959,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "rsZ" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/transport,
 /obj/machinery/light{
@@ -53271,11 +53252,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "sZS" = (

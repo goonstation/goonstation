@@ -4011,11 +4011,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfB" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -44429,12 +44425,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
 /obj/item/cell/cerenkite/charged,
@@ -51255,11 +51246,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nDO" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -52793,11 +52780,7 @@
 	},
 /area/ghostdrone_factory)
 "nWW" = (
-/obj/storage/secure/crate/plasma{
-	desc = "A secure crate designed for transport of hazardous research materials.";
-	name = "Hazard Transport Crate";
-	req_access_txt = "24"
-	},
+/obj/storage/secure/crate/plasma/hazard,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)

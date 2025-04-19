@@ -2988,9 +2988,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "sw" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "sz" = (
@@ -3471,9 +3469,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "vO" = (

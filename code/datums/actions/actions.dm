@@ -1162,13 +1162,13 @@
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || !can_act(src.owner)) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working || !can_act(src.owner))  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1217,6 +1217,8 @@
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!can_act(src.owner))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
