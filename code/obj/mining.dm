@@ -2321,7 +2321,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			// Star Trek transporter accident
 			if(istype(cargo, /obj/storage))
-				mishap_crate(cargo, target_list)
+				mishap_crate(user, cargo, target_list)
 				for(var/obj/submachine/cargopad/pad in target_list)
 					pad.receive_cargo()
 			else
@@ -2343,24 +2343,38 @@ TYPEINFO(/obj/item/cargotele)
 				boutput(user, SPAN_NOTICE("Transfer successful."))
 
 	// Crate's contents thrown out from a transport accident
-	proc/mishap_crate(var/obj/storage/S, var/list/obj/submachine/cargopad/target_list)
+	proc/mishap_crate(var/user, var/obj/storage/S, var/list/obj/submachine/cargopad/target_list)
 		// Crate might not have been opened yet
 		if(S.spawn_contents && S.make_my_stuff())
 			S.spawn_contents = null
 		// Contents go brrrr...
+		var/mob_teled = FALSE
 		var/obj/submachine/cargopad/main_pad = pick(target_list)
+		var/pad_index = pick(1, length(target_list)) // Fling an even number of items between pads
 		for(var/atom/movable/AM in S.contents)
+			var/obj/submachine/cargopad/tele_pad = target_list[pad_index]
+			if(++pad_index > length(target_list))
+				pad_index = 1
 			if(ismob(AM))
 				var/mob/M = AM
 				mishap_mob(M, target_list)
+				mob_teled = TRUE
+				logTheThing(LOG_STATION, user, "uses a cargo transporter to send \
+				[S.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] \
+				with [constructTarget(M,"station")] inside to [log_loc(tele_pad)]. \
+				This cause a transport accident.")
+				spawn(0.25 SECONDS) M.emote("scream") // Don't scream until after mob is teled
 			else if(isitem(AM))
 				var/obj/item/I = AM
 				if(I.storage)
 					mishap_item_storage(I, target_list)
-			var/obj/submachine/cargopad/tele_pad = pick(target_list)
 			if (tele_pad != main_pad || S.can_open() || prob(25))
 				AM.set_loc(get_turf(tele_pad))
 				ThrowRandom(AM, dist = rand(0,3))
+		if(!mob_teled)
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send \
+			[S.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] \
+			([S.type]) to [log_loc(main_pad)].")
 		S.set_loc(get_turf(main_pad))
 		S.open()
 		ThrowRandom(S, dist = rand(1,3))
@@ -2368,27 +2382,34 @@ TYPEINFO(/obj/item/cargotele)
 	// Similar, but for storage items
 	proc/mishap_item_storage(var/obj/item/S, var/list/obj/submachine/cargopad/target_list)
 		var/obj/submachine/cargopad/main_pad = pick(target_list)
+		var/pad_index = pick(1, length(target_list)) // Fling an even number of items between pads
 		for(var/atom/movable/AM in S.contents)
-			var/obj/submachine/cargopad/tele_pad = pick(target_list)
-			if (tele_pad != main_pad || prob(25))
+			var/obj/submachine/cargopad/tele_pad = target_list[pad_index]
+			if (tele_pad != main_pad || prob(50))
 				AM.set_loc(get_turf(tele_pad))
 				ThrowRandom(AM, dist = rand(0,5))
+				if(++pad_index > length(target_list))
+					pad_index = 1
 
 	// Transport accident where mobs can lose items and organs
 	proc/mishap_mob(var/mob/M, var/list/obj/submachine/cargopad/target_list)
 		if(isnull(M))
 			return
+		var/pad_index = pick(1, length(target_list)) // Transport objects evenly between pads
 		// Chance to lose items
-		var/drop_chance = (1 - (0.8 ** length(target_list))) * 100
+		var/chance_item = (1 - (0.8 ** length(target_list))) * 100
 		var/list/equipped_list = M.get_equipped_items(TRUE)
 		for(var/obj/item/I in equipped_list)
 			if(I.storage)
 				mishap_item_storage(I, target_list)
-			if(prob(drop_chance))
-				var/obj/submachine/cargopad/tele_pad = pick(target_list)
+			if(prob(chance_item))
+				var/obj/submachine/cargopad/tele_pad = target_list[pad_index]
 				M.drop_item(I)
 				I.set_loc(get_turf(tele_pad))
 				ThrowRandom(I, dist = rand(0,4))
+				if(++pad_index > length(target_list))
+					pad_index = 1
+
 		// Chance to lose organs
 		if(!isliving(M))
 			return
@@ -2396,28 +2417,29 @@ TYPEINFO(/obj/item/cargotele)
 		if(!L.organHolder)
 			return
 		var/list/organ_list = non_vital_organ_strings + list("tail", "butt", "left_eye", "right_eye")
-		var/splat_chance = (1 - (0.85 ** length(target_list))) * 100
+		var/chance_organ = (1 - (0.85 ** length(target_list))) * 100
 		for(var/organ_str in organ_list)
-			if(prob(splat_chance))
-				L.organHolder.drop_and_throw_organ(organ_str, get_turf(pick(target_list)), alldirs, rand(0,3))
+			if(prob(chance_organ))
+				L.organHolder.drop_and_throw_organ(organ_str, get_turf(target_list[pad_index]), alldirs, rand(0,3))
+				if(++pad_index > length(target_list))
+					pad_index = 1
+
 		// Chance to lose limbs
 		if(!ishuman(L))
 			return
 		var/mob/living/carbon/human/H = L
 		if(!H.limbs)
 			return
-		var/delimb_chance = (1 - (0.6 ** length(target_list))) * 100
-		mishap_limb(H.limbs.r_arm, pick(target_list), delimb_chance)
-		mishap_limb(H.limbs.l_arm, pick(target_list), delimb_chance)
-		mishap_limb(H.limbs.r_leg, pick(target_list), delimb_chance)
-		mishap_limb(H.limbs.l_leg, pick(target_list), delimb_chance)
+		var/chance_limb = (1 - (0.8 ** length(target_list))) * 100
+		for(var/obj/item/parts/limb in H.limbs.get_limb_list())
+			if(prob(chance_limb))
+				limb.remove()
+				limb.set_loc(get_turf(target_list[pad_index]))
+				ThrowRandom(limb, dist = rand(0,3))
+				if(++pad_index > length(target_list))
+					pad_index = 1
 
-	proc/mishap_limb(var/obj/item/parts/limb, var/obj/submachine/cargopad/tele_pad, var/chance)
-		if(limb && prob(chance))
-			limb.remove()
-			limb.set_loc(get_turf(tele_pad))
-			ThrowRandom(limb, dist = rand(0,3))
-
+#undef LOOP_INCREMENT
 #undef SILICON_POWER_COST_MOD
 
 /obj/item/cargotele/efficient
@@ -2796,20 +2818,26 @@ TYPEINFO(/obj/submachine/cargopad)
 
 /obj/submachine/cargopad
 	name = "Cargo Pad"
-	desc = "Used to receive objects transported by a cargo transporter."
+	desc = "Used to receive objects directed by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/active = TRUE
-	var/is_duplicate = FALSE
 	var/tele_name = null // Name of the pad after renaming. In case it is labeled or something.
 	var/group
 	/// The mailgroup to send notifications to
 	var/mailgroup = null
-	var/labelling = FALSE
 	var/image/lights = null
+
+	var/active = TRUE
+	var/is_duplicate = FALSE // Used for the pad's warning lights
+	var/labelling = FALSE // Is this pad currently being renamed by a player?
+
+	get_desc()
+		. = ..()
+		if(is_duplicate)
+			. += " The warning lights indicate a probable guidance malfunction."
 
 	podbay
 		name = "Pod Bay Pad"
@@ -2889,24 +2917,27 @@ TYPEINFO(/obj/submachine/cargopad)
 
 	attackby(obj/item/I, mob/user)
 		..()
-		// Use a multitool to rename the cargo pad
-		if(!ispulsingtool(I) || src.labelling)
+		if(ispulsingtool(I) && !src.labelling)
+			// Use a multitool to rename the cargo pad
+			if(src.active)
+				boutput(user, SPAN_ALERT("You need to turn the receiver off before you can rename the [src]."))
+				return
+			src.labelling = TRUE
+			var/new_name = tgui_input_text(user, "What do you want to name this cargo pad?", null, null, max_length = 50)
+			src.labelling = FALSE
+			new_name = sanitize(html_encode(new_name))
+			if(!new_name || !in_interact_range(src, user) || src.active)
+				return
+			if(!findtext(new_name, "pad"))
+				new_name += " Pad"
+			for(var/obj/submachine/cargopad/pad in global.cargo_pad_manager.pads)
+				if(pad.tele_name == new_name)
+					boutput(user, SPAN_ALERT("The [src] detected another pad called \"[new_name]\" and has canceled your input."))
+					return
+			boutput(user, SPAN_NOTICE("You rename the [src.name] to \"[new_name]\"."))
+			src.name = new_name
+			src.tele_name = new_name
 			return
-		if(src.active)
-			boutput(user, SPAN_ALERT("You need to turn the receiver off before you can rename the [src]."))
-			return
-		src.labelling = TRUE
-		var/new_name = tgui_input_text(user, "What do you want to name this cargo pad?", null, null, max_length = 50)
-		src.labelling = FALSE
-		new_name = sanitize(html_encode(new_name))
-		if(!new_name || !in_interact_range(src, user) || src.active)
-			return
-		if(!findtext(new_name, "pad"))
-			new_name += " Pad"
-		boutput(user, SPAN_NOTICE("You rename the [src.name] to \"[new_name]\"."))
-		src.name = new_name
-		src.tele_name = new_name
-		return
 
 	attack_hand(var/mob/user)
 		toggle(user)
@@ -2927,7 +2958,8 @@ TYPEINFO(/obj/submachine/cargopad)
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 
-	proc/update_lights(var/duplicate = FALSE) // Pad manager tells it if it is currently sharing a name with another pad
+	// Pad manager tells it if it is currently sharing a name with another pad
+	proc/update_lights(var/duplicate = FALSE)
 		src.is_duplicate = duplicate
 		switch(src.lights.icon_state)
 			if("cpad-received")
@@ -2961,7 +2993,6 @@ TYPEINFO(/obj/submachine/cargopad)
 			else
 				src.lights.icon_state = "cpad-rec"
 			src.UpdateOverlays(src.lights, "lights")
-
 
 // satchels -> obj/item/satchel.dm
 
