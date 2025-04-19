@@ -23,6 +23,8 @@ TYPEINFO(/datum/component/radioactive)
 	var/_backup_color = null //so hacky
 	/// Internal, store of turf glow overlay
 	var/static/image/_turf_glow = null
+	/// Internal, reference to light component
+	var/datum/component/loctargeting/simple_light/our_light
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
@@ -63,7 +65,12 @@ TYPEINFO(/datum/component/radioactive)
 			src._backup_color = PA.color
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
-		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		var/list/color_composition = rgb2num(color)
+		var/R = color_composition[1]
+		var/G = color_composition[2]
+		var/B = color_composition[3]
+		var/A = color_composition[4]
+		our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, R, G, B, A, TRUE)
 		if(istype(PA, /turf))
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
@@ -85,6 +92,7 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Remove(parent)
 		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light_\ref[src]")
+		qdel(src.our_light)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
