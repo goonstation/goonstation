@@ -9628,7 +9628,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
@@ -22477,7 +22477,7 @@
 /area/space)
 "bmV" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
@@ -28045,7 +28045,7 @@
 /area/station/crew_quarters/pool)
 "bDY" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -28728,7 +28728,7 @@
 /area/station/crew_quarters/fitness)
 "bFY" = (
 /obj/table/reinforced/bar/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "bFZ" = (
@@ -29002,7 +29002,7 @@
 /area/station/crew_quarters/quarters_south)
 "bGS" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -42579,7 +42579,7 @@
 	pixel_x = -12
 	},
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ctO" = (

@@ -21321,7 +21321,7 @@
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -32092,7 +32092,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "bIq" = (
@@ -43090,7 +43090,7 @@
 /area/station/hangar/medical)
 "cgW" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_x = -4
 	},
 /obj/item/clothing/suit/judgerobe{
@@ -45817,7 +45817,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "ckC" = (
@@ -45825,7 +45825,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "ckD" = (

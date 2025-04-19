@@ -5124,7 +5124,7 @@
 /area/station/crewquarters/cryotron)
 "bwX" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quartersA)
 "bxa" = (
@@ -33071,7 +33071,7 @@
 /area/station/bridge)
 "iNE" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
 "iNH" = (
@@ -42733,7 +42733,7 @@
 /area/station/bridge/reception)
 "lqB" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/blind_switch/area/north,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
@@ -46833,7 +46833,7 @@
 /area/station/mining/staff_room)
 "mrf" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -55982,7 +55982,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -56053,7 +56053,7 @@
 	})
 "oMX" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -65114,7 +65114,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
 "rgu" = (
@@ -70104,7 +70104,7 @@
 /area/station/ranch)
 "srK" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -71297,7 +71297,7 @@
 /area/station/security/detectives_office)
 "sGp" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/sauna)
 "sGq" = (
@@ -79306,7 +79306,7 @@
 /area/station/crew_quarters/lounge/backstage)
 "uEy" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
@@ -80866,7 +80866,7 @@
 "uWn" = (
 /obj/machinery/light/small,
 /obj/table/wood/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/sauna)
 "uWr" = (
@@ -81246,7 +81246,7 @@
 /area/station/hangar/science)
 "vaN" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -81725,7 +81725,7 @@
 /area/station/maintenance/east)
 "vgU" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24

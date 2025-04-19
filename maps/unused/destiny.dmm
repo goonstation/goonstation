@@ -25833,7 +25833,7 @@
 /area/station/maintenance/southwest)
 "gCN" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/judgerobe,
@@ -30958,7 +30958,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/peach,
@@ -36212,7 +36212,7 @@
 /area/station/maintenance/south)
 "lWE" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
@@ -40590,7 +40590,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "ohy" = (
@@ -42085,7 +42085,7 @@
 	icon_state = "line1"
 	},
 /obj/table/glass/reinforced/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/storage/firstaid/oxygen,
@@ -44640,7 +44640,7 @@
 /area/station/medical/robotics)
 "qmA" = (
 /obj/table/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/sponge{
@@ -53133,7 +53133,7 @@
 /area/station/engine/core)
 "uEo" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/wrench,

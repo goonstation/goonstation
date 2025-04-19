@@ -8720,7 +8720,7 @@
 	})
 "tX" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/remote/porter/port_a_medbay,

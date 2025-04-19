@@ -15366,7 +15366,7 @@
 	icon_state = "tabledir";
 	dir = 6
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aFy" = (

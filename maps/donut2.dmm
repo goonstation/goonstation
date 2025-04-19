@@ -2053,7 +2053,7 @@
 /area/station/hangar/science)
 "alA" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alD" = (
@@ -15630,7 +15630,7 @@
 /area/station/crew_quarters/locker)
 "bUK" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
 "bVC" = (
@@ -30639,7 +30639,7 @@
 /area/station/storage/emergency)
 "kVm" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "kVt" = (
@@ -31448,7 +31448,7 @@
 /area/station/hangar/main)
 "lwV" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/eggsplat{
 	pixel_y = 30
 	},
@@ -35932,7 +35932,7 @@
 "nZe" = (
 /obj/decal/stage_edge/alt,
 /obj/table/glass/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "nZg" = (
@@ -38726,7 +38726,7 @@
 /area/station/engine/singcore)
 "pwG" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/reagent_containers/glass/bottle/cleaner{
 	pixel_x = -9;
 	pixel_y = 1

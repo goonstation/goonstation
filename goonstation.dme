@@ -1890,6 +1890,7 @@
 #include "code\obj\ladder.dm"
 #include "code\obj\landmark.dm"
 #include "code\obj\lattice.dm"
+#include "code\obj\linen_bin.dm"
 #include "code\obj\machinery.dm"
 #include "code\obj\map.dm"
 #include "code\obj\martian.dm"

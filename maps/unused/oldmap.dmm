@@ -6593,7 +6593,7 @@
 /area/crew_quarters/quarters)
 "qG" = (
 /obj/table,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "qH" = (

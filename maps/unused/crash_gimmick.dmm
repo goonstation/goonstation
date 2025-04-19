@@ -6175,7 +6175,7 @@
 /area/russian/radiation)
 "biY" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
@@ -6662,7 +6662,7 @@
 /area/russian/radiation)
 "bkQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -23983,7 +23983,7 @@
 	},
 /area/russian/radiation)
 "cHl" = (
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/wood/auto,
 /turf/simulated/floor/black{
 	broken = 1;
@@ -37587,7 +37587,7 @@
 /area/russian/radiation)
 "eXE" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -45659,7 +45659,7 @@
 /area/russian/radiation)
 "iNy" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -75880,7 +75880,7 @@
 /area/space)
 "xUd" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/space,
 /area/space)
 "xVj" = (

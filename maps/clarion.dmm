@@ -17182,7 +17182,7 @@
 /area/station/engine/substation/west)
 "gaf" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/judgerobe,
@@ -38465,7 +38465,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "vgE" = (
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)

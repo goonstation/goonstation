@@ -1104,7 +1104,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "afa" = (
@@ -1358,7 +1358,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "afR" = (
@@ -12544,7 +12544,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aSq" = (
@@ -22679,7 +22679,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -64972,7 +64972,7 @@
 /area/station/engine/power)
 "xSv" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_x = 4
 	},
 /obj/item/clothing/suit/judgerobe{

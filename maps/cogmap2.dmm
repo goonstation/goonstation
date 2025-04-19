@@ -4508,7 +4508,7 @@
 /area/station/crew_quarters/showers)
 "aoY" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -12579,7 +12579,7 @@
 /area/station/crew_quarters/pool)
 "aMj" = (
 /obj/table/glass/reinforced/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 6
 	},
 /obj/item/storage/firstaid/oxygen,
@@ -14967,7 +14967,7 @@
 /area/station/crew_quarters/locker)
 "aTc" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aTe" = (
@@ -15455,7 +15455,7 @@
 /area/station/crew_quarters/locker)
 "aUp" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aUr" = (
@@ -35709,7 +35709,7 @@
 "cdq" = (
 /obj/table/auto,
 /obj/machinery/light/small,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/security/brig)
 "cdr" = (
@@ -65697,7 +65697,7 @@
 /area/station/engine/inner)
 "nMI" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;

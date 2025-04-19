@@ -782,7 +782,7 @@
 /area/space)
 "cy" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary/blue,
 /area/space)
 "cz" = (

@@ -8515,7 +8515,7 @@
 /area/upper_arctic/pod2)
 "aOx" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aOy" = (
@@ -9618,7 +9618,7 @@
 /area/crater/biodome/crew)
 "aRY" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"
@@ -14595,7 +14595,7 @@
 /area/marsoutpost)
 "biv" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/blue/corner{
 	dir = 1
 	},
@@ -30770,7 +30770,7 @@
 /area/dojo)
 "cpJ" = (
 /obj/table/wood/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cpK" = (
@@ -38772,7 +38772,7 @@
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "cOy" = (
@@ -45774,7 +45774,7 @@
 /area/syndicate_station/battlecruiser)
 "dhZ" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/syndicate_station/battlecruiser)
 "dia" = (
@@ -52586,7 +52586,7 @@
 /area/centcom/garden)
 "dLV" = (
 /obj/table/round/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /turf/unsimulated/floor{
@@ -53003,7 +53003,7 @@
 /area/centcom/garden)
 "dNk" = (
 /obj/table/round/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /turf/unsimulated/floor/wood,
@@ -60449,7 +60449,7 @@
 	dir = 5
 	},
 /obj/rack,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "itY" = (
@@ -74323,7 +74323,7 @@
 "tqO" = (
 /obj/map/light/brightwhite,
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "trc" = (
