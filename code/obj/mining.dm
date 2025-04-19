@@ -2179,7 +2179,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 #define SILICON_POWER_COST_MOD 10
 
 TYPEINFO(/obj/item/cargotele)
-	mats = 4
+	mats = list("telecrystal" = 5,
+				"conductive" = 5,
+				"reflective" = 2)
 
 /obj/item/cargotele
 	name = "cargo transporter"
@@ -2439,7 +2441,6 @@ TYPEINFO(/obj/item/cargotele)
 				if(++pad_index > length(target_list))
 					pad_index = 1
 
-#undef LOOP_INCREMENT
 #undef SILICON_POWER_COST_MOD
 
 /obj/item/cargotele/efficient
@@ -2814,7 +2815,9 @@ TYPEINFO(/obj/item/cargotele)
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 TYPEINFO(/obj/submachine/cargopad)
-	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
+	mats = list("telecrystal" = 10,
+				"conductive" = 15,
+				"metal" = 10)
 
 /obj/submachine/cargopad
 	name = "Cargo Pad"
