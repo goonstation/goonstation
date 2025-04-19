@@ -372,7 +372,7 @@
 		var/list/obj/machinery/camera/cameras_to_repair = list()
 
 		. = ..()
-		for(C in camnets["SS13"])
+		for(C in camnets[CAMERA_NETWORK_STATION]) // TODO: get list of all cameras AI can see through?
 			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
 				cameras_to_repair |= C
 
