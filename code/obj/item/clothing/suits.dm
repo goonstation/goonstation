@@ -1341,46 +1341,15 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	setupProperties()
-		..()
-		setProperty("heatprot", 35)
-
-	setupProperties()
-		..()
-		setProperty("chemprot",60)
-		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
-
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	commissar_greatcoat
-		name = "commander's great coat"
-		icon_state = "commissar_greatcoat"
-		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
-		hides_from_examine = C_UNIFORM|C_SHOES
-
-		setupProperties()
-			..()
-			setProperty("exploprot", 40)
-			setProperty("meleeprot", 6)
-			setProperty("rangedprot", 3)
-			setProperty("radprot", 50)
-
-	knight // nukie melee class armor
-		name = "citadel heavy combat cuirass"
-		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
-		icon_state = "syndie_specialist-knight"
-		item_state = "syndie_specialist-knight"
-
-		setupProperties()
-			..()
-			setProperty("meleeprot", 6)
-			setProperty("rangedprot", 1)
-			setProperty("exploprot", 40)
-			setProperty("space_movespeed", 0.9)
-			setProperty("disorient_resist", 65)
-			setProperty("radprot", 50)
+	setupProperties()
+		..()
+		setProperty("chemprot",60)
+		setProperty("heatprot", 35)
+		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1395,33 +1364,66 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("rangedprot", 1.5)
 			setProperty("radprot", 50)
 
+		commissar_greatcoat
+			name = "commander's great coat"
+			icon_state = "commissar_greatcoat"
+			desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+			hides_from_examine = C_UNIFORM|C_SHOES
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
+
+		knight // nukie melee class armor
+			name = "citadel heavy combat cuirass"
+			desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
+			icon_state = "syndie_specialist-knight"
+			item_state = "syndie_specialist-knight"
+
+			setupProperties()
+				..()
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 1)
+				setProperty("exploprot", 40)
+				setProperty("space_movespeed", 0.9)
+				setProperty("disorient_resist", 65)
+
+		heavy
+			name = "specialist heavy operative combat armor"
+			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+			icon_state = "syndie_specialist-heavy"
+			item_state = "syndie_specialist-heavy"
+
+			setupProperties()
+				..()
+				setProperty("meleeprot", 9)
+				setProperty("rangedprot", 2)
+
 		medic
 			name = "specialist operative medic uniform"
-			desc = "A syndicate issue combat dress system, pressurized for space travel."
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Has additional viral protection."
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
-
-			body_parts_covered = TORSO|LEGS|ARMS
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("radprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
-			desc = "A syndicate issue combat dress system, pressurized for space travel."
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Advanced servos increase the speed of the wearer."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
 			setupProperties()
 				..()
 				setProperty("space_movespeed", -0.25)
-				setProperty("radprot", 50)
 
 
 		firebrand
 			name = "specialist operative firesuit"
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Fireproof."
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
 
@@ -1430,39 +1432,29 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setupProperties()
 				..()
 				setProperty("heatprot", 100)
-				setProperty("radprot", 50)
 
 		engineer
 			name = "specialist operative engineering uniform"
 			icon_state = "syndie_specialist-engineer"
 			item_state = "syndie_specialist-engineer"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		sniper
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		grenadier
 			name = "specialist operative bombsuit"
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Has additional explosion resistance."
 
 			setupProperties()
 				..()
 				setProperty("exploprot", 60)
-				setProperty("radprot", 50)
 
 		bard
 			name = "road-worn stage uniform"
 			icon_state = "syndie_specialist-bard"
 			item_state = "syndie_specialist-bard"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		unremovable
 			cant_self_remove = 1
@@ -1688,12 +1680,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-
-	specialist
-		name = "specialist heavy operative combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
 
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,
