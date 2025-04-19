@@ -1366,8 +1366,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		var/turf/T = locate_throw_target(thing)
 		if(isnull(T))
 			return
-		// TODO make the thing pass through things for first few tiles
-		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
+		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30, throw_type=THROW_PHASE)
 
 	disposing()
 		if(src.light)
