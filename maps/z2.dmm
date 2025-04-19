@@ -26529,7 +26529,7 @@
 	},
 /obj/item/storage/firstaid/oxygen,
 /obj/item/tank/oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/air,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
@@ -71522,65 +71522,65 @@
 "rcr" = (
 /obj/machinery/light,
 /obj/rack,
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = -4
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -6;
 	pixel_y = -8
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = 2
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = -2
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = -6
 	},
-/obj/item/tank/emergency_oxygen{
+/obj/item/tank/pocket/oxygen{
 	pixel_x = 6;
 	pixel_y = -8
 	},
@@ -74677,7 +74677,7 @@
 	name = "grimy pipe"
 	},
 /obj/rack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
 "tJE" = (

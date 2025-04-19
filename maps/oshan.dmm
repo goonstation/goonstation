@@ -25344,8 +25344,8 @@
 /area/station/maintenance/south)
 "bPQ" = (
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/power/apc/autoname_west,
@@ -25455,8 +25455,8 @@
 /area/station/hallway/secondary/oshan_arrivals)
 "bPY" = (
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light_switch/east,
@@ -29011,7 +29011,7 @@
 /area/diner/kitchen)
 "ccN" = (
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
@@ -29982,7 +29982,7 @@
 /area/station/maintenance/inner/central)
 "cgc" = (
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
@@ -47313,7 +47313,7 @@
 "xDt" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/camera/auto,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)

@@ -22563,8 +22563,8 @@
 /obj/storage/crate/internals,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/light/small/cool{
 	dir = 1;
 	pixel_y = 16

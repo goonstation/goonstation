@@ -480,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/weldingtool = 10,
 			/obj/item/device/radio = 10,
 			/obj/item/tank/air = 10,
-			/obj/item/tank/emergency_oxygen = 2,
+			/obj/item/tank/pocket/oxygen = 2,
 			/obj/item/extinguisher = 10,
 			/obj/item/clothing/mask/gas/emergency = 3,
 			/obj/burning_barrel = 2,

@@ -772,7 +772,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/mini_ox
 	name = "personnel-class 'mini' pressure tank"
-	typepath = /obj/item/tank/mini_oxygen
+	typepath = /obj/item/tank/mini/oxygen
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"

@@ -20857,15 +20857,15 @@
 	},
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_y = 3;
 	pixel_x = -3
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_y = 3;
 	pixel_x = 3
 	},
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "biH" = (
@@ -52591,7 +52591,7 @@
 	},
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -54454,7 +54454,7 @@
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -55518,7 +55518,7 @@
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 9
 	},

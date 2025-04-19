@@ -560,13 +560,13 @@ Equip items from body traits.
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
 		var/obj/item/tank/good_air
 		if (extended_tank)
-			good_air = new /obj/item/tank/emergency_oxygen/extended/plasma(src)
+			good_air = new /obj/item/tank/pocket/extended/plasma(src)
 			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
-			if (istype(src.l_store, /obj/item/tank/emergency_oxygen/extended))
+			if (istype(src.l_store, /obj/item/tank/pocket/extended/oxygen))
 				qdel(src.l_store)
 			src.equip_if_possible(good_air, SLOT_L_STORE)
 		else
-			good_air = new /obj/item/tank/mini_plasma(src)
+			good_air = new /obj/item/tank/mini/plasma(src)
 			src.put_in_hand_or_stow(good_air, delete_item=FALSE)
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
@@ -621,7 +621,7 @@ Equip items from body traits.
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
+		var/obj/item/tank/mini/oxygen/E = new /obj/item/tank/mini/oxygen(src.loc)
 		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
