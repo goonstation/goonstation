@@ -3230,11 +3230,7 @@
 	name = "Nuclear Control Room"
 	})
 "buw" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -8978,7 +8974,7 @@
 /area/station/bridge/reception)
 "dZK" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -46984,8 +46980,8 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tYz" = (
-/obj/submachine/cargopad{
-	name = "Mining Gear Room Pad"
+/obj/submachine/cargopad/magnet{
+	name = "Mining Staff Room"
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -56202,9 +56198,7 @@
 /area/station/crew_quarters/lounge)
 "yjc" = (
 /obj/machinery/light_switch/west,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},

@@ -112,6 +112,7 @@
 				O.ArtifactDeactivated()
 
 	proc/make_evil(mob/living/carbon/human/clone)
+		set waitfor = FALSE
 		if(clone)
 			sleep(evil_delay)
 			clone.attack_alert = 0

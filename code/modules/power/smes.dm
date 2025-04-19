@@ -15,6 +15,9 @@ TYPEINFO(/obj/machinery/power/smes/magical)
 		charge = INFINITY
 		..()
 
+	set_broken()
+		return TRUE
+
 TYPEINFO(/obj/machinery/power/smes)
 	mats = list("metal" = 40,
 				"conductive_high" = 30,
@@ -56,6 +59,31 @@ TYPEINFO(/obj/machinery/power/smes)
 			term.set_dir(get_dir(Q, iloc))
 		..()
 
+/obj/machinery/power/smes/was_deconstructed_to_frame(mob/user)
+	if (src.terminal)
+		qdel(src.terminal)
+		src.terminal = null
+	. = ..()
+
+/obj/machinery/power/smes/was_built_from_frame(mob/user, newly_built)
+	if (newly_built)
+		src.charge = 0
+		deconstruct_flags = DECON_SIMPLE
+	var/obj/machinery/power/terminal/term
+	for (var/direction in cardinal)
+		for (var/obj/machinery/power/terminal/potential_term in get_turf(get_step(src, direction)))
+			if (isnull(potential_term.master) && potential_term.dir == get_dir(potential_term, src))
+				term = potential_term
+				break
+		if (term)
+			break
+	if (!term)
+		term = new /obj/machinery/power/terminal(get_step(src, src.dir))
+		term.set_dir(get_dir(term, src))
+	src.terminal = term
+	term.master = src
+	. = ..()
+
 /obj/machinery/power/smes/emp_act()
 	..()
 	src.online = 0
@@ -89,16 +117,23 @@ TYPEINFO(/obj/machinery/power/smes)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if (!terminal)
-			status |= BROKEN
+			status |= POWEROFF
+			src.charging = FALSE
+			src.online = FALSE
 			return
 
 		terminal.master = src
 
 		UpdateIcon()
 
+/obj/machinery/power/smes/disposing()
+	. = ..()
+	if (src.terminal)
+		src.terminal.master = null
+		src.terminal = null
 
 /obj/machinery/power/smes/update_icon()
-	if (status & BROKEN)
+	if (status & (BROKEN|POWEROFF))
 		ClearAllOverlays()
 		return
 
@@ -120,6 +155,28 @@ TYPEINFO(/obj/machinery/power/smes)
 	if (clevel>0)
 		I = SafeGetOverlayImage("chargedisp",'icons/obj/power.dmi',"smes-og[clevel]")
 		UpdateOverlays(I, "chargedisp")
+
+/obj/machinery/power/smes/set_broken()
+	if(..()) return
+	src.online = FALSE
+	src.charging = FALSE
+	AddComponent(/datum/component/equipment_fault/dangerously_shorted, tool_flags = TOOL_WIRING | TOOL_SOLDERING | TOOL_WRENCHING | TOOL_SCREWING | TOOL_PRYING)
+
+/obj/machinery/power/smes/ex_act(severity)
+	. = ..()
+	if (QDELETED(src))
+		return
+	switch(severity)
+		if(2)
+			if (prob(50))
+				src.set_broken()
+				return
+		if(3)
+			if (prob(25))
+				src.set_broken()
+
+/obj/machinery/power/smes/overload_act()
+	return !src.set_broken()
 
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
@@ -147,10 +204,15 @@ TYPEINFO(/obj/machinery/power/smes)
 		src.output = clamp((newoutput), 0 , SMESMAXCHARGELEVEL)
 
 /obj/machinery/power/smes/process(mult)
-
 	if (status & BROKEN)
 		return
 
+	if (status & POWEROFF)
+		if (src.terminal)
+			status &= ~POWEROFF
+			src.UpdateIcon()
+		else
+			return
 
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -160,6 +222,12 @@ TYPEINFO(/obj/machinery/power/smes)
 	// Had to revert a hack here that caused SMES to continue charging despite insufficient power coming in on the input (terminal) side.
 	if (terminal)
 		charge(mult)
+	else
+		status |= POWEROFF
+		src.online = FALSE
+		src.charging = FALSE
+		src.UpdateIcon()
+		return
 
 	if (online)		// if outputting
 		if (prob(5))
