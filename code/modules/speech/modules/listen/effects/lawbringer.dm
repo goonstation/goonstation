@@ -35,12 +35,13 @@
 		lawbringer.are_you_the_law(H, message.content)
 		return
 
-	if (!lawbringer.projectiles && !length(lawbringer.projectiles) > 1)
+	if (!length(lawbringer.projectiles))
 		boutput(H, SPAN_NOTICE("Gun broke. Call 1-800-CODER."))
 		lawbringer.set_current_projectile(new /datum/projectile/energy_bolt/aoe)
 		lawbringer.item_state = "lawg-detain"
 		H.update_inhands()
 		lawbringer.UpdateIcon()
+		return
 
 	var/text = lawbringer.sanitize_talk(message.content)
 	if (!lawbringer.fingerprints_can_shoot(H))
