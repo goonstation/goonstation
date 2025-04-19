@@ -23,6 +23,7 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/cancel_stuns)
 		src.ability_holder.addAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.addAbility(/datum/targetable/vampire/hypnotize)
+		src.ability_holder.addAbility(/datum/targetable/vampire/vamp_cloak)
 
 		src.owner.current.assign_gimmick_skull()
 
@@ -33,6 +34,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampire/cancel_stuns)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/hypnotize)
+		src.ability_holder.removeAbility(/datum/targetable/vampire/vamp_cloak)
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
 
