@@ -24945,13 +24945,9 @@
 /area/station/medical/medbay/cloner)
 "ktO" = (
 /obj/machinery/light/small/floor,
-/obj/machinery/camera{
+/obj/machinery/camera/auto/public{
 	c_tag = "The Red Ring";
-	dir = 9;
-	invisibility = 101;
-	name = "Overhead Camera";
-	network = "Zeta";
-	tag = ""
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{

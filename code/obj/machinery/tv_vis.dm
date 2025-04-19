@@ -22,7 +22,7 @@
 	var/active = 0
 
 	var/monitor_id = "MONITOR-1"				//set in map maker
-	var/network = "SS13"			//used in camera computer
+	var/network = CAMERA_NETWORK_STATION			//used in camera computer
 
 	New()
 		..()

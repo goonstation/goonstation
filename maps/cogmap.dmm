@@ -3571,13 +3571,9 @@
 /area/station/crew_quarters/bathroom)
 "aoa" = (
 /obj/landmark/halloween,
-/obj/machinery/camera{
+/obj/machinery/camera/auto/public{
 	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	dir = 9
 	},
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
@@ -19981,11 +19977,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "bth" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -23617,11 +23609,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -64404,13 +64392,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "xtf" = (
-/obj/machinery/camera{
+/obj/machinery/camera/auto/public{
 	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4

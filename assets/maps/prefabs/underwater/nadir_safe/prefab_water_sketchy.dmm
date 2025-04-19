@@ -114,10 +114,7 @@
 /area/prefab/sea_sketch)
 "az" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/security/wooden_tv/public{
 	pixel_y = 4
 	},
 /turf/simulated/floor/grime,
