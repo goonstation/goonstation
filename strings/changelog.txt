@@ -1,5 +1,9 @@
 
 (t)sun apr 20 25
+(u)JORJ949
+(p)22879
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Command now have spare circuit boards for their departmental ID and announcement computers.
 (u)Lord_Earthfire
 (p)23053
 (e)⚖📦|C-Balance, A-Game-Objects
