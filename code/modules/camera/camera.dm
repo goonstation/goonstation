@@ -23,7 +23,7 @@
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
-		/// Cant be snipped by wirecutters
+	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
 	var/sticky = FALSE
