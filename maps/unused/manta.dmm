@@ -3603,7 +3603,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -12837,7 +12837,7 @@
 /area/station/crew_quarters/quarters)
 "aLi" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -13098,7 +13098,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "aLU" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
 	icon_state = "line2"
@@ -13809,7 +13809,7 @@
 	},
 /area/station/security/hos)
 "aOl" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aOm" = (
@@ -15099,7 +15099,7 @@
 /area/station/security/brig)
 "aSo" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 5
 	},
 /obj/item_dispenser/handcuffs,
@@ -15484,7 +15484,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aTR" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/red,
 /area/station/security/beepsky)
 "aTS" = (
@@ -22181,7 +22181,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood/seven,
@@ -23386,7 +23386,7 @@
 /area/station/medical/medbay/lobby)
 "boB" = (
 /obj/table/glass/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 5
 	},
 /turf/simulated/floor/blue,
@@ -30479,7 +30479,7 @@
 	},
 /area/station/security/detectives_office_manta)
 "bKc" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/det_hat{
 	pixel_y = 11
 	},
@@ -33122,7 +33122,7 @@
 /area/station/maintenance/upperstarboard)
 "dUV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decoration/clock{
@@ -34226,7 +34226,7 @@
 /area/abandonedship)
 "fXz" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable{
@@ -40389,7 +40389,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "ucM" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -41038,7 +41038,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/security/console_upper,
+/obj/machinery/computer/camera_viewer/console_upper,
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1;

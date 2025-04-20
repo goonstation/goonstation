@@ -1708,7 +1708,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security/console_upper{
+/obj/machinery/computer/camera_viewer/console_upper{
 	dir = 4
 	},
 /turf/simulated/floor/orange,

@@ -5,21 +5,14 @@
  * @license MIT
  */
 
-import {
-  Button,
-  ByondUi,
-  Flex,
-  Image,
-  Section,
-  Stack,
-} from 'tgui-core/components';
+import { Button, ByondUi, Flex, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 import { MinimapControllerData, MinimapMarkerData } from './MinimapController';
 
-export const GeneralAlert = () => {
+export const CameraViewer = () => {
   const { data, act } = useBackend<MinimapControllerData>();
   const { title, theme, minimap_id, minimap_markers } = data;
 
@@ -58,22 +51,30 @@ export const GeneralAlert = () => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section scrollable fill title="Alerts">
+            <Section scrollable fill title="Cameras">
               <Flex direction="column">
                 <Flex.Item>
-                  {Object.values(minimap_markers).map((marker) => (
-                    <MinimapIconMarker
-                      name={marker.name}
-                      pos={marker.pos}
-                      visible={marker.visible}
-                      can_be_deleted={marker.can_be_deleted}
-                      icon_state={marker.icon_state}
-                      index={marker.index}
-                      marker={marker.marker}
-                      key={marker.index}
-                      target_ref={marker.target_ref}
-                    />
-                  ))}
+                  {Object.values(minimap_markers)
+                    .sort((a, b) =>
+                      a.name.toUpperCase() < b.name.toUpperCase()
+                        ? -1
+                        : a.name.toUpperCase() > b.name.toUpperCase()
+                          ? 1
+                          : 0,
+                    )
+                    .map((marker) => (
+                      <MinimapIconMarker
+                        name={marker.name}
+                        pos={marker.pos}
+                        visible={marker.visible}
+                        can_be_deleted={marker.can_be_deleted}
+                        icon_state={marker.icon_state}
+                        index={marker.index}
+                        marker={marker.marker}
+                        key={marker.index}
+                        target_ref={marker.target_ref}
+                      />
+                    ))}
                 </Flex.Item>
               </Flex>
             </Section>
@@ -85,22 +86,19 @@ export const GeneralAlert = () => {
 };
 
 const MinimapIconMarker = (markerData: MinimapMarkerData) => {
-  const { data } = useBackend<MinimapControllerData>();
-  const { placable_marker_states, placable_marker_images } = data;
+  const { act } = useBackend<MinimapControllerData>();
   return (
     <Stack>
       <Stack.Item>
-        {placable_marker_states[markerData.icon_state] !== null && (
-          <Image
-            align="right"
-            height="40px"
-            width="40px"
-            style={{
-              msTransform: 'scale(1.5)',
-            }}
-            src={`data:image/png;base64,${placable_marker_images[markerData.icon_state]}`}
-          />
-        )}
+        <Button
+          className="minimap-controller__buttons"
+          icon={'eye'}
+          onClick={() =>
+            act('view_camera', {
+              target_ref: markerData.target_ref,
+            })
+          }
+        />
       </Stack.Item>
       <Stack.Item grow>
         <Flex className="minimap-controller__marker-list" height={3}>

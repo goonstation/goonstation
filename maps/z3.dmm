@@ -363,7 +363,7 @@
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "abr" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/redblack/corner{
@@ -16457,7 +16457,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "dZQ" = (
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "dZX" = (
@@ -17800,7 +17800,7 @@
 /area/diner/hallway)
 "hwS" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/stripe_delivery,
@@ -20890,7 +20890,7 @@
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "oUf" = (
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "oVD" = (
@@ -24748,7 +24748,7 @@
 /area/radiostation/press)
 "yfP" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /turf/simulated/floor{
 	icon_state = "hive"
 	},
@@ -24783,7 +24783,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "ylC" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/television{
 	camera_networks = list("Pathopost")
 	},
 /turf/simulated/floor,

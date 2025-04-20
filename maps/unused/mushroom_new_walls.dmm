@@ -788,7 +788,7 @@
 /area/station/engine/inner)
 "aeB" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable{
@@ -10543,7 +10543,7 @@
 	},
 /area/listeningpost)
 "blN" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "blQ" = (
@@ -12452,7 +12452,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bTf" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/cable{
@@ -14684,7 +14684,7 @@
 /turf/space,
 /area/station/engine/proto)
 "dCv" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/red/redblackchecker,
@@ -15021,7 +15021,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "dSD" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/device/radio/intercom/detnet/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -19741,7 +19741,7 @@
 /area/station/solar/aisat)
 "hPh" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -23773,7 +23773,7 @@
 /area/station/crew_quarters/courtroom)
 "lul" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "luS" = (
@@ -28710,7 +28710,7 @@
 	},
 /area/station/hallway/primary/west)
 "pcx" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,

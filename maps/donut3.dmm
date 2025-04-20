@@ -1605,7 +1605,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/ai_upload)
 "avR" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8;
 	name = "Armory Outer Perimeter Security Cameras"
 	},
@@ -6181,7 +6181,7 @@
 "bLr" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 1
 	},
 /turf/simulated/floor/red/checker,
@@ -12268,7 +12268,7 @@
 /area/station/medical/research)
 "dCw" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -18371,7 +18371,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "fwR" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
@@ -18832,7 +18832,7 @@
 /area/station/crew_quarters/courtroom)
 "fEt" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 7
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -18928,7 +18928,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "fFP" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -21491,7 +21491,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "gtI" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -21828,7 +21828,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "gyy" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
@@ -22190,7 +22190,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/item/decoration/ashtray{
@@ -25648,7 +25648,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/bridge)
 "hGP" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -35039,7 +35039,7 @@
 	pixel_x = -1;
 	pixel_y = 31
 	},
-/obj/machinery/computer/security/wooden_tv/cargo{
+/obj/machinery/computer/television/cargo{
 	pixel_y = 10
 	},
 /obj/table/round/auto,
@@ -35226,7 +35226,7 @@
 /area/station/engine/engineering)
 "kEK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/edge{
@@ -37390,7 +37390,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "lqP" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/light/emergency{
@@ -42904,7 +42904,7 @@
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/mining/staff_room)
 "mYL" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "mYY" = (
@@ -50409,7 +50409,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "pmU" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating/jen,
 /area/station/security/beepsky)
 "pmV" = (
@@ -51537,7 +51537,7 @@
 /area/station/hangar/science)
 "pEL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -56829,7 +56829,7 @@
 /area/spacehabitat/pool)
 "rll" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/emergency,
@@ -58392,7 +58392,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "rLf" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 12
@@ -66153,7 +66153,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/storage)
 "uaw" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/det_hat{
 	pixel_y = 11
 	},

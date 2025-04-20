@@ -1927,7 +1927,7 @@
 	})
 "ic" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/black/side{
@@ -3499,7 +3499,7 @@
 	})
 "oA" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/yellowblack{
@@ -6916,7 +6916,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "BZ" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 10
 	},
 /obj/table/wood/auto/desk,
@@ -12063,7 +12063,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "XM" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 10
 	},
 /obj/table/wood/auto,
@@ -12300,7 +12300,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "YB" = (
-/obj/machinery/computer/security/telescreen{
+/obj/machinery/computer/camera_viewer/telescreen{
 	layer = 30;
 	name = "Conference Room Display";
 	camera_networks = list("XG6");

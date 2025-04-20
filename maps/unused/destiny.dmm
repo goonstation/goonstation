@@ -2329,7 +2329,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "akS" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -5609,7 +5609,7 @@
 /area/station/medical/medbay/lobby)
 "aAV" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{
@@ -14177,7 +14177,7 @@
 	},
 /area/listeningpost)
 "bAu" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAv" = (
@@ -18442,7 +18442,7 @@
 	},
 /area/station/science/research_director)
 "dnb" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	dir = 1;
 	name = "Television";
@@ -19300,7 +19300,7 @@
 	},
 /area/station/bridge)
 "dHO" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/security{
@@ -25058,7 +25058,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "ghA" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/det_hat{
 	pixel_y = 11
 	},
@@ -25875,7 +25875,7 @@
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
 "gDu" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/turretid{
@@ -26417,7 +26417,7 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom"
 	},
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "gTZ" = (
@@ -32189,7 +32189,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -46666,7 +46666,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "rpu" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	dir = 4
 	},
 /turf/simulated/floor/wood/eight{

@@ -8,6 +8,8 @@
 
 	/// Used by things that can view cameras to display certain cameras only
 	var/network = CAMERA_NETWORK_STATION
+	/// bitmask of minimaps this camera should appear on
+	var/minimap_types = 0
 	/// Used by autoname: EX "security camera"
 	var/prefix = "security"
 	/// Used by autoname: EX "camera - west primary hallway"
@@ -23,8 +25,6 @@
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
-	/// Cameras only the AI can see through
-	var/ai_only = FALSE
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
@@ -72,7 +72,6 @@
 							/area/station/turret_protected/AIbasecore1,
 							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
-		src.ai_only = TRUE
 		src.prefix = "AI"
 
 	if (src.sticky)
@@ -87,6 +86,9 @@
 	src.light.set_color(209/255, 27/255, 6/255)
 	src.light.attach(src)
 	src.light.enable()
+
+	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
+		src.minimap_types |= MAP_CAMERA_STATION
 
 	SPAWN(1 SECOND)
 		addToNetwork()
@@ -303,6 +305,10 @@
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
 
+/// Adds the minimap component for the camera
+/obj/machinery/camera/proc/add_to_minimap()
+	src.AddComponent(/datum/component/minimap_marker/minimap, src.minimap_types, "camera", name=src.c_tag)
+
 /obj/machinery/camera/ranch
 	name = "autoname - ranch"
 	c_tag = "autotag"
@@ -339,7 +345,6 @@
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
 	prefix = "AI"
-	ai_only = TRUE // TODO: Make this a separate network instead of a flag
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining

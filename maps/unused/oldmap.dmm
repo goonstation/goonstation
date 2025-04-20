@@ -2748,7 +2748,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "gG" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "gH" = (
@@ -7248,7 +7248,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "sp" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/security/main)
 "sq" = (
@@ -10119,7 +10119,7 @@
 /turf/simulated/floor/white,
 /area/tdome/tdomea)
 "zt" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	maplevel = 0;
 	name = "Thunderdome Cameras";
 	network = "thunder"
@@ -10189,7 +10189,7 @@
 	},
 /area/sim/area2)
 "zC" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "The VR representation of a camera monitoring program."
 	},
 /turf/unsimulated/floor{
@@ -13873,7 +13873,7 @@
 	
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	name = "Outpost Zeta Cameras";
 	network = "Zeta"
 	},

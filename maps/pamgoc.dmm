@@ -6541,7 +6541,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -26898,13 +26898,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bsW" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bsX" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/det_hat{
 	pixel_y = 11
 	},
@@ -26918,26 +26918,26 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bsY" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bsZ" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "bta" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "btb" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
 /area/station/janitor/office)
 "btc" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -35903,7 +35903,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -36344,7 +36344,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/light/emergency{
@@ -43173,7 +43173,7 @@
 "chb" = (
 /obj/table/auto,
 /obj/decal/cleanable/desk_clutter,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -43194,7 +43194,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 8
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purple,
@@ -44210,7 +44210,7 @@
 /obj/item/reagent_containers/food/drinks/cola{
 	pixel_x = 7
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = -7;
 	pixel_y = 10
 	},
@@ -45731,7 +45731,7 @@
 /area/station/medical/robotics)
 "cku" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/cdnp{
@@ -45750,7 +45750,7 @@
 	pixel_x = -14;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = 3;
 	pixel_y = 9
 	},
@@ -45758,7 +45758,7 @@
 /area/station/crew_quarters/quarters)
 "ckw" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -46164,7 +46164,7 @@
 /area/station/hallway/secondary/entry)
 "cli" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -46602,7 +46602,7 @@
 /area/station/science/bot_storage)
 "cmd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -47677,7 +47677,7 @@
 /area/listeningpost)
 "cob" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /obj/machinery/light{
 	dir = 4;
 	tag = ""

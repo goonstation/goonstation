@@ -1288,7 +1288,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "Rr" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "Rw" = (

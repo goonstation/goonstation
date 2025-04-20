@@ -3603,7 +3603,7 @@
 /area/crater/cave)
 "erb" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
@@ -4776,7 +4776,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
 "fBE" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -5517,7 +5517,7 @@
 /area/swampzone/interiors/quarry)
 "gup" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
@@ -9670,7 +9670,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "ltN" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -10017,7 +10017,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "lPo" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/unsimulated/floor/longtile/black,
 /area/swampzone/interiors/basements)
 "lQq" = (
@@ -17836,7 +17836,7 @@
 /turf/unsimulated/floor/green/corner,
 /area/crater/biodome/north)
 "vpP" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	pixel_y = 8
 	},
 /obj/table/wood/auto/desk,

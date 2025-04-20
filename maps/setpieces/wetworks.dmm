@@ -4898,7 +4898,7 @@
 	})
 "Hy" = (
 /obj/table/monodesk/auto,
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_y = 9;
 	pixel_x = -1
 	},
@@ -6424,7 +6424,7 @@
 	})
 "SR" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/carpet/office/other,

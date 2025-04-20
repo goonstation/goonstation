@@ -2388,7 +2388,7 @@
 	pixel_x = 26
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
@@ -6432,7 +6432,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Px" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "Py" = (

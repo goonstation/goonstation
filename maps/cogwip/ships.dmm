@@ -2290,7 +2290,7 @@
 	},
 /area/space)
 "gB" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -2306,7 +2306,7 @@
 /area/space)
 "gD" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -2419,7 +2419,7 @@
 /turf/space,
 /area/space)
 "gR" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/red/corner{
@@ -5329,7 +5329,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/space)
 "oo" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	network = "Prison"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -7697,7 +7697,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "um" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/map/light/dimred,
@@ -7761,7 +7761,7 @@
 	},
 /area/space)
 "uu" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8;
 	icon_state = "security"
 	},
@@ -9787,7 +9787,7 @@
 /turf/unsimulated/floor/sanitary,
 /area/space)
 "zm" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4;
 	icon_state = "security"
 	},

@@ -1474,7 +1474,7 @@
 /area/station/science/teleporter)
 "dK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purplewhite{
@@ -4862,7 +4862,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lE" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lF" = (
@@ -9868,7 +9868,7 @@
 	})
 "wB" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
@@ -11051,7 +11051,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zf" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
@@ -15851,7 +15851,7 @@
 	},
 /area/listeningpost)
 "Jx" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "Jy" = (

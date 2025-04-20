@@ -6190,7 +6190,7 @@
 	name = "Concourse B"
 	})
 "xe" = (
-/obj/machinery/computer/security/console_upper{
+/obj/machinery/computer/camera_viewer/console_upper{
 	dir = 4
 	},
 /turf/unsimulated/grimycarpet,
@@ -13133,7 +13133,7 @@
 /turf/unsimulated/floor/engine,
 /area/moon/underground)
 "XQ" = (
-/obj/machinery/computer/security/console_lower{
+/obj/machinery/computer/camera_viewer/console_lower{
 	dir = 4
 	},
 /turf/unsimulated/grimycarpet,

@@ -10955,7 +10955,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/red,
@@ -11694,7 +11694,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aOD" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aOE" = (
@@ -22377,7 +22377,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bEJ" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -25516,7 +25516,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/beepsky)
 "bQv" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
@@ -29146,7 +29146,7 @@
 /area/tech_outpost)
 "cdx" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -32108,7 +32108,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_y = 8
 	},
 /turf/simulated/floor/darkblue{
@@ -35088,7 +35088,7 @@
 /area/station/ranch)
 "gZf" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_y = 8
 	},
 /obj/ladder{
@@ -35819,7 +35819,7 @@
 /obj/blind_switch/area/north{
 	pixel_x = 4
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/security/main)
 "iln" = (
@@ -37022,7 +37022,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "jNn" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},

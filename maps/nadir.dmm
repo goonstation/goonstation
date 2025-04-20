@@ -1730,7 +1730,7 @@
 "aOL" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8;
 	icon_state = "securityb";
 	status = 1
@@ -4689,7 +4689,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
@@ -4767,7 +4767,7 @@
 	},
 /area/station/storage/emergencyinternals)
 "cfO" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
 	icon_state = "line2"
@@ -4811,7 +4811,7 @@
 /area/station/maintenance/southeast)
 "cgX" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/small/sticky/purpleish{
@@ -8960,7 +8960,7 @@
 /obj/blind_switch/area/north{
 	pixel_x = -11
 	},
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "dZx" = (
@@ -15873,7 +15873,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "gRz" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -15904,7 +15904,7 @@
 /area/station/storage/emergencyinternals)
 "gSF" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/blueblack{
@@ -18302,7 +18302,7 @@
 	})
 "hMU" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/item/instrument/harmonica{
@@ -20907,7 +20907,7 @@
 /area/station/maintenance/disposal)
 "iRk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -22025,7 +22025,7 @@
 /area/station/crew_quarters/baroffice)
 "jpQ" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -23621,7 +23621,7 @@
 /area/listeningpost)
 "jVz" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -27939,7 +27939,7 @@
 	pixel_x = -13;
 	pixel_y = 18
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -33352,7 +33352,7 @@
 /area/listeningpost)
 "nUg" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/item/decoration/ashtray{
@@ -34529,7 +34529,7 @@
 /area/ghostdrone_factory)
 "oys" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -37480,7 +37480,7 @@
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/courtroom)
 "pKo" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable{
@@ -38397,7 +38397,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "qhz" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
 "qhC" = (
@@ -39977,7 +39977,7 @@
 /area/station/crew_quarters/fitness)
 "qSY" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/small,
@@ -41451,7 +41451,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "rFT" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -43574,7 +43574,7 @@
 /area/station/hallway/secondary/exit)
 "sDF" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -46857,7 +46857,7 @@
 /area/station/turret_protected/ai)
 "tXL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 5
 	},
 /turf/simulated/floor/blueblack{
@@ -47763,7 +47763,7 @@
 	})
 "urL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/door_control{
@@ -50384,7 +50384,7 @@
 /area/station/crew_quarters/kitchen)
 "vAw" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/se,
@@ -50493,7 +50493,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/pasiphae/bridge)
 "vDK" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable{
@@ -51125,7 +51125,7 @@
 /area/station/ai_monitored/armory)
 "vRH" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/redblack{
@@ -51396,7 +51396,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security/console_lower,
+/obj/machinery/computer/camera_viewer/console_lower,
 /obj/machinery/door_control{
 	id = "kgenpopwindow";
 	name = "General Population Visitation";
@@ -52426,7 +52426,7 @@
 /area/station/crew_quarters/quarters_east)
 "wvv" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -56043,7 +56043,7 @@
 /area/station/crew_quarters/quarters_east)
 "yeJ" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/engine,

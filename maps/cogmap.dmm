@@ -1626,7 +1626,7 @@
 	pixel_x = 14;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -3289,7 +3289,7 @@
 /area/station/crew_quarters/showers)
 "amJ" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -3477,7 +3477,7 @@
 /area/station/security/brig)
 "anJ" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/cdnp{
@@ -6609,7 +6609,7 @@
 "azY" = (
 /obj/table/auto,
 /obj/decal/cleanable/desk_clutter,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -11081,7 +11081,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "aOg" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "aOh" = (
@@ -11775,7 +11775,7 @@
 	},
 /area/station/security/main)
 "aQa" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/red/side,
@@ -14485,7 +14485,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/machinery/light/emergency{
@@ -14677,7 +14677,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYD" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/det_hat{
 	pixel_y = 11
 	},
@@ -17348,7 +17348,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bij" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -19977,7 +19977,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "bth" = (
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -20106,7 +20106,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "btV" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -23609,7 +23609,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -27939,7 +27939,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purple,
@@ -30161,7 +30161,7 @@
 /area/station/science/lobby)
 "chY" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -30310,7 +30310,7 @@
 /area/station/hallway/secondary/exit)
 "cix" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -35290,7 +35290,7 @@
 	},
 /area/listeningpost)
 "czQ" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czS" = (
@@ -42711,7 +42711,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -44418,7 +44418,7 @@
 /area/station/solar/north)
 "iyl" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -55738,7 +55738,7 @@
 /obj/item/reagent_containers/food/drinks/cola{
 	pixel_x = -7
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 10;
 	pixel_x = 7
 	},

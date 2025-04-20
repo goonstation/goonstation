@@ -978,7 +978,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "abV" = (
@@ -23415,7 +23415,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aUB" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aUC" = (
@@ -26479,7 +26479,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bbc" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -29869,7 +29869,7 @@
 	icon_state = "4-8";
 	
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "bho" = (
@@ -30814,7 +30814,7 @@
 "bjv" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bjw" = (

@@ -331,7 +331,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aR" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aS" = (
@@ -515,7 +515,7 @@
 /area/station/security/main)
 "bp" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
@@ -2824,7 +2824,7 @@
 /area/station/crew_quarters/bar)
 "ha" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,

@@ -2085,7 +2085,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/chapel)
 "vN" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "Looks like it's tuned to your station."
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -2197,7 +2197,7 @@
 /area/noGenerate)
 "wz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/small/sticky,

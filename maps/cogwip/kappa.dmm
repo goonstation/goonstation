@@ -464,7 +464,7 @@
 /turf/simulated/floor/shuttle,
 /area/space)
 "bC" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	icon_state = "security";
 	dir = 8
 	},
@@ -5474,7 +5474,7 @@
 /turf/simulated/floor/airless/stairs/wide/other,
 /area/space)
 "pY" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/grey,
@@ -5487,7 +5487,7 @@
 /turf/simulated/floor/grey,
 /area/space)
 "qa" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/grey,
 /area/space)
 "qb" = (
@@ -6319,7 +6319,7 @@
 /area/space)
 "sq" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"

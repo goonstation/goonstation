@@ -229,7 +229,7 @@
 	},
 /area/listeningpost)
 "abb" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abc" = (
@@ -1889,7 +1889,7 @@
 /area/station/hangar/science)
 "alj" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "aln" = (
@@ -7394,7 +7394,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOh" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aOi" = (
@@ -9930,7 +9930,7 @@
 "bbe" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -12257,7 +12257,7 @@
 	},
 /area/station/hallway/primary/south)
 "bpv" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/red/side{
@@ -22143,7 +22143,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "fYW" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -25593,7 +25593,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "iaS" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -26732,7 +26732,7 @@
 	},
 /area/station/mining/magnet)
 "iHM" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -36255,7 +36255,7 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "omO" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable,
@@ -41372,7 +41372,7 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 9;
 	pixel_x = 2
 	},
@@ -48214,7 +48214,7 @@
 /area/station/hallway/primary/south)
 "vco" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer/security/research{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -49719,7 +49719,7 @@
 /area/station/crew_quarters/kitchen)
 "vPF" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/security/research,
+/obj/machinery/computer/camera_viewer,
 /obj/cable,
 /obj/machinery/door_control/bolter/new_walls/west{
 	id = "quarters_rd";

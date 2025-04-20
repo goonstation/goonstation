@@ -114,7 +114,7 @@
 /area/prefab/sea_sketch)
 "az" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_y = 4
 	},
 /turf/simulated/floor/grime,

@@ -5365,7 +5365,7 @@
 	teleport_blocked = 1
 	})
 "za" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 4
 	},
 /obj/table/reinforced/bar/auto{
@@ -7622,7 +7622,7 @@
 	})
 "KQ" = (
 /obj/table/reinforced/industrial/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/black,
@@ -7724,7 +7724,7 @@
 	})
 "Lm" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 4
 	},
 /turf/simulated/floor/concrete,

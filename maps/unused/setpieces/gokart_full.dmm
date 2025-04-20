@@ -1552,7 +1552,7 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/stripe_delivery,
@@ -1731,7 +1731,7 @@
 	})
 "el" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -2090,7 +2090,7 @@
 	},
 /area/sim/area2)
 "eW" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "The VR representation of a camera monitoring program."
 	},
 /turf/unsimulated/floor{
@@ -2347,7 +2347,7 @@
 	},
 /obj/item/pen,
 /obj/item/pen,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -2388,7 +2388,7 @@
 /area/racing_entry)
 "fx" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/specialroom/bar,

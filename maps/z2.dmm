@@ -16595,7 +16595,7 @@
 	},
 /area/precursor)
 "bnM" = (
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /obj/map/light/screen,
 /turf/unsimulated/floor/yellowblack/corner{
 	dir = 4
@@ -23191,7 +23191,7 @@
 /area/crypt/sigma/crew)
 "bOe" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -24805,7 +24805,7 @@
 /obj/table/virtual{
 	icon_state = "tabledir"
 	},
-/obj/machinery/computer/security/wooden_tv/small/virtual,
+/obj/machinery/computer/television/small/virtual,
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/gauntlet/viewing)
 "bTF" = (
@@ -28325,7 +28325,7 @@
 	})
 "chE" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet{
@@ -28955,7 +28955,7 @@
 	},
 /area/sim/area2)
 "cjJ" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "The VR representation of a camera monitoring program."
 	},
 /turf/unsimulated/floor{
@@ -29056,7 +29056,7 @@
 /area/sim/racing_entry)
 "ckb" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/wood,
@@ -29359,7 +29359,7 @@
 	pixel_x = 13;
 	pixel_y = 4
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = -3;
 	pixel_y = 8
 	},
@@ -32205,7 +32205,7 @@
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cuR" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/map/light/dimred,
@@ -36281,7 +36281,7 @@
 	},
 /area/owlery/Owlopen)
 "cHi" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	layer = 4
 	},
 /obj/table/reinforced/bar/auto,
@@ -36542,7 +36542,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "cIa" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/map/light/dimred,
@@ -46308,7 +46308,7 @@
 /turf/unsimulated/floor/carpet/wizard/standard/edge/se,
 /area/wizard_station)
 "dkF" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -49003,7 +49003,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "dzx" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
@@ -49526,7 +49526,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "dBy" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television"
 	},
@@ -50668,7 +50668,7 @@
 /area/crypt/sigma/morgue)
 "dGG" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple1";
 	tag = "icon-fpurple1"
@@ -54863,7 +54863,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "dUk" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -60591,7 +60591,7 @@
 	})
 "iEn" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/decal/stripe_delivery,
@@ -60744,7 +60744,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen{
+/obj/machinery/computer/television{
 	camera_networks = list("Minerva5");
 	pixel_x = -3
 	},
@@ -63965,7 +63965,7 @@
 /area/centcom/offices/marknstein)
 "leS" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	camera_networks = ("Owlery")
 	},
 /turf/unsimulated/floor/white,
@@ -64898,7 +64898,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
 "lUJ" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "It's a television.";
 	camera_networks = list("spooky")
 	},
@@ -66077,7 +66077,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
 "mWf" = (
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	layer = 4;
 	camera_networks = list("Owlery")
 	},
@@ -67028,7 +67028,7 @@
 	desc = "This table is also pretty dang old.";
 	name = "old wooden table"
 	},
-/obj/machinery/computer/security/telescreen{
+/obj/machinery/computer/television{
 	camera_networks = list("Minerva5");
 	pixel_y = 6
 	},
@@ -70953,7 +70953,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	camera_networks = list("Owlery");
 	pixel_y = 3
 	},
@@ -75522,7 +75522,7 @@
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "uyN" = (
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /obj/map/light/screen,
 /turf/unsimulated/floor/yellowblack/corner,
 /area/owlery/gangzone)
@@ -79777,7 +79777,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/outdoors/grass,
@@ -80151,7 +80151,7 @@
 /area/crater/cave/lower)
 "xSH" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	camera_networks = list("Owlery")
 	},
 /turf/unsimulated/floor/carpet{

@@ -2173,7 +2173,7 @@
 	},
 /area/listeningpost)
 "agm" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "agn" = (
@@ -2645,7 +2645,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "aiC" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "aiD" = (
@@ -5172,7 +5172,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge)
 "arg" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -7058,7 +7058,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "axO" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/security/main)
 "axP" = (
@@ -15457,7 +15457,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bdI" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bdJ" = (
@@ -25046,7 +25046,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -27239,7 +27239,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/quartermaster/storage)
 "jCV" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	name = "Test Chamber Monitor";
 	network = "Test Chamber"
 	},
@@ -27769,7 +27769,7 @@
 /turf/simulated/floor/shuttle,
 /area/space)
 "kIp" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "kIA" = (

@@ -2550,7 +2550,7 @@
 	pixel_x = -1;
 	pixel_y = 21
 	},
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
@@ -2979,7 +2979,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -3998,7 +3998,7 @@
 	pixel_x = -10
 	},
 /obj/table/round,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -11168,7 +11168,7 @@
 	},
 /area/listeningpost)
 "bKT" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -19279,7 +19279,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/hos)
 "hCw" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/machinery/light_switch/west{
@@ -20640,7 +20640,7 @@
 	},
 /area/station/mining/staff_room)
 "iww" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/red/side,
@@ -25500,7 +25500,7 @@
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/science/lobby)
 "lTe" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/machinery/light{
@@ -28294,7 +28294,7 @@
 /area/station/engine/gas)
 "nYt" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment{
@@ -30915,7 +30915,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "pUp" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/purple/standard/edge/nw,
 /area/station/janitor/office)
 "pUD" = (
@@ -34480,7 +34480,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 4
 	},
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
@@ -34573,7 +34573,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "sFx" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/phone/wall{
@@ -36375,7 +36375,7 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,

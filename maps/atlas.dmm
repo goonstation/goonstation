@@ -241,7 +241,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
 "abo" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
@@ -991,7 +991,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "adP" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "adQ" = (
@@ -11974,7 +11974,7 @@
 	},
 /area/station/hallway/primary/north)
 "fCU" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -15270,7 +15270,7 @@
 /turf/space,
 /area/space)
 "keS" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -18137,7 +18137,7 @@
 	pixel_y = 16;
 	pixel_x = -5
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8;
 	pixel_x = 4
 	},
@@ -23821,7 +23821,7 @@
 /area/station/engine/gas)
 "wHt" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 14;
 	pixel_x = -5
 	},

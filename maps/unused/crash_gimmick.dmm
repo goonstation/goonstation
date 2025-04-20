@@ -7250,7 +7250,7 @@
 /area/russian/radiation)
 "bno" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -20676,7 +20676,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
 /obj/machinery/light/emergency{
@@ -21338,7 +21338,7 @@
 /area/russian/radiation)
 "czv" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 7
 	},
 /obj/item/clothing/head/helmet/camera{
@@ -27528,7 +27528,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
@@ -31982,7 +31982,7 @@
 /area/russian/radiation)
 "dfC" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/grime{
@@ -43042,7 +43042,7 @@
 	},
 /area/russian/radiation)
 "hzM" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -46345,7 +46345,7 @@
 /turf/space,
 /area/russian/radiation)
 "jcW" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /obj/cable{
@@ -47743,7 +47743,7 @@
 /area/russian/radiation)
 "jCQ" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/television/small,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -58477,7 +58477,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/computer/security/wooden_tv{
+/obj/machinery/computer/television{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
 	network = "Zeta"
