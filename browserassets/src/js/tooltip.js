@@ -51,6 +51,7 @@ class TooltipPerformanceTracking {
 
 	end(id) {
 		const timing = this.timings.get(id);
+		if (!timing) return;
 		this.timings.set(id, {
 			...timing,
 			duration: performance.now() - timing.start,
@@ -126,30 +127,54 @@ class TooltipPerformanceTracking {
 
 class TooltipUI {
 	eta = null;
+	cacheStorage = null;
 	debug = false;
 	options = {};
 
 	constructor(debug = false) {
 		this.debug = debug;
 		this.eta = new window.eta.Eta();
-		if (debug) {
-			window.domainStorage.clear();
+		this.cacheStorage = document.getElementById("cache-storage");
+	}
+
+	fetch(resource, options) {
+		const promise = new Promise((resolve, reject) => {
+			const onMessage = ({ data }) => {
+				window.removeEventListener("message", onMessage);
+				let response = data.response;
+				if (ArrayBuffer[Symbol.species] === response.constructor) {
+					const decoder = new TextDecoder("utf-8");
+					response = decoder.decode(response);
+				}
+				if (data.error) reject({ status: data.status });
+				else resolve({ response, status: data.status });
+			};
+			window.addEventListener("message", onMessage);
+		});
+
+		if (this.cacheStorage?.contentWindow) {
+			this.cacheStorage.contentWindow.postMessage(
+				{ type: "fetch", resource, options },
+				"*",
+			);
+			return promise;
+		} else {
+			return fetch(resource, options).then((response) => {
+				if (!response.ok) throw new Error({ status: response.status });
+				return { response: response.text(), status: response.status };
+			});
 		}
 	}
 
 	async getContent(path) {
-		let content = window.domainStorage.getItem(path);
-		if (content && !this.debug) return content;
-
-		const res = await fetch(path);
-		if (!res.ok) {
-			const err = `Unable to load ${path} (${res.status})`;
+		try {
+			const res = await this.fetch(path);
+			return res.response;
+		} catch (e) {
+			const err = `Unable to load ${path} (${e.status})`;
 			handleError(err);
 			throw new Error(err);
 		}
-		content = await res.text();
-		if (content && !this.debug) window.domainStorage.setItem(path, content);
-		return content;
 	}
 
 	async build(options) {
@@ -195,6 +220,7 @@ class Tooltip {
 		if (this.isHiding()) return false;
 		if (this.tracking) {
 			const caller = new Error().stack?.split("\n")[3]?.trim()?.split(" ")[1];
+			if (!caller) return true;
 			const invokation = this.tracking.start(method, caller);
 			return invokation;
 		}

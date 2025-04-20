@@ -23,6 +23,10 @@ html {
 	font-size: 12px;
 }
 
+#cache-storage {
+	display: none;
+}
+
 a {
 	color: var(--theme-color);
 }

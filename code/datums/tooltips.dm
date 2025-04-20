@@ -41,7 +41,12 @@
 				"browserassets/src/vendor/js/eta.min.js",
 				"browserassets/src/js/tooltip.js",
 			) + recursiveFileList("browserassets/src/html/tooltips/"))
+
 		src.html = grabResource("html/tooltip.html")
+		if (cdn)
+			src.html = replacetext(src.html, "<!-- TOOLTIP_CACHE -->", {"
+				<iframe src="[resource("html/tooltip_cache.html")]" id="cache-storage"></iframe>
+			"})
 
 	/// Determine if we're allowed to show hover tooltips to a client
 	proc/canShowHover()

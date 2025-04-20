@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { compose } from "node:stream";
 import { fileURLToPath } from "url";
 import { series, parallel, src, dest } from "gulp";
 import { deleteAsync } from "del";
@@ -46,6 +47,8 @@ const cdn = `https://cdn-${SERVER_TARGET}.goonhub.com`;
 // Replace {{resource(path/to/file)}} in files with proper CDN URLs
 const resourceMacroRegex = /\{\{resource\(\"(.*?)\"\)\}\}/gi;
 
+const cdnVersionRegex = /{{.?CDN_VERSION.?}}/gi;
+
 const hashFormat = `{name}.{hash:8}{ext}`;
 
 let buildManifest = new Map();
@@ -57,13 +60,18 @@ function cleanFilePath(filePath) {
 }
 
 function macroReplacer() {
-	return replace(resourceMacroRegex, function handleReplace(m, filePath) {
-		if (buildManifest.has(filePath)) {
-			const manifestEntry = buildManifest.get(filePath);
-			filePath = manifestEntry.path;
-		}
-		return `${cdn}/${filePath}?v=${CDN_VERSION}`;
-	});
+	const resources = replace(
+		resourceMacroRegex,
+		function handleReplace(m, filePath) {
+			if (buildManifest.has(filePath)) {
+				const manifestEntry = buildManifest.get(filePath);
+				filePath = manifestEntry.path;
+			}
+			return `${cdn}/${filePath}?v=${CDN_VERSION}`;
+		},
+	);
+	const cdnVersions = replace(cdnVersionRegex, CDN_VERSION);
+	return compose(resources, cdnVersions);
 }
 
 function hashRenamer(filePath, file) {
