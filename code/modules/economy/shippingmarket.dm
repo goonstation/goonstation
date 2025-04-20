@@ -737,7 +737,8 @@
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
 			computer.update_static_data()
-
+		for_by_tcl(barcoder, /obj/item/portable_barcoder)
+			barcoder.update_destinations()
 
 // Debugging and admin verbs (mostly coder)
 

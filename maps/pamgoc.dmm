@@ -26890,9 +26890,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bsV" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 15

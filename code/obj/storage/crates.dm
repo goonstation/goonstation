@@ -819,7 +819,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
-		/obj/item/pipebomb/bomb/engineering = 2)
+		/obj/item/assembly/timer_ignite_pipebomb/engineering = 2)
 
 // evil nasty biohazard crate
 /obj/storage/crate/stxcrate

@@ -1222,32 +1222,6 @@
 		else
 			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
 
-/*
-/datum/achievementReward/secbelt
-	title = "(Skin) Security Toolbelt"
-	desc = "Turns your worn Utility Belt into a Security Toolbelt."
-	required_medal = "Suitable? How about the Oubliette?!"
-
-	rewardActivate(var/mob/living/carbon/human/activator)
-
-	rewardActivate(var/mob/activator)
-		if (!ishuman(activator))
-			return
-
-		var/mob/living/carbon/human/H = activator
-
-		if (H.belt && istype(H.belt, /obj/item/storage/belt/utility))
-			var/obj/item/storage/belt/utility/M = H.belt
-			var/prev = M.name
-			M.icon_state = "secbelt"
-			M.item_state = "secbelt"
-			M.name = "security toolbelt"
-			M.real_name = "security toolbelt"
-			M.desc = "For the trend-setting Security Officer on the go. (Base Item: [prev])"
-			H.set_clothing_icon_dirty()
-		return
-*/
-
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
 	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."

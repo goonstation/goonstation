@@ -93,6 +93,8 @@ TYPEINFO(/obj/item/magtractor)
 	afterattack(atom/A, mob/user as mob)
 		if (!A) return 0
 
+		if (!can_act(user)) return 0
+
 		if (!src.holding)
 			if (!isitem(A)) return 0
 			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)

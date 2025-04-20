@@ -4,7 +4,7 @@
 
 /datum/artifact/borgifier
 	associated_object = /obj/artifact/borgifier
-	type_name = "Cyborg converter"
+	type_name = "Cyborg Converter"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtypes = list("ancient")

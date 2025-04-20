@@ -199,10 +199,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return R
 
 	proc/remove_any_except(var/amount=1, var/exception)
-		if(amount > total_volume) amount = total_volume
+		if (!(exception in src.reagent_list))
+			src.remove_any(amount)
+			return
+
+		var/datum/reagent/exception_reagent = reagent_list[exception]
+		var/effective_total_volume = total_volume - exception_reagent.volume
+		if(amount > effective_total_volume) amount = effective_total_volume
 		if(amount <= 0) return
 
-		var/remove_ratio = amount/total_volume
+		var/remove_ratio = amount/effective_total_volume
 
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)

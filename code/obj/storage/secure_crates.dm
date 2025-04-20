@@ -71,6 +71,11 @@
 	icon_opened = "plasmacrateopen"
 	icon_closed = "plasmacrate"
 
+	hazard
+		name = "Hazard Transport Crate"
+		desc = "A secure crate designed for transport of hazardous research materials."
+		req_access = list(access_research)
+
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
@@ -88,11 +93,20 @@
 	icon_opened = "secgearcrateopen"
 	icon_closed = "secgearcrate"
 
-/obj/storage/secure/crate/gear/saxitoxin_grenades
-	name = "nerve agent crate (DANGER)"
+/obj/storage/secure/crate/gear/syndicate
+	name = "unmarked secure crate"
+	desc = "A secure crate. It doesn't seem to be using standard identification hardware."
 	req_access = list(access_syndicate_shuttle)
+
+/obj/storage/secure/crate/gear/syndicate/saxitoxin_grenades
+	name = "nerve agent crate (DANGER)"
 	spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
 	/obj/item/chem_grenade/saxitoxin = 3)
+
+/obj/storage/secure/crate/gear/transfer
+	name = "Secure Transfer Crate"
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	req_access = list(access_security)
 
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
@@ -164,7 +178,7 @@
 		name = "engineering explosive crate"
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
-		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+		spawn_contents = list(/obj/item/assembly/timer_ignite_pipebomb/engineering = 6)
 
 	interdictor
 		name = "interdictor fabrication crate"

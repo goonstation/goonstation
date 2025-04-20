@@ -128,7 +128,7 @@
 		stand_type = "pulserifle_rack"
 		contained_weapon = /obj/item/gun/energy/pulse_rifle
 		contained_weapon_name = "pulse rifle"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 
 		recharger
 			recharges_contents = 1
@@ -142,7 +142,7 @@
 		stand_type = "phaser_rack"
 		contained_weapon = /obj/item/gun/energy/phaser_gun/extended_mag
 		contained_weapon_name = "phaser"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)
@@ -157,7 +157,7 @@
 		stand_type = "phaser_rack"
 		contained_weapon = /obj/item/gun/energy/phaser_smg/extended_mag
 		contained_weapon_name = "phaser"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)

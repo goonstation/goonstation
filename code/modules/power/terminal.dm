@@ -27,6 +27,10 @@
 			var/obj/machinery/power/apc/APC = src.master
 			if (APC.terminal == src)
 				APC.terminal = null
+		if (istype(src.master, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/SMES = src.master
+			if (SMES.terminal == src)
+				SMES.terminal = null
 	..()
 
 /obj/machinery/power/terminal/hide(var/i)

@@ -12303,7 +12303,7 @@
 /obj/machinery/computer/security/telescreen{
 	layer = 30;
 	name = "Conference Room Display";
-	network = "XG65";
+	camera_networks = list("XG6");
 	pixel_x = -8;
 	pixel_y = 1
 	},

@@ -265,6 +265,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/say_decorate(message)
 	. = monospace_say_regex.Replace(message, SPAN_MONOSPACE("$1"))
 
+/mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
+	. = ..()
+	if (ismob(target))
+		src.cell?.use(W.stamina_cost)
+
 /mob/living/proc/process_killswitch()
 	return
 

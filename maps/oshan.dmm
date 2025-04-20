@@ -4452,10 +4452,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/security/wooden_tv/public{
 	pixel_y = 8
 	},
 /turf/simulated/floor/darkblue{
@@ -7255,9 +7252,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ayY" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ayZ" = (
@@ -12592,10 +12587,8 @@
 /turf/space/fluid/nospawn,
 /area/space)
 "aRK" = (
-/obj/submachine/cargopad{
-	name = " Research Outpost Pod Bay Pad"
-	},
 /obj/machinery/light_switch/auto,
+/obj/submachine/cargopad/researchoutpost,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "aRM" = (
@@ -21881,8 +21874,8 @@
 /turf/simulated/floor/caution/east,
 /area/station/mining/staff_room)
 "bDg" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
+/obj/submachine/cargopad/magnet{
+	name = "Mining Staff Room"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -23884,9 +23877,6 @@
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/office)
 "bKn" = (
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -23898,6 +23888,7 @@
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKo" = (
@@ -42555,10 +42546,7 @@
 /area/station/crew_quarters/baroffice)
 "qNP" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/security/wooden_tv/public{
 	pixel_y = 8
 	},
 /obj/ladder{

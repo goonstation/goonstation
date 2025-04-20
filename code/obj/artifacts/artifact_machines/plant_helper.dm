@@ -4,7 +4,7 @@
 
 /datum/artifact/plant_helper
 	associated_object = /obj/machinery/artifact/plant_helper
-	type_name = "Plant waterer"
+	type_name = "Plant Enhancer"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")

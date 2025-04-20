@@ -3470,10 +3470,7 @@
 	pixel_x = -1;
 	pixel_y = 31
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "A monitor connected to the cargo routing depot camera network.";
-	name = "Routing Depot Monitor";
-	network = "Cargo";
+/obj/machinery/computer/security/wooden_tv/cargo{
 	pixel_y = 10
 	},
 /obj/table/round/auto,
@@ -11823,13 +11820,11 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Teleport Pad"
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "duo" = (
@@ -17984,12 +17979,9 @@
 /area/station/turret_protected/ai)
 "fqg" = (
 /obj/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Routing Depot";
+/obj/machinery/camera/auto/cargo{
 	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
+	c_tag = "Routing Depot - internal"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
@@ -18583,9 +18575,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "fAO" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	req_access_txt = "1"
-	},
+/obj/machinery/computer/secure_data/detective_computer,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -23093,14 +23083,12 @@
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
 "gSY" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
 /obj/disposalpipe/segment,
 /obj/item/cargotele{
 	pixel_x = 5;
 	pixel_y = 8
 	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
 "gTe" = (
@@ -46689,15 +46677,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "ohz" = (
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/circuit/off,
 /area/station/medical/robotics)
 "ohB" = (
@@ -51953,12 +51939,9 @@
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/crew_quarters/cafeteria)
 "pLc" = (
-/obj/machinery/camera{
-	c_tag = "Routing Depot - external";
+/obj/machinery/camera/auto/cargo{
 	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
+	c_tag = "Routing Depot - external"
 	},
 /turf/space,
 /area/space)
@@ -58093,10 +58076,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rGw" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
 /obj/storage/secure/crate/bee/loaded,
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "rGI" = (
@@ -65530,9 +65511,7 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "tQv" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "tQG" = (
@@ -76865,10 +76844,7 @@
 "xeF" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
+	dir = 10
 	},
 /obj/railing/yellow{
 	dir = 4

@@ -235,7 +235,7 @@
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
-			src.camera.network = "Robots"
+			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
 			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
@@ -1087,7 +1087,12 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
+		if (istype(W, /obj/item/card/emag))
+			return
+		if (user.a_intent == INTENT_HARM || is_special)
+			..()
+			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1230,8 +1235,6 @@
 				else
 					boutput(user, SPAN_ALERT("Access denied."))
 
-		else if (istype(W, /obj/item/card/emag))
-			return
 		else if (istype(W, /obj/item/instrument) && opened)
 			user.drop_item(W)
 			W.set_loc(src)

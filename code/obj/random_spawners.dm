@@ -1219,7 +1219,6 @@
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/circuitboard/security,
 					/obj/item/circuitboard/stockexchange,
-					/obj/item/circuitboard/air_management,
 					/obj/item/circuitboard/general_alert,
 					/obj/item/circuitboard/atm,
 					/obj/item/circuitboard/solar_control,

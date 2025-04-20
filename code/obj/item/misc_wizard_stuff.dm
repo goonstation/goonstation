@@ -190,6 +190,12 @@
 		..()
 		return
 
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor))
+			src.do_brainmelt(user, 2)
+			return
+		. = ..()
+
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr) || check_target_immunity(usr))
 			. = ..()
@@ -261,6 +267,13 @@
 				zap_person(user)
 				return
 		else ..()
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor))
+			src.zap_person(user)
+			user.changeStatus("unconscious", 3 SECONDS) // stop magtractoring it
+			return
+		. = ..()
 
 	pull(mob/user)
 		if(check_target_immunity(user))

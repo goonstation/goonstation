@@ -1217,5 +1217,7 @@ TYPEINFO(/obj/item/inner_tube)
 	item_state = "secbelt"
 	check_wclass = 0
 	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
 
 // End of pod wars belts and holsters

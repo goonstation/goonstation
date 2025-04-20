@@ -24,7 +24,6 @@
 /area/space)
 "fg" = (
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/black,
@@ -122,7 +121,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit/red,
@@ -297,7 +295,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit/red,

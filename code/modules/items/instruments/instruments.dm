@@ -40,7 +40,6 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
-	var/static/datum/instrument_sound_bank/sound_bank = new()
 
 	/// Default keybinds, ranging from c2 to c7.
 	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
@@ -51,7 +50,7 @@
 	/// Can it go in a mechcomp component?
 	var/automatable = TRUE
 
-	New()
+	New(loc)
 		..()
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
@@ -71,9 +70,12 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			initialize()
 
+	initialize()
 		if (src.use_new_interface)
-			var/datum/instrument_data/instr_data = src.sound_bank.bank[initial(src.name)]
+			var/datum/instrument_data/instr_data = global.instrument_sound_bank.bank[initial(src.name)]
 			src.notes = instr_data.notes
 			src.note_keys_string = instr_data.note_keys_string
 			src.sounds_instrument = instr_data.sounds_instrument
@@ -503,6 +505,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -510,6 +513,27 @@
 	desc_verb = list("honks")
 	note_time = 0.8 SECONDS
 	pick_random_note = 1
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the bike-horn
+		parent_assembly.target_item_prefix = "bike-horn"
+
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
+
+	/// ----------------------------------------------
 
 	show_play_message(mob/user as mob)
 		return
@@ -541,10 +565,7 @@
 					JOB_XP(user, "Clown", 2)
 					break
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
 			if ("pulse")
@@ -742,10 +763,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("pulse")
 				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)

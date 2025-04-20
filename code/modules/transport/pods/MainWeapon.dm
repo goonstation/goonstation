@@ -280,7 +280,7 @@
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
-	firerate = 5 SECONDS
+	firerate = 10 SECONDS
 	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE

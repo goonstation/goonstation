@@ -320,11 +320,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abn" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abo" = (
@@ -5584,7 +5580,7 @@
 /area/abandonedoutpostthing)
 "aFh" = (
 /obj/machinery/computer/security{
-	network = "Pathopost"
+	camera_networks = list("Pathopost")
 	},
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
@@ -8897,9 +8893,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aQG" = (
-/obj/machinery/computer/security/wooden_tv{
-	network = "Prison"
-	},
+/obj/machinery/computer/security/wooden_tv/small,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aQH" = (
@@ -11557,7 +11551,6 @@
 /obj/storage/crate/internals,
 /obj/item/cable_coil,
 /obj/item/circuitboard/solar_control,
-/obj/item/circuitboard/air_management,
 /obj/item/skull,
 /obj/item/clothing/under/gimmick/sweater,
 /turf/space,
@@ -15709,11 +15702,7 @@
 /area/bee_trader)
 "cdo" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /turf/simulated/floor{
 	icon_state = "hive"
 	},
