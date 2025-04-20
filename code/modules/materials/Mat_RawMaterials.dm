@@ -437,6 +437,16 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
 
+/obj/item/material_piece/uranium
+	desc = "Deadly uranium ore."
+	icon_state = "rod"
+	default_material = "uranium"
+
+/obj/item/material_piece/neutrite
+	desc = "A very unstable radioactive metal."
+	icon_state = "rod"
+	default_material = "neutrite"
+
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "rod"
