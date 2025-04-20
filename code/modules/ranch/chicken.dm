@@ -7,7 +7,7 @@ Secret Chickens:
 Space
 Time
 Spacetime
-Timespaw
+Timespace
 
 Closed Source Chickens (Not Secret)
 Dragon
