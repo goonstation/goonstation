@@ -3471,7 +3471,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			..()
 			set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 
-	long_barrel
+/obj/item/gun/kinetic/sawnoff/long_barrel
 		name = "\improper Double Barrel Shotgun"
 		desc = "A bloody and worn double barreled shotgun. Details indicate recent usage in a last stand fight."
 		item_state = "double_barrel"
