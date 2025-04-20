@@ -72,6 +72,7 @@
 	if (locate(area) in aiareas)
 		src.prefix = "AI"
 		src.network = CAMERA_NETWORK_AI_ONLY
+		src.color = "#9999cc"
 
 	if (src.sticky)
 		autoposition(src.alternate_sprites)
