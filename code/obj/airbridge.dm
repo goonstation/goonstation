@@ -382,7 +382,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				TOOLTIP_PINNED, src,
 				title = src.name,
 				content = alist(
-					"file" = resource("html/tooltips/airbridge_controller.eta"),
+					"file" = "airbridge_controller.eta",
 					"data" = alist(
 						"src" = "\ref[src]",
 						"state_has_error" = startswith(state_str, "ERROR"),

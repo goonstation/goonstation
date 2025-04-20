@@ -15,13 +15,18 @@
 	var/datum/tooltip/hoverTip = null
 	/// All the tooltips opened by clicking on targets. _Should_ contain only visible tooltips
 	var/list/datum/tooltip/clicktip/clickTips = list()
+	/// A preloaded tooltip to use for the next shown pinned tooltip
+	var/datum/tooltip/clicktip/preloadedClickTip = null
 
 	New(client/C)
 		..()
-		if (!C) return
-		src.owner = C
-		src.clearAll()
-		src.loadAssets()
+		SPAWN(0)
+			if (!C) return
+			src.owner = C
+			src.clearAll()
+			src.loadAssets()
+			src.preload(TOOLTIP_HOVER)
+			src.preload(TOOLTIP_PINNED)
 
 	/// Special method to remove all tooltip windows
 	/// Used on client login to clean up any tooltips that might have been stuck open from a previous round
@@ -43,10 +48,10 @@
 			) + recursiveFileList("browserassets/src/html/tooltips/"))
 
 		src.html = grabResource("html/tooltip.html")
-		if (cdn)
-			src.html = replacetext(src.html, "<!-- TOOLTIP_CACHE -->", {"
-				<iframe src="[resource("html/tooltip_cache.html")]" id="cache-storage"></iframe>
-			"})
+		// if (cdn)
+		// 	src.html = replacetext(src.html, "<!-- TOOLTIP_CACHE -->", {"
+		// 		<iframe src="[resource("html/tooltip_cache.html")]" id="cache-storage"></iframe>
+		// 	"})
 
 	/// Determine if we're allowed to show hover tooltips to a client
 	proc/canShowHover()
@@ -87,17 +92,38 @@
 		else if (type == TOOLTIP_PINNED)
 			var/datum/tooltip/clicktip/clicktip = src.findClickTip(target)
 			if (!clicktip)
-				clicktip = new /datum/tooltip/clicktip(src)
+				if (src.preloadedClickTip)
+					clicktip = src.preloadedClickTip
+					src.preloadedClickTip = null
+				else
+					clicktip = new /datum/tooltip/clicktip(src)
 				src.clickTips += clicktip
+				SPAWN(0)
+					src.preload(TOOLTIP_PINNED)
 			toShow = clicktip
 		if (toShow)
 			toShow.show(target, mouse, title, content, theme, align, size, offset, bounds, extra)
+
+	/// Preload a tooltip by creating it ahead of time whilst remaining invisible
+	/// Intended to speed up initial show times
+	proc/preload(type)
+		PRIVATE_PROC(TRUE)
+		var/datum/tooltip/tooltip = null
+		if (type == TOOLTIP_HOVER)
+			tooltip = new /datum/tooltip(src)
+			src.hoverTip = tooltip
+		else if (type == TOOLTIP_PINNED)
+			tooltip = new /datum/tooltip/clicktip(src)
+			src.preloadedClickTip = tooltip
+		tooltip.preloading = TRUE
+		tooltip.create()
+		return tooltip
 
 	/**
 	 * Hide a tooltip
 	 *
 	 * Arguments:
-	 * * type (int) - Type of tooltip to show. One of `TOOLTIP_HOVER` or `TOOLTIP_PINNED`
+	 * * type (int) - Type of tooltip to hide. One of `TOOLTIP_HOVER` or `TOOLTIP_PINNED`
 	 * * target (atom) - The target of the tooltip (only required if hiding a pinned tooltip)
 	 */
 	proc/hide(type = TOOLTIP_HOVER, atom/target)
@@ -142,7 +168,10 @@
 		src.loadAssets()
 		src.hoverTip?.remove()
 		src.hideAllClickTips()
+		src.preloadedClickTip = null
 		src.clearAll()
+		src.preload(TOOLTIP_HOVER)
+		src.preload(TOOLTIP_PINNED)
 
 	proc/toggleDebug()
 		src.debug = !src.debug
@@ -170,6 +199,7 @@
 	var/datum/weakref/target
 	var/datum/tooltipOptions/options
 	var/window = ""
+	var/preloading = FALSE
 	var/loaded = FALSE
 	var/showing = FALSE
 	var/hiding = FALSE
@@ -178,7 +208,7 @@
 	New(datum/tooltips/holder)
 		..()
 		src.holder = holder
-		src.window = "[holder.windowPrefix][time2text(world.realtime, "DDhhmmss")][floor(world.time)]"
+		src.window = "[holder.windowPrefix][time2text(world.realtime, "DDhhmmss")][floor(world.time)][rand(1, 69420)]"
 		src.options = new()
 
 	disposing()
@@ -186,7 +216,6 @@
 		..()
 
 	proc/create()
-		PRIVATE_PROC(TRUE)
 		var/isDisabled = !src.pinned
 		if (src.holder.debug) isDisabled = FALSE
 		winset(src.holder.owner, src.window, list2params(alist(
@@ -198,6 +227,7 @@
 			"is-visible" = FALSE,
 			"is-disabled" = isDisabled,
 			"background-color" = "#000",
+			"use-title" = TRUE,
 		)))
 
 		var/html = replacetext(src.holder.html, "<!-- TOOLTIP_CONFIG -->", {"
@@ -314,13 +344,14 @@
 	proc/show(atom/target, mouse, title, content, theme, list/align, list/size, list/offset, list/bounds, list/extra)
 		if (!src.holder) return
 		var/update = src.shouldUpdate(target)
+		src.preloading = FALSE
 		src.hiding = FALSE
 		src.target = get_weakref(target)
 
 		if (!update) src.options.reset()
 		if (mouse) src.options.setMouse(mouse)
 		if (title) src.options.title = title
-		if (content) src.options.content = content
+		if (content) src.options.setContent(content)
 		if (theme) src.options.theme = theme
 		if (align) src.options.setAlign(align)
 		if (size) src.options.setSize(size)
@@ -344,9 +375,11 @@
 	proc/onHidden()
 		PRIVATE_PROC(TRUE)
 		src.showing = FALSE
-		var/atom/refTarget = src.target.deref()
-		UnregisterSignal(src.holder.owner.mob, COMSIG_MOB_DEATH)
-		UnregisterSignal(refTarget, COMSIG_PARENT_PRE_DISPOSING)
+		if (src.holder?.owner?.mob)
+			UnregisterSignal(src.holder.owner.mob, COMSIG_MOB_DEATH)
+		if (src.target)
+			var/atom/refTarget = src.target.deref()
+			UnregisterSignal(refTarget, COMSIG_PARENT_PRE_DISPOSING)
 		src.updateObjDialog(FALSE)
 
 	proc/remove()
@@ -362,7 +395,7 @@
 	/// Integration with `objDialog.dm`
 	proc/updateObjDialog(add)
 		PRIVATE_PROC(TRUE)
-		if (!src.holder?.owner?.mob) return
+		if (!src.holder?.owner?.mob || !src.target) return
 		var/atom/refTarget = src.target.deref()
 		if (!refTarget || !isobj(refTarget)) return
 		if (add)
@@ -374,7 +407,7 @@
 		switch (href_list["action"])
 			if ("loaded")
 				src.loaded = TRUE
-				src.build()
+				if (!src.preloading) src.build()
 			if ("showing")
 				src.showing = TRUE
 			if ("hidden")
@@ -442,6 +475,11 @@
 			"bounds" = src.bounds,
 			"extra" = src.extra,
 		)
+
+	proc/setContent(content)
+		if (islist(content) && content["file"])
+			content["file_resource"] = resource("html/tooltips/[content["file"]]")
+		src.content = content
 
 	/**
 	 * Parse and set the mouse target position

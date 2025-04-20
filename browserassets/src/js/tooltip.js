@@ -127,59 +127,75 @@ class TooltipPerformanceTracking {
 
 class TooltipUI {
 	eta = null;
-	cacheStorage = null;
+	// cacheStorage = null;
 	debug = false;
 	options = {};
 
 	constructor(debug = false) {
 		this.debug = debug;
 		this.eta = new window.eta.Eta();
-		this.cacheStorage = document.getElementById("cache-storage");
+		// this.cacheStorage = document.getElementById("cache-storage");
 	}
 
-	fetch(resource, options) {
-		const promise = new Promise((resolve, reject) => {
-			const onMessage = ({ data }) => {
-				window.removeEventListener("message", onMessage);
-				let response = data.response;
-				if (ArrayBuffer[Symbol.species] === response.constructor) {
-					const decoder = new TextDecoder("utf-8");
-					response = decoder.decode(response);
-				}
-				if (data.error) reject({ status: data.status });
-				else resolve({ response, status: data.status });
-			};
-			window.addEventListener("message", onMessage);
-		});
+	// fetch(resource, options) {
+	// 	const promise = new Promise((resolve, reject) => {
+	// 		const onMessage = ({ data }) => {
+	// 			window.removeEventListener("message", onMessage);
+	// 			let response = data.response;
+	// 			if (ArrayBuffer[Symbol.species] === response.constructor) {
+	// 				const decoder = new TextDecoder("utf-8");
+	// 				response = decoder.decode(response);
+	// 			}
+	// 			if (data.error) reject({ status: data.status });
+	// 			else resolve({ response, status: data.status });
+	// 		};
+	// 		window.addEventListener("message", onMessage);
+	// 	});
 
-		if (this.cacheStorage?.contentWindow) {
-			this.cacheStorage.contentWindow.postMessage(
-				{ type: "fetch", resource, options },
-				"*",
-			);
-			return promise;
-		} else {
-			return fetch(resource, options).then((response) => {
-				if (!response.ok) throw new Error({ status: response.status });
-				return { response: response.text(), status: response.status };
-			});
-		}
-	}
+	// 	if (this.cacheStorage?.contentWindow) {
+	// 		this.cacheStorage.contentWindow.postMessage(
+	// 			{ type: "fetch", resource, options },
+	// 			"*",
+	// 		);
+	// 		return promise;
+	// 	} else {
+	// 		return fetch(resource, options).then((response) => {
+	// 			if (!response.ok) throw new Error({ status: response.status });
+	// 			return { response: response.text(), status: response.status };
+	// 		});
+	// 	}
+	// }
 
-	async getContent(path) {
-		try {
-			const res = await this.fetch(path);
-			return res.response;
-		} catch (e) {
-			const err = `Unable to load ${path} (${e.status})`;
+	// async getContent(path) {
+	// 	try {
+	// 		const res = await this.fetch(path);
+	// 		return res.response;
+	// 	} catch (e) {
+	// 		const err = `Unable to load ${path} (${e.status})`;
+	// 		handleError(err);
+	// 		throw new Error(err);
+	// 	}
+	// }
+
+	async getContent(path, key) {
+		const cacheKey = `tooltip-${key}`;
+		let content = window.domainStorage.getItem(cacheKey);
+		if (content && !this.debug) return content;
+
+		const res = await fetch(path);
+		if (!res.ok) {
+			const err = `Unable to load ${path} (${res.status})`;
 			handleError(err);
 			throw new Error(err);
 		}
+		content = await res.text();
+		if (content) window.domainStorage.setItem(cacheKey, content);
+		return content;
 	}
 
 	async build(options) {
 		this.options = options;
-		const content = await this.getContent(options.file);
+		const content = await this.getContent(options.file_resource, options.file);
 		if (!content) return;
 		return this.eta.renderString(content, options.data);
 	}
@@ -387,6 +403,7 @@ class Tooltip {
 			$wrapContent.append($content);
 		}
 
+		document.title = title || "Tooltip";
 		const box = $wrapContent.getBoundingClientRect();
 		$wrapClone.remove();
 		this.size = {

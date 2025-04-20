@@ -54,7 +54,7 @@
 		TOOLTIP_PINNED, src.get_atom(),
 		title = src.pump_name,
 		content = alist(
-			"file" = resource("html/tooltips/pump.eta"),
+			"file" = "pump.eta",
 			"data" = alist(
 				"src" = "\ref[src]",
 				"is_on" = is_on(),
