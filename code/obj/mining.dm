@@ -2322,7 +2322,7 @@ TYPEINFO(/obj/item/cargotele)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target_name)].")
 		else
 			// Star Trek transporter accident
-			if(istype(cargo, /obj/storage))
+			if(S?.can_open())
 				mishap_crate(user, cargo, target_list)
 				for(var/obj/submachine/cargopad/pad in target_list)
 					pad.receive_cargo()
@@ -2370,7 +2370,7 @@ TYPEINFO(/obj/item/cargotele)
 				var/obj/item/I = AM
 				if(I.storage)
 					mishap_item_storage(I, target_list)
-			if (tele_pad != main_pad || S.can_open() || prob(25))
+			if (tele_pad != main_pad)
 				AM.set_loc(get_turf(tele_pad))
 				ThrowRandom(AM, dist = rand(0,3))
 		if(!mob_teled)
