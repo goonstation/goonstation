@@ -3465,22 +3465,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"aWN" = (
-/obj/decoration/clock{
-	pixel_x = -1;
-	pixel_y = 31
-	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "A monitor connected to the cargo routing depot camera network.";
-	name = "Routing Depot Monitor";
-	network = "Cargo";
-	pixel_y = 10
-	},
-/obj/table/round/auto,
-/turf/simulated/floor/carpet/red/fancy/edge{
-	dir = 9
-	},
-/area/station/quartermaster/office)
 "aWS" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -5733,6 +5717,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
+"bFb" = (
+/obj/disposalpipe/segment,
+/obj/machinery/camera/auto/cargo{
+	dir = 4;
+	c_tag = "Routing Depot - internal"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "bFd" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/red/fancy/edge{
@@ -17980,17 +17972,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
-"fqg" = (
-/obj/disposalpipe/segment,
-/obj/machinery/camera{
-	c_tag = "Routing Depot";
-	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
-	},
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
 "fqj" = (
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
@@ -33593,12 +33574,6 @@
 	dir = 8
 	},
 /area/station/security/main)
-"kfu" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/mini/oxygen,
-/obj/item/tank/mini/oxygen,
-/turf/simulated/floor/orangeblack,
-/area/station/hallway/secondary/exit)
 "kfw" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
@@ -35058,6 +35033,19 @@
 	dir = 4
 	},
 /turf/simulated/floor,
+/area/station/quartermaster/office)
+"kCc" = (
+/obj/decoration/clock{
+	pixel_x = -1;
+	pixel_y = 31
+	},
+/obj/machinery/computer/security/wooden_tv/cargo{
+	pixel_y = 10
+	},
+/obj/table/round/auto,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 9
+	},
 /area/station/quartermaster/office)
 "kCd" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -39149,6 +39137,16 @@
 "lOJ" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/checkpoint/arrivals)
+"lON" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/camera{
+	dir = 10
+	},
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "lOP" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -51593,6 +51591,13 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"pFe" = (
+/obj/machinery/camera/auto/cargo{
+	dir = 4;
+	c_tag = "Routing Depot - external"
+	},
+/turf/space,
+/area/space)
 "pFg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -51944,16 +51949,6 @@
 /obj/stool/bench/red,
 /turf/simulated/floor/carpet/red/fancy/junction/nw_e,
 /area/station/crew_quarters/cafeteria)
-"pLc" = (
-/obj/machinery/camera{
-	c_tag = "Routing Depot - external";
-	dir = 4;
-	name = "Routing Depot Camera";
-	network = "Cargo";
-	tag = ""
-	},
-/turf/space,
-/area/space)
 "pLf" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -60852,38 +60847,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"sww" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/pocket/oxygen{
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/obj/item/tank/pocket/oxygen{
-	pixel_x = -5;
-	pixel_y = 10
-	},
-/obj/item/tank/pocket/oxygen{
-	pixel_y = 10
-	},
-/obj/item/tank/pocket/oxygen{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/tank/pocket/oxygen{
-	pixel_x = 10;
-	pixel_y = 10
-	},
-/obj/item/tank/mini/oxygen{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/tank/mini/oxygen{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/item/tank/mini/oxygen,
-/turf/simulated/floor/darkblue/checker,
-/area/station/ai_monitored/storage/eva)
 "swx" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -76850,19 +76813,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library)
-"xeF" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/railing/yellow{
-	dir = 4
-	},
-/turf/simulated/floor/black/grime,
-/area/station/routing/depot)
 "xeS" = (
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
@@ -79546,6 +79496,12 @@
 "xRy" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/medical/crematorium)
+"xRI" = (
+/obj/table/reinforced/auto,
+/obj/item/tank/mini/oxygen,
+/obj/item/tank/mini/oxygen,
+/turf/simulated/floor/orangeblack,
+/area/station/hallway/secondary/exit)
 "xRM" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -79722,6 +79678,38 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/cafeteria)
+"xTY" = (
+/obj/table/reinforced/auto,
+/obj/item/tank/pocket/oxygen{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_y = 10
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/tank/mini/oxygen,
+/turf/simulated/floor/darkblue/checker,
+/area/station/ai_monitored/storage/eva)
 "xUa" = (
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -113207,7 +113195,7 @@ suj
 xjj
 hxM
 fCP
-sww
+xTY
 yko
 fvQ
 fvQ
@@ -132562,7 +132550,7 @@ oas
 bEf
 mhe
 mhe
-aWN
+kCc
 iJO
 buc
 oxW
@@ -143375,7 +143363,7 @@ etV
 fPJ
 jnD
 kNU
-kfu
+xRI
 wPm
 qTj
 aIy
@@ -150393,7 +150381,7 @@ bBD
 gCK
 oDI
 gHH
-fqg
+bFb
 pMo
 usK
 jtC
@@ -150698,7 +150686,7 @@ pvr
 goe
 qNg
 pbL
-xeF
+lON
 rfz
 rdj
 rdj
@@ -152808,7 +152796,7 @@ rdj
 vpj
 vJT
 rdj
-pLc
+pFe
 rdj
 rdj
 rdj

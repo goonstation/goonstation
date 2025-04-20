@@ -3229,6 +3229,12 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"buw" = (
+/obj/storage/secure/crate/gear/transfer,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/secwing)
 "buB" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -22629,6 +22635,16 @@
 /obj/machinery/communications_dish,
 /turf/space/fluid/acid/clear,
 /area/space)
+"jAX" = (
+/obj/machinery/light/small/floor,
+/obj/machinery/camera/auto/public{
+	c_tag = "The Red Ring";
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "jBa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24893,20 +24909,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay/cloner)
-"ktO" = (
-/obj/machinery/light/small/floor,
-/obj/machinery/camera{
-	c_tag = "The Red Ring";
-	dir = 9;
-	invisibility = 101;
-	name = "Overhead Camera";
-	network = "Zeta";
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "ktZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
@@ -26302,12 +26304,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"kYG" = (
-/obj/storage/secure/crate/gear/transfer,
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/security/secwing)
 "kYJ" = (
 /obj/storage/secure/closet/engineering/engineer,
 /obj/machinery/light,
@@ -95477,7 +95473,7 @@ oug
 asL
 vRH
 lEg
-kYG
+buw
 wwk
 jpb
 bkM
@@ -109376,7 +109372,7 @@ hbX
 bPj
 kAE
 cPz
-ktO
+jAX
 pRb
 vbY
 vBN

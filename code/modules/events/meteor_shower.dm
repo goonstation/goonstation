@@ -40,6 +40,7 @@ var/global/meteor_shower_active = 0
 	event_effect(source, amount, direction, delay, warning_time, speed, datum/material/transmute_material_instead="random", custom_typepath = null, throw_flag=THROW_NORMAL, custom_name = null)
 		..()
 		var/thrown_thing_typepath = isnull(custom_typepath) ? meteor_typepath : custom_typepath
+		var/current_shower_name = isnull(custom_name) ? shower_name : custom_name
 		// transmute effects only needed for `/obj/newmeteor`
 		if (ispath(thrown_thing_typepath, /obj/newmeteor))
 			if(transmute_material_instead == "random")
@@ -57,10 +58,7 @@ var/global/meteor_shower_active = 0
 			if(istext(transmute_material_instead))
 				transmute_material_instead = getMaterial(transmute_material_instead)
 			if(transmute_material_instead?.getID() == "jean")
-				shower_name = "jeteor jower"
-
-		if (!isnull(custom_name))
-			shower_name = custom_name
+				current_shower_name = "jeteor jower"
 
 		if (isnum(direction) && direction == -1)
 			// dear station: get fucked
@@ -114,7 +112,7 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "[capitalize_each_word(shower_name)] Alert", alert_origin = ALERT_WEATHER)
+			command_alert("[comsev] [current_shower_name] approaching [comdir]. Impact in [commins] seconds.", "[capitalize_each_word(current_shower_name)] Alert", alert_origin = ALERT_WEATHER)
 			playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 			// for all directions, just give, uh, up
 			// todo: someone make shields have an all-sides option
@@ -124,7 +122,7 @@ var/global/meteor_shower_active = 0
 
 		SPAWN(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "[capitalize_each_word(shower_name)] Alert", alert_origin = ALERT_WEATHER)
+				command_alert("The [current_shower_name] has reached the [station_or_ship()]. Brace for impact.", "[capitalize_each_word(current_shower_name)] Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
 	#ifndef UNDERWATER_MAP
