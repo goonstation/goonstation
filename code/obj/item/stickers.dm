@@ -422,9 +422,9 @@
 	var/has_camera = TRUE // the detective's stickers don't get a camera
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
-	var/camera_network = "stickers"
-	var/tv_network = "public"
-	var/sec_network = "SS13"
+	var/camera_network = CAMERA_NETWORK_STICKERS
+	var/tv_network = CAMERA_NETWORK_PUBLIC
+	var/sec_network = CAMERA_NETWORK_STATION
 
 	var/has_selectable_skin = 1 //
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",

@@ -1913,7 +1913,7 @@
 "ajU" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "It's a television.";
-	network = "spooky"
+	camera_networks = list("spooky")
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/hospital)
@@ -27285,14 +27285,10 @@
 	},
 /area/sim/bball)
 "cdt" = (
-/obj/machinery/camera{
+/obj/machinery/camera/auto/vspace{
 	c_tag = "autotag";
 	dir = 9;
-	invisibility = 101;
-	invuln = 1;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	name = "V-space - B-Ball Court"
 	},
 /turf/unsimulated/floor{
 	icon_state = "0,6"
@@ -33615,7 +33611,7 @@
 "czj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery"
+	camera_networks = ("Owlery")
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -33979,7 +33975,7 @@
 "cAk" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery"
+	camera_networks = list("Owlery")
 	},
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue1";
@@ -35789,7 +35785,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "Minerva5";
+	camera_networks = list("Minerva5");
 	pixel_x = -3
 	},
 /obj/machinery/camera{
@@ -37216,7 +37212,7 @@
 "cJM" = (
 /obj/machinery/computer/security/wooden_tv{
 	layer = 4;
-	network = "Owlery"
+	camera_networks = list("Owlery")
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/wizard/carpet/edge{
@@ -37610,11 +37606,7 @@
 	},
 /area/owlery/office)
 "cLg" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/map/light/screen,
 /turf/unsimulated/floor/yellowblack/corner,
 /area/owlery/gangzone)
@@ -37641,11 +37633,7 @@
 	},
 /area/owlery/gangzone)
 "cLn" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/map/light/screen,
 /turf/unsimulated/floor/yellowblack/corner{
 	dir = 4
@@ -38888,7 +38876,7 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery";
+	camera_networks = list("Owlery");
 	pixel_y = 3
 	},
 /obj/table/auto,
@@ -42378,7 +42366,7 @@
 	name = "old wooden table"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "Minerva5";
+	camera_networks = list("Minerva5");
 	pixel_y = 6
 	},
 /obj/machinery/camera{
@@ -74865,14 +74853,10 @@
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "tVB" = (
-/obj/machinery/camera{
+/obj/machinery/camera/auto/vspace{
 	c_tag = "autotag";
 	dir = 9;
-	invisibility = 101;
-	invuln = 1;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	name = "V-Space - Gun Sim Arena"
 	},
 /obj/invisible_teleporter/receive_only{
 	id = "murderbox"

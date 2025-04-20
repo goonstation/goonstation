@@ -350,7 +350,7 @@ TYPEINFO(/mob)
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
-	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+	for(var/mob/m in src) //aieyes, other terrible code
 		if(m.observing == src)
 			m.stopObserving()
 		else

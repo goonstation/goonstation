@@ -237,7 +237,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
-			src.camera.network = "Robots"
+			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
 			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))

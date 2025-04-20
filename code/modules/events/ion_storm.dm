@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 	amount_max = 5
 
 	valid_instance(obj/machinery/camera/camera)
-		. = ..() && camera.type == /obj/machinery/camera && camera.network == "SS13" && get_z(camera) == Z_LEVEL_STATION
+		. = ..() && camera.type == /obj/machinery/camera && camera.network == CAMERA_NETWORK_STATION && get_z(camera) == Z_LEVEL_STATION
 
 	build_targets()
 		for_by_tcl(camera, /obj/machinery/camera)
