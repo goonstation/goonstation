@@ -99,6 +99,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		CAMERA_NETWORK_RANCH,
 		CAMERA_NETWORK_SCIENCE,
 		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
 	)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
