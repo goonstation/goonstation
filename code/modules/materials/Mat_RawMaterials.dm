@@ -250,6 +250,11 @@
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
 
+/obj/item/material_piece/osmium
+	icon_state = "bar"
+	desc = "A processed bar of osmium, a very dense metal."
+	default_material = "osmium"
+
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."

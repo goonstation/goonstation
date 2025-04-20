@@ -775,7 +775,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 
@@ -786,6 +785,32 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 8)
 		setProperty("chemical", 9)
 
+/datum/material/metal/osmium
+	mat_id = "osmium"
+	name = "osmium"
+	desc = "It's very toxic."
+	color = "#4a4852"
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 8)
+		setProperty("hard", 8)
+		setProperty("chemical", 7)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/osmium_life())
+
+/datum/material/metal/osmiridium
+	mat_id = "osmiridium"
+	name = "osmiridium"
+	desc = "An astoundingly dense metal."
+	color = "#515068"
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 10)
+		setProperty("hard", 10)
+		setProperty("chemical", 7)
 
 /datum/material/metal/negativematter
 	mat_id = "negativematter"

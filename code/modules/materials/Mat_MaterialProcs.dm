@@ -793,3 +793,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/osmium_life
+	execute(mob/M, obj/item/I, mult)
+		if (istype(M, /mob/living))
+			var/mob/living/L = M
+			L.TakeDamage("All", tox = 1 * mult * (L.get_chem_protection() / 100))

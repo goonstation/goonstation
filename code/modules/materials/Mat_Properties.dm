@@ -71,6 +71,7 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/hardness
 	name = "Hardness"
 	id = "hard"
+	max_value = 10
 
 	default_value = 3
 	prefix_low_max = 2
@@ -94,6 +95,7 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/density
 	name = "Density"
 	id = "density"
+	max_value = 10
 
 	default_value = 3
 	prefix_low_max = 2

@@ -159,6 +159,22 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/osmiridium
+	name = "osmiridium"
+	result_id = "osmiridium"
+
+	validate(datum/material/M)
+		var/has_osmium = FALSE
+		var/has_iridium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "osmium")
+				has_osmium = TRUE
+			else if (mat.getID() == "iridiumalloy")
+				has_iridium = TRUE
+
+		return has_osmium && has_iridium
+
 // Glass
 
 /datum/material_recipe/plasmaglass

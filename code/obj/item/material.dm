@@ -486,6 +486,12 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/osmium
+	name = "osmium crystals"
+	desc = "A collection of osmium metal crystals, quite toxic due to oxidation."
+	material_name = "Osmium"
+	default_material = "osmium"
+
 /obj/item/raw_material/neutronium
 	name = "neutronium ore"
 	desc = "An ore containing deadly neutronium metal."
