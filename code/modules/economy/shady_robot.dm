@@ -45,7 +45,7 @@
 	//CARD VARS
 	var/card_registered = null		//who is the card registered to?
 	var/card_assignment = null		//what job does it have?
-	var/card_icon_state = "id"		//which icon should we use?
+	var/card_icon_state = "id_basic"		//which icon should we use?
 	var/card_icon_price = 0			//how much does that icon cost (flat price)?
 	var/card_duration = 60			//how long will the card's access last?
 	var/list/card_access = list()	//what access will it have?
@@ -157,7 +157,7 @@
 		//reset stuff to default
 		card_registered = null
 		card_assignment = null
-		card_icon_state = "id"
+		card_icon_state = "id_basic"
 		card_icon_price = 0
 		card_duration = 60
 		card_access = list()
@@ -304,7 +304,7 @@
 			var/newcolour = href_list["colour"]
 			switch(newcolour)
 				if ("none")
-					src.card_icon_state = "id"
+					src.card_icon_state = "id_basic"
 					src.card_icon_price = 0
 				if ("blue")
 					src.card_icon_state = "id_civ"
@@ -325,7 +325,7 @@
 					src.card_icon_state = "id_com"
 					src.card_icon_price = 2000
 				if ("gold")
-					src.card_icon_state = "gold"
+					src.card_icon_state = "id_gold"
 					src.card_icon_price = 5000
 
 			updatecardprice()
@@ -376,7 +376,7 @@
 					//reset to default so people can't go snooping and find out the last ordered card
 					card_registered = null
 					card_assignment = null
-					card_icon_state = "id"
+					card_icon_state = "id_basic"
 					card_icon_price = 0
 					card_duration = 60
 					card_access = list()
