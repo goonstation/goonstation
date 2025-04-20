@@ -521,6 +521,21 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
+	else // if you're blind and have missing eyes, you don't get a cool patch sorry
+		var/missing_left = src.traitHolder.hasTrait("eye_missing_left")
+		var/missing_right =  src.traitHolder.hasTrait("eye_missing_right")
+		if (src.glasses && (missing_left || missing_right))
+			src.stow_in_available(src.glasses)
+		if (missing_left && missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/blindfold(src), SLOT_GLASSES)
+		else if (missing_left)
+			var/obj/item/clothing/glasses/eyepatch/eyepatch = new(src)
+			eyepatch.icon_state = "eyepatch-L"
+			eyepatch.block_eye = "L"
+			src.equip_if_possible(eyepatch, SLOT_GLASSES)
+		else if (missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(src), SLOT_GLASSES)
+
 	if (src.traitHolder.hasTrait("shortsighted"))
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
@@ -606,7 +621,11 @@ Equip items from body traits.
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
+		var/obj/item/tank/E
+		if (src.traitHolder.hasTrait("plasmalungs"))
+			E = new /obj/item/tank/mini_plasma(src.loc)
+		else
+			E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
@@ -619,7 +638,12 @@ Equip items from body traits.
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
-		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+		if(!src.wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/device/pda2/pda = locate() in src

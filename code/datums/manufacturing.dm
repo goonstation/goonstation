@@ -1818,16 +1818,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 3 SECONDS
 	category = "Tool"
 
-/datum/manufacture/secbot
-	name = "Security Drone"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive_high" = 20,
-							 "energy" = 20)
-	item_outputs = list(/obj/machinery/bot/secbot)
-	create = 1
-	time = 120 SECONDS
-	category = "Machinery"
-
 /datum/manufacture/floorbot
 	name = "Construction Drone"
 	item_requirements = list("metal" = 15,
@@ -3292,6 +3282,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_requirements = list("metal_dense" = 10,
 							 "conductive" = 10)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
+	create = 1
+	time = 17 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/gunner_support
+	name = "Gunner Module"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/gunner_support)
 	create = 1
 	time = 17 SECONDS
 	category = "Tool"

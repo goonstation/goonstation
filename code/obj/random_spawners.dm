@@ -1219,7 +1219,6 @@
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/circuitboard/security,
 					/obj/item/circuitboard/stockexchange,
-					/obj/item/circuitboard/air_management,
 					/obj/item/circuitboard/general_alert,
 					/obj/item/circuitboard/atm,
 					/obj/item/circuitboard/solar_control,
@@ -2170,6 +2169,15 @@
 			pixel_x = 9;
 			pixel_y = 5
 		}(src.loc)
+
+/obj/random_item_spawner/armory_phasers
+	name = "armory phaser rack spawner"
+	icon_state = "armory_phaser"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+	items2spawn = list(/obj/machinery/weapon_stand/phaser_rack,
+	/obj/machinery/weapon_stand/phaser_smg_rack
+	)
 
 /obj/random_item_spawner/fruits
 	name = "random fruit spawner"

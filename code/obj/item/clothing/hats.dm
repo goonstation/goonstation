@@ -310,7 +310,7 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
@@ -618,18 +618,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
-	team_num = TEAM_NANOTRASEN
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The beret <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 	c_flags = SPACEWEAR
 
 	setupProperties()

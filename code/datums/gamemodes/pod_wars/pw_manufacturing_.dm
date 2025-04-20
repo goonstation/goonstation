@@ -23,6 +23,7 @@
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
@@ -51,13 +52,6 @@
 		STOP_TRACKING
 		..()
 
-	claim_free_resources(datum/game_mode/pod_wars/PW)
-		if (team_num == TEAM_NANOTRASEN)
-			src.free_resources = PW.team_NT.resources
-		else if (team_num == TEAM_SYNDICATE)
-			src.free_resources = PW.team_SY.resources
-		..()
-
 	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != src.team_num)
 			boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
@@ -81,6 +75,7 @@
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
@@ -120,6 +115,7 @@
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
 		/datum/manufacture/orescoop,
@@ -353,12 +349,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 
 /obj/machinery/manufacturer/mining/pod_wars/
 	var/team_num = 0
+	free_resources = list(
+		/obj/item/material_piece/mauxite = 20,
+		/obj/item/material_piece/pharosium = 20,
+		/obj/item/material_piece/molitz = 20)
 
 	New()
 		START_TRACKING
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
-
+		available -= /datum/manufacture/industrialarmor
 		available -= /datum/manufacture/industrialboots
 		available += /datum/manufacture/pod_wars/industrialboots
 
@@ -369,19 +369,13 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		STOP_TRACKING
 		..()
 
-	claim_free_resources(datum/game_mode/pod_wars/PW)
-		if (team_num == TEAM_NANOTRASEN)
-			src.free_resources = PW.team_NT.resources
-		else if (team_num == TEAM_SYNDICATE)
-			src.free_resources = PW.team_SY.resources
-		..()
-
 /obj/machinery/manufacturer/mining/pod_wars/syndicate
 	team_num = TEAM_SYNDICATE
 
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
+		available += /datum/manufacture/pod_wars_industrialarmor_SY
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
@@ -390,6 +384,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack
+		available += /datum/manufacture/pod_wars_industrialarmor_NT
 		..()
 
 /obj/machinery/manufacturer/medical/pod_wars
@@ -504,7 +499,25 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	time = 2 SECONDS
 	category = "Weapon"
 
+/datum/manufacture/pod_wars_industrialarmor_NT
+	name = "Industrial Space Armor Set"
+	item_requirements = list("metal_superdense" = 15,
+							 "conductive_high" = 10,
+							 "crystal_dense" = 5)
+	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/NT/industrial, /obj/item/clothing/head/helmet/space/pod_wars/NT/industrial)
+	create = 1
+	time = 90 SECONDS
+	category = "Clothing"
 
+/datum/manufacture/pod_wars_industrialarmor_SY
+	name = "Industrial Space Armor Set"
+	item_requirements = list("metal_superdense" = 15,
+							 "conductive_high" = 10,
+							 "crystal_dense" = 5)
+	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/SY/industrial, /obj/item/clothing/head/helmet/space/pod_wars/SY/industrial)
+	create = 1
+	time = 90 SECONDS
+	category = "Clothing"
 
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"
@@ -513,7 +526,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		 "salbutamol", "anti_rad",\
 		"oculine", "mannitol", "saline",\
 		"salicylic_acid", "blood",\
-		"menthol", "antihistamine")
+		"menthol", "antihistamine", "oculine")
 
 	icon_state = "dispenser"
 	icon_base = "dispenser"
@@ -525,7 +538,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
 	"oculine", "mannitol", "penteticacid", "saline",\
 	"salicylic_acid", "blood", \
-	"menthol", "antihistamine", "smelling_salt")
+	"menthol", "antihistamine", "smelling_salt", "oculine")
 
 /obj/machinery/manufacturer/general/pod_wars
 	New()

@@ -705,7 +705,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
-	desc = "A cheap replica of an ancient japanese throwing star."
+	desc = "A cheap replica of an ancient Japanese throwing star."
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1770,7 +1770,7 @@ obj/item/swords/fragile_sword
 
 obj/item/whetstone
 	name = "whetstone"
-	desc = "A stone that can sharpen a blade and restore it to it's former glory."
+	desc = "A stone that can sharpen a blade and restore it to its former glory."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "whetstone"
 

@@ -17,6 +17,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
+	///Can this ammo be cooked off by heating?
+	var/cookable = TRUE
 
 	proc
 		swap(var/obj/item/ammo/A)
@@ -299,6 +301,8 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		. = ..()
+		if (!src.cookable)
+			return
 		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
@@ -725,6 +729,7 @@
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
 	throwforce = 0
+	cookable = FALSE
 
 //0.40
 /obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
@@ -790,6 +795,31 @@
 	icon_dynamic = 1
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
+
+//0.50
+/obj/item/ammo/bullets/antiair
+	sname = ".50 BMG frag"
+	name = ".50 BMG fragmenting rounds"
+	desc = "Extremely powerful rounds with a fragmenting HE core."
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/antiair
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_DEAGLE
+
+/obj/item/ammo/bullets/fivehundred
+	sname = ".500 Mag"
+	name = ".500 speedloader"
+	desc = "A speedloader of .500 magnum revolver bullets. Good lord."
+	icon_state = "38-7"
+	amount_left = 7
+	max_amount = 7
+	ammo_type = new/datum/projectile/bullet/deagle50cal
+	ammo_cat = AMMO_DEAGLE
+	icon_dynamic = 1
+	icon_short = "38"
+	icon_empty = "speedloader_empty"
+
+
 
 //0.58
 /obj/item/ammo/bullets/flintlock
@@ -998,9 +1028,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		amount_left = 1
 		max_amount = 1
 
-	antiair
-		name = "anti-air fragmenting rounds"
-		ammo_type = /datum/projectile/special/spreader/uniform_burst/circle/antiair
+
 
 //1.0
 /obj/item/ammo/bullets/rod

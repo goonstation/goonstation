@@ -190,6 +190,8 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
+		if(isdead(user))
+			return
 		if(src.say_instead)
 			var/msg = "[prob(20)?"":";"][generate_message(O, user)]"
 			if(prob(20))
