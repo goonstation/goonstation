@@ -1904,7 +1904,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium 239"
-	canMix = 0 //Can not be easily modified.
 	desc = "Weapons grade refined plutonium."
 	color = "#230e4d"
 
@@ -1916,6 +1915,36 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+/datum/material/metal/uranium
+	mat_id = "uranium"
+	name = "uranium"
+	desc = "Deadly uranium, often used for weapons of mass destruction."
+	color = "#e6ff01"
+
+	New()
+		..()
+		material_flags |= MATERIAL_CRYSTAL
+		setProperty("density", 7)
+		setProperty("hard", 5)
+		setProperty("n_radioactive", 3)
+		setProperty("radioactive", 4)
+		setProperty("thermal", 3)
+		setProperty("electrical", 4)
+
+/datum/material/metal/neutrite
+	mat_id = "neutrite"
+	name = "neutrite"
+	desc = "A metal right on the brink of instability, waiting for something to push it past its limit."
+	color = "#7898ca"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 7)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("n_radioactive", 5)
 
 /// Material for bundles of glowsticks as fuel rods
 /datum/material/metal/glowstick
