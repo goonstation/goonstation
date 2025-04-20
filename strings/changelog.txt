@@ -1,4 +1,9 @@
 
+(t)sun apr 20 25
+(u)Lord_Earthfire
+(p)23053
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Promity sensors and timers start out a a 5 second timer. You are still able to set them to a lower time, if you want.
 (t)sat apr 19 25
 (u)FlameArrow57
 (p)22789
