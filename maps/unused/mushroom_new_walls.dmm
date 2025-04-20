@@ -35877,7 +35877,7 @@
 /area/station/medical/medbay/surgery)
 "uaO" = (
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
 /turf/simulated/floor/blue,

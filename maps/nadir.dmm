@@ -33785,7 +33785,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "oeQ" = (

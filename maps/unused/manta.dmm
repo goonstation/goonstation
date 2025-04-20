@@ -9883,7 +9883,7 @@
 /area/station/crew_quarters/captain)
 "aDk" = (
 /obj/table/wood/auto/desk,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/item/pinpointer/disk,
 /turf/simulated/floor/carpet/arcade,

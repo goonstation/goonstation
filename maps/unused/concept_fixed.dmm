@@ -30762,7 +30762,7 @@
 	dir = 1;
 	icon_state = "tabledir"
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
 /turf/simulated/floor/blue,

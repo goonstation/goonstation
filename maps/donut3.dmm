@@ -79691,7 +79691,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	pixel_x = -13
 	},
 /turf/simulated/floor/carpet{
