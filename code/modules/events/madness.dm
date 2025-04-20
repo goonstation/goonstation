@@ -26,6 +26,20 @@
 		src.sound_event()
 
 		sleep(5 SECONDS)
+		//try to keep it mostly central over the station but with some randomness
+		var/atom/movable/seamonster_overlay/monster = new(locate(100, rand(130, 190), Z_LEVEL_STATION))
+		monster.alpha = 0
+		animate(monster, 10 SECONDS, alpha = 255)
+		//so I went through a full 4 arc hero's journey story for this snippet of code
+		//parallax was too jumpy, animate caused flickering issues because it only renders at either end of the animation
+		//a Move/glide loop seems like the goldilocks solution for moving large objects (mostly) smoothly across long distances
+		SPAWN(0)
+			for (var/i in 1 to 100)
+				if (QDELETED(monster))
+					break
+				monster.glide_size = 32/(3 SECONDS) * world.tick_lag
+				monster.set_loc(get_step(monster, EAST))
+				sleep(3 SECONDS)
 
 		src.shake_event()
 
@@ -48,6 +62,9 @@
 		while (TIME - start_time < 4 MINUTES)
 			sleep(rand(20, 60) SECONDS)
 			src.sound_event()
+		animate(monster, alpha = 0, time = 10 SECONDS)
+		sleep(10 SECONDS)
+		qdel(monster)
 
 	proc/cause_madness()
 		var/list/potential_victims = list()
@@ -111,3 +128,16 @@
 
 	cleanup()
 		src.num_victims = 0
+
+/atom/movable/seamonster_overlay
+	icon = 'icons/misc/1024x1024.dmi'
+	icon_state = "seamonster1"
+	plane = PLANE_ABOVE_FOREGROUND_PARALLAX
+	anchored = TRUE
+	mouse_opacity = FALSE
+
+	New()
+		. = ..()
+		//TODO: more/better seamonster shadows?
+		src.icon_state = "seamonster[rand(1,2)]"
+		src.Scale(2,2)

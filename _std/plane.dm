@@ -12,6 +12,7 @@
 #define PLANE_HIDDENGAME -95
 #define PLANE_FOREGROUND_PARALLAX -93
 #define PLANE_FOREGROUND_PARALLAX_OCCLUSION -92
+#define PLANE_ABOVE_FOREGROUND_PARALLAX -91
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
 #define PLANE_ABOVE_LIGHTING -50
@@ -105,6 +106,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE_NOWARP, name = "noshadow_above_plane_nowarp", distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FOREGROUND_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "foreground_parallax_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FOREGROUND_PARALLAX_OCCLUSION, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "foreground_parallax_occlusion_plane", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_FOREGROUND_PARALLAX_NO_OCCLUSION, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "foreground_parallax_no_occlusion_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
