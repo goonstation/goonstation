@@ -317,6 +317,9 @@ CONTAINS:
 			src.ammo += 1
 			qdel(I)
 			return
+		if (istype(I, /obj/item/gun/kinetic/zipgun))
+			I.Attackby(src, user)
+			return
 		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
