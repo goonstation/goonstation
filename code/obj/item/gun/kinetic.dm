@@ -541,10 +541,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			else
 				var/obj/item/ammo/bullets/staples/temp_ammo = new
 				temp_ammo.amount_left = stapler.ammo
+				temp_ammo.name = I.name
 				src.Attackby(temp_ammo, user)
 				temp_ammo.loadammo(temp_ammo, src)
 				stapler.ammo = temp_ammo.amount_left
 				qdel(temp_ammo)
+			return
+		if (istype(I, /obj/item/implant/projectile/staple))
+			var/obj/item/ammo/bullets/staples/temp_ammo = new
+			temp_ammo.amount_left = 1
+			src.Attackby(temp_ammo, user)
+			temp_ammo.loadammo(temp_ammo, src)
+			if (temp_ammo.amount_left == 0)
+				qdel(I)
+			qdel(temp_ammo)
 			return
 		. = ..()
 
