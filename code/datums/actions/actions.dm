@@ -726,15 +726,24 @@
 				if (!istype(target.wear_mask, /obj/item/clothing/mask))
 					interrupt(INTERRUPT_ALWAYS)
 					return
-				else
-					if (istype(target.back, /obj/item/tank))
-						target.internal = target.back
+				if(!HAS_FLAG(target.wear_mask.c_flags, MASKINTERNALS))
+					interrupt(INTERRUPT_ALWAYS)
+					return
+				var/list/eq_list = target.get_equipped_items(TRUE)
+				if(target.r_hand) eq_list += target.r_hand
+				if(target.l_hand) eq_list += target.l_hand
+				for(var/I in eq_list)
+					if(istype(I, /obj/item/tank))
+						var/obj/item/tank/tank = I
+						target.internal = I
 						target.update_inv()
-						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
-							T.icon_state = "airon"
+						tank.icon_state = "airon"
 						for(var/mob/M in AIviewers(target, 1))
 							M.show_message(text("[] is now running on internals.", src.target), 1)
 						target.internal.add_fingerprint(owner)
+						return
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
 	duration = 40
