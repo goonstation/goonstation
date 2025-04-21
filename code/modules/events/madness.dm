@@ -23,10 +23,11 @@
 	event_effect(source)
 		set waitfor = FALSE
 		. = ..()
-		//TODO: big spooky shapes overhead
+
 		src.sound_event()
 
 		sleep(5 SECONDS)
+
 		//try to keep it mostly central over the station but with some randomness
 		var/atom/movable/seamonster_overlay/monster = new(locate(100, rand(130, 190), Z_LEVEL_STATION))
 		monster.alpha = 0
