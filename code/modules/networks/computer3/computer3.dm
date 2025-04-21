@@ -104,12 +104,17 @@
 				base_icon_state = "securitycomputer2"
 
 		bank_data
-			name = "Bank computer"
+			name = "personnel management computer"
 			icon_state = "databank"
 			base_icon_state = "databank"
+			setup_drive_size = 80
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/printer
-			setup_starting_program = list(/datum/computer/file/terminal_program/bank_records, /datum/computer/file/terminal_program/secure_records)
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_program = list(
+				/datum/computer/file/terminal_program/bank_records,
+				/datum/computer/file/terminal_program/secure_records,
+				/datum/computer/file/terminal_program/job_controls,
+			)
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
