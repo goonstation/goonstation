@@ -6,6 +6,7 @@
 #else
 	disabled = TRUE
 #endif
+	customization_available = TRUE
 	var/num_victims = 0
 
 	admin_call(source)
