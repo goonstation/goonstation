@@ -213,7 +213,7 @@
 
 		if (src.organHolder.chest)
 			var/chest_stage = src.surgeryHolder.get_surgery_progress("torso_surgery")
-			if (chest_stage < 2)
+			if (chest_stage == 1)
 				. += "<br>[SPAN_ALERT("<B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B>")]"
 			else if (chest_stage >= 2)
 				if (src.organHolder.heart)

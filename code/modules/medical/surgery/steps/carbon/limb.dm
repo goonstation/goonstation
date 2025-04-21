@@ -107,3 +107,49 @@
 			limb.attach(C)
 			var/can_secure = ismob(surgeon) && (limb.easy_attach || surgeon?.find_type_in_hand(/obj/item/suture) || surgeon?.find_type_in_hand(/obj/item/staple_gun))
 			limb.remove_stage = can_secure ? 0 : 2
+
+	skeleton
+		wrench
+			name = "Loosen"
+			desc = "Loosen the limb from the socket."
+			icon_state = "wrench"
+			success_sound = 'sound/items/Screwdriver.ogg'
+			flags_required = TOOL_WRENCHING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [limb] with [tool]."))
+				limb.remove_stage = 1
+				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [limb] with [tool].")
+
+
+		crowbar
+			name = "Pry"
+			desc = "Pry the limb from the socket."
+			icon_state = "crowbar"
+			success_sound = 'sound/items/Crowbar.ogg'
+			flags_required = TOOL_PRYING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pries [limb] loose with [tool]."))
+				limb.remove_stage = 2
+				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [limb] with [tool].")
+
+
+		remove
+			name = "Remove"
+			desc = "Remove the limb."
+			icon_state = "wrench"
+			success_sound = 'sound/items/Ratchet.ogg'
+			flags_required = TOOL_WRENCHING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
+				limb.remove(0)
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [limb] off with [tool]."))
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(C,"combat")]'s [limb.name].")
+				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(C,"diary")]'s [limb.name]", "combat")

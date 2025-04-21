@@ -61,6 +61,53 @@
 				patient.death()
 			patient.organHolder.drop_organ("head")
 
+	skeleton
+		wrench
+			name = "Loosen"
+			desc = "Loosen the head from the neck."
+			icon_state = "wrench"
+			success_sound = 'sound/items/Screwdriver.ogg'
+			flags_required = TOOL_WRENCHING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [O] with [tool]."))
+				O.op_stage = 1
+				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [O] with [tool].")
+
+
+		crowbar
+			name = "Pry"
+			desc = "Pry the head loose."
+			icon_state = "crowbar"
+			success_sound = 'sound/items/Screwdriver.ogg'
+			flags_required = TOOL_PRYING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pries [O] loose with [tool]."))
+				O.op_stage = 2
+				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [O] with [tool].")
+
+
+		remove
+			name = "Remove"
+			desc = "Remove the head."
+			icon_state = "wrench"
+			success_sound = 'sound/items/Ratchet.ogg'
+			flags_required = TOOL_WRENCHING
+			damage_dealt = 0
+			on_complete(mob/surgeon, obj/item/tool)
+				var/mob/living/carbon/human/C = parent_surgery.patient
+				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
+				C.organHolder.drop_organ("head")
+				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [O] off with [tool]."))
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(C,"combat")]'s [O.name].")
+				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(C,"diary")]'s [O.name]", "combat")
+
+
 /datum/surgery_step/chest
 	cut
 		name = "Cut"
@@ -355,7 +402,7 @@
 
 	remove
 		name = "Remove"
-		desc = "Remove the brain, or open the cavity."
+		desc = "Remove the skull."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_SAWING

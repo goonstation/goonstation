@@ -5,10 +5,11 @@
 	visible = FALSE
 	implicit = TRUE
 
-	default_sub_surgeries = list(/datum/surgery/limb/arm/l_arm,
-	/datum/surgery/limb/arm/r_arm,
-	/datum/surgery/limb/leg/l_leg,
-	/datum/surgery/limb/leg/r_leg,
+	default_sub_surgeries = list(
+	/datum/surgery/limb/arm/l_arm, /datum/surgery/limb/skeleton/arm/l_arm,
+	/datum/surgery/limb/arm/r_arm, /datum/surgery/limb/skeleton/arm/r_arm,
+	/datum/surgery/limb/leg/l_leg, /datum/surgery/limb/skeleton/leg/l_leg,
+	/datum/surgery/limb/leg/r_leg, /datum/surgery/limb/skeleton/leg/r_leg
 	)
 
 /datum/surgery/limb
@@ -72,6 +73,7 @@
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)
+			..()
 		l_arm
 			id = "l_arm_surgery"
 			name = "Left Arm Surgery"
@@ -90,10 +92,12 @@
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			..()
 			add_next_step( new/datum/surgery_step/limb/attach_leg(src,limb_var_name))
+
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)
+			..()
 		l_leg
 			id = "l_leg_surgery"
 			name = "Left Leg Surgery"
@@ -108,3 +112,46 @@
 			icon_state = "right_leg"
 			limb_var_name = "r_leg"
 			affected_zone = "r_leg"
+
+	skeleton
+		generate_surgery_steps(mob/living/surgeon, mob/user)
+			add_next_step(new/datum/surgery_step/limb/skeleton/wrench(src, limb_var_name))
+			add_next_step(new/datum/surgery_step/limb/skeleton/crowbar(src, limb_var_name))
+			add_next_step(new/datum/surgery_step/limb/skeleton/remove(src, limb_var_name))
+		surgery_possible(mob/living/surgeon)
+			if (!isskeleton(patient) || !patient.organHolder || surgeon.a_intent == INTENT_HARM)
+				return FALSE
+			return ..()
+		surgery_conditions_met(mob/surgeon, obj/item/tool)
+			return (isskeleton(patient) && patient.organHolder)
+		leg
+
+			l_leg
+				id = "skele_l_leg_surgery (Skeleton)"
+				name = "Left Leg Surgery"
+				desc = "Remove the patients' left leg."
+				icon_state = "left_leg"
+				limb_var_name = "l_leg"
+				affected_zone = "l_leg"
+			r_leg
+				id = "skele_r_leg_surgery (Skeleton)"
+				name = "Right Leg Surgery"
+				desc = "Remove the patients' right leg."
+				icon_state = "right_leg"
+				limb_var_name = "r_leg"
+				affected_zone = "r_leg"
+		arm
+			l_arm
+				id = "skele_l_arm_surgery (Skeleton)"
+				name = "Left Arm Surgery"
+				desc = "Remove the patients' left arm."
+				icon_state = "left_arm"
+				limb_var_name = "l_arm"
+				affected_zone = "l_arm"
+			r_arm
+				id = "skele_r_arm_surgery"
+				name = "Right Arm Surgery (Skeleton)"
+				desc = "Remove the patients' right arm."
+				icon_state = "right_arm"
+				limb_var_name = "r_arm"
+				affected_zone = "r_arm"
