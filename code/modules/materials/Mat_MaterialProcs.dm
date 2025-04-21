@@ -793,3 +793,22 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/veranium_life
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "veranium_shock", rand(40, 60)))
+			return
+		if (istype(L))
+			L.shock(I, 100, "All", 1, FALSE)
+
+/datum/materialProc/voltite_life
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "voltite_shock", rand(60, 80)))
+			return
+		if (istype(L))
+			L.shock(I, 100, "All", 1, FALSE)
+
+		if (prob(10) && istype(L))
+			arcFlash(I, L, 500, 1.5)
+		else
+			arcFlashTurf(I, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), 500, 100)

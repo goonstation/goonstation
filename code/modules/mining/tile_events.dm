@@ -42,6 +42,7 @@
 	var/static/list/metals_to_pick = list(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/iridium = 100,
 
 										  /obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium = 50,
+										  /obj/item/material_piece/veranium = 25,
 										  /obj/item/material_piece/neutronium = 10
 										 )
 

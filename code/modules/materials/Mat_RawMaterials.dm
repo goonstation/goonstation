@@ -458,3 +458,13 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"
 	default_material = "gold"
+
+/obj/item/material_piece/veranium
+	desc = "Veranium metal, shocking to the touch."
+	icon_state = "bar"
+	default_material = "veranium"
+
+/obj/item/material_piece/voltite
+	desc = "A highly energetic bar of voltite."
+	icon_state = "bar"
+	default_material = "voltite"

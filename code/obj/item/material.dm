@@ -486,6 +486,12 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/veranium
+	name = "veranium crystal"
+	desc = "A sparking crystal of veranium."
+	material_name = "Veranium"
+	default_material = "veranium"
+
 /obj/item/raw_material/neutronium
 	name = "neutronium ore"
 	desc = "An ore containing deadly neutronium metal."

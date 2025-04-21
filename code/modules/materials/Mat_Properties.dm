@@ -33,6 +33,7 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"
 	id = "electrical"
+	max_value = 10
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))

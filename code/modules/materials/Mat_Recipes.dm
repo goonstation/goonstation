@@ -144,6 +144,22 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/osmiridium
+	name = "voltite"
+	result_id = "voltite"
+
+	validate(datum/material/M)
+		var/has_electrum = FALSE
+		var/has_veranium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "electrum")
+				has_electrum = TRUE
+			else if (mat.getID() == "veranium")
+				has_veranium = TRUE
+
+		return has_electrum && has_veranium
+
 /datum/material_recipe/plasmasteel
 	name = "plasmasteel"
 	result_id = "plasmasteel"
