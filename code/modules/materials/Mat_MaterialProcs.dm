@@ -806,7 +806,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (ON_COOLDOWN(I, "voltite_shock", rand(60, 80)))
 			return
 		if (istype(L))
-			L.shock(I, 100, "All", 1, FALSE)
+			L.shock(I, 100, "All", 1, TRUE)
 
 		if (prob(10) && istype(L))
 			arcFlash(I, L, 500, 1.5)
