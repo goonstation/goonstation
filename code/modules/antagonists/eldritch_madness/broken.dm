@@ -24,6 +24,7 @@
 	src.owner.current.setStatus("broken_madness", rand(8,12) MINUTES)
 
 /datum/antagonist/broken/remove_self(take_gear, source)
+	. = ..()
 	src.owner.current.delStatus("broken_madness") //hopefully this doesn't infinite loop? idk
 
 /datum/antagonist/broken/announce_removal(source)
