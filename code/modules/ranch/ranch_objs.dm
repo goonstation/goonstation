@@ -1,5 +1,6 @@
 //emergency stub:
 /datum/projectile/special/launch_self
+	var/max_bounce_count = 2
 /*
 
 TODO:
