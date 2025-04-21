@@ -1755,10 +1755,10 @@
 	name = "Explosives Storage"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ags" = (
@@ -6511,7 +6511,7 @@
 	name = "Armory"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "atW" = (
@@ -7421,7 +7421,7 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -7971,7 +7971,7 @@
 /obj/item/clothing/suit/space/diving/security,
 /obj/item/clothing/head/helmet/space/engineer/diving/security,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
 /area/station/hangar/security)
@@ -12797,7 +12797,7 @@
 	},
 /obj/rack,
 /obj/item/tank/jetpack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/blue,
 /area/station/ai_monitored/storage/eva)
@@ -26406,7 +26406,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -34644,7 +34644,7 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35880,7 +35880,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
 /area/station/hangar/security)
@@ -37501,7 +37501,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
@@ -39251,7 +39251,7 @@
 	},
 /obj/rack,
 /obj/item/tank/jetpack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;

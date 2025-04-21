@@ -46,8 +46,8 @@ var/list/pw_rewards_tier3 = null
 	var/datum/pod_wars_team/team_SY
 
 	var/atom/movable/screen/hud/score_board/board
-	var/round_limit = 70 MINUTES
-	var/activate_control_points_time = 15 MINUTES
+	var/round_limit = 45 MINUTES
+	var/activate_control_points_time = 5 MINUTES
 	var/round_start_time					//value of TIME macro at post_setup proc call. IDK if this value is stored somewhere already.
 	var/did_ion_storm_happen = FALSE 		//set to true when the ion storm comes.
 

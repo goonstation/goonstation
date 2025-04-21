@@ -1335,7 +1335,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
-	team_num = TEAM_SYNDICATE
 	item_function_flags = IMMUNE_TO_ACID
 
 	New()
@@ -1345,18 +1344,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	setupProperties()
 		..()
 		setProperty("heatprot", 35)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 
 	setupProperties()
 		..()
@@ -1371,19 +1358,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
-		team_num = TEAM_SYNDICATE
 		hides_from_examine = C_UNIFORM|C_SHOES
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 		setupProperties()
 			..()
@@ -1752,18 +1727,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	pilot
 		name = "NT space suit"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
-		team_num = TEAM_NANOTRASEN
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 		setupProperties()
 			..()
@@ -1775,18 +1738,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
 			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been painted blue?"
-			team_num = TEAM_NANOTRASEN
-			#ifdef MAP_OVERRIDE_POD_WARS
-			attack_hand(mob/user)
-				if (get_pod_wars_team_num(user) == team_num)
-					..()
-				else
-					boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-					make_fake_explosion(src)
-					user.u_equip(src)
-					src.dropped(user)
-					qdel(src)
-			#endif
 
 			setupProperties()
 				..()
@@ -2202,7 +2153,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
-	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
 
@@ -2218,10 +2168,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
+		var/regex/nt_regex = new(@"^[Nn]ano[Tt]rasen\b")
+		var/job_to_show = replacetext(badge_owner_job, nt_regex, "") //Remove NT so you get "Nanotrasen's Finest Security Consultant"
+		var/descriptive_text = "[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [job_to_show]: [badge_owner_name].")]"
 		if (istype(target))
-			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[descriptive_text]", "You show off the badge to [target.name]: <br>[descriptive_text]")
 		else
-			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge: <br>[descriptive_text]", "You show off the badge: <br>[descriptive_text]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack_self(mob/user as mob)
@@ -2252,6 +2205,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	name = "Hall Monitor Badge"
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
+
+/obj/item/clothing/suit/security_badge/nanotrasen
+	name = "Nanotrasen Badge"
+	desc = "An official badge for a Nanotrasen Responder."
+	icon_state = "security_badge_nanotrasen"
 
 /obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"

@@ -27183,7 +27183,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bFf" = (
@@ -37405,11 +37405,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "cjp" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -57054,11 +57050,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "fWN" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -57085,11 +57077,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
 "fYx" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment{
 	dir = 1;

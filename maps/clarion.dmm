@@ -9956,9 +9956,7 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "bxs" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/caution/misc{
 	dir = 6
 	},
@@ -15985,10 +15983,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "fkB" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
 /obj/machinery/oreaccumulator,
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -22925,7 +22921,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -25464,10 +25460,8 @@
 /area/station/crew_quarters/kitchen)
 "lQC" = (
 /obj/machinery/light,
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/machinery/portable_reclaimer,
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lRb" = (
@@ -29368,9 +29362,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "oKd" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/caution/misc{
 	dir = 6
 	},
@@ -31327,9 +31319,7 @@
 "qfk" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
+/obj/storage/secure/closet/research/chemical/pharmacy,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/specialroom/medbay,

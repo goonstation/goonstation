@@ -1301,11 +1301,11 @@
 	dir = 1;
 	light_type = /obj/item/light/tube/yellowish
 	},
-/obj/submachine/cargopad,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "afv" = (
@@ -12195,14 +12195,12 @@
 /turf/simulated/floor,
 /area/station/ranch)
 "fOM" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
 /obj/machinery/oreaccumulator,
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "fPi" = (
@@ -15967,7 +15965,7 @@
 	},
 /area/station/chapel/sanctuary)
 "lko" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/random_item_spawner/armory_phasers,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "lkD" = (
@@ -17189,12 +17187,7 @@
 	},
 /area/station/security/main)
 "mRh" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
@@ -17508,13 +17501,11 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "nol" = (
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
 /obj/machinery/light/incandescent,
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "nqV" = (

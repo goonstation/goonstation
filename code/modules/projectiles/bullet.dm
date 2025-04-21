@@ -1221,12 +1221,12 @@ toxic - poisons
 	casing = /obj/item/casing/shotgun/orange
 
 	on_hit(atom/hit)
-		new /obj/effects/explosion/small(get_turf(hit))
-		explosion_new(null, get_turf(hit), 1)
+		new /obj/effects/explosion/fiery(get_turf(hit))
+		explosion_new(null, get_turf(hit), 2)
 
 	on_max_range_die(obj/projectile/O)
-		new /obj/effects/explosion/small(get_turf(O))
-		explosion_new(null, get_turf(O), 1)
+		new /obj/effects/explosion/fiery(get_turf(O))
+		explosion_new(null, get_turf(O), 2)
 
 /datum/projectile/bullet/flare
 	name = "flare"
@@ -2073,9 +2073,9 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	name = "Salvo Rocket"
 	max_rotation_rate = 5
 	dissipation_delay = 30
-	start_speed = 15
+	start_speed = 6
 	explosion_power = 1
-	shot_delay = 0.3 SECONDS
+	shot_delay = 0.5 SECONDS
 	var/initial_projectile = TRUE
 
 	is_valid_target(atom/A, obj/projectile/P)
