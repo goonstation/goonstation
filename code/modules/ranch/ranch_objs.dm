@@ -1,6 +1,8 @@
 //emergency stub:
+#ifndef SECRETS_ENABLED
 /datum/projectile/special/launch_self
 	var/max_bounce_count = 2
+#endif
 /*
 
 TODO:
