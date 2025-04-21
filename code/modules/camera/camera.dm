@@ -6,8 +6,8 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	text = ""
 
-	/// Used by camera monitors to display certain cameras only
-	var/network = "SS13"
+	/// Used by things that can view cameras to display certain cameras only
+	var/network = CAMERA_NETWORK_STATION
 	/// Used by autoname: EX "security camera"
 	var/prefix = "security"
 	/// Used by autoname: EX "camera - west primary hallway"
@@ -304,9 +304,21 @@
 /obj/machinery/camera/ranch
 	name = "autoname - ranch"
 	c_tag = "autotag"
-	network = "ranch"
+	network = CAMERA_NETWORK_RANCH
 	prefix = "ranch"
 	color = "#AAFF99"
+
+/obj/machinery/camera/mining
+	name = "autoname - mining"
+	network = CAMERA_NETWORK_MINING
+	prefix = "mining"
+	color = "#daa85c"
+
+/obj/machinery/camera/science
+	name = "autoname - science"
+	network = CAMERA_NETWORK_SCIENCE
+	prefix = "outpost"
+	color = "#efb4e5"
 
 /* ====== Auto Cameras ====== */
 
@@ -317,7 +329,7 @@
 
 /obj/machinery/camera/auto/ranch
 	name = "autoname - ranch"
-	network = "ranch"
+	network = CAMERA_NETWORK_RANCH
 	prefix = "ranch"
 	color = "#AAFF99"
 
@@ -325,28 +337,94 @@
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
 	prefix = "AI"
-	ai_only = TRUE
+	ai_only = TRUE // TODO: Make this a separate network instead of a flag
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining
 	name = "autoname - mining"
-	network = "Mining"
+	network = CAMERA_NETWORK_MINING
 	prefix = "mining"
 	color = "#daa85c"
 
 /// Science outpost cameras
 /obj/machinery/camera/auto/science
 	name = "autoname - science"
-	network = "Zeta"
+	network = CAMERA_NETWORK_SCIENCE
 	prefix = "outpost"
 	color = "#efb4e5"
 
-/// Invisible cameras for VR
-/obj/machinery/camera/auto/virtual
-	name = "autoname - VR"
-	network = "VR"
+/obj/machinery/camera/auto/cargo
+	name = "autoname - cargo"
+	network = CAMERA_NETWORK_CARGO
+	prefix = "routing"
+	color = "#daa85c"
+
+/// Invisible cameras for V-Space
+/obj/machinery/camera/auto/vspace
+	name = "autoname - V-Space"
+	network = CAMERA_NETWORK_VSPACE
+	prefix = "v-space"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildappearance"
+#endif
 	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED_ALWAYS
+	opacity = 0
+	density = 0
 	invuln = TRUE
+
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+/// cameras for ghost observers
+/obj/machinery/camera/auto/ghost
+	name = "autoname - ghost"
+	network = null
+	prefix = "ghost"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildappearance"
+#endif
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED_ALWAYS
+	opacity = 0
+	density = 0
+	invuln = TRUE
+
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+/// "overhead" cameras
+/obj/machinery/camera/auto/public
+	name = "autoname - entertainment"
+	network = CAMERA_NETWORK_PUBLIC
+	prefix = "entertainment"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildappearance"
+#endif
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED_ALWAYS
+
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
 
 /obj/machinery/camera/auto/alt
 #ifdef IN_MAP_EDITOR

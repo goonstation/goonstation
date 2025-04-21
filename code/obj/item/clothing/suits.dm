@@ -2168,10 +2168,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
+		var/regex/nt_regex = new(@"^[Nn]ano[Tt]rasen\b")
+		var/job_to_show = replacetext(badge_owner_job, nt_regex, "") //Remove NT so you get "Nanotrasen's Finest Security Consultant"
+		var/descriptive_text = "[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [job_to_show]: [badge_owner_name].")]"
 		if (istype(target))
-			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[descriptive_text]", "You show off the badge to [target.name]: <br>[descriptive_text]")
 		else
-			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge: <br>[descriptive_text]", "You show off the badge: <br>[descriptive_text]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack_self(mob/user as mob)

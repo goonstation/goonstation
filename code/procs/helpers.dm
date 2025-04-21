@@ -671,12 +671,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/zoldorf/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/intangible/seanceghost/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
 
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
@@ -2618,7 +2612,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 				continue
 
 		// Otherwise, output to ghosts
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
 			boutput(M, rendered)
 
 /// Find a client based on ckey

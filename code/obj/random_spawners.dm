@@ -841,8 +841,8 @@
 	/obj/item/storage/toolbox/electrical,
 	/obj/item/storage/toolbox/emergency,
 	/obj/item/tank/air,
-	/obj/item/tank/emergency_oxygen,
-	/obj/item/tank/mini_oxygen,
+	/obj/item/tank/pocket/oxygen,
+	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
 	/obj/item/wrench)
 
@@ -1219,7 +1219,6 @@
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/circuitboard/security,
 					/obj/item/circuitboard/stockexchange,
-					/obj/item/circuitboard/air_management,
 					/obj/item/circuitboard/general_alert,
 					/obj/item/circuitboard/atm,
 					/obj/item/circuitboard/solar_control,

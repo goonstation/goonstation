@@ -7,7 +7,7 @@
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
 	icon_state = "television"
-	network = "public"
+	network = CAMERA_NETWORK_PUBLIC
 	prefix = null
 	uses_area_name = TRUE
 	anchored = ANCHORED
@@ -96,7 +96,7 @@
 /obj/machinery/camera/television/mobile/science
 	name = "mobile television - science"
 	c_tag = "science mobile"
-	network = "telesci"
+	network = CAMERA_NETWORK_TELESCI
 
 #undef SECURED_STATE_UNSECURED
 #undef SECURED_STATE_BOLTED

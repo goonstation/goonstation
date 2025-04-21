@@ -244,7 +244,6 @@
 	dir = 8;
 	icon_state = "camera";
 	name = "autoname  - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1802,7 +1801,6 @@
 	dir = 4;
 	icon_state = "camera";
 	name = "autoname - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/plating,
@@ -4878,7 +4876,6 @@
 	dir = 4;
 	icon_state = "camera";
 	name = "autoname - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/airless/plating/catwalk{
