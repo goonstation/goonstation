@@ -1,6 +1,6 @@
 //Lovingly Adapted from sleeper agent code
 /datum/random_event/major/antag/madness
-	name = "Mass Madness"
+	name = "Megafauna Madness"
 #ifdef MAP_OVERRIDE_NEON
 	disabled = FALSE
 #else
@@ -11,6 +11,10 @@
 
 	admin_call(source)
 		. = ..()
+#ifndef MAP_OVERRIDE_NEON
+		boutput(usr, "The map is not Neon, aborting.")
+		UNLINT(return)
+#endif
 		src.num_victims = input(usr, "How many minds to break?", src.name, 0) as num|null
 		if (isnull(src.num_victims))
 			return
