@@ -654,7 +654,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 
 /datum/objective/madness/hate_department
 	set_up()
-		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department", "the engine")]."
+		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department")]."
 
 /datum/objective/madness/greed
 	set_up()
