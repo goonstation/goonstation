@@ -123,6 +123,7 @@
 #include "code\datums\round_management.dm"
 #include "code\datums\savefile.dm"
 #include "code\datums\sims.dm"
+#include "code\datums\spawn_items.dm"
 #include "code\datums\spawn_rules.dm"
 #include "code\datums\special_r.dm"
 #include "code\datums\stain.dm"
