@@ -212,6 +212,7 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		optional = TRUE
+		damage_dealt = 0
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = tool
 			O.attach_organ(parent_surgery.patient, surgeon)

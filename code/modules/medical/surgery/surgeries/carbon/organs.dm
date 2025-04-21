@@ -4,7 +4,8 @@
 	desc = "Modify the patients' torso and organs."
 	icon_state = "torso"
 	implicit = TRUE
-	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks, /datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp)
+	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks,
+	/datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp, /datum/surgery/organ/replace/head)
 	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -40,8 +41,13 @@
 	id = "head_surgery"
 	name = "Head Surgery"
 	desc = "Perform surgery on the patient's head"
-	default_sub_surgeries = list(/datum/surgery/organ/eye/left, /datum/surgery/organ/eye/right, /datum/surgery/organ/brain,
-	/datum/surgery/cauterize/head, /datum/surgery/organ/head, /datum/surgery/organ/skeleton_head)
+	default_sub_surgeries = list(
+		/datum/surgery/organ/eye/left, /datum/surgery/organ/replace/eye/left,
+		/datum/surgery/organ/eye/right, /datum/surgery/organ/replace/eye/right,
+		/datum/surgery/organ/brain, /datum/surgery/organ/replace/brain,
+		/datum/surgery/organ/head, /datum/surgery/organ/skeleton_head, /datum/surgery/organ/replace/head,
+		/datum/surgery/cauterize/head,
+		/datum/surgery/organ/replace/brain, /datum/surgery/organ/replace/skull)
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
@@ -274,15 +280,11 @@
 	eye
 		affected_zone = "head"
 		implicit = TRUE
-		infer_surgery_stage()
-			..()
-			surgery_steps[4].finished = (patient.organHolder.get_organ(organ_var_name) != null)
 
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/eye/dislodge(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/eye/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/eye/scoop(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/organ/add/eye(src,organ_var_name))
 
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
@@ -423,7 +425,6 @@
 			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/cut2(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/remove(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/organ/add(src, organ_var_name))
 
 		on_cancel(mob/surgeon, obj/item/tool, quiet)
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
@@ -449,14 +450,12 @@
 			surgery_steps[2].finished = no_head || C.organHolder.head.op_stage >= 2
 			surgery_steps[3].finished = no_head || C.organHolder.head.op_stage >= 3
 			surgery_steps[4].finished = no_head
-			surgery_steps[5].finished = !no_head
 			return
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/head/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/saw(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/cut2(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/remove(src, organ_var_name))
-			add_next_step(new /datum/surgery_step/organ/add/head(src, organ_var_name))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
@@ -660,5 +659,22 @@
 			if (surgeon.a_intent == INTENT_HARM)
 				return FALSE
 			return TRUE
-
-
+	head
+		id = "head_replacement"
+		name = "Head Replacement"
+		desc = "Replace the patients' head."
+		affected_zone = "head"
+		organ_var_name = "head"
+		implicit = TRUE
+		generate_surgery_steps()
+			add_next_step(new /datum/surgery_step/organ/add/head(src, organ_var_name))
+		surgery_possible(mob/living/surgeon)
+			if (surgeon.zone_sel.selecting != "head")
+				return FALSE
+			if (patient.organHolder.get_organ(organ_var_name))
+				return FALSE
+			if (surgeon.a_intent == INTENT_HARM)
+				return FALSE
+			return TRUE
+		surgery_conditions_met(mob/surgeon, obj/item/tool)
+			return (isskeleton(patient) || ..())
