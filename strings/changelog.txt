@@ -1,5 +1,7 @@
 
 (t)mon apr 21 25
+(u)LeahTheTech
+(*)Added an informational poster to all mining departments.
 (u)CalliopeSoups
 (p)23024
 (e)⚖|C-Balance

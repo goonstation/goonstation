@@ -17768,6 +17768,9 @@
 /area/station/mining/refinery)
 "bwO" = (
 /obj/machinery/nanofab/refining,
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "bwP" = (

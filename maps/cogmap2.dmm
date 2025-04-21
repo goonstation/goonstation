@@ -46143,6 +46143,9 @@
 /area/station/mining/staff_room)
 "cKh" = (
 /obj/storage/secure/closet/engineering/mining,
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -63261,6 +63264,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"lAN" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 28
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/mining/staff_room)
 "lBA" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/shuttlebay{
@@ -132104,7 +132113,7 @@ crl
 cEt
 cGg
 cHA
-cIG
+lAN
 cIG
 cLI
 cIG
