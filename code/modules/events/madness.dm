@@ -47,6 +47,7 @@
 
 		sleep(rand(3, 7) SECONDS)
 
+		//TODO: maybe make these stats affect the event in some way?
 		var/distance = pick(300, 500, 750, 1500) //meters
 		var/speed = rand(5, 15) //m/s
 		var/displacement = pick(500, 2000, 3000, 10000) //tons
