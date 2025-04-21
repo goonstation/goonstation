@@ -1,3 +1,5 @@
+#define VAMP_CLOAK_ANIMATION_DELAY 0.5 SECONDS
+
 /datum/targetable/vampire/vamp_cloak
 	name = "Turn on Illusory Shroud"
 	desc = "Toggles an illusory shroud, shielding you from being closely examined in dim lighting."
@@ -41,24 +43,37 @@
 	effectType = EFFECT_TYPE_POWER
 	isBad = 0
 	probability = 0
-	msgGain = "You cover yourself in shadow."
+	msgGain = "The shadows will shroud you."
 	msgLose = "You allow your true form to be known."
 	var/is_active = FALSE
 	var/obj/effect/mist = null
 
 	proc/apply_shroud()
 		if (src.is_active) return
+		boutput(src.owner, SPAN_ALERT("The illusory mist surrounds you..."))
 		src.is_active = TRUE
-		src.owner.alpha = 0
-		src.mist.alpha = 255
+		animate(src.owner, VAMP_CLOAK_ANIMATION_DELAY, alpha=0)
+		animate(src.mist,VAMP_CLOAK_ANIMATION_DELAY, alpha=255 )
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, 3)
+
+		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
+			src.owner.alpha = 0
+			src.mist.alpha = 255
+			animate_wave(src.mist)
 
 	proc/remove_shroud()
 		if (!src.is_active) return
+		boutput(src.owner, SPAN_ALERT("The light dispells your shroud!"))
 		src.is_active = FALSE
-		src.owner.alpha = 255
-		src.mist.alpha = 0
+		animate(src.owner, VAMP_CLOAK_ANIMATION_DELAY, alpha = 255)
+		animate(src.mist, VAMP_CLOAK_ANIMATION_DELAY, alpha = 0)
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
+		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
+			src.owner.alpha = 255
+			animate_reset(src.mist)
+			src.mist.color = "#666"
+			src.mist.alpha = 0
 
 	OnAdd()
 		src.is_active = FALSE
@@ -97,3 +112,5 @@
 			src.remove_shroud()
 		else if (can_act(src.owner))
 			src.apply_shroud()
+
+#undef VAMP_CLOAK_ANIMATION_DELAY
