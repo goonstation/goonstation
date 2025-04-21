@@ -1,3 +1,5 @@
+//emergency stub:
+/datum/projectile/special/launch_self
 /*
 
 TODO:
@@ -776,3 +778,32 @@ TYPEINFO(/obj/chicken_nesting_box)
 		carrier.UpdateIcon()
 		APPLY_ATOM_PROPERTY(target, PROP_MOB_BREATHLESS, carrier.type)
 		carrier.RegisterSignal(carrier.chicken, COMSIG_PARENT_PRE_DISPOSING, /obj/item/chicken_carrier/proc/remove_chicken)
+
+// Chicken Nametag
+
+/obj/item/ranch_nametag
+	name = "nametag"
+	desc = "A loop of string. You can write a name on it with a pen."
+	icon = '+secret/icons/obj/nametag.dmi'
+	icon_state = "nametag"
+	var/critter_name = null
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen))
+			var/t = input(user, "Enter a name") as null|text
+			logTheThing(LOG_DEBUG, user, "names a nametag \"[t]\"")
+			if (!t)
+				return
+			phrase_log.log_phrase("name-tag", t, no_duplicates=TRUE)
+			t = strip_html(replacetext(t, "'",""))
+			t = copytext(t, 1, 65)
+			if (!t)
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.critter_name = t
+			desc = "A loop of string. You can write a name on it with a pen. The name \"[critter_name]\" is written on it."
+			icon_state = "nametag_with_name"
+		else
+			return ..()
