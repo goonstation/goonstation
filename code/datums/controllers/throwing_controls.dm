@@ -124,17 +124,16 @@ var/global/datum/controller/throwing/throwing_controller = new
 					end_throwing = FALSE
 					thr.throw_type = THROW_NORMAL
 
-			if (thr.throw_type == THROW_PHASE && thr.get_throw_travelled() > 2)
-				thr.throw_type = THROW_NORMAL
-				thing.event_handler_flags = initial(thing.event_handler_flags)
-
-			if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
-				if (thr.throw_type == THROW_PHASE)
-					thing.set_loc(next)
+			if (thr.throw_type == THROW_PHASE)
+				if (thr.get_throw_travelled() > 1)
+					thr.throw_type = THROW_NORMAL
+					thing.event_handler_flags = initial(thing.event_handler_flags)
 				else
-					thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
-					end_throwing = TRUE
-					break
+					thing.set_loc(next)
+			else if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
+				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
+				end_throwing = TRUE
+				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
 			var/hit_thing = thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
