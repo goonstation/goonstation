@@ -784,7 +784,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 /obj/item/ranch_nametag
 	name = "nametag"
 	desc = "A loop of string. You can write a name on it with a pen."
-	icon = '+secret/icons/obj/nametag.dmi'
+	icon = 'icons/obj/ranch/nametag.dmi'
 	icon_state = "nametag"
 	var/critter_name = null
 
