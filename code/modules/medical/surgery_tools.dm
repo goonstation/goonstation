@@ -308,6 +308,16 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/implant/projectile/staple))
+			if (src.ammo + 1 > initial(src.ammo))
+				boutput(user, SPAN_NOTICE("\The [src] is already filled with staples!"))
+				return
+			boutput(user, SPAN_NOTICE("You load \the [I] into \the [src]."))
+			src.ammo += 1
+			qdel(I)
+			return
+		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red

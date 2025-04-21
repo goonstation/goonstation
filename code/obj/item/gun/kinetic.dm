@@ -533,6 +533,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(src.current_projectile.shot_number > 1)
 			src.current_projectile.shot_number = 1
 
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/staple_gun))
+			var/obj/item/staple_gun/stapler = I
+			if (stapler.ammo <= 0)
+				boutput(user, SPAN_ALERT("You try loading staples from \the [I], but it's all out!"))
+			else
+				var/obj/item/ammo/bullets/staples/temp_ammo = new
+				temp_ammo.amount_left = stapler.ammo
+				src.Attackby(temp_ammo, user)
+				temp_ammo.loadammo(temp_ammo, src)
+				stapler.ammo = temp_ammo.amount_left
+				qdel(temp_ammo)
+			return
+		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
