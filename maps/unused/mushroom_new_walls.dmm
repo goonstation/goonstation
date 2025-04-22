@@ -27016,12 +27016,8 @@
 	},
 /area/station/bridge)
 "nWp" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer,
+/obj/item/device/camera_viewer,
 /obj/item/camera,
 /obj/item/camera,
 /obj/storage/crate,
