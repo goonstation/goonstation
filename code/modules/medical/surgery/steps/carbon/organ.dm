@@ -62,6 +62,7 @@
 			patient.organHolder.drop_organ("head")
 
 	skeleton
+		can_fail = FALSE
 		wrench
 			name = "Loosen"
 			desc = "Loosen the head from the neck."
@@ -206,45 +207,6 @@
 				SPAN_ALERT("You saw through [surgeon == C ? "your" : "[C]'s"] [O.name] with [tool]!"),\
 				SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] through your [O.name] with [tool]!"))
 
-	add
-		name = "Add"
-		desc = "Add the organ."
-		icon_state = "scalpel"
-		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		optional = TRUE
-		damage_dealt = 0
-		on_complete(mob/surgeon, obj/item/tool)
-			var/obj/item/organ/O = tool
-			O.attach_organ(parent_surgery.patient, surgeon)
-			//secure, as per old behavior
-			O.op_stage = 0
-		tool_requirement(mob/surgeon, obj/item/tool)
-			if (istype(tool, /obj/item/organ))
-				var/obj/item/organ/O = tool
-				if (O.organ_holder_name == affected_organ)
-					if (O.can_attach_organ(parent_surgery.patient, surgeon))
-						return TRUE
-			return FALSE
-		head
-			on_complete(mob/surgeon, obj/item/tool)
-				var/obj/item/organ/O = tool
-				O.attach_organ(parent_surgery.patient, surgeon)
-
-		eye
-
-			tool_requirement(mob/surgeon, obj/item/tool)
-				var/obj/item/organ/O = tool
-				if (O.can_attach_organ(parent_surgery.patient, surgeon))
-					return TRUE
-			tools_required = list(/obj/item/organ/eye)
-		skull
-			tool_requirement(mob/surgeon, obj/item/tool)
-				var/obj/item/organ/O = tool
-				if (O.can_attach_organ(parent_surgery.patient, surgeon))
-					return TRUE
-			tools_required = list(/obj/item/skull)
-
-
 	eye
 		var/target_side
 		New(datum/surgery/parent_surgery, the_organ)
@@ -340,8 +302,6 @@
 						SPAN_ALERT("You open the area around [surgeon == C ? "your" : "[C]'s"] brain cavity with [tool]!"),\
 						SPAN_ALERT("[C == surgeon ? "You open" : "<b>[surgeon]</b> opens"] the area around your brain cavity with [tool]!"))
 				C.organHolder.brain.op_stage = 3
-
-
 		saw
 			name = "Saw"
 			desc = "Saw through the skull."
@@ -358,8 +318,6 @@
 					SPAN_ALERT("You saw open [surgeon == C ? "your" : "[C]'s"] skull [missing_fluff] with [tool]!"),\
 					SPAN_ALERT("[C == surgeon ? "You saw" : "<b>[surgeon]</b> saws"] open your skull [missing_fluff] with [tool]!"))
 				C.organHolder.brain.op_stage = 2
-
-
 		remove
 			name = "Remove"
 			desc = "Remove the brain, or open the cavity."
@@ -381,6 +339,67 @@
 						SPAN_ALERT("[C == surgeon ? "You cut open" : "<b>[surgeon]</b> cuts open "] your brain cavity with [tool]!"))
 				C.death()
 				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(C,"combat")]'s brain.")
+
+/datum/surgery_step/organ/add
+	name = "Add"
+	desc = "Add the organ."
+	icon_state = "scalpel"
+	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+	optional = TRUE
+	damage_dealt = 0
+	on_complete(mob/surgeon, obj/item/tool)
+		var/obj/item/organ/O = tool
+		O.attach_organ(parent_surgery.patient, surgeon)
+		//secure, as per old behavior
+		O.op_stage = 0
+	tool_requirement(mob/surgeon, obj/item/tool)
+		if (istype(tool, /obj/item/organ))
+			var/obj/item/organ/O = tool
+			if (O.organ_holder_name == affected_organ)
+				if (O.can_attach_organ(parent_surgery.patient, surgeon))
+					return TRUE
+		return FALSE
+	head
+		on_complete(mob/surgeon, obj/item/tool)
+			var/obj/item/organ/O = tool
+			O.attach_organ(parent_surgery.patient, surgeon)
+
+	eye
+
+		tool_requirement(mob/surgeon, obj/item/tool)
+			var/obj/item/organ/O = tool
+			if (O.can_attach_organ(parent_surgery.patient, surgeon))
+				return TRUE
+		tools_required = list(/obj/item/organ/eye)
+	skull
+		tool_requirement(mob/surgeon, obj/item/tool)
+			var/obj/item/organ/O = tool
+			if (O.can_attach_organ(parent_surgery.patient, surgeon))
+				return TRUE
+		tools_required = list(/obj/item/skull)
+
+
+/datum/surgery_step/organ/skeleton_tail
+	crowbar
+		name = "Remove"
+		desc = "Remove the tail."
+		icon_state = "crowbar"
+		success_sound = 'sound/items/Crowbar.ogg'
+		flags_required = TOOL_PRYING
+		damage_dealt = 0
+		can_fail = FALSE
+		on_complete(mob/surgeon, obj/item/tool)
+			var/mob/living/patient = parent_surgery.patient
+			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!"),\
+				SPAN_ALERT("You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!"),\
+				SPAN_ALERT("[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!"))
+			if (patient.organHolder.tail)
+				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+			patient.organHolder.drop_organ("tail")
+
+
+
+
 /datum/surgery_step/skull
 	cut
 

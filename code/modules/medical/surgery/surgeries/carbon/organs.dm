@@ -5,7 +5,7 @@
 	icon_state = "torso"
 	implicit = TRUE
 	default_sub_surgeries = list(/datum/surgery/ribs, /datum/surgery/subcostal, /datum/surgery/flanks,
-	/datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp, /datum/surgery/organ/replace/head)
+	/datum/surgery/abdomen, /datum/surgery/item, /datum/surgery/chest_clamp)
 	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/chest/cut(src))
 		add_next_step(new /datum/surgery_step/fluff/snip(src))
@@ -45,7 +45,7 @@
 		/datum/surgery/organ/eye/left, /datum/surgery/organ/replace/eye/left,
 		/datum/surgery/organ/eye/right, /datum/surgery/organ/replace/eye/right,
 		/datum/surgery/organ/brain, /datum/surgery/organ/replace/brain,
-		/datum/surgery/organ/head, /datum/surgery/organ/skeleton_head, /datum/surgery/organ/replace/head,
+		/datum/surgery/organ/head, /datum/surgery/organ/replace/head,
 		/datum/surgery/cauterize/head,
 		/datum/surgery/organ/replace/brain, /datum/surgery/organ/replace/skull)
 	visible = FALSE
@@ -417,7 +417,6 @@
 			surgery_steps[2].finished = C.organHolder.brain.op_stage >= 2
 			surgery_steps[3].finished = C.organHolder.brain.op_stage >= 3
 			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
-			surgery_steps[5].finished = (C.organHolder.get_organ(organ_var_name) != null)
 			return
 
 		generate_surgery_steps()
@@ -462,36 +461,7 @@
 			if (surgeon.a_intent != INTENT_HARM)
 				return FALSE
 			return TRUE
-	skeleton_head
-		implicit = TRUE
-		visible = FALSE
-		affected_zone = "head"
-		id = "skeleton_head_removal"
-		name = "Head Removal (Skeleton)"
-		desc = "Remove the patients' head."
-		infer_surgery_stage()
-			var/mob/living/carbon/human/C = patient
-			var/no_head = !C.organHolder.get_organ("head")
-			surgery_steps[1].finished = no_head || C.organHolder.head.op_stage >= 1
-			surgery_steps[2].finished = no_head || C.organHolder.head.op_stage >= 2
-			surgery_steps[3].finished = no_head
-			return
 
-		generate_surgery_steps()
-			add_next_step(new/datum/surgery_step/head/skeleton/wrench(src))
-			add_next_step(new/datum/surgery_step/head/skeleton/crowbar(src))
-			add_next_step(new/datum/surgery_step/head/skeleton/remove(src))
-		surgery_conditions_met(mob/surgeon, obj/item/tool)
-			return (isskeleton(patient) && patient.organHolder)
-
-		surgery_possible(mob/living/surgeon)
-			if (!isskeleton(patient) || !patient.organHolder)
-				return FALSE
-			if (surgeon.zone_sel.selecting != "head")
-				return FALSE
-			if (surgeon.a_intent == INTENT_HARM)
-				return FALSE
-			return TRUE
 
 /datum/surgery/organ/replace
 	id = "organ_addition"

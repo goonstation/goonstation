@@ -109,6 +109,7 @@
 			limb.remove_stage = can_secure ? 0 : 2
 
 	skeleton
+		can_fail = FALSE
 		wrench
 			name = "Loosen"
 			desc = "Loosen the limb from the socket."

@@ -1579,6 +1579,7 @@
 #include "code\modules\medical\surgery\surgeries\carbon\item.dm"
 #include "code\modules\medical\surgery\surgeries\carbon\limbs.dm"
 #include "code\modules\medical\surgery\surgeries\carbon\organs.dm"
+#include "code\modules\medical\surgery\surgeries\carbon\skeleton.dm"
 #include "code\modules\mentor\mentorhelp.dm"
 #include "code\modules\minimap\markers\_minimap_marker_parent.dm"
 #include "code\modules\minimap\markers\minimap_marker.dm"

@@ -216,6 +216,9 @@
 			base_surgeries += new/datum/surgery/parasite(patient, src)
 			base_surgeries += new/datum/surgery/lower_back(patient, src)
 			base_surgeries += new/datum/surgery/sutures(patient, src)
+			// put skeleton surgeries up here, as they can all be performed at any time
+			base_surgeries += new/datum/surgery/skeleton(patient, src)
+
 
 
 

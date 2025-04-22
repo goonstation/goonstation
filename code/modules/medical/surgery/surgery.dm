@@ -372,6 +372,7 @@
 	var/finished = FALSE //! Whether this step is finished
 
 	var/success_chance = 90 //! The chance of success for this step, before modifiers
+	var/can_fail = TRUE //! Whether this step can fail
 	var/failure_damage = 10 //! The damage this step deals on failure
 	var/failure_variance = 5 //! The variance of the damage dealt on failure
 	var/damage_dealt = 5 //! The damage dealt by this step on success
@@ -554,11 +555,11 @@
 					return FALSE
 
 		var/mess_up_odds = calculate_failure_chance(surgeon,tool)
-		if (surgeon.a_intent == INTENT_DISARM)
+		if (surgeon.a_intent == INTENT_DISARM && can_fail)
 			boutput(surgeon, SPAN_NOTICE("You mess up [parent_surgery.patient]'s surgery on purpose."))
 			on_mess_up(surgeon,tool, forced=TRUE)
 			return FALSE
-		else if (prob(mess_up_odds))
+		else if (can_fail && prob(mess_up_odds))
 			on_mess_up(surgeon,tool)
 			return FALSE
 
