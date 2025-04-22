@@ -1229,14 +1229,10 @@
 					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [human]'s [smoke] with [src]."))
 					human.set_clothing_icon_dirty()
 					return
-			if (human.surgeryHolder)
-				var/datum/surgeryHolder/holder = human.surgeryHolder
-				if (holder.do_shortcut(user,src))
-					src.add_fingerprint(user)
-					return
-				if (holder.start_surgery(user,src))
-					src.add_fingerprint(user)
-					return
+
+			if (human.surgeryHolder.will_perform_surgery(user,src))
+				human.surgeryHolder.perform_surgery(user,src)
+				return
 
 		user.visible_message(SPAN_ALERT("<b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]"))
 		return

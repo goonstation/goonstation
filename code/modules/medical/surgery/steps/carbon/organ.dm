@@ -2,6 +2,7 @@
 // for instance, butt/skull/eye surgery can probably cleanly reuse organ removal code. my head hurts - hooligan
 
 /datum/surgery_step/head
+	success_damage = 15
 	cut
 		name = "Cut"
 		desc = "Cut through the neck."
@@ -23,8 +24,7 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_CUTTING
-		damage_min = 15
-		damage_max = 25
+		fail_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
@@ -53,8 +53,7 @@
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_SAWING
-		damage_min = 15
-		damage_max = 25
+		fail_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [tool]!"),\
@@ -73,7 +72,7 @@
 			icon_state = "wrench"
 			success_sound = 'sound/items/Screwdriver.ogg'
 			flags_required = TOOL_WRENCHING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
@@ -88,7 +87,7 @@
 			icon_state = "crowbar"
 			success_sound = 'sound/items/Screwdriver.ogg'
 			flags_required = TOOL_PRYING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
@@ -103,7 +102,7 @@
 			icon_state = "wrench"
 			success_sound = 'sound/items/Ratchet.ogg'
 			flags_required = TOOL_WRENCHING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/organ/O = parent_surgery.patient.organHolder.head
@@ -134,7 +133,7 @@
 		optional = TRUE
 		visible = FALSE
 		repeatable = TRUE
-		damage_dealt = 0
+		success_damage = 0
 		tools_required = list(/obj/item/hemostat)
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -264,8 +263,7 @@
 			desc = "Scoop out the eye."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			damage_min = 15
-			damage_max = 25
+			fail_damage = 20
 			flags_required = TOOL_SPOONING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/patient = parent_surgery.patient
@@ -352,7 +350,7 @@
 	icon_state = "scalpel"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 	optional = TRUE
-	damage_dealt = 0
+	success_damage = 0
 	on_complete(mob/surgeon, obj/item/tool)
 		var/obj/item/organ/O = tool
 		O.attach_organ(parent_surgery.patient, surgeon)
@@ -392,7 +390,7 @@
 		icon_state = "crowbar"
 		success_sound = 'sound/items/Crowbar.ogg'
 		flags_required = TOOL_PRYING
-		damage_dealt = 0
+		success_damage = 0
 		can_fail = FALSE
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/patient = parent_surgery.patient

@@ -10,7 +10,7 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_CUTTING
-		damage_dealt = 20
+		success_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 
 			var/mob/living/carbon/human/C = parent_surgery.patient
@@ -27,7 +27,7 @@
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_SAWING
-		damage_dealt = 20
+		success_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
@@ -58,7 +58,7 @@
 		desc = "Add the limb."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		damage_dealt = 0
+		success_damage = 0
 		do_surgery_step(mob/surgeon, obj/item/tool)
 			if (tool.object_flags & NO_ARM_ATTACH || tool.cant_drop || tool.two_handed)
 				boutput(surgeon, SPAN_ALERT("You try to attach [tool] to [parent_surgery.patient]'s stump, but it politely declines!"))
@@ -72,22 +72,20 @@
 			return ..()
 
 		on_complete(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
+			var/mob/living/carbon/human/patient = parent_surgery.patient
 			if (surgeon.find_in_hand(tool))
 				surgeon.u_equip(tool)
 			var/obj/item/parts/human_parts/arm/limb = null
 			if (!istype(tool, /obj/item/parts/human_parts/arm))
 				if (affected_limb == "l_arm")
-					limb = new /obj/item/parts/human_parts/arm/left/item(C)
+					limb = new /obj/item/parts/human_parts/arm/left/item(patient)
 				else if (affected_limb == "r_arm")
-					limb = new /obj/item/parts/human_parts/arm/right/item(C)
+					limb = new /obj/item/parts/human_parts/arm/right/item(patient)
 				limb.cant_drop = 1
 				limb:set_item(tool)
 			else
 				limb = tool
-			limb.attach(C)
-			var/can_secure = ismob(surgeon) && (limb.easy_attach || surgeon?.find_type_in_hand(/obj/item/suture) || surgeon?.find_type_in_hand(/obj/item/staple_gun))
-			limb.remove_stage = can_secure ? 0 : 2
+			limb.attach(patient, surgeon)
 
 
 		tool_requirement(mob/surgeon, obj/item/tool)
@@ -116,7 +114,7 @@
 			icon_state = "wrench"
 			success_sound = 'sound/items/Screwdriver.ogg'
 			flags_required = TOOL_WRENCHING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
@@ -131,7 +129,7 @@
 			icon_state = "crowbar"
 			success_sound = 'sound/items/Crowbar.ogg'
 			flags_required = TOOL_PRYING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
@@ -146,7 +144,7 @@
 			icon_state = "wrench"
 			success_sound = 'sound/items/Ratchet.ogg'
 			flags_required = TOOL_WRENCHING
-			damage_dealt = 0
+			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]

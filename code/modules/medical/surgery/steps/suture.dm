@@ -5,7 +5,7 @@
 	tools_required = list(/obj/item/suture)
 	repeatable = TRUE
 	var/loc = ""
-	damage_dealt = 0
+	success_damage = 0
 	do_surgery_step(mob/living/surgeon, obj/item/tool)
 		var/mob/living/patient = parent_surgery.patient
 		var/list/datum/surgery/surgeries = parent_surgery.holder.get_surgeries_by_zone(loc)

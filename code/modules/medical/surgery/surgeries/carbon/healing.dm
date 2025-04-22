@@ -62,6 +62,8 @@
 		return FALSE
 
 /datum/surgery/cauterize
+	visible = FALSE
+	implicit = TRUE
 	surgery_conditions_met(mob/living/surgeon, obj/item/tool)
 		return TRUE
 	on_complete(mob/living/surgeon, mob/user)
@@ -70,8 +72,6 @@
 	head
 		name = "Cauterize - Head"
 		desc = "Undo head surgery with a cautery."
-		implicit = TRUE
-		visible = FALSE
 
 		infer_surgery_stage()
 			surgery_steps[1].finished = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
@@ -89,6 +89,8 @@
 			..()
 
 	bleeding
+		name = "Cauterize Bleeding"
+		desc = "Remove bleeding with a cautery."
 		infer_surgery_stage()
 			surgery_steps[1].finished = (patient.bleeding == 0)
 

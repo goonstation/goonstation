@@ -184,7 +184,7 @@
 			surgery_steps[3].finished = TRUE
 
 	on_cancel(mob/living/surgeon, obj/item/tool, quiet)
-		var/obj/item/organ/O = patient.organHolder.vars[organ_var_name]
+		var/obj/O = patient.organHolder.vars[organ_var_name]
 
 		var/organ_name = organ_pretty_name? organ_pretty_name : organ_var_name
 		if (O)
@@ -192,6 +192,8 @@
 				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> secures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [organ_name] back into place with [tool]."),\
 				SPAN_NOTICE("You secure [surgeon == patient ? "your" : "[patient]'s"] [organ_name] back into place with [tool]."),\
 				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] your [organ_name] back  into place closed with [tool]."))
+				O:op_stage = 0
+
 
 
 	cancel_possible()
@@ -373,11 +375,7 @@
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [tool]."),\
 					SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [tool]."),\
 					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [tool]."))
-		infer_surgery_stage()
-			var/mob/living/carbon/human/C = patient
-			var/organ = C.organHolder.get_organ(organ_var_name)
-			surgery_steps[2].finished = (organ == null)
-			return
+
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/skull/cut(src))
 			add_next_step(new /datum/surgery_step/skull/remove(src))
@@ -413,10 +411,16 @@
 
 		infer_surgery_stage()
 			var/mob/living/carbon/human/C = patient
-			surgery_steps[1].finished = C.organHolder.brain.op_stage >= 1
-			surgery_steps[2].finished = C.organHolder.brain.op_stage >= 2
-			surgery_steps[3].finished = C.organHolder.brain.op_stage >= 3
-			surgery_steps[4].finished = (C.organHolder.get_organ(organ_var_name) == null)
+			if (C.organHolder.brain)
+				surgery_steps[1].finished = C.organHolder.brain.op_stage >= 1
+				surgery_steps[2].finished = C.organHolder.brain.op_stage >= 2
+				surgery_steps[3].finished = C.organHolder.brain.op_stage >= 3
+				surgery_steps[4].finished = FALSE
+			else
+				surgery_steps[1].finished = TRUE
+				surgery_steps[2].finished = TRUE
+				surgery_steps[3].finished = TRUE
+				surgery_steps[4].finished = TRUE
 			return
 
 		generate_surgery_steps()

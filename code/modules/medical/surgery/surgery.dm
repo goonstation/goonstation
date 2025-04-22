@@ -212,7 +212,8 @@
 			super_surgery.enter_surgery(surgeon)
 		else
 			var/contexts = get_surgery_contexts(surgeon, tool)
-			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
+			if (length(contexts) > 0)
+				surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 
 	/// Gets the context action for this surgery.
 	proc/get_context()
@@ -371,11 +372,13 @@
 
 	var/success_chance = 90 //! The chance of success for this step, before modifiers
 	var/can_fail = TRUE //! Whether this step can fail
-	var/failure_damage = 10 //! The damage this step deals on failure
-	var/damage_min = 5 //! The variance of the damage dealt on failure
-	var/damage_max = 15 //! The damage dealt by this step on success
+	var/success_damage = 15 //! The damage this step deals on success
+	var/success_damage_variance = 5 //! The variance of the damage dealt on success
+	var/fail_damage = 25 //! The damage dealt by this step on failure
+	var/fail_damage_variance = 5 //! How much this damage can vary, positive and negative.
 	var/damage_type = DAMAGE_CUT
 	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
+
 	New(datum/surgery/parent_surgery)
 		src.parent_surgery = parent_surgery
 		..()
@@ -386,13 +389,8 @@
 			if (istype(tool,type))
 				return TRUE
 	proc/get_mess_up_text(damage, obj/item/tool)
-		var/fluff = pick(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut")
-		var/fluff2 = pick(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut", " nicks an artery")
-		if (damage > 15)
-			return fluff2
-		else
-			return fluff
-
+		var/messup_text = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut")
+		return pick(messup_text)
 	/// Whether this step is actually possible.
 	proc/step_possible(mob/surgeon, obj/item/tool)
 		return TRUE
@@ -563,14 +561,15 @@
 			return FALSE
 
 		var/success = do_surgery_step(surgeon, tool)
-		if (success && damage_dealt > 0)
-			parent_surgery.patient.TakeDamage("chest",damage_dealt,0,damage_type=damage_type)
+		if (success && success_damage > 0)
+			var/dealt_damage = rand(success_damage-success_damage_variance, success_damage+success_damage_variance)
+			parent_surgery.patient.TakeDamage("chest",dealt_damage,0,damage_type=damage_type)
 			if (damage_type in list(DAMAGE_CRUSH,DAMAGE_CUT,DAMAGE_STAB))
-				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = damage_dealt, damage_type = damage_type, surgery_bleed = TRUE)
+				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = dealt_damage, damage_type = damage_type, surgery_bleed = TRUE)
 		return success
 
 	proc/on_mess_up(mob/surgeon, obj/item/tool, forced = FALSE)
-		var/damage_value = rand(damage_min, damage_max)
+		var/damage_value = rand(fail_damage-fail_damage_variance, fail_damage+fail_damage_variance)
 		if (forced)
 			damage_value = rand(15,25)
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value,tool)]!</b>"))

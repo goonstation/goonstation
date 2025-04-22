@@ -79,6 +79,7 @@
 			desc = "Disconnect the intestines."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			fail_damage = 20
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines with [tool]!"),\

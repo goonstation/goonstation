@@ -823,9 +823,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			boutput(user, SPAN_ALERT("That leg is too big to fit on [H]'s body!"))
 			return
 
-		attach(H,user)
 
-		return
+
+		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/skull))

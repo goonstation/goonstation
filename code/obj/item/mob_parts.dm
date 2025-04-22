@@ -297,11 +297,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(attacher)
 			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
 
-			if(!can_act(attacher))
-				return
-			if(attacher.zone_sel.selecting != slot)
-				return ..()
-
 			attacher.remove_item(src)
 
 			playsound(attachee, 'sound/effects/attach.ogg', 50, TRUE)

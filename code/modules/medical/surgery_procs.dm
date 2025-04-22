@@ -1158,47 +1158,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)
 		return TRUE
 
-////////////////////////////////////////////////////////////////////
-
-/* ================================ */
-/* ------------- WRENCH ------------ */
-/* ================================ */
-
-/obj/item/wrench/proc/wrench_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
-	if (!patient.organHolder || surgeon.a_intent == INTENT_HARM || !isskeleton(patient))
-		return FALSE
-
-	src.add_fingerprint(surgeon)
-
-	if (surgeon.zone_sel.selecting == "head" && patient.organHolder.head)
-		var/obj/item/organ/head/H = patient.organHolder.head
-		if (H.op_stage == 0)
-			H.op_stage = 1
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [H] with [src]."))
-			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
-			return TRUE
-		else if (H.op_stage == 2)
-			patient.organHolder.drop_organ("head", get_turf(patient))
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [H] off with [src]."))
-			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
-			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head with [src].")
-			return TRUE
-
-	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
-		var/obj/item/parts/limb = patient.limbs.vars[surgeon.zone_sel.selecting]
-		if (!istype(limb) || !isskeletonlimb(limb))
-			return FALSE
-		if (limb.remove_stage == 0)
-			limb.remove_stage = 1
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [limb] with [src]."))
-			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
-			return TRUE
-		else if (limb.remove_stage == 2)
-			limb.remove(FALSE)
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> twists [limb] off with [src]."))
-			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
-			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
-			return TRUE
 */
 ///You messed up. Cause damage and spawn some indicators.
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)

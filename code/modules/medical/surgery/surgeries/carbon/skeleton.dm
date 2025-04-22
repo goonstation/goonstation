@@ -27,7 +27,8 @@
 	surgery_possible(mob/living/surgeon)
 		if (!isskeleton(patient) || !patient.organHolder || surgeon.a_intent == INTENT_HARM)
 			return FALSE
-		var/obj/item/parts/limb = patient.limbs.vars[limb_var_name]
+		var/mob/living/carbon/human/C = patient
+		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		if (!isskeletonlimb(limb))
 			return FALSE
 		return ..()
@@ -75,6 +76,7 @@
 	id = "skeleton_head_removal"
 	name = "Head Removal (Skeleton)"
 	desc = "Remove the patients' head."
+	organ_var_name = "head"
 	infer_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/no_head = !C.organHolder.get_organ("head")
