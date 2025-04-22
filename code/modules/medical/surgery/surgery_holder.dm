@@ -87,8 +87,8 @@
 	/// Trigger a surgery's context clicked action. Returns TRUE if a context menu was shown.
 	proc/surgery_clicked(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
-			return
-		surgery.surgery_clicked(surgeon, I)
+			return FALSE
+		return surgery.surgery_clicked(surgeon, I)
 
 	/// Returns TRUE if the given tool is relevant to any possible surgery.
 	proc/tool_relevant(mob/user, obj/item/tool)
@@ -128,7 +128,7 @@
 		if (!length(contexts))
 			return FALSE
 		if (length(contexts) == 1) // if only one top-level surgery available. go straight into it. mimics old behavior to instantly enter torso surgery
-			surgery_clicked(contexts[1].surgery, surgeon, tool)
+			return surgery_clicked(contexts[1].surgery, surgeon, tool)
 		else
 			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 		return TRUE

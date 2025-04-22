@@ -198,22 +198,24 @@
 	// UI Interaction
 	// ----------
 
-	/// Called when the surgery's context icon is clicked.
+	/// Called when the surgery's context icon is clicked. Returns TRUE if context was shown.
 	proc/surgery_clicked(mob/living/surgeon, obj/item/I)
 		if (super_surgery && !super_surgery.complete)
-			super_surgery.enter_surgery(surgeon)
+			return super_surgery.enter_surgery(surgeon)
 		else
-			enter_surgery(surgeon)
+			return enter_surgery(surgeon)
 
-	/// Called when the surgery's context menu is entered.
+	/// Called when the surgery's context menu is entered. Returns TRUE if context was shown.
 	proc/enter_surgery(mob/surgeon, obj/item/tool)
 		infer_surgery_stage()
 		if (super_surgery && !super_surgery.complete) // hop up a level if this surgery is no longer accessible
-			super_surgery.enter_surgery(surgeon)
+			return super_surgery.enter_surgery(surgeon)
 		else
 			var/contexts = get_surgery_contexts(surgeon, tool)
 			if (length(contexts) > 0)
 				surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
+				return TRUE
+		return FALSE
 
 	/// Gets the context action for this surgery.
 	proc/get_context()
@@ -389,8 +391,20 @@
 			if (istype(tool,type))
 				return TRUE
 	proc/get_mess_up_text(damage, obj/item/tool)
-		var/messup_text = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut")
-		return pick(messup_text)
+		var/list/messup_texts
+		if (flags_required)
+			if (flags_required & TOOL_CUTTING)
+				messup_texts = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " makes a really messy cut")
+			else if (flags_required & TOOL_SAWING)
+				messup_texts = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " nicks an artery")
+			else if (flags_required & TOOL_SPOONING)
+				messup_texts = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " jabs [tool] in too far")
+			else if (flags_required & TOOL_SNIPPING)
+				messup_texts = list(" messes up", "'s hand slips", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", "gets [tool] stuck")
+		else
+			if (istype(tool, /obj/item/suture))
+				messup_texts = list(" messes up", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " knots up [tool]")
+		return pick(messup_texts)
 	/// Whether this step is actually possible.
 	proc/step_possible(mob/surgeon, obj/item/tool)
 		return TRUE
@@ -489,8 +503,8 @@
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 			if (flags_required)
 				if (flags_required & TOOL_CUTTING)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
-					SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
+					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
 					surgeon.bioHolder.AddEffect("blind")
 					surgeon.changeStatus("knockdown", 4 SECONDS)
 					JOB_XP(surgeon, "Clown", 1)
@@ -499,8 +513,8 @@
 					take_bleeding_damage(surgeon, null, damage)
 
 				if (flags_required & TOOL_SAWING )
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [src] and cuts [him_or_her(surgeon)]self!"),\
-					SPAN_ALERT("You mishandle [src] and cut yourself!"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> mishandles [tool] and cuts [him_or_her(surgeon)]self!"),\
+					SPAN_ALERT("You mishandle [tool] and cut yourself!"))
 					surgeon.changeStatus("knockdown", 1 SECOND)
 					JOB_XP(surgeon, "Clown", 1)
 					var/damage = rand(10, 20)
@@ -508,8 +522,8 @@
 					take_bleeding_damage(surgeon, damage)
 					return FALSE
 				if (flags_required & TOOL_SNIPPING )
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!"), \
-					SPAN_ALERT("You fumble and stab yourself in the eye with [src]!"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [tool]!"), \
+					SPAN_ALERT("You fumble and stab yourself in the eye with [tool]!"))
 					surgeon.bioHolder.AddEffect("blind")
 					surgeon.changeStatus("knockdown", 0.4 SECONDS)
 
@@ -519,16 +533,16 @@
 					take_bleeding_damage(surgeon, null, damage)
 					return FALSE
 				if (flags_required & TOOL_PRYING)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!"), \
-					SPAN_ALERT("You fumble and club yourself in the head with [src]!"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [tool]!"), \
+					SPAN_ALERT("You fumble and club yourself in the head with [tool]!"))
 					surgeon.changeStatus("knockdown", 0.4 SECONDS)
 					JOB_XP(surgeon, "Clown", 1)
 					var/damage = rand(5, 15)
 					random_brute_damage(surgeon, damage)
 					return FALSE
 				if (flags_required & TOOL_CAUTERY)
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [src]!"),\
-					SPAN_ALERT("You burn yourself with [src]"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> burns [him_or_her(surgeon)]self with [tool]!"),\
+					SPAN_ALERT("You burn yourself with [tool]"))
 
 					JOB_XP(surgeon, "Clown", 1)
 					surgeon.changeStatus("knockdown", 4 SECONDS)
@@ -538,8 +552,8 @@
 
 			else if (istype(tool, /obj/item/suture))
 				if (surgeon.bioHolder.HasEffect("clumsy") && prob(33))
-					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [src]!"),\
-					SPAN_ALERT("You prick your finger with [src]"))
+					surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pricks [his_or_her(surgeon)] finger with [tool]!"),\
+					SPAN_ALERT("You prick your finger with [tool]"))
 
 					//surgeon.bioHolder.AddEffect("blind") // oh my god I'm the biggest idiot ever I forgot to get rid of this part
 					// I'm not deleting it I'm just commenting it out so my shame will be eternal and perhaps future generations of coders can learn from my mistake
