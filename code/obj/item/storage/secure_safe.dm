@@ -308,7 +308,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	make_my_stuff()
 		..()
-		var/loot = rand(1,9)
+		var/loot = rand(1,10)
 		switch (loot)
 			if (1)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
@@ -398,7 +398,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 							src.storage.add_contents(new treasure(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
-
+			if (10)
+				var/list/eggs = list(/obj/item)
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
 	New()

@@ -95,7 +95,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				qdel(src)
 			return
 
-		else if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/egg))
+		else if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/egg) && !W.infertile)
 			if(my_egg)
 				boutput(user, SPAN_ALERT("<b>There's already an egg in there!</b>"))
 			else
@@ -128,6 +128,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 			incubate_count = 0
 
 		else
+			boutput(user, SPAN_ALERT("<b>This egg is infertile and cannot be used!</b>"))
 			..()
 
 	attack_hand(mob/user)

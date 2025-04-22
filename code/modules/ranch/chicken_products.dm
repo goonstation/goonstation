@@ -15,11 +15,15 @@
 	var/egg_props_path = /datum/chicken_egg_props/white
 	/// datum containing various egg properties such as food_effects
 	var/datum/chicken_egg_props/chicken_egg_props = null
+	/// bool for eggs that can't be used for incubation
+	var/infertile = FALSE
 
 	New()
 		. = ..()
 		if (egg_props_path)
 			chicken_egg_props = new egg_props_path(src)
+		if (infertile)
+			desc += "\nThis egg is infertile and cannot be incubated."
 		src.setup_special_effects()
 		src.UpdateIcon()
 	update_icon()
