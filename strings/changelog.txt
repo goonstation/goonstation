@@ -1,4 +1,9 @@
 
+(t)tue apr 22 25
+(u)glowbold
+(p)23080
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)The SMES Human gene is as rare as x-ray/gamma ray. There is a gene combination recipe to create it.
 (t)mon apr 21 25
 (u)LeahTheTech
 (*)Added an informational poster to all mining departments.
