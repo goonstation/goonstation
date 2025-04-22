@@ -1,5 +1,9 @@
 
 (t)tue apr 22 25
+(u)Jan.antilles
+(p)22922
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Syndicate Intelligence maximum length reduced from 4000 to 2000 characters.
 (u)glowbold
 (p)23080
 (e)⚖🔨|C-Balance, A-Player-Actions
