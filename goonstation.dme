@@ -2041,6 +2041,7 @@
 #include "code\obj\item\ai_plating_kit.dm"
 #include "code\obj\item\barrier.dm"
 #include "code\obj\item\basketball.dm"
+#include "code\obj\item\bathbomb.dm"
 #include "code\obj\item\beartrap.dm"
 #include "code\obj\item\bell.dm"
 #include "code\obj\item\book.dm"
