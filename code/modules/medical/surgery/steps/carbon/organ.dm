@@ -23,6 +23,8 @@
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_CUTTING
+		damage_min = 15
+		damage_max = 25
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.head
@@ -51,6 +53,8 @@
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_SAWING
+		damage_min = 15
+		damage_max = 25
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [tool]!"),\
@@ -260,6 +264,8 @@
 			desc = "Scoop out the eye."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
+			damage_min = 15
+			damage_max = 25
 			flags_required = TOOL_SPOONING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/patient = parent_surgery.patient

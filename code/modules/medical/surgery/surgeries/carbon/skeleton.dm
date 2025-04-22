@@ -27,6 +27,9 @@
 	surgery_possible(mob/living/surgeon)
 		if (!isskeleton(patient) || !patient.organHolder || surgeon.a_intent == INTENT_HARM)
 			return FALSE
+		var/obj/item/parts/limb = patient.limbs.vars[limb_var_name]
+		if (!isskeletonlimb(limb))
+			return FALSE
 		return ..()
 	surgery_conditions_met(mob/surgeon, obj/item/tool)
 		return (isskeleton(patient) && patient.organHolder)

@@ -19,14 +19,13 @@
 	/// If TRUE, the surgery will be exited when finished, placing the user up 1 level.
 	var/exit_when_finished = FALSE
 	/// If TRUE, this surgery will automatically be performed when
-	/// the user is hit with a tool that allows surgery_possible() and can_operate().
+	/// the user is hit with a relevant tool
 	var/implicit = FALSE
-
 	/// Roughly the part of the body this surgery is performed on. Used for cancelling surgeries.
 	var/affected_zone = "chest"
 
-	var/last_surgery_step = 0 //! The last step ID added, used for sequencing steps.
-	var/complete = FALSE //! If TRUE, the surgery is complete and will show as green.
+	var/last_surgery_step = 0 //! Do not modify - Tracks the last step ID added, used for ordering steps.
+	var/complete = FALSE //! If TRUE, the surgery is complete.
 	var/visible = TRUE //! if TRUE, the surgery will be visible in the context menu.
 	var/cancel_button = FALSE //! If TRUE, the surgery will show a cancel button in the context menu.
 	var/datum/surgeryHolder/holder = null
@@ -149,7 +148,7 @@
 			super_surgery?.enter_surgery(surgeon)
 
 
-	/// If this surgery is implicit, attempt to complete a step with this tool. If complete, attempt to complete a sub-surgery step.
+	/// Perform the first implicit step with this tool.
 	proc/do_shortcut(mob/surgeon, obj/item/I)
 		var/datum/surgery_step/step = get_shortcut(surgeon, I)
 		if (step)
@@ -157,7 +156,7 @@
 			return TRUE
 		return FALSE
 
-	/// Ditto, but returns the surgery step that would have been performed.
+	/// Returns the implicit surgery step to be performed by this tool.
 	proc/get_shortcut(mob/surgeon, obj/item/I)
 		if ((!super_surgery || super_surgery?.complete) && implicit && can_perform_surgery(surgeon, I))
 			var/datum/surgery_step/step = surgery_step_possible(surgeon, I)
@@ -253,9 +252,8 @@
 				if (surgery.can_perform_surgery(surgeon, tool) && surgery.visible)
 					contexts += surgery.get_context()
 
-		//hacky fix to remove the back button if there's only one top-level surgery available.
-		//Keeps contexts looking identical to older code.
 		if (add_navigation)
+			//remove the back button if there's only one top-level surgery available.
 			if (super_surgery != null || length(holder.get_contexts(surgeon)) > 1)
 				contexts += new /datum/contextAction/surgery/step_up(holder, src)
 
@@ -374,8 +372,8 @@
 	var/success_chance = 90 //! The chance of success for this step, before modifiers
 	var/can_fail = TRUE //! Whether this step can fail
 	var/failure_damage = 10 //! The damage this step deals on failure
-	var/failure_variance = 5 //! The variance of the damage dealt on failure
-	var/damage_dealt = 5 //! The damage dealt by this step on success
+	var/damage_min = 5 //! The variance of the damage dealt on failure
+	var/damage_max = 15 //! The damage dealt by this step on success
 	var/damage_type = DAMAGE_CUT
 	var/repeatable = FALSE //! Whether this step can be repeated. If TRUE, the step won't automatically be marked as finished.
 	New(datum/surgery/parent_surgery)
@@ -489,6 +487,7 @@
 
 	///Calculate if this step succeeds, apply failure effects here
 	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
+		// clowns always beat themselves. even if can_fail is FALSE
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 			if (flags_required)
 				if (flags_required & TOOL_CUTTING)
@@ -571,9 +570,9 @@
 		return success
 
 	proc/on_mess_up(mob/surgeon, obj/item/tool, forced = FALSE)
-		var/damage_value = failure_damage + rand(-failure_variance, failure_variance)
-		if (forced && failure_damage < 25)
-			damage_value = failure_damage + rand(-failure_variance, failure_variance)
+		var/damage_value = rand(damage_min, damage_max)
+		if (forced)
+			damage_value = rand(15,25)
 		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value,tool)]!</b>"))
 		parent_surgery.patient.TakeDamage(parent_surgery.affected_zone, damage_value, 0)
 		take_bleeding_damage(parent_surgery.patient, surgeon, damage_value, surgery_bleed = TRUE)
