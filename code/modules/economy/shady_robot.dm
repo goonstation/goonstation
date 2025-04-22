@@ -126,7 +126,7 @@
 		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
-			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp = "[src.name] has calmed down.<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 			src.angry = 0
 		return
 
@@ -176,11 +176,11 @@
 		var/dat = updatemenu()
 		if(!temp)
 			dat += {"[src.greeting]<HR>
-			<A href='?src=\ref[src];temp_card=1'>Purchase Temporary ID</A><BR>
-			<A href='?src=\ref[src];purchase=1'>Purchase Items</A><BR>
-			<A href='?src=\ref[src];viewcart=1'>View Cart</A><BR>
-			<A href='?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
-			<A href='?action=mach_close&window=trader'>Goodbye</A>"}
+			<A href='byond://?src=\ref[src];temp_card=1'>Purchase Temporary ID</A><BR>
+			<A href='byond://?src=\ref[src];purchase=1'>Purchase Items</A><BR>
+			<A href='byond://?src=\ref[src];viewcart=1'>View Cart</A><BR>
+			<A href='byond://?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
+			<A href='byond://?action=mach_close&window=trader'>Goodbye</A>"}
 
 		user.Browse(dat, "window=trader;size=575x530")
 		onclose(user, "trader")
@@ -203,13 +203,13 @@
 		if (href_list["temp_card"])
 			src.temp = "I can hook you up with a temporary ID, just let me know what you need.<HR><BR>"
 			src.temp = "<b>Price: [card_price] credits</b><BR><BR>"
-			src.temp += "Registered: <a href='?src=\ref[src];registered=1'>[card_registered ? card_registered : "--------"]</a><BR>"
-			src.temp += "Assignment: <a href='?src=\ref[src];assignment=1'>[card_assignment ? card_assignment : "--------"]</a><BR>"
-			src.temp += "Duration: <a href='?src=\ref[src];duration=1'>[card_duration ? card_duration : "--------"] seconds</a><BR>"
+			src.temp += "Registered: <a href='byond://?src=\ref[src];registered=1'>[card_registered ? card_registered : "--------"]</a><BR>"
+			src.temp += "Assignment: <a href='byond://?src=\ref[src];assignment=1'>[card_assignment ? card_assignment : "--------"]</a><BR>"
+			src.temp += "Duration: <a href='byond://?src=\ref[src];duration=1'>[card_duration ? card_duration : "--------"] seconds</a><BR>"
 			if(card_timer)
-				src.temp += "Timer (1000 credits): <b>Yes</b>/<a href='?src=\ref[src];timer=0'>No</a><BR>"
+				src.temp += "Timer (1000 credits): <b>Yes</b>/<a href='byond://?src=\ref[src];timer=0'>No</a><BR>"
 			else
-				src.temp += "Timer (1000 credits): <a href='?src=\ref[src];timer=1'>Yes</a>/<b>No</b><BR>"
+				src.temp += "Timer (1000 credits): <a href='byond://?src=\ref[src];timer=1'>Yes</a>/<b>No</b><BR>"
 
 			//Change access to individual areas
 			src.temp += "<br><br><u>Access</u>"
@@ -231,50 +231,50 @@
 				if(access_name_lookup[A] in src.card_access)
 					//Click these to remove access
 					if (access_name_lookup[A] in civilian_access_list)
-						civilian_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						civilian_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 					if (access_name_lookup[A] in engineering_access_list)
-						engineering_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						engineering_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 					if (access_name_lookup[A] in supply_access_list)
-						supply_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						supply_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 					if (access_name_lookup[A] in research_access_list)
-						research_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						research_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 					if (access_name_lookup[A] in security_access_list)
-						security_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						security_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 					if (access_name_lookup[A] in command_access_list)
-						command_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
+						command_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=0'><font color=\"red\">[replacetext(A, " ", "&nbsp")]</font></a>"
 				else//Click these to add access
 					if (access_name_lookup[A] in civilian_access_list)
-						civilian_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						civilian_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 					if (access_name_lookup[A] in engineering_access_list)
-						engineering_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						engineering_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 					if (access_name_lookup[A] in supply_access_list)
-						supply_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						supply_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 					if (access_name_lookup[A] in research_access_list)
-						research_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						research_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 					if (access_name_lookup[A] in security_access_list)
-						security_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						security_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 					if (access_name_lookup[A] in command_access_list)
-						command_access += " <a href='?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
+						command_access += " <a href='byond://?src=\ref[src];access=[access_name_lookup[A]];allowed=1'>[replacetext(A, " ", "&nbsp")]</a>"
 
 			if(37 in src.card_access)
-				special_access += " <a href='?src=\ref[src];access=37;allowed=0'><font color=\"red\">Head of Security</font></a>"
+				special_access += " <a href='byond://?src=\ref[src];access=37;allowed=0'><font color=\"red\">Head of Security</font></a>"
 			else
-				special_access += " <a href='?src=\ref[src];access=37;allowed=1'>Head of Security</a>"
+				special_access += " <a href='byond://?src=\ref[src];access=37;allowed=1'>Head of Security</a>"
 
 			src.temp += "[civilian_access][engineering_access][supply_access][research_access][security_access][command_access][special_access]"
 
 			src.temp += "<br><br><u>Customise ID</u><br>"
-			src.temp += "[src.card_icon_state == "id" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=none'>Plain</a>[src.card_icon_state == "id" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_civ" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=blue'>Civilian</a>[src.card_icon_state == "id_civ" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_clown" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=clown'>Clown</a>[src.card_icon_state == "id_clown" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_eng" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=yellow'>Engineering</a>[src.card_icon_state == "id_eng" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_res" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=purple'>Research</a>[src.card_icon_state == "id_res" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_sec" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=red'>Security</a>[src.card_icon_state == "id_sec" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "id_com" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=green'>Command</a>[src.card_icon_state == "id_com" ? "</font> " : " "]"
-			src.temp += "[src.card_icon_state == "gold" ? "<font color=\"red\">" : ""]<a href='?src=\ref[src];colour=gold'>Captain</a>[src.card_icon_state == "gold" ? "</font>" : ""]"
+			src.temp += "[src.card_icon_state == "id" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=none'>Plain</a>[src.card_icon_state == "id" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_civ" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=blue'>Civilian</a>[src.card_icon_state == "id_civ" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_clown" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=clown'>Clown</a>[src.card_icon_state == "id_clown" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_eng" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=yellow'>Engineering</a>[src.card_icon_state == "id_eng" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_res" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=purple'>Research</a>[src.card_icon_state == "id_res" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_sec" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=red'>Security</a>[src.card_icon_state == "id_sec" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "id_com" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=green'>Command</a>[src.card_icon_state == "id_com" ? "</font> " : " "]"
+			src.temp += "[src.card_icon_state == "gold" ? "<font color=\"red\">" : ""]<a href='byond://?src=\ref[src];colour=gold'>Captain</a>[src.card_icon_state == "gold" ? "</font>" : ""]"
 
-			src.temp += "<BR><A href='?src=\ref[src];buycard=1'>Purchase</A>"
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
+			src.temp += "<BR><A href='byond://?src=\ref[src];buycard=1'>Purchase</A>"
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>Back</A>"
 
 		if (href_list["access"] && href_list["allowed"])
 			var/access_type = text2num_safe(href_list["access"])
@@ -356,7 +356,7 @@
 		if (href_list["buycard"])
 			if(!scan)
 				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
 			updatecardprice() //should be updated but just to be sure
@@ -364,15 +364,15 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if(!account)
 				src.temp = {"That's odd I can't seem to find your account
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 			else if(account["current_money"] < src.card_price)
 				src.temp = {"Sorry [pick("buddy","pal","mate","friend","chief","bud","boss","champ")], you can't afford that!<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 			else
 				if(spawncard())
 					account["current_money"] -= src.card_price
 					src.temp = {"There ya go. You've got [src.card_duration] seconds to abuse that thing before its access is revoked.<BR>
-								<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"}
 					//reset to default so people can't go snooping and find out the last ordered card
 					card_registered = null
 					card_assignment = null
@@ -387,18 +387,18 @@
 			src.temp =buy_dialogue + "<HR><BR>"
 			for(var/datum/commodity/N in goods_sell)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
+				src.temp += {"<A href='byond://?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] Credits<BR>
 				<B>Description:</B> [N.desc]<BR>
-				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
+				<A href='byond://?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
 		///////Handle the buying of a specific item //
 		//////////////////////////////////////////////
 		else if (href_list["doorder"])
 			if(!scan)
 				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 				src.updateUsrDialog()
 				return
 			if (src.scan.registered in FrozenAccounts)
@@ -426,18 +426,18 @@
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
-									<BR><A href='?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
-									<BR><A href='?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
+									<BR><A href='byond://?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
+									<BR><A href='byond://?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
 					else
 						src.temp = {"[pick(failed_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 				else
 					src.temp = {"[src] looks bewildered for a second. Seems like they can't find your item.<BR>
-								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 			else
 				src.temp = {"That's odd I can't seem to find your account
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 
 		///////////////////////////////////////////
 		///Handles haggling for buying ////////////
@@ -456,7 +456,7 @@
 						anger()
 					else
 						haggle(askingprice, 1, N)
-						src.temp +="<BR><A href='?src=\ref[src];purchase=1'>Ok</A>"
+						src.temp +="<BR><A href='byond://?src=\ref[src];purchase=1'>Ok</A>"
 
 		///////////////////////////////////
 		////////Handle Bank account Set-Up ///////
@@ -489,7 +489,7 @@
 			src.temp = "<B>Current Items in Cart: </B>"
 			for(var/obj/S in shopping_cart)
 				temp+= "<BR>[S.name]"
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		////////////////////////////////////////////////////
 		/////Pick up the goods ordered from merchant////////
@@ -501,7 +501,7 @@
 				src.temp = pickupdialogue
 			else
 				src.temp = pickupdialoguefailure
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["mainmenu"])
 			src.temp = null
@@ -517,7 +517,7 @@
 
 		var/dat
 		dat = portrait_setup
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+		dat +="<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
