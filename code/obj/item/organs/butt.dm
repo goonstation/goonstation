@@ -17,6 +17,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	throw_speed = 3
 	throw_range = 5
 	c_flags = COVERSEYES
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	var/toned = 1
 	var/s_tone = "#FAD7D0"
 	var/stapled = 0
@@ -32,6 +33,9 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	mat_changename = "butt"
 
 	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL)
 		if (holder)
 			holder.butt = null
 
@@ -41,6 +45,9 @@ TYPEINFO(/obj/item/clothing/head/butt)
 
 	New(loc, datum/organHolder/nholder)
 		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 		if (istype(nholder) && nholder.donor)
 			src.holder = nholder
 			src.donor = nholder.donor
@@ -53,6 +60,39 @@ TYPEINFO(/obj/item/clothing/head/butt)
 				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
 				if (src.s_tone)
 					src.color = src.s_tone
+
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_application(var/manipulated_grenade, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		if(!ON_COOLDOWN(src, "fart_play", 1 SECOND))
+			var/turf/T = get_turf(src)
+			playsound(T, (src.sound_fart ? src.sound_fart : 'sound/voice/farts/poo2.ogg'), 40, 1, -1)
+			if (issimulatedturf(T))
+				var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
+				fart_gas.farts = 0.17 // A quarter of a normal fart
+				fart_gas.temperature = T20C
+				fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+				T.assume_air(fart_gas)
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to displace the icon a bit more with butts than with other items
+		if (is_build_in && parent_assembly.target == src)
+			parent_assembly.icon_base_offset = 5
+			if(src.toned)
+				//for the assembly, we assume a normal butt, else it shows up non-coloured
+				icon_state = "butt"
+
+
+
+	proc/assembly_removal(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user)
+		//we need to reset the base icon offset
+		parent_assembly.icon_base_offset = 0
+		if(src.toned)
+			//we changed the butt, now we change it back
+			icon_state = initial(src.icon_state)
+	/// ----------------------------------------------
+
 
 	attack(var/mob/living/carbon/M, mob/living/carbon/user)
 		if (!ismob(M))
@@ -143,13 +183,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/timer))
-			var/obj/item/gimmickbomb/butt/B = new /obj/item/gimmickbomb/butt
-			B.set_loc(get_turf(user))
-			user.show_text("You add the timer to the butt!", "blue")
-			qdel(W)
-			qdel(src)
-		else if (istype(W, /obj/item/parts/robot_parts/arm))
+		if (istype(W, /obj/item/parts/robot_parts/arm))
 			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
@@ -162,6 +196,18 @@ TYPEINFO(/obj/item/clothing/head/butt)
 
 		else
 			return ..()
+
+	proc/explode_butt()
+		var/turf/T = get_turf(src)
+		playsound(T, 'sound/voice/farts/superfart.ogg', 45, 1)
+		new /obj/effects/explosion(T)
+		if (issimulatedturf(T))
+			var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
+			fart_gas.farts = 3.45 // five times the amount of a normal fart
+			fart_gas.temperature = T20C
+			fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			T.assume_air(fart_gas)
+		qdel(src)
 
 	proc/on_fart(var/mob/farted_on) // what is wrong with me
 		return
