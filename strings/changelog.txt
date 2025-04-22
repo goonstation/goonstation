@@ -1,5 +1,9 @@
 
 (t)tue apr 22 25
+(u)Lord_Earthfire
+(p)23095
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adding items onto assemblies puts the finished assembly into your hand.
 (u)Jan.antilles
 (p)22922
 (e)⚖🔨|C-Balance, A-Player-Actions
