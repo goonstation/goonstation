@@ -3628,11 +3628,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "cPD" = (
-/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	req_access = null
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/northwest)
 "cPH" = (
@@ -5403,6 +5405,14 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"dVR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/decal/tile_edge/floorguide/arrow_e,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "dWe" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -5699,7 +5709,9 @@
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "ehL" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	id = "chapeloffice"
+	},
 /obj/mapping_helper/access/chapel_office,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
@@ -6878,6 +6890,9 @@
 "eUB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 8
 	},
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/north)
@@ -8570,6 +8585,7 @@
 	tag = ""
 	},
 /obj/item/storage/pill_bottle/antirad,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "fZT" = (
@@ -9540,6 +9556,7 @@
 	name = "Market Stall Doors";
 	opacity = 0
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "gHK" = (
@@ -11111,7 +11128,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "hSY" = (
-/obj/machinery/turret/construction,
+/obj/machinery/turret,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -14243,6 +14260,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
+"jZz" = (
+/obj/machinery/door/airlock/pyro/alt,
+/turf/simulated/floor/black,
+/area/radiostation/bridge)
 "jZQ" = (
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -15700,9 +15721,6 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/drainage/big,
-/obj/decal/tile_edge/floorguide/arrow_e{
-	dir = 4
-	},
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -17717,9 +17735,6 @@
 	name = "mining mail junction"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 1
-	},
 /turf/simulated/floor/blue/corner,
 /area/station/hallway/primary/north)
 "mDA" = (
@@ -19916,8 +19931,8 @@
 "ojz" = (
 /obj/machinery/power/smes{
 	charge = 100000;
-	chargelevel = 1000;
-	output = 500
+	chargelevel = 40000;
+	output = 15000
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/cable/black{
@@ -31495,6 +31510,7 @@
 "wjy" = (
 /obj/turbine_shaft,
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
+/obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/black,
 /area/station/engine/substation/northwest)
 "wjQ" = (
@@ -31597,7 +31613,8 @@
 /obj/machinery/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch";
-	pixel_y = 12
+	pixel_y = 12;
+	last_pos = 1
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -32530,7 +32547,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor,
-/area/radiostation/hallway)
+/area/radiostation/bridge)
 "wWe" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/white,
@@ -32837,7 +32854,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/radiostation/hallway)
+/area/radiostation/bridge)
 "xiQ" = (
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -33330,6 +33347,7 @@
 	enter_id = "inner";
 	cycle_id = "nw_turbine"
 	},
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/northwest)
 "xDD" = (
@@ -34159,6 +34177,13 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/grime,
 /area/iss)
+"yfj" = (
+/obj/turbine_shaft{
+	dir = 4
+	},
+/obj/machinery/firealarm/south,
+/turf/simulated/floor/black,
+/area/station/engine/substation/northwest)
 "yfl" = (
 /obj/fakeobject/flock/antenna/broken{
 	dir = 4;
@@ -78874,7 +78899,7 @@ fot
 rqA
 lWn
 lGN
-bOq
+yfj
 oCp
 lko
 oEH
@@ -84337,7 +84362,7 @@ lOR
 lOR
 lOR
 ucO
-euv
+dVR
 eUB
 lWC
 dpN
@@ -95195,7 +95220,7 @@ qpn
 qpn
 qpn
 qpn
-qpn
+jEw
 qpn
 qpn
 tis
@@ -96641,8 +96666,8 @@ etV
 oze
 hJU
 qBn
-xPD
-hhG
+pOp
+jZz
 rTH
 vnI
 vnI
@@ -96943,8 +96968,8 @@ vpN
 pOp
 jqD
 pOp
-xPD
-hhG
+pOp
+jZz
 cJP
 vnI
 tOC
