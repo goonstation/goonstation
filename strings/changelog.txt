@@ -1,4 +1,9 @@
 
+(t)wed apr 23 25
+(u)glowbold
+(p)23076
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can load staples into a zip gun by using a staple gun or stapler on it.
 (t)tue apr 22 25
 (u)glowbolds
 (p)23096
