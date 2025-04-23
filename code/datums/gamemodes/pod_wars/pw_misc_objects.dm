@@ -519,12 +519,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 #endif
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
-	name = "radio headset"
+	name = "nanotrasen headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a NanoTrasen frequency"
-	icon_state = "headset"
-	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
-	secure_classes = list(RADIOCL_COMMAND)
-	secure_colors = list("#0099cc")
+	icon_state = "command headset"
+	chat_class = RADIOCL_COMMAND
+	secure_frequencies = list("g" = R_FREQ_NANOTRASEN)
+	secure_classes = list("g" = RADIOCL_NANOTRASEN)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen"
 	team = TEAM_NANOTRASEN
@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen/comtac
-	name = "military headset"
+	name = "nanotrasen military headset"
 	icon_state = "radio" // blue enough
 	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
@@ -543,12 +543,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		setProperty("disorient_resist_ear", 100)
 
 /obj/item/device/radio/headset/pod_wars/syndicate
-	name = "radio headset"
+	name = "syndicate headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
-	icon_state = "headset"
+	icon_state = "sec headset"
+	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
-	secure_classes = list(RADIOCL_SYNDICATE)
-	secure_colors = list("#ff69b4")
+	secure_classes = list("g" = RADIOCL_NANOTRASEN)
 	protected_radio = TRUE
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate"
@@ -559,7 +559,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_tooltip = "Syndicate Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate/comtac
-	name = "military headset"
+	name = "syndicate military headset"
 	icon_state = "comtac"
 	desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 

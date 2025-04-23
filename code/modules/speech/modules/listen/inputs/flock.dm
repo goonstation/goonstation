@@ -16,7 +16,7 @@
 			origin = message.speaker.loc
 
 		if (origin)
-			message.format_speaker_prefix += "<a href='?src=\ref[src.parent_tree.listener_parent];origin=\ref[origin]'>"
+			message.format_speaker_prefix += "<a href='byond://?src=\ref[src.parent_tree.listener_parent];origin=\ref[origin]'>"
 			message.format_verb_prefix = "</a>" + message.format_verb_prefix
 
 	. = ..()

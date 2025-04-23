@@ -444,6 +444,7 @@ Contains:
 	manipulated_item.master = src
 	manipulated_item.layer = initial(manipulated_item.layer)
 	user.u_equip(manipulated_item)
+	user.u_equip(src)
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
@@ -463,6 +464,7 @@ Contains:
 	if(src.requires_admin_messaging())
 		message_admins("A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)]")
 	// Since the assembly was done, return TRUE
+	user.put_in_hand_or_drop(src)
 	return TRUE
 
 /obj/item/assembly/proc/add_additional_component(var/atom/to_combine_atom, var/mob/user)
@@ -477,6 +479,7 @@ Contains:
 	manipulated_item.master = src
 	manipulated_item.layer = initial(manipulated_item.layer)
 	user.u_equip(manipulated_item)
+	user.u_equip(src)
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	boutput(user, "You attach the [manipulated_item.name] to the [src.name].")
@@ -495,6 +498,7 @@ Contains:
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
+	user.put_in_hand_or_drop(src)
 	return TRUE
 
 
@@ -731,8 +735,7 @@ Contains:
 
 /obj/item/assembly/timer_ignite_pipebomb/New()
 	..()
-	var/obj/item/device/timer/new_trigger = new /obj/item/device/timer(src)
-	new_trigger.time = 5 SECONDS //have a time already set up and don't blow up unsuspecting users on use
+	var/obj/item/new_trigger = new /obj/item/device/timer(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/pipebomb/bomb/new_target = new src.pipebomb_path(src)
 	if(src.bomb_strength)

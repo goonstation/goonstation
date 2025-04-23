@@ -207,4 +207,4 @@
 /obj/machinery/macrofab/portable_oxygen
 	name = "Portable Oxygen Tank Fabricator"
 	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks."
-	createdObject = /obj/item/tank/emergency_oxygen
+	createdObject = /obj/item/tank/pocket/oxygen

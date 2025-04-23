@@ -730,7 +730,7 @@ TYPEINFO(/obj/critter/gunbot/heavy)
 			dat += "<center><font size = 20>VAULT UNLOCKED</font></center><br>"
 
 		else
-			dat += "<center><a href='?src=\ref[src];unlock=1'>Unlock Vault</a></center>"
+			dat += "<center><a href='byond://?src=\ref[src];unlock=1'>Unlock Vault</a></center>"
 		user.Browse("<head><title>Vault Computer</title></head>[dat]", "window=tourconsole;size=302x245")
 		onclose(user, "vaultcomputer")
 		return

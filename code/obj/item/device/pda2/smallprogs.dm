@@ -82,16 +82,16 @@
 
 		dat += "<h4>Station Status Display Interlink</h4>"
 
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT]'>Default</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_SHUTTLE]'>Shuttle ETA</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_MESSAGE]'>Message</A> \]"
+		dat += "\[ <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT]'>Default</A> \]<BR>"
+		dat += "\[ <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_SHUTTLE]'>Shuttle ETA</A> \]<BR>"
+		dat += "\[ <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_MESSAGE]'>Message</A> \]"
 
-		dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1]'>[ message1 ? message1 : "(none)"]</A>"
-		dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2]'>[ message2 ? message2 : "(none)"]</A></ul><br>"
+		dat += "<ul><li> Line 1: <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1]'>[ message1 ? message1 : "(none)"]</A>"
+		dat += "<li> Line 2: <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2]'>[ message2 ? message2 : "(none)"]</A></ul><br>"
 		dat += "\[ Alert: "
-		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_REDALERT]'>Red Alert</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_LOCKDOWN]'>Lockdown</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_BIOHAZ]'>Biohazard</A> \]<BR>"
+		dat += " <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_REDALERT]'>Red Alert</A> |"
+		dat += " <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_LOCKDOWN]'>Lockdown</A> |"
+		dat += " <A HREF='byond://?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_BIOHAZ]'>Biohazard</A> \]<BR>"
 
 		return dat
 
@@ -298,7 +298,7 @@ Code:
 		dat += "<a href='byond://?src=\ref[src];adj_volume=1'>+</a> "
 		dat += "</TT><br>"
 
-		dat += "<a href='?src=\ref[src];honk=1'>Honk</a>"
+		dat += "<a href='byond://?src=\ref[src];honk=1'>Honk</a>"
 
 		return dat
 
@@ -426,7 +426,7 @@ Code:
 		var/dat = src.return_text_header()
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
-		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
+		dat += "<a href='byond://?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
 		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
@@ -469,7 +469,7 @@ Code:
 
 		dat += "<h4>Atmos Alert Manager</h4>"
 
-		dat += "<a href='?src=\ref[src];scan=1'>Scan for Alerts</a><br>"
+		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan for Alerts</a><br>"
 
 		var/severe_text
 		var/minor_text
@@ -740,7 +740,7 @@ Code:
 
 		dat += "<h4>Botanical System Monitor</h4>"
 
-		dat += "<a href='?src=\ref[src];scan=1'>Refresh Status</a><br>"
+		dat += "<a href='byond://?src=\ref[src];scan=1'>Refresh Status</a><br>"
 
 		var/status_text
 
@@ -796,14 +796,14 @@ Code:
 			else
 				dat += {"
 				<center>Please select alert type:<br>
-				<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>
-				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
-				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
-				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				<a href='byond://?src=\ref[src];alert=1'>Medical Alert</a><br>
+				<a href='byond://?src=\ref[src];alert=2'>Engineering Alert</a><br>
+				<a href='byond://?src=\ref[src];alert=3'>Security Alert</a><br>
+				<a href='byond://?src=\ref[src];alert=4'>Janitor Alert</a>
 				"}
 
 		else
-			dat += "<center><b>Please confirm: <a href='?src=\ref[src];confirm=y'>Y</a> / <a href='?src=\ref[src];confirm=n'>N</a></b></center>"
+			dat += "<center><b>Please confirm: <a href='byond://?src=\ref[src];confirm=y'>Y</a> / <a href='byond://?src=\ref[src];confirm=n'>N</a></b></center>"
 
 		return dat
 
@@ -1231,8 +1231,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		else
 			dat += {"<br><B>Supply Ordering Program</B><HR>
 			<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
-			<A href='?src=\ref[src];viewrequests=1'>View Requests</A><BR>
-			<A href='?src=\ref[src];order=1'>Request Items</A><BR>"}
+			<A href='byond://?src=\ref[src];viewrequests=1'>View Requests</A><BR>
+			<A href='byond://?src=\ref[src];order=1'>Request Items</A><BR>"}
 		return dat
 
 
@@ -1249,10 +1249,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<div class='supply-package'><A href='?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
+				src.temp += {"<div class='supply-package'><A href='byond://?src=\ref[src];doorder=[N.type]'><B><U>[N.name]</U></B></A><BR>
 				<B>Cost:</B> [N.cost] Credits<BR>
 				<B>Contents:</B> [N.desc]<BR><BR></div>"}
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["doorder"])
 			var/datum/supply_order/O = new/datum/supply_order ()
@@ -1282,14 +1282,14 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["viewrequests"])
 			src.temp = "<B>Current Requests:</B><BR><BR>"
 			for(var/S in shippingmarket.supply_requests)
 				var/datum/supply_order/SO = S
 				src.temp += "[SO.object.name] requested by [SO.orderedby] from [SO.console_location].<BR>"
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["mainmenu"])
 			src.temp = null
@@ -1316,7 +1316,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (nextName > world.timeofday)
 				dat += "<b>The station naming coils are recharging, you must wait [(nextName - world.timeofday) / 10] seconds.</b><br><br>"
 			else
-				dat += "<a href='?src=\ref[src];change=1'>Change Name</a><br><br>"
+				dat += "<a href='byond://?src=\ref[src];change=1'>Change Name</a><br><br>"
 		else
 			dat += "<b>Cosmic interference is preventing station name changes right now. Yep.</b><br><br>"
 

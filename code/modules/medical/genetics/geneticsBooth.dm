@@ -179,8 +179,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				. = ""
 				for (var/datum/geneboothproduct/P as() in offered_genes)
 					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
 
 			else
 				. += "[src] has no products available for purchase right now."

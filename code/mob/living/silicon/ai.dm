@@ -940,12 +940,12 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if (single_camera?.camera_status)
-		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"byond://?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
 	else if (length(camera_list))
 		var/first_cam = TRUE
 		var/cameras_string = ""
 		for (var/obj/machinery/camera/camera in camera_list)
-			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"byond://?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
 			first_cam = FALSE
 		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
 	else

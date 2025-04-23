@@ -42782,6 +42782,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},

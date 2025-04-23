@@ -1,6 +1,5 @@
 /datum/pod_wars_team
 	var/name = "NanoTrasen"
-	var/comms_frequency = 0		//used in datum/job/pod_wars/proc/setup_headset (in Jobs.dm) to tune the radio as it's first equipped
 	var/area/base_area = null		//base ship area
 	var/datum/mind/commander = null
 	var/list/members = list()		//list of minds
@@ -44,22 +43,10 @@
 				base_area = /area/pod_wars/team2 //area south, Syndicate crew
 
 		setup_voice_line_alt_amounts()
-		set_comms(mode)
 
 	proc/change_points(var/amt)
 		points += amt
 		mode.handle_point_change(src)
-
-
-	proc/set_comms(var/datum/game_mode/pod_wars/mode)
-		comms_frequency = rand(1360,1420)
-
-		while(comms_frequency in mode.frequencies_used)
-			comms_frequency = rand(1360,1420)
-
-		mode.frequencies_used += comms_frequency
-		protected_frequencies += comms_frequency
-
 
 	proc/accept_initial_players(var/list/players)
 		members = players

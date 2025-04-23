@@ -5126,6 +5126,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/unsimulated/floor,
 /area/pod_wars/team2/magnet)
 "qA" = (
@@ -7723,6 +7726,9 @@
 "yW" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 5

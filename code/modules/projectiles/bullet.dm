@@ -741,6 +741,7 @@ toxic - poisons
 			..()
 
 	weak
+		name = "muckshot"
 		damage = 50 //can have a little throwing, as a treat
 
 /datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
