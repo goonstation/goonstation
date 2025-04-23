@@ -729,7 +729,7 @@
 			if(!HAS_FLAG(target.wear_mask.c_flags, MASKINTERNALS))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			var/list/eq_list = list(src.target.back, src.target.belt, src.target.l_store, src.target.r_store, src.target.r_hand, src.target.l_hand)
+			var/list/eq_list = list(src.target.back, src.target.belt, src.target.r_hand, src.target.l_hand, src.target.l_store, src.target.r_store)
 			for(var/I in eq_list)
 				if(!istype(I, /obj/item/tank))
 					continue
