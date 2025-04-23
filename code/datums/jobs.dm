@@ -2835,23 +2835,13 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			var/datum/abilityHolder/composite/AH = M.abilityHolder
 			AH.addHolder(/datum/abilityHolder/pod_pilot)
 
-		//stuff for headsets
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.setup_team_overlay(M.mind, overlay_icon)
 			if (team == 1)
 				M.mind.special_role = mode.team_NT?.name
-				setup_headset(M.ears, mode.team_NT?.comms_frequency)
 			else if (team == 2)
 				M.mind.special_role = mode.team_SY?.name
-				setup_headset(M.ears, mode.team_SY?.comms_frequency)
-
-	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
-		if (istype(headset))
-			headset.set_secure_frequency("g",freq)
-			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			headset.cant_self_remove = 0
-			headset.cant_other_remove = 0
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"

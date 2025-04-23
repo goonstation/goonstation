@@ -240,16 +240,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
-"abo" = (
-/obj/machinery/computer/television,
-/obj/item/clothing/head/fedora{
-	pixel_y = 11
-	},
-/obj/machinery/light/small/sticky/warm/very{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "abp" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -989,10 +979,6 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/west)
-"adP" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "adQ" = (
 /obj/rack,
@@ -10366,6 +10352,10 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/storage/primary)
+"dhC" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "djg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -11244,6 +11234,22 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"eCH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_reclaimer,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/mining/magnet)
 "eEx" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellowblack{
@@ -11973,23 +11979,6 @@
 	icon_state = "nt_logo"
 	},
 /area/station/hallway/primary/north)
-"fCU" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "fCZ" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/makeCaptain{
@@ -15218,6 +15207,16 @@
 	},
 /turf/simulated/floor/yellow/corner,
 /area/station/mining/staff_room)
+"kbf" = (
+/obj/machinery/computer/television,
+/obj/item/clothing/head/fedora{
+	pixel_y = 11
+	},
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "kbp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15269,22 +15268,6 @@
 	},
 /turf/space,
 /area/space)
-"keS" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "kfc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16102,6 +16085,26 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"lxx" = (
+/obj/item/device/camera_viewer/telesci{
+	pixel_y = 16;
+	pixel_x = -5
+	},
+/obj/machinery/computer/television/small{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/clothing/head/helmet/camera/telesci{
+	pixel_x = -5
+	},
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "lxS" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -17278,19 +17281,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"mWE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/portable_reclaimer,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/mining/magnet)
 "mWK" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -17508,6 +17498,18 @@
 /obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"npx" = (
+/obj/table/wood/round/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 14;
+	pixel_x = -5
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/twotone/black,
+/area/station/crew_quarters/cafeteria)
 "nqV" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -18132,26 +18134,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
-"ocb" = (
-/obj/item/device/camera_viewer/telesci{
-	pixel_y = 16;
-	pixel_x = -5
-	},
-/obj/machinery/computer/television/small{
-	pixel_y = 8;
-	pixel_x = 4
-	},
-/obj/item/clothing/head/helmet/camera/telesci{
-	pixel_x = -5
-	},
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "ocl" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/yellow,
@@ -20213,6 +20195,23 @@
 	wet = 2
 	},
 /area/station/crew_quarters/clown)
+"rBn" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "rCf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22212,6 +22211,22 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"upU" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "uqg" = (
 /obj/machinery/activation_button/flusher_button{
 	id = "artsci_ejection";
@@ -23819,18 +23834,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
-"wHt" = (
-/obj/table/wood/round/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 14;
-	pixel_x = -5
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/twotone/black,
-/area/station/crew_quarters/cafeteria)
 "wIF" = (
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -50354,7 +50357,7 @@ aaa
 aaa
 fns
 mqJ
-mWE
+eCH
 cKw
 ktp
 mqJ
@@ -66373,7 +66376,7 @@ aRZ
 wBL
 wIF
 aDb
-ocb
+lxx
 sFU
 eQw
 fTa
@@ -72981,7 +72984,7 @@ aaa
 aaa
 aaa
 aaL
-abo
+kbf
 abI
 acb
 acA
@@ -73906,7 +73909,7 @@ dMO
 uth
 dMO
 uth
-wHt
+npx
 pRK
 jsH
 akW
@@ -78422,7 +78425,7 @@ afa
 kQf
 adI
 afa
-adP
+dhC
 mSH
 yci
 yfR
@@ -78735,7 +78738,7 @@ kwQ
 lFr
 jGQ
 nrU
-fCU
+rBn
 tue
 ahl
 ahl
@@ -85084,7 +85087,7 @@ alu
 amu
 amu
 aAT
-keS
+upU
 qgH
 vvA
 aSK

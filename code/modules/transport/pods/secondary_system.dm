@@ -832,7 +832,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue
-			dat +="<A href='?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
+			dat +="<A href='byond://?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 
@@ -925,7 +925,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("C"); return false;'>C</a></td></tr>
 		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("F"); return false;'>F</a></td><td><a href='#' onclick='keypadIn("E"); return false;'>E</a></td></td><td><a href='#' onclick='keypadIn("D"); return false;'>D</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='byond://?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
 	</table>
 
 <script language="JavaScript">

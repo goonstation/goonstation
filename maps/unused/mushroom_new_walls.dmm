@@ -786,17 +786,6 @@
 	dir = 4
 	},
 /area/station/engine/inner)
-"aeB" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/firealarm/east,
-/turf/simulated/floor/red/redblackchecker,
-/area/station/security/checkpoint/arrivals)
 "aeD" = (
 /obj/machinery/camera{
 	c_tag = "Arrival Hallway";
@@ -10542,10 +10531,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"blN" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "blQ" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -12451,17 +12436,6 @@
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"bTf" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/light/small/floor,
-/turf/simulated/floor,
-/area/station/security/main)
 "bTz" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -14683,12 +14657,6 @@
 	},
 /turf/space,
 /area/station/engine/proto)
-"dCv" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
-/turf/simulated/floor/red/redblackchecker,
-/area/station/security/processing)
 "dCz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/turret_protected/AIbaseoutside)
@@ -14863,6 +14831,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
+"dIC" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/camera_viewer,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "dJn" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/cola/blue,
@@ -14911,6 +14885,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/armory_outside)
+"dMT" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm/east,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/checkpoint/arrivals)
 "dMU" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk{
@@ -15020,11 +15005,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"dSD" = (
-/obj/machinery/computer/television,
-/obj/item/device/radio/intercom/detnet/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "dSY" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
@@ -15284,6 +15264,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"edk" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/processing)
 "edl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17494,6 +17480,11 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"fST" = (
+/obj/table/auto,
+/obj/machinery/computer/television/small,
+/turf/simulated/floor/purple,
+/area/station/science/hall)
 "fTO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
@@ -19739,12 +19730,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/aisat)
-"hPh" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/camera_viewer,
-/obj/cable,
-/turf/simulated/floor/black,
-/area/station/bridge)
 "hPO" = (
 /obj/cable{
 	icon_state = "6-9"
@@ -21112,6 +21097,19 @@
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"jeR" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/hos)
 "jfe" = (
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor,
@@ -23420,6 +23418,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"lbz" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "lbO" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -23771,11 +23773,6 @@
 /obj/item/stamp,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
-"lul" = (
-/obj/table/auto,
-/obj/machinery/computer/television/small,
-/turf/simulated/floor/purple,
-/area/station/science/hall)
 "luS" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -24879,6 +24876,14 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"mjo" = (
+/obj/item/device/camera_viewer/telesci,
+/obj/item/device/camera_viewer/telesci,
+/obj/item/camera,
+/obj/item/camera,
+/obj/storage/crate,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "mkg" = (
 /obj/stool,
 /turf/simulated/floor/red/redblackchecker,
@@ -27015,18 +27020,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"nWp" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/camera,
-/obj/item/camera,
-/obj/storage/crate,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "nWH" = (
 /obj/shrub/random,
 /turf/simulated/floor,
@@ -28709,19 +28702,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"pcx" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/red,
-/area/station/security/hos)
 "pcD" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=security";
@@ -28993,6 +28973,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"pkm" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor,
+/area/station/security/main)
 "pkB" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -30937,6 +30928,11 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"qHw" = (
+/obj/machinery/computer/television,
+/obj/item/device/radio/intercom/detnet/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "qHx" = (
 /obj/cable,
 /obj/cable{
@@ -50653,7 +50649,7 @@ blk
 bls
 bly
 blH
-blN
+lbz
 blW
 lCL
 bml
@@ -84589,7 +84585,7 @@ cpU
 vdm
 adP
 adP
-aeB
+dMT
 afb
 adP
 dXn
@@ -87438,7 +87434,7 @@ ruC
 hbP
 jdH
 gIn
-hPh
+dIC
 qeo
 aLg
 aaa
@@ -87728,7 +87724,7 @@ mYU
 nCn
 acA
 pFY
-pcx
+jeR
 snH
 rCC
 aYd
@@ -88913,7 +88909,7 @@ vfi
 wHk
 lwp
 tlw
-bTf
+pkm
 rnF
 vPJ
 iYx
@@ -89508,7 +89504,7 @@ bac
 paN
 bAF
 vJu
-dSD
+qHw
 ohr
 vtr
 vgS
@@ -90737,7 +90733,7 @@ xgD
 xgD
 aUU
 moE
-dCv
+edk
 nFe
 qUo
 iOd
@@ -93130,7 +93126,7 @@ aaa
 aaa
 aaa
 uCl
-nWp
+mjo
 lPm
 lny
 wRm
@@ -99461,7 +99457,7 @@ fWB
 hrz
 bVj
 vvc
-lul
+fST
 nsj
 oGD
 pQE

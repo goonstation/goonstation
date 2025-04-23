@@ -2060,6 +2060,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"lZ" = (
+/obj/machinery/door_timer/solitary{
+	name = "Brig Timer";
+	pixel_x = 26
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "ma" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2382,18 +2394,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"nU" = (
-/obj/machinery/door_timer/solitary{
-	name = "Brig Timer";
-	pixel_x = 26
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/obj/item/clothing/glasses/vr/arcade,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "nY" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr/arcade,
@@ -3187,6 +3187,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"tS" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "tT" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/heater,
@@ -6431,10 +6435,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"Px" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "Py" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -7256,6 +7256,12 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"We" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "Wg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21286,7 +21292,7 @@ Hj
 Hj
 io
 TP
-Px
+tS
 Jh
 Hj
 Hj
@@ -50666,7 +50672,7 @@ kz
 lR
 fL
 iz
-nU
+lZ
 sN
 iz
 Qs
@@ -83234,7 +83240,7 @@ bm
 Ix
 Ix
 LS
-cD
+We
 cD
 mA
 cD
