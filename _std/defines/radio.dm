@@ -41,7 +41,7 @@
 #define R_FREQ_RESEARCH 1354
 #define R_FREQ_MEDICAL 1356
 #define R_FREQ_CIVILIAN 1355
-#define R_FREQ_SYNDICATE 1352 // Randomized for nuke rounds.
+#define R_FREQ_SYNDICATE 1352
 #define R_FREQ_PIRATE 1353
 #define R_FREQ_GANG 1400 // Placeholder, it's actually randomized in gang rounds.
 #define R_FREQ_MULTI 1451
