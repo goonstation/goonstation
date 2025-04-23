@@ -24413,6 +24413,12 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
+"kDY" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/mining/magnet)
 "kEe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
@@ -110846,7 +110852,7 @@ dwd
 tJx
 cXS
 daF
-cWF
+kDY
 qxW
 daF
 vnX

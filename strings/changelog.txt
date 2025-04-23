@@ -1,5 +1,42 @@
 
+(t)wed apr 23 25
+(u)TDHooligan
+(p)23091
+(e)⚖|C-Balance
+(+)Gangs armor vest is cheaper.
+(u)glowbold
+(p)23076
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can load staples into a zip gun by using a staple gun or stapler on it.
+(t)tue apr 22 25
+(u)glowbolds
+(p)23096
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Arcfiends recieve a text popup showing how much power they're draining from targets.
+(u)LeahTheTech
+(*)The "liquid plasma" disease reagent has been renamed to "activated plasma".
+(u)Lord_Earthfire
+(p)23095
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adding items onto assemblies puts the finished assembly into your hand.
+(u)Jan.antilles
+(p)22922
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Syndicate Intelligence maximum length reduced from 4000 to 2000 characters.
+(u)glowbold
+(p)23080
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)The SMES Human gene is as rare as x-ray/gamma ray. There is a gene combination recipe to create it.
+(t)mon apr 21 25
+(u)LeahTheTech + Cogwerks
+(*)Added an informational poster to all mining departments.
+(u)CalliopeSoups
+(p)23024
+(e)⚖|C-Balance
+(+)Chem condensers now accept any crystal material.
 (t)sun apr 20 25
+(u)Emily
+(*)Ranch Module moved to open source. Please report bugs to Emily. Happy Easter 420!
 (u)JORJ949
 (p)22879
 (e)🆕📦|C-Feature, A-Game-Objects

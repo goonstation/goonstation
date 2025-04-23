@@ -17287,6 +17287,9 @@
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

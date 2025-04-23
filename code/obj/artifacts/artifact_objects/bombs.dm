@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
-				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
+				potential_reagents = list("nanites","activated plasma","mercury","lithium","plasma","radium","uranium","phlogiston",
 				"silicon","gypsum","sodium_sulfate","diethylamine","pyrosium","thermite","fuel","acid","silicate","lube","cryostylane",
 				"ash","clacid","oil","acetone","ammonia")
 			if ("martian")
