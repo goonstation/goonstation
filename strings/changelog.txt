@@ -1,5 +1,7 @@
 
 (t)tue apr 22 25
+(u)LeahTheTech
+(*)The "liquid plasma" disease reagent has been renamed to "activated plasma".
 (u)Lord_Earthfire
 (p)23095
 (e)🪲📦|C-Bug, A-Game-Objects
