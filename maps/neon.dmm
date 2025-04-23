@@ -277,6 +277,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/ai_status_display{
+	pixel_x = -28
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -4787,7 +4790,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/storage/secure/crate/weapon/confiscated_items{
+	name = "riot equipment crate"
+	},
 /obj/item/gun/kinetic/riot40mm{
 	pixel_y = 8
 	},
@@ -5746,6 +5751,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/ce)
 "eii" = (
@@ -6088,7 +6096,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "etS" = (
 /obj/decal/tile_edge/line/red{
@@ -8781,6 +8789,9 @@
 /area/station/hallway/primary/central)
 "gfg" = (
 /obj/machinery/optable,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "gfz" = (
@@ -9532,6 +9543,9 @@
 /area/station/medical/medbay)
 "gGJ" = (
 /obj/disposalpipe/segment/bent/north,
+/obj/machinery/ai_status_display{
+	pixel_x = -28
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "gGX" = (
@@ -11635,6 +11649,9 @@
 	},
 /area/station/security/processing)
 "ilM" = (
+/obj/machinery/ai_status_display{
+	pixel_y = -29
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/ce)
 "ilY" = (
@@ -12234,7 +12251,7 @@
 /turf/simulated/floor/carpet/blue/decal/innercross,
 /area/station/bridge)
 "iGR" = (
-/obj/machinery/conveyor/EW{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /obj/landmark/supply_delivery,
@@ -12543,6 +12560,9 @@
 	pixel_y = 4
 	},
 /obj/item/mining_tool/powered/shovel,
+/obj/machinery/ai_status_display{
+	pixel_x = 28
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -13580,7 +13600,7 @@
 	},
 /area/station/security/main)
 "jEw" = (
-/obj/machinery/conveyor/EW{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/space/fluid,
@@ -14856,7 +14876,9 @@
 	},
 /area/station/turret_protected/ai)
 "kzH" = (
-/obj/machinery/door/airlock/pyro/reinforced/arrivals,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	req_access = null
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor{
@@ -15830,6 +15852,9 @@
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
 /obj/table/wood/round/auto,
+/obj/machinery/ai_status_display{
+	pixel_x = -28
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "ljs" = (
@@ -16847,7 +16872,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/conveyor/EW{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/plating,
@@ -17354,6 +17379,14 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/space/fluid,
 /area/space)
+"mmJ" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "mnc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -21893,6 +21926,14 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/blue/corner,
 /area/station/hallway/primary/south)
+"pLb" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "pLq" = (
 /obj/machinery/navbeacon/tour/neon/tour0,
 /turf/unsimulated/floor{
@@ -24392,8 +24433,14 @@
 "rwx" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = -8
+	},
 /obj/machinery/vending/security,
+/obj/blind_switch/west{
+	pixel_y = 8;
+	id = "brig"
+	},
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -28401,7 +28448,7 @@
 /obj/machinery/recharger{
 	pixel_y = 5
 	},
-/obj/item/storage/box/handcuff_kit{
+/obj/item/storage/box/panic_buttons{
 	pixel_x = -6
 	},
 /obj/item/storage/box/trackimp_kit,
@@ -28412,6 +28459,7 @@
 	pixel_y = 12
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "uij" = (
@@ -29385,7 +29433,7 @@
 /obj/strip_door{
 	dir = 8
 	},
-/obj/machinery/conveyor/EW{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/plating,
@@ -30198,7 +30246,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "vwk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -30279,9 +30327,6 @@
 /area/station/security/detectives_office)
 "vyK" = (
 /obj/machinery/flasher/portable,
-/obj/blind_switch/south{
-	pixel_x = -24
-	},
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -32905,7 +32950,7 @@
 	id = "cargo_inbound";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor/EW{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/plating,
@@ -95535,7 +95580,7 @@ oDt
 oDt
 twE
 brh
-wgu
+mmJ
 wGX
 wyQ
 pGN
@@ -96139,7 +96184,7 @@ sUM
 sUM
 wfz
 brh
-wgu
+pLb
 srp
 nna
 poW
