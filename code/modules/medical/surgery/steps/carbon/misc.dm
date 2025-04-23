@@ -5,9 +5,6 @@
 		desc = "Insert the item."
 		icon_state = "in"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		step_possible(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			return (C.chest_item == null)
 		tool_requirement(mob/surgeon, obj/item/tool)
 			if(tool.w_class > W_CLASS_NORMAL && !(tool.type in chestitem_whitelist))
 				boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
@@ -40,9 +37,6 @@
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		tools_required = list(/obj/item/suture)
 		optional = TRUE
-		step_possible(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			return (C.chest_item != null)
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			patient.chest_item_sewn = TRUE
@@ -56,9 +50,6 @@
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		flags_required = TOOL_CUTTING
 		optional = TRUE
-		step_possible(mob/surgeon, obj/item/tool)
-			var/mob/living/carbon/human/C = parent_surgery.patient
-			return (C.chest_item != null)
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> removes the [patient.chest_item] from [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest cavity."),\
@@ -74,12 +65,6 @@
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 	flags_required = TOOL_CUTTING
 	optional = TRUE
-	step_possible(mob/surgeon, obj/item/tool)
-		var/mob/living/carbon/human/patient = parent_surgery.patient
-		for (var/datum/ailment_data/an_ailment in patient.ailments)
-			if (an_ailment.cure_flags & CURE_SURGERY)
-				return TRUE
-		return FALSE
 
 	on_complete(mob/surgeon, obj/item/tool)
 		var/mob/living/carbon/human/patient = parent_surgery.patient

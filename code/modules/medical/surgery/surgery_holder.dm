@@ -90,7 +90,7 @@
 			return FALSE
 		return surgery.surgery_clicked(surgeon, I)
 
-	/// Returns TRUE if the given tool is relevant to any possible surgery.
+	/// Returns TRUE if the given tool generally relevant to surgery.
 	proc/tool_relevant(mob/user, obj/item/tool)
 		if (!tool)
 			return FALSE

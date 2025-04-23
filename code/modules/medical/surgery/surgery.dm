@@ -404,10 +404,10 @@
 		else
 			if (istype(tool, /obj/item/suture))
 				messup_texts = list(" messes up", " fumbles with [tool]", " nearly drops [tool]", "'s hand twitches", " knots up [tool]")
+
+		if (!messup_texts)
+			messup_texts = list(" messes up", "'s hand slips", "'s hand twitches")
 		return pick(messup_texts)
-	/// Whether this step is actually possible.
-	proc/step_possible(mob/surgeon, obj/item/tool)
-		return TRUE
 	proc/can_operate(mob/surgeon, obj/item/tool, quiet = TRUE)
 		if (finished)
 			return FALSE
@@ -439,9 +439,19 @@
 					boutput(surgeon,SPAN_ALERT("You can't use that tool for this step."))
 			return FALSE
 
-	///Code based object requirement, IE. contains 50 units of ethanol or something
-	proc/tool_requirement(mob/surgeon, obj/item/tool)
-		return TRUE
+	/// Performs this surgery step with the given tool.
+	proc/perform_step(mob/surgeon, obj/item/tool)
+		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
+			return FALSE
+		if (can_operate(surgeon, tool, FALSE) && attempt_surgery_step(surgeon, tool))
+			if (success_sound)
+				playsound(parent_surgery.patient, success_sound, 50, TRUE)
+			on_complete(surgeon, tool)
+			finish_step(surgeon, tool)
+		else
+			if (!parent_surgery.implicit)
+				parent_surgery.enter_surgery(surgeon)
+
 
 	proc/calculate_failure_chance(mob/surgeon, obj/item/tool)
 		var/screw_up_prob = 0
@@ -497,7 +507,7 @@
 		DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 		return screw_up_prob
 
-	///Calculate if this step succeeds, apply failure effects here
+	///Calculate if this step succeeds
 	proc/attempt_surgery_step(mob/surgeon, obj/item/tool)
 		// clowns always beat themselves. even if can_fail is FALSE
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
@@ -576,34 +586,11 @@
 
 		var/success = do_surgery_step(surgeon, tool)
 		if (success && success_damage > 0)
-			var/dealt_damage = rand(success_damage-success_damage_variance, success_damage+success_damage_variance)
+			var/dealt_damage = max(0,rand(success_damage-success_damage_variance, success_damage+success_damage_variance))
 			parent_surgery.patient.TakeDamage("chest",dealt_damage,0,damage_type=damage_type)
 			if (damage_type in list(DAMAGE_CRUSH,DAMAGE_CUT,DAMAGE_STAB))
 				take_bleeding_damage(parent_surgery.patient, tool.the_mob, damage = dealt_damage, damage_type = damage_type, surgery_bleed = TRUE)
 		return success
-
-	proc/on_mess_up(mob/surgeon, obj/item/tool, forced = FALSE)
-		var/damage_value = rand(fail_damage-fail_damage_variance, fail_damage+fail_damage_variance)
-		if (forced)
-			damage_value = rand(15,25)
-		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value,tool)]!</b>"))
-		parent_surgery.patient.TakeDamage(parent_surgery.affected_zone, damage_value, 0)
-		take_bleeding_damage(parent_surgery.patient, surgeon, damage_value, surgery_bleed = TRUE)
-		create_blood_sploosh(parent_surgery.patient)
-		display_slipup_image(surgeon, parent_surgery.patient.loc)
-		return
-
-	proc/perform_step(mob/surgeon, obj/item/tool) //! Perform the surgery step
-		if (parent_surgery.super_surgery && !parent_surgery.super_surgery.surgery_complete())
-			return FALSE
-		if (can_operate(surgeon, tool, FALSE) && step_possible(surgeon, tool) && attempt_surgery_step(surgeon, tool))
-			if (success_sound)
-				playsound(parent_surgery.patient, success_sound, 50, TRUE)
-			on_complete(surgeon, tool)
-			finish_step(surgeon, tool)
-		else
-			if (!parent_surgery.implicit)
-				parent_surgery.enter_surgery(surgeon)
 
 	/// Mark this step as finished. It's better to override on_complete unless you know what you're doing.
 	proc/finish_step(mob/user, obj/item/tool)
@@ -611,14 +598,7 @@
 			finished = TRUE
 		parent_surgery.step_completed(src, user, tool)
 
-	/// Perform the surgery step. return TRUE if successful.
-	proc/do_surgery_step(mob/surgeon, obj/item/tool)
-		return TRUE
-
-	/// Override this to add completion effects to this surgery step.
-	proc/on_complete(mob/user, obj/item/tool)
-
-	proc/get_context(var/locked) //! Get the context for this step
+	proc/get_context(var/locked) //! Get the context icon for this step
 		if (finished && hide_when_finished || !visible)
 			return null
 		var/datum/contextAction/surgical_step/step_context = new
@@ -672,18 +652,29 @@
 			return "You need wires for this step!"
 		else
 			return "You can't use that tool for this step."
-	screw
-		name = "Screw"
-		desc = "Screw the thing into place."
-		icon_state = "screw"
-		success_sound = 'sound/items/Ratchet.ogg'
-		flags_required = TOOL_SCREWING
-	smack
-		name = "Smack"
-		desc = "Hit with something heavy."
-		icon_state = "wrench"
-		success_sound = 'sound/impact_sounds/meat_smack.ogg'
-		tool_requirement(mob/surgeon, obj/item/tool)
-			if (tool.force >= 5 && (tool.hit_type == DAMAGE_BLUNT || tool.hit_type == DAMAGE_CRUSH))
-				return TRUE
-			return FALSE
+
+	/// ------------ STUFF YOU MIGHT WANT TO OVERRIDE
+
+
+	/// Called when the surgery step fails.
+	proc/on_mess_up(mob/surgeon, obj/item/tool, forced = FALSE)
+		var/damage_value = max(0,rand(fail_damage-fail_damage_variance, fail_damage+fail_damage_variance))
+		if (forced)
+			damage_value = rand(15,25)
+		surgeon.visible_message(SPAN_ALERT("<b>[surgeon][get_mess_up_text(damage_value,tool)]!</b>"))
+		parent_surgery.patient.TakeDamage(parent_surgery.affected_zone, damage_value, 0)
+		take_bleeding_damage(parent_surgery.patient, surgeon, damage_value, surgery_bleed = TRUE)
+		create_blood_sploosh(parent_surgery.patient)
+		display_slipup_image(surgeon, parent_surgery.patient.loc)
+		return
+
+	///Code based object requirement, IE. contains 50 units of ethanol or something
+	proc/tool_requirement(mob/surgeon, obj/item/tool)
+		return TRUE
+
+	/// Perform the surgery step. return TRUE if successful.
+	proc/do_surgery_step(mob/surgeon, obj/item/tool)
+		return TRUE
+
+	/// Override this to add completion effects to this surgery step.
+	proc/on_complete(mob/user, obj/item/tool)

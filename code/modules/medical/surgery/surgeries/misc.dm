@@ -45,12 +45,10 @@
 	surgery_possible(mob/living/surgeon)
 		if (!iscarbon(patient))
 			return FALSE
-		var/mob/living/carbon/human/H = patient
-		for (var/datum/ailment_data/an_ailment in H.ailments)
+		for (var/datum/ailment_data/an_ailment in patient.ailments)
 			if (an_ailment.cure_flags & CURE_SURGERY)
 				return TRUE
 		return FALSE
-
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new/datum/surgery_step/parasite(src))
 

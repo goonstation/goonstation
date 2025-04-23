@@ -10,11 +10,12 @@
 		var/mob/living/patient = parent_surgery.patient
 		var/list/datum/surgery/surgeries = parent_surgery.holder.get_surgeries_by_zone(loc)
 		for (var/datum/surgery/surgery in surgeries)
-			if (surgery.cancel_possible(surgeon, tool))
+			if (surgery.cancel_possible())
 				surgery.cancel_surgery(surgeon, tool, quiet = FALSE)
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE
+
 
 	head
 		desc = "Suture the head shut."

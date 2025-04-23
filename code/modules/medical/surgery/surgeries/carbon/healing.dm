@@ -64,6 +64,8 @@
 /datum/surgery/cauterize
 	visible = FALSE
 	implicit = TRUE
+	cancel_possible()
+		return FALSE
 	surgery_conditions_met(mob/living/surgeon, obj/item/tool)
 		return TRUE
 	on_complete(mob/living/surgeon, mob/user)
@@ -106,6 +108,7 @@
 		return FALSE
 	implicit = TRUE
 	visible = FALSE
+
 
 
 /datum/surgery/suture

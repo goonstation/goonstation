@@ -145,6 +145,8 @@
 			return
 
 /datum/surgery_step/organ
+	success_damage = 0
+	success_damage_variance = 09
 	var/affected_organ
 	New(datum/surgery/parent_surgery, the_organ)
 		src.affected_organ = the_organ
