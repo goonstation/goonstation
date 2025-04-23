@@ -4162,6 +4162,7 @@ ABSTRACT_TYPE(/area/mining)
 /area/space/plasma_reef
 	name = "Plasma Reef"
 	icon_state = "purple"
+	ambient_light = OCEAN_LIGHT
 
 // // // // // // // // // // // //
 
