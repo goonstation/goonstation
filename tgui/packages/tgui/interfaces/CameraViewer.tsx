@@ -5,7 +5,14 @@
  * @license MIT
  */
 
-import { Button, ByondUi, Flex, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Flex,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -15,11 +22,18 @@ import { MinimapControllerData, MinimapMarkerData } from './MinimapController';
 export const CameraViewer = () => {
   const { data, act } = useBackend<MinimapControllerData>();
   const { title, theme, minimap_id, minimap_markers } = data;
+  const sortedMarkers = Object.values(minimap_markers).sort((a, b) =>
+    a.name.toUpperCase() < b.name.toUpperCase()
+      ? -1
+      : a.name.toUpperCase() > b.name.toUpperCase()
+        ? 1
+        : 0,
+  );
 
   return (
     <Window title={title} theme={theme} width={950} height={700}>
       <Window.Content>
-        <Stack justify="center">
+        <Stack>
           <Stack.Item>
             <Section
               title="Minimap"
@@ -34,49 +48,33 @@ export const CameraViewer = () => {
                 </Button>
               }
             >
-              <Flex>
-                <Flex.Item>
-                  <ByondUi
-                    params={{
-                      id: minimap_id,
-                      type: 'map',
-                    }}
-                    style={{
-                      width: '600px',
-                      height: '600px',
-                    }}
-                  />
-                </Flex.Item>
-              </Flex>
+              <ByondUi
+                params={{
+                  id: minimap_id,
+                  type: 'map',
+                }}
+                style={{
+                  width: '600px',
+                  height: '600px',
+                }}
+              />
             </Section>
           </Stack.Item>
           <Stack.Item grow>
             <Section scrollable fill title="Cameras">
-              <Flex direction="column">
-                <Flex.Item>
-                  {Object.values(minimap_markers)
-                    .sort((a, b) =>
-                      a.name.toUpperCase() < b.name.toUpperCase()
-                        ? -1
-                        : a.name.toUpperCase() > b.name.toUpperCase()
-                          ? 1
-                          : 0,
-                    )
-                    .map((marker) => (
-                      <MinimapIconMarker
-                        name={marker.name}
-                        pos={marker.pos}
-                        visible={marker.visible}
-                        can_be_deleted={marker.can_be_deleted}
-                        icon_state={marker.icon_state}
-                        index={marker.index}
-                        marker={marker.marker}
-                        key={marker.index}
-                        target_ref={marker.target_ref}
-                      />
-                    ))}
-                </Flex.Item>
-              </Flex>
+              {sortedMarkers.map((marker) => (
+                <MinimapIconMarker
+                  name={marker.name}
+                  pos={marker.pos}
+                  visible={marker.visible}
+                  can_be_deleted={marker.can_be_deleted}
+                  icon_state={marker.icon_state}
+                  index={marker.index}
+                  marker={marker.marker}
+                  key={marker.index}
+                  target_ref={marker.target_ref}
+                />
+              ))}
             </Section>
           </Stack.Item>
         </Stack>
@@ -92,7 +90,7 @@ const MinimapIconMarker = (markerData: MinimapMarkerData) => {
       <Stack.Item>
         <Button
           className="minimap-controller__buttons"
-          icon={'eye'}
+          icon="eye"
           onClick={() =>
             act('view_camera', {
               target_ref: markerData.target_ref,
@@ -102,11 +100,9 @@ const MinimapIconMarker = (markerData: MinimapMarkerData) => {
       </Stack.Item>
       <Stack.Item grow>
         <Flex className="minimap-controller__marker-list" height={3}>
-          <Flex.Item inline>
-            <Flex.Item fontSize={1.1} bold>
-              {capitalize(markerData.name)}
-            </Flex.Item>
-            <Flex.Item>{markerData.pos}</Flex.Item>
+          <Flex.Item>
+            <Box bold>{capitalize(markerData.name)}</Box>
+            <Box>{markerData.pos}</Box>
           </Flex.Item>
         </Flex>
       </Stack.Item>
