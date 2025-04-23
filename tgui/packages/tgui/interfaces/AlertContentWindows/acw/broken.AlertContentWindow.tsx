@@ -8,7 +8,7 @@ import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
   title: 'Broken',
-  // theme: 'syndicate', //TODO: eldritch theme?
+  theme: 'syndicate', // TODO: eldritch theme?
   content: (
     <div className="traitor-tips">
       <h1 className="center">
