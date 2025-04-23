@@ -1483,6 +1483,7 @@
 #include "code\modules\maptext\gang_score.dm"
 #include "code\modules\maptext\gang_vandalism.dm"
 #include "code\modules\maptext\health.dm"
+#include "code\modules\maptext\sap_power.dm"
 #include "code\modules\maptext\wraith_whisper.dm"
 #include "code\modules\materials\Mat_FabParts.dm"
 #include "code\modules\materials\Mat_FabRecipes.dm"

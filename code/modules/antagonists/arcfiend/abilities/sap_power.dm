@@ -200,9 +200,7 @@
 			S.start()
 		playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 30, TRUE, FALSE, pitch = 0.8)
 
-		var/image/chat_maptext/chat_text = null
-		chat_text = make_chat_maptext(src.target, "<span class='c ps2p sh' style='color: #e6e600;'>+[points_gained]<span style='font-size: 1.5em'>⚡</span></span>", alpha = 180, time = 0.5 SECONDS)
-		chat_text.show_to(src.holder.owner.client)
+		display_sap_power_maptext(src.target, src.holder.owner, "+[points_gained]<span style='font-size: 1.5em'>⚡</span>")
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)
 		src.onRestart()
