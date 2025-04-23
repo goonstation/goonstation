@@ -248,3 +248,4 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 	name = "synthetic butt"
 	desc = "Why would you even grow this. What the fuck is wrong with you?"
 	icon_state = "butt-plant"
+	toned = 0
