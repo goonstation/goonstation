@@ -2993,7 +2993,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/device/radio/intercom{
+/obj/item/device/radio/intercom/security{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -5116,6 +5116,9 @@
 "dKJ" = (
 /obj/machinery/disposal/small/south,
 /obj/disposalpipe/trunk/west,
+/obj/item/device/radio/intercom{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
 "dLf" = (
@@ -6846,7 +6849,9 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/gloves/yellow/unsulated,
 /obj/item/device/multitool,
-/obj/machinery/light/incandescent/cool,
+/obj/item/device/radio/intercom/catering{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "eQz" = (
@@ -6977,8 +6982,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "eVt" = (
-/obj/machinery/light/incandescent/warm,
 /obj/machinery/computer/ordercomp,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
 "eWb" = (
@@ -9109,6 +9116,10 @@
 "gnm" = (
 /obj/machinery/disposal/mail/small/autoname/bridge/south,
 /obj/disposalpipe/trunk/mail/north,
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0;
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
 "gnV" = (
@@ -9645,9 +9656,10 @@
 /area/station/medical/medbay)
 "gGJ" = (
 /obj/disposalpipe/segment/bent/north,
-/obj/machinery/ai_status_display{
-	pixel_x = -32
+/obj/cable{
+	icon_state = "1-4"
 	},
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "gGX" = (
@@ -13902,13 +13914,15 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
 "jJq" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/machinery/computer3/generic/med_data{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/item/device/radio/intercom/science{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -14290,9 +14304,16 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "jUK" = (
-/obj/machinery/light/incandescent/cool,
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -16321,6 +16342,7 @@
 	name = "Bridge Lockdown";
 	pixel_y = 24
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
 "lsA" = (
@@ -19165,6 +19187,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "nxx" = (
@@ -20456,15 +20481,15 @@
 /turf/space/fluid,
 /area/space)
 "ovf" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
 /obj/disposalpipe/segment/vertical,
 /obj/decal/tile_edge/floorguide/ai{
 	dir = 8
 	},
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -25191,9 +25216,12 @@
 /area/station/ai_monitored/storage/eva)
 "rPz" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "rPN" = (
@@ -26189,8 +26217,8 @@
 	pixel_x = 12;
 	pixel_y = -4
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -32683,19 +32711,15 @@
 "wJr" = (
 /obj/storage/crate,
 /obj/item/storage/box/PDAbox,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /obj/item/storage/box/PDAbox{
 	pixel_x = -1;
 	pixel_y = 3
 	},
 /obj/item/device/radio/intercom/AI{
 	broadcasting = 0
+	},
+/obj/item/device/radio/intercom/cargo{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
@@ -33687,9 +33711,6 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = -8;
 	pixel_y = 6
-	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge)
