@@ -84,19 +84,6 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return bodyImage
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!ishuman(target))
-			return
-
-		src.add_fingerprint(user)
-
-		if(user.zone_sel.selecting != src.slot)
-			return ..()
-
-		var/mob/living/carbon/human/H = target
-
-		attach(H, user)
-
 	proc/on_attach()
 		return ishuman(src.holder)
 

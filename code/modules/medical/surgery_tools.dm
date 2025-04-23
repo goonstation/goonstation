@@ -722,6 +722,20 @@ TYPEINFO(/obj/machinery/defib_mount)
 				user.suiciding = 0
 		return 1
 
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
+			var/mob/living/carbon/human/human = target
+
+			if (is_special)
+				return ..()
+			if (human.surgeryHolder.will_perform_surgery(user,src))
+				human.surgeryHolder.perform_surgery(user,src)
+				return
+		if (user.a_intent != INTENT_HARM)
+			boutput(user, SPAN_ALERT("[target] has no wounds or incisions to close!"))
+			return
+		return ..()
+
 /obj/item/suture/vr
 	icon = 'icons/effects/VR.dmi'
 

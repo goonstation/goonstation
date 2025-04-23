@@ -562,9 +562,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 			boutput(user, SPAN_ALERT("That arm is too big to fit on [H]'s body!"))
 			return
 
-		attach(H,user)
-
-		return
+		return ..()
 
 	can_arm_attach()
 		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
@@ -809,9 +807,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(target))
 			return ..()
-
-		// if (!surgeryCheck(target,user))
-		// 	return ..()
 
 		var/mob/living/carbon/human/H = target
 

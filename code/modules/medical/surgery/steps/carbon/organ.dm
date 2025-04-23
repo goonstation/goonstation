@@ -146,11 +146,11 @@
 
 /datum/surgery_step/organ
 	success_damage = 0
-	success_damage_variance = 09
+	success_damage_variance = 0
 	var/affected_organ
 	New(datum/surgery/parent_surgery, the_organ)
 		src.affected_organ = the_organ
-		..(parent_surgery)
+		..(parent_surgery) 
 
 	snip
 		name = "Snip"
