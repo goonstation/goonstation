@@ -6,7 +6,7 @@
 	var/static/shared_objective_text = null
 
 /datum/antagonist/broken/announce()
-	boutput(owner.current, SPAN_ALERT("<h2>You have broken and surrendered to madness!</h2>"))
+	boutput(owner.current, SPAN_ALERT("<h1 class='system'>You have broken and surrendered to madness!</h1>"))
 	boutput(owner.current, "<h3>[src.shared_objective_text]<h3>")
 
 /datum/antagonist/broken/assign_objectives()
@@ -28,4 +28,5 @@
 	src.owner.current.delStatus("broken_madness") //hopefully this doesn't infinite loop? idk
 
 /datum/antagonist/broken/announce_removal(source)
+	boutput(owner.current, SPAN_ALERT("<h1 class='system'>Your sanity returns, you are no longer an antagonist!</h1>"))
 	src.owner.current.show_antag_popup("broken_removed")

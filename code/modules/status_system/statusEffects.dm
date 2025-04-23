@@ -3698,4 +3698,6 @@
 		. = ..()
 		var/mob/mob_owner = src.owner
 		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
+		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
 		mob_owner.mind?.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)

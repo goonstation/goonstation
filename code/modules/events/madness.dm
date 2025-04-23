@@ -63,7 +63,9 @@
 		src.sound_event()
 
 		if (prob(80)) //sometimes all the paranoia was for nothing...
-			src.cause_madness()
+			src.cause_madness(source)
+		else
+			message_admins("[src.name] was just a scare, no madness caused.")
 
 		var/start_time = TIME
 		while (TIME - start_time < 4 MINUTES)
@@ -73,7 +75,7 @@
 		sleep(10 SECONDS)
 		qdel(monster)
 
-	proc/cause_madness()
+	proc/cause_madness(source)
 		var/list/potential_victims = list()
 		for (var/mob/living/carbon/human/H in global.mobs)
 			if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && H.client.preferences.be_misc && isalive(H)) //using "misc" prefs for now
@@ -89,6 +91,8 @@
 		for (var/i in 1 to src.num_victims)
 			var/mob/living/carbon/human/victim = pick(potential_victims)
 			victim.mind.add_antagonist(ROLE_BROKEN)
+			message_admins("[key_name(victim)] surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
+			logTheThing(LOG_ADMIN, victim, "surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
 			potential_victims -= victim
 
 	proc/shake_event()
