@@ -9956,9 +9956,7 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "bxs" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/caution/misc{
 	dir = 6
 	},
@@ -10019,6 +10017,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/simulated/floor/yellow/side{
 	broken = 1;
@@ -15985,10 +15986,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "fkB" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
 /obj/machinery/oreaccumulator,
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -25464,10 +25463,8 @@
 /area/station/crew_quarters/kitchen)
 "lQC" = (
 /obj/machinery/light,
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/machinery/portable_reclaimer,
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lRb" = (
@@ -29368,9 +29365,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "oKd" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/caution/misc{
 	dir = 6
 	},

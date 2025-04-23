@@ -86,7 +86,7 @@
 	desc = "Protects the subject's cellular structure from electrical energy."
 	id = "resist_electric"
 	effectType = EFFECT_TYPE_POWER
-	probability = 66
+	probability = 33
 	blockCount = 3
 	blockGaps = 3
 	stability_loss = 15

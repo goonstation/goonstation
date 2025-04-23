@@ -612,20 +612,10 @@
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
-
 				// Re-added (Convair880).
-				if (istype(I, /obj/item/mousetrap/))
-					var/obj/item/mousetrap/MT = I
-					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mine))
-					var/obj/item/mine/M = I
-					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						M.triggered(source)
+				if SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, source)
+					for (var/mob/O in AIviewers(owner))
+						O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 
 				target.u_equip(I)
 				I.set_loc(target.loc)
@@ -1172,13 +1162,13 @@
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || !can_act(src.owner)) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working || !can_act(src.owner))  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1227,6 +1217,8 @@
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!can_act(src.owner))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()

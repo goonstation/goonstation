@@ -98,10 +98,6 @@
 	icon_state = "console00"
 */
 
-/obj/machinery/computer/hangar
-	name = "Hangar"
-	icon_state = "teleport"
-
 /obj/machinery/computer/New()
 	..()
 	base_icon_state = initial(icon_state)

@@ -298,12 +298,12 @@ var/global/logLength = 0
 		if (type == "diary")
 			data += "[name ? " (" : ""][key][name ? ")" : ""]"
 		else
-			data += "[name ? " (" : ""]<a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[key]</a>[name ? ")" : ""]"
+			data += "[name ? " (" : ""]<a href='byond://?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[key]</a>[name ? ")" : ""]"
 	else if(mobRef.last_ckey)
 		if (type == "diary")
 			data += "[name ? " (" : ""]last: [ckey][name ? ")" : ""]"
 		else
-			data += "[name ? " (" : ""]last: <a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[ckey]</a>[name ? ")" : ""]"
+			data += "[name ? " (" : ""]last: <a href='byond://?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[ckey]</a>[name ? ")" : ""]"
 	if (traitor_roles)
 		if (type == "diary")
 			data += " \[TRAITOR\]"

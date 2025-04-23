@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_suit = list(/obj/item/clothing/suit/armor/captain/centcomm)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/centhat)
-		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_belt = list(/obj/item/tank/pocket/extended/oxygen)
 		slot_glov = list(/obj/item/clothing/gloves/fingerless)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_mask = list(/obj/item/clothing/mask/gas)
@@ -371,7 +371,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_suit = list(/obj/item/clothing/suit/armor/NT)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/NTberet)
-		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_belt = list(/obj/item/tank/pocket/extended/oxygen)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -414,7 +414,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_suit = list(/obj/item/clothing/suit/space/industrial)
 		slot_foot = list(/obj/item/clothing/shoes/magnetic)
 		slot_head = list(/obj/item/clothing/head/helmet/space/industrial)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
+		slot_belt = list(/obj/item/tank/pocket/oxygen)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal) // mesons look fuckin weird in the dark
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/rcd,/obj/item/rcd_ammo,/obj/item/rcd_ammo,/obj/item/device/light/flashlight,/obj/item/cell/cerenkite)
@@ -685,7 +685,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 		limit = 0
 		slot_suit = list(/obj/item/clothing/suit/armor/vest)
 		slot_head = list(/obj/item/clothing/head/helmet/swat)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
+		slot_belt = list(/obj/item/tank/pocket/oxygen)
 		slot_mask = list(/obj/item/clothing/mask/breath)
 		slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
@@ -780,7 +780,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		limit = 0
 		slot_suit = list(/obj/item/clothing/suit/space/engineer)
 		slot_head = list(/obj/item/clothing/head/helmet/welding)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
+		slot_belt = list(/obj/item/tank/pocket/oxygen)
 		slot_mask = list(/obj/item/clothing/mask/breath)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/gun/kinetic/flaregun,/obj/item/ammo/bullets/flare,/obj/item/cell/cerenkite)
 		special_spawn_location = LANDMARK_HTR_TEAM
@@ -1210,7 +1210,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
-	items_in_backpack = list(/obj/item/tank/emergency_oxygen)
+	items_in_backpack = list(/obj/item/tank/pocket/oxygen)
 
 /datum/job/special/hall_monitor
 	name = "Hall Monitor"
@@ -1269,7 +1269,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_poc1 = list(/obj/item/device/analyzer/atmospheric)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
+	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
 /datum/job/special/stowaway
@@ -2313,7 +2313,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list()
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
 	slot_card = null		///obj/item/card/id
-	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
 	slot_rhan = list()
@@ -2340,6 +2340,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/syndicate_specialist
 	linkcolor = SYNDICATE_LINK_COLOR
 	name = "Syndicate Special Operative"
+	access_string = "Syndicate Operative" // "All Access" + Syndie Shuttle
 	limit = 0
 	wages = 0
 	allow_traitors = FALSE
@@ -2357,7 +2358,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
 	slot_card = /obj/item/card/id
-	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/storage/pouch/assault_rifle)
 	slot_lhan = list()
 	slot_rhan = list(/obj/item/tank/jetpack/syndicate)
@@ -2370,10 +2371,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
-
-	New()
-		..()
-		src.access = syndicate_spec_ops_access()
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2511,7 +2508,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2540,7 +2537,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2587,7 +2584,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
-	items_in_backpack = list(/obj/item/tank/emergency_oxygen,/obj/item/crowbar)
+	items_in_backpack = list(/obj/item/tank/pocket/oxygen,/obj/item/crowbar)
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -2839,23 +2836,13 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			var/datum/abilityHolder/composite/AH = M.abilityHolder
 			AH.addHolder(/datum/abilityHolder/pod_pilot)
 
-		//stuff for headsets
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.setup_team_overlay(M.mind, overlay_icon)
 			if (team == 1)
 				M.mind.special_role = mode.team_NT?.name
-				setup_headset(M.ears, mode.team_NT?.comms_frequency)
 			else if (team == 2)
 				M.mind.special_role = mode.team_SY?.name
-				setup_headset(M.ears, mode.team_SY?.comms_frequency)
-
-	proc/setup_headset(var/obj/item/device/radio/headset/headset, var/freq)
-		if (istype(headset))
-			headset.set_secure_frequency("g",freq)
-			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			headset.cant_self_remove = 0
-			headset.cant_other_remove = 0
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
@@ -2879,7 +2866,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
 		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 		slot_poc2 = list(/obj/item/requisition_token/podwars/NT)
 
 		commander
@@ -2923,7 +2910,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
 		slot_mask = list(/obj/item/clothing/mask/gas/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat/syndicate)
-		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 		slot_poc2 = list(/obj/item/requisition_token/podwars/SY)
 
 		commander

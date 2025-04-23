@@ -247,6 +247,9 @@
 	uses_default_material_appearance = FALSE
 	amount = 5
 
+/obj/item/material_piece/iridiumalloy/small
+	amount = 1
+
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
@@ -443,12 +446,18 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
-	icon_state = "bar"
+	icon_state = "rod"
 	default_material = "neutronium"
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
-	icon_state = "bar"
+	icon_state = "rod"
+	default_material = "plutonium"
+
+/obj/item/material_piece/plutonium_scrap
+	name = "scrap"
+	icon_state = "plutonium"
+	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold

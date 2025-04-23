@@ -29,7 +29,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit,
@@ -148,7 +147,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit,
@@ -315,7 +313,6 @@
 	icon_state = "line-broken1"
 	},
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/black,
@@ -342,7 +339,6 @@
 /area/space)
 "PM" = (
 /obj/machinery/computer/security/telescreen{
-	network = "SS13";
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/black,
