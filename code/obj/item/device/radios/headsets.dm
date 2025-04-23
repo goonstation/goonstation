@@ -73,6 +73,8 @@
 	name = "wizard headset"
 	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
 	icon_state = "wizard headset"
+	secure_frequencies = list("w" = R_FREQ_WIZARD)
+	secure_classes = list("w" = RADIOCL_CIVILIAN)
 	icon_override = "wizard"
 	icon_tooltip = "Wizard"
 
