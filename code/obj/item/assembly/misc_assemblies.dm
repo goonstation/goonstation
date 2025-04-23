@@ -591,6 +591,26 @@ Contains:
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	src.set_up_new(null, new_trigger, new_applier)
 
+/////////////////////////////////////// Timer/igniter/butt /////////////////////////
+
+/obj/item/assembly/time_ignite_butt
+	secured = TRUE
+
+/obj/item/assembly/time_ignite_butt/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/timer(src)
+	var/obj/item/new_applier = new /obj/item/device/igniter(src)
+	var/obj/item/new_target = new /obj/item/clothing/head/butt(src)
+	src.set_up_new(null, new_trigger, new_applier, new_target)
+
+/obj/item/assembly/time_ignite_butt/prearmed
+
+/obj/item/assembly/time_ignite_butt/prearmed/New()
+	..()
+	var/obj/item/device/timer/assembly_timer = src.trigger
+	assembly_timer.time = 2 SECONDS
+	SEND_SIGNAL(assembly_timer, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src)
+
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
 
 /obj/item/assembly/prox_ignite
