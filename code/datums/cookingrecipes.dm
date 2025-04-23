@@ -551,7 +551,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/oven/brain_bread
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/breadloaf = 1,
 	/obj/item/organ/brain = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/brain

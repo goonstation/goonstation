@@ -2827,9 +2827,12 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.update_colorful_parts()
 	return W
 
-
-/mob/living/carbon/human/set_eye()
-	..()
+/mob/living/carbon/human/set_eye(atom/new_eye, new_pixel_x = 0, new_pixel_y = 0)
+	if (new_eye == null && isskeleton(src))
+		var/datum/mutantrace/skeleton/skeleton = src.mutantrace
+		if (skeleton.head_tracker)
+			new_eye = skeleton.head_tracker
+	..(new_eye, new_pixel_x, new_pixel_y)
 	src.update_sight()
 
 /mob/living/carbon/human/heard_say(var/mob/other, var/message)
@@ -2993,7 +2996,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
 				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
 			else if (istype(A, /obj/item/device/transfer_valve))
@@ -3001,6 +3004,15 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+			else if (istype(A, /obj/item/assembly))
+				var/obj/item/assembly/dropped_assembly = A
+				if(!dropped_assembly.secured)
+					// You're not evading death that easily, clown
+					dropped_assembly.secured = TRUE
+					dropped_assembly.add_fingerprint(src)
+					dropped_assembly.UpdateIcon()
+					dropped_assembly.last_armer = src
+				dropped_assembly.AttackSelf(src)
 		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			A.throw_at(get_step(src, pick(alldirs)), 1, 1)

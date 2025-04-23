@@ -221,7 +221,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/captain,
 	/obj/item/megaphone,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/captain)
+	/obj/item/device/pda2/captain,
+	/obj/item/circuitboard/announcement/bridge) //This one makes the arrivals announcement and this is the ONLY spare for it
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -259,7 +260,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
 	/obj/item/barrier,
-	/obj/item/device/pda2/hos)
+	/obj/item/device/pda2/hos,
+	/obj/item/circuitboard/card/security,
+	/obj/item/circuitboard/announcement/security)
 
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
@@ -277,7 +280,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/hop,
-	/obj/item/device/panicbutton/medicalalert/hop)
+	/obj/item/device/panicbutton/medicalalert/hop,
+	/obj/item/circuitboard/card)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -299,7 +303,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/research_director,
 	/obj/item/places_pipes/research,
-	/obj/item/rcd_ammo/big)
+	/obj/item/rcd_ammo/big,
+	/obj/item/circuitboard/card/research,
+	/obj/item/circuitboard/announcement/research)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -326,7 +332,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/stamp/md,
 	/obj/item/device/radio/headset/command/md,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/medical_director)
+	/obj/item/device/pda2/medical_director,
+	/obj/item/circuitboard/card/medical,
+	/obj/item/circuitboard/announcement/medical)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -355,6 +363,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/extinguisher,
 		/obj/item/pet_carrier,
 		/obj/item/device/pda2/chiefengineer,
+		/obj/item/circuitboard/card/engineering,
+		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#endif

@@ -17,11 +17,7 @@
 /turf/space/fluid,
 /area/space)
 "X" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate. It doesn't seem to be using standard identification hardware.";
-	name = "slightly-rusted secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/raw_material/miracle{
 	rand_pos = 1
 	},

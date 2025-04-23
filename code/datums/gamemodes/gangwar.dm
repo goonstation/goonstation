@@ -2616,7 +2616,7 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "Armored Vest"
 	desc = "Grants you protection, and lets you keep your wicked style bonus!"
 	class2 = "clothing"
-	price = 7500
+	price = 3500
 	item_path = /obj/item/clothing/suit/armor/gang
 
 /datum/gang_item/weapon/lead_pipe

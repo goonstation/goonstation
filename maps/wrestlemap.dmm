@@ -3360,7 +3360,7 @@
 /area/station/storage/tools)
 "bxJ" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -13889,7 +13889,7 @@
 /area/station/maintenance/northeast)
 "fYI" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
@@ -15272,7 +15272,7 @@
 	})
 "gJE" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -20601,7 +20601,7 @@
 /area/station/hallway/secondary/entry)
 "iYV" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -24413,6 +24413,12 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
+"kDY" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/mining/magnet)
 "kEe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
@@ -26443,7 +26449,7 @@
 /area/station/medical/medbay)
 "lzX" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -29931,7 +29937,7 @@
 /area/station/crew_quarters/hop)
 "ndF" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
@@ -37851,7 +37857,7 @@
 /area/station/hallway/secondary/exit)
 "qBN" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
@@ -47806,7 +47812,7 @@
 /area/station/medical/medbay)
 "vak" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -50751,7 +50757,7 @@
 /area/station/crew_quarters/stockex)
 "wnh" = (
 /obj/rack,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/shoes/magnetic,
@@ -110846,7 +110852,7 @@ dwd
 tJx
 cXS
 daF
-cWF
+kDY
 qxW
 daF
 vnX
