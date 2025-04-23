@@ -504,6 +504,11 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/plant/herb/cannabis/white/spawnable
 	price = PAY_UNTRAINED
 
+/datum/commodity/drugs/sell/CBD
+	comname = "CBD Pills"
+	comtype = /obj/item/reagent_containers/pill/CBD
+	price = PAY_DOCTORATE
+
 /datum/commodity/drugs/sell/methamphetamine
 	comname = "Methamphetamine (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/methamphetamine
