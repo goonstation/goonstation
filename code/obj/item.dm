@@ -1277,7 +1277,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!target || !user) // not sure if this is the right thing...
 		return
 
-	if (isliving(target))
+	if (isliving(target) && !is_special)
 		// if we're used in a surgery step, cancel the remaining attack
 		var/mob/living/H = target
 		if (H.surgeryHolder)
