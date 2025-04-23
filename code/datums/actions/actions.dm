@@ -712,8 +712,9 @@
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && BOUNDS_DIST(owner, target) == 0)
-			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		if(!owner || !target || !BOUNDS_DIST(owner, target) == 0)
+			return
+		SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 		if(remove_internals)
 			target.internal.add_fingerprint(owner)
 			for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -729,7 +730,7 @@
 			if(!HAS_FLAG(target.wear_mask.c_flags, MASKINTERNALS))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			var/list/eq_list = list(src.target.back, src.target.belt, src.target.r_hand, src.target.l_hand, src.target.l_store, src.target.r_store)
+			var/list/eq_list = list(src.target.back, src.target.belt, src.target.r_hand, src.target.l_hand, src.target.r_store, src.target.l_store)
 			for(var/I in eq_list)
 				if(!istype(I, /obj/item/tank))
 					continue

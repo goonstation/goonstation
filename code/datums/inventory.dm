@@ -61,7 +61,7 @@
 		return FALSE
 	if(!HAS_FLAG(src.human.wear_mask.c_flags, MASKINTERNALS))
 		return FALSE
-	var/list/eq_list = list(src.human.back, src.human.belt, src.human.r_hand, src.human.l_hand, src.human.l_store, src.human.r_store)
+	var/list/eq_list = list(src.human.back, src.human.belt, src.human.r_hand, src.human.l_hand, src.human.r_store, src.human.l_store)
 	for(var/I in eq_list)
 		if(istype(I, /obj/item/tank))
 			return TRUE
