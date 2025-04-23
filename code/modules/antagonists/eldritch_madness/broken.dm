@@ -25,7 +25,7 @@
 
 /datum/antagonist/broken/remove_self(take_gear, source)
 	. = ..()
-	src.owner.current.delStatus("broken_madness") //hopefully this doesn't infinite loop? idk
+	src.owner.current.delStatus("broken_madness")
 
 /datum/antagonist/broken/announce_removal(source)
 	boutput(owner.current, SPAN_ALERT("<h1 class='system'>Your sanity returns, you are no longer an antagonist!</h1>"))
