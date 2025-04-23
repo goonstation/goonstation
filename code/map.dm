@@ -1286,8 +1286,6 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
 
-	shipping_destinations = list("North", "South")
-
 	valid_nuke_targets = list("the bridge" = list(/area/station/bridge),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the warehouse" = list(/area/station/storage/warehouse),

@@ -767,8 +767,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-#ifdef MAP_OVERRIDE_OSHAN
-#elif defined(MAP_OVERRIDE_NEON)
+#ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/clothing/shoes/stomp_boots)
 #else
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)

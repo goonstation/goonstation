@@ -3581,6 +3581,11 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING
+
+/area/station/hangar/eng_mining_shared
+		name = "Submarine Bay (Engineering/Mining)"
+		station_map_colour = MAPC_MINING
+
 /area/station/hangar/security
 		name = "Submarine Bay (Security)"
 		station_map_colour = MAPC_SECURITY
