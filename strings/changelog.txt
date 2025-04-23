@@ -1,5 +1,9 @@
 
 (t)tue apr 22 25
+(u)glowbolds
+(p)23096
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Arcfiends recieve a text popup showing how much power they're draining from targets.
 (u)LeahTheTech
 (*)The "liquid plasma" disease reagent has been renamed to "activated plasma".
 (u)Lord_Earthfire
