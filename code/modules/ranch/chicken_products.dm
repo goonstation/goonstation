@@ -15,8 +15,6 @@
 	var/egg_props_path = /datum/chicken_egg_props/white
 	/// datum containing various egg properties such as food_effects
 	var/datum/chicken_egg_props/chicken_egg_props = null
-	/// bool for eggs that can't be used for incubation
-	var/infertile = FALSE
 
 	New()
 		. = ..()

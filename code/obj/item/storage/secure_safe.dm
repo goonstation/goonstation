@@ -399,7 +399,19 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					else // if what we selected wasn't a valid path
 						i++ // try again
 			if (10)
-				var/list/eggs = list(/obj/item)
+				var/list/eggs = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight)
+
+				for (var/i=rand(1,src.storage.slots), i>0, i--)
+					var/egg = pick(eggs)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+					else // if what we selected wasn't a valid path
+						i++ // try again
+
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
 	New()

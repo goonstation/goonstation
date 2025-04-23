@@ -10,6 +10,8 @@
 	initial_reagents = list("egg"=5)
 	fill_amt = 0.5
 	doants = 0 // They're protected by a shell
+	/// bool for eggs that can't be used for incubation put here instead of ranch parent cause these ones are checked too
+	var/infertile = FALSE
 
 	New()
 		. = ..()
