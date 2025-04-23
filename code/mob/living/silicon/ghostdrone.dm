@@ -49,7 +49,7 @@
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
-				name = "Drone [mode.agent_radiofreq]"
+				name = "Drone [R_FREQ_SYNDICATE]"
 			else if (length(flocks))
 				name = "Flockdrone"
 			else

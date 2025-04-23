@@ -259,12 +259,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	locked_frequency = TRUE
 
 	initialize()
-		if(istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/N = ticker.mode
-			if(N.agent_radiofreq)
-				set_frequency(N.agent_radiofreq)
-		else
-			set_frequency(frequency)
+		set_frequency(frequency)
 
 // -------------------- DetNet --------------------
 /obj/item/device/radio/intercom/detnet

@@ -524,11 +524,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			var/the_frequency = R_FREQ_SYNDICATE
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-				var/datum/game_mode/nuclear/N = ticker.mode
-				the_frequency = N.agent_radiofreq
-			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
+			src.frequency = R_FREQ_SYNDICATE // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"
