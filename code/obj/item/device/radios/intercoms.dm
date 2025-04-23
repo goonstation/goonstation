@@ -186,7 +186,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/mining
 	name = "Mining Intercom"
 	frequency = R_FREQ_INTERCOM_MINING
-	broadcasting = FALSE
+	initial_microphone_enabled = FALSE
 	device_color = "#6b4e0b"
 
 	initialize(player_caused_init)

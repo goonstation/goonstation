@@ -1699,7 +1699,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	New()
 		. = ..()
 		var/obj/item/device/radio/pigeon/P = new/obj/item/device/radio/pigeon(src)
-		P.broadcasting = FALSE
+		P.toggle_microphone(FALSE)
 
 
 	grow_up()

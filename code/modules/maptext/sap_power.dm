@@ -13,9 +13,8 @@
 
 /// Displays power sapping maptext on a specified target to the sapper.
 /proc/display_sap_power_maptext(atom/target, mob/recipient, content)
-	target.maptext_manager ||= new /atom/movable/maptext_manager(target)
-
 	if (!recipient.client)
 		return
 
+	target.maptext_manager ||= new /atom/movable/maptext_manager(target)
 	target.maptext_manager.add_maptext(recipient.client, global.sap_power_maptext(content))

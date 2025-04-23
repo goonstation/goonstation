@@ -200,7 +200,7 @@
 			S.start()
 		playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 30, TRUE, FALSE, pitch = 0.8)
 
-		display_sap_power_maptext(src.target, src.holder.owner, "+[points_gained]<span style='font-size: 1.5em'>⚡</span>")
+		global.display_sap_power_maptext(src.target, src.holder.owner, "+[points_gained]<span style='font-size: 1.5em'>⚡</span>")
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)
 		src.onRestart()
