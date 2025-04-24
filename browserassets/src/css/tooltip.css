@@ -42,6 +42,10 @@ p {
 	line-height: 1.2;
 }
 
+hr {
+	border-color: hsl(from var(--theme-highlight) h s calc(l + 20));
+}
+
 img {
 	position: relative;
 	image-rendering: pixelated;

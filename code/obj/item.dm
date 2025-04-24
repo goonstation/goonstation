@@ -217,12 +217,12 @@ ABSTRACT_TYPE(/obj/item)
 			var/obj/item/clothing/gloves/G = src
 			if(G.specialoverride && G.overridespecial)
 				var/content = resource("images/tooltips/[G.specialoverride.image].png")
-				. += "<br>Unarmed special attack override:<div><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em;' /></div><div style=\"overflow:hidden\">[G.specialoverride.name]: [G.specialoverride.getDesc()]</div>"
+				. += "<hr><div style='display: flex;'><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em; flex-shrink: 0;' /><div style='margin-top: .2em;'>Unarmed special attack override:<br>[G.specialoverride.name]: [G.specialoverride.getDesc()]</div></div>"
 			. = jointext(., "")
 		//standard item specials
 		if(special && !istype(special, /datum/item_special/simple))
 			var/content = resource("images/tooltips/[special.image].png")
-			. += "<br><div><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em;' /></div><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
+			. += "<hr><div style='display: flex;'><img src=\"[content]\" class='icon' style='width: 2.6em; height: 2.6em; flex-shrink: 0;' /><div style='margin-top: .2em;'><div style='margin-bottom: .5em;'>[special.name]: [special.getDesc()]</div>To execute a special, use HARM or DISARM intent and click a far-away tile.</div></div>"
 		. = jointext(., "")
 
 		. += src.storage?.get_capacity_string()
@@ -230,9 +230,14 @@ ABSTRACT_TYPE(/obj/item)
 		lastTooltipContent = .
 
 	proc/tooltipHook(datum/tooltipOptions/options)
-		if (!usr?.client?.tg_layout)
-			var/bottom = options.mouse["bottom"]["tiles"]
-			if (bottom == 1) options.pushTiles("up", 1)
+		if (src.z != 0 || options.mouse["bottom"]["tiles"] != 1) return
+		var/mob/living/carbon/human/withinMob = src.stored?.linked_item.loc || src.loc
+		var/datum/hud/human/hud = withinMob?.hud
+
+		// If the mob is using goon HUD style, and the item is within the bottom row of the two-row style inventory
+		// Then push the tooltip up so it shows above the two rows
+		if (istype(hud) && hud.layout_style != "tg" && hud.show_inventory)
+			options.pushTiles("up", 1)
 
 	MouseEntered(location, control, params)
 		if (showTooltip && usr.client.tooltips)
@@ -263,9 +268,15 @@ ABSTRACT_TYPE(/obj/item)
 
 				var/tooltipAlign = 0
 				if (src.z == 0)
-					if (src.loc == usr) tooltipAlign = TOOLTIP_TOP
-					// If we're over an item that's stored in a container the user has equipped
-					if (src.stored?.linked_item.loc == usr) tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
+					tooltipAlign = TOOLTIP_TOP
+
+					var/withinStorage = !!src.stored?.linked_item.loc
+					var/mob/living/carbon/human/withinMob = withinStorage ? src.stored.linked_item.loc : src.loc
+					var/datum/hud/human/hud = withinMob?.hud
+
+					// If we're over an item that's stored in a container a mob has equipped
+					if (withinStorage && istype(hud) && hud.layout_style != "tg")
+						tooltipAlign = TOOLTIP_RIGHT | TOOLTIP_CENTER
 
 				usr.client.tooltips.show(arglist(list(
 					"type" = TOOLTIP_HOVER,
