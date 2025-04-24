@@ -3123,6 +3123,7 @@
 /area/station/crew_quarters/kitchen)
 "cvt" = (
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cvu" = (
@@ -5493,6 +5494,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"dWL" = (
+/obj/machinery/sleeper/port_a_medbay,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/disposal)
 "dWO" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -12694,7 +12699,7 @@
 	id = "qmout"
 	},
 /obj/machinery/door_control{
-	id = "cargo_shutters";
+	id = "cargo_shutter";
 	name = "Cargo Shutters Control";
 	pixel_x = -24
 	},
@@ -18199,6 +18204,11 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"mFr" = (
+/obj/machinery/light/incandescent,
+/obj/vehicle/forklift,
+/turf/simulated/floor/yellow,
+/area/station/quartermaster/office)
 "mFA" = (
 /obj/machinery/networked/teleconsole{
 	dir = 4
@@ -74211,7 +74221,7 @@ sKB
 kIk
 jum
 avE
-wSs
+dWL
 neI
 aru
 jOL
@@ -91712,7 +91722,7 @@ rrN
 oYi
 pOS
 oZB
-qAW
+mFr
 kOh
 iPj
 rwU
