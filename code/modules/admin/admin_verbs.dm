@@ -1099,7 +1099,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	var/datum/job/job_list = job_controls.staple_jobs | job_controls.special_jobs | job_controls.hidden_jobs | job_controls.savefile_get_job_names(src)
-	var/datum/job/J = tgui_input_list(src.mob, "Please, select a job!", "Respawn As Job", job_list, "Staff Assistant")
+	var/datum/job/J = tgui_input_list(src.mob, "Select a job", "Respawn As Job", job_list, "Staff Assistant")
 	if(!J)
 		return
 
