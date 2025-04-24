@@ -1091,13 +1091,18 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
-/client/proc/respawn_as_job(var/datum/job/J in (job_controls.staple_jobs|job_controls.special_jobs|job_controls.hidden_jobs|job_controls.savefile_get_job_names(src)))
+/client/proc/respawn_as_job()
 	set name = "Respawn As Job"
 	set desc = "Respawn yourself as a given job. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+	var/datum/job/job_list = job_controls.staple_jobs | job_controls.special_jobs | job_controls.hidden_jobs | job_controls.savefile_get_job_names(src)
+	var/datum/job/J = tgui_input_list(src.mob, "Please, select a job!", "Respawn As Job", job_list, "Staff Assistant")
+	if(!J)
+		return
+
 	if(istext(J))
 		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
 		if(job_controls.cloudsave_load(src, idx))
