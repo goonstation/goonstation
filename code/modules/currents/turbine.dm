@@ -236,6 +236,7 @@
 	flags = FLUID_DENSE | TGUI_INTERACTIVE
 	processing_tier = PROCESSING_HALF
 	directwired = FALSE
+	pass_unstable = TRUE
 	///The current shaft, can be null if some idiot overextends the shaft all the way out
 	var/obj/turbine_shaft/shaft = null
 
