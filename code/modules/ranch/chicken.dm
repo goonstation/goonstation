@@ -1695,12 +1695,15 @@ All other chickens in this file are non-secret. Please be respectful.
 	happiness = 0
 	favorite_flag = "peas"
 	open_to_sound = TRUE
+	var/obj/machinery/camera/ranch/pigeon/camera = null
 
 	New()
 		. = ..()
-		var/obj/item/device/radio/pigeon/P = new/obj/item/device/radio/pigeon(src)
-		P.toggle_microphone(FALSE)
+		camera = new(src, prob(0.1) ? "NTSO Security Van" : "Camera [\ref(src)]")
 
+	death(gibbed, do_drop_equipment)
+		QDEL_NULL(camera)
+		. = ..()
 
 	grow_up()
 		..()
@@ -1713,9 +1716,6 @@ All other chickens in this file are non-secret. Please be respectful.
 			real_name = "Messenger Pigeon Hen"
 			desc = "It hatched from a chicken egg, but that's no hen!"
 		return
-
-	change_happiness(var/amt)
-		..()
 
 	rooster
 		is_masc = 1
