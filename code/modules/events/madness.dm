@@ -55,7 +55,6 @@
 		var/distance = pick(300, 500, 750, 1500) //meters
 		var/speed = rand(5, 15) //m/s
 		var/displacement = pick(500, 2000, 3000, 10000) //tons
-		//https://pixabay.com/sound-effects/alarm-301729/
 		command_alert("An untracked object has been detected on an approach vector to Neon Deepwater Research Facility.<br>Current depth: [distance] meters above seafloor, closing at [speed]m/s.<br>Estimated displacement: [displacement] tons.", "Automated proximity alert", 'sound/machines/proximity_alarm.ogg', alert_origin = "Abzu Sonar Monitoring Array")
 
 		sleep(rand(10, 20) SECONDS)
@@ -111,24 +110,19 @@
 				var/beats = rand(2,5)
 				var/delay = rand(1,3) SECONDS
 				for (var/i in 1 to beats)
-					//https://pixabay.com/sound-effects/monster-footstep-162883/ - TODO: put these in final PR
 					var/chosen_boom = pick(list('sound/effects/seamonster/beats/boom1.ogg', 'sound/effects/seamonster/beats/boom2.ogg', 'sound/effects/seamonster/beats/boom3.ogg', 'sound/effects/seamonster/beats/boom4.ogg'))
 					src.play_to_station(chosen_boom, 65, 1)
 					sleep(delay)
 			if (2)
-				//https://pixabay.com/sound-effects/horror-sound-lurking-horror-monster-189948/
 				src.play_to_station('sound/effects/seamonster/groan1.ogg', 40, 1)
 				if (prob(50))
 					sleep(3 SECONDS)
 					src.shake_event()
 			if (3)
-				//https://pixabay.com/sound-effects/horror-sound-monster-breath-189934/
 				src.play_to_station('sound/effects/seamonster/breathe1.ogg', 30, 1)
 			if (4)
-				//https://pixabay.com/sound-effects/creepy-whale-song-323612/
 				src.play_to_station('sound/effects/seamonster/whale1.ogg', 50, 1)
 			if (5)
-				//https://pixabay.com/sound-effects/haunting-whale-song-323611/
 				src.play_to_station('sound/effects/seamonster/whale2.ogg', 50, 1)
 
 
