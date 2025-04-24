@@ -7109,12 +7109,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
-"eZM" = (
-/obj/item/device/radio/intercom/medical{
-	dir = 8
-	},
-/turf/space/fluid,
-/area/space)
 "faw" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -8545,7 +8539,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 120;
 	id = "trashgun"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
@@ -9011,10 +9005,6 @@
 /obj/mapping_helper/algae,
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"gjx" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/space/fluid,
-/area/diner/hallway)
 "gjF" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -11466,7 +11456,7 @@
 "hZZ" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 100;
+	drive_range = 120;
 	id = "research"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -12308,6 +12298,7 @@
 /area/station/maintenance/south)
 "iDc" = (
 /obj/machinery/light/incandescent/warm,
+/obj/xmastree/ephemeral,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -19142,7 +19133,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "nvT" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/eng_mining_shared)
 "nwd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -21788,7 +21779,7 @@
 "pwy" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 100;
+	drive_range = 120;
 	id = "research"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -29033,7 +29024,7 @@
 "upz" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 120;
 	id = "trashgun"
 	},
 /turf/simulated/floor/plating,
@@ -67929,7 +67920,7 @@ qpn
 qpn
 qpn
 qpn
-eZM
+qpn
 qpn
 qpn
 qpn
@@ -76367,7 +76358,7 @@ qpn
 qpn
 qpn
 qpn
-qQR
+nvT
 grM
 dqK
 dqK
@@ -81346,7 +81337,7 @@ qpn
 qpn
 qpn
 qpn
-gjx
+xLc
 eMD
 gGX
 xLc
