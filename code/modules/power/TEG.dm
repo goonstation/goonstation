@@ -1656,6 +1656,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		// We exist in the list already, update information instead
 		for (var/key in signal.data)
 			pump_data_ref[key] = signal.data[key]
+			if (key == "sender")
+				pump_data_ref["netid"] = signal.data[key]
 		pump_data_ref["processing"] = FALSE
 		pump_data_ref["alive"] = PUMP_ALIVE
 		return
@@ -1663,6 +1665,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	var/list/infoset = new()
 	for (var/key in signal.data)
 		infoset[key] = signal.data[key]
+		if (key == "sender")
+			infoset["netid"] = signal.data[key]
 	var/area/A = get_area(signal.source)
 	if (!A)
 		return
@@ -1674,7 +1678,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	if (!area_name_index)
 		// We are first of an area, create our place in the list
 		src.pump_infoset[infoset["area_name"]] = list()
-		src.pump_infoset[infoset["area_name"]][infoset["sender"]] = infoset
+		src.pump_infoset[infoset["area_name"]][infoset["netid"]] = infoset
 	else
 		// We are not first of an area, place us in the list alphabetically
 		var/iter = 1
@@ -1683,8 +1687,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			iter += 1
 
 		// Insert key first
-		L.Insert(iter, infoset["sender"])
-		L[infoset["sender"]] = infoset
+		L.Insert(iter, infoset["netid"])
+		L[infoset["netid"]] = infoset
 
 /obj/machinery/computer/atmosphere/pumpcontrol/process()
 	..()
