@@ -26,6 +26,9 @@
 /area/radiostation
 	name = "Radio Station"
 	icon_state = "purple"
+#ifdef MAP_OVERRIDE_NEON
+	requires_power = FALSE
+#endif
 
 /area/radiostation/studio
 	name = "Radio Studio"

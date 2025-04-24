@@ -5692,7 +5692,7 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 100;
+	drive_range = 120;
 	id = "chapelgun"
 	},
 /turf/simulated/floor/plating,
@@ -21779,7 +21779,7 @@
 "pwy" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 120;
+	drive_range = 121;
 	id = "research"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
