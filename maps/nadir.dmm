@@ -7305,6 +7305,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "doE" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},

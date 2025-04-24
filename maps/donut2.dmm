@@ -24905,8 +24905,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera/auto/science{
-	c_tag = "Central Hallway East";
-	
+	c_tag = "Central Hallway East"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42654,8 +42653,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rOo" = (
-/obj/machinery/alarm{
-	pixel_y = 25
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -50807,6 +50806,10 @@
 	name = "mail chute-'Mining'"
 	},
 /obj/disposalpipe/trunk/mail/north,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
