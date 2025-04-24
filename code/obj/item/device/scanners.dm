@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = last_scan + "<br>---- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
 		number_of_scans += 1
 
 		boutput(user, scan_output)
