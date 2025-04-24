@@ -33721,6 +33721,19 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"khP" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "kie" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -130426,7 +130439,7 @@ mYB
 lmA
 wCJ
 mYB
-ltB
+khP
 jme
 vYX
 xie

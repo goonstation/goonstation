@@ -10018,6 +10018,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/yellow/side{
 	broken = 1;
 	dir = 1
