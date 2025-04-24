@@ -39866,8 +39866,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/engineering)
 "iZu" = (
@@ -58318,10 +58318,11 @@
 	},
 /area/listeningpost)
 "nkn" = (
-/obj/machinery/door/airlock/pyro/security/alt{
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "nko" = (
@@ -64585,8 +64586,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/armory,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oIY" = (
@@ -81190,8 +81192,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "syx" = (
@@ -94675,8 +94677,8 @@
 /obj/cable/blue{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "vxI" = (
@@ -99060,8 +99062,8 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "wyJ" = (
@@ -99622,8 +99624,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/engineering,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "wDe" = (
