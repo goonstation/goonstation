@@ -1651,7 +1651,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"area_name" - Name of the area the pump is in
 	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
 	*/
-	var/list/pump_data_ref = src.getPump(signal.data["netid"])
+	var/list/pump_data_ref = src.getPump(signal.data["sender"])
 	if (pump_data_ref)
 		// We exist in the list already, update information instead
 		for (var/key in signal.data)
@@ -1674,7 +1674,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	if (!area_name_index)
 		// We are first of an area, create our place in the list
 		src.pump_infoset[infoset["area_name"]] = list()
-		src.pump_infoset[infoset["area_name"]][infoset["netid"]] = infoset
+		src.pump_infoset[infoset["area_name"]][infoset["sender"]] = infoset
 	else
 		// We are not first of an area, place us in the list alphabetically
 		var/iter = 1
@@ -1683,8 +1683,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 			iter += 1
 
 		// Insert key first
-		L.Insert(iter, infoset["netid"])
-		L[infoset["netid"]] = infoset
+		L.Insert(iter, infoset["sender"])
+		L[infoset["sender"]] = infoset
 
 /obj/machinery/computer/atmosphere/pumpcontrol/process()
 	..()
