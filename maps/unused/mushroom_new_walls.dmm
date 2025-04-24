@@ -15022,7 +15022,7 @@
 /area/station/engine/proto)
 "dSD" = (
 /obj/machinery/computer/security/wooden_tv,
-/obj/item/device/radio/intercom/detnet/detective,
+/obj/item/device/radio/intercom/brig,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dSY" = (
@@ -20086,7 +20086,6 @@
 /area/station/medical/research)
 "ijd" = (
 /obj/storage/secure/closet/security/forensics,
-/obj/item/device/radio/intercom/brig,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ijm" = (
@@ -32246,7 +32245,7 @@
 /area/station/hallway/primary/central)
 "rzl" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/item/device/radio/intercom/detnet/security,
+/obj/item/device/radio/intercom/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "rzv" = (

@@ -24215,12 +24215,6 @@
 	},
 /area/station/quartermaster/office)
 "hje" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
 /obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -26054,7 +26048,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "inl" = (
-/obj/item/device/radio/intercom/detnet/detective{
+/obj/item/device/radio/intercom/security{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
