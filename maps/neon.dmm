@@ -2087,7 +2087,6 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "bFi" = (
-/obj/disposalpipe/segment/bent/north,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4206,7 +4205,7 @@
 /area/station/maintenance/inner/central)
 "dgJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/right{
+/obj/window_blinds/cog2/left{
 	dir = 4
 	},
 /obj/cable{
@@ -6323,14 +6322,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/science/research_director)
-"eyk" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/landmark/pest,
-/turf/simulated/floor/sanitary,
-/area/station/medical/medbay/restroom)
 "eyr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8757,9 +8748,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -17931,7 +17919,7 @@
 /area/evilreaver/security)
 "mxb" = (
 /obj/landmark/start/job/security_officer,
-/obj/machinery/light_switch/north,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "mxD" = (
@@ -18005,7 +17993,6 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
 "mAa" = (
-/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "mAb" = (
@@ -21205,6 +21192,7 @@
 	autoclose = 0
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -23393,6 +23381,7 @@
 "qvp" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/decal/stripe_caution,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "qvw" = (
@@ -24394,6 +24383,7 @@
 	dir = 1;
 	interesting = "There are traces of styptic powder and adhesive residue on some of the leaves."
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/sec_foyer)
 "rht" = (
@@ -27492,11 +27482,11 @@
 /area/station/crew_quarters/lounge)
 "tmK" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/panic_buttons,
-/obj/item/device/panicbutton,
 /obj/item/device/ticket_writer{
 	pixel_y = 12
 	},
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -27974,7 +27964,13 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator/upper)
 "tDD" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -27983,10 +27979,8 @@
 	name = "Security Lockdown Doors";
 	opacity = 0
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
+/obj/machinery/phone,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "tDI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -28274,7 +28268,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/segment/bent/west,
 /obj/random_item_spawner/gross/one_or_zero,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
@@ -28829,7 +28823,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ugL" = (
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -28845,9 +28838,6 @@
 /area/station/maintenance/disposal)
 "uig" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger{
-	pixel_y = 5
-	},
 /obj/item/storage/box/trackimp_kit{
 	pixel_x = -3
 	},
@@ -30958,10 +30948,7 @@
 /area/station/security/checkpoint/sec_foyer)
 "vEG" = (
 /obj/table/reinforced/auto,
-/obj/machinery/phone,
-/obj/item/device/prisoner_scanner{
-	pixel_x = -12
-	},
+/obj/item/device/prisoner_scanner,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "vEL" = (
@@ -31571,8 +31558,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left{
-	dir = 8
+/obj/window_blinds/cog2/middle{
+	dir = 8;
+	id = "robotics"
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
@@ -31921,6 +31909,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
+"whT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "wib" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -33858,6 +33853,7 @@
 /obj/machinery/disposal/small/north{
 	pixel_y = 32
 	},
+/obj/disposalpipe/trunk/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
 "xCH" = (
@@ -76129,7 +76125,7 @@ bcs
 bcs
 bcs
 wOn
-wOn
+whT
 bcs
 vtE
 vez
@@ -78876,7 +78872,7 @@ nSP
 peN
 teb
 tNa
-eyk
+bFi
 bFi
 ohd
 lHg
@@ -85806,7 +85802,7 @@ kVw
 hCM
 eFo
 eFo
-phM
+oVr
 gJx
 tSO
 knB
