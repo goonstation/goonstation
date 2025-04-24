@@ -12183,6 +12183,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blue/side{
 	dir = 10
 	},
@@ -23032,6 +23033,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -24522,6 +24524,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -27377,6 +27380,7 @@
 /turf/space/fluid,
 /area/space)
 "tfb" = (
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -28765,6 +28769,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -29491,11 +29496,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"uyj" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/plating,
-/area/radiostation/bridge)
 "uyq" = (
 /obj/storage/closet/coffin,
 /obj/item/clothing/head/mario,
@@ -30606,6 +30606,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -98585,7 +98586,7 @@ qpn
 qpn
 cmk
 vCj
-uyj
+vCj
 vCj
 cmk
 xhT
