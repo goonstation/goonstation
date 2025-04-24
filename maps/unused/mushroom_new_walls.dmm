@@ -4957,7 +4957,7 @@
 	},
 /area/station/quartermaster/office)
 "aBF" = (
-/obj/machinery/nanofab,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -18242,7 +18242,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "gBd" = (
@@ -27016,12 +27016,8 @@
 	},
 /area/station/bridge)
 "nWp" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
+/obj/item/device/camera_viewer/telesci,
 /obj/item/camera,
 /obj/item/camera,
 /obj/storage/crate,

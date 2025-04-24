@@ -159,9 +159,9 @@ datum
 			disease = /datum/ailment/disease/monkey_madness
 
 		disease/liquid_plasma // Plasmatoid
-			name = "liquid plasma"
-			id = "liquid plasma"
-			description = "Liquid plasma."
+			name = "activated plasma"
+			id = "activated plasma"
+			description = "This liquid plasma seems to be moving on its own."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0

@@ -7256,6 +7256,12 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"We" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "Wg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -83234,7 +83240,7 @@ bm
 Ix
 Ix
 LS
-cD
+We
 cD
 mA
 cD

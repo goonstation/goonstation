@@ -90,14 +90,14 @@
 /obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
-	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
+	dat += "Status: \[<A href='byond://?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>"
 	if (!src.locked)
 		dat += "<hr>"
-		dat += "Improves floors: \[<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
+		dat += "Improves floors: \[<A href='byond://?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Finds tiles: \[<A href='byond://?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Make single pieces of metal into tiles when empty: \[<A href='byond://?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
 	if (user.client?.tooltips)
 		user.client.tooltips.show(

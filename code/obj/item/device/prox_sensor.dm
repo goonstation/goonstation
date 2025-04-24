@@ -6,7 +6,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	icon_state = "motion0"
 	var/armed = FALSE
 	var/timing = FALSE
-	var/time = 0
+	var/time = 5 SECONDS
 	var/last_tick = null
 	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0

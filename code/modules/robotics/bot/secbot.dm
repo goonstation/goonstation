@@ -291,20 +291,20 @@
 
 		dat += {"
 		<TT><B>Automatic Security Unit v2.0</B></TT><BR><BR>
-		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
+		Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
 		Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
 		if(!src.locked)
 			dat += {"<hr>
-			Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
-			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
-			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
-			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
-			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
-			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
-			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
-			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
+			Check for Unauthorised Equipment: <A href='byond://?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
+			Check Security Records: <A href='byond://?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
+			Operating Mode: <A href='byond://?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
+			Issue Warnings: <A href='byond://?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='byond://?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='byond://?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
+			Auto Patrol: <A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
+			Report Arrests: <A href='byond://?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
+			Guard Lockdown: <A href='byond://?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
+			<A href='byond://?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
 		if (user.client?.tooltips)
 			user.client.tooltips.show(

@@ -1343,37 +1343,37 @@
 	//Air and Fuel tanks
 	dat += "<HR><B>Atmos Tank</B>: "
 	if(!isnull(src.atmostank))
-		dat += "<A href='?src=\ref[src];takeatmostank=1'>[src.atmostank]</A>"
+		dat += "<A href='byond://?src=\ref[src];takeatmostank=1'>[src.atmostank]</A>"
 	else
-		dat += "<A href='?src=\ref[src];atmostank=1'>--------</A>"
+		dat += "<A href='byond://?src=\ref[src];atmostank=1'>--------</A>"
 	dat += "<HR><B>Fuel Tank</B>: "
 	if(src.fueltank)
-		dat += "<A href='?src=\ref[src];takefueltank=1'>[src.fueltank]</A>"
+		dat += "<A href='byond://?src=\ref[src];takefueltank=1'>[src.fueltank]</A>"
 	else
-		dat += "<A href='?src=\ref[src];fueltank=1'>--------</A>"
+		dat += "<A href='byond://?src=\ref[src];fueltank=1'>--------</A>"
 	dat += "<HR><B>Engine</B>: "
 	//Engine
 	if(src.engine)
-		dat += "<A href='?src=\ref[src];unengine=1'>[src.engine]</A>"
+		dat += "<A href='byond://?src=\ref[src];unengine=1'>[src.engine]</A>"
 	else
 		dat += "None Installed"
 	///Life Support
 	dat += "<HR><B>Life Support</B>: "
 	if(src.life_support)
-		dat += "<A href='?src=\ref[src];unlife=1'>[src.life_support]</A>"
+		dat += "<A href='byond://?src=\ref[src];unlife=1'>[src.life_support]</A>"
 	else
 		dat += "None Installed"
 	//// Com System
 	dat += "<HR><B>Com System</B>: "
 	if(src.com_system)
-		dat += "<A href='?src=\ref[src];uncom=1'>[src.com_system]</A>"
+		dat += "<A href='byond://?src=\ref[src];uncom=1'>[src.com_system]</A>"
 	else
 		dat += "None Installed"
 	///Main Weapon
 	if(weapon_class != 0)
 		dat += "<HR><B>Main Weapon</B>: "
 		if(src.m_w_system)
-			dat += "<A href='?src=\ref[src];unm_w=1'>[src.m_w_system]</A>"
+			dat += "<A href='byond://?src=\ref[src];unm_w=1'>[src.m_w_system]</A>"
 			if (src.m_w_system.uses_ammunition)
 				dat += "<br><b>Remaining ammo:</b> [src.m_w_system.remaining_ammunition]"
 		else
@@ -1381,31 +1381,31 @@
 	if(istype(src,/obj/machinery/vehicle/tank))
 		dat += "<HR><B>Locomotion</B>: "
 		if(src:locomotion)
-			dat += "<A href='?src=\ref[src];unloco=1'>[src:locomotion]</A>"
+			dat += "<A href='byond://?src=\ref[src];unloco=1'>[src:locomotion]</A>"
 		else
 			dat += "None Installed"
 	////Sensors
 	dat += "<HR><B>Sensors</B>: "
 	if(src.sensors)
-		dat += "<A href='?src=\ref[src];unsensors=1'>[src.sensors]</A>"
+		dat += "<A href='byond://?src=\ref[src];unsensors=1'>[src.sensors]</A>"
 	else
 		dat += "None Installed"
 	////Secondary System
 	dat += "<HR><B>Secondary System</B>: "
 	if(src.sec_system)
-		dat += "<A href='?src=\ref[src];unsec_system=1'>[src.sec_system]</A>"
+		dat += "<A href='byond://?src=\ref[src];unsec_system=1'>[src.sec_system]</A>"
 	else
 		dat += "None Installed"
 	////Lights System
 	dat += "<HR><B>Lights System</B>: "
 	if(src.lights)
-		dat += "<A href='?src=\ref[src];unlights=1'>[src.lights]</A>"
+		dat += "<A href='byond://?src=\ref[src];unlights=1'>[src.lights]</A>"
 	else
 		dat += "None Installed"
 	////Locking System
 	dat += "<HR><B>Locking System</B>: "
 	if(src.lock)
-		dat += "<A href='?src=\ref[src];un_lock=1'>[src.lock]</A>"
+		dat += "<A href='byond://?src=\ref[src];un_lock=1'>[src.lock]</A>"
 	else
 		dat += "None Installed"
 
@@ -1470,68 +1470,68 @@
 		dat += "<font color=red>No tank installed!</font><BR>"
 	if(src.engine)
 		if(src.engine.active)
-			dat += {"<HR><B>Engine</B>: <I><A href='?src=\ref[src];enginecomp=1'>[src.engine]</A></I>"}
-			dat += {"<BR><A href='?src=\ref[src];dengine=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Engine</B>: <I><A href='byond://?src=\ref[src];enginecomp=1'>[src.engine]</A></I>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];dengine=1'>(Deactivate)</A>"}
 		else
 			dat += {"<HR><B>Engine</B>: <I>[src.engine]</I>"}
-			dat += {"<BR><A href='?src=\ref[src];aengine=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];aengine=1'>(Activate)</A>"}
 	if(src.life_support)
 		dat += {"<HR><B>Life Support</B>: <I>[src.life_support]</I>"}
 		if(src.life_support.active)
-			dat += {"<BR><A href='?src=\ref[src];dlife=1'>(Deactivate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];dlife=1'>(Deactivate)</A>"}
 		else
-			dat += {"<BR><A href='?src=\ref[src];alife=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];alife=1'>(Activate)</A>"}
 		dat+={"([src.life_support.power_used])<BR>"}
 	if(src.com_system)
 		if(src.com_system.active)
-			dat += {"<HR><B>Com System</B>: <I><A href='?src=\ref[src];comcomp=1'>[src.com_system]</A></I>"}
-			dat += {"<BR><A href='?src=\ref[src];dcom=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Com System</B>: <I><A href='byond://?src=\ref[src];comcomp=1'>[src.com_system]</A></I>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];dcom=1'>(Deactivate)</A>"}
 		else
 			dat += {"<HR><B>Com System</B>: <I>[src.com_system]</I>"}
-			dat += {"<BR><A href='?src=\ref[src];acom=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];acom=1'>(Activate)</A>"}
 		dat+= {"([src.com_system.power_used])"}
 	if(src.m_w_system)
 		if(src.m_w_system.active)
-			dat += {"<HR><B>Main Weapon</B>: <I><A href='?src=\ref[src];mweaponcomp=1'>[src.m_w_system]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];dmweapon=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Main Weapon</B>: <I><A href='byond://?src=\ref[src];mweaponcomp=1'>[src.m_w_system]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];dmweapon=1'>(Deactivate)</A>"}
 		else
 			dat += {"<HR><B>Main Weapon</B>: <I>[src.m_w_system]</I>"}
-			dat += {"<BR><A href='?src=\ref[src];amweapon=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];amweapon=1'>(Activate)</A>"}
 		dat+= {"([src.m_w_system.power_used])"}
 	if(src.sensors)
 		if(src.sensors.active)
-			dat += {"<HR><B>Sensors</B>: <I><A href='?src=\ref[src];sensorcomp=1'>[src.sensors]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];dsensors=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Sensors</B>: <I><A href='byond://?src=\ref[src];sensorcomp=1'>[src.sensors]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];dsensors=1'>(Deactivate)</A>"}
 		else
 			dat += {"<HR><B>Sensors</B>: <I>[src.sensors]</I>"}
-			dat += {"<BR><A href='?src=\ref[src];asensors=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];asensors=1'>(Activate)</A>"}
 		dat+= {"([src.sensors.power_used])"}
 	if(src.sec_system)
 		if(src.sec_system.active)
-			dat += {"<HR><B>Secondary System</B>: <I><A href='?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];dsec_system=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Secondary System</B>: <I><A href='byond://?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];dsec_system=1'>(Deactivate)</A>"}
 		else
-			dat += {"<HR><B>Secondary System</B>: <I><A href='?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];asec_system=1'>(Activate)</A>"}
+			dat += {"<HR><B>Secondary System</B>: <I><A href='byond://?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];asec_system=1'>(Activate)</A>"}
 		dat+= {"([src.sec_system.power_used])"}
 	if(src.lights)
 		if(src.lights.active)
-			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];dlights=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>Lights</B>: <I><A href='byond://?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];dlights=1'>(Deactivate)</A>"}
 		else
-			dat += {"<HR><B>Lights</B>: <I><A href='?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
-			dat += {"<BR><A href='?src=\ref[src];alights=1'>(Activate)</A>"}
+			dat += {"<HR><B>Lights</B>: <I><A href='byond://?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
+			dat += {"<BR><A href='byond://?src=\ref[src];alights=1'>(Activate)</A>"}
 		dat+= {"([src.lights.power_used])"}
 	if(src.lock)
 		dat += "<HR><B>Lock</B>:<br>"
 		if(src.locked)
-			dat += "<a href='?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
+			dat += "<a href='byond://?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
 		else
 			if (src.lock.is_set())
-				dat += "<a href='?src=\ref[src.lock];lock=1'>(Lock)</a>"
+				dat += "<a href='byond://?src=\ref[src.lock];lock=1'>(Lock)</a>"
 			// if the lock is not set OR it is set and can be reset, show the set code button
 			if (!src.lock.is_set() || (src.lock.is_set() && src.lock.can_reset))
-				dat += " <a href='?src=\ref[src.lock];setcode=1;'>(Set Code)</a>"
+				dat += " <a href='byond://?src=\ref[src.lock];setcode=1;'>(Set Code)</a>"
 	user.Browse(dat, "window=ship_main")
 	onclose(user, "ship_main")
 	return

@@ -162,7 +162,7 @@
 
 		dat += "<tt><b>Automatic Station Cleaner v1.1</b></tt>"
 		dat += "<br><br>"
-		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
+		dat += "Status: <A href='byond://?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
 		if (user.client?.tooltips)
 			user.client.tooltips.show(

@@ -475,7 +475,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_masked)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.name];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.name];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -500,7 +500,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_normal)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[real_name ? real_name : M.real_name];track2=\ref[R];track=\ref[M]'>[real_name ? real_name : M.real_name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[real_name ? real_name : M.real_name];track2=\ref[R];track=\ref[M]'>[real_name ? real_name : M.real_name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -519,7 +519,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_voice)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][M.voice_message][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][M.voice_message][part_c]"
 				else if (isghostdrone(R))
 					thisR = "[part_a][M.voice_name][part_b][M.say_quote(messages[1])][part_c]"
 
@@ -540,7 +540,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_garbled)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][M.say_quote(messages[2])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][M.say_quote(messages[2])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) &&  M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"

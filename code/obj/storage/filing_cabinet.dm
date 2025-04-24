@@ -45,6 +45,6 @@
 			return
 		var/output = "<html><head></head><body>"
 		for(var/i = 1, i <= src.contents.len, i++)
-			output += "<a href='?src=\ref[src];id=[i];action=retrieve'>[src.contents[i].name]</a><br>"
+			output += "<a href='byond://?src=\ref[src];id=[i];action=retrieve'>[src.contents[i].name]</a><br>"
 		output += "</body></html>"
 		user << browse(output, "window=filing_cabinet;size=200x400")
