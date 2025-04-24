@@ -21526,7 +21526,10 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "peH" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "peI" = (
@@ -23322,7 +23325,8 @@
 /area/station/hallway/primary/north)
 "qph" = (
 /obj/machinery/door_control/antagscanner{
-	pixel_x = 24
+	entrance_scanner = 1;
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
@@ -31673,7 +31677,9 @@
 /area/station/medical/morgue)
 "vVZ" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
-	dir = 4
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
 	},
 /turf/simulated/floor,
 /area/listeningpost)
