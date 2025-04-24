@@ -1063,6 +1063,13 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/hop)
+"aME" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "aML" = (
 /obj/landmark/gps_waypoint,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -5152,6 +5159,7 @@
 /area/station/maintenance/west)
 "dLN" = (
 /obj/storage/crate,
+/obj/item/record/atlas,
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/under/misc/tourist/max_payne,
 /obj/item/clothing/head/cowboy,
@@ -6578,6 +6586,12 @@
 /obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"eGB" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "eGW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -23725,6 +23739,10 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"qEX" = (
+/obj/item/wrench,
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "qFD" = (
 /obj/overlay{
 	density = 1;
@@ -28268,6 +28286,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"tKE" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "tKJ" = (
 /obj/item/cable_coil/cut,
 /turf/simulated/floor/plating/damaged3,
@@ -30076,6 +30098,12 @@
 "uVQ" = (
 /turf/simulated/floor,
 /area/station/science/lab)
+"uVZ" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/heated_pool)
 "uWR" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/breakfast,
@@ -89992,8 +90020,8 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
+cUW
+cUW
 cUW
 cUW
 cUW
@@ -90293,12 +90321,12 @@ qpn
 qpn
 qpn
 cUW
+cUW
+cUW
+cUW
 dPL
 qpn
-cUW
-cUW
-dPL
-dPL
+qpn
 qpn
 qpn
 qpn
@@ -90602,7 +90630,7 @@ dPL
 qpn
 qpn
 qpn
-qpn
+cUW
 cUW
 cUW
 cUW
@@ -90898,13 +90926,13 @@ cUW
 cUW
 cUW
 cUW
-cUW
-cUW
 dPL
 qpn
 qpn
 qpn
 qpn
+qpn
+cUW
 cUW
 cUW
 cUW
@@ -91199,13 +91227,13 @@ cUW
 cUW
 cUW
 cUW
-cUW
-cUW
-cUW
-dPL
 qpn
 qpn
 qpn
+qpn
+cvT
+hIZ
+cvT
 cUW
 cUW
 cUW
@@ -91501,14 +91529,14 @@ cUW
 cUW
 cUW
 cUW
-cUW
-dPL
 qpn
 qpn
 qpn
 qpn
+qis
+fhr
+qis
 qpn
-cUW
 cUW
 cUW
 cUW
@@ -91804,13 +91832,13 @@ cUW
 cUW
 dPL
 qpn
-qpn
-qpn
-qpn
+cvT
+qis
+qis
 cvT
 hIZ
 cvT
-cUW
+cvT
 cUW
 cUW
 cUW
@@ -92105,14 +92133,14 @@ cUW
 cUW
 dPL
 qpn
-qpn
-qpn
-qpn
-qpn
-qis
+cvT
+cvT
+dKA
+dKA
 fhr
-qis
-qpn
+nZB
+aME
+cvT
 cUW
 cUW
 cUW
@@ -92407,13 +92435,13 @@ cUW
 cUW
 dPL
 qpn
-qpn
-cvT
 qis
-qis
-cvT
-hIZ
-cvT
+fhr
+wUY
+wUY
+qEX
+eGB
+tKE
 cvT
 cUW
 cUW
@@ -92709,12 +92737,12 @@ cUW
 cUW
 dPL
 qpn
-cvT
-cvT
-dKA
+qis
 wUY
-fhr
-nZB
+wUY
+wUY
+wUY
+uVZ
 fJe
 cvT
 cUW
