@@ -1250,7 +1250,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/neon
 	name = "NEON"
 	display_name = "Neon Deepwater Research Facility, Abzu"
-	goonhub_map = "https://goonhub.com/maps/oshan" //TODO
+	goonhub_map = "https://goonhub.com/maps/neon"
 
 	arrivals_type = MAP_SPAWN_CRYO
 
