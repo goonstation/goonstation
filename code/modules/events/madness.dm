@@ -32,6 +32,7 @@
 
 		sleep(5 SECONDS)
 
+		//TODO: different directions?
 		//try to keep it mostly central over the station but with some randomness
 		var/atom/movable/seamonster_overlay/monster = new(locate(100, rand(130, 190), Z_LEVEL_STATION))
 		monster.alpha = 0
@@ -143,6 +144,5 @@
 
 	New()
 		. = ..()
-		//TODO: more/better seamonster shadows?
-		src.icon_state = "seamonster[rand(1,2)]"
+		src.icon_state = "seamonster[rand(1,7)]"
 		src.Scale(2,2)
