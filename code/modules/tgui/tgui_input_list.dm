@@ -36,7 +36,7 @@
 		return
 	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme)
 	input.ui_interact(user)
-	UNTIL(!user.client || input.choice || input.closed)
+	input.wait()
 	if (input)
 		. = input.choice
 		qdel(input)
@@ -112,7 +112,7 @@
 /datum/tgui_modal/list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ListInputModal")
+		ui = new(user, src, "ListInputWindow")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -123,6 +123,7 @@
 	.["capitalize"] = capitalize
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(FALSE)
 	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return

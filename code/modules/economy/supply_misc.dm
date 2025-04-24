@@ -9,16 +9,11 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
-/area/supply/delivery_point //the area supplies are fired at
-	name = "supply target point"
-	icon_state = "shuttle3"
-	requires_power = 0
-
-	#ifdef UNDERWATER_MAP
-	color = OCEAN_COLOR
-	#endif
+/obj/landmark/supply_delivery // target location where supplies are sent to
+	name = LANDMARK_SUPPLY_DELIVERY
 
 /area/supply/sell_point //the area where supplies move from the station z level
 	name = "supply sell region"
@@ -27,6 +22,7 @@ ABSTRACT_TYPE(/area/supply)
 
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
+	ambient_light = OCEAN_LIGHT
 	#endif
 
 	Entered(var/atom/movable/AM)
@@ -132,8 +128,8 @@ TYPEINFO(/obj/strip_door)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	Cross(atom/A)
 		if (!src.flap_material)  // You Shall Pass! But Only Because I Have No Flaps!

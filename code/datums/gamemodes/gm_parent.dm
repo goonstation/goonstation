@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
+	var/shuttle_prevent_recall_time = 120 MINUTES // After how long do we prevent recalling the Shuttle (only applied upon an automatic call)
 
 	var/latejoin_antag_compatible = 0 // Ultimately depends on the global 'late_traitors' setting, though.
 	var/latejoin_only_if_all_antags_dead = 0 // Don't spawn 'em until all antagonists are dead.
@@ -33,7 +34,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	boutput(world, "<B>[src] did not define announce()</B>")
 
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/post_setup()
 
@@ -56,7 +57,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return
 	if (shuttle_last_auto_call + (shuttle_initial_auto_call_done ? shuttle_auto_call_time / 2 : shuttle_auto_call_time) <= ticker.round_elapsed_ticks)
 		emergency_shuttle.incall()
-		command_alert("The shuttle has automatically been called for a shift change.  Please recall the shuttle to extend the shift.","Shift Shuttle Update")
+		var/announcement = "The shuttle has automatically been called for a shift change."
+		if(shuttle_prevent_recall_time <= ticker.round_elapsed_ticks)
+			emergency_shuttle.can_recall = FALSE
+			logTheThing(LOG_STATION, null, "Automatically disabled recalling of the Energency Shuttle.")
+			announcement += " Central Command has prohibited further recalls."
+		else
+			announcement += " Please recall the shuttle to extend the shift."
+		command_alert(announcement,"Shift Shuttle Update")
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1
@@ -81,107 +89,70 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
-	var/list/datum/mind/antags = list()
 	var/list/stuff_to_output = list()
 
-	for (var/datum/mind/traitor in traitors)
-		antags.Add(traitor)
-	for (var/datum/mind/various in Agimmicks)
-		antags.Add(various)
-
-	for (var/datum/mind/traitor in antags)
-		var/traitorwin = 1
+	for (var/datum/antagonist/traitor in get_all_antagonists())
 		var/obj_count = 0
 		var/traitor_name
+		var/datum/mind/criminal_mind = traitor.owner
 
-		if (traitor.current)
-			traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
+		if (criminal_mind.current)
+			traitor_name = "[criminal_mind.current.real_name] (played by [criminal_mind.displayed_key])"
 		else
-			traitor_name = "[traitor.displayed_key] (character destroyed)"
+			traitor_name = "[criminal_mind.displayed_key] (character destroyed)"
 
-		if (traitor.special_role == ROLE_MINDHACK)
-			stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
-			continue // Objectives are irrelevant for mindhacks and thralls.
-		else if (traitor.special_role == ROLE_VAMPTHRALL)
-			stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
-			continue // Ditto.
-		else if (traitor.special_role == ROLE_FLOCKTRACE)
-			continue // Flocktraces are listed under their respective flockmind
-		else
-			if (traitor.late_special_role)
-				stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
-			else if (traitor.random_event_special_role)
-				stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.special_role]!"
+		switch(traitor.id)
+			if(ROLE_MINDHACK)
+				stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
+				continue // Objectives are irrelevant for mindhacks and thralls.
+			if(ROLE_VAMPTHRALL)
+				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
+				continue // Ditto.
+			if(ROLE_FLOCKTRACE)
+				continue // Flocktraces are listed under their respective flockmind
+
+		switch(traitor.assigned_by)
+			if (ANTAGONIST_SOURCE_LATE_JOIN)
+				stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.display_name]!"
+			if (ANTAGONIST_SOURCE_RANDOM_EVENT)
+				stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.display_name]!"
 			else
-				stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
+				stuff_to_output += "<B>[traitor_name]</B> was a [traitor.display_name]!"
 
-			if (traitor.special_role == ROLE_SLASHER)
-				var/foundmachete = FALSE
-				for_by_tcl(M, /obj/item/slasher_machete)
-					if(M.slasher_key == traitor.current.ckey)
-						foundmachete = TRUE
-						var/outputval = round((M.force - 15) / 2.5)
-						stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
-						break
-				if(!foundmachete)
-					stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
+		if (traitor.id == ROLE_SLASHER)
+			var/foundmachete = FALSE
+			for_by_tcl(M, /obj/item/slasher_machete)
+				if(M.slasher_key == criminal_mind.current.ckey)
+					foundmachete = TRUE
+					var/outputval = round((M.force - 15) / 2.5)
+					stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
+					break
+			if(!foundmachete)
+				stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-			for (var/datum/objective/objective in traitor.objectives)
-#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew)) continue
-#endif
-				obj_count++
-				if (objective.check_completion())
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]"
-					logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
-					if (!isnull(objective.medal_name) && !isnull(traitor.current))
-						traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
-				else
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_ALERT("Failed")]"
-					logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
-					traitorwin = 0
+		for (var/datum/objective/objective in traitor.objectives)
+			obj_count++
+			if (objective.check_completion())
+				stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]"
+				logTheThing(LOG_DIARY, criminal_mind, "completed objective: [objective.explanation_text]")
+				if (!isnull(objective.medal_name) && !isnull(criminal_mind.current))
+					criminal_mind.current.unlock_medal(objective.medal_name, objective.medal_announce)
+			else
+				stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_ALERT("Failed")]"
+				logTheThing(LOG_DIARY, criminal_mind, "failed objective: [objective.explanation_text]. Womp womp.")
 
 		// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
 		if (obj_count)
-			if (traitorwin)
-				if (traitor.current)
-					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				stuff_to_output += "[SPAN_SUCCESS("The [traitor.special_role] was successful!")]<br>"
+			if (traitor.check_success())
+				stuff_to_output += "[SPAN_SUCCESS("The [traitor.display_name] was successful!")]<br>"
 			else
-				stuff_to_output += "[SPAN_ALERT("The [traitor.special_role] has failed!")]<br>"
+				stuff_to_output += "[SPAN_ALERT("The [traitor.display_name] has failed!")]<br>"
 
 	#ifdef DATALOGGER
-			if (traitorwin)
-				game_stats.Increment("traitorwin")
-			else
-				game_stats.Increment("traitorloss")
+		game_stats.Increment(traitor.check_success() ? "traitorwin" : "traitorloss")
 	#endif
 
-
-	// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
-	for (var/datum/mind/traitor in former_antagonists)
-		var/traitor_name
-
-		if (traitor.current)
-			traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
-		else
-			traitor_name = "[traitor.displayed_key] (character destroyed)"
-
-		if (traitor.former_antagonist_roles.len)
-			for (var/string in traitor.former_antagonist_roles)
-				if (string == ROLE_MINDHACK)
-					stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
-				else if (string == ROLE_VAMPTHRALL)
-					stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
-				else
-					stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
-
-	// Display all antagonist datums.
-	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-		antagonist_role.handle_round_end(TRUE)
-#ifdef DATA_LOGGER
-		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
-#endif
+		traitor.handle_round_end(TRUE)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -256,12 +227,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
 /// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
-	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
-		// vamp will burn in the chapel before he can react
-		if (prob(50))
-			antag.special_role = ROLE_TRAITOR
-		else
-			antag.special_role = ROLE_CHANGELING
 
 	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
@@ -293,19 +258,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/proc/roundstart_player_count(loud = TRUE)
-	var/readied_count = 0
-	var/unreadied_count = 0
-	for (var/client/C in global.clients)
-		var/mob/new_player/mob = C.mob
-		if (istype(mob))
-			if (mob.ready)
-				readied_count++
-			else
-				unreadied_count++
-	var/total = readied_count + (unreadied_count/2)
-	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
-	return total
+	return global.ticker.roundstart_player_count(loud)
 
 ////////////////////////////
 // Objective related code //

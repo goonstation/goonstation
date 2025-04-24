@@ -376,6 +376,17 @@
 
 		return ..()
 
+/datum/overlayComposition/steelmask
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
+		dither.d_icon_state = "steelmask"
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		definitions.Add(dither)
+
+		return ..()
+
 
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/limited_sight
@@ -497,6 +508,17 @@
 
 		return ..()
 
+/datum/overlayComposition/telephoto
+	New()
+		var/datum/overlayDefinition/telephoto = new()
+		telephoto.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
+		telephoto.d_icon_state = "telephoto"
+		telephoto.do_wide_fill = 1
+		definitions.Add(telephoto)
+
+		return ..()
+
+
 /datum/overlayComposition/insanity
 	New()
 		var/datum/overlayDefinition/insanity = new()
@@ -523,3 +545,46 @@
 
 		return ..()
 
+/datum/overlayComposition/silicon_rad_light
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_light.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 100
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_medium
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_medium.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#777777"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_heavy
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_heavy.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#555555"
+		interference.d_alpha = 200
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_extreme
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_extreme.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()

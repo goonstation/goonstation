@@ -3,6 +3,7 @@
 	name = "SECURE AREA"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "securearea"
+	deconstruct_flags = DECON_WIRECUTTERS
 	anchored = ANCHORED
 	opacity = 0
 	density = 0

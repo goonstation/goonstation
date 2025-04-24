@@ -280,7 +280,7 @@
 /area/prefab/secbot_academy)
 "lu" = (
 /obj/machinery/light/small/floor,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "lA" = (
@@ -392,7 +392,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
 "pY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "ql" = (

@@ -12,9 +12,9 @@
 cfg/admin.txt
 
 # Build files
-/_stdlib/__build.dm
 /testmerges
 z_build_opts.dm
+/cdn-manifest.json
 
 # Pre-processor related
 node_modules
@@ -53,9 +53,9 @@ prof.dll
 /browserassets/build/
 
 # Local tgui dev server files
-/browserassets/tgui/.tmp/**/*
-/browserassets/tgui/**/*.map
-/browserassets/tgui/**/*.hot-update.*
+/browserassets/src/tgui/.tmp/**/*
+/browserassets/src/tgui/**/*.map
+/browserassets/src/tgui/**/*.hot-update.*
 
 # Windows image file caches
 Thumbs.db
@@ -74,6 +74,10 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+
+# Local define usage
+/_std/__build.local.dm
+/code/WorkInProgress/__development.local.dm
 
 # OpenDream compiled bytecode
 goonstation.json

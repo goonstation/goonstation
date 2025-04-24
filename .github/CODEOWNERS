@@ -11,6 +11,12 @@
 # Aloe
 /code/mob/dead/ @frawhst
 
+# Emily
+/code/modules/ranch/ @UrsulaMejor
+/icons/obj/ranch/ @UrsulaMejor
+/icons/mob/ranch/ @UrsulaMejor
+/icons/misc/ranch/ @UrsulaMejor
+
 # Flourish
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
@@ -47,10 +53,13 @@
 /code/datums/actions/ @ZeWaka
 
 # Pali
-/code/datums/components/ @pali6
-/code/obj/artifacts/ @pali6
-/code/datums/controllers/artifact_controls.dm @pali6
+#/code/datums/components/ @pali6
+#/code/obj/artifacts/ @pali6
+#/code/datums/controllers/artifact_controls.dm @pali6
 /code/WorkInProgress/pali.dm @pali6
 
+# Wire
+/tools/server/ @Wirewraith
+
 # Multiple Owners
-/tgui/ @mordent-goonstation @ZeWaka @Tarmunora
+/tgui/ @mordent-goonstation @ZeWaka

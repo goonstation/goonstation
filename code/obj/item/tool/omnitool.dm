@@ -31,8 +31,18 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.mode == OMNI_MODE_PRYING)
-			if (!pry_surgery(target, user))
+			if (is_special || !pry_surgery(target, user))
 				return ..()
+		else if (src.mode == OMNI_MODE_WELDING)
+			if (is_special)
+				return ..()
+			if (src.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
+				var/mob/living/carbon/human/H = target
+				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
+					if (!src.cautery_surgery(H, user, 15, src.welding))
+						return ..()
+			else
+				..()
 		else
 			..()
 
@@ -92,42 +102,42 @@
 				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-prying"), src)
+					FLICK(("[prefix]-swap-prying"), src)
 
 			if (OMNI_MODE_PULSING)
 				set_icon_state("[prefix]-pulsing")
 				src.setItemSpecial(/datum/item_special/elecflash)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-pulsing"), src)
+					FLICK(("[prefix]-swap-pulsing"), src)
 
 			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
-				src.setItemSpecial(/datum/item_special/simple)
+				src.setItemSpecial(/datum/item_special/jab)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-screwing"), src)
+					FLICK(("[prefix]-swap-screwing"), src)
 
 			if (OMNI_MODE_SNIPPING)
 				set_icon_state("[prefix]-snipping")
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-snipping"), src)
+					FLICK(("[prefix]-swap-snipping"), src)
 
 			if (OMNI_MODE_WRENCHING)
 				set_icon_state("[prefix]-wrenching")
 				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-wrenching"), src)
+					FLICK(("[prefix]-swap-wrenching"), src)
 
 			if (OMNI_MODE_CUTTING)
 				set_icon_state("[prefix]-cutting")
 				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
-					flick(("[prefix]-swap-cutting"), src)
+					FLICK(("[prefix]-swap-cutting"), src)
 
 			if(OMNI_MODE_WELDING)
 				src.setItemSpecial(/datum/item_special/flame)
@@ -163,8 +173,10 @@
 		var/safety = 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (!H.sight_check()) //don't blind if we're already blind
+				safety = 2
 			// we want to check for the thermals first so having a polarized eye doesn't protect you if you also have a thermal eye
-			if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
+			else if (istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal) || istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 				safety = -1
 			else if (istype(H.head, /obj/item/clothing/head/helmet/welding))
 				var/obj/item/clothing/head/helmet/welding/WH = H.head
@@ -242,7 +254,7 @@
 			if(!(get_fuel() > 0))
 				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing) && !istype(O, /obj/item/clothing/mask/cigarette))
 			boutput(user, SPAN_HINT("You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)"))
 			user.u_equip(src)
 			src.set_loc(O)

@@ -56,11 +56,6 @@
 		simsController.simsMotives -= src
 		..()
 
-	disposing()
-		if (hud)
-			qdel(hud)
-		..()
-
 	proc/updateHud()
 		var/change = 0
 		if (value > last_life_value)
@@ -270,27 +265,6 @@
 					holder.owner.setStatus("filthy", 3 MINUTES)
 			else if ((value >= SIMS_HYGIENE_THRESHOLD_FILTHY) && holder.owner.hasStatus("rancid"))
 				holder.owner.delStatus("rancid")
-			/*
-			if (value < 10 && prob((10 - value) * 1.5))
-				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
-					if (H != holder.owner && prob(30 - value) * 2)
-						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
-						H.vomit()
-						H.visible_message(SPAN_ALERT("[H] throws up all over \himself. Gross!"))
-						boutput(H, SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message(SPAN_ALERT("[holder.owner] throws up all over \himself. Gross!"))
-				holder.owner.vomit()
-				showOwner(SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-			*/
-			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				holder.owner.infected(P)
-				showOwner(SPAN_ALERT("You feel really sick.")) // in a bad way
-			#endif
 
 		getWarningMessage()
 			if (value < 25)
@@ -468,12 +442,7 @@
 	var/list/motives = list()
 	var/list/datum/simsHolder/simsHolders = list()
 	var/list/datum/simsMotive/simsMotives = list()
-
-#ifdef RP_MODE
 	var/provide_plumbobs = 0
-#else
-	var/provide_plumbobs = 1
-#endif
 
 	New()
 		..()
@@ -556,28 +525,28 @@
 		var/o = "<html><head><title>Motive Controls</title><style>"
 		o += "</style></head><body>"
 
-		o += {"<a href='?src=\ref[src];toggle_plum=1'>Plumbobs: [provide_plumbobs ? "On" : "Off"]</a><br>
+		o += {"<a href='byond://?src=\ref[src];toggle_plum=1'>Plumbobs: [provide_plumbobs ? "On" : "Off"]</a><br>
 
 				<h3>Profiles</h3>
 				<table style='font-size:80%'><tr>
-				<td><a href='?src=\ref[src];profile=ham'>Custom</a></td>
-				<td><a href='?src=\ref[src];profile=0.6'>RP Default(0.3)</a></td>
-				<td><a href='?src=\ref[src];profile=0.2'>V. Low (0.2)</a></td>
-				<td><a href='?src=\ref[src];profile=0.4'>Low (0.4)</a></td>
-				<td><a href='?src=\ref[src];profile=0.6'>Med-low (0.6)</a></td>
-				<td><a href='?src=\ref[src];profile=1'>Standard (1)</a></td>
-				<td><a href='?src=\ref[src];profile=1.5'>High (1.5)</a></td>
-				<td><a href='?src=\ref[src];profile=2'>Very High (2)</a></td>
-				<td><a href='?src=\ref[src];profile=4'>Doom (4)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=ham'>Custom</a></td>
+				<td><a href='byond://?src=\ref[src];profile=0.6'>RP Default(0.3)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=0.2'>V. Low (0.2)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=0.4'>Low (0.4)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=0.6'>Med-low (0.6)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=1'>Standard (1)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=1.5'>High (1.5)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=2'>Very High (2)</a></td>
+				<td><a href='byond://?src=\ref[src];profile=4'>Doom (4)</a></td>
 				</tr></table>"}
 		o += "<table><tr><td><b>Name</b></td><td><b>Standard depletion rate</b></td><td><b>Gain rate</b></td><td>Drain rate</td></tr>"
 		for (var/T in motives)
 			var/datum/simsMotive/M = motives[T]
 			o += {"<tr>
 				<td><b>[M.name]</b></td>
-				<td><a href='?src=\ref[src];mot=\ref[M];rate=1'>[M.depletion_rate]</a>% per second</td>
-				<td><a href='?src=\ref[src];mot=\ref[M];gain=1'>[M.gain_rate]</a> ([M.gain_rate * 100]%)</td>
-				<td><a href='?src=\ref[src];mot=\ref[M];drain=1'>[M.drain_rate]</a> ([M.drain_rate * 100]%)</td>
+				<td><a href='byond://?src=\ref[src];mot=\ref[M];rate=1'>[M.depletion_rate]</a>% per second</td>
+				<td><a href='byond://?src=\ref[src];mot=\ref[M];gain=1'>[M.gain_rate]</a> ([M.gain_rate * 100]%)</td>
+				<td><a href='byond://?src=\ref[src];mot=\ref[M];drain=1'>[M.drain_rate]</a> ([M.drain_rate * 100]%)</td>
 				</tr>"}
 
 		o += "</table>"
@@ -611,16 +580,11 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
-			addMotive(/datum/simsMotive/hygiene)
-			//addMotive(/datum/simsMotive/bladder)
-			//addMotive(/datum/simsMotive/energy)
-			//addMotive(/datum/simsMotive/sanity)
 
 		wolf
 			make_motives()
 				addMotive(/datum/simsMotive/hunger/wolfy)
 				addMotive(/datum/simsMotive/hunger/thirst)
-				addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()
@@ -690,6 +654,12 @@ var/global/datum/simsControl/simsController = new()
 			return
 		motives[initial(M.name)] = M
 		M.holder = src
+
+	proc/removeMotive(var/name)
+		if((name in src.motives))
+			var/datum/simsMotive/S = src.motives[name]
+			src.motives.Remove(name)
+			qdel(S)
 
 	proc/getValue(var/name)
 		if (name in motives)

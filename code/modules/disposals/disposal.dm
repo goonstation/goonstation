@@ -18,8 +18,7 @@
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
-	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/last_sound = 0
+	var/count = 1000	//! can travel 1000 steps before going inactive (in case of loops)
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -111,7 +110,7 @@
 
 	// merge two holder objects
 	// used when a a holder meets a stuck holder
-	proc/merge(var/obj/disposalholder/other)
+	proc/merge(obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
@@ -119,30 +118,31 @@
 		other.merged(src)
 		qdel(other)
 
-	proc/merged(var/obj/disposalholder/host)
+	proc/merged(obj/disposalholder/host)
 		return
 
 	// called when player tries to move while in a pipe
-	relaymove(mob/user as mob)
-		if (user.stat)
+	relaymove(mob/user, direction)
+		if (is_incapacitated(user))
 			return
+
+		var/turf/our_turf = get_turf(src)
 
 		// drsingh: attempted fix for Cannot read null.loc
-		if (src == null || src.loc == null || src.loc.loc == null)
+		if (src == null || our_turf == null)
 			return
 
-		for (var/mob/M in hearers(src.loc.loc))
+		for (var/mob/M in hearers(our_turf))
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
-		if(last_sound + 6 < world.time)
+		if(!ON_COOLDOWN(src, "pipeclang", 1 SECOND))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
-			last_sound = world.time
 			if(!istype(user,/mob/living/critter/small_animal))
 				damage_pipe()
 			if(prob(30))
 				slowed++
 
-	mob_flip_inside(var/mob/user)
+	mob_flip_inside(mob/user)
 		var/obj/disposalpipe/P = src.loc
 		if(!istype(P))
 			return
@@ -193,6 +193,8 @@
 	plane = PLANE_FLOOR
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
+	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
+	var/weldable = TRUE
 
 
 	var/image/pipeimg = null
@@ -451,7 +453,7 @@
 			return		// prevent interaction with T-scanner revealed pipes
 
 		if (isweldingtool(I))
-			if (I:try_weld(user, 3, noisy = 2))
+			if (src.weldable && I:try_weld(user, src.welding_cost, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = I.loc
@@ -990,7 +992,7 @@
 		if(flipdir != dir)	// came from secondary or tertiary
 			var/senddir = dir	//Do we send this out the primary or secondary?
 			if(use_secondary && flipdir != switch_dir) //Oh, we're set to sort this out our side secondary
-				flick("[base_icon_state]-on", src)
+				FLICK("[base_icon_state]-on", src)
 				senddir = switch_dir
 			return senddir
 		else				// came from primary
@@ -1158,7 +1160,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
 	is_syndicate = 1
+	weldable = FALSE
 	var/is_doing_stuff = FALSE
+	HELP_MESSAGE_OVERRIDE("The disciplinary loaf processor cannot be detached by welding.")
 
 	horizontal
 		dir = EAST
@@ -1233,9 +1237,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
 					if(!isdead(M))
 						M:emote("scream")
-					M.death()
 					if (M.mind || M.client)
 						M.ghostize()
+					M.death()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
@@ -1581,7 +1585,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	icon_state = "unblockoutlet"
 	anchored = ANCHORED
 	density = 1
+	weldable = FALSE
 	var/turf/stuff_chucking_target
+	HELP_MESSAGE_OVERRIDE("The smart disposal outlet cannot be detached by welding.")
 
 	north
 		dir = NORTH
@@ -1611,7 +1617,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				break
 
 		if (allowDump)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1682,7 +1688,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				things_to_dump += A
 
 		if (things_to_dump.len)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1784,12 +1790,12 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else
 			for (var/atom/aThing in H)
@@ -1801,7 +1807,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 								continue
 
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-						flick("pipe-mechsense-detect", src)
+						FLICK("pipe-mechsense-detect", src)
 						break
 
 		return ..()
@@ -1959,6 +1965,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 /obj/disposalpipe/trunk/zlevel
 	icon_state = "pipe-v"
+	weldable = FALSE
+	HELP_MESSAGE_OVERRIDE("This pipe cannot be detached by welding.")
 
 	getlinked()
 		return
@@ -2003,6 +2011,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	dpdir = 0		// broken pipes have dpdir=0 so they're not found as 'real' pipes
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
+	welding_cost = 1
 
 	New()
 		..()
@@ -2130,7 +2139,7 @@ TYPEINFO(/obj/disposaloutlet)
 				if(M.mail_id == src.flusher_id)
 					M.mail_tag = H.mail_tag
 
-		flick("outlet-open", src)
+		FLICK("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame

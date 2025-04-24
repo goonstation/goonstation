@@ -1,4 +1,5 @@
 
+#define MAX_INPUT_HISTORY_LENGTH 100 //! Maximum amount of things some nerd can put in here until we've had enough
 
 /obj/machinery/computer3
 	name = "computer"
@@ -35,6 +36,11 @@
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
+
+	// Vars for command history
+	var/list/list/tgui_input_history //! (Keyed by CKEY) A list of strings representing the terminal's command execution history. New history is appended as commands are executed
+	var/list/tgui_input_index //! (Keyed by CKEY)  An index pointing to the position in tgui_input_history to update tgui_last_accessed with
+	var/list/tgui_last_accessed //! (Keyed by CKEY)  The most recently accessed command from the console
 
 	power_usage = 250
 
@@ -97,6 +103,23 @@
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
+		bank_data
+			name = "Bank computer"
+			icon_state = "databank"
+			base_icon_state = "databank"
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+
+			console_upper
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank1"
+				base_icon_state = "bank1"
+			console_lower
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank2"
+				base_icon_state = "bank2"
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
@@ -114,39 +137,11 @@
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
-		disease_research
-			name = "Disease Database"
-			icon_state = "resdis"
-			setup_starting_program = /datum/computer/file/terminal_program/disease_research
-			setup_drive_size = 48
-
 		artifact_research
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
 			setup_drive_size = 48
-
-		hangar_control
-			name = "Hangar Control"
-			icon_state = "comm"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_control
-			setup_drive_size = 48
-		hangar_research
-			name = "Hangar Research"
-			icon_state = "resrob"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_research
-			setup_drive_size = 48
-		robotics_research
-			name = "Robotics Database"
-			icon_state = "resrob"
-			setup_starting_program = /datum/computer/file/terminal_program/robotics_research
-			setup_drive_size = 48
-/*
-		dna_scan
-			name = "DNA Modifier Access Console"
-			icon_state = "scanner"
-			setup_starting_peripheral1 = /obj/item/peripheral/dnascanner_control
-*/
 
 		engine
 			name = "Engine Control Console"
@@ -177,16 +172,6 @@
 		radio
 			name = "wireless computer"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/radio
-
-		basic_test
-			name = "personal computer"
-			//setup_starting_program = /datum/computer/file/terminal_program/basic
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/drive/cart_reader
-
-		supply
-			name = "Supply Ordering Computer"
-			setup_idscan_path = /obj/item/peripheral/card_scanner/register
 
 	terminal //Terminal computer, stripped down with less cards.
 		name = "Terminal"
@@ -276,6 +261,9 @@
 	light.attach(src)
 
 	src.base_icon_state = src.icon_state
+	src.tgui_input_history = list()
+	src.tgui_input_index = list()
+	src.tgui_last_accessed = list()
 
 	if(glow_in_dark_screen)
 		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
@@ -345,14 +333,16 @@
 		ui.open()
 
 /obj/machinery/computer3/ui_static_data(mob/user)
-	. = list()
+	. = list(
+		"ckey" = user.ckey,
+	)
 	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
 		. += list("peripherals" = list(list(
 		"icon" = "save",
 		"card" = "internal",
 		"color" = src.diskette,
 		"contents" = src.diskette,
-		"label" = "Disk"
+		"label" = "Disk",
 		)))
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
@@ -365,6 +355,7 @@
 				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_data(mob/user)
+	src.tgui_last_accessed[user.ckey] ||= ""
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
@@ -373,7 +364,44 @@
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
 		"bgColor" = src.setup_bg_color,
+		"inputValue" = src.tgui_last_accessed[user.ckey],
 	)
+
+/// Get the history entry at a certain index. Returns null if the index is out of bounds or the ckey is null. Will return an empty string for length+1
+/obj/machinery/computer3/proc/get_history(ckey, index)
+	if (isnull(ckey))
+		return
+	// Allow length+1 to simulate hitting the 'end' of the history and ending up on an empty line
+	if (index == length(src.tgui_input_history[ckey]) + 1)
+		return ""
+	// Ensure index with key exists
+	src.tgui_input_history[ckey] ||= list()
+	// Ensure we can return a value
+	if (index < 1 || length(src.tgui_input_history[ckey]) < index)
+		return
+	return src.tgui_input_history[ckey][index]
+
+/obj/machinery/computer3/proc/add_history(ckey, new_history)
+	// Ensure index with key exists
+	src.tgui_input_history[ckey] ||= list()
+	src.tgui_input_history[ckey].Add(new_history)
+	// Ensure not over limit after adding new entry
+	if (length(src.tgui_input_history) > MAX_INPUT_HISTORY_LENGTH)
+		src.tgui_input_history[ckey].Remove(src.tgui_input_history[ckey][1])
+	// After typing something else in the console, history is always most recent entry
+	src.tgui_input_index[ckey] = length(src.tgui_input_history[ckey])
+
+/// Traverse the current history by some amount. Returns true if different history was accessed, false otherwise (usually if new index OOB)
+/obj/machinery/computer3/proc/traverse_history(ckey, amount)
+	// Most recent entry in history if first time accessing
+	src.tgui_input_index[ckey] ||= length(src.tgui_input_history[ckey])
+	// Ensure previous history exists
+	var/result = src.get_history(ckey, src.tgui_input_index[ckey] + amount)
+	if (isnull(result))
+		return FALSE
+	src.tgui_input_index[ckey] = src.tgui_input_index[ckey] + amount
+	src.tgui_last_accessed[ckey] = result
+	return TRUE
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -383,12 +411,18 @@
 		if("restart")
 			src.restart()
 			src.updateUsrDialog()
+		if("history")
+			if (params["direction"] == "prev")
+				return src.traverse_history(params["ckey"], -1)
+			if (params["direction"] == "next")
+				return src.traverse_history(params["ckey"],  1)
 		if("text")
 			if(src.active_program && params["value"]) // haha it fucking works WOOOOOO
 				if(params["value"] == "term_clear")
 					src.temp = "Cleared\n"
 					return
 				src.active_program.input_text(params["value"])
+				src.add_history(params["ckey"], params["value"])
 				playsound(src.loc, "keyboard", 50, 1, -15)
 				src.updateUsrDialog()
 		if("buttonPressed")
@@ -643,6 +677,9 @@
 				else
 					src.set_broken()
 
+/obj/machinery/computer3/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer3/disposing()
 	if (hd)
 		if (hd.loc == src)
@@ -665,6 +702,8 @@
 	if (processing_programs)
 		src.processing_programs.len = 0
 		src.processing_programs = null
+
+	tgui_input_history = null
 
 	active_program = null
 	host_program = null
@@ -746,12 +785,6 @@
 			qdel(signal)
 		return
 
-	set_broken()
-		icon_state = src.base_icon_state
-		icon_state += "b"
-		status |= BROKEN
-		light.disable()
-
 	restart()
 		if(src.restarting)
 			return
@@ -762,6 +795,8 @@
 		src.processing_programs = new
 		src.temp = ""
 		src.temp_add = "Restarting system...<br>"
+		src.tgui_input_history = list()
+		src.tgui_input_index = list()
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)
@@ -1048,3 +1083,5 @@
 		src.set_loc(src.case)
 		src.deployed = 0
 		return
+
+#undef MAX_INPUT_HISTORY_LENGTH

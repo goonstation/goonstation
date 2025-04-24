@@ -241,11 +241,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +269,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +282,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -306,7 +306,6 @@
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A human arm."
-	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
 	var/rebelliousness = 0
 	var/strangling = FALSE
@@ -452,7 +451,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -515,7 +513,6 @@
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
 			handlistPart += "l_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -531,7 +528,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 			handimage.icon_state = state
 
@@ -566,13 +563,13 @@
 			remove_object = null
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -600,7 +597,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
 	streak_descriptor = "oily" //bloody, oily, etc
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -646,7 +642,6 @@
 			//if(I.over_clothes) handlistPart += "r_arm_[I.arm_icon]"
 			//else partlistPart += "r_arm_[I.arm_icon]"
 			handlistPart += "r_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -662,7 +657,7 @@
 
 			handimage = I.inhand_image
 			var/state = I.item_state ? I.item_state + "-LR" : (I.icon_state ? I.icon_state + "-LR" : "LR")
-			if(!(state in icon_states(I.inhand_image_icon)))
+			if(!(state in get_icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
 			handimage.pixel_y = H.mutantrace.hand_offset + 6
@@ -694,13 +689,13 @@
 			qdel(remove_object)
 
 	getHandIconState()
-		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+		if (handlistPart && !(handlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
 
 	getPartIconState()
-		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+		if (partlistPart && !(partlistPart in get_icon_states(special_icons)))
 			.= handimage
 		else
 			.=..()
@@ -729,7 +724,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -756,7 +750,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -783,7 +776,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -803,7 +795,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -825,7 +816,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
 	partIconModifier = "bear"
@@ -848,7 +838,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
 	partIconModifier = "bear"
@@ -876,6 +865,7 @@
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -896,6 +886,7 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -976,7 +967,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
 	partIconModifier = "abomination"
@@ -1016,7 +1006,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
 	partIconModifier = "abomination"
@@ -1055,15 +1044,14 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1078,14 +1066,13 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1101,7 +1088,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1123,7 +1109,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1645,6 +1630,7 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+	fingertip_color = "#895d37"
 
 	sever(mob/user)
 		. = ..()
@@ -1685,7 +1671,6 @@
 	handlistPart = "hand_left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	show_on_examine = TRUE
 
@@ -1703,7 +1688,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -1770,6 +1754,7 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	fingertip_color = "#aa9987"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1821,6 +1806,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
 	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	fingertip_color = "#745136"
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
@@ -2049,7 +2035,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -2068,7 +2053,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_right"
 	show_on_examine = TRUE

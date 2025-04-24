@@ -28,7 +28,6 @@ TYPEINFO(/area/diner/juicer_trader)
 
 /obj/item/clothing/shoes/thong
 	name = "garbage flip-flops"
-	desc = "These cheap sandals don't even look legal."
 	icon_state = "thong"
 	protective_temperature = 0
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
@@ -37,7 +36,7 @@ TYPEINFO(/area/diner/juicer_trader)
 	examine()
 		. = ..()
 		if(stapled)
-			. += "Two thongs stapled together, to make a MEGA VELOCITY boomarang."
+			. += "Two thongs stapled together, to make a MEGA VELOCITY boomerang."
 		else
 			. += "These cheap [pick(possible_names)] don't even look legal."
 
@@ -47,7 +46,7 @@ TYPEINFO(/area/diner/juicer_trader)
 			boutput(user, "You staple the [src] together to create a mighty thongarang.")
 			name = "thongarang"
 			icon_state = "thongarang"
-			throwforce = 5
+			throwforce = 0
 			throw_range = 10
 			throw_return = 1
 		else
@@ -71,6 +70,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	icon_off = "monkey-off"
 	icon_broken = "monkey-broken"
 	icon_fallen = "monkey-fallen"
+	icon_fallen_broken = "monkey-fallen-broken"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("It's meat you can buy!",
@@ -187,12 +187,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		..()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_beard
-		bioHolder.mobAppearance.customization_first_color = "#281400"
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/hair/gimmick/shitty_beard_stains
-		bioHolder.mobAppearance.customization_third_color = "#663300"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#281400"
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/short/pomp
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/gimmick/shitty_beard_stains
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#663300"
 		bioHolder.age = 63
 		bioHolder.bloodType = "A+"
 		bioHolder.mobAppearance.gender = "male"
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 			var/mob/living/carbon/human/john/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return
@@ -608,7 +608,7 @@ Urs' Hauntdog critter
 		var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
 
 		if(isturf(moveto) && !moveto.density)
-			flick("hauntdog-hop",src)
+			FLICK("hauntdog-hop",src)
 			step_towards(src, moveto)
 		if(src.aggressive) seek_target()
 		steps += 1
@@ -621,7 +621,7 @@ Urs' Hauntdog critter
 
 	proc/flip()
 		src.visible_message("<b>[src]</b> does a flip!")
-		flick("hauntdog-flip",src)
+		FLICK("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()

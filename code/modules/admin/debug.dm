@@ -116,79 +116,6 @@ var/global/debug_messages = 0
 	src.Browse(html, "window=deletedImageData;size=400x600")
 #endif
 
-/client/proc/debug_pools()
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	set name = "Debug Object Pools"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	#ifndef DETAILED_POOL_STATS
-	var/poolsJson = "\[{pool:null,count:0}"
-	for(var/pool in object_pools)
-		var/list/poolList = object_pools[pool]
-		poolsJson += ",{pool:'[pool]',count:[poolList.len]}\n"
-	poolsJson += "]"
-	var/html = {"<!doctype html><html>
-	<head><title>object pool counts</title>
-	<script type="text/javascript">
-	function display() {
-		var i, html,
-			listing = document.getElementById('listing'),
-			objectPools = [poolsJson].sort(function(a, b) { return b.count - a.count; });
-		html = '';
-		var total = 0;
-		for(i = 0;i < objectPools.length; i++) {
-			total += objectPools\[i].count;
-			html += '<li><strong>' + objectPools\[i].pool
-				+ '</strong>: ' + objectPools\[i].count.toString()
-				+ '</li>';
-		}
-		html = '<li><span style="color:red;font-weight:bold">Total</span>: ' + total.toString() + "</li>" + html;
-		listing.innerHTML = html;
-	}
-	</script>
-	</head><body onload="display()">
-	<h1>Object Pool Counts:</h1>
-	<ul id="listing"></ul>
-	</body></html>"}
-	#else
-	var/poolsJson = getPoolingJson()
-	var/html = {"<!doctype html><html>
-				<head><title>object pool counts</title>
-				<style>
-					table {
-						border: 1px solid black;
-						border-collapse:collapse;
-					}
-					th, td {
-						padding:5px;
-						border: 1px solid black;
-					}
-				</style>
-				</head><body>
-				<h1>Object Pool Counts:</h1>
-				<span id="listing"></span>
-				<script type="text/javascript">
-					function display() {
-						var i, html,
-							listing = document.getElementById('listing'),
-							objectPools = [poolsJson].sort(function(a, b) { return b.count - a.count; });
-						html = '';
-						var total = 0;
-						for(i = 0;i < objectPools.length; i++) {
-							var p = objectPools\[i];
-							total += p.count;
-							html += '<tr><td>' + p.path + '</td><td>' + p.count.toString() + '</td><td>' + p.hits.toString() + '</td><td>' + p.misses.toString() + '</td><td>' + p.poolings.toString() + '</td><td>' + p.unpoolings.toString() + '</td><td>' + p.evictions.toString() + '</td></tr>';
-						}
-						html = '<table><tr><th>Path</th><th>Count</th><th>Hits</th><th>Misses</th><th>Poolings</th><th>Unpoolings</th><th>Evictions</th></tr>' + html + '<tr><th>Total:</th><td>' + total.toString() + '</td></tr></table>';
-						listing.innerHTML = html;
-					};
-				display();
-				</script>
-				</body></html>"}
-	#endif
-	src.Browse(html, "window=poolCounts;size=400x800")
-
 /client/proc/call_proc_atom(atom/target as null|area|obj|mob|turf in world)
 	set name = "Call Proc"
 	set desc = "Calls a proc associated with the targeted atom"
@@ -355,6 +282,7 @@ var/global/debug_messages = 0
 			"description" = customization[ARG_INFO_DESC])
 		if(length(customization) >= ARG_INFO_DEFAULT)
 			.["options"][customization[ARG_INFO_NAME]]["value"] = customization[ARG_INFO_DEFAULT]
+			src.listargs[customization[ARG_INFO_NAME]] = customization[ARG_INFO_DEFAULT]
 		else
 			.["options"][customization[ARG_INFO_NAME]]["value"] = null
 
@@ -736,18 +664,25 @@ body
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear","Clothing Dummies")
 	switch (selected)
 		if ("Disco Inferno")
-			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
+			for (var/turf/T as anything in landmarks[LANDMARK_BLOBSTART]+landmarks[LANDMARK_HALLOWEEN_SPAWN]+landmarks[LANDMARK_PESTSTART])
 				var/datum/gas_mixture/gas = new /datum/gas_mixture
-				gas.toxins = 10000
-				gas.oxygen = 10000
-				gas.temperature = 10000
+				gas.toxins = 33333
+				gas.oxygen = 66666
+				gas.temperature = 100000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/door in by_type[/obj/machinery/door])
-				if (istype(door, /obj/machinery/door/airlock/pyro/maintenance) || istype(door, /obj/machinery/door/airlock/maintenance))
-					LAGCHECK(LAG_LOW)
-					qdel(door)
-			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(door, /obj/machinery/door)
+				var/turf/T = get_step(door, NORTH)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, SOUTH)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, EAST)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, WEST)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
 				qdel(door)
 		if ("Chemist's Delight")
 			for (var/turf/simulated/floor/T in world)

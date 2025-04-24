@@ -267,9 +267,10 @@
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"
-	if (victim.organHolder[src.target_zone])
+	if (victim.organHolder.vars[src.target_zone])
 		target = src.target_zone
 	victim.TakeDamageAccountArmor(target, src.crashed_force, 0, 0, DAMAGE_STAB)
+	take_bleeding_damage(victim, null, rand(11, 15), DAMAGE_STAB)
 	//after this, we play a corresponding sound and update everything
 	playsound(victim.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
 	victim.UpdateDamageIcon()
@@ -286,9 +287,10 @@
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"
-	if (victim.organHolder[src.target_zone])
+	if (victim.organHolder.vars[src.target_zone])
 		target = src.target_zone
 	victim.TakeDamageAccountArmor(target, src.armed_force, 0, 0, DAMAGE_STAB)
+	take_bleeding_damage(victim, null, rand(5, 9), DAMAGE_STAB)
 	//after this, we play a corresponding sound, make a material trigger and update everything
 	playsound(victim.loc, 'sound/impact_sounds/Flesh_stab_1.ogg', 80, 1)
 	if (src.material)

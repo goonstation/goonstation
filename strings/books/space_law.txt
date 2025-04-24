@@ -1,113 +1,24 @@
-<center><h2>Frontier Justice on the NSS Destiny: A Treatise on Space Law</h2></center>
-	<h3>A Brief Summary of Space Law</h3><hr>
-	As a Security Officer, the zeroth Space Law that you should probably always obey is to use your common sense. If it is a crime in real life, then it is a crime in this video game. Remember to use your best judgement when arresting criminals, and don't get discouraged if they complain.<br><br>
-	For certain crimes, the accused's intent is important. The difference between Assault and Attempted Murder can be very hard to ascertain, and, when in doubt, you should default to the less serious crime. It is important to note though, that Assault and Attempted Murder are mutually exclusive. You cannot be charged with Assault and Attempted Murder from the same crime as the intent of each is different. Likewise, 'Assault With a Deadly Weapon' and 'Assaulting an Officer' are also crimes that exclude others. Pay careful attention to the requirements of each law and select the one that best fits the crime when deciding sentence.<br><br>
-	Security roles and their superiors can read the Miranda warning to suspects by using the Recite Miranda Rights verb or *miranda emote. The wording is also customizable via Set Miranda Rights.<br><br>
-	Additionally: It is <b><i>highly illegal</i></b> for Nanotrasen personnel to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors.<hr>
+<h2>Nanotrasen Space Law</h2>
+As a Security Officer, the zeroth Space Law that you should probably always obey is to use your common sense. If it's a crime back on earth then it's probably a crime here too.
 
-	As a Security Assistant, generally the same principles apply to you, but with half of the responsibility. Your primary role is to assist the Security team in the best way you can, whether that be through sorting out Security records, wardening any prisoners being held in the brig or manning the security cameras. Despite what your fellow officers might tell you, supplying the Security team with alcohol is NOT within your role expectation and should NOT be done while on duty.<br><br>
-	In the case of conflict arising, either between two crew members, the crew and Security or antagonistic forces against the station, you are advised to tactically retreat and reconvene with your team in order to tackle the issue together. Do not attempt to handle these yourself. The equipment you are given is to serve you purely in the case of supporting the team and if worse comes to worst, in the case of self-defence. As such, leave the responsibility of performing arrests and takedowns to the Security Officers. Better to catch a criminal another day than to lose a teammate.<br><br>
-	Here's a guideline for how you should probably treat suspects by each particular crime.
-	<h4>Minor Crimes:</h4>
-	<i>No suspect may be sentenced for more than five minutes in the Brig for Minor Crimes. Minor Crime sentences are not cumulative (e.g: max five minutes for committing multiple Minor Crimes).</i>
-	<ul style='list-style-type:disc'>
-		<li>Assault
-			<ul style='list-style-type:circle'>
-				<li>To use physical force against someone without the apparent intent to kill them.</li>
-			</ul>
-		</li>
-		<li>Theft
-			<ul style='list-style-type:circle'>
-				<li>To take items from areas one does not have access to or to take items belonging to others or the ship as a whole.</li>
-			</ul>
-		</li>
-		<li>Fraud</li>
-		<li>Breaking and Entering
-			<ul style='list-style-type:circle'>
-				<li>To deliberately damage the ship without malicious intent.</li>
-				<li>To be in an area which a person does not have access to. This counts for general areas of the ship, and trespass in restricted areas is a more serious crime.</li>
-			</ul>
-		</li>
-		<li>Resisting Arrest
-			<ul style='list-style-type:circle'>
-				<li>To not cooperate with an officer who attempts a proper arrest.</li>
-			</ul>
-		</li>
-		<li>Escaping from the Brig
-			<ul style='list-style-type:circle'>
-				<li>To escape from a brig cell, or custody.</li>
-			</ul>
-		</li>
-		<li>Assisting or Abetting Criminals
-			<ul style='list-style-type:circle'>
-				<li>To act as, or knowingly aid, an enemy of Nanotrasen.</li>
-			</ul>
-		</li>
-		<li>Drug Possession
-			<ul style='list-style-type:circle'>
-				<li>To possess space drugs or other narcotics by unauthorized personnel.</li>
-			</ul>
-		</li>
-		<li>Narcotics Distribution
-			<ul style='list-style-type:circle'>
-				<li>To distribute narcotics and other controlled substances.</li>
-			</ul>
-		</li>
-	</ul>
-	<h4>Major Crime:</h4>
-	<i>For Major Crimes, a suspect may be sentenced for more than five minutes, but no more than fifteen. Like above, multiple Major Crime sentences are not cumulative.</i><br>
-	<ul style='list-style-type:disc'>
-		<li>Murder
-			<ul style='list-style-type:circle'>
-				<li>To maliciously kill someone.</li>
-				<li><b><i>Unauthorised executions are classed as Murder.</i></b></li>
-			</ul>
-		</li>
-		<li>Manslaughter
-			<ul style='list-style-type:circle'>
-				<li>To unintentionally kill someone through negligent, but not malicious, actions.</li>
-				<li>Intent is important. Accidental deaths caused by negligent actions, such as creating workplace hazards (e.g. gas leaks), tampering with equipment, excessive force, and confinement in unsafe conditions are examples of Manslaughter.</li>
-			</ul>
-		</li>
-		<li>Sabotage
-			<ul style='list-style-type:circle'>
-				<li>To engage in maliciously destructive actions, seriously threatening crew or ship.</li>
-				<li>Bombing, arson, releasing viruses, deliberately exposing areas to space, physically destroying machinery or electrifying doors all count as Grand Sabotage.</li>
-			</ul>
-		</li>
-		<li>Enemy of Nanotrasen
-			<ul style='list-style-type:circle'>
-				<li>To act as, or knowingly aid, an enemy of Nanotrasen.</li>
-			</ul>
-		</li>
-		<li>Creating a Workplace Hazard
-			<ul style='list-style-type:circle'>
-				<li>To endanger the crew or ship through negligent or irresponsible, but not deliberately malicious, actions.</li>
-				<li>Possession of Explosives</li>
-			</ul>
-		</li>
-	</ul>
-	<i>Suspects guilty of committing Major Crimes might also be sentenced to death, or perma-brigging, under specific circumstances listed below.</i><br>
-	Execution, permabrigging, poisoning, or anything else resulting in death or massive frustration requires:
-	<ol type="1">
-		<li>Solid evidence of a major crime</li>
-		<li>Permission of the following Heads:
-			<ol type="i">
-				<li>the Head of Security</li>
-				<li>the Captain</li>
-				<li>the Head of Personnel</li>
-			</ol>
-		</li>
-	</ol>
-	Please note that the ruling of the HoS supercedes that of the Captain in criminal matters, and likewise, the Captain with the HoP. Execution should only be used in grievous circumstances.<bt>
-	<b><i>The execution of criminals without Command authority, or evidence, is tantamount to murder.</i></b>
-	<h3>Standard Security Operating Practice</h3><hr>
-	As a Security Officer, you are expected to practice a modicum of due process in detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just turn into more crime and bring about a swift end to your existence. Never use lethal force when nonlethal force will do!<br>
-	<ul style='list-style-type:disc'>
-		<li>Detain the suspect with minimum force.</li>
-		<li>Handcuff the suspect and restrain them by pulling them. If their crime requires a brig time, bring them into the office, preferably via Port-a-Brig.</li>
-		<li>In the brig, tell them you're going to search them before doing so. Empty their pockets and remove their backpack. Look through everything. Be sure to open containers inside containers, such as boxes inside backpacks. Be sure to replace all items in the containers when you're done. <b><i>Don't strip them in the hallways!</i></b></li>
-		<li>If you need to brig them you can feed them into the little chute next to the brig. Remember to set the timer!</li>
-		<li>Confiscate any contraband and/or stolen items, as well as any tools that may be used for future crimes, these need to be placed in a proper evidence locker, or crate and should not be left on the brig floor, or used for personal use, if stolen, return the items to their rightful owners.</li>
-		<li>Update their security record if needed.</li>
-	</ul>
+<h3>Contraband</h3>
+Confiscated items go in the reinforced contraband lockers, <b>NOT</b> in your pockets. Any officer caught using items of <b><span style="color:#b90000;">Syndicate</span></b> manufacture may be subject to demotion.
+
+<h3>Uniform</h3>
+As a Nanotrasen security officer you should be proud of your uniform. Regulations state that all officers must be identifiable while on duty.<br>
+While they are not required to be worn, and might be considered "<span style="font-family:'Comic Sans MS';">dorky</span>" or "incredibly uncool," gear like your armored vest or helmet (which comes with a built-in flashlight) can save your life in a pinch.
+
+<h3>Chain of Command</h3>
+Firstly, the <b><span style="color:#a87101;">Captain</span></b> has ultimate authority on their station unless you have very good reason to believe they have been compromised.<br>
+Security officers answer directly to the <b><span style="color:red;">Head of Security</span></b> however, and Centcom might send an <b><span style="color:#2d35ce;">NT Security Consultant</span></b> if the station is particularly in need of shaping up, they should be considered second in command under the HoS.<br>
+Department Heads retain authority inside their department and can order you to leave unconditionally. <b><span style="color:red;">The Head of Security</span></b>, <b><span style="color:#0A6B00;">Head of Personnel</span></b>, or <b><span style="color:#a87101;">Captain</span></b> can override this.<br>
+
+<h3>Arrests</h3>
+As a Security Officer, you are expected to use restraint and good judgment when detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just increase tensions with the crew and invite more crime. Only arrest people when you have reason to believe they've committed a crime, and don't do strip searches in public. Never use lethal force when nonlethal force will do!<br>
+Keep in touch with your fellow security members over the radio and support one another when making arrests. Never get discouraged when the criminals complain.
+
+<h3>Punishments</h3>
+The variety of creative and awful ways crewmembers will find to break the law is infinite, so the variety of punishments and sentences should be too.<br>
+Standard penalties range from tickets, fines and brig sentences to exile and even execution for the most severe crimes.<br>
+Brig sentences should not exceed a maximum of 5 minutes jail time and all executions of captured prisoners <b>must</b> be signed off by a head of staff, preferably the <b><span style="color:#a87101;">Captain</span></b>.<br>
+Trials may be held at the discretion of the <b><span style="color:#a87101;">Captain</span></b>, but are not required under normal circumstances.

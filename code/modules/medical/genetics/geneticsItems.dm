@@ -54,7 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 
 	dna_injector
 		name = "dna injector"
-		desc = "A syringe designed to safely insert or remove genetic structures to and from a living organism."
+		desc = "A syringe designed to safely insert genetic structures into a living organism."
 		var/datum/bioEffect/BE = null
 
 		injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -254,6 +254,8 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			src.bioHolder.CopyOther(target.bioHolder)
 			stored_name = target.real_name
 			randomize_look(target)
+			target.bioHolder.Uid = target.bioHolder.CreateUid() // forensics stuff, new blood dna and fingerprints
+			target.bioHolder.build_fingerprints()
 			UpdateIcon()
 
 	proc/paste_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)

@@ -1,24 +1,24 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/table/wood/round,
-/obj/item/reagent_containers/food/drinks/bottle/empty/rectangular{
-	initial_reagents = list("water"=100);
-	pixel_x = -3;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
-	pixel_x = 6;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/turf/simulated/floor/wood/two,
-/area/dmm_suite/clear_area)
 "d" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_y = 1;
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/empty/rectangular{
+	initial_reagents = list("water"=100);
+	pixel_x = -5;
+	pixel_y = 20
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
@@ -50,29 +50,24 @@
 /area/dmm_suite/clear_area)
 "j" = (
 /obj/item/cigarbox{
-	pixel_x = 4;
-	pixel_y = -1
+	pixel_x = -30;
+	pixel_y = 42
 	},
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "t" = (
-/obj/table/wood/auto/desk{
-	pixel_x = 13
-	},
-/obj/table/wood/auto/desk{
-	pixel_x = -13
-	},
+/obj/table/wood/auto/desk,
 /obj/machinery/phone/unlisted{
 	pixel_x = 19;
 	pixel_y = 6;
 	stripe_color = null
 	},
 /obj/item/paper{
-	pixel_x = -7;
+	pixel_x = -1;
 	pixel_y = 6
 	},
 /obj/item/pen/fancy{
-	pixel_x = -12;
+	pixel_x = -7;
 	pixel_y = 9
 	},
 /obj/machinery/light/lamp{
@@ -93,6 +88,10 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/stool/chair/comfy/red,
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/table/wood/auto/desk,
 /turf/simulated/floor/wood/two,
 /area/dmm_suite/clear_area)
 "S" = (
@@ -122,11 +121,11 @@
 (1,1,1) = {"
 h
 Y
-a
+Y
 "}
 (2,1,1) = {"
 g
-Y
+f
 Y
 "}
 (3,1,1) = {"
@@ -136,7 +135,7 @@ d
 "}
 (4,1,1) = {"
 v
-Y
+I
 Y
 "}
 (5,1,1) = {"

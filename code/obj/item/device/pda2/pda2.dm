@@ -43,7 +43,12 @@
 	var/bg_color = "#6F7961"
 	var/link_color = "#000000"
 	var/linkbg_color = "#565D4B"
+	///is the background colour of this PDA locked due to annoying propreitary software
+	var/locked_bg_color = FALSE
 	var/graphic_mode = 0
+
+	var/screen_x = 0
+	var/screen_y = 0
 
 	var/setup_default_pen = /obj/item/pen //PDAs can contain writing implements by default
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
@@ -60,7 +65,7 @@
 		// Other
 		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -89,6 +94,7 @@
 
 	/// mailgroup-specific ringtones, added on the fly!
 	var/list/mailgroup_ringtones = list()
+	var/window_title = "Personal Data Assistant"
 
 	registered_owner()
 		.= registered
@@ -136,6 +142,30 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+
+
+	ntofficial
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		setup_drive_size = 32
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
+	nt_medical
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+		setup_drive_size = 32
+		mailgroups = list(MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+
+	nt_engineer
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
+
 
 	ai
 		icon_state = "pda-h"
@@ -190,7 +220,7 @@
 
 		robotics
 			name = "Robotics PDA"
-			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY, MGO_SILICON)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
@@ -317,17 +347,36 @@
 	syndicate
 		icon_state = "pda-syn"
 		name = "Military PDA"
-		owner = "John Doe"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
-		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/mess_off
+		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
+		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/knockoff
+		mailgroups = list(MGA_SYNDICATE)
+		locked_bg_color = TRUE
+		bg_color = "#A33131"
+		r_tone = /datum/ringtone/basic/ring10
+		screen_x = 2
+		window_title = "Personnel Data Actuator"
+
+		nuclear
+			owner = "John Doe"
+			setup_system_os_path = /datum/computer/file/pda_program/os/main_os/knockoff/mess_off
+			setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
+
+			New()
+				START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
+
+			disposing()
+				STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
 
 		New()
-			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+			var/datum/computer/file/text/pda2manual/old_manual = locate() in src.hd.root.contents
+			src.hd.root.remove_file(old_manual)
+			var/datum/computer/file/pda_program/emergency_alert/crisis = locate() in src.hd.root.contents
+			src.hd.root.remove_file(crisis)
+			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
 
-		disposing()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
 
 /obj/item/device/pda2/pickup(mob/user)
 	..()
@@ -348,11 +397,12 @@
 	var/mob/M = src.loc
 	if(ispath(src.r_tone))
 		src.r_tone = new r_tone(src)
-	if(istype(M) && M.client)
-		src.bg_color = M.client.preferences.PDAcolor
-		var/list/color_vals = hex_to_rgb_list(bg_color)
-		src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 
+	if(istype(M) && M.client && !src.locked_bg_color)
+		src.bg_color = M.client.preferences.PDAcolor
+
+	var/list/color_vals = hex_to_rgb_list(src.bg_color)
+	src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 	src.update_colors(src.bg_color, src.linkbg_color)
 
 	src.hd = new /obj/item/disk/data/fixed_disk(src)
@@ -468,7 +518,7 @@
 	//boutput(world, wincheck)
 	if(wincheck != "MAIN")
 		winclone(user, "pda2", "pda2_\ref[src]")
-
+	winset(user, "pda2_\ref[src]", "title=\"[src.window_title]\"")
 	var/display_mode = src.graphic_mode
 	if(!src.host_program || !owner)
 		display_mode = 0
@@ -553,7 +603,7 @@
 					dat += "<center><font color=red>Fatal Error 0x17<br>"
 					dat += "No System Software Loaded</font></center>"
 
-		user << output(dat, "pda2_\ref[src].texto")
+		user.Browse(dat, "window=pda2_\ref[src].texto")
 
 
 	winshow(user,"pda2_\ref[src]",1)
@@ -689,6 +739,9 @@
 	else if (istype(C, /obj/item/currency/spacecash))
 		src.insert_cash(C, user)
 
+	else if (istype(C, /obj/item/currency/buttcoin))
+		src.insert_buttcoin(C, user)
+
 /obj/item/device/pda2/examine()
 	. = ..()
 	. += "The back cover is [src.closed ? "closed" : "open"]."
@@ -795,8 +848,8 @@
 
 		if (!overlay_images)
 			src.overlay_images = list()
-			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle")
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message")
+			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -880,6 +933,21 @@
 			cash.amount = 0
 			qdel(cash)
 			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
+			src.updateSelfDialog()
+		else
+			if (src.ID_card && !src.accessed_record)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. The inserted ID card doesn't have a bank account associated with it."))
+			else if (!src.ID_card)
+				boutput(user, SPAN_ALERT("\The [src] refuses your [cash]. There is no ID card inserted."))
+		return
+
+	proc/insert_buttcoin(obj/item/currency/buttcoin/cash, mob/user)
+		if (src.ID_card && src.accessed_record)
+			boutput(user, SPAN_NOTICE("You force [cash] into \the [src]."))
+			boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
+			cash.amount = 0
+			qdel(cash)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 			src.updateSelfDialog()
 		else
 			if (src.ID_card && !src.accessed_record)
@@ -1238,4 +1306,24 @@ Enter the file browser and copy the file you want to send.  Now enter the messen
 <br>
 ThinkOS 7 supports a wide variety of software solutions, ranging from robot interface systems to forensic and medical scanners.<br>
 <font size=1>This technology produced by Thinktronic Systems, LTD for the NanoTrasen Corporation</font>
+"}
+
+/datum/computer/file/text/pda2manual/knockoff
+	name = "User Guide!"
+
+	data = {"
+ElecTek 5 Personnel Data Actuator Manual<br>
+Operating System: ThoughtOS 1.2<hr>
+ThoughtOS 1.2 appears with several useful application!<br>
+<i><ul>
+<li>Notemaker: Load, edit, and save text files just like this one!</li>
+<li>Messenger: Send messages between all enabled PDAs.  Can also send the current file in the clipboard.</li>
+<li>File Browser: Manage and execute programs in the internal drive or loaded cartridge.</li>
+<li>Atmos Scanner: Using patented AirScan technology.</li>
+<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-ray Scanner! The choice is yours!</li>
+</ul></i>
+<b>To send a file with the messenger:</b><br>
+Enter the file browser and copy the file you want to send.  Now enter the messenger and select *send file*.<br>
+<br>
+<font size=1>This technology produced by ElecTek LTD, part of the BonkTek Consortium!</font>
 "}

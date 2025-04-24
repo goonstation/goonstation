@@ -291,20 +291,20 @@
 
 		dat += {"
 		<TT><B>Automatic Security Unit v2.0</B></TT><BR><BR>
-		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
+		Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
 		Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
 		if(!src.locked)
 			dat += {"<hr>
-			Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
-			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
-			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
-			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
-			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
-			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
-			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
-			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
+			Check for Unauthorised Equipment: <A href='byond://?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
+			Check Security Records: <A href='byond://?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
+			Operating Mode: <A href='byond://?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
+			Issue Warnings: <A href='byond://?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='byond://?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='byond://?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
+			Auto Patrol: <A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
+			Report Arrests: <A href='byond://?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
+			Guard Lockdown: <A href='byond://?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
+			<A href='byond://?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
 		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
@@ -579,12 +579,13 @@
 			UpdateOverlays(null, "secbot_charged")
 
 	/// Hits someone with our baton, or charges it if it isnt
-	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0)
+	proc/baton_attack(var/mob/living/carbon/M, var/force_attack = 0, var/extra_hits = 0)
 		if(force_attack || baton_charged)
 			src.baton_charging = 0
 			src.icon_state = "secbot-c[src.emagged >= 2 ? "-wild" : null]"
 			var/maxstuns = 4
 			var/stuncount = (src.emagged >= 2) ? rand(5,10) : 1
+			stuncount += extra_hits
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
@@ -780,7 +781,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>", group = "storage_thud")
 					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -847,6 +848,8 @@
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
 				break
+			if(C.traitHolder.hasTrait("wasitsomethingisaid") && src.threatlevel >= 1)
+				src.EngageTarget(C)
 			else
 				continue
 
@@ -1278,7 +1281,12 @@
 			if(ishuman(master.target) && !uncuffable)
 				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
+				master.target.update_clothing()
 				logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(master.target,"combat")] at [log_loc(master)].")
+
+			if(master.target.traitHolder?.hasTrait("wasitsomethingisaid")) //a little extra to make the trait funnier
+				var/extra_hits = (master.emagged >= 2) ? 20 : 4 //normal = 4. double emagged = 20. i just think its very funny
+				master.baton_attack(master.target, TRUE, extra_hits)
 
 			if(!uncuffable)
 				master.arrest_gloat()

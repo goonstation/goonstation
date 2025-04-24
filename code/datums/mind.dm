@@ -12,8 +12,7 @@ datum/mind
 	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
-	var/miranda // sec's miranda rights thingy.
-	var/last_miranda_time = 0 // this is different than last_memory_time, this is when the rights were last SAID, not last CHANGED
+	var/miranda = null // sec's miranda rights thingy.
 
 	var/violated_hippocratic_oath = 0
 	var/soul = 100 // how much soul we have left
@@ -57,6 +56,8 @@ datum/mind
 	var/const/karma_min = -420
 	var/const/karma_max = 69
 	var/damned = 0 //! If 1, they go to hell when are die
+
+	var/datum/personal_summary/personal_summary
 
 	var/show_respawn_prompts = TRUE
 
@@ -220,8 +221,9 @@ datum/mind
 		miranda = new_text
 
 	proc/get_miranda()
-		if (islist(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
-			return call(src.miranda[1])()
+		if (isnull(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
+			var/datum/job/job = find_job_in_controller_by_string(src.assigned_role)
+			return job.get_default_miranda()
 		return src.miranda
 
 	proc/show_miranda(mob/recipient)
@@ -254,6 +256,17 @@ datum/mind
 			if (A.id == role_id)
 				return A
 		return null
+
+	///Returns a human readable english list of all antagonsit roles this person has
+	proc/list_antagonist_roles(include_pseudo = FALSE)
+		var/list/valid_antags = list()
+		for (var/datum/antagonist/antag as anything in src.antagonists)
+			if (!include_pseudo && antag.pseudo)
+				continue
+			valid_antags += antag.display_name
+		if (!length(valid_antags))
+			return null
+		return english_list(valid_antags)
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
 	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
@@ -328,7 +341,7 @@ datum/mind
 		if (!antagonist_role)
 			return FALSE
 		if (antagonist_role.faction)
-			antagonist_role.owner.current.faction -= antagonist_role.faction
+			LAZYLISTREMOVE(antagonist_role.owner.current.faction, antagonist_role.faction)
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		var/mob/living/carbon/human/H = src.current

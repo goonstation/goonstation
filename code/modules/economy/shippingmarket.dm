@@ -89,22 +89,23 @@
 
 		update_shipping_data()
 
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
+
+	proc/init()
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
 			spawnpoint = T
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
-
-		//set up pressure crystal market peaks
-		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
-			var/value = rand(1, 230)
-			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -398,7 +399,7 @@
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
 		price *= randfloat(0.9, 1.3)
-		price = round(price, 5)
+		price = round(price, 4)
 
 		// track score
 		if(pap)
@@ -592,6 +593,7 @@
 						if(AID_CONTRACT) src.aid_contracts_active--
 						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
+					contract.count += 1
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
@@ -651,16 +653,26 @@
 
 	//NADIR: Transception antenna cargo I/O
 #ifdef MAP_OVERRIDE_NADIR
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
-		pending_crates.Add(shipped_thing)
+		if(force)
+			var/obj/machinery/transception_pad/toRecv = pick(by_type[/obj/machinery/transception_pad])
+			var/turf/T = get_turf(toRecv) || get_turf(pick_landmark(LANDMARK_LATEJOIN)) //AAAAA
+			shipped_thing.set_loc(T)
+			if(get_turf(toRecv))
+				showswirl(get_turf(toRecv))
 
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+
+		else
+			pending_crates.Add(shipped_thing)
+
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
-	proc/receive_crate(atom/movable/shipped_thing)
+	proc/receive_crate(atom/movable/shipped_thing, force = FALSE)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -668,15 +680,19 @@
 			break
 
 		var/turf/target
-		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
 			target = T
 			break
 
 		if (!spawnpoint)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
+			if(force)
+				shipped_thing.set_loc(get_turf(pick_landmark(LANDMARK_LATEJOIN)))
 			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
@@ -700,7 +716,9 @@
 #endif
 
 	proc/get_path_to_market()
-		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
+		var/list/bounds = list()
+		for(var/turf/T in landmarks[LANDMARK_SUPPLY_DELIVERY])
+			bounds += T
 		bounds += get_area_turfs(/area/supply/sell_point)
 		bounds += get_area_turfs(/area/supply/spawn_point)
 		var/min_x = INFINITY
@@ -719,7 +737,8 @@
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
 			computer.update_static_data()
-
+		for_by_tcl(barcoder, /obj/item/portable_barcoder)
+			barcoder.update_destinations()
 
 // Debugging and admin verbs (mostly coder)
 

@@ -18,8 +18,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
+	var/emagged = FALSE
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+	var/obj/item/record/record = null
+	var/record_locked = FALSE // TRUE if the internal record cannot be removed, intended to be varedited by admins for gimmicks.
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -119,11 +122,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		. = list()
 		if (src.armed)
 			. += "It is currently counting down to detonation. Ohhhh shit."
-			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
+			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authentication disk has been inserted." : ""]"
 		else
 			. += "It is not armed. That's a relief."
 			if (src.disk && istype(src.disk))
-				. += "The authenticaion disk has been inserted."
+				. += "The authentication disk has been inserted."
 
 		if (!src.anchored)
 			. += "The floor bolts are unsecure. The bomb can be moved around."
@@ -149,7 +152,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
@@ -166,7 +169,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
 				(ispath(target_area) && istype(get_area(src), target_area)) || \
-				(islist(target_area) && ((get_area(src)):type in target_area)) \
+				(islist(target_area) && istypes(get_area(src), target_area)) \
 			))
 
 		if(!src.target_override && !istype(ticker?.mode, /datum/game_mode/nuclear))
@@ -200,6 +203,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.armed = TRUE
 		src.anchored = ANCHORED
 		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_NUKE_PLANTED)
 			src.change_status_display()
 		if (!src.image_light)
 			src.image_light = image(src.icon, "nblightc")
@@ -215,14 +219,45 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+		if(src.record)
+			if(is_music_playing())
+				src.visible_message(SPAN_NOTICE("The [src]'s record player detects conflicting music and ejects the record!"))
+				src.record.set_loc(get_turf(src))
+				src.record = null
+			else
+				SPAWN(6 SECONDS) // Length of the "Bomb planted" sound effect
+				if (istype(src.record, /obj/item/record/remote))
+					var/obj/item/record/remote/YT = src.record
+					if (YT.youtube)
+						play_youtube_remote_url(user, YT.youtube)
+					else
+						src.visible_message(SPAN_ALERT("The [src] ejects the faulty record. Maybe call an admin."))
+						src.record.set_loc(get_turf(src))
+						src.record = null
+				else
+					user.client.play_music_radio(src.record.song, html_encode(src.record.name))
+
 		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
+		message_ghosts("<b>[src]</b> has been armed at [log_loc(src.loc, ghostjump=TRUE)].")
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
 		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
 
+	mouse_drop(atom/over_object as mob|obj)
+		if (over_object == usr && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			if (in_interact_range(src, H))
+				if (src.record_locked)
+					boutput(H, SPAN_ALERT("The [src]'s record cannot be removed!"))
+				else if (tgui_alert(H, "Remove the [src]'s stored record?", src.name, list("Yes", "No")) == "Yes")
+					H.put_in_hand_or_drop(src.record)
+					src.record = null
+					return
+		..()
+
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 
 		if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
 			if (src.disk && istype(src.disk))
@@ -255,6 +290,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			attack_particle(user,src)
 			return
 
+		if (istype(W, /obj/item/record))
+			if(src.record)
+				boutput(user, SPAN_ALERT("The [src.name] already has a record inserted!"))
+				return
+			boutput(user, "You insert the record into the record player.")
+			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
+			user.drop_item()
+			W.set_loc(src)
+			src.record = W
+			return
+
 		if (istype(W, /obj/item/remote/syndicate_teleporter))
 			for(var/obj/submachine/syndicate_teleporter/S in get_turf(src)) //sender
 				for_by_tcl(R, /obj/submachine/syndicate_teleporter) // receiver
@@ -273,6 +319,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 							SPAWN(R.recharge)
 								R.recharging = 0
 
+		if (istype(W, /obj/item/wrench/battle))
+			if(src._health < src._max_health)
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs [src]!", null)
+			else
+				boutput(user, SPAN_NOTICE("[src] is already fully repaired!"))
+			return
+
 		if (isnukeop(user) && !src.anyone_can_activate)
 			if (src.armed == 1)
 				boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
@@ -286,10 +339,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				// Give the player a notice so they realize what has happened
 				boutput(user, SPAN_ALERT("The screws are all weird safety-bit types! You can't turn them!"))
 				return
-
-		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
-			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
 			switch (W.force)
@@ -316,6 +365,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!isnum(power) || power < 1) power = 1
 		src.take_damage(power)
 		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
+			src.name = "buclear nomb"
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
 
 	meteorhit()
 		src.take_damage(rand(30,60))
@@ -580,7 +637,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.anchored = !src.anchored
 			boutput(user, SPAN_NOTICE("[src] is now [src.anchored ? "anchored" : "unanchored"]."))
 			return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src._health -= W.force
 		checkhealth()

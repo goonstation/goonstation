@@ -168,7 +168,7 @@ var/datum/respawn_controls/respawn_controller
 	proc/notifyAndGrantVerb()
 		if(!client_processed && checkValid())
 			// Send a message to the client
-			the_client.mob.playsound_local(the_client.mob, 'sound/misc/respawn.ogg', 70, flags=SOUND_IGNORE_SPACE)
+			the_client.mob.playsound_local(the_client.mob, 'sound/misc/respawn.ogg', 70, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 
 			boutput(the_client.mob, "<h2>You are now eligible for a <a href='byond://winset?command=Respawn-As-New-Character'>respawn (click here)</a>!</h1>")
 			if(master.rp_alert)
@@ -186,9 +186,11 @@ var/datum/respawn_controls/respawn_controller
 		var/is_round_observer = FALSE
 		if (istype(usr, /mob/dead/observer))
 			var/mob/dead/observer/ghost = usr
+			ghost.last_ckey = null
 			is_round_observer = ghost.observe_round
 		else if (usr.ghost)	// ghost is on /mob
 			var/mob/dead/observer/ghost = usr.ghost
+			ghost.last_ckey = null
 			is_round_observer = ghost?.observe_round
 			if (isliving(usr) && inafterlife(usr))
 				var/mob/living/oldmob = usr
@@ -264,4 +266,4 @@ var/datum/respawn_controls/respawn_controller
 			src.server_name = server_name
 		if (server_id == config.server_id)
 			return
-		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="?src=\ref[src]&action=close">X</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join<br>[server_name]!</a></span>"}
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="byond://?src=\ref[src]&action=close">X</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join<br>[server_name]!</a></span>"}

@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		src.vchange = new(src) // Built-in voice changer (Convair880).
+		src.vchange = new /obj/item/voice_changer/permanent(src) // Built-in voice changer (Convair880).
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -313,12 +313,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			return
 		. = ..()
 
-/obj/item/clothing/head/devil
-	name = "devil horns"
-	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
-	icon_state = "devil"
-	item_state = "devil"
-
 // Donk clothes
 
 /obj/item/clothing/head/helmet/space/donk
@@ -480,6 +474,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()
@@ -880,11 +875,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 
 			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
-			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
-			H.bioHolder.mobAppearance.customization_first_color = "#412819"
-			H.bioHolder.mobAppearance.customization_second_color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#412819"
 			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
 			H.update_colorful_parts()
@@ -1161,6 +1156,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
+
+/obj/item/clothing/suit/scarf/cozy
+	name = "scarf"
+	desc = "A cozy scarf. A beautiful adornment to any outfit."
+	icon_state = "shortscarf"
+	item_state = "shortscarf"
+
+/obj/item/clothing/suit/scarf/long
+	name = "long scarf"
+	desc = "A long luxurious scarf. A perfect addition to any look."
+	icon_state = "longscarf"
+	item_state = "longscarf"
 
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
@@ -2056,3 +2063,16 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
 	icon_state = "goku"
 	item_state = "goku"
+
+// Mx Blorbo, a ersatz Mr Blobby costume.
+
+/obj/item/clothing/suit/blorbosuit
+	name = "Mx. Blorbo costume suit"
+	desc = "A padded, uncomfortably sweaty-looking polka-dot costume."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "blorbosuit"
+	item_state = "blorbosuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES

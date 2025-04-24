@@ -71,7 +71,8 @@ THROWING DARTS
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
 		SHOULD_CALL_PARENT(TRUE)
-		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		if(!istype(get_area(M), /area/sim/gunsim))
+			logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		src.set_loc(M)
 		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
@@ -288,10 +289,16 @@ THROWING DARTS
 			healthlist["TOX"] = 0
 			healthlist["BURN"] = 0
 			healthlist["BRUTE"] = 0
+			healthlist["HealthImplant"] = 0
 		else
 			var/mob/living/L
 			if (isliving(src.owner))
 				L = src.owner
+				healthlist["HealthImplant"] = 0
+				for (var/implant in L.implant)
+					if (istype(implant, /obj/item/implant/health))
+						healthlist["HealthImplant"] = 1
+						break
 				healthlist["OXY"] = round(L.get_oxygen_deprivation())
 				healthlist["TOX"] = round(L.get_toxin_damage())
 				healthlist["BURN"] = round(L.get_burn_damage())
@@ -522,8 +529,8 @@ THROWING DARTS
 
 	deactivate()
 		. = ..()
-		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
-		C?.RemoveComponent(/datum/component/minimap_marker)
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
+		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
 	on_death()
 		src.deactivate()
@@ -532,13 +539,13 @@ THROWING DARTS
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 /obj/item/implant/pod_wars/syndicate
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 
 /** Deprecated **/
@@ -701,7 +708,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	/// You probably want to call this parent after exploding or whatever
 	proc/do_effect(power)
 		SHOULD_CALL_PARENT(TRUE)
-		if (. >= 6)
+		if (power >= 6)
 			src.owner.visible_message(SPAN_ALERT("<b>[src.owner][big_message]!</b>"))
 		else
 			src.owner.visible_message("[src.owner][small_message].")
@@ -710,6 +717,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "microbomb implant"
 	big_message = " emits a loud clunk"
 	small_message = " makes a small clicking noise"
+
+	can_implant(mob/target, mob/user)
+		if(!..())
+			return FALSE
+		if (isghostcritter(target) || ishelpermouse(target))
+			return FALSE
+		return TRUE
+
 
 	implanted(mob/target, mob/user)
 		..()
@@ -737,7 +752,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * power, 1) //The . is the tally of explosionPower in this poor slob.
+			explosion_new(src, T, 7 * power, 1) //power is the tally of explosionPower in this poor slob.
 			if (ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
 				H.dump_contents_chance = 80 //hee hee
@@ -781,15 +796,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
 
-	implanted(var/mob/M, mob/I)
+	implanted(mob/M, mob/I)
 		..()
 		if (istype(M))
-			M.faction |= FACTION_BOTANY
+			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
 
-	on_remove(var/mob/M)
+	on_remove(mob/M)
 		..()
 		if (istype(M))
-			M.faction -= FACTION_BOTANY
+			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
 
 	do_effect(power)
 		// enjoy your wasps
@@ -1018,7 +1033,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (!isdead(src.owner))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 					data = copytext(strip_prefix(data, "*"), 1, 46) // Trim starting asterisks to prevent force-emoting
-					src.owner.say(data)
+					src.owner.being_controlled = TRUE
+					try
+						src.owner.say(data)
+					catch (var/exception/e)
+						logTheThing(LOG_DEBUG, src, "Exception [e] occurred while processing marionette implant say stack for mob [src.owner]")
+					src.owner.being_controlled = FALSE
 				else
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)
@@ -1452,6 +1472,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
+	ice_feather
+		name = "ice feather"
+		desc = "A feather made of ice, sharp on all edges."
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "ice_feather"
+		burn_possible = FALSE
+		default_material = "ice"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		mat_changeappearance = FALSE
+
 	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
@@ -1465,6 +1496,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			. = ..()
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
+
+		blowdart
+			name = "blowdart"
+			desc = "a sharp little dart with a little poison reservoir."
+			icon_state = "blowdart"
+			leaves_wound = FALSE
+			barbed = TRUE
+
+			New()
+				..()
+				implant_overlay = null
 
 		dart
 			name = "dart"
@@ -1566,19 +1608,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					syringe.do_heal(src.owner)
 			proc/set_owner(obj/item/tool/janktanktwo/injector)
 				src.syringe = injector
-
-
-
-
-	blowdart
-		name = "blowdart"
-		desc = "a sharp little dart with a little poison reservoir."
-		icon_state = "blowdart"
-		leaves_wound = FALSE
-
-		New()
-			..()
-			implant_overlay = null
 
 	flintlock
 		name= "flintlock round"
@@ -1706,6 +1735,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				access.access = get_access("Chef")
+
+		admin_mouse
+			New()
+				..()
+				access.access = get_access("Admin")
 
 
 /* ============================================================ */
@@ -2524,7 +2558,7 @@ TYPEINFO(/obj/item/gun/implanter)
 
 /obj/item/gun/implanter
 	name = "implant gun"
-	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or rotbusttec implants. Right?"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1

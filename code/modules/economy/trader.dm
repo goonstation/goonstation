@@ -81,7 +81,7 @@
 		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
-			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp = "[src.name] has calmed down.<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 			src.angry = 0
 		return
 
@@ -95,11 +95,11 @@
 		var/dat = updatemenu(user)
 		if(!temp)
 			dat += {"[src.greeting]<HR>
-			<A href='?src=\ref[src];purchase=1'>Purchase Items</A><BR>
-			<A href='?src=\ref[src];sell=1'>Sell Items</A><BR>
-			<A href='?src=\ref[src];viewcart=1'>View Cart</A><BR>
-			<A href='?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
-			<A href='?action=mach_close&window=[lastWindowName]'>Goodbye</A>"}
+			<A href='byond://?src=\ref[src];purchase=1'>Purchase Items</A><BR>
+			<A href='byond://?src=\ref[src];sell=1'>Sell Items</A><BR>
+			<A href='byond://?src=\ref[src];viewcart=1'>View Cart</A><BR>
+			<A href='byond://?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
+			<A href='byond://?action=mach_close&window=[lastWindowName]'>Goodbye</A>"}
 
 		user.Browse(dat, "window=[windowName];size=[windowSize]", 1)
 		onclose(user, windowName)
@@ -159,11 +159,11 @@
 			src.temp =buy_dialogue + "<HR><BR>"
 			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
+				src.temp += {"<A href='byond://?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
 				<B>Description:</B> [N.desc] Amount: [N.amount > -1 ? N.amount : "Infinite"]<BR>
-				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
+				<A href='byond://?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
 		///////Handle the buying of a specific item //
 		//////////////////////////////////////////////
@@ -178,7 +178,7 @@
 			if(!barter)
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>
-								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 					src.updateUsrDialog()
 					return
 				if (src.scan.registered in FrozenAccounts)
@@ -203,7 +203,7 @@
 					var/current_funds = src.barter ? barter_customers[barter_lookup(usr)] : account["current_money"]
 					if(shopping_cart.len + quantity > amount_per_order)
 						src.temp = {"Error. Maximum purchase limit of [amount_per_order] items exceeded.<BR>
-						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+						<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 					else if(current_funds >= P.price * quantity)
 						if(barter)
 							barter_customers[barter_lookup(usr)] -= P.price * quantity
@@ -218,18 +218,18 @@
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
-									<BR><A href='?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
-									<BR><A href='?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
+									<BR><A href='byond://?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
+									<BR><A href='byond://?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
 					else
 						src.temp = {"[pick(failed_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 				else
 					src.temp = {"[src] looks bewildered for a second. Seems like they can't find your item.<BR>
-								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 			else
 				src.temp = {"That's odd I can't seem to find your account
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 
 		///////////////////////////////////////////
 		///Handles haggling for buying ////////////
@@ -248,7 +248,7 @@
 						anger()
 					else
 						haggle(askingprice, 1, N)
-						src.temp +="<BR><A href='?src=\ref[src];purchase=1'>Ok</A>"
+						src.temp +="<BR><A href='byond://?src=\ref[src];purchase=1'>Ok</A>"
 
 
 		/////////////////////////////////////////////
@@ -261,14 +261,14 @@
 					continue
 				else
 					temp+={"<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
-							<A href='?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
+							<A href='byond://?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
 			else
 				src.item_name = "--------"
-			src.temp += {"<HR>What do you wish to sell? <a href='?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
-						<BR><A href='?src=\ref[src];selltheitem=1'>Sell Item</A>
-						<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"}
+			src.temp += {"<HR>What do you wish to sell? <a href='byond://?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
+						<BR><A href='byond://?src=\ref[src];selltheitem=1'>Sell Item</A>
+						<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>"}
 
 		///////////////////////////////////////////
 		///Haggle for selling /////////////////////
@@ -288,7 +288,7 @@
 						anger()
 					else
 						haggle(askingprice, 0, N)
-						src.temp +="<BR><A href='?src=\ref[src];sell=1'>Ok</A>"
+						src.temp +="<BR><A href='byond://?src=\ref[src];sell=1'>Ok</A>"
 
 		////////////////////////////////////////
 		////////Slot holder for the current item///
@@ -319,9 +319,9 @@
 				src.item_name = src.sellitem.name
 			else
 				src.item_name = "--------"
-			src.temp += {"<HR>What do you wish to sell? <a href='?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
-							<BR><A href='?src=\ref[src];selltheitem=1'>Sell Item</A>
-							<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>
+			src.temp += {"<HR>What do you wish to sell? <a href='byond://?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
+							<BR><A href='byond://?src=\ref[src];selltheitem=1'>Sell Item</A>
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>
 							<BR><i>To sell large quantities at once, clickdrag a crate onto [src].</i>"}
 
 		///////////////////////////////////////////
@@ -338,7 +338,7 @@
 			if(!barter)
 				if(!src.scan)
 					src.temp = {"You have to scan a card in first.<BR>
-								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 					src.updateUsrDialog()
 					return
 				account = FindBankAccountByName(src.scan.registered)
@@ -347,14 +347,14 @@
 			if(tradetype)
 				if (!barter && !account)
 					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
-								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					return
 				else
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
-					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					src.temp += "<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"
 
 					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
 					if(log_trades)
@@ -370,7 +370,7 @@
 					doing_a_thing = 0
 					return
 			src.temp = {"[pick(failed_sale_dialogue)]<BR>
-						<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+						<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 
 		///////////////////////////////////
 		////////Handle Bank account Set-Up ///////
@@ -385,7 +385,7 @@
 			src.temp = "<B>Current Items in Cart: </B>"
 			for(var/obj/S in shopping_cart)
 				temp+= "<BR>[S.name]"
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		////////////////////////////////////////////////////
 		/////Pick up the goods ordered from merchant////////
 		//////////////////////////////////////////////////////
@@ -395,7 +395,7 @@
 				src.temp = pickupdialogue
 			else
 				src.temp = pickupdialoguefailure
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["mainmenu"])
 			src.temp = null
@@ -435,7 +435,7 @@
 				barter_customers[barter_lookup(user)] = 0
 			dat+="<B>Barter value</B>: [barter_customers[barter_lookup(user)]] [currency]<HR>"
 		else
-			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+			dat +="<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR>"
 			if(scan)
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
@@ -517,6 +517,22 @@
 					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[4]
 					return
+		//check if we're trying to scam a trader that is, for whatever reason, buying and selling the exact same commodity
+		if(buying == 1)
+			for(var/datum/commodity/arbitrage in src.goods_buy)
+				if(arbitrage.type == H.type && askingprice < arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+		else
+			for(var/datum/commodity/arbitrage in src.goods_sell)
+				if(arbitrage.type == H.type && askingprice > arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+
 		// check if the price increase % of the haggle is more than this trader will tolerate
 		var/hikeperc = askingprice - H.price
 		hikeperc = (hikeperc / H.price) * 100
@@ -632,16 +648,37 @@
 ///////////////THE TRADERS ///////////////////////////
 //////////////////////////////////////////////////////
 
+/obj/landmark/spawner/random_trader
+	spawn_the_thing()
+		var/type = pick(concrete_typesof(/obj/npc/trader/random) - /obj/npc/trader/random/contraband)
+		new type(src.loc)
+		qdel(src)
+
+/obj/landmark/spawner/random_trader/diner
+	spawn_the_thing()
+		var/type = pick(concrete_typesof(/obj/npc/trader/random))
+		new type(src.loc)
+		qdel(src)
+
 //////Generic Randomized visitor
+ABSTRACT_TYPE(/obj/npc/trader/random)
 /obj/npc/trader/random
 	icon_state = "welder"
 	picture = "generic.png"
 	angrynope = "Not right now..."
 	whotext = ""
+	///What base type do they buy/sell?
+	var/commercetype = null
+	///What do they buy (overrides commercetype)
+	var/buy_commercetype_override = null
+	///What do they sell (overrides commercetype)
+	var/sell_commercetype_override = null
+	var/list/possible_icon_states = list("welder")
+	var/list/descriptions = list("Broken", "ohgodwhy", "1800-coder")
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
+		icon_state = pick(src.possible_icon_states)
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")
@@ -697,22 +734,8 @@
 		var/items_for_sale = rand(5,8)
 		var/items_wanted = rand(2,5)
 
-		var/list/commercetypes = list(/datum/commodity/ore,
-		/datum/commodity/podparts,
-		/datum/commodity/drugs,
-		/datum/commodity/contraband,
-		/datum/commodity/salvage,
-		/datum/commodity/junk,
-		/datum/commodity/diner,
-		/datum/commodity/bodyparts,
-		/datum/commodity/medical)
-
-		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
-		commercetypes += /datum/commodity/synthmodule
-		#endif
-
-		var/list/selltypes = typesof(pick(commercetypes))
-		var/list/buytypes = typesof(pick(commercetypes))
+		var/list/selltypes = typesof(sell_commercetype_override ? sell_commercetype_override : commercetype)
+		var/list/buytypes = typesof(buy_commercetype_override ? buy_commercetype_override : commercetype)
 
 		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
@@ -728,6 +751,8 @@
 			if(buyitem.comtype != null)
 				src.goods_buy += buyitem
 
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "trader")
+
 	activatesecurity()
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")
@@ -742,6 +767,55 @@
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
+/obj/npc/trader/random/ore
+	commercetype = /datum/commodity/ore
+	possible_icon_states = list("lavacrab")
+	descriptions = list("raw materials", "ore", "rocks and stones")
+
+/obj/npc/trader/random/pod
+	commercetype = /datum/commodity/podparts
+	possible_icon_states = list("owl","gull","parrot")
+	descriptions = list("pod", "spare vehicle parts", "space catalytic converter")
+
+/obj/npc/trader/random/drugs
+	commercetype = /datum/commodity/drugs
+	buy_commercetype_override = /datum/commodity/drugs/buy
+	sell_commercetype_override = /datum/commodity/drugs/sell
+	possible_icon_states = list("petbee","possum","bumblespider")
+	descriptions = list("off-brand pharmaceutical", "recreational chemicals")
+
+/obj/npc/trader/random/contraband
+	commercetype = /datum/commodity/contraband
+	descriptions = list("legitimate goods", "perfectly legitimate goods", "extremely legitimate goods")
+
+	New()
+		src.possible_icon_states = list("big_spide[pick("","-red","-blue","-green")]")
+		..()
+
+//actually this just seems to be robotics upgrades and scrap metal?
+// /obj/npc/trader/random/salvage
+// 	commercetype = /datum/commodity/salvage
+// 	possible_icon_states = list("welder")
+
+/obj/npc/trader/random/junk
+	commercetype = /datum/commodity/junk
+	possible_icon_states = list("welder")
+	descriptions = list("space junk", "miscellanea", "surplus bargains")
+
+/obj/npc/trader/random/diner
+	commercetype = /datum/commodity/diner
+	possible_icon_states = list("walrus")
+	descriptions = list("catering", "fast food", "discount burger")
+
+/obj/npc/trader/random/bodyparts
+	commercetype = /datum/commodity/bodyparts
+	possible_icon_states = list("martian","martianP","martianW","martianSP")
+	descriptions = list("organ", "body parts", "biomatter")
+
+/obj/npc/trader/random/medical
+	commercetype = /datum/commodity/medical
+	possible_icon_states = list("goose","swan")
+	descriptions = list("medical supplies", "pharmaceutical")
 
 //////Martian
 /obj/npc/trader/martian
@@ -878,6 +952,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/bodyparts/cybereye_spectro(src)
 		src.goods_sell += new /datum/commodity/bodyparts/cybereye_prodoc(src)
 		src.goods_sell += new /datum/commodity/bodyparts/cybereye_camera(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_monitor(src)
 		src.goods_sell += new /datum/commodity/bodyparts/cybereye_laser(src)
 		src.goods_sell += new /datum/commodity/bodyparts/cybereye_ecto(src)
 		src.goods_sell += new /datum/commodity/bodyparts/l_cyberlung(src)
@@ -941,16 +1016,18 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 
-		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 		src.goods_sell += new /datum/commodity/podparts/cloak(src)
 		src.goods_sell += new /datum/commodity/podparts/redarmor(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
 		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 		src.goods_sell += new /datum/commodity/podparts/artillery(src)
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
+		src.goods_sell += new /datum/commodity/clothing_restock(src)
 #ifdef UNDERWATER_MAP
 		src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -1018,21 +1095,21 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
 		src.goods_sell += new /datum/commodity/contraband/swatmask/NT(src)
-		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
-		src.goods_sell += new /datum/commodity/drugs/crank(src)
-		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
-		src.goods_sell += new /datum/commodity/drugs/morphine(src)
-		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/crank(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/catdrugs(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/morphine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
 
-		src.goods_buy += new /datum/commodity/drugs/shrooms(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/shrooms(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_mega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_white(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_omega(src)
 
 /obj/npc/trader/robot/robuddy/diner
 	name = "B.I.F.F."
@@ -1132,7 +1209,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
-				M.unlock_medal("Bombini is missing!", 1)
+				M.unlock_medal("Bombini is Missing!", 1)
 				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
@@ -1140,6 +1217,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 			..()
 
 
+
+/obj/npc/trader/bee/sea
+	name = "Bambini"
 
 // Hon- I mean, hello sir.
 
@@ -1177,6 +1257,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/costume/jester(src)
+		src.goods_sell += new /datum/commodity/costume/blorbosuit(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
@@ -1364,13 +1445,13 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		//// sell list //////////////////////////////////////////
 		/////////////////////////////////////////////////////////
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
-		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
-		src.goods_sell += new /datum/commodity/drugs/crank(src)
-		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
-		src.goods_sell += new /datum/commodity/drugs/morphine(src)
-		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-		src.goods_sell += new /datum/commodity/drugs/lsd(src)
-		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/methamphetamine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/crank(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/catdrugs(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/morphine(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)
@@ -1380,12 +1461,12 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		/////////////////////////////////////////////////////////
 		//// buy list ///////////////////////////////////////////
 		/////////////////////////////////////////////////////////
-		src.goods_buy += new /datum/commodity/drugs/poppies(src)
-		src.goods_buy += new /datum/commodity/drugs/shrooms(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
-		src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/poppies(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/shrooms(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_mega(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_white(src)
+		src.goods_buy += new /datum/commodity/drugs/buy/cannabis_omega(src)
 		/////////////////////////////////////////////////////////
 
 		greeting= {"<i>A hand sticking out from a toilet waves in your direction.</i>"}

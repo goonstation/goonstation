@@ -3,7 +3,8 @@
 /obj/machinery/door/airlock/pyro
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/safe
 	can_shock = FALSE
@@ -29,7 +30,6 @@
 	name = "command airlock"
 	icon_state = "com_closed"
 	icon_base = "com"
-	req_access = null
 	health = 800
 	health_max = 800
 
@@ -37,7 +37,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 	mats = 0
 
 /obj/machinery/door/airlock/pyro/command/centcom
-	req_access_txt = "57"
+	req_access = list(access_centcom)
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
 	hardened = TRUE
@@ -49,7 +49,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/centcom)
 	icon_base = "com2"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	mats = 0
@@ -64,31 +63,34 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_base = "manta"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	cyborgBumpAccess = FALSE
 
 /obj/machinery/door/airlock/pyro/weapons/noemag
-	req_access = null
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
 
-
-
+/obj/machinery/door/airlock/pyro/weapons/secure
+	name = "secure weapons airlock"
+	icon_state = "secure_closed"
+	icon_base = "secure"
+	hardened = FALSE
+	cant_hack = TRUE
+	aiControlDisabled = FALSE
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
 	icon_state = "sec_closed"
 	icon_base = "sec"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
 	icon_base = "sec2"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 // -------- engineering
 
@@ -96,14 +98,12 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	name = "engineering airlock"
 	icon_state = "eng_closed"
 	icon_base = "eng"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering/alt
 	icon_state = "eng2_closed"
 	icon_base = "eng2"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/mining
 	name = "mining airlock"
@@ -111,7 +111,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_base = "mining"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 // -------- medsci
 
@@ -119,28 +118,24 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	name = "medical airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/alt
 	icon_state = "research2_closed"
 	icon_base = "research2"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/alt2
 	icon_state = "med_closed"
 	icon_base = "med"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/morgue
 	icon_state = "morgue_closed"
 	icon_base = "morgue"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/sci_alt
 	name = "research airlock"
@@ -148,7 +143,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_base = "sci"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/toxins_alt
 	name = "toxins airlock"
@@ -156,7 +150,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	icon_base = "toxins2"
 	panel_icon_state = "2_panel_open"
 	welded_icon_state = "2_welded"
-	req_access = null
 
 // -------- maintenance
 
@@ -164,7 +157,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	name = "maintenance airlock"
 	icon_state = "maint_closed"
 	icon_base = "maint"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/maintenance/alt
 	icon_state = "maint2_closed"
@@ -209,10 +201,12 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	return
 
 /obj/machinery/door/airlock/pyro/reinforced/syndicate
-	req_access_txt = "52"
-	cyborgBumpAccess = FALSE
+	req_access = list(access_syndicate_shuttle)
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
+
+	listeningpost
+		req_access = list(access_impossible)
 
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
@@ -249,62 +243,50 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 /obj/machinery/door/airlock/pyro/glass/reinforced/blob_act(power)
 	return
 
-/obj/machinery/door/airlock/pyro/glass/brig
-	req_access_txt = "2"
-
 /obj/machinery/door/airlock/pyro/glass/command
 	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/security/alt
 	name = "security airlock"
 	icon_state = "sec_glassalt_closed"
 	icon_base = "sec_glassalt"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/sci
 	name = "research airlock"
 	icon_state = "sci_glass_closed"
 	icon_base = "sci_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/toxins
 	name = "toxins airlock"
 	icon_state = "toxins_glass_closed"
 	icon_base = "toxins_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/mining
 	name = "mining airlock"
 	icon_state = "mining_glass_closed"
 	icon_base = "mining_glass"
-	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/botany
 	name = "botany airlock"
 	icon_state = "botany_glass_closed"
 	icon_base = "botany_glass"
-	req_access = null
 
 // -------- windoors
 
@@ -320,7 +302,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	health_max = 500
 	layer = EFFECTS_LAYER_UNDER_4 // under lights and blinds, above pretty much everything else
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/machinery/door/airlock/pyro/glass/windoor/opened()
@@ -393,18 +375,18 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	if (need_rebuild)
 		if (istype(source)) // Rebuild resp. update nearby group geometry.
 			if (source.parent)
-				air_master.groups_to_rebuild |= source.parent
+				air_master.groups_to_rebuild[source.parent] = null
 			else
-				air_master.tiles_to_update |= source
+				air_master.tiles_to_update[source] = null
 
 		if (istype(target))
 			if (target.parent)
-				air_master.groups_to_rebuild |= target.parent
+				air_master.groups_to_rebuild[target.parent] = null
 			else
-				air_master.tiles_to_update |= target
+				air_master.tiles_to_update[target] = null
 	else
-		if (istype(source)) air_master.tiles_to_update |= source
-		if (istype(target)) air_master.tiles_to_update |= target
+		if (istype(source)) air_master.tiles_to_update[source] = null
+		if (istype(target)) air_master.tiles_to_update[target] = null
 
 	if (istype(source))
 		source.selftilenotify() //for fluids

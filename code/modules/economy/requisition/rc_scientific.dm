@@ -338,7 +338,139 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef CHEMLAB_SOLVENTS
 #undef CHEMLAB_CULINARY
 
-/datum/req_contract/scientific/botanical
+/datum/req_contract/scientific/botanical_mutates
+	payout = PAY_TRADESMAN*10*2
+	var/list/namevary = list("Plant Mutation Research","Bio-Mutate Engineering","Agricultural Variation Study","Crop Innovation",
+							"Botanical Advancement", "Agronomic Specimen Testing", "Cultivar Innovation Study","Eco-Evolution Research",
+							 "Plant-Deviate Experimentation")
+	var/list/desc_wherestudy = list(
+		"An advanced phytogenetic study lab",
+		"The flora development branch of a nearby outpost",
+		"The botanical division of a partnered research station",
+		"The agricultural innovation department of an allied lab",
+		"A terrestrially-based agronomic development team",
+		"The botanical wing of an affiliated station",
+		"The botanical team of an affiliated vessel",
+		"A Nanotrasen horticultural scientist"
+	)
+	var/list/desc_items = list("botanical mutates","mutated produce","deviant plant specimens","aberrant crop samples", "botanical aberrations",
+								"cultivar deviants","anomalous plant varieties")
+	var/list/desc_bonusflavor = list(
+		null,
+		" All specimens must be properly decontaminated before shipment.",
+		" Ensure container is properly sealed before sending.",
+		" Follow mandatory packing guidelines to ensure specimens are not damaged by transit.",
+		" Damaged or low-quality specimens received will be reflected in filed paperwork.",
+		" Please use appropriate container to avoid in-transit loss of specimens."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "[pick(desc_wherestudy)] is requesting a specific batch of [pick(desc_items)]. [pick(desc_bonusflavor)]"
+		src.payout += rand(0,30) * 10
+
+		if (prob(60))
+			src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+			src.payout += 8000
+			if (prob(70))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+			if (prob(20))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+			AddReward(30)
+		else
+			src.rc_entries += new /datum/rc_entry/item/mutated_produce/complex(rc_entries,rand(5,12))
+			src.payout += 13000 // mutations with prerequisites tend to take considerably more work to produce, so they demand a better reward.
+			if (prob(30))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce/complex(rc_entries,rand(5,12))
+				src.payout += 10000
+			if (prob(30))
+				src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+				src.payout += 5000
+				if (length(src.rc_entries) < 3 && prob(50))
+					src.rc_entries += new /datum/rc_entry/item/mutated_produce(rc_entries,rand(5,12))
+					src.payout += 5000
+			AddReward(60)
+		..()
+
+	proc/AddReward(var/probability)
+		if(prob(probability))
+			src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		else
+			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
+
+/datum/rc_entry/item/mutated_produce
+	name = "mutated produce"
+	// Easy to get mutations, ones which don't have prerequisites.
+	// These are chosen either because they're lesser-oft grown mutations, or mutations that are usually associated with antag gimmicks,
+	// thus potentially providing a bit of plausible deniability.
+	var/list/mutates = list(
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+		/obj/item/plant/oat/salt,
+		/obj/item/reagent_containers/food/snacks/plant/corn/pepper,
+		/obj/item/reagent_containers/food/snacks/plant/soy/soylent,
+		/obj/item/plant/herb/commol/burning,
+		/obj/item/plant/herb/sassafras,
+		/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry,
+		/obj/item/reagent_containers/food/snacks/plant/raspberry/blueraspberry,
+		/obj/item/reagent_containers/food/snacks/plant/melon/george,
+		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
+		/obj/item/reagent_containers/food/snacks/plant/grapefruit
+	)
+	// Group the synth organs together so they don't overwhelm every other option.
+	var/list/synthorgans = list(
+		/obj/item/organ/eye/synth,/obj/item/organ/brain/synth,/obj/item/organ/heart/synth,/obj/item/organ/lung/synth,/obj/item/organ/appendix/synth,
+		/obj/item/organ/pancreas/synth,/obj/item/organ/liver/synth,/obj/item/organ/kidney/synth,/obj/item/organ/spleen/synth,
+		/obj/item/organ/intestines/synth,/obj/item/organ/stomach/synth
+	)
+
+	complex
+		// plants which require specific stats or infusions to mutate, and are thus a little tougher to get.
+		mutates = list(
+			/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary,
+			///datum/plantmutation/rice/ricein,
+			/obj/item/reagent_containers/food/snacks/plant/orange/clockwork,
+			/obj/item/reagent_containers/food/snacks/mushroom/amanita,
+			/obj/item/reagent_containers/food/snacks/mushroom/cloak,
+			/obj/item/reagent_containers/food/snacks/plant/apple/poison,
+			/obj/item/plant/herb/tobacco/twobacco,
+			/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha,
+			/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte,
+			"synth"
+		)
+
+	proc/select_mutate(mutates_list, synthorgans_list)
+		var/type = pick(mutates_list)
+		if (type == "synth")
+			type = pick(synthorgans_list)
+		return type
+
+	New(list/entries = null, var/numberof = 1)
+		var/obj/item/item
+		// duplicate avoidance
+		if (entries != null && entries.len > 0)
+			var/list/mutates_copy = mutates.Copy()
+			var/list/synthorgans_copy = synthorgans.Copy()
+			for(var/datum/rc_entry/item/entry in entries)
+				mutates_copy -= entry.typepath
+				synthorgans_copy -= entry.typepath
+			item = select_mutate(mutates_copy, synthorgans_copy)
+		else
+			item = select_mutate(mutates, synthorgans)
+		name = initial(item.name)
+		typepath = item
+		count = numberof
+		..()
+		// Override the names of things that are too generic.
+		if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/cloak) name = "cloaked panellus mushroom"
+		else if (typepath == /obj/item/reagent_containers/food/snacks/mushroom/amanita) name = "amanita mushroom"
+		else if (typepath == /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary) name = "volatile tomato"
+
+
+
+// old seed requisition
+/* /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
 	payout = PAY_TRADESMAN*10*2
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study","Botanical Advancement")
@@ -377,38 +509,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
 			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
-		..()
+		..()*/
 
-/datum/rc_entry/seed/scientific
-	name = "genetically fussy seed"
-	cropname = "Durian"
-	feemod = PAY_DOCTORATE*3
-	var/crop_genpath = /datum/plant
 
-	fruit
-		crop_genpath = /datum/plant/fruit
-	veg
-		crop_genpath = /datum/plant/veg
-	crop
-		crop_genpath = /datum/plant/crop
-
-	New()
-		var/datum/plant/plantalyze = pick(concrete_typesof(crop_genpath))
-		src.cropname = initial(plantalyze.name)
-
-		switch(rand(1,7))
-			if(1) src.gene_reqs["Maturation"] = rand(10,20)
-			if(2) src.gene_reqs["Production"] = rand(10,20)
-			if(3)
-				src.gene_reqs["Production"] = rand(5,10)
-				src.gene_reqs["Potency"] = rand(3,5)
-			if(4) src.gene_reqs["Yield"] = rand(3,5)
-			if(5) src.gene_reqs["Potency"] = rand(3,5)
-			if(6) src.gene_reqs["Endurance"] = rand(3,5)
-			if(7)
-				src.gene_reqs["Maturation"] = rand(5,10)
-				src.gene_reqs["Production"] = rand(5,10)
-		..()
 
 
 /datum/rc_itemreward/plant_cartridge
@@ -669,7 +772,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/item/mini_ox
 	name = "personnel-class 'mini' pressure tank"
-	typepath = /obj/item/tank/mini_oxygen
+	typepath = /obj/item/tank/mini/oxygen
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"

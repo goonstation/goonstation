@@ -501,14 +501,14 @@ obj/machinery/embedded_controller/radio/access_controller
 
 		switch(state)
 			if(ACCESS_STATE_INTERNAL)
-				state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Lock Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_closed'>Lock Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
 			if(ACCESS_STATE_LOCKED)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Unlock Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Unlock Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_interior'>Unlock Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_exterior'>Unlock Exterior Airlock</A><BR>"}
 			if(ACCESS_STATE_EXTERNAL)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Lock Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_closed'>Lock Exterior Airlock</A><BR>"}
 
 		var/output = {"<B>Access Control Console</B><HR>
 [state_options]<HR>
@@ -577,18 +577,18 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN)
-				state_options = {"<A href='?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_closed'>Close Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_exterior'>Cycle to Exterior Airlock</A><BR>"}
 			if(AIRLOCK_STATE_PRESSURIZE)
-				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+				state_options = "<A href='byond://?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
 			if(AIRLOCK_STATE_CLOSED)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_interior'>Open Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_exterior'>Open Exterior Airlock</A><BR>"}
 			if(AIRLOCK_STATE_DEPRESSURIZE)
-				state_options = "<A href='?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
+				state_options = "<A href='byond://?src=\ref[src];command=abort'>Abort Cycling</A><BR>"
 			if(AIRLOCK_STATE_OUTOPEN)
-				state_options = {"<A href='?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
-<A href='?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
+				state_options = {"<A href='byond://?src=\ref[src];command=cycle_interior'>Cycle to Interior Airlock</A><BR>
+<A href='byond://?src=\ref[src];command=cycle_closed'>Close Exterior Airlock</A><BR>"}
 
 		var/output = {"<B>Airlock Control Console</B><HR>
 [state_options]<HR>
@@ -683,9 +683,9 @@ obj/machinery/embedded_controller/radio/department_controller
 
 		switch(state)
 			if(ACCESS_STATE_LOCKED)
-				state_options = "<A href='?src=\ref[src];command=unlock'>Unseal Airlocks</A>"
+				state_options = "<A href='byond://?src=\ref[src];command=unlock'>Unseal Airlocks</A>"
 			if(ACCESS_STATE_EXTERNAL)
-				state_options = "<A href='?src=\ref[src];command=lock'>Seal Airlocks</A>"
+				state_options = "<A href='byond://?src=\ref[src];command=lock'>Seal Airlocks</A>"
 
 		var/output = "<B>Department Airlock Control Console</B><HR>"
 		if (src.locked && !issilicon(user))

@@ -1,4 +1,4 @@
-/obj/fakeobjects/sec_tv
+/obj/fakeobject/sec_tv
 	name = "broken million dollar flatscreen teevee"
 	desc = "It's a broken million dollar flatscreen teevee."
 	icon = 'icons/obj/sec_TV.dmi'

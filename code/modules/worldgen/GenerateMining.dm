@@ -181,7 +181,6 @@ TYPEINFO(/turf/variableTurf/clear)
 				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
 				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate) || isgenplanet(T)) )
 					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
-					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
@@ -259,7 +258,6 @@ TYPEINFO(/turf/variableTurf/clear)
 		#endif
 		for(var/i in 0 to numAsteroidSeed-1)
 			var/turf/X = pick(miningZ)
-			var/quality = rand(-101,101)
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
@@ -301,7 +299,6 @@ TYPEINFO(/turf/variableTurf/clear)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate) || isgenplanet(T))
 					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
-					AST.quality = quality
 				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			if(prob(15))

@@ -1,0 +1,1383 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aW" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"bF" = (
+/obj/mapping_helper/turf/floor/burner,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"bR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door_control{
+	id = "mercoutpost";
+	name = "Hangar Door Control";
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 0
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"bV" = (
+/obj/mapping_helper/turf/floor/burner,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"bX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decoration/bullethole{
+	pixel_x = -12;
+	pixel_y = -30
+	},
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"cK" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"dl" = (
+/obj/item/chair/folded,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"do" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"dH" = (
+/obj/machinery/computer/security/wooden_tv/public,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"ej" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"eC" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Warehouse"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"fS" = (
+/obj/storage/crate,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/random_item_spawner/hat/maybe_few,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"ge" = (
+/obj/storage/crate,
+/obj/item/storage/toolbox/emergency,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"hn" = (
+/obj/storage/crate,
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/firstaid/regular,
+/obj/item/paper/mercmanifest3,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"ht" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"hD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"hE" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/airless/blue,
+/area/prefab/merc_outpost)
+"io" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"iw" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"jn" = (
+/obj/mapping_helper/turf/floor/burner,
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"jK" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/merc_outpost)
+"jT" = (
+/obj/lattice/auto/turf_attaching,
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"jV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"kn" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/storage/closet/emergency,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"kG" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"lQ" = (
+/obj/mapping_helper/turf/floor/burner,
+/obj/item/raw_material/scrap_metal,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"mP" = (
+/obj/table/auto,
+/obj/item/extinguisher{
+	pixel_y = 8
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"mR" = (
+/obj/stool/chair,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"nn" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"nH" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"nI" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"nN" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"ok" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"oP" = (
+/obj/storage/crate,
+/obj/random_item_spawner/junk/lots,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"oT" = (
+/obj/item/clothing/under/misc/merc01,
+/obj/storage/closet/dresser,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"qJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/casing/rifle,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"rg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"rq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"rH" = (
+/obj/stool/chair/couch{
+	dir = 5
+	},
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"sd" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"sL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/mercmanifest1,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"tc" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"tL" = (
+/obj/machinery/light/incandescent,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/storage/closet/fire,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"uw" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"vy" = (
+/obj/storage/closet,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"wo" = (
+/obj/machinery/light/incandescent,
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"wQ" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"xu" = (
+/obj/storage/crate,
+/obj/random_item_spawner/snacks/some,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"yN" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"yQ" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"yR" = (
+/obj/machinery/door/airlock/pyro/alt,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"yU" = (
+/obj/decal/cleanable/blood/drip/low,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"zu" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/mob/living/critter/human/mercenary/rifle,
+/obj/storage/closet,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"Aj" = (
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"Ao" = (
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"AM" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Quarters"
+	},
+/obj/item/casing/rifle,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"AW" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	id = "mercoutpost"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/prefab/merc_outpost)
+"Bl" = (
+/obj/item/casing/rifle,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"BH" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"CQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/merc_outpost)
+"Dy" = (
+/obj/mesh/grille/steel,
+/obj/lattice/auto/turf_attaching,
+/turf/variableTurf/clear,
+/area/prefab/merc_outpost)
+"DA" = (
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/prefab/merc_outpost)
+"DD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"DR" = (
+/obj/table/auto,
+/obj/item/wrench{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/weldingtool,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Eb" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"Fg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"FF" = (
+/obj/machinery/light/incandescent,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Gd" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"GD" = (
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"GJ" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"GK" = (
+/obj/machinery/vending/snack,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"He" = (
+/obj/storage/crate,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/burrito,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/paper/mercmanifest2,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"Hn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/merc_outpost)
+"HW" = (
+/obj/mapping_helper/turf/floor/burner,
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"IL" = (
+/obj/decoration/bullethole{
+	pixel_x = 9;
+	pixel_y = 27
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"JA" = (
+/obj/decal/cleanable/blood/drip/low,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"JD" = (
+/obj/machinery/vehicle/pod_smooth/light,
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/prefab/merc_outpost)
+"JI" = (
+/obj/table/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Lo" = (
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
+/obj/decal/cleanable/blood/splatter,
+/obj/item/gun/kinetic/draco/empty,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Lz" = (
+/obj/storage/crate,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"LH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/merc_outpost)
+"MN" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Restroom"
+	},
+/turf/simulated/floor/airless/blue,
+/area/prefab/merc_outpost)
+"Np" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"Oe" = (
+/obj/table/auto,
+/obj/item/plate,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"OA" = (
+/obj/mapping_helper/turf/floor/burner,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/obj/mapping_helper/mob_spawn/corpse/human/merc,
+/turf/simulated/floor/airless,
+/area/prefab/merc_outpost)
+"OW" = (
+/obj/machinery/shower,
+/obj/machinery/drainage,
+/turf/simulated/floor/airless/blue,
+/area/prefab/merc_outpost)
+"Pa" = (
+/obj/machinery/r_door_control{
+	id = "mercoutpost"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/merc_outpost)
+"Po" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/crowbar{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/emergency,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"PJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Qc" = (
+/obj/storage/crate,
+/obj/random_item_spawner/desk_stuff/maybe_few,
+/obj/random_item_spawner/tools/maybe_few,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"Qe" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Rp" = (
+/obj/item/storage/toilet,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/airless/blue,
+/area/prefab/merc_outpost)
+"RE" = (
+/obj/item/casing/rifle,
+/obj/decoration/bullethole{
+	pixel_y = -28;
+	pixel_x = -4
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Sd" = (
+/obj/item/casing/rifle,
+/obj/item/casing/rifle,
+/obj/item/casing/rifle,
+/obj/item/casing/rifle,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"Sk" = (
+/obj/storage/crate,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"Sv" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/merc_outpost)
+"SO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"SX" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"TH" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/random,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"Uo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Uz" = (
+/obj/storage/secure/closet{
+	icon_state = "sec";
+	icon_closed = "sec";
+	icon_opened = "secure_red-open"
+	},
+/obj/item/handcuffs/guardbot,
+/obj/item/handcuffs/guardbot,
+/obj/item/device/flash,
+/obj/item/clipboard,
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/belt/security/shoulder_holster/small,
+/obj/item/gun/kinetic/pistol/empty,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"UY" = (
+/obj/mapping_helper/turf/floor/burner,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+"VU" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/merc_outpost)
+"Wh" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/merc_outpost)
+"Wu" = (
+/obj/item/casing/rifle,
+/obj/decoration/bullethole{
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"WR" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/merc_outpost)
+"Xd" = (
+/obj/stool/chair/couch{
+	dir = 9
+	},
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"Xf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/prefab/merc_outpost)
+"Xn" = (
+/obj/deployable_turret/outpost/active/west,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"Xx" = (
+/obj/machinery/light/incandescent,
+/obj/decoration/bullethole{
+	pixel_x = 24;
+	pixel_y = 6
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"XT" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"XU" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/popcorn,
+/turf/simulated/floor/airless/carpet/grime,
+/area/prefab/merc_outpost)
+"YQ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/prefab/merc_outpost)
+"ZV" = (
+/obj/cable,
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/airless,
+/area/prefab/merc_outpost)
+
+(1,1,1) = {"
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+"}
+(2,1,1) = {"
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+sd
+sd
+"}
+(3,1,1) = {"
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+jK
+jK
+jK
+jK
+jK
+nn
+sd
+sd
+sd
+sd
+sd
+"}
+(4,1,1) = {"
+sd
+sd
+sd
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+jK
+Rp
+hE
+OW
+jK
+nn
+nn
+sd
+sd
+sd
+sd
+"}
+(5,1,1) = {"
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+jK
+jK
+jK
+jK
+jK
+Sv
+MN
+Sv
+jK
+nn
+nn
+sd
+sd
+sd
+sd
+"}
+(6,1,1) = {"
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+jK
+dH
+Eb
+Xd
+oT
+TH
+HW
+lQ
+jK
+nn
+nn
+wQ
+sd
+sd
+sd
+"}
+(7,1,1) = {"
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+jK
+Aj
+Aj
+rH
+Aj
+Aj
+bF
+UY
+jn
+bV
+wQ
+wQ
+nn
+sd
+sd
+"}
+(8,1,1) = {"
+sd
+sd
+jT
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+XU
+Aj
+Aj
+Sd
+Np
+jn
+OA
+jK
+nn
+nn
+nn
+nn
+nn
+sd
+"}
+(9,1,1) = {"
+sd
+sd
+sd
+Pa
+DR
+FF
+rg
+rg
+Gd
+Po
+Sv
+Sv
+Sv
+Sv
+AM
+Sv
+jK
+jK
+jK
+nn
+nn
+nn
+nn
+nn
+sd
+"}
+(10,1,1) = {"
+sd
+sd
+sd
+AW
+DA
+DA
+JD
+DA
+DD
+wo
+Sv
+ok
+yN
+GD
+Bl
+cK
+jK
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+"}
+(11,1,1) = {"
+sd
+sd
+sd
+AW
+DA
+DA
+DA
+DA
+DD
+GJ
+Sv
+mR
+JI
+dl
+GD
+GK
+jK
+jK
+jK
+jK
+jK
+jK
+nn
+nn
+sd
+"}
+(12,1,1) = {"
+sd
+sd
+sd
+AW
+DA
+DA
+DA
+DA
+DD
+GD
+Sv
+GD
+Qe
+Lo
+GD
+tc
+Sv
+zu
+ej
+jV
+do
+jK
+nn
+nn
+sd
+"}
+(13,1,1) = {"
+sd
+sd
+sd
+AW
+DA
+DA
+DA
+DA
+DD
+GD
+Sv
+IL
+nI
+GD
+yU
+Sv
+Sv
+vy
+Fg
+Ao
+nN
+jK
+nn
+kG
+Dy
+"}
+(14,1,1) = {"
+sd
+sd
+sd
+AW
+DA
+DA
+DA
+DA
+DD
+ok
+Sv
+SX
+GD
+GD
+GD
+Sv
+Sk
+Ao
+Xf
+jV
+bX
+LH
+hD
+ZV
+Dy
+"}
+(15,1,1) = {"
+sd
+sd
+sd
+jK
+kn
+tL
+ht
+ht
+iw
+mP
+Sv
+Oe
+Xx
+GD
+GD
+Sv
+Sk
+Ao
+sL
+hn
+Sk
+jK
+nn
+kG
+Dy
+"}
+(16,1,1) = {"
+sd
+sd
+jT
+jK
+jK
+jK
+io
+io
+Sv
+CQ
+Sv
+Sv
+Sv
+Bl
+Wu
+Sv
+Ao
+Ao
+He
+oP
+xu
+jK
+nn
+nn
+sd
+"}
+(17,1,1) = {"
+sd
+sd
+sd
+nn
+jK
+jK
+ok
+GD
+Hn
+yQ
+bR
+aW
+XT
+qJ
+rq
+eC
+jV
+SO
+fS
+Qc
+Sk
+jK
+nn
+sd
+sd
+"}
+(18,1,1) = {"
+sd
+sd
+nn
+nn
+jK
+ge
+GD
+GD
+BH
+uw
+PJ
+Bl
+VU
+GD
+RE
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+nn
+sd
+sd
+"}
+(19,1,1) = {"
+sd
+sd
+nn
+nn
+jK
+Lz
+GD
+yU
+YQ
+JA
+Uo
+Uz
+VU
+GD
+ok
+jK
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+"}
+(20,1,1) = {"
+sd
+sd
+nn
+nn
+jK
+Lz
+GD
+GD
+Sv
+WR
+Wh
+WR
+Sv
+io
+io
+jK
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+"}
+(21,1,1) = {"
+sd
+sd
+sd
+nn
+jK
+jK
+GD
+GD
+yR
+GD
+GD
+GD
+GD
+GD
+GD
+jK
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+"}
+(22,1,1) = {"
+sd
+sd
+sd
+nn
+nn
+jK
+FF
+rg
+nH
+GD
+ok
+GD
+GD
+ok
+GD
+jK
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+sd
+"}
+(23,1,1) = {"
+sd
+sd
+sd
+nn
+nn
+jK
+Xn
+Xn
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+jK
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+sd
+"}
+(24,1,1) = {"
+sd
+sd
+sd
+nn
+nn
+jK
+jK
+jK
+jK
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+"}
+(25,1,1) = {"
+sd
+sd
+sd
+sd
+nn
+nn
+nn
+nn
+nn
+sd
+sd
+sd
+nn
+nn
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+sd
+"}

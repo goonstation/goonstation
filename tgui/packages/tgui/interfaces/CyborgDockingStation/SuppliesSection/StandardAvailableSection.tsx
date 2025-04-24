@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { Box, Section } from '../../../components';
+import { Box, Section } from 'tgui-core/components';
+
 import { DockingAllowedButton } from '../DockingAllowedButton';
 import type { ItemData } from '../type';
 
@@ -17,7 +18,9 @@ interface StandardAvailableSectionProps<T extends ItemData> {
   title: string;
 }
 
-export const StandardAvailableSection = <T extends ItemData>(props: StandardAvailableSectionProps<T>) => {
+export const StandardAvailableSection = <T extends ItemData>(
+  props: StandardAvailableSectionProps<T>,
+) => {
   const { items, onEject, onInstall, title } = props;
   return (
     <Section title={title}>

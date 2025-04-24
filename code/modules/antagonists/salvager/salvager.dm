@@ -25,15 +25,6 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
 		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
 
-		var/obj/item/clothing/glasses/G = H.glasses
-		if(istype(G))
-			if (H.traitHolder.hasTrait("shortsighted"))
-				G.correct_bad_vision = TRUE
-			if (H.traitHolder.hasTrait("blind"))
-				G.allow_blind_sight = TRUE
-
-		H.equip_sensory_items()
-
 		var/obj/item/device/radio/headset/headset = H.ears
 		if(!headset)
 			headset = new /obj/item/device/radio/headset/salvager
@@ -51,15 +42,14 @@
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
-		if("plasmalungs" in src.owner.current.client?.preferences.traitPreferences.traits_selected) //sigh
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
-		else
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), SLOT_SHOES)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/salvager(H), SLOT_BELT)
 		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), SLOT_WEAR_ID)
+		var/obj/item/device/pda2/salvager_pda = locate() in H
+		salvager_pda.insert_id_card(new /obj/item/card/id/salvager(H), H)
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_IN_BACKPACK)
@@ -67,6 +57,7 @@
 		H.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/weldingtool, SLOT_IN_BACKPACK)
 
+		// we don't need to add body or sensory trait items as we have removed all traits above
 		H.traitHolder.addTrait("training_engineer")
 
 	add_to_image_groups()

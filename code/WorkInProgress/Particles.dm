@@ -1374,10 +1374,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				copied.reaction(A, TOUCH, 0, 0)
 			if(isliving(A))
 				var/mob/living/L = A
+				var/exception = ismiasmaimmune(L) ? "miasma" : null
 				if(!issmokeimmune(L))
 					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
+						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2, exception = exception) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
@@ -1479,4 +1480,37 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/glow_stick_dance
 	New(var/atom/location = null, var/light_color)
 		..(location, "glow_stick_dance", 9.9, light_color)
+		SpawnParticle()
+
+/datum/particleType/glasses_sparkle
+	name = "glasses_sparkle"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if(..())
+			par.pixel_x = rand(0,1) ? -8:  8
+			par.pixel_y = 6 + rand(2, 4)
+
+			var/rot = rand(-90, 90)
+
+			first.Turn(rot)
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(11)
+			animate(par, transform = first, time = 5, alpha = 245)
+
+			first.Scale(0.1 / 11)
+			first.Turn(rot)
+			animate(transform = first, time = 15, alpha = 50)
+			first.Reset()
+
+/datum/particleSystem/glasses_sparkle
+	New(var/atom/location = null, var/glasses_color)
+		..(location, "glasses_sparkle", 9.9, glasses_color)
 		SpawnParticle()

@@ -80,7 +80,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		src.anti_spam = world.time
 		var/obj/overlay/T = new/obj/overlay(get_turf(src))
 		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
+		FLICK("emppulse",T)
 		SPAWN(0.8 SECONDS)
 			if (T) qdel(T)
 		return 1
@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/device/disguiser)
 			src.anti_spam = world.time
 			var/obj/overlay/T = new/obj/overlay(get_turf(src))
 			T.icon = 'icons/effects/effects.dmi'
-			flick("emppulse",T)
+			FLICK("emppulse",T)
 			SPAWN(0.8 SECONDS)
 				if (T) qdel(T)
 		src.active = 0
@@ -124,9 +124,9 @@ TYPEINFO(/obj/item/device/disguiser)
 		if (!reset_to_normal)
 			oldAH.CopyOther(AH)
 			if (AH.mob_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-				AH.customization_first_color = fix_colors(AH.customization_first_color)
-				AH.customization_second_color = fix_colors(AH.customization_second_color)
-				AH.customization_third_color = fix_colors(AH.customization_third_color)
+				AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
+				AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+				AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 			src.real_name = user.real_name
 			randomize_look(user, 0, 0, 0, 1, 0, 0) // randomize: gender 0, blood type 0, age 0, name 1, underwear 0, remove effects 0
 			user.update_colorful_parts()

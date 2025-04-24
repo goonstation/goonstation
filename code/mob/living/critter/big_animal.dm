@@ -27,6 +27,7 @@
 	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/bite/big)
+	has_genes = TRUE
 
 	New()
 		..()

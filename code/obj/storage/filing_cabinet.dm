@@ -5,6 +5,7 @@
 	icon_state = "filecabinet" //i guess its a feature now               ok bye
 	anchored = ANCHORED
 	density = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/folder))
@@ -44,6 +45,6 @@
 			return
 		var/output = "<html><head></head><body>"
 		for(var/i = 1, i <= src.contents.len, i++)
-			output += "<a href='?src=\ref[src];id=[i];action=retrieve'>[src.contents[i].name]</a><br>"
+			output += "<a href='byond://?src=\ref[src];id=[i];action=retrieve'>[src.contents[i].name]</a><br>"
 		output += "</body></html>"
 		user << browse(output, "window=filing_cabinet;size=200x400")

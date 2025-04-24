@@ -58,7 +58,11 @@ TYPEINFO(/obj/submachine/chef_sink)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
 					GRAB.affecting.lastgasp() // --BLUH
-
+		else if (istype(W, /obj/item/gun/sprayer))
+			var/obj/item/gun/sprayer/sprayer = W
+			sprayer.clogged = FALSE
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -80,18 +84,18 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.gloves)
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message(SPAN_NOTICE("[user] cleans [his_or_her(user)] gloves."))
-				if (H.sims)
+				if (H.sims?.getValue("Hygiene"))
 					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				if(H.sims)
+				if(H.sims?.getValue("Hygiene"))
 					if (H.sims.getValue("Hygiene") >= SIMS_HYGIENE_THRESHOLD_MESSY)
 						user.visible_message(SPAN_NOTICE("[user] starts washing [his_or_her(user)] hands."))
 						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
@@ -213,6 +217,8 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 		src.onRestart()
 
+
+ADMIN_INTERACT_PROCS(/obj/submachine/ice_cream_dispenser, proc/add_flavor)
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
 
@@ -225,6 +231,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	/// A list of reagent_ids we will dispense by default
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
@@ -246,6 +253,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 			var/datum/reagent/fooddrink/current_reagent = reagents_cache[reagent]
 			flavorsTemp.Add(list(list(
 				name = current_reagent.name,
+				id = current_reagent.id,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b
@@ -257,7 +265,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	ui_data(mob/user)
 		. = list(
 			"beaker" = ui_describe_reagents(src.beaker),
-			"cone" = src.cone
+			"has_cone" = src.cone ? TRUE : FALSE
 		)
 
 	ui_act(action, params)
@@ -378,10 +386,23 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 
 		return
 
+	proc/add_flavor()
+		set name = "Add flavor"
+
+		var/datum/reagent/reagent = pick_reagent(usr)
+		if (!reagent)
+			return
+
+		if (reagent.id in src.flavors)
+			boutput(usr, "[src] already has flavor [reagent.name]")
+			return
+
+		src.flavors += reagent.id
+		src.update_static_data_for_all_viewers()
+
 /// COOKING RECODE ///
 
 var/list/oven_recipes = list()
-var/oven_recipe_html = ""
 
 
 TYPEINFO(/obj/submachine/chef_oven)
@@ -404,7 +425,13 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/list/recipes = null
 	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
 	var/allowed = list(/obj/item)
-	var/tmp/recipe_html = null
+	var/static/tmp/recipe_html = null // see: create_oven_recipe_html()
+
+	var/list/possible_recipe_icons = list()
+	var/list/possible_recipe_names = list()
+	var/output_icon
+	var/output_name
+	var/cooktime
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -419,121 +446,92 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (isghostdrone(user))
 			boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
 			return
+		src.ui_interact(user)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Oven")
+			ui.open()
 
-		src.add_dialog(user)
-		var/dat = {"
-			<style type="text/css">
-table#cooktime {
-	margin: 0 auto;
-	border-collapse: collapse;
-	border: none;
-	}
-table#cooktime td {
-	padding: 0.1em 0.2em;
-	width: 3em;
-	text-align: center;
-	border: none;
-	}
-table#cooktime a {
-	display: block;
-	text-decoration: none;
-	width: 100%;
-	min-width: 3em;
-	color: #ccc;
-	background: #333;
-	border: 2px solid #999;
-	}
-table#cooktime a:hover {
-	background: #777;
-	color: white;
-	border: 2px solid #ccc;
-	}
+	ui_data(mob/user)
+		src.get_recipes()
+		. = list(
+			"time" = src.time,
+			"heat" = src.heat,
+			"cooking" = src.working,
+			"content_icons" = src.get_content_icons(),
+			"content_names" = src.get_content_names(),
+			"recipe_icons" = src.possible_recipe_icons,
+			"recipe_names" = src.possible_recipe_names,
+			"output_icon" = src.output_icon,
+			"output_name" = src.output_name,
+			"cook_time" = src.cooktime
+		)
 
-table#cooktime a#ct[time], table#cooktime a#h[heat] {
-	background: #b85;
-	border: 2px solid #db9;
-	color: white;
-	font-weight: bold;
-}
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		. = TRUE
+		switch (action)
+			if ("set_time")
+				src.time = params["time"]
+			if ("set_heat")
+				src.heat = params["heat"]
+			if ("start")
+				src.cook_food()
+			if ("eject_all")
+				for (var/obj/item/I in src.contents)
+					I.set_loc(src.loc)
+			if ("eject")
+				var/obj/item/thing_to_eject = src.contents[params["ejected_item"]]
+				if (thing_to_eject)
+					thing_to_eject.set_loc(src.loc)
+			if ("open_recipe_book")
+				usr.Browse(recipe_html, "window=recipes;size=500x700")
 
-table#cooktime a#start {
-	background: #8b5;
-	color: white;
-	border: 2px solid #ad9;
-}
+	proc/get_content_icons()
+		if (!length(src.contents))
+			return
+		var/list/contained = list()
+		for (var/obj/item/I in src.contents)
+			contained += icon2base64(getFlatIcon(I), "chef_oven-\ref[src]")
+		return contained
 
-.icon {
-	background: rgba(127, 127, 127, 0.5);
-	vertical-align: middle;
-	display: inline-block;
-	border-radius: 4px;
-	margin: 1px;
-}
+	proc/get_content_names()
+		if (!length(src.contents))
+			return
+		var/list/contained = list()
+		for (var/obj/item/I in src.contents)
+			contained += I.name
+		return contained
 
+	proc/get_recipes()
+		src.possible_recipe_icons = list()
+		src.possible_recipe_names = list()
+		src.output_icon = null
+		src.output_name = null
+		src.cooktime = null
 
+		var/datum/cookingrecipe/possible = src.OVEN_get_valid_recipe()
+		if (!possible)
+			return
 
-</style>
-			<b>Cookomatic Multi-Oven</b> - <a href='?src=\ref[src];open_recipies=1'>Open Recipe Book</a> (slow)<br>
-			<hr>
-			<b>Time:</b> [time]<br>
-			<b>Heat:</b> [heat]<br>
-			<hr>
-		"}
-		if (!src.working)
+		for(var/I in possible.ingredients)
+			var/atom/item_path = I
+			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
-			var/timeopts = ""
-			for (var/i = 1; i <= 10; i++)
-				timeopts += "<td><a id='ct[i]' href='?src=\ref[src];time=[i]'>[i]</a></td>"
-				if (i == 5)
-					timeopts += "<td><a id='hHigh' href='?src=\ref[src];heat=1'>HIGH</a></td><td rowspan='2' valign='middle'><a id='start' href='?src=\ref[src];cook=1'>START</a></td></tr><tr>"
+		if (ispath(possible.output))
+			var/atom/item_path = possible.output
+			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_name = initial(item_path.name)
 
-			timeopts += "<td><a id='hLow' href='?src=\ref[src];heat=2'>LOW</a></td>"
-
-			var/junk = ""
-			for (var/obj/item/I in src.contents)
-				junk += "[bicon(I)] <a href='?src=\ref[src];eject_item=\ref[I]'>[I]</a><br>"
-
-			dat += {"
-			<table id='cooktime'>
-				<tr>
-					[timeopts]
-				</tr>
-			</table>
-			<hr>
-			<strong>Contents</strong> (<a href='?src=\ref[src];eject=1'>Eject all</a>)<br>
-			[junk ? junk : "(Empty)"]
-			"}
-
-			if (length(src.contents))
-				var/datum/cookingrecipe/possible = src.OVEN_get_valid_recipe()
-				if (possible)
-					dat += "<hr><b>Potential Recipe:</b><br>"
-					if (possible.item1)
-						var/atom/item_path = possible.item1
-						dat += "[bicon(possible.item1)] [initial(item_path.name)][possible.amt1 > 1 ? " x[possible.amt1]" : ""]<br>"
-					if (possible.item2)
-						var/atom/item_path = possible.item2
-						dat += "[bicon(possible.item2)] [initial(item_path.name)][possible.amt2 > 1 ? " x[possible.amt2]" : ""]<br>"
-					if (possible.item3)
-						var/atom/item_path = possible.item3
-						dat += "[bicon(possible.item3)] [initial(item_path.name)][possible.amt3 > 1 ? " x[possible.amt3]" : ""]<br>"
-					if (possible.item4)
-						var/atom/item_path = possible.item4
-						dat += "[bicon(possible.item4)] [initial(item_path.name)][possible.amt4 > 1 ? " x[possible.amt4]" : ""]<br>"
-
-					if (ispath(possible.output))
-						var/atom/item_path = possible.output
-						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b>"
-					else
-						dat += "<b>Result:</b><br>???"
-
-
+		if (possible.cookbonus < 10)
+			src.cooktime = "[possible.cookbonus] seconds low"
 		else
-			dat += {"Cooking! Please wait!"}
-
-		user.Browse(dat, "window=oven;size=400x500")
-		onclose(user, "oven")
+			src.cooktime = "[floor(possible.cookbonus/2)] seconds high"
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
@@ -555,7 +553,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/scotch_egg(src)
 			src.recipes += new /datum/cookingrecipe/oven/omelette_bee(src)
 			src.recipes += new /datum/cookingrecipe/oven/omelette(src)
-			src.recipes += new /datum/cookingrecipe/oven/monster(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/monster(src)
 			src.recipes += new /datum/cookingrecipe/oven/c_butty(src)
 			src.recipes += new /datum/cookingrecipe/oven/scarewich_h(src)
 			src.recipes += new /datum/cookingrecipe/oven/scarewich_p_h(src)
@@ -597,49 +595,51 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/mint_chutney(src)
 			src.recipes += new /datum/cookingrecipe/oven/refried_beans(src)
 			src.recipes += new /datum/cookingrecipe/oven/ultrachili(src)
-			src.recipes += new /datum/cookingrecipe/oven/aburgination(src)
-			src.recipes += new /datum/cookingrecipe/oven/baconator(src)
-			src.recipes += new /datum/cookingrecipe/oven/butterburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheeseburger_m(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheeseburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/wcheeseburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/tikiburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/luauburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/coconutburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/humanburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/monkeyburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/synthburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/slugburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/baconburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/aburgination(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/baconator(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/butterburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger_m(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/wcheeseburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/tikiburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/luauburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/coconutburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/humanburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/monkeyburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/synthburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/slugburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/baconburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich_2(src)
 			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/oven/chickensandwich(src)
-			src.recipes += new /datum/cookingrecipe/oven/mysteryburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/synthbuttburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/cyberbuttburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/buttburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/synthheartburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/cyberheartburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/flockheartburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/heartburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/synthbrainburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/cyberbrainburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/flockbrainburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/flockburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/brainburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/fishburger(src)
-			src.recipes += new /datum/cookingrecipe/oven/sloppyjoe(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/mysteryburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/synthbuttburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cyberbuttburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/buttburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/synthheartburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cyberheartburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/flockheartburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/heartburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/synthbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cyberbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/flockbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/flockburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/brainburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/fishburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/oven/superchili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/queso(src)
 			src.recipes += new /datum/cookingrecipe/oven/creamofamanita(src)
 			src.recipes += new /datum/cookingrecipe/oven/creamofpsilocybin(src)
 			src.recipes += new /datum/cookingrecipe/oven/creamofmushroom(src)
-			src.recipes += new /datum/cookingrecipe/oven/cheeseborger(src)
-			src.recipes += new /datum/cookingrecipe/oven/roburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/cheeseborger(src)
+			src.recipes += new /datum/cookingrecipe/oven/burger/roburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/swede_mball(src)
 			src.recipes += new /datum/cookingrecipe/oven/honkpocket(src)
 			src.recipes += new /datum/cookingrecipe/oven/donkpocket(src)
@@ -655,7 +655,9 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/banana_bread_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
+			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
+			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
 			src.recipes += new /datum/cookingrecipe/oven/bagel(src)
 			src.recipes += new /datum/cookingrecipe/oven/crumpet(src)
@@ -694,15 +696,18 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/baguette(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread_ch(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
+			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
 			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_blueb(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/oven/danish_cheese(src)
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 
-			src.recipes += new /datum/cookingrecipe/oven/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/oven/pie_anything/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_blueberry(src)
@@ -733,7 +738,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_jaffa(src)
@@ -767,6 +771,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
+			src.recipes += new /datum/cookingrecipe/oven/flapjack_batch(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
@@ -789,6 +794,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/oven/fish_fingers(src)
 			src.recipes += new /datum/cookingrecipe/oven/shrimp(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_egg(src)
 			src.recipes += new /datum/cookingrecipe/oven/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/oven/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_ball(src)
@@ -801,243 +807,163 @@ table#cooktime a#start {
 			// store the list for later
 			oven_recipes = src.recipes
 
-		src.recipe_html = create_oven_recipe_html(src)
-
-
-
-	Topic(href, href_list)
-		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
+	proc/cook_food()
+		var/amount = length(src.contents)
+		if (!amount)
+			boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
 			return
-		if (is_incapacitated(usr) || usr.restrained())
-			return
-		if (href_list["cook"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
-				return
-			var/amount = length(src.contents)
-			if (!amount)
-				boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
-				return
-
-			var/output = null /// what path / item is (getting) created
-			var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
-			var/bonus = 0 /// correct-cook-time bonus
-			var/derivename = 0 /// if output should derive name from human meat inputs
-			var/recipebonus = 0 /// the ideal amount of cook time for the bonus
-			var/recook = 0
-
-			// If emagged produce random output.
-			if (emagged)
-				// Enforce GIGO and prevent infinite reuse
-				var/contentsok = 1
-				for(var/obj/item/I in src.contents)
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
+		var/output = null /// what path / item is (getting) created
+		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
+		var/bonus = 0 /// correct-cook-time bonus
+		var/derivename = 0 /// if output should derive name from human meat inputs
+		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
+		var/recook = 0
+		// If emagged produce random output.
+		if (emagged)
+			// Enforce GIGO and prevent infinite reuse
+			var/contentsok = 1
+			for(var/obj/item/I in src.contents)
+				if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
+					contentsok = 0
+					break
+				if(istype(I, /obj/item/reagent_containers/food/snacks/yuck/burn))
+					contentsok = 0
+					break
+				if(istype(I, /obj/item/reagent_containers/food))
+					var/obj/item/reagent_containers/food/F = I
+					if (F.from_emagged_oven) // hyphz checked heal_amt but I think this custom var is a nicer solution (also I'm not sure that valid food not from an emagged oven will never have a heal_amt of 0 (because I am lazy and don't want to read the code))
 						contentsok = 0
 						break
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck/burn))
-						contentsok = 0
-						break
-					if(istype(I, /obj/item/reagent_containers/food))
-						var/obj/item/reagent_containers/food/F = I
-						if (F.from_emagged_oven) // hyphz checked heal_amt but I think this custom var is a nicer solution (also I'm not sure that valid food not from an emagged oven will never have a heal_amt of 0 (because I am lazy and don't want to read the code))
-							contentsok = 0
-							break
-					// Pick a random recipe
-				var/datum/cookingrecipe/xrecipe = pick(src.recipes)
-				var/xrecipeok = 1
-				// Don't choose recipes with human meat since we don't have a name for them
-				if (xrecipe.useshumanmeat)
-					xrecipeok = 0
-				// Don't choose recipes with special outputs since we don't have valid inputs for them
-				if (isnull(xrecipe.output))
-					xrecipeok = 0
-				// Bail out to a mess if we didn't get a valid recipe
-				if (xrecipeok && contentsok)
-					output = xrecipe.output
-				else
-					output = /obj/item/reagent_containers/food/snacks/yuck
-				// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
-				recipebonus = 0
-				bonus = -1
-
+				// Pick a random recipe
+			var/datum/cookingrecipe/xrecipe = pick(src.recipes)
+			var/xrecipeok = 1
+			// Don't choose recipes with human meat since we don't have a name for them
+			if (xrecipe.useshumanmeat)
+				xrecipeok = 0
+			// Don't choose recipes with special outputs since we don't have valid inputs for them
+			if (isnull(xrecipe.output))
+				xrecipeok = 0
+			// Bail out to a mess if we didn't get a valid recipe
+			if (xrecipeok && contentsok)
+				output = xrecipe.output
 			else
-				// Non-emagged cooking
-
-				var/datum/cookingrecipe/R = src.OVEN_get_valid_recipe()
-				if (R)
-					// this is null if it uses normal outputs (see below),
-					// otherwise it will be the created item from this
-					output = R.specialOutput(src)
-
-					if (isnull(output))
-						output = R.output
-
-					if (R.useshumanmeat) derivename = 1
-
-					// derive the bonus amount from cooking
-					// being off by one in either direction is OK
-					// being off by 5 either burns it or makes it taste like shit
-					// "cookbonus" here is actually "amount of cooking needed for bonus"
-					recipebonus = R.cookbonus
-
-					if (abs(cook_amt - R.cookbonus) <= 1)
-						// if -1, 0, or 1, you did ok
-						bonus = 1
-					else if (cook_amt <= R.cookbonus - 5)
-						// severely undercooked
-						bonus = -1
-					else if (cook_amt >= R.cookbonus + 5)
-						// severely overcooked and burnt
+				output = /obj/item/reagent_containers/food/snacks/yuck
+			// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
+			recipebonus = 0
+			bonus = -1
+		else
+			// Non-emagged cooking
+			var/datum/cookingrecipe/R = src.OVEN_get_valid_recipe()
+			if (R)
+				// this is null if it uses normal outputs (see below),
+				// otherwise it will be the created item from this
+				output = R.specialOutput(src)
+				if (isnull(output))
+					output = R.output
+				if (R.useshumanmeat) derivename = 1
+				// derive the bonus amount from cooking
+				// being off by one in either direction is OK
+				// being off by 5 either burns it or makes it taste like shit
+				// "cookbonus" here is actually "amount of cooking needed for bonus"
+				recipebonus = R.cookbonus
+				if (abs(cook_amt - R.cookbonus) <= 1)
+					// if -1, 0, or 1, you did ok
+					bonus = 1
+				else if (cook_amt <= R.cookbonus - 5)
+					// severely undercooked
+					bonus = -1
+				else if (cook_amt >= R.cookbonus + 5)
+					// severely overcooked and burnt
+					output = /obj/item/reagent_containers/food/snacks/yuck/burn
+					bonus = 0
+			// the case where there are no valid recipies is handled below in the outer context
+			// (namely it replaces them with yuck)
+		if (isnull(output))
+			output = /obj/item/reagent_containers/food/snacks/yuck
+		// this only happens if the output is a yuck item, either from an
+		// invalid recipe or otherwise...
+		if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
+			for (var/obj/item/reagent_containers/food/snacks/F in src)
+				if(F.quality < 1)
+					// @TODO cook_amt == F.quality can never happen here
+					// (cook_amt is the time the oven is set to from 1-10,
+					//  and F.quality has to be 0 or below to get here)
+					recook = 1
+					if (cook_amt == F.quality) F.quality = 1.5
+					else if (cook_amt == F.quality + 1) F.quality = 1
+					else if (cook_amt == F.quality - 1) F.quality = 1
+					else if (cook_amt <= F.quality - 5) F.quality = 0.5
+					else if (cook_amt >= F.quality + 5)
 						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
+		// start cooking animation
+		src.working = 1
+		src.icon_state = "oven_bake"
 
-				// the case where there are no valid recipies is handled below in the outer context
-				// (namely it replaces them with yuck)
-
-			if (isnull(output))
-				output = /obj/item/reagent_containers/food/snacks/yuck
-
-			// this only happens if the output is a yuck item, either from an
-			// invalid recipe or otherwise...
-			if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
+		// this is src.time seconds instead of cook_amt,
+		// because cook_amount is x2 if on "high" mode,
+		// and it seems pretty silly to make it take twice as long
+		// instead of, idk, just giving the oven 20 buttons
+		SPAWN(src.time SECONDS)
+			// this is all stuff relating to re-cooking with yuck items
+			// suitably it is very gross
+			if(recook && bonus !=0)
 				for (var/obj/item/reagent_containers/food/snacks/F in src)
-					if(F.quality < 1)
-						// @TODO cook_amt == F.quality can never happen here
-						// (cook_amt is the time the oven is set to from 1-10,
-						//  and F.quality has to be 0 or below to get here)
-						recook = 1
-						if (cook_amt == F.quality) F.quality = 1.5
-						else if (cook_amt == F.quality + 1) F.quality = 1
-						else if (cook_amt == F.quality - 1) F.quality = 1
-						else if (cook_amt <= F.quality - 5) F.quality = 0.5
-						else if (cook_amt >= F.quality + 5)
-							output = /obj/item/reagent_containers/food/snacks/yuck/burn
-							bonus = 0
-
-			// start cooking animation
-			src.working = 1
-			src.icon_state = "oven_bake"
-			src.updateUsrDialog()
-
-			// this is src.time seconds instead of cook_amt,
-			// because cook_amount is x2 if on "high" mode,
-			// and it seems pretty silly to make it take twice as long
-			// instead of, idk, just giving the oven 20 buttons
-			SPAWN(src.time SECONDS)
-				// this is all stuff relating to re-cooking with yuck items
-				// suitably it is very gross
-				if(recook && bonus !=0)
-					for (var/obj/item/reagent_containers/food/snacks/F in src)
-						if (bonus == 1)
-							if (F.quality != 1)
-								F.quality = 1
-						else if (bonus == -1)
-							if (F.quality > 0.5)
-								F.quality = 0.5
-						if (src.emagged)
-							F.from_emagged_oven = 1
-						F.set_loc(src.loc)
-						if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
-							src.food_crime(usr, F)
-
-				else
-
-					// normal cooking here
-					var/obj/item/reagent_containers/food/snacks/F
-					if (ispath(output))
-						F = new output(src.loc)
-					else
-						F = output
-						F.set_loc( get_turf(src) )
-
-					// if this was a yuck item, it's bad enough to be criminal
+					if (bonus == 1)
+						if (F.quality != 1)
+							F.quality = 1
+					else if (bonus == -1)
+						if (F.quality > 0.5)
+							F.quality = 0.5
+					if (src.emagged)
+						F.from_emagged_oven = 1
+					F.set_loc(src.loc)
 					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
 						src.food_crime(usr, F)
-
-					// "bonus" is 1 if cook time is within 1 of the required time,
-					// 0 if it was off by 2-4 or over by 5+
-					// -1 if it was under by 5 or more
-					// basically:
-					// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
-					//                 |
-					//  0  1  2  3  5  5  5  3  2  1  0   food quality
-					if (bonus == 1)
-						F.quality = 5
-					else
-						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
-
-					// emagged ovens cannot re-cook their own outputs
-					if (src.emagged && istype(F))
-						F.from_emagged_oven = 1
-
-					// used for dishes that have their human's name in them
-					if (derivename)
-						var/foodname = F.name
-						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-							F.name = "[M.subjectname] [foodname]"
-							F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-							if(!isnull(F.unlock_medal_when_eaten))
-								continue
-							else if (M.subjectjob && M.subjectjob == "Clown")
-								F.unlock_medal_when_eaten = "That tasted funny"
-							else
-								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-
-				// done with checking outputs...
-				// change icon back, ding, and remove used ingredients
-				src.icon_state = "oven_off"
-				src.working = 0
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				for (var/atom/movable/I in src.contents)
-					qdel(I)
-				src.updateUsrDialog()
-				return
-
-		if(href_list["time"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
-				return
-			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
-			src.updateUsrDialog()
-			return
-
-		if(href_list["heat"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("The dials are locked! THIS IS HOW OVENS WORK OK"))
-				return
-			var/operation = text2num_safe(href_list["heat"])
-			if (operation == 1) src.heat = "High"
-			if (operation == 2) src.heat = "Low"
-			src.updateUsrDialog()
-			return
-
-		if(href_list["eject"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("Too late! It's already cooking, ejecting the food would ruin everything forever!"))
-				return
-			for (var/obj/item/I in src.contents)
-				I.set_loc(src.loc)
-			src.updateUsrDialog()
-			return
-
-		if(href_list["eject_item"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("Too late! It's already cooking, ejecting the food would ruin everything forever!"))
-				return
-
-			// dangerous, kind of, passing a ref. but it's okay, because
-			// we'll check that whatever it is is actually inside the oven first.
-			// no ejecting random mobs or whatever, hackerman.
-			var/obj/item/thing_to_eject = locate(href_list["eject_item"])
-			if (thing_to_eject && istype(thing_to_eject) && thing_to_eject.loc == src)
-				thing_to_eject.set_loc(src.loc)
-			src.updateUsrDialog()
-			return
-
-		if(href_list["open_recipies"])
-			usr.Browse(recipe_html, "window=recipes;size=500x700")
-			return
-
+			else
+				// normal cooking here
+				var/obj/item/reagent_containers/food/snacks/F
+				if (ispath(output))
+					F = new output(src.loc)
+				else
+					F = output
+					F.set_loc( get_turf(src) )
+				// if this was a yuck item, it's bad enough to be criminal
+				if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+					src.food_crime(usr, F)
+				// "bonus" is 1 if cook time is within 1 of the required time,
+				// 0 if it was off by 2-4 or over by 5+
+				// -1 if it was under by 5 or more
+				// basically:
+				// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
+				//                 |
+				//  0  1  2  3  5  5  5  3  2  1  0   food quality
+				if (bonus == 1)
+					F.quality = 5
+				else
+					F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
+				// emagged ovens cannot re-cook their own outputs
+				if (src.emagged && istype(F))
+					F.from_emagged_oven = 1
+				// used for dishes that have their human's name in them
+				if (derivename)
+					var/foodname = F.name
+					for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
+						F.name = "[M.subjectname] [foodname]"
+						F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
+						if(!isnull(F.unlock_medal_when_eaten))
+							continue
+						else if (M.subjectjob && M.subjectjob == "Clown")
+							F.unlock_medal_when_eaten = "That tasted funny"
+						else
+							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
+			// done with checking outputs...
+			// change icon back, ding, and remove used ingredients
+			src.icon_state = "oven_off"
+			src.working = 0
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+			for (var/atom/movable/I in src.contents)
+				qdel(I)
 
 	proc/food_crime(mob/user, obj/item/food)
 		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
@@ -1095,7 +1021,7 @@ table#cooktime a#start {
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
-		src.updateUsrDialog()
+		src.ui_interact(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
@@ -1110,14 +1036,8 @@ table#cooktime a#start {
 		return null
 
 	proc/OVEN_can_cook_recipe(datum/cookingrecipe/recipe)
-		if (recipe.item1)
-			if (!OVEN_checkitem(recipe.item1, recipe.amt1)) return FALSE
-		if (recipe.item2)
-			if (!OVEN_checkitem(recipe.item2, recipe.amt2)) return FALSE
-		if (recipe.item3)
-			if (!OVEN_checkitem(recipe.item3, recipe.amt3)) return FALSE
-		if (recipe.item4)
-			if (!OVEN_checkitem(recipe.item4, recipe.amt4)) return FALSE
+		for(var/I in recipe.ingredients)
+			if (!OVEN_checkitem(I, recipe.ingredients[I])) return FALSE
 
 		return TRUE
 
@@ -1130,108 +1050,6 @@ table#cooktime a#start {
 		if (count < recipecount)
 			return FALSE
 		return TRUE
-
-
-/proc/create_oven_recipe_html(obj/submachine/cooker)
-	if (!oven_recipe_html)
-		var/list/dat = list()
-		// we are making it now ok
-		dat += {"<!doctype html>
-<html><head><title>Recipe Book</title><style type="text/css">
-.icon {
-	background: rgba(127, 127, 127, 0.5);
-	vertical-align: middle;
-	display: inline-block;
-	border-radius: 4px;
-	margin: 1px;
-}
-table { width: 100%; }
-th { text-align: left; font-weight: normal;}
-.item {
-	position: relative;
-	display: inline-block;
-	}
-.item span {
-	position: absolute;
-	bottom: -5px;
-	right: -2px;
-	background: white;
-	color: black;
-	border-radius: 50px;
-	font-size: 70%;
-	padding: 0px 1px;
-	border-right: 1px solid #444;
-	border-bottom: 1px solid #333;
-	}
-label {
-	display: block;
-	background: #555;
-	color: white;
-	text-align: center;
-	font-size: 120%;
-	cursor: pointer;
-	padding: 0.3em;
-	margin-top: 0.25em;
-	}
-label:hover {
-	background: #999;
-	}
-tr:hover {
-	background: rgba(127, 127, 127, 0.3);
-}
-input { display: none; }
-input + div { display: none; }
-input:checked + div { display: block; }
-.x { width: 0%; text-align: right; white-space: pre; }
-</style>
-</head><body><h2>Recipe Book</h2>
-"}
-
-		var/list/recipies = list()
-		for (var/datum/cookingrecipe/R in oven_recipes)
-			// do not show recipies set to a null category
-			if (!R.category)
-				continue
-			var/list/tmp2 = list("<tr>")
-
-			if (ispath(R.output))
-				var/atom/item_path = R.output
-				tmp2 += "<th>[bicon(R.output)][initial(item_path.name)]</th><td>"
-			else
-				tmp2 += "<th>???</th><td>"
-
-			if (R.item1)
-				var/atom/item_path = R.item1
-				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item1)][R.amt1 > 1 ? "<span>x[R.amt1]</span>" : ""]</div>"
-			if (R.item2)
-				var/atom/item_path = R.item2
-				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item2)][R.amt2 > 1 ? "<span>x[R.amt2]</span>" : ""]</div>"
-			if (R.item3)
-				var/atom/item_path = R.item3
-				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item3)][R.amt3 > 1 ? "<span>x[R.amt3]</span>" : ""]</div>"
-			if (R.item4)
-				var/atom/item_path = R.item4
-				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item4)][R.amt4 > 1 ? "<span>x[R.amt4]</span>" : ""]</div>"
-
-			tmp2 += "</td><td class='x'>[R.cookbonus >= 10 ? "[round(R.cookbonus / 2)] HI" : "[round(R.cookbonus)] LO"]</td></tr>"
-
-			if (!recipies[R.category])
-				recipies[R.category] = list("<label for='[R.category]'><b>[R.category]</b></label><input type='checkbox' id='[R.category]'><div><table>")
-			// collapse all the list elements into one table row
-			recipies[R.category] += tmp2.Join("\n")
-
-		for (var/cat in recipies)
-			var/list/tmp = recipies[cat]
-			dat += tmp.Join("\n\n")
-			dat += "</table></div>"
-
-		dat += {"
-</body></html>
-"}
-
-		oven_recipe_html = dat.Join("\n")
-
-	return oven_recipe_html
 
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
@@ -1292,21 +1110,25 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "brain meatball"
 					F.desc = "Oh jesus, brain meatballs? That's just nasty."
+					F.icon_state = "meatball_brain"
 					qdel( P )
 				if (/obj/item/clothing/head/butt)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "buttball"
 					F.desc = "The best you can hope for is that the meat was lean..."
+					F.icon_state = "meatball_butt"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "synthetic meatball"
 					F.desc = "Let's be honest, this is probably as good as these things are going to get."
+					F.icon_state = "meatball_plant"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "mystery meatball"
 					F.desc = "A meatball of even more dubious quality than usual."
+					F.icon_state = "meatball_mystery"
 					qdel( P )
 				if (/obj/item/plant/wheat/metal)
 					new/obj/item/reagent_containers/food/snacks/condiment/ironfilings/(src.loc)
@@ -1337,7 +1159,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
-					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
+					new/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen(src.loc)
@@ -1510,4 +1332,3 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing food into [src]!"))
 		else ..()
-		src.updateUsrDialog()

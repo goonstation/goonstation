@@ -101,6 +101,9 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/quadriga,
+		/atom/movable/screen/parallax_render_source/planet/channel,
+		/atom/movable/screen/parallax_render_source/planet/amantes,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -110,6 +113,7 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/regina,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -129,7 +133,7 @@ var/global/list/mapNames = list(
 	var/window_layer_south = null
 	var/auto_windows = FALSE
 
-	var/ext_airlocks = /obj/machinery/door/airlock/external
+	var/ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	var/airlock_style = "gannets"
 
 	var/escape_centcom = /area/shuttle/escape/centcom
@@ -246,6 +250,7 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -263,7 +268,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_centcom = null
@@ -295,7 +299,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = SOUTH
@@ -328,7 +331,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = NORTH
@@ -359,7 +361,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/cogmap,
-		/atom/movable/screen/parallax_render_source/planet/mundus,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -374,7 +376,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = SOUTH
@@ -387,7 +388,7 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo office (QM)" = list(/area/station/quartermaster/office),
-		"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
+		"the engineering control room" = list(/area/station/engine/monitoring, /area/station/engine/power),
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
@@ -425,9 +426,9 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/cogmap2,
+		/atom/movable/screen/parallax_render_source/planet/mundus,
 		/atom/movable/screen/parallax_render_source/planet/iustitia,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		/atom/movable/screen/parallax_render_source/planet/iudicium,
 		)
 
 	windows = /obj/window/auto
@@ -441,7 +442,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -535,6 +535,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/donut2,
+		/atom/movable/screen/parallax_render_source/planet/fatuus,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -579,7 +580,8 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/donut3,
+		/atom/movable/screen/parallax_render_source/planet/mors,
+		/atom/movable/screen/parallax_render_source/planet/regis,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -631,6 +633,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/kondaru,
+		/atom/movable/screen/parallax_render_source/planet/magus,
 		/atom/movable/screen/parallax_render_source/asteroids_far/kondaru,
 		)
 
@@ -647,7 +650,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -696,7 +698,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -725,6 +726,43 @@ var/global/list/mapNames = list(
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
 
+/datum/map_settings/atlas/init()
+	. = ..()
+	if(!station_repair.station_generator && prob(66))
+		if( !mapSwitcher.thisMapWasVotedFor )
+			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped due to unvoted map change")
+			for_by_tcl(spawner, /obj/eva_suit_spawner)
+				spawner.spawn_gear()
+			return
+
+		var/list/terrainify_options = list(/datum/terrainify/caveify,
+										/datum/terrainify/swampify,
+										/datum/terrainify/winterify,
+										/datum/terrainify/forestify,
+										/datum/terrainify/desertify)
+		var/datum/terrainify/T = pick(terrainify_options)
+		for_by_tcl(spawner, /obj/eva_suit_spawner)
+			spawner.spawn_gear(T)
+		T = new T()
+		var/terrain_params = T.get_default_params()
+
+		if( ("Prefabs" in terrain_params) && prob(80) )
+			terrain_params["Prefabs"] = TRUE
+		if(("Parallax" in terrain_params) && prob(75))
+			terrain_params["Parallax"] = TRUE
+		if( ("Syndi Camo" in terrain_params) && prob(33) )
+			terrain_params["Syndi Camo"] = TRUE
+		if("Mining" in terrain_params)
+			terrain_params["Mining"] = weighted_pick(list("None"=5,"Normal"=50,"Rich"=45))
+
+#if defined(LIVE_SERVER)
+		T.perform_terrainify(terrain_params, src)
+#endif
+	else
+		for_by_tcl(spawner, /obj/eva_suit_spawner)
+			spawner.spawn_gear()
+
+
 /datum/map_settings/destiny
 	name = "DESTINY"
 	display_name = "NSS Destiny"
@@ -742,7 +780,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -796,10 +833,15 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the nuclear reactor room" = list(/area/station/engine/core/nuclear),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
@@ -837,7 +879,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -849,7 +890,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	shipping_destinations = list("North", "South")
+	shipping_destinations = list("North Carousel", "South Carousel", "East Carousel", "West Carousel")
 
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
@@ -894,7 +935,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -912,10 +952,10 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
-		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
-		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the extraction nexus" = list(/area/station/science/construction),
+		"the cafeteria" = list(/area/station/crew_quarters/cafeteria, /area/station/crew_quarters/bar),
 		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the radio lab" = list(/area/station/crew_quarters/radio/lab),
+		"the hydroponics bay" = list(/area/station/hydroponics),
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
@@ -945,7 +985,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 	shuttle_map_turf = /turf/space/fluid/manta
 
@@ -987,7 +1026,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1016,10 +1054,10 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/clown = 2,
 		/datum/job/security/security_officer = 6,
 		/datum/job/security/detective = 1,
-		/datum/job/research/geneticist = 3,
-		/datum/job/research/roboticist = 3,
+		/datum/job/medical/geneticist = 3,
+		/datum/job/medical/roboticist = 3,
 		/datum/job/research/scientist = 6,
-		/datum/job/research/medical_doctor = 7,
+		/datum/job/medical/medical_doctor = 7,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,
@@ -1060,6 +1098,9 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 	escape_dir = EAST
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 /datum/map_settings/trunkmap
 	name = "TRUNKMAP"
 	goonhub_map = "/maps/trunkmap"
@@ -1090,7 +1131,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1120,7 +1160,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	default_shuttle = "east_density"
@@ -1150,8 +1189,8 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/hairdresser = 1,
-		/datum/job/special/research_assistant = 2,
-		/datum/job/special/medical_assistant = 2
+		/datum/job/research/research_assistant = 2,
+		/datum/job/medical/medical_assistant = 2
 	)
 
 	windows = /obj/window/auto
@@ -1165,7 +1204,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	escape_dir = EAST
@@ -1208,8 +1246,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-
 	escape_dir = EAST
 
 	merchant_left_centcom = null
@@ -1240,7 +1276,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -1284,12 +1319,22 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_merch_l"
 	donut2
 		icon_state = "shuttle_merch_l-dnt2"
+		loc_string = "north"
 	cogmap
 		icon_state = "shuttle_merch_l-cog1"
+
+		atlas
+			loc_string = "north"
+		nadir
+			loc_string = "north"
+		wrestlemap
+			loc_string = "north"
 	cogmap2
 		icon_state = "shuttle_merch_l-cog2"
+		loc_string = "north"
 	destiny
 		icon_state = "shuttle_merch_l-dest"
+		loc_string = "north"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
 
@@ -1313,12 +1358,20 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_merch_r"
 	donut2
 		icon_state = "shuttle_merch_r-dnt2"
+		loc_string = "south"
 	cogmap
 		icon_state = "shuttle_merch_r-cog1"
+
+		atlas
+			loc_string = "south"
+		nadir
+			loc_string = "south"
 	cogmap2
 		icon_state = "shuttle_merch_r-cog2"
+		loc_string = "south"
 	destiny
 		icon_state = "shuttle_merch_r-dest"
+		loc_string = "south"
 	sealab
 		icon_state = "shuttle_merch_r-sealab"
 

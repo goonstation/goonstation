@@ -1,4 +1,5 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
+
 import { Button } from '../../../../components';
 
 type ButtonConfirmProps = {
@@ -14,7 +15,10 @@ type ButtonConfirmState = {
 };
 
 // I know there is Button.Confirm, but mine does what I want it to do better
-export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmState> {
+export class ButtonConfirm extends Component<
+  ButtonConfirmProps,
+  ButtonConfirmState
+> {
   state = {
     confirmState: false,
   };
@@ -26,7 +30,14 @@ export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmSt
   };
 
   render() {
-    const { icon, color, onConfirm, tooltipContent, confirmText = 'Confirm', ...rest } = this.props;
+    const {
+      icon,
+      color,
+      onConfirm,
+      tooltipContent,
+      confirmText = 'Confirm',
+      ...rest
+    } = this.props;
 
     return (
       <Button

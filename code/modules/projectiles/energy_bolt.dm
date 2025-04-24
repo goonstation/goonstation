@@ -41,7 +41,8 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
+	has_impact_particles = TRUE
 
 
 //Any special things when it hits shit?
@@ -84,6 +85,7 @@ toxic - poisons
 	color_green = 0.6
 	color_blue = 0.8
 	ie_type = "E"
+	has_impact_particles = TRUE
 
 	on_hit(atom/hit)
 		if (isliving(hit))
@@ -224,7 +226,8 @@ toxic - poisons
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
 	//Can we pass windows
-	window_pass = 0
+	window_pass = 1
+	goes_through_walls = 1
 	brightness = 0.8
 	color_red = 0.2
 	color_green = 0.8
@@ -252,8 +255,8 @@ toxic - poisons
 	cost = 50
 	dissipation_rate = 5
 	dissipation_delay = 3
-	color_red = 255
-	color_green = 165
+	color_red = 1
+	color_green = 0.65
 	color_blue = 0
 	max_range = 7 //slight range boost
 	damage_type = D_ENERGY
@@ -318,10 +321,10 @@ toxic - poisons
 	color_red = 0.18
 	color_green = 0.2
 	color_blue = 1
+	energy_particles_override = TRUE
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	var/strong = FALSE
 
@@ -360,10 +363,9 @@ toxic - poisons
 	color_red = 0.18
 	color_green = 0.2
 	color_blue = 1
+	energy_particles_override = TRUE
 
 	disruption = 25
-
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(hit)
@@ -396,7 +398,7 @@ toxic - poisons
 	disruption = 2
 	ie_type = "T"
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -419,8 +421,6 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
 /datum/projectile/energy_bolt/smgauto
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -437,7 +437,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -460,29 +460,6 @@ toxic - poisons
 	fullauto_valid = 1
 
 	disruption = 2
-
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
-/datum/projectile/energy_bolt/dazzler
-	name = "energy bolt"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "signifer2_brute"
-	stun = 4
-	cost = 20
-	max_range = 12
-	window_pass = 1 // maybe keep
-	dissipation_rate = 0 // weak enough as is
-	sname = "dazzle"
-	shot_sound = 'sound/weapons/Taser.ogg'
-	shot_sound_extrarange = 5
-	shot_number = 1
-	damage_type = D_ENERGY
-	color_red = 0
-	color_green = 0
-	color_blue = 1
-	disruption = 8
-
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.changeStatus("disorient", 4 SECOND)

@@ -893,7 +893,7 @@ datum/pump_ui/circulator_ui
 		if(cold_air) src.circ2.circulate_gas(cold_air)
 
 		desc = "Current Output: [engineering_notation(lastgen)]W [warning_light_desc]"
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(lastgen), 50)]&powerfmt=[engineering_notation(lastgen)]W")
 		var/genlev = clamp(round(26*lastgen / 4000000), 0, 26) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
 		var/warnings = src.circ1?.warning_active | src.circ2?.warning_active
 
@@ -1148,7 +1148,7 @@ datum/pump_ui/circulator_ui
 
 			if(target == null) break
 
-			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			var/list/affected = drawLineObj(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
 				SPAWN(0.6 SECONDS) qdel(O)
@@ -1603,7 +1603,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /// Signals which claim the device to be of identifier "AGP" are exclusively pumps or pump wannabes (fine)
 #define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
 /// Do we have all the information we should Really Really Have?
-#define HAS_REQUIRED_DATA(signal) ((signal.data["netid"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
+#define HAS_REQUIRED_DATA(signal) ((signal.data["sender"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1769,6 +1769,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	return list("area_list" = src.pump_infoset)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
+	. = ..()
 	switch (action)
 		if ("togglePump")
 			playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)

@@ -9,12 +9,16 @@
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 
-/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
+	if (alert_origin == ALERT_WATCHFUL_EYE)
+		for_by_tcl(eye, /mob/living/critter/small_animal/floateye/watchful)
+			eye.make_jittery(rand(10, 250))
+
+/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1, volume = 100) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
 
 	boutput(world, "<h2 class='alert'>[title]</h2><span class='[css_class]'>[text]</span><br><br>")
 	if (sound_to_play && length(sound_to_play) > 0)
-		playsound_global(world, sound_to_play, 100)
+		playsound_global(world, sound_to_play, volume)
 
 /proc/advanced_command_alert(var/text, var/title="", var/sound_to_play = "")
 	if(!text) return 0

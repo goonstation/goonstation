@@ -107,9 +107,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aaw" = (
 /obj/item/space_thing,
 /turf/simulated/floor/grass/random/alt,
@@ -209,7 +207,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aaU" = (
 /obj/landmark/spawner/artifact,
 /obj/cable,
@@ -226,7 +224,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aaZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -320,11 +318,6 @@
 "abr" = (
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
-"abu" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "abw" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -469,7 +462,7 @@
 /area/station/bridge/captain)
 "abW" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
@@ -518,16 +511,9 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"ach" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "ack" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{
@@ -580,7 +566,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "acq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -632,13 +618,13 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acF" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -646,7 +632,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -656,12 +642,12 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acL" = (
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/machinery/light/incandescent{
@@ -675,11 +661,11 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acO" = (
 /obj/stool/chair/office,
 /obj/landmark/start/job/head_of_personnel,
@@ -690,7 +676,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acP" = (
 /obj/machinery/computer/card{
 	dir = 8
@@ -708,7 +694,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acQ" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -726,7 +712,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "acX" = (
 /obj/window_blinds/cog2/middle{
 	dir = 4
@@ -1245,7 +1231,7 @@
 /area/station/maintenance/northwest)
 "afk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "afl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2124,17 +2110,13 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aiT" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aiU" = (
 /mob/living/critter/small_animal/dog/blair,
 /obj/machinery/firealarm{
@@ -2146,9 +2128,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "aiZ" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/destiny)
@@ -2204,16 +2184,6 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
-"ajB" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "ajE" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -2247,14 +2217,14 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ajO" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ajS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2286,7 +2256,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "ajV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -2356,7 +2326,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "akf" = (
 /obj/machinery/shower{
 	dir = 1
@@ -2380,7 +2350,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "akh" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -4088,7 +4058,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "arW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4148,7 +4118,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "asq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -4160,7 +4130,7 @@
 	},
 /area/station/solar/west)
 "ass" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -4909,7 +4879,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "avt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -5057,13 +5027,6 @@
 /obj/disposalpipe/junction,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"awq" = (
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "awt" = (
 /obj/disposalpipe/segment/food,
 /obj/cable{
@@ -5182,9 +5145,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "awZ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -6271,9 +6232,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aCz" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -6832,9 +6791,7 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aFu" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -7198,9 +7155,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aGN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7227,9 +7182,7 @@
 /area/station/mining/refinery)
 "aGU" = (
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aGV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/north)
@@ -7341,9 +7294,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aHo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7627,9 +7578,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aIE" = (
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -8200,9 +8149,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKW" = (
 /obj/cable,
 /obj/cable{
@@ -8245,9 +8192,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKY" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/decal/tile_edge/line/purple{
@@ -8267,9 +8212,7 @@
 	},
 /obj/machinery/cashreg,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aKZ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -8326,7 +8269,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aLg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8367,7 +8310,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "aLn" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -8480,9 +8423,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMm" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/west{
@@ -8646,9 +8587,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMB" = (
 /obj/storage/closet/coffin/wood,
 /obj/item/device/radio/intercom/security,
@@ -8684,9 +8623,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "aMF" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -9723,6 +9660,10 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"aTK" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "aTO" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -9785,11 +9726,11 @@
 /area/station/maintenance/solar/west)
 "aUh" = (
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "aUk" = (
 /obj/machinery/computer/card,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "aUl" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -10173,7 +10114,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/research_director)
 "aWn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -10240,7 +10181,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "aWK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10352,7 +10293,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "aXn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10554,7 +10495,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "aYn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -11201,9 +11142,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bdc" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -11249,9 +11188,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bdm" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -12828,7 +12765,7 @@
 	},
 /area/station/bridge)
 "bqD" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bqN" = (
@@ -13858,7 +13795,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bxd" = (
@@ -14155,7 +14092,7 @@
 /area/station/hallway/primary/north)
 "bza" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzi" = (
@@ -14217,11 +14154,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bzy" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzz" = (
@@ -15545,9 +15480,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "bUr" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -16269,9 +16202,7 @@
 	name = "crematorium pipe"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "clh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16360,9 +16291,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cmN" = (
 /obj/stool/chair/dining/wood,
 /obj/cable{
@@ -16830,7 +16759,7 @@
 /area/station/turret_protected/Zeta)
 "cuw" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -17447,9 +17376,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "cKp" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood{
@@ -17687,7 +17614,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "cOe" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -17866,9 +17793,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "cRs" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/power/data_terminal,
@@ -17958,9 +17883,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "cTp" = (
 /obj/cable/yellow{
 	icon_state = "1-4"
@@ -18073,9 +17996,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "cUP" = (
 /obj/table/wood/auto,
 /obj/item/device/gps{
@@ -18088,9 +18009,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "cUU" = (
 /obj/rack,
 /obj/item/chem_grenade/firefighting,
@@ -18227,7 +18146,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "cXc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18287,9 +18206,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "cXv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
@@ -18317,7 +18234,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "cYl" = (
 /obj/cable,
 /obj/cable{
@@ -18991,9 +18908,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/grass/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "drA" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
@@ -19919,7 +19834,7 @@
 /area/station/science/lab)
 "dMT" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "dMU" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -21478,9 +21393,7 @@
 	dir = 4
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -21667,57 +21580,23 @@
 /area/station/hallway/primary/north)
 "eAx" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -21970,9 +21849,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eFx" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -22140,9 +22017,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eJk" = (
 /obj/landmark/start/job/bartender,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -22204,7 +22079,7 @@
 /area/station/engine/gas)
 "eKi" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -22953,9 +22828,7 @@
 /area/station/crew_quarters/lounge)
 "eZD" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "eZL" = (
 /obj/cable/yellow{
 	icon_state = "0-8"
@@ -23149,7 +23022,6 @@
 	},
 /area/station/chapel/sanctuary)
 "fdn" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -23157,6 +23029,7 @@
 /obj/machinery/light_switch/west{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fdA" = (
@@ -23470,9 +23343,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "flK" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/disposalpipe/segment{
@@ -23541,9 +23412,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "fmX" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -23871,7 +23740,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "fuu" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -23886,7 +23755,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "fuU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23980,7 +23849,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "fwk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint{
@@ -24185,16 +24054,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
-"fBs" = (
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "fBW" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -24711,7 +24570,7 @@
 /area/station/engine/core)
 "fMQ" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -25108,7 +24967,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "fXk" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -25402,7 +25261,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "gdi" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25860,9 +25719,7 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "goR" = (
 /obj/table/reinforced/auto,
 /obj/window/reinforced/west,
@@ -26965,7 +26822,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "gWr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/machinery/computer/magnet,
@@ -27788,7 +27645,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "hre" = (
 /obj/landmark/gps_waypoint,
 /obj/machinery/bot/cleanbot,
@@ -28295,13 +28152,13 @@
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "hCu" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "hCD" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28655,7 +28512,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "hLU" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -29950,7 +29807,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 4
 	},
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
 	},
@@ -29972,7 +29829,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "iyB" = (
@@ -30026,7 +29883,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "izQ" = (
 /obj/lattice{
 	dir = 4;
@@ -30225,7 +30082,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "iFJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30276,7 +30133,7 @@
 	name = "autoname - Entertainment";
 	network = "Zeta"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -30612,7 +30469,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "iQX" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -30678,9 +30535,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "iSC" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -31196,9 +31051,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 10
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "jgI" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -31362,7 +31215,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "jlF" = (
 /obj/machinery/vending/medical,
 /obj/item_dispenser/prescription_glasses,
@@ -31975,6 +31828,10 @@
 "jAQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/elect)
+"jAU" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/construction)
 "jBp" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -32601,7 +32458,7 @@
 /area/station/science/chemistry)
 "jRs" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -33056,7 +32913,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "kga" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -35271,9 +35128,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "lnt" = (
 /obj/cable,
 /obj/cable,
@@ -36580,15 +36435,9 @@
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -37095,7 +36944,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "mjk" = (
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -37272,9 +37121,7 @@
 /area/station/hangar/qm)
 "mlY" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/disposal/mail/small{
 	dir = 1;
 	mail_tag = "brig";
@@ -38656,7 +38503,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "mZE" = (
@@ -38956,7 +38803,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "ngM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -39195,7 +39042,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "nnQ" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line3"
@@ -39330,7 +39177,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "nqM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -39405,7 +39252,7 @@
 /obj/mapping_helper/access/head_of_personnel,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "nrd" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 1
@@ -39473,9 +39320,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nsV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39690,9 +39535,7 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nxN" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -39861,7 +39704,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "nCG" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -39999,15 +39842,6 @@
 	dir = 10
 	},
 /area/station/hallway/secondary/exit)
-"nGm" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating/random,
-/area/station/hallway/primary/central)
 "nGz" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -40310,9 +40144,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/black,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "nOL" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -41349,7 +41181,7 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line3"
 	},
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	nostick = 1;
@@ -41943,7 +41775,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "oMx" = (
@@ -42104,9 +41936,7 @@
 /area/station/storage/tools)
 "oRz" = (
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "oRI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43524,10 +43354,10 @@
 	pixel_y = 30
 	},
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -44048,16 +43878,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"pOY" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/simulated/floor/yellow,
-/area/station/hallway/secondary/construction)
 "pPB" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -44103,7 +43923,7 @@
 /area/station/crew_quarters/courtroom)
 "pQP" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -44209,7 +44029,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/incubator{
+/obj/fakeobject/incubator{
 	dir = 1
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -44381,7 +44201,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "pYK" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/decal/tile_edge/line/green{
 	dir = 9;
 	icon_state = "line4"
@@ -44477,7 +44297,7 @@
 	},
 /obj/machinery/door/airlock/pyro/weapons,
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "qbK" = (
@@ -45669,7 +45489,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "qHX" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife,
@@ -45708,7 +45528,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "qIA" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /obj/item/device/radio/intercom/science,
@@ -46805,7 +46625,7 @@
 /area/station/engine/core)
 "roM" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -47600,7 +47420,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/bridge)
 "rHk" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	nostick = 1
@@ -47793,7 +47613,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "rNq" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -47803,6 +47623,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
+"rNE" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/artifact)
 "rNF" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -47842,7 +47666,7 @@
 /obj/machinery/mining_magnet{
 	pixel_x = 16
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -48263,7 +48087,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "saz" = (
@@ -49025,7 +48849,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "swP" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -49126,7 +48950,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/microscope{
+/obj/fakeobject/microscope{
 	pixel_w = -1
 	},
 /turf/simulated/floor/greenwhite/other,
@@ -49551,7 +49375,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "sMG" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -50690,9 +50514,7 @@
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "tmJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50727,7 +50549,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "tnx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50782,12 +50604,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/psychiatrist)
 "trO" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "trW" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -51049,9 +50871,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
+/area/station/crew_quarters/hop)
 "tzg" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -51737,9 +51557,7 @@
 	pixel_x = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -52131,7 +51949,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "ucG" = (
@@ -53127,9 +52945,7 @@
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uBC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53742,9 +53558,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uOM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/outer/sw)
@@ -54069,9 +53883,7 @@
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "uWW" = (
 /obj/item_dispenser/latex_gloves,
 /obj/stool/chair/blue,
@@ -54420,8 +54232,9 @@
 /obj/machinery/conveyor/SN{
 	id = "cargo_in"
 	},
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/station/quartermaster/cargobay)
 "vcX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -54579,6 +54392,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "vgU" = (
+/obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
 "vgX" = (
@@ -55041,7 +54855,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/area/station/crew_quarters/hop)
 "vsD" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -55666,9 +55480,7 @@
 "vKa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/greenwhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "vKh" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -55687,9 +55499,7 @@
 /area/station/crew_quarters/lounge)
 "vLx" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -11
@@ -56106,7 +55916,7 @@
 	},
 /area/station/bridge)
 "vWX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -56905,9 +56715,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "wrw" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/scanner{
@@ -56940,7 +56748,7 @@
 	pixel_y = 34
 	},
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "wsb" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -56959,7 +56767,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "wsz" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 4
@@ -56985,9 +56793,6 @@
 	},
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/primary/east)
@@ -57832,7 +57637,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "wLJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
@@ -57973,7 +57778,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
 "wQD" = (
@@ -58224,7 +58029,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
 "wVL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor/blast/single{
 	id = "tox_mix";
 	layer = 4;
@@ -58769,9 +58574,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xmd" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -58816,7 +58619,7 @@
 	name = "autoname - SS13";
 	pixel_x = 11
 	},
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line3"
@@ -58977,7 +58780,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/customs)
+/area/station/bridge/customs)
 "xrf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
@@ -59134,7 +58937,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "xvv" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -59253,9 +59056,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xxW" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -59375,9 +59176,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xzT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60265,9 +60064,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/white,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "xZl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60692,9 +60489,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/area/station/medical/research)
 "ykI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -104632,9 +104427,9 @@ acf
 aah
 cYR
 fcx
-abu
+afk
 aat
-fBs
+hrc
 afk
 aaT
 fWL
@@ -104934,9 +104729,9 @@ acf
 bgz
 aNN
 aiC
-abu
+afk
 cRl
-ajB
+aaV
 cXT
 aaV
 aaV
@@ -105236,9 +105031,9 @@ acf
 bgB
 adX
 fjJ
-abu
+afk
 cSY
-awq
+arS
 afk
 acD
 acF
@@ -105538,7 +105333,7 @@ acf
 bgJ
 adX
 akY
-abu
+afk
 tyV
 awX
 afk
@@ -105840,7 +105635,7 @@ hoO
 ahF
 acg
 ack
-abu
+afk
 cUO
 aiS
 afk
@@ -106142,7 +105937,7 @@ acf
 hKB
 acf
 acf
-abu
+afk
 cUP
 aiT
 afk
@@ -106444,7 +106239,7 @@ acf
 bgS
 aiy
 acm
-abu
+afk
 cXp
 aiU
 afk
@@ -106502,7 +106297,7 @@ xSt
 aGN
 abH
 byZ
-nGm
+bin
 aKw
 ajS
 kek
@@ -106746,9 +106541,9 @@ abY
 cON
 aiz
 aiz
-ach
-ach
-ach
+acM
+acM
+acM
 acM
 acM
 hBy
@@ -107048,7 +106843,7 @@ acf
 acf
 acf
 acf
-abu
+afk
 atW
 aIP
 abr
@@ -113225,7 +113020,7 @@ dsA
 mub
 sPw
 nOV
-nYu
+aTK
 wsT
 psH
 tDL
@@ -115957,8 +115752,8 @@ kmN
 bil
 xQd
 uCi
-qPl
-pOY
+jAU
+pMQ
 pBg
 pMQ
 qPl
@@ -117458,7 +117253,7 @@ mAZ
 wXo
 wXo
 wXo
-wXo
+rNE
 gvb
 brW
 xQd

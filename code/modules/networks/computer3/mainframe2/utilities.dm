@@ -791,6 +791,7 @@
 /datum/computer/file/mainframe_program/utility/grep
 	name = "grep"
 	size = 1
+	var/max_recursion = 100 //hopefully enough? Idk I'm not a linux maintainer
 
 	initialize(var/initparams)
 		if (..())
@@ -821,7 +822,7 @@
 					plain = 1
 				initlist.Cut(1,2)
 				if (length(initlist) < 2)
-					. += "No pattern or target file. Try 'help grep'"
+					message_user("No pattern or target file. Try 'help grep'")
 					mainframe_prog_exit
 					return
 
@@ -831,13 +832,16 @@
 
 			var/regex/R = new (pattern)
 			if (!istype(R))
-				. += "No regular expression found."
+				message_user("No regular expression found.")
 				mainframe_prog_exit
 				return
 
-			var/current = read_user_field("curpath")
-			for (var/i = 2, i <= initlist.len, i++)
+			var/recursion_levels = 0
 
+			var/current = read_user_field("curpath")
+
+			var/list/grep_results = list()
+			for (var/i = 2, i <= initlist.len, i++)
 				if (!dd_hasprefix(initlist[i], "/"))
 					initlist[i] = "[current]" + (current == "/" ? null : "/") + initlist[i]
 
@@ -850,12 +854,15 @@
 					continue
 
 				if (recursive && istype(to_check, /datum/computer/folder))
+					recursion_levels += 1
+					if (recursion_levels > src.max_recursion)
+						message_user("Maximum recursion depth reached, aborting.")
+						mainframe_prog_exit
+						return
 					var/datum/computer/folder/listfolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[i]))
 					if (istype(listfolder))
 						for(var/datum/computer/P in listfolder.contents)
 							initlist.Add(initlist[i]+"/"+P.name)
-					. += ""
-
 				else if (istype(to_check, /datum/computer/file/record))
 					var/j = 0
 					for (var/textLine in to_check:fields)
@@ -865,17 +872,19 @@
 
 						if (R.Find(case_sensitive ? "[textLine][to_check:fields[textLine]]" : lowertext("[textLine][to_check:fields[textLine]]")))
 							if (print_only_match)
-								. += "[R.match]|n"
+								grep_results += "[R.match]"
 							else if (plain)
-								. += "[textLine][to_check:fields[textLine]]|n"
+								grep_results += "[textLine][to_check:fields[textLine]]"
 							else
-								. += "[to_check.name]:[j]:" + "[textLine][to_check:fields[textLine]]|n"
+								grep_results += "[to_check.name]:[j]:" + "[textLine][to_check:fields[textLine]]"
 						R = null
 				else
 					if(no_messages)
-						. += "[to_check] could not be read.|n"
+						grep_results += "[to_check] could not be read."
 
-			if (.)
+			if (length(grep_results))
+				message_user("[jointext(grep_results, "|n")]", "multiline")
+			else if (.)
 				message_user(., "multiline")
 
 		mainframe_prog_exit

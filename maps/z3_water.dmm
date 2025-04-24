@@ -56,7 +56,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bj" = (
@@ -77,7 +77,7 @@
 /area/wrecknsspolaris)
 "bn" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bo" = (
@@ -461,9 +461,8 @@
 /turf/unsimulated/floor/damaged3,
 /area/wrecknsspolaris)
 "ct" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -471,9 +470,8 @@
 	},
 /area/wrecknsspolaris)
 "cu" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/wrecknsspolaris)
@@ -1716,7 +1714,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1734,14 +1732,14 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -1919,14 +1917,14 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space/fluid/noexplosion,
@@ -2015,7 +2013,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "gh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},

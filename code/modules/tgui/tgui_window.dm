@@ -6,7 +6,7 @@
 /datum/tgui_window
 	var/id
 	var/client/client
-	var/tgui_pooled
+	var/pooled
 	var/pool_index
 	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
@@ -18,8 +18,25 @@
 	var/message_queue
 	var/list/sent_assets
 	// Vars passed to initialize proc (and saved for later)
-	var/inline_assets
-	var/fancy
+	var/initial_strict_mode
+	var/initial_fancy
+	var/initial_assets
+	var/initial_inline_html
+	var/initial_inline_js
+	var/initial_inline_css
+	var/mouse_event_macro_set = FALSE
+
+	/**
+	 * Static list used to map in macros that will then emit execute events to the tgui window
+	 * A small disclaimer though I'm no tech wiz: I don't think it's possible to map in right or middle
+	 * clicks in the current state, as they're keywords rather than modifiers.
+	 */
+	var/static/list/byondToTguiEventMap = list(
+		"MouseDown" = "byond/mousedown",
+		"MouseUp" = "byond/mouseup",
+		"Ctrl" = "byond/ctrldown",
+		"Ctrl+UP" = "byond/ctrlup",
+	)
 
 /**
  * public
@@ -29,14 +46,14 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, tgui_pooled = FALSE)
-	..()
+/datum/tgui_window/New(client/client, id, pooled = FALSE)
+	. = ..()
 	src.id = id
 	src.client = client
-	src.tgui_pooled = tgui_pooled
+	src.client.tgui_windows[id] = src
 	src.sent_assets = list()
-	if(tgui_pooled)
-		client.tgui_windows[id] = src
+	src.pooled = pooled
+	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
 
 /**
@@ -46,16 +63,32 @@
  * state. You can begin sending messages right after initializing. Messages
  * will be put into the queue until the window finishes loading.
  *
- * optional inline_assets list List of assets to inline into the html.
+ * optional strict_mode bool - Enables strict error handling and BSOD.
+ * optional fancy bool - If TRUE and if this is NOT a panel, will hide the window titlebar.
+ * optional assets list - List of assets to load during initialization.
+ * optional inline_html string - Custom HTML to inject.
+ * optional inline_js string - Custom JS to inject.
+ * optional inline_css string - Custom CSS to inject.
  */
-/datum/tgui_window/proc/initialize(inline_assets = list(), inline_html = "", fancy = FALSE)
+/datum/tgui_window/proc/initialize(
+		strict_mode = FALSE,
+		fancy = FALSE,
+		assets = list(),
+		inline_html = "",
+		inline_js = "",
+		inline_css = ""
+	)
+
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
 	if(!client)
 		return
-	src.inline_assets = inline_assets
-	src.fancy = fancy
+	src.initial_fancy = fancy
+	src.initial_assets = assets
+	src.initial_inline_html = inline_html
+	src.initial_inline_js = inline_js
+	src.initial_inline_css = inline_css
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
 	// Build window options
@@ -67,13 +100,16 @@
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
 	var/html = tgui_process.basehtml
-	html = replacetextEx(html, "\[tgui:windowId]", id)
+	html = replacetextEx(html, "\[tgui:windowId\]", id)
+	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode)
+	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version)
+	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build)
 
-	// Inject inline assets
+	// Inject assets
 	var/inline_assets_str = ""
 
-	// Handle CDN Assets, Goonstation-style |GOONSTATION-ADD|
-	for(var/datum/asset/asset in inline_assets)
+	// Handle CDN Assets, Goonstation-style |GOONSTATION-CHANGE|
+	for(var/datum/asset/asset in assets)
 		if (istype(asset, /datum/asset/group))
 			var/datum/asset/group/g = asset
 			for(var/subasset in g.subassets)
@@ -83,9 +119,20 @@
 
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
-	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
-	// Inject custom HTML
-	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
+	html = replacetextEx(html, "<!-- tgui:assets -->", inline_assets_str)
+
+	// Inject inline HTML
+	if (inline_html)
+		html = replacetextEx(html, "<!-- tgui:inline-html -->", isfile(inline_html) ? file2text(inline_html) : inline_html)
+	// Inject inline JS
+	if (inline_js)
+		inline_js = "<script>\n'use strict';\n[isfile(inline_js) ? file2text(inline_js) : inline_js]\n</script>"
+		html = replacetextEx(html, "<!-- tgui:inline-js -->", inline_js)
+	// Inject inline CSS
+	if (inline_css)
+		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
+		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
+
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
@@ -128,6 +175,23 @@
 /**
  * public
  *
+ * Reinitializes the panel with previous data used for initialization.
+ */
+/datum/tgui_window/proc/reinitialize()
+	initialize(
+		strict_mode = initial_strict_mode,
+		fancy = initial_fancy,
+		assets = initial_assets,
+		inline_html = initial_inline_html,
+		inline_js = initial_inline_js,
+		inline_css = initial_inline_css)
+	// Resend assets
+	for(var/datum/asset/asset in sent_assets)
+		send_asset(asset)
+
+/**
+ * public
+ *
  * Checks if the window is ready to receive data.
  *
  * return bool
@@ -144,7 +208,7 @@
  */
 /datum/tgui_window/proc/can_be_suspended()
 	return !fatally_errored \
-		&& tgui_pooled \
+		&& pooled \
 		&& pool_index > 0 \
 		&& pool_index <= TGUI_WINDOW_SOFT_LIMIT \
 		&& status == TGUI_WINDOW_READY
@@ -206,6 +270,8 @@
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
 	if(!client)
 		return
+	if(mouse_event_macro_set)
+		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
 		log_tgui(client,
 			context = "[id]/close (suspending)",
@@ -278,9 +344,15 @@
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
-	send_message("asset/mappings", asset.get_associated_urls())
 	sent_assets += list(asset)
-	asset.deliver(client)
+	. = asset.deliver(client)
+	/*
+	if(istype(asset, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/spritesheet = asset
+		send_message("asset/stylesheet", spritesheet.css_filename())
+	*/
+	send_raw_message("asset/mappings", asset.get_associated_urls())
+
 
 /**
  * private
@@ -330,7 +402,7 @@
 	// If not locked, handle these message types
 	switch(type)
 		if("ping")
-			send_message("pingReply", payload)
+			send_message("ping/reply", payload)
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
@@ -338,8 +410,36 @@
 		if("openLink")
 			client << link(href_list["url"])
 		if("cacheReloaded")
-			// Reinitialize
-			initialize(inline_assets = inline_assets, fancy = fancy)
-			// Resend the assets
-			for(var/asset in sent_assets)
-				send_asset(asset)
+			reinitialize()
+		// if("chat/resend") TGUI CHAT
+			// SSchat.handle_resend(client, payload)
+
+/datum/tgui_window/proc/set_mouse_macro()
+	if(mouse_event_macro_set)
+		return
+
+	for(var/mouseMacro in byondToTguiEventMap)
+		var/command_template = ".output CONTROL PAYLOAD"
+		var/event_message = TGUI_CREATE_MESSAGE(byondToTguiEventMap[mouseMacro], null)
+		var target_control = is_browser \
+			? "[id]:update" \
+			: "[id].browser:update"
+		var/with_id = replacetext(command_template, "CONTROL", target_control)
+		var/full_command = replacetext(with_id, "PAYLOAD", event_message)
+
+		var/list/params = list(
+			"parent" = "default", //Technically this is external to tgui but whatever
+			"name" = mouseMacro,
+			"command" = full_command
+		)
+
+
+		winset(client, "[mouseMacro]Window[id]Macro", params)
+	mouse_event_macro_set = TRUE
+
+/datum/tgui_window/proc/remove_mouse_macro()
+	if(!mouse_event_macro_set)
+		stack_trace("Unsetting mouse macro on tgui window that has none")
+	for(var/mouseMacro in byondToTguiEventMap)
+		winset(client, null, "[mouseMacro]Window[id]Macro.parent=null")
+	mouse_event_macro_set = FALSE

@@ -9,7 +9,7 @@
 	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "begins glowing with an enticing light!"
 	deact_text = "falls dark and quiet."
@@ -64,12 +64,12 @@
 						if(N.client)
 							shake_camera(N, 6, 16)
 					logTheThing(LOG_COMBAT, user, "was turned into a gold statue by wishgranter [src] at [log_loc(user)].")
-					user.become_statue(getMaterial("gold"),"A statue of someone very wealthy", TRUE)
+					user.become_statue(getMaterial("gold"), "A statue of someone very wealthy", TRUE)
 
 				if("I wish for great power!")
 					O.visible_message(SPAN_ALERT("<b>[O] discharges a massive bolt of electricity!</b>"))
 					playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
-					var/list/affected = DrawLine(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+					var/list/affected = drawLineObj(O,user,/obj/line_obj/elec,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 					for(var/obj/OB in affected)
 						SPAWN(0.6 SECONDS)
 							qdel(OB)

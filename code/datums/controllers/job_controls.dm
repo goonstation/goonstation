@@ -12,13 +12,13 @@ var/datum/job_controller/job_controls
 
 	New()
 		..()
-		if (derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode || global.master_mode == "disaster")
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
-			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
+			new /datum/job/medical/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
@@ -28,6 +28,7 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/command)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/security)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/research)) src.staple_jobs += new A(src)
+			for (var/A in concrete_typesof(/datum/job/medical)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/engineering)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/civilian)) src.staple_jobs += new A(src)
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
@@ -82,14 +83,13 @@ var/datum/job_controller/job_controls
 		if (!valid_jobs.Find(job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
-		var/datum/preferences/P = player.client.preferences
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
 			if ((!job.allow_traitors && player.mind.special_role))
 				return
 			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
 				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
 				return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return
@@ -99,8 +99,8 @@ var/datum/job_controller/job_controls
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
-		// mentor only job check
-		if (job.mentor_only && !(player.ckey in mentors))
+		// trusted only job check
+		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.key))))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
 			return
 		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
@@ -214,62 +214,62 @@ var/datum/job_controller/job_controls
 		var/list/dat = list("<html><body><title>Job Creation</title>")
 		dat += "<b><u>Job Creator</u></b><HR>"
 
-		dat += "<A href='?src=\ref[src];EditName=1'>Job Name:</A> [src.job_creator.name]<br>"
-		dat += "<A href='?src=\ref[src];EditWages=1'>Wages Per Payday:</A> [src.job_creator.wages]<br>"
-		dat += "<A href='?src=\ref[src];EditLimit=1'>Job Limit:</A> [src.job_creator.limit]<br>"
-		dat += "<A href='?src=\ref[src];ChangeName=1'>Can Change Name on Spawn:</A> [src.job_creator.change_name_on_spawn ? "Yes":"No"]<br>"
-		dat += "<A href='?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location]<br>"
-		dat += "<A href='?src=\ref[src];SpawnId=1'>Spawns with ID:</A> [src.job_creator.spawn_id ? "Yes" : "No"]<br>"
-		dat += "<A href='?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (" (Crew Objective)") : ""]<br>"
-		dat += "<A href='?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
-		dat += "<A href='?src=\ref[src];ToggleRadioAnnounce=1'>Radio Announcement:</A> [src.job_creator.radio_announcement?"Yes":"No"]<br>"
-		dat += "<A href='?src=\ref[src];ToggleManifest=1'>Add To Manifest:</A> [src.job_creator.add_to_manifest?"Yes":"No"]<br>"
-		dat += "<A href='?src=\ref[src];EditMob=1'>Mob Type:</A> [src.job_creator.mob_type]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditName=1'>Job Name:</A> [src.job_creator.name]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditWages=1'>Wages Per Payday:</A> [src.job_creator.wages]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditLimit=1'>Job Limit:</A> [src.job_creator.limit]<br>"
+		dat += "<A href='byond://?src=\ref[src];ChangeName=1'>Can Change Name on Spawn:</A> [src.job_creator.change_name_on_spawn ? "Yes":"No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location]<br>"
+		dat += "<A href='byond://?src=\ref[src];SpawnId=1'>Spawns with ID:</A> [src.job_creator.spawn_id ? "Yes" : "No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (" (Crew Objective)") : ""]<br>"
+		dat += "<A href='byond://?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];ToggleRadioAnnounce=1'>Radio Announcement:</A> [src.job_creator.radio_announcement?"Yes":"No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];ToggleManifest=1'>Add To Manifest:</A> [src.job_creator.add_to_manifest?"Yes":"No"]<br>"
+		dat += "<A href='byond://?src=\ref[src];EditMob=1'>Mob Type:</A> [src.job_creator.mob_type]<br>"
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
-			dat += "<A href='?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [english_list(src.job_creator.slot_head)]<br>"
-			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [english_list(src.job_creator.slot_mask)]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [english_list(src.job_creator.slot_ears)]<br>"
-			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [english_list(src.job_creator.slot_eyes)]<br>"
-			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [english_list(src.job_creator.slot_suit)]<br>"
-			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [english_list(src.job_creator.slot_jump)]<br>"
-			dat += "<A href='?src=\ref[src];EditIDCard=1'>Starting ID Card:</A> [src.job_creator.slot_card]<br>"
-			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [english_list(src.job_creator.slot_glov)]<br>"
-			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [english_list(src.job_creator.slot_foot)]<br>"
-			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [english_list(src.job_creator.slot_back)]<br>"
-			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [english_list(src.job_creator.slot_belt)]<br>"
-			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [english_list(src.job_creator.slot_poc1)]<br>"
-			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
-			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [english_list(src.job_creator.slot_head)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditMask=1'>Starting Mask:</A>  [english_list(src.job_creator.slot_mask)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [english_list(src.job_creator.slot_ears)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [english_list(src.job_creator.slot_eyes)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [english_list(src.job_creator.slot_suit)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [english_list(src.job_creator.slot_jump)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditIDCard=1'>Starting ID Card:</A> [src.job_creator.slot_card]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [english_list(src.job_creator.slot_glov)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [english_list(src.job_creator.slot_foot)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditBack=1'>Starting Back Item:</A> [english_list(src.job_creator.slot_back)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [english_list(src.job_creator.slot_belt)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [english_list(src.job_creator.slot_poc1)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
+			dat += "<A href='byond://?src=\ref[src];EditImpl=1'>Starting Implants:</A> [english_list(src.job_creator.receives_implants)]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
+				dat += "<A href='byond://?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.items_in_belt) >= i ? src.job_creator.items_in_belt[i] : null]<br>"
-			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
+				dat += "<A href='byond://?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.items_in_belt) >= i ? src.job_creator.items_in_belt[i] : null]<br>"
+			dat += "<A href='byond://?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
 			if (length(src.job_creator.access) > 1)
 				dat += " "
-				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
+				dat += "<A href='byond://?src=\ref[src];AddAccess=1'>(Add More):</A>"
 			dat += ":<BR>"
 			for(var/X in src.job_creator.access)
 				dat += "[X], "
 			dat += "<BR>"
-			dat += "<A href='?src=\ref[src];BioEffects=1'>Bio Effects:</A> [src.job_creator.bio_effects]<br>"
+			dat += "<A href='byond://?src=\ref[src];BioEffects=1'>Bio Effects:</A> [src.job_creator.bio_effects]<br>"
 		else if (ispath(src.job_creator.mob_type, /mob/living/critter))
-			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Implanted Access Permissions</A>"
+			dat += "<A href='byond://?src=\ref[src];GetAccess=1'>Set Implanted Access Permissions</A>"
 			if (length(src.job_creator.access) > 1)
 				dat += " "
-				dat += "<A href='?src=\ref[src];AddAccess=1'>(Add More):</A>"
+				dat += "<A href='byond://?src=\ref[src];AddAccess=1'>(Add More):</A>"
 				dat += ":<BR>"
 				for(var/X in src.job_creator.access)
 					dat += "[X], "
 				dat += "<BR>"
 
 		dat += "<BR>"
-		dat += "<A href='?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Hidden Job (for admin respawning)</b></A><BR><BR>"
-		dat += "<A href='?src=\ref[src];CreateJob=1'><b>Create Job</b></A>"
+		dat += "<A href='byond://?src=\ref[src];CreateJob=1;Hidden=1'><b>Create Hidden Job (for admin respawning)</b></A><BR><BR>"
+		dat += "<A href='byond://?src=\ref[src];CreateJob=1'><b>Create Job</b></A>"
 		dat += "<BR><BR>"
 
 		if (loaded_save)
@@ -278,17 +278,17 @@ var/datum/job_controller/job_controls
 			var/list/job_names = src.savefile_get_job_names(usr.client)
 			for (var/i in 1 to length(job_names))
 				if(job_names[i])
-					dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i]]</a>"
+					dat += " <a href='byond://?src=\ref[src];Load=[i]'>[job_names[i]]</a>"
 				else
 					dat += " Empty slot ([i])"
 				dat += "&nbsp;"
-				dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
+				dat += " <a href='byond://?src=\ref[src];Save=[i]'>(Save here)</a>"
 				dat += "<br>"
 			dat += "</small><br>"
 		else
-			dat += "<A href='?src=\ref[src];SaveLoad=1'>Save/Load</A>"
+			dat += "<A href='byond://?src=\ref[src];SaveLoad=1'>Save/Load</A>"
 
-		dat += "<br><A href='?src=\ref[src];Import=1'>Import</A> / <A href='?src=\ref[src];Export=1'>Export</A>"
+		dat += "<br><A href='byond://?src=\ref[src];Import=1'>Import</A> / <A href='byond://?src=\ref[src];Export=1'>Export</A>"
 		dat += "</body></html>"
 
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
@@ -1065,7 +1065,7 @@ var/datum/job_controller/job_controls
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 	return JOB
 
-///Soft supresses crash on failing to find a job
+///Soft supresses logging on failing to find a job
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
@@ -1075,9 +1075,6 @@ var/datum/job_controller/job_controls
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
-	#endif
-	#ifndef CREATE_PATHOGENS
-	excluded_strings += "Pathologist"
 	#endif
 	if (string in excluded_strings)
 		return null
@@ -1098,7 +1095,7 @@ var/datum/job_controller/job_controls
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
 	if (!soft)
-		CRASH("No job found with name '[string]'!")
+		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

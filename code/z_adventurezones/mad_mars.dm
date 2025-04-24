@@ -752,7 +752,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 			dat += "<center><font size = 20>VAULT UNLOCKED</font></center><br>"
 
 		else
-			dat += "<center><a href='?src=\ref[src];unlock=1'>Unlock Vault</a></center>"
+			dat += "<center><a href='byond://?src=\ref[src];unlock=1'>Unlock Vault</a></center>"
 		user.Browse("<head><title>Vault Computer</title></head>[dat]", "window=tourconsole;size=302x245")
 		onclose(user, "vaultcomputer")
 		return
@@ -775,6 +775,11 @@ TYPEINFO(/obj/vehicle/marsrover)
 							P.open()
 				for_by_tcl(M, /obj/item/storage/secure/ssafe/marsvault)
 					M.disabled = 0
+
+				if (istype(get_area(src), /area/marsoutpost/vault))
+					for (var/mob/living/L in range(3, src))
+						if (!isintangible(L))
+							L.unlock_medal("Where are the Ghosts?", TRUE)
 
 				playsound(src.loc, 'sound/machines/engine_alert1.ogg', 50, 1)
 

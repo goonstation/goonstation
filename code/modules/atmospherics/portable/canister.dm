@@ -1,4 +1,4 @@
-ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve)
+ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_valve, proc/break_open)
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -22,18 +22,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
-	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, the air, or to a tank that you attach to it."
 	var/overpressure = 0 // for canister explosions
 	var/rupturing = 0
-	var/obj/item/assembly/detonator/det = null
+	var/obj/item/canbomb_detonator/det = null
 	var/overlay_state = null
 	var/dialog_update_enabled = 1 //For preventing the DAMNABLE window taking focus when manually inputting pressure
 
 	var/image/atmos_dmi
 	var/image/bomb_dmi
+	var/full_gas_name = "the labelled gas"
+	HELP_MESSAGE_OVERRIDE("Use a <b>wrench</b> to attach or detach from an atmospherics port.")
 
 	New()
 		..()
+		desc = "A container which holds a large amount of [src.full_gas_name]."
 		src.AddComponent(/datum/component/bullet_holes, 5, 0)
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 		bomb_dmi = image('icons/obj/canisterbomb.dmi')
@@ -48,7 +50,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			return FALSE
 		user.visible_message(SPAN_ALERT("<b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b>"))
 		if (src.det)
-			if (!src.det.part_fs.timing || src.det.defused)
+			if (!src.det.get_timing() || src.det.defused)
 				boutput(user, SPAN_ALERT("You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i>"))
 				return
 			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
@@ -74,31 +76,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
+	full_gas_name = "nitrous oxide"
 	icon_state = "redws"
 	casecolor = "redws"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
+	full_gas_name = "nitrogen"
 	icon_state = "red"
 	casecolor = "red"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
+	full_gas_name = "oxygen"
 	icon_state = "blue"
 	casecolor = "blue"
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
+	full_gas_name = "Faddeev-Popov Anhydrous Anomalous Evaporate (FAAE, commonly called plasma)"
 	icon_state = "orange"
 	casecolor = "orange"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
+	full_gas_name = "carbon dioxide"
 	icon_state = "black"
 	casecolor = "black"
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
+	full_gas_name = "air mix"
 	icon_state = "grey"
 	casecolor = "grey"
 	filled = 2
@@ -111,6 +119,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
+	full_gas_name = "nothing"
 	icon_state = "empty"
 	casecolor = "empty"
 
@@ -121,6 +130,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/methane
 	name = "Canister \[Methane\]"
+	full_gas_name = "methane"
 	icon_state = "darkgreen"
 	casecolor = "darkgreen"
 
@@ -131,8 +141,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	else
 		icon_state = "[casecolor]"
 		if (overlay_state)
-			if (src.det && src.det.part_fs.timing && !src.det.safety && !src.det.defused)
-				if (src.det.part_fs.time > 5 SECONDS)
+			if (src.det && src.det.get_timing() && !src.det.safety && !src.det.defused)
+				if (src.det.get_time_left() > 5 SECONDS)
 					bomb_dmi.icon_state = "overlay_ticking"
 					UpdateOverlays(bomb_dmi, "canbomb")
 				else
@@ -176,30 +186,40 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return 1
 
 	if (src.health <= 10)
-		tgui_process.close_uis(src)
-		if(src.air_contents.check_if_dangerous())
-			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-		logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-
-		var/atom/location = src.loc
-		location.assume_air(air_contents)
-		air_contents = null
-
-		if (src.det)
-			processing_items.Remove(src.det)
-
-		src.destroyed = 1
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
-		src.set_density(0)
-		UpdateIcon()
-
-		if (src.holding)
-			src.holding.set_loc(src.loc)
-			src.holding = null
+		src.break_open(user)
 		return 1
 	else
 		return 1
 
+/obj/machinery/portable_atmospherics/canister/clamp_act(mob/clamper, obj/item/clamp)
+	if (!src.destroyed)
+		src.break_open()
+		return TRUE
+
+/obj/machinery/portable_atmospherics/canister/proc/break_open(mob/user)
+	user = user || usr
+	tgui_process.close_uis(src)
+	if(src.air_contents.check_if_dangerous())
+		message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+	message_ghosts("<b>[src]</b> was destructively opened at [log_loc(src, ghostjump = TRUE)].")
+
+	var/atom/location = src.loc
+	location.assume_air(air_contents)
+	air_contents = null
+	disconnect()
+
+	if (src.det)
+		processing_items.Remove(src.det)
+
+	src.destroyed = 1
+	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	src.set_density(0)
+	UpdateIcon()
+
+	if (src.holding)
+		src.holding.set_loc(src.loc)
+		src.holding = null
 
 /obj/machinery/portable_atmospherics/canister/process()
 	if (!loc) return
@@ -254,9 +274,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 				rupture()
 
 	//Canister bomb grumpy sounds
-	if (src.det && src.det.part_fs)
-		if (src.det.part_fs.timing) //If it's counting down
-			if (src.det.part_fs.time > 9 SECONDS)
+	if (src.det)
+		if (src.det.get_timing()) //If it's counting down
+			if (src.det.get_time_left() > 9 SECONDS)
 				src.add_simple_light("canister", list(0.94 * 255, 0.94 * 255, 0.3 * 255, 0.6 * 255))
 				if (prob(8)) //originally 5ish
 					switch(rand(1,6))
@@ -281,13 +301,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 								theAPC.UpdateIcon()
 								theAPC.update()
 
-			else if (src.det.part_fs.time < 10 SECONDS && src.det.part_fs.time > 7 SECONDS)  //EXPLOSION IMMINENT
+			else if (src.det.get_time_left() < 10 SECONDS && src.det.get_time_left() > 7 SECONDS)  //EXPLOSION IMMINENT
 				src.add_simple_light("canister", list(1 * 255, 0.03 * 255, 0.03 * 255, 0.6 * 255))
 				src.visible_message(SPAN_ALERT("[src] flashes and sparks wildly!"))
 				playsound(src.loc, 'sound/machines/siren_generalquarters.ogg', 50, 1)
 				playsound(src.loc, "sparks", 75, 1, -1)
 				elecflash(src,power = 2)
-			else if (src.det.part_fs.time <= 3 SECONDS)
+			else if (src.det.get_time_left() <= 3 SECONDS)
 				playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 		else //Someone might have defused it or the bomb failed
 			src.remove_simple_light("canister")
@@ -296,7 +316,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	src.UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/canister/return_air()
+/obj/machinery/portable_atmospherics/canister/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/canister/blob_act(var/power)
@@ -374,28 +394,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
-		if (holding)
-			user.show_message(SPAN_ALERT("You must remove the currently inserted tank from the slot first."))
-		else
-			var/obj/item/assembly/detonator/Det = W
-			if (Det.det_state != 4)
-				user.show_message(SPAN_ALERT("The assembly is incomplete."))
-			else
-				Det.set_loc(src)
-				Det.master = src
-				Det.layer = initial(W.layer)
-				user.u_equip(Det)
-				overlay_state = "overlay_safety_on"
-				src.det = Det
-				src.det.attachedTo = src
-				src.det.builtBy = user
-				logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
-				if(src.air_contents.check_if_dangerous())
-					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
-				tgui_process.update_uis(src)
-				src.UpdateIcon()
-	else if (src.det && istype(W, /obj/item/tank))
+	if (src.det && istype(W, /obj/item/tank))
 		user.show_message(SPAN_ALERT("You cannot insert a tank, as the slot is shut closed by the detonator assembly."))
 		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
@@ -424,7 +423,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
@@ -457,15 +456,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	)
 
 	if(src.det)
+		var/obj/item/chosen_trigger = src.det.get_signaler()
 		. += list(
 			"detonator" = list(
 				"wireNames" = src.det.WireNames,
 				"wireStatus" = src.det.WireStatus,
 				"safetyIsOn" = src.det.safety,
 				"isAnchored" = src.anchored,
-				"isPrimed" = src.det.part_fs.timing ? TRUE : FALSE,
-				"time" = src.det.part_fs.time,
-				"trigger" = src.det.trigger ? src.det.trigger.name : null,
+				"isPrimed" = src.det.get_timing(),
+				"time" = src.det.get_time_left(),
+				"trigger" = chosen_trigger ? chosen_trigger.name : null,
 			)
 		)
 
@@ -514,13 +514,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			src.det.failsafe_engage()
 			. = TRUE
 		if("trigger")
-			src.det.trigger.AttackSelf(usr)
+			var/obj/item/chosen_trigger = src.det.get_signaler()
+			chosen_trigger.AttackSelf(usr)
 			. = TRUE
 		if("timer")
-			if(!src.det.part_fs.timing)
+			if(!src.det.get_timing())
 				var/new_time = params["newTime"]
 				if(isnum(new_time))
-					src.det.part_fs.set_time(new_time)
+					src.det.part_assembly.set_trigger_time(max(new_time, 90 SECONDS))
 					. = TRUE
 		if("wire-interact")
 			var/tool = null
@@ -602,11 +603,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 					if("losetime")
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 1)
-						if (src.det.part_fs.time > 7 SECONDS)
-							src.det.part_fs.time -= 7 SECONDS
+						if (src.det.get_time_left() > 7 SECONDS)
+							src.det.part_assembly.set_trigger_time(src.det.get_time_left() - 7 SECONDS)
 						else
-							src.det.part_fs.time = 2 SECONDS
-							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.part_fs.time SECONDS] seconds.</font></B>")
+							src.det.part_assembly.set_trigger_time(2 SECONDS)
+							src.visible_message("<B><font color=#B7410E>The failsafe beeps rapidly for two moments. The external display indicates that the timer has reduced to [src.det.get_time_left() / (1 SECONDS)] seconds.</font></B>")
 					if("mobility")
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -625,7 +626,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						src.det.leaking()
 					else
 						src.det.failsafe_engage()
-						if (src.det.part_fs.timing)
+						if (src.det.get_timing())
 							var/obj/item/attachment = src.det.WireFunctions[which_wire]
 							attachment.detonator_act("cut", src.det)
 
@@ -644,10 +645,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 				src.visible_message("<b><font color=#B7410E>[user.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch (src.det.WireFunctions[which_wire])
 					if ("detonate")
-						if (src.det.part_fs.timing)
+						if (src.det.get_timing())
 							playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-							if (src.det.part_fs.time > 7 SECONDS)
-								src.det.part_fs.time = 7 SECONDS
+							if (src.det.get_time_left() > 7 SECONDS)
+								src.det.part_assembly.set_trigger_time(7 SECONDS)
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and sets itself to 7 seconds.</font></B>")
 							else
 								src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes refusingly before going quiet forever.</font></B>")
@@ -655,15 +656,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 									src.det.detonate()
 						else
 							src.det.failsafe_engage()
-							src.det.part_fs.time = rand(8,14) SECONDS
+							src.det.part_assembly.set_trigger_time(rand(8,14) SECONDS)
 							playsound(src.loc, 'sound/machines/pod_alarm.ogg', 50, 1)
-							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.part_fs.time / 10] seconds to act.</font></B>")
+							src.visible_message("<B><font color=#B7410E>The failsafe timer buzzes loudly and activates. You have [src.det.get_time_left() / 10] seconds to act.</font></B>")
 					if ("defuse")
 						src.det.failsafe_engage()
 						if (src.det.grant)
-							src.det.part_fs.time += 5 SECONDS
+							src.det.part_assembly.set_trigger_time(src.det.get_time_left() + 5 SECONDS)
 							playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.part_fs.time / 10] seconds.</font></B>")
+							src.visible_message("<B><font color=#B7410E>The detonator assembly emits a reassuring noise. You notice that the failsafe timer has increased to [src.det.get_time_left() / 10] seconds.</font></B>")
 							src.det.grant = 0
 						else
 							playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -710,7 +711,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						src.det.leaks++
 					else
 						src.det.failsafe_engage()
-						if (src.det.part_fs.timing)
+						if (src.det.get_timing())
 							var/obj/item/attachment = src.det.WireFunctions[which_wire]
 							attachment.detonator_act("pulse", src.det)
 		return

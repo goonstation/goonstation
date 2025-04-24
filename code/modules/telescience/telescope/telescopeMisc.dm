@@ -66,7 +66,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("[src.icon_state]-act", src)
+			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("[src.icon_state]-act", src)
+			FLICK("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
@@ -232,6 +232,8 @@ TYPEINFO(/obj/machinery/lrteleporter)
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
 	smashes_shit = FALSE
+	var/rare_metal_drop_chance = 5
+	var/rare_metal_drop_path = /obj/item/material_piece/iridiumalloy
 
 	ChaseAttack(atom/M)
 		if(target && !attacking)
@@ -270,7 +272,16 @@ TYPEINFO(/obj/machinery/lrteleporter)
 				if(src)
 					qdel(src)
 
-		if(prob(5) && alive && !dying)
-			new/obj/item/material_piece/iridiumalloy(src.loc)
+		if(prob(src.rare_metal_drop_chance) && alive && !dying)
+			new src.rare_metal_drop_path(src.loc)
 
 		..()
+
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal
+	rare_metal_drop_chance = 100
+
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/iridium
+	rare_metal_drop_path = /obj/item/material_piece/iridiumalloy/small
+
+/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium // plutonium power source
+	rare_metal_drop_path = /obj/item/material_piece/plutonium_scrap

@@ -106,6 +106,15 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/space_2,
 	)
 
+/datum/parallax_render_source_group/area/watchful_eye_sensor
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/void/clouds_1,
+		/atom/movable/screen/parallax_render_source/void/clouds_2,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		/atom/movable/screen/parallax_render_source/typhon
+	)
+
 // Planet Parallax Layers
 /datum/parallax_render_source_group/planet/snow
 	parallax_render_source_types = list(

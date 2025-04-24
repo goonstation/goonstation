@@ -80,10 +80,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check(flags)
 
 
 ///for the mapgen mountains, temp until we get something better
@@ -100,7 +97,15 @@
 
 		if(src.ore || prob(8)) // provide less rock
 			default_ore = /obj/item/raw_material/rock
+		var/could_build = src.can_build
 		. = ..()
+		if(could_build)
+			src.can_build = could_build
+
+			var/turf/unsimulated/T = src
+			if(istype(T))
+				T.can_replace_with_stuff = TRUE
+
 		for (var/turf/unsimulated/floor/plating/asteroid/A in range(src,1))
 			A.UpdateIcon()
 
@@ -116,6 +121,9 @@
 #undef _TRANSFER_GAS_TO_AIR
 
 				air.temperature = temperature
+
+		if(station_repair.allows_vehicles)
+			src.allows_vehicles = station_repair.allows_vehicles
 
 		return src
 

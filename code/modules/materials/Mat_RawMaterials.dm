@@ -32,6 +32,15 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		if (!(src.material?.getMaterialFlags() & MATERIAL_METAL))
+			return FALSE
+		var/obj/item/sheet/sheets = new(src.loc)
+		sheets.set_stack_amount(src.amount * 10)
+		sheets.setMaterial(src.material)
+		qdel(src)
+		return TRUE
+
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
@@ -162,6 +171,7 @@
 		icon_state = "fabric"
 		name = "fabric"
 		desc = "A weave of some kind."
+		default_material = "cotton"
 		var/in_use = 0
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -236,6 +246,9 @@
 	default_material = "iridiumalloy"
 	uses_default_material_appearance = FALSE
 	amount = 5
+
+/obj/item/material_piece/iridiumalloy/small
+	amount = 1
 
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
@@ -426,12 +439,18 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
-	icon_state = "bar"
+	icon_state = "rod"
 	default_material = "neutronium"
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
-	icon_state = "bar"
+	icon_state = "rod"
+	default_material = "plutonium"
+
+/obj/item/material_piece/plutonium_scrap
+	name = "scrap"
+	icon_state = "plutonium"
+	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold

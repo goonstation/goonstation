@@ -37,14 +37,14 @@
 
 /area/radiostation/podbay
 	name = "Radio Podbay"
-	icon_state = "green"
+	icon_state = "hangar"
 
 /area/radiostation/bedroom
-	name = "Radio Bedroom"
+	name = "Radio Quarters"
 	icon_state = "red"
 
 /area/radiostation/engineering
-	name = "Radio Engine"
+	name = "Radio Supply Closet"
 	icon_state = "blue"
 
 /area/radiostation/hallway
@@ -56,6 +56,22 @@
 	icon_state = "yellow"
 	sound_environment = 3
 	workplace = 1
+
+/area/radiostation/tv_set
+	name = "Radio TV Studio"
+	icon_state = "green"
+
+/area/radiostation/green
+	name = "Radio Green Room"
+	icon_state = "green"
+
+/area/radiostation/teleporter
+	name = "Radio Cargo Intake"
+	icon_state = "red"
+
+/area/radiostation/press
+	name = "Radio Paper Press"
+	icon_state = "yellow"
 
 //objects
 
@@ -273,15 +289,18 @@
 			if(!record_name)
 				boutput(user, SPAN_NOTICE("You decide not to play this record."))
 				return
+			if(!(inserted_record in user.equipped_list()))
+				boutput(user, SPAN_ALERT("You have to be holding a record to place it in the player!"))
+				return
 			if(!in_interact_range(src, user))
-				boutput(user, "You're out of range of the [src.name]!")
+				boutput(user, SPAN_ALERT("You're out of range of the [src.name]!"))
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
 			phrase_log.log_phrase("record", html_encode(record_name))
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message(SPAN_NOTICE("<b>[user] inserts the record into the record player.</b>"))
-			user.drop_item()
+			user.drop_item(W)
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = TRUE
@@ -319,6 +338,22 @@
 		else
 			boutput(user, "You can feel heat emanating from the record player. You should probably wait a while before touching it. It's kinda old and you don't want to break it.")
 
+/obj/submachine/record_player/portable
+	name = "portable record player"
+	desc = "An old school record player, painted in a cool syndicate-red."
+	icon_state = "portable_record"
+	density = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/syndicate)
+		var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
+		if(!fold_component?.the_briefcase)
+			return
+		var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
+		if (briefcase)
+			briefcase.set_loc(get_turf(src))
+			src.set_loc(briefcase)
 // Records
 /obj/item/record
 	name = "record"
@@ -612,6 +647,16 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 	record_name = "Lunch4Laika"
 	song = 'sound/radio_station/music/lunch.ogg'
 
+/obj/item/record/random/funk/monkey_riot
+	name = "record - \"Monkey Riot\""
+	record_name = "Monkey Riot"
+	song = 'sound/radio_station/music/monkey_riot.ogg'
+
+/obj/item/record/random/funk/space_gardener
+	name = "record - \"Space Gardener\""
+	record_name = "Space Gardener"
+	song = 'sound/radio_station/music/space_gardener.ogg'
+
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario
 	New()
@@ -844,6 +889,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	New()
 		. = ..()
 		START_TRACKING
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 	get_desc()
 		if(!src.can_play_tapes)
@@ -1146,7 +1192,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	fields = strings("radioship/radioship_records.txt","log_2")
 
 
-
+TYPEINFO(/obj/item/device/radio/intercom/radiostation)
+	mats = 0
 /obj/item/device/radio/intercom/radiostation
 	name = "broadcast radio"
 	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."

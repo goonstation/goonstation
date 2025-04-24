@@ -30,15 +30,15 @@ ABSTRACT_TYPE(/obj/item)
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	var/burning = null
-	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
-	var/health = null
-	var/burn_point = 15000  //this already exists but nothing uses it???
-	var/burn_output = 1500 //how hot should it burn
-	var/burn_type = 0 //0 = ash, 1 = melt
-	var/burning_last_process = 0
-	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
+
+	var/burn_possible = TRUE //!Is this item burnable
+	var/burning = null //!Are we currently burning
+	var/health = null //!How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
+	var/burn_point = 15000 KELVIN //!Ambient temperature at which the item may spontaneously ignite
+	var/burn_output = 1500 KELVIN //!How hot does the item burn once on fire
+	var/burn_remains = BURN_REMAINS_ASH	//!What is left when it's burnt up
+	var/burning_last_process = 0 //!Keep track of last burning state
+	var/firesource = FALSE //! Is this a valid source for lighting fires
 
 	/*______*/
 	/*Combat*/
@@ -70,7 +70,10 @@ ABSTRACT_TYPE(/obj/item)
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
-	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
+	///Sound for when you pick this up from anywhere. If null, we auto-pick from a list based on w_class
+	var/pickup_sfx = 0
+	///Sound for when you equip this from an inventory (ie not a turf)
+	var/equip_sfx = null
 	var/w_class = W_CLASS_NORMAL // how big they are, determines if they can fit in backpacks and pockets and the like
 	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
@@ -126,7 +129,6 @@ ABSTRACT_TYPE(/obj/item)
 	/*‾‾‾‾‾*/
 	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
 	var/over_clothes = 0 //draw over clothes when used as a limb
-	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
 	/// Chance for this item to be replaced by a mimic disguised as it - note, setting this high here is a *really* bad idea
@@ -266,7 +268,7 @@ ABSTRACT_TYPE(/obj/item)
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-			tooltip_rebuild = 0
+				tooltip_rebuild = 0
 
 		usr.moused_over(src)
 
@@ -281,9 +283,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
-				burn_type = 1
+				burn_remains = BURN_REMAINS_MELT
 			else
-				burn_type = 0
+				burn_remains = BURN_REMAINS_ASH
 
 		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -343,6 +345,11 @@ ABSTRACT_TYPE(/obj/item)
 	// this should be fine in most cases but if there's any bugs from using usr or unique functionality wanted, this should be manually defined
 	if (storage_check && src.stored)
 		src.stored.transfer_stored_item(src, newloc)
+		return
+	if (src.storage)
+		..()
+		for (var/atom/A as anything in src.storage.get_all_contents())
+			A.parent_storage_loc_changed()
 		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
@@ -438,7 +445,7 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_NOTICE("You take a bite of [src]!"))
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
@@ -642,6 +649,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		stacker = other
 		stackee = src
 	else
+		if(istype(src.loc,/obj/item/shipcomponent/mainweapon/constructor))
+			max_stack = 200
 		stacker = src
 		stackee = other
 
@@ -682,7 +691,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= src.amount || toRemove < 1) return null
+	if(toRemove >= src.amount || toRemove < 1 || QDELETED(src)) return null
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -726,7 +735,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 #define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
-/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -739,7 +748,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	var/mob/user = usr
 
-	params = params2list(params)
+	if (!islist(params)) params = params2list(params)
 
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
@@ -766,7 +775,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite.
+																				// Consider replacing the storage check with should_place_on() for flexibility.
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
@@ -862,6 +872,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
 		target = user
@@ -875,7 +889,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.r_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					. = user.put_in_hand_or_drop(src, 0)
 				else if (!user.l_hand)
 					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -883,7 +897,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(1)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 1)
+						. = user.put_in_hand_or_drop(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -892,7 +906,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.l_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					. = user.put_in_hand_or_drop(src, 1)
 				else if (!user.r_hand)
 					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -900,7 +914,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(0)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 0)
+						. = user.put_in_hand_or_drop(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
@@ -958,10 +972,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 		if (src.health <= 0)
 			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-			if (burn_type == 1)
-				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
-			else
-				make_cleanable( /obj/decal/cleanable/ash,get_turf(src))
+			switch(src.burn_remains)
+				if(BURN_REMAINS_ASH)
+					make_cleanable(/obj/decal/cleanable/ash, get_turf(src))
+				if(BURN_REMAINS_MELT)
+					make_cleanable(/obj/decal/cleanable/molten_item, get_turf(src))
+
 
 			if (istype(src,/obj/item/parts/human_parts))
 				src:holder = null
@@ -1015,10 +1031,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(TRUE)
+	src.equipped_in_slot = slot
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
-	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop], slot)
 	user.update_equipped_modifiers()
@@ -1245,8 +1261,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.ArtifactTouched(user)
 
 	if (hide_attack != ATTACK_FULLY_HIDDEN)
-		if (pickup_sfx)
-			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
+		if (src.equip_sfx && !istype(oldloc, /turf))
+			playsound(oldloc_sfx, src.equip_sfx, 56, vary=0.2)
+		else if (src.pickup_sfx)
+			playsound(oldloc_sfx, src.pickup_sfx, 56, vary=0.2)
 		else
 			playsound(oldloc_sfx, "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg", 56, vary=0.2)
 
@@ -1495,6 +1513,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			. = 1
 		if ("inhand_image")
 			. = 1
+		if ("name", "desc", "force", "hit_type", "throwforce", "w_class", "combat_click_delay", "click_delay")
+			src.tooltip_rebuild = TRUE
 	if (. && src.loc && ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inhands()
@@ -1578,6 +1598,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 				if (M.client.tooltipHolder.transient)
 					if (M.client.tooltipHolder.transient.A == src)
 						M.client.tooltipHolder.transient.A = null
+
+		if(src.master)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, src)
 
 		return ..()
 	var/area/Ar = T.loc
@@ -1754,7 +1777,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image = image(src.inhand_image_icon, "", MOB_INHAND_LAYER)
 
 	var/state = src.item_state ? src.item_state + "-[hand]" : (src.icon_state ? src.icon_state + "-[hand]" : hand)
-	if(!(state in icon_states(src.inhand_image_icon)))
+	if(!(state in get_icon_states(src.inhand_image_icon)))
+		// stack_trace("ZeWaka {TEMP}: [src] has no icon state [state] in [src.inhand_image_icon] | iconstate: [src.icon_state] | itemstate: [src.item_state]")
 		state = src.item_state ? src.item_state + "-L" : (src.icon_state ? src.icon_state + "-L" : "L")
 
 	src.inhand_image.icon_state = state
@@ -1764,3 +1788,38 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image.color = src.inhand_color
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
+
+/// Move item to turf, and snap its pixel offsets to a grid of the input size.
+/obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2, centered = 1, offsetx = 0, offsety = 0)
+	. = FALSE
+	if (src && !isghostdrone(user))
+		var/dirbuffer
+		dirbuffer = src.dir
+		if (user)
+			if (src.cant_drop)
+				return
+			user.drop_item()
+		if(src.dir != dirbuffer)
+			src.set_dir(dirbuffer)
+		src.set_loc(target)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			var/grid32 = (32 / grid)
+			// the inner round is flooring, the outer round is rounding, yes that's right
+			var/gridx = round( round((text2num(params["icon-x"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			var/gridy = round( round((text2num(params["icon-y"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			src.pixel_x = gridx + offsetx - 16 // -16 to center the sprite
+			src.pixel_y = gridy + offsety - 16
+		. = TRUE
+
+/// Override to implement custom logic for determining whether the item should be placed onto a target object
+/obj/item/proc/should_place_on(obj/target, params)
+	return TRUE
+
+///This will be called when the item is build into a /obj/item/assembly on get_help_message()
+/obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	return
+
+///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
+/obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+

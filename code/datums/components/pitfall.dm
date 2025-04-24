@@ -30,8 +30,15 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 			return COMPONENT_INCOMPATIBLE
 		RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(start_fall))
 		RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
+		RegisterSignal(src.parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 		src.BruteDamageMax	= BruteDamageMax
 		src.FallTime		= FallTime
+
+	UnregisterFromParent()
+		. = ..()
+		UnregisterSignal(src.parent, COMSIG_ATOM_ENTERED)
+		UnregisterSignal(src.parent, COMSIG_ATTACKBY)
+		UnregisterSignal(src.parent, COMSIG_TURF_REPLACED)
 
 	/// returns the .parent but typecasted as a turf
 	proc/typecasted_parent()

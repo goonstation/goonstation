@@ -365,8 +365,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-
-				switch(counter += (1 * mult))
+				counter += (1 * mult)
+				if (counter < 175)
+					M.remove_vomit_behavior(/datum/vomit_behavior/blood)
+				switch(counter)
 					if (75 to 125)
 						if(isliving(M) && probmult(15))
 							var/mob/living/L = M
@@ -387,15 +389,14 @@ datum
 							if (H.organHolder)
 								H.organHolder.damage_organs(1*mult, 0, 1*mult, target_organs, 25)
 					if (175 to INFINITY)
+						M.add_vomit_behavior(/datum/vomit_behavior/blood)
 						if (probmult(10))
 							M.emote(pick("sneeze","drool","cough","moan","groan"))
 						if (probmult(20))
 							boutput(M, SPAN_ALERT("You feel weak and drowsy."))
 							M.setStatus("slowed", 5 SECONDS)
-						if (probmult(8) && !M.reagents?.get_reagent_amount("promethazine"))
-							M.visible_message(SPAN_ALERT("[M] vomits a lot of blood!"))
-							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
-							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+						if (probmult(20))
+							M.nauseate(1)
 						else if (probmult(5))
 							boutput(M, SPAN_ALERT("You feel a sudden pain in your chest."))
 							M.setStatusMin("stunned", 6 SECONDS * mult)
@@ -427,7 +428,7 @@ datum
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				if (prob(10))
-					M.reagents.add_reagent("histamine", rand(5,15) * mult)
+					M.reagents.add_reagent("histamine", randfloat(12.5 , 37.5) * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -756,6 +757,34 @@ datum
 					holder.my_atom.color = "#ffffff"
 				return ..()
 
+		harmful/hyper_vomitium // vomit your heart out
+			name = "hyper vomitium"
+			id = "hyper_vomitium"
+			description = "A highly potent variant of space ipecac, sufficient to make someone vomit out everything in them. Literally."
+			reagent_state = LIQUID
+			fluid_r = 2
+			fluid_g = 50
+			fluid_b = 25
+			transparency = 200
+			depletion_rate = 0.2
+			/// how much cycles this has been in the target's system.
+			var/cycles = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				src.cycles += mult
+				M.nauseate(rand(2,5))
+				..()
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/hyper)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/hyper)
+
 		harmful/cholesterol
 			name = "cholesterol"
 			id = "cholesterol"
@@ -837,7 +866,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(6))
-					M.reagents.add_reagent("histamine", rand(1,3) * mult)
+					M.reagents.add_reagent("histamine", randfloat(11 , 33.4) * src.calculate_depletion_rate(M, mult))
 				if (prob(2))
 					boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 					random_brute_damage(M,5 * mult)
@@ -1255,7 +1284,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // sped this up a bit due to mob loop changes
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter += 1)
+				switch(counter += 1 * mult)
 					if (1 to 5)
 						if (probmult(25)) M.emote("yawn")
 					if (6 to 9)
@@ -1361,21 +1390,19 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(125, 250) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 20)
 					M.take_toxin_damage(0.75 * mult)
 					random_brute_damage(M, 0.75 * mult)
 				else if (our_amt < 40)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(20))
+						M.nauseate(1)
 					M.take_toxin_damage(1.25 * mult)
 					delimb_counter += 0.6 * mult
 					random_brute_damage(M, 1.25 * mult)
 				else
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(20))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					delimb_counter += 1.5 * mult
 					random_brute_damage(M, 2 * mult)
@@ -1461,7 +1488,7 @@ datum
 			fluid_b = 110
 			depletion_rate = 1
 			var/counter = 1
-			var/fainted = 0
+			var/fainted = FALSE
 			blob_damage = 1
 			value = 4 // 3c + heat
 
@@ -1481,11 +1508,12 @@ datum
 						M.change_misstep_chance(20 * mult)
 						if (probmult(35)) M.emote("drool")
 					if (18 to INFINITY)
-						if (!fainted)
-							M.emote("faint")
-							fainted = 1
-						M.setStatusMin("unconscious", 10 SECONDS * mult)
+						M.changeStatus("paralysis", 10 SECONDS * mult)
+						M.changeStatus("muted", 10 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
+						if (!fainted)
+							M.force_laydown_standup()
+							fainted = TRUE
 
 				M.jitteriness = max(M.jitteriness-30,0)
 				if (M.get_brain_damage() <= 80)
@@ -1528,7 +1556,7 @@ datum
 						M.make_dizzy(1 * mult)
 						M.change_eye_blurry(6, 6)
 						M.change_misstep_chance(20 * mult)
-						if(M.reagents?.has_reagent("capulettium") && M.hasStatus("knockdown"))
+						if(M.reagents?.has_reagent("capulettium") && is_incapacitated(M))
 							..()                      //will not cause emotes and puking if you are already downed by capulettium
 							return					  //for preserving the death diguise
 						if(probmult(15))
@@ -1540,9 +1568,8 @@ datum
 											SPAN_ALERT("Your feel a numbness through your [pick("hands", "fingers")].."),\
 											SPAN_ALERT("Your vision [pick("gets all blurry", "goes fuzzy")]!"),\
 											SPAN_ALERT("You feel very sick!")))
-							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
-								var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-								M.vomit(0, null, vomit_message) //so dizzy you puke
+							if(prob(30)) //no need for probmult in here as it's already behind a probmult statement
+								M.nauseate(1)
 						else if(probmult(9))
 							M.setStatus("muted", 10 SECONDS)
 							boutput(M, pick(SPAN_ALERT("You feel like the words are getting caught up in your mouth!"),\
@@ -1701,19 +1728,26 @@ datum
 			fluid_b = 30
 			transparency = 255
 
-			on_mob_life(var/mob/M, var/mult = 1)
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/green_goo)
 
-				if (!M) M = holder.my_atom
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/green_goo)
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
 				if (prob(10))
 					M.take_toxin_damage(rand(2,4) * mult)
 				if (prob(7))
 					boutput(M, SPAN_ALERT("A horrible migraine overpowers you."))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
-				if (probmult(7) && !M.reagents?.get_reagent_amount("promethazine"))
-					for(var/mob/O in AIviewers(M, null))
-						O.show_message(SPAN_ALERT("[M] vomits up some green goo."), 1)
-					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-					make_cleanable( /obj/decal/cleanable/greenpuke,M.loc)
+				if (probmult(20))
+					M.nauseate(1)
 				..()
 
 		harmful/histamine
@@ -1866,9 +1900,8 @@ datum
 						M.take_toxin_damage(1 * mult)
 						M.take_brain_damage(1 * mult)
 						M.setStatusMin("knockdown", 5 SECONDS * mult)
-				if (probmult(8))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-					M.vomit(0, null, vomit_message)
+				if (probmult(20))
+					M.nauseate(1)
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
 				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
@@ -1884,7 +1917,7 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.3
+			depletion_rate = 0.2
 			var/progression_speed = 1
 			var/counter = 1
 
@@ -1892,7 +1925,7 @@ datum
 				if (!M) M = holder.my_atom
 
 				switch(src.counter+= (mult * src.progression_speed))
-					if (10 to 27) // Small signs of trouble
+					if (10 to 28) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
 						if (probmult(13))
@@ -1901,7 +1934,7 @@ datum
 						if (probmult(13))
 							M.emote(pick("twitch","drool","tremble"))
 							M.change_eye_blurry(2, 2)
-					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
+					if (28 to 40) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						M.setStatusMin("slowed", 40 SECONDS)
@@ -1912,7 +1945,7 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (47 to INFINITY) // Heart effects kick in
+					if (40 to INFINITY) // Heart effects kick in
 						M.setStatusMin("slowed", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
@@ -1932,7 +1965,6 @@ datum
 			fluid_b = 0
 			transparency = 255
 			depletion_rate = 2
-			pathogen_nutrition = list("dna_mutagen")
 
 			var/tmp/progress_timer = 1
 
@@ -2259,10 +2291,9 @@ datum
 					if(probmult(25))
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
-					if(probmult(10))
-						var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
-						H.vomit(0, null, vomit_message)
-					else if (prob(5) && !H.reagents?.get_reagent_amount("promethazine"))
+					if(probmult(25))
+						H.nauseate(1)
+					else if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 						var/damage = rand(1,10)
 						H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
 						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)

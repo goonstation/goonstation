@@ -211,7 +211,7 @@
 	},
 /area/crater/cave/lower)
 "aou" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -410,7 +410,7 @@
 /turf/unsimulated/floor/yellowblack,
 /area/swampzone/interiors/bonktek/electek)
 "axg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/unsimulated/wall/trench{
@@ -456,7 +456,7 @@
 	},
 /area/swampzone/ground)
 "aBE" = (
-/obj/grille/steel/broken/melted{
+/obj/mesh/grille/steel/broken/melted{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -609,7 +609,7 @@
 	},
 /area/swampzone/interiors)
 "aKR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -620,7 +620,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aLh" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "aLH" = (
@@ -679,7 +679,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "aOx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -1011,7 +1011,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
 "bid" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -1435,7 +1435,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
 "bKC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1513,7 +1513,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/swampzone/interiors)
 "bNZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -1531,11 +1531,11 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/deeps)
 "bPF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/map/light/graveyard,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -1882,7 +1882,7 @@
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/crypt/graveyard)
 "ciQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/swampzone/ground)
 "cjq" = (
@@ -2125,7 +2125,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "cCj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -2464,7 +2464,7 @@
 	},
 /area/crypt/graveyard)
 "cYH" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
@@ -2474,7 +2474,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "cYK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -2528,7 +2528,7 @@
 	},
 /area/crater/cave/lower)
 "daN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight{
 	dir = 4
 	},
@@ -2549,7 +2549,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "dda" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "ddF" = (
@@ -2784,7 +2784,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "dtk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -3159,7 +3159,7 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/swampzone/ground/canyon)
 "dPr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
@@ -3241,7 +3241,7 @@
 	},
 /area/crypt/graveyard)
 "dRX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/unsimulated/wall/trench/side{
@@ -3688,7 +3688,7 @@
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "eve" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/machinery/door/airlock/glass,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
@@ -4069,7 +4069,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
 "eQl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/wall/trench{
@@ -4131,7 +4131,7 @@
 /turf/space/fluid,
 /area/swampzone/interiors/bonktek)
 "eTw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "eTD" = (
@@ -4148,7 +4148,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/deeps)
 "eUz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -4262,7 +4262,7 @@
 /turf/unsimulated/outdoors/concrete,
 /area/swampzone/ground)
 "fbg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/railing/red{
@@ -4612,7 +4612,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/space)
 "fsM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -4710,7 +4710,7 @@
 /turf/unsimulated/floor/specialroom/chapel,
 /area/crypt/sigma/mainhall)
 "fxF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -4847,7 +4847,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
 "fFl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -4904,7 +4904,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/swampzone/interiors)
 "fGU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -5049,7 +5049,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/swampzone/interiors/outbuildings)
 "fRx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/industrial,
 /area/swampzone/deeps)
 "fRM" = (
@@ -5068,7 +5068,7 @@
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
 "fSY" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -5094,7 +5094,7 @@
 /turf/unsimulated/nicegrass/random,
 /area/swampzone/interiors/outbuildings)
 "fTD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -5118,7 +5118,7 @@
 	},
 /area/swampzone/deeps)
 "fVn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/wall/trench/side{
@@ -5196,7 +5196,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "fZm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -5613,7 +5613,7 @@
 /turf/unsimulated/greek/water,
 /area/swampzone/ground)
 "gzr" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical,
@@ -5630,7 +5630,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "gCg" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -5692,10 +5692,10 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek/waffletek)
 "gFR" = (
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_y = -6
 	},
-/obj/grille/steel/broken/melted{
+/obj/mesh/grille/steel/broken/melted{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -5768,14 +5768,14 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek)
 "gKM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
 "gLB" = (
 /turf/unsimulated/grasstodirt,
 /area/swampzone/ground)
 "gMw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/railing/red{
@@ -6080,7 +6080,7 @@
 	},
 /area/swampzone/deeps)
 "hhn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space/fluid/trench{
@@ -6107,7 +6107,7 @@
 	},
 /area/syndicate_station)
 "hii" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -6142,7 +6142,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "hjK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -6246,7 +6246,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
 "hor" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/crypt/sigma)
 "hoK" = (
@@ -6274,7 +6274,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "hqR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -6406,7 +6406,7 @@
 	},
 /area/swampzone/ground)
 "hBe" = (
-/obj/grille/catwalk/dubious{
+/obj/mesh/catwalk/dubious{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -6643,7 +6643,7 @@
 	},
 /area/swampzone/deeps)
 "hMz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -6857,7 +6857,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "idJ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/cave{
 	icon_state = "cave-light"
 	},
@@ -6980,7 +6980,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "ipG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
@@ -7032,7 +7032,7 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/swampzone/ground)
 "irt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -7061,7 +7061,7 @@
 	},
 /area/swampzone/ground)
 "isp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "isx" = (
@@ -7247,7 +7247,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/bonktek)
 "iCN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -7590,7 +7590,7 @@
 /turf/unsimulated/floor/carpet/purple/fancy/edge/nw,
 /area/swampzone/interiors/bonktek/blastotek)
 "iYd" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
@@ -7697,7 +7697,7 @@
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
 "jgy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -7714,7 +7714,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/shootingrange)
 "jhc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -7729,7 +7729,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "jhJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/structure/woodwall,
@@ -7871,7 +7871,7 @@
 	},
 /area/swampzone/interiors/bonktek/funktek)
 "jsL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/research)
 "jtx" = (
@@ -8503,14 +8503,14 @@
 	},
 /area/swampzone/interiors)
 "kej" = (
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_y = 8
 	},
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_x = -7;
 	pixel_y = 4
 	},
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_x = 5;
 	pixel_y = -3
 	},
@@ -8562,11 +8562,11 @@
 /turf/unsimulated/floor/cave,
 /area/catacombs)
 "kgN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/swampzone/ground/canyon)
 "kht" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
 "kiO" = (
@@ -8589,7 +8589,7 @@
 /obj/railing/cyan/reinforced{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "kjD" = (
@@ -8607,7 +8607,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/someplace)
 "kkj" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
@@ -8676,7 +8676,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "kpD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/channel{
 	required_to_pass = 1e+009
 	},
@@ -9533,7 +9533,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "ljv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/east,
@@ -9653,7 +9653,7 @@
 	},
 /area/catacombs)
 "lsE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/cave{
 	icon_state = "cave-light"
@@ -9774,7 +9774,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard/swamp)
 "lzw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "lzI" = (
@@ -9944,7 +9944,7 @@
 /turf/unsimulated/floor/terrazzo/black,
 /area/swampzone/interiors/bonktek/lounge)
 "lMr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/channel{
@@ -9961,7 +9961,7 @@
 	},
 /area/crater/biodome/research)
 "lMN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space/fluid/trench{
@@ -10106,7 +10106,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/research)
 "lXB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical{
@@ -10271,7 +10271,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "mhi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -10431,7 +10431,7 @@
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
 "mrh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -10558,7 +10558,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "mxJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -10627,7 +10627,7 @@
 /turf/unsimulated/wall/auto/reinforced/gannets,
 /area/someplace)
 "mEK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/cave{
 	icon_state = "cave-light"
@@ -11055,7 +11055,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
 "ndF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/machinery/door/airlock/glass,
@@ -11063,7 +11063,7 @@
 /turf/unsimulated/floor,
 /area/crypt/sigma/mainhall)
 "nei" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -11154,7 +11154,7 @@
 /turf/unsimulated/floor/sanitary,
 /area/swampzone/interiors/bonktek/maintenance)
 "nms" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -11262,7 +11262,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "nrD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -11341,7 +11341,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "nwA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -11391,19 +11391,14 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "nAf" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/storage/fanny/syndie,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
 /area/syndicate_station)
 "nBq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/unsimulated/wall/trench/side{
@@ -11454,7 +11449,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "nEa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -11956,7 +11951,7 @@
 /turf/unsimulated/floor/auto/swamp/rain,
 /area/swampzone/ground)
 "ocs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
@@ -11972,7 +11967,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "ode" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/industrial,
 /area/swampzone/ground/canyon)
 "odj" = (
@@ -11980,7 +11975,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/swampzone/ground/canyon)
 "odR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -12208,7 +12203,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "ovC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/unsimulated/wall/trench/side{
@@ -12468,7 +12463,7 @@
 /turf/unsimulated/floor/stairs,
 /area/swampzone/ground)
 "oLL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -12676,7 +12671,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "oZr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -12859,7 +12854,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
 "pmu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -12992,14 +12987,14 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/interiors/quarry)
 "puJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "puK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -13014,14 +13009,14 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "pvN" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/wall/trench{
 	color = "#669966";
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
 "pwb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/channel{
@@ -13097,7 +13092,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "pAe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "pAi" = (
@@ -13663,7 +13658,7 @@
 	},
 /area/space)
 "qoY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -13747,7 +13742,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "qtL" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "qwT" = (
@@ -14030,7 +14025,7 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "qNR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -14065,7 +14060,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/bonktek/shootingrange)
 "qOP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "qOS" = (
@@ -14187,7 +14182,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "qVm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -14340,7 +14335,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "rfj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/channel{
@@ -14534,7 +14529,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/wall/trench/side{
 	color = "#669966";
 	name = "swamp wall"
@@ -14614,7 +14609,7 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek)
 "rvP" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "rvU" = (
@@ -14630,7 +14625,7 @@
 	},
 /area/crater/biodome/research)
 "rwh" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "rwN" = (
@@ -14681,7 +14676,7 @@
 	},
 /area/syndicate_station)
 "rBp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -14977,7 +14972,7 @@
 /area/swampzone/interiors/bonktek/blastotek)
 "sai" = (
 /obj/fluid_pipe/straight,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "saL" = (
@@ -15019,7 +15014,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
 "sdh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/unsimulated/wall/trench{
@@ -15149,7 +15144,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "sjt" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "skF" = (
@@ -15164,7 +15159,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "slU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/cave{
 	icon_state = "cave-light"
 	},
@@ -15176,7 +15171,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
 "snk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/glass,
@@ -15361,14 +15356,14 @@
 	},
 /area/syndicate_station)
 "swx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "sxg" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/t_junction{
 	dir = 4
 	},
@@ -15475,7 +15470,7 @@
 	},
 /area/catacombs)
 "sFN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/space/fluid/trench{
@@ -15547,7 +15542,7 @@
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "sIo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/cave{
 	icon_state = "cave-light"
 	},
@@ -15748,7 +15743,7 @@
 	},
 /area/crypt/graveyard)
 "sVO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -15758,7 +15753,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "sWx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -15872,7 +15867,7 @@
 	},
 /area/swampzone/heights)
 "taO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/auto/dirt,
@@ -16074,10 +16069,10 @@
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
 "tpj" = (
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_y = -6
 	},
-/obj/grille/steel/broken/melted{
+/obj/mesh/grille/steel/broken/melted{
 	pixel_x = -5;
 	pixel_y = -3
 	},
@@ -16217,7 +16212,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "twN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/wall/trench{
@@ -16384,7 +16379,7 @@
 /turf/unsimulated/floor/terrazzo/black,
 /area/swampzone/interiors/bonktek/lounge)
 "tGX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -16848,7 +16843,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "ukq" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
@@ -16975,7 +16970,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "urS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -17122,7 +17117,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/swampzone/ground)
 "uDD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -17264,7 +17259,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "uId" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -17639,7 +17634,7 @@
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/swampzone/interiors/bonktek)
 "vcw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -17662,7 +17657,7 @@
 	},
 /area/crater/biodome/south)
 "vdx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -17921,7 +17916,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "vtH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space/fluid/trench{
 	color = "#669966";
 	name = "swamp floor"
@@ -17994,7 +17989,7 @@
 /turf/unsimulated/floor/cave,
 /area/catacombs)
 "vBb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/east,
@@ -18039,7 +18034,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "vCQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -18055,7 +18050,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
 "vDo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/space/fluid/trench{
@@ -18133,7 +18128,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "vHV" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "vIy" = (
@@ -18426,7 +18421,7 @@
 	},
 /area/crater/cave)
 "vYg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/unsimulated/wall/trench/side{
@@ -18472,7 +18467,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
 "vZQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/wall/trench/side{
@@ -18802,7 +18797,7 @@
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "wtt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/auto/swamp/rain,
@@ -19057,7 +19052,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground/canyon)
 "wHH" = (
@@ -19199,7 +19194,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "wNF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/unsimulated/floor/auto/grass/swamp_grass,
@@ -19220,7 +19215,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
 "wOz" = (
-/obj/machinery/incubator,
+/obj/fakeobject/incubator,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "wOE" = (
@@ -19382,7 +19377,7 @@
 /turf/unsimulated/wall/cave,
 /area/catacombs)
 "wYZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/space/fluid/trench{
@@ -19414,7 +19409,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "xbB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -19638,7 +19633,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
 "xsk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/channel{
@@ -19923,7 +19918,7 @@
 	},
 /area/swampzone/deeps)
 "xSc" = (
-/obj/machinery/computer/pathology,
+/obj/fakeobject/pathogen_computer,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xSs" = (
@@ -20077,7 +20072,7 @@
 /area/syndicate_station)
 "xXU" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xYv" = (
@@ -20320,7 +20315,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/swampzone/interiors/bonktek/maintenance)
 "ykB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fluid_pipe/straight,
 /turf/unsimulated/floor/industrial,
 /area/swampzone/deeps)

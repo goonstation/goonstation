@@ -22,6 +22,10 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 	ex_act(severity, last_touched, power, datum/explosion/explosion)
 		if (!src.broken && ((explosion?.power || power) >= src.break_power))
 			src.break_open()
+		else if (src.broken && severity < 3) //prevent spamming concussive charges
+			for (var/i in 1 to rand(2,3))
+				new /obj/item/raw_material/rock(src.loc)
+			qdel(src)
 
 /obj/geode/crystal
 	icon_state = "pale"
@@ -80,7 +84,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
 		var/obj/item/crystal = new spawn_type(src.loc)
 		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]."))
-		user.lastattacked = src //is this how this works?
+		user.lastattacked = get_weakref(src) //is this how this works?
 
 	claretine
 		amount = 6
@@ -88,6 +92,15 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 
 	molitz_b
 		crystal_path = /obj/item/raw_material/molitz_beta
+		break_open()
+			..()
+			var/turf/simulated/T = get_turf(src)
+			if (!istype(T))
+				return
+			var/datum/gas_mixture/release_gas = new
+			release_gas.oxygen_agent_b = 400
+			release_gas.temperature = T20C
+			T.assume_air(release_gas)
 
 	starstone
 		icon_state = "dark"
@@ -117,12 +130,13 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 ABSTRACT_TYPE(/obj/geode/fluid)
 /obj/geode/fluid
 	var/reagent_id = null
+	var/temperature = 20 + T0C
 	New()
 		..()
 		var/amt = rand(100, 300)
 		src.create_reagents(amt)
 		if (src.reagent_id)
-			src.reagents.add_reagent(src.reagent_id, amt)
+			src.reagents.add_reagent(src.reagent_id, amt, temp_new = temperature)
 		src.AddComponent(/datum/component/reagent_overlay, 'icons/obj/geodes.dmi', "trickles", 1)
 
 	break_open()
@@ -144,6 +158,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 	//hehehehe
 	cyanide
 		reagent_id = "cyanide"
+		temperature = 50 + T0C
 	ants
 		reagent_id = "ants"
 		weight = 20

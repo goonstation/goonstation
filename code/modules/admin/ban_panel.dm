@@ -108,9 +108,9 @@
 	if (!the_ban)
 		tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
 		return
-	var/ckey = the_ban.original_ban_detail["ckey"]
-	var/cid = the_ban.original_ban_detail["comp_id"]
-	var/ip = the_ban.original_ban_detail["ip"]
+	var/ckey = the_ban.original_ban_detail.ckey
+	var/cid = the_ban.original_ban_detail.comp_id
+	var/ip = the_ban.original_ban_detail.ip
 	var/alert_body = {"
 		Are you sure you want to delete ban [ban_id]?
 		ckey: [ckey || "none"]

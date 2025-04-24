@@ -2,6 +2,8 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/delay
 	var/list/obj/afterimage/afterimages
+	var/afterimage_type = /obj/afterimage
+	var/list/afterimage_args
 
 TYPEINFO(/datum/component/afterimage)
 	initialization_args = list(
@@ -15,13 +17,14 @@ TYPEINFO(/datum/component/afterimage)
 		return COMPONENT_INCOMPATIBLE
 	src.delay = delay
 	src.afterimages = list()
+	src.set_afterimage_args()
 	if(count > 1)
 		for(var/i = 1 to count)
-			var/obj/afterimage/afterimage = new/obj/afterimage(null)
+			var/obj/afterimage/afterimage = new afterimage_type(arglist(afterimage_args))
 			afterimage.correct_alpha = 200 - 100 * (i - 1) / (count - 1)
 			afterimages += afterimage
 	else
-		var/obj/afterimage/afterimage = new/obj/afterimage(null)
+		var/obj/afterimage/afterimage = new afterimage_type(arglist(afterimage_args))
 		afterimage.correct_alpha = 100
 		afterimages += afterimage
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(move))
@@ -49,6 +52,9 @@ TYPEINFO(/datum/component/afterimage)
 		src.afterimages = null
 	. = ..()
 
+/datum/component/afterimage/proc/set_afterimage_args()
+	afterimage_args = list(null)
+
 /datum/component/afterimage/proc/change_dir(atom/movable/AM, new_dir, old_dir)
 	src.sync_afterimages(new_dir)
 
@@ -63,7 +69,7 @@ TYPEINFO(/datum/component/afterimage)
 
 /datum/component/afterimage/proc/sync_afterimages(dir_override=null)
 	set waitfor = FALSE
-	var/obj/afterimage/target_state = new(null)
+	var/obj/afterimage/target_state = new afterimage_type(arglist(afterimage_args))
 	target_state.active = TRUE
 	target_state.sync_with_parent(parent)
 	target_state.loc = null

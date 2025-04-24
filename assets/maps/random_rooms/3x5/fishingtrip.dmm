@@ -13,20 +13,20 @@
 	pixel_y = -11;
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "h" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue,
 /area/space)
 "i" = (
-/turf/simulated/floor/airless/stairs/wood2,
+/turf/simulated/floor/stairs/wood2,
 /area/space)
 "o" = (
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "t" = (
 /obj/item/fishing_rod/basic{
@@ -41,7 +41,7 @@
 	pixel_y = -5;
 	pixel_x = 12
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/space)
 "w" = (
 /obj/decal/cleanable/paper,
@@ -56,20 +56,20 @@
 	pixel_y = 3;
 	pixel_x = 8
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "E" = (
-/turf/unsimulated/floor/setpieces/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "I" = (
-/turf/unsimulated/floor/setpieces/swampgrass_edging,
+/turf/simulated/floor/swampgrass_edging,
 /area/space)
 "Q" = (
 /obj/storage/crate/freezer{
 	desc = "A cooler to keep your fresh catches in.";
 	name = "cooler"
 	},
-/turf/unsimulated/floor/setpieces/swampgrass,
+/turf/simulated/floor/swampgrass,
 /area/space)
 "R" = (
 /turf/simulated/floor/twotone/blue,
@@ -85,7 +85,7 @@
 	pixel_y = -6;
 	pixel_x = -12
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/space)
 
 (1,1,1) = {"

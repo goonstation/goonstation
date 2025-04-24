@@ -88,16 +88,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// The types of material pieces of which the manufacturer will be spawned with.
 	/// The amount of each resource is defined on free_resource_amt
 	var/list/free_resources = list()
-	/// Supposedly used by podwards manufacturers, but not really
-	/// Kind of legacy is this is removed soon
-	var/list/resource_amounts = list()
 	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
 	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
+	var/list/cached_producibility_data = list() //! List which stores producibility data to be returned early in get_producibility_for_blueprints
+	// Because of how get_producibility_for_blueprints works it only updates if the materials changed in quantity or order, so this makes sure we have something for comparison
+	// The other option would be to manually set a trigger or flag whenever the contents are hard-coded to change but that would be unwarranted work onto future contributions
+	var/list/stored_previous_materials_data = list() //! List which stores the materials as they were last seen in get_producibility_for_blueprints
+	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
 	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -121,8 +123,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/static/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/datum/action/action_bar = null
 
+	///!!very hacky and dumb!! All manufacturers with the same share_id have the same storage datum, ie share materials inherently
+	var/share_id = null
+
 	New()
 		START_TRACKING
+		if (src.share_id)
+			var/tracking_id = TR_CAT_MANUFACTURER_LINK + src.share_id
+			for (var/obj/machinery/manufacturer/other as anything in by_cat[tracking_id])
+				if (other.share_id == src.share_id)
+					src.storage = other.storage //lalala I cant hear youu I'm too busy committing code crimess
+					break
+			src.ensure_contents() //so that the first one consistently makes its contents
+			src.claim_free_resources() //add them to the pool
+			START_TRACKING_CAT(tracking_id)
+			src.UpdateOverlays(image(src.icon, "fab-dish", layer=src.layer + 0.1), "share-dish")
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.net_id = generate_net_id(src)
@@ -151,6 +166,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	disposing()
 		STOP_TRACKING
+		if (src.share_id)
+			STOP_TRACKING_CAT(TR_CAT_MANUFACTURER_LINK + src.share_id)
 		src.remove_storage()
 		manuf_controls.manufacturing_units -= src
 		src.work_display = null
@@ -271,7 +288,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
+	overload_act()
+		if (src.is_broken())
+			return FALSE
+		src.health = 25
+		src.visible_message(SPAN_ALERT("<b>[src] breaks down and stops working!</b>"))
+		src.status |= BROKEN
+		src.power_change()
+		return TRUE
+
 	power_change()
+		if (QDELETED(src))
+			return
 		if(src.is_broken())
 			src.build_icon()
 		else
@@ -306,12 +334,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = FALSE
 			src.update_static_data(user)
 
-		// Send material data as tuples of material name, material id, material amount
-		var/resource_data = list()
+		// Get data about resources in the manufacturer and what it can/can't make
+		var/list/resource_data = list()
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
+		var/list/blueprint_producibility_by_ref = src.get_producibility_for_blueprints()
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -342,6 +371,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"repeat" = src.repeat,
 			"error" = src.error,
 			"resource_data" = resource_data,
+			"producibility_data" = blueprint_producibility_by_ref,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
 			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
@@ -468,6 +498,63 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"isMechBlueprint" = istype(M, /datum/manufacture/mechanics),
 		)
 
+	/// Get an associated list for the UI of blueprintRef to associated list of requirement name to whether that one's producible, but only when necessary
+	proc/get_producibility_for_blueprints()
+		// Run a comparison against the shallow storage of the previous contents to see if it changed
+		var/contents_changed = FALSE
+		var/list/C = src.get_contents()
+		var/list/refs_encountered = list() //! List to gather the refs still in the container, to find what might no longer exist in the container and prune it from stored data accordingly
+		for (var/obj/item/material_piece/M as anything in C)
+			var/M_ref = "\ref[M]"
+			refs_encountered.Add(M_ref)
+			// Do checks if we still aren't convinced contents changed
+			if (!contents_changed)
+				// Compare amounts, where stored_previous_materials_data[ref] contains the amount last recorded
+				if (!(M_ref in src.stored_previous_materials_data) || M.amount != src.stored_previous_materials_data[M_ref])
+					contents_changed = TRUE
+			// After checking this one, overwrite the previous entry with the new
+			src.stored_previous_materials_data[M_ref] = M.amount
+		// Quick pass to remove any stored material refs that shouldn't exist
+		for (var/ref in src.stored_previous_materials_data)
+			if (!(ref in refs_encountered))
+				src.stored_previous_materials_data.Remove(ref)
+				contents_changed = TRUE
+		// Do actual computation since contents changed
+		if (contents_changed)
+			return src.compute_producibility_for_blueprints()
+		// Contents didn't change, but this nerd might have added blueprints so now we check if blueprints changed
+		// Quick first pass to see if lengths differ. If they do, blueprints certainly changed.
+		var/all_blueprints = ALL_BLUEPRINTS // just to compile the list once
+		if (length(all_blueprints) != length(src.stored_previous_blueprint_data))
+			src.stored_previous_blueprint_data = all_blueprints
+			return src.compute_producibility_for_blueprints()
+		// Slightly more in depth check over the blueprints to check if any are missing
+		for (var/datum/manufacture/M as anything in all_blueprints)
+			if (!(M in src.stored_previous_blueprint_data))
+				// A blueprint was found that wasn't previously seen, so it changed
+				src.stored_previous_blueprint_data = all_blueprints
+				return src.compute_producibility_for_blueprints()
+		// Nothing changed, return the cached data
+		return src.cached_producibility_data
+
+	/// Runs the actual computation for the above proc. Split apart so the caching can still be a bit more performant
+	proc/compute_producibility_for_blueprints()
+		var/list/output = list()
+		for (var/datum/manufacture/M as anything in ALL_BLUEPRINTS)
+			var/M_ref = "\ref[M]"
+			var/list/mats_needed = src.get_materials_needed(M)
+			output[M_ref] = list()
+			// 'convert' the result of R = P_ref to R.name = boolean
+			for (var/datum/manufacturing_requirement/needed_R as anything in M.item_requirements)
+				output[M_ref][needed_R.getName()] = FALSE
+				for (var/datum/manufacturing_requirement/satisfied_R as anything in mats_needed)
+					if (satisfied_R == needed_R)
+						output[M_ref][needed_R.getName()] = TRUE
+						break
+		// Store this as cached now that it has, in fact, changed
+		src.cached_producibility_data = output
+		return output
+
 	attack_hand(mob/user)
 		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
 		if (length(free_resources) > 0)
@@ -592,6 +679,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "Manufacturer queue length limit reached.", sound = TRUE)
 				else
 					src.queue += I
+					logTheThing(LOG_STATION, usr, "queues manufacturing of [I.name] ([json_encode(I.item_outputs)])[repeat ? " on repeat":""] in [src] at [log_loc(src)]")
 					if (src.mode == MODE_READY)
 						src.begin_work( new_production = TRUE )
 					return TRUE
@@ -675,6 +763,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "ERROR: Invalid Operation.", sound = TRUE)
 					return
 				src.queue -= src.queue[operation]
+				actions.interrupt(src, INTERRUPT_ALWAYS)
+
 				// This is a new production if we removed the item at index 1, otherwise we just removed something not being produced yet
 				begin_work( new_production = (operation == 1) )
 				return TRUE
@@ -692,7 +782,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (!src.allowed(usr))
-						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						src.grump_message(usr, "ERROR: Could not re-validate authentication credentials. Aborting.", sound = TRUE)
 						return
 					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
 						return
@@ -745,8 +835,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 						// This next bit is stolen from PTL Code
 					var/list/accounts = \
-						data_core.bank.find_records("job", "Chief Engineer") + \
-						data_core.bank.find_records("job", "Miner")
+						data_core.general.find_records("rank", "Chief Engineer") + \
+						data_core.general.find_records("rank", "Miner")
 
 
 					var/datum/signal/minerSignal = get_free_signal()
@@ -760,10 +850,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/t as anything in accounts)
 								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
@@ -785,15 +875,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
+	/*
+	Handling for shocking the user
+	Handling for getting the satchel of an ore scoop
+	Handling for getting the blueprint into a fabricator
+	Handling for loading material bars from a satchel
+	Handling for tools (screwdriver, open maint panel)
+	Handling for tools (welding, repair/load)
+	Handling for cable coils (repair, load)
+	Handling for tools (crowbar, dismantle)
+	Handling for tools (snipping, dismantle)
+	Handling for reconstruction (sheets, reconstruct)
+	Handling for cable coils (reconstruct)
+	Handling for inserting manudrives
+	Grumping for trying to insert sheets/coils/raw mats
+	Handling for inserting material pieces
+	Handling for.. snipping/pulsing calling Attackhand when the panel is open?
+	Handling for early return if a card is scanned successfully
+	Handling for calling parent proc + hitting the machine
+	*/
+
 	attackby(obj/item/W, mob/user)
+		// Handling for shocking the user
 		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
+		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
+		// Handling for getting the blueprint into a fabricator
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
@@ -832,18 +945,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 			return
 
+		// Handling for loading material bars from a satchel
 		else if (istype(W, /obj/item/satchel))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [W]!"), SPAN_NOTICE("You use [src]'s automatic loader on [W]."))
 			var/amtload = 0
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M)
+				src.add_contents(M, user)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
 			else boutput(user, SPAN_ALERT("No materials loaded!"))
 
+		// Handling for tools (screwdriver, open maint panel)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
@@ -853,6 +968,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			tgui_process.try_update_ui(user, src)
 
+		// Handling for tools (welding, repair/load)
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -863,7 +979,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -873,6 +989,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
+		// Handling for cable coils (repair, load, reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
@@ -884,7 +1001,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.change_contents(mat_piece = C, user = user)
+				src.add_contents(C, user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -896,6 +1013,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health >= 50)
 						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
+		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -906,7 +1024,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == DISMANTLE_NONE)
@@ -922,6 +1040,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				src.build_icon()
 
+		// Handling for tools (crowbar, dismantle)
 		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -929,6 +1048,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
+		// Handling for tools (snipping, dismantle)
 		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
@@ -942,12 +1062,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			C.UpdateIcon()
 			src.build_icon()
 
+		// Handling for reconstruction (sheets, reconstruct)
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
+		// Handling for cable coils (reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
@@ -957,6 +1079,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.shock(user,100)
 			src.build_icon()
 
+		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
@@ -983,20 +1106,24 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
+		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.change_contents(mat_piece = W, user = user)
+			src.add_contents(W, user)
 
+		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
 			return
 
+		// Handling for early return if a card is scanned successfully
 		else if(scan_card(W))
 			return
 
+		// Handling for calling parent proc + hitting the machine
 		else
 			..()
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			attack_particle(user,src)
 			hit_twitch(src)
 			if (W.hitsound)
@@ -1172,7 +1299,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.get_contents() // Ensure contents exist first
+				src.add_contents(M, user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1189,7 +1317,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.add_contents(M, user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1556,9 +1684,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/remove_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			var/piece_ref = mats_used[R]
-			var/amount_to_remove = M.item_requirements[R]
-			src.change_contents(-amount_to_remove/10, mat_piece = locate(piece_ref))
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
+				if ("\ref[P]" != mats_used[R])
+					continue
+				P.amount = round( (P.amount - (required_amount/10)), 0.1)
+				if (P.amount <= 0)
+					qdel(P)
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1567,7 +1699,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				return -1 // Represents unlimited with manudrives, we roll with it
 			for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 				if(!isnull(MD.num_working))
-					return src.manudrive.fablimit - MD.num_working
+					return MD.fablimit - MD.num_working
 		return 0 // none loaded
 
 	proc/begin_work(new_production = TRUE)
@@ -1688,9 +1820,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	proc/dispense_product(product, datum/manufacture/M, var/list/materials_used)
+		var/atom/movable/A
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
-				var/atom/movable/A = new product(src)
+				A = new product(src)
 				if (isitem(A))
 					var/obj/item/I = A
 					M.modify_output(src, I, materials_used)
@@ -1698,7 +1831,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				else
 					A.set_loc(src.get_output_location(A))
 			else
-				new product(get_output_location())
+				A = new product(get_output_location())
 
 		else if (istext(product) || isnum(product))
 			if (istext(product) && copytext(product,1,8) == "reagent")
@@ -1713,23 +1846,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (welp.Width() > 32 || welp.Height() > 32)
 				welp.Scale(32, 32)
 				product = welp
-			var/obj/dummy = new /obj/item(get_turf(src))
-			dummy.name = "strange thing"
-			dummy.desc = "The fuck is this?"
-			dummy.icon = welp
-
+			A = new /obj/item(get_turf(src))
+			A.name = "strange thing"
+			A.desc = "The fuck is this?"
+			A.icon = welp
 		else if (isfile(product)) // adapted from vending machine code
 			var/S = sound(product)
 			if (S)
 				playsound(src.loc, S, 50, 0)
 
-		else if (isobj(product))
-			var/obj/X = product
-			X.set_loc(get_output_location())
+		else if (isobj(product) || ismob(product))
+			A = product
+			A.set_loc(get_output_location())
 
-		else if (ismob(product))
-			var/mob/X = product
-			X.set_loc(get_output_location())
+		return A
 
 	proc/flip_out()
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)
@@ -1817,11 +1947,24 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.manudrive = null
 		should_update_static = TRUE
 
+	proc/ensure_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece), slots = INFINITY)
+
+	proc/add_contents(obj/item/W, mob/user = null)
+		src.ensure_contents()
+		src.storage.add_contents(W, user, visible=FALSE)
+
+	remove_storage()
+		if (src.share_id) //don't qdel shared storages
+			src.storage = null
+			return
+		. = ..()
+
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
-		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud, can_hold=list(/obj/item/material_piece))
+		src.ensure_contents()
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
@@ -1829,69 +1972,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(I, src.loc)
 		return storage_contents
 
-	/*
-	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
-	Parameters for selection of material (requires at least one non-null):
-	mat_id = material id to set. creates a new material if none of that id exists
-	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
-	material = material datum to add. acts as/overrides mat_id if provided
-	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
-	user = (optional) any mob that may be loading this
-	*/
-	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
-		if (!isnull(mat_path))
-			mat_piece = new mat_path
-			if (amount)
-				mat_piece.amount = amount
-
-		if (!amount)
-			if (isnull(mat_piece))
-				return
-			else
-				amount = mat_piece.amount
-
-		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
-			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
-
-		// Try stacking with existing same material in storage
-		var/list/C = src.get_contents()
-		if (!isnull(mat_datum))
-			mat_id = mat_datum.getID()
-		for (var/obj/item/material_piece/P as anything in C)
-			if (!P.material)
-				continue
-			// Match by material piece or id
-			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
-				mat_id && mat_id == P.material.getID())
-				P.change_stack_amount(amount)
-				// Handle inserting pieces into the machine
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-					qdel(mat_piece)
-				if (P.amount <= 0)
-					qdel(P)
-				return
-
-		// No same material in storage, create/add the one we have and update the requirements index accordingly
-		if (!isnull(mat_piece))
-			if (isnull(mat_piece.material))
-				return
-			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
-			return
-
-		if (isnull(mat_datum))
-			// we gave an ID but no M, so override 'M' for this
-			mat_datum = getMaterial(mat_id)
-
-		var/T = getProcessedMaterialForm(mat_datum)
-		var/obj/item/material_piece/P = new T
-		P.amount = max(0, amount)
-		src.storage.add_contents(P, user = user, visible = FALSE)
-
-		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
+	on_add_contents(obj/item/I)
+		if (!("\ref[I.material]" in src.material_patterns_by_ref))
+			src.material_patterns_by_ref["\ref[I.material]"] = src.get_requirements_material_satisfies(I.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -1927,8 +2010,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resources = list()
 			return
 
+		src.get_contents() // potentially load storage datum if it doesnt exist yet
 		for (var/mat_path in src.free_resources)
-			src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
+			var/obj/item/material_piece/P = new mat_path
+			P.amount = src.free_resources[mat_path]
+			src.add_contents(P)
 
 		free_resources = list()
 

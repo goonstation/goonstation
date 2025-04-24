@@ -8,10 +8,11 @@ VUVUZELA
 */
 
 /obj/item/bananapeel
-	name = "Banana Peel"
+	name = "banana peel"
 	desc = "A peel from a banana."
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-peel"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "banana-peel"
 	w_class = W_CLASS_TINY
 	throwforce = 0

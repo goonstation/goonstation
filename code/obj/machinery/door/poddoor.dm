@@ -64,7 +64,7 @@
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -966,16 +966,9 @@
 	if (ispryingtool(C) && src.density && (src.status & NOPOWER) && !( src.operating ))
 		if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
 			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
-		src.operating = TRUE
-		flick("[icon_base]c0", src)
-		src.icon_state = "[icon_base]0"
-		sleep(1.5 SECONDS)
-		src.set_density(0)
-		src.set_opacity(0)
-		src.operating = FALSE
-		src.update_nearby_tiles()
+		src.open()
 	else if (C && src.density && !src.operating)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(C.force)
@@ -983,53 +976,18 @@
 /obj/machinery/door/poddoor/bumpopen(atom/movable/AM)
 	return 0
 
-/obj/machinery/door/poddoor/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!src.density)
-		return 0
-	if (src.linked_forcefield) //mbc : oh gosh why is this not calling door parent
-		src.linked_forcefield.setactive(1)
-
-	if(!src.operating) //in case of emag
-		src.operating = 1
-
-	SPAWN(-1)
-		flick("[icon_base]c0", src)
-		src.icon_state = "[icon_base]0"
-		sleep(1 SECOND)
-		src.set_density(0)
-		src.set_opacity(0)
-		src.update_nearby_tiles()
-
-		if(src.operating == 1) //emag again
-			src.operating = 0
-		if(src.autoclose)
-			SPAWN(15 SECONDS)
-				src.autoclose()
-	return 1
+/obj/machinery/door/poddoor/play_animation(animation)
+	switch(animation)
+		if("opening")
+			FLICK("[icon_base]c0", src)
+			src.icon_state = "[icon_base]0"
+		if("closing")
+			FLICK("[icon_base]c1", src)
+			src.icon_state = "[icon_base]1"
+	return
 
 /obj/machinery/door/poddoor/close()
-	if (src.operating)
-		return
-	if (src.density)
-		return
-	if (src.linked_forcefield) //mbc : oh gosh why is this not calling door parent
-		src.linked_forcefield.setactive(0)
-
-	SPAWN(0)
-		src.operating = 1
-		flick("[icon_base]c1", src)
-		src.icon_state = "[icon_base]1"
-		src.set_density(1)
-		if (src.visible)
-			src.set_opacity(1)
-		src.update_nearby_tiles()
-
-		sleep(1 SECOND)
-		src.operating = 0
-
-	return
+	. = ..(TRUE)
 
 /obj/machinery/door/poddoor/buff
 	name = "buff blast door"
@@ -1068,63 +1026,29 @@
 	if (!ispryingtool(C))
 		return
 	if ((src.density && (src.status & NOPOWER) && !( src.operating )))
-		SPAWN( 0 )
-			src.operating = 1
-			flick("[icon_base][doordir]c0", src)
-			src.icon_state = "[icon_base][doordir]0"
-			sleep(1.5 SECONDS)
-			src.set_density(0)
-			src.set_opacity(0)
-			src.operating = 0
-			src.update_nearby_tiles()
-			return
+		if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+		src.open()
 	return
 
 /obj/machinery/door/poddoor/blast/bumpopen(atom/movable/AM)
 	return 0
 
-/obj/machinery/door/poddoor/blast/open()
-	if (src.operating == 1) //doors can still open when emag-disabled
-		return
-	if (!density)
-		return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
-	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		src.linked_forcefield.setactive(1)
+/obj/machinery/door/poddoor/blast/play_animation(animation)
+	switch(animation)
+		if("opening")
+			FLICK("[icon_base][doordir]c0", src)
+			src.icon_state = "[icon_base][doordir]0"
+		if("closing")
+			FLICK("[icon_base][doordir]c1", src)
+			src.icon_state = "[icon_base][doordir]1"
+	return
 
-	SPAWN(-1)
-		flick("[icon_base][doordir]c0", src)
-		src.icon_state = "[icon_base][doordir]0"
-		sleep(1 SECOND)
-		src.set_density(0)
-		src.set_opacity(0)
-		src.update_nearby_tiles()
-
-		if(operating == 1) //emag again
-			src.operating = 0
-		if(autoclose)
-			SPAWN(15 SECONDS)
-				autoclose()
-	return 1
-
-/obj/machinery/door/poddoor/blast/close()
-	if (src.operating || src.density)
-		return
-	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		src.linked_forcefield.setactive(0)
-	src.operating = 1
-
-	SPAWN(0)
-		flick("[icon_base][doordir]c1", src)
-		src.icon_state = "[icon_base][doordir]1"
-		src.set_density(1)
-		if (src.visible)
-			src.set_opacity(1)
-		src.update_nearby_tiles()
-
-		sleep(1 SECOND)
-		src.operating = 0
+/obj/machinery/door/poddoor/blast/update_icon(var/toggling = 0)
+	if(toggling? !density : density)
+		icon_state = "[icon_base][doordir]1"
+	else
+		icon_state = "[icon_base][doordir]0"
 	return
 
 /obj/machinery/door/poddoor/isblocked()

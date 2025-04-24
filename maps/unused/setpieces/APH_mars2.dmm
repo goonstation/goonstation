@@ -502,7 +502,7 @@
 	},
 /area/marsoutpost)
 "bq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
@@ -529,7 +529,7 @@
 	},
 /area/mars)
 "bu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /obj/window/reinforced/west,
@@ -562,7 +562,7 @@
 	},
 /area/mars)
 "bz" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken (EAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -612,7 +612,7 @@
 	},
 /area/mars)
 "bF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";
@@ -980,7 +980,7 @@
 	},
 /area/marsoutpost)
 "cs" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto/reinforced,
 /turf/unsimulated/floor{
 	tag = "icon-plating_dusty1";
@@ -1241,7 +1241,7 @@
 	},
 /area/mars)
 "dD" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-bdoorbroken (SOUTHEAST)";
 	name = "rusty blastdoor";
 	desc = "This blast door looks rusted over.  Junk.";

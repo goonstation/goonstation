@@ -249,14 +249,16 @@
 		if (!obj_turf)
 			return FALSE
 		for (var/obj/O in obj_turf)
-			if (src.constructible_check(O))
+			if (src.should_ignore_dense_check(O))
 				continue
 			if (O.density)
 				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
 
-	proc/constructible_check(var/obj/O)
+	/// Check if the object is one of a dense object which is an exception to most others -- and should be allowed to have
+	/// several of its own instances on a tile. Girders, thin windows, and railings are all examples of this.
+	proc/should_ignore_dense_check(var/obj/O)
 		// girder for soul, window for thindow (fuck thindow) <- ((I have no idea what this means))
 		return istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing)
 
@@ -468,7 +470,7 @@
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-		if (interrupt_flags)
+		if (interrupt_flags != null)
 			src.interrupt_flags = interrupt_flags
 		//generate a id
 		if (src.proc_path)
@@ -610,20 +612,10 @@
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
-
 				// Re-added (Convair880).
-				if (istype(I, /obj/item/mousetrap/))
-					var/obj/item/mousetrap/MT = I
-					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mine))
-					var/obj/item/mine/M = I
-					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						M.triggered(source)
+				if SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, source)
+					for (var/mob/O in AIviewers(owner))
+						O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 
 				target.u_equip(I)
 				I.set_loc(target.loc)
@@ -1170,13 +1162,13 @@
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || !can_act(src.owner)) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working || !can_act(src.owner))  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1225,6 +1217,8 @@
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!can_act(src.owner))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
@@ -1425,6 +1419,9 @@
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		M.losebreath++ // ♪ give a little bit of your life to me ♪
+		M.emote("gasp")
 
 		target.take_oxygen_deprivation(-15)
 		target.losebreath = 0
@@ -1969,3 +1966,47 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 0)
 			injector.inject(owner, target)
 
+
+/datum/action/show_item
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/item = null
+	var/hand_icon = ""
+	var/pixel_x_offset = null
+	var/pixel_y_offset = null
+	var/pixel_x_hand_offset = null
+	var/pixel_y_hand_offset = null
+
+	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
+		. = ..()
+		src.user = user
+		src.item = item
+		src.hand_icon = hand_icon
+		src.pixel_x_offset = x_offset
+		src.pixel_y_offset = y_offset
+		src.pixel_x_hand_offset = x_hand_offset
+		src.pixel_y_hand_offset = y_hand_offset
+
+	onStart()
+		. = ..()
+		var/hand_icon_state = ""
+		if(src.user.hand)
+			hand_icon_state = "[hand_icon]_hold_l"
+		else
+			hand_icon_state = "[hand_icon]_hold_r"
+			src.pixel_x_offset = -src.pixel_x_offset
+			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
+
+		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
+
+		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
+
+		src.user.set_dir(SOUTH)
+
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.user.UpdateOverlays(null, "showoff_hand_overlay")

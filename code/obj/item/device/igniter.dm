@@ -5,9 +5,9 @@ TYPEINFO(/obj/item/device/igniter)
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
-	var/status = 1
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5
@@ -20,110 +20,75 @@ TYPEINFO(/obj/item/device/igniter)
 	//its still a bit stronger than non-inventory interactions, why not
 	var/last_ignite = 0
 
+/obj/item/device/igniter/New()
+	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
+
+/obj/item/device/igniter/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
+	..()
+
+/// ----------- Trigger/Applier-Assembly-Related Procs -----------
+
+
+/obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	if(!parent_assembly.target)
+		return " You can add a plasma tank, pipebomb or beaker onto this assembly in order to modify it further."
+
+/obj/item/device/igniter/proc/assembly_application(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	if(!assembly_target)
+		//if there is no target, we just heat the tile we are on
+		src.ignite()
+	else
+		if(istype(assembly_target, /obj/item/pipebomb/bomb))
+			playsound(get_turf(parent_assembly), 'sound/weapons/armbomb.ogg', 50, TRUE)
+			var/obj/item/pipebomb/bomb/manipulated_pipebomb = assembly_target
+			manipulated_pipebomb.do_explode()
+			qdel(parent_assembly)
+			return
+		if(istype(assembly_target, /obj/item/reagent_containers/glass/beaker))
+			var/obj/item/reagent_containers/glass/beaker/manipulated_beaker = assembly_target
+			manipulated_beaker.reagents.temperature_reagents(4000, 400)
+			manipulated_beaker.reagents.temperature_reagents(4000, 400)
+			return
+		if(istype(assembly_target, /obj/item/tank/plasma))
+			var/obj/item/tank/plasma/manipulated_plasma_tank = assembly_target
+			manipulated_plasma_tank.ignite()
+			qdel(parent_assembly)
+			return
+		if(istype(assembly_target, /obj/item/clothing/head/butt))
+			var/obj/item/clothing/head/butt/manipulated_butt = assembly_target
+			manipulated_butt.explode_butt()
+			qdel(parent_assembly)
+			return
+
+/obj/item/device/igniter/proc/assembly_setup(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	if(parent_assembly.applier == src)
+		// trigger-igniter- Assembly + wired pipebomb/pipebomb-frame/beaker/butt -> trigger-igniter pipebomb/beakerbomb/buttbomb
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/tank/plasma, /obj/item/clothing/head/butt, /obj/item/pipebomb/bomb, /obj/item/reagent_containers/glass/beaker), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+	if(istype(parent_assembly.applier, /obj/item/device/multitool) && (src in parent_assembly.additional_components))
+		//were on the way to blow everything up, so lets lock in!
+		parent_assembly.special_construction_identifier = "canbomb"
+		//the rest of the assembly will be handled in obj/item/device/multitool
+
+/obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/passed_overlay_offset)
+	if(parent_assembly.special_construction_identifier == "canbomb")
+		parent_assembly.overlays += image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
+/// ----------------------------------------------
+
+
 /obj/item/device/igniter/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (H:bleeding || (H.organHolder.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-			if (!src.cautery_surgery(target, user, 15))
+			if (is_special || !src.cautery_surgery(target, user, 15))
 				return ..()
 		else return ..()
 	else return ..()
-
-/obj/item/device/igniter/attackby(obj/item/W, mob/user)
-	if ((istype(W, /obj/item/device/radio/signaler) && !( src.status )))
-		var/obj/item/device/radio/signaler/S = W
-		if (!( S.b_stat ))
-			return
-		var/obj/item/assembly/rad_ignite/R = new /obj/item/assembly/rad_ignite( user )
-		S.set_loc(R)
-		R.part1 = S
-		S.layer = initial(S.layer)
-		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		S.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		src.add_fingerprint(user)
-
-	else if ((istype(W, /obj/item/device/prox_sensor) && !( src.status )))
-
-		var/obj/item/assembly/prox_ignite/R = new /obj/item/assembly/prox_ignite( user )
-		W.set_loc(R)
-		R.part1 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(R)
-		W.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		src.add_fingerprint(user)
-
-	else if ((istype(W, /obj/item/device/timer) && !( src.status )))
-
-		var/obj/item/assembly/time_ignite/R = new /obj/item/assembly/time_ignite( user )
-		W.set_loc(R)
-		R.part1 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(R)
-		W.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		src.add_fingerprint(user)
-	else if ((istype(W, /obj/item/device/analyzer/healthanalyzer) && !( src.status )))
-
-		var/obj/item/assembly/anal_ignite/R = new /obj/item/assembly/anal_ignite( user ) // Hehehe anal
-		W.set_loc(R)
-		R.part1 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(R)
-		W.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		src.add_fingerprint(user)
-	else if (istype(W, /obj/item/device/multitool)) // check specifically for a multitool
-
-		var/obj/item/assembly/detonator/R = new /obj/item/assembly/detonator(user);
-		W.set_loc(R)
-		W.master = R
-		W.layer = initial(W.layer)
-		src.set_loc(R)
-		src.master = R
-		src.layer = initial(src.layer)
-		R.part_mt = W
-		R.part_ig = src
-		R.set_loc(user)
-		user.u_equip(src)
-		user.u_equip(W)
-
-		user.put_in_hand_or_drop(R)
-
-		R.setDetState(0)
-		src.add_fingerprint(user)
-		user.show_message(SPAN_NOTICE("You hook up the igniter to the multitool's panel."))
-
-	if (isscrewingtool(W))
-		src.status = !(src.status)
-		if (src.status)
-			user.show_message(SPAN_NOTICE("The igniter is ready!"))
-		else
-			user.show_message(SPAN_NOTICE("The igniter can now be attached!"))
-		src.add_fingerprint(user)
-
-	return
 
 /obj/item/device/igniter/attack_self(mob/user as mob)
 
@@ -138,29 +103,22 @@ TYPEINFO(/obj/item/device/igniter)
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
-		flick("igniter_light", src)
-		boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+		FLICK("igniter_light", src)
+		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
 
 /obj/item/device/igniter/proc/ignite()
-	if (src.status && can_ignite())
+	if (src.can_ignite())
 		var/turf/location = src.loc
 
 		if (src.master)
 			location = src.master.loc
 
-		flick("igniter_light", src)
+		FLICK("igniter_light", src)
 		location = get_turf(location)
 		location?.hotspot_expose((isturf(location) ? 3000 : 4000),2000)
 		last_ignite = world.time
 
 	return
 
-/obj/item/device/igniter/examine(mob/user)
-	. = ..()
-	if ((in_interact_range(src, user) || src.loc == user))
-		if (src.status)
-			. += "The igniter is ready!"
-		else
-			. += "The igniter can be attached!"
