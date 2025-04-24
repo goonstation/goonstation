@@ -408,6 +408,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				for (var/i=rand(1,src.storage.slots), i>0, i--)
 					var/egg = pick(eggs)
 					if (ispath(egg))
+						egg.infertile = TRUE
 						src.storage.add_contents(new egg(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
