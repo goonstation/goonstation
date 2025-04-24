@@ -1468,6 +1468,7 @@ TYPEINFO(/area/diner)
 	name = "Heated Pool"
 	requires_power = FALSE
 	icon_state = "red"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/watchful_eye_sensor
 	name = "Watchful Eye Sensor Satellite"

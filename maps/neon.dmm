@@ -3968,9 +3968,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "dae" = (
-/obj/submachine/cargopad{
-	name = " Research Outpost Pod Bay Pad"
-	},
+/obj/submachine/cargopad/researchoutpost,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
@@ -4939,6 +4937,7 @@
 	},
 /obj/storage/closet/syndicate/personal,
 /obj/item/tank/pocket/extended/oxygen,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/listeningpost)
 "dEp" = (
@@ -4967,6 +4966,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"dFh" = (
+/obj/submachine/cargopad/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
 "dFl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
@@ -5576,6 +5579,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"dZz" = (
+/obj/machinery/genetics_booth,
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/south)
 "dZQ" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -8032,8 +8039,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "fBv" = (
-/obj/stool/bench/auto,
-/obj/landmark/start/job/assistant,
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
 "fBR" = (
@@ -8500,6 +8505,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
+"fTa" = (
+/obj/submachine/cargopad/qm,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "fTc" = (
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /obj/disposalpipe/segment/mail{
@@ -9238,12 +9247,13 @@
 	},
 /area/station/turret_protected/ai)
 "gqS" = (
-/obj/table/auto,
+/obj/machinery/recharge_station,
 /obj/machinery/light/incandescent/cool,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "grK" = (
@@ -10479,10 +10489,6 @@
 "hlB" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
-"hlG" = (
-/obj/machinery/light/incandescent/netural,
-/turf/simulated/floor,
-/area/station/science/lab)
 "hlU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10993,9 +10999,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space/plasma_reef)
 "hIw" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -13491,6 +13495,7 @@
 /area/station/science/teleporter)
 "jsS" = (
 /obj/machinery/light_switch/west,
+/obj/submachine/cargopad/radio,
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "jtm" = (
@@ -13580,9 +13585,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
 "jwo" = (
-/obj/shrub{
-	dir = 10
-	},
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -15141,6 +15143,7 @@
 /area/station/engine/gas)
 "kwr" = (
 /obj/machinery/vending/jobclothing/syndicate,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
 /area/listeningpost)
 "kym" = (
@@ -18512,7 +18515,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "mPr" = (
-/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai)
 "mQi" = (
@@ -18790,9 +18792,6 @@
 /area/station/security/main)
 "ndp" = (
 /obj/item/device/radio/intercom/AI{
-	dir = 8
-	},
-/obj/machinery/computer/announcement/station/ai{
 	dir = 8
 	},
 /turf/simulated/floor/blue,
@@ -20419,14 +20418,13 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "okV" = (
-/obj/machinery/light/incandescent/warm,
 /obj/item/device/radio/intercom/bridge{
 	dir = 4;
 	broadcasting = 0
 	},
 /obj/cable/black,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/red,
+/turf/simulated/floor/plating,
 /area/listeningpost)
 "olE" = (
 /obj/submachine/chicken_incubator,
@@ -21183,7 +21181,6 @@
 /turf/simulated/floor/plating,
 /area/derelict_diner)
 "oSa" = (
-/obj/machinery/light/incandescent/warm,
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
@@ -21191,7 +21188,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/circuit/red,
+/turf/simulated/floor/plating,
 /area/listeningpost)
 "oSc" = (
 /obj/shrub{
@@ -22626,6 +22623,12 @@
 "pPO" = (
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
+"pQg" = (
+/obj/item/storage/toilet/random{
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/station/bridge/execrestroom)
 "pQv" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
@@ -23461,6 +23464,7 @@
 /obj/disposalpipe/segment/vertical,
 /obj/landmark/gps_waypoint,
 /mob/living/carbon/human/npc/monkey/krimpus,
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "qvj" = (
@@ -26189,8 +26193,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 8
+/obj/machinery/recharger/wall{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -29097,6 +29102,10 @@
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "comtoilet"
 	},
+/obj/decoration/toiletholder{
+	pixel_x = 16;
+	pixel_y = -8
+	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/execrestroom)
 "unS" = (
@@ -29891,9 +29900,7 @@
 	},
 /area/station/hallway/primary/north)
 "uOT" = (
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
+/obj/submachine/cargopad/robotics,
 /obj/machinery/light/incandescent/cool,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
@@ -30097,14 +30104,17 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/circuit/red,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
 /area/listeningpost)
 "uVQ" = (
 /turf/simulated/floor,
 /area/station/science/lab)
 "uVZ" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/floor/grime,
 /area/heated_pool)
@@ -78778,7 +78788,7 @@ pdR
 mNi
 soE
 vCY
-hlG
+uVQ
 hED
 qrp
 iSb
@@ -81171,7 +81181,7 @@ jLI
 wRg
 ewt
 uXD
-fBv
+dZz
 vMj
 wql
 oal
@@ -87771,7 +87781,7 @@ shx
 wBK
 eLK
 eZu
-xww
+dFh
 hak
 xww
 dTD
@@ -91139,7 +91149,7 @@ cCe
 qoo
 ylg
 ylx
-wGs
+pQg
 unN
 lxo
 qpn
@@ -92903,7 +92913,7 @@ qpn
 tDI
 nVh
 xLW
-xLW
+fTa
 xLW
 xLW
 hum
@@ -122982,7 +122992,7 @@ tmh
 gmD
 oBs
 hod
-uNv
+xvA
 dEk
 ggC
 tyO
@@ -123888,7 +123898,7 @@ vrL
 xYh
 jRf
 fOl
-uNv
+xvA
 kwr
 smv
 wJs
