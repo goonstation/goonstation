@@ -24,6 +24,7 @@
 // areas
 
 /area/radiostation
+	requires_power = FALSE
 	name = "Radio Station"
 	icon_state = "purple"
 
