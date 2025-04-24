@@ -1967,7 +1967,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "bzy" = (
 /obj/table/auto,
@@ -3385,7 +3385,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cHf" = (
 /obj/railing/purple/reinforced,
@@ -3497,6 +3497,12 @@
 /turf/simulated/floor/wood/two,
 /area/diner/dining)
 "cKC" = (
+/obj/decal/mule/beacon,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -4741,7 +4747,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "dAj" = (
 /turf/simulated/wall/auto/supernorn,
@@ -5005,7 +5011,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "dIw" = (
 /obj/lattice{
@@ -8811,7 +8817,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "gcv" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
@@ -9624,6 +9630,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"gFm" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gFn" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -10071,6 +10083,9 @@
 "gUO" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -10865,6 +10880,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"hEB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "hED" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -12100,7 +12121,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "iuw" = (
 /obj/stool/chair/dining/wood{
@@ -13622,6 +13643,9 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"jzJ" = (
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "jzT" = (
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -14121,7 +14145,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jMP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -14156,6 +14180,12 @@
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"jNH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "jNV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -14320,6 +14350,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/processing)
+"jTK" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "jTX" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/bedroom)
@@ -15382,6 +15416,12 @@
 /obj/machinery/turretid/armory{
 	pixel_x = -24
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kLc" = (
@@ -15638,7 +15678,7 @@
 	pixel_y = 6
 	},
 /obj/machinery/light/incandescent/greenish,
-/turf/simulated/floor/black,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "kUa" = (
 /obj/machinery/ore_cloud_storage_container,
@@ -18253,6 +18293,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
+"mLZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "mMe" = (
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/market{
@@ -18535,7 +18584,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mYv" = (
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
@@ -20738,6 +20787,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/stool/chair/red{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oFA" = (
@@ -20910,7 +20962,7 @@
 "oMV" = (
 /obj/random_item_spawner/armory_breaching_supplies,
 /obj/item/device/radio/intercom/security,
-/turf/simulated/floor/black,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "oNj" = (
 /obj/disposalpipe/segment/vertical,
@@ -23612,15 +23664,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"qFy" = (
-/obj/decal/mule/beacon,
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/item/ammo/bullets/tranq_darts,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "qFD" = (
 /obj/overlay{
 	density = 1;
@@ -31727,7 +31770,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/firealarm/north,
-/turf/simulated/floor/black,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "wcR" = (
 /obj/disposalpipe/segment/bent/south,
@@ -32525,7 +32568,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/ai_upload,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "wDg" = (
 /mob/living/critter/martian/warrior,
@@ -83655,7 +83698,7 @@ lqR
 lit
 hcS
 nIK
-mtv
+jTK
 pwn
 qUb
 ccs
@@ -83673,7 +83716,7 @@ uZW
 kfd
 fwH
 wcH
-xiQ
+jzJ
 kKk
 epJ
 lXT
@@ -83974,9 +84017,9 @@ ffh
 loF
 fcW
 fwH
-oFu
-xiQ
-xiQ
+jNH
+jzJ
+gFm
 oFu
 xiQ
 aTS
@@ -84277,7 +84320,7 @@ dDC
 oym
 bIM
 dIk
-gUO
+hEB
 gUO
 xpM
 xiQ
@@ -84579,8 +84622,8 @@ ikD
 shH
 fwH
 kTM
-xiQ
-xiQ
+jzJ
+gFm
 rry
 xiQ
 ehU
@@ -84881,11 +84924,11 @@ iue
 tJZ
 fwH
 oMV
+jzJ
+mLZ
 xiQ
 xiQ
 xiQ
-xiQ
-qFy
 fwH
 fwH
 lfe
