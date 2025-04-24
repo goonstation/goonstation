@@ -17082,6 +17082,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
+"lPz" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "lPG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -20341,10 +20351,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "ojg" = (
@@ -20474,6 +20480,9 @@
 /area/ghostdrone_factory)
 "onS" = (
 /obj/machinery/firealarm/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "ooc" = (
@@ -20868,6 +20877,12 @@
 "oHe" = (
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
+"oHl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "oHw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74735,7 +74750,7 @@ pQx
 epK
 qpn
 fsF
-tAx
+oHl
 tAx
 fsF
 qpn
@@ -75037,7 +75052,7 @@ pDA
 epK
 qpn
 fsF
-tAx
+oHl
 jrk
 fsF
 qpn
@@ -75641,7 +75656,7 @@ qiM
 epK
 qpn
 fsF
-tAx
+oHl
 tAx
 fsF
 qpn
@@ -75943,7 +75958,7 @@ pxm
 epK
 qpn
 fsF
-tAx
+oHl
 jrk
 fsF
 qpn
@@ -76245,7 +76260,7 @@ djG
 epK
 dmC
 iff
-tMF
+lPz
 tMF
 fsF
 qpn
