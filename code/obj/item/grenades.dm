@@ -1142,15 +1142,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			src.dress_up(M)
 		..()
 
-/obj/item/gimmickbomb/butt
-	name = "Butt Bomb"
-	desc = "What a crappy grenade."
-	icon_state = "fartbomb"
-	sound_beep = 'sound/voice/farts/poo2.ogg'
-	icon_state_armed = "fartbomb_beep"
-	sound_explode = 'sound/voice/farts/superfart.ogg'
-	is_dangerous = FALSE
-
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
 	desc = "Why explode when you can gold!"
@@ -1191,15 +1182,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				M.become_statue(getMaterial("gold"))
 		..()
 
-
-/obj/item/gimmickbomb/butt/prearmed
-	armed = TRUE
-	anchored = ANCHORED
-
-	New()
-		SPAWN(0)
-			src.beep(10)
-		return ..()
 
 /obj/item/gimmickbomb/owlgib/prearmed
 	armed = TRUE
