@@ -124,5 +124,6 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		CAMERA_NETWORK_TELESCI,
 		CAMERA_NETWORK_STICKERS,
 		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
 	)
 	default_material = "miracle"

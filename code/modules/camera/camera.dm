@@ -73,6 +73,8 @@
 							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
 		src.prefix = "AI"
+		src.network = CAMERA_NETWORK_AI_ONLY
+		src.color = "#9999cc"
 
 	if (src.sticky)
 		autoposition(src.alternate_sprites)
@@ -344,7 +346,9 @@
 /// AI only camera
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
+	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
+	color = "#9999cc"
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining

@@ -4945,12 +4945,6 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
-"aBF" = (
-/obj/machinery/nanofab,
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "aBH" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/neutral/side,
@@ -13692,6 +13686,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"cKQ" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "cLh" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
@@ -24876,14 +24876,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
-"mjo" = (
-/obj/item/device/camera_viewer/telesci,
-/obj/item/device/camera_viewer/telesci,
-/obj/item/camera,
-/obj/item/camera,
-/obj/storage/crate,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "mkg" = (
 /obj/stool,
 /turf/simulated/floor/red/redblackchecker,
@@ -27020,6 +27012,14 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
+"nWp" = (
+/obj/item/device/camera_viewer/telesci,
+/obj/item/device/camera_viewer/telesci,
+/obj/item/camera,
+/obj/item/camera,
+/obj/storage/crate,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "nWH" = (
 /obj/shrub/random,
 /turf/simulated/floor,
@@ -80984,7 +80984,7 @@ qgx
 aCH
 aCH
 aor
-aBF
+cKQ
 aCb
 lwG
 aDC
@@ -93126,7 +93126,7 @@ aaa
 aaa
 aaa
 uCl
-mjo
+nWp
 lPm
 lny
 wRm

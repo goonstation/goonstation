@@ -1120,7 +1120,6 @@
 #include "code\modules\economy\commodity.dm"
 #include "code\modules\economy\persistent_bank.dm"
 #include "code\modules\economy\persistent_bank_purchases.dm"
-#include "code\modules\economy\shady_robot.dm"
 #include "code\modules\economy\shippingmarket.dm"
 #include "code\modules\economy\supply_misc.dm"
 #include "code\modules\economy\supply_packs.dm"
