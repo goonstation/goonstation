@@ -9,7 +9,7 @@ var/datum/job/priority_job = null
 	req_access = list(access_change_ids) //maybe should just be heads, but I like this being an HoP/captain thing
 	var/state = null
 	var/datum/job/requested_job = null
-	var/datum/job/request_count = 0
+	var/request_count = 0
 
 	initialize()
 		if (..())
@@ -135,6 +135,7 @@ var/datum/job/priority_job = null
 							requested_job.limit += request_count
 							global.wagesystem.station_budget -= total_cost
 							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot(s) requisitioned by [src.account.assignment] [src.account.registered]")
+							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened: [requested_job.name]"))
 
 						requested_job = null
 						request_count = 0
@@ -147,14 +148,26 @@ var/datum/job/priority_job = null
 		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
 		if (job.is_highlighted())
 			job_text += " (PRIORITY)"
-		if(include_requests)
-			job_text += ", can requisition [job.request_limit] more ([job.request_cost][CREDIT_SIGN])"
+		if(include_requests && (job.request_limit > job.limit))
+			job_text += ", can requisition [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN])"
 		return job_text
 
 	proc/send_pda_message(message)
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+	proc/notify_respawnable_players(message)
+		var/list/mob/potential_new_hires = list()
+		for (datum/respawnee/R in respawn_controller.respawnees)
+			if(R.checkValid() = RESPAWNEE_STATE_ELIGIBLE)
+				potential_new_hires += ckey_to_mob(R.ckey)
+		for (var/mob/new_player/M in mobs)
+			potential_new_hires += M
+		for (var/who in potential_new_hires)
+			playsound_local(who, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+			boutput(who, message)
+
 
 #undef MENU_MAIN
 #undef MENU_REQUEST_COUNT
