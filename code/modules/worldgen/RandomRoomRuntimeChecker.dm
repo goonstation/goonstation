@@ -42,7 +42,7 @@ var/global/loaded_prefab_path
 		// we don't have a ref to prefab in `check_map_correctness` so we do the check here
 		var/turf/other_corner = locate(T.x + R.prefabSizeX, T.y + R.prefabSizeY, T.z)
 		for(var/turf/T2 in block(T, other_corner))
-			if (!istype(get_area(T2, /area/dmm_suite/clear_area)))
+			if (!istype(get_area(T2), /area/dmm_suite/clear_area))
 				bad_prefabs += R.prefabPath
 				break
 		sleep(1 SECOND)
