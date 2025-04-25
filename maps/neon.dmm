@@ -20170,6 +20170,7 @@
 "nXm" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/toilets)
 "nXu" = (
