@@ -10,6 +10,8 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 /datum/component/holdertargeting/sniper_scope
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	mobtype = /mob/living
+	var/enabled = FALSE
+	var/always_on = FALSE
 	var/scoped = FALSE
 	var/datum/overlayComposition/scope_overlay
 	var/scope_sound
@@ -25,18 +27,31 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 			create_movement_controller(speed, max_range)
 			RegisterSignal(I, COMSIG_ITEM_SWAP_TO, PROC_REF(init_scope_mode))
 			RegisterSignal(I, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_scope_mode))
+			RegisterSignal(I, COMSIG_SCOPE_ENABLED, PROC_REF(enable_scope))
 			if(ismob(I.loc))
 				on_pickup(null, I.loc)
 
 	on_pickup(datum/source, mob/user)
 		. = ..()
-		if(user.equipped() == parent)
+		if(user.equipped() == parent && enabled)
 			init_scope_mode(source, user)
 
 	on_dropped(datum/source, mob/user)
 		end_scope_mode(source, user)
+		if (!always_on)
+			src.enabled = FALSE
 		. = ..()
+	always_on
+		enabled = TRUE
+		always_on = TRUE
 
+/datum/component/holdertargeting/sniper_scope/proc/enable_scope(datum/source, mob/user, enabled)
+	if(!enabled && src.enabled)
+		end_scope_mode(source, user)
+	else
+		if(enabled && !src.enabled )
+			init_scope_mode(source, user)
+	src.enabled = enabled
 /datum/component/holdertargeting/sniper_scope/proc/create_movement_controller(speed, max_range)
 	src.movement_controller = new/datum/movement_controller/sniper_scope(speed, max_range)
 
@@ -69,7 +84,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 /datum/component/holdertargeting/sniper_scope/proc/stop_sniping(mob/user)
 	user.override_movement_controller = null
 	src.movement_controller.stop()
-	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, FALSE)
+	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, FALSE, user)
 	user.keys_changed(0,0xFFFF)
 	if (user.client)
 		user.client.pixel_x = 0

@@ -21,6 +21,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	hide_attack = 2 //Point blanking... gross
 	pickup_sfx = 'sound/items/pickup_gun.ogg'
 	inventory_counter_enabled = 1
+	var/scope_enabled = 0
 
 	var/suppress_fire_msg = 0
 
@@ -156,6 +157,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
 
+/obj/item/gun/dropped(mob/user as mob)
+	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
+	scope?.icon_state = "scope_on"
+	..()
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0

@@ -818,12 +818,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_max = 14
 	recoil_inaccuracy_max = 20
 	rarity = 3
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
+
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
@@ -2503,6 +2505,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
 	fire_animation = FALSE
 	recoil_strength = 20
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
@@ -3429,6 +3432,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 3
 	recoil_strength = 15
 	recoil_inaccuracy_max = 0 // just to be nice :)
+	abilities = list(/obj/ability_button/toggle_scope)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -3475,6 +3479,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
+	abilities = list(/obj/ability_button/toggle_scope)
 
 
 	New()
