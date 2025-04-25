@@ -160,12 +160,12 @@ var/datum/job/priority_job = null
 	proc/notify_respawnable_players(message)
 		var/list/mob/potential_new_hires = list()
 		for (var/datum/respawnee/R in respawn_controller.respawnees)
-			if(R.checkValid() = RESPAWNEE_STATE_ELIGIBLE)
+			if(R.checkValid() == RESPAWNEE_STATE_ELIGIBLE)
 				potential_new_hires += ckey_to_mob(R.ckey)
 		for (var/mob/new_player/M in mobs)
 			potential_new_hires += M
-		for (var/who in potential_new_hires)
-			playsound_local(who, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+		for (var/mob/who in potential_new_hires)
+			who.playsound_local(who, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 			boutput(who, message)
 
 
