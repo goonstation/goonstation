@@ -1010,7 +1010,7 @@
 					src.brainexposed = TRUE
 					src.visible_message(SPAN_ALERT("<b>[src]</b>' head compartment pops open!"))
 				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
-				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)], shorting out their cover lock")
+				elecflash(src)
 				update_appearance()
 				return 1
 			return 0

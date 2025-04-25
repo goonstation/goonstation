@@ -264,6 +264,7 @@ or don't if it uses a custom topopen overlay
 		if(dismantle_stage < 2)
 			dismantle_stage = 2
 			src.visible_message(SPAN_ALERT("[src]'s cover lock pops open!"))
+		elecflash(src)
 		src.update_appearance()
 		return 1
 	return 0
