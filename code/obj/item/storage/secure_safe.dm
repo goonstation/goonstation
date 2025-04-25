@@ -308,7 +308,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	make_my_stuff()
 		..()
-		var/loot = rand(10,10)
+		var/loot = rand(1,10)
 		switch (loot)
 			if (1)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
@@ -403,7 +403,9 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
-				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight)
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
 
 				for (var/i=rand(1,src.storage.slots), i>0, i--)
 					var/egg = pick(eggs)
@@ -411,7 +413,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 						src.storage.add_contents(new egg(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
-				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.storage.slots)
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
 					E.infertile = TRUE
 
 /obj/item/paper/IOU
