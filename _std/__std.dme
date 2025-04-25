@@ -100,6 +100,7 @@
 #include "defines\RCD.dm"
 #include "defines\speech_pro.dm"
 #include "defines\reagents.dm"
+#include "defines\respawns.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
 #include "defines\security.dm"
