@@ -427,7 +427,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pheoinx,\
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
 				#endif
-				for (var/i=rand(1,1), i>0, i--)
+				for (var/i=rand(1,1), i>0, i--) // think we need this for loop for error handling still
 					var/egg = pick(eggs_strong)
 					if (ispath(egg))
 						src.storage.add_contents(new egg(src))
