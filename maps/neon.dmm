@@ -15169,6 +15169,10 @@
 "kqr" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/central)
+"kqI" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/toilets)
 "kqJ" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/purple/side{
@@ -15668,8 +15672,11 @@
 /area/station/maintenance/northeast)
 "kIN" = (
 /obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/firealarm/west,
+/obj/item/storage/firstaid/regular{
+	pixel_y = 6
+	},
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/bridge)
 "kIR" = (
@@ -15746,7 +15753,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/purplewhite/corner{
+/turf/simulated/floor/purple/checker{
 	dir = 1
 	},
 /area/station/science/chemistry)
@@ -20170,7 +20177,6 @@
 "nXm" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
-/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/toilets)
 "nXu" = (
@@ -74510,7 +74516,7 @@ ubm
 ayJ
 sPL
 nXm
-sPL
+kqI
 epK
 epK
 qpn
