@@ -3044,6 +3044,10 @@
 /obj/item/device/flash{
 	pixel_x = -11
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "csr" = (
@@ -7161,6 +7165,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "eWr" = (
@@ -7369,8 +7376,11 @@
 /area/station/hallway/secondary/exit)
 "fdu" = (
 /obj/table/reinforced,
-/obj/item/circuitboard/robotics,
 /obj/machinery/light/incandescent/cool,
+/obj/item/disk/data/tape/master/readonly{
+	pixel_y = 7
+	},
+/obj/item/circuitboard/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "fdz" = (
@@ -8449,7 +8459,7 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/pen/fancy,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/science/research_director)
@@ -17389,6 +17399,9 @@
 "lRl" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
@@ -27656,6 +27669,7 @@
 	desc = "Looks busted from overuse...";
 	anchored = 1
 	},
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -28997,15 +29011,16 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "uaw" = (
-/obj/table/reinforced,
-/obj/item/disk/data/tape/master/readonly{
-	pixel_y = 7
-	},
 /obj/machinery/door_control{
 	id = "auxcommsshield";
 	name = "Communication Mast Shield Control";
 	pixel_y = 24
 	},
+/obj/machinery/computer3/terminal/zeta,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "uaK" = (
@@ -29938,6 +29953,10 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/security/main)
+"uEp" = (
+/obj/item/cloneModule/genepowermodule,
+/turf/unsimulated/wall/trench,
+/area/space)
 "uEI" = (
 /obj/stool/chair/office/purple,
 /obj/machinery/light/incandescent/cool,
@@ -33474,6 +33493,9 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -37837,7 +37859,7 @@ cUW
 cUW
 cUW
 cUW
-cUW
+uEp
 cUW
 dPL
 qpn
