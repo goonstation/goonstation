@@ -1,3 +1,4 @@
+/*
 /datum/antagonist/emagged_cyborg
 	id = ROLE_EMAGGED_ROBOT
 	display_name = "emagged cyborg"
@@ -36,3 +37,4 @@
 	announce()
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
 		tgui_alert(src.owner.current, "You have been emagged and now have absolute free will.", "You have been emagged!")
+*/

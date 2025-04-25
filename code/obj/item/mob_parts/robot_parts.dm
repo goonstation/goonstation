@@ -1019,17 +1019,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			emagged = 1
 			if (user)
 				logTheThing(LOG_STATION, user, "emags a robot frame at [log_loc(user)].")
-				boutput(user, SPAN_NOTICE("You short out the behavior restrictors on the frame's motherboard."))
+				boutput(user, SPAN_NOTICE("You short out the interface lock on the frame's motherboard."))
 			return 1
 		else if(user)
-			boutput(user, SPAN_ALERT("This frame's behavior restrictors have already been shorted out."))
+			boutput(user, SPAN_ALERT("This frame's interface lock has already been shorted out."))
 		return 0
 
 	demag(var/mob/user)
 		if (!emagged)
 			return 0
 		if (user)
-			user.show_text("You repair the behavior restrictors on the frame's motherboard.", "blue")
+			user.show_text("You repair the interface lock on the frame's motherboard.", "blue")
 		emagged = 0
 		return 1
 
@@ -1306,6 +1306,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.cell = src.chest.cell
 			borg.cell.set_loc(borg)
 
+		if (src.emagged)
+			borg.emagged = 1
+			borg.locked = FALSE
+			SPAWN(0)
+				borg.update_appearance()
+
 		if (borg.mind && !borg.part_head.ai_interface)
 			borg.unlock_medal("Adjutant Online", 1)
 			borg.set_loc(get_turf(src))
@@ -1314,15 +1320,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(borg, "To use something, simply click it.")
 			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
-			if (src.emagged || src.syndicate)
+			if (src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
 					ticker.mode:revolutionaries += borg.mind
-				if (src.emagged)
-					borg.emagged = 1
-					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
-					SPAWN(0)
-						borg.update_appearance()
-				else if (src.syndicate)
+				else (src.syndicate)
 					borg.syndicate = 1
 				borg.make_syndicate("activated by [usr]")
 			else

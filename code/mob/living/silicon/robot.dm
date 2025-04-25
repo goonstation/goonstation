@@ -996,22 +996,21 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if(isshell(src) || src.part_head.ai_interface)
-			boutput(user, SPAN_ALERT("Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!"))
-			return 0 //emags don't do anything to AI shells
 		if (!src.emaggable)
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
-
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
 			else
 				if (user)
-					boutput(user, "You emag [src]'s interface.")
-				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
-				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
+					boutput(user, "You short out [src]'s interface lock.")
+				src.emagged = TRUE
+				if(!src.brainexposed)
+					src.brainexposed = TRUE
+					src.visible_message(SPAN_ALERT("<b>[src]</b>' head compartment pops open!"))
+				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
+				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)], shorting out their cover lock")
 				update_appearance()
 				return 1
 			return 0
@@ -1112,9 +1111,9 @@
 				return
 
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-				if(src.emagged || src.syndicate)
+				if(src.syndicate)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
+					logTheThing(LOG_STATION, src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are syndicate, so it failed.")
 					elecflash(src,power=2)
 					return
 				if(src.law_rack_connection)
@@ -1225,6 +1224,8 @@
 				boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
 			else if (brainexposed)
 				boutput(user, SPAN_ALERT("You need to close the head compartment."))
+			else if (emagged)
+				boutput(user, SPAN_ALERT("The cover lock has been shorted out!"))
 			else
 				if (src.allowed(user))
 					if (src.locking)
@@ -1273,10 +1274,8 @@
 					B.owner.transfer_to(src)
 					if (src.syndicate)
 						src.make_syndicate("brain added by [user]")
-					else if (src.emagged)
-						src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 
-				if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
+				if (!src.syndicate) // The antagonist proc does that too.
 					boutput(src, "<B>You are playing a Cyborg. You can interact with most electronic objects in your view.</B>")
 					src.show_laws()
 
@@ -2291,6 +2290,8 @@
 		if (src.locked)
 			src.locked = 0
 			boutput(src, SPAN_ALERT("You have unlocked your interface."))
+		else if (src.emagged)
+			boutput(src, SPAN_ALERT("Your interface lock has been shorted out!"))
 		else if (src.opened)
 			boutput(src, SPAN_ALERT("Your chest compartment is open."))
 		else if (src.wiresexposed)
