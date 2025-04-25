@@ -955,6 +955,7 @@
 	interesting = "There are traces of styptic powder and adhesive residue on some of the leaves."
 	},
 /obj/machinery/camera/ranch,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aJt" = (
@@ -5520,8 +5521,8 @@
 /area/station/medical/head)
 "dXp" = (
 /obj/machinery/crema_switch{
-	id = "crematorium";
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/black,
@@ -14597,6 +14598,7 @@
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
 "jZQ" = (
+/obj/submachine/chem_extractor,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "jZT" = (
@@ -15832,6 +15834,10 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
+"kVy" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "kVD" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -24391,7 +24397,7 @@
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "ree" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /obj/item/device/reagentscanner,
 /obj/machinery/glass_recycler/chemistry{
 	pixel_y = 14
@@ -24714,7 +24720,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced/chemistry/auto,
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -27525,6 +27531,15 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"tjM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/voting_box,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "tjQ" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/escape{
@@ -28129,6 +28144,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/mapping_helper/access/rancher,
 /turf/simulated/floor/green,
 /area/station/ranch)
 "tEu" = (
@@ -32250,6 +32266,7 @@
 "woo" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/incandescent,
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "woH" = (
@@ -32739,6 +32756,13 @@
 "wCA" = (
 /obj/table/glass/auto,
 /obj/machinery/light/incandescent/cool,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "wCI" = (
@@ -83289,7 +83313,7 @@ oee
 mFl
 alb
 olE
-iFb
+kVy
 tEU
 gqC
 qXv
@@ -84170,7 +84194,7 @@ hAE
 xYl
 ilM
 bZJ
-rXX
+tjM
 uMp
 dbz
 rUr
