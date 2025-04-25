@@ -32,7 +32,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 
 	New()
 		..()
-		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
+		src.egg_overlay = image('icons/mob/ranch/chickens.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
 
