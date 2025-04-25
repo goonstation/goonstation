@@ -47,7 +47,11 @@
 #include "trait_id_uniqueness.dm"
 #include "material_id_uniqueness.dm"
 #include "action_id_uniqueness.dm"
+#include "antag_popup_existence.dm"
 #include "job_name_uniqueness.dm"
+#include "mutation_combo_valid_ids.dm"
+#include "od_compile_bot.dm"
+#include "terrainify.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

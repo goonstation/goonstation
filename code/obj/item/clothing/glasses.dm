@@ -13,9 +13,13 @@
 	block_vision = 0
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
+	compatible_species = list("human", "cow", "werewolf", "flubber")
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	var/nudge_compatible = TRUE //! Works with the "nudge" emote
+	var/flash_compatible = FALSE //! Does an anime styled sparkle-flash effect when nudged
+	var/is_nudged = FALSE //! Are the glasses currently nudged upwards?
+	var/flash_state = "flash" //! Icon state to use when nudged and flash compatible
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
@@ -23,12 +27,39 @@
 			return
 		return ..()
 
+	equipped(mob/user, slot)
+		. = ..()
+		src.is_nudged = FALSE
+
+	unequipped(mob/user)
+		. = ..()
+		if (src.flash_compatible)
+			user.ClearSpecificOverlays("glasses_flash")
+
+	/// Does the flash effect when nudging glasses upwards
+	proc/nudge_flash()
+		if (!src.flash_compatible)
+			return
+		var/mob/living/carbon/human/H = src.loc
+		if (!istype(H))
+			return
+		if (!src.is_nudged)
+			var/image/glasses_flash_overlay = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
+			glasses_flash_overlay.alpha = 100
+			glasses_flash_overlay.pixel_y = H.mutantrace.head_offset
+			glasses_flash_overlay.appearance_flags = KEEP_TOGETHER
+			H.AddOverlays(glasses_flash_overlay, "glasses_flash")
+			playsound(H, 'sound/effects/glare.ogg', 60, pitch=2)
+			particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, src.color))
+		else
+			H.ClearSpecificOverlays("glasses_flash")
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
 	item_state = "crafted"
 	desc = "A simple pair of glasses."
+	flash_compatible = TRUE
 
 	onMaterialChanged()
 		..()
@@ -46,6 +77,7 @@
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
+	nudge_compatible = FALSE
 
 	setupProperties()
 		..()
@@ -84,6 +116,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	icon_state = "meson"
 	item_state = "glasses"
 	desc = "Goggles that allow you to see the structure of the station through walls."
+	flash_compatible = TRUE
 	color_r = 0.92
 	color_g = 1
 	color_b = 0.92
@@ -123,6 +156,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+	flash_compatible = TRUE
 
 	attack_self(mob/user)
 		user.show_text("You swap the style of your glasses.")
@@ -135,12 +169,15 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "round glasses"
 	icon_state = "glasses_round"
 	item_state = "glasses_round"
+	flash_state = "round_flash"
 	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
+
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
 	desc = "Admittedly, they are rather strange."
 	icon_state = "ectoglasses"
+	flash_compatible = TRUE
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
@@ -161,6 +198,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
+	flash_state = "goggle_flash"
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
@@ -206,6 +244,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
+	var/image_group = CLIENT_IMAGE_GROUP_ARREST_ICONS
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -218,14 +257,36 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	emag_act(mob/user)
+		if (src.image_group != CLIENT_IMAGE_GROUP_ARREST_ICONS)
+			boutput(user, SPAN_ALERT("[src]'s facial recognition is already fried!"))
+			return
+		src.image_group = "fake_arrest_icons_\ref[src]"
+		for (var/i in 1 to rand(3,7))
+			var/datum/db_record/record = pick(data_core.security.records)
+			for_by_tcl(H, /mob/living/carbon/human)
+				if (H.real_name == record["name"] || H.name == record["name"])
+					var/icon_state = pick(100; "*Arrest*", 20; "Contraband", 5; "Clown")
+					var/image/fake_arrest_icon = image('icons/effects/sechud.dmi',H,icon_state,EFFECTS_LAYER_UNDER_4)
+					fake_arrest_icon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+					get_image_group(src.image_group).add_image(fake_arrest_icon)
+					break
+
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src.loc)
+			get_image_group(src.image_group).add_mob(src.loc)
+
+		boutput(user, SPAN_ALERT("You short out [src]'s facial recognition circuit!"))
+		return TRUE
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			get_image_group(src.image_group).add_mob(user)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			get_image_group(src.image_group).remove_mob(user)
 		..()
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
@@ -237,6 +298,37 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	color_g = 1
 	color_b = 1
 	contraband = 4 // illegal (stolen) crimefighting vigilante gear
+
+/obj/item/clothing/glasses/nt_operative
+	name = "\improper NanoTrasen Operative HUD"
+	desc = "Patented NT technology compacting many different HUDs into one compact set of glasses.  Enhanced shielding blocks many flashes."
+	icon_state = "nt"
+	item_state = "sunglasses"
+	color_r = 0.85
+	color_g = 0.85
+	color_b = 1
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			//Security
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+			//Medical
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+			APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			//Security
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			//Medical
+			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
+		..()
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 100)
 
 TYPEINFO(/obj/item/clothing/glasses/thermal)
 	mats = 8
@@ -311,6 +403,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VISOR goggles"
 	icon_state = "visor"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
 	color_r = 0.92
@@ -342,6 +436,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "eyepatch-R"
 	item_state = "headset"
 	block_eye = "R"
+	nudge_compatible = FALSE
 	var/pinhole = 0
 	var/mob/living/carbon/human/equipper
 	wear_layer = MOB_GLASSES_LAYER2
@@ -452,7 +547,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldnt be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
@@ -478,6 +573,9 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					if (S.is_inspector)
 						newscuttle.make_inspector()
 			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			for(var/obj/item/photo/P in S.contents)
+				P.set_loc(get_turf(src))
+
 			S.drop_item()
 			qdel(S)
 			qdel(src)
@@ -519,6 +617,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
+	flash_compatible = TRUE
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85
@@ -584,6 +683,8 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "spectroscopic scanner goggles"
 	icon_state = "spectro"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	desc = "Goggles with an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	color_r = 1 // pink tint?
 	color_g = 0.8
@@ -685,11 +786,22 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	flashblocking //Admin or gimmick spawn option
+		name = "advanced night vision sechud goggles"
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND with darkened lenses? Wowee!"
+		color_r = 0.8
+		color_g = 0.8
+		color_b = 0.8
+
+		setupProperties()
+			..()
+			setProperty("disorient_resist_eye", 100)
+
 	sechud
 		name = "night vision sechud goggles"
 		icon_state = "nightvisionsechud"
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
-		color_r = 1
+		color_r = 0.8
 		color_g = 0.5
 		color_b = 0.5
 
@@ -767,6 +879,8 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
 	icon_state = "atmos"
 	item_state = "glasses"
+	flash_state = "goggle_flash"
+	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
 	var/list/image/atmos_overlays = list()
 	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
@@ -820,3 +934,15 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 			return
 		src.clear_overlays(M)
 		src.generate_overlays(M)
+
+/obj/item/clothing/glasses/eyestrain
+	name = "blue-light filtering glasses"
+	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
+	icon_state = "oglasses"
+	flash_compatible = TRUE
+	// would be nice if these tinted TGUI
+
+	color_r = 1
+	color_g = 0.9
+	color_b = 0.8
+

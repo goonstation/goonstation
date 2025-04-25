@@ -67,7 +67,7 @@
 			"max_length" = src.max_length
 		)
 
-	ui_act(action, params)
+	ui_act(action, params, datum/tgui/ui)
 		. = ..()
 		if (.)
 			return
@@ -102,7 +102,7 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, usr, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
 
 	proc/update_status()
 		if(!src.ID)
@@ -184,7 +184,13 @@
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", person.mind.assigned_role), "$NAME", person.real_name)
+		var/job = person.mind.assigned_role
+		if(!job || job == "MODE")
+			job = "Staff Assistant"
+		if(issilicon(person) && !isAI(person))
+			job = "Cyborg"
+
+		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
 		var/list/messages = process_language(message)
@@ -199,8 +205,9 @@
 		var/job = person.mind.assigned_role
 		if(!job || job == "MODE")
 			job = "Staff Assistant"
-		if(issilicon(person))
+		if(issilicon(person) && !isAI(person))
 			job = "Cyborg"
+
 		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
 
@@ -304,6 +311,7 @@
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
 	desc = "A bootleg announcement computer. Only accepts official Chips Ahoy brand clown IDs."
+	sound_volume = 50
 
 	send_message(mob/user, message)
 		. = ..()
@@ -321,10 +329,10 @@
 					S?["mi_crim"] = "Making a very irritating announcement."
 
 					clown.update_burning(15) // placed here since update_burning is only for mob/living
-				if(ID)
-					user.put_in_hand_or_eject(ID)
+				if(src.ID)
+					user.put_in_hand_or_eject(src.ID)
 
-				if (emagged)
+				if (src.emagged)
 					var/turf/T = get_turf(src.loc)
 					if(T)
 						src.visible_message("<b>The clown on the screen laughs as the [src] explodes!</b>")
@@ -343,13 +351,13 @@
 		..()
 		switch(action)
 			if ("id")
-				if ( ID.icon_state != "id_clown")
+				if (src.ID && (src.ID.icon_state != "id_clown"))
 					src.unlocked = 0 // clowns ONLY
 					update_status()
 
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if (!emagged)
+		if (!src.emagged)
 			src.visible_message(SPAN_ALERT("<B>The clown on the screen grins in horrid delight!</B>"))
-		emagged = TRUE
+		src.emagged = TRUE
 

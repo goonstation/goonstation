@@ -104,13 +104,13 @@
 		name = "commander's space helmet"
 		icon_state = "space-captain-blue"
 		item_state = "space-captain-blue"
-		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable blue befitting a commander."
 
 	red
 		name = "commander's space helmet"
 		icon_state = "space-captain-red"
 		item_state = "space-captain-red"
-		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
+		desc = "Helps protect against vacuum. Comes in a fashionable red befitting a commander."
 
 /obj/item/clothing/head/helmet/space/neon
 	name = "neon space helmet"
@@ -181,7 +181,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
 	name = "diving helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "diving0"
 	acid_survival_time = 8 MINUTES
 
@@ -343,23 +343,10 @@
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = TRUE
-		team_num = TEAM_SYNDICATE
 
 		setupProperties()
 			..()
 			setProperty("exploprot", 10)
-
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The cap <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 	specialist
 		name = "specialist combat helmet"
@@ -501,18 +488,6 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
-	team_num = TEAM_NANOTRASEN
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 
 	setupProperties()
 		..()
@@ -697,7 +672,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	var/static/camera_counter = 0
 
 	New()
@@ -719,7 +694,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "telescience camera helmet"
 	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
 	camera_tag = "Telescience Helmet Cam"
-	camera_network = "telesci"
+	camera_network = CAMERA_NETWORK_TELESCI
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"
@@ -1050,8 +1025,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 			return
 		src.remove_visor(user)
 
+TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	mats = list("metal_superdense" = 5,
+				"conductive_high" = 5,
+				"crystal_dense" = 5)
 /obj/item/clothing/head/helmet/space/industrial/syndicate
-	name = "\improper Syndicate Command Helmet"
+	name = "\improper Syndicate command helmet"
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
@@ -1062,6 +1041,14 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		..()
 		setProperty("meleeprot_head", 7)
 		setProperty("space_movespeed", 0)
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,
@@ -1109,7 +1096,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Someone's cut out a bit of this bucket so you can put it on your head."
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 
@@ -1137,7 +1124,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Looks like this bucket has been turned upside down so it can be used as a hat."
 	icon_state = "buckethat"
 	item_state = "buckethat"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
@@ -1198,7 +1185,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

@@ -1,5 +1,6 @@
 You can step over crates by click-dragging yourself onto them.
 Hold SPACE and click on a tile to throw your current item there.
+Hold SPACE and click on a tile to pick up the highest weight item on that tile, if your hand is free.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
 Hit F to fart. All the cool kids are doing it.
@@ -162,3 +163,4 @@ Different items do different types of damage in different amounts, both to your 
 The cloning console displays a red flashing icon when someone can be cloned.
 Shuttle votes aren't in the rules, if you have access and the station's in bad shape you can call the shuttle!
 Want to express yourself, but can't put things into words? Press M to make your own, custom emote! You can also press CTRL + M to emote audibly - chortle and snort at your own, bad jokes!
+You can find the GPS verb under the commands tab after the game has started. It is quite helpful in finding your way around the station!

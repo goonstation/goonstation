@@ -21,18 +21,21 @@ interface CAViewerData {
   settings;
   typeData;
   viewWidth;
+  bigText;
 }
 
 export const CAViewer = () => {
   const { act, data } = useBackend<CAViewerData>();
-  const { CAType, CAData, viewWidth, typeData, settings } = data;
+  const { CAType, CAData, viewWidth, bigText, typeData, settings } = data;
 
   const width_replace = '(.{' + viewWidth + '})';
   const width_re = new RegExp(width_replace, 'g');
   let CAText = CAData;
-  CAText = CAText.replace(/0/g, '▫');
-  CAText = CAText.replace(/1/g, '■');
-  CAText = CAText.replace(width_re, '$1\n');
+  if (CAText) {
+    CAText = CAText.replace(/0/g, '▫');
+    CAText = CAText.replace(/1/g, '■');
+    CAText = CAText.replace(width_re, '$1\n');
+  }
 
   return (
     <Window title="Cellular Automata Viewer" width={1600} height={800}>
@@ -100,10 +103,14 @@ export const CAViewer = () => {
           <Section>
             <Box
               preserveWhitespace
-              style={{ fontSize: '9px', lineHeight: '5px' }}
+              style={
+                bigText
+                  ? { fontSize: '9px', lineHeight: '10px' }
+                  : { fontSize: '9px', lineHeight: '5px' }
+              }
               fontFamily="Consolas"
             >
-              {CAText}
+              {CAText || 'Error in generation'}
             </Box>
           </Section>
         </Section>

@@ -1,4 +1,11 @@
 var/list/bad_name_characters = list("_", "'", "\"", "<", ">", ";", "\[", "\]", "{", "}", "|", "\\", "/")
+var/regex/emoji_regex = regex(@{"([^\u0020-\u8000]+)"})
+
+proc/remove_bad_name_characters(string)
+	for (var/char in bad_name_characters)
+		string = replacetext(string, char, "")
+	return emoji_regex.Replace_char(string, "")
+
 var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
@@ -14,6 +21,7 @@ var/list/removed_jobs = list(
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/hyphenate_name
 	var/robot_name
 	var/gender = MALE
 	var/age = 30
@@ -117,6 +125,10 @@ var/list/removed_jobs = list(
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
 
 	ui_state(mob/user)
@@ -215,6 +227,7 @@ var/list/removed_jobs = list(
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"hyphenateName" = src.hyphenate_name,
 			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
@@ -420,8 +433,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -438,7 +450,7 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_first = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -447,8 +459,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					new_name = ""
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) > NAME_CHAR_MAX)
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
@@ -464,8 +475,7 @@ var/list/removed_jobs = list(
 				if (isnull(new_name))
 					return
 				new_name = trimtext(new_name)
-				for (var/c in bad_name_characters)
-					new_name = replacetext(new_name, c, "")
+				new_name = remove_bad_name_characters(new_name)
 				if (length(new_name) < NAME_CHAR_MIN)
 					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
@@ -482,9 +492,15 @@ var/list/removed_jobs = list(
 
 				if (new_name)
 					src.name_last = new_name
-					src.real_name = src.name_first + " " + src.name_last
+					src.set_real_name()
 					src.profile_modified = TRUE
 					return TRUE
+
+			if ("toggle-hyphenation")
+				src.hyphenate_name = !src.hyphenate_name
+				src.set_real_name()
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("update-robotName")
 				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
@@ -1095,7 +1111,7 @@ var/list/removed_jobs = list(
 				src.name_middle = capitalize(pick_string_autokey("names/first_female.txt"))
 		if (last)
 			src.name_last = capitalize(pick_string_autokey("names/last.txt"))
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 
 	proc/randomizeLook() // im laze
 		if (!src.AH)
@@ -1107,21 +1123,26 @@ var/list/removed_jobs = list(
 		src.update_preview_icon()
 
 	proc/sanitize_name()
-		for (var/c in bad_name_characters)
-			src.name_first = replacetext(src.name_first, c, "")
-			src.name_middle = replacetext(src.name_middle, c, "")
-			src.name_last = replacetext(src.name_last, c, "")
+		src.name_first = remove_bad_name_characters(src.name_first)
+		src.name_middle = remove_bad_name_characters(src.name_middle)
+		src.name_last = remove_bad_name_characters(src.name_last)
 
 		if (length(src.name_first) < NAME_CHAR_MIN || length(src.name_first) > NAME_CHAR_MAX || is_blank_string(src.name_first) || !character_name_validation.Find(src.name_first))
 			src.randomize_name(1, 0, 0)
 
-		if (length(src.name_middle) > NAME_CHAR_MAX || is_blank_string(src.name_middle))
+		if (length(src.name_middle) > NAME_CHAR_MAX)
 			src.randomize_name(0, 1, 0)
 
 		if (length(src.name_last) < NAME_CHAR_MIN || length(src.name_last) > NAME_CHAR_MAX || is_blank_string(src.name_last) || !character_name_validation.Find(src.name_last))
 			src.randomize_name(0, 0, 1)
 
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
+
+	proc/set_real_name()
+		if (!src.name_middle)
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-") + src.name_last
+		else
+			src.real_name = src.name_first + (!src.hyphenate_name ? " " : "-[src.name_middle]-") + src.name_last
 
 
 	proc/update_preview_icon()
@@ -1456,7 +1477,7 @@ var/list/removed_jobs = list(
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];[istype(JD, /datum/job/civilian/clown) ? "font-family: Comic Sans MS;" : ""]" title="[hover_text]">
 					[JD.name]</a>
 				</div>
 				"}
@@ -1581,7 +1602,15 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
+			var/played_rounds = user.client.player.get_rounds_participated()
+			var/needed_rounds = temp_job.rounds_needed_to_play
+			var/allowed_rounds = temp_job.rounds_allowed_to_play
+			var/reason_msg = ""
+			if (allowed_rounds && !needed_rounds)
+				reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+			else if (needed_rounds)
+				reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null
@@ -1819,7 +1848,7 @@ var/list/removed_jobs = list(
 					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
-		src.real_name = src.name_first + " " + src.name_last
+		src.set_real_name()
 		character.real_name = src.real_name
 		phrase_log.log_phrase("name-human", character.real_name, no_duplicates=TRUE)
 
@@ -1853,14 +1882,14 @@ var/list/removed_jobs = list(
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
-		for (var/slot_id in src.custom_parts)
-			var/part_id = src.custom_parts[slot_id]
-			var/datum/part_customization/customization = get_part_customization(part_id)
-			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.try_apply(character, src.custom_parts)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))

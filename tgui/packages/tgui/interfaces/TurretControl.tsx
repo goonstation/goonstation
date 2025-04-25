@@ -13,7 +13,7 @@ import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
 
 const generate_kill = (number) => {
-  let out = [];
+  let out: string[] = [];
   for (let i = 0; i < number; i++) {
     if (Math.random() > 0.3) {
       out.push('Kill. ');

@@ -50,6 +50,8 @@
 	var/obj/item/device/radio/headset/radio = null
 	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
+	var/obj/item/instrument/scream_instrument = null
+	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
@@ -65,8 +67,6 @@
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
-	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
-	var/viewalerts = 0
 	var/jetpack = 0
 	var/freemodule = 1 // For picking modules when a robot is first created
 	var/automaton_skin = 0 // for the medal reward
@@ -84,7 +84,11 @@
 	var/image/i_critdmg
 	var/image/i_panel
 	var/image/i_upgrades
-	var/image/i_clothes
+
+	var/image/i_helmet
+	var/image/i_under
+	var/image/i_suit
+	var/image/i_mask
 
 	var/image/i_head
 	var/image/i_head_decor
@@ -97,6 +101,8 @@
 	var/image/i_arm_l
 	var/image/i_arm_r
 	var/image/i_arm_decor
+	var/image/i_hand_l
+	var/image/i_hand_r
 
 	var/image/i_details
 
@@ -229,7 +235,7 @@
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
-			src.camera.network = "Robots"
+			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
 			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
@@ -260,10 +266,10 @@
 				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 				src.update_name_tag()
 			if (src.syndicate)
-				src.show_antag_popup("syndieborg")
+				src.show_antag_popup(ROLE_SYNDICATE_ROBOT)
 
-		if (prob(50))
-			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
+		src.scream_instrument = new /obj/item/instrument/roboscream(src)
+		src.scream_note = rand(1,2)
 
 		for (var/datum/movement_modifier/MM in src.movement_modifiers) // Spawning borgs applies human only movemods, this cleans that up
 			if (!istype(MM, /datum/movement_modifier/robot_part))
@@ -293,6 +299,8 @@
 					chest.wires = 1
 					if (src.cell)
 						chest.cell = src.cell
+						src.cell = null
+						chest.cell.set_loc(chest)
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.setMaterial(src.frame_material)
@@ -542,8 +550,12 @@
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+				if (src.emote_check(voluntary, src.scream_instrument.note_time))
+					var/note_index = src.scream_note
+					if (istext(src.scream_note))
+						note_index = src.scream_instrument.notes.Find(src.scream_note)
+
+					src.scream_instrument.play_note(note_index, src, src.vocal_pitch)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -558,8 +570,6 @@
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
-					if (!(src.client && src.client.holder)) src.emote_allowed = 0
-					if (isdead(src)) src.emote_allowed = 0
 					if ((src.restrained()) && (!src.getStatusDuration("knockdown")))
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
@@ -659,8 +669,6 @@
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					SPAWN(1 SECOND)
-						src.emote_allowed = 1
 			else
 				if (voluntary) src.show_text("Invalid Emote: [act]")
 				return
@@ -815,7 +823,7 @@
 
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.real_name = "SHELL/[src.mainframe]"
+			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
 
@@ -1079,48 +1087,12 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
-		if (isdead(src))
-			return 1
-		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/sources = alarm[3]
-				if (!(alarmsource in sources))
-					sources += alarmsource
-				return 1
-		var/obj/machinery/camera/C = null
-		var/list/CL = null
-		if (O && istype(O, /list))
-			CL = O
-			if (length(CL) == 1)
-				C = CL[1]
-		else if (O && istype(O, /obj/machinery/camera))
-			C = O
-		L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-		boutput(src, text("--- [class] alarm detected in [A.name]!"))
-		if (src.viewalerts) src.robot_alerts()
-		return 1
-
-	cancelAlarm(var/class, area/A as area, obj/origin)
-		var/list/L = src.alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs = alarm[3]
-				if (origin in srcs)
-					srcs -= origin
-				if (length(srcs) == 0)
-					cleared = 1
-					L -= I
-		if (cleared)
-			boutput(src, text("--- [class] alarm in [A.name] has been cleared."))
-			if (src.viewalerts) src.robot_alerts()
-		return !cleared
-
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
+		if (istype(W, /obj/item/card/emag))
+			return
+		if (user.a_intent == INTENT_HARM || is_special)
+			..()
+			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1263,9 +1235,16 @@
 				else
 					boutput(user, SPAN_ALERT("Access denied."))
 
-		else if (istype(W, /obj/item/card/emag))
-			return
-
+		else if (istype(W, /obj/item/instrument) && opened)
+			user.drop_item(W)
+			W.set_loc(src)
+			user.put_in_hand_or_drop(src.scream_instrument)
+			src.scream_instrument = W
+			if (src.scream_instrument.pick_random_note)
+				src.scream_note = rand(1, length(src.scream_instrument.sounds_instrument))
+			else
+				src.scream_note = pick(src.scream_instrument.notes)
+			user.visible_message(SPAN_NOTICE("[user] inserts [src.scream_instrument] into [src]'s chest."))
 		else if (istype(W, /obj/item/organ/brain) && src.brainexposed)
 			if (!src.part_head)
 				boutput(user, SPAN_ALERT("That cyborg doesn't even have a head. Where are you going to put [W]?"))
@@ -1388,6 +1367,9 @@
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_chest.robot_movement_modifier, src.part_chest.type)
+					src.part_chest.cell = src.cell
+					src.cell = null
+					src.part_chest.cell.set_loc(src.part_chest)
 					src.part_chest.set_loc(src.loc)
 					src.part_chest.holder = null
 					src.part_chest = null
@@ -1622,7 +1604,7 @@
 
 			update_appearance()
 		else //We're just bapping the borg
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if(!user.stat)
 				if (user.a_intent != INTENT_HELP)
 					actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -1981,8 +1963,6 @@
 					IT.dropped(src) // Handle light datums and the like.
 				if (I in module.tools)
 					I.set_loc(module)
-				else
-					qdel(I)
 			src.module_active = null
 			src.module_states[i] = null
 
@@ -2096,6 +2076,14 @@
 
 		hud.toggle_equipment()
 
+	proc/get_tools()
+		RETURN_TYPE(/list)
+		var/list/tools = src.module.tools.Copy()
+		if (src.part_arm_l?.add_to_tools)
+			tools += src.part_arm_l
+		if (src.part_arm_r?.add_to_tools)
+			tools += src.part_arm_r
+		return tools
 
 	proc/installed_modules()
 		if(weapon_lock)
@@ -2109,7 +2097,7 @@
 				return
 
 		var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotmod'>Close</A> <A HREF='?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
+		dat += "<A HREF='byond://?action=mach_close&window=robotmod'>Close</A> <A HREF='byond://?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
 
 		dat += "<B><U>Status Report</U></B><BR>"
 
@@ -2184,17 +2172,17 @@
 
 			dat += "<B>Active Equipment:</B><BR>"
 
-			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[1]]'>[module_states[1]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Left Arm Unavailable</b><br>"
-			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]</A>" : "Nothing"]<BR>"
-			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]</A>" : "Nothing"]<BR>"
+			dat += "<b>Center:</b> [module_states[2] ? "<A HREF='byond:?src=\ref[src];mod=\ref[module_states[2]]'>[module_states[2]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[3]]'>[module_states[3]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Right Arm Unavailable</b><br>"
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
 			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
-				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
+				else dat += text("[obj]: <A HREF='byond://?src=\ref[src];act=\ref[obj]'>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"
 
 		dat += "<HR>"
@@ -2204,10 +2192,10 @@
 		dat += "<BR><B>Installed Upgrades</B> ([upgradecount]/[src.max_upgrades])<BR>"
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (R.passive) dat += text("[R] (Always On)<BR>")
-			else if (R.active) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Use</B></A> (Drain: [R.drainrate])<BR>")
+			else if (R.active) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Use</B></A> (Drain: [R.drainrate])<BR>")
 			else
-				if(!R.activated) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
-				else dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				if(!R.activated) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				else dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
 
 		src.Browse(dat, "window=robotmod;size=400x600")
 
@@ -2342,6 +2330,23 @@
 		update_bodypart(part = "head")
 		return 1
 
+	verb/cmd_pick_scream()
+		set category = "Robot Commands"
+		set name = "Change scream note"
+
+		var/list/notes_list = list()
+		if (src.scream_instrument.pick_random_note || !src.scream_instrument.use_new_interface)
+			for (var/i in 1 to length(src.scream_instrument.sounds_instrument))
+				notes_list += i
+		else
+			notes_list = src.scream_instrument.notes
+
+		var/note = tgui_input_list(usr, "Select a scream note", "Select scream", notes_list)
+		if (!note || !(note in notes_list))
+			return
+
+		src.scream_note = note
+
 	verb/access_internal_pda()
 		set category = "Robot Commands"
 		set name = "Cyborg PDA"
@@ -2454,31 +2459,8 @@
 
 	verb/cmd_robot_alerts()
 		set category = "Robot Commands"
-		set name = "Show Alerts"
-		src.robot_alerts()
-
-	proc/robot_alerts()
-		var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotalerts'>Close</A><BR><BR>"
-		for (var/cat in src.alarms)
-			dat += text("<B>[cat]</B><BR><br>")
-			var/list/L = src.alarms[cat]
-			if (L.len)
-				for (var/alarm in L)
-					var/list/alm = L[alarm]
-					var/area/A = alm[1]
-					var/list/sources = alm[3]
-					dat += "<NOBR>"
-					dat += text("-- [A.name]")
-					if (length(sources) > 1)
-						dat += text("- [sources.len] sources")
-					dat += "</NOBR><BR><br>"
-			else
-				dat += "-- All Systems Nominal<BR><br>"
-			dat += "<BR><br>"
-
-		src.viewalerts = 1
-		src.Browse(dat, "window=robotalerts&can_close=0")
+		set name = "Show Alert Minimap"
+		src.open_alert_minimap()
 
 	proc/get_poweruse_count()
 		if (src.cell)
@@ -2692,7 +2674,7 @@
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/internal_paint_part(var/image/part_image, var/list/color_matrix)
-		var/image/paint = image(part_image.icon, part_image.icon_state)
+		var/image/paint = image(part_image.icon, part_image.icon_state, layer=part_image.layer)
 		paint.color = color_matrix
 		part_image.overlays += paint
 
@@ -2722,7 +2704,7 @@
 
 		if (part == "head" || update_all)
 			if (src.part_head && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
-				src.i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString)
+				src.i_head = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString, layer=MOB_FACE_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_head, color_matrix)
 				if (src.part_head.visible_eyes && C)
@@ -2750,7 +2732,7 @@
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				src.icon_state = "body-" + src.part_chest.appearanceString
 				if (C?.painted)
-					src.i_chest = image("icon" = src.icon, icon_state = src.icon_state, "layer" = FLOAT_LAYER)
+					src.i_chest = image("icon" = src.icon, icon_state = src.icon_state, layer = MOB_BODYDETAIL_LAYER1)
 					src.i_chest.color = color_matrix
 				else
 					src.i_chest = null
@@ -2760,9 +2742,9 @@
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_leg_l.slot == "leg_both")
-					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString)
+					src.i_leg_l = image('icons/mob/robots.dmi', "leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
 				else
-					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString)
+					src.i_leg_l = image('icons/mob/robots.dmi', "l_leg-" + src.part_leg_l.appearanceString, layer=MOB_LIMB_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_l, color_matrix)
 			else
@@ -2771,9 +2753,9 @@
 		if (part == "r_leg" || update_all)
 			if (src.part_leg_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_leg_r.slot == "leg_both")
-					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString)
+					src.i_leg_r = image('icons/mob/robots.dmi', "leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
 				else
-					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString)
+					src.i_leg_r = image('icons/mob/robots.dmi', "r_leg-" + src.part_leg_r.appearanceString, layer=MOB_LIMB_LAYER)
 				if (color_matrix)
 					src.internal_paint_part(src.i_leg_r, color_matrix)
 			else
@@ -2782,43 +2764,51 @@
 		if (part == "l_arm" || update_all)
 			if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_l.slot == "arm_both")
-					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString)
+					src.i_arm_l = image('icons/mob/robots.dmi', "arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString)
+					src.i_arm_l = image('icons/mob/robots.dmi', "l_arm-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_l = image('icons/mob/robots.dmi', "l_hand-" + src.part_arm_l.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_l, color_matrix)
+					src.internal_paint_part(src.i_hand_l, color_matrix)
 			else
 				src.i_arm_l = null
+				src.i_hand_l = null
 
 		if (part == "r_arm" || update_all)
 			if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 				if (src.part_arm_r.slot == "arm_both")
-					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString)
+					src.i_arm_r = image('icons/mob/robots.dmi', "arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				else
-					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString)
+					src.i_arm_r = image('icons/mob/robots.dmi', "r_arm-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER1)
+					src.i_hand_r = image('icons/mob/robots.dmi', "r_hand-" + src.part_arm_r.appearanceString, layer=MOB_HAND_LAYER2)
 				if (color_matrix)
 					src.internal_paint_part(src.i_arm_r, color_matrix)
+					src.internal_paint_part(src.i_hand_r, color_matrix)
 			else
 				src.i_arm_r = null
+				src.i_hand_r = null
 
 		if (C)
 			if (C.legs_mod && (src.part_leg_r || src.part_leg_l) && (!src.part_leg_r || src.part_leg_r.slot != "leg_both") && (!src.part_leg_l || src.part_leg_l.slot != "leg_both"))
-				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod)
+				src.i_leg_decor = image('icons/mob/robots_decor.dmi', "legs-" + C.legs_mod, layer=MOB_BODYDETAIL_LAYER2)
 			else
 				src.i_leg_decor = null
 
 			if (C.arms_mod && (src.part_arm_r || src.part_arm_l) && (!src.part_arm_r || src.part_arm_r.slot != "arm_both") && (!src.part_arm_l || src.part_arm_l.slot != "arm_both") )
-				src.i_arm_decor = image('icons/mob/robots_decor.dmi', "arms-" + C.arms_mod)
+				src.i_arm_decor = image('icons/mob/robots_decor.dmi', "arms-" + C.arms_mod, layer=MOB_BODYDETAIL_LAYER2)
 			else
 				src.i_arm_decor = null
 
 			if (C.head_mod && src.part_head)
-				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod)
+				src.i_head_decor = image('icons/mob/robots_decor.dmi', "head-" + C.head_mod, layer=MOB_HAIR_LAYER1)
 			else
 				src.i_head_decor = null
 
 			if (C.ches_mod && src.part_chest)
-				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod)
+				src.i_chest_decor = image('icons/mob/robots_decor.dmi', "body-" + C.ches_mod, layer=MOB_ARMOR_LAYER - 0.1) //layer just under outer suits
 			else
 				src.i_chest_decor = null
 
@@ -2862,14 +2852,18 @@
 
 		if (src.part_arm_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_l, "arm_l")
+			UpdateOverlays(src.i_hand_l, "hand_l")
 		else
 			ClearSpecificOverlays("arm_l")
+			ClearSpecificOverlays("hand_l")
 
 
 		if (src.part_arm_r && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
 			UpdateOverlays(src.i_arm_r, "arm_r")
+			UpdateOverlays(src.i_hand_r, "hand_r")
 		else
 			ClearSpecificOverlays("arm_r")
+			ClearSpecificOverlays("hand_r")
 
 		UpdateOverlays(src.i_chest, "chest")
 		UpdateOverlays(src.i_head_decor, "head_decor")
@@ -2878,9 +2872,10 @@
 		UpdateOverlays(src.i_arm_decor, "arm_decor")
 
 		if (length(src.clothes))
-			if (!src.i_clothes)
-				src.i_clothes = new
-			src.i_clothes.overlays.Cut()
+			src.i_under = new
+			src.i_suit = new
+			src.i_mask = new
+			src.i_helmet = new
 			for(var/x in src.clothes)
 				var/obj/item/clothing/U = src.clothes[x]
 				if (!istype(U))
@@ -2895,10 +2890,22 @@
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
-				src.i_clothes.overlays += clothed_image
-			AddOverlays(src.i_clothes, "clothes", TRUE)
+
+				if (istype(U, /obj/item/clothing/under))
+					src.i_under = clothed_image
+				else if (istype(U, /obj/item/clothing/suit))
+					src.i_suit = clothed_image
+				else if (istype(U, /obj/item/clothing/mask))
+					src.i_mask = clothed_image
+				else if (istype(U, /obj/item/clothing/head))
+					src.i_helmet = clothed_image
+
+			AddOverlays(src.i_under, "under", TRUE)
+			AddOverlays(src.i_suit, "suit", TRUE)
+			AddOverlays(src.i_mask, "mask", TRUE)
+			AddOverlays(src.i_helmet, "helmet", TRUE)
 		else
-			ClearSpecificOverlays("clothes")
+			ClearSpecificOverlays("under", "suit", "mask", "helmet")
 
 		if (src.brainexposed && src.part_head)
 			if (src.part_head.brain)

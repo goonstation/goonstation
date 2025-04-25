@@ -1,0 +1,1507 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aE" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C4-0"
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 1;
+	pixel_y = 18
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"ba" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C12-0"
+	},
+/obj/machinery/light/emergencyflashing,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"bc" = (
+/turf/unsimulated/floor/stairs/dark,
+/area/space)
+"bq" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full{
+	dir = 4
+	},
+/area/space)
+"bJ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/space)
+"bK" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 8
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/obj/railing/blue,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"bR" = (
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"bS" = (
+/obj/decal/poster/wallsign/medbay_sign,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/space)
+"cH" = (
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/machinery/manufacturer/robotics,
+/obj/item/storage/belt/utility/prepared,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"ek" = (
+/obj/surgery_tray,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/scalpel,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/machinery/light/small/floor/cool,
+/obj/item/storage/firstaid/docbag,
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"fL" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/space)
+"fO" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 4
+	},
+/area/space)
+"gj" = (
+/obj/barricade,
+/obj/decal/stage_edge{
+	name = "trench"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"gv" = (
+/obj/storage/crate/classcrate{
+	name = "siege gear"
+	},
+/obj/item/ammo/bullets/breach_flashbang,
+/obj/item/ammo/bullets/breach_flashbang,
+/obj/item/gun/kinetic/riot40mm/breach{
+	pixel_y = 6
+	},
+/obj/item/storage/concussion_grenade_pouch,
+/obj/item/storage/concussion_grenade_pouch,
+/obj/item/ammo/bullets/stunbaton,
+/obj/item/ammo/bullets/four_bore/stun{
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/four_bore/stun{
+	pixel_y = 1
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_y = -8
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"gw" = (
+/obj/item/device/light/floodlight/starts_on/fixed,
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 6
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"hU" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 4
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/obj/railing/blue{
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"iO" = (
+/obj/item/clothing/head/helmet/space/nanotrasen{
+	name = "Mark X Siegebreaker Helm";
+	desc = "An armored helm developed by Five Points Armory.";
+	pixel_y = 12;
+	pixel_x = -11;
+	rarity = 4
+	},
+/obj/rack,
+/obj/item/clothing/head/helmet/space/nanotrasen{
+	name = "Mark X Siegebreaker Helm";
+	desc = "An armored helm developed by Five Points Armory.";
+	pixel_y = 12;
+	pixel_x = 4;
+	rarity = 4
+	},
+/obj/item/clothing/suit/space/industrial/nt_specialist{
+	name = "NT Siege Command armor";
+	desc = "Very heavy armour for prolonged frontline activity. Protects from radiation and explosions.";
+	pixel_y = 1;
+	pixel_x = 4
+	},
+/obj/item/clothing/suit/space/industrial/nt_specialist{
+	name = "NT Siege Command armor";
+	desc = "Very heavy armour for prolonged frontline activity. Protects from radiation and explosions.";
+	pixel_y = 1;
+	pixel_x = -11
+	},
+/obj/item/gun/energy/optio1{
+	rarity = 4
+	},
+/obj/item/gun/energy/optio1{
+	rarity = 4;
+	pixel_y = -4
+	},
+/obj/item/gun/energy/vexillifer4{
+	pixel_y = 32;
+	rarity = 4;
+	pixel_x = 30
+	},
+/obj/item/gun/energy/vexillifer4{
+	pixel_y = 23;
+	rarity = 4;
+	pixel_x = 30
+	},
+/obj/item/swords_sheaths/captain/blue{
+	pixel_x = 5
+	},
+/obj/item/swords_sheaths/captain/blue{
+	pixel_x = -8
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"jh" = (
+/obj/table/sleek/auto,
+/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+	pixel_y = 8
+	},
+/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+	pixel_y = 2
+	},
+/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"ju" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 9
+	},
+/area/space)
+"jG" = (
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/machinery/bot/medbot/head_surgeon,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"jN" = (
+/obj/machinery/drainage/big,
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C9-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"kY" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 1
+	},
+/obj/decal/stage_edge{
+	name = "trench"
+	},
+/obj/railing/blue,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"lM" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 5
+	},
+/obj/decal/stage_edge{
+	name = "trench"
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"ma" = (
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_y = 3
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"ne" = (
+/obj/cabinet/restrictedmedical,
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"nr" = (
+/obj/machinery/vending/medical,
+/obj/item/device/radio/intercom/medical{
+	pixel_y = 22
+	},
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"pe" = (
+/obj/decoration/ntcratesmall{
+	anchored = 1
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"pn" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 26
+	},
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C12-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"pG" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 1
+	},
+/area/space)
+"pP" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 8
+	},
+/area/space)
+"pZ" = (
+/obj/machinery/vending/security_ammo,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"rX" = (
+/obj/stool/bed/moveable/hospital,
+/obj/item/storage/medical_pouch,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"sF" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/space)
+"to" = (
+/obj/item/device/light/floodlight/starts_on/fixed,
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/obj/railing/blue{
+	dir = 1
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"tB" = (
+/obj/barricade,
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"uc" = (
+/obj/table/sleek/auto,
+/obj/item/megaphone{
+	pixel_y = 12
+	},
+/obj/item/storage/belt/utility/nt_engineer{
+	pixel_y = -9
+	},
+/obj/item/storage/belt/utility/nt_engineer{
+	pixel_y = -9
+	},
+/obj/item/megaphone{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"ur" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C0-0"
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"vb" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C11-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"vO" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 9
+	},
+/obj/decal/stage_edge{
+	name = "trench"
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"xX" = (
+/obj/machinery/light/small/floor/blueish,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"yv" = (
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/machinery/light/small/floor/blueish,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"zA" = (
+/obj/table/sleek/auto,
+/obj/item/clothing/suit/security_badge/shielded{
+	name = "NT Combat Auxilliary Badge";
+	desc = "An official badge for combat support and logistics volunteers, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch.";
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/clothing/suit/security_badge/shielded{
+	name = "NT Combat Auxilliary Badge";
+	desc = "An official badge for combat support and logistics volunteers, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch.";
+	pixel_x = -5
+	},
+/obj/item/clothing/suit/security_badge/shielded{
+	name = "NT Combat Auxilliary Badge";
+	desc = "An official badge for combat support and logistics volunteers, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch.";
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/security_badge/shielded{
+	name = "NT Combat Auxilliary Badge";
+	desc = "An official badge for combat support and logistics volunteers, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch.";
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Al" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 8
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/obj/railing/blue{
+	dir = 4
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Ap" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "FOB Charlie"
+	},
+/obj/mapping_helper/access/medical,
+/turf/unsimulated/floor/engine/caution/north,
+/area/space)
+"Be" = (
+/obj/machinery/recharger/wall{
+	dir = 4;
+	pixel_x = 20
+	},
+/obj/item/quarterstaff{
+	name = "battlestaff"
+	},
+/obj/item/quarterstaff{
+	name = "battlestaff";
+	pixel_x = 11
+	},
+/obj/table/sleek/auto,
+/obj/table/sleek/auto,
+/obj/item/quarterstaff{
+	name = "battlestaff";
+	pixel_x = 8
+	},
+/obj/item/quarterstaff{
+	name = "battlestaff";
+	pixel_x = 4
+	},
+/obj/item/barrier{
+	pixel_x = -8
+	},
+/obj/item/barrier{
+	pixel_x = -8
+	},
+/obj/item/barrier{
+	pixel_x = -8
+	},
+/obj/item/barrier{
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Bq" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C14-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"BZ" = (
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_y = 3
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Ck" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/obj/barricade,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Co" = (
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"DK" = (
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Eb" = (
+/obj/item/storage/pouch/shotgun,
+/obj/item/storage/pouch/shotgun,
+/obj/item/storage/pouch/shotgun,
+/obj/item/storage/pouch/shotgun,
+/obj/item/storage/ntsc_pouch/ntso,
+/obj/item/storage/ntsc_pouch/ntso,
+/obj/table/sleek/auto,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Er" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C0-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Ex" = (
+/obj/cabinet/medical,
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"EG" = (
+/obj/table/sleek/auto,
+/obj/item/gun/kinetic/four_bore_albatross{
+	pixel_y = -2
+	},
+/obj/item/gun/kinetic/riot40mm/breach{
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"EV" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction,
+/area/space)
+"EW" = (
+/obj/cabinet/medicalmenders,
+/turf/unsimulated/floor/industrial,
+/area/space)
+"Fv" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C7-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"FD" = (
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/mapping_helper/access/security,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Gt" = (
+/obj/machinery/defib_mount,
+/obj/table/sleek/auto,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Gz" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 4
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/obj/railing/blue,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Hh" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/space)
+"Hl" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full{
+	dir = 1
+	},
+/area/space)
+"IJ" = (
+/obj/surgery_tray,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/scalpel,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/item/reagent_containers/ampoule/smelling_salts,
+/obj/machinery/light/small/floor/cool,
+/obj/item/storage/firstaid/docbag,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"IW" = (
+/obj/storage/crate/classcrate{
+	name = "siege gear"
+	},
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/suit/armor/NT_alt,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/obj/item/clothing/glasses/sunglasses/sechud,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Jg" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
+	},
+/area/space)
+"Js" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"JA" = (
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"JC" = (
+/obj/vehicle/tug,
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C5-0"
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"JU" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 10
+	},
+/area/space)
+"Kh" = (
+/obj/machinery/drainage/big,
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C10-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Kv" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/wallsign/medbay_left,
+/turf/unsimulated/floor/engine/caution/east,
+/area/space)
+"KM" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"LA" = (
+/obj/machinery/optable,
+/obj/machinery/drainage/big,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"MX" = (
+/obj/fakeobject/mantacontainer/blue,
+/obj/decal/poster/wallsign/poster_y4nt{
+	pixel_y = 3;
+	pixel_x = 4
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Nz" = (
+/obj/table/sleek/auto,
+/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+	pixel_y = 8
+	},
+/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+	pixel_y = 2
+	},
+/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+	pixel_y = -4
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"NS" = (
+/obj/item/device/radio/intercom/security{
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1";
+	dir = 1
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	name = "F.O.B. Console";
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Od" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/space)
+"Ok" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 10
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 2
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"OP" = (
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf{
+	pixel_x = -3;
+	rarity = 5
+	},
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf{
+	pixel_x = 7;
+	rarity = 5
+	},
+/obj/rack,
+/obj/item/clothing/head/bio_hood/nt{
+	pixel_y = 10;
+	pixel_x = 6
+	},
+/obj/item/clothing/head/bio_hood/nt{
+	pixel_y = 10;
+	pixel_x = -3
+	},
+/obj/item/storage/belt/utility/prepared/ceshielded{
+	desc = "An utility belt for usage in high-risk recovery operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily.";
+	pixel_x = -6
+	},
+/obj/item/storage/belt/utility/prepared/ceshielded{
+	desc = "An utility belt for usage in high-risk recovery operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily.";
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"OY" = (
+/obj/decal/poster/wallsign/security_sign,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/space)
+"PN" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C4-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"PT" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "FOB Charlie";
+	dir = 4
+	},
+/obj/mapping_helper/access/sec_lockers,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Qa" = (
+/obj/item/breaching_hammer,
+/obj/item/breaching_hammer,
+/obj/item/breaching_charge/NT,
+/obj/item/breaching_charge/NT,
+/obj/storage/crate/classcrate{
+	name = "siege gear"
+	},
+/obj/item/gun/kinetic/striker{
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/ammo/bullets/aex,
+/obj/item/ammo/bullets/aex,
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = 26
+	},
+/turf/unsimulated/floor/industrial,
+/area/space)
+"QI" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/obj/barricade,
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Rr" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C0-0"
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Tc" = (
+/obj/machinery/drainage/big,
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C5-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"TJ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/space)
+"TO" = (
+/obj/machinery/manufacturer/medical,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Uj" = (
+/obj/decal/poster/wallsign/medbay,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/space)
+"Uu" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"UE" = (
+/obj/decoration/ntcrate/ntcrate2{
+	opacity = 1
+	},
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_y = 3
+	},
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"UN" = (
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/engine/caution/north,
+/area/space)
+"US" = (
+/obj/machinery/optable,
+/obj/machinery/drainage/big,
+/obj/machinery/light/small/floor/blueish,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"UZ" = (
+/obj/table/sleek/auto,
+/obj/item/shieldwallgen{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Vd" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C12-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Vi" = (
+/obj/table/sleek/auto,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implantcase/counterrev,
+/obj/item/implanter,
+/obj/item/implanter{
+	pixel_y = -6
+	},
+/obj/item/implanter{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Wg" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"WN" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/light/small/floor/blueish,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Xo" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "FOB Charlie";
+	dir = 8
+	},
+/obj/mapping_helper/access/medical,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"XU" = (
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 8
+	},
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/wallsign/security_right,
+/turf/unsimulated/floor/engine/caution/west,
+/area/space)
+"XV" = (
+/obj/vehicle/tug/security,
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C9-0"
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"Ye" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 5
+	},
+/area/space)
+"Yq" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = -5
+	},
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/space)
+"Ys" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Yx" = (
+/obj/decoration/ntcrate{
+	opacity = 1
+	},
+/obj/decal/poster/banner{
+	color = "#4466ff";
+	desc = "A banner in NT blue.";
+	pixel_y = 3
+	},
+/obj/decal/stage_edge{
+	name = "trench"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"YS" = (
+/obj/table/sleek/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor/alt,
+/obj/railing/blue,
+/obj/decal/stripe_caution,
+/obj/mapping_helper/access/sec_lockers,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/space)
+"Zl" = (
+/obj/barricade,
+/obj/decal/stage_edge{
+	name = "trench";
+	dir = 4
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+"ZA" = (
+/obj/mesh/catwalk{
+	dir = 9;
+	icon_state = "C6-0"
+	},
+/turf/unsimulated/dirt{
+	color = "#aaaaaa";
+	name = "trench"
+	},
+/area/space)
+
+(1,1,1) = {"
+vO
+Al
+tB
+BZ
+tB
+tB
+bK
+ju
+pP
+XU
+Ck
+tB
+tB
+KM
+Ok
+"}
+(2,1,1) = {"
+kY
+ZA
+Fv
+Er
+Er
+Er
+Er
+Uu
+Uu
+Er
+Er
+Rr
+Er
+Tc
+to
+"}
+(3,1,1) = {"
+gj
+Bq
+XV
+Hh
+sF
+Hl
+Yq
+PT
+Yq
+Hl
+sF
+sF
+Od
+aE
+MX
+"}
+(4,1,1) = {"
+Yx
+ba
+Hh
+fL
+NS
+uc
+EG
+bR
+Ys
+Eb
+xX
+Nz
+bq
+PN
+Js
+"}
+(5,1,1) = {"
+bc
+Vd
+TJ
+iO
+JA
+bR
+UZ
+xX
+FD
+Vi
+bR
+jh
+OY
+PN
+Co
+"}
+(6,1,1) = {"
+TJ
+pn
+TJ
+gv
+yv
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+YS
+Uu
+JU
+"}
+(7,1,1) = {"
+gj
+Vd
+TJ
+Qa
+JA
+bR
+bR
+bR
+pZ
+Be
+zA
+IW
+YS
+Uu
+pG
+"}
+(8,1,1) = {"
+kY
+ba
+EV
+sF
+sF
+Hl
+PT
+Hl
+sF
+sF
+Hl
+sF
+Jg
+aE
+ma
+"}
+(9,1,1) = {"
+gj
+Vd
+TJ
+Ex
+cH
+TO
+bR
+rX
+rX
+Wg
+bR
+DK
+Ap
+Uu
+JU
+"}
+(10,1,1) = {"
+TJ
+pn
+TJ
+EW
+yv
+bR
+bR
+bR
+bR
+bR
+bR
+bR
+Ap
+Uu
+pG
+"}
+(11,1,1) = {"
+bc
+Vd
+TJ
+ne
+jG
+bR
+bR
+xX
+bR
+US
+bR
+LA
+bS
+PN
+ma
+"}
+(12,1,1) = {"
+UN
+ba
+bJ
+Od
+nr
+OP
+Gt
+bR
+WN
+IJ
+WN
+ek
+bq
+PN
+pe
+"}
+(13,1,1) = {"
+gj
+Bq
+JC
+bJ
+sF
+Hl
+Uj
+Xo
+Uj
+Hl
+sF
+sF
+fL
+aE
+pe
+"}
+(14,1,1) = {"
+kY
+Kh
+vb
+Er
+Er
+Er
+Er
+Uu
+Uu
+Er
+Er
+ur
+Er
+jN
+to
+"}
+(15,1,1) = {"
+lM
+hU
+Zl
+UE
+Zl
+Zl
+Gz
+fO
+Ye
+Kv
+QI
+Zl
+Zl
+hU
+gw
+"}

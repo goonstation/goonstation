@@ -358,17 +358,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return
 
 /obj/item/clothing/gloves/swat
-	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	desc = "A pair of tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	name = "\improper SWAT gloves"
-	icon_state = "swat_syndie"
-	item_state = "swat_syndie"
+	icon_state = "inspector"
+	item_state = "inspector"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
-	fingertip_color = "#b22c20"
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
+	fingertip_color = "#535353"
 
 	setupProperties()
 		..()
@@ -376,11 +372,22 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0.25)
 		setProperty("deflection", 20)
 
+/obj/item/clothing/gloves/swat/syndicate
+	desc = "A pair of Syndicate tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	name = "\improper SWAT gloves"
+	icon_state = "swat_syndie"
+	item_state = "swat_syndie"
+	fingertip_color = "#b22c20"
+
+	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-/obj/item/clothing/gloves/swat/knight
+/obj/item/clothing/gloves/swat/syndicate/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
 	icon_state = "combatgauntlets"
@@ -576,7 +583,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 
 	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 35, 1, -3)
@@ -695,7 +702,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			for(var/count=0, count<4, count++)
 
-				var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+				var/list/affected = drawLineObj(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 				SPAWN(0.6 SECONDS)
 					for(var/obj/O in affected)

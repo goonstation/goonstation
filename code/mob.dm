@@ -45,9 +45,10 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
+	var/emotes_on_cooldown = FALSE
 	var/computer_id = null
-	var/lastattacker = null
-	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
+	var/datum/weakref/lastattacker = null
+	var/datum/weakref/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
 	var/lastattackertime = 0
 	var/other_mobs = null
 	var/memory = ""
@@ -231,6 +232,11 @@
 	var/no_stamina_stuns = FALSE
 	///A flag set temporarily when a mob is being forced to say something, used to avoid HORRIBLE SPAGHETTI in say logging. I'm sorry okay.
 	var/being_controlled = FALSE
+	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
+	var/list/datum/vomit_behavior/vomit_behaviors = null
+
+	/// if this mob can interface with pod context menu by left clicking
+	var/can_interface_with_pods = TRUE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -264,7 +270,7 @@
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
 		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
-	src.lastattacked = src //idk but it fixes bug
+	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new(null, src)
 
@@ -347,7 +353,7 @@
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
-	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+	for(var/mob/m in src) //aieyes, other terrible code
 		if(m.observing == src)
 			m.stopObserving()
 		else
@@ -404,6 +410,9 @@
 
 	if (src.buckled)
 		src.buckled.buckled_guy = null
+
+	for(var/obj/item/grab/G in src.grabbed_by)
+		qdel(G)
 
 	mobs.Remove(src)
 
@@ -739,7 +748,7 @@
 
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
-				else if (locate(/obj/hotspot) in tmob.loc)
+				else if (locate(/atom/movable/hotspot) in tmob.loc)
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
@@ -767,12 +776,12 @@
 			deliver_move_trigger("bump")
 			victim.deliver_move_trigger("bump")
 			var/was_in_space = istype(victim.loc, /turf/space)
-			var/was_in_fire = locate(/obj/hotspot) in victim.loc
+			var/was_in_fire = locate(/atom/movable/hotspot) in victim.loc
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
-			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
+			else if (!was_in_fire && (locate(/atom/movable/hotspot) in victim.loc))
 				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
@@ -985,13 +994,13 @@
 		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
-/mob/proc/unequip_all(var/delete_stuff=0)
+/mob/proc/unequip_all(var/delete_stuff=0, atom/drop_loc = null)
 	var/list/obj/item/to_unequip = src.get_unequippable()
 	if(length(to_unequip))
 		for (var/obj/item/W in to_unequip)
 			src.remove_item(W)
 			if (W)
-				W.set_loc(src.loc)
+				W.set_loc(drop_loc || src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
 			if(delete_stuff)
@@ -1228,12 +1237,12 @@
 /mob/proc/restrained()
 	. = src.hasStatus("handcuffed")
 
-/mob/proc/drop_from_slot(obj/item/item, turf/T)
+/mob/proc/drop_from_slot(obj/item/item, turf/T, force_drop=FALSE)
 	if (!item)
 		return
 	if (!(item in src.contents))
 		return
-	if (item.cant_drop)
+	if (item.cant_drop && !force_drop)
 		return
 	if (item.cant_self_remove && src.l_hand != item && src.r_hand != item)
 		return
@@ -1322,6 +1331,23 @@
 			return src.l_hand
 		else
 			return src.r_hand
+///Legally distinct from `equipped_list`, this gets all items from equipment slots and not hands!
+/mob/proc/equipment_list()
+	RETURN_TYPE(/list)
+	return list()
+
+/mob/living/critter/equipment_list()
+	. = list()
+	for (var/datum/equipmentHolder/holder as anything in src.equipment)
+		if (holder.item)
+			. += holder.item
+	return .
+
+/mob/living/carbon/human/equipment_list()
+	. = list()
+	for (var/obj/item/item in list(src.l_store, src.r_store, src.belt, src.back, src.wear_id, src.wear_mask, src.wear_suit, src.w_uniform, src.shoes, src.gloves, src.ears))
+		. += item //using byond type filtering this can't be null here
+	return .
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -1458,18 +1484,25 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
-		if (!new_rights || new_rights == src.mind.miranda)
-			src.show_text("Miranda rights not changed.", "red")
-			return
+		var/choice = tgui_alert(usr, "Edit Miranda's rights?", "Miranda Rights", list("Edit", "Reset", "Cancel"))
+		switch(choice)
+			if("Edit")
+				var/new_rights = tgui_input_text(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA)
+				if (!new_rights || new_rights == src.mind.miranda)
+					src.show_text("Miranda rights not changed.", "red")
+					return
 
-		new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
-		new_rights = sanitize(strip_html(new_rights))
+				new_rights = copytext(new_rights, 1, MAX_MESSAGE_LEN)
+				new_rights = sanitize(strip_html(new_rights))
 
-		src.mind.set_miranda(new_rights)
+				src.mind.set_miranda(new_rights)
 
-		logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
-		src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+				logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
+				src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
+			if("Reset")
+				src.mind.set_miranda(null)
+				logTheThing(LOG_TELEPATHY, src, "has reset their miranda rights.")
+				src.show_text("Miranda rights reset.", "blue")
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -1526,7 +1559,7 @@
 	set category = "Commands"
 
 	if (global.current_state < GAME_STATE_FINISHED)
-		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
+		boutput(src, SPAN_NOTICE("The game hasn't finished yet!"))
 		return
 
 	global.ticker.get_credits().ui_interact(src)
@@ -1769,7 +1802,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if (src.client) // I feel like every player should be ghosted when they get gibbed
 		var/mob/dead/observer/newmob = ghostize()
@@ -1855,7 +1888,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("elecgibbed", animation)
+		FLICK("elecgibbed", animation)
 		if(ispath(light_type))
 			light = new light_type
 			light.set_brightness(brightness)
@@ -1865,12 +1898,16 @@
 			light.enable()
 			SPAWN(1 SECOND)
 				qdel(light)
+	else if(src.custom_gib_handler)
+		call(src.custom_gib_handler)(src.loc)
+	else if(issilicon(src) || isrobocritter(src))
+		robogibs(src.loc)
+	else
+		gibs(src.loc)
+
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
+		newmob?.corpse = null
 
 	if (animation)
 		animation.delaydispose()
@@ -1893,12 +1930,12 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("firegibbed", animation)
+		FLICK("firegibbed", animation)
 		if (drop_equipment)
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.add_stain("singed")
+					C.add_stain(/datum/stain/singed)
 			unequip_all()
 
 	if (drop_equipment)
@@ -1938,11 +1975,11 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	if (bdna && btype)
 		partygibs(src.loc, bdna, btype) // For forensics (Convair880).
@@ -1981,7 +2018,7 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("owlgibbed", animation)
+		FLICK("owlgibbed", animation)
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
@@ -1990,7 +2027,7 @@
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	if (bdna && btype)
 		gibs(src.loc, null, bdna, btype) // For forensics (Convair880).
@@ -2020,7 +2057,7 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("disintegrated", animation)
+		FLICK("disintegrated", animation)
 
 		if (prob(20))
 			make_cleanable(/obj/decal/cleanable/ash, src.loc)
@@ -2033,7 +2070,7 @@
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	elecflash(src.loc,exclude_center = 0)
 
@@ -2057,11 +2094,11 @@
 	if (ishuman(src))
 		animation = new(src.loc)
 		animation.master = src
-		flick("implode", animation)
+		FLICK("implode", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
@@ -2080,7 +2117,7 @@
 		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/cluwne/floor/floorcluwne = null
@@ -2165,11 +2202,11 @@
 
 		animation = new(src.loc)
 		animation.master = src
-		flick("gibbed", animation)
+		FLICK("gibbed", animation)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 	var/list/ejectables = list_ejectables()
 
@@ -2460,6 +2497,8 @@
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
+			if (thr.throw_type & THROW_GIB)
+				src.gib()
 		else
 			src.gib()
 
@@ -2491,10 +2530,12 @@
 	src.delStatus("drowsy")
 	src.remove_stuns()
 	src.delStatus("slowed")
+	src.delStatus("nausea")
 	src.delStatus("burning")
 	src.delStatus("radiation")
 	src.delStatus("critical_condition")
 	src.delStatus("recent_trauma")
+	src.delStatus("muted")
 	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
@@ -2512,6 +2553,23 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
+	src.update_body()
+
+/// Attempt to bring a mob just out of crit without immediately dropping back into crit
+/mob/proc/stabilize()
+	SHOULD_CALL_PARENT(TRUE)
+	src.losebreath = min(src.losebreath, 2)
+	src.delStatus("burning")
+	src.delStatus("radiation")
+	src.take_radiation_dose(-INFINITY)
+	src.change_eye_blurry(-INFINITY)
+	src.take_eye_damage(-INFINITY)
+	src.take_eye_damage(-INFINITY, 1)
+	src.take_ear_damage(-INFINITY)
+	src.take_ear_damage(-INFINITY, 1)
+	src.take_brain_damage(-(max(src.get_brain_damage()-10, 0))) // leave them with up to 10 brain damage
+	src.health = max(src.health, 10)
+	src.update_body()
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0
@@ -2831,6 +2889,7 @@
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
+			newname = remove_bad_name_characters(newname)
 			if (!length(newname) || copytext(newname,1,2) == " ")
 				src.show_text("That name was too short after removing bad characters from it. Please choose a different name.", "red")
 				continue
@@ -2905,6 +2964,9 @@
 
 	if (source && source != src) //we were moved by something that wasnt us
 		last_pulled_time = world.time
+		if ((istype(src.loc, /turf/space) || src.no_gravity) && ismob(source))
+			var/mob/M = source
+			src.inertia_dir = M.inertia_dir
 	else
 		if(src.pulled_by)
 			src.pulled_by.remove_pulling()
@@ -2947,16 +3009,27 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 	if(equipment_proxy.aquatic_movement > 0)
 		equipment_proxy.aquatic_movement *= modifier
+		if(modifier == 0) // aquatic_movement requires a positive value to skip added fluid turf delay
+			equipment_proxy.aquatic_movement += 0.01
 
 
+/mob/proc/nauseate(stacks = 1)
+	if (isalive(src))
+		src.setStatus("nausea", INFINITE_STATUS, stacks)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	SHOULD_CALL_PARENT(TRUE)
+	. = TRUE
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
+		return 0
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
+	if (!specialType && length(src.vomit_behaviors))
+		var/datum/vomit_behavior/chosen = pick(src.vomit_behaviors)
+		specialType = chosen.vomit(src)
+	if (!specialType)
+		src.visible_message(flavorMessage, selfMessage) //assume the special behavior handles the message
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -2967,6 +3040,16 @@
 			vomit.blood_DNA = src.bioHolder.Uid
 
 	src.nutrition -= nutrition
+	src.changeStatus("stunned", 2 SECONDS)
+	src.change_misstep_chance(5)
+	src.delStatus("nausea")
+
+/mob/proc/add_vomit_behavior(type)
+	LAZYLISTADDUNIQUE(src.vomit_behaviors, new type)
+
+/mob/proc/remove_vomit_behavior(type)
+	var/datum/vomit_behavior/behavior = locate(type) in src.vomit_behaviors
+	LAZYLISTREMOVE(src.vomit_behaviors, behavior)
 
 /mob/proc/accept_forcefeed(obj/item/item, mob/user, edibility_override) //just.. don't ask
 	item.forcefeed(src, user, edibility_override)
@@ -3023,7 +3106,7 @@
 	SPAWN(0.7 SECONDS) //Length of animation.
 		newbody.set_loc(animation.loc)
 		qdel(animation)
-		newbody.anchored = ANCHORED // Stop running into the lava every half second jeez!
+		newbody.anchored = ANCHORED_ALWAYS // Stop running into the lava every half second jeez!
 		sleep(4 SECONDS)
 		reset_anchored(newbody)
 
@@ -3038,7 +3121,7 @@
 		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
-		src.anchored = ANCHORED
+		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 0
 
 		var/mob/living/carbon/human/satan/satan = new /mob/living/carbon/human/satan
@@ -3311,7 +3394,7 @@
 		src.last_radiation_dose_time = TIME
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
-		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, geiger_stage(Sv))
 		. = radres_mult*Sv
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing

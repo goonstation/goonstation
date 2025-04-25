@@ -423,6 +423,22 @@
 		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 
+/datum/bioEffect/radioactive_farts
+	name = "Radioactive Farts"
+	desc = "The subject's flatulence is contaminated with radioactive isotopes."
+	id = "radioactive_farts"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 66
+	blockCount = 3
+	blockGaps = 3
+	isBad = 1
+	stability_loss = 10
+	msgGain = "You feel a strange energy radiate from your bowels."
+	msgLose = "Your intestines are no longer glowing."
+	reclaim_fail = 15
+	icon_state  = "bad"
+	effect_group = "rad"
+
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause themselves to mutate."
@@ -545,14 +561,12 @@
 	icon_state  = "bad"
 
 	OnAdd()
-		src.removed = 0
 		owner.apply_color_matrix(COLOR_MATRIX_PROTANOPIA, COLOR_MATRIX_PROTANOPIA_LABEL)
-		return
+		. = ..()
 
 	OnRemove()
-		src.removed = 1
+		. = ..()
 		owner.remove_color_matrix(COLOR_MATRIX_PROTANOPIA_LABEL)
-		return
 
 /datum/bioEffect/colorblindness/greenblind
 	name = "Deuteranopia"
@@ -566,14 +580,12 @@
 	icon_state  = "bad"
 
 	OnAdd()
-		src.removed = 0
 		owner.apply_color_matrix(COLOR_MATRIX_DEUTERANOPIA, COLOR_MATRIX_DEUTERANOPIA_LABEL)
-		return
+		. = ..()
 
 	OnRemove()
-		src.removed = 1
+		. = ..()
 		owner.remove_color_matrix(COLOR_MATRIX_DEUTERANOPIA_LABEL)
-		return
 
 /datum/bioEffect/colorblindness/blueblind
 	name = "Tritanopia"
@@ -587,14 +599,12 @@
 	icon_state  = "bad"
 
 	OnAdd()
-		src.removed = 0
 		owner.apply_color_matrix(COLOR_MATRIX_TRITANOPIA, COLOR_MATRIX_TRITANOPIA_LABEL)
-		return
+		. = ..()
 
 	OnRemove()
-		src.removed = 1
+		. = ..()
 		owner.remove_color_matrix(COLOR_MATRIX_TRITANOPIA_LABEL)
-		return
 
 /datum/bioEffect/emoter/screamer
 	name = "Paranoia"
@@ -673,12 +683,15 @@
 	OnAdd()
 		if (isliving(owner))
 			effect = new/obj/effects/bees(owner)
-		..()
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		qdel(effect)
 
 	OnLife(var/mult)
+		if (..())
+			return
 		var/mob/living/L = owner
 		if (!istype(L) || (isdead(L)))
 			return
@@ -757,8 +770,10 @@
 	OnAdd()
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
@@ -776,6 +791,8 @@
 	icon_state  = "bad"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (probmult(ring_prob) && owner.client)
 			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
@@ -794,6 +811,8 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (isliving(owner))
 			var/mob/living/L = owner
 
@@ -815,6 +834,8 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (isliving(owner))
 			var/mob/living/L = owner
 			if (L.blood_volume < 6 / 5 * initial(L.blood_volume) && L.blood_volume > 0)
@@ -950,12 +971,13 @@
 	icon_state  = "bad"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (probmult(5))
 			if (isdead(owner))
 				return
 			else
 				owner:emote("sneeze")
-		return
 
 /datum/bioEffect/lazy_eye
 	name = "Ego Dislocation"

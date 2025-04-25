@@ -52,6 +52,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
 	new /datum/bank_purchaseable/frog,\
+	new /datum/bank_purchaseable/dye_beret,\
+	new /datum/bank_purchaseable/dye_cardigan,\
+
 
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
@@ -352,6 +355,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (ispath(origin))
 						H.wear_suit.icon_state = origin.icon_state
 						H.wear_suit.item_state = origin.item_state
+						H.wear_suit.wear_state = origin.wear_state
 						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
 							H.wear_suit.coat_style = origin.coat_style
@@ -473,7 +477,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
-		path = /obj/item/tank/emergency_oxygen  // oh boy they'll need this if they are unlucky
+		path = /obj/item/tank/pocket/oxygen  // oh boy they'll need this if they are unlucky
 		icon = 'icons/obj/large/32x64.dmi'
 		icon_state = "arrival_missile"
 		icon_dir = SOUTH
@@ -482,6 +486,17 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			var/mob/living/silicon/sillycon = M
+			if(istype(sillycon))
+				var/obj/item/organ/brain/latejoin/latejoin_brain = null
+				if (istype(sillycon,/mob/living/silicon/ai))
+					var/mob/living/silicon/ai/AI = sillycon
+					latejoin_brain = AI.brain
+				if (istype(sillycon,/mob/living/silicon/robot))
+					var/mob/living/silicon/robot/R = sillycon
+					latejoin_brain = R.part_head?.brain
+				if(istype(latejoin_brain))
+					return FALSE //Don't missile launch latejoin silicons that already exist
 			SPAWN(0)
 				if(istype(M.loc, /obj/storage))
 					launch_with_missile(M.loc)
@@ -730,6 +745,20 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		path = /obj/item/clothing/shoes/heels/dancin
 		icon = 'icons/obj/clothing/item_shoes.dmi'
 		icon_state = "wheels"
+
+	dye_cardigan
+		name = "Dyeable Cardigan"
+		cost = 1200
+		path = /obj/item/clothing/suit/knitsweater/cardigan/dyeable
+		icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+		icon_state = "cardigan"
+
+	dye_beret
+		name = "Dyeable Beret"
+		cost = 1200
+		path = /obj/item/clothing/head/beret/dyeable
+		icon = 'icons/obj/clothing/item_hats.dmi'
+		icon_state = "dye_beret"
 
 	////////////////////////
 	//CYBORG PURCHASEABLES//

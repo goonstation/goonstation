@@ -15,7 +15,7 @@ export interface ExpiryOptions {
 
 export interface PollSettings {
   alertPlayers: boolean;
-  expiry: ExpiryOptions | undefined;
+  expiry: ExpiryOptions;
   multipleChoice: boolean;
   title: string;
   servers: string | undefined;

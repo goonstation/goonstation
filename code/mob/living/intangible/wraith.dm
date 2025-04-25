@@ -98,6 +98,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -272,7 +273,7 @@
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.icon_state = "wraithdie"
 			animation.master = src
-			flick(death_icon_state, animation)
+			FLICK(death_icon_state, animation)
 
 			src.ghostize()
 			qdel(src)
@@ -488,7 +489,7 @@
 				M.show_message(SPAN_ALERT("[src] [acts]!"))
 
 	attack_hand(var/mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.a_intent != "harm")
 			visible_message("[user] pets [src]!")
 		else

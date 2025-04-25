@@ -50,7 +50,7 @@
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), SLOT_WEAR_SUIT)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
@@ -62,6 +62,7 @@
 		H.equip_if_possible(SB, SLOT_BELT)
 
 		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank=TRUE)
 
 		H.assign_gimmick_skull()
 

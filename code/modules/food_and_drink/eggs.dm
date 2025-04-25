@@ -51,6 +51,33 @@
 			qdel(src)
 		else ..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
+	name = "chocolate egg"
+	desc = "A little chocolate egg, roughly egg sized."
+	icon_state = "chocolate-egg"
+	food_effects = list("food_brute", "food_burn")
+	initial_reagents = list("chocolate" = 5)
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		return
+
+	heal(mob/living/M)
+		if (length(src.contents))
+			var/obj/item/plastic_toy = pick(src.contents)
+			if (prob(70))
+				M.put_in_hand_or_drop(plastic_toy)
+				boutput(M, SPAN_NOTICE("You open [src] and get \a [plastic_toy]!"))
+			else
+				plastic_toy.Eat(M, M, FALSE, TRUE)
+				M.take_oxygen_deprivation(30)
+				M.lose_breath(2)
+				M.emote("gasp", FALSE)
+				boutput(M, SPAN_ALERT("You accidentally swallow \the [plastic_toy]! Shit!"))
+				M.changeStatus("knockdown", 4 SECONDS)
+			return
+		. = ..()
+
+
 //why am I doing this
 /obj/item/reagent_containers/food/snacks/ingredient/egg/century
 	name = "century egg"
@@ -58,7 +85,16 @@
 	icon_state = "century-egg"
 	food_color = "#68634B" //eww
 	heal_amt = 5 //tasty treat
+	food_effects = list("food_all", "food_cateyes")
 	var/timestamp_created = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
@@ -70,7 +106,12 @@
 			M.reagents?.add_reagent("msg", 5)
 		if (age > 1 MONTH)
 			M.reagents?.add_reagent("omnizine", 5)
-		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.timestamp_created ? approx_time_text(age) : "not very long"]."))
+		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.get_age_string()]."))
+
+	proc/get_age_string()
+		if (!src.timestamp_created)
+			return "not very long"
+		return approx_time_text(world.realtime - src.timestamp_created)
 
 //mostly adapted from pickle jars because imcargoculter and it's not really generalizable
 

@@ -52,7 +52,10 @@ export const MapVoteReport = () => {
   return (
     <Window height={height} width={width}>
       <Window.Content>
-        <Stack wrap={!isDetailed} justify={!isDetailed ? 'space-around' : null}>
+        <Stack
+          wrap={!isDetailed}
+          justify={!isDetailed ? 'space-around' : undefined}
+        >
           {mapList.map((map) => {
             return (
               <MapPanel

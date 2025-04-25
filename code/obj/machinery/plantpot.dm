@@ -453,15 +453,19 @@ TYPEINFO(/obj/machinery/plantpot)
 			boutput(user, SPAN_ALERT("Something is already in that tray."))
 			return
 		user.visible_message(SPAN_NOTICE("[user] plants a seed in the [src]."))
-		user.u_equip(SEED)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] (reagents: [json_encode(HYPget_assoc_reagents(SEED.planttype, SEED.plantgenes))]) seed at [log_loc(src)].")
 			src.HYPnewplant(SEED)
+			SEED.charges--
+			if (SEED.charges < 1)
+				user.u_equip(SEED)
+				qdel(SEED)
+			else SEED.inventory_counter.update_number(SEED.charges)
 			if(!(user in src.contributors))
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
+			user.u_equip(SEED)
 			qdel(SEED)
 		return
 
@@ -479,7 +483,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			SEED = new /obj/item/seed
 		SEED.generic_seed_setup(SP.selected, FALSE)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			src.HYPnewplant(SEED)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)] using the seedplanter.")
@@ -487,7 +490,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
-			qdel(SEED)
+		qdel(SEED)
 
 	else if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
@@ -1098,8 +1101,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 				// Same shit again. This isn't so much the crop as it is giving you seeds
 				// incase you couldn't get them otherwise, though.
-				HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src)
 				seedcount++
+
+		if (seedcount > 0) HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
 
 		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 		// This is only reached if you actually got anything harvested.
@@ -1273,10 +1277,9 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Copy over all genes, strains and mutations from the seed.
 
 	// Finally set the harvests, make sure we always have at least one harvest,
-	// then get rid of the seed, mutate the genes a little and update the pot sprite.
+	// mutate the genes a little and update the pot sprite.
 	if(growing.harvestable) src.harvests = growing.harvests + DNA?.get_effective_value("harvests")
 	if(src.harvests < 1) src.harvests = 1
-	qdel(SEED)
 	if (!SEED.dont_mutate)
 		src.HYPmutateplant(1)
 	src.post_alert(list("event" = "new", "plant" = src.current.name))
@@ -1468,7 +1471,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = ANCHORED
-	deconstruct_flags = 0
+	deconstruct_flags = DECON_NONE
 	icon_state = null
 	power_usage = 0
 	growth_rate = 1

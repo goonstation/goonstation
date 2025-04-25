@@ -10,7 +10,7 @@
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
@@ -24,7 +24,7 @@
 		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
-				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
+				potential_reagents = list("nanites","activated plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","salbutamol","anti_rad","synaptizine","omnizine","synthflesh",

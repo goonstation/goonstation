@@ -13,7 +13,7 @@
 	var/crystal = 0
 	var/powersource = 0
 	var/scoopable = 1
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = 50
 	event_handler_flags = USE_FLUID_ENTER
@@ -76,7 +76,7 @@
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum) || QDELETED(src))
 				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
@@ -486,6 +486,12 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/neutronium
+	name = "neutronium ore"
+	desc = "An ore containing deadly neutronium metal."
+	material_name = "Neutronium"
+	default_material = "neutronium"
+
 // Misc building material
 
 /// This has no material, why does it exist???? Someone replace it
@@ -542,7 +548,7 @@
 	force = 5
 	throwforce = 5
 	g_amt = 3750
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -560,7 +566,7 @@
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!scalpel_surgery(target,user)) return ..()
+		if(is_special || !scalpel_surgery(target, user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)

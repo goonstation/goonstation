@@ -477,7 +477,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents)
+		if (src.reagents && (src.reagents.total_temperature > 330 || src.reagents.total_temperature < 270))
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)

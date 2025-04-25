@@ -108,7 +108,7 @@ TRAYS
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 5)
-		if (!spoon_surgery(target,user))
+		if (is_special || !spoon_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -142,7 +142,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(target,user)) // it doesn't make sense, no. but hey, it's something.
+		if((is_special || !saw_surgery(target,user))) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
 	custom_suicide = 1
@@ -182,7 +182,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)]."))
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
-		if(!scalpel_surgery(target,user))
+		if(is_special || !scalpel_surgery(target, user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -213,7 +213,7 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!spoon_surgery(target,user))
+		if (is_special || !spoon_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -243,7 +243,7 @@ TRAYS
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!saw_surgery(target,user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -274,7 +274,7 @@ TRAYS
 		if(prob(20))
 			src.break_utensil(user)
 			return
-		if(!scalpel_surgery(target,user))
+		if(is_special || !scalpel_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -416,7 +416,7 @@ TRAYS
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard."))
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(target,user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -862,7 +862,7 @@ TRAYS
 
 	dropped(mob/user)
 		..()
-		if(user.lying)
+		if(user?.lying)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (!H.limbs.r_leg && !H.limbs.l_leg)
@@ -933,17 +933,10 @@ TYPEINFO(/obj/item/plate/pizza_box)
 		. = ..()
 
 	proc/mousetrap_check(mob/user)
-		for(var/obj/item/mousetrap/MT in src.food_inside)
-			if (MT.armed)
-				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a mousetrap!</B>"),\
-					SPAN_ALERT("<B>You open the pizza box, but there was a live mousetrap in there!</B>"))
-				MT.triggered(user, user?.hand ? "l_hand" : "r_hand")
-				return TRUE
-		for(var/obj/item/mine/M in src.food_inside)
-			if (M.armed && M.used_up != TRUE)
-				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a [M.name]!</B>"),\
-					SPAN_ALERT("<B>You open the pizza box, but there was a live [M.name] in there!</B>"))
-				M.triggered(user)
+		for(var/obj/item/checked_item in src.food_inside)
+			if (SEND_SIGNAL(checked_item, COMSIG_ITEM_STORAGE_INTERACTION, user))
+				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a [checked_item]!</B>"),\
+					SPAN_ALERT("<B>You open the pizza box, but there was a live [checked_item] in there!</B>"))
 				return TRUE
 
 	proc/toggle_box(mob/user)
@@ -1222,9 +1215,9 @@ TYPEINFO(/obj/item/plate/pizza_box)
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
-				foodoverlay.color = FOOD.get_food_color()
+				foodoverlay.color = FOOD.get_average_color()
 				foodoverlay.layer = (src.layer+3)
-				toppingdata.Add(FOOD.get_food_color())
+				toppingdata.Add(FOOD.get_average_color())
 				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)

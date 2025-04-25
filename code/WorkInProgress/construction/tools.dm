@@ -119,14 +119,14 @@
 			return
 
 		src.add_dialog(user)
-		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
+		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='byond://?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
 		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
-			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
-			t += text("Currently firing at <A href='?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
-			t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
+			t += text("Turrets [] - <A href='byond://?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
+			t += text("Currently firing at <A href='byond://?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
+			t += text("Currently set for [] - <A href='byond://?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
 		user.Browse(t, "window=turretid")
 		onclose(user, "turretid")
@@ -244,7 +244,7 @@ TYPEINFO(/obj/item/room_marker)
 
 			var/dense = 0
 			for (var/obj/O in C)
-				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/mesh/grille) || istype(O, /obj/window) || istype(O, /obj/table))
 					dense = 1
 					break
 			if (dense)
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
+			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
@@ -626,6 +626,7 @@ TYPEINFO(/obj/item/room_planner)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
+					W.mod = W::mod
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
@@ -733,7 +734,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in N
+				var/obj/mesh/grille/Gr = locate() in N
 				if (Gr)
 					borders_mask -= 1
 					gcount--
@@ -745,7 +746,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in S
+				var/obj/mesh/grille/Gr = locate() in S
 				if (Gr)
 					borders_mask -= 2
 					gcount--
@@ -757,7 +758,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in E
+				var/obj/mesh/grille/Gr = locate() in E
 				if (Gr)
 					borders_mask -= 4
 					gcount--
@@ -769,7 +770,7 @@ TYPEINFO(/obj/item/room_planner)
 				if (recurse)
 					G.calculate_orientation(0)
 			else
-				var/obj/grille/Gr = locate() in W
+				var/obj/mesh/grille/Gr = locate() in W
 				if (Gr)
 					borders_mask -= 8
 					gcount--
@@ -814,7 +815,7 @@ TYPEINFO(/obj/item/room_planner)
 
 		origin.use_materials(2, borders)
 
-		var/obj/grille/G = new /obj/grille(L)
+		var/obj/mesh/grille/G = new /obj/mesh/grille(L)
 		G.setMaterial(metal)
 
 		var/mask = bmask
@@ -894,6 +895,7 @@ TYPEINFO(/obj/item/room_planner)
 			var/turf/simulated/wall/auto/AT = T
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
+			AT.mod = selectedmod
 
 			qdel(src)
 

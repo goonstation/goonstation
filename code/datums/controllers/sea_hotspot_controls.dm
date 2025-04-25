@@ -39,8 +39,8 @@
 
 	#ifdef UNDERWATER_MAP
 	var/list/map_colors = list(
-		empty = rgb(0, 0, 50),
-		solid = rgb(0, 0, 255),
+		empty = rgb(0, 0, 255),
+		solid = rgb(0, 0, 50),
 		station = rgb(255, 153, 58),
 		other = rgb(120, 200, 120))
 	#else
@@ -56,25 +56,28 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
+			var/size_mult = 2
 			for (var/x in 1 to world.maxx)
 				for (var/y in 1 to world.maxy)
 					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
-						turf_color = "empty"
+						continue
 					else
 						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
 
-					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+					var/mx = x * size_mult - 1
+					var/my = y * size_mult - 1
+					map.DrawBox(map_colors[turf_color], mx, my, mx + 1, my + 1)
 
 			for (var/beacon in by_type[/obj/warp_beacon])
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
 					var/turf/T = get_turf(beacon)
-					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
+					map.DrawBox(map_colors["station"], T.x * size_mult - 3, T.y * size_mult - 3, T.x * size_mult + 2, T.y * size_mult + 2)
 
 			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
@@ -116,6 +119,7 @@
 			width: 600px;
 			overflow: hidden;
 			margin: 0 auto;
+			background-color: [map_colors["empty"]]
 		}
 		#map img {
 			position: absolute;
@@ -987,7 +991,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		on = 0
 		UpdateIcon()
-		flick("stomper2",src)
+		FLICK("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
 			SPAWN(0.4 SECONDS)

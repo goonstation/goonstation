@@ -309,7 +309,7 @@ proc/compare_ornament_score(list/a, list/b)
 	EPHEMERAL_XMAS
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
-	icon = 'icons/effects/160x160.dmi'
+	icon = 'icons/obj/xmastree.dmi'
 	icon_state = "xmastree_2023"
 	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -883,7 +883,7 @@ proc/compare_ornament_score(list/a, list/b)
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 16)
 						C.show_message(SPAN_ALERT("<B>[src] [attack_text] on [O]!</B>"), 1)
-					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
+					if(istype(O, /obj/window) || istype(O, /obj/mesh/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 					else
 						O.ex_act(attack_strength)
@@ -1257,10 +1257,10 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		if(user.ckey in src.downvoted)
 			highlight_down = "font-weight: 900;"
 		. += {"<br>
-		<a href='?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href='?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
+		<a href='byond://?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href='byond://?src=\ref[src];downvote=1' style='color:#ff8888;[highlight_down]'>👎 (dislike)</a>"}
 		if(user?.client?.holder?.level >= LEVEL_SA)
-			. += "<br><a href='?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
+			. += "<br><a href='byond://?src=\ref[src];remove_ornament=1' style='color:red;'>Annihilate ornament</a>"
 
 	Topic(href, href_list)
 		if(href_list["remove_ornament"])
@@ -1391,14 +1391,14 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
+			boutput(user, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='byond://?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = "#" + href_list["setcolor"]
-			boutput(usr, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
+			boutput(usr, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='byond://?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)

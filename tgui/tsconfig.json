@@ -16,10 +16,17 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    // "noUncheckedIndexedAccess": true, TODO: enable
+    // "noUnusedLocals": true, TODO: enable
+    // "noUnusedParameters": true, TODO: enable
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    // "strictNullChecks": true, TODO-REACT: uhh maybe revisit this
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "target": "ES5"
   },
   "include": [

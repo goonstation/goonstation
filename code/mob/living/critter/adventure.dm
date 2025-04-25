@@ -106,7 +106,7 @@
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
+		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 ////////////// Shades ////////////////
@@ -288,7 +288,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	faction = list(FACTION_DERELICT)
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs

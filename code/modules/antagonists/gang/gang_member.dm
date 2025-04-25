@@ -92,7 +92,7 @@
 	announce()
 		. = ..()
 		var/gang_name = src.gang.gang_name
-		src.owner.current.show_antag_popup("gang_member")
+		src.owner.current.show_antag_popup(ROLE_GANG_MEMBER)
 		if(gang_name == initial(src.gang.gang_name))
 			gang_name = "a yet to be named gang"
 		// this is a LOT of text, but it will help in the absence of the wiki

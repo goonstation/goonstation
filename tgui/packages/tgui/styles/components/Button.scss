@@ -5,12 +5,12 @@
  * Changes: Mordent (FA6)
  */
 
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
 $color-default: colors.bg(colors.$primary) !default;
-$color-disabled: #999999 !default;
+$color-disabled: hsl(0, 0%, 60%) !default;
 $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
@@ -39,10 +39,6 @@ $bg-map: colors.$bg-map !default;
     background-color: lighten($color, 30%);
     color: $text-color;
   }
-
-  &:active {
-    background-color: lighten($color, 60%);
-  }
 }
 
 .Button {
@@ -66,8 +62,8 @@ $bg-map: colors.$bg-map !default;
 
   .fa,
   .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular {
-    // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-left: 0; // ZeWaka: Changed from -0.25em due to FA6 offset
     margin-right: 0; // Mordent: Changed from -0.25em due to FA6 offset
     min-width: 1.333em;
@@ -85,8 +81,8 @@ $bg-map: colors.$bg-map !default;
   // Add a margin to the icon to keep it separate from the text
   .fa,
   .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular {
-    // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-right: 0.25em;
   }
 }
@@ -94,20 +90,21 @@ $bg-map: colors.$bg-map !default;
 .Button--hasContent.Button--iconPosition--right {
   .fa,
   .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular {
-    // |GOONSTATION-CHANGE|
+  .fa-regular // |GOONSTATION-CHANGE|
+  {
     margin-right: 0px;
     margin-left: 3px;
   }
 }
 
 .Button--ellipsis {
+  display: block;
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
 // |GOONSTATION-ADD|
-//ellipsis has to be on the children, it can't work otherwise.
+// ellipsis has to be on the children, it can't work otherwise.
 .Button--ellipsis .Button__content {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -188,4 +185,16 @@ $bg-map: colors.$bg-map !default;
 
 .Button__textMargin {
   margin-left: 0.4rem;
+}
+
+// |GOONSTATION-ADD|
+.Button--ComplexContent {
+  // Button__content has an `align-self: stretch` that only works when it's parent is display flex, this makes it work.
+  display: flex;
+  // Opting out of `whitespace: nowrap` for complex button contents
+  white-space: normal;
+  .Button__content {
+    //In addion to stretch, grow: 1 to take the full width is pretty much necessary
+    flex-grow: 1;
+  }
 }

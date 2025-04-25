@@ -1,16 +1,20 @@
 /*
 Contains:
--Base Tank
--Anesthetic/N2O Tank
--Jetpacks
--Oxygen Tank
--Emergency Oxygen Tank
--Air Tank
--Plasma Tank
+- Base Tanks
+	- Oxygen, Plasma, Air, Empty, Anesthetic subtypes
+- Jetpacks
+	- Mk2, Syndicate, Micro subtypes
+- Pocket Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
+- Extended Pocket Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
+- Mini Tanks
+	- Oxygen, Plasma, Air, Empty subtypes
 */
 
 #define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
 
+ABSTRACT_TYPE(/obj/item/tank)
 /obj/item/tank
 	name = "tank"
 	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
@@ -325,13 +329,116 @@ Contains:
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
 
-////////////////////////////////////////////////////////////
+/obj/item/tank/oxygen
+	name = "gas tank (oxygen)"
+	icon_state = "oxygen"
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
 
+	New()
+		..()
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/plasma
+	name = "gas tank (plasma)"
+	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
+	icon_state = "plasma"
+	item_state = "plasma"
+	item_function_flags = ASSEMBLY_NEEDS_MESSAGING
+
+	New()
+		..()
+		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		return
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+		return " [log_atmos(src)]"
+
+	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the plasma tank
+		parent_assembly.target_item_prefix = "plasma"
+
+	/// ----------------------------------------------
+
+
+	proc/release()
+		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
+		loc.assume_air(removed)
+
+	proc/ignite()
+		if (QDELETED(src))
+			return
+		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
+		var/strength = 1
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
+
+		if(src in bible_contents)
+			strength = fuel_moles/20
+			var/bible_count = length(by_type[/obj/item/bible])
+			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
+			for_by_tcl(B, /obj/item/bible)//world)
+				var/turf/T = get_turf(B.loc)
+				if(T)
+					explosion(src, T, 0, strength, strength*2, strength*3)
+			if(src.master)
+				qdel(src.master)
+			qdel(src)
+			return
+
+		var/turf/ground_zero = get_turf(loc)
+
+		if(air_contents.temperature > (T0C + 400))
+			strength = fuel_moles/8
+
+			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
+
+		else if(air_contents.temperature > (T0C + 250))
+			strength = fuel_moles/10
+
+			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
+			ground_zero.assume_air(air_contents)
+			air_contents = null
+			ground_zero.hotspot_expose(1000, 125)
+
+		else if(air_contents.temperature > (T0C + 100))
+			strength = fuel_moles/13
+
+			explosion(src, ground_zero, -1, -1, strength*2, strength*3)
+			ground_zero.assume_air(air_contents)
+			air_contents = null
+			ground_zero.hotspot_expose(1000, 125)
+
+		else
+			ground_zero.assume_air(air_contents)
+			air_contents = null
+			ground_zero.hotspot_expose(1000, 125)
+
+		if(src.master) qdel(src.master)
+		qdel(src)
+
+/obj/item/tank/air
+	name = "gas tank (air mix)"
+	icon_state = "airmix"
+	item_state = "airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		return
 /obj/item/tank/empty
 	name = "gas tank"
 	icon_state = "empty"
-
-////////////////////////////////////////////////////////////
 
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
@@ -344,11 +451,10 @@ Contains:
 		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
 		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
-////////////////////////////////////////////////////////////
+// ==== JETPACKS ====
 
 TYPEINFO(/obj/item/tank/jetpack)
 	mats = 16
-
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	w_class = W_CLASS_BULKY
@@ -439,7 +545,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 			var/mob/M = src.loc
 			M.update_equipped_modifiers()
 
-
 /obj/item/tank/jetpack/syndicate
 	name = "jetpack (oxygen)"
 	icon_state = "sjetpack_mag0"
@@ -457,7 +562,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 TYPEINFO(/obj/item/tank/jetpack/micro)
 	mats = 8
-
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
@@ -471,73 +575,113 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.volume = 30
 		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
-////////////////////////////////////////////////////////////
 
-/obj/item/tank/oxygen
-	name = "gas tank (oxygen)"
-	icon_state = "oxygen"
-	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
-	distribute_pressure = 17
-
-	New()
-		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/emergency_oxygen
-	name = "pocket oxygen tank"
-	icon_state = "pocket_oxtank"
+// ==== POCKET TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/pocket)
+/obj/item/tank/pocket
+	name = "pocket tank"
+	desc = "A tiny personal tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	flags = TABLEPASS | CONDUCT
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
 	stamina_damage = 20
 	stamina_cost = 8
-	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
-	distribute_pressure = 17
 	compatible_with_TTV = FALSE
 
 	New()
 		..()
 		src.air_contents.volume = 3
+
+/obj/item/tank/pocket/oxygen
+	name = "pocket tank (oxygen)"
+	icon_state = "pocket_oxtank"
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
+
+	New()
+		..()
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-/obj/item/tank/emergency_oxygen/extended
-	name = "extended capacity pocket oxygen tank"
-	desc = "An extended capacity version of the pocket emergency oxygen tank."
-	icon_state = "ex_pocket_oxtank"
+/obj/item/tank/pocket/plasma
+	name = "pocket tank (plasma)"
+	icon_state = "pocket_plasma"
+	extra_desc = "The bright orange paintwork indicates that it contains plasma."
+
+	New()
+		..()
+		src.air_contents.toxins = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/pocket/air
+	name = "pocket tank (air mix)"
+	icon_state = "pocket_airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		return
+
+/obj/item/tank/pocket/empty
+	name = "pocket tank"
+	icon_state = "pocket_empty"
+	extra_desc = "The dull grey paintwork indicates that it may not contain anything."
+
+// ==== EXTENDED POCKET TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
+/obj/item/tank/pocket/extended
+	name = "extended capacity pocket tank"
+	desc = "An extended capacity version of the pocket emergency tank. To use, put on a secure mask and open the tank's release valve."
 	var/default_fill_mols = ONE_ATMOSPHERE * 60 / (R_IDEAL_GAS_EQUATION * T20C) //I think this is mols???
 
 	New()
 		..()
 		src.air_contents.volume = 6
+
+/obj/item/tank/pocket/extended/oxygen
+	name = "extended capacity pocket tank (oxygen)"
+	icon_state = "ex_pocket_oxtank"
+	extra_desc = "The bright yellow and deep blue paintwork indicates that it contains oxygen."
+
+	New()
+		..()
 		src.air_contents.oxygen = src.default_fill_mols
-		return
 
-	empty
+/obj/item/tank/pocket/extended/plasma
+	name = "extended capacity pocket tank (plasma)"
+	icon_state = "ex_pocket_plastank"
+	extra_desc = "The bright yellow and orange paintwork indicates that it contains plasma."
 
-		New()
-			..()
-			src.air_contents.oxygen = null
-			return
-	plasma
-		name = "extended capacity plasma tank"
-		desc = "A standard extended capacity oxygen tank that someone has filled with plasma. Wow!"
-		icon_state = "ex_pocket_plastank"
+	New()
+		..()
+		src.air_contents.toxins = src.default_fill_mols
 
-		New()
-			..()
-			src.air_contents.oxygen = null
-			src.air_contents.toxins = src.default_fill_mols
+/obj/item/tank/pocket/extended/air
+	name = "extended capacity pocket tank (air mix)"
+	icon_state = "ex_pocket_airmix"
+	extra_desc = "The bright yellow and white paintwork indicates that it contains a breathable airmix."
+	distribute_pressure = 81
 
+	New()
+		..()
+		src.air_contents.oxygen = src.default_fill_mols * O2STANDARD
+		src.air_contents.nitrogen = src.default_fill_mols * N2STANDARD
 
-/obj/item/tank/mini_oxygen
-	name = "mini oxygen tank"
-	icon_state = "mini_oxtank"
-	item_state = "mini_oxtank"
+/obj/item/tank/pocket/extended/empty
+	name = "extended capacity pocket tank"
+	icon_state = "ex_pocket_empty"
+	extra_desc = "The bright yellow and dull grey paintwork indicates that it may not contain anything."
+
+// ==== MINI TANKS ====
+ABSTRACT_TYPE(/obj/item/tank/mini)
+/obj/item/tank/mini
+	name = "mini tank"
+	icon_state = "mini_empty"
+	item_state = "mini_empty"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
@@ -545,7 +689,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	force = 4
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A personal oxygen tank meant to keep you alive in an emergency. This one hooks directly to your jumpsuit's belt. To use, put on a secure mask and open the tank's release valve."
+	desc = "A belt-worn tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 	compatible_with_TTV = FALSE
@@ -553,187 +697,29 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 15
+
+/obj/item/tank/mini/oxygen
+	name = "mini tank (oxygen)"
+	icon_state = "mini_oxtank"
+	item_state = "mini_oxtank"
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+
+	New()
+		..()
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-	empty
+	empty // for printed mini tanks
 		New()
 			..()
 			src.air_contents.oxygen = null
 			return
 
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/air
-	name = "gas tank (air mix)"
-	icon_state = "airmix"
-	item_state = "airmix"
-	extra_desc = "The white paintwork indicates a breathable air mix."
-	distribute_pressure = 81
-
-	New()
-		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-		return
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/plasma
-	name = "gas tank (BIOHAZARD)"
-	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
-	icon_state = "plasma"
-	item_state = "plasma"
-
-	New()
-		..()
-		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		return
-
-	proc/release()
-		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
-		loc.assume_air(removed)
-
-	proc/ignite()
-		if (QDELETED(src))
-			return
-		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
-		var/strength = 1
-		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-
-		if(src in bible_contents)
-			strength = fuel_moles/20
-			var/bible_count = length(by_type[/obj/item/bible])
-			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
-			for_by_tcl(B, /obj/item/bible)//world)
-				var/turf/T = get_turf(B.loc)
-				if(T)
-					explosion(src, T, 0, strength, strength*2, strength*3)
-			if(src.master)
-				qdel(src.master)
-			qdel(src)
-			return
-
-		var/turf/ground_zero = get_turf(loc)
-
-		if(air_contents.temperature > (T0C + 400))
-			strength = fuel_moles/15
-
-			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
-
-		else if(air_contents.temperature > (T0C + 250))
-			strength = fuel_moles/20
-
-			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
-			ground_zero.assume_air(air_contents)
-			air_contents = null
-			ground_zero.hotspot_expose(1000, 125)
-
-		else if(air_contents.temperature > (T0C + 100))
-			strength = fuel_moles/25
-
-			explosion(src, ground_zero, -1, -1, strength*2, strength*3)
-			ground_zero.assume_air(air_contents)
-			air_contents = null
-			ground_zero.hotspot_expose(1000, 125)
-
-		else
-			ground_zero.assume_air(air_contents)
-			air_contents = null
-			ground_zero.hotspot_expose(1000, 125)
-
-		if(src.master) qdel(src.master)
-		qdel(src)
-
-	attackby(obj/item/W, mob/user)
-		..()
-		if (istype(W, /obj/item/assembly/rad_ignite))
-			var/obj/item/assembly/rad_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/radio_bomb/R = new /obj/item/assembly/radio_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
-
-		if (istype(W, /obj/item/assembly/prox_ignite))
-			var/obj/item/assembly/prox_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/proximity_bomb/R = new /obj/item/assembly/proximity_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
-
-		if (istype(W, /obj/item/assembly/time_ignite))
-			var/obj/item/assembly/time_ignite/S = W
-			if (!( S.status ))
-				return
-			var/obj/item/assembly/time_bomb/R = new /obj/item/assembly/time_bomb( user )
-			R.part1 = S.part1
-			S.part1.set_loc(R)
-			S.part1.master = R
-			R.part2 = S.part2
-			S.part2.set_loc(R)
-			S.part2.master = R
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.part3 = src
-			S.part1 = null
-			S.part2 = null
-			//S = null
-			qdel(S)
-
-/obj/item/tank/mini_plasma
-	name = "mini plasma tank"
+/obj/item/tank/mini/plasma
+	name = "mini tank (plasma)"
 	icon_state = "mini_plastank"
 	item_state = "mini_plastank"
-	flags = TABLEPASS | CONDUCT
-	c_flags = ONBELT
-	health = 5
-	w_class = W_CLASS_NORMAL
-	force = 4
-	stamina_damage = 30
-	stamina_cost = 16
-	desc = "This orange gas tank is used to contain toxic, volatile plasma. This one hooks directly to your jumpsuit's belt."
-	wear_image_icon = 'icons/mob/clothing/belt.dmi'
-	distribute_pressure = 17
+	extra_desc = "The bright orange paintwork indicates that it contains plasma."
 	compatible_with_TTV = FALSE
 
 	New()
@@ -742,10 +728,27 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		src.air_contents.toxins = (ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-	empty
+	empty // for printed mini tanks
 		New()
 			..()
 			src.air_contents.toxins = null
 			return
+
+/obj/item/tank/mini/air
+	name = "mini tank (air mix)"
+	icon_state = "mini_airmix"
+	item_state = "mini_airmix"
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+
+
+/obj/item/tank/mini/empty
+	icon_state = "mini_empty"
+	item_state = "mini_empty"
 
 #undef TANK_VOLUME

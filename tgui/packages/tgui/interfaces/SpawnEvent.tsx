@@ -26,6 +26,7 @@ interface SpawnEventData {
   ask_permission;
   allow_dnr;
   eligible_player_count;
+  add_to_manifest;
 }
 
 export const SpawnEvent = () => {
@@ -46,9 +47,10 @@ export const SpawnEvent = () => {
     ask_permission,
     allow_dnr,
     eligible_player_count,
+    add_to_manifest,
   } = data;
   return (
-    <Window title="Ghost Spawn Editor" width={500} height={330}>
+    <Window title="Ghost Spawn Editor" width={500} height={360}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -194,6 +196,19 @@ export const SpawnEvent = () => {
                 Allow DNR players
               </ButtonCheckbox>
             </LabeledList.Item>
+            {spawn_type === 'job' && (
+              <LabeledList.Item label="Manifest">
+                <ButtonCheckbox
+                  checked={add_to_manifest}
+                  tooltip="Add players spawned by this event to the station manifest"
+                  onClick={() =>
+                    act('set_manifest', { add_to_manifest: !add_to_manifest })
+                  }
+                >
+                  Add to manifest
+                </ButtonCheckbox>
+              </LabeledList.Item>
+            )}
             <LabeledList.Item label="Objective text">
               <TextArea
                 value={objective_text}

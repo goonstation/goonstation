@@ -319,6 +319,7 @@ var/list/admin_verbs = list(
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
 		/client/proc/SetInfoOverlayAlias,
+		/client/proc/show_mining_map,
 
 		),
 
@@ -379,9 +380,12 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_nukie_colour,
+		/client/proc/cmd_event_controller,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
+		/client/proc/cmd_paraviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
@@ -429,13 +433,15 @@ var/list/admin_verbs = list(
 		/client/proc/region_allocator_panel,
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
+		/client/proc/test_spacebee_command,
+		/client/proc/delete_landmarks,
+		/client/proc/admin_minimap,
 		),
 
 	7 = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -1718,8 +1724,14 @@ var/list/fun_images = list()
 	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
-		var/changelogHtml = grabResource("html/changelog.html")
-		var/data = admin_changelog:html
+		var/changelogHtml
+		var/data
+		if (src.byond_version >= 516)
+			changelogHtml = grabResource("html/changelog.html")
+			data = admin_changelog.html
+		else
+			changelogHtml = grabResource("html/legacy_changelog.html")
+			data = legacy_admin_changelog.html
 		var/fontcssdata = {"
 				<style type="text/css">
 				@font-face {
@@ -1733,7 +1745,10 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
+		if (src.byond_version >= 516)
+			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
+		else
+			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -2297,6 +2312,8 @@ var/list/fun_images = list()
 			C.cmd_admin_check_health(A)
 		if("Heal")
 			C.cmd_admin_rejuvenate(A)
+		if("Stabilize")
+			C.cmd_admin_stabilize(A)
 		if("Gib")
 			C.cmd_admin_gib(A)
 		if("Polymorph")
@@ -2352,6 +2369,9 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Object Speak")
+			var/obj/object = A
+			object.admin_command_obj_speak()
 
 	src.update_cursor()
 
@@ -2566,6 +2586,9 @@ var/list/fun_images = list()
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if(tgui_alert(src.mob, "Distribute tokens to all roundstart antagonists?", "Token Distribution", list("Yes", "No")) != "Yes")
+		return
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
 		for (var/datum/antagonist/antag in M?.mind?.antagonists)
@@ -2680,3 +2703,26 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
 		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))
+
+/client/proc/test_spacebee_command(command as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Test spacebee command"
+	set desc = "Run a discord/IRC bot command on the current server, omit the ;;. Local servers are considered server 0 for server targeted commands."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	spacebee_extension_system.process_raw_command(command, usr.key)
+
+/client/proc/delete_landmarks()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Delete landmarks"
+	set desc = "Delete all landmarks of a specific type."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/choice = tgui_input_list(src, "Choose landmark category", "Choose landmark", global.landmarks)
+	if (!choice)
+		return
+	for (var/turf/landmark in global.landmarks[choice])
+		boutput(src, "Deleting landmark at [log_loc(landmark)]")
+	global.landmarks[choice] = list()

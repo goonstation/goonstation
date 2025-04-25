@@ -288,6 +288,7 @@
 			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
 		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
+		package.real_name = package.name
 		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
@@ -363,6 +364,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 3,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 4,
+		/obj/item/pen/crayon/infrared = 4,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 1,
@@ -451,7 +453,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/clothing/head/helmet/camera = 3,
 		),
 
-	/datum/job/research/medical_doctor = list(
+	/datum/job/medical/medical_doctor = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -469,7 +471,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/emergency_injector/random = 2,
 		),
 
-	/datum/job/research/roboticist = list(
+	/datum/job/medical/roboticist = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -483,10 +485,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/sheet/steel/fullstack = 2,
 		),
 
-	/datum/job/research/geneticist = list(
+	/datum/job/medical/geneticist = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
+		/obj/item/clothing/glasses/eyestrain = 10,
 		),
 
 
@@ -498,6 +501,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 7,
+		/obj/item/pen/crayon/infrared = 7,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 2,
@@ -566,7 +570,16 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/civilian/rancher = list(
-		),
+		/obj/item/knitting_needles = 5,
+		/obj/item/drop_spindle = 5,
+		/obj/item/scissors/surgical_scissors/shears = 5,
+		/obj/item/fishing_rod/basic = 9,
+		/obj/item/fishing_rod/upgraded = 3,
+		/obj/item/fishing_rod/master = 1,
+		/obj/item/device/camera_viewer/ranch = 4,
+		/obj/item/clothing/mask/chicken = 5,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg = 3,
+		), // Some T1 Power Eggs would be nice to add in secret, to give newer struggling ranchers a test taste on what they could do
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,
@@ -644,7 +657,7 @@ var/global/mail_types_everyone = list(
 	/obj/item/reagent_containers/food/snacks/chips = 6,
 	/obj/item/reagent_containers/food/snacks/popcorn = 6,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
-	/obj/item/tank/emergency_oxygen = 5,
+	/obj/item/tank/pocket/oxygen = 5,
 	/obj/item/wrench = 4,
 	/obj/item/crowbar = 4,
 	/obj/item/screwdriver = 4,

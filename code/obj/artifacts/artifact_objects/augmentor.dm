@@ -4,13 +4,13 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
-	type_name = "Surgery machine (cyborg/synth)"
+	type_name = "Surgery Machine (cyborg/synth)"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange tools!"
 	deact_text = "closes itself up."
@@ -348,7 +348,7 @@
 
 /datum/artifact/augmentor/limb_augmentor
 	associated_object = /obj/artifact/augmentor/limb_augmentor
-	type_name = "Surgery machine (artifact limbs)"
+	type_name = "Surgery Machine (artifact limbs)"
 	rarity_weight = 200
 	validtypes = list("eldritch", "martian", "precursor")
 	limited_use = TRUE

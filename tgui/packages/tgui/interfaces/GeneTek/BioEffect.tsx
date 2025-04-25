@@ -31,7 +31,7 @@ export const ResearchLevel = {
 };
 
 export const haveDevice = (equipmentCooldown, name) => {
-  for (const { label, cooldown } of equipmentCooldown) {
+  for (const { label } of equipmentCooldown) {
     if (label === name) {
       return true;
     }
@@ -50,9 +50,15 @@ export const onCooldown = (equipmentCooldown, name) => {
   return true;
 };
 
+interface Booth {
+  ref: string;
+  price: number;
+  desc: string;
+}
+
 export const BioEffect = (props) => {
   const { data, act } = useBackend<GeneTekData>();
-  const [booth, setBooth] = useSharedState('booth', null);
+  const [booth, setBooth] = useSharedState<Booth | null>('booth', null);
   const {
     materialCur,
     researchCost,
@@ -115,7 +121,7 @@ export const BioEffect = (props) => {
                   maxValue={999999}
                   step={1}
                   width={'5'}
-                  value={booth.price}
+                  value={booth.price.toFixed()}
                   onChange={(price) =>
                     setBooth({
                       ref: booth.ref,
@@ -233,7 +239,9 @@ export const BioEffect = (props) => {
               disabled={onCooldown(equipmentCooldown, 'Reclaimer')}
               icon="times"
               color="bad"
-              onClick={() => act('reclaim', { ref })}
+              onClick={() =>
+                act(isStorage ? 'reclaimStored' : 'reclaimOccupant', { ref })
+              }
             >
               Reclaim
             </Button>
@@ -255,7 +263,8 @@ export const BioEffect = (props) => {
             <Button
               icon="radiation"
               disabled={
-                onCooldown(equipmentCooldown, 'Emitter') || subject.stat > 0
+                onCooldown(equipmentCooldown, 'Emitter') ||
+                (subject && subject.stat > 0)
               }
               color="bad"
               onClick={() => act('precisionemitter', { ref })}

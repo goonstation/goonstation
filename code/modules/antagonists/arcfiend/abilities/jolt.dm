@@ -17,18 +17,21 @@
 	/// Each individual shock will use this much wattage.
 	var/wattage = 2.6 KILO WATTS
 
+	tryCast(atom/target, params)
+		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
+			boutput(src.holder.owner, SPAN_ALERT("That is too far away!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!ishuman(target))
+			boutput(src.holder.owner, SPAN_ALERT("You can only use this on humans!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		return ..()
+
 	cast(atom/target)
 		. = ..()
-		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return TRUE
-		if (ishuman(target))
-			if (target == src.holder.owner)
-				self_cast(target)
-				return
-			actions.start(new/datum/action/bar/private/icon/jolt(src.holder.owner, target, src.holder, src.wattage), src.holder.owner)
-			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
-		else
-			return TRUE
+		if (target == src.holder.owner)
+			self_cast(target)
+			return CAST_ATTEMPT_SUCCESS
+		actions.start(new/datum/action/bar/private/icon/jolt(src.holder.owner, target, src.holder, src.wattage), src.holder.owner)
 
 	proc/self_cast(mob/living/carbon/human/H)
 		boutput(H, SPAN_ALERT("You send a massive electrical surge through yourself!"))

@@ -165,7 +165,7 @@
 			for (var/mob/living/L in T)
 				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
 					qdel(L)
-			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
 			else
 				T.ReplaceWith(/turf/space)
@@ -198,7 +198,7 @@
 		// this used to use an area, which meant it only checked
 		var/turf/origin = get_turf(src)
 		var/unacceptable = FALSE
-		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+		for (var/turf/T in block(locate(origin.x-1, origin.y-1, origin.z), locate(origin.x + width, origin.y + height, origin.z)))
 
 			for (var/mob/living/L in T)
 				if(ismobcritter(L)) // we don't care about critters
@@ -256,7 +256,7 @@
 			if (!T)
 				boutput(usr, SPAN_ALERT("Error: magnet area spans over construction area bounds."))
 				return 0
-			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			var/isterrain = T.can_build && istype(T,/turf/unsimulated)
 			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, SPAN_ALERT("Error: [T] detected in [width]x[height] magnet area. Cannot magnetize."))
 				return 0
@@ -264,13 +264,13 @@
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -278,13 +278,13 @@
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			var/isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			isterrain = S.can_build && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, SPAN_ALERT("Error: bordering tile has a gap, cannot magnetize area."))
 				return 0
@@ -317,10 +317,11 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
-			qdel(W)
+			W.change_stack_amount(-1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
+		var/turf/target_turf = target
+		var/isterrain = istype(target_turf,/turf/unsimulated) && target_turf.can_build
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -371,6 +372,7 @@
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
 	anchored = ANCHORED_ALWAYS
+	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -656,7 +658,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
-				M.invisibility = INVIS_INFRA
+				M.invisibility = INVIS_MESON
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
@@ -718,11 +720,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -731,11 +733,11 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
+					src.visible_message("<b>[src.name]</b> states, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -746,7 +748,7 @@
 				else
 					var/mob/living/carbon/human/H = usr
 					if(!src.allowed(H))
-						boutput(usr, SPAN_ALERT("Access denied. Please contact the Chief Engineer or Captain to access the override."))
+						boutput(usr, SPAN_ALERT("Access denied."))
 					else
 						src.cooldown_override = !src.cooldown_override
 					. = TRUE
@@ -766,7 +768,7 @@
 	var/temp = null
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
-	req_access = list(access_engineering_chief)
+	req_access = list(access_mining)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
@@ -776,6 +778,9 @@
 			src.connection_scan()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(!src.allowed(user))
+			boutput(user, SPAN_ALERT("Access Denied."))
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "MineralMagnet", src.name)
@@ -813,16 +818,16 @@
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
@@ -831,7 +836,7 @@
 				if(istype(src.linked_magnet))
 					if (src.linked_magnet.health <= 0)
 						src.linked_magnet = null // ITS DEAD!!!! STOP!!!
-						src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
+						src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
 						return
 					. = src.linked_magnet.ui_act(action, params)
 
@@ -1434,6 +1439,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
 	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
+	can_build = TRUE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1473,11 +1479,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 	proc/weaken_asteroid()
 		return
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tile/))
-			var/obj/item/tile/tile = W
-			tile.build(src)
 
 	update_icon()
 		. = ..()
@@ -1543,7 +1544,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
+	turf_flags = MOB_SLIP | MOB_STEP | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
 	fullbright = 0
@@ -1996,12 +1997,12 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
-		flick("hedron-WtoM", src)
+		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
-		flick("hedron-MtoW", src)
+		FLICK("hedron-MtoW", src)
 		..()
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
@@ -2281,7 +2282,8 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		var/datum/action/bar/private/icon/callback/teleport = new(user, cargo, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null, src)
+		actions.start(teleport, user)
 		return TRUE
 
 
@@ -2302,7 +2304,7 @@ TYPEINFO(/obj/item/cargotele)
 				mob_teled = TRUE
 
 		if(!mob_teled)
-			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2727,6 +2729,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()

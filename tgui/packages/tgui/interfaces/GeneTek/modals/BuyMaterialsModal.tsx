@@ -13,7 +13,7 @@ import type { GeneTekData } from '../type';
 
 export const BuyMaterialsModal = (props) => {
   const { data, act } = useBackend<GeneTekData>();
-  const [buyMats, setBuyMats] = useSharedState<number | null>('buymats', null);
+  const [buyMats, setBuyMats] = useSharedState('buymats', 0);
   const maxBuyMats = props.maxAmount;
   const { budget, costPerMaterial } = data;
 
@@ -26,7 +26,7 @@ export const BuyMaterialsModal = (props) => {
           <Knob
             inline
             value={resolvedBuyMats}
-            onChange={(e, value) => setBuyMats(value)}
+            onChange={(_e, value) => setBuyMats(value)}
             minValue={1}
             maxValue={maxBuyMats}
           />
@@ -61,14 +61,14 @@ export const BuyMaterialsModal = (props) => {
             disabled={resolvedBuyMats <= 0}
             onClick={() => {
               act('purchasematerial', { amount: resolvedBuyMats });
-              setBuyMats(null);
+              setBuyMats(0);
             }}
           >
             Submit
           </Button>
         </Box>
         <Box inline width="50%" textAlign="center">
-          <Button color="bad" icon="times" onClick={() => setBuyMats(null)}>
+          <Button color="bad" icon="times" onClick={() => setBuyMats(0)}>
             Cancel
           </Button>
         </Box>

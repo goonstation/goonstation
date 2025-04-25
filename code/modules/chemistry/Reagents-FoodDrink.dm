@@ -278,7 +278,7 @@ datum
 			fluid_g = 64
 			fluid_b = 27
 			transparency = 190
-			var/alch_strength = 0.07
+			var/alch_strength = 0.07  // ABV, with 1 being 100% ABV
 			bladder_value = -0.15
 			thirst_value = 0.4
 			viscosity = 0.2
@@ -286,7 +286,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("ethanol", alch_strength * src.calculate_depletion_rate(M, mult))
-				//Multiplying by depletion rate makes alch_strength describe ABV, with 1 being 100% ABV
+				//Multiplying by depletion rate to maintain alch_strength description of ABV, with 1 being 100% ABV
 				//This means that drinks ~15% ABV need a higher depletion rate so that the ethanol can accumulate
 				..()
 				return
@@ -647,7 +647,7 @@ datum
 						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
-						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !H.reagents?.has_reagent("promethazine"))
+						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 
 							boutput(M, SPAN_ALERT("Oh god, this stuff is far too manly to keep down...!"))
 							SPAWN(pick(30,50,70))
@@ -925,10 +925,7 @@ datum
 					boutput(M, SPAN_ALERT("Ugh! Why did you drink that?!"))
 					M.setStatusMin("stunned", 3 SECONDS)
 					M.setStatusMin("knockdown", 3 SECONDS)
-					if (prob(25))
-
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					M.nauseate(5)
 
 
 		fooddrink/alcoholic/whiskey_sour
@@ -1354,9 +1351,7 @@ datum
 					M.setStatusMin("knockdown", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
-					if (prob(10))
-						M.visible_message(SPAN_ALERT("[M] horks all over [himself_or_herself(M)]. Gross!"))
-						M.vomit()
+					L.nauseate(6)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1382,9 +1377,8 @@ datum
 				flush(holder, 4.8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
-				if(probmult(20))
-					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)]!")
-					M.vomit(0, null, vomit_message)
+				if(probmult(40))
+					M.nauseate(2)
 				if(probmult(10))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -1820,7 +1814,7 @@ datum
 					boutput(M, SPAN_NOTICE("<b>Oh. God.</b>"))
 					SPAWN(2 SECONDS)
 						if (M)
-							M.become_statue_ice()
+							M.become_statue(getMaterial("ice"))
 				..()
 				return
 
@@ -2117,7 +2111,8 @@ datum
 						 "You imagine yourself dying alone."))
 					else
 						boutput(M, pick("You feel like your heart grew a size!", "You are overcome with joy!", "You feel generous!", "You feel compassionate!"))
-					modify_christmas_cheer(1)
+					if (!inafterlife(M))
+						modify_christmas_cheer(1)
 
 				..()
 				return
@@ -4022,9 +4017,7 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
-					M.visible_message(SPAN_ALERT("[M] pukes violently!"))
-					M.vomit()
+				if(probmult(15) && M.vomit(flavorMessage = SPAN_ALERT("[M] pukes violently!")))
 					if(prob(33))
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
 						M.visible_message(SPAN_ALERT("[M] pukes out an entire lemon!"))
@@ -4069,12 +4062,10 @@ datum
 					M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), od_halluc[imagekey], 25, 5)
 					if(probmult(15)) boutput(M, SPAN_ALERT("<B>FRUIT IN MY EYES!!!</B>"))
 
-					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))
-						M.vomit()
+					if(probmult(25) && M.vomit(flavorMessage = SPAN_ALERT("[M] pukes out a trifecta of citrus!")))
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
-						M.visible_message(SPAN_ALERT("[M] pukes out a trifecta of citrus!"))
 
 		fooddrink/lemonade
 			name = "lemonade"
@@ -4192,6 +4183,21 @@ datum
 			fluid_b = 54
 			transparency = 220
 			taste = list("aromatic", "citrusy")
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+			reaction_temperature(exposed_temperature, exposed_volume)
+				return // avoid renaming in parent
+
+
+		fooddrink/kombucha
+			name = "kombucha"
+			id = "kombucha"
+			fluid_r = 255
+			fluid_g = 239
+			fluid_b = 148
+			transparency = 200
+			taste = list("fizzy", "rich", "vinegary")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -4457,6 +4463,18 @@ datum
 			transparency = 255
 			taste = "like the surface of the sun"
 
+			on_add()
+				if (ismob(holder.my_atom))
+					RegisterSignal(holder.my_atom, COMSIG_MOB_VOMIT, PROC_REF(on_vomit))
+
+			proc/on_vomit()
+				boutput(holder.my_atom, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
+				holder.my_atom.reagents.del_reagent("ghostchilijuice")
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					UnregisterSignal(holder.my_atom, COMSIG_MOB_VOMIT)
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				//If the user drinks milk, they'll be fine.
@@ -4474,11 +4492,9 @@ datum
 					boutput(M, SPAN_ALERT("Why!? WHY!?"))
 				if(probmult(8))
 					boutput(M, SPAN_ALERT("ARGHHHH!"))
-				if(probmult(33))
-					M.visible_message(SPAN_ALERT("[M] suddenly and violently vomits!"))
-					M.vomit()
-					boutput(M, SPAN_NOTICE("Thank goodness. You're not sure how long you could have held out with heat that intense!"))
-					M.reagents.del_reagent("ghostchilijuice")
+				if(probmult(50))
+					M.nauseate(2)
+
 				if(probmult(min(10,5 * volume)))
 					boutput(M, SPAN_ALERT("<b>OH GOD OH GOD PLEASE NO!!</b>"))
 					var/mob/living/L = M
@@ -4719,9 +4735,13 @@ datum
 			fluid_g = 149
 			fluid_b = 12
 			alch_strength = 0.6
-			description = "An egregious and disgusting misinterpretation of some perfectly good rum."
+			description = "A rich, dark rum infused with the spice of cinnamon."
 			reagent_state = LIQUID
 			taste = "seasoned"
+
+			fake
+				id = "spicedrumfake"
+				description = "An egregious and disgusting misinterpretation of some perfectly good rum."
 
 		fooddrink/alcoholic/beesknees
 			name = "Bee's Knees"

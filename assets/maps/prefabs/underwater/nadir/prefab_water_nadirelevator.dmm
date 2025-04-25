@@ -32,6 +32,13 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
+"bm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay4,
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "bt" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	name = "siphon shaft wall"
@@ -65,7 +72,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/cobweb,
 /obj/item/cigbutt{
 	pixel_x = 6;
@@ -148,6 +155,13 @@
 "eT" = (
 /turf/simulated/floor/engine/caution/north,
 /area/shuttle/sea_elevator)
+"fc" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "ft" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{
@@ -160,6 +174,9 @@
 "fv" = (
 /turf/simulated/floor/caution/north,
 /area/shuttle/sea_elevator)
+"fw" = (
+/turf/space/fluid/acid/clear,
+/area/shuttle/merchant_shuttle/diner_station)
 "fy" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 4
@@ -179,7 +196,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator)
 "fP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -195,6 +212,9 @@
 	dir = 4
 	},
 /area/shuttle/sea_elevator)
+"gr" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/allowGenerate/trench)
 "gu" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
@@ -319,11 +339,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
-"mu" = (
-/obj/decal/cleanable/dirt/dirt2,
-/obj/item/instrument/large/jukebox,
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "mG" = (
 /obj/storage/crate/packing,
 /obj/item/device/light/glowstick,
@@ -415,6 +430,13 @@
 "oQ" = (
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
+"pb" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "pk" = (
 /obj/machinery/computer/elevator/sea{
 	dir = 8
@@ -557,7 +579,7 @@
 	name = "Space Diner Backhall"
 	})
 "tX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -578,6 +600,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/backroom)
+"uM" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "uP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/dining)
@@ -598,15 +624,19 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /turf/simulated/floor/black/grime,
 /area/tech_outpost{
 	name = "The Recluse"
 	})
+"wn" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay2,
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "wr" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/black,
@@ -715,7 +745,7 @@
 	},
 /area/shuttle/sea_elevator)
 "zF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -782,7 +812,7 @@
 "Ck" = (
 /obj/machinery/drainage/big,
 /obj/decal/cleanable/dirt/dirt4,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -832,7 +862,7 @@
 	name = "The Recluse"
 	})
 "EG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -842,7 +872,7 @@
 	})
 "EL" = (
 /obj/decal/cleanable/dirt,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -907,7 +937,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
 "Fx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/incandescent/small,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -919,6 +949,9 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"FR" = (
+/turf/space/fluid/acid/clear,
+/area/allowGenerate/trench)
 "FW" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -950,7 +983,6 @@
 	})
 "Hl" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/submachine/slot_machine,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "Hv" = (
@@ -971,7 +1003,7 @@
 	name = "Space Diner Backhall"
 	})
 "Ir" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -1000,6 +1032,14 @@
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
+"Jz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_diner/delay4,
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "JO" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1;
@@ -1176,6 +1216,7 @@
 /turf/simulated/floor/engine,
 /area/bee_trader)
 "NO" = (
+/obj/item/instrument/large/jukebox,
 /turf/simulated/floor/carpet/red/standard/edge/sw,
 /area/diner/dining)
 "NW" = (
@@ -1191,7 +1232,9 @@
 "Ol" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink,
-/turf/variableTurf/clear,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
 /area/diner/dining)
 "Oo" = (
 /obj/decal/cleanable/gangtag{
@@ -1235,6 +1278,15 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
+"PL" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "Ql" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
@@ -1366,8 +1418,8 @@
 	name = "The Recluse"
 	})
 "TP" = (
-/obj/npc/trader/bee{
-	name = "Bambini"
+/obj/npc/trader/bee/sea{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -1396,7 +1448,7 @@
 	layer = 2.5;
 	pixel_y = 32
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -2145,7 +2197,7 @@ XP
 XP
 XP
 XP
-XP
+gr
 XP
 XP
 XP
@@ -2650,8 +2702,8 @@ ku
 Nl
 ku
 ku
-XP
-XP
+ku
+Nl
 nw
 nw
 nw
@@ -2701,11 +2753,11 @@ ku
 ku
 ku
 ku
-nw
-nw
-nw
-nw
-Nl
+ku
+ku
+ku
+ku
+ku
 Kj
 uP
 uP
@@ -2797,11 +2849,11 @@ nw
 nw
 nw
 nw
+nw
+nw
+nw
+FR
 Nl
-ku
-ku
-ku
-ku
 ku
 ku
 yh
@@ -2843,13 +2895,13 @@ ku
 ku
 nw
 nw
-nw
-nw
-nw
-nw
-nw
-Nl
-nw
+ku
+fw
+fw
+fw
+fw
+ku
+wn
 Nl
 Nl
 Vu
@@ -2889,17 +2941,17 @@ ku
 ku
 ku
 ku
-XP
 nw
 nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
-nw
+ku
+ku
+fw
+fw
+fw
+fw
+ku
+Jz
+Nl
 Nl
 sX
 ub
@@ -2938,15 +2990,15 @@ ku
 ku
 ku
 ku
-XP
-XP
 nw
 nw
-nw
-nw
-nw
-nw
-nw
+ku
+fw
+fw
+fw
+fw
+fw
+fw
 JT
 JT
 JT
@@ -2987,15 +3039,15 @@ Ft
 ku
 ku
 ku
-XP
-XP
-XP
 nw
 nw
-nw
-nw
-nw
-nw
+ku
+fw
+fw
+fw
+fw
+fw
+fw
 JT
 NW
 Sm
@@ -3036,15 +3088,15 @@ UQ
 dV
 ku
 ku
-XP
-XP
-XP
 nw
 nw
-nw
-nw
-nw
-nw
+ku
+fw
+fw
+fw
+fw
+fw
+fw
 JT
 Oo
 Sr
@@ -3085,15 +3137,15 @@ cF
 ku
 ku
 ku
-XP
-XP
 nw
 nw
-nw
-nw
-nw
-nw
-nw
+ku
+fw
+fw
+fw
+fw
+fw
+fw
 JT
 Ow
 rO
@@ -3134,14 +3186,14 @@ ku
 ku
 ku
 ku
-XP
-XP
 nw
 nw
-nw
-nw
-nw
-nw
+fc
+bm
+uP
+PL
+PL
+uP
 uP
 JT
 oB
@@ -3185,14 +3237,14 @@ ku
 XP
 XP
 nw
-nw
-nw
-nw
-nw
-nw
-uP
-uP
-mu
+ku
+ku
+LU
+Vf
+lZ
+Vf
+Vf
+lZ
 Vf
 rV
 Vf
@@ -3235,11 +3287,11 @@ XP
 XP
 nw
 nw
-nw
-nw
-nw
-nw
+ku
 LU
+uM
+pb
+Vf
 Hl
 Vf
 Vf
@@ -3285,9 +3337,9 @@ XP
 nw
 nw
 nw
-nw
-nw
-nw
+uP
+uP
+uP
 uP
 mO
 XK

@@ -401,7 +401,7 @@
 		return
 
 	R["bioHolder.bloodType"] = M.bioHolder.bloodType
-	R["cdi_d"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	R["cdi"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
 	if (M.ailments.len)
 		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
 	else
@@ -480,6 +480,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/F = A
 		reagents = F.group.reagents
+	else if (istype(A, /obj/item/assembly))
+		var/obj/item/assembly/checked_assembly = A
+		reagents = checked_assembly.get_first_component_reagents()
 	else if (istype(A, /obj/machinery/clonepod))
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
@@ -521,6 +524,23 @@
 			data += "<br>[scan_reagents(gas, show_temp, visible, medical, admin)]"
 
 	return data
+
+/proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
+	var/eth_eq = 0
+	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	if(!istype(R))
+		return
+	for (var/current_id in R.reagent_list)
+		var/datum/reagent/current_reagent = R.reagent_list[current_id]
+		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
+			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
+			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			should_we_output = TRUE
+		if (current_reagent.id == "ethanol")
+			eth_eq += current_reagent.volume
+	if (should_we_output == FALSE)
+		eth_eq = 0
+	return eth_eq
 
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
 /proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)

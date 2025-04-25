@@ -42,7 +42,7 @@ export const ListInputWindow = () => {
     let biggestWidth = 325;
     const font = getCanvasFont();
     for (const item of items) {
-      biggestWidth = Math.max(biggestWidth, getTextWidth(item, font));
+      biggestWidth = Math.max(biggestWidth, getTextWidth(item, font) || 0);
     }
     setWindowWidth(biggestWidth);
   }

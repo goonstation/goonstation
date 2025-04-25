@@ -45,12 +45,16 @@
 #define ishelpermouse(x) (istype(x, /mob/living/critter/small_animal/mouse/weak/mentor))//mentor and admin mice
 #define islivingobject(x) (istype(x, /mob/living/object)) //! Is a possessed object
 #define is_dead_or_ghost_role(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
+#define istestdummy(x) (istype(x, /mob/living/carbon/human/tdummy))
 
 /// Returns true if x is a new player mob (what u r if ur in the lobby screen, usually)
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
 #define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
+
+/// Returns true if this mob immune to breathing in miasma
+#define ismiasmaimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && x.wear_mask.c_flags & BLOCKMIASMA )))
 
 /// This is for objects which have some sort of prerequisite for people to use them. Allows you to bypass those checks if
 /// the user is the possessed version of the object being interacted with

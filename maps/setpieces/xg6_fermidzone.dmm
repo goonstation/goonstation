@@ -1296,7 +1296,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ft" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1427,7 +1427,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "fW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
@@ -1450,7 +1450,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gd" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4080,7 +4080,7 @@
 	})
 "qB" = (
 /obj/railing/yellow/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -4227,7 +4227,7 @@
 	})
 "rh" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -7239,7 +7239,7 @@
 	})
 "Dz" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -7314,7 +7314,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "DO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/plating,
 /area/solarium{
@@ -8289,7 +8289,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8304,7 +8304,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "HX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -9644,7 +9644,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4;
@@ -12303,7 +12303,7 @@
 /obj/machinery/computer/security/telescreen{
 	layer = 30;
 	name = "Conference Room Display";
-	network = "XG65";
+	camera_networks = list("XG6");
 	pixel_x = -8;
 	pixel_y = 1
 	},

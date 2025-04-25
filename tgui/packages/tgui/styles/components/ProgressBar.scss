@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
 $color-default-fill: colors.bg(colors.$primary) !default;
 $background-color: rgba(0, 0, 0, 0) !default;
@@ -13,7 +13,7 @@ $border-radius: base.$border-radius !default;
 $bg-map: colors.$bg-map !default;
 
 .ProgressBar {
-  display: flex;
+  display: inline-block;
   position: relative;
   width: 100%;
   padding: 0 0.5em;
@@ -22,7 +22,6 @@ $bg-map: colors.$bg-map !default;
   border-radius: $border-radius;
   background-color: $background-color;
   transition: border-color 900ms ease-out;
-  align-items: center;
 }
 
 .ProgressBar__fill {

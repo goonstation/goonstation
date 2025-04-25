@@ -60,6 +60,11 @@
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
 
+// ---- machinery ----
+
+/// When this piece of machinery calls its process function
+#define COMSIG_MACHINERY_PROCESS "machinery_process"
+
 // ---- atom/movable signals ----
 
 	// ---- generic ----
@@ -161,6 +166,10 @@
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
 	/// When the item in hand is twirl emoted and spun in hand. (user, item)
 	#define COMSIG_ITEM_TWIRLED "itm_twirled"
+	/// When an item reacting to being seen in a storage or dumped out of it (e.g. mousetraps)
+	#define COMSIG_ITEM_STORAGE_INTERACTION "itm_storage_interaction"
+	/// Send out to every item directly in and on the person on no-suicide-death
+	#define COMSIG_ITEM_ON_OWNER_DEATH "itm_on_owner_death"
 
 	// ---- bomb assembly signals ----
 
@@ -168,6 +177,35 @@
 	#define COMSIG_ITEM_BOMB_SIGNAL_START "bomb_signal_start"
 	/// Triggers when an assembly bomb's signalling is cancelled
 	#define COMSIG_ITEM_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
+	// ---- general assembly signals ----
+
+	/// Triggers on attack_self of the assembly if it is unsecured
+	#define COMSIG_ITEM_ASSEMBLY_MANIPULATION "assembly_manipulation"
+	/// Triggers on attack_self of the assembly if it is secured
+	#define COMSIG_ITEM_ASSEMBLY_ACTIVATION "assembly_activation"
+	/// Triggers if the assembly fires it's applier
+	#define COMSIG_ITEM_ASSEMBLY_APPLY "assembly_apply"
+	/// Triggers on an item when it is build into an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_SETUP "assembly_item_setup"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION "assembly_item_on_target_addition"
+	/// Triggers on an item when a target is build into an assembly. Used when special combinations are enabled through certain components
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION "assembly_item_on_misc_addition"
+	/// Triggers on an item when it is removed from an assembly. Used in case something needs to behave differently in an assembly than for itself
+	#define COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL "assembly_item_removal"
+	/// Checks on any item if they have special conditions under which they cannot be used in the assembly, e.g. igniters needing to be unsecured
+	#define COMSIG_ITEM_ASSEMBLY_COMBINATION_CHECK "assembly_combination_check"
+	/// Checks if that item, as additional component, adds any odd overlays on the assembly
+	#define COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS "assembly_overlay_additions"
+	/// Returns the state of the trigger of the assembly
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE "assembly_get_trigger_state"
+	/// Pass here a assembly_signal_helper datum here to get the time left on the trigger of the assembly (if it has any, else its 0)
+	#define COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT "assembly_get_trigger_time_left"
+	/// Set's the timer of the trigger to the respectable time (if it is able to)
+	#define COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME "assembly_set_trigger_time"
+	/// Will be send to the assembly if one of its components gets disposed
+	#define COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL "assembly_on_part_disposal"
 
 	// ---- implant signals ----
 
@@ -235,6 +273,8 @@
 	#define COMSIG_MOB_SAY "mob_say"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
+	/// Sent when a mob changes its lying state (lying)
+	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 
 	// ---- cloaking device signal ----
 

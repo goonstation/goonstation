@@ -41,11 +41,13 @@
 			qdel(W)
 
 	attack_hand(mob/user)
+		if (is_dead_or_ghost_role(user))
+			return 1
 		add_fingerprint(user)
-		user.lastattacked = src //prevents spam
+		user.lastattacked = get_weakref(src) //prevents spam
 		if (src.cant_withdraw)
 			..()
-			return
+			return 1
 
 		if (src.amount >= 1)
 			if (last_dispense_time + dispense_rate > TIME)
@@ -65,6 +67,7 @@
 					UpdateIcon()
 		else
 			boutput(user, SPAN_ALERT("There's nothing in \the [src] to take!"))
+			return 1
 
 	update_icon()
 		if (src.amount <= 0)
@@ -126,9 +129,8 @@
 	amount = 7
 
 	attack_hand(mob/user)
-		if (!src.cant_withdraw && src.amount >= 1)
+		if(!..())
 			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 25, 1)
-		..()
 
 /obj/item_dispenser/icedispenser
 	name = "ice dispenser"

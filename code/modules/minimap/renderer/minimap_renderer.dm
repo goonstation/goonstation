@@ -19,6 +19,8 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	var/list/atom/movable/radar_minimap_objects_by_z_level
 	/// A list of minimap render modifiers, sorted by priority.
 	var/list/datum/minimap_render_modifier/minimap_modifiers
+	/// Does this minimap render space, if so - what color? Null if it renders space as black.
+	var/render_space_color = null
 
 /datum/minimap_renderer/New()
 	. = ..()
@@ -176,6 +178,10 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 /datum/minimap_renderer/proc/turf_color(turf/T)
 	if (!T.loc)
 		return
+
+	// Not a modifier to cut down on proccalls
+	if (istype(T, /turf/space))
+		return src.render_space_color || "#000000"
 
 	var/area/A = T.loc
 	var/list/turf_hsl = hex_to_hsl_list(A.station_map_colour)

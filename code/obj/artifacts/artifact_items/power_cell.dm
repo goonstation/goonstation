@@ -27,7 +27,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
@@ -79,7 +79,7 @@
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact
-	type_name = "Large power cell"
+	type_name = "Large Power Cell"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")

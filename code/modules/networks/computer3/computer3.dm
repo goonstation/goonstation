@@ -103,6 +103,23 @@
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
+		bank_data
+			name = "Bank computer"
+			icon_state = "databank"
+			base_icon_state = "databank"
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/printer
+			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+
+			console_upper
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank1"
+				base_icon_state = "bank1"
+			console_lower
+				icon = 'icons/obj/computerpanel.dmi'
+				icon_state = "bank2"
+				base_icon_state = "bank2"
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"
@@ -120,39 +137,11 @@
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
-		disease_research
-			name = "Disease Database"
-			icon_state = "resdis"
-			setup_starting_program = /datum/computer/file/terminal_program/disease_research
-			setup_drive_size = 48
-
 		artifact_research
 			name = "Artifact Database"
 			icon_state = "resart"
 			setup_starting_program = /datum/computer/file/terminal_program/artifact_research
 			setup_drive_size = 48
-
-		hangar_control
-			name = "Hangar Control"
-			icon_state = "comm"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_control
-			setup_drive_size = 48
-		hangar_research
-			name = "Hangar Research"
-			icon_state = "resrob"
-			//setup_starting_program = /datum/computer/file/terminal_program/hangar_research
-			setup_drive_size = 48
-		robotics_research
-			name = "Robotics Database"
-			icon_state = "resrob"
-			setup_starting_program = /datum/computer/file/terminal_program/robotics_research
-			setup_drive_size = 48
-/*
-		dna_scan
-			name = "DNA Modifier Access Console"
-			icon_state = "scanner"
-			setup_starting_peripheral1 = /obj/item/peripheral/dnascanner_control
-*/
 
 		engine
 			name = "Engine Control Console"
@@ -183,16 +172,6 @@
 		radio
 			name = "wireless computer"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/radio
-
-		basic_test
-			name = "personal computer"
-			//setup_starting_program = /datum/computer/file/terminal_program/basic
-			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/drive/cart_reader
-
-		supply
-			name = "Supply Ordering Computer"
-			setup_idscan_path = /obj/item/peripheral/card_scanner/register
 
 	terminal //Terminal computer, stripped down with less cards.
 		name = "Terminal"
@@ -698,6 +677,9 @@
 				else
 					src.set_broken()
 
+/obj/machinery/computer3/overload_act()
+	return !src.set_broken()
+
 /obj/machinery/computer3/disposing()
 	if (hd)
 		if (hd.loc == src)
@@ -803,12 +785,6 @@
 			qdel(signal)
 		return
 
-	set_broken()
-		icon_state = src.base_icon_state
-		icon_state += "b"
-		status |= BROKEN
-		light.disable()
-
 	restart()
 		if(src.restarting)
 			return
@@ -820,7 +796,7 @@
 		src.temp = ""
 		src.temp_add = "Restarting system...<br>"
 		src.tgui_input_history = list()
-		src.tgui_input_index = 0
+		src.tgui_input_index = list()
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 		SPAWN(2 SECONDS)

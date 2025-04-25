@@ -13,22 +13,24 @@ TYPEINFO(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
-	///The icon states of the above icon, cached because byond is bad
-	var/icon_states
 TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
 	..()
 	for (var/category in src.clothing_icons)
 		src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
-	src.icon_states = icon_states(src.icon)
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
-	var/name = null				// used for identification in diseases, clothing, etc
+	/// used for identification in diseases, clothing, etc
+	var/name = null
+
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
-	var/race_mutation = null
+	var/datum/bioEffect/mutantrace/race_mutation = null
+
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
-	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+
+	// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+	// ^ ??????? AH.original?
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -399,6 +401,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		src.AH = null
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
@@ -602,7 +605,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
 		if(!H.bioHolder.HasEffect(initial(mr.id)))
-			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1, scannable=TRUE)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -806,11 +809,11 @@ TYPEINFO(/datum/mutantrace/virtual)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -963,7 +966,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			SPAWN(rand(4, 30))
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup("zombie")
+			M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1012,11 +1015,11 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1091,11 +1094,11 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 		var/message = null
 		if(act == "scream")
 			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
+				src.mob.emotes_on_cooldown = TRUE
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1326,11 +1329,11 @@ TYPEINFO(/datum/mutantrace/abomination)
 		switch (act)
 			if ("scream")
 				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
@@ -1452,18 +1455,18 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 		switch(act)
 			if("howl", "scream")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						src.mob?.emote_allowed = 1
+						src.mob?.emotes_on_cooldown = FALSE
 			if("burp")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						src.mob?.emote_allowed = 1
+						src.mob?.emotes_on_cooldown = FALSE
 		return message
 
 	/// Has a chance to snap at mobs that try to pet them.
@@ -1746,7 +1749,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	dna_mutagen_banned = FALSE
+	dna_mutagen_banned = TRUE
 
 
 	on_attach()
@@ -1775,6 +1778,10 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				src.mob.gib()
+
+	disposing()
+		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")
+		. = ..()
 
 // some new simple gimmick junk
 
@@ -1831,6 +1838,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
+		M.bioHolder.AddEffect("skitter", do_stability = FALSE, scannable = FALSE, innate = TRUE)
 
 	say_verb()
 		return "clicks"
@@ -1843,6 +1851,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(src.mob))
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
+			src.mob.bioHolder.RemoveEffect("skitter")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
@@ -1952,20 +1961,20 @@ TYPEINFO(/datum/mutantrace/amphibian)
 		switch (act)
 			if ("scream","howl","laugh")
 				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 
 			if("burp","fart","gasp")
 				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
+					src.mob.emotes_on_cooldown = TRUE
 					message = "<B>[src.mob]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 			else ..()
 
@@ -2056,6 +2065,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
 				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 					var/datum/abilityHolder/composite/ch = H.abilityHolder
@@ -2066,6 +2076,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			var/mob/living/carbon/human/H = src.mob
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
@@ -2181,6 +2192,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
+		if(prob(0.1))
+			src.blood_id = pick("chocolate_milk", "strawberry_milk", "super_milk", "banana_milk", "blue_milk")
 		..()
 		if(ishuman(src.mob))
 			src.mob.update_face()
@@ -2507,6 +2520,16 @@ TYPEINFO(/datum/mutantrace/pug)
 			new /obj/item/implant/robotalk(H)
 			SPAWN(1 SECOND)
 				H.update_colorful_parts()
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into.
+proc/safe_mutantrace_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned)
+
+///Returns whether the given mutantrace type is safe to randomly mutate people into, but only the ones that don't occur in genepools.
+proc/safe_mutantrace_nogenepool_filter(type)
+	var/datum/mutantrace/mutrace = type
+	return !initial(mutrace.dna_mutagen_banned) && mutrace.race_mutation && !mutrace.race_mutation.occur_in_genepools
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

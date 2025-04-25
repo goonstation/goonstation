@@ -35,6 +35,12 @@ export const Cashreg = () => {
     tip_proportion,
   } = data;
 
+  const ownerButtonClick = owner
+    ? is_authorised || is_owner
+      ? () => act('reset')
+      : undefined
+    : () => act('swipe_owner');
+
   return (
     <Window title={name} theme="ntos" height={240} width={300}>
       <Window.Content>
@@ -44,11 +50,7 @@ export const Cashreg = () => {
               className="cashreg__ownerbutton"
               color="blue"
               disabled={active_transaction}
-              onClick={
-                owner
-                  ? (is_authorised || is_owner) && (() => act('reset'))
-                  : () => act('swipe_owner')
-              }
+              onClick={ownerButtonClick}
               tooltip={
                 owner &&
                 (is_authorised || is_owner) &&
@@ -84,7 +86,7 @@ export const Cashreg = () => {
                     onClick={() => act('set_tip')}
                     width="100%"
                   >
-                    {`Tip: ${tip_proportion * 100}%`}
+                    {`Tip: ${(tip_proportion * 100).toFixed()}%`}
                   </Button>
                 </Stack.Item>
                 <Stack.Item grow>
@@ -142,7 +144,7 @@ const CenterPart = () => {
                 <>
                   <tr>
                     <td>{`Tip (%)`}</td>
-                    <td className="cashreg__table_cellright">{`${tip_proportion * 100}%`}</td>
+                    <td className="cashreg__table_cellright">{`${(tip_proportion * 100).toFixed()}%`}</td>
                   </tr>
                   <tr>
                     <td>{`Tip (⪽)`}</td>

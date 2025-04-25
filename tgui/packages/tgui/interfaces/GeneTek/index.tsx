@@ -33,7 +33,7 @@ const formatSeconds = (v) => (v > 0 ? (v / 10).toFixed(0) + 's' : 'Ready');
 export const GeneTek = () => {
   const { data, act } = useBackend<GeneTekData>();
   const [menu, setMenu] = useSharedState('menu', 'research');
-  const [buyMats, setBuyMats] = useSharedState('buymats', null);
+  const [buyMats, setBuyMats] = useSharedState('buymats', 0);
   const [isCombining] = useSharedState('iscombining', false);
   const {
     materialCur,
@@ -103,43 +103,47 @@ export const GeneTek = () => {
             {subject && (
               <LabeledList>
                 <LabeledList.Item label="Occupant">{name}</LabeledList.Item>
-                <LabeledList.Item label="Health">
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 0.15],
-                      average: [0.15, 0.75],
-                      good: [0.75, Infinity],
-                    }}
-                    value={health}
-                  >
-                    {stat < 2 ? (
-                      health <= 0 ? (
-                        <Box color="bad">
-                          <Icon name="exclamation-triangle" />
-                          {' Critical'}
-                        </Box>
+                {health && (
+                  <LabeledList.Item label="Health">
+                    <ProgressBar
+                      ranges={{
+                        bad: [-Infinity, 0.15],
+                        average: [0.15, 0.75],
+                        good: [0.75, Infinity],
+                      }}
+                      value={health}
+                    >
+                      {!stat || stat < 2 ? (
+                        health <= 0 ? (
+                          <Box color="bad">
+                            <Icon name="exclamation-triangle" />
+                            {' Critical'}
+                          </Box>
+                        ) : (
+                          (health * 100).toFixed(0) + '%'
+                        )
                       ) : (
-                        (health * 100).toFixed(0) + '%'
-                      )
-                    ) : (
-                      <Box>
-                        <Icon name="skull" />
-                        {' Deceased'}
-                      </Box>
-                    )}
-                  </ProgressBar>
-                </LabeledList.Item>
-                <LabeledList.Item label="Stability">
-                  <ProgressBar
-                    ranges={{
-                      bad: [-Infinity, 15],
-                      average: [15, 75],
-                      good: [75, Infinity],
-                    }}
-                    value={stability}
-                    maxValue={100}
-                  />
-                </LabeledList.Item>
+                        <Box>
+                          <Icon name="skull" />
+                          {' Deceased'}
+                        </Box>
+                      )}
+                    </ProgressBar>
+                  </LabeledList.Item>
+                )}
+                {stability && (
+                  <LabeledList.Item label="Stability">
+                    <ProgressBar
+                      ranges={{
+                        bad: [-Infinity, 15],
+                        average: [15, 75],
+                        good: [75, Infinity],
+                      }}
+                      value={stability}
+                      maxValue={100}
+                    />
+                  </LabeledList.Item>
+                )}
               </LabeledList>
             )}
             <Divider />
@@ -147,12 +151,16 @@ export const GeneTek = () => {
               {currentResearch.map((r) => (
                 <ProgressBar
                   key={r.ref}
-                  value={r.total - r.current}
+                  value={r.total && r.current ? r.total - r.current : 0}
                   maxValue={r.total}
                   mb={1}
                 >
                   <Box position="absolute">{r.name}</Box>
-                  <TimeDisplay auto value={r.current} format={formatSeconds} />
+                  <TimeDisplay
+                    auto
+                    value={r.current ?? 0}
+                    format={formatSeconds}
+                  />
                 </ProgressBar>
               ))}
             </Flex.Item>
@@ -234,7 +242,7 @@ export const GeneTek = () => {
                   </Tabs.Tab>
                 )}
               </Tabs>
-              {buyMats !== null && <BuyMaterialsModal maxAmount={maxBuyMats} />}
+              {buyMats > 0 && <BuyMaterialsModal maxAmount={maxBuyMats} />}
               {!!isCombining && <CombineGenesModal />}
               {menu === 'research' && (
                 <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />

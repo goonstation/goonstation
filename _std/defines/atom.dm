@@ -72,6 +72,9 @@
 #define THROW_SLIP		(1 << 3)
 #define THROW_PEEL_SLIP	(1 << 4)
 #define THROW_BASEBALL  (1 << 5) // throw that doesn't stun into walls.
+#define THROW_THROUGH_WALL (1 << 6) //throw that will blow through one wall/other dense object before becoming a normal throw again
+#define THROW_GIB 		(1 << 7) //!gibs thrown mob on end (use with care)
+#define THROW_PHASE		(1 << 8) //! throw has phasing through walls for two tiles. For white holes
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)

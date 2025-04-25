@@ -37,7 +37,7 @@ TYPEINFO_NEW(/obj/table)
 	var/drawer_locked = FALSE
 	/// id for key checks, keys with the same id can lock it
 	var/lock_id = null
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New(loc)
 		..()
@@ -69,6 +69,13 @@ TYPEINFO_NEW(/obj/table)
 		var/area/Ar = get_area(src)
 		if (Ar)
 			Ar.sims_score = min(Ar.sims_score + bonus, 100)
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it. \
+		You can also use a <b>screwdriver</b> on <span class='harm'>harm</span> intent to \
+		[(src.has_drawer && src.drawer_locked) ? "pick the drawer's lock." : "adjust the shape of it."]"
+
 
 	proc/xmasify()
 		var/in_cafeteria = istype(get_area(src), /area/station/crew_quarters/cafeteria)
@@ -191,6 +198,8 @@ TYPEINFO_NEW(/obj/table)
 		var/turf/OL = get_turf(src)
 		if (!OL)
 			return
+		for(var/atom/movable/AM as anything in src.storage?.get_contents())
+			AM.set_loc(OL)
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)
@@ -246,7 +255,7 @@ TYPEINFO_NEW(/obj/table)
 		else if (istype(W, /obj/item/paint_can))
 			return
 
-		else if (isscrewingtool(W))
+		else if (isscrewingtool(W) && user.a_intent == INTENT_HARM)
 			if (src.has_drawer && src.drawer_locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
 				return
@@ -254,7 +263,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == INTENT_HARM) // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -280,6 +289,9 @@ TYPEINFO_NEW(/obj/table)
 			user.visible_message(SPAN_NOTICE("[user] wipes down [src] with [W]."))
 
 		else if (istype(W) && src.place_on(W, user, params))
+			return
+		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
+		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 && rand(1, 10) < 10))
 			return
 
 		else
@@ -329,7 +341,7 @@ TYPEINFO_NEW(/obj/table)
 			return TRUE
 		return FALSE
 
-	MouseDrop_T(atom/O, mob/user as mob)
+	MouseDrop_T(atom/O, mob/user as mob, src_location, over_location, over_control, src_control, params)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
@@ -357,10 +369,9 @@ TYPEINFO_NEW(/obj/table)
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
-		user.drop_item()
-		if (I.loc != src.loc)
-			step(I, get_dir(I, src))
-		return
+
+		src.place_on(I, user, params, TRUE)
+
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr == over_object && src.has_drawer && src.drawer_locked)
@@ -857,8 +868,9 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 3,
-				/obj/item/reagent_containers/glass/condenser/fractional = 1)
+				/obj/item/reagent_containers/glass/plumbing/condenser = 3,
+				/obj/item/reagent_containers/glass/plumbing/condenser/fractional = 1,
+				/obj/item/reagent_containers/glass/plumbing/dropper = 2)
 
 
 
@@ -1103,14 +1115,15 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
+				var/datum/material/mat = S.material //hold a ref to this in case the sheet stack gets disposed by using the last sheet
 				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, SPAN_ALERT("You have to use glass or another crystalline material to repair [src]!"))
-				else if (S.change_stack_amount(-1))
+				else if (S.change_stack_amount(-2))
 					boutput(user, SPAN_NOTICE("You add glass to [src]!"))
 					if (S.reinforcement)
 						src.reinforced = 1
-					if (S.material)
-						src.setMaterial(S.material)
+					if (mat)
+						src.setMaterial(mat)
 					src.repair()
 				return
 			else

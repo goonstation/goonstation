@@ -5,11 +5,6 @@
 		x:block_vision \
 	)
 
-//Put any items that NPCs physically cannot pickup here
-#define IS_NPC_ILLEGAL_ITEM(x) ( \
-		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
-	)
-
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -239,7 +234,7 @@
 
 		//Why do we WANT to go after this jerk?
 		if(M.client) rating += 20 //We'd rather go after actual non-braindead players
-		if(src.lastattacker == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
+		if(src.lastattacker?.deref() == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
 
 
 		//Why do we NOT want to go after this jerk
@@ -811,8 +806,8 @@
 
 	if(pickup && !src.r_hand)
 		src.swap_hand(0)
-		if(src.put_in_hand_or_drop(pickup))
-			src.set_clothing_icon_dirty()
+		pickup.Attackhand(src)
+		src.set_clothing_icon_dirty()
 
 
 /mob/living/carbon/human/proc/ai_avoid(var/turf/T)
@@ -954,8 +949,8 @@
 			W.Attackby(src.r_hand, src)
 			acted = 1
 
-		if((locate(/obj/grille) in get_step(src,dir))  && !acted)
-			var/obj/grille/G = (locate(/obj/grille) in get_step(src,dir))
+		if((locate(/obj/mesh/grille) in get_step(src,dir))  && !acted)
+			var/obj/mesh/grille/G = (locate(/obj/mesh/grille) in get_step(src,dir))
 			if(!G.ruined)
 				G.Attackby(src.r_hand, src)
 				acted = 1
@@ -985,4 +980,3 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
-#undef IS_NPC_ILLEGAL_ITEM

@@ -96,23 +96,29 @@
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball", "Cigarette packet"))
+		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
 		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else if (fold == "Cigarette packet")
 			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
 			var/obj/item/cigpacket/paperpack/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
 			if (fold == "Paper plane")
 				user.show_text("You fold the paper into a plane! Neat.", "blue")
 				F = new /obj/item/paper/folded/plane(user)
+
+			else if (fold == "Paper crane")
+				user.show_text("You fold the paper into a crane! Neat.", "blue")
+				F = new /obj/item/paper/folded/crane(user)
 			else
 				user.show_text("You crumple the paper into a ball! Neat.", "blue")
 				F = new /obj/item/paper/folded/ball(user)
@@ -120,6 +126,7 @@
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
+			F.setMaterial(src.material)
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)
@@ -515,15 +522,14 @@
 	desc = "Fancy."
 	var/print_icon = 'icons/effects/sstv.dmi'
 	var/print_icon_state = "sstv_1"
+	sizex = 640 + 0
+	sizey = 480 + 32
+	scrollbar = FALSE
 
 	New()
 		..()
-		src.info = {"<IMG SRC="sstv_cachedimage.png">"}
+		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
 		return
-
-	examine()
-		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"
@@ -619,13 +625,16 @@
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
-		if (src.amount_left >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
-			src.amount_left--
-			var/obj/item/P = new bin_type(src)
-			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
-				var/obj/item/paper/PA = P
-				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+		if (user) //Wire: Fix for Cannot read null.loc (user)
+			if (src.amount_left >= 1)
+				src.amount_left--
+				var/obj/item/P = new bin_type(src)
+				user.put_in_hand_or_drop(P)
+				if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+					var/obj/item/paper/PA = P
+					PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			else
+				user.put_in_hand_or_drop(src)
 	src.update()
 
 /obj/item/paper_bin/attack_self(mob/user as mob)
@@ -882,7 +891,7 @@
 
 /obj/item/paper/folded/examine()
 	if (src.sealed)
-		return list(desc)
+		return list("This is \an [src.name].", desc)
 	else
 		return ..()
 
@@ -892,6 +901,12 @@
 	icon_state = "paperplane"
 	throw_speed = 1
 	throw_spin = 0
+
+/obj/item/paper/folded/crane
+	name = "paper crane"
+	desc = "If you fold a lot of these do you get a wish granted?"
+	icon_state = "papercrane"
+	throw_speed = 1
 
 /obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
 	if(src.throwing && src.sealed)
@@ -965,10 +980,13 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	// it picks a random set of info at new, then the printing press overrides it
-	src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	if (!length(src.publisher))
+		src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher]"
-	src.generate_headline()
-	src.generate_article()
+	if (!length(src.headline))
+		src.generate_headline()
+	if (!length(src.info))
+		src.generate_article()
 	src.update_desc()
 
 /obj/item/paper/newspaper/pickup(mob/user)
@@ -1056,3 +1074,12 @@
 			if (9)
 				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
 	src.info += temporary
+
+/obj/item/paper/newspaper/rolled/centcom_plasma
+	publisher = "Seneca Journal"
+	headline = "Nanotrasen denies responsibility for Seneca Lake plasma contamination"
+	info = {"
+		In a rare personal appearance, Nanotrasen CEO John Nanotrasen today categorically denied his company's involvement in the recent Seneca Lake plasma contamination scare.<br>
+		Levels of FAAE (commonly known as "plasma") in the lakewater have reached 500μg per liter according to an EPA source, prompting the agency to declare a substantial threat to public health.<br>
+		Nanotrasen is the only company in the Seneca area licensed to transport plasma, hundreds of kilograms of which are used in the fuelling of their inter-channel shuttle services every month.
+	"}

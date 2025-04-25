@@ -5,7 +5,6 @@
 
 	cooldown = 25 SECONDS
 	targeted = FALSE
-	var/pixels = 32
 
 	cast()
 		if (..())
@@ -40,29 +39,31 @@
 			return 1
 
 		//Make flame on tile we're standing on
-		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
+		var/atom/movable/hotspot/chemfire/cf = locate(/atom/movable/hotspot/chemfire) in T
 		if (cf == null || cf.fire_color != CHEM_FIRE_DARKRED)
-			new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+			new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
 
 		//Make flame on tile to the East/West or North/South
-		var/obj/o = new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+		var/atom/movable/hotspot/chemfire/o = new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+		o.set_real_color()
 		spawn(1)
-			handle_fire_spread(T, T1, o, pixels)
-		var/obj/o1 = new /obj/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+			handle_fire_spread(T, T1, o)
+		var/atom/movable/hotspot/chemfire/o1 = new /atom/movable/hotspot/chemfire(T,  CHEM_FIRE_DARKRED)
+		o1.set_real_color()
 		spawn(1)
-			handle_fire_spread(T, T2, o1, pixels)
+			handle_fire_spread(T, T2, o1)
 		return 0
 
 
-	proc/handle_fire_spread(turf/Source, turf/Destination, obj/fire, pixels)
-		step_to(fire, Destination, 0, pixels)
+	proc/handle_fire_spread(turf/Source, turf/Destination, obj/fire)
+		fire.set_loc(Destination)
 		if (get_turf(fire) == Source)
-			del(fire)
+			qdel(fire)
 		// If tile it moves to has a darkred chemfire, then delete this
 		if (get_turf(fire) == Destination)
-			for(var/obj/hotspot/chemfire/cf in  Destination)
+			for(var/atom/movable/hotspot/chemfire/cf in  Destination)
 				if (cf == fire) continue
 				if (cf.fire_color == CHEM_FIRE_DARKRED)
-					del(fire)
+					qdel(fire)
 					break;
 

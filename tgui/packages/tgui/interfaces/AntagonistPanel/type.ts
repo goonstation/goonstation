@@ -33,7 +33,7 @@ export interface TabSectionData {
 export interface AntagonistData {
   mind_ref: string;
   antagonist_datum: string;
-  real_name: string;
+  real_name: string | null;
   ckey: string;
   job: string;
   dead: BooleanLike;
@@ -48,8 +48,8 @@ export interface PositionData {
 export interface SubordinateAntagonistData {
   mind_ref: string;
   antagonist_datum: string;
-  display_name: string;
-  real_name: string;
+  display_name: string | null;
+  real_name: string | null;
   ckey: string;
   job: string;
   dead: BooleanLike;
@@ -74,7 +74,7 @@ export interface NuclearBombData {
 export interface HeadsData {
   mind_ref: string;
   role: string;
-  real_name: string;
+  real_name: string | null;
   ckey: string;
   dead: BooleanLike;
 }

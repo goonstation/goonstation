@@ -54,14 +54,16 @@
 			return null
 
 /datum/intercept_text/proc/pick_mob()
-	var/list/dudes = list()
+	. = list()
 	for(var/mob/living/carbon/human/man in mobs)
-		dudes += man
-	var/dude = pick(dudes)
-	return dude
+		. += man
+	if (length(.))
+		return pick(.)
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
+	if (!dude)
+		return "CLASSIFIED"
 	var/print = "[dude.bioHolder.fingerprints]"
 	return print
 

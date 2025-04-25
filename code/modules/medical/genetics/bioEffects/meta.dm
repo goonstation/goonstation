@@ -22,7 +22,7 @@
 		for(var/ID in B.effectPool)
 			B.ActivatePoolEffect(B.effectPool[ID], 1, 0)
 			//Overrides incomplete DNA sequences
-		return
+		. = ..()
 
 /datum/bioEffect/scrambler
 	name = "Booster Gene Y"
@@ -47,7 +47,7 @@
 
 		B.RemoveAllEffects(null, TRUE)
 		B.BuildEffectPool()
-		return
+		. = ..()
 
 /datum/bioEffect/remove_all
 	name = "Booster Gene Z"
@@ -72,7 +72,7 @@
 
 		B.RemoveAllEffects(null, TRUE)
 		B.RemoveAllPoolEffects()
-		return
+		. = ..()
 
 /datum/bioEffect/early_secret_access
 	name = "High Complexity DNA"

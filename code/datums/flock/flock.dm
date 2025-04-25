@@ -374,7 +374,7 @@ proc/get_default_flock()
 				qdel(arrow)
 		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
 		var/prefix = "[SPAN_BOLD("\[[src.name]\]")] [SPAN_NAME("[pinger.name]")]"
-		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
+		boutput(F, "<span class='[class]'><a href='byond://?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
 
 // ANNOTATIONS
@@ -936,7 +936,7 @@ proc/get_default_flock()
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
 /var/list/flock_conversion_paths = list(
-	/obj/grille = /obj/grille/flock,
+	/obj/mesh/grille = /obj/mesh/flock/barricade,
 	/obj/window = /obj/window/auto/feather,
 	/obj/machinery/door = /obj/machinery/door/feather,
 	/obj/stool = /obj/stool/chair/comfy/flock,
@@ -1004,7 +1004,7 @@ proc/get_default_flock()
 			qdel(lat)
 			new /obj/lattice/flock(T)
 
-	var/obj/grille/catwalk/catw = locate(/obj/grille/catwalk) in T
+	var/obj/mesh/catwalk/catw = locate(/obj/mesh/catwalk) in T
 	if(catw)
 		qdel(catw)
 		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)

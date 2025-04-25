@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/pinpointer)
 	/// do not set directly, use turn_on and turn_off
 	var/active = FALSE
 	var/icon_type = "disk"
-	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technologically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)
@@ -222,14 +222,6 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_type = "disk"
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
-
-	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
 
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
@@ -402,7 +394,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
+	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technologically advanced arrow."
 
 	proc/track(var/list/L)
 		itemrefs = list()
@@ -563,6 +555,20 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	name = "mob pinpointer"
 	category = /mob
 	thing_name = "mob"
+
+/obj/item/pinpointer/category/mobs/single_use
+	name = "single-use mob pinpointer"
+	var/used = FALSE
+
+	attack_self(mob/user)
+		if (used)
+			user.show_text("This pinpointer has already been used and cannot be activated again.", "red")
+			return
+		. = ..()
+		used = TRUE
+
+		src.name = "[target.name] pinpointer"
+
 
 /obj/item/pinpointer/category/ouija_boards
 	name = "ouija board pinpointer"

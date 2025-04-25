@@ -132,7 +132,7 @@ proc/is_music_playing()
 	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
-/proc/play_music_remote(data)
+/proc/play_music_remote(data, from_topic = FALSE, silent = null)
 	if (!config.allow_admin_sounds)
 		alert("Admin sounds disabled")
 		return 0
@@ -160,13 +160,14 @@ proc/is_music_playing()
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
 
-			C.chatOutput.playMusic(data["file"], vol)
-			if (!adminC || !(adminC.stealth && !adminC.fakekey))
-				// Stealthed admins won't show the "now playing music" message,
-				// for added ability to be spooky.
-				if (remote_music_announcements)
-					boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
-				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			C.chatOutput.playMusic(data["file"], vol, fromTopic = from_topic)
+			if (silent != TRUE)
+				if (!adminC || !(adminC.stealth && !adminC.fakekey))
+					// Stealthed admins won't show the "now playing music" message,
+					// for added ability to be spooky.
+					if (remote_music_announcements)
+						boutput(C, "Playing <b>[data["title"]]</b> ([data["duration_human"]]).")
+					boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)
@@ -276,6 +277,7 @@ proc/is_music_playing()
 			return
 		var/mock_data = list()
 		mock_data["admin_ckey"] = M.ckey
+		mock_data["key"] = M.ckey
 		mock_data["file"] = url
 		mock_data["title"] = filename
 		mock_data["filesize"] = "?"

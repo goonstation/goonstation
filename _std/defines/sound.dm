@@ -1,7 +1,7 @@
 //Reserved Area Ambience sound channels
-#define SOUNDCHANNEL_LOOPING 123
-#define SOUNDCHANNEL_FX_1 124
-#define SOUNDCHANNEL_FX_2 125
+#define SOUNDCHANNEL_LOOPING 990
+#define SOUNDCHANNEL_FX_1 991
+#define SOUNDCHANNEL_FX_2 992
 #define SOUNDCHANNEL_RADIO 1013
 #define SOUNDCHANNEL_ADMIN_LOW 1014 // lower end of the range of admin channels
 #define SOUNDCHANNEL_ADMIN_HIGH 1024 // upper end
@@ -23,6 +23,7 @@ var/global/admin_sound_channel = SOUNDCHANNEL_ADMIN_LOW // current admin channel
 #define VOLUME_CHANNEL_ADMIN 4
 #define VOLUME_CHANNEL_EMOTE 5
 #define VOLUME_CHANNEL_MENTORPM 6
+#define VOLUME_CHANNEL_INSTRUMENTS 7
 
 var/global/list/audio_channel_name_to_id = list(
 	"master" = VOLUME_CHANNEL_MASTER,
@@ -31,7 +32,8 @@ var/global/list/audio_channel_name_to_id = list(
 	"radio" = VOLUME_CHANNEL_RADIO,
 	"admin" = VOLUME_CHANNEL_ADMIN,
 	"emote" = VOLUME_CHANNEL_EMOTE,
-	"mentorpm" = VOLUME_CHANNEL_MENTORPM
+	"mentorpm" = VOLUME_CHANNEL_MENTORPM,
+	"instruments" = VOLUME_CHANNEL_INSTRUMENTS
 )
 
 //Area Ambience
@@ -42,6 +44,7 @@ var/global/list/audio_channel_name_to_id = list(
 //playsound flags
 #define SOUND_IGNORE_SPACE (1<<0)
 #define SOUND_SKIP_OBSERVERS (1<<1) //! Only applies to local playsound(s)
+#define SOUND_IGNORE_DEAF (1<<2) //! No you can't ignore admin PMs because you lost your auditory headset
 
 #define MAX_SOUND_RANGE max_sound_range
 #define MAX_SOUND_RANGE_NORMAL 33

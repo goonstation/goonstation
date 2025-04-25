@@ -361,7 +361,7 @@ TYPEINFO(/obj/item/sword)
 		else
 			src.icon_state = "[state_name]1-[src.bladecolor]"
 			src.item_state = "[state_name]1-[src.bladecolor]"
-			flick("sword_extend-[src.bladecolor]", src)
+			FLICK("sword_extend-[src.bladecolor]", src)
 		light_c.update(TRUE)
 	else
 		if(robusted)
@@ -371,7 +371,7 @@ TYPEINFO(/obj/item/sword)
 
 			src.icon_state = "[state_name]0"
 			src.item_state = "[state_name]0"
-			flick("sword_retract-[src.bladecolor]", src)
+			FLICK("sword_retract-[src.bladecolor]", src)
 		light_c.update(FALSE)
 
 /obj/item/sword/red
@@ -532,7 +532,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
@@ -557,7 +557,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	if(ismob(A))
 		var/mob/M = A
 		if (ismob(usr))
-			M.lastattacker = usr
+			M.lastattacker = get_weakref(usr)
 			M.lastattackertime = world.time
 		M.changeStatus("knockdown", 6 SECONDS)
 		M.force_laydown_standup()
@@ -705,7 +705,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
-	desc = "A cheap replica of an ancient japanese throwing star."
+	desc = "A cheap replica of an ancient Japanese throwing star."
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
@@ -737,7 +737,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
-	burn_type = 0
+	burn_remains = BURN_REMAINS_ASH
 	stamina_damage = 45
 	stamina_cost = 20
 	stamina_crit_chance = 60
@@ -856,8 +856,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	else
 		..()
 
-/obj/item/knife/butcher/attack(target, mob/user)
-	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user))
+/obj/item/knife/butcher/attack(target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user) && !is_special)
 		if (scalpel_surgery(target,user))
 			return
 
@@ -920,7 +920,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-			flick("[src.icon_state]-tele", src)
+			FLICK("[src.icon_state]-tele", src)
 
 	disposing()
 		. = ..()
@@ -1403,6 +1403,17 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
+/obj/item/swords/ntboss
+	icon_state = "ntboss_sword"
+	name = "NanoTrasen Commander's Sabre"
+	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
+	force = 20
+	contraband = 4
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
 /obj/item/swords/nukeop/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
@@ -1622,6 +1633,18 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/swords/nukeop
 
+/obj/item/swords_sheaths/ntboss
+	name = "Nanotrasen Commander's Scabbard"
+	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The blue paint is peeling a bit..."
+	icon_state = "ntboss_sword_scabbard"
+	item_state = "scabbard-ntboss1"
+
+	sheathed_state = "ntboss_sword_scabbard"
+	sheath_state = "ntboss_scabbard"
+	ih_sheathed_state = "scabbard-ntboss1"
+	ih_sheath_state = "scabbard-ntboss0"
+	sword_path = /obj/item/swords/ntboss
+
 /obj/item/swords_sheaths/pirate
 	name = "Pirate's Scabbard"
 	desc = "A nifty container for a ruthless sword. Given to the most feared space pirates, or stolen from the previous most feared space pirate. The scabbard bears the insignia 'I.B.B'."
@@ -1747,7 +1770,7 @@ obj/item/swords/fragile_sword
 
 obj/item/whetstone
 	name = "whetstone"
-	desc = "A stone that can sharpen a blade and restore it to it's former glory."
+	desc = "A stone that can sharpen a blade and restore it to its former glory."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "whetstone"
 
@@ -1981,7 +2004,7 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			if (ismob(usr))
-				C.lastattacker = usr
+				C.lastattacker = get_weakref(usr)
 				C.lastattackertime = world.time
 			C.changeStatus("knockdown", 3 SECONDS)
 			C.force_laydown_standup()
@@ -2130,27 +2153,61 @@ obj/item/whetstone
 #undef HALB_MED_STAMCOST
 #undef HALB_LIGHT_STAMCOST
 
-/obj/item/swords/sord
-	name = "gross sord"
-	desc = "oh no"
+/obj/item/crashaxe
+	name = "crash axe"
+	desc = "A lightweight utility-survival axe designed to cut through pod hulls and other structures. Works just as well on bothersome crewmembers."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "longsword"
+	icon_state = "crashaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	color = "#4a996c"
+	hitsound ='sound/impact_sounds/coconut_break.ogg' //shamelessly re-using this sound idea from my halberd
+
+	health = 5 //same item health as most tools
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+
+	w_class = W_CLASS_SMALL
 	hit_type = DAMAGE_CUT
-	flags = TABLEPASS | NOSHIELD | USEDELAY
-	force = 10
-	throwforce = 5
-	throw_speed = 1
-	throw_range = 5
-	is_syndicate = TRUE
-	contraband = 10 // absolutely illegal
-	w_class = W_CLASS_NORMAL
-	hitsound = 'sound/voice/farts/fart7.ogg'
-	tool_flags = TOOL_CUTTING
-	attack_verbs = "slashes"
+	force = 13
+	stamina_damage = 25
+	throwforce = 21
+	throw_speed = 4
+	throw_range = 7
+
+	var/breakmode = TRUE
+	var/breaking_tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+	var/prying_tool_flags = TOOL_CUTTING | TOOL_PRYING
+
+	HELP_MESSAGE_OVERRIDE({"Can be used in hand to toggle it between a prying and chopping tool. Throw the weapon to inflict a very short stun."})
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/rangestab)
+		src.setItemSpecial(/datum/item_special/simple)
+		BLOCK_SETUP(BLOCK_ROD)
 
+	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+
+			C.changeStatus("knockdown", 2 SECONDS) //stun is meant to give an opportunity to sneak in and steal weapons, not for rampaging
+			C.changeStatus("disorient", 4 SECONDS)
+			C.force_laydown_standup()
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+
+		..()
+
+	attack_self(mob/user)
+		if(breakmode)
+			breakmode = FALSE
+			src.tool_flags = prying_tool_flags
+			icon_state = "crashaxe-rev"
+			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to pry."))
+			src.setItemSpecial(/datum/item_special/tile_fling)
+			hit_type = DAMAGE_STAB
+
+		else
+			breakmode = TRUE
+			src.tool_flags = breaking_tool_flags
+			icon_state = "crashaxe"
+			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
+			src.setItemSpecial(/datum/item_special/simple)
+			hit_type = DAMAGE_CUT

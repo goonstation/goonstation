@@ -19,6 +19,8 @@
 	var/equip_antag = TRUE
 	///Include DNR ghosts
 	var/allow_dnr = FALSE
+	///Should these newly spawned players show up on the manifest?
+	var/add_to_manifest = FALSE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -103,15 +105,21 @@
 			logTheThing(LOG_ADMIN, mind.current, "respawned as \a [src.get_mob_name()] from a custom spawn event triggered by [key_name(usr)].")
 
 			mind.transfer_to(new_mob)
+			if (istext(src.thing_to_spawn)) //it's a job
+				new_mob.mind.assigned_role = src.thing_to_spawn
+				if (src.add_to_manifest)
+					var/obj/item/device/pda2/pda = locate() in new_mob
+					global.data_core.addManifest(new_mob, "", "", pda?.net_id, "")
 
-			if (src.antag_role == "generic_antagonist")
-				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
-			else if (src.antag_role)
-				if (mind.get_antagonist(src.antag_role))
-					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
-			else
-				mind.wipe_antagonists()
+			SPAWN(1) //job equip procs have to be SPAWN(0) so this has to be SPAWN(1) for them to get an uplink, yes I know but mob init order is cursed and evil
+				if (src.antag_role == "generic_antagonist")
+					mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+				else if (src.antag_role)
+					if (mind.get_antagonist(src.antag_role))
+						mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+					mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
+				else
+					mind.wipe_antagonists()
 
 			if (length(src.objective_text))
 				if (src.antag_role)
@@ -174,6 +182,7 @@
 			"ask_permission" = src.spawn_event.ask_permission,
 			"allow_dnr" = src.spawn_event.allow_dnr,
 			"eligible_player_count" = src.eligible_player_count,
+			"add_to_manifest" = src.spawn_event.add_to_manifest,
 		)
 
 	ui_static_data(mob/user)
@@ -239,6 +248,8 @@
 					src.spawn_event.do_spawn()
 			if ("refresh_player_count")
 				src.refresh_player_count = TRUE
+			if ("set_manifest")
+				src.spawn_event.add_to_manifest = params["add_to_manifest"]
 		return TRUE
 
 /client/proc/cmd_custom_spawn_event()

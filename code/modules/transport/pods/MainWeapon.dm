@@ -5,6 +5,10 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
+	/// number of projectiles that are fired when weapon is fired
+	var/shots_to_fire = 1
+	/// change to a degree in angles to give custom spread
+	var/spread = -1
 	var/weapon_score = 0.1
 	var/appearanceString
 
@@ -30,7 +34,7 @@
 			if(r_gunner)
 				dat += {"<B>Gunner:</B>"}
 				if(!gunner)
-					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
+					dat += {"<A href='byond://?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
 			if(uses_ammunition)
@@ -63,15 +67,19 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
+	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
 	if(ON_COOLDOWN(src, "fire", firerate))
 		return
+	EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
+		else
+			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)
@@ -80,7 +88,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -133,6 +141,14 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/burst_phaser
+	name = "Mk 1.5e Burst Phaser"
+	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
+	firerate = 2.4 SECONDS
+	shots_to_fire = 3
+	current_projectile = new/datum/projectile/laser/light/pod/burst
+	icon_state = "class-a-burst"
+
 /obj/item/shipcomponent/mainweapon/phaser/short
 	name = "Mk 1.45 Light Phaser"
 	desc = "A basic, light weight phaser designed for close quarters space fights..."
@@ -162,6 +178,15 @@
 	icon_state = "mk-2-scout"
 	muzzle_flash = "muzzle_flash_laser"
 
+
+/obj/item/shipcomponent/mainweapon/maser
+	name = "Syndicate Maser Device"
+	desc = "A microwave beam weapon that bypasses pod armor to directly damage the pilot. Quite nasty."
+	weapon_score = 0.4
+	appearanceString = "pod_weapon_maser"
+	current_projectile = new/datum/projectile/laser/light/maser/pod
+	icon_state = "maser"
+	muzzle_flash = null
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
@@ -200,6 +225,66 @@
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
 
+/obj/item/shipcomponent/mainweapon/minigun
+	name = "Minigun"
+	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."
+	weapon_score = 1.25
+	firerate = 0.25 SECONDS
+	spread = 25
+	appearanceString = "pod_weapon_gun_off"
+	current_projectile = new/datum/projectile/bullet/akm/pod
+	icon_state = "minigun"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm
+	name = "PEP-9 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_9mm
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
+	name = "PEP-9L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 9mm rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
+
+/obj/item/shipcomponent/mainweapon/gun_22
+	name = "PEP-22 Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds."
+	weapon_score = 1.25
+	power_used = 30
+	current_projectile = new/datum/projectile/bullet/bullet_22
+	appearanceString = "pod_weapon_gun_off"
+	firerate = 10
+	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
+	name = "PEP-22L Ballistic System"
+	desc = "A peashooter attached to a kinetic podweapon, designed to fire 22 caliber rounds. It has an integral magazine that must be reloaded when empty."
+
+	uses_ammunition = 1
+	remaining_ammunition = 20
+
+/obj/item/shipcomponent/mainweapon/salvo_rockets
+	name = "Cerberus Salvo Rockets"
+	desc = "A three-rocket salvo launcher, created in mind for multi-purpose space combat. Usable only by small pods."
+	icon_state = "cerberus-salvo-rockets"
+	weapon_score = 1.25
+	power_used = 50
+	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
+	appearanceString = "pod_weapon_cerberus"
+	firerate = 10 SECONDS
+	shots_to_fire = 3
+	spread = 30
+	large_pod_compatible = FALSE
+
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25
@@ -209,6 +294,17 @@
 	current_projectile = new/datum/projectile/laser/asslaser
 	icon_state = "assult-laser"
 	muzzle_flash = "muzzle_flash_laser"
+
+/obj/item/shipcomponent/mainweapon/hammer_railgun
+	name = "Hammerhead Railgun"
+	desc = "A powerful wall-piercing railgun designed for siege operations."
+	firerate = 5 SECONDS
+	power_used = 100
+	current_projectile = new/datum/projectile/bullet/hammer_railgun
+	weapon_score = 1.5
+	appearanceString = "pod_weapon_hammer_railgun"
+	icon_state = "hammer-railgun"
+	muzzle_flash = "muzzle_flash_launch"
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
@@ -244,6 +340,9 @@
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
 
+	lower_ammo
+		remaining_ammunition = 6
+
 /obj/item/shipcomponent/mainweapon/UFO
 	name = "UFO Blaster"
 	desc = "An extraterrestrial weapons system."
@@ -266,9 +365,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Heat Beam<BR>"
-				dat+="<A href='?src=\ref[src];death=1'>Death Ray</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];death=1'>Death Ray</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];heat=1'>Heat Beam</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];heat=1'>Heat Beam</A><BR>"
 				dat+="Death Ray<BR>"
 
 		else
@@ -312,6 +411,7 @@
 			if(0)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
@@ -351,9 +451,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Metalfoam Constructor Nozzles<BR>"
-				dat+="<A href='?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
 				dat+="Industrial Cutter Blades<BR>"
 
 		else
@@ -462,10 +562,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_FLOORS to EFIF_MODE_WALLS)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
-				if(src.mode != EFIF_MODE_R_FLOORS && ship.z == Z_LEVEL_STATION) //antigrief
-					boutput(user,SPAN_ALERT("The construction system isn't cleared to operate in this mode within this sector."))
-					src.sadbuzz()
-					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 				if(!src.check_sheets())
@@ -485,6 +582,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			if(EFIF_MODE_REPAIR)
 				if(ON_COOLDOWN(src, "fire", firerate))
 					return
+				EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 				if(length(src.active_fields) >= 1)
 					return
 
@@ -753,37 +851,37 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			switch(mode)
 				if(EFIF_MODE_FLOORS)
 					dat+="<B>Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_R_FLOORS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<B>Reinforced Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_WALLS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<B>Walls</B><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_REPAIR)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<B>Repair</B><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				else
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
 					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
-			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
-			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
+			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='byond://?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
+			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='byond://?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -1010,6 +1108,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		if(ON_COOLDOWN(src, "fire", firerate))
 			return
+		EXTEND_COOLDOWN(src, "weapon_swap_cd", 10 SECONDS)
 		if(!core_inserted)
 			boutput(ship.pilot, SPAN_ALERT("<B>The weapon requires a unique power source to function!</B>"))
 			return
@@ -1025,12 +1124,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = TRUE
-			flick("SPS_o_large", purge)
+			FLICK("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = FALSE
-			flick("SPS_o_small", purge)
+			FLICK("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 
@@ -1122,6 +1221,13 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	dissipation_rate = 1
 	dissipation_delay = 14
 	projectile_speed = 42
+
+/datum/projectile/laser/light/pod/burst
+	damage = 25
+	shot_delay = 0.2 SECONDS
+
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4

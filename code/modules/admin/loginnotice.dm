@@ -51,7 +51,7 @@
 
 	// New note saved, usual player notes bookkeeping
 	addPlayerNote(target_key, src.owner.ckey, "New login notice set:\n[message_text]")
-	message_admins(SPAN_INTERNAL("[key_name(src.owner.mob)] added a login notice for <a href='?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div>"))
+	message_admins(SPAN_INTERNAL("[key_name(src.owner.mob)] added a login notice for <a href='byond://?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div>"))
 	tgui_alert(src.owner.mob, "Login notice for '[target_key]' has been set. They should see it next time they connect.")
 
 	ircbot.export_async("admin", list(
@@ -95,7 +95,7 @@
 								<hr>
 								<p style='white-space: pre-wrap;'>[message]</p>
 								<hr>
-								<p class='c'><a class='a' href="?src=\ref[src];action=loginnotice_ack">Acknowledge Message</a></p>
+								<p class='c'><a class='a' href="byond://?src=\ref[src];action=loginnotice_ack">Acknowledge Message</a></p>
 							</body>
 						</html>
 					"}

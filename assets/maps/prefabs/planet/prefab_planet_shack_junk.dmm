@@ -6,7 +6,7 @@
 /obj/storage/crate,
 /obj/random_item_spawner/junk/some,
 /obj/random_item_spawner/snacks/some,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "i" = (
 /obj/storage/crate,
@@ -15,33 +15,33 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "s" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	pixel_y = -9
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "z" = (
 /obj/storage/crate,
 /obj/random_item_spawner/junk/some,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "P" = (
 /obj/storage/crate,
 /obj/random_item_spawner/junk/some,
 /obj/random_item_spawner/med_tool/some,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "R" = (
 /obj/storage/crate,
 /obj/random_item_spawner/junk/some,
 /obj/random_item_spawner/med_kit/one,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "U" = (
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/noGenerate)
 "Y" = (
 /turf/simulated/wall/auto/supernorn/wood,

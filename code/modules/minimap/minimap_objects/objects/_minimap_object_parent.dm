@@ -23,6 +23,8 @@
 		src.initialise_minimap()
 
 /obj/minimap/disposing()
+	QDEL_NULL(map)
+	vis_contents = null
 	STOP_TRACKING
 	. = ..()
 
@@ -34,7 +36,13 @@
 	// As the minimap render is transparent to clicks, the minimap will require an overlay which clicks may register on.
 	if (!src.icon || !src.icon_state)
 		var/icon/click_overlay_icon = icon('icons/obj/minimap/minimap.dmi', "blank")
-		click_overlay_icon.Scale(src.map.x_max * map_scale, src.map.y_max * map_scale)
+		var/max_dim = max(src.map.x_max, src.map.y_max)
+		click_overlay_icon.Scale(max_dim * map_scale, max_dim * map_scale)
 		click_overlay_icon.ChangeOpacity(0)
 		src.icon = click_overlay_icon
 		src.mouse_opacity = 2
+
+/obj/minimap/proc/get_turf_at_screen_coords(screen_x,screen_y)
+	var/x = round((screen_x - src.map.minimap_render.pixel_x) / (src.map.zoom_coefficient * src.map.map_scale))
+	var/y = round((screen_y - src.map.minimap_render.pixel_y) / (src.map.zoom_coefficient * src.map.map_scale))
+	return locate(x, y, map.z_level)

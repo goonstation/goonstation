@@ -498,6 +498,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.name = t
 
 			src.desc = "For storing medical chemicals and less savory things."
+			return
 
 		if (istype(W, /obj/item/reagent_containers/synthflesh_pustule))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -510,7 +511,21 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			W.reagents.trans_to(src, W.reagents.total_volume)
 			user.u_equip(W)
 			qdel(W)
+			return
 
+		if (src.is_open_container() &&\
+			istypes(W, list(/obj/item/sheet, /obj/item/material_piece)) &&\
+			(W.material?.isSameMaterial(getMaterial("wood")) || W.material?.isSameMaterial(getMaterial("bamboo")))
+		)
+			if (W.amount < 5)
+				boutput(user, SPAN_ALERT("You need at least 5 pieces to fill the barrel."))
+				return
+			W.change_stack_amount(-5)
+			var/obj/burning_barrel/woodbarrel = new /obj/burning_barrel{on = FALSE}(src.loc)
+			woodbarrel.anchored = src.anchored
+			boutput(user, SPAN_NOTICE("The barrel follows narrative causality and instantly becomes shabbier as you shove the wood into it."))
+			qdel(src)
+			return
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
 				user.visible_message("<b>[user]</b> wrenches [src]'s lid closed!")
@@ -519,8 +534,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
-		else
-			..()
+			return
+
+		. = ..()
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (istype(over_object, /obj/machinery/chem_master))
@@ -674,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (user.loc != staystill) break
-				if (P.type != itemtype) continue
+				if (P.type != itemtype || P.equipped_in_slot) continue
 				var/amount = 20
 				if (istype(P,/obj/item/reagent_containers/food/snacks/mushroom/))
 					amount = 25

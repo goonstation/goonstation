@@ -5,6 +5,7 @@
 	var/obj/machinery/atmospherics/node
 	/// The pipe network we belong to.
 	var/datum/pipe_network/network
+	exclusionary = TRUE
 
 /obj/machinery/atmospherics/unary/New()
 	..()
@@ -42,6 +43,8 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			node = target
 			break
 	if(player_caused_init)

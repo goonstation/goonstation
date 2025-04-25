@@ -18,7 +18,7 @@
 			if (!A.activated)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 			A.effect_click_tile(src,user,U)
 

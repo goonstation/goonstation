@@ -7,7 +7,7 @@
 	anchored = ANCHORED
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-	invisibility = INVIS_CLOAK
+	invisibility = INVIS_ALWAYS
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
 	power_usage = 50
@@ -169,7 +169,7 @@
 		invisibility = INVIS_NONE
 		popping = 1
 		if (src.cover!=null)
-			flick("popup", src.cover)
+			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
 		SPAWN(1 SECOND)
 			if (popping==1) popping = 0
@@ -180,11 +180,11 @@
 	if ((!isPopping()) || src.popping==1)
 		popping = -1
 		if (src.cover!=null)
-			flick("popdown", src.cover)
+			FLICK("popdown", src.cover)
 			src.cover.icon_state = "turretCover"
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
-				invisibility = INVIS_CLOAK
+				invisibility = INVIS_ALWAYS
 				popping = 0
 				set_density(0)
 
@@ -257,7 +257,7 @@
 	if (cover!=null)
 		qdel(cover)
 	sleep(0.3 SECONDS)
-	flick("explosion", src)
+	FLICK("explosion", src)
 	SPAWN(1.3 SECONDS)
 		qdel(src)
 
@@ -368,32 +368,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 /obj/machinery/turretid/ai_upload
 	name = "AI Upload Turret Control"
 	turretArea = /area/station/turret_protected/ai_upload
-	req_access = access_ai_upload
+	req_access = list(access_ai_upload)
 
 /obj/machinery/turretid/ai_chamber
 	name = "AI Chamber Turret Control"
 	turretArea = /area/station/turret_protected/ai
-	req_access = access_ai_upload
+	req_access = list(access_ai_upload)
 
 /obj/machinery/turretid/ai_perimeter
 	name = "AI Perimeter Turret Control"
 	turretArea = /area/station/turret_protected/AIbaseoutside
-	req_access = access_ai_upload
+	req_access = list(access_ai_upload)
 
 /obj/machinery/turretid/computer_core
 	name = "Computer Core Turret Control"
 	turretArea = /area/station/turret_protected/Zeta
-	req_access = access_heads
+	req_access = list(access_heads)
 
 /obj/machinery/turretid/armory
 	name = "Armory Turret Control"
 	turretArea = /area/station/ai_monitored/armory
-	req_access = access_armory
+	req_access = list(access_armory)
 
 /obj/machinery/turretid/armory_perimeter
 	name = "Armory Perimeter Turret Control"
 	turretArea = /area/station/turret_protected/armory_outside
-	req_access = access_armory
+	req_access = list(access_armory)
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return

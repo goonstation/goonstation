@@ -46,6 +46,8 @@
 
 	cheat
 		charge = INFINITY
+		can_fire()
+			return TRUE
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -64,7 +66,7 @@
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Output", PROC_REF(_toggle_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if(!terminal)
@@ -418,19 +420,26 @@
 
 		var/melt_prob = 0 //this var only exists for debug really
 		if (isturf(A))
-			if (abs(output) < 100 MEGA WATTS) //hard threshold for turfs, you need a beeg laser
+			var/turf_mult = istype(A, /turf/simulated/wall/auto/asteroid) ? 0.1 : 1
+			if (abs(output) < 100 MEGA WATTS * turf_mult) //hard threshold for turfs, you need a beeg laser
 				melt_prob = 0
 			else
-				melt_prob = abs(output) / (25 MEGA WATTS)
+				melt_prob = abs(output) / (25 MEGA WATTS * turf_mult)
 			if (prob(melt_prob))
 				A.ex_act(2)
 			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
 				animate_meltspark(A)
 		else
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
-			if (prob(melt_prob))
-				A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
-				qdel(A)
+			if (istype(A, /obj/blob))
+				var/obj/blob/blob = A
+				blob.take_damage(min(100, round(melt_prob/2)), damtype = "laser")
+			else if (prob(melt_prob))
+				if (istype(A, /obj/geode))
+					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
+				else
+					A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
+					qdel(A)
 
 		if (QDELETED(A))
 			src.blocking_objects -= A //mmm yes for loop list modification
@@ -440,7 +449,7 @@
 	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 
 /obj/machinery/power/pt_laser/proc/get_available_input_power()
-		return src.charging * min(src.chargelevel, src.get_available_terminal_power())
+	return src.charging * min(src.chargelevel, src.get_available_terminal_power())
 
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return (abs(src.output) <= src.charge + src.get_available_input_power()) & (abs(src.output) >= PTLMINOUTPUT)
@@ -612,8 +621,8 @@
 			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
 			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+				if(L:sever_limb(limb))
+					L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
 		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)

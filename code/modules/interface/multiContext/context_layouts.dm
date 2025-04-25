@@ -63,8 +63,8 @@ var/list/datum/contextAction/globalContextActions = null
 		offsetY = OffsetY
 		. = ..()
 
-	showButtons(list/buttons, atom/target)
-		var/atom/screenCenter = get_turf(usr.client.virtual_eye)
+	showButtons(list/buttons, atom/target, mob/user)
+		var/atom/screenCenter = get_turf(user.client.virtual_eye)
 		var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 		var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 		var/offX = 0
@@ -76,7 +76,7 @@ var/list/datum/contextAction/globalContextActions = null
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-			addButtonToHud(usr, C)
+			addButtonToHud(user, C)
 
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
@@ -104,7 +104,7 @@ var/list/datum/contextAction/globalContextActions = null
 		offsetY = OffsetY
 		. = ..()
 
-	showButtons(list/buttons, atom/target)
+	showButtons(list/buttons, atom/target, mob/user)
 		var/offX = 0
 		var/offY = spacingY
 		var/finalOff = spacingX * (buttons.len-3)
@@ -113,7 +113,7 @@ var/list/datum/contextAction/globalContextActions = null
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER,CENTER+0.6"
 
-			addButtonToHud(usr, C)
+			addButtonToHud(user, C)
 
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
@@ -137,8 +137,8 @@ var/list/datum/contextAction/globalContextActions = null
 		dist = Dist
 		return ..()
 
-	showButtons(list/buttons, atom/target)
-		var/atom/screenCenter = get_turf(usr.client.virtual_eye)
+	showButtons(list/buttons, atom/target, mob/user)
+		var/atom/screenCenter = get_turf(user.client.virtual_eye)
 		var/screenX
 		var/screenY
 		if (!isturf(target.loc)) //hackish in-inventory compatability for lamp manufacturer, I don't understand HUD coordinate stuff
@@ -156,7 +156,7 @@ var/list/datum/contextAction/globalContextActions = null
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER:[screenX],CENTER:[screenY]"
 
-			addButtonToHud(usr, C)
+			addButtonToHud(user, C)
 
 			// Uh, hardcoded sizes. getIconBounds doesnt work here since our icons can have empty pixels and then they wont be properly aligned with our button background.
 			var/icon/Icon = icon(C.action.icon, C.action.icon_state)
@@ -178,8 +178,8 @@ var/list/datum/contextAction/globalContextActions = null
 
 /datum/contextLayout/default
 
-	showButtons(list/buttons, atom/target)
-		var/atom/screenCenter = get_turf(usr.client.virtual_eye)
+	showButtons(list/buttons, atom/target, mob/user)
+		var/atom/screenCenter = get_turf(user.client.virtual_eye)
 		var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 		var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 		var/offX = 0
@@ -188,7 +188,7 @@ var/list/datum/contextAction/globalContextActions = null
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-			addButtonToHud(usr, C)
+			addButtonToHud(user, C)
 
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
@@ -204,8 +204,8 @@ var/list/datum/contextAction/globalContextActions = null
 
 /datum/contextLayout/expandtest
 
-	showButtons(list/buttons, atom/target)
-		var/atom/screenCenter = get_turf(usr.client.virtual_eye)
+	showButtons(list/buttons, atom/target, mob/user)
+		var/atom/screenCenter = get_turf(user.client.virtual_eye)
 		var/screenX = ((screenCenter.x - target.x) * (-1)) * 32
 		var/screenY = ((screenCenter.y - target.y) * (-1)) * 32
 		var/offX = 0
@@ -215,7 +215,7 @@ var/list/datum/contextAction/globalContextActions = null
 		for(var/atom/movable/screen/contextButton/C as anything in buttons)
 			C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 
-			addButtonToHud(usr, C)
+			addButtonToHud(user, C)
 
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
@@ -234,7 +234,7 @@ var/list/datum/contextAction/globalContextActions = null
 /datum/contextLayout/screen_HUD_default
 	var/count_start_pos = 1
 
-	showButtons(list/buttons, atom/movable/screen/target)
+	showButtons(list/buttons, atom/movable/screen/target, mob/user)
 		var/longitude_dir
 		var/lattitude_dir
 		var/targetx
@@ -266,8 +266,8 @@ var/list/datum/contextAction/globalContextActions = null
 			//C.screen_loc = "CENTER[(screenX) < 0 ? ":[screenX]":":[screenX]"],CENTER[(screenY) < 0 ? ":[screenY]":":[screenY]"]"
 			C.screen_loc = "[lattitude_dir][targetx],[longitude_dir][targety]"
 
-			addButtonToHud(usr, C)
-			var/mob/dead/observer/GO = usr
+			addButtonToHud(user, C)
+			var/mob/dead/observer/GO = user
 			if(istype(GO)) GO.hud.add_screen(C)
 
 			var/matrix/trans = new /matrix

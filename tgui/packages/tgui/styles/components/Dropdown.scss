@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
+@use '../base';
 
 .Dropdown {
   display: flex;
@@ -31,9 +31,9 @@
   align-items: center;
   max-height: base.em(200px);
   border-radius: 0 0 base.em(2px) base.em(2px);
-  color: #fff;
-  background-color: #000;
-  background-color: rgba(0, 0, 0, 0.75);
+  color: hsl(0, 0%, 100%);
+  background-color: hsl(0, 0%, 0%);
+  background-color: hsla(0, 0%, 0%, 0.75);
 }
 
 .Dropdown__menu-scroll {

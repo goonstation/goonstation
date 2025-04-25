@@ -28,6 +28,9 @@
 	New()
 		..()
 		//Comes with the goggles
+		src.spawn_goggles()
+
+	proc/spawn_goggles()
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
 
@@ -82,6 +85,9 @@
 			else
 				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
 
+		for(var/obj/item/photo/P in src.contents)
+			P.set_loc(get_turf(src))
+
 		..(gibbed, 0)
 
 		if (!gibbed)
@@ -120,8 +126,9 @@
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
-	add_abilities = list(/datum/targetable/critter/takepicture)
+	add_abilities = list(/datum/targetable/critter/takepicture/nostorage)
 
 
 	setup_hands()
 
+	spawn_goggles()

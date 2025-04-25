@@ -185,6 +185,8 @@
 		return
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)

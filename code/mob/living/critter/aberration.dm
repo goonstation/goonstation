@@ -30,6 +30,7 @@
 	metabolizes = FALSE
 	use_stamina = FALSE
 	ailment_immune = TRUE
+	throws_can_hit_me = FALSE
 
 	grabresistmessage = "but their hands pass right through!"
 	death_text = "%src% dissipates!"
@@ -82,7 +83,7 @@
 			return
 		M.visible_message(SPAN_COMBAT("<b>[M] shocks the [src.name] with [I]!</b>"),
 			SPAN_COMBAT("<b>While your baton passes through, the [src.name] appears damaged!</b>"))
-		M.lastattacked = src
+		M.lastattacked = get_weakref(src)
 		B.process_charges(-1, M)
 
 		src.hurt(50)

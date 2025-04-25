@@ -84,7 +84,7 @@
 /obj/minimap/map_computer/pod_wars
 	name = "Debris Field Map"
 	desc = "A cutting-edge cathode ray tube monitor, actively rendering many dozens of kilobytes of reconnaissance data on the surrounding debris field."
-	map_scale = 0.3
+	map_scale = 0.25
 
 
 /obj/minimap/map_computer/pod_wars/nanotrasen
@@ -127,3 +127,20 @@
 /obj/minimap/map_computer/pod_wars/both_teams/disposing()
 	STOP_TRACKING
 	. = ..()
+
+/obj/minimap/map_computer/htr_team
+	name = "Station Map"
+	desc = "A cutting-edge cathode ray tube monitor, actively rendering a visualization of the target station."
+	map_type = MAP_HTR_TEAM
+
+	light_r = 0.3
+	light_g = 0.3
+	light_b = 1
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()

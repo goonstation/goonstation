@@ -9,7 +9,7 @@ proc/get_telearea(var/name)
 	var/list/areas = get_teleareas()
 	return areas[name]
 
-proc/generate_teleareas()
+proc/generate_teleareas() //Turns out nukies could deploy to the wizards den all this time
 	LAGCHECK(LAG_HIGH)
 	teleareas = list()
 	for (var/area/area in world)
@@ -23,4 +23,8 @@ proc/generate_teleareas()
 				teleareas[area.name] = area
 		if(istype(area, /area/wizard_station))
 			teleareas[area.name] = area
+		if (istype(area, /area/radiostation))
+			var/turf/T = area.contents[1]
+			if (!isrestrictedz(T?.z))
+				teleareas[area.name] = area
 	sortList(teleareas, /proc/cmp_text_asc)

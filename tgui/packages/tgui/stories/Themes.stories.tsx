@@ -6,15 +6,18 @@
 
 import { Input, LabeledList, Section } from 'tgui-core/components';
 
-import { useLocalState } from '../backend';
+import { useSharedState } from '../backend';
 
 export const meta = {
   title: 'Themes',
   render: () => <Story />,
 };
 
-const Story = (props) => {
-  const [theme, setTheme] = useLocalState('kitchenSinkTheme', undefined);
+const Story = () => {
+  const [theme, setTheme] = useSharedState<string | undefined>(
+    'kitchenSinkTheme',
+    undefined,
+  );
   return (
     <Section>
       <LabeledList>
@@ -22,7 +25,7 @@ const Story = (props) => {
           <Input
             placeholder="theme_name"
             value={theme}
-            onInput={(e, value) => setTheme(value)}
+            onInput={(_e, value) => setTheme(value)}
           />
         </LabeledList.Item>
       </LabeledList>

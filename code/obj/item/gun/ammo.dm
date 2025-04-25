@@ -17,6 +17,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
+	///Can this ammo be cooked off by heating?
+	var/cookable = TRUE
 
 	proc
 		swap(var/obj/item/ammo/A)
@@ -297,6 +299,18 @@
 	get_desc()
 		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		. = ..()
+		if (!src.cookable)
+			return
+		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
+			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
+				//shoot in a truly random direction
+				shoot_projectile_relay_pixel_spread(src, src.ammo_type, src, rand(-32, 32), rand(-32, 32), 360)
+				if (prob(30) && src.use(1)) //small chance to do two per tick
+					sleep(0.3 SECONDS)
+					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
+
 //no caliber:
 /obj/item/ammo/bullets/vbullet
 	sname = "VR bullets"
@@ -380,6 +394,16 @@
 	amount_left = 10
 	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/bullet_22/HP
+	ammo_cat = AMMO_PISTOL_22
+
+/obj/item/ammo/bullets/bullet_22match
+	sname = ".22 Match grade"
+	name = ".22 Match grade magazine"
+	desc = "Exceedingly precise rounds for competitions or exceedingly demanding operators."
+	icon_state = "pistol_magazine_hp"
+	amount_left = 10
+	max_amount = 10
+	ammo_type = new/datum/projectile/bullet/bullet_22/match
 	ammo_cat = AMMO_PISTOL_22
 
 //0.223
@@ -705,6 +729,7 @@
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
 	throwforce = 0
+	cookable = FALSE
 
 //0.40
 /obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
@@ -771,6 +796,31 @@
 	icon_short = "38"
 	icon_empty = "speedloader_empty"
 
+//0.50
+/obj/item/ammo/bullets/antiair
+	sname = ".50 BMG frag"
+	name = ".50 BMG fragmenting rounds"
+	desc = "Extremely powerful rounds with a fragmenting HE core."
+	ammo_type = /datum/projectile/special/spreader/buckshot_burst/antiair
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_DEAGLE
+
+/obj/item/ammo/bullets/fivehundred
+	sname = ".500 Mag"
+	name = ".500 speedloader"
+	desc = "A speedloader of .500 magnum revolver bullets. Good lord."
+	icon_state = "38-7"
+	amount_left = 7
+	max_amount = 7
+	ammo_type = new/datum/projectile/bullet/deagle50cal
+	ammo_cat = AMMO_DEAGLE
+	icon_dynamic = 1
+	icon_short = "38"
+	icon_empty = "speedloader_empty"
+
+
+
 //0.58
 /obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
@@ -801,6 +851,9 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	weak //for nuke ops engineer
+		sname = "12ga Muckshot"
+		name = "12ga muckshot ammo box"
+		desc = "A box of weak buckshot shells, capable of tearing through soft tissue."
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
 
@@ -822,6 +875,10 @@
 		four //for FLW
 			amount_left = 4
 			max_amount = 4
+
+		five //mts
+			amount_left = 5
+			max_amount = 5
 
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
@@ -846,25 +903,25 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "makeshiftscrap"
 	amount_left = 4
 	max_amount = 4
-	ammo_cat = AMMO_SHOTGUN_HIGH
+	ammo_cat = AMMO_SHOTGUN_PIPE
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
-	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
+	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/plasglass
 	icon_state = "makeshiftplasglass"
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
-	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames."
+	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
 	icon_state = "makeshiftglass"
 
 /obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
 	sname = "scrap load"
-	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
+	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
 
 /obj/item/ammo/bullets/pipeshot/scrap/five
@@ -873,8 +930,15 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
 	sname = "bone load"
-	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque! They're too crude for advanced shotgun receivers."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
+	icon_state = "makeshiftbone"
+
+/obj/item/ammo/bullets/pipeshot/potato
+	sname = "potato load"
+	desc = "This appears to be some potatoes haphazardly shoved into a few cut open pipe frames. They're too crude for advanced shotgun receivers."
+	ammo_type = new/datum/projectile/bullet/potatoslug
+	icon_state = "makeshiftpotato"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -951,10 +1015,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 //0.787
 /obj/item/ammo/bullets/cannon
-	sname = "20mm APHE"
-	name = "20mm APHE shells"
-	amount_left = 5
-	max_amount = 5
+	sname = "20mm AP"
+	name = "20mm AP shells"
+	amount_left = 4
+	max_amount = 4
 	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM
@@ -966,6 +1030,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	single
 		amount_left = 1
 		max_amount = 1
+
+
 
 //1.0
 /obj/item/ammo/bullets/rod
@@ -1229,7 +1295,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
@@ -1250,7 +1316,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
 			for(var/i in 1 to amount_left)
-				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
+				user.put_in_hand_or_drop(AMMO.get_nade():launcher_clone())
 			AMMO.unload_nade()
 			qdel(src)
 
@@ -1290,7 +1356,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 6
 	max_amount = 6
 	icon_state = "mrl_rocketpack"
-	ammo_type = new /datum/projectile/bullet/homing/mrl
+	ammo_type = new /datum/projectile/bullet/homing/rocket/mrl
 	ammo_cat = AMMO_ROCKET_MRL
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
@@ -1732,8 +1798,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/lasergat
 	name = "Mod. 93R Repeating Laser Cell"
 	desc = "This single-use cell has a proprietary port for injecting liquid coolant into a laser firearm."
-	charge = 120
-	max_charge = 120
+	charge = 180
+	max_charge = 180
 	icon_state = "burst_laspistol"
 	rechargable = FALSE
 	New()

@@ -71,8 +71,10 @@
 		knockoff
 			name = "ThoughtOS 1.2"
 			note = "Congratulation! You have chosen the ElecTek 5 Personnel Data Actuator!"
-			message_on = 0
 			knockoff = TRUE
+
+			mess_off
+				message_on = 0
 
 		disposing()
 			if (detected_pdas)
@@ -351,18 +353,18 @@
 						. += "Address book is empty!"
 					else
 						. += "<table cellspacing=5>"
-						for(var/caller in src.all_callers)
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[caller]]'>Block</a>"
-							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[caller]'>Msg</a>"
-							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[caller]'>Send File</a>"
+						for(var/address in src.all_callers)
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["single"];entry=[src.all_callers[address]]'>Block</a>"
+							var/callButton = "<a href='byond://?src=\ref[src];input=message;target=[address]'>Msg</a>"
+							var/sendButton = "<a href='byond://?src=\ref[src];input=send_file;target=[address]'>Send File</a>"
 							if(!src.master.fileshare_program)
 								sendButton = ""
 							else if(!src.clipboard || src.clipboard?.dont_copy)
 								sendButton = "<strike>Send File</strike>"
-							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[caller]'>Del</a>"
-							if(src.all_callers[caller] in src.blocked_numbers)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[caller]]'>Unblock</a>"
-							. += "<tr><td>[src.all_callers[caller]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
+							var/delButton = "<a href='byond://?src=\ref[src];delAddress=[address]'>Del</a>"
+							if(src.all_callers[address] in src.blocked_numbers)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["single"];entry=[src.all_callers[address]]'>Unblock</a>"
+							. += "<tr><td>[src.all_callers[address]]</td><td>[callButton]</td><td>[muteButton]</td><td>[sendButton]</td><td>[delButton]</td></tr>"
 						. += "</table>"
 					. += "<hr>"
 					. += "<h4>Primary Ringtone</h4><br>"
@@ -573,10 +575,7 @@
 							return
 
 					if("ack")
-						if(src.message_last + 20 > TIME) //Message sending delay
-							return
 						src.CrisisAck(href_list["alert_group"], href_list["caller"], href_list["noreply"])
-						src.master.add_fingerprint(usr)
 						return
 
 					if("rename")
@@ -1199,6 +1198,9 @@
 		/// * caller_id: The PDA ID who called the alert
 		/// * noreply: `noreply` data from alert message signal
 		proc/CrisisAck(group_id, caller_id, noreply)
+			if(src.message_last + 20 > TIME) //Message sending delay
+				return
+			src.master.add_fingerprint(usr)
 			var/message = "ACK: Responding to crisis alert!"
 
 			var/caller_reply = TRUE

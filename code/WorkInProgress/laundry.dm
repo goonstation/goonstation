@@ -22,6 +22,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	var/cycle_current = 0
 	var/cycle_max = CYCLE_TIME
 	var/mob/occupant = null
+	var/mob/activator = null
 	var/image/image_door = null
 	var/image/image_light = null
 	//var/image/image_panel = null
@@ -33,6 +34,12 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/New()
 	..()
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/disposing()
+	src.unload()
+	src.activator = null
+	src.occupant = null
+	..()
 
 /obj/submachine/laundry_machine/update_icon()
 	ENSURE_IMAGE(src.image_door, src.icon, "laundry[src.open]")
@@ -71,8 +78,8 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			for (var/obj/item/I in src.contents)
 				if (istype(I, /obj/item/clothing))
 					var/obj/item/clothing/C = I
-					C.stains = list("damp")
-					C.UpdateName()
+					C.clean_stains()
+					C.add_stain(/datum/stain/damp)
 				I.clean_forensic()
 			if (src.occupant && ishuman(src.occupant))
 				H.sims?.affectMotive("Hygiene", 100)
@@ -87,7 +94,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			for (var/obj/item/item in src.contents)
 				if (istype(item, /obj/item/clothing))
 					var/obj/item/clothing/clothing = item
-					clothing.stains = null
+					clothing.clean_stains()
 					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
 					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					clothing.UpdateName()
@@ -101,6 +108,16 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
 						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
+					//Money laundering is a crime!
+					var/mob/living/carbon/human/criminal = src.activator
+					if (ishuman(criminal) && seen_by_camera(criminal))
+						var/perpname = criminal.name
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
+							sec_record["mi_crim"] = "Money laundering."
+							criminal.update_arrest_icon()
+			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
@@ -239,6 +256,19 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	else
 		return ..()
 
+/obj/submachine/laundry_machine/hitby(atom/movable/MO, datum/thrown_thing/thr)
+	if (istype(MO, /mob/living))
+		if (src.open)
+			var/mob/living/M = MO
+			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
+			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
+			M.set_loc(src)
+			src.open = 0
+			UpdateIcon()
+	else
+		return ..()
+
+
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
@@ -324,6 +354,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				src.on = !src.on
 				. = TRUE
 				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+				src.activator = usr
 				if (src.on)
 					src.cycle = PRE
 					src.open = 0

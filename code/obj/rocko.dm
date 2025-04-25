@@ -1,6 +1,6 @@
 
 // CE's pet rock! A true hellburn companion
-obj/item/rocko
+/obj/item/rocko
 	name = "Rocko"
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "rock1"
@@ -160,6 +160,11 @@ obj/item/rocko
 			W.set_loc(src)
 			user.visible_message("[user] manages to fit [W] snugly on top of [src].")
 			update_hat()
+		if(istype(W, /obj/item/pet_carrier))
+			var/obj/item/pet_carrier/carrier = W
+			carrier.trap_mob(src, user)
+			user.visible_message(SPAN_ALERT("[user] places [src] into [carrier]."))
+			return
 		. = ..()
 
 	attack_self(mob/user as mob)

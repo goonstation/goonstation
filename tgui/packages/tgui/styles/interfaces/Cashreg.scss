@@ -5,8 +5,8 @@
  * @license MIT
  */
 
-@use '.././colors.scss';
-@use '../functions.scss' as *;
+@use '../colors';
+@use '../functions' as *;
 
 .cashreg__ {
   &ownerbutton,

@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/shuttle_auto_call_time = 90 MINUTES // 120 minutes.  Shuttle auto-called at this time and then again at this time + 1/2 this time, then every 1/2 this time after that. Set to 0 to disable.
 	var/shuttle_last_auto_call = 0
 	var/shuttle_initial_auto_call_done = 0 // set to 1 after first call so we know to start checking shuttle_auto_call_time/2
+	var/shuttle_prevent_recall_time = 120 MINUTES // After how long do we prevent recalling the Shuttle (only applied upon an automatic call)
 
 	var/latejoin_antag_compatible = 0 // Ultimately depends on the global 'late_traitors' setting, though.
 	var/latejoin_only_if_all_antags_dead = 0 // Don't spawn 'em until all antagonists are dead.
@@ -33,7 +34,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	boutput(world, "<B>[src] did not define announce()</B>")
 
 /datum/game_mode/proc/pre_setup()
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/post_setup()
 
@@ -56,7 +57,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return
 	if (shuttle_last_auto_call + (shuttle_initial_auto_call_done ? shuttle_auto_call_time / 2 : shuttle_auto_call_time) <= ticker.round_elapsed_ticks)
 		emergency_shuttle.incall()
-		command_alert("The shuttle has automatically been called for a shift change.  Please recall the shuttle to extend the shift.","Shift Shuttle Update")
+		var/announcement = "The shuttle has automatically been called for a shift change."
+		if(shuttle_prevent_recall_time <= ticker.round_elapsed_ticks)
+			emergency_shuttle.can_recall = FALSE
+			logTheThing(LOG_STATION, null, "Automatically disabled recalling of the Energency Shuttle.")
+			announcement += " Central Command has prohibited further recalls."
+		else
+			announcement += " Please recall the shuttle to extend the shift."
+		command_alert(announcement,"Shift Shuttle Update")
 		shuttle_last_auto_call = ticker.round_elapsed_ticks
 		if (!shuttle_initial_auto_call_done)
 			shuttle_initial_auto_call_done = 1
@@ -219,12 +227,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
 /// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
-	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
-		// vamp will burn in the chapel before he can react
-		if (prob(50))
-			antag.special_role = ROLE_TRAITOR
-		else
-			antag.special_role = ROLE_CHANGELING
 
 	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
@@ -256,19 +258,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/proc/roundstart_player_count(loud = TRUE)
-	var/readied_count = 0
-	var/unreadied_count = 0
-	for (var/client/C in global.clients)
-		var/mob/new_player/mob = C.mob
-		if (istype(mob))
-			if (mob.ready)
-				readied_count++
-			else
-				unreadied_count++
-	var/total = readied_count + (unreadied_count/2)
-	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
-	return total
+	return global.ticker.roundstart_player_count(loud)
 
 ////////////////////////////
 // Objective related code //

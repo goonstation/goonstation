@@ -20,6 +20,7 @@ export interface CharacterPreferencesData {
   nameFirst: string;
   nameMiddle: string;
   nameLast: string;
+  hyphenateName: BooleanLike;
   robotName: string;
   randomName: number;
   gender: string;
@@ -77,7 +78,7 @@ export interface CharacterPreferencesData {
   traitsAvailable: CharacterPreferencesTraitData[];
   traitsMax: number;
   traitsPointsTotal: number;
-  partsData: Record<string, CharacterPreferencesPartData>;
+  partsData: Partial<Record<string, CharacterPreferencesPartData>>;
 }
 export interface CharacterPreferencesPartData {
   id: string;

@@ -15,7 +15,13 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 #define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
-#define LANDMARK_RADIO_SHOW_HOST "Radio-Show-Host-Spawn"
+#define LANDMARK_SUPPLY_DELIVERY "Supply-Delivery-Point"
+
+// station job special_spawn_location landmarks
+#define LANDMARK_RADIO_SHOW_HOST_SPAWN "Radio-Show-Host-Spawn"
+#define LANDMARK_JOURNALIST_SPAWN "Journalist-Spawn"
+#define LANDMARK_ACTOR_SPAWN "Actor-Spawn"
+#define LANDMARK_INFLUENCER_SPAWN "Influencer-Spawn"
 
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
@@ -26,12 +32,14 @@
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
+
+//Old nukies
 #define LANDMARK_NUCLEAR_CLOSET "Nuclear-Closet"
 #define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
 #define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
-#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
-#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
 // Pirates. Yarr!
 #define LANDMARK_PIRATE "Pirate-Spawn"
@@ -113,3 +121,8 @@
 #define LANDMARK_VM_WARP_ALL 1
 #define LANDMARK_VM_WARP_NON_ADMINS 2
 #define LANDMARK_VM_ONLY_WITCHES 3
+
+//HTR teams
+#define LANDMARK_HTR_TEAM "HTR_TEAM"
+#define LANDMARK_HTR_VENDOR "HTR_VENDOR"
+#define LANDMARK_HTR_BOTS "HTR_BOTS"

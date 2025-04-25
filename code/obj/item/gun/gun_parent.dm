@@ -209,8 +209,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = target
-	target.lastattacker = user
+	user.lastattacked = get_weakref(target)
+	target.lastattacker = get_weakref(user)
 	target.lastattackertime = world.time
 
 	if(user.a_intent != INTENT_HELP && isliving(target))
@@ -363,6 +363,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
+
+	if(!isturf(target))
+		target = get_turf(target)
+
+	if(isnull(target))
+		return FALSE
+
 	if (!canshoot(user))
 		if (ismob(user) && src.click_sound)
 			user.show_text(src.click_msg, "red") // No more attack messages for empty guns (Convair880).
@@ -375,9 +382,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return FALSE
 	if (!istype(src.current_projectile,/datum/projectile/))
 		return FALSE
-
-	if(!isturf(target))
-		target = get_turf(target)
 
 	if (src.muzzle_flash)
 		if (isturf(user.loc))
@@ -412,7 +416,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
 		P.forensic_ID = src.forensic_ID
-
+	P.spread = spread
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))

@@ -413,7 +413,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 
 /obj/item/device/light/candle/spooky/summon
 	New()
-		flick("candle-summon", src)
+		FLICK("candle-summon", src)
 		..()
 
 /obj/item/device/light/candle/haunted
@@ -853,7 +853,9 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 					return ..()
 				var/mob/living/carbon/human/H = target
-				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+				if (is_special)
+					return ..()
+				else if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(H, user, 5, src.on)
 					return ..()
 				else

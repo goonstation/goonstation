@@ -116,10 +116,12 @@ const Occupant = () => {
       {!!occupant && (
         <>
           <LabeledList>
-            <LabeledList.Item label="Status">
-              <Icon color={occupantStatus.color} name={occupantStatus.icon} />
-              {` ${occupantStatus.name}`}
-            </LabeledList.Item>
+            {!!occupantStatus && (
+              <LabeledList.Item label="Status">
+                <Icon color={occupantStatus.color} name={occupantStatus.icon} />
+                {` ${occupantStatus.name}`}
+              </LabeledList.Item>
+            )}
             <LabeledList.Item label="Overall Health">
               <ProgressBar
                 value={occupant.health}

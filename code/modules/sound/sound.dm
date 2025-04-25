@@ -46,7 +46,7 @@
 			//	return 0.62 //todo : a cooler underwater effect if possible
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
-		if (T.turf_flags & IS_TYPE_SIMULATED) //danger :)
+		if (issimulatedturf(T)) //danger :)
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -69,7 +69,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
@@ -77,7 +77,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.", "Music from in-game instruments.")
 
 /// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
@@ -125,6 +125,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+	if(isarea(source))
+		CRASH("playsound(): source is an area [source.name], sound is [soundin]")
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -179,6 +182,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		if (CLIENT_IGNORES_SOUND(C))
 			continue
 
+		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE, TRUE))
+			continue
 		Mloc = get_turf(M)
 
 		if (!Mloc)
@@ -265,6 +270,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	if(!src.client)
 		return
 
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
+		return
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
@@ -343,6 +351,9 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /// like playsound_local but without a source atom, this just plays at a given volume
 /mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
 	if(!src.client)
+		return
+
+	if (!(flags & SOUND_IGNORE_DEAF) && !src.hearing_check(FALSE, TRUE))
 		return
 
 	if (CLIENT_IGNORES_SOUND(src.client))
@@ -450,7 +461,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.volume = ourvolume
 
 		var/orig_freq = S.frequency
-		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+		if(C.mob)
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
 		C << S
 
@@ -515,6 +527,7 @@ var/global/number_of_sound_generated = 0
 			if ("step_flipflop") soundin = pick(sounds_step_flipflop)
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
+			if ("step_snow") soundin = pick(sounds_step_snow)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -779,6 +792,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
 /var/global/list/sounds_step_heavyboots = 	list(sound('sound/misc/step/step_heavyboots_1.ogg'),sound('sound/misc/step/step_heavyboots_2.ogg'),sound('sound/misc/step/step_heavyboots_3.ogg'))
 /var/global/list/sounds_step_military = 	list(sound('sound/misc/step/step_military_1.ogg'),sound('sound/misc/step/step_military_2.ogg'),sound('sound/misc/step/step_military_3.ogg'),sound('sound/misc/step/step_military_4.ogg'))
+/var/global/list/sounds_step_snow = 	    list(sound('sound/misc/step/step_snow_01.ogg'),sound('sound/misc/step/step_snow_02.ogg'),sound('sound/misc/step/step_snow_03.ogg'))
 
 
 

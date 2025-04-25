@@ -64,39 +64,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (user.get_gang())
 			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
-			if(istype(item, /obj/item/tank))
-				var/obj/item/tank/myTank = item
-				if(!myTank.compatible_with_TTV)
-					boutput(user, SPAN_ALERT("There's no way that will fit!"))
-					return
-
-			if(tank_one && tank_two)
-				boutput(user, SPAN_ALERT("There are already two tanks attached, remove one first!"))
-				return
-
-			if(!tank_one)
-				tank_one = item
-				user.drop_item()
-				item.set_loc(src)
-				boutput(user, SPAN_NOTICE("You attach \the [item] to the transfer valve"))
-			else if(!tank_two)
-				tank_two = item
-				user.drop_item()
-				item.set_loc(src)
-				boutput(user, SPAN_NOTICE("You attach the \the [item] to the transfer valve!"))
-
-			if(tank_one && tank_two)
-				var/turf/T = get_turf(src)
-				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing(LOG_BOMBING, user, "made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
-				message_admins("[key_name(user)] made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
-
-			UpdateIcon()
-			attacher = user
-
-			if(user.back == src)
-				user.update_clothing()
-
+			src.attach_tank(user)
 		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/infra) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
 				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
@@ -150,34 +118,44 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 		return
 
-	/// Attach the tank the mob is currently holding
+	/**
+	Attach the tank (or butt) the mob is currently holding to the transfer valve.
+
+	* @param `mob/user` The mob holding the tank to attach.
+
+	* @param `tank_preference` The tank slot to attach the tank to. If null, the tank will be attached to the first available slot.
+	**/
 	proc/attach_tank(mob/user, tank_preference=null)
 		if (!user) return
 		var/obj/item/I = user.equipped()
-		if (!istype(I, /obj/item/tank) || istype(I, /obj/item/clothing/head/butt)) return
-		var/obj/item/tank/myTank = I
-		if (!myTank.compatible_with_TTV) return
+		if (istype(I, /obj/item/tank))
+			var/obj/item/tank/myTank = I
+			if (!myTank.compatible_with_TTV) return
+		else if (istype(I, /obj/item/clothing/head/butt))
+			; // butts allowed without additional checks
+		else
+			return
 		// Handle UI tank attachment
 		if (tank_preference == 1)
 			// This check should always pass
 			if (!src.tank_one)
-				src.tank_one = myTank
+				src.tank_one = I
 		else if (tank_preference == 2)
 			// As should this one
 			if (!src.tank_two)
-				src.tank_two = myTank
+				src.tank_two = I
 		// Handle attackby tank attachment (wherever fits)
 		else if (!tank_preference && !src.tank_one)
-			src.tank_one = myTank
+			src.tank_one = I
 		else if (!tank_preference && !src.tank_two)
-			src.tank_two = myTank
+			src.tank_two = I
 		else
 			// it did not fit, clearly. dummy.
-			boutput(user, SPAN_NOTICE("\the [myTank] cannot fit on the [src]!"))
+			boutput(user, SPAN_NOTICE("\the [I] cannot fit on the [src]!"))
 			return
 		user.drop_item()
-		myTank.set_loc(src)
-		boutput(user, SPAN_NOTICE("You attach \the [myTank] to the transfer valve"))
+		I.set_loc(src)
+		boutput(user, SPAN_NOTICE("You attach \the [I] to the transfer valve"))
 		if(src.tank_one && src.tank_two)
 			var/turf/T = get_turf(src)
 			var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
@@ -217,7 +195,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 	ui_act(action, params)
 		..()
-		if (isghostdrone(usr) || usr.stat || usr.restrained())
+		if (isghostdrone(usr) || !can_act(usr))
 			return
 		switch(action)
 			if ("add_item")
@@ -247,10 +225,16 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		src.AttackSelf(usr)
 		src.add_fingerprint(usr)
 
-	proc/remove_tank(var/T)
-		if (!istype(T, /obj/item/tank)) return
-		var/obj/item/tank/removed = T
-		boutput(usr, SPAN_NOTICE("You remove the [removed] from [src]."))
+	/**
+	Remove a tank (or butt) from the transfer valve.
+
+	 * @param `tank_or_butt` The tank or butt to remove.
+
+	**/
+	proc/remove_tank(tank_or_butt)
+		var/obj/item/removed = tank_or_butt
+		if (!istype(removed)) return // huh, must have been the wind
+		boutput(usr, SPAN_NOTICE("You remove \the [removed] from [src]."))
 		removed.set_loc(get_turf(src))
 		removed = null
 		UpdateIcon()
@@ -640,9 +624,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 							and seems to have succeeded. You feel ashamed for being so compelled by a device that \
 							has nothing more than a slot and a number display.</span>")
 
-	ex_act(var/ex, var/inf, var/factor)
+	ex_act(var/ex, var/inf, var/factor, var/datum/explosion/explosion)
 		if (src.crystal)
-			src.crystal.ex_act(ex, inf, factor)
+			src.crystal.ex_act(ex, inf, factor, explosion)
 			src.crystal.set_loc(src.loc)
 		qdel(src)
 

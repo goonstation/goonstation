@@ -81,8 +81,8 @@
 	if(!sourceT || !targetT || sourceT.z != targetT.z)
 		return null
 	// we draw twice, once anchored to source, once to target; this is so the line is visible at both ends
-	var/datum/lineResult/R1 = drawLine(sourceT, targetT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
-	var/datum/lineResult/R2 = drawLine(targetT, sourceT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
+	var/datum/lineResult/R1 = drawLineImg(sourceT, targetT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+	var/datum/lineResult/R2 = drawLineImg(targetT, sourceT, "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
 	. = list(R1.lineImage, R2.lineImage)
 	for(var/image/img as anything in .)
 		img.color = debug_color_of(src.channel_name)
@@ -146,6 +146,10 @@
 	var/target_tag = signal.data["address_tag"]
 	var/target_address = signal.data["address_1"]
 	var/is_broadcast = target_address == "ping" || target_address == "00000000" || (isnull(target_tag) && isnull(target_address))
+	var/sender = signal.data["sender"]
+	//block any packet asking every device to send a ping back, trivial amplification attack that can seriously lag the server
+	if (sender == "ping")
+		return
 	var/use_can_receive = src.can_receive_necessary(source, signal, params)
 	var/datum/client_image_group/img_group = get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.channel_name]")
 	var/draw_packet = length(img_group?.subscribed_mobs_with_subcount)

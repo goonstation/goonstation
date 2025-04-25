@@ -135,7 +135,7 @@ export const PlayerPanel = () => {
   const { act, data } = useBackend<PlayerPanelData>();
   const { players } = data;
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState<SortConfig>(null);
+  const [sort, setSort] = useState<SortConfig | null>(null);
   let resolvedPlayers = Object.keys(players).map((ckey) => players[ckey]);
 
   // generate all values up front (to avoid having to generate multiple times)
@@ -147,10 +147,12 @@ export const PlayerPanel = () => {
     prevPlayerValues[currPlayer.ckey] = columns.reduce(
       (prevValues, currColumn) => {
         const { id, valueSelector } = currColumn;
-        prevValues[id] = valueSelector({
-          column: currColumn,
-          row: currPlayer,
-        });
+        if (valueSelector) {
+          prevValues[id] = valueSelector({
+            column: currColumn,
+            row: currPlayer,
+          });
+        }
         return prevValues;
       },
       {},
@@ -170,9 +172,10 @@ export const PlayerPanel = () => {
   }
   if (sort) {
     const sortColumn = columns.find((column) => column.id === sort.id);
-    if (sortColumn) {
+    const sorter = sortColumn?.sorter;
+    if (sorter) {
       resolvedPlayers.sort((a, b) => {
-        let comparison = sortColumn.sorter(
+        let comparison = sorter(
           playerValues[a.ckey][sortColumn.id],
           playerValues[b.ckey][sortColumn.id],
         );
@@ -211,7 +214,7 @@ export const PlayerPanel = () => {
                                 : SortDirection.Asc,
                               id: column.id,
                             })
-                        : null
+                        : undefined
                     }
                     sortDirection={columnSort?.dir}
                   >
@@ -229,7 +232,7 @@ export const PlayerPanel = () => {
                   const { id, template } = column;
                   return (
                     <Table.Cell key={id}>
-                      {template({
+                      {template?.({
                         act,
                         column,
                         row: player,
