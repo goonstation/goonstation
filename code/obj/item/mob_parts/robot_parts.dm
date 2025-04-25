@@ -1323,7 +1323,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
 					ticker.mode:revolutionaries += borg.mind
-				else (src.syndicate)
+				else
 					borg.syndicate = 1
 				borg.make_syndicate("activated by [usr]")
 			else
