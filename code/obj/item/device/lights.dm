@@ -130,6 +130,41 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
+
+/obj/item/device/light/lantern
+	name = "lantern"
+	desc = "An electric lantern for lighting up the area close by."
+	icon_state = "lantern-off"
+	item_state = "flight"
+	w_class = W_CLASS_SMALL
+	flags = TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	m_amt = 50
+	g_amt = 20
+	col_r = 0.9
+	col_g = 0.8
+	col_b = 0.7
+	brightness = 0.8
+	abilities = list(/obj/ability_button/flashlight_toggle)
+
+	attack_self(mob/user)
+		src.toggle(user, TRUE)
+
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
+		src.on = !src.on
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
+		if (src.on)
+			src.icon_state = "lantern-on"
+			src.light.enable(TRUE)
+		else
+			src.icon_state = "lantern-off"
+			src.light.disable(TRUE)
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+
 ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
