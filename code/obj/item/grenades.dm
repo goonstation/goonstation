@@ -1672,7 +1672,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/raw_material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
 	 							/obj/item/item_box/medical_patches, /obj/item/item_box/gold_star, /obj/item/item_box/assorted/stickers, /obj/item/material_piece/cloth,\
 	 							/obj/item/raw_material/shard, /obj/item/raw_material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
-	 							/obj/item/rcd_ammo, /obj/item/raw_material/plasmastone, /obj/item/material_piece/plasmastone))
+	 							/obj/item/rcd_ammo, /obj/item/raw_material/plasmastone, /obj/item/material_piece/plasmastone)
 
 	get_help_message(dist, mob/user)
 		switch(src.state)
