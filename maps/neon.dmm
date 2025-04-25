@@ -7474,6 +7474,11 @@
 	dir = 8
 	},
 /area/station/storage/warehouse)
+"ffB" = (
+/obj/random_item_spawner/gross_with_junk/one_or_zero,
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "ffO" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -34982,6 +34987,10 @@
 	},
 /turf/simulated/floor,
 /area/listeningpost)
+"xWh" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
 "xWj" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -73057,7 +73066,7 @@ qRk
 qRk
 isf
 qRk
-pTj
+ffB
 roP
 roP
 pMr
@@ -86890,7 +86899,7 @@ qWB
 xKV
 xww
 xww
-xww
+xWh
 iat
 fSZ
 gjS
