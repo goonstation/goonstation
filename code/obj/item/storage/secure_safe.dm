@@ -398,7 +398,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 							src.storage.add_contents(new treasure(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
-			if (10)
+
+			if (10) // weaker power eggs
 				var/list/eggs_weak = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
@@ -416,7 +417,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
 					E.infertile = TRUE
 
-			if (11)
+			if (11) // strong power eggs
 				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
