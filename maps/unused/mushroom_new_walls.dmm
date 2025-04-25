@@ -4957,7 +4957,7 @@
 	},
 /area/station/quartermaster/office)
 "aBF" = (
-/obj/machinery/nanofab,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
