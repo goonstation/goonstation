@@ -28,6 +28,11 @@
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		qdel (src)
 
+	get_desc()
+		. = ..()
+		if (infertile)
+			. += "\nThis egg is infertile and cannot be incubated."
+
 /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	name = "hard-boiled egg"
 	desc = "You're a loose cannon, egg. I'm taking you off the menu."

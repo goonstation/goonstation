@@ -20,8 +20,6 @@
 		. = ..()
 		if (egg_props_path)
 			chicken_egg_props = new egg_props_path(src)
-		if (infertile)
-			desc += "\nThis egg is infertile and cannot be incubated."
 		src.setup_special_effects()
 		src.UpdateIcon()
 	update_icon()

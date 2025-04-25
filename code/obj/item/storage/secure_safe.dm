@@ -399,7 +399,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					else // if what we selected wasn't a valid path
 						i++ // try again
 			if (10)
-				var/list/eggs = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
+				var/list/eggs_weak = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
@@ -408,7 +408,26 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
 
 				for (var/i=rand(1,src.storage.slots), i>0, i--)
-					var/egg = pick(eggs)
+					var/egg = pick(eggs_weak)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+					else // if what we selected wasn't a valid path
+						i++ // try again
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
+
+			if (11)
+				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
+				#ifdef SECRETS_ENABLED
+					eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pheoinx,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				#endif
+				for (var/i=rand(1,1), i>0, i--)
+					var/egg = pick(eggs_strong)
 					if (ispath(egg))
 						src.storage.add_contents(new egg(src))
 					else // if what we selected wasn't a valid path
