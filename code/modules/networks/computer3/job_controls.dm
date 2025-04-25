@@ -159,7 +159,7 @@ var/datum/job/priority_job = null
 
 	proc/notify_respawnable_players(message)
 		var/list/mob/potential_new_hires = list()
-		for (datum/respawnee/R in respawn_controller.respawnees)
+		for (var/datum/respawnee/R in respawn_controller.respawnees)
 			if(R.checkValid() = RESPAWNEE_STATE_ELIGIBLE)
 				potential_new_hires += ckey_to_mob(R.ckey)
 		for (var/mob/new_player/M in mobs)
