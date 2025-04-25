@@ -21391,7 +21391,7 @@
 /area/station/engine/engineering)
 "oQz" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/engineering,
 /obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 4
@@ -27872,10 +27872,23 @@
 "tmK" = (
 /obj/table/reinforced/auto,
 /obj/item/device/ticket_writer{
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/obj/item/storage/box/panic_buttons{
+	pixel_x = 6
+	},
+/obj/item/device/panicbutton{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/item/storage/box/panic_buttons,
-/obj/item/device/panicbutton,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6;
+	pixel_x = -12
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -28891,7 +28904,16 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "tUL" = (
-/obj/machinery/light/incandescent/warm,
+/obj/table/wood/round/auto,
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
 "tUM" = (
@@ -29953,10 +29975,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/security/main)
-"uEp" = (
-/obj/item/cloneModule/genepowermodule,
-/turf/unsimulated/wall/trench,
-/area/space)
 "uEI" = (
 /obj/stool/chair/office/purple,
 /obj/machinery/light/incandescent/cool,
@@ -30277,6 +30295,8 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/carpet/blue/decal/outercross,
 /area/station/bridge)
 "uRZ" = (
@@ -31573,6 +31593,9 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/eng_mining_shared)
 "vJj" = (
+/obj/item/reagent_containers/food/snacks/candy/sugar_cube{
+	pixel_x = -7
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
 "vJu" = (
@@ -33465,12 +33488,20 @@
 /area/radiostation/studio)
 "wTd" = (
 /obj/table/auto,
+/obj/machinery/phone/wall{
+	pixel_x = -24
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 14
+	},
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/machinery/phone/wall{
-	pixel_x = -24
+/obj/item/cell/supercell/charged,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -37859,7 +37890,7 @@ cUW
 cUW
 cUW
 cUW
-uEp
+cUW
 cUW
 dPL
 qpn
