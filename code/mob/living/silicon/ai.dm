@@ -86,8 +86,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	icon_state = "ai"
 	anchored = ANCHORED
 	density = 1
-	emaggable = 0 // Can't be emagged...
-	syndicate_possible = 1 // ...but we can become a rogue computer.
+	syndicate_possible = 1 // Can become a rogue computer.
 	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
@@ -254,6 +253,21 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/full_heal()
 	..()
 	src.turn_it_back_on()
+
+/mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/E)
+	if (src.dismantle_stage >= 2)
+		boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
+		return 0
+	if (!src.emagged)
+		src.emagged = TRUE
+		boutput(user, SPAN_NOTICE("You short out [src]'s cover lock."))
+		if(dismantle_stage < 2)
+			dismantle_stage = 2
+			src.visible_message(SPAN_ALERT("[src]'s cover lock pops open!"))
+		src.update_appearance()
+		return 1
+	return 0
+
 
 /mob/living/silicon/ai/get_help_message(dist, mob/user)
 	switch(src.dismantle_stage)
@@ -517,6 +531,8 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage >= 2)
 			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
+			if(src.emagged)
+				boutput(user, SPAN_ALERT("[src.name]'s cover lock has been shorted out!"))
 			if(src.allowed(user))
 				if (src.dismantle_stage == 1)
 					src.dismantle_stage = 0
@@ -548,7 +564,7 @@ or don't if it uses a custom topopen overlay
 			W.set_loc(src)
 			src.brain = W
 			src.dismantle_stage = 3
-			if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
+			if (!src.syndicate) // The antagonist proc does that too.
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
 				src.show_text("<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
@@ -1789,6 +1805,8 @@ or don't if it uses a custom topopen overlay
 
 	if (src.dismantle_stage >= 2)
 		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
+	else if (src.emagged)
+		boutput(src, SPAN_ALERT("Your cover lock is shorted out!"))
 	else
 		if (src.locking)
 			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
