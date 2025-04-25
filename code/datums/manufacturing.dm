@@ -288,6 +288,17 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+
+/datum/manufacture/lantern
+	name = "Lantern"
+	item_requirements = list("metal" = 1,
+							 "conductive" = 1,
+							 "crystal" = 1)
+	item_outputs = list(/obj/item/device/light/lantern)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
 /datum/manufacture/vuvuzela
 	name = "Vuvuzela"
 	item_requirements = list("any" = 1)
