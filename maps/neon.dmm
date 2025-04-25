@@ -5494,10 +5494,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"dWL" = (
-/obj/machinery/sleeper/port_a_medbay,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/disposal)
 "dWO" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -74221,7 +74217,7 @@ sKB
 kIk
 jum
 avE
-dWL
+wSs
 neI
 aru
 jOL
