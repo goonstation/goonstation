@@ -1702,7 +1702,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			return "[null_value]"
 
 	proc/clickable_link(var/topic_name, var/curr_value, var/null_value = "(null)", var/topic_value = 1)
-		return "<a href='?src=\ref[src];[topic_name]=[topic_value]'>[clickable(curr_value, null_value)]</a>"
+		return "<a href='byond://?src=\ref[src];[topic_name]=[topic_value]'>[clickable(curr_value, null_value)]</a>"
 
 	proc/switcher(var/value, var/current_value, var/name, var/text)
 		if (value == current_value)
@@ -2036,7 +2036,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 		output += "<br><span class='subtitle'>Appearance</span><br>"
 		output += "<span class='attribute-name'>Color (click box to change):</span><br>"
-		output += "<a href='?src=\ref[src];color=1' style='text-decoration:none'>"
+		output += "<a href='byond://?src=\ref[src];color=1' style='text-decoration:none'>"
 		output += "<div style='display: inline-block; width:20px; height: 20px; background-color: [template.color ? template.color : "#ffffff"]; border: 1px solid black;'>&nbsp;</div>"
 		output += "</a><br>"
 		output += "<span class='attribute-name'>Icon:</span><br/>"
@@ -2062,12 +2062,12 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		output += "<img src='preview_E.png' iconstate='[template.icon_state]' icondir='EAST' width='32' height='32' />"
 		output += "<img src='preview_W.png' iconstate='[template.icon_state]' icondir='WEST' width='32' height='32' /><br>"
 		output += "<strong>Note: </strong> The North, East and West preview images do not show up correctly for unidirectional sprites.<br>"
-		output += "<a href='?src=\ref[src];icon_preset=1'>Set to preset</a><br>"
-		output += "<a href='?src=\ref[src];icon=1'>Set icon file</a><br>"
+		output += "<a href='byond://?src=\ref[src];icon_preset=1'>Set to preset</a><br>"
+		output += "<a href='byond://?src=\ref[src];icon=1'>Set icon file</a><br>"
 		output += "To add directions, upload your icon in a .dmi format, with a single icon state with 4 directions.<br>"
 		output += attribute_clicker("Icon state", "icon_state", template.icon_state)
 		output += "<span class='attribute-name'>Dead icon:</span><br/>"
-		output += "<a href='?src=\ref[src];iconondeath=1'>[template.dead_change_icon? "Changes" : "Does not change"]</a> icon on death.<br>"
+		output += "<a href='byond://?src=\ref[src];iconondeath=1'>[template.dead_change_icon? "Changes" : "Does not change"]</a> icon on death.<br>"
 		if (template.dead_change_icon)
 			browsed_icon = icon(template.dead_icon, template.dead_icon_state)
 			if (template.color)
@@ -2083,7 +2083,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		for (var/i = 1, i <= template.abil.len, i++)
 			output += switcher(i, abilid, "ability", "[i]")
 			output += " "
-		output += "<a href='?src=\ref[src];newabil=1'>Add new</a><br><br>"
+		output += "<a href='byond://?src=\ref[src];newabil=1'>Add new</a><br><br>"
 		if (abilid)
 			var/datum/critterAbility/A = template.abil[abilid]
 			if (A)

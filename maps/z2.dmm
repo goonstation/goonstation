@@ -1910,13 +1910,6 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/hospital)
-"ajU" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "It's a television.";
-	network = "spooky"
-	},
-/turf/unsimulated/floor/carpet/arcade,
-/area/hospital)
 "ajV" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -5674,6 +5667,16 @@
 	dir = 6
 	},
 /area/owlery/office)
+"aBV" = (
+/obj/machinery/camera/auto/vspace{
+	c_tag = "autotag";
+	dir = 9;
+	name = "V-space - B-Ball Court"
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/sim/bball)
 "aBY" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
@@ -7421,14 +7424,6 @@
 /area/marsoutpost)
 "aKT" = (
 /obj/machinery/light/worn,
-/turf/unsimulated/floor/grime,
-/area/marsoutpost)
-"aKU" = (
-/obj/item/mousetrap/armed/cleaner,
-/obj/item/tile/steel,
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
-	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aKV" = (
@@ -10563,16 +10558,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
-"aVd" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/sunglasses,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "aVe" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8
@@ -16549,6 +16534,13 @@
 	dir = 4
 	},
 /area/precursor)
+"bnM" = (
+/obj/machinery/computer/security/wooden_tv/public,
+/obj/map/light/screen,
+/turf/unsimulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/owlery/gangzone)
 "bnO" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm8"
@@ -20502,6 +20494,23 @@
 	dir = 8
 	},
 /area/meat_derelict/entry)
+"bEU" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/auto,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "bEV" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe/heat{
@@ -26478,19 +26487,6 @@
 /obj/submachine/GTM/void,
 /turf/simulated/wall/auto/old,
 /area/crunch)
-"bZX" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/storage/crate/internals{
-	name = "Oxygen tanks"
-	},
-/obj/item/storage/firstaid/oxygen,
-/obj/item/tank/oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/air,
-/turf/unsimulated/floor/plating,
-/area/owlery/staffhall)
 "bZY" = (
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
@@ -27240,20 +27236,6 @@
 "cds" = (
 /turf/unsimulated/floor{
 	icon_state = "3,4"
-	},
-/area/sim/bball)
-"cdt" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	invuln = 1;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
-	},
-/turf/unsimulated/floor{
-	icon_state = "0,6"
 	},
 /area/sim/bball)
 "cdu" = (
@@ -32585,15 +32567,6 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
-"cvZ" = (
-/obj/rack,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm1"
-	},
-/area/syndicate_station/battlecruiser)
 "cwc" = (
 /obj/decal/stalagtite{
 	desc = "It's a stalactite. Hmm. Looks like theres something carved into it. I cant make it out from here though."
@@ -32649,14 +32622,6 @@
 	tag = "icon-fred2 (EAST)"
 	},
 /area/afterlife/hell)
-"cwk" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 5
-	},
-/area/syndicate_station/battlecruiser)
 "cwl" = (
 /obj/decal/boxingrope{
 	dir = 8
@@ -32673,14 +32638,6 @@
 	dir = 6
 	},
 /area/moon/museum)
-"cwn" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 6
-	},
-/area/syndicate_station/battlecruiser)
 "cwo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -33570,13 +33527,6 @@
 /obj/item/reagent_containers/food/drinks/noodlecup,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
-"czj" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery"
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
 "czk" = (
 /obj/item/tile/steel,
 /obj/cable{
@@ -33929,16 +33879,6 @@
 /area/owlery/staffhall)
 "cAj" = (
 /obj/marker/supplymarker,
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue1";
-	tag = "icon-blue1"
-	},
-/area/owlery/staffhall)
-"cAk" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery"
-	},
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue1";
 	tag = "icon-blue1"
@@ -35739,26 +35679,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
-"cFD" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	network = "Minerva5";
-	pixel_x = -3
-	},
-/obj/machinery/camera{
-	c_tag = "NT/SCI #41903";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "cFE" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -37171,16 +37091,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
-"cJM" = (
-/obj/machinery/computer/security/wooden_tv{
-	layer = 4;
-	network = "Owlery"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 5
-	},
-/area/owlery/office)
 "cJN" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -37567,15 +37477,6 @@
 	dir = 8
 	},
 /area/owlery/office)
-"cLg" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/yellowblack/corner,
-/area/owlery/gangzone)
 "cLh" = (
 /obj/item/storage/pill_bottle/bathsalts,
 /obj/critter/madnessowl/gun,
@@ -37596,17 +37497,6 @@
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
-	},
-/area/owlery/gangzone)
-"cLn" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/yellowblack/corner{
-	dir = 4
 	},
 /area/owlery/gangzone)
 "cLo" = (
@@ -38840,17 +38730,6 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
-/area/owlery/gangzone)
-"cOP" = (
-/obj/fakeobject/lightbulb_broken{
-	dir = 8
-	},
-/obj/machinery/computer/security/wooden_tv/small{
-	network = "Owlery";
-	pixel_y = 3
-	},
-/obj/table/auto,
-/turf/unsimulated/floor/yellowblack/corner,
 /area/owlery/gangzone)
 "cOQ" = (
 /obj/fakeobject/lighttube_broken{
@@ -42330,27 +42209,6 @@
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
-"cXM" = (
-/obj/table/wood/round/auto{
-	desc = "This table is also pretty dang old.";
-	name = "old wooden table"
-	},
-/obj/machinery/computer/security/telescreen{
-	network = "Minerva5";
-	pixel_y = 6
-	},
-/obj/machinery/camera{
-	c_tag = "NT/ADMIN/SCI #51352";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	tag = "icon-blue1"
-	},
-/area/syndicate/minerva5/command)
 "cXN" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -44686,22 +44544,10 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
-"dfn" = (
-/obj/table/auto,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/item/crowbar,
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "dfo" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm14"
 	},
-/area/syndicate_station/battlecruiser)
-"dfp" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfr" = (
 /obj/fakeobject{
@@ -45035,14 +44881,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
-"dgh" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_door";
-	name = "armory & firing range"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "dgi" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -45075,42 +44913,6 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm13"
 	},
-/area/syndicate_station/battlecruiser)
-"dgr" = (
-/obj/table/auto,
-/obj/item/ammo/bullets/rpg,
-/obj/item/ammo/bullets/rpg,
-/obj/item/ammo/bullets/rpg,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
-"dgs" = (
-/obj/table/auto,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/item/old_grenade/stinger/frag,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
-"dgt" = (
-/obj/table/auto,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgu" = (
 /obj/machinery/dispenser,
@@ -45212,39 +45014,6 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
-"dgL" = (
-/obj/table/auto,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/landmark{
-	name = "Breaching-Charges"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
-"dgM" = (
-/obj/table/auto,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/item/mine/blast,
-/obj/item/mine/blast,
-/obj/item/mine/blast,
-/obj/item/mine/blast,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
-"dgN" = (
-/obj/table/auto,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/item/device/flash/turbo,
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "dgO" = (
 /obj/storage/crate/wooden,
 /obj/random_item_spawner/furniture_parts/few,
@@ -45342,22 +45111,6 @@
 /obj/mopbucket,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"dhh" = (
-/obj/table/auto,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/storage/belt/utility,
-/obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
-	},
-/obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
-	},
-/obj/item/tool/omnitool/syndicate{
-	icon_state = "syndicate-omnitool-screwing"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "dhi" = (
 /obj/mesh/catwalk,
 /obj/fakeobject{
@@ -45586,14 +45339,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
-"dhN" = (
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 4
-	},
-/area/syndicate_station/battlecruiser)
 "dhO" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -45620,14 +45365,6 @@
 	dir = 4
 	},
 /area/syndicate_station/medbay)
-"dhS" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_door";
-	name = "medical center"
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
 "dhT" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -45652,14 +45389,6 @@
 "dhW" = (
 /obj/cable{
 	icon_state = "1-8"
-	},
-/turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
-"dhX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_door";
-	name = "barracks"
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
@@ -55735,6 +55464,21 @@
 /obj/table/wood/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/glowbold)
+"eCt" = (
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/gun{
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/mainweapon/gun{
+	pixel_x = -4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "eCA" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -55909,6 +55653,35 @@
 /obj/item/reagent_containers/food/drinks/water,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"eNm" = (
+/obj/table/auto,
+/obj/item/storage/belt/utility{
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -3
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 6
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "eNu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56001,14 +55774,6 @@
 "eQS" = (
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/observatory)
-"eQW" = (
-/obj/table/auto,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/storage/toolbox/mechanical,
-/obj/decal/stripe_caution,
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "eRK" = (
 /obj/syndi_putt_spawner,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -57554,17 +57319,6 @@
 "gec" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
-"geI" = (
-/obj/table/auto,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/obj/item/remote/syndicate_teleporter,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "geL" = (
 /obj/computer3frame/terminal{
 	anchored = 1;
@@ -57705,6 +57459,19 @@
 	},
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/observatory)
+"gjT" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/device/flash/turbo{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "gkG" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -58485,6 +58252,15 @@
 	name = "broken door"
 	},
 /area/hospital/samostrel)
+"gNu" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "cairngorm_barracks";
+	name = "barracks"
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "gNx" = (
 /obj/map/light/cyan,
 /obj/fakeobject{
@@ -58932,6 +58708,23 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
+"hkm" = (
+/obj/table/auto,
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -2
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -6
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -10
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "hkn" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -59033,6 +58826,22 @@
 /obj/fakeobject/lighttube_broken,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"hoU" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "hpv" = (
 /obj/shrub{
 	dir = 10
@@ -60807,6 +60616,26 @@
 	dir = 6
 	},
 /area/centcom/gallery)
+"iJX" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	camera_networks = list("Minerva5");
+	pixel_x = -3
+	},
+/obj/machinery/camera{
+	c_tag = "NT/SCI #41903";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "iKm" = (
 /obj/lattice{
 	dir = 4;
@@ -62815,6 +62644,19 @@
 	dir = 9
 	},
 /area/observatory)
+"kls" = (
+/obj/rack,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = 2
+	},
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm1"
+	},
+/area/syndicate_station/battlecruiser)
 "klF" = (
 /obj/pool/perspective{
 	dir = 6;
@@ -63029,6 +62871,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"krj" = (
+/obj/storage/closet/syndicate/personal,
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/battlecruiser)
 "krl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -63110,6 +62958,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"kwf" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cairngorm_armory";
+	single_use = 1
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "kwx" = (
 /obj/lattice{
 	dir = 10;
@@ -63573,17 +63432,6 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"kNR" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/table/auto,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "kOx" = (
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
@@ -63631,22 +63479,6 @@
 /obj/submachine/foodprocessor,
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
-"kQq" = (
-/obj/table/auto,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/pinpointer/nuke,
-/obj/item/remote/syndicate_teleporter,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "kQR" = (
 /obj/fakeobject/skeleton{
 	desc = "The burnt remains of some poor sod.";
@@ -63981,6 +63813,13 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"leS" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	camera_networks = ("Owlery")
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "lfc" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -64631,6 +64470,19 @@
 	dir = 8
 	},
 /area/centcom)
+"lGt" = (
+/obj/rack,
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = 2
+	},
+/obj/item/tank/jetpack/syndicate{
+	pixel_x = -4
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm3"
+	},
+/area/syndicate_station/battlecruiser)
 "lGJ" = (
 /obj/machinery/light/small/broken,
 /obj/decal/cleanable/dirt/dirt2,
@@ -64756,6 +64608,14 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"lNy" = (
+/obj/item/assembly/mousetrap_cleaner,
+/obj/item/tile/steel,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "lNz" = (
 /obj/machinery/door/poddoor/pyro/podbay_autoclose/wizard_horizontal/vertical,
 /turf/unsimulated/floor/shuttlebay,
@@ -64908,6 +64768,13 @@
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
+"lUJ" = (
+/obj/machinery/computer/security/wooden_tv{
+	desc = "It's a television.";
+	camera_networks = list("spooky")
+	},
+/turf/unsimulated/floor/carpet/arcade,
+/area/hospital)
 "lUK" = (
 /obj/fakeobject/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -65553,6 +65420,73 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mxS" = (
+/obj/machinery/light,
+/obj/rack,
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/tank/pocket/extended/oxygen{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "myh" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
@@ -65876,6 +65810,15 @@
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"mQI" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/stripe_caution,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cairngorm_podbay";
+	single_use = 1
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "mRb" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -66029,6 +65972,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
+"mWf" = (
+/obj/machinery/computer/security/wooden_tv{
+	layer = 4;
+	camera_networks = list("Owlery")
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 5
+	},
+/area/owlery/office)
 "mWs" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -66180,14 +66133,6 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
-"ncT" = (
-/obj/landmark{
-	name = "Nuclear-Closet"
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 4
-	},
-/area/syndicate_station/battlecruiser)
 "ndE" = (
 /obj/lattice{
 	dir = 6;
@@ -66815,6 +66760,18 @@
 "nAf" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
+"nBf" = (
+/obj/machinery/sleep_console,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "cairngorm_medical";
+	single_use = 1
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/medbay)
 "nBO" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -66968,6 +66925,27 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"nJa" = (
+/obj/table/wood/round/auto{
+	desc = "This table is also pretty dang old.";
+	name = "old wooden table"
+	},
+/obj/machinery/computer/security/telescreen{
+	camera_networks = list("Minerva5");
+	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "NT/ADMIN/SCI #51352";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/carpet{
+	dir = 4;
+	tag = "icon-blue1"
+	},
+/area/syndicate/minerva5/command)
 "nJg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
@@ -67351,6 +67329,46 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"nTJ" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 8;
+	pixel_x = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 10
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = 18;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 18
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "nTL" = (
 /obj/decal/stage_edge{
 	dir = 8
@@ -68082,6 +68100,22 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
+"oyS" = (
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = 6
+	},
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 1;
+	name = "grimy pipe"
+	},
+/obj/rack,
+/obj/item/tank/pocket/oxygen,
+/turf/unsimulated/floor/caution/east,
+/area/hospital/samostrel)
 "ozc" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -69910,6 +69944,12 @@
 	},
 /turf/unsimulated/dirt,
 /area/crypt/graveyard/swamp)
+"pST" = (
+/obj/storage/closet/syndicate/personal,
+/turf/unsimulated/floor/redblack{
+	dir = 5
+	},
+/area/syndicate_station/battlecruiser)
 "pSW" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -70018,6 +70058,15 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"pVY" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "cairngorm_medical";
+	name = "medical center"
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "pWf" = (
 /obj/mesh/catwalk,
 /obj/decal/nav_danger,
@@ -70135,6 +70184,15 @@
 	icon_state = "fblue3"
 	},
 /area/centcom/gallery)
+"pXQ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "cairngorm_armory";
+	name = "armory & firing range"
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "pZn" = (
 /obj/decal/poster/wallsign/stencil/left/eight,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -70721,6 +70779,33 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"qAb" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 10;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 12;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 14;
+	pixel_x = -3
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "qAh" = (
 /obj/cable/green{
 	icon_state = "6-9"
@@ -70823,6 +70908,17 @@
 	icon_state = "track_2"
 	},
 /area/drone/office)
+"qDK" = (
+/obj/fakeobject/lightbulb_broken{
+	dir = 8
+	},
+/obj/machinery/computer/security/wooden_tv/small{
+	camera_networks = list("Owlery");
+	pixel_y = 3
+	},
+/obj/table/auto,
+/turf/unsimulated/floor/yellowblack/corner,
+/area/owlery/gangzone)
 "qDO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 8
@@ -71425,73 +71521,6 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
-"rcr" = (
-/obj/machinery/light,
-/obj/rack,
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = -4
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = -6
-	},
-/obj/item/tank/emergency_oxygen/extended{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = -2
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = -4
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = -6
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 6;
-	pixel_y = -8
-	},
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
@@ -73744,6 +73773,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPo" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "cairngorm_barracks";
+	single_use = 1
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/syndicate_station/battlecruiser)
 "sPM" = (
 /mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
@@ -73919,6 +73957,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"taV" = (
+/obj/table/auto,
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_x = -8
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/old_grenade/stinger/frag,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "tbj" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -74250,6 +74308,28 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"trA" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/mine/blast{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/mine/blast{
+	pixel_x = 9
+	},
+/obj/item/mine/blast{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/mine/blast{
+	pixel_x = -7
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "trH" = (
 /obj/fakeobject/teleport_pad{
 	name = "prototype receiver pad"
@@ -74564,22 +74644,6 @@
 	dir = 5
 	},
 /area/owlery/owleryhall)
-"tJz" = (
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
-	},
-/obj/fakeobject/pipe{
-	color = "b4b4b4";
-	dir = 1;
-	name = "grimy pipe"
-	},
-/obj/rack,
-/obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/caution/east,
-/area/hospital/samostrel)
 "tJE" = (
 /obj/lattice{
 	dir = 6;
@@ -74640,16 +74704,6 @@
 	dir = 1
 	},
 /area/meat_derelict/entry)
-"tNs" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station/battlecruiser)
 "tNz" = (
 /obj/lattice{
 	dir = 9;
@@ -74668,6 +74722,70 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
+"tOm" = (
+/obj/table/auto,
+/obj/item/shipcomponent/secondary_system/crash{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/obj/item/shipcomponent/secondary_system/crash{
+	pixel_x = -2
+	},
+/obj/item/crowbar,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
+"tPf" = (
+/obj/table/auto,
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 4;
+	pixel_y = -10
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -8
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = -3;
+	pixel_y = -12
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "tPE" = (
 /obj/machinery/teleport/portal_ring,
 /turf/unsimulated/floor/void,
@@ -74747,25 +74865,6 @@
 /obj/item/storage/wall/clothingrack/dresses2,
 /turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
-"tVB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	invuln = 1;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
-	},
-/obj/invisible_teleporter/receive_only{
-	id = "murderbox"
-	},
-/turf/unsimulated/floor/setpieces/gauntlet{
-	desc = "Today is a good day to die.";
-	icon_state = "gauntfloorSkulls";
-	name = "\proper THE MURDERBOX"
-	},
-/area/sim/gunsim/arena)
 "tVC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -74943,15 +75042,6 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
-"ubB" = (
-/obj/rack,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/machinery/light,
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm3"
-	},
-/area/syndicate_station/battlecruiser)
 "uca" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75467,6 +75557,11 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
+"uyN" = (
+/obj/machinery/computer/security/wooden_tv/public,
+/obj/map/light/screen,
+/turf/unsimulated/floor/yellowblack/corner,
+/area/owlery/gangzone)
 "uzz" = (
 /obj/table/nanotrasen/auto,
 /obj/item/gimmickbomb/grenyanda/inert{
@@ -76236,6 +76331,12 @@
 /mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
+"vdl" = (
+/obj/storage/closet/syndicate/nuclear,
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/battlecruiser)
 "vdu" = (
 /obj/lattice{
 	dir = 1;
@@ -76392,6 +76493,37 @@
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
+"vjw" = (
+/obj/table/auto,
+/obj/item/pinpointer/nuke{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = 4
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5
+	},
+/obj/item/pinpointer/nuke{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "vjx" = (
 /obj/machinery/light/small/floor,
 /obj/fakeobject/teleport_pad,
@@ -76734,6 +76866,27 @@
 /obj/landmark/lrt/icemoon,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"vtv" = (
+/obj/table/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -8
+	},
+/obj/machinery/light/small/floor,
+/obj/item/old_grenade/stinger,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/battlecruiser)
 "vtG" = (
 /obj/map/light/graveyard,
 /mob/living/critter/small_animal/firefly/ai_controlled,
@@ -76837,6 +76990,12 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"vAR" = (
+/obj/storage/closet/syndicate/personal,
+/turf/unsimulated/floor/redblack{
+	dir = 6
+	},
+/area/syndicate_station/battlecruiser)
 "vAW" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77472,6 +77631,15 @@
 "vXw" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/office)
+"vYj" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "cairngorm_podbay";
+	name = "launch bay"
+	},
+/obj/mapping_helper/airlock/bolter,
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "vYu" = (
 /obj/fakeobject/vacuumtape,
 /obj/cable/green{
@@ -77720,14 +77888,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"wgY" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_door";
-	name = "launch bay"
-	},
-/turf/unsimulated/floor/darkpurple,
-/area/syndicate_station/battlecruiser)
 "wiy" = (
 /obj/table/auto,
 /obj/item/ammo/ammobox/shootingrange,
@@ -79922,6 +80082,19 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
+"xJT" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/storage/crate/internals{
+	name = "Oxygen tanks"
+	},
+/obj/item/storage/firstaid/oxygen,
+/obj/item/tank/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/air,
+/turf/unsimulated/floor/plating,
+/area/owlery/staffhall)
 "xKr" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -80104,6 +80277,16 @@
 /obj/item/material_piece/uqill,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
+"xSH" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	camera_networks = list("Owlery")
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "blue1";
+	tag = "icon-blue1"
+	},
+/area/owlery/staffhall)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -80479,6 +80662,21 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"ycI" = (
+/obj/machinery/camera/auto/vspace{
+	c_tag = "autotag";
+	dir = 9;
+	name = "V-Space - Gun Sim Arena"
+	},
+/obj/invisible_teleporter/receive_only{
+	id = "murderbox"
+	},
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "Today is a good day to die.";
+	icon_state = "gauntfloorSkulls";
+	name = "\proper THE MURDERBOX"
+	},
+/area/sim/gunsim/arena)
 "ycV" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -82547,7 +82745,7 @@ cYb
 cYD
 cWJ
 cWV
-cXM
+nJa
 cXg
 cWJ
 cXl
@@ -89452,7 +89650,7 @@ bxW
 fVa
 czy
 czW
-cAk
+xSH
 cGu
 aBY
 cDj
@@ -95480,7 +95678,7 @@ cnw
 cnw
 bBm
 aBY
-bZX
+xJT
 chT
 aBY
 cwO
@@ -96707,7 +96905,7 @@ cDJ
 cAB
 cAB
 cFf
-cFD
+iJX
 cHo
 cAB
 cLQ
@@ -97301,7 +97499,7 @@ bBm
 aBY
 cyE
 cEm
-czj
+leS
 cAu
 aBY
 cAF
@@ -98831,7 +99029,7 @@ cID
 aBU
 xWw
 xWw
-cLg
+uyN
 cLF
 cMg
 cMI
@@ -99127,7 +99325,7 @@ cCM
 cCM
 cGo
 kDP
-cJM
+mWf
 ffY
 cIE
 xWw
@@ -99149,7 +99347,7 @@ cQE
 cRk
 cRH
 uTF
-cOP
+qDK
 wzE
 cMK
 cTI
@@ -101549,7 +101747,7 @@ cnw
 cnw
 xWw
 xWw
-cLn
+bnM
 cLK
 cMp
 cKc
@@ -105164,9 +105362,9 @@ hlE
 hlE
 lzl
 dey
-dfn
+tOm
 ozT
-eQW
+eCt
 dgu
 lzl
 dgO
@@ -105469,7 +105667,7 @@ bqV
 bqV
 bqV
 bqV
-rcr
+mxS
 lzl
 dgP
 aQz
@@ -106375,7 +106573,7 @@ joO
 dfT
 dgm
 dgz
-cvZ
+kls
 lzl
 dgQ
 dgZ
@@ -106979,7 +107177,7 @@ pah
 dfV
 dgo
 dgB
-ubB
+lGt
 lzl
 bqW
 iGH
@@ -107885,7 +108083,7 @@ dez
 bqV
 bqV
 bqV
-dfp
+mQI
 lzl
 dgR
 dhc
@@ -107893,7 +108091,7 @@ lzl
 dhs
 dhG
 dhR
-dic
+nBf
 dik
 lzl
 bXv
@@ -108184,9 +108382,9 @@ dat
 dat
 lzl
 lzl
-wgY
-wgY
-wgY
+vYj
+vYj
+vYj
 lzl
 lzl
 lzl
@@ -108194,7 +108392,7 @@ lzl
 lzl
 lzl
 dhH
-dhS
+pVY
 dhH
 lzl
 lzl
@@ -110601,16 +110799,16 @@ ddl
 lzl
 lzl
 lzl
-dgh
-dgh
-dgh
+pXQ
+pXQ
+pXQ
 lzl
 lzl
 lzl
 lzl
 lzl
 lzl
-dhX
+gNu
 lzl
 lzl
 lzl
@@ -110907,13 +111105,13 @@ btf
 btf
 btf
 dgK
-cwh
+kwf
 cwg
 lzl
 dhv
 bvI
 bvI
-bvI
+sPo
 dio
 lzl
 diH
@@ -111509,7 +111707,7 @@ dfa
 btf
 lhj
 btf
-kNR
+bEU
 btf
 cwh
 fgY
@@ -111811,7 +112009,7 @@ deG
 sFY
 nJZ
 btf
-dgL
+nTJ
 btf
 dgi
 cwg
@@ -112111,9 +112309,9 @@ dep
 nWL
 dfa
 btf
-dgr
+hkm
 btf
-dgL
+hoU
 btf
 cwh
 cwg
@@ -112413,9 +112611,9 @@ dep
 dex
 deG
 sFY
-dgs
+taV
 btf
-dgM
+trA
 btf
 dgi
 cwg
@@ -112715,18 +112913,18 @@ deq
 dex
 dfa
 btf
-dgt
+vtv
 btf
-dgN
+gjT
 btf
 cwh
 fgY
 lzl
-cwk
-dhN
-ncT
-dhN
-cwn
+pST
+krj
+vdl
+krj
+vAR
 lzl
 lzl
 lzl
@@ -113317,7 +113515,7 @@ lzl
 lzl
 lzl
 lzl
-gmY
+btf
 btf
 btf
 btf
@@ -113619,11 +113817,11 @@ hlE
 hlE
 hlE
 lzl
-geI
-kQq
-aVd
-dhh
-tNs
+gmY
+vjw
+tPf
+eNm
+qAb
 dfH
 dgi
 cwg
@@ -119302,7 +119500,7 @@ cbn
 cbV
 cbV
 cbV
-cdt
+aBV
 cbV
 cbV
 cbV
@@ -126302,7 +126500,7 @@ abp
 aeX
 aiy
 ajj
-ajU
+lUJ
 aeX
 abp
 abp
@@ -135444,7 +135642,7 @@ aTs
 aTs
 aTs
 aTs
-aKU
+lNy
 aTs
 aTs
 aTs
@@ -152843,7 +153041,7 @@ clv
 clv
 clv
 clv
-tVB
+ycI
 clv
 clv
 clv
@@ -166997,7 +167195,7 @@ aev
 wAJ
 abr
 rJq
-tJz
+oyS
 abr
 afn
 aiL

@@ -37405,11 +37405,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "cjp" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fpurple2"
@@ -46147,6 +46143,9 @@
 /area/station/mining/staff_room)
 "cKh" = (
 /obj/storage/secure/closet/engineering/mining,
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -57054,11 +57053,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "fWN" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "public"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -57085,11 +57080,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
 "fYx" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -63273,6 +63264,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"lAN" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 28
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/mining/staff_room)
 "lBA" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/shuttlebay{
@@ -132116,7 +132113,7 @@ crl
 cEt
 cGg
 cHA
-cIG
+lAN
 cIG
 cLI
 cIG
