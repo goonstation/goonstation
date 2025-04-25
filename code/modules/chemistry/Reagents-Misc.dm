@@ -958,19 +958,12 @@ datum
 				..()
 				return
 
-			proc/unglue_attached_to(atom/A)
-				var/atom/Aloc = isturf(A) ? A : A.loc
-				for(var/atom/movable/AM in Aloc)
-					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
-					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
-						qdel(glued_comp)
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, raw_volume)
-				unglue_attached_to(M)
+				var/atom/A = M
+				A.unglue_attached_to()
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
@@ -980,11 +973,13 @@ datum
 				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
 				if(glue_ready_comp)
 					qdel(glue_ready_comp)
-				unglue_attached_to(O)
+				var/atom/A = O
+				A.unglue_attached_to()
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				unglue_attached_to(T)
+				var/atom/A = T
+				A.unglue_attached_to(T)
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
