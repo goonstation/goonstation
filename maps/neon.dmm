@@ -2544,6 +2544,10 @@
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"bWG" = (
+/obj/bubble_vent/oxygen,
+/turf/space/fluid,
+/area/space)
 "bWL" = (
 /obj/decal/cleanable/oil,
 /obj/disposalpipe/segment{
@@ -3112,6 +3116,8 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/firedoor_spawn,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "cul" = (
@@ -5656,10 +5662,6 @@
 "dYa" = (
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"dYu" = (
-/obj/landmark/latejoin_job/influencer,
-/turf/unsimulated/wall/trench,
-/area/space)
 "dYQ" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow,
@@ -18533,7 +18535,7 @@
 	},
 /obj/machinery/cashreg,
 /obj/item/paper_bin{
-	pixel_x = 4;
+	pixel_x = -4;
 	pixel_y = -4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -45702,8 +45704,8 @@ cUW
 dPL
 qpn
 qpn
-cUW
-dPL
+qpn
+qpn
 qpn
 qpn
 qpn
@@ -46004,8 +46006,8 @@ cUW
 dPL
 qpn
 qpn
-cUW
-dPL
+qpn
+qpn
 qpn
 qpn
 qpn
@@ -46306,8 +46308,8 @@ cUW
 cUW
 dPL
 qpn
-cUW
-dPL
+qpn
+qpn
 qpn
 qpn
 qpn
@@ -46607,8 +46609,8 @@ cUW
 cUW
 cUW
 cUW
-cUW
 dPL
+qpn
 qpn
 qpn
 qpn
@@ -47673,10 +47675,10 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -47974,12 +47976,12 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -48275,13 +48277,13 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -48575,15 +48577,15 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
 vPP
 vPP
 vPP
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -48877,16 +48879,16 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
 vPP
 vPP
 vPP
 vPP
 vPP
 vPP
-qpn
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -49180,8 +49182,8 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
+vPP
+vPP
 vPP
 vPP
 vPP
@@ -49484,7 +49486,7 @@ qpn
 qpn
 qpn
 qpn
-qpn
+vPP
 vPP
 vPP
 vPP
@@ -49788,10 +49790,10 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
 qpn
 qpn
 qpn
@@ -81053,7 +81055,7 @@ asi
 (152,1,1) = {"
 asi
 cUW
-dYu
+cUW
 dPL
 qxW
 pJO
@@ -86019,7 +86021,7 @@ knB
 qpn
 hsq
 qpn
-qpn
+bWG
 qpn
 hsq
 qpn
@@ -86293,7 +86295,7 @@ lOR
 qpn
 qpn
 qpn
-qpn
+bWG
 qpn
 qpn
 lOR
@@ -94809,10 +94811,10 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
 vPP
 vPP
 vPP
@@ -95112,10 +95114,10 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
+vPP
 vPP
 vPP
 vPP
@@ -95418,9 +95420,9 @@ qpn
 qpn
 qpn
 qpn
-qpn
-qpn
-qpn
+vPP
+vPP
+vPP
 vPP
 vPP
 vPP
