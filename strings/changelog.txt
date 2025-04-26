@@ -1,5 +1,9 @@
 
 (t)fri apr 25 25
+(u)LeahTheTech
+(p)23120
+(e)🚄|C-Performance
+(*)Reduced ocean clutter spawns in an attempt to improve client performance.
 (u)JORJ949
 (p)23114
 (e)💅🔨|C-QoL, A-Player-Actions
