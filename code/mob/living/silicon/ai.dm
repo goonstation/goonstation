@@ -266,7 +266,6 @@ or don't if it uses a custom topopen overlay
 		boutput(user, SPAN_NOTICE("You short out [src]'s cover lock."))
 		if(dismantle_stage < 2)
 			dismantle_stage = 2
-			src.visible_message(SPAN_ALERT("[src]'s cover lock pops open!"))
 		elecflash(src)
 		src.update_appearance()
 		return 1
