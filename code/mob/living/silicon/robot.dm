@@ -1011,6 +1011,7 @@
 					src.visible_message(SPAN_ALERT("<b>[src]</b>' head compartment pops open!"))
 				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
 				elecflash(src)
+				src.locked = FALSE
 				update_appearance()
 				return 1
 			return 0
