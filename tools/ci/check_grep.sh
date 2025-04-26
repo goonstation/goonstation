@@ -26,8 +26,8 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
 fi;
 
 if grep -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/**/*.dmm; then
-	echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
-	st=1
+    echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
+    st=1
 fi;
 
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
