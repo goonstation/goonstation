@@ -58276,10 +58276,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "wFB" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart"
-	},
+/obj/storage/cart/mechcart/breach,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
