@@ -6,6 +6,7 @@
 	mob_path = /mob/living/intangible/wraith
 	uses_pref_name = FALSE
 	has_info_popup = FALSE
+	wiki_link = "https://wiki.ss13.co/Wraith"
 
 	assign_objectives()
 		switch (rand(1, 3))
