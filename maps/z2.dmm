@@ -51459,17 +51459,13 @@
 /area/centcom/lounge)
 "dJd" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/centcom/lounge)
 "dJe" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/centcom/lounge)

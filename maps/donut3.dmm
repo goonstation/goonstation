@@ -5883,9 +5883,7 @@
 /area/station/quartermaster/office)
 "bHy" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -5909,9 +5907,7 @@
 /area/station/maintenance/outer/se)
 "bHA" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -8869,9 +8865,7 @@
 /area/station/maintenance/inner/se)
 "cxC" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -11192,9 +11186,7 @@
 /area/station/hallway/primary/northwest)
 "djS" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
@@ -24145,9 +24137,7 @@
 /area/station/hallway/secondary/exit)
 "hka" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -29936,9 +29926,7 @@
 /area/station/security/equipment)
 "jbz" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -32798,9 +32786,7 @@
 /area/station/bridge/captain)
 "jTV" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -35327,9 +35313,7 @@
 /area/station/crew_quarters/garden)
 "kGl" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -44461,9 +44445,7 @@
 /area/station/medical/medbay/surgery/storage)
 "nxP" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -53964,9 +53946,7 @@
 /area/station/hallway/primary/northwest)
 "qsj" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent,
