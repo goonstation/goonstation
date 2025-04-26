@@ -256,6 +256,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/E)
 	if(!src.emaggable)
+		boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 		return FALSE
 	if (src.dismantle_stage >= 2)
 		boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
