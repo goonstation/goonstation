@@ -10,11 +10,13 @@ import {
   Button,
   ByondUi,
   Flex,
+  Input,
+  LabeledList,
   Section,
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 import { MinimapControllerData, MinimapMarkerData } from './MinimapController';
@@ -22,6 +24,7 @@ import { MinimapControllerData, MinimapMarkerData } from './MinimapController';
 export const CameraViewer = () => {
   const { data, act } = useBackend<MinimapControllerData>();
   const { title, theme, minimap_id, minimap_markers } = data;
+  const [search, setSearch] = useSharedState('search', '');
   const sortedMarkers = Object.values(minimap_markers).sort((a, b) =>
     a.name.toUpperCase() < b.name.toUpperCase()
       ? -1
@@ -62,17 +65,19 @@ export const CameraViewer = () => {
           </Stack.Item>
           <Stack.Item grow>
             <Section scrollable fill title="Cameras">
+            <LabeledList>
+                <LabeledList.Item label="Search">
+                  <Input
+                    value={search}
+                    onInput={(e, value) => setSearch(value)}
+                  />
+                </LabeledList.Item>
+            </LabeledList>
               {sortedMarkers.map((marker) => (
-                <MinimapIconMarker
-                  name={marker.name}
-                  pos={marker.pos}
-                  visible={marker.visible}
-                  can_be_deleted={marker.can_be_deleted}
-                  icon_state={marker.icon_state}
-                  index={marker.index}
-                  marker={marker.marker}
-                  key={marker.index}
-                  target_ref={marker.target_ref}
+                <SearchableMinimapIconMarker
+                  key={marker.name}
+                  search={search}
+                  {...marker}
                 />
               ))}
             </Section>
@@ -83,8 +88,18 @@ export const CameraViewer = () => {
   );
 };
 
-const MinimapIconMarker = (markerData: MinimapMarkerData) => {
+type SearchableMinimapIconMarkerProps = MinimapMarkerData & { search: String };
+
+const SearchableMinimapIconMarker = (
+  props: SearchableMinimapIconMarkerProps,
+) => {
+  const { search, name, pos, target_ref } = props;
   const { act } = useBackend<MinimapControllerData>();
+
+  if (search && name && !name.toLowerCase().includes(search.toLowerCase())) {
+    return null;
+  }
+
   return (
     <Stack>
       <Stack.Item>
@@ -93,7 +108,7 @@ const MinimapIconMarker = (markerData: MinimapMarkerData) => {
           icon="eye"
           onClick={() =>
             act('view_camera', {
-              target_ref: markerData.target_ref,
+              target_ref,
             })
           }
         />
@@ -101,8 +116,8 @@ const MinimapIconMarker = (markerData: MinimapMarkerData) => {
       <Stack.Item grow>
         <Flex className="minimap-controller__marker-list" height={3}>
           <Flex.Item>
-            <Box bold>{capitalize(markerData.name)}</Box>
-            <Box>{markerData.pos}</Box>
+            <Box bold>{capitalize(name)}</Box>
+            <Box>{pos}</Box>
           </Flex.Item>
         </Flex>
       </Stack.Item>
