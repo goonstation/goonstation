@@ -36972,9 +36972,7 @@
 /area/shuttle/arrival/station)
 "bSr" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 8
@@ -36986,9 +36984,7 @@
 /area/station/crew_quarters/arcade)
 "bSs" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -36997,9 +36993,7 @@
 /area/station/crew_quarters/arcade)
 "bSt" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -37008,9 +37002,7 @@
 /area/station/crew_quarters/arcade)
 "bSu" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -37023,9 +37015,7 @@
 /area/station/crew_quarters/arcade)
 "bSv" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -37034,9 +37024,7 @@
 /area/station/crew_quarters/arcade)
 "bSw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;

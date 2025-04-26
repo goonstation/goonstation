@@ -3230,11 +3230,7 @@
 	name = "Nuclear Control Room"
 	})
 "buw" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/storage/secure/crate/gear/transfer,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -3446,6 +3442,29 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"byw" = (
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/storage/secure/closet/immersion/command,
+/obj/item/clothing/suit/space/diving/command{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/command{
+	pixel_x = -4
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "byA" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
@@ -3787,10 +3806,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bGm" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/item/storage/wall{
 	icon_state = "minipurple";
 	name = "VR goggles cabinet";
@@ -6198,24 +6214,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"cPh" = (
-/obj/storage/secure/closet/immersion/research,
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 8
-	},
-/area/station/science/hall)
 "cPi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6704,6 +6702,24 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
+"cYG" = (
+/obj/storage/secure/closet/immersion/research,
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/hall)
 "cYP" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 1
@@ -7286,6 +7302,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "doE" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -8996,6 +9015,33 @@
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pasiphae/sys)
+"eao" = (
+/obj/storage/secure/closet/immersion/security,
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "eap" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
@@ -9390,29 +9436,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/pasiphae/hangar)
-"elm" = (
-/obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/space/diving/engineering{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se{
-	name = "Southeast Breach Hull"
-	})
 "elT" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -9577,30 +9600,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
-"eqm" = (
-/obj/storage/secure/closet/immersion{
-	name = "Janitorial Immersion Suit Vault";
-	req_access = list(26)
-	},
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/darkblue,
-/area/station/janitor/office)
 "eqq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -11499,29 +11498,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"fgz" = (
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/cable,
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/storage/secure/closet/immersion/command,
-/obj/item/clothing/suit/space/diving/command{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/command{
-	pixel_x = -4
-	},
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "fgA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15531,6 +15507,37 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
+"gKJ" = (
+/obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
+	req_access = list(26)
+	},
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
 "gKW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15895,34 +15902,6 @@
 	dir = 8
 	},
 /area/station/storage/emergencyinternals)
-"gRZ" = (
-/obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/space/diving/security{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/security{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/area/station/hangar/sec)
 "gSF" = (
 /obj/table/glass/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -19728,33 +19707,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment)
-"ipb" = (
-/obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/space/diving/security{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/security{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/hangar/sec)
 "ips" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -22469,10 +22421,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jwV" = (
@@ -22683,6 +22632,16 @@
 /obj/machinery/communications_dish,
 /turf/space/fluid/acid/clear,
 /area/space)
+"jAX" = (
+/obj/machinery/light/small/floor,
+/obj/machinery/camera/auto/public{
+	c_tag = "The Red Ring";
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "jBa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24947,20 +24906,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay/cloner)
-"ktO" = (
-/obj/machinery/light/small/floor,
-/obj/machinery/camera{
-	c_tag = "The Red Ring";
-	dir = 9;
-	invisibility = 101;
-	name = "Overhead Camera";
-	network = "Zeta";
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "ktZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
@@ -26431,29 +26376,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
-	})
-"laZ" = (
-/obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/space/diving/engineering{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/sw{
-	name = "Southwest Breach Hull"
 	})
 "lbc" = (
 /obj/machinery/fluid_canister,
@@ -29527,6 +29449,29 @@
 "mkQ" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/hos)
+"mkU" = (
+/obj/storage/secure/closet/immersion/engineering,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "mkY" = (
 /obj/machinery/disposal/transport{
 	name = "north substation transit chute"
@@ -30637,6 +30582,29 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
+"mKY" = (
+/obj/storage/secure/closet/immersion/engineering,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "mLq" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/southeast)
@@ -30691,6 +30659,31 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"mMU" = (
+/obj/storage/secure/closet/immersion/quartermasters,
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "mMV" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/standard/edge{
@@ -32528,33 +32521,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/east)
-"nEm" = (
-/obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/space/diving/security{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/security{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/station/security/main)
 "nEn" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger/wall/sticky{
@@ -36536,35 +36502,6 @@
 /obj/submachine/syndicate_teleporter,
 /turf/simulated/floor/engine,
 /area/listeningpost)
-"pph" = (
-/obj/storage/secure/closet/immersion/command,
-/obj/item/clothing/suit/space/diving/command{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/command{
-	pixel_x = -4
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/captain)
 "ppo" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -38357,24 +38294,6 @@
 	dir = 5
 	},
 /area/ghostdrone_factory)
-"qeu" = (
-/obj/storage/secure/closet/immersion/research,
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/hall)
 "qeJ" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -40419,6 +40338,30 @@
 	dir = 8
 	},
 /area/station/bridge/reception)
+"ref" = (
+/obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
+	req_access = list(26)
+	},
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/office)
 "req" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40493,6 +40436,33 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"rgM" = (
+/obj/storage/secure/closet/immersion/security,
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/main)
 "rgP" = (
 /obj/cable,
 /turf/simulated/floor/black,
@@ -40849,37 +40819,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
-"rpq" = (
-/obj/storage/secure/closet/immersion{
-	name = "Janitorial Immersion Suit Vault";
-	req_access = list(26)
-	},
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/darkblue,
-/area/station/janitor/supply)
 "rpt" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -41469,6 +41408,35 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"rEJ" = (
+/obj/storage/secure/closet/immersion/command,
+/obj/item/clothing/suit/space/diving/command{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/chemhood{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/command{
+	pixel_x = -4
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain)
 "rEP" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -42304,31 +42272,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"rYl" = (
-/obj/storage/secure/closet/immersion/quartermasters,
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 5
-	},
-/area/station/engine/inner{
-	name = "Transception Array Control"
-	})
 "rYw" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/grime,
@@ -43070,24 +43013,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
-"sqP" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 1;
-	pixel_y = 26
-	},
-/obj/rack,
-/obj/item/storage/toolbox/emergency,
-/obj/item/tank/mini_oxygen{
-	pixel_x = -7
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/shuttle/sea_elevator_room)
 "sqZ" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -46464,29 +46389,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"tLG" = (
-/obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/space/diving/engineering{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/ne{
-	name = "Northeast Breach Hull"
-	})
 "tLV" = (
 /obj/machinery/light{
 	dir = 1;
@@ -47008,6 +46910,24 @@
 	dir = 6
 	},
 /area/station/engine/storage)
+"tYI" = (
+/obj/storage/secure/closet/immersion/research,
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/hall)
 "tYQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
@@ -47378,10 +47298,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "uib" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48242,6 +48159,34 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"uzH" = (
+/obj/storage/secure/closet/immersion/security,
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/hangar/sec)
 "uzM" = (
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "crew";
@@ -49065,6 +49010,29 @@
 "uUW" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"uVs" = (
+/obj/storage/secure/closet/immersion/engineering,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "uWc" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -50477,6 +50445,24 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
+"vCX" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 26
+	},
+/obj/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/tank/mini/oxygen{
+	pixel_x = -7
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/shuttle/sea_elevator_room)
 "vDf" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/pool/no_animate,
@@ -53410,6 +53396,35 @@
 	dir = 4
 	},
 /area/station/medical/staff)
+"wTg" = (
+/obj/storage/secure/closet/immersion/command,
+/obj/item/clothing/suit/space/diving/command{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/command{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 9
+	},
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
 "wTj" = (
 /obj/lattice{
 	dir = 10;
@@ -53646,29 +53661,6 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"wYK" = (
-/obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/space/diving/engineering{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/nw{
-	name = "Northwest Breach Hull"
-	})
 "wYR" = (
 /obj/item/storage/wall{
 	dir = 4;
@@ -54664,35 +54656,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"xxN" = (
-/obj/storage/secure/closet/immersion/command,
-/obj/item/clothing/suit/space/diving/command{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/command{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line1"
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 9
-	},
-/area/station/engine/inner{
-	name = "Transception Array Control"
-	})
 "xxR" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light{
@@ -55325,34 +55288,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/head)
-"xNt" = (
-/obj/storage/secure/closet/immersion{
-	name = "Janitorial Immersion Suit Vault";
-	req_access = list(26)
-	},
-/obj/item/clothing/suit/space/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
-	pixel_x = -4
-	},
-/obj/item/tank/mini_oxygen{
-	pixel_x = 8
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/darkblue,
-/area/station/janitor/office)
 "xND" = (
 /obj/decal/tile_edge/floorguide/catering{
 	dir = 1
@@ -55640,6 +55575,29 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"xTE" = (
+/obj/storage/secure/closet/immersion/engineering,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "xTI" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -55668,6 +55626,34 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"xUL" = (
+/obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
+	req_access = list(26)
+	},
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/office)
 "xVu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -86419,7 +86405,7 @@ gBV
 wci
 beO
 cEM
-xNt
+xUL
 vaV
 tZe
 uqC
@@ -87325,7 +87311,7 @@ pRY
 uxe
 vxR
 hiU
-eqm
+ref
 gRz
 vaV
 uqC
@@ -90652,7 +90638,7 @@ qLh
 kLy
 hAC
 qLh
-ipb
+eao
 wpf
 dPx
 jEi
@@ -90945,7 +90931,7 @@ apC
 xhO
 aMz
 qyb
-nEm
+rgM
 hXN
 nDC
 tYQ
@@ -90954,7 +90940,7 @@ iYF
 kch
 dTs
 qLh
-gRZ
+uzH
 vzZ
 aUA
 fhF
@@ -96994,7 +96980,7 @@ snL
 sLU
 dqD
 nKp
-fgz
+byw
 huU
 vUc
 wQJ
@@ -97308,7 +97294,7 @@ ckl
 gow
 ocC
 mQl
-pph
+rEJ
 oeL
 gow
 tZe
@@ -99669,7 +99655,7 @@ bAZ
 bAZ
 bAZ
 oWG
-qeu
+tYI
 smh
 mjx
 smh
@@ -99919,7 +99905,7 @@ bzS
 bzS
 bzS
 xQv
-wYK
+mKY
 sRh
 bRa
 cQf
@@ -100035,7 +100021,7 @@ abz
 gAS
 uqC
 tWS
-laZ
+mkU
 jjE
 bzS
 bzS
@@ -101532,7 +101518,7 @@ aPz
 yge
 knN
 hiW
-xxN
+wTg
 gti
 eDz
 whu
@@ -102740,7 +102726,7 @@ aPz
 yge
 knN
 hiW
-rYl
+mMU
 vgL
 eDz
 vtc
@@ -104147,7 +104133,7 @@ bzS
 bzS
 bzS
 rne
-tLG
+uVs
 nFp
 uNU
 wNN
@@ -104263,7 +104249,7 @@ abz
 mif
 neB
 vTb
-elm
+xTE
 dAB
 bzS
 bzS
@@ -104501,7 +104487,7 @@ vqL
 vqL
 vqL
 wRi
-cPh
+cYG
 fKH
 eGe
 fKH
@@ -109025,7 +109011,7 @@ eeW
 lsj
 fju
 fNc
-sqP
+vCX
 cBo
 cBo
 hSW
@@ -109380,7 +109366,7 @@ hbX
 bPj
 kAE
 cPz
-ktO
+jAX
 pRb
 vbY
 vBN
@@ -117163,7 +117149,7 @@ bey
 bmX
 iam
 dCt
-rpq
+gKJ
 wSB
 wzY
 iam

@@ -851,6 +851,9 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	weak //for nuke ops engineer
+		sname = "12ga Muckshot"
+		name = "12ga muckshot ammo box"
+		desc = "A box of weak buckshot shells, capable of tearing through soft tissue."
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
 

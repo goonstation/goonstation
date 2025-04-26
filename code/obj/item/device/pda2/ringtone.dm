@@ -57,8 +57,8 @@
 				src.selectedRT = null
 				for(var/RiTo in src.ring_list)
 					var/datum/ringtone/ring_tone_temp = src.ring_list[RiTo]
-					var/applyLink = "<a href='?src=\ref[src];setSelectedRT=[RiTo]'>[ring_tone_temp.applyText]</a>"
-					var/previewLink = "<a href='?src=\ref[src];previewTone=[RiTo]'>[ring_tone_temp.previewText]</a>"
+					var/applyLink = "<a href='byond://?src=\ref[src];setSelectedRT=[RiTo]'>[ring_tone_temp.applyText]</a>"
+					var/previewLink = "<a href='byond://?src=\ref[src];previewTone=[RiTo]'>[ring_tone_temp.previewText]</a>"
 					dat += "[ring_tone_temp.nameText] [ring_tone_temp.name]<br>"
 					dat += "[ring_tone_temp.descText] [ring_tone_temp.desc]<br>"
 					dat += "[applyLink] | [previewLink]<br><br>"
@@ -69,12 +69,12 @@
 				if(!src.selectedRT)
 					src.selectedRT = "ring1"
 				var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
-				var/applyLink = "<a href='?src=\ref[src];applyTone=[src.selectedRT]'>Primary</a>"
-				var/alertLink = "<a href='?src=\ref[src];setToneGenSlot=["alert"]'>Alert</a>"
-				var/mailLink = "<a href='?src=\ref[src];setToneGenSlot=["mailgroup"]'>Mailgroup</a>"
+				var/applyLink = "<a href='byond://?src=\ref[src];applyTone=[src.selectedRT]'>Primary</a>"
+				var/alertLink = "<a href='byond://?src=\ref[src];setToneGenSlot=["alert"]'>Alert</a>"
+				var/mailLink = "<a href='byond://?src=\ref[src];setToneGenSlot=["mailgroup"]'>Mailgroup</a>"
 				dat += "Set [ring_tone_temp] as which ringtone?<br>"
 				dat += "[applyLink] | [alertLink] | [mailLink]<br><br>"
-				dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+				dat += "<br><a href='byond://?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 				dat += "[src.dividerThing]<br><br>"
 
 			if("alert")
@@ -87,8 +87,8 @@
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select an alert type to use [ring_tone_temp].<br><br>"
 					for(var/alert in src.master.alertgroups)
-						dat += "<a href='?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
-					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+						dat += "<a href='byond://?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
+					dat += "<br><a href='byond://?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"
 
 			if("mailgroup")
@@ -101,8 +101,8 @@
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select a mailgroup to use [ring_tone_temp].<br><br>"
 					for(var/mailgroup in src.master.mailgroups)
-						dat += "<a href='?src=\ref[src];applyTone=[mailgroup]'>[mailgroup]</a><br>"
-					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
+						dat += "<a href='byond://?src=\ref[src];applyTone=[mailgroup]'>[mailgroup]</a><br>"
+					dat += "<br><a href='byond://?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"
 
 		if(src.overrideAlertAllowed)

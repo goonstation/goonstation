@@ -5489,9 +5489,7 @@
 /area/station/maintenance/east)
 "aES" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -17187,12 +17185,7 @@
 	},
 /area/station/security/main)
 "mRh" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/cell/cerenkite/charged,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
@@ -17291,6 +17284,9 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"

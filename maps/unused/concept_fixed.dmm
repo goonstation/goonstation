@@ -25548,25 +25548,13 @@
 /obj/cable,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"aZk" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/station/crew_quarters/arcade)
 "aZl" = (
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/arcade)
 "aZm" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
@@ -25880,10 +25868,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aZS" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetW"
 	},
@@ -25900,10 +25885,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetE"
 	},
@@ -26121,10 +26103,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bat" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -26140,10 +26119,7 @@
 	name = "Local Air Monitor";
 	pixel_x = 29
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -26919,20 +26895,14 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/arcade)
 "bca" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR war simulation pod";
-	network = "gunsim"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/arcade)
 "bcb" = (
 /obj/machinery/light,
-/obj/machinery/sim/vr_bed{
-	name = "VR war simulation pod";
-	network = "gunsim"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -55410,7 +55380,7 @@ aWp
 aXh
 aXT
 aYB
-aZk
+bca
 aZS
 bat
 bar
