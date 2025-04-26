@@ -7165,9 +7165,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "eWr" = (
