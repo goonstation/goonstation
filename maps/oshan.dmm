@@ -47259,12 +47259,12 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;

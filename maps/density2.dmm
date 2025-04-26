@@ -3885,11 +3885,11 @@
 /area/station/crew_quarters/clown)
 "yF" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yH" = (

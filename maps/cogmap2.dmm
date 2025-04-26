@@ -55094,11 +55094,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "dSO" = (
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "dUr" = (

@@ -49881,11 +49881,11 @@
 /area/station/quartermaster/office)
 "vVq" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/courtroom)
 "vVz" = (
