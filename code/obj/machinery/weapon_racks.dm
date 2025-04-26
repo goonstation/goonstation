@@ -128,7 +128,7 @@
 		stand_type = "pulserifle_rack"
 		contained_weapon = /obj/item/gun/energy/pulse_rifle
 		contained_weapon_name = "pulse rifle"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 
 		recharger
 			recharges_contents = 1
@@ -142,7 +142,7 @@
 		stand_type = "phaser_rack"
 		contained_weapon = /obj/item/gun/energy/phaser_gun/extended_mag
 		contained_weapon_name = "phaser"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)
@@ -157,7 +157,7 @@
 		stand_type = "phaser_rack"
 		contained_weapon = /obj/item/gun/energy/phaser_smg/extended_mag
 		contained_weapon_name = "phaser"
-		req_access = list(access_security)
+		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)
@@ -240,10 +240,10 @@
 				var/is_uncut = src.wires & APCWireColorToFlag[rackwires[wiredesc]]
 				pdat += "[wiredesc] wire: "
 				if(!is_uncut)
-					pdat += "<a href='?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Mend</a>"
+					pdat += "<a href='byond://?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Mend</a>"
 				else
-					pdat += "<a href='?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Cut</a> "
-					pdat += "<a href='?src=\ref[src];pulsewire=[rackwires[wiredesc]]'>Pulse</a> "
+					pdat += "<a href='byond://?src=\ref[src];cutwire=[rackwires[wiredesc]]'>Cut</a> "
+					pdat += "<a href='byond://?src=\ref[src];pulsewire=[rackwires[wiredesc]]'>Pulse</a> "
 				pdat += "<br>"
 
 			pdat += "<br>"

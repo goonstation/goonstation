@@ -13,7 +13,7 @@
 		H.equip_new_if_possible(/obj/item/clothing/shoes/white, SLOT_SHOES)
 		H.equip_new_if_possible(pick(concrete_typesof(/obj/item/clothing/head/wizard)), SLOT_HEAD)
 		H.equip_new_if_possible(/obj/item/device/radio/headset/wizard, SLOT_EARS)
-		H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+		H.equip_new_if_possible(/obj/item/tank/pocket/extended/oxygen, SLOT_L_STORE)
 		H.equip_new_if_possible(/obj/item/bball_uplink, SLOT_R_STORE)
 		H.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
 		H.equip_new_if_possible(/obj/item/basketball, SLOT_R_HAND)

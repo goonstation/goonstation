@@ -830,7 +830,7 @@
 	},
 /area/pod_wars/team1/medbay)
 "cK" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /turf/unsimulated/floor/red/side,
 /area/pod_wars/team2/hangar)
 "cL" = (
@@ -1707,7 +1707,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "fD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 6
 	},
@@ -1929,7 +1929,7 @@
 	},
 /area/pod_wars/team2/hangar)
 "gl" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -2630,7 +2630,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
 "iD" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -3494,7 +3494,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/medbay)
 "lz" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/red/side{
 	dir = 1
@@ -5001,7 +5001,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant)
 "qd" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -5125,6 +5125,9 @@
 "qz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/unsimulated/floor,
 /area/pod_wars/team2/magnet)
@@ -5835,14 +5838,6 @@
 	dir = 4
 	},
 /area/pod_wars/team2/bridge)
-"sH" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/pod_wars/spacejunk/fstation/medbay)
 "sI" = (
 /obj/machinery/vending/medical,
 /turf/unsimulated/floor/redwhite{
@@ -6252,7 +6247,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "uf" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6860,7 +6855,7 @@
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
 "we" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -6997,7 +6992,7 @@
 /turf/space,
 /area/pod_wars/team2/power)
 "wy" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -7732,6 +7727,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -8106,7 +8104,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "Aa" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -8425,6 +8423,8 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools/maybe_few,
 /obj/item/storage/belt/utility,
+/obj/item/storage/box/lightbox/tubes,
+/obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -9726,7 +9726,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "EW" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11059,7 +11059,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/fstation)
 "Ji" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -11340,7 +11340,7 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
 "Kc" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -12979,7 +12979,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/powergen)
 "PK" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -13042,7 +13042,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "PV" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -13301,7 +13301,7 @@
 	},
 /area/space)
 "QR" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen/pod_wars/anchored,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -13581,7 +13581,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "RJ" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -15817,7 +15817,7 @@
 	},
 /area/pod_wars/team2/aftprimaryhall)
 "YD" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -15963,7 +15963,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "YY" = (
-/obj/reagent_dispensers/fueltank,
+/obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -16296,7 +16296,7 @@
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
 "ZZ" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -77965,9 +77965,9 @@ jN
 DY
 jb
 rt
-sH
+rt
 SL
-sH
+rt
 rt
 rt
 xC
@@ -78779,7 +78779,7 @@ eC
 eC
 eC
 eC
-dU
+fY
 Zm
 Zm
 Zm
@@ -78987,7 +78987,7 @@ XC
 wK
 af
 dU
-dU
+fY
 dU
 dU
 eC
@@ -79185,8 +79185,8 @@ eC
 eC
 dU
 dU
-fY
-fY
+dU
+dU
 dU
 dU
 eC

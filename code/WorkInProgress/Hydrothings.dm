@@ -327,7 +327,7 @@
 
 /obj/item/card/id/owlgold
 	name = "identification card"
-	icon_state = "gold"
+	icon_state = "id_gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)

@@ -1,3 +1,8 @@
+#define ID_COMPUTER_DEPARTMENT_ENGINEERING 1
+#define ID_COMPUTER_DEPARTMENT_MEDICAL 2
+#define ID_COMPUTER_DEPARTMENT_RESEARCH 3
+#define ID_COMPUTER_DEPARTMENT_SECURITY 4
+
 /obj/machinery/computer/card
 	name = "identification computer"
 	icon_state = "id"
@@ -143,22 +148,22 @@
 		var/list/command_jobs = list()
 
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/civilian))
-			if (initial(job.name) && job != /datum/job/civilian/AI && job != /datum/job/civilian/cyborg)
+			if (initial(job.name) && job.show_in_id_comp)
 				civilian_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/engineering))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				engineering_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/research))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				research_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/medical))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				medical_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/security))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				security_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/command))
-			if (initial(job.name) && job != /datum/job/command/head_of_security)
+			if (initial(job.name) && job.show_in_id_comp)
 				command_jobs.Add(initial(job.name))
 
 		var/list/civilian_access = list()
@@ -187,28 +192,28 @@
 
 		if (src.departmentcomp)
 			switch(src.department)
-				if (1) // eng
+				if (ID_COMPUTER_DEPARTMENT_ENGINEERING) // eng
 					civilian_jobs = list("Staff Assistant")
 					//stock engineering_jobs are good
 					medical_jobs = null
 					research_jobs = null
 					security_jobs = null
 					command_jobs = null
-				if (2) // med
+				if (ID_COMPUTER_DEPARTMENT_MEDICAL) // med
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
 					// stock medical_jobs are good
 					research_jobs = null
 					security_jobs = null
 					command_jobs = null
-				if (3) // research
+				if (ID_COMPUTER_DEPARTMENT_RESEARCH) // research
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
 					medical_jobs = null
 					// stock research_jobs are good
 					security_jobs = null
 					command_jobs = null
-				if (4) // sec
+				if (ID_COMPUTER_DEPARTMENT_SECURITY) // sec
 					civilian_jobs = list("Staff Assistant", "Clown")
 					engineering_jobs = null
 					medical_jobs = null
@@ -515,7 +520,7 @@
 	proc/update_card_style(band_color)
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (band_color == "none")
-				src.modify.icon_state = "id"
+				src.modify.icon_state = "id_basic"
 			if (band_color == "civilian")
 				src.modify.icon_state = "id_civ"
 			if (band_color == "engineering")
@@ -592,7 +597,7 @@
 
 /obj/machinery/computer/card/department/engineering
 	color = "#ffffcc" // look there's a lot of icons to edit just to add a single stripe of color to these computers
-	department = 1
+	department = ID_COMPUTER_DEPARTMENT_ENGINEERING
 	req_access = list(access_engineering_chief)
 	circuit_type = /obj/item/circuitboard/card/engineering
 
@@ -606,7 +611,7 @@
 
 /obj/machinery/computer/card/department/medical
 	color = "#99ccff"
-	department = 2
+	department = ID_COMPUTER_DEPARTMENT_MEDICAL
 	req_access = list(access_medical_director)
 	circuit_type = /obj/item/circuitboard/card/medical
 
@@ -621,7 +626,7 @@
 
 /obj/machinery/computer/card/department/research
 	color = "#cc99ff"
-	department = 3
+	department = ID_COMPUTER_DEPARTMENT_RESEARCH
 	req_access = list(access_research_director)
 	circuit_type = /obj/item/circuitboard/card/research
 
@@ -636,7 +641,7 @@
 
 /obj/machinery/computer/card/department/security
 	color = "#ff9999"
-	department = 4
+	department = ID_COMPUTER_DEPARTMENT_SECURITY
 	req_access = list(access_maxsec)
 	circuit_type = /obj/item/circuitboard/card/security
 
@@ -648,3 +653,7 @@
 	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_eva)
 
+#undef ID_COMPUTER_DEPARTMENT_ENGINEERING
+#undef ID_COMPUTER_DEPARTMENT_MEDICAL
+#undef ID_COMPUTER_DEPARTMENT_RESEARCH
+#undef ID_COMPUTER_DEPARTMENT_SECURITY

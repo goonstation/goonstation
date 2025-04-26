@@ -7421,7 +7421,7 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -7971,7 +7971,7 @@
 /obj/item/clothing/suit/space/diving/security,
 /obj/item/clothing/head/helmet/space/engineer/diving/security,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
 /area/station/hangar/security)
@@ -12797,7 +12797,7 @@
 	},
 /obj/rack,
 /obj/item/tank/jetpack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/blue,
 /area/station/ai_monitored/storage/eva)
@@ -21627,9 +21627,7 @@
 /area/station/maintenance/upperstarboard)
 "bkt" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -21652,9 +21650,7 @@
 /area/station/crew_quarters/arcade)
 "bkw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -26406,7 +26402,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -33947,9 +33943,7 @@
 /area/station/crewquarters/garbagegarbs)
 "ftI" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
@@ -34644,7 +34638,7 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35880,7 +35874,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
 /area/station/hangar/security)
@@ -37501,7 +37495,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
@@ -39251,7 +39245,7 @@
 	},
 /obj/rack,
 /obj/item/tank/jetpack,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;
@@ -42239,9 +42233,7 @@
 /area/station/medical/robotics)
 "ybh" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{

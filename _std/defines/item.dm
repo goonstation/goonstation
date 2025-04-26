@@ -65,6 +65,8 @@
 #define UNSTORABLE					(1<<5)
 /// Prevents the action bar when this item is put on someone/interacting with the item of someone to be hidden
 #define OBVIOUS_INTERACTION_BAR		(1<<6)
+/// When this item is build into an assembly, this flag will cause it to message an admin
+#define ASSEMBLY_NEEDS_MESSAGING	(1<<7)
 
 //tool flags
 #define TOOL_CLAMPING  (1<<0)
@@ -80,6 +82,7 @@
 #define TOOL_CHOPPING  (1<<10) // for fire axes, does additional damage to doors.
 #define TOOL_SOLDERING (1<<11)
 #define TOOL_WIRING    (1<<12)
+#define TOOL_ASSEMBLY_APPLIER (1<<13) // for anything that are useable for assemblies, e.g. igniters & bikehorns
 
 //omnitool flags
 #define OMNI_MODE_PRYING 1
@@ -94,6 +97,8 @@
 #define FLUID_CANISTER_MODE_OFF 1
 #define FLUID_CANISTER_MODE_SLURP 2
 #define FLUID_CANISTER_MODE_PISS 3
+
+//------
 
 //tooltip flags for rebuilding
 

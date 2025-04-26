@@ -16,7 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	var/exploding = 0 //So we don't die like five times at once.
 	var/muted = 0 // shut up omg shut up.
 	var/no_camera = 0
-	var/setup_camera_network = "Robots"
+	var/setup_camera_network = CAMERA_NETWORK_ROBOTS
 	var/obj/machinery/camera/cam = null
 	var/emagged = 0
 	var/mob/emagger = null

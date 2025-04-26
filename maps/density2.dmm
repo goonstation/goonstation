@@ -244,7 +244,6 @@
 	dir = 8;
 	icon_state = "camera";
 	name = "autoname  - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1802,7 +1801,6 @@
 	dir = 4;
 	icon_state = "camera";
 	name = "autoname - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/plating,
@@ -2988,9 +2986,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "sw" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "sz" = (
@@ -3471,9 +3467,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "vO" = (
@@ -4882,7 +4876,6 @@
 	dir = 4;
 	icon_state = "camera";
 	name = "autoname - SS13";
-	network = "SS13";
 	tag = ""
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7263,6 +7256,12 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"We" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "Wg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -83241,7 +83240,7 @@ bm
 Ix
 Ix
 LS
-cD
+We
 cD
 mA
 cD
