@@ -278,7 +278,7 @@
 			if (!the_wraith.hearghosts)
 				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -1141,7 +1141,7 @@
 		flockmindRendered = rendered // no need for URLs
 	else
 		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
-		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='byond://?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 

@@ -183,6 +183,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		else
 			src.take_damage(power*5)
 
+	overload_act()
+		return !src.set_broken()
+
 	meteorhit()
 		qdel(src)
 		return
