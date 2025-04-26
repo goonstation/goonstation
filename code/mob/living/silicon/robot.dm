@@ -1016,6 +1016,7 @@
 			return FALSE
 
 
+
 	emp_act()
 		vision.noise(60)
 		src.changeStatus("stunned", 5 SECONDS, optional=null)
