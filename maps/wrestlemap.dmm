@@ -33338,9 +33338,7 @@
 /area/station/ai_monitored/armory)
 "oxE" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -34584,9 +34582,7 @@
 /area/station/maintenance/inner/the_cage)
 "pdf" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light/incandescent/cool,
 /obj/decal/tile_edge/stripe{

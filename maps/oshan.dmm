@@ -8149,17 +8149,13 @@
 /area/station/storage/tools)
 "aBK" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aBL" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
@@ -23794,9 +23790,7 @@
 	tag = ""
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
