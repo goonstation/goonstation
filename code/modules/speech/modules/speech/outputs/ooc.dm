@@ -1,16 +1,7 @@
 /datum/speech_module/output/ooc
 	id = SPEECH_OUTPUT_OOC
 	channel = SAY_CHANNEL_OOC
-
-/datum/speech_module/output/ooc/New(datum/speech_module_tree/parent)
-	. = ..()
-
-	src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_OOC)
-
-/datum/speech_module/output/ooc/disposing()
-	src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_OOC)
-
-	. = ..()
+	speech_prefix = SPEECH_PREFIX_OOC
 
 /datum/speech_module/output/ooc/process(datum/say_message/message)
 	if (!ismob(message.speaker))

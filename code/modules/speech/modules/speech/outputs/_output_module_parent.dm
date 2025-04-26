@@ -10,6 +10,8 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 	var/channel = "none"
 	/// The say channel datum that this module should pass say messages to.
 	var/datum/say_channel/say_channel
+	/// The prefix module ID that this output module should add to the parent tree.
+	var/speech_prefix = null
 
 /datum/speech_module/output/New(datum/speech_module_tree/parent)
 	. = ..()
@@ -17,9 +19,15 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
 	src.say_channel.RegisterOutput(src)
 
+	if (src.speech_prefix)
+		src.parent_tree.AddSpeechPrefix(src.speech_prefix)
+
 /datum/speech_module/output/disposing()
 	src.say_channel.UnregisterOutput(src)
 	src.say_channel = null
+
+	if (src.speech_prefix)
+		src.parent_tree.RemoveSpeechPrefix(src.speech_prefix)
 
 	. = ..()
 

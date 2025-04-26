@@ -1,19 +1,7 @@
 /datum/speech_module/output/siliconchat
 	id = SPEECH_OUTPUT_SILICONCHAT
 	channel = SAY_CHANNEL_SILICON
-	var/add_prefix = TRUE
-
-/datum/speech_module/output/siliconchat/New(datum/speech_module_tree/parent)
-	. = ..()
-
-	if (src.add_prefix)
-		src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_SILICON)
-
-/datum/speech_module/output/siliconchat/disposing()
-	if (src.add_prefix)
-		src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_SILICON)
-
-	. = ..()
+	speech_prefix = SPEECH_PREFIX_SILICON
 
 /datum/speech_module/output/siliconchat/process(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
@@ -48,4 +36,4 @@
 
 /datum/speech_module/output/siliconchat/admin
 	id = SPEECH_OUTPUT_SILICONCHAT_ADMIN
-	add_prefix = FALSE
+	speech_prefix = null

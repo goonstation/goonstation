@@ -2,17 +2,8 @@
 	id = SPEECH_OUTPUT_DEADCHAT
 	priority = SPEECH_OUTPUT_PRIORITY_DEFAULT
 	channel = SAY_CHANNEL_DEAD
-	var/role
-
-/datum/speech_module/output/deadchat/New(datum/speech_module_tree/parent)
-	. = ..()
-
-	src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_DEADCHAT)
-
-/datum/speech_module/output/deadchat/disposing()
-	src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_DEADCHAT)
-
-	. = ..()
+	speech_prefix = SPEECH_PREFIX_DEADCHAT
+	var/role = null
 
 /datum/speech_module/output/deadchat/process(datum/say_message/message)
 	var/maptext_colour = dead_maptext_color(message.speaker.name)
