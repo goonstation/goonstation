@@ -976,7 +976,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				T.unglue_attached_to(T)
+				T.unglue_attached_to()
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
