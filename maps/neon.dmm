@@ -8783,7 +8783,6 @@
 /area/radiostation/hallway)
 "fZc" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/light_switch/west,
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail{
 	pixel_x = -11;
@@ -8820,6 +8819,10 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot{
 	pixel_x = 10;
 	pixel_y = 3
+	},
+/obj/item/storage/wall/bar{
+	dir = 4;
+	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -10706,6 +10709,7 @@
 /obj/machinery/glass_recycler/chemistry{
 	pixel_y = 14
 	},
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -16415,6 +16419,9 @@
 /obj/disposalpipe/trunk/east,
 /obj/table/wood/round/auto,
 /obj/machinery/phone,
+/obj/machinery/light_switch/west{
+	pixel_x = -30
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "ljs" = (
@@ -18100,6 +18107,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "moM" = (
@@ -20370,9 +20378,12 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/obj/item/storage/firstaid/brain,
+/obj/item/storage/firstaid/brain{
+	pixel_y = 6
+	},
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/east,
+/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -29573,6 +29584,12 @@
 /area/station/science/chemistry)
 "uqZ" = (
 /obj/machinery/light/incandescent/cool,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "urd" = (
