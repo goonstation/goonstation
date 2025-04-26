@@ -998,7 +998,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emaggable)
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
-			return 0
+			return FALSE
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))

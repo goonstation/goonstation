@@ -257,7 +257,7 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/emag_act(mob/user, obj/item/card/emag/E)
 	if (src.dismantle_stage >= 2)
 		boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
-		return 0
+		return FALSE
 	if (!src.emagged)
 		src.emagged = TRUE
 		boutput(user, SPAN_NOTICE("You short out [src]'s cover lock."))
