@@ -55,24 +55,24 @@ export const CameraViewer = () => {
                 params={{
                   id: minimap_id,
                   type: 'map',
+                  'right-click': true,
+                  letterbox: false,
                 }}
-                style={{
-                  width: '600px',
-                  height: '600px',
-                }}
+                width="600px"
+                height="600px"
               />
             </Section>
           </Stack.Item>
           <Stack.Item grow>
             <Section scrollable fill title="Cameras">
-            <LabeledList>
+              <LabeledList>
                 <LabeledList.Item label="Search">
                   <Input
                     value={search}
                     onInput={(e, value) => setSearch(value)}
                   />
                 </LabeledList.Item>
-            </LabeledList>
+              </LabeledList>
               {sortedMarkers.map((marker) => (
                 <SearchableMinimapIconMarker
                   key={marker.name}
