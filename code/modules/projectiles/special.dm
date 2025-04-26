@@ -211,7 +211,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.travelled = rand(0,dissipation_variance)
+		var/dissipation_ratio = (FC.internal_speed-speed_min) / (speed_max-speed_min)
+		FC.travelled = dissipation_variance * (1-dissipation_ratio)
 		FC.launch()
 		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
@@ -232,13 +233,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 7
+	pellets_to_fire = 12
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
-	speed_min = 28
-	spread_angle_variance = 30
-	dissipation_variance = 40
+	speed_min = 20
+	spread_angle_variance = 20
+	dissipation_variance = 96
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
@@ -261,10 +262,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 30
-	speed_min = 20
+	speed_max = 40
+	speed_min = 30
 	spread_angle_variance = 25
-	dissipation_variance = 40
+	dissipation_variance = 20
 
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
