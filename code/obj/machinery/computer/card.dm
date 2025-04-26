@@ -395,7 +395,7 @@
 							src.modify.access -= access_type
 						else
 							src.modify.access += access_type
-						src.update_card_name()
+						src.modify.update_name()
 						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
@@ -430,7 +430,7 @@
 					if (params["style"])
 						update_card_style(params["style"])
 
-					src.update_card_name()
+					src.modify.update_name()
 
 			if ("reg")
 				if (src.authenticated)
@@ -443,7 +443,7 @@
 						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
-						src.update_card_name()
+						src.modify.update_name()
 
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -491,10 +491,10 @@
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
 				src.update_card_accesses(selected_access_list.Copy())
-				src.update_card_name()
+				src.modify.update_name()
 				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
-				src.update_card_name()
+				src.modify.update_name()
 			if ("eject")
 				if (istype(src.eject,/obj/item/implantcase/access))
 					var/obj/item/implantcase/access/A = src.eject
@@ -525,9 +525,6 @@
 				src.modify.icon_state = "id_sec"
 			if (band_color == "command")
 				src.modify.icon_state = "id_com"
-
-	proc/update_card_name()
-		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 
 	proc/update_card_accesses(var/list/access_list)
 		for(var/access in access_list) //Remove accesses this computer cannot give
