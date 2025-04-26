@@ -1008,6 +1008,7 @@
 				src.emagged = TRUE
 				if(!src.brainexposed)
 					src.brainexposed = TRUE
+				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
 				elecflash(src)
 				src.locked = FALSE
 				update_appearance()
