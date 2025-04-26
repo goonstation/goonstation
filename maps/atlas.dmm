@@ -5489,9 +5489,7 @@
 /area/station/maintenance/east)
 "aES" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -17286,6 +17284,9 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"

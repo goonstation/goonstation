@@ -290,10 +290,10 @@
 
 /datum/digbot_ui/proc/render()
 	return {"
-<span>[bot.on ? "Active" : "Inactive"] - </span><a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_power">Toggle Power</a><br />
+<span>[bot.on ? "Active" : "Inactive"] - </span><a href="byond://?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_power">Toggle Power</a><br />
 <span>Settings:<br />
-<a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_suspicious">[bot.digsuspicious ? "Digging" : "Avoiding"] suspicious rocks</a><br />
-<a href="?src=\ref[src]&ui_target=digbot_ui&ui_action=hardness">Targeting rock hardness [bot.hardthreshold] and lower</a>
+<a href="byond://?src=\ref[src]&ui_target=digbot_ui&ui_action=toggle_suspicious">[bot.digsuspicious ? "Digging" : "Avoiding"] suspicious rocks</a><br />
+<a href="byond://?src=\ref[src]&ui_target=digbot_ui&ui_action=hardness">Targeting rock hardness [bot.hardthreshold] and lower</a>
 "}
 
 

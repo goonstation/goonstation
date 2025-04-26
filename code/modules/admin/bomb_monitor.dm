@@ -49,8 +49,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 						device_name += " (DEFAULT)"
 
 				if (!T || !isturf(T)) continue
-				var/ref_a = "<a href='?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
-				var/ref_b = "<a href='?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
+				var/ref_a = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
+				var/ref_b = "<a href='byond://?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
 				temp += {"<tr>
 							<td>
 								[TV.name]
@@ -74,10 +74,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[TV]'>[TV.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[TV]'><B>[TV.tank_one && TV.tank_two ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -95,7 +95,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		for (var/obj/item/assembly/checked_bomb in bomb_assemblies)
 			var/turf/T = get_turf(checked_bomb)
 			if (!T || !isturf(T)) continue
-			var/ref_checked_bomb = "<a href='?src=\ref[src];airmon=\ref[checked_bomb.target]'>[checked_bomb.target]</a>"
+			var/ref_checked_bomb = "<a href='byond://?src=\ref[src];airmon=\ref[checked_bomb.target]'>[checked_bomb.target]</a>"
 			temp += {"<tr>
 						<td>
 							[checked_bomb.name]
@@ -116,10 +116,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							[checked_bomb.fingerprintslast ? checked_bomb.fingerprintslast : "N/A"]
 						</td>
 						<td>
-							<a href='?src=\ref[src];toggle_dud=\ref[checked_bomb]'>[checked_bomb.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+							<a href='byond://?src=\ref[src];toggle_dud=\ref[checked_bomb]'>[checked_bomb.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 						</td>
 						<td>
-							<a href='?src=\ref[src];trigger=\ref[checked_bomb]'><B>[checked_bomb.target ? "Trigger" : ""]</B></a>
+							<a href='byond://?src=\ref[src];trigger=\ref[checked_bomb]'><B>[checked_bomb.target ? "Trigger" : ""]</B></a>
 						</td>
 					</tr>"}
 
@@ -136,7 +136,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			if(!filter_active_only || det.attachedTo)
 				var/turf/T = get_turf(det)
 				if (!T || !isturf(T)) continue
-				var/ref = "<a href='?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
+				var/ref = "<a href='byond://?src=\ref[src];airmon=\ref[det.attachedTo]'>[det.attachedTo]</a>"
 				temp += {"<tr>
 							<td>
 								[det.name]
@@ -157,10 +157,10 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[det.attachedTo && det.attachedTo.fingerprintslast ? det.attachedTo.fingerprintslast : "N/A"]
 							</td>
 							<td>
-								<a href='?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
+								<a href='byond://?src=\ref[src];toggle_dud=\ref[det]'>[det.force_dud ? SPAN_ALERT("YES") : "No"]</a>
 							</td>
 							<td>
-								<a href='?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
+								<a href='byond://?src=\ref[src];trigger=\ref[det]'><B>[det.attachedTo ? "Trigger" : ""]</B></a>
 							</td>
 						</tr>"}
 
@@ -206,7 +206,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 							</style>
 						</head>
 						<body>
-							<a href='?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='?src=\ref[src];refresh=interface'>Refresh</a> <a href='?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
+							<a href='byond://?src=\ref[src];refresh=rebuild'>Rebuild Lists</a> <a href='byond://?src=\ref[src];refresh=interface'>Refresh</a> <a href='byond://?src=\ref[src];filter=1'>Filtering: [filter_active_only ? "Only Complete" : "All"]</a><br>
 							[TTVtable]
 							<BR>
 							[STtable]

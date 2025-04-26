@@ -480,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/weldingtool = 10,
 			/obj/item/device/radio = 10,
 			/obj/item/tank/air = 10,
-			/obj/item/tank/emergency_oxygen = 2,
+			/obj/item/tank/pocket/oxygen = 2,
 			/obj/item/extinguisher = 10,
 			/obj/item/clothing/mask/gas/emergency = 3,
 			/obj/burning_barrel = 2,
@@ -1366,8 +1366,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		var/turf/T = locate_throw_target(thing)
 		if(isnull(T))
 			return
-		// TODO make the thing pass through things for first few tiles
-		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30)
+		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30, throw_type=THROW_PHASE)
 
 	disposing()
 		if(src.light)

@@ -54,11 +54,7 @@
 /turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "dH" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /turf/simulated/floor/airless/carpet/grime,
 /area/prefab/merc_outpost)
 "ej" = (

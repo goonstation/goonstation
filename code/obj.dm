@@ -499,6 +499,8 @@
 	while(. in forensic_IDs)
 
 /obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
 	var/turf/target_loc = get_turf(src)
 	var/obj/item/electronics/frame/F = null
 	if (flatpack)

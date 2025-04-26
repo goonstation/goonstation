@@ -2831,9 +2831,12 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.update_colorful_parts()
 	return W
 
-
-/mob/living/carbon/human/set_eye()
-	..()
+/mob/living/carbon/human/set_eye(atom/new_eye, new_pixel_x = 0, new_pixel_y = 0)
+	if (new_eye == null && isskeleton(src))
+		var/datum/mutantrace/skeleton/skeleton = src.mutantrace
+		if (skeleton.head_tracker)
+			new_eye = skeleton.head_tracker
+	..(new_eye, new_pixel_x, new_pixel_y)
 	src.update_sight()
 
 /mob/living/carbon/human/heard_say(var/mob/other, var/message)
@@ -3747,3 +3750,11 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/mob/living/carbon/human/proc/fake_say(text)
+	set waitfor = FALSE
+	var/spaces = length(splittext(text, " "))
+	src.create_typing_indicator()
+	sleep(1.2 SECONDS * spaces)
+	src.remove_typing_indicator()
+	src.say(text)

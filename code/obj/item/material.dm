@@ -486,6 +486,12 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/neutronium
+	name = "neutronium ore"
+	desc = "An ore containing deadly neutronium metal."
+	material_name = "Neutronium"
+	default_material = "neutronium"
+
 // Misc building material
 
 /// This has no material, why does it exist???? Someone replace it

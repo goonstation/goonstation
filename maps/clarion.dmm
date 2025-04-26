@@ -10018,6 +10018,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/yellow/side{
 	broken = 1;
 	dir = 1
@@ -33913,9 +33916,7 @@
 /area/station/storage/warehouse)
 "shk" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/carpet/arcade,
@@ -36632,9 +36633,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -40813,9 +40812,7 @@
 /area/station/maintenance/east)
 "xcV" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)

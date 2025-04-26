@@ -76,7 +76,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 
 		if(roll > (max_roll - uses * 20)) // failure chances increase by 2% every roll
 			src.emag_act(null, null) // bye bye!
-			prize_type = /obj/item/gimmickbomb/butt/prearmed
+			prize_type = /obj/item/assembly/time_ignite_butt/prearmed
 			exclamation = "Big Loser! Goodbye! "
 			win_sound = 'sound/musical_instruments/Trombone_Failiure.ogg'
 			return

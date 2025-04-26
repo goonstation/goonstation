@@ -1,5 +1,87 @@
 
+(t)sat apr 26 25
+(u)glowbold
+(p)23037
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawyers get a special legal license they can show off.
+(u)Flappybat
+(p)23141
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Deconstructing an object will unglue anything that is glued to it.
+(t)fri apr 25 25
+(u)LeahTheTech
+(p)23120
+(e)🚄|C-Performance
+(*)Reduced ocean clutter spawns in an attempt to improve client performance.
+(u)JORJ949
+(p)23114
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Clicking the Wiki button now opens your job's wiki page
+(u)glowbold
+(p)23044
+(e)⚖🌠|C-Balance, A-Events
+(+)White holes throw items through the edge of their effect. Update your containment protocols!
+(t)wed apr 23 25
+(u)Lord_Earthfire
+(p)23090
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Buttbombs have been removed. Instead, butts can be attached onto trigger/igniter assemblies for the same effect.
+(+)Butts can be attached with timers/mousetraps/prox sensors/health analysers/signalers to fart when activated
+(+)Butts in assemblies emit small amounts of fart gas when triggered.
+(u)TDHooligan
+(p)23091
+(e)⚖|C-Balance
+(+)Gangs armor vest is cheaper.
+(u)glowbold
+(p)23076
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can load staples into a zip gun by using a staple gun or stapler on it.
+(t)tue apr 22 25
+(u)glowbolds
+(p)23096
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Arcfiends recieve a text popup showing how much power they're draining from targets.
+(u)LeahTheTech
+(*)The "liquid plasma" disease reagent has been renamed to "activated plasma".
+(u)Lord_Earthfire
+(p)23095
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adding items onto assemblies puts the finished assembly into your hand.
+(u)Jan.antilles
+(p)22922
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Syndicate Intelligence maximum length reduced from 4000 to 2000 characters.
+(u)glowbold
+(p)23080
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)The SMES Human gene is as rare as x-ray/gamma ray. There is a gene combination recipe to create it.
+(t)mon apr 21 25
+(u)LeahTheTech + Cogwerks
+(*)Added an informational poster to all mining departments.
+(u)CalliopeSoups
+(p)23024
+(e)⚖|C-Balance
+(+)Chem condensers now accept any crystal material.
+(t)sun apr 20 25
+(u)Emily
+(*)Ranch Module moved to open source. Please report bugs to Emily. Happy Easter 420!
+(u)JORJ949
+(p)22879
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Command now have spare circuit boards for their departmental ID and announcement computers.
+(u)Lord_Earthfire
+(p)23053
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Promity sensors and timers start out a a 5 second timer. You are still able to set them to a lower time, if you want.
 (t)sat apr 19 25
+(u)FlameArrow57
+(p)22789
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Asteroids may now contain a rare metal, such as plutonium
+(u)CalliopeSoups
+(p)23049
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now throw people into open washing machines.
 (u)glowbold
 (p)22950
 (e)🪲🔄📦⚗|C-Bug, C-Rework, A-Game-Objects, A-Chemistry
