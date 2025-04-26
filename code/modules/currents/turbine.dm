@@ -331,6 +331,8 @@
 				src.UpdateIcon()
 			src.generation = 0
 			return
+		if (!src.powernet)
+			src.recheck_powernet()
 		//this part is physics though!
 		src.generation = src.stator_load * src.shaft.network.rpm/60
 		src.add_avail(src.generation / 4) //divide four because we're processing faster than the powernet expects
