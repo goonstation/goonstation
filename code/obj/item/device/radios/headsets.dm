@@ -486,7 +486,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "ghost_buster"
+	icon_override = "hunter_ghost"
 	icon_tooltip = "Ghost Buster"
 
 /obj/item/device/radio/headset/werewolf_hunter
@@ -507,7 +507,7 @@
 		"m" = RADIOCL_MEDICAL,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "ghost_buster"
+	icon_override = "hunter_wolf"
 	icon_tooltip = "Werewolf Hunter"
 
 /obj/item/device/radio/headset/syndicate
