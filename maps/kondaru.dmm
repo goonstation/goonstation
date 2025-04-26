@@ -45164,8 +45164,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "niM" = (
-/obj/machinery/computer/television,
 /obj/machinery/light_switch/north,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "niP" = (

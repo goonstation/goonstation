@@ -21998,6 +21998,21 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"tYQ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "tYS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -98808,7 +98823,7 @@ aaa
 aaa
 agK
 aNe
-aNH
+tYQ
 aNR
 aUH
 aOw

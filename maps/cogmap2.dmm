@@ -72228,7 +72228,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/outer/ne)
 "ucs" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer{
+	dir = 1
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},

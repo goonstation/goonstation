@@ -40498,6 +40498,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/hallway)
+"ohz" = (
+/obj/machinery/computer/camera_viewer,
+/turf/space/fluid,
+/area/space)
 "ohR" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black,
@@ -47421,7 +47425,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "xNK" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "xNO" = (
@@ -56878,7 +56882,7 @@ buR
 aqn
 aqn
 aqn
-aqn
+ohz
 aqn
 aqn
 aqn

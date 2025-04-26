@@ -4779,6 +4779,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"cgj" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "cgu" = (
 /obj/storage/cart,
 /obj/item/instrument/vuvuzela,
@@ -16693,6 +16697,12 @@
 "hgG" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"hgM" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost)
 "hgP" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -40624,10 +40634,6 @@
 	},
 /turf/simulated/floor/shuttlebay/flock/middle,
 /area/flock_trader)
-"riW" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "rjb" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -86910,7 +86916,7 @@ rTM
 jVb
 tQG
 pki
-aWY
+cgj
 xzc
 sKF
 aBB
@@ -87510,11 +87516,11 @@ bzS
 pki
 enc
 pqv
-mbO
+hgM
 cij
 gwG
 pki
-riW
+aWY
 xzc
 iOs
 oKQ

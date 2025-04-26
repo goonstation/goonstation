@@ -71839,7 +71839,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "vLY" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "vMa" = (

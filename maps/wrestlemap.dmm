@@ -672,7 +672,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "akQ" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "alb" = (

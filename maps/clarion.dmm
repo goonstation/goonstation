@@ -17722,7 +17722,9 @@
 	},
 /area/station/engine/core/nuclear)
 "gsu" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer{
+	dir = 1
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},

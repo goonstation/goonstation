@@ -19354,7 +19354,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "elv" = (
-/obj/machinery/computer/television,
+/obj/machinery/computer/camera_viewer{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "elB" = (
