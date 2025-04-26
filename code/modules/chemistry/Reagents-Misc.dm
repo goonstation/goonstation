@@ -962,8 +962,7 @@ datum
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, raw_volume)
-				var/atom/A = M
-				A.unglue_attached_to()
+				M.unglue_attached_to()
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
@@ -973,13 +972,11 @@ datum
 				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
 				if(glue_ready_comp)
 					qdel(glue_ready_comp)
-				var/atom/A = O
-				A.unglue_attached_to()
+				O.unglue_attached_to()
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				var/atom/A = T
-				A.unglue_attached_to(T)
+				T.unglue_attached_to(T)
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10

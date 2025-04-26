@@ -500,8 +500,7 @@
 
 /obj/proc/become_frame(mob/user, flatpack = FALSE)
 	// Prevent glue based frame exploits
-	var/atom/A = src
-	A.unglue_attached_to()
+	src.unglue_attached_to()
 	var/turf/target_loc = get_turf(src)
 	var/obj/item/electronics/frame/F = null
 	if (flatpack)
