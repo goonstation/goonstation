@@ -35,3 +35,4 @@
 
 //------------ Other ------------//
 #define NO_MESSAGE null
+#define NO_SAY_SOUND ""
