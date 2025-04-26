@@ -113,25 +113,25 @@
 				if (prob(1))
 					new /obj/item/seashell(src)
 			else
-				if (prob(5))
+				if (prob(2))
 					new /obj/item/seashell(src)
 
 		if (spawningFlags & SPAWN_PLANTS)
-			if (prob(8))
+			if (prob(4))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant) : (childrentypesof(/obj/sea_plant) - /obj/sea_plant/anemone/lit) )
 				var/obj/sea_plant/P = new plant(src)
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
 		if (spawningFlags & SPAWN_PLANTSMANTA)
-			if (prob(8))
+			if (prob(4))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant_manta) : (childrentypesof(/obj/sea_plant_manta) - /obj/sea_plant_manta/anemone/lit) )
 				var/obj/sea_plant_manta/P = new plant(src)
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
 		if (spawningFlags & SPAWN_ACID_DOODADS)
-			if (prob(8))
+			if (prob(4))
 				var/obj/doodad = pick( childrentypesof(/obj/nadir_doodad) )
 				var/obj/nadir_doodad/D = new doodad(src)
 				D.initialize()
@@ -142,7 +142,7 @@
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
 			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
-			else if (prob(1) && prob(20))
+			else if (prob(1) && prob(15))
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
 				new fish(src)
 			else if (src.z == 5 && prob(1) && prob(9) && prob(90))
