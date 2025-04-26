@@ -772,6 +772,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/porridge(src)
 			src.recipes += new /datum/cookingrecipe/oven/ratatouille(src)
 			src.recipes += new /datum/cookingrecipe/oven/flapjack_batch(src)
+			src.recipes += new /datum/cookingrecipe/oven/egg_on_rice(src)
+			src.recipes += new /datum/cookingrecipe/oven/cheese_beef_bowl(src)
+			src.recipes += new /datum/cookingrecipe/oven/miso_soup(src)
+			src.recipes += new /datum/cookingrecipe/oven/bibimbap(src)
+			src.recipes += new /datum/cookingrecipe/oven/katsu_bowl_chicken(src)
+			src.recipes += new /datum/cookingrecipe/oven/katsu_bowl_bacon(src)
+			src.recipes += new /datum/cookingrecipe/oven/katsu_curry(src)
+			src.recipes += new /datum/cookingrecipe/oven/beef_bowl(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/oven/pizza_custom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom_item(src)
@@ -803,6 +811,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
 			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 			src.recipes += new /datum/cookingrecipe/oven/brownie_batch(src)
+			src.recipes += new /datum/cookingrecipe/oven/rice_bowl(src)
 
 			// store the list for later
 			oven_recipes = src.recipes

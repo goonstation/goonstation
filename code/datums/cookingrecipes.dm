@@ -2400,3 +2400,74 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
 
+/datum/cookingrecipe/oven/rice_bowl
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1)
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/rice_bowl
+
+/datum/cookingrecipe/oven/egg_on_rice
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+	/obj/item/reagent_containers/food/snacks/condiment/soysauce = 1)
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/egg_on_rice
+
+/datum/cookingrecipe/oven/katsu_bowl_bacon
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/katsu_bowl
+
+/datum/cookingrecipe/oven/katsu_bowl_chicken
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/katsu_bowl
+
+/datum/cookingrecipe/oven/beef_bowl
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/beef_bowl
+
+/datum/cookingrecipe/oven/cheese_beef_bowl
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/cheese_beef_bowl
+
+/datum/cookingrecipe/oven/miso_soup
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
+	/obj/item/reagent_containers/food/snacks/plant/soy = 1)
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/miso_soup
+
+/datum/cookingrecipe/oven/bibimbap
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1,
+	/obj/item/reagent_containers/food/snacks/plant/lettuce = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/bibimbap
+
+/datum/cookingrecipe/oven/katsu_curry
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/katsu_curry
