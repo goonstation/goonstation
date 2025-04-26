@@ -3806,10 +3806,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bGm" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/item/storage/wall{
 	icon_state = "minipurple";
 	name = "VR goggles cabinet";
@@ -22424,10 +22421,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jwV" = (
@@ -47304,10 +47298,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "uib" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
 	c_tag = "autotag";

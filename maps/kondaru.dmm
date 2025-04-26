@@ -15276,9 +15276,7 @@
 /area/station/crew_quarters/cafeteria)
 "bma" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -16005,9 +16003,7 @@
 /area/station/crew_quarters/cafeteria)
 "boE" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -45720,10 +45716,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
 "nFS" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -46834,10 +46827,7 @@
 	},
 /area/station/bridge)
 "orU" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/cable{
 	icon_state = "0-8"
 	},

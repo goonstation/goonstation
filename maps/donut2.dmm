@@ -7351,9 +7351,7 @@
 /area/station/crew_quarters/arcade)
 "aNW" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -28093,9 +28091,7 @@
 /area/station/science/lobby)
 "jzW" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";

@@ -4578,9 +4578,7 @@
 /area/station/storage/autolathe)
 "azw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNW"
@@ -10836,9 +10834,7 @@
 "bne" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetN"
@@ -16966,9 +16962,7 @@
 /area/station/maintenance/east)
 "fvc" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -21067,9 +21061,7 @@
 /area/station/bridge)
 "jdJ" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNE"
@@ -30564,9 +30556,7 @@
 	dir = 8
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetE"
@@ -31303,9 +31293,7 @@
 /area/space)
 "qRX" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -34545,9 +34533,7 @@
 /area/station/medical/robotics)
 "tcv" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNW"
@@ -40237,9 +40223,7 @@
 /area/station/crew_quarters/hor)
 "xyf" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetW"
