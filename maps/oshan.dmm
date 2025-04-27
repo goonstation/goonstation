@@ -17721,9 +17721,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "bop" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,

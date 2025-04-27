@@ -53390,8 +53390,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /obj/machinery/light/small{
 	dir = 8;
@@ -58078,8 +58077,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8

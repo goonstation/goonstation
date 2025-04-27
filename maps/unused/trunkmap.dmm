@@ -22296,9 +22296,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxb" = (
