@@ -27,7 +27,7 @@
 /area/station/maintenance/west)
 "abH" = (
 /obj/table/wood/round/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer/disk,
 /obj/item/hand_tele,
 /obj/machinery/light/incandescent/warm{
