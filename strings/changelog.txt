@@ -1,5 +1,9 @@
 
 (t)sun apr 27 25
+(u)glowbold
+(p)22930
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)You can get fireworks out of firework boxes by using a snipping tool on them. Try not to blow your hands off.
 (u)JORJ949 & glowbold
 (p)23041
 (e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
