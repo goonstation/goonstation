@@ -3079,7 +3079,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/egg_on_rice
-	name = "egg on rice"
+	name = "egg yolk with rice"
 	desc = "A bowl of cooked rice with a raw egg yolk and soy sauce on top. Otherwise known as tamago kake gohan."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "egg_on_rice"
