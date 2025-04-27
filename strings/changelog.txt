@@ -1,4 +1,9 @@
 
+(t)sun apr 27 25
+(u)LorrMaster
+(p)23100
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Can set other people's internals in slots other than the back.
 (t)sat apr 26 25
 (u)glowbold
 (p)23037

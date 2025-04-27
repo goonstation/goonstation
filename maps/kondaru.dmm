@@ -21194,7 +21194,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
@@ -58265,11 +58267,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "wFB" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
+/obj/storage/cart/mechcart/breach,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

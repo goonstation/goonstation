@@ -17721,9 +17721,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "bop" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -47259,12 +47257,12 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;

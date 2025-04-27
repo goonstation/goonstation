@@ -8591,12 +8591,12 @@
 	},
 /area/station/hallway/primary/south)
 "dKL" = (
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/bridge,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge/customs)
 "dKY" = (

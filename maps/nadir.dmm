@@ -24832,7 +24832,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
