@@ -508,31 +508,6 @@
 
 		return ..()
 
-
-/datum/overlayComposition/ironsight_vignette
-	New()
-		var/datum/overlayDefinition/vignette = new()
-		vignette.d_icon = 'icons/effects/overlays/ironsight_vignette.dmi'
-		vignette.d_icon_state = "ironsight_vignette"
-		vignette.d_blend_mode = 2
-		vignette.d_screen_loc = "CENTER-10,CENTER-7"
-		vignette.do_wide_fill = 0
-		definitions.Add(vignette)
-
-		return ..()
-
-/datum/overlayComposition/ironsight_vignette_scope
-	New()
-		var/datum/overlayDefinition/vignette = new()
-		vignette.d_icon = 'icons/effects/overlays/ironsight_vignette.dmi'
-		vignette.d_icon_state = "ironsight_vignette_scope"
-		vignette.d_blend_mode = 2
-		vignette.d_screen_loc = "CENTER-10,CENTER-7"
-		vignette.do_wide_fill = 0
-		definitions.Add(vignette)
-
-		return ..()
-    
 /datum/overlayComposition/telephoto
 	New()
 		var/datum/overlayDefinition/telephoto = new()
