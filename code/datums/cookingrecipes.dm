@@ -2413,39 +2413,41 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/egg_on_rice
 
-/datum/cookingrecipe/oven/katsu_bowl_bacon
+/datum/cookingrecipe/oven/katsudon_bacon
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/katsu_bowl
+	output = /obj/item/reagent_containers/food/snacks/katsudon
 
-/datum/cookingrecipe/oven/katsu_bowl_chicken
+/datum/cookingrecipe/oven/katsudon_chicken
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/katsu_bowl
+	output = /obj/item/reagent_containers/food/snacks/katsudon
 
-/datum/cookingrecipe/oven/beef_bowl
+/datum/cookingrecipe/oven/gyudon
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
+	/obj/item/reagent_containers/food/snacks/onion_slice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/beef_bowl
+	output = /obj/item/reagent_containers/food/snacks/gyudon
 
-/datum/cookingrecipe/oven/cheese_beef_bowl
+/datum/cookingrecipe/oven/cheese_gyudon
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/sticky_rice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
+	/obj/item/reagent_containers/food/snacks/onion_slice = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/cheese_beef_bowl
+	output = /obj/item/reagent_containers/food/snacks/cheese_gyudon
 
 /datum/cookingrecipe/oven/miso_soup
 	ingredients = list(\
