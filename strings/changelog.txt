@@ -1,5 +1,9 @@
 
 (t)sun apr 27 25
+(u)JORJ949 & glowbold
+(p)23041
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Customs offices have a personnel management computer, containing BankBoss, SecMate, and RoleControl.
 (u)LorrMaster
 (p)23100
 (e)🪲🔨|C-Bug, A-Player-Actions
