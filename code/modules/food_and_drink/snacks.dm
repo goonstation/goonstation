@@ -3138,6 +3138,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	food_effects = list("food_warm","food_hp_up_big")
 	bites_left = 5
 	heal_amt = 5
+	initial_reagents = list("capsaicin"=10)
 
 /obj/item/reagent_containers/food/snacks/katsu_curry
 	name = "katsu curry"
