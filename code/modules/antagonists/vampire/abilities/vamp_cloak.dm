@@ -12,7 +12,6 @@
 	when_stunned = 0
 	not_when_handcuffed = 0
 	interrupt_action_bars = FALSE
-	do_logs = FALSE
 
 	cast(mob/target)
 		if (!src.holder) return 1
@@ -57,6 +56,7 @@
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, 3)
 
 		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
+			src.owner.mouse_opacity = 0
 			src.owner.alpha = 0
 			src.mist.alpha = 255
 			animate_wave(src.mist)
@@ -70,6 +70,7 @@
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
 
 		SPAWN(VAMP_CLOAK_ANIMATION_DELAY)
+			src.owner.mouse_opacity = 1
 			src.owner.alpha = 255
 			animate_reset(src.mist)
 			src.mist.color = "#666"
