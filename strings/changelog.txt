@@ -1,5 +1,9 @@
 
 (t)sun apr 27 25
+(u)bobbis dobbis
+(p)22923
+(e)🆕🎨📡|C-Feature, C-Sprites, A-AI
+(+)Added sunglasses and wide smile ai faces
 (u)glowbold
 (p)22930
 (e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
