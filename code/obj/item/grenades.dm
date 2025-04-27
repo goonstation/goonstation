@@ -1375,6 +1375,126 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 		..()
 
+
+#define ROMAN_CANDLE_UNLIT 0
+#define ROMAN_CANDLE_LIT 1
+#define ROMAN_CANDLE_BURNT 2
+
+/obj/item/roman_candle
+	name = "roman candle"
+	desc = "Contains 10 exploding stars. Only use outdoors. Only point towards sky. All liability is waived."
+	icon = 'icons/obj/items/sparklers.dmi'
+	icon_state = "sparkler-off"
+	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
+	item_state = "sparkler-off"
+	w_class = W_CLASS_SMALL
+	var/base_icon_state = "sparkler-"
+	var/state = ROMAN_CANDLE_UNLIT
+	var/charges = 10
+
+/obj/item/roman_candle/New()
+	. = ..()
+	src.charges = rand(8,10) // cheap ass fireworks
+
+/obj/item/roman_candle/attackby(obj/item/W, mob/user, params)
+	if (src.state == ROMAN_CANDLE_UNLIT)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+			src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
+
+		else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+			src.light(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
+
+		else if (istype(W, /obj/item/device/igniter))
+			src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
+
+		else if (istype(W, /obj/item/device/light/zippo) && W:on)
+			src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
+
+		else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
+
+		else if (W.burning)
+			src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
+	else
+		return ..()
+
+/obj/item/roman_candle/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if((temperature > T0C+400))
+		src.light(src.loc, SPAN_ALERT("\The [src] cooks off!"))
+	..()
+
+/obj/item/roman_candle/reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+	if (src.state == ROMAN_CANDLE_LIT)
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 10)
+			src.snuff(src.loc)
+	. = ..()
+
+/obj/item/roman_candle/process()
+	if (src.state != ROMAN_CANDLE_LIT)
+		processing_items -= src
+		return
+
+	var/turf/T = get_turf(src.loc)
+
+	if (T)
+		T.hotspot_expose(700,5)
+
+	if (prob(66))
+		var/direction = pick(alldirs)
+		var/turf/location = src.loc
+		if (ismob(location))
+			var/mob/M = location
+			if (M.find_in_hand(src))
+				location = M.loc
+				direction = M.dir
+		src.shoot_firework(T, direction)
+
+/obj/item/roman_candle/update_icon()
+	. = ..()
+	var/new_state = src.base_icon_state
+	switch (src.state)
+		if(ROMAN_CANDLE_UNLIT)
+			new_state += "off"
+		if(ROMAN_CANDLE_LIT)
+			new_state += "on"
+		if(ROMAN_CANDLE_BURNT)
+			new_state += "burnt"
+	src.icon_state = new_state
+	src.item_state = new_state
+
+/obj/item/roman_candle/proc/light(mob/user, message)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_UNLIT) return
+	src.state = ROMAN_CANDLE_LIT
+	logTheThing(LOG_STATION, user, "lights the [src] at [log_loc(src)].")
+	src.hit_type = DAMAGE_BURN
+	src.force = 3
+	src.UpdateIcon()
+	processing_items |= src
+	if(istype(user))
+		user.update_inhands()
+
+/obj/item/roman_candle/proc/shoot_firework(turf/T, direction)
+	var/datum/projectile/special/firework/firework = new
+	shoot_projectile_ST_pixel_spread(src.loc, firework, get_step(src.loc, direction))
+	src.charges--
+	if (src.charges <= 0)
+		src.snuff(src.loc)
+
+/obj/item/roman_candle/proc/snuff(mob/user)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_LIT) return
+	src.state = ROMAN_CANDLE_BURNT
+	src.UpdateIcon()
+	processing_items -= src
+	if (istype(user))
+		user.update_inhands()
+
+#undef ROMAN_CANDLE_UNLIT
+#undef ROMAN_CANDLE_LIT
+#undef ROMAN_CANDLE_BURNT
+
+
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge

@@ -1173,18 +1173,33 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
-/obj/item/get_desc()
-	var/t
+/obj/item/get_desc(dist, mob/user)
+	var/size_desc
 	switch(src.w_class)
-		if (-INFINITY to W_CLASS_TINY) t = "tiny"
-		if (W_CLASS_SMALL) t = "small"
-		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
-		if (W_CLASS_NORMAL) t = "normal-sized"
-		if (W_CLASS_BULKY) t = "bulky"
-		if (W_CLASS_HUGE to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) size_desc = "tiny"
+		if (W_CLASS_SMALL) size_desc = "small"
+		if (W_CLASS_POCKET_SIZED) size_desc = "pocket-sized"
+		if (W_CLASS_NORMAL) size_desc = "normal-sized"
+		if (W_CLASS_BULKY) size_desc = "bulky"
+		if (W_CLASS_HUGE to INFINITY) size_desc = "huge"
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
-		t = "funny-looking"
-	return "It is \an [t] item."
+		size_desc = "funny-looking"
+	. = "It is \an [size_desc] item."
+
+	if ((src in user) && src.reagents?.total_volume)
+		var/temperature_desc = null
+		var/temperature = src.reagents.total_temperature
+		//you can't tell if something's too hot if you're immune to heat
+		if (temperature > user.scald_temp() && !user.is_heat_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("scalding hot!")]</b>"
+		else if (temperature > T20C)
+			temperature_desc = "warm to the touch."
+		else if (temperature < user.frostburn_temp() && !user.is_cold_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("freezing cold!")]</b>"
+		else if (temperature < T0C)
+			temperature_desc = "cold to the touch."
+		if (temperature_desc)
+			. += "<br>It's [temperature_desc]"
 
 /obj/item/attack_hand(mob/user)
 	var/obj/item/checkloc = src.loc
