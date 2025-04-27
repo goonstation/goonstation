@@ -21194,7 +21194,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
