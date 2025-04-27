@@ -2468,9 +2468,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = 0
 	add_to_manifest = FALSE
 	radio_announcement = FALSE
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	slot_card = /obj/item/card/id
 	slot_belt = list()
 	slot_back = list()
@@ -2513,9 +2511,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Juicer Security"
 	limit = 0
 	wages = 0
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	add_to_manifest = FALSE
 
 	slot_back = list(/obj/item/gun/energy/blaster_cannon)
