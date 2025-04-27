@@ -65,7 +65,6 @@
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
-		animate(src.client, 0.3 SECONDS, color = client_color)
 		SPAWN(0)
 			src.add_all_statics()
 
