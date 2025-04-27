@@ -1,4 +1,53 @@
 
+(t)sun apr 27 25
+(u)LeahTheTech
+(*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
+(u)FlameArrow57
+(p)22828
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fixed being unable to build walls over or using an RCD on Space Phoenix ice tunnels
+(u)Garash
+(p)22290
+(e)🪲📄|C-Bug, A-UI
+(+)Keybind menu now allows to bind special keys such as shift, ctrl, alt...
+(u)bobbis dobbis
+(p)22923
+(e)🆕🎨📡|C-Feature, C-Sprites, A-AI
+(+)Added sunglasses and wide smile ai faces
+(u)glowbold
+(p)22930
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)You can get fireworks out of firework boxes by using a snipping tool on them. Try not to blow your hands off.
+(u)JORJ949 & glowbold
+(p)23041
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Customs offices have a personnel management computer, containing BankBoss, SecMate, and RoleControl.
+(u)LorrMaster
+(p)23100
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Can set other people's internals in slots other than the back.
+(t)sat apr 26 25
+(u)glowbold
+(p)23037
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawyers get a special legal license they can show off.
+(u)Flappybat
+(p)23141
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Deconstructing an object will unglue anything that is glued to it.
+(t)fri apr 25 25
+(u)LeahTheTech
+(p)23120
+(e)🚄|C-Performance
+(*)Reduced ocean clutter spawns in an attempt to improve client performance.
+(u)JORJ949
+(p)23114
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Clicking the Wiki button now opens your job's wiki page
+(u)glowbold
+(p)23044
+(e)⚖🌠|C-Balance, A-Events
+(+)White holes throw items through the edge of their effect. Update your containment protocols!
 (t)wed apr 23 25
 (u)Lord_Earthfire
 (p)23090

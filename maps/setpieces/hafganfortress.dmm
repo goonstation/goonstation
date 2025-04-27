@@ -9930,7 +9930,7 @@
 "US" = (
 /obj/railing/yellow,
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary/blue,
 /area/adventure{
 	name = "Caer Vedwyd";
