@@ -50,7 +50,7 @@
 	/// Can it go in a mechcomp component?
 	var/automatable = TRUE
 
-	New()
+	New(loc)
 		..()
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
@@ -70,16 +70,15 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			initialize()
 
+	initialize()
 		if (src.use_new_interface)
-			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
-			src.note_keys_string = src.generate_keybinds(src.notes)
-			if(!src.note_keys_string)
-				src.note_keys_string = src.default_keys_string
-			src.sounds_instrument = list()
-			for (var/i in 1 to length(src.notes))
-				src.note = src.notes[i]
-				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
+			var/datum/instrument_data/instr_data = global.instrument_sound_bank.bank[initial(src.name)]
+			src.notes = instr_data.notes
+			src.note_keys_string = instr_data.note_keys_string
+			src.sounds_instrument = instr_data.sounds_instrument
 
 	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
@@ -164,6 +163,8 @@
 
 		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
 		for(var/i in start to end)
+			if(i > length(split_default_key_string))
+				break
 			. += split_default_key_string[i]
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -504,6 +505,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -511,6 +513,27 @@
 	desc_verb = list("honks")
 	note_time = 0.8 SECONDS
 	pick_random_note = 1
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the bike-horn
+		parent_assembly.target_item_prefix = "bike-horn"
+
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
+
+	/// ----------------------------------------------
 
 	show_play_message(mob/user as mob)
 		return
@@ -542,10 +565,7 @@
 					JOB_XP(user, "Clown", 2)
 					break
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
 			if ("pulse")
@@ -641,7 +661,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
+	wear_state = "whistle"
 	w_class = W_CLASS_TINY
+	c_flags = ONBELT
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -679,6 +701,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "security whistle"
 	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
+	wear_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
 
@@ -699,6 +722,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "janitor whistle"
 	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
 	icon_state = "whistle-jani"
+	wear_state = "whistle-jani"
 	var/commandtime = 5 SECONDS
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
@@ -739,10 +763,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("pulse")
 				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)

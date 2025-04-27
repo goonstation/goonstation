@@ -450,6 +450,28 @@
 		logTheThing(LOG_DIARY, usr, "healed / revived [healed] mobs via Heal All", "admin")
 		message_admins(SPAN_ALERT("Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!"))
 
+/client/proc/cmd_admin_stabilize(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Stabilize"
+	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(!src.mob)
+		return
+	if(isobserver(M))
+		alert("Cannot stabilize a ghost")
+		return
+	if(isdead(M))
+		alert("Cannot stabilize a dead mob")
+		return
+
+	M.stabilize()
+
+	logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
+	logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
+	message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
+
 /client/proc/cmd_admin_create_centcom_report()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Create Command Report"

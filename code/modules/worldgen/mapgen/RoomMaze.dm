@@ -202,7 +202,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		src.lag_check()
+		src.lag_check(flags)
 
 /datum/map_generator/room_maze_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = src.cell_grid[T.x][T.y]

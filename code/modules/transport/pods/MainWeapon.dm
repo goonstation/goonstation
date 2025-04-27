@@ -34,7 +34,7 @@
 			if(r_gunner)
 				dat += {"<B>Gunner:</B>"}
 				if(!gunner)
-					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
+					dat += {"<A href='byond://?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
 			if(uses_ammunition)
@@ -88,7 +88,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -280,7 +280,7 @@
 	power_used = 50
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
-	firerate = 5 SECONDS
+	firerate = 10 SECONDS
 	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE
@@ -365,9 +365,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Heat Beam<BR>"
-				dat+="<A href='?src=\ref[src];death=1'>Death Ray</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];death=1'>Death Ray</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];heat=1'>Heat Beam</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];heat=1'>Heat Beam</A><BR>"
 				dat+="Death Ray<BR>"
 
 		else
@@ -451,9 +451,9 @@
 			dat +="<B>Weapon Mode:</B><BR>"
 			if(mode == 0)
 				dat+="Metalfoam Constructor Nozzles<BR>"
-				dat+="<A href='?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Cutter Blades</A><BR>"
 			else
-				dat+="<A href='?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
+				dat+="<A href='byond://?src=\ref[src];foam=1'>Switch to Foam Nozzles</A><BR>"
 				dat+="Industrial Cutter Blades<BR>"
 
 		else
@@ -851,37 +851,37 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			switch(mode)
 				if(EFIF_MODE_FLOORS)
 					dat+="<B>Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_R_FLOORS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
 					dat+="<B>Reinforced Floors</B><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_WALLS)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
 					dat+="<B>Walls</B><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				if(EFIF_MODE_REPAIR)
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
 					dat+="<B>Repair</B><BR>"
-					dat+="<A href='?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];cutter=1'>Switch to Drilling</A><BR>"
 				else
-					dat+="<A href='?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
-					dat+="<A href='?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
-					dat+="<A href='?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];floors=1'>Switch to Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];r_floors=1'>Switch to Reinforced Floors</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];walls=1'>Switch to Walls</A><BR>"
+					dat+="<A href='byond://?src=\ref[src];repair=1'>Switch to Repair</A><BR>"
 					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
-			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
-			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
+			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='byond://?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
+			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='byond://?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -1124,12 +1124,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = TRUE
-			flick("SPS_o_large", purge)
+			FLICK("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = FALSE
-			flick("SPS_o_small", purge)
+			FLICK("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
 
@@ -1225,6 +1225,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 /datum/projectile/laser/light/pod/burst
 	damage = 25
 	shot_delay = 0.2 SECONDS
+
+/datum/projectile/laser/light/pod/support_gunner
+	damage = 5
 
 /datum/projectile/disruptor
 	impact_range = 4

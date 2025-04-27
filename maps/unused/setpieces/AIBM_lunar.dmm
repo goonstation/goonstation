@@ -6073,7 +6073,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2";
 	tag = "icon-1-2"
@@ -6590,7 +6590,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pA" = (
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pB" = (

@@ -336,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -803,7 +803,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/pocket/oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -978,7 +978,7 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/emergency_oxygen/extended,
+		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
@@ -1217,5 +1217,7 @@ TYPEINFO(/obj/item/inner_tube)
 	item_state = "secbelt"
 	check_wclass = 0
 	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
 
 // End of pod wars belts and holsters

@@ -98,10 +98,6 @@
 	icon_state = "console00"
 */
 
-/obj/machinery/computer/hangar
-	name = "Hangar"
-	icon_state = "teleport"
-
 /obj/machinery/computer/New()
 	..()
 	base_icon_state = initial(icon_state)
@@ -152,6 +148,9 @@
 			src.verbs -= x
 		set_broken()
 		src.set_density(0)
+
+/obj/machinery/computer/overload_act()
+	return !src.set_broken()
 
 /obj/machinery/computer/power_change()
 	//if(!istype(src,/obj/machinery/computer/security/telescreen))

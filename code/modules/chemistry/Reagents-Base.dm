@@ -497,7 +497,9 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
+	overdose = 30
 	taste = "metallic"
+	var/finaltone = rgb(108, 125, 183)
 
 	reaction_obj(var/obj/item/I, var/volume)
 		if (I.material && I.material.getID() == "silver")
@@ -518,6 +520,20 @@
 				I.setMaterial(getMaterial("silver"))
 				holder.remove_reagent(src.id, 50)
 				.= 0
+	do_overdose(severity, mob/M, mult) //turns your skin blue
+		. = ..()
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			var/currenttone = H.bioHolder?.mobAppearance.s_tone
+			if(currenttone && color_dist(currenttone, finaltone) >= 5000) //these numbers might need tweaking
+				var/newtone = BlendRGB(currenttone, finaltone, 0.04)
+				H.bioHolder.mobAppearance.s_tone = newtone
+				H.set_face_icon_dirty()
+				H.set_body_icon_dirty()
+				if (H.limbs)
+					H.limbs.reset_stone()
+				H.update_colorful_parts()
+
 
 /datum/reagent/sulfur
 	name = "sulfur"
@@ -795,13 +811,6 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))

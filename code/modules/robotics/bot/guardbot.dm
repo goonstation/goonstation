@@ -1739,7 +1739,7 @@
 
 			else
 
-				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+				dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
@@ -4072,7 +4072,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				master.speak(pick("Hey, who turned out the lights?","Error: Visual sensor impaired!","Whoa hey, what's the big deal?","Where did everyone go?"))
 
 			if (escape_counter-- > 0)
-				flick("robuddy-ghostfumble", master)
+				FLICK("robuddy-ghostfumble", master)
 				master.visible_message(SPAN_ALERT("[master] fumbles around in the sheet!"))
 			else
 				master.visible_message("[master] cuts a hole in the sheet!")
@@ -4345,13 +4345,13 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += "<br>Configuration Switches:<br><table border='1' style='background-color:#7A7A7A'><tr>"
 			for (var/i = 8, i >= 1, i >>= 1)
 				var/styleColor = (net_number & i) ? "#60B54A" : "#CD1818"
-				dat += "<td style='background-color:[styleColor]'><a href='?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
+				dat += "<td style='background-color:[styleColor]'><a href='byond://?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
 
 			dat += "</tr></table>"
 
@@ -4801,7 +4801,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			dat += "<b>Guide:</b> <center>\[[linked_bot.name]]</center><br>"
 
 			if ((linked_bot in orange(1, src)) && linked_bot.charge_dock)
-				dat += "<center><a href='?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
+				dat += "<center><a href='byond://?src=\ref[src];start_tour=1'>Begin Tour</a></center>"
 
 			else
 				var/area/guideArea = get_area(linked_bot)
@@ -4881,7 +4881,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 
 		else
 
-			dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
+			dat += "Status: <a href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
 		dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
 

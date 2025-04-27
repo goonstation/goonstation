@@ -190,6 +190,12 @@
 		..()
 		return
 
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor))
+			src.do_brainmelt(user, 2)
+			return
+		. = ..()
+
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr) || check_target_immunity(usr))
 			. = ..()
@@ -247,7 +253,7 @@
 		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 		..()
 
 	attack_hand(var/mob/user)
@@ -261,6 +267,13 @@
 				zap_person(user)
 				return
 		else ..()
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor))
+			src.zap_person(user)
+			user.changeStatus("unconscious", 3 SECONDS) // stop magtractoring it
+			return
+		. = ..()
 
 	pull(mob/user)
 		if(check_target_immunity(user))
@@ -293,7 +306,7 @@
 		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
 			thunder_charges = 3
 		UpdateIcon()
-		flick("[icon_state]_fire", src)
+		FLICK("[icon_state]_fire", src)
 
 	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
 		boutput(target, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))

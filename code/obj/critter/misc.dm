@@ -255,7 +255,7 @@
 
 	CritterDeath()
 		..()
-		flick("ancientrobot-disappear",src)
+		FLICK("ancientrobot-disappear",src)
 		SPAWN(16) //maybe let the animation actually play
 			qdel(src)
 

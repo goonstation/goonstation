@@ -182,36 +182,36 @@
 
 	proc/buildHtml()
 		var/html = list()
-		html += "<a href='?src=\ref[src];tab=recipes'><i class='icon-list'></i> Blueprints</a>  "
-		html += "<a href='?src=\ref[src];tab=storage'><i class='icon-folder-open'></i> Storage</a>  "
-		html += "<a href='?src=\ref[src];tab=progress'><i class='icon-cog'></i> Progress</a>  "
-		html += "<a href='?src=\ref[src];tab=settings'><i class='icon-wrench'></i> Settings</a>"
+		html += "<a href='byond://?src=\ref[src];tab=recipes'><i class='icon-list'></i> Blueprints</a>  "
+		html += "<a href='byond://?src=\ref[src];tab=storage'><i class='icon-folder-open'></i> Storage</a>  "
+		html += "<a href='byond://?src=\ref[src];tab=progress'><i class='icon-cog'></i> Progress</a>  "
+		html += "<a href='byond://?src=\ref[src];tab=settings'><i class='icon-wrench'></i> Settings</a>"
 		html += "<hr>"
 
 		html += "<div>"
 		switch(tab)
 			if("settings")
-				html += "Output into fabricator: <a href='?src=\ref[src];toggleoutput=1'>[outputInternal ? "ON":"OFF"]</a><br>"
+				html += "Output into fabricator: <a href='byond://?src=\ref[src];toggleoutput=1'>[outputInternal ? "ON":"OFF"]</a><br>"
 			if("recipes")
 				if(filter_category)
-					html += "<i class='icon-exclamation-sign'></i> Filtering by Category: [filter_category] <a href='?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
+					html += "<i class='icon-exclamation-sign'></i> Filtering by Category: [filter_category] <a href='byond://?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
 				else if (filter_string)
-					html += "<i class='icon-exclamation-sign'></i> Filtering by Name: [filter_string] <a href='?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
+					html += "<i class='icon-exclamation-sign'></i> Filtering by Name: [filter_string] <a href='byond://?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
 				else
 					html += "<i class='icon-search'></i> Category: "
 					var/list/categories = list()
 					for(var/datum/matfab_recipe/E in recipes)
 						if(!(E.category in categories))
 							categories.Add(E.category)
-							html += "<a href='?src=\ref[src];filtercat=[E.category]'>[E.category]</a> "
-					html += "<i class='icon-caret-right'></i> <a href='?src=\ref[src];filterstr=1'>Name</a>"
+							html += "<a href='byond://?src=\ref[src];filtercat=[E.category]'>[E.category]</a> "
+					html += "<i class='icon-caret-right'></i> <a href='byond://?src=\ref[src];filterstr=1'>Name</a>"
 				html += "<hr>"
 
 				html += "<div style='overflow-y: auto; height:500px;'>"
 				for(var/datum/matfab_recipe/R in recipes)
 					if(filter_category && R.category != filter_category) continue
 					if(filter_string && !findtext(lowertext(R.name), lowertext(filter_string)) ) continue
-					html += "<i class='icon-caret-right'></i> <a href='?src=\ref[src];select=\ref[R]'>[R.name]</a><br>"
+					html += "<i class='icon-caret-right'></i> <a href='byond://?src=\ref[src];select=\ref[R]'>[R.name]</a><br>"
 					html += " Materials: "
 					var/commanow = 0
 					for(var/datum/matfab_part/P in R.required_parts)
@@ -228,7 +228,7 @@
 				var/count = 0
 				for(var/obj/item/I in src)
 					if(!I.amount) continue
-					html += "<a href='?src=\ref[src];eject=\ref[I]'><i class='icon-signout'></i></a> [I.name]<br>"
+					html += "<a href='byond://?src=\ref[src];eject=\ref[I]'><i class='icon-signout'></i></a> [I.name]<br>"
 					count++
 				if(!count)
 					html += "<i class='icon-exclamation-sign'></i> No objects found in storage.<br>"
@@ -239,23 +239,23 @@
 					var/complete = 1
 					for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 						html += "<i class='icon-chevron-sign-right'></i> [P.required_amount] [P.name] <i class='icon-chevron-sign-right'></i> [P.part_name] <i class='icon-chevron-sign-right'></i> "
-						html += "<a href='?src=\ref[src];selectpart=\ref[P]'>[P.assigned ? P.assigned.name : "(EMPTY)"]</a>"
+						html += "<a href='byond://?src=\ref[src];selectpart=\ref[P]'>[P.assigned ? P.assigned.name : "(EMPTY)"]</a>"
 						html += "<br>"
 						if(!P.assigned && !P.optional) complete = 0
 					if(complete)
-						html += "<br><a href='?src=\ref[src];build=1'><i class='icon-cogs'></i> BUILD</a>"
+						html += "<br><a href='byond://?src=\ref[src];build=1'><i class='icon-cogs'></i> BUILD</a>"
 			if("part")
 				if(selectedRecipe && selectingPart)
 					if(!selectingPartList.len)
 						html += "<i class='icon-exclamation-sign'></i> No valid components found for this slot.<br>"
-						html += "<br><a href='?src=\ref[src];partreturn=1'>Return</a>"
+						html += "<br><a href='byond://?src=\ref[src];partreturn=1'>Return</a>"
 					else
 						for(var/obj/item/I in selectingPartList)
 							if(selectingPartList[I]) //If this is set to 1, we dont have enough of the material.
 								html += "<p style='color:red;display: inline;'><i class='icon-plus'></i> [I.name] (Insufficient amount)</p><br>"
 							else
-								html += "<a href='?src=\ref[src];choosepart=\ref[I]'><i class='icon-plus'></i></a> [I.name]<br>"
-						html += "<br><a href='?src=\ref[src];partreturn=1'>Return</a>"
+								html += "<a href='byond://?src=\ref[src];choosepart=\ref[I]'><i class='icon-plus'></i></a> [I.name]<br>"
+						html += "<br><a href='byond://?src=\ref[src];partreturn=1'>Return</a>"
 		html += "</div>"
 		return jointext(html, "")
 
@@ -338,7 +338,7 @@
 						selectingPart = null
 						selectingPartList.Cut()
 						selectedRecipe = null
-						flick("fab2-work", src)
+						FLICK("fab2-work", src)
 		src.Attackhand(usr)
 
 	proc/addMaterial(var/obj/item/W, var/mob/user)

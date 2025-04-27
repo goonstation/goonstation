@@ -308,6 +308,19 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/implant/projectile/staple))
+			if (src.ammo + 1 > initial(src.ammo))
+				boutput(user, SPAN_NOTICE("\The [src] is already filled with staples!"))
+				return
+			boutput(user, SPAN_NOTICE("You load \the [I] into \the [src]."))
+			src.ammo += 1
+			qdel(I)
+			return
+		if (istype(I, /obj/item/gun/kinetic/zipgun))
+			I.Attackby(src, user)
+			return
+		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -375,7 +388,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			flick("[src.icon_base]-shock", src)
+			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
@@ -400,7 +413,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		flick("[src.icon_base]-shock", src)
+		FLICK("[src.icon_base]-shock", src)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm

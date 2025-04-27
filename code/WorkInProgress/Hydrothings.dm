@@ -28,6 +28,7 @@
 	name = "smelly note"
 	interesting = "There are traces of Escherichia Coli, Salmonella, and synthetic grasslike fibers dusted across the note. The handwriting seems mechanical."
 	desc = "A note which smells faintly of... Owls?"
+	icon_state = "paper"
 	info = {"We have your Bee, Bombini. We want 5 mill-ion dosh credits or your Bee friend will be spaced. Do not try to HOOTIN find us. We are very powerful and our location is impossible to find. -THE OWLS
 		<br>
 		<br><b>(This message brought to you by Gaggle Translation services, this message was translated to ENGLISH from OWL.)"}
@@ -36,6 +37,7 @@
 	name = "paper- 'crumpled paper'"
 	desc = "This paper seems like a script for a speech, it's all crumpled up."
 	interesting = "A faint scent of butterscotch lingers on this paper"
+	icon_state = "paper"
 	info =  {"<i>*cheerful*</i>Hallo and Welcome to the newly reopened Frontier Space Owlery!
 			<br>I'm Professor Reuben van der Hootens and I'm glad you're here! You're just in time for Hootenany Week 2053.
 			<br><i> *pause, cough out loud*</i>
@@ -60,6 +62,7 @@
 /obj/item/paper/rippednote
 	name = "paper- 'torn Up paper'"
 	desc = "This paper is barely able to be read, it looks like a bird ripped it up or something."
+	icon_state = "paper"
 	info = {"Kyle, I'm leaving this note here for when you find this. <i>What. The. Fuck.</i>
 			<br>Why did you decide this was a good spot for an APC? Come on man.
 			<br>The birds are going to destroy this thing here. Get this fixed you idiot and report to my office once you're done. -Alex"}
@@ -67,6 +70,7 @@
 /obj/item/paper/hootening
 	name = "paper- 'Experiment #620'"
 	desc = "An experiment log, part of it is obscured by a coffee stain."
+	icon_state = "paper"
 	info = {"<b>Experiment Log #620.</b>
 			<br>
 			<br>Hypothesis: Slow infusion of mutagens, stimulants, and Space Owl blood administered to captive SUBJECT #620-JA may induce
@@ -85,6 +89,7 @@
 
 /obj/item/paper/cleanerorder
 	name = "paper- 'Mission Statement'"
+	icon_state = "paper"
 	info = {"<b>Mission Statement for NT/SEC/FORN #36322</b>
 			<br>Arrange civilian transport to Designated Facility (DF) 'Frontier Space Owlery' under assigned cover, rank: Substitute Custodian
 			<br>Note: This job position has been opened by on-site agent NT/SCI #41903 for you.
@@ -113,6 +118,7 @@
 /obj/item/paper/cargoinvoice
 	name = "paper- 'Daily Order'"
 	desc = "This paper is barely able to be read, it looks like someone spilled coffee on it."
+	icon_state = "paper"
 	info = {"<b>Frontier Space Owlery: Daily Order</b>
 			<br>
 			<br>Shipment Contents:
@@ -123,6 +129,7 @@
 /obj/item/paper/shuttle_heist
 	name = "DEAR FIRST SHIFT TEAM"
 	desc = "This note looks ANGRY."
+	icon_state = "paper"
 	info = {"<b>WHY: I ASK YOU</b>
 			<br>
 			<br>WHY
@@ -133,12 +140,14 @@
 
 /obj/item/paper/randomencounter
 	name = "paper- 'Weird-ass guy'"
+	icon_state = "paper"
 	info = {"Hey its me Jacob, shifts have just about changed but we ran into a crazy dude just now.
 		<br>Guy came running in from the tour route holding a fucking flamethrower!
 		<br>We were able to take him down before he could use the fucking thing. But im not really sure what to do with his stuff. For now we left it inside the confiscated items locker."}
 
 /obj/item/paper/getaway
 	name = "paper- 'Experiment #621: Success'"
+	icon_state = "paper"
 	info = {"As of writing this experiment #621 has been a success. With the blood samples from Experiment #620, I have finally created a reliable synthesis method for this 'Hootagen' shit.
 			<br>I will be presenting my findings in person to AH and the Professor at Aurora's. I'll have to leave James in charge here.
 			<br>He's an idiot but I doubt he could fuck up too badly in just a couple days.
@@ -147,18 +156,21 @@
 
 /obj/item/paper/fuckingidiot
 	name = "paper- 'Memo'"
+	icon_state = "paper"
 	info = {"Hey Alex, James here. Just leaving this note here for when you come back. Kyle and I were fixing a disposals jam and found one of the missing jugs of Owl Nutrients stuck in one of the tubes.
 			<br>Dang janitor must have tossed some full jugs out by accident before he took off. So I tossed it in with the rest of the supplies. Kinda gross, why's this Formula 620 stuff smell like rotting plants?
 			<br>Are you buying from a new producer? I heard it's unhealthy to switch owl feed brands like that."}
 
 /obj/item/paper/failedexperiment
 	name = "paper- 'Experiment #616 results'"
+	icon_state = "paper"
 	info = {"Experiment #616 has been a failure, the chemical synthesis method again did not yield the "Hootagen" I seek.
 			<br>Strangly though instead of the usual flash, explosion or dangerous gas reaction it seems it preciptated into a drab green substance smelling of decayed vegetation.
 			<br>I am experiencing severely intrusive violent thoughts and a really fucking bad headache I suspect stemmed from this brief exposure. Should be more careful around this fucking owl gunk."}
 
 /obj/item/paper/employment
 	name = "paper- 'New Horizons'"
+	icon_state = "paper"
 	info = {"So since this started happening I have decided to begin keeping a journal incase this all blows up in my face.
 			<br>Recently I was contacted by my old college friend Amy on behalf of her employer. Seems this Professor Hootens guy heard about my incident getting fired from NT14.
 			<br>He needs someone with my kinda background and rap sheet in advanced chemistry and genetics to do some classified research with Owls.
@@ -173,6 +185,7 @@
 
 /obj/item/paper/hootagenhint
 	name = "paper- 'Hootagen Research Notes'"
+	icon_state = "paper"
 	info = {"Do research on things that turn into other things because you need to turn the person into another thing? Like a chameleon but different maybe?
 			<br>
 			<br>How the fuck am I supposed to turn somebody into an owl without them fucking dying?
@@ -181,6 +194,7 @@
 
 /obj/item/paper/janitorlist
 	name = "steve's daily notes"
+	icon_state = "paper"
 	info = {"<h3>steve's daily notes</h3>
 			<hr>
 			<p>
@@ -313,7 +327,7 @@
 
 /obj/item/card/id/owlgold
 	name = "identification card"
-	icon_state = "gold"
+	icon_state = "id_gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)
@@ -768,7 +782,7 @@
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 50, 1)
 			else
 				if (prob(10))
-					flick("[src.icon_state]-flap", src)
+					FLICK("[src.icon_state]-flap", src)
 					src.visible_message("<b>[src]</b> flaps.")
 					playsound(src.loc, pick(sounds_rustle), 50, 1)
 
@@ -861,7 +875,7 @@
 		return
 
 	ChaseAttack(mob/M)
-		flick("[src.icon_state]-flaploop", src)
+		FLICK("[src.icon_state]-flaploop", src)
 		if(prob(50))
 			playsound(src.loc, pick(sounds_rustle), 50, 1, -1)
 		if(ismob(M))

@@ -121,7 +121,7 @@
 				src.underlays += iced
 			boutput(iced, SPAN_ALERT("You are trapped within [src]!")) // since this is used in at least two places to trap people in things other than ice cubes
 
-		if (istype(iced, /mob/living/critter/ice_phoenix))
+		if (istype(iced, /mob/living/critter/space_phoenix))
 			qdel(src)
 			return
 

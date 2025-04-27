@@ -55,7 +55,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			for_by_tcl(P, /obj/machinery/networked/printer)
 				if (P.status & (NOPOWER|BROKEN))
 					continue
-				flick("printer-printing",P)
+				FLICK("printer-printing",P)
 				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
@@ -120,7 +120,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			continue
 		if (P.z != Z_LEVEL_STATION)
 			continue
-		flick("printer-printing",P)
+		FLICK("printer-printing",P)
 		playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 		SPAWN(3.2 SECONDS)
 			var/obj/item/poster/titled_photo/wp = new(get_turf(P))
@@ -510,15 +510,15 @@ TYPEINFO(/obj/submachine/poster_creator)
 		src.ensure_plist()
 
 		src.pdata = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Wanted Poster</title>"
-		src.pdata += "<right><A href='?src=\ref[src];print=1'>PRINT</A></right><br>"
-		src.pdata += "<h2><center><b><A href='?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
+		src.pdata += "<right><A href='byond://?src=\ref[src];print=1'>PRINT</A></right><br>"
+		src.pdata += "<h2><center><b><A href='byond://?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
 		src.pdata += "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=pm_posterimage.png height=96 width=96></center><br>"
 		src.pdata += "<center><small><sup>[src.plist["subtitle"]]<br>"
-		src.pdata += "<A href='?src=\ref[src];selectphoto=1'>\[SEARCH\]</A> <A href='?src=\ref[src];resetphoto=1'>\[X\]</A></sup></small></center><hr>"
-		src.pdata += "<b><big><center><A href='?src=\ref[src];enterdoa=1'>WANTED: [src.plist["wanted"]]</A></center></big></b><br>"
-		src.pdata += "<center><b><A href='?src=\ref[src];enterreward=1'>[src.plist["reward"]] CREDIT REWARD</A></b></center><br>"
-		src.pdata += "<A href='?src=\ref[src];enterfor=1'><b>WANTED FOR:</b> [src.plist["for"]]</A><br>"
-		src.pdata += "<A href='?src=\ref[src];enternotes=1'><b>NOTES:</b> [src.plist["notes"]]</A><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];selectphoto=1'>\[SEARCH\]</A> <A href='byond://?src=\ref[src];resetphoto=1'>\[X\]</A></sup></small></center><hr>"
+		src.pdata += "<b><big><center><A href='byond://?src=\ref[src];enterdoa=1'>WANTED: [src.plist["wanted"]]</A></center></big></b><br>"
+		src.pdata += "<center><b><A href='byond://?src=\ref[src];enterreward=1'>[src.plist["reward"]] CREDIT REWARD</A></b></center><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];enterfor=1'><b>WANTED FOR:</b> [src.plist["for"]]</A><br>"
+		src.pdata += "<A href='byond://?src=\ref[src];enternotes=1'><b>NOTES:</b> [src.plist["notes"]]</A><br>"
 		src.pdata += "</body></html>"
 
 	proc/print_poster(mob/user as mob)

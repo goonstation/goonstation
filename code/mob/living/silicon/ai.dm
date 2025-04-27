@@ -77,6 +77,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
 	"Wink (Inverted)" = "ai_wink-lod",\
+	"Wide Smile" = "ai_widesmile-dol",\
+	"Wide Smile (Inverted)" = "ai_widesmile-lod",\
+	"Sunglasses" = "ai_sunglasses-dol",\
+	"Sunglasses (Inverted)" = "ai_sunglasses-lod",\
 	"Devious" = "ai_devious-dol",\
 	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
@@ -92,7 +96,15 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	/// Camera networks we can connect to
-	var/list/camera_networks = list("SS13", "Robots", "Zeta", "ranch", "telesci", "public")
+	var/list/camera_networks = list(
+		CAMERA_NETWORK_STATION,
+		CAMERA_NETWORK_PUBLIC,
+		CAMERA_NETWORK_ROBOTS,
+		CAMERA_NETWORK_RANCH,
+		CAMERA_NETWORK_SCIENCE,
+		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
+	)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
 	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
@@ -387,7 +399,7 @@ or don't if it uses a custom topopen overlay
 
 		src.camera = new /obj/machinery/camera/auto/AI(src)
 		src.camera.c_tag = src.real_name
-		src.camera.network = "Robots"
+		src.camera.network = CAMERA_NETWORK_ROBOTS
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
@@ -916,12 +928,12 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if (single_camera?.camera_status)
-		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"byond://?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
 	else if (length(camera_list))
 		var/first_cam = TRUE
 		var/cameras_string = ""
 		for (var/obj/machinery/camera/camera in camera_list)
-			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"byond://?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
 			first_cam = FALSE
 		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
 	else
@@ -1221,7 +1233,7 @@ or don't if it uses a custom topopen overlay
 				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
-				//flick("ai-flip", src)
+				//FLICK("ai-flip", src)
 				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
 					AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
@@ -2805,4 +2817,3 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
-
