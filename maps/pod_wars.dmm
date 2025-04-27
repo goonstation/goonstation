@@ -10748,6 +10748,9 @@
 	dir = 9
 	},
 /area/pod_wars/spacejunk/fstation)
+"Il" = (
+/turf/simulated/wall/auto/asteroid,
+/area/pod_wars/asteroid/minor)
 "Im" = (
 /obj/machinery/power/furnace{
 	desc = "Wow. This thing puts out a lot of heat! If only we had some carbon based material we could shove in here to burn...";
@@ -79773,9 +79776,9 @@ eC
 eC
 Uo
 eC
-eC
-eC
-eC
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -79976,7 +79979,7 @@ Uo
 Uo
 Uo
 Uo
-eC
+Uo
 Uo
 Uo
 eC
@@ -80176,11 +80179,11 @@ eC
 Uo
 Uo
 Uo
-Uo
-Uo
-Uo
-Uo
-Uo
+Il
+eC
+eC
+eC
+Il
 Uo
 eC
 eC
@@ -80378,11 +80381,11 @@ eC
 eC
 Uo
 Uo
-Uo
-Uo
-Uo
-Uo
-Uo
+eC
+eC
+eC
+eC
+eC
 Uo
 Uo
 eC
@@ -80578,13 +80581,13 @@ eC
 eC
 eC
 eC
+Uo
+Uo
+eC
+Il
 eC
 eC
-Uo
-Uo
-Uo
-Uo
-Uo
+Il
 Uo
 Uo
 eC
@@ -80780,13 +80783,13 @@ eC
 eC
 eC
 eC
+Uo
+Uo
+eC
+Il
 eC
 eC
-Uo
-Uo
-Uo
-Uo
-Uo
+eC
 Uo
 eC
 eC
@@ -80983,13 +80986,13 @@ eC
 eC
 eC
 eC
-eC
-eC
 Uo
 Uo
 Uo
 Uo
-eC
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -81186,11 +81189,11 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
+Uo
+Uo
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -85806,7 +85809,7 @@ eC
 eC
 za
 za
-za
+eC
 za
 eC
 za
