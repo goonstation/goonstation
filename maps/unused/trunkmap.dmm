@@ -26244,7 +26244,7 @@
 /area/shuttle/brig/prison)
 "gmf" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)

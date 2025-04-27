@@ -7815,7 +7815,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/door_control/bolter/new_walls/east{
 	id = "eastcc_room3"
 	},
@@ -12798,7 +12798,7 @@
 	})
 "fGo" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -20169,7 +20169,7 @@
 /area/station/hallway/secondary/east)
 "iyr" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "iyv" = (
@@ -48546,7 +48546,7 @@
 /area/station/medical/morgue)
 "uKf" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 7
 	},
 /obj/item/remote/porter/port_a_nanomed,
@@ -53979,7 +53979,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "xhg" = (
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/instrument/vuvuzela,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/industrial,
