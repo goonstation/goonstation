@@ -353,7 +353,7 @@
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
-	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+	for(var/mob/m in src) //aieyes, other terrible code
 		if(m.observing == src)
 			m.stopObserving()
 		else
@@ -726,7 +726,7 @@
 
 			else if (tmob.a_intent == "help" && src.a_intent == "help" \
 				&& tmob.canmove && src.canmove \
-				&& !tmob.buckled && !src.buckled \
+				&& !tmob.buckled?.anchored && !src.buckled?.anchored \
 				&& !src.throwing && !tmob.throwing \
 				&& !(src.pulling && src.pulling.density) && !(tmob.pulling && tmob.pulling.density)) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
@@ -3470,3 +3470,9 @@
 	if (src.bioHolder?.mobAppearance)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
+
+/mob/proc/scald_temp()
+	return src.base_body_temp + (src.temp_tolerance * 4)
+
+/mob/proc/frostburn_temp()
+	return src.base_body_temp - (src.temp_tolerance * 4)

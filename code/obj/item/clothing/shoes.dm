@@ -43,13 +43,13 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini/oxygen) || istype(W, /obj/item/tank/jetpack))
 			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
 				return
 
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini/oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/mini_oxygen(src)
+		src.tank = new /obj/item/tank/mini/oxygen(src)
 
 	setupProperties()
 		..()
@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 			if (src.tank)
 				boutput(user, SPAN_ALERT("There's already a tank installed!"))
 				return
-			if (!istype(W, /obj/item/tank/mini_oxygen))
+			if (!istype(W, /obj/item/tank/mini/oxygen))
 				boutput(user, SPAN_ALERT("[W] doesn't fit!"))
 				return
 			boutput(user, SPAN_NOTICE("You install [W] into [src]."))

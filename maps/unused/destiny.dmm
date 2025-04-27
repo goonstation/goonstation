@@ -399,10 +399,8 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Captain's Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -1919,7 +1917,7 @@
 	pixel_y = 4;
 	switchon = 1
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/machinery/light/emergency,
 /obj/machinery/camera{
@@ -3502,9 +3500,7 @@
 	name = "West Central Maintenance"
 	})
 "aqw" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1
-	},
+/obj/machinery/computer/announcement/station/bridge,
 /obj/machinery/camera,
 /obj/cable{
 	icon_state = "1-4"
@@ -21877,10 +21873,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
 "eMD" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23164,10 +23158,7 @@
 	icon_state = "line2"
 	},
 /obj/item/device/radio/intercom/cargo,
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -24765,10 +24756,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "fZW" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -25833,7 +25822,7 @@
 /area/station/maintenance/southwest)
 "gCN" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/judgerobe,
@@ -30958,7 +30947,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/peach,
@@ -32626,9 +32615,7 @@
 /area/station/hallway/primary/central)
 "ken" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -36212,7 +36199,7 @@
 /area/station/maintenance/south)
 "lWE" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
@@ -37237,9 +37224,7 @@
 /area/station/crew_quarters/bar)
 "mwl" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -40590,7 +40575,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "ohy" = (
@@ -42085,7 +42070,7 @@
 	icon_state = "line1"
 	},
 /obj/table/glass/reinforced/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/storage/firstaid/oxygen,
@@ -43186,10 +43171,10 @@
 	pixel_y = 30
 	},
 /obj/storage/closet/emergency,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
@@ -44640,7 +44625,7 @@
 /area/station/medical/robotics)
 "qmA" = (
 /obj/table/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/sponge{
@@ -52410,9 +52395,7 @@
 /area/station/turret_protected/Zeta)
 "upR" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -53071,10 +53054,8 @@
 	icon_state = "line2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/computer/announcement{
-	dir = 1;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -53133,7 +53114,7 @@
 /area/station/engine/core)
 "uEo" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/wrench,
@@ -57817,10 +57798,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -60454,9 +60432,7 @@
 /area/station/maintenance/southwest)
 "ykg" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 1;

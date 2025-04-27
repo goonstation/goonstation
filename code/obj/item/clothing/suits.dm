@@ -2154,10 +2154,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
+		var/regex/nt_regex = new(@"^[Nn]ano[Tt]rasen\b")
+		var/job_to_show = replacetext(badge_owner_job, nt_regex, "") //Remove NT so you get "Nanotrasen's Finest Security Consultant"
+		var/descriptive_text = "[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [job_to_show]: [badge_owner_name].")]"
 		if (istype(target))
-			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[descriptive_text]", "You show off the badge to [target.name]: <br>[descriptive_text]")
 		else
-			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge: <br>[descriptive_text]", "You show off the badge: <br>[descriptive_text]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack_self(mob/user as mob)
@@ -2218,6 +2221,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
+
+/obj/item/clothing/suit/security_badge/attorney
+	name = "legal license"
+	desc = "A very tasteful business card that exudes professionalism. It even has a watermark."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "businesscard"
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	item_state = "security_badge_paper"
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_state = "security_badge_paper"
 
 /obj/item/clothing/suit/snow
 	name = "snow suit"

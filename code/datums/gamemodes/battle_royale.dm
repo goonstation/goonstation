@@ -544,7 +544,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
 	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
-	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
+	var/obj/item/card/id/gold/captains_spare/I = new /obj/item/card/id/gold/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= list(access_maxsec, access_armory)

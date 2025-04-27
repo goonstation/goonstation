@@ -345,7 +345,7 @@
 		spread_angle = 15
 
 	artillery
-		proj = new/datum/projectile/bullet/autocannon
+		proj = new/datum/projectile/special/spreader/uniform_burst/circle/airburst
 		shots = 1
 		current_shots = 1
 		cooldown = 5 SECONDS
