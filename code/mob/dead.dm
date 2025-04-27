@@ -1,6 +1,6 @@
 /mob/dead
 	stat = STAT_DEAD
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse

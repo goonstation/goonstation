@@ -84,14 +84,6 @@
 		src.name = ocean_name
 		#endif
 
-	proc/bake_light()
-
-
-		sleep(0.1 SECONDS)
-		for(var/obj/overlay/tile_effect/lighting/L in src)
-			src.icon = getFlatIcon(L)
-			qdel(L)
-
 //space/fluid/ReplaceWith() this is for future ctrl Fs
 	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = NORTH, force = 0)
 		.= ..(what, keep_old_material, handle_air)
@@ -275,6 +267,7 @@
 		src.AddComponent(/datum/component/pitfall/target_area,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetArea = /area/trench_landing)
 
 	edge
@@ -303,6 +296,7 @@
 		src.AddComponent(/datum/component/pitfall/target_coordinates,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetZ = 5,\
 			LandingRange = 8)
 
