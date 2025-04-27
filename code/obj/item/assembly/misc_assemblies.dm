@@ -398,7 +398,7 @@ Contains:
 	src.target = null
 	src.target_item_prefix = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
-	src.contraband = max(src.trigger.contraband, checked_item.applier.contraband)
+	src.contraband = max(src.trigger.contraband, src.applier.contraband)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
