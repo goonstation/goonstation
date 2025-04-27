@@ -88,6 +88,9 @@
 	//Rotating full logs saved to disk
 	var/allowRotatingFullLogs = 0
 
+	//Maximum number of 1kb TGUI chunks for large payloads
+	var/tgui_max_chunk_count = 32
+
 	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
 	var/baseWhitelistEnabled = 0 //! The config value of whitelistEnabled (actual value might be modified mid-round)
@@ -345,6 +348,9 @@
 
 			if ("server_buddy_id")
 				config.server_buddy_id = trimtext(value)
+
+			if ("tgui_max_chunk_count")
+				config.tgui_max_chunk_count = text2num(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")
