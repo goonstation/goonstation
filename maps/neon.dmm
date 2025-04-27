@@ -4820,13 +4820,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
-"dyh" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
-/obj/landmark/start/job/assistant,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quartersA)
 "dys" = (
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/south)
@@ -15529,6 +15522,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"kDa" = (
+/obj/machinery/firealarm/north,
+/obj/table/wood/auto,
+/obj/linen_bin/bedsheet,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quartersA)
 "kDo" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -16503,7 +16502,7 @@
 /area/station/hallway/primary/north)
 "llF" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/grime,
 /area/heated_pool)
 "llY" = (
@@ -26986,7 +26985,7 @@
 /area/listeningpost)
 "sHe" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/toilets)
@@ -28405,7 +28404,7 @@
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "tCU" = (
-/obj/bedsheetbin{
+/obj/linen_bin/towel{
 	pixel_y = -17
 	},
 /turf/simulated/floor/sanitary,
@@ -33924,7 +33923,7 @@
 /area/station/engine/substation/northwest)
 "xgD" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
@@ -34831,6 +34830,7 @@
 /area/station/crew_quarters/captain)
 "xMR" = (
 /obj/landmark/pest,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -78571,8 +78571,8 @@ qpn
 qpn
 qpn
 sUN
-pDD
-dyh
+kDa
+hjM
 mlx
 tEX
 pDD
