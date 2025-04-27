@@ -1753,7 +1753,7 @@
 	},
 /area/space)
 "fy" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1

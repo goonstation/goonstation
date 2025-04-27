@@ -71,9 +71,6 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (small television)"
 	computertype = /obj/machinery/computer/security/wooden_tv/small
 	icon_state = "circuit_civilian"
-/obj/item/circuitboard/communications
-	name = "circuit board (communications)"
-	computertype = /obj/machinery/computer/communications
 
 // ID Card computers
 /obj/item/circuitboard/card
