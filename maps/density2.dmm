@@ -3887,15 +3887,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"yF" = (
-/obj/decal/stage_edge,
-/obj/machinery/computer3/generic/bank_data,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/wood/two,
-/area/station/bridge)
 "yH" = (
 /obj/decal/stage_edge,
 /obj/machinery/computer/communications,
@@ -4248,6 +4239,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"BC" = (
+/obj/decal/stage_edge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/personnel_management,
+/turf/simulated/floor/wood/two,
+/area/station/bridge)
 "BE" = (
 /obj/cable/orange,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -48868,7 +48868,7 @@ CI
 aG
 up
 wA
-yF
+BC
 Bc
 Db
 Fy

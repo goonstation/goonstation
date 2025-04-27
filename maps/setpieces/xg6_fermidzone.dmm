@@ -196,6 +196,18 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"aR" = (
+/obj/machinery/computer/announcement/syndicate/commander{
+	dir = 4;
+	name = "Shen Kuo Observatory Announcement Console"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "aS" = (
 /obj/machinery/recharger/wall{
 	pixel_y = 24
@@ -1925,17 +1937,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"ic" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 1
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "id" = (
 /obj/decal/hfire{
 	pixel_y = 6
@@ -2097,6 +2098,15 @@
 /obj/decal/poster/wallsign/stencil/left/x,
 /obj/decal/poster/wallsign/stencil/right/g,
 /turf/unsimulated/wall/auto/adventure/shuttle,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
+"iE" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/sanitary/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -3286,6 +3296,14 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"nM" = (
+/obj/machinery/light/small,
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/unsimulated/floor/sanitary,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "nN" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/industrial,
@@ -3493,17 +3511,6 @@
 /obj/item/casing/deagle,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"oA" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/yellowblack{
-	dir = 1
 	},
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4109,17 +4116,6 @@
 /turf/unsimulated/floor/stairs/dark{
 	dir = 4
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"qG" = (
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -6467,6 +6463,22 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Ay" = (
+/obj/machinery/computer/camera_viewer/telescreen{
+	layer = 30;
+	name = "Conference Room Display";
+	camera_networks = list("XG6");
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/fakeobject/safehouse/mechcomp_cabinet{
+	desc = "An equipment rack for various AV devices. ";
+	name = "AV rack"
+	},
+/turf/unsimulated/floor/carpet/red/standard/edge/east,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "AB" = (
 /obj/item/storage/toolbox{
 	pixel_y = 19
@@ -6912,15 +6924,6 @@
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"BZ" = (
-/obj/machinery/computer/television/small{
-	pixel_y = 10
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/sanitary/white,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7811,6 +7814,17 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"FR" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "FT" = (
 /obj/railing/yellow/reinforced{
 	dir = 4
@@ -8054,14 +8068,6 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"Hf" = (
-/obj/machinery/light/small,
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -10209,20 +10215,6 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
-"PN" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console";
-	req_access_txt = "76"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/redblack{
-	dir = 4
-	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
 "PO" = (
 /obj/decal/cleanable/blood/tracks,
 /mob/living/critter/fermid/spitter,
@@ -11125,6 +11117,17 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"TE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 1
+	},
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "TG" = (
 /obj/window/cubicle{
 	dir = 1
@@ -11504,6 +11507,17 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Vf" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/unsimulated/floor/sanitary,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Vg" = (
 /obj/fakeobject/tallsmes,
 /obj/cable/conduit,
@@ -11840,6 +11854,15 @@
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
+"Ws" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/black,
+/area/solarium{
+	name = "XG6 Shen Kuo Observatory"
+	})
 "Wt" = (
 /turf/unsimulated/floor/purple/checker,
 /area/solarium{
@@ -12059,15 +12082,6 @@
 /turf/unsimulated/floor/carpet/purple/standard/edge{
 	dir = 9
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"XM" = (
-/obj/machinery/computer/television/small{
-	pixel_y = 10
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/black,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -12296,22 +12310,6 @@
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
-/area/solarium{
-	name = "XG6 Shen Kuo Observatory"
-	})
-"YB" = (
-/obj/machinery/computer/camera_viewer/telescreen{
-	layer = 30;
-	name = "Conference Room Display";
-	camera_networks = list("XG6");
-	pixel_x = -8;
-	pixel_y = 1
-	},
-/obj/fakeobject/safehouse/mechcomp_cabinet{
-	desc = "An equipment rack for various AV devices. ";
-	name = "AV rack"
-	},
-/turf/unsimulated/floor/carpet/red/standard/edge/east,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -13328,13 +13326,13 @@ Yf
 In
 In
 Yf
-qG
+Vf
 Mc
 Nn
 Mc
 Nn
 Mc
-Hf
+nM
 Yf
 In
 In
@@ -14294,7 +14292,7 @@ WP
 vz
 mw
 mw
-BZ
+iE
 pg
 nP
 HW
@@ -14331,7 +14329,7 @@ MZ
 Va
 Va
 LB
-PN
+aR
 ZP
 RT
 qw
@@ -14488,7 +14486,7 @@ Yf
 IA
 WH
 wu
-ic
+FR
 RT
 VY
 aW
@@ -14520,7 +14518,7 @@ In
 In
 Yf
 ZN
-YB
+Ay
 za
 ZZ
 ZZ
@@ -14690,7 +14688,7 @@ zY
 Mh
 Yf
 ep
-XM
+Ws
 Pj
 Wf
 aV
@@ -16909,7 +16907,7 @@ Yf
 eU
 JR
 Ng
-oA
+TE
 Yf
 Bz
 sP

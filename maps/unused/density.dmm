@@ -330,10 +330,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"aR" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "aS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell 1"
@@ -510,19 +506,6 @@
 	},
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 7
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
-"bp" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -2780,21 +2763,6 @@
 	},
 /turf/space,
 /area/space)
-"gW" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 4;
-	icon_state = "comm"
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "gX" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -2820,13 +2788,6 @@
 /area/station/bridge)
 "gZ" = (
 /obj/machinery/chem_dispenser/soda,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
-"ha" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "hb" = (
@@ -6378,6 +6339,19 @@
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
+"yJ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "BD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6424,6 +6398,13 @@
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"FX" = (
+/obj/table/wood/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "GM" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
@@ -6440,6 +6421,19 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
+"Hw" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "Je" = (
 /obj/strip_door,
 /turf/simulated/floor/plating,
@@ -6566,6 +6560,10 @@
 /obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
+"ZK" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/plating,
+/area/station/security/main)
 
 (1,1,1) = {"
 aa
@@ -43256,7 +43254,7 @@ fg
 fz
 fY
 gu
-gW
+Hw
 hl
 fg
 ic
@@ -45068,7 +45066,7 @@ GM
 fD
 fD
 gz
-ha
+FX
 hp
 hp
 nS
@@ -53505,7 +53503,7 @@ al
 ar
 aA
 aq
-aR
+ZK
 aq
 ax
 bm
@@ -54112,7 +54110,7 @@ aJ
 aS
 ax
 bf
-bp
+yJ
 ax
 bz
 ax

@@ -9972,6 +9972,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"byg" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/yellow/side{
+	broken = 1;
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "byk" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -10291,6 +10305,12 @@
 "bAT" = (
 /turf/simulated/floor,
 /area/station/engine/substation/west)
+"bBg" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "bBB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -13447,19 +13467,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"dlc" = (
-/obj/machinery/firealarm/east,
-/obj/disposalpipe/segment,
-/obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
-/obj/item/pen/fancy,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "dlm" = (
 /obj/machinery/light_switch/east,
 /obj/machinery/disposal/small{
@@ -17164,23 +17171,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/west)
-"gaf" = (
-/obj/table/reinforced/auto,
-/obj/bedsheetbin{
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/judgerobe,
-/obj/item/clothing/head/powdered_wig,
-/obj/item/device/radio/headset/civilian,
-/obj/item/device/radio/headset/civilian,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/bridge/customs)
 "gah" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -22083,6 +22073,23 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/southwest)
+"jxc" = (
+/obj/machinery/door_control{
+	id = "lockdown";
+	name = "Bridge Lockdown Control";
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/bridge/customs)
 "jxi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25420,23 +25427,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"lOq" = (
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Lockdown Control";
-	pixel_x = -23;
-	dir = 8;
-	pixel_y = 1
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/bridge/customs)
 "lOC" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -28972,20 +28962,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"owe" = (
-/obj/storage/secure/closet/engineering/mining,
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28
-	},
-/turf/simulated/floor/yellow/side{
-	broken = 1;
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "owA" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -29826,6 +29802,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"pcw" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/bedsheet{
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/judgerobe,
+/obj/item/clothing/head/powdered_wig,
+/obj/item/device/radio/headset/civilian,
+/obj/item/device/radio/headset/civilian,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "pdl" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -29853,6 +29846,20 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
+"pee" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "pel" = (
 /obj/machinery/floorflusher/minibrig,
 /obj/disposalpipe/trunk/west,
@@ -30743,6 +30750,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
+"pOE" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/machinery/firealarm/east,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "pPg" = (
 /obj/storage/closet/office,
 /obj/machinery/disposal/small{
@@ -33921,15 +33935,6 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/warehouse)
-"shk" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/obj/machinery/firealarm/east,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "sht" = (
 /obj/storage/closet/welding_supply,
 /obj/item/storage/wall/fire{
@@ -34299,6 +34304,11 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
+"ssZ" = (
+/obj/linen_bin/towel,
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "stg" = (
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -36594,22 +36604,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/southeast)
-"tZC" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "uai" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -38457,11 +38451,6 @@
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
-"vgE" = (
-/obj/towelbin,
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "vgO" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -39035,6 +39024,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
+"vGD" = (
+/obj/machinery/firealarm/east,
+/obj/disposalpipe/segment,
+/obj/table/wood/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/pen/fancy,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "vHe" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -40816,14 +40818,6 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"xcV" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "xdq" = (
 /obj/machinery/turretid/armory_perimeter{
 	pixel_x = -24
@@ -75726,7 +75720,7 @@ yie
 yie
 yie
 abJ
-xcV
+bBg
 xkb
 xkb
 abJ
@@ -78759,8 +78753,8 @@ akz
 fZz
 uly
 bmh
-tZC
-shk
+pee
+pOE
 bmh
 arj
 ybI
@@ -78771,7 +78765,7 @@ tQO
 jHU
 pui
 rJP
-vgE
+ssZ
 jHU
 tCh
 azu
@@ -81510,7 +81504,7 @@ aOE
 aPQ
 vgr
 hXx
-lOq
+jxc
 pYy
 wYg
 dIa
@@ -83020,7 +83014,7 @@ aOE
 aPQ
 kVr
 nFM
-gaf
+pcw
 eVv
 wYg
 wYg
@@ -83052,7 +83046,7 @@ iMh
 xsx
 rvL
 bHT
-owe
+byg
 bGC
 bGe
 tij
@@ -85140,7 +85134,7 @@ aWW
 mlo
 aWW
 baJ
-dlc
+vGD
 roJ
 bep
 vgO

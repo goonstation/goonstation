@@ -2289,13 +2289,6 @@
 	icon_state = "blue2"
 	},
 /area/space)
-"gB" = (
-/obj/machinery/computer/television,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "blue2"
-	},
-/area/space)
 "gC" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -2304,17 +2297,6 @@
 	icon_state = "wall3"
 	},
 /area/space)
-"gD" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/television{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/diner/tug)
 "gE" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -2417,14 +2399,6 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
-"gR" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/turf/simulated/floor/red/corner{
-	dir = 4
-	},
 /area/space)
 "gS" = (
 /obj/stool/chair/office{
@@ -3712,6 +3686,17 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/wood/two,
 /area/space)
+"kt" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/television{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta"
+	},
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/diner/tug)
 "kw" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Janitor's Closet"
@@ -5326,12 +5311,6 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/carpet/grime,
-/area/space)
-"oo" = (
-/obj/machinery/computer/television{
-	network = "Prison"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/space)
 "op" = (
@@ -7696,18 +7675,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
-"um" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/obj/map/light/dimred,
-/obj/cable{
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/red,
-/area/space)
 "un" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -7759,18 +7726,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
-/area/space)
-"uu" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 8;
-	icon_state = "security"
-	},
-/obj/map/light/dimred,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/red,
 /area/space)
 "uv" = (
 /obj/surgery_tray,
@@ -9345,11 +9300,6 @@
 /obj/machinery/manufacturer/uniform,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/space)
-"yf" = (
-/obj/table/auto,
-/obj/bedsheetbin,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/space)
 "yg" = (
 /obj/table/auto,
 /turf/unsimulated/floor/red/redblackchecker,
@@ -9785,13 +9735,6 @@
 	icon_state = "showerhead"
 	},
 /turf/unsimulated/floor/sanitary,
-/area/space)
-"zm" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4;
-	icon_state = "security"
-	},
-/turf/simulated/floor/circuit/red,
 /area/space)
 "zn" = (
 /obj/fakeobject/shuttleengine{
@@ -10698,6 +10641,18 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
+"Cz" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/obj/map/light/dimred,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/machinery/power/data_terminal,
+/turf/unsimulated/floor/red,
+/area/space)
 "Da" = (
 /obj/table/reinforced/auto,
 /obj/item/camera/large,
@@ -10714,12 +10669,25 @@
 	icon_state = "floor2"
 	},
 /area/space)
+"FI" = (
+/obj/machinery/computer/television{
+	network = "Prison"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/space)
 "Gy" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
 	},
 /mob/living/critter/zombie/scientist,
 /turf/space,
+/area/space)
+"IX" = (
+/obj/machinery/computer/television,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "blue2"
+	},
 /area/space)
 "Jv" = (
 /obj/fakeobject/pipe{
@@ -10747,6 +10715,14 @@
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
+/area/space)
+"JI" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/red/corner{
+	dir = 4
+	},
 /area/space)
 "Lu" = (
 /obj/item/storage/belt/utility,
@@ -10783,6 +10759,30 @@
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/red,
+/area/space)
+"VK" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8;
+	icon_state = "security"
+	},
+/obj/map/light/dimred,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/unsimulated/floor/red,
+/area/space)
+"Wq" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"Xo" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4;
+	icon_state = "security"
+	},
+/turf/simulated/floor/circuit/red,
 /area/space)
 
 (1,1,1) = {"
@@ -13083,7 +13083,7 @@ th
 ai
 tS
 ud
-um
+Cz
 uA
 uK
 uP
@@ -13314,7 +13314,7 @@ aa
 ev
 ec
 ew
-gD
+kt
 kV
 ln
 sZ
@@ -14299,7 +14299,7 @@ th
 ai
 tW
 ui
-uu
+VK
 uG
 uO
 uV
@@ -14925,7 +14925,7 @@ xj
 ai
 xC
 tG
-yf
+Wq
 tG
 yx
 ai
@@ -17514,7 +17514,7 @@ ai
 ar
 ar
 zf
-zm
+Xo
 bB
 bF
 aa
@@ -20474,7 +20474,7 @@ fy
 fy
 gf
 gr
-gB
+IX
 aq
 aa
 aa
@@ -23078,7 +23078,7 @@ aa
 aa
 aa
 ai
-oo
+FI
 jm
 oI
 ai
@@ -23154,7 +23154,7 @@ aa
 aa
 gI
 gK
-gR
+JI
 hd
 hp
 hA
@@ -24598,7 +24598,7 @@ aa
 aa
 aa
 ai
-oo
+FI
 jm
 oI
 ai

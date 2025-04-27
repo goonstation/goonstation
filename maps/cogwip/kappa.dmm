@@ -463,16 +463,6 @@
 "bB" = (
 /turf/simulated/floor/shuttle,
 /area/space)
-"bC" = (
-/obj/machinery/computer/camera_viewer{
-	icon_state = "security";
-	dir = 8
-	},
-/turf/simulated/floor/blueblack{
-	icon_state = "blueblack";
-	dir = 4
-	},
-/area/space)
 "bD" = (
 /obj/stool/chair/comfy/shuttle/red{
 	icon_state = "shuttle_chair-red";
@@ -779,11 +769,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/space)
-"cy" = (
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/simulated/floor/sanitary/blue,
 /area/space)
 "cz" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -3402,32 +3387,6 @@
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/black,
 /area/space)
-"ke" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/turf/simulated/floor/black,
-/area/space)
 "kf" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -5473,21 +5432,11 @@
 "pX" = (
 /turf/simulated/floor/airless/stairs/wide/other,
 /area/space)
-"pY" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/turf/simulated/floor/grey,
-/area/space)
 "pZ" = (
 /obj/stool/chair/red{
 	icon_state = "chair-r";
 	dir = 8
 	},
-/turf/simulated/floor/grey,
-/area/space)
-"qa" = (
-/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/grey,
 /area/space)
 "qb" = (
@@ -6315,15 +6264,6 @@
 "sp" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/marker/supplymarker,
-/turf/simulated/floor/arrival,
-/area/space)
-"sq" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/television{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
 /turf/simulated/floor/arrival,
 /area/space)
 "sr" = (
@@ -7658,6 +7598,65 @@
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall_3_trans"
+	},
+/area/space)
+"wG" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/simulated/floor/sanitary/blue,
+/area/space)
+"xo" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/space)
+"ET" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart"
+	},
+/turf/simulated/floor/black,
+/area/space)
+"OP" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/grey,
+/area/space)
+"TM" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/television{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta"
+	},
+/turf/simulated/floor/arrival,
+/area/space)
+"Zm" = (
+/obj/machinery/computer/camera_viewer{
+	icon_state = "security";
+	dir = 8
+	},
+/turf/simulated/floor/blueblack{
+	icon_state = "blueblack";
+	dir = 4
 	},
 /area/space)
 
@@ -24755,7 +24754,7 @@ as
 as
 bO
 bO
-cy
+wG
 as
 bP
 bP
@@ -29360,7 +29359,7 @@ cq
 ak
 cq
 kj
-ke
+ET
 as
 as
 gJ
@@ -30802,7 +30801,7 @@ ei
 gq
 fs
 lw
-bC
+Zm
 bN
 bN
 lh
@@ -35325,7 +35324,7 @@ as
 as
 ll
 ll
-cy
+wG
 as
 cD
 cD
@@ -43041,7 +43040,7 @@ oK
 oK
 oX
 oX
-pY
+xo
 pA
 pA
 nb
@@ -46664,7 +46663,7 @@ nL
 nL
 nL
 pA
-pY
+xo
 lf
 lf
 qf
@@ -49081,7 +49080,7 @@ nL
 nL
 oX
 oX
-qa
+OP
 qg
 pA
 oX
@@ -77625,7 +77624,7 @@ hj
 hj
 rq
 rU
-sq
+TM
 sA
 sG
 sR
@@ -77915,7 +77914,7 @@ hj
 hj
 rq
 rU
-sq
+TM
 sA
 sG
 sR
@@ -93989,7 +93988,7 @@ aa
 aa
 rq
 rU
-sq
+TM
 sA
 sG
 sR

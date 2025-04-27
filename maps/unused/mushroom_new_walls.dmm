@@ -2079,18 +2079,6 @@
 /obj/storage/crate,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
-"amV" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/engine/engineering/ce)
 "amX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -4565,16 +4553,6 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/autolathe)
-"azw" = (
-/obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/station/crew_quarters/arcade)
 "azx" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -4943,6 +4921,12 @@
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
+	},
+/area/station/quartermaster/office)
+"aBF" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
 	},
 /area/station/quartermaster/office)
 "aBH" = (
@@ -6008,21 +5992,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"aIw" = (
-/obj/machinery/camera{
-	c_tag = "Cargo Bay Office";
-	dir = 1
-	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/orangeblack/side{
-	dir = 10
-	},
-/area/station/quartermaster/office)
 "aIy" = (
 /obj/item/device/radio/intercom{
 	dir = 1
@@ -10812,17 +10781,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"bne" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetN"
-	},
-/area/station/crew_quarters/arcade)
 "bng" = (
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -12368,6 +12326,21 @@
 	dir = 9
 	},
 /area/station/engine/engineering/private)
+"bQP" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/blue{
+	icon_state = "0-6"
+	},
+/obj/machinery/computer/announcement/station/ai,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "bQV" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/floorguide/evac{
@@ -13686,12 +13659,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"cKQ" = (
-/obj/machinery/nanofab/refining,
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "cLh" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
@@ -14842,6 +14809,14 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
+"dJN" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/station/crew_quarters/arcade)
 "dJO" = (
 /obj/submachine/cargopad/hydroponic,
 /obj/disposalpipe/segment/mail{
@@ -16325,6 +16300,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
+"eUZ" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "carpetW"
+	},
+/area/station/crew_quarters/arcade)
 "eVp" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "chemistry";
@@ -16950,16 +16933,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"fvc" = (
-/obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetSW"
-	},
-/area/station/crew_quarters/arcade)
 "fvo" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -17820,6 +17793,17 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"glM" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "carpetE"
+	},
+/area/station/crew_quarters/arcade)
 "glV" = (
 /obj/stool/chair/pew/left{
 	dir = 4
@@ -20829,6 +20813,13 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"iSI" = (
+/obj/table/wood/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/pinpointer,
+/obj/item/hand_tele,
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/captain)
 "iTx" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -21050,16 +21041,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/bridge)
-"jdJ" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetNE"
-	},
-/area/station/crew_quarters/arcade)
 "jdY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -22063,23 +22044,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
-"jSV" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable/blue{
-	icon_state = "0-6"
-	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "jTk" = (
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
@@ -25063,6 +25027,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"mqF" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "carpetNE"
+	},
+/area/station/crew_quarters/arcade)
 "mra" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -27919,6 +27891,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"oHQ" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "carpetNW"
+	},
+/area/station/crew_quarters/arcade)
 "oIr" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -28826,6 +28806,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"pfN" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "carpetN"
+	},
+/area/station/crew_quarters/arcade)
 "pgH" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -29497,6 +29486,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/listeningpost/power)
+"pDN" = (
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue1"
+	},
+/area/station/bridge)
 "pDP" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -30335,6 +30332,18 @@
 	dir = 9
 	},
 /area/station/hallway/primary/south)
+"qkW" = (
+/obj/machinery/camera{
+	c_tag = "Cargo Bay Office";
+	dir = 1
+	},
+/obj/machinery/computer/announcement/station/cargo,
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/station/quartermaster/office)
 "qla" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
@@ -30554,19 +30563,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"quL" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetE"
-	},
-/area/station/crew_quarters/arcade)
 "quR" = (
 /obj/storage/closet/port_a_sci,
 /turf/simulated/floor/purple/corner{
@@ -30788,6 +30784,12 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"qBM" = (
+/obj/machinery/computer/announcement/station/security,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "qCB" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
@@ -31301,16 +31303,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"qRX" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/station/crew_quarters/arcade)
 "qSd" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -33585,6 +33577,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"sxe" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/computer/announcement/station/engineering,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/engine/engineering/ce)
 "sxh" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -34543,16 +34544,6 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
-"tcv" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/station/crew_quarters/arcade)
 "tds" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35871,13 +35862,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
-"uaO" = (
-/obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
-/obj/item/pinpointer,
-/obj/item/hand_tele,
-/turf/simulated/floor/blue,
-/area/station/crew_quarters/captain)
 "ubb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36658,6 +36642,14 @@
 	dir = 5
 	},
 /area/station/medical/research)
+"uFQ" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "carpetNW"
+	},
+/area/station/crew_quarters/arcade)
 "uFR" = (
 /obj/landmark/start/job/bartender,
 /turf/simulated/floor/black,
@@ -39521,6 +39513,14 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"wZJ" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "carpetSW"
+	},
+/area/station/crew_quarters/arcade)
 "xao" = (
 /obj/cable,
 /obj/cable{
@@ -39798,15 +39798,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"xiV" = (
-/obj/machinery/computer/announcement{
-	name = "Security Announcement Computer";
-	req_access = list(1)
-	},
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/main)
 "xiY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -39933,16 +39924,6 @@
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
-"xnS" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fblue1"
-	},
-/area/station/bridge)
 "xnZ" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -40235,16 +40216,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/hor)
-"xyf" = (
-/obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor{
-	icon_state = "carpetW"
-	},
-/area/station/crew_quarters/arcade)
 "xyu" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -78608,7 +78579,7 @@ axu
 bow
 anl
 bqp
-amV
+sxe
 aoL
 tds
 apJ
@@ -80085,7 +80056,7 @@ aCH
 aCH
 aFs
 aHs
-aIw
+qkW
 aJw
 aKm
 aKm
@@ -80752,12 +80723,12 @@ iyq
 iyq
 eJa
 ydc
-azw
-xyf
-fvc
+uFQ
+eUZ
+wZJ
 bqz
 bqz
-tcv
+oHQ
 iEl
 abm
 aaa
@@ -80984,7 +80955,7 @@ qgx
 aCH
 aCH
 aor
-cKQ
+aBF
 aCb
 lwG
 aDC
@@ -81059,7 +81030,7 @@ azM
 mrV
 bqz
 bqz
-bne
+pfN
 iEl
 aaa
 aaa
@@ -81356,9 +81327,9 @@ cyg
 cyg
 cFQ
 ydc
-jdJ
-quL
-qRX
+mqF
+glM
+dJN
 bqz
 evU
 oii
@@ -84112,7 +84083,7 @@ mTm
 lMk
 uLU
 vRA
-uaO
+iSI
 urL
 anA
 aaa
@@ -87734,7 +87705,7 @@ xEj
 pxY
 fIl
 nFu
-xnS
+pDN
 hkc
 htK
 dBx
@@ -89208,7 +89179,7 @@ hZb
 usi
 ivk
 vfi
-xiV
+qBM
 pEi
 uLR
 xvS
@@ -112223,7 +112194,7 @@ bMf
 bMf
 wPL
 wPL
-jSV
+bQP
 ovz
 ovz
 ovz

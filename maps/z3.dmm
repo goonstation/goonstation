@@ -180,17 +180,6 @@
 	},
 /turf/space,
 /area/space)
-"aaL" = (
-/obj/machinery/computer/announcement{
-	name = "Radio Station Announcement Computer";
-	req_access_txt = "";
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/darkblueblack,
-/area/radiostation/bridge)
 "aaM" = (
 /obj/table/auto,
 /obj/item/device/audio_log/radioship/large/distress,
@@ -362,14 +351,6 @@
 	},
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
-"abr" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/radiostation/bridge)
 "abs" = (
 /obj/structure/girder,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -15405,12 +15386,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/tv_set)
-"byl" = (
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/floor/grime,
-/area/diner/motel/pool)
 "byK" = (
 /obj/stool/chair/yellow,
 /turf/unsimulated/floor/honeyblocks,
@@ -15783,6 +15758,10 @@
 "ctc" = (
 /turf/unsimulated/floor/black,
 /area/space_hive)
+"cto" = (
+/obj/machinery/computer/television/small,
+/turf/simulated/floor/carpet/grime,
+/area/abandonedship)
 "cty" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -16456,10 +16435,6 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
-"dZQ" = (
-/obj/machinery/computer/television/small,
-/turf/simulated/floor/carpet/grime,
-/area/abandonedship)
 "dZX" = (
 /obj/decal/cleanable/oil,
 /obj/machinery/light/small,
@@ -17798,14 +17773,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"hwS" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/diner/dining)
 "hzu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19022,6 +18989,12 @@
 	name = "broken door"
 	},
 /area/space_hive)
+"kqW" = (
+/obj/machinery/computer/television{
+	camera_networks = list("Pathopost")
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "kse" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
@@ -19084,6 +19057,14 @@
 "kyb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/jucer_trader)
+"kyc" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/radiostation/bridge)
 "kAu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19387,6 +19368,17 @@
 	},
 /turf/space,
 /area/salvage_trader)
+"llG" = (
+/obj/machinery/computer/announcement{
+	name = "Radio Station Announcement Computer";
+	req_access = null;
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/radiostation/bridge)
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -20385,6 +20377,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"nxy" = (
+/obj/machinery/computer/television/public,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "nxO" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20889,10 +20885,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
-"oUf" = (
-/obj/machinery/computer/television/public,
-/turf/unsimulated/floor/honeyblocks,
-/area/space_hive)
 "oVD" = (
 /obj/machinery/light{
 	dir = 4;
@@ -20937,6 +20929,13 @@
 	icon_state = "red4"
 	},
 /area/diner/dining)
+"oXL" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/television/public,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "oXO" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -22722,6 +22721,14 @@
 /mob/living/critter/zombie/security,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
+"tdV" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "teK" = (
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
@@ -23017,6 +23024,12 @@
 	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
+"tQQ" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/grime,
+/area/diner/motel/pool)
 "tQT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -24746,13 +24759,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor,
 /area/radiostation/press)
-"yfP" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/television/public,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/bee_trader)
 "ygK" = (
 /turf/space,
 /area/diner/tug)
@@ -24782,12 +24788,6 @@
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"ylC" = (
-/obj/machinery/computer/television{
-	camera_networks = list("Pathopost")
-	},
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 
 (1,1,1) = {"
 aaa
@@ -38590,7 +38590,7 @@ aaa
 aaa
 axl
 iYn
-dZQ
+cto
 aQE
 aRm
 iYn
@@ -44147,7 +44147,7 @@ aaq
 gaf
 aaY
 hFn
-oUf
+nxy
 aaf
 aaf
 acd
@@ -73180,7 +73180,7 @@ iDu
 vpl
 azq
 asW
-hwS
+tdV
 iZr
 wli
 tkr
@@ -73468,7 +73468,7 @@ aaa
 aaa
 wvT
 alp
-yfP
+oXL
 sFI
 hGO
 dYj
@@ -84351,7 +84351,7 @@ crC
 bxI
 jij
 crC
-byl
+tQQ
 moj
 vRZ
 qhW
@@ -106729,7 +106729,7 @@ aac
 aab
 aab
 aDy
-ylC
+kqW
 aFy
 aFg
 aGc
@@ -107863,7 +107863,7 @@ aaa
 aaa
 uiy
 aaD
-abr
+kyc
 abU
 acm
 ptd
@@ -108466,7 +108466,7 @@ aaa
 aaw
 aaB
 jEf
-aaL
+llG
 xcP
 aat
 ach

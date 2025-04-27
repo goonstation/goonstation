@@ -474,6 +474,34 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"cr" = (
+/obj/table/syndicate/auto,
+/obj/item/clothing/gloves/swat/knight,
+/obj/item/clothing/shoes/swat/knight{
+	pixel_y = -17;
+	pixel_x = 7
+	},
+/obj/machinery/light/small/floor/frostedred,
+/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/space/syndicate/specialist/knight{
+	pixel_y = 19;
+	pixel_x = 18
+	},
+/obj/item/clothing/head/helmet/space/syndicate/specialist/knight{
+	pixel_y = 37;
+	pixel_x = 15
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "cu" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/unsimulated/wall/auto/lead/gray{
@@ -3989,6 +4017,17 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"sT" = (
+/obj/railing/yellow,
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/turf/unsimulated/floor/sanitary/blue,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "tb" = (
 /obj/machinery/vending/cigarette{
 	pixel_y = 4
@@ -4286,6 +4325,36 @@
 /turf/unsimulated/floor/stairs/dark{
 	dir = 9
 	},
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"tV" = (
+/obj/table/syndicate/auto,
+/obj/item/clothing/shoes/swat/knight{
+	pixel_y = -16;
+	pixel_x = 15
+	},
+/obj/item/clothing/gloves/swat/knight{
+	pixel_x = 13
+	},
+/obj/item/clothing/suit/space/syndicate/specialist/knight{
+	pixel_y = 19;
+	pixel_x = 18
+	},
+/obj/machinery/light/small/floor/frostedred,
+/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
+/obj/machinery/light/emergencyflashing{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/clothing/head/helmet/space/syndicate/specialist/knight{
+	pixel_y = 37;
+	pixel_x = 15
+	},
+/turf/unsimulated/floor/engine/glow,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -4906,34 +4975,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"xp" = (
-/obj/table/syndicate/auto,
-/obj/item/clothing/gloves/swat/knight,
-/obj/item/clothing/shoes/swat/knight{
-	pixel_y = -17;
-	pixel_x = 7
-	},
-/obj/machinery/light/small/floor/frostedred,
-/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
-/obj/machinery/light/emergencyflashing{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/space/syndicate/knight{
-	pixel_y = 19;
-	pixel_x = 18
-	},
-/obj/item/clothing/head/helmet/space/syndicate/specialist/knight{
-	pixel_y = 37;
-	pixel_x = 15
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "xq" = (
 /turf/unsimulated/floor/redblack{
 	dir = 6
@@ -5358,20 +5399,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/concrete,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"za" = (
-/obj/machinery/computer/television/small{
-	pixel_y = 4
-	},
-/obj/table/reinforced/bar/auto{
-	name = "office counter"
-	},
-/turf/unsimulated/floor/wood/two,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -6400,36 +6427,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"Fl" = (
-/obj/table/syndicate/auto,
-/obj/item/clothing/shoes/swat/knight{
-	pixel_y = -16;
-	pixel_x = 15
-	},
-/obj/item/clothing/gloves/swat/knight{
-	pixel_x = 13
-	},
-/obj/item/clothing/suit/space/syndicate/knight{
-	pixel_y = 19;
-	pixel_x = 18
-	},
-/obj/machinery/light/small/floor/frostedred,
-/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
-/obj/machinery/light/emergencyflashing{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/item/clothing/head/helmet/space/syndicate/specialist/knight{
-	pixel_y = 37;
-	pixel_x = 15
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "Fo" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light/incandescent/warm{
@@ -7268,6 +7265,18 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"Jt" = (
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "Jv" = (
 /obj/stool/bench,
 /obj/item/paper/businesscard/banjo,
@@ -7620,18 +7629,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"KQ" = (
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 4
-	},
-/turf/unsimulated/floor/black,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "KY" = (
 /obj/stool/chair/purple{
 	dir = 8
@@ -7716,18 +7713,6 @@
 /turf/unsimulated/wall/auto/adventure/cave{
 	name = "dark rock"
 	},
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"Lm" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer/television/small{
-	pixel_y = 4
-	},
-/turf/simulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -9791,6 +9776,20 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"TW" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/obj/table/reinforced/bar/auto{
+	name = "office counter"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "Ud" = (
 /obj/mapping_helper/access/syndie_shuttle,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -9921,17 +9920,6 @@
 /turf/simulated/floor/engine/glow{
 	name = "landing pad"
 	},
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"US" = (
-/obj/railing/yellow,
-/obj/table/reinforced/auto,
-/obj/towelbin,
-/turf/unsimulated/floor/sanitary/blue,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -10493,6 +10481,18 @@
 	},
 /obj/railway_vehicle/flatbed/container/red,
 /turf/simulated/floor/engine/caution/northsouth,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"XP" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/turf/simulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11525,7 +11525,7 @@ Zj
 zA
 Zj
 Zj
-Lm
+XP
 DR
 RP
 ZJ
@@ -12502,7 +12502,7 @@ Qd
 Qd
 fa
 zU
-za
+TW
 Ux
 lu
 Xy
@@ -14112,7 +14112,7 @@ Qd
 (52,1,1) = {"
 Qd
 fa
-Fl
+tV
 IV
 zO
 fa
@@ -14241,7 +14241,7 @@ zO
 zO
 fa
 fa
-US
+sT
 pd
 fa
 Wl
@@ -14291,7 +14291,7 @@ Xy
 Xy
 zh
 Xy
-KQ
+Jt
 fa
 Qd
 "}
@@ -14365,7 +14365,7 @@ zO
 zO
 fa
 fa
-US
+sT
 lQ
 fa
 BT
@@ -14422,7 +14422,7 @@ Qd
 (57,1,1) = {"
 Qd
 fa
-xp
+cr
 zO
 ff
 fa

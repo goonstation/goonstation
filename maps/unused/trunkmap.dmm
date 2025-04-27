@@ -2172,10 +2172,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"agm" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "agn" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -2642,10 +2638,6 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "aiB" = (
-/turf/simulated/floor/red/side,
-/area/station/security/checkpoint/arrivals)
-"aiC" = (
-/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "aiD" = (
@@ -5171,16 +5163,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/bridge)
-"arg" = (
-/obj/machinery/computer/camera_viewer,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/darkblue,
-/area/station/bridge)
 "arh" = (
 /obj/stool/chair{
 	dir = 8
@@ -5507,13 +5489,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"ask" = (
-/obj/table/auto,
-/obj/item/card/id/captains_spare,
-/obj/item/pinpointer,
-/obj/item/hand_tele,
-/turf/simulated/floor/carpet/arcade/blank,
-/area/station/crew_quarters/captain)
 "asl" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -7055,10 +7030,6 @@
 	},
 /obj/machinery/port_a_brig,
 /obj/machinery/light,
-/turf/simulated/floor,
-/area/station/security/main)
-"axO" = (
-/obj/machinery/computer/camera_viewer,
 /turf/simulated/floor,
 /area/station/security/main)
 "axP" = (
@@ -13785,14 +13756,6 @@
 "aXA" = (
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/barber_shop)
-"aXB" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/barber_shop)
 "aXC" = (
 /obj/stool/barber_chair,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -15454,10 +15417,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"bdI" = (
-/obj/machinery/computer/television,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bdJ" = (
@@ -22294,15 +22253,6 @@
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"bxa" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "bxb" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -25042,15 +24992,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"cdR" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer/camera_viewer,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/security/prison)
 "ciN" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/cable{
@@ -25091,6 +25032,12 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/hop)
+"coG" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/security/prison)
 "coY" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/shuttlebay,
@@ -25732,6 +25679,13 @@
 /obj/machinery/door/window/westleft,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
+"exU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/storage/cart/hotdog,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "eyk" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
@@ -26246,12 +26200,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/brig/prison)
-"gmf" = (
-/obj/table/auto,
-/obj/bedsheetbin,
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/security/prison)
 "gms" = (
 /obj/machinery/mass_driver{
 	id = "sciencedriver"
@@ -26315,6 +26263,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"gyo" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor,
+/area/station/security/main)
 "gzv" = (
 /turf/simulated/wall,
 /area/station/engine/power)
@@ -26973,6 +26925,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"iFd" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/barber_shop)
 "iGr" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -27238,13 +27196,6 @@
 "jul" = (
 /turf/simulated/wall/r_wall,
 /area/station/quartermaster/storage)
-"jCV" = (
-/obj/machinery/computer/camera_viewer{
-	name = "Test Chamber Monitor";
-	network = "Test Chamber"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "jFr" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced{
@@ -27768,10 +27719,6 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/space)
-"kIp" = (
-/obj/machinery/computer/camera_viewer,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "kIA" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Incinerator Access";
@@ -28985,6 +28932,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
+"oyk" = (
+/obj/machinery/computer/camera_viewer{
+	name = "Test Chamber Monitor";
+	network = "Test Chamber"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "ozk" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced{
@@ -29040,6 +28994,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining)
+"oHO" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "oII" = (
 /obj/stool/chair,
 /obj/landmark/start/job/assistant,
@@ -30185,6 +30143,13 @@
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
+"rXD" = (
+/obj/table/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/pinpointer,
+/obj/item/hand_tele,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/station/crew_quarters/captain)
 "rYp" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -30380,12 +30345,30 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"sxQ" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "syY" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"sBd" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint/arrivals)
+"sBz" = (
+/obj/machinery/computer/camera_viewer,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/bridge)
 "sHS" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -30799,6 +30782,15 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
+"tOO" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/security/prison)
 "tPy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31627,6 +31619,10 @@
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"vZs" = (
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "vZu" = (
 /obj/mesh/grille/steel,
 /obj/window/reinforced/west,
@@ -40788,7 +40784,7 @@ afF
 afR
 afX
 afz
-agm
+sxQ
 agv
 agB
 buP
@@ -57571,7 +57567,7 @@ bnj
 boo
 bpy
 aij
-aiC
+sBd
 aiY
 aaa
 aaa
@@ -69919,7 +69915,7 @@ aal
 aal
 aqM
 arE
-ask
+rXD
 atp
 auL
 arE
@@ -70542,9 +70538,9 @@ aPC
 aDQ
 azR
 aVB
-aXB
-aXB
-aXB
+iFd
+iFd
+iFd
 aXA
 agQ
 aia
@@ -71125,7 +71121,7 @@ aaJ
 aaJ
 apv
 aqm
-arg
+sBz
 apu
 asn
 atr
@@ -75679,7 +75675,7 @@ bAx
 aXI
 aTW
 bcq
-bdI
+oHO
 bfx
 bhw
 biu
@@ -79320,7 +79316,7 @@ bsO
 btI
 buF
 bsO
-bxa
+exU
 aok
 anH
 aog
@@ -84117,7 +84113,7 @@ asL
 anK
 anK
 axa
-axO
+gyo
 ayP
 anK
 aBZ
@@ -94728,7 +94724,7 @@ bzk
 uiF
 nus
 bFv
-jCV
+oyk
 bva
 ifM
 fcp
@@ -108744,7 +108740,7 @@ mZc
 drz
 mZc
 mZc
-kIp
+vZs
 ktH
 aab
 aaa
@@ -109638,7 +109634,7 @@ sYh
 luc
 tDL
 foT
-gmf
+coG
 foT
 vOk
 sqv
@@ -115069,7 +115065,7 @@ aaa
 aaa
 aaa
 csK
-cdR
+tOO
 lVI
 hrh
 iPj

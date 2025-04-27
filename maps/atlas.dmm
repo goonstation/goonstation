@@ -2711,18 +2711,6 @@
 /obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
-"aoS" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
-/obj/item/sticker/ribbon/first_place,
-/obj/item/stamp/cap,
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "aoT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3548,16 +3536,6 @@
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/carpet{
 	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/station/bridge/customs)
-"aup" = (
-/obj/machinery/computer3/generic/bank_data,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
 /area/station/bridge/customs)
@@ -5473,17 +5451,6 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
-"aES" = (
-/obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/lounge)
 "aET" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
@@ -11234,22 +11201,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"eCH" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/portable_reclaimer,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -15
-	},
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/mining/magnet)
 "eEx" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellowblack{
@@ -12408,6 +12359,15 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"gfb" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/lounge)
 "ggb" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -14904,6 +14864,18 @@
 	dir = 9
 	},
 /area/station/security/main)
+"jHe" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2"
+	},
+/area/station/bridge/customs)
 "jIB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14969,12 +14941,6 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
-"jLt" = (
-/obj/table/auto,
-/obj/bedsheetbin,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge)
 "jMI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17281,6 +17247,22 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"mWE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_reclaimer,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/mining/magnet)
 "mWK" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -20677,6 +20659,18 @@
 "sok" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core)
+"som" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/wood/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/sticker/ribbon/first_place,
+/obj/item/stamp/cap,
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "sqo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
@@ -24871,6 +24865,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"yky" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/obj/machinery/firealarm/north,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge)
 "ykT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -50372,7 +50372,7 @@ aaa
 aaa
 fns
 mqJ
-eCH
+mWE
 cKw
 ktp
 mqJ
@@ -80284,7 +80284,7 @@ aUv
 aCN
 dEY
 aVx
-aES
+gfb
 aRF
 aGz
 aEV
@@ -80883,7 +80883,7 @@ iZt
 hgR
 lzN
 apT
-jLt
+yky
 aDs
 aCm
 bof
@@ -82084,7 +82084,7 @@ amr
 iga
 asO
 aub
-aup
+jHe
 avg
 azf
 aSW
@@ -82984,7 +82984,7 @@ aVi
 aSl
 rOr
 aoc
-aoS
+som
 ybr
 amu
 asq

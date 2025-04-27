@@ -899,6 +899,13 @@
 	name = "swamp wall"
 	},
 /area/swampzone/deeps)
+"aZe" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/television{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/red/fancy/edge/ne,
+/area/swampzone/interiors/bonktek/security)
 "bbk" = (
 /obj/decal/lightshaft{
 	pixel_x = 8;
@@ -1817,6 +1824,14 @@
 /obj/stool/chair/comfy/purple,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/swampzone/interiors/bonktek/lounge)
+"cgA" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/map/light/screen,
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/carpet/grime,
+/area/crypt/sigma/rd)
 "cgZ" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -3601,13 +3616,6 @@
 	name = "strange surface"
 	},
 /area/crater/cave)
-"erb" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer/television{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/carpet/red/fancy/edge/ne,
-/area/swampzone/interiors/bonktek/security)
 "erc" = (
 /obj/tree/carcosa/two,
 /turf/unsimulated/wall/trench/side{
@@ -4775,14 +4783,6 @@
 	},
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
-"fBE" = (
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/obj/map/light/screen,
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor/carpet/grime,
-/area/crypt/sigma/rd)
 "fCo" = (
 /obj/item/book_kinginyellow{
 	name = "old book"
@@ -4984,14 +4984,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crypt/graveyard)
-"fNz" = (
-/obj/table/reinforced/auto,
-/obj/bedsheetbin,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "green2"
-	},
-/area/crater/biodome/crew)
 "fOn" = (
 /turf/unsimulated/floor/plating,
 /area/swampzone/interiors/quarry)
@@ -5515,13 +5507,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
-"gup" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer/television{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/carpet/red/fancy/edge/nw,
-/area/swampzone/interiors/bonktek/security)
 "guw" = (
 /obj/item/clothing/shoes/clown_shoes/blue{
 	pixel_x = 18
@@ -5863,6 +5848,16 @@
 /obj/item/raw_material/claretine,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"gUb" = (
+/obj/table/wood/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/crypt/sigma/crew)
 "gUe" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/cave,
@@ -6660,6 +6655,15 @@
 "hOF" = (
 /turf/unsimulated/floor/stairs/dark,
 /area/swampzone/ground/canyon)
+"hPc" = (
+/obj/machinery/computer/television{
+	pixel_y = 8
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/wood/eight{
+	dir = 8
+	},
+/area/swampzone/interiors/bonktek/security)
 "hPv" = (
 /turf/unsimulated/wall/setpieces/rootwall{
 	desc = "This wall is made of damp stone.";
@@ -9009,6 +9013,13 @@
 	name = "strange surface"
 	},
 /area/crater/cave)
+"kFA" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/television{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/red/fancy/edge/nw,
+/area/swampzone/interiors/bonktek/security)
 "kFE" = (
 /obj/railing/green/reinforced{
 	dir = 8
@@ -9386,6 +9397,10 @@
 	name = "rock"
 	},
 /area/space)
+"laT" = (
+/obj/machinery/computer/camera_viewer,
+/turf/unsimulated/floor/longtile/black,
+/area/swampzone/interiors/basements)
 "lbq" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/maintenance)
@@ -9668,16 +9683,6 @@
 "lto" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/lounge)
-"ltN" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/crypt/sigma/crew)
 "ltP" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 5
@@ -10016,10 +10021,6 @@
 	dir = 4
 	},
 /area/swampzone/interiors/bonktek)
-"lPo" = (
-/obj/machinery/computer/camera_viewer,
-/turf/unsimulated/floor/longtile/black,
-/area/swampzone/interiors/basements)
 "lQq" = (
 /obj/fakeobject/azarakrocks/rock3,
 /turf/space/fluid/cenote,
@@ -17835,15 +17836,6 @@
 	},
 /turf/unsimulated/floor/green/corner,
 /area/crater/biodome/north)
-"vpP" = (
-/obj/machinery/computer/television{
-	pixel_y = 8
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/wood/eight{
-	dir = 8
-	},
-/area/swampzone/interiors/bonktek/security)
 "vpR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5;
@@ -18859,6 +18851,14 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
+"wxW" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/bedsheet,
+/turf/unsimulated/floor/carpet{
+	dir = 1;
+	icon_state = "green2"
+	},
+/area/crater/biodome/crew)
 "wxX" = (
 /obj/storage/crate/medical/morgue,
 /turf/unsimulated/floor/specialroom/freezer{
@@ -37927,7 +37927,7 @@ toL
 toL
 toL
 lUK
-gup
+kFA
 sYx
 jXu
 ooO
@@ -38229,7 +38229,7 @@ toL
 toL
 toL
 lUK
-vpP
+hPc
 jXu
 jXu
 ooO
@@ -38531,7 +38531,7 @@ toL
 toL
 toL
 lUK
-erb
+aZe
 nHb
 jXu
 ooO
@@ -85565,7 +85565,7 @@ kZc
 vMr
 vMr
 vMr
-fBE
+cgA
 rCE
 rCE
 kSg
@@ -88253,7 +88253,7 @@ ena
 qJt
 kEH
 jkm
-ltN
+gUb
 ahQ
 ahQ
 mRO
@@ -137465,7 +137465,7 @@ cTa
 cTa
 cTa
 jqw
-lPo
+laT
 xKp
 xKp
 xKp
@@ -181887,7 +181887,7 @@ urS
 jey
 jey
 oQv
-fNz
+wxW
 iXJ
 oQv
 tnD

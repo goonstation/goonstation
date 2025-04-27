@@ -1472,15 +1472,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
-"dK" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "dL" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -1878,22 +1869,6 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/tenebrae)
-"eJ" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Tenebrae Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/greenblack{
-	dir = 8
-	},
-/area/station/science/research_director{
-	name = "Tenebrae Command Center"
-	})
 "eK" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -3884,6 +3859,22 @@
 /area/station/turret_protected/AIbaseoutside{
 	name = "Hammer Defense Zone"
 	})
+"jz" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4;
+	area_name = "Hammer";
+	name = "Hammer Announcement Computer"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/hos{
+	name = "Hammer Command"
+	})
 "jA" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4307,17 +4298,6 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
 	icon_state = "line1"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/yellowblack,
-/area/station/engine/engineering/ce{
-	name = "Maru Bridge"
-	})
-"kz" = (
-/obj/machinery/light,
-/obj/machinery/computer/announcement{
-	name = "Maru Announcement Computer"
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -4861,10 +4841,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"lE" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "lF" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -5329,22 +5305,6 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/security/hos{
-	name = "Hammer Command"
-	})
-"mI" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Hammer Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
 /area/station/security/hos{
 	name = "Hammer Command"
 	})
@@ -8425,22 +8385,6 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
-"tr" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Asclepius Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/medical/head{
-	name = "Asclepius Command"
-	})
 "ts" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -8690,6 +8634,22 @@
 "tT" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/research)
+"tU" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4;
+	area_name = "Asclepius";
+	name = "Asclepius Announcement Computer"
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/medical/head{
+	name = "Asclepius Command"
+	})
 "tV" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -8714,16 +8674,6 @@
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay{
-	name = "Asclepius Primary Zone"
-	})
-"tX" = (
-/obj/table/auto,
-/obj/bedsheetbin,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/remote/porter/port_a_medbay,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -9110,6 +9060,10 @@
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
 	})
+"uO" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "uR" = (
 /obj/storage/crate{
 	desc = "Various supplies for the bar.";
@@ -9860,17 +9814,6 @@
 "wA" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/turf/simulated/floor/specialroom/bar/edge{
-	dir = 8
-	},
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
-"wB" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/television/small{
-	pixel_y = 8
-	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 8
 	},
@@ -11046,12 +10989,6 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast{
-	name = "Dionysus Maintenance"
-	})
-"zf" = (
-/obj/machinery/computer/television,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
@@ -12759,20 +12696,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"CO" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Meridian Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
 "CP" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -12977,19 +12900,6 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
-"Dm" = (
-/obj/table/wood/auto,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/card/id/captains_spare,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
@@ -14426,6 +14336,10 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
+"Gr" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "Gs" = (
 /obj/tree,
 /turf/simulated/floor/grass/leafy,
@@ -14576,6 +14490,20 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
+	})
+"GI" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4;
+	name = "Meridian Announcement Computer";
+	area_name = "Meridian"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain{
+	name = "Meridian Command"
 	})
 "GJ" = (
 /obj/shrub,
@@ -15849,10 +15777,6 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
-/area/listeningpost)
-"Jx" = (
-/obj/machinery/computer/television,
-/turf/simulated/floor/black,
 /area/listeningpost)
 "Jy" = (
 /obj/table/wood/auto,
@@ -18033,6 +17957,17 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"Oq" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/specialroom/bar/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
 "Or" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -18294,6 +18229,22 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"OL" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/research{
+	dir = 4;
+	area_name = "Tenebrae";
+	name = "Tenebrae Announcement Computer"
+	},
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/science/research_director{
+	name = "Tenebrae Command Center"
+	})
 "OM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20960,6 +20911,19 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Ui" = (
+/obj/table/wood/auto,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/card/id/gold/captains_spare,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain{
+	name = "Meridian Command"
+	})
 "Uj" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/crew_quarters/hop)
@@ -21010,6 +20974,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"Uq" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/remote/porter/port_a_medbay,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay{
+	name = "Asclepius Primary Zone"
+	})
 "Ur" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -22080,6 +22054,12 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"WT" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast{
+	name = "Dionysus Maintenance"
+	})
 "WV" = (
 /obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
@@ -22291,6 +22271,19 @@
 	},
 /turf/space,
 /area/space)
+"Xt" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station{
+	dir = 4;
+	area_name = "Dionysus";
+	name = "Dionysus Announcement Computer"
+	},
+/obj/mapping_helper/access/head_of_personnel,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/hop)
 "Xu" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/shuttlebay,
@@ -22350,6 +22343,15 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"XC" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/teleporter)
 "XD" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -22548,6 +22550,18 @@
 /turf/simulated/floor/grey,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Yc" = (
+/obj/machinery/light,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/engineering{
+	area_name = "Maru";
+	name = "Maru Announcement Computer"
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/engineering/ce{
+	name = "Maru Bridge"
 	})
 "Yd" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -23250,19 +23264,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"ZQ" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 4;
-	name = "Dionysus Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/hop)
 "ZR" = (
 /obj/table/wood/auto,
 /obj/item/clipboard,
@@ -49489,7 +49490,7 @@ gT
 gT
 lq
 lW
-mI
+jz
 nj
 nO
 oq
@@ -53137,7 +53138,7 @@ aa
 aa
 Zf
 Zf
-ZQ
+Xt
 xF
 SU
 Zf
@@ -54694,7 +54695,7 @@ cN
 cN
 dE
 PP
-eJ
+OL
 cN
 cN
 aa
@@ -56158,7 +56159,7 @@ tI
 si
 uV
 uX
-wB
+Oq
 xg
 xI
 xe
@@ -56433,7 +56434,7 @@ js
 js
 js
 kU
-lE
+uO
 mn
 mU
 nx
@@ -57668,7 +57669,7 @@ rB
 um
 uX
 vQ
-wB
+Oq
 xg
 xe
 yl
@@ -58014,7 +58015,7 @@ bV
 bV
 cU
 dr
-dK
+XC
 Qu
 eR
 fa
@@ -58896,7 +58897,7 @@ aa
 BM
 Cl
 pD
-Dm
+Ui
 DN
 Eg
 Ef
@@ -59485,7 +59486,7 @@ xk
 xI
 yr
 uj
-zf
+WT
 zt
 zC
 zO
@@ -60103,7 +60104,7 @@ aa
 aa
 Bx
 Co
-CO
+GI
 Dp
 DR
 Ej
@@ -61565,7 +61566,7 @@ in
 iR
 jx
 kb
-kz
+Yc
 hR
 aa
 aa
@@ -64609,7 +64610,7 @@ aa
 aa
 sp
 sp
-tr
+tU
 OS
 uz
 sp
@@ -68234,7 +68235,7 @@ rI
 ra
 sY
 tz
-tX
+Uq
 sf
 vu
 wf
@@ -106679,7 +106680,7 @@ Jc
 Jj
 Jm
 IQ
-Jx
+Gr
 JJ
 JQ
 Kb
