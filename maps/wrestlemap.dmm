@@ -41340,7 +41340,7 @@
 /obj/table/auto,
 /obj/item/pinpointer/disk,
 /obj/item/hand_tele,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/captain)
 "sek" = (

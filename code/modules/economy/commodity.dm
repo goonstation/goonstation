@@ -635,7 +635,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/contraband/captainid
 	comname = "NT Captain Gold ID"
-	comtype = /obj/item/card/id/captains_spare
+	comtype = /obj/item/card/id/gold/captains_spare
 	desc = "NT gold-level registered captain ID."
 	price = PAY_EMBEZZLED
 

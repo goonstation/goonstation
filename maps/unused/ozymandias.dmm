@@ -64862,7 +64862,7 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2"
 	},

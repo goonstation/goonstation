@@ -23055,7 +23055,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bNI" = (
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	desc = "Look, sometimes you don't wanna bother figuring out how access works and all that crap so you do something like this. Try not to lose it, doofus.";
 	name = "\improper Gross Hack card"
 	},
@@ -23801,7 +23801,7 @@
 /area/crunch)
 "bQl" = (
 /obj/table/auto,
-/obj/item/card/id/blank_deluxe{
+/obj/item/card/id/gold{
 	desc = "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.";
 	name = "deluxe debit card"
 	},
@@ -79112,7 +79112,7 @@
 	req_access = list(37);
 	admin_access_override = 1
 	},
-/obj/item/card/id/nt_specialist{
+/obj/item/card/id/nanotrasen{
 	pixel_y = 7;
 	desc = "It seems by punctually completing paperwork someone has gained recognition as a paperwork specialist.";
 	name = "Paperwork Specialist's ID"

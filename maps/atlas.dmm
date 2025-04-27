@@ -2732,7 +2732,7 @@
 	pixel_x = -10
 	},
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/sticker/ribbon/first_place,
 /obj/item/stamp/cap,
 /turf/simulated/floor/carpet/arcade,

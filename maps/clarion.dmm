@@ -13484,7 +13484,7 @@
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment,
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/machinery/light/lamp/green{
 	pixel_x = -6;

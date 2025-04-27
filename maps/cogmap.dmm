@@ -17403,7 +17403,7 @@
 /area/station/maintenance/disposal)
 "biv" = (
 /obj/table/auto,
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	pixel_x = 8;
 	pixel_y = 10
 	},

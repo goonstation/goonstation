@@ -33989,7 +33989,7 @@
 	pixel_y = 6;
 	pixel_x = -14
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
