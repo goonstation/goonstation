@@ -486,11 +486,11 @@
 	default_material = "gold"
 	dense = 2
 
-/obj/item/raw_material/neutronium
-	name = "neutronium ore"
-	desc = "An ore containing deadly neutronium metal."
-	material_name = "Neutronium"
-	default_material = "neutronium"
+/obj/item/raw_material/uranium
+	name = "uranium ore"
+	desc = "Uranium ore. Best to stay away from it without proper radiactive protection."
+	material_name = "Uranium"
+	default_material = "uranium"
 
 // Misc building material
 

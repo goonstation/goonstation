@@ -159,6 +159,38 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/neutrite
+	name = "neutrite"
+	result_id = "neutrite"
+
+	validate(datum/material/M)
+		var/has_uranium = FALSE
+		var/has_plutonium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "uranium")
+				has_uranium = TRUE
+			else if (mat.getID() == "plutonium")
+				has_plutonium = TRUE
+
+		return has_uranium && has_plutonium
+
+/datum/material_recipe/neutronium
+	name = "neutronium"
+	result_id = "neutronium"
+
+	validate(datum/material/M)
+		var/has_neutrite = FALSE
+		var/has_erebite = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "neutrite")
+				has_neutrite = TRUE
+			else if (mat.getID() == "erebite")
+				has_erebite = TRUE
+
+		return has_neutrite && has_erebite
+
 // Glass
 
 /datum/material_recipe/plasmaglass
