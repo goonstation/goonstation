@@ -1697,7 +1697,7 @@
 
 /// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
-/mob/proc/apply_color_matrix(list/cmatrix, label)
+/mob/proc/apply_color_matrix(list/cmatrix, label, animate = 0)
 	if (!cmatrix || !label)
 		return
 
@@ -1706,10 +1706,10 @@
 
 	LAZYLISTADDASSOC(src.color_matrices, label, cmatrix)
 
-	src.update_active_matrix()
+	src.update_active_matrix(animate)
 
 /// Removes whichever matrix is associated with the label. Must be a string!
-/mob/proc/remove_color_matrix(label)
+/mob/proc/remove_color_matrix(label, animate = 0)
 	if (!label || !length(src.color_matrices))
 		return
 
@@ -1720,11 +1720,12 @@
 	else
 		LAZYLISTREMOVE(src.color_matrices, label)
 
-	src.update_active_matrix()
+	src.update_active_matrix(animate)
 
 /// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
 /// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
-/mob/proc/update_active_matrix()
+/// If animate is present, animate the transition for that many DS
+/mob/proc/update_active_matrix(animate = 0)
 	if (!length(src.color_matrices))
 		src.active_color_matrix = null
 	else
@@ -1739,7 +1740,10 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
+	if (animate)
+		src.client?.animate_color(src.active_color_matrix, animate, respect_view_tint_settings = src.respect_view_tint_settings)
+	else
+		src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual

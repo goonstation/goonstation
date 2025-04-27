@@ -1531,6 +1531,25 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 5)
 
+/datum/material/organic/plasmacoral
+	mat_id = "plasmacoral"
+	name = "plasma coral"
+	desc = "Strange coral seemingly infused with plasmastone. Appears naturally."
+	color = "#A114FF"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 1)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("radioactive", 1) // less spicy in coral/wall form
+		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
+
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 /datum/material/organic/ectoplasm
 	mat_id = "ectoplasm"
