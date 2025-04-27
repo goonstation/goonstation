@@ -480,6 +480,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/F = A
 		reagents = F.group.reagents
+	else if (istype(A, /obj/item/assembly))
+		var/obj/item/assembly/checked_assembly = A
+		reagents = checked_assembly.get_first_component_reagents()
 	else if (istype(A, /obj/machinery/clonepod))
 		var/obj/machinery/clonepod/P = A
 		if(P.occupant)
@@ -779,9 +782,11 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>\
-			Volume: [check_me.volume] L<br>\
-			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
+			Temperature: [round(check_me.temperature)] K<br>"
+			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
+			if (!istype(A, /obj/bubble))
+				data += "Volume: [check_me.volume] L<br>"
+			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf

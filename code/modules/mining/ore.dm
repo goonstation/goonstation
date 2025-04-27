@@ -31,7 +31,7 @@
 /datum/ore/mauxite
 	name = "mauxite"
 	output = /obj/item/raw_material/mauxite
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
@@ -39,7 +39,7 @@
 /datum/ore/pharosium
 	name = "pharosium"
 	output = /obj/item/raw_material/pharosium
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
@@ -47,7 +47,7 @@
 /datum/ore/molitz
 	name = "molitz"
 	output = /obj/item/raw_material/molitz
-	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
+	events = list(/datum/ore/event/gem = 100,/datum/ore/event/gem/molitz_b = 200)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	event_chance = 20
 	hardness_mod = 1
@@ -56,7 +56,7 @@
 /datum/ore/char
 	name = "char"
 	output = /obj/item/raw_material/char
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/fibrilith)
 	tiles_per_rock_min = 6
 	tiles_per_rock_max = 16
@@ -74,7 +74,7 @@
 /datum/ore/cobryl
 	name = "cobryl"
 	output = /obj/item/raw_material/cobryl
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -84,7 +84,7 @@
 /datum/ore/bohrum
 	name = "bohrum"
 	output = /obj/item/raw_material/bohrum
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -95,7 +95,7 @@
 /datum/ore/claretine
 	name = "claretine"
 	output = /obj/item/raw_material/claretine
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -118,7 +118,7 @@
 /datum/ore/syreline
 	name = "syreline"
 	output = /obj/item/raw_material/syreline
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	amount_per_tile_min = 2
 	amount_per_tile_max = 3
@@ -131,7 +131,7 @@
 /datum/ore/cerenkite
 	name = "cerenkite"
 	output = /obj/item/raw_material/cerenkite
-	events = list(/datum/ore/event/gem,/datum/ore/event/radioactive)
+	events = list(/datum/ore/event/gem = 100,/datum/ore/event/radioactive = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	hardness_mod = 3
 	rarity_tier = 3
@@ -157,7 +157,7 @@
 /datum/ore/plasmastone
 	name = "plasmastone"
 	output = /obj/item/raw_material/plasmastone
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	hardness_mod = 2
 	rarity_tier = 3
@@ -170,7 +170,7 @@
 /datum/ore/koshmarite
 	name = "koshmarite"
 	output = /obj/item/raw_material/eldritch
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
 	event_chance = 12
 	tiles_per_rock_min = 4
@@ -182,7 +182,7 @@
 /datum/ore/gold
 	name = "gold"
 	output = /obj/item/raw_material/gold
-	events = list(/datum/ore/event/gem)
+	events = list(/datum/ore/event/gem = 100, /datum/ore/event/rare_metal = 1)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
@@ -193,7 +193,7 @@
 /datum/ore/miracle
 	name = "miraclium"
 	output = /obj/item/raw_material/miracle
-	events = list(/datum/ore/event/loot_crate)
+	events = list(/datum/ore/event/loot_crate = 100)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
 	event_chance = 1
@@ -207,7 +207,7 @@
 /datum/ore/erebite
 	name = "erebite"
 	output = /obj/item/raw_material/erebite
-	events = list(/datum/ore/event/volatile)
+	events = list(/datum/ore/event/volatile = 100)
 	event_chance = 33
 	tiles_per_rock_min = 1
 	tiles_per_rock_max = 4
@@ -233,7 +233,7 @@
 /datum/ore/nanite
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
-	events = list(/datum/ore/event/loot_crate)
+	events = list(/datum/ore/event/loot_crate = 100)
 	event_chance = 1
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15

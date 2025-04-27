@@ -1104,7 +1104,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "afa" = (
@@ -1358,7 +1358,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "afR" = (
@@ -3571,13 +3571,9 @@
 /area/station/crew_quarters/bathroom)
 "aoa" = (
 /obj/landmark/halloween,
-/obj/machinery/camera{
+/obj/machinery/camera/auto/public{
 	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	dir = 9
 	},
 /obj/landmark/boxing_ring,
 /turf/simulated/floor/specialroom/gym,
@@ -5123,9 +5119,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "auF" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -5134,9 +5128,7 @@
 /area/station/crew_quarters/arcade)
 "auG" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -5448,9 +5440,7 @@
 /area/station/crew_quarters/locker)
 "avN" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -5479,9 +5469,7 @@
 /area/station/crew_quarters/arcade)
 "avQ" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -5886,9 +5874,7 @@
 /area/station/maintenance/northwest)
 "axj" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -5897,9 +5883,7 @@
 /area/station/crew_quarters/arcade)
 "axk" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -12544,7 +12528,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aSq" = (
@@ -17419,7 +17403,7 @@
 /area/station/maintenance/disposal)
 "biv" = (
 /obj/table/auto,
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	pixel_x = 8;
 	pixel_y = 10
 	},
@@ -19981,11 +19965,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "bth" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv/public,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
@@ -20410,9 +20390,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvE" = (
-/obj/submachine/cargopad{
-	name = "Pod Bay Pad"
-	},
+/obj/submachine/cargopad/podbay,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvF" = (
@@ -22106,9 +22084,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bEq" = (
-/obj/submachine/cargopad{
-	name = "Mineral Magnet Pad"
-	},
+/obj/submachine/cargopad/magnet,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bEs" = (
@@ -22683,7 +22659,7 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -23147,10 +23123,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/cargopad{
-	name = "Cargo Bay Pad"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bJJ" = (
@@ -23623,11 +23597,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -24658,9 +24628,7 @@
 	},
 /area/station/crew_quarters/bar)
 "bOR" = (
-/obj/submachine/cargopad{
-	name = "Mechanical Workshop Pad"
-	},
+/obj/submachine/cargopad/mechanics,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bOT" = (
@@ -31388,9 +31356,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "clR" = (
-/obj/submachine/cargopad{
-	name = "Artifact Lab Pad"
-	},
+/obj/submachine/cargopad/artlab,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "clT" = (
@@ -31570,12 +31536,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/submachine/cargopad{
-	name = "Robotics Workshop Pad"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/submachine/cargopad/robotics,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cmr" = (
@@ -42806,6 +42770,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -49041,9 +49008,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "mlq" = (
-/obj/submachine/cargopad{
-	name = "Botany Pad"
-	},
+/obj/submachine/cargopad/hydroponic,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "mlt" = (
@@ -64418,13 +64383,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "xtf" = (
-/obj/machinery/camera{
+/obj/machinery/camera/auto/public{
 	c_tag = "autotag";
-	dir = 9;
-	invisibility = 101;
-	name = "autoname - Entertainment";
-	network = "Zeta";
-	tag = ""
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -64646,7 +64607,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/generic/bank_data{
+/obj/machinery/computer3/generic/personnel_management{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -64986,7 +64947,7 @@
 /area/station/engine/power)
 "xSv" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_x = 4
 	},
 /obj/item/clothing/suit/judgerobe{

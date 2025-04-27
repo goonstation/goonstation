@@ -24,7 +24,7 @@
 			H.unequip_all(TRUE)
 			H.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
 			H.equip_new_if_possible(/obj/item/device/radio/headset/civilian, SLOT_EARS)
-			H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+			H.equip_new_if_possible(/obj/item/tank/pocket/extended/oxygen, SLOT_L_STORE)
 			if (prob(50)) // Are they a luchador or not?
 				var/obj/item/clothing/mask/rand_mask = get_random_subtype (/obj/item/clothing/mask/wrestling)
 				H.equip_new_if_possible(rand_mask, SLOT_WEAR_MASK)

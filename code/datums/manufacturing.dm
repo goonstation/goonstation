@@ -868,7 +868,7 @@
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
-	item_requirements = list("molitz" = 5)
+	item_requirements = list("crystal" = 5)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
@@ -1063,7 +1063,7 @@
 	item_requirements = list("dense_super" = 10,
 							 "insulated" = 20,
 							 "rubber" = 5)
-	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	item_outputs = list(/obj/item/tank/pocket/extended/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -2345,7 +2345,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/miniplasmatank
 	name = "Mini plasma tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	item_outputs = list(/obj/item/tank/mini/plasma/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -2353,7 +2353,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/minioxygentank
 	name = "Mini oxygen tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	item_outputs = list(/obj/item/tank/mini/oxygen/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -3830,5 +3830,21 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
 	category = "Clothing"
+
+/datum/manufacture/turbine_shaft
+	name = "Turbine Shaft"
+	item_requirements = list("metal_dense" = 20)
+	create = 1
+	item_outputs = list(/obj/turbine_shaft)
+	time = 30 SECONDS
+	category = "Machinery"
+
+/datum/manufacture/current_turbine
+	name = "Current Turbine"
+	item_requirements = list("metal_dense" = 50, "conductive" = 20)
+	create = 1
+	item_outputs = list(/obj/turbine_shaft/turbine)
+	time = 50 SECONDS
+	category = "Machinery"
 
 #undef JUMPSUIT_COST

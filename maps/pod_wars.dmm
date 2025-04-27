@@ -5126,6 +5126,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
 /turf/unsimulated/floor,
 /area/pod_wars/team2/magnet)
 "qA" = (
@@ -5683,11 +5686,10 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "sp" = (
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/syndicate{
 	dir = 8;
-	icon_state = "datasec";
-	name = "Syndicate Announcement Computer";
-	req_access = null
+	req_access = null;
+	area_name = null
 	},
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
@@ -7723,6 +7725,9 @@
 "yW" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 5

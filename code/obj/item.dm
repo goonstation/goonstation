@@ -872,6 +872,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
+	if(src.two_handed && !user.can_hold_two_handed() && user.is_that_in_this(src)) // prevent accidentally donating weapons to your enemies
+		boutput(user, SPAN_ALERT("You don't have the hands to hold this item."))
+		return FALSE
+
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
 		target = user
@@ -885,7 +889,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.r_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 0)
+					. = user.put_in_hand_or_drop(src, 0)
 				else if (!user.l_hand)
 					if (!target?.can_equip(src, SLOT_L_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -893,7 +897,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(1)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 1)
+						. = user.put_in_hand_or_drop(src, 1)
 			else
 				if (user.l_hand == src)
 					.= 1
@@ -902,7 +906,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					. = 1
 				else if (!user.l_hand)
 					user.u_equip(src)
-					. = user.put_in_hand(src, 1)
+					. = user.put_in_hand_or_drop(src, 1)
 				else if (!user.r_hand)
 					if (!target?.can_equip(src, SLOT_R_HAND))
 						user.show_text("You need a free hand to do that!", "blue")
@@ -910,7 +914,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					else
 						user.swap_hand(0)
 						user.u_equip(src)
-						. = user.put_in_hand(src, 0)
+						. = user.put_in_hand_or_drop(src, 0)
 
 		else
 			user.show_text("You need a free hand to do that!", "blue")
@@ -1169,18 +1173,33 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.Attackhand(M)
 	M.next_click = world.time + src.click_delay
 
-/obj/item/get_desc()
-	var/t
+/obj/item/get_desc(dist, mob/user)
+	var/size_desc
 	switch(src.w_class)
-		if (-INFINITY to W_CLASS_TINY) t = "tiny"
-		if (W_CLASS_SMALL) t = "small"
-		if (W_CLASS_POCKET_SIZED) t = "pocket-sized"
-		if (W_CLASS_NORMAL) t = "normal-sized"
-		if (W_CLASS_BULKY) t = "bulky"
-		if (W_CLASS_HUGE to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) size_desc = "tiny"
+		if (W_CLASS_SMALL) size_desc = "small"
+		if (W_CLASS_POCKET_SIZED) size_desc = "pocket-sized"
+		if (W_CLASS_NORMAL) size_desc = "normal-sized"
+		if (W_CLASS_BULKY) size_desc = "bulky"
+		if (W_CLASS_HUGE to INFINITY) size_desc = "huge"
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
-		t = "funny-looking"
-	return "It is \an [t] item."
+		size_desc = "funny-looking"
+	. = "It is \an [size_desc] item."
+
+	if ((src in user) && src.reagents?.total_volume)
+		var/temperature_desc = null
+		var/temperature = src.reagents.total_temperature
+		//you can't tell if something's too hot if you're immune to heat
+		if (temperature > user.scald_temp() && !user.is_heat_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("scalding hot!")]</b>"
+		else if (temperature > T20C)
+			temperature_desc = "warm to the touch."
+		else if (temperature < user.frostburn_temp() && !user.is_cold_resistant())
+			temperature_desc = "<b>[SPAN_ALERT("freezing cold!")]</b>"
+		else if (temperature < T0C)
+			temperature_desc = "cold to the touch."
+		if (temperature_desc)
+			. += "<br>It's [temperature_desc]"
 
 /obj/item/attack_hand(mob/user)
 	var/obj/item/checkloc = src.loc
@@ -1595,6 +1614,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 					if (M.client.tooltipHolder.transient.A == src)
 						M.client.tooltipHolder.transient.A = null
 
+		if(src.master)
+			SEND_SIGNAL(src.master, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL, src)
+
 		return ..()
 	var/area/Ar = T.loc
 	if (!(locate(/obj/table) in T) && !(locate(/obj/rack) in T))
@@ -1807,3 +1829,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// Override to implement custom logic for determining whether the item should be placed onto a target object
 /obj/item/proc/should_place_on(obj/target, params)
 	return TRUE
+
+///This will be called when the item is build into a /obj/item/assembly on get_help_message()
+/obj/item/proc/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+	return
+
+///This will be called when the item is build into a /obj/item/assembly on get_admin_log_message(). Use this for additional information for logging.
+/obj/item/proc/assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+	return
+
