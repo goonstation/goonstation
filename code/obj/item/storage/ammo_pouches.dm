@@ -366,6 +366,20 @@
 		/obj/item/remote/sawflyremote
 	)
 
+/obj/item/storage/werewolf_hunter_pouch
+	name = "werewolf hunter pouch"
+	desc = "A pouch for carrying some useful grenades."
+	icon_state = "ammopouch"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 4
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	spawn_contents = list(
+		/obj/item/old_grenade/thing_thrower/aconite = 2,
+		/obj/item/old_grenade/thing_thrower/garlic
+	)
+
 // Pod wars pouches
 /obj/item/storage/pw_medical_pouch
 	name = "injector pouch"

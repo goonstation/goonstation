@@ -782,6 +782,74 @@
 				var/mob/M = owner
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
+	simpledot/werewolf_bane
+		id = "werewolf_bane"
+		name = "Wolf's Bane"
+		desc = "POISON!"
+		icon_state = "fragrant"
+		maxDuration = 5 MINUTES
+//////////////////////////////////effect_quality =
+		var/ag_stage = 0
+
+		onAdd(optional=null)
+			changeState()
+			return ..(optional)
+
+		getTooltip()
+			var/how_much = ""
+			switch(ag_stage)
+				if(0)
+					how_much = "a bit of"
+				if(1)
+					how_much = "a little"
+				if(2)
+					how_much = "some"
+				if(3)
+					how_much = "quite a lot"
+				if(4)
+					how_much = "a dangerous amount of"
+				if(5)
+					how_much = "way way way too much"
+			. = "You are afflicted with [how_much] wolf's bane."
+
+		onUpdate(timePassed)
+			changeState()
+			if (istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				if (iswerewolf(H))
+					if (prob(8))
+						H.changeStatus("stunned", 1 SECONDS)
+					if (prob(10))
+						H.dizziness = clamp(H.dizziness+5, 0,  ag_stage*5)
+
+					if (ag_stage >= 2 && prob(ag_stage*10)) //Why not?
+						H.take_toxin_damage(ag_stage)
+					H.make_jittery(2)
+					return
+				if (H.get_ability_holder(/datum/abilityHolder/werewolf) != null) //If wolf in human form
+					if (prob(40))
+						H.dizziness = clamp(H.dizziness+5, 0,  ag_stage*5)
+
+					H.make_jittery(5)
+					return
+
+			return ..(timePassed)
+
+		proc/changeState()
+			if(owner?.reagents)
+				if (duration >= 200 SECONDS)
+					ag_stage = 4
+				else if (duration >= 100 SECONDS)
+					ag_stage = 3
+				else if (duration > 50 SECONDS)
+					ag_stage = 2
+				else if (duration <= 20 SECONDS)
+					ag_stage = 1
+				else if (duration <= 0)
+					ag_stage = 0
+					return
+				// icon_state = "werewolf_bane[ag_stage]"
+
 	stuns
 		effect_quality = STATUS_QUALITY_NEGATIVE
 
