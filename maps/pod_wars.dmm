@@ -849,6 +849,11 @@
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/west,
 /turf/space,
 /area/space)
+"cN" = (
+/obj/machinery/light/incandescent,
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/pod_wars/team2/power)
 "cO" = (
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team2/magnet)
@@ -1427,8 +1432,8 @@
 "eK" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
-	chargelevel = 15000;
-	output = 10000
+	chargelevel = 60000;
+	output = 40000
 	},
 /obj/cable,
 /turf/simulated/floor/engine,
@@ -3809,8 +3814,8 @@
 "mq" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
-	chargelevel = 15000;
-	output = 10000
+	chargelevel = 60000;
+	output = 40000
 	},
 /obj/cable,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -10257,6 +10262,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/powergen)
+"Gz" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/pod_wars/team2/power)
 "GA" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor,
@@ -127298,7 +127307,7 @@ jC
 nV
 Dx
 gq
-xg
+Gz
 pP
 fv
 We
@@ -127702,7 +127711,7 @@ uV
 nV
 Sg
 gq
-pP
+cN
 xg
 cv
 sJ
@@ -128106,7 +128115,7 @@ rK
 ye
 xc
 oN
-xg
+Gz
 xg
 Nz
 xg
@@ -128712,7 +128721,7 @@ OL
 OL
 aX
 OA
-xg
+Gz
 pP
 xg
 xg
