@@ -17276,6 +17276,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "bmO" = (
@@ -38722,14 +38723,15 @@
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "lOs" = (
-/obj/decal/cleanable/blood,
 /obj/item/kitchen/utensil/knife{
 	dir = 8;
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_y = -4
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
 	},
 /turf/simulated/floor/darkblue{
 	dir = 10
