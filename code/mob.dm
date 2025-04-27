@@ -726,7 +726,7 @@
 
 			else if (tmob.a_intent == "help" && src.a_intent == "help" \
 				&& tmob.canmove && src.canmove \
-				&& !tmob.buckled && !src.buckled \
+				&& !tmob.buckled?.anchored && !src.buckled?.anchored \
 				&& !src.throwing && !tmob.throwing \
 				&& !(src.pulling && src.pulling.density) && !(tmob.pulling && tmob.pulling.density)) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
