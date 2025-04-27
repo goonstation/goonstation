@@ -4554,7 +4554,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "doJ" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -6069,7 +6069,7 @@
 /turf/space/fluid,
 /area/space)
 "eno" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -10256,7 +10256,7 @@
 /area/station/medical/medbay)
 "gVT" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -11956,7 +11956,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "ijy" = (
@@ -24227,7 +24227,7 @@
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "qLp" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -25642,7 +25642,7 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "rLP" = (
-/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/computer/television,
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/carpet/grime,
@@ -27303,7 +27303,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "sRC" = (
-/obj/machinery/computer/security,
+/obj/machinery/computer/camera_viewer,
 /obj/cable{
 	icon_state = "1-2"
 	},

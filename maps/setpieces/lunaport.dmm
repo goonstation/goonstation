@@ -10581,7 +10581,7 @@
 	})
 "HJ" = (
 /obj/table/reinforced/industrial/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/television/small{
 	pixel_y = 7
 	},
 /turf/unsimulated/grimycarpet,
