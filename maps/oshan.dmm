@@ -12153,10 +12153,6 @@
 /obj/monkeyplant,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"aQl" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "aQr" = (
 /obj/stool/chair{
 	dir = 1
@@ -17693,6 +17689,9 @@
 /area/station/hallway/primary/west)
 "box" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -33318,11 +33317,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"eXV" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/disposalpipe/segment/morgue,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "eYr" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/tox_storage,
@@ -48005,10 +47999,6 @@
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
-"xNC" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/west)
 "xNO" = (
 /obj/stool/chair/office/purple{
 	dir = 4
@@ -82737,7 +82727,7 @@ xRd
 bfl
 bfO
 bgw
-eXV
+tnS
 kDZ
 blw
 blw
@@ -82749,7 +82739,7 @@ bmA
 bnc
 dqh
 mNV
-eXV
+tnS
 bov
 aDS
 aDS
@@ -83643,7 +83633,7 @@ wcp
 efM
 nyX
 cLa
-aQl
+nfD
 dwx
 qRu
 bjh
@@ -83655,7 +83645,7 @@ bmD
 nQj
 vSb
 mCE
-xNC
+nfD
 boy
 ixf
 brh
