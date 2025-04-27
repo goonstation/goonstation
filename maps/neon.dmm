@@ -1169,7 +1169,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aPJ" = (
@@ -4218,6 +4218,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/junction/middle/west,
+/obj/machinery/navbeacon/mule/catering_north/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dfn" = (
@@ -6028,7 +6029,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "eli" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -6406,6 +6407,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/navbeacon/mule/chapel_north,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "ewL" = (
@@ -8840,6 +8842,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -11508,6 +11511,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/mule/QM1_north/east,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hSU" = (
@@ -13225,7 +13229,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "jcd" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid,
 /area/space)
 "jcp" = (
@@ -13409,7 +13413,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/warp_beacon{
-	name = "Mining Dock"
+	name = "Mining/Engineering Dock"
 	},
 /turf/space/fluid,
 /area/space)
@@ -14607,7 +14611,7 @@
 /obj/machinery/networked/test_apparatus/heater,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent/cool,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -15958,6 +15962,11 @@
 "kTr" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"kTs" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/navbeacon/mule/hydroponics_north,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "kTz" = (
 /obj/decal/cleanable/generic,
 /obj/machinery/light/incandescent/warm/very,
@@ -16150,6 +16159,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/studio)
+"kYz" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/navbeacon/mule/research_north/west,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "kYU" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -17200,6 +17214,10 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"lJk" = (
+/obj/machinery/navbeacon/mule/toolstorage_north,
+/turf/simulated/floor,
+/area/station/storage/tools)
 "lJy" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -20953,6 +20971,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/navbeacon/mule/security_north/east,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "oyB" = (
@@ -21465,7 +21484,21 @@
 /area/station/chapel/sanctuary)
 "oSf" = (
 /obj/machinery/firealarm/east,
-/obj/reagent_dispensers/foamtank,
+/obj/table/auto,
+/obj/item/sheet/glass/fullstack{
+	pixel_x = -6
+	},
+/obj/item/sheet/glass/fullstack{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/sheet/glass/reinforced/fullstack{
+	pixel_x = 6
+	},
+/obj/item/sheet/glass/reinforced/fullstack{
+	pixel_y = 6;
+	pixel_x = 6
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "oSr" = (
@@ -22561,6 +22594,16 @@
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"pHX" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon/mule/ranch_north/south,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "pIz" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
@@ -25874,6 +25917,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "rVX" = (
+/obj/machinery/navbeacon/mule/crewA_north,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -26270,6 +26314,10 @@
 /area/station/medical/medbay/pharmacy)
 "shh" = (
 /obj/landmark/gps_waypoint,
+/obj/submachine/cargopad{
+	name = "Mining Cargo Pad"
+	},
+/obj/machinery/navbeacon/mule/mining_north/west,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "sht" = (
@@ -28478,6 +28526,7 @@
 	},
 /obj/decal/mule/beacon,
 /obj/storage/crate,
+/obj/machinery/navbeacon/mule/QM2_north/east,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "tHe" = (
@@ -31610,6 +31659,7 @@
 /obj/item/reagent_containers/food/snacks/candy/sugar_cube{
 	pixel_x = -7
 	},
+/obj/machinery/navbeacon/mule/bridge_north,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge)
 "vJu" = (
@@ -31646,6 +31696,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/navbeacon/mule/engineering_north/east,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "vLe" = (
@@ -31966,6 +32017,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "vVe" = (
@@ -32557,6 +32609,13 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/scorched,
 /area/diner/hallway)
+"wkB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon/mule/medbay_north/west,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "wkG" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/grime,
@@ -33225,6 +33284,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/beacon,
+/obj/machinery/navbeacon/mule/cafeteria_north/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "wFJ" = (
@@ -33635,22 +33695,12 @@
 "wXu" = (
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack{
-	pixel_y = 8
+	pixel_y = 4;
+	pixel_x = -6
 	},
 /obj/item/sheet/steel/fullstack{
-	pixel_y = 8
-	},
-/obj/item/sheet/steel/fullstack{
-	pixel_y = 8
-	},
-/obj/item/sheet/steel/fullstack{
-	pixel_y = 8
-	},
-/obj/item/storage/box/cablesbox{
-	pixel_y = 2
-	},
-/obj/item/storage/box/cablesbox{
-	pixel_y = 2
+	pixel_y = 8;
+	pixel_x = -6
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -33658,6 +33708,20 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 2
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 6
 	},
 /obj/item/clothing/gloves/yellow{
 	pixel_y = 6
@@ -34358,6 +34422,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
+"xxY" = (
+/obj/machinery/navbeacon/mule/podbay_north,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "xyL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35089,7 +35157,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "xWv" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
@@ -76152,7 +76220,7 @@ laK
 khg
 cMf
 leV
-leV
+kYz
 leV
 lUa
 eiJ
@@ -77040,7 +77108,7 @@ xmx
 cmj
 fKB
 kMW
-kMW
+wkB
 opt
 aAD
 mXo
@@ -83389,7 +83457,7 @@ pQG
 quP
 rBc
 vRk
-vRk
+kTs
 tpT
 jXT
 tiY
@@ -83679,7 +83747,7 @@ mFl
 alb
 olE
 kVy
-tEU
+pHX
 gqC
 qXv
 ycn
@@ -85783,7 +85851,7 @@ jNV
 miG
 dpN
 aqE
-jSD
+lJk
 qBU
 qpB
 dpN
@@ -95135,7 +95203,7 @@ asQ
 mhE
 xHR
 blA
-blA
+xxY
 ofF
 noF
 nwd
