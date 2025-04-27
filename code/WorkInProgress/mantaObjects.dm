@@ -1578,11 +1578,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	access = list(access_polariscargo,access_heads)
 	keep_icon = TRUE
 
-/obj/item/card/id/blank_polaris
-	name = "blank Nanotrasen ID"
-	icon_state = "id_nanotrasen"
-	keep_icon = TRUE
-
 /obj/item/broken_egun
 	name = "broken energy gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'

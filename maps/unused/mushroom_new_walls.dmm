@@ -2096,10 +2096,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "amX" = (
@@ -4578,9 +4575,7 @@
 /area/station/storage/autolathe)
 "azw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNW"
@@ -6030,10 +6025,7 @@
 	c_tag = "Cargo Bay Office";
 	dir = 1
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/orangeblack/side{
@@ -10836,9 +10828,7 @@
 "bne" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetN"
@@ -16966,9 +16956,7 @@
 /area/station/maintenance/east)
 "fvc" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -21067,9 +21055,7 @@
 /area/station/bridge)
 "jdJ" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNE"
@@ -22077,9 +22063,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "jTk" = (
@@ -30564,9 +30548,7 @@
 	dir = 8
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetE"
@@ -31303,9 +31285,7 @@
 /area/space)
 "qRX" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -34545,9 +34525,7 @@
 /area/station/medical/robotics)
 "tcv" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetNW"
@@ -35873,7 +35851,7 @@
 /area/station/medical/medbay/surgery)
 "uaO" = (
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
 /turf/simulated/floor/blue,
@@ -39799,10 +39777,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "xiV" = (
-/obj/machinery/computer/announcement{
-	name = "Security Announcement Computer";
-	req_access = list(1)
-	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -39934,10 +39909,8 @@
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "xnS" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -40237,9 +40210,7 @@
 /area/station/crew_quarters/hor)
 "xyf" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "carpetW"

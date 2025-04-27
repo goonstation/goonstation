@@ -5509,7 +5509,7 @@
 /area/station/maintenance/northeast)
 "ask" = (
 /obj/table/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
 /turf/simulated/floor/carpet/arcade/blank,
@@ -13787,9 +13787,7 @@
 /area/station/crew_quarters/barber_shop)
 "aXB" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/barber_shop)
@@ -22298,9 +22296,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bxb" = (
@@ -26248,7 +26244,7 @@
 /area/shuttle/brig/prison)
 "gmf" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)

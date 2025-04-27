@@ -728,11 +728,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	var/absorb_count
 
 	set_up()
-#ifdef RP_MODE
-		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
-#else
-		absorb_count = min(10, (ticker.minds.len - 1))
-#endif
+		absorb_count = clamp(round((ticker.minds.len - 1) / 4), 2, 6)
 		explanation_text = "Absorb the DNA of at least [absorb_count] more crew members in addition to the one you started with, and escape on the shuttle alive."
 
 	check_completion()
@@ -755,11 +751,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	var/bloodcount
 
 	set_up()
-#ifdef RP_MODE
-		bloodcount = rand(40,80) * 10
-#else
-		bloodcount = rand(60,100) * 10
-#endif
+		bloodcount = rand(50,90) * 10
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
@@ -1506,11 +1498,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 	var/powergoal
 
 	set_up()
-#ifdef RP_MODE
 		powergoal = rand(350,400) * 10
-#else
-		powergoal = rand(450,500) * 10
-#endif
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()

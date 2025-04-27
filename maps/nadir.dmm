@@ -3806,10 +3806,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bGm" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/item/storage/wall{
 	icon_state = "minipurple";
 	name = "VR goggles cabinet";
@@ -7818,7 +7815,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/door_control/bolter/new_walls/east{
 	id = "eastcc_room3"
 	},
@@ -12801,7 +12798,7 @@
 	})
 "fGo" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -20172,7 +20169,7 @@
 /area/station/hallway/secondary/east)
 "iyr" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "iyv" = (
@@ -20745,7 +20742,6 @@
 	dir = 8;
 	icon_state = "commb";
 	name = "Pasiphae Announcement Computer";
-	req_access_txt = "19";
 	status = 1
 	},
 /obj/cable{
@@ -22424,10 +22420,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jwV" = (
@@ -24838,7 +24831,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -33761,7 +33754,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "oeQ" = (
@@ -47304,10 +47297,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "uib" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48555,7 +48545,7 @@
 /area/station/medical/morgue)
 "uKf" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 7
 	},
 /obj/item/remote/porter/port_a_nanomed,
@@ -53988,7 +53978,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "xhg" = (
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/instrument/vuvuzela,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/industrial,

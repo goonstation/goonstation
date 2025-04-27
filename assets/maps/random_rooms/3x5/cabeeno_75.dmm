@@ -6,7 +6,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 10
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "f" = (
 /obj/item/storage/secure/ssafe/loot{
 	pixel_x = -28
@@ -30,32 +30,32 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/stool/bar,
 /mob/living/critter/small_animal/bee,
 /turf/simulated/floor/carpet/red/fancy/edge,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "l" = (
 /obj/submachine/slot_machine/cash,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 8
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "p" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -65,7 +65,7 @@
 	pixel_x = 5
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -78,7 +78,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/table/reinforced/roulette,
 /obj/item/currency/spacecash/really_small{
@@ -101,24 +101,24 @@
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/stool/chair/office/syndie,
 /mob/living/critter/small_animal/bee/fancy,
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "H" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/stool/bar,
 /mob/living/critter/small_animal/bee/small,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 6
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -147,7 +147,7 @@
 	pixel_x = 5
 	},
 /turf/simulated/floor/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/roulette_table_w,
 /obj/item/currency/spacecash/really_small,
@@ -175,7 +175,7 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor/carpet/red,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 f

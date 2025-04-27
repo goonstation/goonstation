@@ -276,62 +276,6 @@
 	deserialize_postprocess()
 		return
 
-/obj/bedsheetbin
-	name = "linen bin"
-	desc = "A bin for containing bedsheets."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
-
-/obj/towelbin
-	name = "towel bin"
-	desc = "A bin for containing towels."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/under/towel))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/under/towel(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
-
 /obj/overlay
 	name = "overlay"
 	anchored = ANCHORED
@@ -385,7 +329,7 @@
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
 		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
-		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
+		var/obj/replica = new /obj/item/card/id/gold/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state
 		replica.name = O.name
@@ -499,6 +443,8 @@
 	while(. in forensic_IDs)
 
 /obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
 	var/turf/target_loc = get_turf(src)
 	var/obj/item/electronics/frame/F = null
 	if (flatpack)
