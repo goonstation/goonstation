@@ -3003,7 +3003,10 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "akN" = (
-/obj/machinery/computer/announcement/syndicate/console,
+/obj/machinery/computer/announcement/syndicate{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "syndiepc14"
+},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "akO" = (
@@ -8453,10 +8456,8 @@
 /area/station/engine/engineering/ce)
 "aza" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -10349,10 +10350,8 @@
 /area/station/hallway/starboardupperhallway)
 "aEy" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /obj/machinery/light_switch/auto{
 	pixel_x = 5;
@@ -13585,9 +13584,8 @@
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aND" = (
-/obj/machinery/computer/announcement{
-	name = "Communications Office Announcement Computer";
-	req_access_txt = ""
+/obj/machinery/computer/announcement/station{
+	name = "Communications Office Announcement Computer"
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -23386,10 +23384,8 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "boC" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Medical Director's Announcement Computer";
-	voice_name = "Medical Director's Announcement Computer"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -38034,10 +38030,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "owg" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -41996,10 +41990,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Captain's Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
+/obj/machinery/computer/announcement/station/captain{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -42204,11 +42196,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement/console_upper{
-	announces_arrivals = 1;
-	dir = 4;
-	name = "Bridge Announcement Computer";
-	voice_name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "announcement1";
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
