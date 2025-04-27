@@ -11643,9 +11643,7 @@
 /area/station/crew_quarters/cafeteria)
 "dlg" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -20638,9 +20636,7 @@
 /area/station/science/lab)
 "fBb" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/arcade,
@@ -25791,9 +25787,7 @@
 /area/station/chapel/sanctuary)
 "gQu" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -27236,9 +27230,7 @@
 	})
 "hiX" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light/small/cool/very{
 	dir = 4;
@@ -40404,9 +40396,7 @@
 /area/station/medical/robotics)
 "kKG" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light/small/warm/very{
 	dir = 8;
@@ -64872,7 +64862,7 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -72279,9 +72269,7 @@
 /area/station/hallway/primary/south)
 "sRL" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light/small/cool/very{
 	dir = 1;
@@ -74939,9 +74927,7 @@
 /area/station/maintenance/inner/hydroponics)
 "tAj" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)

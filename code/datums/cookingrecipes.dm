@@ -1732,7 +1732,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/oven/ultrachili
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
+	/obj/item/reagent_containers/food/snacks/soup/chili = 1,
 	/obj/item/reagent_containers/food/snacks/soup/superchili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
