@@ -8164,7 +8164,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/machinery/computer3/generic/bank_data{
+/obj/machinery/computer3/generic/personnel_management{
 	dir = 8
 	},
 /obj/cable{
