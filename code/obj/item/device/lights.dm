@@ -136,7 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
 	name = "lantern"
 	desc = "An electric lantern for lighting up the area close by."
 	icon_state = "lantern-off"
-	item_state = "flight"
+	item_state = "lantern-off"
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
@@ -156,9 +156,11 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
 		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
 		if (src.on)
 			src.icon_state = "lantern-on"
+			src.item_state = "lantern-on"
 			src.light.enable(TRUE)
 		else
 			src.icon_state = "lantern-off"
+			src.item_state = "lantern-off"
 			src.light.disable(TRUE)
 
 		if (activated_inhand)
