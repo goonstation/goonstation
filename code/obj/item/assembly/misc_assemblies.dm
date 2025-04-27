@@ -85,6 +85,7 @@ Contains:
 		checked_item.master = src
 		checked_item.layer = initial(checked_item.layer)
 		src.w_class = max(src.w_class, checked_item.w_class)
+		src.contraband = max(src.contraband, checked_item.contraband)
 		if(user)
 			checked_item.add_fingerprint(user)
 	//now, to set up the assembly, we have to send the signals in the correct order like a normal assembly would be created
@@ -397,6 +398,7 @@ Contains:
 	src.target = null
 	src.target_item_prefix = null
 	src.w_class = max(src.trigger.w_class, src.applier.w_class)
+	src.contraband = max(src.trigger.contraband, checked_item.applier.contraband)
 	SEND_SIGNAL(src.trigger, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	SEND_SIGNAL(src.applier, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, src, null, FALSE)
 	src.UpdateIcon()
@@ -448,6 +450,7 @@ Contains:
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	src.contraband = max(src.contraband, manipulated_item.contraband)
 	boutput(user, "You attach the [src.name] to the [manipulated_item.name].")
 	//Since we completed the assembly, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
@@ -495,6 +498,7 @@ Contains:
 			SEND_SIGNAL(checked_item, COMSIG_ITEM_ASSEMBLY_ITEM_ON_MISC_ADDITION, src, user, to_combine_atom)
 	//Last but not least, we update our icon, w_class and name
 	src.w_class = max(src.w_class, manipulated_item.w_class)
+	src.contraband = max(src.contraband, manipulated_item.contraband)
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
