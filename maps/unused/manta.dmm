@@ -2140,7 +2140,7 @@
 /area/station/maintenance/upperstarboard)
 "aih" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/head/towel_hat,
 /obj/item/clothing/shoes/fuzzy,
@@ -3990,7 +3990,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anw" = (
 /obj/table/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /turf/simulated/floor/sanitary,
@@ -17173,7 +17173,7 @@
 /area/station/medical/research)
 "aYM" = (
 /obj/table/glass/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/hand_labeler,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/blue,
@@ -18208,7 +18208,7 @@
 /area/station/hallway/starboardlowerhallway)
 "bbV" = (
 /obj/table/reinforced/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /turf/simulated/floor{
@@ -31027,7 +31027,7 @@
 /area/station/science/restroom)
 "bLv" = (
 /obj/table/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /turf/simulated/floor/sanitary,
@@ -36051,7 +36051,7 @@
 	dir = 4
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/device/radio/headset/civilian,
@@ -42304,7 +42304,7 @@
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "ykr" = (
 /obj/table/round/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/bathrobe,
