@@ -92,7 +92,3 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 	if(src.scope_overlay)
 		user.removeOverlayComposition(src.scope_overlay)
 		user.updateOverlaysClient(user.client)
-
-/datum/component/holdertargeting/sniper_scope/light
-	create_movement_controller(speed, max_range)
-		src.movement_controller = new/datum/movement_controller/sniper_scope/light(speed, max_range)
