@@ -15,6 +15,7 @@
 (+)All "Broken" share the same randomly picked objective.
 (+)Haloperidol can be used to cure the "Broken" faster.
 (u)LeahTheTech
+(*)Glue no longer falls off on its own, instead the more glue you use the harder the object will be to remove.
 (*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
 (u)FlameArrow57
 (p)22828
