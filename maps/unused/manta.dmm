@@ -9883,7 +9883,7 @@
 /area/station/crew_quarters/captain)
 "aDk" = (
 /obj/table/wood/auto/desk,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/item/pinpointer/disk,
 /turf/simulated/floor/carpet/arcade,
@@ -21627,9 +21627,7 @@
 /area/station/maintenance/upperstarboard)
 "bkt" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -21652,9 +21650,7 @@
 /area/station/crew_quarters/arcade)
 "bkw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -33947,9 +33943,7 @@
 /area/station/crewquarters/garbagegarbs)
 "ftI" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
@@ -42239,9 +42233,7 @@
 /area/station/medical/robotics)
 "ybh" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{

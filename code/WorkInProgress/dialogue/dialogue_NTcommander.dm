@@ -90,7 +90,7 @@
 
 		onActivate(var/client/C)
 			master.setFlag(C, "card_reward", "taken")
-			C.mob.put_in_hand_or_drop(new/obj/item/card/id/blank_polaris, C.mob.hand)
+			C.mob.put_in_hand_or_drop(new/obj/item/card/id/nanotrasen, C.mob.hand)
 			return
 
 	nt_reward_b

@@ -1414,3 +1414,12 @@ TYPEINFO(/atom/movable)
 ///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
 /atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
 	return TRUE
+
+///Removes anything that is glued to this atom
+/atom/proc/unglue_attached_to()
+	var/atom/Aloc = isturf(src) ? src : src.loc
+	for(var/atom/movable/AM in Aloc)
+		var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+		// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+		if(glued_comp?.glued_to == src && !isnull(glued_comp.glue_removal_time))
+			qdel(glued_comp)

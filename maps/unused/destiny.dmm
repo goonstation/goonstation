@@ -1919,7 +1919,7 @@
 	pixel_y = 4;
 	switchon = 1
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/machinery/light/emergency,
 /obj/machinery/camera{
@@ -32626,9 +32626,7 @@
 /area/station/hallway/primary/central)
 "ken" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -37237,9 +37235,7 @@
 /area/station/crew_quarters/bar)
 "mwl" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -52410,9 +52406,7 @@
 /area/station/turret_protected/Zeta)
 "upR" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -60454,9 +60448,7 @@
 /area/station/maintenance/southwest)
 "ykg" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light{
 	dir = 1;

@@ -385,7 +385,7 @@
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
 		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
-		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
+		var/obj/replica = new /obj/item/card/id/gold/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state
 		replica.name = O.name
@@ -499,6 +499,8 @@
 	while(. in forensic_IDs)
 
 /obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
 	var/turf/target_loc = get_turf(src)
 	var/obj/item/electronics/frame/F = null
 	if (flatpack)
