@@ -1,5 +1,9 @@
 
 (t)sun apr 27 25
+(u)Garash
+(p)22290
+(e)🪲📄|C-Bug, A-UI
+(+)Keybind menu now allows to bind special keys such as shift, ctrl, alt...
 (u)bobbis dobbis
 (p)22923
 (e)🆕🎨📡|C-Feature, C-Sprites, A-AI
