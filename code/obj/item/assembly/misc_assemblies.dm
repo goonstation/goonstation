@@ -524,6 +524,7 @@ Contains:
 	var/obj/item/mousetrap_roller/new_roller = new /obj/item/mousetrap_roller(get_turf(user), src, to_combine_atom)
 	new_roller.name = "roller/[src.name]" // Roller/mousetrap/igniter/plutonium 239-pipebomb-assembly, gotta love those names
 	user.put_in_hand_or_drop(new_roller)
+	new_roller.contraband = src.contraband
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_roller.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
 	if(src.requires_admin_messaging())
@@ -543,6 +544,7 @@ Contains:
 	src.add_fingerprint(user)
 	to_combine_atom.add_fingerprint(user)
 	var/obj/item/clothing/suit/armor/suicide_bomb/new_suicide_vest = new /obj/item/clothing/suit/armor/suicide_bomb(get_turf(user), src, to_combine_atom)
+	new_suicide_vest.contraband = src.contraband
 	user.put_in_hand_or_drop(new_suicide_vest)
 	//Some Admin logging/messaging
 	logTheThing(LOG_BOMBING, user, "A [new_suicide_vest.name] was created at [log_loc(src)]. Created by: [key_name(user)];[src.get_additional_logging_information(user)]")
