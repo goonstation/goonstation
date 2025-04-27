@@ -2654,7 +2654,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/mob/living/critter/small_animal/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -4253,7 +4255,6 @@
 	},
 /area/station/security/main)
 "aoZ" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -4261,6 +4262,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/access/kitchen,
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Bar"
+	},
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -38049,19 +38053,15 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/table/reinforced/auto{
-	icon_state = "1"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "kitchen_shutter";
-	layer = 3.1;
-	name = "Kitchen Shutter";
-	dir = 8
-	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Kitchen"
+	},
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -39098,10 +39098,6 @@
 /obj/table/wood/auto/desk{
 	icon_state = "8"
 	},
-/obj/machinery/espresso_machine{
-	pixel_y = 8;
-	pixel_x = 2
-	},
 /obj/machinery/partyalarm{
 	dir = 8;
 	pixel_x = 24;
@@ -39113,6 +39109,14 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
+	},
+/obj/item/paper_bin{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/item/pen{
+	pixel_y = 6;
+	pixel_x = 5
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple{
 	dir = 5
@@ -46046,13 +46050,9 @@
 /obj/drink_rack/cup{
 	pixel_y = 32
 	},
-/obj/item/paper_bin{
-	pixel_y = 7;
-	pixel_x = 6
-	},
-/obj/item/pen{
-	pixel_y = 6;
-	pixel_x = 5
+/obj/machinery/espresso_machine{
+	pixel_y = 8;
+	pixel_x = 2
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west{
 	dir = 1
