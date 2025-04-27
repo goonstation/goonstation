@@ -898,7 +898,7 @@
 /area/ship/arjuna)
 "ya" = (
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue3"

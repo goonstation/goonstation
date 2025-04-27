@@ -3405,3 +3405,11 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/mob/living/carbon/human/proc/fake_say(text)
+	set waitfor = FALSE
+	var/spaces = length(splittext(text, " "))
+	src.create_typing_indicator()
+	sleep(1.2 SECONDS * spaces)
+	src.remove_typing_indicator()
+	src.say(text)

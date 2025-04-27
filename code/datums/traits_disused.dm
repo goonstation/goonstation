@@ -94,6 +94,7 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 50
 			H.health = 50
+			health_update_queue |= H
 		return
 
 	onLife(var/mob/owner) //Just to be safe.
@@ -101,6 +102,13 @@
 			var/mob/living/carbon/human/H = owner
 			H.max_health = 50
 		return
+
+	onRemove(mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.max_health = initial(H.max_health)
+			health_update_queue |= H
+		. = ..()
 
 /datum/trait/glasscannon
 	name = "Glass cannon"

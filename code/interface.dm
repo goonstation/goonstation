@@ -72,7 +72,7 @@
 			set name = "Wiki"
 			set desc = "Open the Wiki in your browser"
 			set hidden = 1
-			src << link("http://wiki.ss13.co")
+			src << link(generate_ingame_wiki_link(src))
 
 		map()
 			set category = "Commands"
@@ -103,3 +103,10 @@
 	. += "?sx=[T.x]&sy=[T.y]&zoom=0"
 	if (T.z == Z_LEVEL_DEBRIS)
 		. += "&layer=debris"
+
+/proc/generate_ingame_wiki_link(client/our_user)
+	. = "https://wiki.ss13.co/"
+	if (our_user.mob.mind?.assigned_role)
+		var/datum/job/Job = find_job_in_controller_by_string(our_user.mob.mind?.assigned_role)
+		if(Job.wiki_link)
+			. = Job.wiki_link
