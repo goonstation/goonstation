@@ -1,5 +1,7 @@
 
 (t)sun apr 27 25
+(u)LeahTheTech
+(*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
 (u)FlameArrow57
 (p)22828
 (e)🪲🧛|C-Bug, A-Gamemodes
