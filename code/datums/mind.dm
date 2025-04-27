@@ -106,7 +106,7 @@ datum/mind
 			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
-				tgui_process.on_transfer(current, new_character)
+				tgui_process?.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
 			current.oldmind = src
 			current.mind = null

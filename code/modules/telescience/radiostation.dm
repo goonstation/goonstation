@@ -24,8 +24,10 @@
 // areas
 
 /area/radiostation
+	requires_power = FALSE
 	name = "Radio Station"
 	icon_state = "purple"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/radiostation/studio
 	name = "Radio Studio"

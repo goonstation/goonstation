@@ -11,7 +11,7 @@
 	bound_width = 32
 	bound_height = 64
 	layer = 30
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	dir = NORTH
 	var/move_dir = NORTH
 	var/moved_on_flooring = 0

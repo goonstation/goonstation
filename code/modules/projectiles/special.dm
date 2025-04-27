@@ -1400,3 +1400,28 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		src.on_hit(target, O = O)
+
+/datum/projectile/special/firework
+	name = "firework"
+	damage = 3
+	damage_type = D_BURNING
+	hit_type = DAMAGE_BURN
+	icon_state = "4gauge-slug-blood"
+	shot_sound = 'sound/effects/firework_shoot.ogg'
+	projectile_speed = 7
+	impact_image_state = "burn1"
+	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+
+	proc/die(turf/where)
+		particleMaster.SpawnSystem(new /datum/particleSystem/fireworks_pop(where))
+		playsound(where, 'sound/effects/firework_pop.ogg', 50, 1)
+
+	on_hit(atom/hit, direction, projectile)
+		src.die(get_turf(hit))
+		..()
+
+	on_max_range_die(obj/projectile/O)
+		src.die(get_turf(O))
+		..()
+
