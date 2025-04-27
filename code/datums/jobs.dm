@@ -2322,9 +2322,6 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 /datum/job/special/syndicate/specialist
 	name = "Syndicate Special Operative"
-	access_string = "Syndicate Operative" // "All Access" + Syndie Shuttle
-	limit = 0
-	wages = 0
 	receives_implants = list(/obj/item/implant/revenge/microbomb)
 	slot_belt = list(/obj/item/storage/belt/gun/pistol)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
