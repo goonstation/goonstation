@@ -2906,7 +2906,7 @@
 "boW" = (
 /obj/item/clothing/under/gimmick/macho,
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/junction/right/south,
 /obj/cable{
 	icon_state = "1-2"
@@ -12083,7 +12083,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/glass/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/quarters_south)
 "flw" = (
@@ -35066,7 +35066,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "pqB" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -37624,7 +37624,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/showers{
@@ -38980,7 +38980,7 @@
 /area/listeningpost)
 "rdV" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "rdZ" = (
@@ -55043,7 +55043,7 @@
 	icon_state = "0-2"
 	},
 /obj/table/glass/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_north)
 "yeS" = (
