@@ -1,5 +1,19 @@
 
 (t)sun apr 27 25
+(u)Sord, Leah, Jan + seamonsters by Thrush
+(p)23105
+(e)🗺🔧❗|A-Mapping, A-Tooling, E-FUCK
+(*)Added a new underwater map, Neon. Neon replaces Atlas as the lowpop map (Max votable playercount 30).
+(*)Neon is built within a strange reef where the coral is made of plasma. The plasma has been having strange effects on the wildlife.
+(*)All gas vented underwater now becomes bubbles. Bubbles eventually "pop" and dissipate. Large bubbles can be breathed from. Bubbles can be captured using portable pumps or air scrubbers.
+(*)Neon comes with a new unique rare antag type, the "Broken", which can spawn via a random event.
+(*)Neon features a new solars-like power generation method, the current driven Turbine. Wrench turbine shafts and use one of the four turbines located around maintenance to find the sweet spot in the current to generate the small amounts of power.
+(+)There are unique mobs located within the plasma coral reefs which contain a new genetic mutation.
+(+)Currents outside the north and south side of the station can be counteracted with a jetpack or magboots.
+(+)Any non antagonists, regardless of mindhack protection implants or traits, can become "Broken"
+(+)To opt into becoming the "Broken" you can enable "Other Foes" in your character preferences.
+(+)All "Broken" share the same randomly picked objective.
+(+)Haloperidol can be used to cure the "Broken" faster.
 (u)LeahTheTech
 (*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
 (u)FlameArrow57
