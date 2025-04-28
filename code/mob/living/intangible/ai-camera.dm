@@ -63,7 +63,7 @@
 		src.client.show_popup_menus = 1
 		if (!src.client) // just client things
 			return
-		src.bioHolder.mobAppearance.pronouns = src.fclient.preferences.AH.pronouns
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.update_name_tag()
 		src.job = "AI"
 		if (src.mind)
