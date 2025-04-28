@@ -25,7 +25,7 @@
 /datum/listen_module/input/distorted_flock
 	id = LISTEN_INPUT_FLOCK_DISTORTED
 	priority = LISTEN_INPUT_PRIORITY_DISTORTED
-	channel = SAY_CHANNEL_DISTORTED_FLOCK
+	channel = SAY_CHANNEL_FLOCK_DISTORTED
 
 
 /datum/listen_module/input/global_flock
