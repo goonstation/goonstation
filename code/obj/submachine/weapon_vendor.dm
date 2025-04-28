@@ -326,7 +326,7 @@
 		materiel_stock += new/datum/materiel/loadout/pw_smg
 		materiel_stock += new/datum/materiel/loadout/pw_shotgun
 
-		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
 		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
@@ -346,10 +346,11 @@
 		materiel_stock += new/datum/materiel/loadout/pw_NTsmg
 		materiel_stock += new/datum/materiel/loadout/pw_NTshotgun
 
-		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
 		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/pw_medical_belt
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
@@ -365,10 +366,11 @@
 		materiel_stock += new/datum/materiel/loadout/pw_SYsmg
 		materiel_stock += new/datum/materiel/loadout/pw_SYshotgun
 
-		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
 		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/pw_medical_belt
 		materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
@@ -770,11 +772,15 @@
 	path = /obj/item/storage/pw_medical_pouch
 	description = "A small pouch containing four advanced medical autoinjectors."
 	cost = 2
+/datum/materiel/utility/pw_pouch
+	name = "High Capacity Tactical Pouch"
+	path = /obj/item/storage/pouch/highcap/pod_wars
+	description = "A pouch that can hold up to 4 normal sized items. Fits in your pocket."
 
 /datum/materiel/utility/pw_advanced_belt
 	name = "Tactical Belt"
 	path = /obj/item/storage/belt/podwars/advanced
-	description = "A belt to replace your standard issue holster, capable of carrying many more items into battle."
+	description = "A belt to replace your standard issue holster, capable of carrying up to 6 bulky items into battle."
 
 /datum/materiel/utility/preparedtoolbelt
 	name = "Loaded Utility Toolbelt"
@@ -795,6 +801,11 @@
 	name = "Military Headset"
 	path = /obj/item/device/radio/headset/pod_wars/syndicate/comtac
 	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+
+/datum/materiel/utility/pw_medical_belt
+	name = "Loaded Medical Belt"
+	path = /obj/item/storage/belt/medical/podwars
+	description = "A medical belt preloaded with menders, hypospray, suture, defibrilator, an upgraded health analyzer, and upgraded health hud goggles."
 
 // End of pod wars stuff
 

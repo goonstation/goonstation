@@ -133,13 +133,12 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/security)
 "bF" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - Mining";
-	network = "Mining";
 	pixel_x = -10;
-	tag = ""
+	
 	},
 /obj/item/device/radio/intercom/mining{
 	dir = 4
@@ -1106,12 +1105,10 @@
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
 "px" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 1;
-	name = "autoname - Mining";
-	network = "Mining";
-	tag = ""
+	name = "autoname - Mining"
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
@@ -1194,13 +1191,11 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "pP" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname -  Mining";
-	network = "Mining";
-	pixel_y = 20;
-	tag = ""
+	pixel_y = 20
 	},
 /obj/stool/chair{
 	dir = 4
@@ -1833,9 +1828,7 @@
 	name = "decomposed corpse"
 	},
 /turf/simulated/floor/plating/damaged3,
-/area/spyshack{
-	lightswitch = 0
-	})
+/area/spyshack)
 "tJ" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -2088,11 +2081,6 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"vL" = (
-/turf/simulated/floor/plating,
-/area/spyshack{
-	lightswitch = 0
-	})
 "vM" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/chapel)
@@ -2143,13 +2131,11 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "wd" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - Mining";
-	network = "Mining";
-	pixel_x = -10;
-	tag = ""
+	pixel_x = -10
 	},
 /obj/machinery/vending/coffee,
 /obj/decal/stripe_caution,
@@ -2964,12 +2950,10 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/bridge)
 "Bp" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 1;
-	name = "autoname - Mining";
-	network = "Mining";
-	tag = ""
+	name = "autoname - Mining"
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
@@ -3536,12 +3520,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 4;
-	name = "autoname - Mining";
-	network = "Mining";
-	tag = ""
+	name = "autoname - Mining"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light_switch/west,
@@ -3918,13 +3900,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname -  Mining";
-	network = "Mining";
-	pixel_y = 20;
-	tag = ""
+	pixel_y = 20
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -4507,13 +4487,11 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "LG" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - Mining";
-	network = "Mining";
-	pixel_x = 10;
-	tag = ""
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
@@ -4575,13 +4553,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/refinery)
 "LR" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - Mining";
-	network = "Mining";
 	pixel_x = -10;
-	tag = ""
+	
 	},
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -5587,13 +5564,11 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
 "Tl" = (
-/obj/machinery/camera{
+/obj/machinery/camera/mining{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - Mining";
-	network = "Mining";
-	pixel_x = -10;
-	tag = ""
+	pixel_x = -10
 	},
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grime,
@@ -44875,7 +44850,7 @@ oZ
 oB
 Sq
 Ud
-vL
+gX
 gX
 gX
 DZ

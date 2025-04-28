@@ -560,13 +560,13 @@ Equip items from body traits.
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
 		var/obj/item/tank/good_air
 		if (extended_tank)
-			good_air = new /obj/item/tank/emergency_oxygen/extended/plasma(src)
+			good_air = new /obj/item/tank/pocket/extended/plasma(src)
 			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
-			if (istype(src.l_store, /obj/item/tank/emergency_oxygen/extended))
+			if (istype(src.l_store, /obj/item/tank/pocket/extended/oxygen))
 				qdel(src.l_store)
 			src.equip_if_possible(good_air, SLOT_L_STORE)
 		else
-			good_air = new /obj/item/tank/mini_plasma(src)
+			good_air = new /obj/item/tank/mini/plasma(src)
 			src.put_in_hand_or_stow(good_air, delete_item=FALSE)
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
@@ -609,20 +609,20 @@ Equip items from body traits.
 
 				D.name = "data disk - '[src.real_name]'"
 
-			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/badge
-				if (ispath(JOB.receives_badge))
-					badge = new JOB.receives_badge(src)
-				else
-					badge = new /obj/item/clothing/suit/security_badge(src)
+			if(JOB.badge)
+				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
 				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
 					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
 				badge.badge_owner_name = src.real_name
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
+		var/obj/item/tank/extra_air
+		if (src.traitHolder.hasTrait("plasmalungs"))
+			extra_air = new /obj/item/tank/mini/plasma(src.loc)
+		else
+			extra_air = new /obj/item/tank/mini/oxygen(src.loc)
+		src.force_equip(extra_air, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
 		src.force_equip(SSW, SLOT_IN_BACKPACK, TRUE)
@@ -634,7 +634,12 @@ Equip items from body traits.
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
-		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+		if(!src.wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/device/pda2/pda = locate() in src

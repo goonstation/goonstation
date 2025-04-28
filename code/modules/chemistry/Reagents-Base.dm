@@ -431,7 +431,11 @@
 		if(!M) M = holder.my_atom
 		if(holder.has_reagent("epinephrine"))
 			holder.remove_reagent("epinephrine", 2 * mult)
-		M.take_toxin_damage(1 * mult)
+		var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+		if (!plasma_bioeffect)
+			M.take_toxin_damage(1 * mult)
+		else
+			plasma_bioeffect.absorb_liquid_plasma(mult)
 		..()
 		return
 
@@ -811,13 +815,6 @@
 		var/mob/living/M = target
 		if(istype(M))
 			var/list/covered = holder.covered_turf()
-			if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
-				var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
-				if(M in pz.brandlist)
-					pz.brandlist -= M
-					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
-					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
 				for(var/mob/O in AIviewers(M, null))

@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
 		scans[index] = last_scan
-		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		var/scan_output = last_scan + "<br>---- <a href='byond://?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
 		number_of_scans += 1
 
 		boutput(user, scan_output)
@@ -361,6 +361,48 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
 		AddOverlays(scanner_status, "status")
+		RegisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH, PROC_REF(assembly_on_wearer_death))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_building))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION, PROC_REF(assembly_building))
+		// Health-analyser + assembly-applier -> health-analyser/Applier-Assembly
+		src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ON_OWNER_DEATH)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_ON_TARGET_ADDITION)
+		..()
+
+/// ----------- Assembly-Related Procs -----------
+
+	assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
+		return " You can add this to a armor vest in order to craft a suicide bomb vest."
+
+	proc/assembly_on_wearer_death(var/affected_analyser, var/mob/dying_mob)
+		if (src.master && istype(src.master, /obj/item/assembly))
+			var/obj/item/assembly/triggering_assembly = src.master
+			if (dying_mob.suiciding && prob(60)) // no suiciding
+				dying_mob.visible_message(SPAN_ALERT("<b>[dying_mob]'s [src.master.name] clicks softly, but nothing happens.</b>"))
+				return
+			//we give our potential victims a time of 3 seconds to react and flee
+			triggering_assembly.last_armer = dying_mob
+			dying_mob.visible_message(SPAN_ALERT("<B>With [him_or_her(dying_mob)] last breath, the [triggering_assembly.name] on them is set off!</B>"),\
+			SPAN_ALERT("<B>With your last breath, you trigger the [src.master.name]!</B>"))
+			logTheThing(LOG_BOMBING, dying_mob, "initiated a health-analyser on a [triggering_assembly.name] at [log_loc(src.master)].")
+			playsound(get_turf(dying_mob), 'sound/machines/twobeep.ogg', 40, TRUE)
+			SPAWN(3 SECONDS)
+				var/datum/signal/signal = get_free_signal()
+				signal.source = src
+				signal.data["message"] = "ACTIVATE"
+				src.master.receive_signal(signal)
+
+	proc/assembly_building(var/manipulated_mousetrap, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//since we have a lot of icon states for health analysers, but they have no effect, we take a single one
+		parent_assembly.trigger_icon_prefix = "health-scanner"
+		//health-analyser-assembly + armor vest -> suicide vest
+		parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/clothing/suit/armor/vest), TYPE_PROC_REF(/obj/item/assembly, create_suicide_vest), TRUE)
+
+/// ----------------------------------------------
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -665,11 +707,10 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		src.add_fingerprint(user)
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
+			if ("attach")
+				det.initial_wire_functions += src
 			if ("pulse")
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>\The [src]'s external display turns off for a moment before booting up again.</span>")
 			if ("cut")

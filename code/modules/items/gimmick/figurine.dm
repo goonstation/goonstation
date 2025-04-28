@@ -1069,6 +1069,26 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Normal Human"
 		icon_state = "normalhuman"
 		ckey = "lazybones123"
+	emeraldcrow
+		name = "\improper Caitlin"
+		icon_state = "caitlin"
+		ckey = "emeraldcrow"
+	kikimofo
+		name = "\improper Kiki Kolana"
+		icon_state = "kikikolana"
+		ckey = "kikimofo"
+	fffootloose
+		name = "\improper Leeland Ponds"
+		icon_state = "leelandponds"
+		ckey = "fffootloose"
+	tamedevil
+		name = "\improper Vaughn Guy"
+		icon_state = "vaughnguy"
+		ckey = "tamedevil"
+	laticauda
+		name = "\improper Tommy Guilaume"
+		icon_state = "tommyguilaume"
+		ckey = "laticauda"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

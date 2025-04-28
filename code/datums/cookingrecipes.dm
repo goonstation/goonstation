@@ -11,6 +11,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
+	proc/render()
+		var/list/icons = list()
+		for (var/obj/item/type as anything in src.ingredients)
+			icons += bicon(type, 2)
+		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
+		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
+
 //TODO: replace variant checking code with this once cooking machines have been unified under one type
 /*	proc/getVariant(var/obj/submachine/ourCooker)
 		for(var/specialIngredient in variants)
@@ -435,7 +442,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/oven/brain_bread
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/breadloaf = 1,
 	/obj/item/organ/brain = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/brain
@@ -795,7 +802,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 /datum/cookingrecipe/mixer/wonton_wrapper
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/flour = 2)
+	/obj/item/reagent_containers/food/snacks/ingredient/flour = 1)
 	cookbonus = 1
 	output = /obj/item/reagent_containers/food/snacks/wonton_spawner
 
@@ -938,7 +945,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	category = "Cookies"
 
 /datum/cookingrecipe/oven/cookie
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie
 	category = "Cookies"
@@ -1356,7 +1363,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/soup/porridge
 
 /datum/cookingrecipe/oven/oatmeal
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/soup/oatmeal
 
@@ -1405,7 +1412,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 /datum/cookingrecipe/oven/ultrachili
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
+	/obj/item/reagent_containers/food/snacks/soup/chili = 1,
 	/obj/item/reagent_containers/food/snacks/soup/superchili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
@@ -1622,12 +1629,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/mashedbrains
 
 /datum/cookingrecipe/mixer/meatpaste
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 
 /datum/cookingrecipe/mixer/soysauce
-	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/soy)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/soy = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
 
@@ -1639,7 +1646,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
 
 /datum/cookingrecipe/mixer/fishpaste
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste
 
@@ -1708,7 +1715,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/granola_bar
 
 /datum/cookingrecipe/oven/hardboiled
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/egg)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 
@@ -1764,10 +1771,10 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 /datum/cookingrecipe/oven/macguffin
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/emuffin = 1,
+	/obj/item/reagent_containers/food/snacks/emuffin = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/egg = 2)
+	/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/macguffin
 
@@ -1904,7 +1911,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 /datum/cookingrecipe/oven/curry_udon_bowl
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/currypowder = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled = 1)
@@ -2031,14 +2038,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
 
 /datum/cookingrecipe/oven/brownie_batch
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/brownie_batter)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/brownie_batter = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/brownie
 
 /datum/cookingrecipe/oven/flapjack_batch
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/butter = 2,
+	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/syrup = 1) //technically this should be GOLDEN syrup but this works too
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
