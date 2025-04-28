@@ -41,7 +41,7 @@
 					user.tri_message(H, SPAN_NOTICE("<b>[user]</b> puts [src] to [(user != H) ? "[H]'s" : "their"] chest."),
 						SPAN_NOTICE("You put [src] to [(user != H) ? "[H]'s" : "your"] chest and begin listening."),
 						SPAN_NOTICE("[user] puts [src] to your chest and begins listening intently."))
-					if(do_after(user, (user.traitHolder.hasTrait("training_medical") ? 2 SECONDS : 4 SECONDS)))
+					if(do_after(user, (user.traitHolder.hasTrait("training_medical") ? 2 SECONDS : 4 SECONDS)) && can_act(user))
 						if(!user.traitHolder.hasTrait("training_medical") && prob(15))
 							boutput(user, SPAN_ALERT("You attempt to listen to [(user != H) ? "[H]'s" : "your"] lungs before realizing after a few attempts that you've been listening to [(user != H) ? "[H]'s" : "your"] [pick("liver", "kidneys", "spleen", "leg", "PDA", "eyes")], a shameful [user]"))
 						else
