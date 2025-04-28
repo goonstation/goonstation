@@ -101,7 +101,7 @@
 "ap" = (
 /obj/machinery/computer/announcement{
 	name = "Communications Office Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
