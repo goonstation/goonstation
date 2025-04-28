@@ -2,7 +2,7 @@
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/makeup.dmi'
-	icon_state = "blush_light1"
+	icon_state = "blush_brush"
 	var/mob/living/carbon/human/target
 	var/obj/item/makeup/blush
 
@@ -56,7 +56,7 @@
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/makeup.dmi'
-	icon_state = "eyeshadow_light1"
+	icon_state = "eyeshadow_brush"
 	var/mob/living/carbon/human/target
 	var/obj/item/makeup/eyeshadow
 
@@ -107,14 +107,6 @@
 			target.update_body()
 			for (var/mob/O in AIviewers(ownerMob))
 				O.show_message("[owner] applies [eyeshadow] to [target ]!", 1)
-
-//datum/action/bar/icon/apply_blush/dark
-	//icon = 'icons/obj/items/makeup.dmi'
-	//icon_state = "blush_dark1"
-
-//datum/action/bar/icon/apply_blush/gold
-	//icon = 'icons/obj/items/makeup.dmi'
-	//icon_state = "blush_gold1"
 
 /obj/item/pen/crayon/lipstick/fancy
 	name = "lipstick"
