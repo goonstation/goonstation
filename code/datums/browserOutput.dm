@@ -340,7 +340,7 @@ var/global
 	return copytext(partial[2], 3, -5)
 
 
-/proc/bicon(obj)
+/proc/bicon(obj, scale = 1)
 
 	var/baseData
 	if (isicon(obj))
@@ -386,8 +386,9 @@ var/global
 				return
 
 			baseData = icon2base64(icon, iconKey)
-
-		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
+		//kind of hacky, remove when we don't need to support 515 anymore
+		var/pixelation_mode = usr?.client.byond_version >= 516 ? "image-rendering: pixelated" : "-ms-interpolation-mode: nearest-neighbor"
+		return "<img style='position: relative; left: -1px; bottom: -3px; width: [world.icon_size * scale]px; height: [world.icon_size * scale]px; [pixelation_mode]' class='icon' src='data:image/png;base64,[baseData]' />"
 
 /proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
 	if (isnull(target))
