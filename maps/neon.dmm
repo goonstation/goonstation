@@ -9769,8 +9769,7 @@
 "gFn" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -21946,7 +21945,7 @@
 "piq" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23405,8 +23404,7 @@
 "qgQ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/plating,
@@ -33949,9 +33947,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "xhn" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "xho" = (
