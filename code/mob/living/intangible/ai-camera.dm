@@ -37,6 +37,11 @@
 	var/y_edge = 0
 	var/turf/T = 0
 
+	/// client view width in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_width = 12
+	/// client view height in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_height = 9
+
 	var/outer_eye_atom = null
 
 	New()
@@ -56,11 +61,9 @@
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		var/client_color = src.client.color
-		src.client.color = "#000000"
 		if (!src.client) // just client things
 			return
-		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+		src.bioHolder.mobAppearance.pronouns = src.fclient.preferences.AH.pronouns
 		src.update_name_tag()
 		src.job = "AI"
 		if (src.mind)
@@ -120,20 +123,20 @@
 	proc/add_all_statics()
 		if (!src.loc)
 			return
-		for (var/turf/T as anything in block(src.loc.x - 11, src.loc.y - 8, src.loc.z, src.loc.x + 11, src.loc.y + 8, src.loc.z))
+		for (var/turf/T as anything in block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z))
 			src.client.images |= T.aiImage
 
 	proc/remove_all_statics()
 		if (!src.last_client)
 			return
 		var/atom/center = src.last_loc
-		for (var/turf/T as anything in block(center?.x - 11, center?.y - 8, center?.z, center?.x + 11, center?.y + 8, center?.z))
+		for (var/turf/T as anything in block(center?.x - src.v_width, center?.y - src.v_height, center?.z, center?.x + src.v_width, center?.y + src.v_height, center?.z))
 			src.last_client.images -= T.aiImage
 
 	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
 		SPAWN(0)
-			var/list/add_block = block(new_turf.x - 11, new_turf.y - 8, new_turf.z, new_turf.x + 11, new_turf.y + 8, new_turf.z)
-			var/list/remove_block = block(old_turf.x - 11, old_turf.y - 8, old_turf.z, old_turf.x + 11, old_turf.y + 8, old_turf.z)
+			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z)
+			var/list/remove_block = block(old_turf.x - src.v_width, old_turf.y - src.v_height, old_turf.z, old_turf.x + src.v_width, old_turf.y + src.v_height, old_turf.z)
 
 			for (var/turf/T as anything in (remove_block - add_block))
 				src.client.images -= T.aiImage
