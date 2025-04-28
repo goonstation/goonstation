@@ -1006,16 +1006,16 @@
 				if (user)
 					boutput(user, "You short out [src]'s interface lock.")
 				src.emagged = TRUE
-				if(!src.brainexposed)
-					src.brainexposed = TRUE
+				if(!src.opened)
+					src.opened = TRUE
 				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
 				elecflash(src)
 				src.locked = FALSE
 				update_appearance()
 				return TRUE
 		else
-			if(!src.brainexposed)
-				src.brainexposed = TRUE
+			if(!src.opened)
+				src.opened = TRUE
 				boutput(user, "You manually disengage [src]'s interface cover")
 		return FALSE
 
