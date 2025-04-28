@@ -358,7 +358,22 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
-
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple) // table ambushes ig
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/snow)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime)
+	#ifdef SECRETS_ENABLED
+		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoeinx)
+		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+	#endif
 	var/list/armor_supplies = list()
 	// Feel free to add more!
 	armor_supplies.Add(/obj/item/clothing/shoes/rocket)
