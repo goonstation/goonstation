@@ -9106,6 +9106,7 @@
 	pixel_y = 24;
 	start_charge = 10
 	},
+/obj/landmark/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQj" = (
@@ -9298,6 +9299,7 @@
 "aQU" = (
 /obj/table/auto,
 /obj/item/gun/kinetic/flaregun,
+/obj/item/disk/data/floppy/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQV" = (
