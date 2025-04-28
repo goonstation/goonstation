@@ -217,7 +217,7 @@
 
 /////blush
 /obj/item/makeup/blush
-	name = "Blush"
+	name = "blush"
 	desc = "this is blush"
 	makeuptype = "blush_light"
 	makeup_color = "#fda7f6"
@@ -238,20 +238,20 @@
 			return ..()
 
 /obj/item/makeup/blush/dark
-	name = "Blush"
+	name = "blush"
 	desc = "this is blush"
 	makeuptype = "blush_dark"
 	makeup_color = "#d63f3f"
 
 /obj/item/makeup/blush/gold
-	name = "Blush"
+	name = "blush"
 	desc = "this is blush"
 	makeuptype = "blush_gold"
 	makeup_color = "#ff5b8c"
 
 ///// EYESHADOW
 /obj/item/makeup/eyeshadow
-	name = "Eyeshadow"
+	name = "eyeshadow"
 	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_light"
 	var/list/eyeshadow_light_colors = list("#ff9eb6", "#f8aaaa", "#ff757b", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
@@ -277,7 +277,7 @@
 			return ..()
 
 /obj/item/makeup/eyeshadow/dark
-	name = "Eyeshadow"
+	name = "eyeshadow"
 	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_dark"
 	var/list/eyeshadow_dark_colors = list("#87a2ad", "#a9bbc2", "#c2eeff", "#64b0ce", "#aacac6", "#3e4746", "#0000", "#ffffff",
@@ -289,7 +289,7 @@
 
 
 /obj/item/makeup/eyeshadow/gold
-	name = "Eyeshadow"
+	name = "eyeshadow"
 	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_gold"
 	var/list/eyeshadow_gold_colors = list("#d65644", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
@@ -298,3 +298,27 @@
 	New()
 		makeup_color = pick(eyeshadow_gold_colors)
 		return ..()
+
+//Makeup Bags
+/obj/item/storage/makeup_bag
+	name = "light makeup bag"
+	icon = 'icons/obj/items/makeup.dmi'
+	icon_state = "light_makeupbag"
+	desc = "A sturdy fabric pouch used to carry several grenades."
+	w_class = W_CLASS_SMALL
+	slots = 3
+	can_hold = list(/obj/item/makeup, /obj/item/pen/crayon/lipstick)
+	prevent_holding = list(/obj/item/storage)
+
+/obj/item/storage/makeup_bag/dark
+	name = "dark makeup bag"
+	icon = 'icons/obj/items/makeup.dmi'
+	icon_state = "dark_makeupbag"
+	desc = "A sturdy fabric pouch used to carry several grenades."
+
+/obj/item/storage/makeup_bag/gold
+	name = "gold makeup bag"
+	icon = 'icons/obj/items/makeup.dmi'
+	icon_state = "gold_makeupbag"
+	desc = "A sturdy fabric pouch used to carry several grenades."
+
