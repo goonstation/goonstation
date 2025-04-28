@@ -370,7 +370,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime)
 	#ifdef SECRETS_ENABLED
 		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
-		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoeinx)
+		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
 		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
 		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
 	#endif
