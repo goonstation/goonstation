@@ -52,9 +52,9 @@
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(\
 	/obj/item/reagent_containers/patch/bruise = 3,\
-	/obj/item/reagent_containers/pill/CBD,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/emergency_injector/saline,\
 	/obj/item/bandage/medicated)
 
 /obj/item/storage/firstaid/fire
