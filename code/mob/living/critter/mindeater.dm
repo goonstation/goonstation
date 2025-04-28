@@ -1,5 +1,5 @@
 /mob/living/critter/mindeater
-	name = "???"
+	name = "mindeater"
 	real_name = "mindeater"
 	desc = "What sort of eldritch abomination is this thing???"
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		src.name = "???" // set here so that in respawn popups the name doesn't appear as "???"
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -68,10 +69,13 @@
 		. = ..()
 		if (src.is_intangible())
 			return
+		if (istype(get_turf(src), /turf/space) && !istype(get_turf(src), /turf/space/fluid))
+			src.TakeDamage("All", 10, 10)
 		if (src.disguised)
 			return
-		if (istype(get_turf(src), /turf/space))
-			src.TakeDamage("All", 10, 10)
+		if (src.pulling)
+			src.reveal(FALSE)
+			return
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")
 			if (!src.hasStatus("mindeater_appearing") && !src.is_visible())
@@ -89,6 +93,8 @@
 		. = ..()
 		src.full_heal()
 		src.demanifest()
+		for (var/datum/statusEffect/status in src.statusEffects)
+			qdel(status)
 		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/become_tangible/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/become_tangible/)
 		abil_holder.deductPoints(abil_holder.points)
@@ -155,6 +161,16 @@
 	nauseate(stacks)
 		return
 
+	can_pull(atom/A)
+		. = ..()
+		if (src.is_intangible())
+			return FALSE
+
+	set_pulling(atom/movable/AM)
+		..()
+		if (src.pulling)
+			src.reveal(FALSE)
+
 	//say_understands(var/other)
 	//	return 1
 
@@ -194,12 +210,13 @@
 		return src.invisibility == INVIS_NONE
 
 	/// reveal the mindeater's true form to all
-	proc/reveal()
+	proc/reveal(remove_disguise = TRUE)
 		src.delStatus("mindeater_appearing")
 		src.delStatus("mindeater_cloaking")
 		src.vis_indicator.set_visible(TRUE)
 		src.invisibility = INVIS_NONE
-		src.undisguise()
+		if (remove_disguise)
+			src.undisguise()
 
 	/// set the mindeater invisible to humans
 	proc/set_invisible()
@@ -242,6 +259,8 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/become_tangible)
 
+		src.remove_pulling()
+
 	/// create fake mindeaters for associated ability
 	proc/setup_fake_mindeaters(list/fakes)
 		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(move_fake_mindeaters))
@@ -262,6 +281,9 @@
 
 	/// levitate an item with associated ability
 	proc/levitate_item(obj/item/I)
+		var/mob/living/L = I.loc
+		if (istype(L))
+			L.drop_item(I)
 		src.levitated_items += I
 		I.set_loc(src)
 		src.vis_contents += I

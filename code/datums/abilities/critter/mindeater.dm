@@ -54,6 +54,18 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	icon_state = "manifest"
 	cooldown = 60 SECONDS
 
+	tryCast()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		var/turf/T = get_turf(mindeater)
+		if (T.density)
+			boutput(mindeater, SPAN_ALERT("Something is blocking this turf!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		for (var/atom/A as anything in get_turf(mindeater))
+			if (A.density)
+				boutput(mindeater, SPAN_ALERT("Something is blocking this turf!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
