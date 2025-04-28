@@ -358,6 +358,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+	weapon_supplies.Add(/obj/item/syndie_fishing_rod)
+	weapon_supplies.Add(/obj/item/razor_blade/barberang)
 	// Ranch Eggs
 	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
 	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/plant)
