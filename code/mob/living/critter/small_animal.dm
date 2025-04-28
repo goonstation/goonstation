@@ -361,7 +361,7 @@ proc/filter_carrier_pets(var/type)
 			return ..()
 		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
 			return
-		src.visible_message("[src] considers \the [food].")
+		src.visible_message("[src] sniffs \the [food].")
 		var/list/possible_recipes = list()
 		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
 			if (istypes(food, recipe.ingredients))
