@@ -77,6 +77,7 @@
 	desc = "A first aid kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine and syringes for emergency use."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/emergency_injector/charcoal = 1,\
 	/obj/item/reagent_containers/emergency_injector/calomel = 1,\
 	/obj/item/reagent_containers/pill/antirad = 2,\
 	/obj/item/reagent_containers/pill/antitox = 2)
