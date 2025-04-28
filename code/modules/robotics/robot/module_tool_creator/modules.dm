@@ -91,7 +91,7 @@
 		/obj/item/satchel/hydro,
 		/obj/item/satchel/hydro,
 		// TODO: some sort of nutrient dispenser?
-		/obj/item/tongs,
+		/obj/item/kitchen/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,

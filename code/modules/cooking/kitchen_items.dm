@@ -502,7 +502,7 @@ TRAYS
 			. += "There's [(src.count > 0) ? src.count : "no" ] [src.contained_food_name][s_es(src.count)] in [src]."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tongs))
+		if (istype(W, /obj/item/kitchen/tongs))
 			return src.Attackhand(user)
 		// Stops trying to fit sticker in the box when we want it ON the box
 		if (istype(W, /obj/item/sticker))
@@ -927,7 +927,7 @@ TYPEINFO(/obj/item/plate/pizza_box)
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
 			return
 
-		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
+		if (src.open && istype(food, /obj/item/kitchen/tongs)) // Stops borgs from seeing duplicate messages
 			return
 
 		. = ..()
@@ -1308,10 +1308,9 @@ TYPEINFO(/obj/item/plate/pizza_box)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 
-/obj/item/tongs
+/obj/item/kitchen/tongs
 	name = "tongs"
 	desc = "A device that allows you to use food items as if they were used in-hand, or get food items out of food boxes."
-	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "tongs"
 
 	// used in attackby procs of /obj/item/reagent_containers/food/snacks and /obj/item/kitchen/food_box
