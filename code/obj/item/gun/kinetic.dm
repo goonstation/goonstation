@@ -44,6 +44,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
 
+	/// What firemode is this gun set to use?
+	var/selected_firemode = null
+
 	/// Can you use the gun on ammo to reload?
 	var/allowReverseReload = TRUE
 
@@ -191,7 +194,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (ammoRemaining >= src.current_projectile.cost)
 			return null
 
-		var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
+		var/ammo_per_shot = src.current_projectile.cost / selected_firemode.shot_number
 
 		var/max_shots = round(ammoRemaining/ammo_per_shot)
 		if (max_shots > 0)
@@ -3170,28 +3173,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		var/obj/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
-			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
-				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
-					projectiles = list(new/datum/projectile/bullet/assault_rifle/armor_piercing, current_projectile)
-				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/armor_piercing)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
-			else if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/remington))
-				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
-					projectiles = list(new/datum/projectile/bullet/assault_rifle/remington, current_projectile)
-				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/remington)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/remington)
-			else // we switched from armor penetrating ammo to normal
-				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst)
-					projectiles = list(new/datum/projectile/bullet/assault_rifle, current_projectile)
-				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
 
 	attack_self(mob/user)
 		..()	//burst shot has a slight spread.

@@ -320,7 +320,6 @@
 
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
-	cost = 3
 	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
