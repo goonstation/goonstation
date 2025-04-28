@@ -3566,11 +3566,13 @@
 	},
 /area/station/bridge/customs)
 "aup" = (
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -14980,7 +14982,7 @@
 /area/station/science/artifact)
 "jLt" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge)

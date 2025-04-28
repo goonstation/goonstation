@@ -120,6 +120,19 @@
 				icon_state = "bank2"
 				base_icon_state = "bank2"
 
+		personnel_management
+			name = "personnel management computer"
+			icon_state = "personnel_management"
+			base_icon_state = "personnel_management"
+			setup_drive_size = 80
+			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
+			setup_starting_program = list(
+				/datum/computer/file/terminal_program/bank_records,
+				/datum/computer/file/terminal_program/secure_records,
+				/datum/computer/file/terminal_program/job_controls,
+			)
+
 		communications
 			name = "Communications Console"
 			icon_state = "comm"

@@ -9628,7 +9628,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
@@ -15527,9 +15527,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
 	},
 /obj/item/clipboard,
 /turf/simulated/floor/darkblue,
@@ -22477,7 +22476,7 @@
 /area/space)
 "bmV" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
@@ -28033,7 +28032,7 @@
 /area/station/crew_quarters/pool)
 "bDY" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -28716,7 +28715,7 @@
 /area/station/crew_quarters/fitness)
 "bFY" = (
 /obj/table/reinforced/bar/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "bFZ" = (
@@ -28990,7 +28989,7 @@
 /area/station/crew_quarters/quarters_south)
 "bGS" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -38891,10 +38890,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -40053,10 +40049,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "clJ" = (
@@ -42567,7 +42560,7 @@
 	pixel_x = -12
 	},
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ctO" = (
@@ -48738,10 +48731,10 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "hlM" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station{
 	dir = 4
 	},
+/obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/bridge/customs)
@@ -57392,10 +57385,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/hallway/primary/central)
 "vbj" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 1

@@ -4874,7 +4874,7 @@
 /area/station/crew_quarters/quartersA)
 "btM" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
@@ -7460,7 +7460,7 @@
 /area/station/medical/asylum/main)
 "cgS" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
 /obj/item/pen/marker/red,
@@ -11400,7 +11400,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -20078,7 +20078,7 @@
 /area/station/medical/medbay/treatment)
 "fWH" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/incandescent/cool,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet/red/fancy/narrow{
@@ -22816,7 +22816,7 @@
 /area/station/crew_quarters/baroffice)
 "gPq" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -64289,7 +64289,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
+/obj/machinery/computer3/generic/personnel_management{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -71020,7 +71020,7 @@
 /area/station/crew_quarters/stockex)
 "vyo" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 12
 	},
 /obj/item/storage/pill_bottle/salicylic_acid,
@@ -73348,7 +73348,7 @@
 /area/station/crew_quarters/garden)
 "wiQ" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/blue,
 /area/spacehabitat/pool)
 "wiT" = (

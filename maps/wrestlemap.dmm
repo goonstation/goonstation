@@ -2700,7 +2700,9 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
-/obj/machinery/computer/announcement/console_upper{
+/obj/machinery/computer/announcement/station/engineering{
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "announcement1";
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -2906,7 +2908,7 @@
 "boW" = (
 /obj/item/clothing/under/gimmick/macho,
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/junction/right/south,
 /obj/cable{
 	icon_state = "1-2"
@@ -8591,12 +8593,12 @@
 	},
 /area/station/hallway/primary/south)
 "dKL" = (
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/bridge,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge/customs)
 "dKY" = (
@@ -12083,7 +12085,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/glass/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/quarters_south)
 "flw" = (
@@ -13951,14 +13953,14 @@
 /turf/simulated/floor/black,
 /area/station/engine/power)
 "gan" = (
-/obj/machinery/computer/announcement{
-	dir = 4
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area/station/bridge)
 "gaq" = (
@@ -15333,15 +15335,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "gKZ" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer"
-	},
 /obj/machinery/light/emergency{
 	dir = 8
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/hos)
 "gLc" = (
@@ -15814,11 +15815,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gUW" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -15832,6 +15828,9 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -35066,7 +35065,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "pqB" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -37624,7 +37623,7 @@
 /obj/item/sponge{
 	name = "loofah"
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/showers{
@@ -38980,7 +38979,7 @@
 /area/listeningpost)
 "rdV" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "rdZ" = (
@@ -50329,13 +50328,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "wdv" = (
-/obj/machinery/computer/announcement{
-	dir = 4
-	},
 /obj/machinery/light_switch/west,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/orange/side{
 	dir = 8
@@ -55043,7 +55042,7 @@
 	icon_state = "0-2"
 	},
 /obj/table/glass/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_north)
 "yeS" = (

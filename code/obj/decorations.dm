@@ -433,7 +433,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
 
 	get_desc(dist, mob/user)
-		if(istraitor(user) || isnukeop(user) || user.mind?.get_antagonist(ROLE_SLEEPER_AGENT)) //no issleeperagent() >:(
+		if(istrainedsyndie(user))
 			. += SPAN_ALERT("<b>The latest in syndicate spy technology. </b>")
 		else
 			. += "Is that an antenna? "
@@ -1946,30 +1946,43 @@ obj/decoration/pottedfern
 /obj/fireworksbox
 	name = "Box of Fireworks"
 	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
-	density = 0
-	anchored = UNANCHORED
-	opacity = 0
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "fireworksbox"
-	var/fireworking = 0
+	var/fireworking = FALSE
+	var/amount_left = 25
+
+	New()
+		. = ..()
+		src.amount_left = rand(15, 25)
 
 	attack_hand(mob/user)
 		if(fireworking) return
-		fireworking = 1
+		fireworking = TRUE
 		boutput(user, SPAN_ALERT("The fireworks go off as soon as you touch the box. This is some high quality stuff."))
 		anchored = ANCHORED
 
 		SPAWN(0)
-			for(var/i=0, i<rand(15,25), i++)
+			for(var/i=0, i<src.amount_left, i++)
 				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
 				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
 				sleep(rand(2, 15))
 
-			for(var/mob/O in oviewers(world.view, src))
-				O.show_message(SPAN_NOTICE("The box of fireworks magically disappears."), 1)
-
+			src.visible_message(SPAN_NOTICE("The box of fireworks magically disappears."))
 			qdel(src)
 		return
+
+	attackby(obj/item/I, mob/user)
+		if (issnippingtool(I) && !src.fireworking)
+			var/a_firework = weighted_pick(list(/obj/item/roman_candle=5, /obj/item/firework=5, /obj/item/firework/bootleg=1))
+			var/obj/item/the_firework = new a_firework(src.loc)
+			boutput(user, "You take [the_firework] from the box.")
+			user.put_in_hand_or_drop(the_firework)
+			src.amount_left -= 1
+			if (src.amount_left <= 0)
+				src.visible_message(SPAN_NOTICE("The box of fireworks magically disappears."))
+				qdel(src)
+			return
+		. = ..()
 
 ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 /obj/lever
