@@ -420,6 +420,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 			if (11) // strong power eggs
 				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
 				#ifdef SECRETS_ENABLED
 					eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
