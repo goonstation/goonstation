@@ -735,3 +735,159 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/geigerclick(stage)
 	if(!ON_COOLDOWN(src, "geigerclick", 1 SECOND))
 		src.playsound_local(get_turf(src), "sound/items/geiger/geiger-[stage]-[stage >= 4 ? rand(1, 3) : rand(1, 2)].ogg", 20, flags = SOUND_IGNORE_SPACE)
+
+/datum/statusEffect/low_power
+	id = "low_power"
+	name = "Low Power"
+	desc = "Your internal cell is running critically low."
+	icon_state = "stam-"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/low_power_sound = 'sound/voice/Sad_Robot.ogg'
+	var/mob/living/silicon/silicon
+	var/next_sound_time
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.UpdateOverlays(distress, "battery_distress")
+		src.silicon = src.owner
+		src.next_sound_time = world.time + 5 SECONDS
+		src.silicon.show_text()
+
+	onUpdate(timePassed)
+		. = ..()
+		if(src.silicon.cell?.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		if (world.time > src.next_sound_time)
+			playsound(src.owner.loc, src.low_power_sound, 100, 1)
+			src.next_sound_time = world.time + 5 SECONDS
+
+	onRemove()
+		. = ..()
+		src.silicon = null
+		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
+
+/datum/statusEffect/killswitched
+	id = "killswitched"
+	name = "Killswitched"
+	desc = "You are going to die."
+	icon_state = "blinded3"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+
+	onRemove()
+		. = ..()
+
+	proc/do_killswitch()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			if (M.client)
+				boutput(src, SPAN_ALERT("<b>Killswitch engaged!</b>"))
+				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
+
+/datum/statusEffect/lockdown
+	id = "lockdown"
+	name = "Locked Down"
+	desc = "Your access to tools and equipment have been locked down."
+	icon_state = "handcuffed"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown engaged!</b>"))
+
+	onRemove()
+		. = ..()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.show_text(SPAN_ALERT("<b>Equipment lockdown disengaged!</b>"))
+
+/datum/statusEffect/lockdown/ai
+	id = "lockdown_ai"
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+
+/datum/statusEffect/lockdown/robot
+	id = "lockdown_robot"
+	maxDuration = 2 MINUTES
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated) R.upgrade_deactivate(robot)
+
+	onRemove()
+		. = ..()
+		src.robot = null
+
+/datum/statusEffect/no_power
+	id = "no_power"
+	name = "No Power"
+	desc = "Your internal cell is completely out of charge."
+	icon_state = "no_power"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.addOverlayComposition(/datum/overlayComposition/low_signal)
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated) R.upgrade_deactivate(robot)
+
+	onRemove()
+		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		var/mob/M = owner
+		M.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/statusEffect/no_power/no_cell
+	id = "no_cell"
+	name = "No Power Cell"
+	desc = "You have no power cell installed!"
+	icon_state = "no_power"
+
+	onAdd(optional)
+		. = ..()

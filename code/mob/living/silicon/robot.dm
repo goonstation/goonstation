@@ -1,6 +1,4 @@
-#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
-#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
-#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+/// Wireless charge amount provided by Nimbus-class interdictor
 #define ROBOT_BATTERY_WIRELESS_CHARGERATE 50
 
 /datum/robot_cosmetic
@@ -62,8 +60,6 @@
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
-	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -747,7 +743,10 @@
 			. += "[SPAN_ALERT("[src.name] doesn't seem to be responding.")]<br>"
 
 		. += "The cover is [opened ? "open" : "closed"].<br>"
-		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
+		if (src.cell)
+			. += "The power cell display reads: [round(cell.percent())]%<br>"
+		else
+			. += "[SPAN_ALERT("<b>[src.name] does not have a cell installed!</b>")]<br>"
 
 		if (src.module)
 			. += "[src.name] has a [src.module.name] installed.<br>"
@@ -2596,17 +2595,14 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
-				batteryDistress() // Execute distress mode
-			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
-				clearBatteryDistress() // Exit distress mode
+			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD && !src.hasStatus("low_power"))
+				src.setStatus("low_power", INFINITE_STATUS)
 
 		else
 			if (isalive(src))
 				sleep(0)
 				src.lastgasp()
 			setunconscious(src)
-			batteryDistress() // No battery. Execute distress mode
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -3192,28 +3188,9 @@
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
 
-/mob/living/silicon/robot/var/image/i_batterydistress
-
-/mob/living/silicon/robot/proc/batteryDistress()
-	if (!src.i_batterydistress) // we only need to build i_batterydistress once
-		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
-		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
-
-	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
-		AddOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
-		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
-		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
-	else if(world.time >= src.next_batteryDistressBoop)
-		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
-		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
-
 /mob/living/silicon/robot/set_a_intent(intent)
 	. = ..()
 	src.hud?.update_intent()
-
-/mob/living/silicon/robot/proc/clearBatteryDistress()
-	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	ClearSpecificOverlays("batterydistress")
 
 /mob/living/silicon/robot/verb/open_nearest_door()
 	set category = "Robot Commands"
@@ -3626,6 +3603,3 @@
 		//STEP SOUND HANDLING OVER
 
 #undef can_step_sfx
-#undef ROBOT_BATTERY_DISTRESS_INACTIVE
-#undef ROBOT_BATTERY_DISTRESS_ACTIVE
-#undef ROBOT_BATTERY_DISTRESS_THRESHOLD
