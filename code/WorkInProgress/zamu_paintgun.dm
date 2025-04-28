@@ -109,7 +109,7 @@
 	dissipation_delay = 0
 	sname = "paintball"
 	shot_sound = 'sound/effects/splort.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 	damage_type = 0
 	hit_ground_chance = 33

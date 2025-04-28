@@ -19,7 +19,7 @@
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	ie_type = "E"
 //What is our damage type
 /*
@@ -108,7 +108,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 8
 	max_range = 7
-	shot_number = 2
+	default_firemode = /datum/firemode/two_burst
 
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
@@ -149,7 +149,7 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 	brightness = 4
-	shot_number = 5
+	default_firemode = /datum/firemode/five_burst
 	window_pass = 0
 
 	tick(var/obj/projectile/P)
@@ -376,7 +376,7 @@ toxic - poisons
 
 	burst
 		cost = 50
-		shot_number = 3
+		default_firemode = /datum/firemode/three_burst
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "rydberg-matter bolt"
@@ -424,7 +424,7 @@ toxic - poisons
 	name = "burst laser"
 	sname = "burst laser"
 	shot_sound = 'sound/weapons/snipershot.ogg'
-	shot_number = 3
+	default_firemode = /datum/firemode/three_burst
 	cost = 100
 	damage = 35
 	color_red = 0.4
@@ -445,7 +445,7 @@ toxic - poisons
 	color_red = 0.4
 	color_green = 0.5
 	color_blue = 0.7
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 
 // blaster projectiles
@@ -465,7 +465,7 @@ toxic - poisons
 	color_green = 0.5
 	color_blue = 1
 	brightness = 1.2
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 	on_launch(var/obj/projectile/P)
 		. = ..()
@@ -491,7 +491,7 @@ toxic - poisons
 	burst
 		damage = 15
 		cost = 30
-		shot_number = 3
+		default_firemode = /datum/firemode/three_burst
 		icon_state = "bolt_burst"
 		shot_sound = 'sound/weapons/laser_c.ogg'
 		fullauto_valid = 1
@@ -501,7 +501,7 @@ toxic - poisons
 		damage = 30
 		cost = 100
 		icon_state = "crescent_white"
-		shot_number = 1
+		default_firemode = /datum/firemode/single
 
 	cannon
 		shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
@@ -726,7 +726,7 @@ toxic - poisons
 
 	disruption = 8
 
-	shot_number = 2
+	default_firemode = /datum/firemode/two_burst
 	ie_type = "E"
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
@@ -764,8 +764,7 @@ toxic - poisons
 /datum/projectile/laser/plasma/burst
 	cost = 60
 	damage = 20
-	shot_number = 4
-	shot_delay = 1
+	default_firemode = /datum/firemode/four_burst
 	shot_volume = 75
 	projectile_speed = 42
 
@@ -821,4 +820,4 @@ toxic - poisons
 	name = "burst laser"
 	sname = "burst laser"
 	cost = 15
-	shot_number = 3
+	default_firemode = /datum/firemode/three_burst

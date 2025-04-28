@@ -674,8 +674,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/shot_sound_extrarange = 0 //should the sound have extra range?
 	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
 	var/shot_pitch = 1
-	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
+	var/datum/firemode/firemode
+	var/datum/firemode/default_firemode = /datum/firemode/single //Sets the number of bullets fired & delay
 	var/damage_type = D_KINETIC  // What is our damage type
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
@@ -740,6 +740,7 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	New()
 		. = ..()
+		firemode = new default_firemode()
 		generate_stats()
 		var/icon/fuck_you_byond = icon(src.icon)
 		src.x_offset = -(fuck_you_byond.Width() - 32)/2
@@ -910,10 +911,11 @@ ABSTRACT_TYPE(/datum/projectile)
 						new /obj/effects/impact_energy/smoke(get_turf(hit), x, y, -O.xo, -O.yo, damage)
 
 // THIS IS INTENDED FOR POINTBLANKING.
-/proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
+/proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T, var/datum/firemode/firemode_override = null)
 	if (!S || !T)
 		return
-	var/times = max(1, DATA.shot_number)
+	var/datum/firemode/FM = firemode_override || DATA.firemode
+	var/times = max(1, FM.shot_number)
 	for (var/i = 1, i <= times, i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(S, DATA, T)
 		if (S == T)
@@ -945,16 +947,17 @@ ABSTRACT_TYPE(/datum/projectile)
 		return shoot_projectile_ST_pixel_spread(S, DATA, T, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source)
 	return null
 
-/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null)
+/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/datum/firemode/firemode_override = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
 	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source)
-	if (DATA.shot_number > 1)
+	var/datum/firemode/FM = firemode_override || DATA.firemode
+	if (FM.shot_number > 1)
 		SPAWN(-1)
-			for (var/i = 2, i <= DATA.shot_number, i++)
-				sleep(DATA.shot_delay)
+			for (var/i = 2, i <= FM.shot_number, i++)
+				sleep(FM.shot_delay)
 				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source)
 	return Q
 
@@ -985,16 +988,17 @@ ABSTRACT_TYPE(/datum/projectile)
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null)
+/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/datum/firemode/firemode_override = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source)
-	if (DATA.shot_number > 1)
+	var/datum/firemode/FM = firemode_override || DATA.firemode
+	if (FM.shot_number > 1)
 		SPAWN(-1)
-			for (var/i = 2, i <= DATA.shot_number, i++)
-				sleep(DATA.shot_delay)
+			for (var/i = 2, i <= FM.shot_number, i++)
+				sleep(FM.shot_delay)
 				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source)
 	return Q
 

@@ -211,8 +211,8 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 
 	proc/set_projectile()
 		current_projectile = new projectile_type
-		current_projectile.shot_number = burst_size
-		current_projectile.shot_delay = 10/fire_rate
+		current_projectile.firemode.shot_number = burst_size
+		current_projectile.firemode.shot_delay = 10/fire_rate
 
 	proc/shoot(target)
 		SPAWN(0)
@@ -224,7 +224,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 					var/turf/T = get_step(src, direction)
 					if (T && !T.density)
 						casing_turfs += T
-			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
+			for(var/i in 1 to src.current_projectile.firemode.shot_number) //loop animation until finished
 				FLICK("[src.icon_tag]_fire",src)
 				muzzle_flash_any(src, 0, "muzzle_flash")
 				if (src.current_projectile.casing)
@@ -235,7 +235,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 						SPAWN(30 SECONDS)
 							if (!QDELETED(turret_casing) && get_turf(turret_casing) == picked_turf)
 								qdel(turret_casing)
-				sleep(src.current_projectile.shot_delay)
+				sleep(src.current_projectile.firemode.shot_delay)
 		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 	proc/process()

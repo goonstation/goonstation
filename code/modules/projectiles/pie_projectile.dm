@@ -5,7 +5,7 @@
 	stun = 1
 	dissipation_rate = 1
 	dissipation_delay = 7
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	shot_sound = 'sound/effects/throw.ogg'
 	damage_type = D_SPECIAL
 

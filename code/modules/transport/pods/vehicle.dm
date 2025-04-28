@@ -484,14 +484,14 @@
 	proc/AmmoPerShot()
 		return 1
 
-	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1, num_shots = 1)
+	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
 		if (src.m_w_system?.muzzle_flash && src.allow_muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
-		for (var/i in 1 to (num_shots - 1))
-			sleep(PROJ.shot_delay)
+		for (var/i in 1 to (PROJ.firemode.shot_number - 1))
+			sleep(PROJ.firemode.shot_delay)
 			src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
 	proc/create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)

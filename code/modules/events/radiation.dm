@@ -103,7 +103,7 @@
 		SPAWN(lifespan)
 			playsound(src,pulse_sound,50,TRUE)
 			irradiate_turf(get_turf(src))
-			shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
+			shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron(10), get_step_rand(get_turf(src)), spread_angle = 360, firemode_override = new/datum/firemode/ten_burst)
 			for (var/turf/T in circular_range(src,pulse_range))
 				irradiate_turf(T)
 			SPAWN(0)

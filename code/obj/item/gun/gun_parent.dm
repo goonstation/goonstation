@@ -124,6 +124,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/check_lock(var/user as mob)
 	return 1
 
+///CHECK_FIREMODE
+///Return a non-null firemode to override the current firemode
+/obj/item/gun/proc/override_firemode()
+	return
+
 ///CHECK_VALID_SHOT
 ///Call to check and make sure the shot is ok
 ///Not called much atm might remove, is now inside shoot
@@ -179,7 +184,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 			if (G && G.can_dual_wield && G.canshoot(user))
 				is_dual_wield = 1
-				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
+				if(!ON_COOLDOWN(G, "shot_delay", G.shoot_delay))
 					SPAWN(0.2 SECONDS)
 						if(!(G in user.equipped_list())) return
 						G.Shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
@@ -194,16 +199,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 						guns += H.item
 			SPAWN(0)
 				for(var/obj/item/gun/gun in guns)
-					if(!ON_COOLDOWN(gun, "shoot_delay", gun.shoot_delay))
+					if(!ON_COOLDOWN(gun, "shot_delay", gun.shoot_delay))
 						sleep(0.2 SECONDS)
 						if(!(gun in user.equipped_list())) return
 						gun.Shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield, target)
 
-	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
+	if(!ON_COOLDOWN(src, "shot_delay", src.shoot_delay))
 		Shoot(target_turf, user_turf, user, pox, poy, is_dual_wield, target)
 
 
 	return 1
+
+/// Alter the firemode before shooting, like reducing shot_number.
+/obj/item/gun/proc/alter_firemode(var/datum/firemode/F)
+	return
 
 /obj/item/gun/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
@@ -295,7 +304,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
-	if (!process_ammo(user))
+	var/datum/firemode/fireMode = override_firemode()
+	if (!process_ammo(user, fireMode || current_projectile.firemode))
 		return FALSE
 
 	if (src.muzzle_flash)
@@ -323,8 +333,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	spread += (recoil/recoil_max) * recoil_inaccuracy_max
-
-	for (var/i = 0; i < current_projectile.shot_number; i++)
+	var/datum/firemode/FM = current_projectile.default_firemode
+	src.alter_firemode(FM)
+	for (var/i = 0; i < FM.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
 			return FALSE
@@ -345,7 +356,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				L.lastgasp()
 			L.set_clothing_icon_dirty()
 		src.UpdateIcon()
-		sleep(current_projectile.shot_delay)
+		sleep(FM.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
@@ -376,7 +387,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (!silenced)
 				playsound(user, click_sound, 60, TRUE)
 		return FALSE
-	if (!process_ammo(user))
+	var/datum/firemode/fireMode = override_firemode()
+	if (!process_ammo(user, fireMode || current_projectile.firemode))
 		return FALSE
 	if (!isturf(start))
 		return FALSE
@@ -413,7 +425,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	spread += (recoil/recoil_max) * recoil_inaccuracy_max
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode_override = fireMode)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 	P.spread = spread
@@ -453,7 +465,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return list("You have no idea what the hell this thing is!")
 	return ..()
 
-/obj/item/gun/proc/process_ammo(var/mob/user)
+/obj/item/gun/proc/process_ammo(var/mob/user, var/datum/firemode/firemode = null)
 	if (src.click_sound)
 		boutput(user, SPAN_ALERT(src.click_msg))
 		if (!src.silenced)
@@ -565,9 +577,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (camera_recoil_enabled)
 		do_camera_recoil(user, start,target,POX,POY)
 
-	if (first_shot && src.current_projectile.shot_number > 1 && src.current_projectile.shot_delay > 0)
-		for (var/i=1 to src.current_projectile.shot_number-1)
-			SPAWN(i*src.current_projectile.shot_delay)
+	var/datum/firemode/fireMode = override_firemode() || src.current_projectile.firemode
+
+	if (first_shot && fireMode.shot_number > 1 && fireMode.shot_delay > 0)
+		for (var/i=1 to fireMode.shot_number-1)
+			SPAWN(i*fireMode.shot_delay)
 				handle_recoil(user,start,target,POX,POY, FALSE)
 	if (start_recoil && icon_recoil_enabled)
 		SPAWN(0)

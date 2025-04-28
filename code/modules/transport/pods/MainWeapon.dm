@@ -5,8 +5,6 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
-	/// number of projectiles that are fired when weapon is fired
-	var/shots_to_fire = 1
 	/// change to a degree in angles to give custom spread
 	var/spread = -1
 	var/weapon_score = 0.1
@@ -88,7 +86,7 @@
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
 	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
-	ship.ShootProjectiles(user, current_projectile, rdir, src.spread, src.shots_to_fire)
+	ship.ShootProjectiles(user, current_projectile, rdir, src.spread)
 	remaining_ammunition -= ship.AmmoPerShot()
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
@@ -145,7 +143,6 @@
 	name = "Mk 1.5e Burst Phaser"
 	desc = "A variant of the Mk 1.5 Light Phaser that fires a stronger burst of 3 shots at a third of the firerate."
 	firerate = 2.4 SECONDS
-	shots_to_fire = 3
 	current_projectile = new/datum/projectile/laser/light/pod/burst
 	icon_state = "class-a-burst"
 
@@ -281,7 +278,6 @@
 	current_projectile = new/datum/projectile/bullet/homing/rocket/salvo
 	appearanceString = "pod_weapon_cerberus"
 	firerate = 10 SECONDS
-	shots_to_fire = 3
 	spread = 30
 	large_pod_compatible = FALSE
 
@@ -1224,7 +1220,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 /datum/projectile/laser/light/pod/burst
 	damage = 25
-	shot_delay = 0.2 SECONDS
+	default_firemode = /datum/firemode/pod/burst_phaser
 
 /datum/projectile/laser/light/pod/support_gunner
 	damage = 5

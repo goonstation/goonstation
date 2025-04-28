@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 0
 	sname = "laser"
 	shot_sound = 'sound/weapons/Taser.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_SPECIAL
 	hit_ground_chance = 50
 	window_pass = 0
@@ -631,7 +631,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	dissipation_delay = 0
 	shot_sound = 'sound/weapons/Taser.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_SPECIAL
 	hit_ground_chance = 100
 	window_pass = 0
@@ -1062,7 +1062,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/shotgunlaser.ogg'
 	cost = 50
 	damage = 15
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	sname = "lethal"
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
@@ -1113,7 +1113,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 0
 	sname = "4 space wasp eggs"
 	shot_sound = null
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	damage = 60
 	cost = 60
@@ -1201,7 +1201,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 0
 	sname = "space wasp egg"
 	shot_sound = null
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	hit_ground_chance = 0
 	damage_type = D_SPECIAL
@@ -1281,7 +1281,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage = 0
 	cost = 1
 	damage_type = D_SPECIAL
-	shot_delay = 0.1 SECONDS
 	dissipation_rate = 0
 	dissipation_delay = 0
 	hit_ground_chance = 0 // burn right over em

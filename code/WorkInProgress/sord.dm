@@ -91,7 +91,7 @@
 	sname = "dazzle"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	color_red = 0
 	color_green = 0
@@ -129,7 +129,7 @@
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/laser_e.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	hit_ground_chance = 0
 	brightness = 0.8

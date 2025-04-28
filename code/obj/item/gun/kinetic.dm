@@ -34,6 +34,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/ammobag_restock_cost = 1
 	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
 	var/sound_load_override = null
+	/// Can this gun shoot less than a full burst?
+	var/can_shoot_partially = TRUE
 
 	/// How many bullets get moved into this gun per action?
 	var/max_move_amount = -1
@@ -94,15 +96,25 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return 0
 
 	canshoot(mob/user)
-		if(src.ammo && src.current_projectile)
-			if(src.ammo:amount_left >= src.current_projectile:cost)
-				return 1
+		var/ammo = src.ammo.amount_left
+		if (can_shoot_partially && ammo >= src.current_projectile.cost / src.current_projectile.firemode.shot_number)
+			return 1
+		else if (ammo >= src.current_projectile.cost)
+			return 1
 		return 0
 
-	process_ammo(var/mob/user)
-		if(src.ammo && src.current_projectile)
-			if(src.ammo.use(current_projectile.cost))
+	process_ammo(var/mob/user, var/datum/firemode/firemode)
+		if(can_shoot_partially)
+			var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
+			var/ammoCost = firemode.shot_number * ammo_per_shot
+			if(src.ammo.use(ammoCost))
+				handle_casings(firemode.shot_number)
 				return 1
+		else
+			if(src.ammo && src.current_projectile)
+				if(src.ammo.use(current_projectile.cost))
+					handle_casings(firemode.shot_number)
+					return 1
 		if (src.click_sound)
 			boutput(user, SPAN_ALERT(src.click_msg))
 			if (!src.silenced)
@@ -161,6 +173,33 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			..()
 
+	proc/handle_casings(num)
+		if (src.auto_eject)
+			var/turf/T = get_turf(src)
+			if(T)
+				if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
+					var/number_of_casings = max(1, num)
+					//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
+					for (var/i in 1 to number_of_casings)
+						new src.current_projectile.casing(T, src.forensic_ID)
+		else
+			if (src.casings_to_eject < 0)
+				src.casings_to_eject = 0
+			src.casings_to_eject += num
+	override_firemode()
+		var/ammoRemaining = src.ammo.amount_left
+		if (ammoRemaining >= src.current_projectile.cost)
+			return null
+
+		var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
+
+		var/max_shots = round(ammoRemaining/ammo_per_shot)
+		if (max_shots > 0)
+			var/datum/firemode/firemodeOverride = new src.current_projectile.firemode.type()
+			firemodeOverride.shot_number = max_shots
+			return firemodeOverride
+		return null
+
 	//attack_self(mob/user as mob)
 	//	return
 
@@ -177,38 +216,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.eject_magazine(user)
 		return ..()
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-	// Finished Cogwerks' former WIP system (Convair880).
-		if (src.canshoot(user) && user.a_intent != "help" && user.a_intent != "grab")
-			if (src.auto_eject)
-				var/turf/T = get_turf(src)
-				if(T)
-					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
-						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
-			else
-				if (src.casings_to_eject < 0)
-					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
-		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-		if (src.canshoot(user) && !isghostdrone(user))
-			if (src.auto_eject)
-				var/turf/T = get_turf(src)
-				if(T)
-					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
-						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src.forensic_ID)
-			else
-				if (src.casings_to_eject < 0)
-					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
-
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
@@ -273,10 +282,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	// Don't set this too high. Absurdly large reloads and item spawning can cause a lot of lag. (Convair880).
 	proc/sanitycheck(var/casings = 0, var/ammo = 1)
-		if (casings && (src.casings_to_eject > 30 || src.current_projectile.shot_number > 30))
+		if (casings && src.casings_to_eject > 30)
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-			if (src.casings_to_eject > 0)
-				src.casings_to_eject = 0
+			if (src.casings_to_eject > 30)
+				src.casings_to_eject = 30
 			return 0
 		if (ammo && (src.max_ammo_capacity > 200 || src.ammo.amount_left > 200))
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
@@ -527,11 +536,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	set_current_projectile(datum/projectile/newProj)
 		..()
 		if(src.current_projectile.cost > 1)
-			if(src.current_projectile.shot_number < src.current_projectile.cost)
-				src.current_projectile.power = src.current_projectile.cost/src.current_projectile.shot_number
+			if(src.current_projectile.firemode.shot_number < src.current_projectile.cost)
+				src.current_projectile.power = src.current_projectile.cost/src.current_projectile.firemode.shot_number
 			src.current_projectile.cost = 1
-		if(src.current_projectile.shot_number > 1)
-			src.current_projectile.shot_number = 1
+		if(src.current_projectile.firemode.shot_number > 1)
+			src.current_projectile.firemode.shot_number = 1
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/staple_gun))

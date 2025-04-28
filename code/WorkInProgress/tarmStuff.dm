@@ -10,7 +10,7 @@
 	impact_image_state = "bullethole-large"
 	damage = 15
 	icon_state = "mininuke"
-	shot_delay = 1 SECONDS
+	default_firemode = /datum/firemode/cluster_rocket
 	min_speed = 24
 	max_speed = 36
 	start_speed = 24
@@ -325,8 +325,7 @@
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 3
-	shot_delay = 0.04 SECONDS
+	default_firemode = /datum/firemode/g11
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
 	dissipation_delay = 10
@@ -404,7 +403,7 @@
 		src.fueltank.reagents.add_reagent("ff-foam", 1000)
 		src.amt_chem = 20
 		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
-		src.current_projectile.shot_number = 3
+		src.current_projectile.firemode.shot_number = 3
 		src.chem_divisor = 3
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)

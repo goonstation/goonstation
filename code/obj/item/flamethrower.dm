@@ -677,19 +677,20 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 			var/new_mode = params["mode"]
 			playsound(src, 'sound/effects/valve_creak.ogg', 15, TRUE)
 			src.current_projectile.fullauto_valid = 1
-			src.current_projectile.shot_number = 1
+			src.current_projectile.firemode.shot_number = 1
+			src.current_projectile.firemode.shot_delay = 2 DECI SECONDS
 			switch(new_mode)
 				if("auto") // mid-range automatic
 					src.mode = FLAMER_MODE_AUTO
 					src.spread_angle = 15
 					src.shoot_delay = 4 DECI SECONDS
 					src.chem_divisor = 2
-					src.current_projectile.shot_number = 2
-					src.current_projectile.shot_delay = 2 DECI SECONDS
+					src.current_projectile.firemode.shot_number = 2
+
 				if("burst") // close range burst
 					src.mode = FLAMER_MODE_BURST
 					src.spread_angle = 33
-					src.current_projectile.shot_number = 4
+					src.current_projectile.firemode.shot_number = 4
 					src.chem_divisor = 4 //4 shots per burst
 					src.shoot_delay = 1 SECOND
 					src.current_projectile.fullauto_valid = 0

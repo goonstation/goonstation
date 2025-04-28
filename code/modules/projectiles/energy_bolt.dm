@@ -18,7 +18,7 @@
 //should the sound have extra range?
 	shot_sound_extrarange = 5
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 //What is our damage type
 /*
 kinetic - raw power
@@ -77,7 +77,7 @@ toxic - poisons
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/heavyion.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	hit_ground_chance = 0
 	brightness = 0.8
@@ -109,7 +109,7 @@ toxic - poisons
 	stun = 25
 
 /datum/projectile/energy_bolt/burst
-	shot_number = 3
+	default_firemode = /datum/firemode/three_burst
 	cost = 75
 	sname = "burst stun"
 
@@ -168,7 +168,7 @@ toxic - poisons
 //file location for the sound you want it to play
 	shot_sound = 'sound/musical_instruments/Vuvuzela_1.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 //What is our damage type
 /*
 kinetic - raw power
@@ -220,7 +220,7 @@ toxic - poisons
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/Taser.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 	damage_type = D_ENERGY
 	//With what % do we hit mobs laying down
@@ -239,7 +239,7 @@ toxic - poisons
 
 //Projectile for Azungars NT gun.
 /datum/projectile/energy_bolt/ntburst // fixed overlapping path - /datum/projectile/energy_bolt/burst already exists for taser burst fire
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	stun = 15
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "minispark"
@@ -416,7 +416,7 @@ toxic - poisons
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
-	shot_number = 2
+	default_firemode = /datum/firemode/two_burst
 	damage_type = D_ENERGY
 
 	disruption = 8
@@ -431,7 +431,7 @@ toxic - poisons
 	sname = "full-auto"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	shot_sound_extrarange = 5
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	fullauto_valid = 1
 
@@ -455,7 +455,7 @@ toxic - poisons
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 3
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	fullauto_valid = 1
 
