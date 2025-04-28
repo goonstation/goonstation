@@ -1,5 +1,10 @@
 
 (t)mon apr 28 25
+(u)wisconsin, sunnyaries
+(p)23171
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Added 9 new food items, most to do with rice.
+(+)Sliced Bread can be cut into Breadcrumbs, a new ingredient.
 (u)Cindertroy
 (p)23179
 (e)🗺💅|A-Mapping, C-QoL
