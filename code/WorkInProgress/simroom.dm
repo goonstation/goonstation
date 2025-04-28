@@ -179,7 +179,7 @@
 //A VR-Bed to replace the stupid chairs.
 
 /obj/machinery/sim/vr_bed
-	name = "VR containment unit"
+	name = "VR simulation pod"
 	desc = "An advanced pod that lets the user enter V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "vrbed"//_0"
@@ -189,7 +189,7 @@
 	machine_registry_idx = MACHINES_SIM
 	var/active = 0
 	var/internal_id = 0
-	var/network = "none"
+	var/network = "arcadevr"
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null

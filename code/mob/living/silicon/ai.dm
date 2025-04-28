@@ -77,6 +77,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
 	"Wink (Inverted)" = "ai_wink-lod",\
+	"Wide Smile" = "ai_widesmile-dol",\
+	"Wide Smile (Inverted)" = "ai_widesmile-lod",\
+	"Sunglasses" = "ai_sunglasses-dol",\
+	"Sunglasses (Inverted)" = "ai_sunglasses-lod",\
 	"Devious" = "ai_devious-dol",\
 	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
@@ -2813,4 +2817,3 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
-
