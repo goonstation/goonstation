@@ -21,14 +21,14 @@
 #define access_research_director 11
 #define access_maint_tunnels 12
 #define access_ticket 13 // issuing tickets
-#define access_emergency_storage 14 // Unused
+// Access 14 Unused
 #define access_change_ids 15
 #define access_ai_upload 16
 #define access_teleporter 17
 #define access_eva 18
 #define access_heads 19 // Mostly just the bridge.
 #define access_captain 20
-#define access_all_personal_lockers 21 // Unused. Personal lockers are always linked to ID that was swiped first.
+// Access 21 Unused
 #define access_chapel_office 22
 #define access_tech_storage 23
 #define access_research 24
@@ -37,35 +37,34 @@
 #define access_crematorium 27
 #define access_kitchen 28
 #define access_robotics 29
-#define access_hangar 30 // Unused. Theoretically the pod hangars, but not implemented as such in practice.
+// Access 30 Unused
 #define access_cargo 31 // QM.
-#define access_construction 32 // Unused.
+// Access 32 Unused
 #define access_chemistry 33
 #define access_dwaine_superuser 34 // So it's not the same as the RD's office and locker.
 #define access_hydro 35
-#define access_mail 36 // Unused.
+// Access 36 Unused
 #define access_maxsec 37 // The HoS' office
 #define access_securitylockers 38
 #define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned. Contraband permit defined at 75.
 #define access_engineering 40 // General engineering area and substations.
 #define access_engineering_storage 41 // Main metal/tool storage things.
-#define access_engineering_eva 42 // Engineering space suits. Currently unused.
+// Access 42 Unused
 #define access_engineering_power 43 // APCs and related supplies.
 #define access_engineering_engine 44 // Engine room.
 #define access_engineering_mechanic 45 // Electronics lab.
 #define access_engineering_atmos 46 // Engineering's supply of gas canisters.
+// Access 47 Unused
 #define access_engineering_control 48 // Engine control room.
 #define access_engineering_chief 49 // CE's office.
 
-#define access_mining_shuttle 47 // Unused.
 #define access_mining 50
 #define access_mining_outpost 51
 
 #define access_syndicate_shuttle 52 // Also to the listening post.
 #define access_medical_director 53
-#define access_head_of_personnel 55
-
 #define access_special_club 54 //Shouldnt be used for general gameplay. Used for adminevents.
+#define access_head_of_personnel 55
 
 #define access_ghostdrone 56 // drooooones
 
@@ -85,6 +84,9 @@
 #define access_syndicate_128 65
 #define access_syndicate_256 66 // highest level documents in terra8
 #define access_syndicate_512 67 // allude to this but don't use it except for super special things
+
+// Access 68 Unused
+// Access 69 Unused
 
 //Owlzone access
 #define access_owlerymaint 70

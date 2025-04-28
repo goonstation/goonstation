@@ -96,11 +96,6 @@
 	req_access = list(access_engineering_storage)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/engineering_eva
-	name = "engineering EVA access spawn"
-	req_access = list(access_engineering_eva)
-	color = ENGINEERING
-
 /obj/mapping_helper/access/engineering_power
 	name = "engineering power access spawn"
 	req_access = list(access_engineering_power)
