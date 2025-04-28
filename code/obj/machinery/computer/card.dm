@@ -420,7 +420,7 @@
 						logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
-						src.update_card_accesses(get_access(t1))
+						src.update_card_accesses(get_access(t1), usr)
 						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
@@ -490,7 +490,7 @@
 				var/slot = text2num_safe(params["apply"])
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
-				src.update_card_accesses(selected_access_list.Copy())
+				src.update_card_accesses(selected_access_list.Copy(), usr)
 				src.modify.update_name()
 				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
@@ -526,20 +526,28 @@
 			if (band_color == "command")
 				src.modify.icon_state = "id_com"
 
-	proc/update_card_accesses(var/list/access_list)
+	proc/update_card_accesses(var/list/access_list, var/mob/user)
 		for(var/access in access_list) //Remove accesses this computer cannot give
 			if(!(access in src.allowed_access_list))
 				access_list -= access
 
+		var/list/unauthorised_edits = list() //List of accesses this computer wasn't allowed to remove
 		for (var/access in src.modify.access)
 			if (access in access_list)
 				continue
 			if (!(access in get_all_accesses())) // preserve accesses which are otherwise unobtainable
-				access_list += access
+				access_list += access //But don't mention keeping them (e.g. don't out agent cards)
 				continue
 			if (!(access in src.allowed_access_list)) // Add accesses this computer cannot remove
 				access_list += access
+				if(length(unauthorised_edits) >= 5)
+					if (!("more" in unauthorised_edits))
+						unauthorised_edits += "more"
+				else
+					unauthorised_edits += get_access_desc(access)
 				continue
+		if(length(unauthorised_edits))
+			boutput(user, SPAN_ALERT("[src] does not have permission to remove [english_list(unauthorised_edits, "none", " and ")] accesses."))
 		src.modify.access = access_list
 
 	proc/try_authenticate()
