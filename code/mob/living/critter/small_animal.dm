@@ -423,29 +423,19 @@ proc/filter_carrier_pets(var/type)
 			. += "And he's wearing an adorable costume! Wow!"
 
 	update_icon()
-		if (isalive(src))
-			if (src.shell_count)
-				src.icon_state = "turtle-shell"
-			else if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "turtle-beret"
-				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-beret-com"
-			else
-				src.icon_state = "turtle"
-			if (costume_name)
-				src.UpdateOverlays(costume_alive, "costume")
-
-		else
-			if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "turtle-dead-beret"
-				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-dead-beret-com"
-			else
-				src.icon_state = "turtle-dead"
-			if (costume_name)
-				src.UpdateOverlays(costume_dead, "costume")
+		var/state = "turtle"
+		if(!isalive(src))
+			state += "-dead"
+		else if(src.shell_count)
+			src.icon_state = "turtle-shell"
+			return
+		if(src.wearing_beret)
+			state += "-beret"
+			if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+				state += "-com"
+		src.icon_state = state
+		if (costume_name)
+			src.UpdateOverlays(costume_dead, "costume")
 
 	bullet_act(var/obj/projectile/P)
 		switch(P.proj_data.damage_type)
