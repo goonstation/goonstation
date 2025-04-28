@@ -3894,11 +3894,11 @@
 /area/station/bridge)
 "yH" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/communications,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yI" = (
@@ -6765,6 +6765,9 @@
 "Sy" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "SF" = (

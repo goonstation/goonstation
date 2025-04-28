@@ -1226,7 +1226,9 @@
 /obj/machinery/recharger{
 	pixel_y = 6
 	},
-/obj/item/paper/book/from_file/space_law,
+/obj/item/paper/book/from_file/space_law{
+	pixel_x = 6
+	},
 /turf/simulated/floor/black,
 /area/station/security/processing)
 "aRX" = (
@@ -14726,6 +14728,7 @@
 	tag = ""
 	},
 /obj/machinery/chem_heater,
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "jXT" = (
@@ -26959,10 +26962,10 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "sEW" = (
-/obj/item/device/radio/intercom,
 /obj/table/wood/round/auto,
 /obj/machinery/espresso_machine{
-	pixel_y = 8
+	pixel_y = 8;
+	pixel_x = -8
 	},
 /obj/drink_rack/cup{
 	pixel_y = 28
@@ -30141,6 +30144,10 @@
 	},
 /turf/simulated/floor/engine/caution,
 /area/station/engine/gas)
+"uIL" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/north)
 "uIN" = (
 /obj/submachine/ATM{
 	pixel_y = 32
@@ -81315,7 +81322,7 @@ hDB
 coX
 coX
 pxA
-csP
+uIL
 eht
 dRl
 uFy
