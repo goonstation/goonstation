@@ -220,7 +220,6 @@
 	name = "blush"
 	desc = "this is blush"
 	makeuptype = "blush_light"
-	makeup_color = "#fda7f6"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
@@ -236,6 +235,12 @@
 				return
 		else
 			return ..()
+
+/obj/item/makeup/blush/light
+	name = "blush"
+	desc = "this is blush"
+	makeuptype = "blush_light"
+	makeup_color = "#fda7f6"
 
 /obj/item/makeup/blush/dark
 	name = "blush"
@@ -256,10 +261,11 @@
 	makeuptype = "eyeshadow_light"
 	var/list/eyeshadow_light_colors = list("#ff9eb6", "#f8aaaa", "#ff757b", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
 	"#e253de", "#bc88bb")
+	var/list/eyeshadow_dark_colors = list("#87a2ad", "#a9bbc2", "#c2eeff", "#64b0ce", "#aacac6", "#3e4746", "#0000", "#ffffff",
+	"#32274b", "#28527d")
+	var/list/eyeshadow_gold_colors = list("#d65644", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
+	"#ffa200")
 
-	New()
-		makeup_color = pick(eyeshadow_light_colors)
-		return ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
@@ -270,34 +276,31 @@
 			if (H.eyeshadow == 2)
 				user.show_text("Gurl, [H == user ? "you" : H] a hot mess right now. That all needs to be cleaned up first.", "red")
 				return
-			else
-				actions.start(new /datum/action/bar/icon/apply_eyeshadow(target, src, target == user ? 40 : 60), user)
-				return
+			if(src.makeuptype == "eyeshadow_light")
+				makeup_color = pick(eyeshadow_light_colors)
+			if(src.makeuptype == "eyeshadow_dark")
+				makeup_color = pick(eyeshadow_dark_colors)
+			if(src.makeuptype == "eyeshadow_gold")
+				makeup_color = pick(eyeshadow_gold_colors)
+			actions.start(new /datum/action/bar/icon/apply_eyeshadow(target, src, target == user ? 40 : 60), user)
+			return
 		else
 			return ..()
+
+/obj/item/makeup/eyeshadow/light
+	name = "eyeshadow"
+	desc = "this is eyeshadow"
+	makeuptype = "eyeshadow_light"
 
 /obj/item/makeup/eyeshadow/dark
 	name = "eyeshadow"
 	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_dark"
-	var/list/eyeshadow_dark_colors = list("#87a2ad", "#a9bbc2", "#c2eeff", "#64b0ce", "#aacac6", "#3e4746", "#0000", "#ffffff",
-	"#32274b", "#28527d")
-
-	New()
-		makeup_color = pick(eyeshadow_dark_colors)
-		return ..()
-
 
 /obj/item/makeup/eyeshadow/gold
 	name = "eyeshadow"
 	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_gold"
-	var/list/eyeshadow_gold_colors = list("#d65644", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
-	"#ffa200")
-
-	New()
-		makeup_color = pick(eyeshadow_gold_colors)
-		return ..()
 
 //Makeup Bags
 /obj/item/storage/makeup_bag
