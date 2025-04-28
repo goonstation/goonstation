@@ -1952,7 +1952,7 @@
 /area/station/hangar/science)
 "alA" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alE" = (
@@ -7351,9 +7351,7 @@
 /area/station/crew_quarters/arcade)
 "aNW" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -15441,7 +15439,7 @@
 /area/station/crew_quarters/locker)
 "bUK" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
 "bVC" = (
@@ -16639,7 +16637,7 @@
 /area/station/crew_quarters/quarters)
 "cHd" = (
 /obj/table/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer/disk,
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/arcade,
@@ -28093,9 +28091,7 @@
 /area/station/science/lobby)
 "jzW" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -30462,7 +30458,7 @@
 /area/station/storage/emergency)
 "kVm" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "kVt" = (
@@ -31267,7 +31263,7 @@
 /area/station/hangar/main)
 "lwV" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/eggsplat{
 	pixel_y = 30
 	},
@@ -35792,7 +35788,7 @@
 "nZe" = (
 /obj/decal/stage_edge/alt,
 /obj/table/glass/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "nZg" = (
@@ -38589,7 +38585,7 @@
 /area/station/engine/singcore)
 "pwG" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/reagent_containers/glass/bottle/cleaner{
 	pixel_x = -9;
 	pixel_y = 1
@@ -49885,11 +49881,11 @@
 /area/station/quartermaster/office)
 "vVq" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/computer3/generic/bank_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/courtroom)
 "vVz" = (

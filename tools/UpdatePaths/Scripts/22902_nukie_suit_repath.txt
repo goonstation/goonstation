@@ -1,0 +1,4 @@
+/clothing/suit/space/syndicate/knight : /clothing/suit/space/syndicate/specialist/knight{@OLD}
+/clothing/suit/space/syndicate/commissar_greatcoat : /clothing/suit/space/syndicate/specialist/commissar_greatcoat{@OLD}
+/clothing/head/helmet/space/syndicate/commissar_cap : /clothing/head/helmet/space/syndicate/specialist/commissar_cap{@OLD}
+/clothing/suit/space/industrial/syndicate/specialist : /clothing/suit/space/syndicate/specialist/heavy{@OLD}

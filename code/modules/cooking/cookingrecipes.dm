@@ -9,6 +9,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
+	proc/render()
+		var/list/icons = list()
+		for (var/obj/item/type as anything in src.ingredients)
+			icons += bicon(type, 2)
+		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
+		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
+
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
 // rather than relying on its output being null and using output if so
@@ -1732,7 +1739,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/oven/ultrachili
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1,
+	/obj/item/reagent_containers/food/snacks/soup/chili = 1,
 	/obj/item/reagent_containers/food/snacks/soup/superchili = 1,
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
