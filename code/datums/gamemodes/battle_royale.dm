@@ -358,16 +358,17 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+	// Ranch Eggs
 	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple) // table ambushes ig
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/plant)
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/void) // table ambushes ig
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/snow)
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/wizard)
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/knight)
+	weapon_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/mime)
 	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/snow)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy)
+	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
 	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight)
-	weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime)
 	#ifdef SECRETS_ENABLED
 		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
 		weapon_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
