@@ -40,6 +40,13 @@
 		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,
 	// botany
 		/obj/item/reagent_containers/glass/happyplant = 20,\
+	// ranch
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple = 20,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream = 10,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant = 20,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ixworth = 30,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard = 20,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight = 20,\
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
