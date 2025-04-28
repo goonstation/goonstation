@@ -152,6 +152,12 @@
 		flick("[icon_state]_close", src)
 		playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 
+/obj/item/pen/crayon/lipstick/fancy/gold
+	icon_state = "gold_lipstick"
+
+/obj/item/pen/crayon/lipstick/fancy/light
+	icon_state = "light_lipstick"
+
 /datum/action/bar/icon/apply_makeup/fancy
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -162,14 +168,6 @@
 	var/icon_open = "dark_lipstick1"
 	var/icon_closed = "dark_lipstick0"
 
-///obj/item/storage/makeup_pouch
-//	name = "make-up pouch"
-//	icon_state = "mpouch"
-//	desc = "A sturdy fabric pouch used to carry several grenades."
-//	w_class = W_CLASS_TINY
-//	slots = 3
-//	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
-//	prevent_holding = list(/obj/item/storage)
 /obj/item/makeup
 	name = "makeup"
 	desc = "this is makeup"
@@ -214,11 +212,10 @@
 		flick("[makeuptype]_close", src)
 		playsound(user, 'sound/items/penclick.ogg', 30, TRUE)
 
-
 /////blush
 /obj/item/makeup/blush
 	name = "blush"
-	desc = "this is blush"
+	desc = "A container full of ultra-fine powder intended to be used to tiny a person's cheeks."
 	makeuptype = "blush_light"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -238,32 +235,29 @@
 
 /obj/item/makeup/blush/light
 	name = "blush"
-	desc = "this is blush"
 	makeuptype = "blush_light"
 	makeup_color = "#fda7f6"
 
 /obj/item/makeup/blush/dark
 	name = "blush"
-	desc = "this is blush"
 	makeuptype = "blush_dark"
 	makeup_color = "#d63f3f"
 
 /obj/item/makeup/blush/gold
 	name = "blush"
-	desc = "this is blush"
 	makeuptype = "blush_gold"
 	makeup_color = "#ff5b8c"
 
 ///// EYESHADOW
 /obj/item/makeup/eyeshadow
 	name = "eyeshadow"
-	desc = "this is eyeshadow"
+	desc = "A palette of pigmented powders that is intended to be used around a person's eyes."
 	makeuptype = "eyeshadow_light"
 	var/list/eyeshadow_light_colors = list("#ff9eb6", "#f8aaaa", "#ff757b", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
 	"#e253de", "#bc88bb")
-	var/list/eyeshadow_dark_colors = list("#87a2ad", "#a9bbc2", "#c2eeff", "#64b0ce", "#aacac6", "#3e4746", "#0000", "#ffffff",
-	"#32274b", "#28527d")
-	var/list/eyeshadow_gold_colors = list("#d65644", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
+	var/list/eyeshadow_dark_colors = list("#87a2ad", "#4d5a96", "#c2eeff", "#64b0ce", "#6a9b95", "#3e4746", "#00000000", "#dbeff5",
+	"#3b2c5e", "#28527d")
+	var/list/eyeshadow_gold_colors = list("#be5e51", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
 	"#ffa200")
 
 
@@ -304,24 +298,42 @@
 
 //Makeup Bags
 /obj/item/storage/makeup_bag
-	name = "light makeup bag"
+	name = "cute makeup bag"
 	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "light_makeupbag"
-	desc = "A sturdy fabric pouch used to carry several grenades."
+	desc = "A cute fabric pouch meant to keep all of your expensive beauty products safe while traveling."
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "light_makeupbag"
 	w_class = W_CLASS_SMALL
 	slots = 3
 	can_hold = list(/obj/item/makeup, /obj/item/pen/crayon/lipstick)
 	prevent_holding = list(/obj/item/storage)
 
 /obj/item/storage/makeup_bag/dark
-	name = "dark makeup bag"
+	name = "mysterious makeup bag"
 	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "dark_makeupbag"
-	desc = "A sturdy fabric pouch used to carry several grenades."
+	item_state = "dark_makeupbag"
+	desc = "A fabric pouch with a mysterious design meant to keep all of your expensive beauty products safe while traveling."
 
 /obj/item/storage/makeup_bag/gold
-	name = "gold makeup bag"
+	name = "luxury makeup bag"
 	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "gold_makeupbag"
-	desc = "A sturdy fabric pouch used to carry several grenades."
+	item_state = "gold_makeupbag"
+	desc = "An extravagant fabric pouch meant to keep all of your expensive beauty products safe while traveling."
 
+/obj/item/storage/makeup_bag/gold/full
+	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy/gold,
+	/obj/item/makeup/eyeshadow/gold,
+	/obj/item/makeup/blush/gold)
+
+/obj/item/storage/makeup_bag/dark/full
+	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy,
+	/obj/item/makeup/eyeshadow/dark,
+	/obj/item/makeup/blush/dark)
+
+/obj/item/storage/makeup_bag/full
+	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy/light,
+	/obj/item/makeup/eyeshadow,
+	/obj/item/makeup/blush)
