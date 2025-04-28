@@ -3152,13 +3152,6 @@
 /area/shuttle/sea_elevator_room)
 "cvq" = (
 /obj/kitchenspike,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "cvt" = (
@@ -3822,7 +3815,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 5;
+	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
@@ -9769,8 +9762,7 @@
 "gFn" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -10588,6 +10580,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"hkw" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "hkI" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -13602,6 +13601,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/submachine/ATM{
+	pixel_y = -20
+	},
 /turf/unsimulated/floor/green/side{
 	dir = 6
 	},
@@ -14000,9 +14002,9 @@
 	pixel_y = 11
 	},
 /obj/table/auto,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -16742,10 +16744,10 @@
 	},
 /area/station/turret_protected/ai)
 "luc" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "luH" = (
@@ -20784,6 +20786,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/submachine/ATM{
+	pixel_x = -32
+	},
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
@@ -21946,7 +21951,7 @@
 "piq" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23405,8 +23410,7 @@
 "qgQ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "External Access";
-	req_access_txt = null
+	name = "External Access"
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/plating,
@@ -28927,13 +28931,6 @@
 	pixel_x = 24;
 	pixel_y = 6
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tTw" = (
@@ -29397,6 +29394,9 @@
 /area/station/maintenance/inner/central)
 "ulG" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/submachine/ATM{
+	pixel_y = -20
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -29528,6 +29528,10 @@
 "uoU" = (
 /obj/machinery/deep_fryer,
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uoZ" = (
@@ -33949,9 +33953,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "xhn" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "xho" = (
@@ -81631,7 +81633,7 @@ jOA
 qmT
 eht
 uoU
-gyK
+mGu
 jCV
 tnR
 gpi
@@ -81933,8 +81935,8 @@ beT
 rbY
 eht
 tiW
-gyK
 iNp
+gyK
 oTc
 avL
 iTZ
@@ -82235,7 +82237,7 @@ dfl
 oht
 lRK
 kjY
-kjY
+hkw
 luc
 sCZ
 eDy
