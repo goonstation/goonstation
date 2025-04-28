@@ -887,7 +887,7 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, volume * 20 SECONDS, 5 SECONDS)
+				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
@@ -958,19 +958,11 @@ datum
 				..()
 				return
 
-			proc/unglue_attached_to(atom/A)
-				var/atom/Aloc = isturf(A) ? A : A.loc
-				for(var/atom/movable/AM in Aloc)
-					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
-					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
-						qdel(glued_comp)
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, raw_volume)
-				unglue_attached_to(M)
+				M.unglue_attached_to()
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
@@ -980,11 +972,11 @@ datum
 				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
 				if(glue_ready_comp)
 					qdel(glue_ready_comp)
-				unglue_attached_to(O)
+				O.unglue_attached_to()
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				unglue_attached_to(T)
+				T.unglue_attached_to()
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
@@ -1533,9 +1525,8 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
-					if (probmult(8))
-						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-						M.vomit(0, null, vomit_message)
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1575,9 +1566,8 @@ datum
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 20)
-					if (probmult(8))
-						M.visible_message(SPAN_ALERT("[M] hoots all over [himself_or_herself(M)]."), SPAN_ALERT("You hoot all over yourself!"))
-						M.vomit()
+					if (probmult(30))
+						M.nauseate(1)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 				else if (probmult(4))
@@ -1679,6 +1669,7 @@ datum
 				if (prob(7))
 					M.emote(pick("twitch","drool","moan"))
 					M.take_toxin_damage(1 * mult)
+					M.nauseate(2)
 				..()
 				return
 
@@ -1698,6 +1689,8 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
@@ -1709,6 +1702,8 @@ datum
 				random_brute_damage(M, 4)
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()
@@ -1773,7 +1768,6 @@ datum
 				if (!M) M = holder.my_atom
 				if(istype(M, /mob/living/critter/spider))
 					return
-				var/turf/T = get_turf(M)
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
 				else if (prob(10))
@@ -1787,19 +1781,22 @@ datum
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !HAS_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT)) //doesn't just go thru mob/proc/vomit because we don't want to re-vomit if there are already spiders on the floor, to not spam spiderlings
-					if (!locate(/obj/decal/cleanable/vomit) in T)
-						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
-						random_brute_damage(M, rand(4))
-						M.visible_message(SPAN_ALERT("<b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]"),\
-						SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b>"))
-						if (prob(33))
-							if (prob(5))
-								new /mob/living/critter/spider/baby(M)
-							else
-								new /mob/living/critter/spider/baby/nice(M)
+
+				if (prob(30))
+					M.nauseate(2)
+
 				..()
 				return
+
+			on_add()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.add_vomit_behavior(/datum/vomit_behavior/spider)
+
+			on_remove()
+				if (ismob(holder.my_atom))
+					var/mob/mob = holder.my_atom
+					mob.remove_vomit_behavior(/datum/vomit_behavior/spider)
 
 		hugs
 			name = "pure hugs"

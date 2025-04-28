@@ -100,7 +100,7 @@
 	name = "'EFIF-1 Operational Disclaimer'"
 	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
 	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
-	Please be aware that non-repair assembly of walls and standard floors may be restricted within your workplace's vicinity for safety reasons.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may obstruct your pod's clearance, and should be constructed with caution.<BR>\n<BR>\n
 	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
 
 /obj/item/paper/courtroom
@@ -1208,6 +1208,31 @@ proc/spawn_kitchen_note()
 	You know where to find us larry, bring the money, 100,000 credits.
 	"}
 
+/obj/item/paper/radshuttle
+	name = "bloody note"
+	desc = "The bottom half of this paper is soaked in blood."
+	icon_state = "paper_caution_bloody"
+	info = {"<span style="color:red;font-family:Lucida Handwriting;">
+	ten souls aboard<br>
+	no food, no water, no medkids, the worst toilet in the universe,<br>
+	all crammed into the space of the crew lounge.<br><br>
+
+	Donnovan keeps looking at the engine compartment - hes scared.<br>
+	seats by the back are blistering hot; the front is witch-tit cold.<br>
+	probably has something to do with why people are throwing up so much.<br><br>
+
+	this shuttle was a damn garbage scow ten hours ago! I dont deserve this! <br>
+	I just had a bad performance review for the month! <br>
+	station transfer my ass!<br>
+	this whole damn thing is a detroit pink slip for ten people!<br><br>
+
+	the others killed the security guard to to vent their anger,<br>
+	another guy got beat so bad he crawled out the airlock.<br><br>
+
+	Tonio is playing us farewell on that weird mouth organ. bless the man.<br>
+	they took all my space cash before we left.<br>
+	so I gave him my old lucky coin for a tip.<br>"}
+
 /obj/item/paper/labdrawertips
 	name = "stern lab safety warning"
 	icon_state = "paper"
@@ -1453,7 +1478,7 @@ proc/spawn_kitchen_note()
 			<li>Wires and power cells: putting both wire and a cell in your bomb will cause high voltage arcs from the point of detonation.</li>
 			<li>Plasmastone: releases a substantial amount of plasma gas upon detonation. <span style="font-family:Brush Script MT;">NB: this isn't very useful if you just blew a hole in the hull - maybe try combining with cloth?</span></li>
 		</ul>
-		Remember you can usually only fit three items into a pipe frame before it starts to affect the explosive potential.<br>
+		Remember you can usually only fit three items total into a pipe frame.<br>
 		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
 		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
 		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>

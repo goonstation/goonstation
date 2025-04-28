@@ -247,18 +247,14 @@ var/global/list/nuke_op_camo_matrix = null
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	the_bomb.gives_medal = TRUE
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
-	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
-
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
-		new /obj/storage/closet/syndicate/personal(T)
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
-	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
-	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
-		for(var/i = 1 to 5)
-			new /obj/item/breaching_charge/thermite(T)
 
 	for_by_tcl(computer,/obj/machinery/computer/battlecruiser_podbay)
 		auth_computer = computer
+
+	var/list/cairngorm_door_ids = list("cairngorm_podbay", "cairngorm_armory", "cairngorm_medical", "cairngorm_barracks")
+	for_by_tcl(bolter, /obj/machinery/door_control/bolter)
+		if(bolter.id in cairngorm_door_ids)
+			bolter.toggle()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

@@ -64,7 +64,6 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
-
 	New()
 		..()
 		src.path_old = src.type
@@ -1248,7 +1247,7 @@ TYPEINFO(/turf/simulated)
 		var/area/A = get_area (user)
 		var/obj/item/rods/R = C
 		if (istype(R))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
@@ -1263,7 +1262,7 @@ TYPEINFO(/turf/simulated)
 			return
 
 		if (istype(C, /obj/item/tile))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			var/obj/item/tile/T = C
@@ -1300,6 +1299,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/space_phoenix))
+		var/mob/living/critter/space_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return

@@ -77,7 +77,7 @@
 
 		summon
 			New()
-				flick("skeleton_summon", src)
+				FLICK("skeleton_summon", src)
 				..()
 
 
@@ -347,7 +347,7 @@
 	density = 1
 
 /obj/fakeobject/lawrack
-	name = "defunct AI Law Mount Rack"
+	name = "defunct AI Law Rack"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"

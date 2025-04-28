@@ -752,11 +752,11 @@ TYPEINFO(/obj/item/device/geiger)
 	proc/change_icon_state(source, stage)
 		switch(stage)
 			if(1 to 2)
-				flick("geiger-1", src)
+				FLICK("geiger-1", src)
 			if(3 to 4)
-				flick("geiger-2", src)
+				FLICK("geiger-2", src)
 			if(5)
-				flick("geiger-3", src)
+				FLICK("geiger-3", src)
 
 
 /obj/decal/fireplace  //for Jan's chrismas event
@@ -997,7 +997,7 @@ TYPEINFO(/obj/item/device/geiger)
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	can_swap_cell = 0
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+	color = COLOR_MATRIX_INVERSE
 
 	New()
 		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)

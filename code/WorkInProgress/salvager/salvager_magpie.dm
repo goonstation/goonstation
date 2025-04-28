@@ -303,6 +303,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 	proc/reroll_commodity()
 		if(length(targets))
 			comtype = pick(targets)
+			targets -= comtype
 			var/obj/object_type = comtype
 			comname = initial(object_type.name)
 			var/value = targets[comtype]
@@ -310,7 +311,6 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy/random_buy)
 			baseprice = value
 			upperfluc = value * 0.10
 			lowerfluc = value * -0.05
-			targets -= comtype
 		else
 			comtype = null
 			hidden = TRUE
@@ -466,17 +466,31 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 
 #ifndef UNDERWATER_MAP
 	pod_kinetic
-		comname = "Ballistic System"
+		comname = "SPE-12 Ballistic System"
 		comtype = /obj/item/shipcomponent/mainweapon/gun
 		desc = "A pod-mounted kinetic weapon system."
+		price = 5000
+		amount = 3
+
+	pod_kinetic_9mm
+		comname = "PEP-9L Ballistic System"
+		comtype = /obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
+		desc = "A pod-mounted kinetic weapon system. Has limited ammunition."
 		price = 3000
+		amount = 3
+
+	pod_kinetic_22
+		comname = "PEP-22L Ballistic System"
+		comtype = /obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
+		desc = "A pod-mounted kinetic weapon system. Has limited ammunition."
+		price = 2200
 		amount = 3
 
 	pod_40mm
 		comname = "40mm Assault Platform"
 		comtype = /obj/item/shipcomponent/mainweapon/artillery/lower_ammo
 		desc = "A pair of pod-mounted ballistic launchers, fires explosive 40mm shells. Holds 6 shells."
-		price = 5000
+		price = 8000
 		amount = 3
 
 	artillery_ammo

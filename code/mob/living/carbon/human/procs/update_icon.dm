@@ -529,7 +529,7 @@
 
 	// does a suit potentially cover our tail?
 	if(our_tail.clothing_image_icon && icon_state)
-		var/tail_overrides = icon_states(our_tail.clothing_image_icon)
+		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
 			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
 			src.tail_standing.overlays += human_tail_image
@@ -898,7 +898,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					if (limb)
 						var/mutantrace_override = null
 						var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
-						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in typeinfo?.icon_states))
+						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in get_icon_states(typeinfo?.icon)))
 							mutantrace_override = typeinfo.icon
 						var/image/limb_pic = limb.getMobIcon(src.decomp_stage, mutantrace_override, force)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful

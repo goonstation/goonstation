@@ -1,3 +1,18 @@
+(t)fri apr 11 25
+(u)glowbold
+(*)Added a "Stabilize" option to admin mob interaction and player panel. Heals people just above crit and cures them of most immediately fatal issues.
+(t)fri mar 07 25
+(u)LeahTheTech
+(*)Added throw mode flags to the throw buildmode. Ever wanted to throw someone through a wall? Now you can!
+(t)tue feb 25 25
+(u)LeahTheTech
+(*)Added new gas build mode that lets you release gas on a turf or inject it into a gas container.
+(t)fri feb 21 25
+(u)Sovexe
+(*)Built out the betting booth system with safeties, bug fixes, and helper procs. Simply spawn two or more /obj/betting_booth and admin interact setup betting to get started with your gambling event!
+(t)sun feb 09 25
+(u)Sovexe
+(*)Added a "View Admin Minimap" verb to allow admins easy access to the observer minimap at any time.
 (t)tue feb 04 25
 (u)LeahTheTech
 (*)Added `/obj/lever/custom` as an easy way to make a player accessible button that calls procs on things. Basically lets you give players access to admin interact procs and more. Call "Set up" on it for setup interface.

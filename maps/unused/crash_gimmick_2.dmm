@@ -822,8 +822,9 @@
 	},
 /area/space)
 "Dm" = (
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/space)
 "Du" = (
 /obj/table/reinforced/auto,
 /obj/item/lamp_manufacturer/organic,
@@ -1102,7 +1103,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "KD" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,

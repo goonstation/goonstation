@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Autofocus,
   Box,
@@ -40,7 +40,6 @@ type AlertModalData = {
   title: string;
   theme: string | null;
   cant_interact: number;
-  cant_interact_value: number | null;
 };
 
 const KEY_DECREMENT = -1;
@@ -60,9 +59,25 @@ export const AlertModal = () => {
     title,
     theme,
     cant_interact,
-    cant_interact_value,
   } = data;
   const [selected, setSelected] = useState(0);
+
+  // From deciseconds to seconds
+  const cantInteractSeconds = cant_interact ? cant_interact / 10 : 0;
+  const [remainingTime, setRemainingTime] = useState(cantInteractSeconds);
+
+  useEffect(() => {
+    if (!cant_interact) return;
+
+    // Set initial remaining time (converting deciseconds to seconds)
+    setRemainingTime(cantInteractSeconds);
+
+    const interval = setInterval(() => {
+      setRemainingTime((prev) => Math.max(0, prev - 0.1));
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [cant_interact, cantInteractSeconds]);
 
   const typedContentWindow = content_window
     ? getAlertContentWindow(content_window)
@@ -71,7 +86,7 @@ export const AlertModal = () => {
   // Dynamically sets window dimensions
   const windowHeight = typedContentWindow
     ? typedContentWindow.height || DEFAULT_CONTENT_WINDOW_HEIGHT
-    : 115 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+    : 120 + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
   const windowWidth = typedContentWindow
     ? typedContentWindow.width || DEFAULT_CONTENT_WINDOW_WIDTH
     : 325 + (items.length > 2 ? 55 : 0);
@@ -96,7 +111,7 @@ export const AlertModal = () => {
       }
       width={windowWidth}
       theme={typedContentWindow?.theme ?? theme ?? 'nanotrasen'}
-      canClose={cant_interact <= 0}
+      canClose={remainingTime <= 0}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
@@ -119,11 +134,10 @@ export const AlertModal = () => {
           }
         }}
       >
-        {!!cant_interact && cant_interact_value && (
+        {remainingTime > 0 && (
           <Box position="absolute" top={1} right={1}>
-            <ProgressBar value={cant_interact}>
-              {round((cant_interact_value / 10) * cant_interact, 0)} seconds
-              remaining
+            <ProgressBar value={remainingTime / cantInteractSeconds}>
+              {round(remainingTime, 0)} seconds remaining
             </ProgressBar>
           </Box>
         )}
@@ -135,7 +149,6 @@ export const AlertModal = () => {
                 overflowX="hidden"
                 overflowY="auto"
                 maxHeight="100%"
-                minHeight="200px"
               >
                 {typedContentWindow ? typedContentWindow.content : message}
               </Box>
@@ -144,7 +157,7 @@ export const AlertModal = () => {
               {!!autofocus && <Autofocus />}
               <ButtonDisplay
                 selected={selected}
-                cantInteract={data.cant_interact}
+                cantInteract={remainingTime > 0}
               />
             </Stack.Item>
           </Stack>
@@ -172,7 +185,7 @@ const ButtonDisplay = (props) => {
             button={button}
             id={button}
             selected={selected === items.indexOf(button)}
-            disabled={cantInteract > 0}
+            disabled={cantInteract}
           />
         </Flex.Item>
       ))}

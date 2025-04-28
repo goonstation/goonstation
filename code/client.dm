@@ -200,8 +200,8 @@
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
-	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]")
-	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
+	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
 	login_success = 0
 
@@ -313,6 +313,10 @@
 				del(src)
 			return
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
 	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
@@ -321,7 +325,7 @@
 		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
 		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -354,10 +358,6 @@
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
-
-	// Record a login, sets player.id, which is used by almost every future API call for a player
-	// So we need to do this early, and outside of a spawn
-	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
@@ -417,6 +417,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
@@ -475,8 +476,8 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
-					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
+					//src << browse_rsc(file("browserassets/src/images/changelog/postcardsmall.jpg"))
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				changes()
 
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
@@ -494,15 +495,15 @@
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+				src << link("https://www.byond.com/download")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-		if (src.byond_version >= 516)
-			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+		if (src.byond_version >= 517)
+			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -587,6 +588,8 @@
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -639,8 +642,14 @@
 
 	//tg controls end
 
-	use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-	use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
+	if (src.byond_version >= 516)
+		use_chui = FALSE
+		winset(src, "use_chui", "is-checked=false")
+		use_chui_custom_frames = FALSE
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+	else
+		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
+		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -1054,7 +1063,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1093,7 +1102,7 @@ var/global/curr_day = null
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1131,10 +1140,10 @@ var/global/curr_day = null
 				if (src.holder)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
 					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 				else
 					if (M.client && M.client.holder)
-						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
@@ -1151,7 +1160,7 @@ var/global/curr_day = null
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 
@@ -1407,6 +1416,10 @@ var/global/curr_day = null
 /client/verb/set_chui()
 	set hidden = 1
 	set name = "set-chui"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui", "is-checked=false")
+		return
 	if (src.use_chui)
 		src.use_chui = 0
 	else
@@ -1415,6 +1428,10 @@ var/global/curr_day = null
 /client/verb/set_chui_custom_frames()
 	set hidden = 1
 	set name = "set-chui-custom-frames"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+		return
 	if (src.use_chui_custom_frames)
 		src.use_chui_custom_frames = 0
 	else

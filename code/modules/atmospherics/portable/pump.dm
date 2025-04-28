@@ -13,7 +13,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
 	var/image/tank_hatch
-
+	var/absorbing_bubble = FALSE
 
 	desc = "A device which can siphon or release gasses."
 	custom_suicide = 1
@@ -46,6 +46,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	..()
 	if (!loc) return
 	if (src.contained) return
+	if (src.absorbing_bubble)
+		return
 
 	var/datum/gas_mixture/environment
 	if(holding)
@@ -111,6 +113,16 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return
 	return src.Attackhand(user)
 
+/obj/machinery/portable_atmospherics/pump/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/portable_atmospherics/pump/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
@@ -141,8 +153,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return
 	switch(action)
 		if("toggle-power")
-			src.on = !src.on
-			src.UpdateIcon()
+			if (src.on)
+				src.turn_off()
+			else
+				src.turn_on()
 			. = TRUE
 		if("toggle-pump")
 			src.direction_out = !src.direction_out
@@ -161,8 +175,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		return 0
 
 	if (!on) //Can't chop your head off if the fan's not spinning
-		on = 1
-		UpdateIcon()
+		src.turn_on()
 
 	user.visible_message(SPAN_ALERT("<b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b>"))
 	var/obj/head = user.organHolder.drop_organ("head")
@@ -175,9 +188,9 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 		T.fluid_react_single("blood", 20, airborne = 1)
 
 	for (var/mob/living/carbon/human/V in oviewers(user, null))
-		if (prob(33))
+		if (prob(50))
 			V.show_message(SPAN_ALERT("Oh fuck, that's going to leave a mark on your psyche."), 1)
-			V.vomit()
+			V.nauseate(rand(7,10))
 	if (user) //ZeWaka: Fix for null.loc
 		health_update_queue |= user
 	SPAWN(50 SECONDS)

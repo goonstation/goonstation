@@ -71,7 +71,7 @@
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera/auto/AI(src)
 		src.camera.c_tag = src.name
-		src.camera.network = "Robots"
+		src.camera.network = CAMERA_NETWORK_ROBOTS
 
 	..()
 	src.botcard.access = get_all_accesses()
@@ -520,7 +520,7 @@
 		return ..()
 
 /mob/living/silicon/hivebot/attack_hand(mob/user)
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 	if(!user.stat)
 		if (user.a_intent != INTENT_HELP)
 			actions.interrupt(src, INTERRUPT_ATTACKED)

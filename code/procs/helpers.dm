@@ -671,12 +671,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	for(var/mob/living/silicon/ghostdrone/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/zoldorf/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/intangible/seanceghost/M in mobs)
-		. += M
-		LAGCHECK(LAG_REALTIME)
 
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
@@ -1381,7 +1375,7 @@ proc/outermost_movable(atom/movable/target)
 	else if(ghostjump)
 		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	else
-		text += "<a href='?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
+		text += "<a href='byond://?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	return text
 
 // hi I'm haine -throws more crap onto the pile-
@@ -2613,7 +2607,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 				continue
 
 		// Otherwise, output to ghosts
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
 			boutput(M, rendered)
 
 /// Find a client based on ckey
@@ -2788,3 +2782,23 @@ proc/blackbody_color(temperature)
 	blue = clamp(blue, 0, 255)
 
 	return rgb(red, green, blue)
+
+proc/pick_reagent(mob/user)
+	RETURN_TYPE(/datum/reagent)
+	var/list/reagents_list = list()
+	var/searchFor = input(user, "Look for a part of the reagent ID (or leave blank for all)", "Add reagent") as null|text
+	if(searchFor)
+		for(var/id in global.reagents_cache)
+			if(findtext("[id]", searchFor))
+				reagents_list += id
+	else
+		reagents_list = reagents_cache //you really asked for the 500+ IDs I guess
+
+	if(length(reagents_list) == 1)
+		return global.reagents_cache[reagents_list[1]]
+	else if(length(reagents_list) > 1)
+		var/id = input(user,"Select Reagent:","Reagents",null) as null|anything in reagents_list
+		return global.reagents_cache[id]
+	else
+		user.show_text("No reagents matching that name", "red")
+		return null

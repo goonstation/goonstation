@@ -43,6 +43,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 5
 		prefabSizeY = 5
 
+	radshuttle //An ill-fated and ill-equipped "transport"
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_Radshuttle.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 14
+
 	shuttle
 		maxNum = 1
 		probability = 25
@@ -71,6 +78,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 5
 		prefabSizeY = 5
 
+/* Disabling for now since the full mining outpost exists on z5
 	outpost // rest stop/outpost for miners to eat/rest/heal at.
 		required = 1
 		maxNum = 1
@@ -78,6 +86,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabPath = "assets/maps/prefabs/space/prefab_outpost.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 20
+*/
 
 	ksol // The wreck of the old radio buoy, rip
 		maxNum = 1
@@ -267,3 +276,25 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabPath = "assets/maps/prefabs/space/prefab_merc_outpost.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 25
+
+// Drone Spawners
+	drone_common
+		maxNum = 8
+		probability = 100
+		prefabPath = "assets/maps/prefabs/space/prefab_drone_common.dmm"
+		prefabSizeX = 1
+		prefabSizeY = 1
+
+	drone_uncommon
+		maxNum = 4
+		probability = 100
+		prefabPath = "assets/maps/prefabs/space/prefab_drone_uncommon.dmm"
+		prefabSizeX = 1
+		prefabSizeY = 1
+
+	drone_rare
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/space/prefab_drone_rare.dmm"
+		prefabSizeX = 1
+		prefabSizeY = 1

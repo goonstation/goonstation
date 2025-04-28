@@ -336,7 +336,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -803,7 +803,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/pocket/oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -889,6 +889,17 @@
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
 
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
+
 /obj/item/storage/belt/security
 	name = "security toolbelt"
 	desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
@@ -967,7 +978,7 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/emergency_oxygen/extended,
+		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
@@ -1206,5 +1217,7 @@ TYPEINFO(/obj/item/inner_tube)
 	item_state = "secbelt"
 	check_wclass = 0
 	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
 
 // End of pod wars belts and holsters

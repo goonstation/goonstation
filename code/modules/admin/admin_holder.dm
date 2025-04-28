@@ -96,6 +96,7 @@
 			"Subtle Message",\
 			"Check Health",\
 			"Heal",\
+			"Stabilize",\
 
 			"Manage Bioeffects",\
 			"Manage Abilities",\
@@ -143,37 +144,37 @@
 
 	proc/show_pref_window(mob/user)
 		var/list/HTML = list("<html><head><title>Admin Preferences</title></head><body>")
-		HTML += "<a href='?src=\ref[src];action=refresh_admin_prefs'>Refresh</a></b><br>"
-		HTML += "<b>Automatically Set Alternate Key?: <a href='?src=\ref[src];action=toggle_auto_alt_key'>[(src.auto_alt_key ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Auto Alt Key: <a href='?src=\ref[src];action=set_auto_alt_key_name'>[(src.auto_alt_key_name ? "[src.auto_alt_key_name]" : "N/A")]</a></b><br>"
-		HTML += "<b>Automatically Set Stealth Mode?: <a href='?src=\ref[src];action=toggle_auto_stealth'>[(src.auto_stealth ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Auto Stealth Name: <a href='?src=\ref[src];action=set_auto_stealth_name'>[(src.auto_stealth_name ? "[src.auto_stealth_name]" : "N/A")]</a></b><br>"
+		HTML += "<a href='byond://?src=\ref[src];action=refresh_admin_prefs'>Refresh</a></b><br>"
+		HTML += "<b>Automatically Set Alternate Key?: <a href='byond://?src=\ref[src];action=toggle_auto_alt_key'>[(src.auto_alt_key ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Auto Alt Key: <a href='byond://?src=\ref[src];action=set_auto_alt_key_name'>[(src.auto_alt_key_name ? "[src.auto_alt_key_name]" : "N/A")]</a></b><br>"
+		HTML += "<b>Automatically Set Stealth Mode?: <a href='byond://?src=\ref[src];action=toggle_auto_stealth'>[(src.auto_stealth ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Auto Stealth Name: <a href='byond://?src=\ref[src];action=set_auto_stealth_name'>[(src.auto_stealth_name ? "[src.auto_stealth_name]" : "N/A")]</a></b><br>"
 		HTML += "<i>Note: Auto Stealth will override Auto Alt Key settings on load</i><br>"
-		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='byond://?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		//if (src.owner.holder:level >= LEVEL_CODER)
-			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Receive Alerts For Uncool Words?: <a href='?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
-		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
-		HTML += "<b>Hide ATags?: <a href='?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
-		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
-		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Don't create manifest entries when respawning?: <a href='?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide offline indicators when mob jumping?: <a href='?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
+			//HTML += "<b>Hide Extra Verbs?: <a href='byond://?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Server Toggles Tab?: <a href='byond://?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='byond://?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Attack Alerts?: <a href='byond://?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Ghost respawn offers?: <a href='byond://?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Who/Adminwho alerts?: <a href='byond://?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='byond://?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For Uncool Words?: <a href='byond://?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>See Prayers?: <a href='byond://?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Audible Prayers?: <a href='byond://?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
+		HTML += "<b>Audible Admin Helps?: <a href='byond://?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
+		HTML += "<b>Hide ATags?: <a href='byond://?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Change view when using buildmode?: <a href='byond://?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
+		HTML += "<b>Spawn verb spawns in your loc?: <a href='byond://?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Show Topic log?: <a href='byond://?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Don't create manifest entries when respawning?: <a href='byond://?src=\ref[src];action=toggle_skip_manifest'>[(src.skip_manifest ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide offline indicators when mob jumping?: <a href='byond://?src=\ref[src];action=toggle_hide_offline'>[(src.hide_offline_indicators ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Slow down Stat panel update speed to non-admin speed?: <a href='byond://?src=\ref[src];action=toggle_slow_stat'>[(src.slow_stat ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
-			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
-		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
+			HTML += "<b>Hide [cat] verbs?: <a href='byond://?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
+		HTML += "<hr><b><a href='byond://?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='byond://?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
 		user.Browse(HTML.Join(),"window=aprefs;size=385x540")

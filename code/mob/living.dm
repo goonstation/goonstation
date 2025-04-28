@@ -95,7 +95,6 @@
 	var/metabolizes = 1
 
 	var/can_bleed = 1
-	var/regens_blood = TRUE
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
@@ -372,7 +371,7 @@
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	var/datum/limb/L = src.equipped_limb()
 	if (L && L.attack_range(target, src, params))
-		src.lastattacked = src
+		src.lastattacked = get_weakref(src)
 		return TRUE
 	return FALSE
 
@@ -536,29 +535,33 @@
 					hand_attack(target, params, location, control)
 
 				//If lastattacked was set, this must be a combat action!! Use combat click delay ||  the other condition is whether a special attack was just triggered.
-				if ((lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
+				if ((lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay) || (equipped && equipped.special && equipped.special.last_use >= world.time - src.click_delay))
 					src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 					src.lastattacked = null
 
 			else if (!equipped)
 				hand_range_attack(target, params, location, control)
 
-				if (lastattacked != null && (src.lastattacked == target || src.lastattacked == equipped || src.lastattacked == src) && use_delay)
+				if (lastattacked?.deref() != null && (src.lastattacked.deref() == target || src.lastattacked.deref() == equipped || src.lastattacked.deref() == src) && use_delay)
 					src.next_click = world.time + src.combat_click_delay
 					src.lastattacked = null
 
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
-			if (ship.sensors)
-				if (ship.sensors.active)
-					var/obj/machinery/vehicle/target_pod = target
-					if (src.loc != target_pod && istype(target_pod))
-						ship.sensors.end_tracking()
-						ship.sensors.quick_obtain_target(target_pod)
-				else
-					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			if (ship.pilot == src)
+				if (ship.sensors)
+					if (ship.sensors.active)
+						var/obj/machinery/vehicle/target_pod = target
+						if (src.loc != target_pod && istype(target_pod))
+							ship.sensors.end_tracking()
+							ship.sensors.quick_obtain_target(target_pod)
+					else
+						if (istype(target, /obj/machinery/vehicle))
+							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+				support_gunner.fire_at(target, src)
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
@@ -614,12 +617,12 @@
 	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
 		return
 
-	var/obj/item/gun/G = src.equipped()
+	var/obj/item/I = src.equipped()
 	var/gunpoint = FALSE
-	if(!istype(G) || !ismob(target))
+	if(!cangunpoint(I) || !ismob(target))
 		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
-		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
+		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [I] at [target]!</span>")
 		gunpoint = TRUE
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
@@ -1248,7 +1251,6 @@
 		if (( \
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
-			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
@@ -1276,13 +1278,6 @@
 						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !my_client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
-			else if(istype(M, /mob/zoldorf))
-				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (GET_DIST(M,say_location) <= viewrange)
-					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
-						M.show_message(thisR, 2, assoc_maptext = chat_text)
-				else
-					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
 
@@ -1594,7 +1589,7 @@
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
-	M.lastattacked = src
+	M.lastattacked = get_weakref(src)
 
 	attack_particle(M,src)
 
@@ -2084,7 +2079,7 @@
 	var/mob/M = null
 	if (ismob(P.shooter))
 		M = P.shooter
-		src.lastattacker = M
+		src.lastattacker = get_weakref(M)
 		src.lastattackertime = world.time
 	src.was_harmed(M)
 
@@ -2405,3 +2400,6 @@
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
 	return TRUE
+
+/mob/living/HealBleeding(amt)
+	src.bleeding = max(src.bleeding - amt, 0)

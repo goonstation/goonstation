@@ -236,7 +236,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 			Free to play - IF YOU DARE!<BR>
 			[src.plays] attempts have been made today!<BR>
 			<HR><BR>
-			<A href='?src=\ref[src];ops=1'>Play!</A><BR>"}
+			<A href='byond://?src=\ref[src];ops=1'>Play!</A><BR>"}
 			user.Browse(dat, "window=slotmachine;size=400x500")
 			onclose(user, "slotmachine")
 
@@ -308,8 +308,8 @@ TYPEINFO(/obj/submachine/slot_machine)
 			I.amount = 0
 			qdel(I)
 		else if(istype(I, /obj/item/currency/buttcoin/))
-			boutput(user, SPAN_NOTICE("You insert the cash into [src]."))
-			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+			boutput(user, SPAN_NOTICE("You force the cash into [src]."))
+			boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
 			I.amount = 0
 			qdel(I)
 
@@ -328,8 +328,8 @@ TYPEINFO(/obj/submachine/slot_machine)
 			<B>Credits Remaining:</B> [src.play_money]<BR>
 			[src.plays] attempts have been made today!<BR>
 			<HR><BR>
-			<A href='?src=\ref[src];ops=1'>Play!</A><BR>
-			<A href='?src=\ref[src];ops=2'>Eject cash</A>"}
+			<A href='byond://?src=\ref[src];ops=1'>Play!</A><BR>
+			<A href='byond://?src=\ref[src];ops=2'>Eject cash</A>"}
 			user.Browse(dat, "window=slotmachine;size=400x500")
 			onclose(user, "slotmachine")
 

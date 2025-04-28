@@ -43,6 +43,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/faction = list()
 	/// Used in lieu of the id for antag_popups.dm
 	var/popup_name_override
+	/// Set when the antagonist is in the process of being removed, to prevent double removals.
+	var/removing = FALSE
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -112,6 +114,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
 	proc/remove_self(take_gear = TRUE, source)
+		src.removing = TRUE
 		if (take_gear)
 			src.remove_equipment()
 
@@ -250,11 +253,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are \a [src.display_name]!</h1>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
+		boutput(owner.current, SPAN_ALERT("<h1 class='system'>You are no longer \a [src.display_name]!</h1>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup()

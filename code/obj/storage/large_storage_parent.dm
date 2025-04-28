@@ -173,10 +173,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	update_icon()
 
 		if (src.open)
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 			src.icon_state = src.icon_opened
 		else if (!src.open)
-			flick(src.closing_anim,src)
+			FLICK(src.closing_anim,src)
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
@@ -218,7 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
-		if (istype(get_turf(src), /turf/space))
+		if (istype(get_turf(src), /turf/space) || !get_turf(src))
 			if (!istype(get_turf(src), /turf/space/fluid))
 				return
 
@@ -642,7 +642,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!src.can_open())
 			return 0
 		else
-			flick(src.opening_anim,src)
+			FLICK(src.opening_anim,src)
 
 		if(entangled && !entangleLogic && !entangled.can_close())
 			visible_message(SPAN_ALERT("It won't budge!"))
@@ -667,7 +667,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		return 1
 
 	proc/close(var/entangleLogic)
-		flick(src.closing_anim,src)
+		FLICK(src.closing_anim,src)
 		if (!src.open)
 			return 0
 		if (src._health <= 0)
@@ -783,10 +783,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
-			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/our_trap = O
-				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
+			if(user)
+				SEND_SIGNAL(O, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)

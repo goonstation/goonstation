@@ -18,10 +18,14 @@
 /datum/effects/system/ion_trail_follow/proc/on_vehicle_move(atom/movable/vehicle, atom/previous_loc, direction)
 	var/turf/T = get_turf(vehicle)
 	var/has_trailblazer = FALSE
+	var/has_afterburner = FALSE
 	if (istype(vehicle, /obj/machinery/vehicle))
 		var/obj/machinery/vehicle/mover = vehicle
 		if (istype(mover.sec_system, /obj/item/shipcomponent/secondary_system/trailblazer))
 			has_trailblazer = TRUE
+		else if (istype(mover.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/afterburner))
+			var/obj/item/shipcomponent/secondary_system/thrusters/afterburner/afterburner = mover.sec_system
+			has_afterburner = afterburner.active
 	if(T != src.oldposition)
 		if(istype(oldposition, /turf) && istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
 			if (istext(istate) && istate != "blank")
@@ -29,8 +33,10 @@
 					var/obj/I
 					if (!has_trailblazer)
 						I = new /obj/effects/ion_trails
+						if (has_afterburner)
+							I.color = "#ff09de"
 						src.oldposition.vis_contents += I
-						flick(istate, I)
+						FLICK(istate, I)
 						I.icon_state = "blank"
 					else
 						I = new /atom/movable/hotspot/chemfire(src.oldposition, CHEM_FIRE_BLUE)

@@ -378,6 +378,44 @@ TYPEINFO(/datum/component/equipment_fault)
 			if (zamus_dumb_power_popups)
 				new /obj/maptext_junk/power(get_turf(M), change = -M.power_usage * mult, channel = M.power_channel)
 
+/datum/component/equipment_fault/dangerously_shorted
+	///base probability to shock each tick
+	var/static/base_probability = 10
+	///current probability to shock on this process tick
+	var/current_prob
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+
+/datum/component/equipment_fault/dangerously_shorted/Initialize(tool_flags)
+	. = COMPONENT_INCOMPATIBLE
+	if(istype(parent, /obj/machinery/power))
+		. = ..()
+
+/datum/component/equipment_fault/dangerously_shorted/ef_process(obj/machinery/M, mult)
+	. = TRUE
+	elecflash(M)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = src.base_probability
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/dangerously_shorted/ef_perform_fault(obj/machinery/M)
+	if(..())
+		M.visible_message(SPAN_ALERT("[M] sparks violently!"))
+
+		var/list/mob/targets = list()
+		for (var/mob/mob in hearers(8, M.loc))
+			if (mob.invisibility >= INVIS_AI_EYE) continue
+			targets.Add(mob)
+
+		if (!length(targets))
+			elecflash(M.loc, power=5, exclude_center=FALSE)
+			return
+
+		var/target = pick(targets)
+		arcFlash(M, target, 200000) // TODO: maybe some sort of PNET check?
+
 
 /datum/component/equipment_fault/faulty_wiring
 	fault_delay = 45 SECONDS
@@ -441,14 +479,14 @@ TYPEINFO(/datum/component/equipment_fault)
 		S.setup(flame_turf)
 
 		if (prob(20))
-			flick("flame",S)
+			FLICK("flame",S)
 			flame_turf.hotspot_expose(T0C + 400, 400)
 			playsound(flame_turf, 'sound/effects/flame.ogg', 50, FALSE)
 			O.visible_message(SPAN_ALERT("A tuft of flame erupts from [O]!"))
 			for (var/mob/M in flame_turf)
 				M.changeStatus("burning", 2 SECONDS)
 		else
-			flick("spark",S)
+			FLICK("spark",S)
 			flame_turf.hotspot_expose(T0C + 50, 50)
 			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
 			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))
@@ -507,3 +545,50 @@ TYPEINFO(/datum/component/equipment_fault/leaky)
 		var/datum/reagents/temp_fluid_reagents = new /datum/reagents(5)
 		temp_fluid_reagents.add_reagent(pick(src.reagent_list), 5)
 		target_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
+
+TYPEINFO(/datum/component/equipment_fault/messy)
+	initialization_args = list(
+		ARG_INFO("tool_flags", DATA_INPUT_BITFIELD, "Tools Required", TOOL_PULSING | TOOL_SCREWING),
+		ARG_INFO("cleanables", DATA_INPUT_LIST_PROVIDED, "Cleanable List", list(\
+			/obj/decal/cleanable/machine_debris=40,\
+			/obj/decal/cleanable/oil=10,\
+			/obj/decal/cleanable/oil/streak=20,\
+			/obj/decal/cleanable/generic=10,\
+			/obj/decal/cleanable/glitter/harmless=5,\
+		)),
+	)
+
+///streaks one of a list of weighted cleanables near the machine
+/datum/component/equipment_fault/messy
+	///list of cleanables picked to spawn when a fault is triggered
+	var/list/obj/decal/cleanable/cleanable_types = list(
+		/obj/decal/cleanable/machine_debris=40,
+		/obj/decal/cleanable/oil=10,
+		/obj/decal/cleanable/oil/streak=20,
+		/obj/decal/cleanable/generic=10,
+		/obj/decal/cleanable/glitter/harmless=5,
+	)
+	var/static/list/sounds = list(
+		'sound/machines/windup.ogg',
+		'sound/machines/hydraulic.ogg',
+		'sound/machines/seed_destroyed.ogg',
+		'sound/machines/ArtifactBee1.ogg',
+		'sound/machines/constructor_work.ogg',
+	)
+
+/datum/component/equipment_fault/messy/Initialize(tool_flags, cleanables)
+	. = ..()
+	if (!islist(cleanables))
+		return COMPONENT_INCOMPATIBLE
+	src.cleanable_types = cleanables
+
+/datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
+	src.ef_perform_fault(M)
+
+/datum/component/equipment_fault/messy/ef_perform_fault(obj/O)
+	if(..())
+		playsound(O, pick(sounds), 30, 2)
+		var/obj/decal/cleanable/junk = make_cleanable(pick(src.cleanable_types), O.loc)
+		junk.streak_cleanable(cardinal, dist_upper=1)
+		hit_twitch(O)
+		O.visible_message(SPAN_NOTICE("[O] spews out some of its internals."))

@@ -198,6 +198,10 @@
 /// Global lookup proc for access levels based on a job string (e.g. "Captain")
 /proc/get_access(job)
 	switch(job)
+		if("Nanotrasen Responder")
+			return get_all_accesses() + list(access_centcom)
+		if("Syndicate Operative")
+			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
 			return get_all_accesses()
@@ -367,21 +371,6 @@
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
 #endif
 
-/proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
-	return list(access_security, access_brig, access_forensics_lockers,
-				access_medical, access_medlab, access_morgue, access_securitylockers,
-				access_tox, access_tox_storage, access_chemistry, access_carrypermit,
-				access_change_ids, access_ai_upload,
-				access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-				access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
-				access_engineering, access_maint_tunnels,
-				access_tech_storage, access_engineering_storage, access_engineering_eva,
-				access_engineering_power, access_engineering_engine,
-				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director, access_special_club, access_syndicate_shuttle,
-				access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-
 // Generated at round start.
 var/list/access_name_lookup = null
 var/list/access_all_actually = null
@@ -424,7 +413,7 @@ var/list/access_all_actually = null
 		if(access_medical_lockers)
 			return "Medical Equipment"
 		if(access_medlab)
-			return "Med-Sci/Genetics"
+			return "Genetics"
 		if(access_pathology)
 			return "Pathology"
 		if(access_morgue)

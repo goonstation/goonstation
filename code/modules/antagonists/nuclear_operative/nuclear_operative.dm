@@ -45,22 +45,20 @@
 		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
 		H.equip_if_possible(new /obj/item/requisition_token/syndicate(H), SLOT_R_STORE)
-
-		if("plasmalungs" in src.owner.current.client?.preferences.traitPreferences.traits_selected) //sigh
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
-		else
-			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 
 		if(src.id == ROLE_NUKEOP_COMMANDER)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), SLOT_HEAD)
-			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), SLOT_WEAR_SUIT)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap(H), SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat(H), SLOT_WEAR_SUIT)
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), SLOT_EARS)
 			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
+			H.equip_if_possible(new /obj/item/pinpointer/disk, SLOT_IN_BACKPACK)
 		else
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 
 		H.equip_sensory_items()
+		H.equip_body_traits(extended_tank=TRUE)
 
 		var/obj/item/card/id/syndicate/ID
 		if(src.id == ROLE_NUKEOP_COMMANDER)

@@ -39,7 +39,7 @@ var/global/totally_random_jobs = FALSE
 	{engineering_staff += player}\
 else if (istype(JOB, /datum/job/research/scientist))\
 	{research_staff += player}\
-else if (istype(JOB, /datum/job/research/medical_doctor))\
+else if (istype(JOB, /datum/job/medical/medical_doctor))\
 	{medical_staff += player}\
 else if (istype(JOB, /datum/job/security/security_officer))\
 	{security_officers += player}
@@ -521,6 +521,21 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
+	else // if you're blind and have missing eyes, you don't get a cool patch sorry
+		var/missing_left = src.traitHolder.hasTrait("eye_missing_left")
+		var/missing_right =  src.traitHolder.hasTrait("eye_missing_right")
+		if (src.glasses && (missing_left || missing_right))
+			src.stow_in_available(src.glasses)
+		if (missing_left && missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/blindfold(src), SLOT_GLASSES)
+		else if (missing_left)
+			var/obj/item/clothing/glasses/eyepatch/eyepatch = new(src)
+			eyepatch.icon_state = "eyepatch-L"
+			eyepatch.block_eye = "L"
+			src.equip_if_possible(eyepatch, SLOT_GLASSES)
+		else if (missing_right)
+			src.equip_if_possible(new /obj/item/clothing/glasses/eyepatch(src), SLOT_GLASSES)
+
 	if (src.traitHolder.hasTrait("shortsighted"))
 		if (src.glasses)
 			src.stow_in_available(src.glasses)
@@ -530,26 +545,29 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			src.stow_in_available(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
-/// Equip items from body traits
-/mob/living/carbon/human/proc/equip_body_traits()
-	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
-		if (src.limbs)
-			if (src.limbs.l_leg)
-				src.limbs.l_leg.delete()
-			if (src.limbs.r_leg)
-				src.limbs.r_leg.delete()
-			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
-			chair.buckle_in(src, src)
+/**
+Equip items from body traits.
 
+ * @param extended_tank - If TRUE, the mob will spawn with a pocket extended tank instead of a mini tank.
+
+**/
+/mob/living/carbon/human/proc/equip_body_traits(extended_tank=FALSE)
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
 			src.stow_in_available(src.wear_mask)
 
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
-
-		var/obj/item/tank/good_air = new /obj/item/tank/mini_plasma(src)
-		src.put_in_hand_or_drop(good_air)
+		var/obj/item/tank/good_air
+		if (extended_tank)
+			good_air = new /obj/item/tank/pocket/extended/plasma(src)
+			// TODO: antagonists spawn tanks in the left pocket by practice(copy/paste), not pattern
+			if (istype(src.l_store, /obj/item/tank/pocket/extended/oxygen))
+				qdel(src.l_store)
+			src.equip_if_possible(good_air, SLOT_L_STORE)
+		else
+			good_air = new /obj/item/tank/mini/plasma(src)
+			src.put_in_hand_or_stow(good_air, delete_item=FALSE)
 		if (!good_air.using_internal())//set tank ON
 			good_air.toggle_valve()
 
@@ -591,20 +609,20 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 				D.name = "data disk - '[src.real_name]'"
 
-			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/badge
-				if (ispath(JOB.receives_badge))
-					badge = new JOB.receives_badge(src)
-				else
-					badge = new /obj/item/clothing/suit/security_badge(src)
+			if(JOB.badge)
+				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)
 				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
 					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
 				badge.badge_owner_name = src.real_name
 				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
-		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
+		var/obj/item/tank/extra_air
+		if (src.traitHolder.hasTrait("plasmalungs"))
+			extra_air = new /obj/item/tank/mini/plasma(src.loc)
+		else
+			extra_air = new /obj/item/tank/mini/oxygen(src.loc)
+		src.force_equip(extra_air, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
 		src.force_equip(SSW, SLOT_IN_BACKPACK, TRUE)
@@ -616,7 +634,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
 		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
-		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
+		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
+			src.stow_in_available(src.wear_mask)
+		if(!src.wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/device/pda2/pda = locate() in src
@@ -658,6 +681,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = new random_lunchbox_path(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
 		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
+		var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+		trinket = the_chair
+		the_chair.buckle_in(src, src)
 	else
 		trinket = new T(src)
 
@@ -699,9 +726,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
-		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+		src.put_in_hand_or_stow(new /obj/item/reagent_containers/food/snacks/cookie/dog, delete_item = FALSE)
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
-		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+		src.put_in_hand_or_stow(new /obj/item/joint_wax, delete_item = FALSE)
 
 	src.equip_sensory_items()
 

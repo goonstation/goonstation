@@ -18,6 +18,9 @@
 
 #define hex_to_rgb_list(hex) rgb2num(hex)
 
+/// distance^2 between first and second RGB values
+#define color_dist2(_r, _g, _b, _dr, _dg, _db) ((_r-_dr)*(_r-_dr)+(_g-_dg)*(_g-_dg)+(_b-_db)*(_b-_db))
+
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
@@ -112,6 +115,15 @@
 								0,0,0,1,\
 								0,0,0,0)
 
+#define COLOR_MATRIX_INVERSE_LABEL "inverse"
+#define COLOR_MATRIX_INVERSE list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+
+#define COLOR_MATRIX_PLASMA_MADNESS_LABEL "plasma"
+#define COLOR_MATRIX_PLASMA_MADNESS list(1.2,0,0,0,\
+										0.2,0.8,0.2,0,\
+										0,0,1.2,0,\
+										0,0,0,1,\
+										0,0,0,0)
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
 	if (length(Mat1) != 20 || length(Mat2) != 20)
@@ -330,14 +342,42 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 
 var/global/list/list/icon_state_average_color_cache = list(list())
 
-/atom/proc/get_average_color()
+///include_local_color: multiply the cached average icon color by the specific `src.color` var of this atom
+/atom/proc/get_average_color(include_local_color = FALSE)
 	if(!icon_state_average_color_cache[src.icon] || !icon_state_average_color_cache[src.icon][src.icon_state])
 		if(!icon_state_average_color_cache[src.icon])
 			icon_state_average_color_cache[src.icon] = list()
 		var/icon/I = icon(src.icon, src.icon_state)
 		icon_state_average_color_cache[src.icon][src.icon_state] = global.get_average_color(I)
 
-	return icon_state_average_color_cache[src.icon][src.icon_state]
+	var/average_color = icon_state_average_color_cache[src.icon][src.icon_state]
+	if (include_local_color && src.color && src.color != "#ffffff")
+		return mult_colors(src.color, average_color)
+	return average_color
+
+///Multiplies two colors together in the same way Byond does, accounting for one or both being matrices
+proc/mult_colors(A, B)
+	//they're both matrices, just multiply them together and return a matrix since there's no way to losslessly convert back to a hex code
+	if (islist(A) && islist(B))
+		return mult_color_matrix(A, B)
+	if (islist(A) || islist(B)) //one of them is a matrix
+		var/list/matrix = islist(A) ? A : B
+		var/hex = islist(A) ? B : A
+		var/list/hex_rgb = hex_to_rgb_list(hex)
+		//okay I know this looks like evil hell maths but I promise it's just an implementation of https://www.byond.com/docs/ref/#/{notes}/color-matrix
+		//multiply the RGB values of the hex color by the corresponding transformation values of the color matrix
+		//in a sane world byond would return an actual matrix object here and all this would be one multiply operation but NOOOO
+		var/red = hex_rgb[1] * matrix[1] + hex_rgb[2] * matrix[4 + 1] + hex_rgb[3] * matrix[8 + 1]
+		var/green = hex_rgb[1] * matrix[2] + hex_rgb[2] * matrix[4 + 2] + hex_rgb[3] * matrix[8 + 2]
+		var/blue = hex_rgb[1] * matrix[3] + hex_rgb[2] * matrix[4 + 3] + hex_rgb[3] * matrix[8 + 3]
+		return rgb(red, green, blue)
+	else //both of them are hex codes
+		var/list/A_rgb = hex_to_rgb_list(A)
+		var/list/B_rgb = hex_to_rgb_list(B)
+		//can't multiply two 0-255 values together directly, so convert one to 0-1, the maths all works out in the end
+		for (var/i in 1 to length(A_rgb))
+			A_rgb[i] /= 255
+		return rgb(A_rgb[1] * B_rgb[1], A_rgb[2] * B_rgb[2], A_rgb[3] * B_rgb[3]) //return a hex code
 
 
 /**
@@ -446,6 +486,13 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 		derive_color_from_hue_offset(color, 270)
 	)
 
+///Returns the squared euclidian distance between two colors in RGB space
+///Not great scientifically but should be good enough for our purposes
+/proc/color_dist(A, B)
+	var/list/a_rgb = hex_to_rgb_list(A)
+	var/list/b_rgb = hex_to_rgb_list(B)
+	return color_dist2(a_rgb[1], a_rgb[2], a_rgb[3], b_rgb[1], b_rgb[2], b_rgb[3])
+
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
 	src.color = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
@@ -457,7 +504,7 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 		src.color_matrix = src.view_tint ? matrix : null
 	src.color = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 
-/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
+/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING, respect_view_tint_settings = FALSE)
 	src.color_matrix = matrix
 	matrix = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 	animate(src, color=matrix, time=time, easing=easing)

@@ -308,6 +308,19 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/implant/projectile/staple))
+			if (src.ammo + 1 > initial(src.ammo))
+				boutput(user, SPAN_NOTICE("\The [src] is already filled with staples!"))
+				return
+			boutput(user, SPAN_NOTICE("You load \the [I] into \the [src]."))
+			src.ammo += 1
+			qdel(I)
+			return
+		if (istype(I, /obj/item/gun/kinetic/zipgun))
+			I.Attackby(src, user)
+			return
+		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -375,7 +388,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			flick("[src.icon_base]-shock", src)
+			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
@@ -400,7 +413,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		flick("[src.icon_base]-shock", src)
+		FLICK("[src.icon_base]-shock", src)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
@@ -649,7 +662,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if(!defib || QDELETED(defib))
 			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
@@ -663,7 +676,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (W == src.defib)
 			src.put_back_defib()
 
@@ -1072,6 +1085,12 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
+			if (istype(O, /obj/storage)) // don't eat closets/crates
+				continue
+			if (istype(O, /obj/item/body_bag)) // don't eat other deployed bodybags
+				var/obj/item/body_bag/other_bag = O
+				if (other_bag.w_class == W_CLASS_BULKY)
+					continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
 			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)

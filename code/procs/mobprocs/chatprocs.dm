@@ -278,7 +278,7 @@
 			if (!the_wraith.hearghosts)
 				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -571,25 +571,22 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
-	if (src.emote_allowed)
-		if (dead_check && isdead(src))
-			src.emote_allowed = FALSE
-			return FALSE
-		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
-			return FALSE
-		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = FALSE
-				src.last_emote_time = world.time
-				src.last_emote_wait = time
-				SPAWN(time)
-					src.emote_allowed = TRUE
-			return TRUE
-		else
-			return FALSE
-	else
+	if ((!src.emote_allowed))
 		return FALSE
-
+	if (dead_check && isdead(src))
+		src.emote_allowed = FALSE
+		return FALSE
+	if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
+		return FALSE
+	if (world.time >= (src.last_emote_time + src.last_emote_wait))
+		if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+			src.emotes_on_cooldown = TRUE
+			src.last_emote_time = world.time
+			src.last_emote_wait = time
+			SPAWN(time)
+				src.emotes_on_cooldown = FALSE
+		return TRUE
+	return FALSE
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
@@ -1144,7 +1141,7 @@
 		flockmindRendered = rendered // no need for URLs
 	else
 		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
-		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='byond://?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 

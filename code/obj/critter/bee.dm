@@ -118,10 +118,10 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))
 					return
 
-				if (beeMom.lastattacker && beeMom.lastattacker != beeMom && (beeMom.lastattackertime + 140) >= world.time)
-					src.target = beeMom.lastattacker
+				if (beeMom.lastattacker?.deref() && beeMom.lastattacker.deref() != beeMom && (beeMom.lastattackertime + 140) >= world.time)
+					src.target = beeMom.lastattacker.deref()
 					src.oldtarget_name = "[src.target]"
-					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker]!</b>"))
+					src.visible_message(SPAN_ALERT("<b>[src] buzzes angrily at [beeMom.lastattacker.deref()]!</b>"))
 					src.task = "chasing"
 					return ..()
 
@@ -352,7 +352,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 							src.visible_message("<b>[src]</b> drops \a [D] on the floor in an attempt to cheer [user] up!")
 							playsound(D.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg' , 30, 1)
 			else
-				E.icon_state = "gold"
+				E.icon_state = "id_gold"
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"

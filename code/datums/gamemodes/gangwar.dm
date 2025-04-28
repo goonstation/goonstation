@@ -2265,7 +2265,7 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_NOTICE("[satchel] doesn't contain any cannabis."))
 			return
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
@@ -2443,11 +2443,8 @@ proc/broadcast_to_all_gangs(var/message)
 		playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
 		H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 		H.vomit()
-		//un-kill organs
-		for (var/organ_slot in H.organHolder.organ_list)
-			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
-			if(istype(O))
-				O.unbreakme()
+		H.nauseate(6)
+		H.organHolder.unbreak_all_organs()
 		if (H.organHolder) //would be nice to make these heal to desired_health_pct but requires new organHolder functionality...
 			H.organHolder.heal_organs(1000,1000,1000, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
 		H.remove_ailments()
@@ -2502,6 +2499,7 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	contraband = 2
 	var/max_charges = 5
 	var/charges = 5
 
@@ -2532,7 +2530,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (A.canAIControl())
 			if (A.open())
 				src.charges--
-				flick("quickhack_fire", src)
+				FLICK("quickhack_fire", src)
 				boutput(user, SPAN_ALERT("The [src.name] beeps!"))
 			else
 				boutput(user, SPAN_ALERT("The [src.name] buzzes. Maybe something's wrong with the door?"))
@@ -2596,7 +2594,7 @@ proc/broadcast_to_all_gangs(var/message)
 	category = "Country Western"
 /datum/gang_item/space
 	category = "Space Gang"
-/datum/gang_item/space
+/datum/gang_item/weapon
 	category = "Weapon"
 /datum/gang_item/equipment
 	category = "Consumable"
@@ -2618,7 +2616,7 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "Armored Vest"
 	desc = "Grants you protection, and lets you keep your wicked style bonus!"
 	class2 = "clothing"
-	price = 7500
+	price = 3500
 	item_path = /obj/item/clothing/suit/armor/gang
 
 /datum/gang_item/weapon/lead_pipe

@@ -72,7 +72,11 @@
 			..()
 
 			if (Obj)
+#ifdef UNDERWATER_MAP
+				var/turf/T = locate(Obj.x, 75, 5)
+#else
 				var/turf/T = locate(Obj.x, 4, 1)
+#endif
 				Obj.set_loc(T)
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
 				var/obj/somesparks = new /obj/effects/sparks
@@ -176,7 +180,7 @@
 					animation.icon_state = "blank"
 					animation.icon = 'icons/mob/mob.dmi'
 					animation.master = target_original_loc
-					flick("disintegrated", animation)
+					FLICK("disintegrated", animation)
 
 					if (prob(20))
 						make_cleanable(/obj/decal/cleanable/ash,target_original_loc)

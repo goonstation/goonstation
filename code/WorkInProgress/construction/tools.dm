@@ -119,14 +119,14 @@
 			return
 
 		src.add_dialog(user)
-		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
+		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='byond://?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
 		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
-			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
-			t += text("Currently firing at <A href='?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
-			t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
+			t += text("Turrets [] - <A href='byond://?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
+			t += text("Currently firing at <A href='byond://?src=\ref[];firesAt=1'>[]</a><br><br>", src, firesat)
+			t += text("Currently set for [] - <A href='byond://?src=\ref[];toggleLethal=1'>Change to []?</a><br><br>", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
 
 		user.Browse(t, "window=turretid")
 		onclose(user, "turretid")
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
+			states += (get_icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
@@ -626,6 +626,7 @@ TYPEINFO(/obj/item/room_planner)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
+					W.mod = W::mod
 					W.UpdateIcon()
 					W.update_neighbors()
 			return
@@ -894,6 +895,7 @@ TYPEINFO(/obj/item/room_planner)
 			var/turf/simulated/wall/auto/AT = T
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
+			AT.mod = selectedmod
 
 			qdel(src)
 

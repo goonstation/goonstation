@@ -16,10 +16,14 @@
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
+		/datum/manufacture/metal/bulk,
 		/datum/manufacture/metalR,
+		/datum/manufacture/metalR/bulk,
 		/datum/manufacture/rods2,
 		/datum/manufacture/glass,
+		/datum/manufacture/glass/bulk,
 		/datum/manufacture/glassR,
+		/datum/manufacture/glassR/bulk,
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/gastank,
 		/datum/manufacture/miniplasmatank,
@@ -139,7 +143,6 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/surgical_spoon,
 		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
 		/datum/manufacture/medbot,
 		/datum/manufacture/firebot,
 		/datum/manufacture/floorbot,
@@ -163,6 +166,7 @@
 		/datum/manufacture/robup_visualizer,
 		/datum/manufacture/robup_efficiency,
 		/datum/manufacture/robup_repair,
+		/datum/manufacture/scream_synth,
 		/datum/manufacture/sbradio,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
@@ -371,9 +375,6 @@
 		/datum/manufacture/pod/armor_industrial,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/storagehold,
-#ifndef UNDERWATER_MAP
-		/datum/manufacture/lateral_thrusters,
-#endif
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
@@ -381,12 +382,21 @@
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/pod/weapon/burst_ltlaser,
+		/datum/manufacture/engine_scout,
 		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
+#ifndef UNDERWATER_MAP
+		/datum/manufacture/pod/lateral_thrusters,
+		/datum/manufacture/pod/afterburner,
+#endif
 		/datum/manufacture/pod/light_shielding,
 		/datum/manufacture/pod/heavy_shielding,
+		/datum/manufacture/pod/auto_repair_kit,
+		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -648,6 +658,7 @@
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/heavy_firesuit,
 		/datum/manufacture/floodlight,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
@@ -656,6 +667,8 @@
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
+		/datum/manufacture/turbine_shaft,
+		/datum/manufacture/current_turbine,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,

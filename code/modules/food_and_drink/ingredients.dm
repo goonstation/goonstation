@@ -498,7 +498,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza_base(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
@@ -509,7 +509,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
@@ -520,7 +520,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 			for(var/i = 1, i <= 2, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
@@ -530,7 +530,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
@@ -568,7 +568,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+				src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
@@ -608,7 +608,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			JOB_XP(user, "Chef", 1)
 		if(prob(1))
 			playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-			src.visible_message(SPAN_ALERT("<B>The [src] screams!</B>"))
+			src.visible_message(SPAN_ALERT("<B>[src] screams!</B>"))
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
 
@@ -1042,3 +1042,12 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	use_bite_mask = FALSE
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	w_class = W_CLASS_BULKY
+
+/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs
+	name = "breadcrumbs"
+	desc = "Some dried breadcrumbs."
+	icon_state = "breadcrumbs"
+	bites_left = 1
+	heal_amt = 0
+	initial_volume = 1
+	initial_reagents = list("bread"=1)

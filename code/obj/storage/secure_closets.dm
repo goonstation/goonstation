@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		else if (user.a_intent == INTENT_HELP)
 			..()
 		else if (I.force > 0)
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src.reinforced)
 				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
 				attack_particle(user,src)
@@ -110,9 +110,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		if (ON_COOLDOWN(src, "locker_projectile_hit", 0.3 SECONDS))
 			return
 		if (block)
-			flick("block_spark_armor",src.attack_particle)
+			FLICK("block_spark_armor",src.attack_particle)
 		else
-			flick("block_spark",src.attack_particle)
+			FLICK("block_spark",src.attack_particle)
 		src.attack_particle.alpha = 255
 		src.attack_particle.loc = src.loc
 		src.attack_particle.pixel_x = 0
@@ -221,7 +221,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/captain,
 	/obj/item/megaphone,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/captain)
+	/obj/item/device/pda2/captain,
+	/obj/item/circuitboard/announcement/bridge) //This one makes the arrivals announcement and this is the ONLY spare for it
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -259,7 +260,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
 	/obj/item/barrier,
-	/obj/item/device/pda2/hos)
+	/obj/item/device/pda2/hos,
+	/obj/item/circuitboard/card/security,
+	/obj/item/circuitboard/announcement/security)
 
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
@@ -277,7 +280,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/hop,
-	/obj/item/device/panicbutton/medicalalert/hop)
+	/obj/item/device/panicbutton/medicalalert/hop,
+	/obj/item/circuitboard/card)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -299,7 +303,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/research_director,
 	/obj/item/places_pipes/research,
-	/obj/item/rcd_ammo/big)
+	/obj/item/rcd_ammo/big,
+	/obj/item/circuitboard/card/research,
+	/obj/item/circuitboard/announcement/research)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -326,7 +332,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/stamp/md,
 	/obj/item/device/radio/headset/command/md,
 	/obj/item/pet_carrier,
-	/obj/item/device/pda2/medical_director)
+	/obj/item/device/pda2/medical_director,
+	/obj/item/circuitboard/card/medical,
+	/obj/item/circuitboard/announcement/medical)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -355,6 +363,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/extinguisher,
 		/obj/item/pet_carrier,
 		/obj/item/device/pda2/chiefengineer,
+		/obj/item/circuitboard/card/engineering,
+		/obj/item/circuitboard/announcement/engineering,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#endif
@@ -451,6 +461,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/detective_scanner/detective,
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
+	/obj/item/camera_film/large,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
@@ -709,7 +720,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
 	/obj/item/clothing/glasses/blindfold = 2,
-	/obj/item/clothing/mask/monkey_translator = 2)
+	/obj/item/clothing/mask/monkey_translator = 2,
+	/obj/item/pet_carrier)
 
 /* ==================== */
 /* ----- Research ----- */
@@ -769,6 +781,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B7.pixel_x = 0
 			return 1
 
+/obj/storage/secure/closet/research/chemical/pharmacy
+	name = "pharmacy chemical locker"
+	icon_closed = "medical_chemical"
+	icon_state = "medical_chemical"
+	req_access = list(access_medical_lockers)
+
 /* ======================= */
 /* ----- Engineering ----- */
 /* ======================= */
@@ -823,7 +841,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
-#ifdef MAP_OVERRIDE_OSHAN
+#ifdef HOTSPOTS_ENABLED
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
 	/obj/item/engivac/complete,
@@ -831,6 +849,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/pen/infrared,
+	/obj/item/pen/crayon/infrared,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)

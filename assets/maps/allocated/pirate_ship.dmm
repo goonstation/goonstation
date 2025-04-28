@@ -2019,49 +2019,49 @@
 /area/pirate_ship)
 "SZ" = (
 /obj/table/nanotrasen/auto,
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 10;
 	pixel_y = 18
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 10;
 	pixel_y = 12
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 10;
 	pixel_y = 6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 10
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 3;
 	pixel_y = 18
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -5;
 	pixel_y = 18
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -5;
 	pixel_y = 12
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/tank/emergency_oxygen/extended{
+/obj/item/tank/pocket/extended/oxygen{
 	pixel_x = -5
 	},
 /turf/simulated/floor/black,
@@ -2138,7 +2138,7 @@
 /area/pirate_ship)
 "UL" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "UX" = (

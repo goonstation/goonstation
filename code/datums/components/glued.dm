@@ -80,7 +80,7 @@ TYPEINFO(/datum/component/glued)
 		src.start_ungluing(parent, user)
 	else
 		src.glued_to.Attackhand(user)
-		user.lastattacked = user
+		user.lastattacked = get_weakref(user)
 
 /datum/component/glued/proc/start_ungluing(atom/movable/parent, mob/user)
 	if(isnull(src.glue_removal_time))
@@ -101,7 +101,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
-	user.lastattacked = user
+	user.lastattacked = get_weakref(user)
 
 /datum/component/glued/proc/on_hitby_proj(atom/movable/parent, obj/projectile/proj)
 	src.glued_to.bullet_act(proj)

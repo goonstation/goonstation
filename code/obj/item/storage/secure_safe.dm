@@ -279,6 +279,8 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	w_class = W_CLASS_BULKY
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
+	check_wclass = TRUE
+	can_hold = list(/obj/item/stamped_bullion)
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
 	mats = 8
@@ -343,7 +345,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
 				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
-				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird/five(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
@@ -371,7 +373,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/raw_material/miracle,\
 				/obj/item/raw_material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
-				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/pipeshot/scrap/five,\
+				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/a12/bird/five,\
 				/obj/item/gun/energy/taser_gun,\
 				/obj/item/gun/energy/phaser_gun,\
 				/obj/item/gun/energy/egun_jr,\
@@ -520,7 +522,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				S.setup(src, try_add_to_storage = TRUE)
 			if (3)
 				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
-				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird/five(src))
 			if (4)
 				src.storage.add_contents(new /obj/item/paper/freeze(src))
 

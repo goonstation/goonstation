@@ -320,13 +320,13 @@
 
 	var/list/states = src.get_step_image_states()
 
-	if (states[1] || states[2])
+	if (!src.lying && (states[1] || states[2]))
 		if (states[1])
 			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[1], src.last_move, 0)
 		if (states[2])
 			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[2], src.last_move, 0)
 	else
-		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
+		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear[min (3, round(src.tracked_blood["count"]/2, 1))]", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // mirror from below
 		src.tracked_blood["count"] --

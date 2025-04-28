@@ -1979,7 +1979,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
@@ -2085,7 +2085,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 
 	proc/decloak()
 		if(isliving(owner))

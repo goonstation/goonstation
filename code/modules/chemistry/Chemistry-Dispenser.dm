@@ -93,7 +93,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (!istype(B, glass_path))
 			var/damage = B.force
 			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				attack_particle(user,src)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
@@ -182,6 +182,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			qdel(src)
 		else
 			src.take_damage(power*5)
+
+	overload_act()
+		return !src.set_broken()
 
 	meteorhit()
 		qdel(src)

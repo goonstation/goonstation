@@ -1133,7 +1133,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
-					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
+					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='byond://?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
 
 		src.menu_message += "<HR>"
 
@@ -1503,7 +1503,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/prismatic_spray
 	name = "Prismatic Spray"
 	eqtype = "Offensive"
-	desc = "This spell allows you to launch a spray of colorful and wildly innaccurate projectiles outwards in a cone aimed roughly at a nearby target."
+	desc = "This spell allows you to launch a spray of colorful and wildly inaccurate projectiles outwards in a cone aimed roughly at a nearby target."
 	assoc_spell = /datum/targetable/spell/prismatic_spray
 	cost = 1
 
@@ -1618,7 +1618,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/summongolem
 	name = "Summon Golem"
 	eqtype = "Utility"
-	desc = "This spell allows you to turn a reagent you currently hold (in a jar, bottle or other container) into a golem. Golems will attack your enemies, and release their contents as chemical smoke when destroyed."
+	desc = "This spell allows you to turn a reagent you currently hold (in a jar, bottle, or other container) into a golem. Golems will attack your enemies, and release their contents as chemical smoke when destroyed."
 	assoc_spell = /datum/targetable/spell/golem
 	cost = 2
 

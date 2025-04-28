@@ -4,34 +4,34 @@
 	dir = 9
 	},
 /turf/simulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 5
 	},
 /turf/simulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 6
 	},
 /turf/simulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /turf/simulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 "p" = (
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 10
 	},
 /turf/simulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "r" = (
 /obj/railing/velvet{
 	pixel_y = 23
 	},
 /turf/simulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/item/boarvessel/forgery{
 	pixel_y = 10;
@@ -42,7 +42,7 @@
 /obj/machinery/light/small/floor,
 /obj/effects/lightshaft,
 /turf/simulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 i

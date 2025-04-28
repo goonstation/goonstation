@@ -703,7 +703,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return
 
 			b_pressed = TRUE
-			flick("boss_button_activate", src)
+			FLICK("boss_button_activate", src)
 			src.icon_state = "boss_button1"
 
 			playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
@@ -724,7 +724,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || health <= 0)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			user.visible_message(SPAN_ALERT("<b>[user] bonks [src] with [I]!</b>"),SPAN_ALERT("<b>You hit [src] with [I]!</b>"))
 			if (iomoon_blowout_state == 0)
 				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
@@ -833,7 +833,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (!I.force || src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
@@ -867,7 +867,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (src.status != IOCORE_ACTIVE)
 				return
 
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (user.a_intent == "harm")
 				src.health -= rand(1,2) * 0.5
 				user.visible_message(SPAN_ALERT("<b>[user]</b> punches [src]!"), SPAN_ALERT("You punch [src]![prob(25) ? " It's about as effective as you would expect!" : null]"))
@@ -1170,7 +1170,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			changing_state = 1
 			active = (opened != default_state)
 
-			flick("ancientdoor_open",src)
+			FLICK("ancientdoor_open",src)
 			src.icon_state = "ancientdoor_opened"
 			set_density(0)
 			set_opacity(0)
@@ -1191,7 +1191,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			set_density(1)
 			set_opacity(1)
-			flick("ancientdoor_close",src)
+			FLICK("ancientdoor_close",src)
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
 			src.name = initial(src.name)
@@ -1361,7 +1361,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			active = 1
 			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
-			flick("ancient_floorpanel_activate",src)
+			FLICK("ancient_floorpanel_activate",src)
 			src.icon_state = "ancient_floorpanel1"
 
 		if (id)
@@ -1409,7 +1409,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = 0
 
 			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
-			flick("ancient_floorpanel_deactivate",src)
+			FLICK("ancient_floorpanel_deactivate",src)
 			src.icon_state = "ancient_floorpanel0"
 
 		if (id)
@@ -1587,7 +1587,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return 1
 
 		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
-		flick("ancient_button_activate",src)
+		FLICK("ancient_button_activate",src)
 		src.icon_state = "ancient_button[++active]"
 
 		if (timer)
@@ -1627,7 +1627,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return 1
 
 		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
-		flick("ancient_button_deactivate", src)
+		FLICK("ancient_button_deactivate", src)
 		src.icon_state = "ancient_button[--active]"
 
 		if (id)

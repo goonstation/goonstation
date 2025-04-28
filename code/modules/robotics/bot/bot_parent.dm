@@ -16,7 +16,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	var/exploding = 0 //So we don't die like five times at once.
 	var/muted = 0 // shut up omg shut up.
 	var/no_camera = 0
-	var/setup_camera_network = "Robots"
+	var/setup_camera_network = CAMERA_NETWORK_ROBOTS
 	var/obj/machinery/camera/cam = null
 	var/emagged = 0
 	var/mob/emagger = null
@@ -112,7 +112,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		..()
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user,src)
 		hit_twitch(src)
 		if (W.hitsound)
@@ -220,11 +220,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			hit_particle.set_loc(src.loc)
 			hit_particle.transform.Turn(rand(0, 360))
 			if (P.proj_data.damage > 1)
-				flick("block_spark", hit_particle)
+				FLICK("block_spark", hit_particle)
 				if (P.proj_data.damage_type & D_KINETIC)
 					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
 			else
-				flick("block_spark_armor", hit_particle)
+				FLICK("block_spark_armor", hit_particle)
 				if (P.proj_data.damage_type & D_ENERGY)
 					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
 		if (P.proj_data.ks_ratio > 0)
@@ -376,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)
-						flick("ion_fade", I)
+						FLICK("ion_fade", I)
 						I.icon_state = "blank"
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y

@@ -71,6 +71,7 @@
 	var/d_mouse_opacity = 0 //In case you want it to block clicks. For blindness and such.
 	var/do_wide_fill = 1 //If true, use underlays to 'fill out' the area that extends to the sides in widescreen
 	var/d_screen_loc = "CENTER-7,CENTER-7"
+	var/d_scale = 1
 
 //list of overlay composition stored on mob
 //list is applied in life proc?! and login
@@ -94,6 +95,8 @@
 			S.plane = D.d_plane
 			S.mouse_opacity = D.d_mouse_opacity
 			S.screen_loc = D.d_screen_loc
+			if (D.d_scale != 1)
+				S.Scale(D.d_scale, D.d_scale)
 
 			instances.Add(S)
 
@@ -508,18 +511,34 @@
 
 		return ..()
 
+/datum/overlayComposition/telephoto
+	New()
+		var/datum/overlayDefinition/telephoto = new()
+		telephoto.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
+		telephoto.d_icon_state = "telephoto"
+		telephoto.do_wide_fill = 1
+		definitions.Add(telephoto)
+
+		return ..()
+
+
 /datum/overlayComposition/insanity
+	var/scale = 1
 	New()
 		var/datum/overlayDefinition/insanity = new()
 		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
 		insanity.d_icon_state = "insanity"
 		insanity.d_blend_mode = 2
 		insanity.do_wide_fill = 0
+		insanity.d_scale = src.scale
 		//insanity.d_alpha = 190
 		insanity.d_screen_loc = "CENTER-10,CENTER-7"
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/insanity/large
+	scale = 2
 
 /datum/overlayComposition/insanity_light
 	New()
@@ -534,3 +553,46 @@
 
 		return ..()
 
+/datum/overlayComposition/silicon_rad_light
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_light.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 100
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_medium
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_medium.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#777777"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_heavy
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_heavy.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#555555"
+		interference.d_alpha = 200
+		definitions.Add(interference)
+		return ..()
+
+/datum/overlayComposition/silicon_rad_extreme
+	New()
+		var/datum/overlayDefinition/interference = new()
+		interference.d_icon = 'icons/effects/overlays/silicon_rad_extreme.dmi'
+		interference.d_icon_state = "interference"
+		interference.d_mouse_opacity = FALSE
+		interference.d_color = "#999999"
+		interference.d_alpha = 150
+		definitions.Add(interference)
+		return ..()

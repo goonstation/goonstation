@@ -112,7 +112,7 @@
 
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
-	type_name = "Dimensional key"
+	type_name = "Dimensional Key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
 	validtypes = list("eldritch", "precursor")
@@ -129,8 +129,6 @@
 		var/turf/T = artkey.fissure_region.get_center()
 		var/area/artifact_fissure/fissure_area = get_area(T)
 		fissure_area.fissure_region = artkey.fissure_region
-
-		mirrored_physical_zone_created = TRUE
 
 /****** Supporting items/atoms/etc. *******/
 
@@ -169,7 +167,10 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			AM.set_loc(get_step(src.exit_turf, turn(AM.dir, 180)))
 			SPAWN(0.001) // just a really low value
 				AM.set_loc(src.exit_turf)
-
+				if (istype(AM, /obj/stool)) // i dont like this but buckled is weird as shit
+					var/obj/stool/stool = AM
+					if (stool.buckled_guy)
+						stool.buckled_guy.set_loc(src.exit_turf)
 		else
 			return ..()
 
@@ -276,7 +277,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 	proc/open(recursion_check = TRUE)
 		src.icon_state = "door0"
 		playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
-		flick("doorc0", src)
+		FLICK("doorc0", src)
 		src.set_opacity(FALSE)
 		src.density = FALSE
 		src.open = TRUE
@@ -286,7 +287,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 	proc/close(recursion_check = TRUE)
 		src.icon_state = "door1"
 		playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
-		flick("doorc1", src)
+		FLICK("doorc1", src)
 		src.set_opacity(TRUE)
 		src.density = TRUE
 		src.open = FALSE
@@ -294,7 +295,7 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			src.linked_door.close(FALSE)
 
 	proc/deny_open()
-		flick("door_deny", src)
+		FLICK("door_deny", src)
 		if (ON_COOLDOWN(src, "deny_sound", 1 SECOND))
 			return
 		playsound(src, 'sound/machines/door_locked.ogg', 40, FALSE)

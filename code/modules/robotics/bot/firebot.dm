@@ -71,7 +71,7 @@
 /obj/machinery/bot/firebot/attack_ai(mob/user as mob, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 //	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 //	if(!src.locked)
@@ -87,7 +87,7 @@
 /obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
-	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
+	dat += "Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
 
 //	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
 //	if(!src.locked)
@@ -119,7 +119,7 @@
 		if(user)
 			boutput(user, SPAN_ALERT("You short out [src]'s valve control circuit!"))
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -141,7 +141,7 @@
 	..()
 	if (!src.emagged && prob(75))
 		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
-		flick("firebot_spark", src)
+		FLICK("firebot_spark", src)
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -312,7 +312,7 @@
 
 	var/list/the_targets = list(T,T1,T2)
 
-	flick("firebot-c", src)
+	FLICK("firebot-c", src)
 	if (src.setup_party)
 		playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 75, 1, -3)
 

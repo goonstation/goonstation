@@ -238,6 +238,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if (src.status & BROKEN)
 			return
+		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
@@ -303,6 +305,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		else
 			return ..()
 
+	attack_hand(mob/user)
+		. = ..()
+		if (src.status & (BROKEN | NOPOWER))
+			src.eject() //don't let people hide in depowered disposal chutes indefinitely
+
 	set_broken()
 		. = ..()
 		if (.) return
@@ -352,6 +359,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				if (prob(P.power))
 					if (!(status & BROKEN))
 						src.set_broken()
+
+	overload_act()
+		return !src.set_broken()
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -515,7 +525,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/flush()
 
 		flushing = 1
-		flick("[icon_style]-flush", src)
+		FLICK("[icon_style]-flush", src)
 
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
@@ -781,7 +791,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user)
+	ui_interact(mob/user, datum/tgui/ui)
 		return
 
 
@@ -794,7 +804,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	//stuff to emulate computer look
 	var/datum/light/light
 	var/image/screen_image
-	///A dummy object in vis_contents so we can use flick() to animate the flush overlay
+	///A dummy object in vis_contents so we can use FLICK() to animate the flush overlay
 	var/obj/dummy/flush_dummy = null
 	///The vendor at the other end
 	var/obj/machinery/vending/player/chemicals/linked = null
@@ -859,7 +869,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
 		H.start(src)
-		flick("chemlink_flush", src.flush_dummy)
+		FLICK("chemlink_flush", src.flush_dummy)
 		playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -937,6 +947,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
+				if(istype(chute, /obj/machinery/disposal/brig))
+					user.unlock_medal("Suitable? How about the Oubliette?!", 1)
 				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
 			else
 				..()

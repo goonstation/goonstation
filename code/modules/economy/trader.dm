@@ -81,7 +81,7 @@
 		SPAWN(rand(1000,3000))
 			src.visible_message("<b>[src.name] calms down.</b>")
 			src.desc = "[src] looks a bit annoyed."
-			src.temp = "[src.name] has calmed down.<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp = "[src.name] has calmed down.<BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 			src.angry = 0
 		return
 
@@ -95,11 +95,11 @@
 		var/dat = updatemenu(user)
 		if(!temp)
 			dat += {"[src.greeting]<HR>
-			<A href='?src=\ref[src];purchase=1'>Purchase Items</A><BR>
-			<A href='?src=\ref[src];sell=1'>Sell Items</A><BR>
-			<A href='?src=\ref[src];viewcart=1'>View Cart</A><BR>
-			<A href='?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
-			<A href='?action=mach_close&window=[lastWindowName]'>Goodbye</A>"}
+			<A href='byond://?src=\ref[src];purchase=1'>Purchase Items</A><BR>
+			<A href='byond://?src=\ref[src];sell=1'>Sell Items</A><BR>
+			<A href='byond://?src=\ref[src];viewcart=1'>View Cart</A><BR>
+			<A href='byond://?src=\ref[src];pickuporder=1'>I'm Ready to Pick Up My Order</A><BR>
+			<A href='byond://?action=mach_close&window=[lastWindowName]'>Goodbye</A>"}
 
 		user.Browse(dat, "window=[windowName];size=[windowSize]", 1)
 		onclose(user, windowName)
@@ -153,17 +153,17 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (istraitor(usr) || isspythief(usr) || isnukeop(usr) || usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_OMNITRAITOR))
+			if(usr.mind && istrainedsyndie(usr))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
 			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
-				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
+				src.temp += {"<A href='byond://?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
 				<B>Description:</B> [N.desc] Amount: [N.amount > -1 ? N.amount : "Infinite"]<BR>
-				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
-			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
+				<A href='byond://?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
+			src.temp += "<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
 		///////Handle the buying of a specific item //
 		//////////////////////////////////////////////
@@ -178,7 +178,7 @@
 			if(!barter)
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>
-								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 					src.updateUsrDialog()
 					return
 				if (src.scan.registered in FrozenAccounts)
@@ -203,7 +203,7 @@
 					var/current_funds = src.barter ? barter_customers[barter_lookup(usr)] : account["current_money"]
 					if(shopping_cart.len + quantity > amount_per_order)
 						src.temp = {"Error. Maximum purchase limit of [amount_per_order] items exceeded.<BR>
-						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+						<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 					else if(current_funds >= P.price * quantity)
 						if(barter)
 							barter_customers[barter_lookup(usr)] -= P.price * quantity
@@ -218,18 +218,18 @@
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
-									<BR><A href='?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
-									<BR><A href='?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>What other things have you got for sale?</A>
+									<BR><A href='byond://?src=\ref[src];pickuporder=1'>I want to pick up my order.</A>
+									<BR><A href='byond://?src=\ref[src];mainmenu=1'>I've got some other business.</A>"}
 					else
 						src.temp = {"[pick(failed_purchase_dialogue)]<BR>
-									<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+									<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 				else
 					src.temp = {"[src] looks bewildered for a second. Seems like they can't find your item.<BR>
-								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 			else
 				src.temp = {"That's odd I can't seem to find your account
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+							<BR><A href='byond://?src=\ref[src];purchase=1'>OK</A>"}
 
 		///////////////////////////////////////////
 		///Handles haggling for buying ////////////
@@ -248,7 +248,7 @@
 						anger()
 					else
 						haggle(askingprice, 1, N)
-						src.temp +="<BR><A href='?src=\ref[src];purchase=1'>Ok</A>"
+						src.temp +="<BR><A href='byond://?src=\ref[src];purchase=1'>Ok</A>"
 
 
 		/////////////////////////////////////////////
@@ -261,14 +261,14 @@
 					continue
 				else
 					temp+={"<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
-							<A href='?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
+							<A href='byond://?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
 			else
 				src.item_name = "--------"
-			src.temp += {"<HR>What do you wish to sell? <a href='?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
-						<BR><A href='?src=\ref[src];selltheitem=1'>Sell Item</A>
-						<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"}
+			src.temp += {"<HR>What do you wish to sell? <a href='byond://?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
+						<BR><A href='byond://?src=\ref[src];selltheitem=1'>Sell Item</A>
+						<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>"}
 
 		///////////////////////////////////////////
 		///Haggle for selling /////////////////////
@@ -288,7 +288,7 @@
 						anger()
 					else
 						haggle(askingprice, 0, N)
-						src.temp +="<BR><A href='?src=\ref[src];sell=1'>Ok</A>"
+						src.temp +="<BR><A href='byond://?src=\ref[src];sell=1'>Ok</A>"
 
 		////////////////////////////////////////
 		////////Slot holder for the current item///
@@ -319,9 +319,9 @@
 				src.item_name = src.sellitem.name
 			else
 				src.item_name = "--------"
-			src.temp += {"<HR>What do you wish to sell? <a href='?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
-							<BR><A href='?src=\ref[src];selltheitem=1'>Sell Item</A>
-							<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>
+			src.temp += {"<HR>What do you wish to sell? <a href='byond://?src=\ref[src];sellitem=1'>[src.item_name]</a><br>
+							<BR><A href='byond://?src=\ref[src];selltheitem=1'>Sell Item</A>
+							<BR><A href='byond://?src=\ref[src];mainmenu=1'>Ok</A>
 							<BR><i>To sell large quantities at once, clickdrag a crate onto [src].</i>"}
 
 		///////////////////////////////////////////
@@ -338,7 +338,7 @@
 			if(!barter)
 				if(!src.scan)
 					src.temp = {"You have to scan a card in first.<BR>
-								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 					src.updateUsrDialog()
 					return
 				account = FindBankAccountByName(src.scan.registered)
@@ -347,14 +347,14 @@
 			if(tradetype)
 				if (!barter && !account)
 					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
-								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+								<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					return
 				else
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
-					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
+					src.temp += "<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"
 
 					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
 					if(log_trades)
@@ -370,7 +370,7 @@
 					doing_a_thing = 0
 					return
 			src.temp = {"[pick(failed_sale_dialogue)]<BR>
-						<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+						<BR><A href='byond://?src=\ref[src];sell=1'>OK</A>"}
 
 		///////////////////////////////////
 		////////Handle Bank account Set-Up ///////
@@ -385,7 +385,7 @@
 			src.temp = "<B>Current Items in Cart: </B>"
 			for(var/obj/S in shopping_cart)
 				temp+= "<BR>[S.name]"
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 		////////////////////////////////////////////////////
 		/////Pick up the goods ordered from merchant////////
 		//////////////////////////////////////////////////////
@@ -395,7 +395,7 @@
 				src.temp = pickupdialogue
 			else
 				src.temp = pickupdialoguefailure
-			src.temp += "<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+			src.temp += "<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		else if (href_list["mainmenu"])
 			src.temp = null
@@ -435,7 +435,7 @@
 				barter_customers[barter_lookup(user)] = 0
 			dat+="<B>Barter value</B>: [barter_customers[barter_lookup(user)]] [currency]<HR>"
 		else
-			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+			dat +="<B>Scanned Card:</B> <A href='byond://?src=\ref[src];card=1'>([src.scan])</A><BR>"
 			if(scan)
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
@@ -1021,6 +1021,8 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
 		src.goods_sell += new /datum/commodity/podparts/cloak(src)
 		src.goods_sell += new /datum/commodity/podparts/redarmor(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_22(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic_9mm(src)
 		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 		src.goods_sell += new /datum/commodity/podparts/artillery(src)
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
@@ -1100,6 +1102,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/CBD(src)
 		src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
 
@@ -1216,6 +1219,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 
 
+/obj/npc/trader/bee/sea
+	name = "Bambini"
+
 // Hon- I mean, hello sir.
 
 /obj/npc/trader/exclown
@@ -1252,6 +1258,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/costume/jester(src)
+		src.goods_sell += new /datum/commodity/costume/blorbosuit(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
@@ -1446,6 +1453,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/CBD(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)

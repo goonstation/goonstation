@@ -81,6 +81,7 @@
 		"[R_FREQ_RESEARCH]" = "Research",
 		"[R_FREQ_MEDICAL]" = "Medical",
 		"[R_FREQ_ENGINEERING]" = "Engineering",
+		"[R_FREQ_NANOTRASEN]" = "NanoTrasen",
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
@@ -141,6 +142,8 @@
 	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
+	Z_LOG_DEBUG("World/Init", "Calculating shipping throw distance...")
+	global.shippingmarket.init()
 
 	//QM Categories by ZeWaka
 	build_qm_categories()

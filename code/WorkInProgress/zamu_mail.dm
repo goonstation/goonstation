@@ -364,6 +364,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 3,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 4,
+		/obj/item/pen/crayon/infrared = 4,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 1,
@@ -452,7 +453,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/clothing/head/helmet/camera = 3,
 		),
 
-	/datum/job/research/medical_doctor = list(
+	/datum/job/medical/medical_doctor = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -470,7 +471,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/emergency_injector/random = 2,
 		),
 
-	/datum/job/research/roboticist = list(
+	/datum/job/medical/roboticist = list(
 		/obj/item/reagent_containers/mender/brute = 5,
 		/obj/item/reagent_containers/mender/burn = 5,
 		/obj/item/reagent_containers/mender/both = 3,
@@ -484,10 +485,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/sheet/steel/fullstack = 2,
 		),
 
-	/datum/job/research/geneticist = list(
+	/datum/job/medical/geneticist = list(
 		// so you can keep looking at your screen,
 		// even in the brightness of nuclear hellfire o7
 		/obj/item/clothing/glasses/sunglasses/tanning = 10,
+		/obj/item/clothing/glasses/eyestrain = 10,
 		),
 
 
@@ -499,6 +501,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,
 		/obj/item/pen/infrared = 7,
+		/obj/item/pen/crayon/infrared = 7,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 2,
@@ -654,7 +657,7 @@ var/global/mail_types_everyone = list(
 	/obj/item/reagent_containers/food/snacks/chips = 6,
 	/obj/item/reagent_containers/food/snacks/popcorn = 6,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
-	/obj/item/tank/emergency_oxygen = 5,
+	/obj/item/tank/pocket/oxygen = 5,
 	/obj/item/wrench = 4,
 	/obj/item/crowbar = 4,
 	/obj/item/screwdriver = 4,

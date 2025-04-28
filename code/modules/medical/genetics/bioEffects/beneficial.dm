@@ -86,7 +86,7 @@
 	desc = "Protects the subject's cellular structure from electrical energy."
 	id = "resist_electric"
 	effectType = EFFECT_TYPE_POWER
-	probability = 66
+	probability = 33
 	blockCount = 3
 	blockGaps = 3
 	stability_loss = 15
@@ -94,6 +94,7 @@
 	msgLose = "The tingling in your skin fades."
 	degrade_to = "funky_limb"
 	icon_state  = "elec_res"
+	effect_group = "elec"
 
 	OnAdd()
 		if (ishuman(owner))
@@ -1022,7 +1023,7 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_INFRA)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 
@@ -1088,6 +1089,11 @@ var/list/radio_brains = list()
 		set waitfor = FALSE
 		if (!src.owner.lying || is_incapacitated(src.owner) || length(src.owner.grabbed_by))
 			return
+		if (!isturf(src.owner.loc))
+			return
+		var/turf/T = get_turf(src.owner)
+		if (!istype(T) || T.throw_unlimited)
+			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))
@@ -1115,4 +1121,140 @@ var/list/radio_brains = list()
 
 	OnRemove()
 		UnregisterSignal(src.owner, COMSIG_MOB_SPRINT)
+		. = ..()
+
+/datum/bioEffect/plasma_metabolism
+	id = "plasma_metabolism"
+	name = "Plasma metabolism"
+	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	occur_in_genepools = FALSE
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel a sudden hunger for plasma..."
+	msgLose = "Your hunger for purple recedes."
+	effect_group = "elec"
+	///Absorbed plasma material
+	VAR_PRIVATE/material = 0
+	///Separate counter between burps
+	VAR_PRIVATE/burp_counter = 0
+	///Stored to keep UpdateOverlays calls to a minimum
+	VAR_PRIVATE/eye_state = -1
+
+	OnLife(mult)
+		. = ..()
+		//if we haven't absorbed plasma in a while, drain a little bit
+		if (!GET_COOLDOWN(src.owner, "plasma_absorb") && src.material < 10)
+			src.material = max(0, src.material - 0.5)
+			src.update_eyes()
+			return
+		src.do_madness()
+		//too little or too often
+		if (src.material < 10 || GET_COOLDOWN(src.owner, "plasma_electricity"))
+			return
+		//a little bit random
+		if (prob(20))
+			return
+		ON_COOLDOWN(src.owner, "plasma_electricity", 7 SECONDS)
+		src.material -= 5
+		src.update_eyes()
+		var/obj/item/found_item = null
+		if (prob(15)) //most of the time we try to ground into an item, sometimes it misses
+			boutput(src.owner, SPAN_ALERT("Electricty arcs wildly from your fingers!"))
+			elecflash(src.owner, 0, 2, exclude_center = FALSE)
+			arcFlash(src.owner, pick(view(3, src.owner)), 5000)
+			return
+		for (var/obj/item/item in src.owner)
+			//ammo type power cell or holder (welcome to comsig hell)
+			if ((SEND_SIGNAL(item, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
+				//is it full?
+				var/list/ret = list()
+				if ((SEND_SIGNAL(item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) && (ret["charge"] >= ret["max_charge"]))
+					continue
+				SEND_SIGNAL(item, COMSIG_CELL_CHARGE, 20)
+				found_item = item
+				break
+			if (istype(item, /obj/item/cell))
+				var/obj/item/cell/cell = item
+				if (cell.charge >= cell.maxcharge)
+					continue
+				cell.give(1000)
+				found_item = cell
+				break
+		if (found_item)
+			boutput(src.owner, SPAN_NOTICE("Your [found_item.name] sparks quietly!"))
+			playsound(src.owner.loc, "sparks", 50, 1)
+		else
+			boutput(src.owner, SPAN_ALERT("With nowhere to ground itself, electricity arcs from your fingers!"))
+			elecflash(src.owner, 0, 2, exclude_center = FALSE)
+
+	///Disclaimer: may or may not be a rock
+	proc/absorb_tasty_rock(obj/item/rock)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/human = src.owner
+			human.sims.affectMotive("Hunger", rock.w_class * 3)
+		src.gain_material(rock.w_class * 10)
+		qdel(rock)
+
+	proc/absorb_liquid_plasma(amount)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/human = src.owner
+			human.sims.affectMotive("Thirst", amount)
+		src.gain_material(amount)
+
+	proc/gain_material(amount)
+		src.material += amount
+		src.burp_counter += amount
+		ON_COOLDOWN(src.owner, "plasma_absorb", 10 SECONDS)
+		if (src.burp_counter > 20 && !ON_COOLDOWN(src.owner, "plasma_burp", 5 SECONDS))
+			src.burp_counter = 0
+			src.owner.emote("burp")
+			var/turf/T = get_turf(src.owner)
+			if (T)
+				var/datum/gas_mixture/plasma_burp = new()
+				plasma_burp.toxins = 8
+				plasma_burp.temperature = T20C
+				T.assume_air(plasma_burp)
+		src.update_eyes()
+
+	proc/update_eyes()
+		if (!ishuman(src.owner)) //no standard way to get critter eye position
+			return
+		var/new_eye_state
+		switch (src.material)
+			if (1 to 20)
+				new_eye_state = 1
+			if (15 to INFINITY)
+				new_eye_state = 2
+			else
+				new_eye_state = 0
+		if (src.eye_state != new_eye_state)
+			src.eye_state = new_eye_state
+			if (src.eye_state == 0)
+				src.owner.ClearSpecificOverlays("plasma_eyes")
+				src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
+			else
+				src.owner.apply_color_matrix(COLOR_MATRIX_PLASMA_MADNESS, COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
+				var/mutable_appearance/eye_overlay = mutable_appearance('icons/effects/genetics.dmi', "plasma_eyes_[src.eye_state]")
+				eye_overlay.plane = PLANE_SELFILLUM
+				src.owner.UpdateOverlays(eye_overlay, "plasma_eyes")
+
+	proc/do_madness()
+		if (src.eye_state >= 2 && prob(10))
+			src.owner.AddComponent(\
+				/datum/component/hallucination/random_image_override,\
+				timeout = 20,\
+				image_list = list(\
+					image('icons/turf/floors.dmi', "void")\
+				),\
+				target_list = list(/turf/simulated/floor, /turf/unsimulated/floor),\
+			)
+		if (src.eye_state >= 1)
+			if (prob(5))
+				src.owner.playsound_local_not_inworld('sound/ambience/spooky/Void_Calls.ogg', 50, 1)
+			if (prob(20))
+				var/speech_id = pick(global.sounds_speak)
+				src.owner.playsound_local_not_inworld(global.sounds_speak[speech_id], rand(20, 60), 0.01)
+
+	OnRemove()
+		src.owner.ClearSpecificOverlays("plasma_eyes")
+		src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
 		. = ..()
