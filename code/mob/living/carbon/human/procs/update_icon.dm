@@ -1152,6 +1152,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 			if (src.eyeshadow && src.eyeshadow_color)
 				eyeshadow_image.icon_state = "eyeshadow[src.eyeshadow]"
 				eyeshadow_image.color = src.eyeshadow_color
+				eyeshadow_image.pixel_y = eye_offset
 				src.body_standing.overlays += eyeshadow_image
 
 
