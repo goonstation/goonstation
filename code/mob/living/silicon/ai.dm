@@ -269,8 +269,14 @@ or don't if it uses a custom topopen overlay
 		boutput(src, SPAN_ALERT("Your cover lock has been emagged!"))
 		elecflash(src)
 		src.update_appearance()
-		return 1
-	return 0
+		return TRUE
+	else
+		if	(dismantle_stage < 2)
+			boutput(user, SPAN_NOTICE("You manually disengage [src]'s cover"))
+			dismantle_stage = 2
+		else
+			boutput(user, SPAN_ALERT("[src]'s cover is already open!"))
+	return FALSE
 
 
 /mob/living/silicon/ai/get_help_message(dist, mob/user)

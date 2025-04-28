@@ -1013,7 +1013,11 @@
 				src.locked = FALSE
 				update_appearance()
 				return TRUE
-			return FALSE
+		else
+			if(!src.brainexposed)
+				src.brainexposed = TRUE
+				boutput(user, "You manually disengage [src]'s interface cover")
+		return FALSE
 
 
 
