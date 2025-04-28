@@ -13601,6 +13601,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/submachine/ATM{
+	pixel_y = -20
+	},
 /turf/unsimulated/floor/green/side{
 	dir = 6
 	},
@@ -20783,6 +20786,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/submachine/ATM{
+	pixel_x = -32
+	},
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
@@ -29395,6 +29401,9 @@
 /area/station/maintenance/inner/central)
 "ulG" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/submachine/ATM{
+	pixel_y = -20
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
