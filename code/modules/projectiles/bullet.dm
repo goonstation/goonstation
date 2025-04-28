@@ -69,7 +69,6 @@ toxic - poisons
 	name = "virtual bullet"
 	shot_sound = 'sound/weapons/Gunshot.ogg'
 	damage = 10
-	cost = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = null
@@ -93,7 +92,6 @@ toxic - poisons
 		fullauto_valid = 1
 		default_firemode = /datum/firemode/single
 		damage = 18
-		cost = 1
 		shot_volume = 20
 		sname = "full auto"
 		casing = null
@@ -150,7 +148,6 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/assrifle.ogg'  // todo: single shot sound?
 	damage = 45
-	cost = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	default_firemode = /datum/firemode/single
@@ -169,9 +166,7 @@ toxic - poisons
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
 	damage = 45
-	cost = 2
 	default_firemode = /datum/firemode/two_burst
-
 	armor_piercing
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
@@ -184,7 +179,6 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	damage = 10
-	cost = 1
 	default_firemode = /datum/firemode/single //dont question it
 	dissipation_delay = 7
 	damage_type = D_KINETIC
@@ -203,7 +197,6 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
 	damage = 40  // BEFORE YOU TWEAK THESE VALUES: This projectile is also used by the Syndicate Ballistic Drone and Nukie NAS-T turret
-	cost = 3
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	default_firemode = /datum/firemode/akm
@@ -221,7 +214,6 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/akm.ogg'
 	damage = 31
-	cost = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	default_firemode = /datum/firemode/single
@@ -336,7 +328,6 @@ toxic - poisons
 	sname = "8-shot burst"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
 	damage = 15
-	cost = 8
 	default_firemode = /datum/firemode/lmg/burst
 	dissipation_delay = 12
 	damage_type = D_KINETIC
@@ -357,12 +348,11 @@ toxic - poisons
 		fullauto_valid = 1
 		sname = "full auto"
 		shot_volume = 66
-		cost = 1
+
 		default_firemode = /datum/firemode/single
 
 /datum/projectile/bullet/lmg/weak
 	damage = 1
-	cost = 2
 	default_firemode = /datum/firemode/lmg/weak
 	dissipation_delay = 8
 	silentshot = 1
@@ -383,11 +373,10 @@ toxic - poisons
 
 	smg
 		damage = 20
-		cost = 3
 		default_firemode = /datum/firemode/three_burst
 		auto
 			fullauto_valid = 1
-			cost = 1
+
 			default_firemode = /datum/firemode/single
 
 
@@ -414,13 +403,11 @@ toxic - poisons
 
 /datum/projectile/bullet/nine_mm_NATO/burst
 	default_firemode = /datum/firemode/three_burst
-	cost = 3
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_NATO/auto
 	fullauto_valid = 1
 	default_firemode = /datum/firemode/single
-	cost = 1
 	shot_volume = 66
 	sname = "full auto"
 
@@ -431,7 +418,6 @@ toxic - poisons
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	damage = 16
 	default_firemode = /datum/firemode/single
-	cost = 1
 	hit_ground_chance = 75
 	dissipation_rate = 3
 	dissipation_delay = 8
@@ -442,13 +428,11 @@ toxic - poisons
 	casing = /obj/item/casing/small
 /datum/projectile/bullet/nine_mm_surplus/burst
 	default_firemode = /datum/firemode/three_burst
-	cost = 3
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_surplus/auto
 	fullauto_valid = 1
 	default_firemode = /datum/firemode/single
-	cost = 1
 	shot_volume = 66
 	sname = "full auto"
 
@@ -480,7 +464,6 @@ toxic - poisons
 /datum/projectile/bullet/veritate/burst
 	sname = "burst fire"
 	damage = 15
-	cost = 3
 	default_firemode = /datum/firemode/three_burst
 
 
@@ -1229,7 +1212,6 @@ toxic - poisons
 	sname = "hotshot"
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	damage = 20
-	cost = 1
 	damage_type = D_BURNING
 	hit_type = null
 	brightness = 1
@@ -1330,7 +1312,6 @@ toxic - poisons
 	damage = 100
 	dissipation_delay = 30
 	dissipation_rate = 5
-	cost = 1
 	shot_sound = 'sound/weapons/20mm.ogg'
 	shot_volume = 100
 	implanted = null
@@ -1407,7 +1388,6 @@ toxic - poisons
 	dissipation_rate = 8
 	dissipation_delay = 10
 	armor_ignored = 0.4
-	cost = 1
 	projectile_speed = 72
 	implanted = null
 	hit_type = DAMAGE_STAB
@@ -1469,7 +1449,6 @@ toxic - poisons
 	stun = 105
 	dissipation_rate = 12
 	dissipation_delay = 10
-	cost = 1
 	projectile_speed = 54
 	implanted = null
 	hit_type = DAMAGE_BLUNT
@@ -1502,7 +1481,6 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	damage = 25
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1611,7 +1589,6 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	damage = 5
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1642,7 +1619,6 @@ datum/projectile/bullet/autocannon
 	damage_type = D_KINETIC
 	damage = 25
 	dissipation_delay = 10
-	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1686,7 +1662,6 @@ datum/projectile/bullet/autocannon
 	damage_type = D_KINETIC
 	damage = 15
 	dissipation_delay = 10
-	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1770,7 +1745,6 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	damage = 25
 	dissipation_delay = 20
-	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1882,7 +1856,6 @@ datum/projectile/bullet/autocannon
 	damage_type = D_KINETIC
 	damage = 20
 	dissipation_delay = 20
-	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/grenade
@@ -1913,7 +1886,6 @@ datum/projectile/bullet/autocannon
 	hit_type = DAMAGE_BLUNT
 	damage = 40
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 
@@ -2023,7 +1995,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 	default_firemode = /datum/firemode/homing_missile
-	cost = 1
 	damage = 15
 	icon_state = "mininuke"
 	max_speed = 10
@@ -2085,7 +2056,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = DAMAGE_BLUNT
 	damage = 15
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 
@@ -2127,7 +2097,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = DAMAGE_BLUNT
 	damage = 5
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 	implanted = null
@@ -2157,7 +2126,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = DAMAGE_BLUNT
 	damage = 120
 	dissipation_delay = 30
-	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "bullethole-large"
 	implanted = null
@@ -2185,7 +2153,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
-	cost = 1
 	has_impact_particles = FALSE
 
 	on_hit(atom/hit, dirflag)
@@ -2253,11 +2220,9 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	stun = 200
 	dissipation_delay = 300
 	dissipation_rate = 5
-	cost = 1
 	shot_sound = 'sound/effects/explosion_new2.ogg'
 	shot_volume = 90
 	implanted = null
-
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
@@ -2297,7 +2262,6 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	hit_type = null
 	damage = 30
 	dissipation_delay = 12
-	cost = 1
 	shot_sound = 'sound/effects/glitchshot.ogg'
 	casing = null
 	impact_image_state = null
