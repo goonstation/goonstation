@@ -1543,7 +1543,7 @@
 	})
 "kH" = (
 /obj/table/sleek/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 5
 	},
 /obj/disposalpipe/segment/transport{
@@ -3647,7 +3647,7 @@
 /area/space)
 "zB" = (
 /obj/table/sleek/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/pool/blue,
@@ -4898,10 +4898,7 @@
 	})
 "Hy" = (
 /obj/table/monodesk/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/security/wooden_tv/public{
 	pixel_y = 9;
 	pixel_x = -1
 	},

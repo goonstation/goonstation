@@ -14,91 +14,91 @@
 	.antagType .title {display:block; color:white; background:black; padding: 2px 5px; margin: -5px -5px 2px -5px}
 </style>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Traitor</b>
-	<a href='?src=\ref[src];action=[ROLE_TRAITOR]'>Traitor</a> |
-	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
-	<a href='?src=\ref[src];action=[ROLE_OMNITRAITOR]'>Omnitraitor</a> |
-	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
-	<a href='?src=\ref[src];action=[ROLE_SLEEPER_AGENT]'>Sleeper agent</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_TRAITOR]'>Traitor</a> |
+	<a href='byond://?src=\ref[src];action=traitorhard'>Hard Mode</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_OMNITRAITOR]'>Omnitraitor</a> |
+	<a href='byond://?src=\ref[src];action=traitorgeneric'>Generic</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_SLEEPER_AGENT]'>Sleeper agent</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
-	<a href='?src=\ref[src];action=[ROLE_MINDHACK]'>Implanted</a> |
-	<a href='?src=\ref[src];action=mindhackdeath'>Death</a> |
-	<a href='?src=\ref[src];action=mindhackoverride'>Overriden</a> |
-	<a href='?src=\ref[src];action=mindhackexpired'>Expired</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_MINDHACK]'>Implanted</a> |
+	<a href='byond://?src=\ref[src];action=mindhackdeath'>Death</a> |
+	<a href='byond://?src=\ref[src];action=mindhackoverride'>Overriden</a> |
+	<a href='byond://?src=\ref[src];action=mindhackexpired'>Expired</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Wizard</b>
-	<a href='?src=\ref[src];action=[ROLE_WIZARD]'>Wizard</a> |
-	<a href='?src=\ref[src];action=adminwizard'>Custom Wizard</a> |
-	<a href='?src=\ref[src];action=polymorph'>Polymorph</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_WIZARD]'>Wizard</a> |
+	<a href='byond://?src=\ref[src];action=adminwizard'>Custom Wizard</a> |
+	<a href='byond://?src=\ref[src];action=polymorph'>Polymorph</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Nuke/Rev</b>
-	<a href='?src=\ref[src];action=[ROLE_NUKEOP]'>Nuke Op</a> |
-	<a href='?src=\ref[src];action=[ROLE_NUKEOP_COMMANDER]'>Nuke Op Commander</a> |
-	<a href='?src=\ref[src];action=[ROLE_NUKEOP_GUNBOT]'>Nuke Op Gunbot</a> |
-	<a href='?src=\ref[src];action=[ROLE_HEAD_REVOLUTIONARY]'>Rev Head</a> |
-	<a href='?src=\ref[src];action=[ROLE_REVOLUTIONARY]'>Revved</a> |
-	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_NUKEOP]'>Nuke Op</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_NUKEOP_COMMANDER]'>Nuke Op Commander</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_NUKEOP_GUNBOT]'>Nuke Op Gunbot</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_HEAD_REVOLUTIONARY]'>Rev Head</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_REVOLUTIONARY]'>Revved</a> |
+	<a href='byond://?src=\ref[src];action=derevved'>De-Revved</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Spy/Conspiracy</b>
-	<a href='?src=\ref[src];action=spy'>Spy</a> |
-	<a href='?src=\ref[src];action=[ROLE_SPY_THIEF]'>Spy Thief</a> |
-	<a href='?src=\ref[src];action=[ROLE_CONSPIRATOR]'>Conspiracy</a> |
-	<a href='?src=\ref[src];action=[ROLE_GANG_LEADER]'>Gang Leader</a> |
-	<a href='?src=\ref[src];action=[ROLE_GANG_MEMBER]'>Gang Member</a>
+	<a href='byond://?src=\ref[src];action=spy'>Spy</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_SPY_THIEF]'>Spy Thief</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_CONSPIRATOR]'>Conspiracy</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_GANG_LEADER]'>Gang Leader</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_GANG_MEMBER]'>Gang Member</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Vampire/Changeling</b>
-	<a href='?src=\ref[src];action=[ROLE_VAMPIRE]'>Vampire</a> |
-	<a href='?src=\ref[src];action=[ROLE_VAMPTHRALL]'>Vamp Thrall</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_VAMPIRE]'>Vampire</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_VAMPTHRALL]'>Vamp Thrall</a> |
 	<br>
-	<a href='?src=\ref[src];action=[ROLE_CHANGELING]'>Changeling</a> |
-	<a href='?src=\ref[src];action=[ROLE_CHANGELING_HIVEMIND_MEMBER]'>Changeling victim</a> |
-	<a href='?src=\ref[src];action=changeling_leave'>Leaving Hivemind</a> |
-	<a href='?src=\ref[src];action=[ROLE_HANDSPIDER]'>Handspider</a> |
-	<a href='?src=\ref[src];action=[ROLE_EYESPIDER]'>Eyespider</a> |
-	<a href='?src=\ref[src];action=[ROLE_LEGWORM]'>Legworm</a> |
-	<a href='?src=\ref[src];action=[ROLE_BUTTCRAB]'>Buttcrab</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_CHANGELING]'>Changeling</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_CHANGELING_HIVEMIND_MEMBER]'>Changeling victim</a> |
+	<a href='byond://?src=\ref[src];action=changeling_leave'>Leaving Hivemind</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_HANDSPIDER]'>Handspider</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_EYESPIDER]'>Eyespider</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_LEGWORM]'>Legworm</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_BUTTCRAB]'>Buttcrab</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Flock</b>
-	<a href='?src=\ref[src];action=[ROLE_FLOCKTRACE]'>Flocktrace</a> |
-	<a href='?src=\ref[src];action=[ROLE_FLOCKMIND]'>Flockmind</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_FLOCKTRACE]'>Flocktrace</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_FLOCKMIND]'>Flockmind</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Instrusion</b>
 	<a href='?src=\ref[src];action=[ROLE_MINDEATER]'>Mindeater</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Other Antags</b>
-	<a href='?src=\ref[src];action=[ROLE_GRINCH]'>Grinch</a> |
-	<a href='?src=\ref[src];action=[ROLE_HUNTER]'>Hunter</a> |
-	<a href='?src=\ref[src];action=[ROLE_WEREWOLF]'>Werewolf</a> |
-	<a href='?src=\ref[src];action=[ROLE_WRESTLER]'>Wrestler</a> |
-	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
-	<a href='?src=\ref[src];action=martian'>Martian</a> |
-	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
-	<a href='?src=\ref[src];action=[ROLE_SLASHER]'>The Slasher</a> |
-	<a href='?src=\ref[src];action=[ROLE_SALVAGER]'>Salvagers</a> |
-	<a href='?src=\ref[src];action=[ROLE_ARCFIEND]'>Arcfiend Person</a> |
-	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
-	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
-	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
-	<a href='?src=\ref[src];action=[ROLE_PLAGUE_RAT]'>Plague rat</a> |
-	<a href='?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a> |
-	<a href='?src=\ref[src];action=[ROLE_PHOENIX]'>Space Phoenix</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_GRINCH]'>Grinch</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_HUNTER]'>Hunter</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_WEREWOLF]'>Werewolf</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_WRESTLER]'>Wrestler</a> |
+	<a href='byond://?src=\ref[src];action=battle'>Battle Royale</a> |
+	<a href='byond://?src=\ref[src];action=martian'>Martian</a> |
+	<a href='byond://?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_SLASHER]'>The Slasher</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_SALVAGER]'>Salvagers</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_ARCFIEND]'>Arcfiend Person</a> |
+	<a href='byond://?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
+	<a href='byond://?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
+	<a href='byond://?src=\ref[src];action=trickster'>Trickster wraith</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_PLAGUE_RAT]'>Plague rat</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_PHOENIX]'>Space Phoenix</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
-	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
-	<a href='?src=\ref[src];action=ghostcritter'>Ghostcritter</a> |
-	<a href='?src=\ref[src];action=ghostcritter_antag'>Antag ghostcritter</a> |
-	<a href='?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
+	<a href='byond://?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
+	<a href='byond://?src=\ref[src];action=ghostcritter'>Ghostcritter</a> |
+	<a href='byond://?src=\ref[src];action=ghostcritter_antag'>Antag ghostcritter</a> |
+	<a href='byond://?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
-	<a href='?src=\ref[src];action=[ROLE_SYNDICATE_ROBOT]'>Rogue Borg</a> |
-	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
-	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
-	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
-	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
-	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a> |
-	<a href='?src=\ref[src];action=football'>Football</a> |
-	<a href='?src=\ref[src];action=podwars'>Podwars</a> |
-	<a href='?src=\ref[src];action=[ROLE_FLOOR_GOBLIN]'>Floor goblin</a>
+	<a href='byond://?src=\ref[src];action=[ROLE_SYNDICATE_ROBOT]'>Rogue Borg</a> |
+	<a href='byond://?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
+	<a href='byond://?src=\ref[src];action=antagremoved'>Antag Removed</a> |
+	<a href='byond://?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
+	<a href='byond://?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
+	<a href='byond://?src=\ref[src];action=slasher_possession'>Slasher Possession</a> |
+	<a href='byond://?src=\ref[src];action=football'>Football</a> |
+	<a href='byond://?src=\ref[src];action=podwars'>Podwars</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_FLOOR_GOBLIN]'>Floor goblin</a>
 </div>
 "}
 

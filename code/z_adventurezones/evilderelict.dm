@@ -190,6 +190,8 @@ var/maniac_previous_victim = "Unknown"
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
 	requires_power = FALSE
+#elif defined(MAP_OVERRIDE_NEON)
+	requires_power = FALSE
 #endif
 
 /area/evilreaver/medical

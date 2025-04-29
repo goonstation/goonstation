@@ -3684,6 +3684,29 @@
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
 
+/datum/statusEffect/broken
+	id = "broken_madness"
+	name = "Broken"
+	desc = "You have been driven to madness by the immense psychic pressure of the unknowable minds drifting far above."
+	visible = TRUE
+	icon_state = "madness"
+
+	onAdd(optional)
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.addOverlayComposition(/datum/overlayComposition/insanity/large)
+
+	onRemove()
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		var/datum/antagonist/antag_datum = mob_owner.mind?.get_antagonist(ROLE_BROKEN)
+		if (!antag_datum || antag_datum.removing)
+			return
+		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
+		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
+		mob_owner.mind.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+
 /datum/statusEffect/mindeater_becoming_visible
 	id = "mindeater_appearing"
 	name = "Appearing"

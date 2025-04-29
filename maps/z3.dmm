@@ -183,7 +183,7 @@
 "aaL" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = "";
+	req_access = null;
 	dir = 1
 	},
 /obj/cable{
@@ -318,14 +318,6 @@
 	pixel_x = -8
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
-/area/space_hive)
-"abn" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
-/turf/unsimulated/floor/honeyblocks,
 /area/space_hive)
 "abo" = (
 /obj/fakeobject{
@@ -5582,12 +5574,6 @@
 "aFg" = (
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"aFh" = (
-/obj/machinery/computer/security{
-	network = "Pathopost"
-	},
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aFj" = (
 /turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
@@ -5820,7 +5806,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aGu" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/radiostation/bedroom)
@@ -8894,12 +8880,6 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/carpet/grime,
-/area/abandonedship)
-"aQG" = (
-/obj/machinery/computer/security/wooden_tv{
-	network = "Prison"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aQH" = (
@@ -14222,7 +14202,7 @@
 "biZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/radiostation/bedroom)
@@ -15427,7 +15407,7 @@
 /area/radiostation/tv_set)
 "byl" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
@@ -15705,17 +15685,6 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/bee_trader)
-"cdo" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
 /area/bee_trader)
 "cfW" = (
 /obj/machinery/light{
@@ -16487,6 +16456,10 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"dZQ" = (
+/obj/machinery/computer/security/wooden_tv/small,
+/turf/simulated/floor/carpet/grime,
+/area/abandonedship)
 "dZX" = (
 /obj/decal/cleanable/oil,
 /obj/machinery/light/small,
@@ -18865,7 +18838,7 @@
 /obj/storage/secure/closet/personal,
 /obj/item/device/microphone,
 /obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
@@ -20916,6 +20889,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
+"oUf" = (
+/obj/machinery/computer/security/wooden_tv/public,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "oVD" = (
 /obj/machinery/light{
 	dir = 4;
@@ -22558,18 +22535,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"sQW" = (
-/obj/storage/crate/internals,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/machinery/light/small/cool{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/simulated/floor/longtile/black,
-/area/space)
 "sRO" = (
 /obj/map/light/yellowbright,
 /turf/unsimulated/floor/plating/scorched,
@@ -23731,6 +23696,18 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"vvv" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
 "vws" = (
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
@@ -24548,7 +24525,7 @@
 /area/timewarp)
 "xzt" = (
 /obj/table/wood/auto/desk,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/radiostation/bedroom)
@@ -24769,6 +24746,13 @@
 /obj/storage/closet/office,
 /turf/simulated/floor,
 /area/radiostation/press)
+"yfP" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/security/wooden_tv/public,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "ygK" = (
 /turf/space,
 /area/diner/tug)
@@ -24798,6 +24782,12 @@
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"ylC" = (
+/obj/machinery/computer/security{
+	camera_networks = list("Pathopost")
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 
 (1,1,1) = {"
 aaa
@@ -38600,7 +38590,7 @@ aaa
 aaa
 axl
 iYn
-aQG
+dZQ
 aQE
 aRm
 iYn
@@ -44157,7 +44147,7 @@ aaq
 gaf
 aaY
 hFn
-abn
+oUf
 aaf
 aaf
 acd
@@ -53334,7 +53324,7 @@ bkA
 bkF
 bkN
 afR
-sQW
+vvv
 afR
 afR
 aab
@@ -73478,7 +73468,7 @@ aaa
 aaa
 wvT
 alp
-cdo
+yfP
 sFI
 hGO
 dYj
@@ -106739,7 +106729,7 @@ aac
 aab
 aab
 aDy
-aFh
+ylC
 aFy
 aFg
 aGc

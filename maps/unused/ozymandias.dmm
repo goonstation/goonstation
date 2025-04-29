@@ -581,22 +581,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/east)
-"aiE" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/firealarm{
-	pixel_x = -6;
-	pixel_y = 24
-	},
-/turf/simulated/floor/black,
-/area/station/communications/centre)
 "aiF" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grass,
@@ -4010,20 +3994,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"bfB" = (
-/obj/storage/secure/crate/plasma/hazard,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/yellow/checker,
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "bfJ" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -5124,7 +5094,7 @@
 /area/station/crewquarters/cryotron)
 "bwX" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quartersA)
 "bxa" = (
@@ -10151,10 +10121,8 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/engineering)
 "cQK" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -10949,6 +10917,22 @@
 "cZG" = (
 /turf/simulated/floor/engine/caution/south,
 /area/station/storage/warehouse)
+"cZU" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/oxygen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/firealarm{
+	pixel_x = -6;
+	pixel_y = 24
+	},
+/turf/simulated/floor/black,
+/area/station/communications/centre)
 "cZW" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
@@ -11657,9 +11641,7 @@
 /area/station/crew_quarters/cafeteria)
 "dlg" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -12225,10 +12207,7 @@
 	name = "Jury Sequestration"
 	})
 "drZ" = (
-/obj/machinery/computer/announcement{
-	name = "Executive Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/captain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -12955,6 +12934,19 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
+"dCW" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/storage/secure/crate/gear/syndicate,
+/obj/item/cell/cerenkite/charged,
+/obj/item/cell/cerenkite/charged,
+/obj/item/cell/cerenkite/charged,
+/turf/simulated/floor/yellow/side,
+/area/listeningpost)
 "dDa" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/firealarm{
@@ -15363,6 +15355,15 @@
 	},
 /turf/space,
 /area/space)
+"ejo" = (
+/obj/storage/secure/crate/plasma/hazard,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/yellow/checker,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "ejx" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -17337,10 +17338,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -19026,6 +19025,20 @@
 /obj/item/light/bulb,
 /turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
+"feJ" = (
+/obj/storage/secure/crate/plasma/hazard,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/yellow/checker,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "feL" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -20616,9 +20629,7 @@
 /area/station/science/lab)
 "fBb" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/arcade,
@@ -20664,10 +20675,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -25769,9 +25778,7 @@
 /area/station/chapel/sanctuary)
 "gQu" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -27214,9 +27221,7 @@
 	})
 "hiX" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light/small/cool/very{
 	dir = 4;
@@ -33071,7 +33076,7 @@
 /area/station/bridge)
 "iNE" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
 "iNH" = (
@@ -39977,10 +39982,8 @@
 /turf/space,
 /area/space)
 "kGk" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -40382,9 +40385,7 @@
 /area/station/medical/robotics)
 "kKG" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/machinery/light/small/warm/very{
 	dir = 8;
@@ -42733,7 +42734,7 @@
 /area/station/bridge/reception)
 "lqB" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/blind_switch/area/north,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
@@ -44429,19 +44430,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
-"lLd" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/storage/secure/crate/gear/syndicate,
-/obj/item/cell/cerenkite/charged,
-/obj/item/cell/cerenkite/charged,
-/obj/item/cell/cerenkite/charged,
-/turf/simulated/floor/yellow/side,
-/area/listeningpost)
 "lLn" = (
 /obj/machinery/conveyor/NS{
 	id = "qmin"
@@ -46833,7 +46821,7 @@
 /area/station/mining/staff_room)
 "mrf" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -51256,15 +51244,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"nDO" = (
-/obj/storage/secure/crate/plasma/hazard,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/turf/simulated/floor/yellow/checker,
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "nEg" = (
 /obj/machinery/light{
 	dir = 8;
@@ -52790,11 +52769,6 @@
 	dir = 9
 	},
 /area/ghostdrone_factory)
-"nWW" = (
-/obj/storage/secure/crate/plasma/hazard,
-/obj/disposalpipe/segment/ejection,
-/turf/simulated/floor/engine,
-/area/station/hangar/science)
 "nWY" = (
 /obj/stool/chair{
 	dir = 4
@@ -52829,6 +52803,14 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"nXI" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/tank/pocket/oxygen,
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/plating,
+/area/station/hangar/engine)
 "nXJ" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -53397,8 +53379,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /obj/machinery/light/small{
 	dir = 8;
@@ -55090,10 +55071,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/storage)
 "oAV" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 4;
@@ -55982,7 +55961,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -56053,7 +56032,7 @@
 	})
 "oMX" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -58085,8 +58064,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -58651,10 +58629,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "pxh" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -58936,14 +58912,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
-"pAY" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/plating,
-/area/station/hangar/engine)
 "pBm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64877,7 +64845,7 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -65114,7 +65082,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
 "rgu" = (
@@ -66255,11 +66223,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/station{
 	dir = 8;
-	name = "Detention Announcement Computer";
-	req_access_txt = "2"
+	name = "Detention Announcement Computer"
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/brig)
 "rvU" = (
@@ -70104,7 +70072,7 @@
 /area/station/ranch)
 "srK" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -71297,7 +71265,7 @@
 /area/station/security/detectives_office)
 "sGp" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/sauna)
 "sGq" = (
@@ -72284,9 +72252,7 @@
 /area/station/hallway/primary/south)
 "sRL" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/light/small/cool/very{
 	dir = 1;
@@ -72705,6 +72671,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"sWC" = (
+/obj/storage/secure/crate/plasma/hazard,
+/obj/disposalpipe/segment/ejection,
+/turf/simulated/floor/engine,
+/area/station/hangar/science)
 "sWG" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/power/data_terminal,
@@ -74939,9 +74910,7 @@
 /area/station/maintenance/inner/hydroponics)
 "tAj" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -79306,7 +79275,7 @@
 /area/station/crew_quarters/lounge/backstage)
 "uEy" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
@@ -80866,7 +80835,7 @@
 "uWn" = (
 /obj/machinery/light/small,
 /obj/table/wood/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/sauna)
 "uWr" = (
@@ -81246,7 +81215,7 @@
 /area/station/hangar/science)
 "vaN" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -81725,7 +81694,7 @@
 /area/station/maintenance/east)
 "vgU" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -101326,7 +101295,7 @@ qEJ
 qEJ
 mRF
 rkc
-lLd
+dCW
 oVS
 bFM
 aJu
@@ -125028,7 +124997,7 @@ fGI
 jPD
 krH
 xXo
-nDO
+ejo
 yhh
 yhh
 yhh
@@ -125330,7 +125299,7 @@ xXo
 jcS
 mQl
 xXo
-bfB
+feJ
 yhh
 yhh
 yhh
@@ -130727,9 +130696,9 @@ dcu
 bDw
 uCr
 myL
-nWW
+sWC
 myL
-nWW
+sWC
 myL
 khr
 xwn
@@ -145252,7 +145221,7 @@ tnl
 jlu
 oKW
 oKW
-aiE
+cZU
 xLF
 swn
 kvR
@@ -167919,7 +167888,7 @@ iNE
 vgO
 gIy
 cFt
-pAY
+nXI
 qNj
 aJu
 aJu

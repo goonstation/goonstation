@@ -65,8 +65,11 @@ TYPEINFO(/datum/component/radioactive)
 			src._backup_color = PA.color
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
-		var/list/color_composition = rgb2num(color)
-		our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, color_composition[1], color_composition[2], color_composition[3], color_composition[4], TRUE)
+		if (isturf(PA))
+			PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		else
+			var/list/color_composition = rgb2num(color)
+			our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, color_composition[1], color_composition[2], color_composition[3], color_composition[4], TRUE)
 		if(istype(PA, /turf))
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")

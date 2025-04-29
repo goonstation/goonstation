@@ -678,7 +678,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR) || user.mind?.get_antagonist(ROLE_NUKEOP) || user.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER))
+	if (istrainedsyndie(user))
 		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
 		src.toggle()
 		if (src.entrance_scanner)

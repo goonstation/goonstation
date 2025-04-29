@@ -309,44 +309,20 @@
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-		setProperty("chemprot",30)
-		setProperty("heatprot", 15)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
-
-	setupProperties()
-		..()
-		setProperty("space_movespeed", 0)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
 		item_state = null
-
-	commissar_cap
-		name = "commander's cap"
-		icon_state = "syndie_commander"
-		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
-		seal_hair = 0
-		see_face = TRUE
-
-		setupProperties()
-			..()
-			setProperty("exploprot", 10)
 
 	specialist
 		name = "specialist combat helmet"
@@ -359,14 +335,18 @@
 			setProperty("exploprot", 10)
 			setProperty("radprot", 50)
 
+		commissar_cap
+			name = "commander's cap"
+			icon_state = "syndie_commander"
+			desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
+			seal_hair = 0
+			see_face = TRUE
+
 		infiltrator
-			name = "specialist combat helmet"
-			desc = "A modified combat helmet for syndicate operative specialists."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
 		firebrand
-			name = "specialist combat helmet"
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
 
@@ -376,10 +356,8 @@
 
 		engineer
 			name = "specialist welding helmet"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing meson vision and protecting eyes."
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = FALSE
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -413,8 +391,7 @@
 
 		medic
 			name = "specialist health monitor"
-			icon_state = "syndie_specialist"
-			item_state = "syndie_specialist"
+			desc = "A modified combat helmet for syndicate operative specialists. Comes with advanced visor showing health of friends and foes."
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
@@ -672,7 +649,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	var/static/camera_counter = 0
 
 	New()
@@ -694,7 +671,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "telescience camera helmet"
 	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
 	camera_tag = "Telescience Helmet Cam"
-	camera_network = "telesci"
+	camera_network = CAMERA_NETWORK_TELESCI
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"

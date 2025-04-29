@@ -6,7 +6,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/wood/two,
-/area/space)
+/area/dmm_suite/clear_area)
 "h" = (
 /obj/item/toy/plush/small/bunny{
 	pixel_x = 5;
@@ -31,7 +31,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/item/clothing/lanyard{
 	name = "convention badge";
@@ -61,10 +61,10 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /turf/simulated/floor/carpet/arcade,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /obj/item/crushed_can{
 	pixel_y = 7;
@@ -74,7 +74,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 4
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal{
@@ -94,7 +94,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne{
 	dir = 9
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/item/toy/figure/patreon{
 	pixel_y = 9;
@@ -126,7 +126,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/item/storage/backpack/bearpack{
 	pixel_y = 11;
@@ -142,7 +142,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/north{
 	dir = 8
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/table/wood/auto/desk,
 /obj/item/clothing/ears/earmuffs{
@@ -181,7 +181,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se{
 	dir = 5
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/decal/xmas_lights{
 	name = "LED lightstring";
@@ -189,7 +189,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood/two,
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/item/clothing/suit/bedsheet/captain,
 /obj/item/toy/plush/small/possum,
@@ -200,7 +200,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/arcade,
-/area/space)
+/area/dmm_suite/clear_area)
 "H" = (
 /obj/item/toy/plush/small,
 /obj/machinery/light/lamp,
@@ -212,7 +212,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/sw{
 	dir = 6
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/item/toy/figure/patreon{
 	pixel_y = -1;
@@ -240,11 +240,11 @@
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 10
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/decoration/ceilingfan,
 /turf/simulated/floor/wood/two,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 F

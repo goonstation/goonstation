@@ -2096,10 +2096,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "amX" = (
@@ -4424,7 +4421,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpet2";
 	tag = "icon-carpet2 (WEST)"
@@ -4578,11 +4575,9 @@
 /area/station/storage/autolathe)
 "azw" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/arcade)
@@ -4957,7 +4952,7 @@
 	},
 /area/station/quartermaster/office)
 "aBF" = (
-/obj/machinery/nanofab,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -6030,10 +6025,7 @@
 	c_tag = "Cargo Bay Office";
 	dir = 1
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/orangeblack/side{
@@ -6463,12 +6455,12 @@
 "aKI" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/chapel/office)
 "aKK" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/chapel/office)
@@ -6651,14 +6643,14 @@
 	c_tag = "Chapel Office";
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/office)
 "aLI" = (
 /obj/stool/chair,
 /obj/landmark/start/job/chaplain,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet1"
 	},
 /area/station/chapel/office)
@@ -6839,7 +6831,7 @@
 "aMZ" = (
 /obj/table/wood/auto,
 /obj/item/bible,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/chapel/office)
@@ -6847,7 +6839,7 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/machinery/light/small,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/chapel/office)
@@ -6858,7 +6850,7 @@
 	pixel_y = -24
 	},
 /obj/item/card_box/tarot,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/chapel/office)
@@ -6890,7 +6882,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/chapel/sanctuary)
@@ -6912,7 +6904,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
@@ -6920,7 +6912,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
@@ -6928,7 +6920,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
@@ -7041,7 +7033,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aOj" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/sanctuary)
@@ -7246,7 +7238,7 @@
 /area/station/chapel/sanctuary)
 "aPC" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/sanctuary)
@@ -8038,7 +8030,7 @@
 	dir = 4;
 	tag = "icon-bulb1 (EAST)"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/barber_shop)
@@ -10681,7 +10673,7 @@
 /area/listeningpost)
 "bmu" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/listeningpost)
@@ -10689,14 +10681,14 @@
 /obj/machinery/vending/cola/blue{
 	credit = 12
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetN"
 	},
 /area/listeningpost)
 "bmw" = (
 /obj/submachine/chef_sink/chem_sink,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/listeningpost)
@@ -10731,18 +10723,18 @@
 	},
 /area/listeningpost)
 "bmA" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/listeningpost)
 "bmB" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpet2"
 	},
 /area/listeningpost)
 "bmC" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/listeningpost)
@@ -10766,7 +10758,7 @@
 "bmH" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/listeningpost)
@@ -10774,7 +10766,7 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetS"
 	},
@@ -10783,7 +10775,7 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/pinpointer,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/listeningpost)
@@ -10836,11 +10828,9 @@
 "bne" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/arcade)
@@ -13453,7 +13443,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpet2";
 	tag = "icon-carpet2 (WEST)"
@@ -14836,7 +14826,7 @@
 	},
 /obj/item/plant/herb/cannabis,
 /obj/item/plant/wheat,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -14994,7 +14984,7 @@
 /obj/drink_rack/cup{
 	pixel_x = -27
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/crew_quarters/bar)
@@ -15627,7 +15617,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/ntbrew{
 	name = "Expensive Vintage"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -15956,7 +15946,7 @@
 /obj/table/wood/auto,
 /obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
@@ -16400,7 +16390,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/barber_shop)
@@ -16550,7 +16540,7 @@
 	dir = 8
 	},
 /obj/item/device/light/zippo,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -16954,7 +16944,7 @@
 /area/station/engine/elect)
 "fuK" = (
 /obj/stool/chair/comfy,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/barber_shop)
@@ -16966,11 +16956,9 @@
 /area/station/maintenance/east)
 "fvc" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/crew_quarters/arcade)
@@ -17733,7 +17721,7 @@
 /area/station/crew_quarters/cafeteria)
 "gjn" = (
 /obj/stool/bar,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/cafeteria)
@@ -17884,7 +17872,7 @@
 	dir = 8;
 	tag = "icon-bulb1 (WEST)"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/barber_shop)
@@ -18242,7 +18230,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "gBd" = (
@@ -18958,7 +18946,7 @@
 /obj/stool/chair/couch/green{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -19480,7 +19468,7 @@
 /area/station/turret_protected/Zeta)
 "hAU" = (
 /obj/stool/bar,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpetE";
 	tag = "icon-carpetE (WEST)"
@@ -19900,7 +19888,7 @@
 /obj/stool/chair,
 /obj/landmark/start/job/detective,
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/security/detectives_office)
@@ -21067,11 +21055,9 @@
 /area/station/bridge)
 "jdJ" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/arcade)
@@ -21781,7 +21767,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "jLL" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -21993,7 +21979,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -22077,9 +22063,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "jTk" = (
@@ -23700,12 +23684,12 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
 /obj/machinery/light/small,
 /obj/item/instrument/saxophone,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
 "lqS" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/security/detectives_office)
@@ -25028,7 +25012,7 @@
 	name = "Robust Donuts"
 	},
 /obj/machinery/espresso_machine,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/bar)
@@ -25081,7 +25065,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "mrV" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/arcade)
@@ -25174,7 +25158,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/cafeteria)
@@ -25324,7 +25308,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/security/detectives_office)
@@ -27016,12 +27000,8 @@
 	},
 /area/station/bridge)
 "nWp" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
+/obj/item/device/camera_viewer/telesci,
 /obj/item/camera,
 /obj/item/camera,
 /obj/storage/crate,
@@ -27319,7 +27299,7 @@
 	},
 /area/station/crew_quarters/hop)
 "ohr" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/security/detectives_office)
@@ -27680,7 +27660,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "ouU" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/security/detectives_office)
@@ -27786,7 +27766,7 @@
 	},
 /area/station/science/hall)
 "oBD" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/security/detectives_office)
@@ -28028,7 +28008,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -30295,7 +30275,7 @@
 /obj/stool/chair/comfy/green{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -30568,11 +30548,9 @@
 	dir = 8
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/arcade)
@@ -31307,11 +31285,9 @@
 /area/space)
 "qRX" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/arcade)
@@ -31776,7 +31752,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpet2";
 	tag = "icon-carpet2 (WEST)"
@@ -32366,15 +32342,15 @@
 /area/station/science/hall)
 "rAz" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/card{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Bridge Checkpoint";
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/bridge/customs)
@@ -34549,11 +34525,9 @@
 /area/station/medical/robotics)
 "tcv" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/arcade)
@@ -35168,7 +35142,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/arcade)
@@ -35877,7 +35851,7 @@
 /area/station/medical/medbay/surgery)
 "uaO" = (
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
 /turf/simulated/floor/blue,
@@ -36292,7 +36266,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -36341,7 +36315,7 @@
 "urB" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/bar)
@@ -36377,7 +36351,7 @@
 /obj/table/wood/auto,
 /obj/item/cigpacket,
 /obj/item/clothing/glasses/thermal,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
@@ -36783,7 +36757,7 @@
 "uIV" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/bar)
@@ -37391,7 +37365,7 @@
 	name = "detectives camera";
 	pictures_left = 30
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
@@ -37594,7 +37568,7 @@
 /area/station/hangar/engine)
 "vqf" = (
 /obj/stool/bar,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/cafeteria)
@@ -37660,7 +37634,7 @@
 	},
 /area/station/hallway/primary/south)
 "vtr" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/security/detectives_office)
@@ -38317,7 +38291,7 @@
 /obj/stool/chair/comfy/green{
 	dir = 8
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -38657,7 +38631,7 @@
 	pixel_x = -13
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/crew_quarters/bar)
@@ -38803,7 +38777,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/jazz)
@@ -39803,10 +39777,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "xiV" = (
-/obj/machinery/computer/announcement{
-	name = "Security Announcement Computer";
-	req_access = list(1)
-	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -39823,7 +39794,7 @@
 "xjs" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/security/detectives_office)
@@ -39938,10 +39909,8 @@
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)
 "xnS" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -40241,11 +40210,9 @@
 /area/station/crew_quarters/hor)
 "xyf" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/arcade)
@@ -40398,7 +40365,7 @@
 "xCr" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/bar)
@@ -40762,7 +40729,7 @@
 /area/station/turret_protected/Zeta)
 "xMT" = (
 /obj/machinery/navbeacon/guardbot_buddytime,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/cafeteria)
@@ -41187,7 +41154,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpet2";
 	tag = "icon-carpet2 (WEST)"
@@ -41259,7 +41226,7 @@
 /area/station/hydroponics/bay)
 "yla" = (
 /obj/stool/bar,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/crew_quarters/cafeteria)

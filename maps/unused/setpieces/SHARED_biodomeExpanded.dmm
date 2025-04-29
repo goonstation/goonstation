@@ -4986,7 +4986,7 @@
 /area/crypt/graveyard)
 "fNz" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"

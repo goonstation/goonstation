@@ -9628,7 +9628,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
@@ -14458,7 +14458,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east,
@@ -15527,9 +15527,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 4
 	},
 /obj/item/clipboard,
 /turf/simulated/floor/darkblue,
@@ -20857,15 +20856,15 @@
 	},
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_y = 3;
 	pixel_x = -3
 	},
-/obj/item/tank/mini_oxygen{
+/obj/item/tank/mini/oxygen{
 	pixel_y = 3;
 	pixel_x = 3
 	},
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "biH" = (
@@ -22477,7 +22476,7 @@
 /area/space)
 "bmV" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
@@ -24970,9 +24969,7 @@
 /area/station/hallway/secondary/west)
 "bve" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -25007,9 +25004,7 @@
 /area/station/crew_quarters/arcade)
 "bvi" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -25735,9 +25730,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -25751,9 +25744,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -26846,9 +26837,7 @@
 	dir = 4
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -26872,9 +26861,7 @@
 	dir = 4
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -28045,7 +28032,7 @@
 /area/station/crew_quarters/pool)
 "bDY" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -28728,7 +28715,7 @@
 /area/station/crew_quarters/fitness)
 "bFY" = (
 /obj/table/reinforced/bar/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "bFZ" = (
@@ -29002,7 +28989,7 @@
 /area/station/crew_quarters/quarters_south)
 "bGS" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -38903,10 +38890,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/engineering,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -40065,10 +40049,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer";
-	req_access_txt = "19"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "clJ" = (
@@ -42579,7 +42560,7 @@
 	pixel_x = -12
 	},
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ctO" = (
@@ -48750,10 +48731,10 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "hlM" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station{
 	dir = 4
 	},
+/obj/mapping_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/bridge/customs)
@@ -52591,7 +52572,7 @@
 	},
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -54454,7 +54435,7 @@
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 8
 	},
@@ -55518,7 +55499,7 @@
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini/oxygen,
 /turf/simulated/floor/escape{
 	dir = 9
 	},
@@ -57404,10 +57385,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/hallway/primary/central)
 "vbj" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
