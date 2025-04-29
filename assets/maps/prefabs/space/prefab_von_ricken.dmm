@@ -1170,9 +1170,7 @@
 /area/prefab/von_ricken)
 "NE" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/storage/secure/closet/fridge{
-	req_access_txt = "29"
-	},
+/obj/storage/secure/closet/fridge,
 /obj/random_item_spawner/organs/bloody/one_to_three,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
