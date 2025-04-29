@@ -750,7 +750,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	icon_state = "grimy"
 
 /turf/simulated/floor/carpet/arcade
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "arcade_carpet"
 
 /turf/simulated/floor/carpet/arcade/half
