@@ -1952,6 +1952,7 @@
 #include "code\obj\artifacts\artifactprocs.dm"
 #include "code\obj\artifacts\artifacts.dm"
 #include "code\obj\artifacts\faults.dm"
+#include "code\obj\artifacts\reticulator.dm"
 #include "code\obj\artifacts\triggers.dm"
 #include "code\obj\artifacts\artifact_items\activator_key.dm"
 #include "code\obj\artifacts\artifact_items\attack_wand.dm"
