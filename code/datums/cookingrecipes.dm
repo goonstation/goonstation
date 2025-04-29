@@ -76,6 +76,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	output = /obj/item/reagent_containers/food/snacks/burger
+	useshumanmeat = TRUE //this is a bit hacky, but it shouldn't affect anything when cooking any of the non-human recipes
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug = /obj/item/reagent_containers/food/snacks/burger/slugburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/burger/fishburger,
@@ -477,7 +478,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = 1)
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meat_h
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_h)
@@ -1100,7 +1101,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak
-	useshumanmeat = 1
+	useshumanmeat = TRUE //see /datum/cookingrecipe/oven/burger/meat
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/steak/human,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
