@@ -328,6 +328,9 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 	shiny_chance = 0
+	gender = MALE
+	///Remy tries not to suggest the same thing twice in a row
+	var/last_recipe = null
 
 	New()
 		. = ..()
@@ -352,6 +355,40 @@ proc/filter_carrier_pets(var/type)
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
+
+	attackby(obj/item/reagent_containers/food/food, mob/user)
+		if (!istype(food))
+			return ..()
+		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
+			return
+		src.visible_message("[src] sniffs \the [food].")
+		var/list/possible_recipes = list()
+		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
+			if (istypes(food, recipe.ingredients))
+				possible_recipes += recipe
+		src.set_dir(get_dir(src, user))
+		src.ai.disable()
+		SPAWN(2 SECONDS)
+			if (length(possible_recipes))
+				if (length(possible_recipes) > 2)
+					possible_recipes -= src.last_recipe
+				src.emote("scream")
+				var/datum/cookingrecipe/chosen = pick(possible_recipes)
+				boutput(user, chosen.render())
+			else
+				src.visible_message("[src] shakes [his_or_her(src)] head sadly.")
+			sleep(1 SECOND)
+			src.ai.enable()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					FLICK("remy-exclaim", src)
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
+		return ..()
+
 
 /* ============================================= */
 /* ------------------ Turtle ------------------- */

@@ -3067,3 +3067,85 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_warm","food_energized")
 	slice_product = /obj/item/reagent_containers/food/snacks/flapjack
+
+/obj/item/reagent_containers/food/snacks/rice_bowl
+	name = "rice bowl"
+	desc = "A bowl of plain cooked rice."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "rice_bowl"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_energized")
+	bites_left = 5
+	heal_amt = 1
+
+/obj/item/reagent_containers/food/snacks/egg_on_rice
+	name = "egg yolk with rice"
+	desc = "A bowl of cooked rice with a raw egg yolk and soy sauce on top. Otherwise known as tamago kake gohan."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "egg_on_rice"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_energized_big","food_refreshed")
+	bites_left = 5
+	heal_amt = 2
+	meal_time_flags = MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/katsudon
+	name = "katsudon"
+	desc = "A bowl of rice topped with egg and a deep fried meat cutlet. You'll feel like a winner eating this for sure!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "katsu_bowl"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_energized","food_warm","food_brute")
+	bites_left = 5
+	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/gyudon
+	name = "gyūdon"
+	desc = "A bowl of rice topped with thin slices of sauced meat and onions. This one has an egg yolk on top!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "beef_bowl"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_energized","food_warm","food_brute")
+	bites_left = 5
+	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/cheese_gyudon
+	name = "cheese gyūdon"
+	desc = "Basically just gyūdon but with melted cheese on top of it. Yum!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "cheese_beef_bowl"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_energized_big","food_warm","food_brute")
+	bites_left = 5
+	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/miso_soup
+	name = "miso soup"
+	desc = "A small bowl of soup made with dashi stock and miso paste."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "miso_soup"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	food_effects = list("food_warm","food_refreshed","food_disease_resist")
+	bites_left = 4
+	heal_amt = 1
+
+/obj/item/reagent_containers/food/snacks/bibimbap
+	name = "bibimbap"
+	desc = "A Korean dish of rice, grilled meat, vegetables, and gochujang. Served in a hot stone pot!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "bibimbap"
+	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	food_effects = list("food_warm","food_hp_up_big")
+	bites_left = 5
+	heal_amt = 5
+	initial_reagents = list("capsaicin"=10)
+
+/obj/item/reagent_containers/food/snacks/katsu_curry
+	name = "katsu curry"
+	desc = "Japanese curry with rice and a deep fried meat cutlet. A hearty, home-cooked meal."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "katsu_curry"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	food_effects = list("food_warm","food_energized","food_brute")
+	bites_left = 5
+	heal_amt = 3
