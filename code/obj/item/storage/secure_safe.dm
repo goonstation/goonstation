@@ -430,12 +430,10 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				#endif
 				for (var/i=rand(1,1), i>0, i--) // think we need this for loop for error handling still
 					var/egg = pick(eggs_strong)
-					if (ispath(egg))
-						src.storage.add_contents(new egg(src))
-					else // if what we selected wasn't a valid path
-						i++ // try again
-				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
-					E.infertile = TRUE
+					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/C = new(egg)
+					if (istype(C))
+						C.infertile = TRUE
+						src.storage.add_contents(C)
 
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
