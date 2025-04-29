@@ -641,11 +641,10 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	icon_state = "arcade_carpet_blank"
 
 /turf/simulated/floor/airless/carpet/office
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "office_carpet"
 
 /turf/simulated/floor/airless/carpet/office/other
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
 /////////////////////////////////////////

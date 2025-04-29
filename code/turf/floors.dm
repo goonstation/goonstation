@@ -760,11 +760,10 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	icon_state = "arcade_carpet_blank"
 
 /turf/simulated/floor/carpet/office
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "office_carpet"
 
 /turf/simulated/floor/carpet/office/other
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
 DEFINE_FLOORS(carpet/regalcarpet,
