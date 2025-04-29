@@ -91,7 +91,7 @@
 			SPAWN(randfloat(1 SECOND, 3 SECONDS))
 				if(H && !H.client) // completely convincing dialogue
 					if (prob(33))
-						H.say(pick(
+						H.fake_say(pick(
 							"Well, that was weird!",
 							"Huh",
 							"Maybe it's a [pick("healer","teleporter","plant helper")] type artifact?",
@@ -100,11 +100,11 @@
 							"I don't feel any different.",
 							""))
 						sleep(randfloat(1 SECOND, 3 SECONDS))
-						H.say(phrase_log.random_phrase("say"))
+						H.fake_say(phrase_log.random_phrase("say"))
 					else
-						H.say(phrase_log.random_phrase("say"))
+						H.fake_say(phrase_log.random_phrase("say"))
 						sleep(randfloat(1 SECOND, 3 SECONDS))
-						H.say(phrase_log.random_phrase("say"))
+						H.fake_say(phrase_log.random_phrase("say"))
 				src.make_evil(H)
 		else
 			src.make_evil(clone)
@@ -114,6 +114,7 @@
 				O.ArtifactDeactivated()
 
 	proc/make_evil(mob/living/carbon/human/clone)
+		set waitfor = FALSE
 		if(clone)
 			sleep(evil_delay)
 			clone.attack_alert = 0
@@ -122,7 +123,7 @@
 			clone.ai_calm_down = 0
 			sleep(randfloat(3 SECOND, 20 SECONDS))
 			while (!isdead(clone) && isnull(clone.client) && !QDELETED(clone))
-				clone.say(phrase_log.random_phrase("say"))
+				clone.fake_say(phrase_log.random_phrase("say"))
 				sleep(randfloat(3 SECOND, 20 SECONDS))
 
 	effect_deactivate(obj/O)

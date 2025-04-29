@@ -1522,14 +1522,14 @@
 	icon_state = "chair_comfy";
 	dir = 4
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
 "dR" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/tdome/tdomea{
@@ -1541,7 +1541,7 @@
 	icon_state = "chair_comfy";
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/tdome/tdomea{
@@ -1584,7 +1584,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/tdome/tdomea{
@@ -1645,14 +1645,14 @@
 	name = "Thunderdome Lounge"
 	})
 "eb" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
 "ec" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/tdome/tdomea{
@@ -1664,7 +1664,7 @@
 	name = "Thunderdome Lounge"
 	})
 "ee" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/tdome/tdomea{
@@ -1690,14 +1690,14 @@
 	},
 /area/racing_track)
 "eh" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
 "ei" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "carpetE"
 	},
@@ -1723,7 +1723,7 @@
 	icon_state = "chair_comfy";
 	dir = 4
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/tdome/tdomea{
@@ -1734,7 +1734,7 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/tdome/tdomea{
@@ -1746,7 +1746,7 @@
 	icon_state = "chair_comfy";
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/tdome/tdomea{
@@ -1754,14 +1754,14 @@
 	})
 "en" = (
 /mob/living/critter/small_animal/boogiebot,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
 "eo" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/tdome/tdomea{
@@ -1773,7 +1773,7 @@
 	icon_state = "chair_comfy";
 	dir = 4
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/tdome/tdomea{
@@ -1785,7 +1785,7 @@
 	icon_state = "chair_comfy";
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/tdome/tdomea{
@@ -2261,7 +2261,7 @@
 	},
 /area/racing_track)
 "fh" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/sim/area2)
@@ -2273,7 +2273,7 @@
 	desc = "A data logging utility represented as an audio logger.";
 	name = "Audiolog"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
@@ -2282,17 +2282,17 @@
 /obj/landmark{
 	name = "det_net"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
 "fk" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
 "fl" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/sim/area2)
@@ -2335,7 +2335,7 @@
 	},
 /area/racing_entry)
 "fr" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/sim/area2)
@@ -2350,14 +2350,14 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/sim/area2)
 "ft" = (
 /obj/table/woodentable,
 /obj/item/currency/spacecash/hundred,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/sim/area2)
@@ -2368,12 +2368,12 @@
 /obj/item/paper_bin{
 	pixel_y = 9
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/sim/area2)
 "fv" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "carpetE"
 	},
@@ -2453,7 +2453,7 @@
 	},
 /area/sim/area2)
 "fG" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/sim/area2)

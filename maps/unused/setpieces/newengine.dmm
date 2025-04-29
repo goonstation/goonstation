@@ -40,8 +40,7 @@
 	tag = "icon-intact (SOUTHWEST)"
 	},
 /obj/cable{
-	icon_state = "2-4";
-	
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -62,8 +61,7 @@
 /area/space)
 "i" = (
 /obj/cable{
-	icon_state = "4-8";
-	
+	icon_state = "4-8"
 	},
 /obj/mesh/catwalk{
 	dir = 4;
@@ -86,8 +84,7 @@
 /area/space)
 "l" = (
 /obj/cable{
-	icon_state = "0-4";
-	
+	icon_state = "0-4"
 	},
 /obj/machinery/power/terminal{
 	tag = "icon-term (NORTH)";
@@ -190,8 +187,7 @@
 /area/space)
 "y" = (
 /obj/cable{
-	icon_state = "0-4";
-	
+	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;

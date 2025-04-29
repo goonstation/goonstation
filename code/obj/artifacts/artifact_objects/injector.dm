@@ -26,7 +26,7 @@
 		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
-				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
+				potential_reagents = list("nanites","activated plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","salbutamol","anti_rad","synaptizine","omnizine","synthflesh",

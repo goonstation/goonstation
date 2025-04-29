@@ -690,7 +690,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (user.loc != staystill) break
-				if (P.type != itemtype) continue
+				if (P.type != itemtype || P.equipped_in_slot) continue
 				var/amount = 20
 				if (istype(P,/obj/item/reagent_containers/food/snacks/mushroom/))
 					amount = 25

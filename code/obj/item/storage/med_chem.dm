@@ -443,6 +443,10 @@
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
 
 /* -------------------- Pill Bottles - Drugs -------------------- */
+/obj/item/storage/pill_bottle/CBD
+	name = "pill bottle (CBD)"
+	desc = "CBD is the non-psychoactive phytocannabinoid extracted from cannabis, good for relaxing."
+	spawn_contents = list(/obj/item/reagent_containers/pill/CBD = 5)
 
 /obj/item/storage/pill_bottle/methamphetamine
 	name = "pill bottle (methamphetamine)"

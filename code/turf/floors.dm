@@ -737,7 +737,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
@@ -746,11 +746,11 @@ TYPEINFO(/turf/simulated/floor/carpet)
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/floor/carpet/arcade
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "arcade_carpet"
 
 /turf/simulated/floor/carpet/arcade/half
@@ -760,16 +760,15 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	icon_state = "arcade_carpet_blank"
 
 /turf/simulated/floor/carpet/office
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "office_carpet"
 
 /turf/simulated/floor/carpet/office/other
-	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
 DEFINE_FLOORS(carpet/regalcarpet,
 	name = "regal carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "regal_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -782,7 +781,7 @@ DEFINE_FLOORS(carpet/regalcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/darkcarpet,
 	name = "dark carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "dark_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -795,7 +794,7 @@ DEFINE_FLOORS(carpet/darkcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/clowncarpet,
 	name = "clown carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "clown_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)

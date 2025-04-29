@@ -235,7 +235,7 @@
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
-			src.camera.network = "Robots"
+			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
 			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
@@ -1087,7 +1087,12 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
+		if (istype(W, /obj/item/card/emag))
+			return
+		if (user.a_intent == INTENT_HARM || is_special)
+			..()
+			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1230,8 +1235,6 @@
 				else
 					boutput(user, SPAN_ALERT("Access denied."))
 
-		else if (istype(W, /obj/item/card/emag))
-			return
 		else if (istype(W, /obj/item/instrument) && opened)
 			user.drop_item(W)
 			W.set_loc(src)
@@ -2094,7 +2097,7 @@
 				return
 
 		var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotmod'>Close</A> <A HREF='?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
+		dat += "<A HREF='byond://?action=mach_close&window=robotmod'>Close</A> <A HREF='byond://?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
 
 		dat += "<B><U>Status Report</U></B><BR>"
 
@@ -2169,17 +2172,17 @@
 
 			dat += "<B>Active Equipment:</B><BR>"
 
-			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[1]]'>[module_states[1]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Left Arm Unavailable</b><br>"
-			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]</A>" : "Nothing"]<BR>"
-			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]</A>" : "Nothing"]<BR>"
+			dat += "<b>Center:</b> [module_states[2] ? "<A HREF='byond:?src=\ref[src];mod=\ref[module_states[2]]'>[module_states[2]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[3]]'>[module_states[3]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Right Arm Unavailable</b><br>"
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
 			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
-				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
+				else dat += text("[obj]: <A HREF='byond://?src=\ref[src];act=\ref[obj]'>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"
 
 		dat += "<HR>"
@@ -2189,10 +2192,10 @@
 		dat += "<BR><B>Installed Upgrades</B> ([upgradecount]/[src.max_upgrades])<BR>"
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (R.passive) dat += text("[R] (Always On)<BR>")
-			else if (R.active) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Use</B></A> (Drain: [R.drainrate])<BR>")
+			else if (R.active) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Use</B></A> (Drain: [R.drainrate])<BR>")
 			else
-				if(!R.activated) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
-				else dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				if(!R.activated) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				else dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
 
 		src.Browse(dat, "window=robotmod;size=400x600")
 

@@ -265,6 +265,11 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/say_decorate(message)
 	. = monospace_say_regex.Replace(message, SPAN_MONOSPACE("$1"))
 
+/mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
+	. = ..()
+	if (ismob(target))
+		src.cell?.use(W.stamina_cost)
+
 /mob/living/proc/process_killswitch()
 	return
 
@@ -386,13 +391,13 @@ td {
 </style></head><body><h2>Module editor</h2><h3>Current items</h3><table style='width:100%'><tr><td style='width:80%'><b>Module</b></td><td style='width:10%'>&nbsp;</td><td style='width:10%'>&nbsp;</td></tr>"}
 
 		for (var/obj/item/I in D.tools)
-			output += "<tr><td><b>[I.name]</b> ([I.type])</td><td><a href='?src=\ref[src];edit=\ref[I];mod=\ref[D]'>(EDIT)</a><a href='?src=\ref[src];del=\ref[I];mod=\ref[D]'>(DEL)</a></td></tr>"
+			output += "<tr><td><b>[I.name]</b> ([I.type])</td><td><a href='byond://?src=\ref[src];edit=\ref[I];mod=\ref[D]'>(EDIT)</a><a href='byond://?src=\ref[src];del=\ref[I];mod=\ref[D]'>(DEL)</a></td></tr>"
 
 		output += "</table><br><br><h3>Add new item</h3>"
-		output += "<a href='?src=\ref[src];create=1;mod=\ref[D]'>Create new item</a><br><br>"
+		output += "<a href='byond://?src=\ref[src];create=1;mod=\ref[D]'>Create new item</a><br><br>"
 		if (current)
-			output += "<b>Currently adding: </b> [current.name] <a href='?src=\ref[src];edcurr=1;mod=\ref[D]'>(EDIT)</a><br>"
-			output += "<a href='?src=\ref[src];addcurr=1;mod=\ref[D]'>Add to module</a>"
+			output += "<b>Currently adding: </b> [current.name] <a href='byond://?src=\ref[src];edcurr=1;mod=\ref[D]'>(EDIT)</a><br>"
+			output += "<a href='byond://?src=\ref[src];addcurr=1;mod=\ref[D]'>Add to module</a>"
 		usr.Browse(output, "window=module_editor;size=400x600")
 
 	Topic(href, href_list)

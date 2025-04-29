@@ -112,7 +112,7 @@
 
 /datum/artifact/dimensional_key
 	associated_object = /obj/item/artifact/dimensional_key
-	type_name = "Dimensional key"
+	type_name = "Dimensional Key"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 200
 	validtypes = list("eldritch", "precursor")
@@ -169,7 +169,10 @@ ABSTRACT_TYPE(/obj/art_fissure_objs/cross_dummy)
 			AM.set_loc(get_step(src.exit_turf, turn(AM.dir, 180)))
 			SPAWN(0.001) // just a really low value
 				AM.set_loc(src.exit_turf)
-
+				if (istype(AM, /obj/stool)) // i dont like this but buckled is weird as shit
+					var/obj/stool/stool = AM
+					if (stool.buckled_guy)
+						stool.buckled_guy.set_loc(src.exit_turf)
 		else
 			return ..()
 

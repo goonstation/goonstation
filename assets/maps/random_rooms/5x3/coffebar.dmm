@@ -42,10 +42,7 @@
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
+/obj/machinery/computer/security/wooden_tv/public{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
