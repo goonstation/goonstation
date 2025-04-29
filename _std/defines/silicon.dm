@@ -1,6 +1,4 @@
-
-// Borg death alert message modifiers for use in borg_death_alert()
-
+// Cyborg death alert message modifiers for use in borg_death_alert()
 #define ROBOT_DEATH_MOD_NONE 0 //standard death alert
 #define ROBOT_DEATH_MOD_SUICIDE 1 //suicide death alert
 #define ROBOT_DEATH_MOD_KILLSWITCH 2 //killswitch death alert
@@ -16,3 +14,8 @@
 
 /// Cell power remaining before the low power distress effect occurs
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+
+/// Cyborg killswitch timer duration
+#define ROBOT_KILLSWITCH_DURATION 1 MINUTE
+/// AI killswitch timer duration
+#define AI_KILLSWITCH_DURATION 3 MINUTES
