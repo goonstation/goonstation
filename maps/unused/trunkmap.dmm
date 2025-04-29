@@ -11327,7 +11327,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aOF" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/chapel/sanctuary)
@@ -11335,17 +11335,17 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
 "aOH" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
 "aOI" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/chapel/sanctuary)
@@ -11848,7 +11848,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aQD" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/sanctuary)
@@ -11866,7 +11866,7 @@
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aQG" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/chapel/sanctuary)
@@ -12181,7 +12181,7 @@
 /area/station/chapel/sanctuary)
 "aRH" = (
 /obj/machinery/door,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/chapel/sanctuary)
@@ -12189,18 +12189,18 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/chapel/sanctuary)
 "aRJ" = (
 /mob/living/carbon/human/npc/monkey/albert,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/chapel/sanctuary)
 "aRK" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/chapel/sanctuary)
@@ -12695,7 +12695,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/sanctuary)
@@ -13086,7 +13086,7 @@
 /area/station/chapel/sanctuary)
 "aUM" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/chapel/sanctuary)
@@ -14079,7 +14079,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/chapel/sanctuary)
@@ -14091,7 +14091,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/chapel/sanctuary)
@@ -14099,7 +14099,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/chapel/sanctuary)
@@ -14107,7 +14107,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/chapel/sanctuary)
@@ -14202,7 +14202,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/chapel/sanctuary)
@@ -14820,7 +14820,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/chapel/sanctuary)
@@ -14844,7 +14844,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet1"
 	},
 /area/station/chapel/sanctuary)
@@ -14852,7 +14852,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet1"
 	},
 /area/station/chapel/sanctuary)
@@ -14867,7 +14867,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/chapel/sanctuary)
@@ -15209,17 +15209,17 @@
 /area/station/storage/auxillary)
 "bcT" = (
 /obj/machinery/light,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/chapel/sanctuary)
 "bcU" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/chapel/sanctuary)
 "bcV" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/chapel/sanctuary)
@@ -15236,13 +15236,13 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/chapel/sanctuary)
 "bcX" = (
 /obj/machinery/light,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/chapel/sanctuary)
@@ -15936,7 +15936,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/security/detectives_office)
@@ -15949,7 +15949,7 @@
 	},
 /obj/item/paper,
 /obj/item/pen,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/security/detectives_office)
@@ -15958,12 +15958,12 @@
 	dir = 8
 	},
 /obj/landmark/start/job/detective,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/security/detectives_office)
 "bfx" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/security/detectives_office)
@@ -16248,13 +16248,13 @@
 /area/space)
 "bgI" = (
 /obj/machinery/door/window/southleft,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/chapel/sanctuary)
 "bgJ" = (
 /obj/machinery/door/window/southright,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/chapel/sanctuary)
@@ -16455,7 +16455,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "bht" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/security/detectives_office)
@@ -16463,7 +16463,7 @@
 /obj/table/wood/auto,
 /obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/lamp/green,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
@@ -16471,12 +16471,12 @@
 /obj/table/wood/auto,
 /obj/item/clothing/glasses/thermal,
 /obj/item/cigpacket,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
 "bhw" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/security/detectives_office)
@@ -21195,7 +21195,7 @@
 /area/station/maintenance/south)
 "bui" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/maintenance/south)
@@ -21205,13 +21205,13 @@
 	desc = "The only relic recovered from Bo Jackson's body.";
 	name = "Jackson's Helmet"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/maintenance/south)
 "buk" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/maintenance/south)
@@ -21220,7 +21220,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/maintenance/south)
@@ -21567,20 +21567,20 @@
 /area/station/maintenance/south)
 "bvd" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/maintenance/south)
 "bve" = (
 /obj/table/reinforced/auto,
 /mob/living/carbon/human/npc/monkey/mr_rathen,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/maintenance/south)
 "bvf" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/maintenance/south)
@@ -21589,7 +21589,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/maintenance/south)
@@ -22051,7 +22051,7 @@
 /area/station/quartermaster/storage)
 "bwy" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/listeningpost)
@@ -22059,14 +22059,14 @@
 /obj/machinery/vending/cola/blue{
 	credit = 12
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetN"
 	},
 /area/listeningpost)
 "bwA" = (
 /obj/submachine/chef_sink/chem_sink,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/listeningpost)
@@ -22189,12 +22189,12 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "bwN" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/listeningpost)
 "bwO" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpet2"
 	},
@@ -22203,7 +22203,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/listeningpost)
@@ -22227,7 +22227,7 @@
 	},
 /area/listeningpost)
 "bwT" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/listeningpost)
@@ -22353,7 +22353,7 @@
 "bxg" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/listeningpost)
@@ -22361,7 +22361,7 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetS"
 	},
@@ -22370,7 +22370,7 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/pinpointer,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/listeningpost)
@@ -25581,7 +25581,7 @@
 	pixel_y = 10
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/security/hos)
@@ -25677,7 +25677,7 @@
 	},
 /area/station/ai_monitored/armory)
 "eqo" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/security/hos)
@@ -26023,7 +26023,7 @@
 /area/station/crew_quarters/hop)
 "fpZ" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/security/hos)
@@ -26226,7 +26226,7 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/securityimp_kit,
 /obj/disposalpipe/segment,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/security/hos)
@@ -27886,7 +27886,7 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/security/hos)
@@ -28513,7 +28513,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "mLo" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/security/hos)
@@ -28802,7 +28802,7 @@
 /area/station/engine/power)
 "nRT" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/security/hos)
@@ -29852,7 +29852,7 @@
 "rfL" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/security/hos)
@@ -29945,12 +29945,12 @@
 /turf/simulated/floor/plating,
 /area/space)
 "rtQ" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/security/hos)
 "rvc" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/security/hos)
