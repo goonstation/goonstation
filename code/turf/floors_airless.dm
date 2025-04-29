@@ -613,7 +613,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 	mat_changename = 0
 	default_material = "cotton"
@@ -627,7 +627,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 		icon = 'icons/turf/floors.dmi'
 
 /turf/simulated/floor/airless/carpet/grime
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/floor/airless/carpet/arcade

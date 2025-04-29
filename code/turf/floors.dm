@@ -737,7 +737,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
@@ -746,7 +746,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/floor/carpet/arcade

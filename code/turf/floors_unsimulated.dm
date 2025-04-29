@@ -573,11 +573,11 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/floor/carpet/grime
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/floor/carpet/arcade
