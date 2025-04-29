@@ -41,10 +41,10 @@ export const acw: AlertContentWindow = {
         objective.
       </p>
 
-      {/* <p> //TODO: wiki
+      <p>
         For more information, consult{' '}
-        <a href="https://wiki.ss13.co/index.php?search=Traitor">the wiki</a>
-      </p> */}
+        <a href="https://wiki.ss13.co/Madness">the wiki</a>
+      </p>
     </div>
   ),
 };
