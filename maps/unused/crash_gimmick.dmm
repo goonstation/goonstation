@@ -5287,9 +5287,7 @@
 /area/russian/radiation)
 "bhg" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade{
 	broken = 1;
@@ -5343,9 +5341,7 @@
 /area/russian/radiation)
 "bhm" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -5719,9 +5715,7 @@
 /area/russian/radiation)
 "bhW" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/space,
 /area/russian/radiation)
@@ -5744,9 +5738,7 @@
 /area/russian/radiation)
 "bib" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/space,
 /area/russian/radiation)
@@ -5980,9 +5972,7 @@
 	dir = 4
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade{
 	desc = " It is made of temp."
@@ -6022,9 +6012,7 @@
 	dir = 4
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade{
 	broken = 1;
@@ -6175,7 +6163,7 @@
 /area/russian/radiation)
 "biY" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
@@ -6662,7 +6650,7 @@
 /area/russian/radiation)
 "bkQ" = (
 /obj/table/reinforced/bar/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -6838,9 +6826,7 @@
 /obj/item/body_bag,
 /obj/item/body_bag,
 /obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "4"
-	},
+/obj/storage/cart/forensic,
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
@@ -18209,7 +18195,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/east{
@@ -23983,7 +23969,7 @@
 	},
 /area/russian/radiation)
 "cHl" = (
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/wood/auto,
 /turf/simulated/floor/black{
 	broken = 1;
@@ -37587,7 +37573,7 @@
 /area/russian/radiation)
 "eXE" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -45659,7 +45645,7 @@
 /area/russian/radiation)
 "iNy" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -75880,7 +75866,7 @@
 /area/space)
 "xUd" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/space,
 /area/space)
 "xVj" = (

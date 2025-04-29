@@ -8,4 +8,4 @@
 
 
 /datum/say_channel/distorted_flock
-	channel_id = SAY_CHANNEL_DISTORTED_FLOCK
+	channel_id = SAY_CHANNEL_FLOCK_DISTORTED

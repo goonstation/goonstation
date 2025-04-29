@@ -61,7 +61,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		/obj/item/hand_tele,
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/gimmickbomb/hotdog,
-		/obj/item/card/id/captains_spare,
+		/obj/item/card/id/gold/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
 		/mob/living/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,

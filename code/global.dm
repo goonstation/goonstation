@@ -92,7 +92,6 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/spacePushList = list()
 	/// All the accessible areas on the station in one convenient place
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0

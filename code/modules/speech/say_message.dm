@@ -146,7 +146,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	src.say_verb ||= speaker.speech_verb_say
 
-	// A deplorably disgusting hack to get `card_ident`.
+	// A deplorable, disgusting hack to get `card_ident`.
 	if (hasvar(speaker, "wear_id"))
 		src.card_ident = speaker:wear_id?:registered
 
@@ -245,7 +245,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (world.time < src.speaker.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
-	if (src.say_sound == "")
+	if (src.say_sound == NO_SAY_SOUND)
 		return
 
 	if (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override)

@@ -497,6 +497,7 @@ TYPEINFO(/obj/item/heat_dowsing)
 	speech_bubble_icon_sing = null
 	speech_bubble_icon_sing_bad = null
 
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	//two_handed = 1
 //	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/dowse_dist_fuzz = 3
@@ -869,6 +870,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	density = 1
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	speech_verb_say = "beeps"

@@ -12,7 +12,6 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	var/obj/machinery/camera/current = null
 	// Sin but we need to know for disposing to clear viewer list on current
 	var/mob/last_viewer = null
-	var/can_view_ai = FALSE
 
 	disposing()
 		src.disconnect_user(src.last_viewer)
@@ -57,8 +56,6 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 		for (var/obj/machinery/camera/camera as anything in cameras)
 			if (camera.network in src.camera_networks)
-				if (camera.ai_only && !src.can_view_ai)
-					continue
 				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
 
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
@@ -127,6 +124,6 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		CAMERA_NETWORK_TELESCI,
 		CAMERA_NETWORK_STICKERS,
 		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
 	)
-	can_view_ai = TRUE
 	default_material = "miracle"

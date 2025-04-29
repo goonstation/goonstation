@@ -4,7 +4,7 @@
 /datum/message_modifier/preprocessing/whisper/process(datum/say_message/message)
 	. = message
 
-	message.say_sound = ""
+	message.say_sound = NO_SAY_SOUND
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
 
 

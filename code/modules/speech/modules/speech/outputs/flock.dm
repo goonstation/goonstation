@@ -8,7 +8,7 @@
 	. = ..()
 
 	src.flock = flock
-	src.distorted_flock_channel = global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DISTORTED_FLOCK)
+	src.distorted_flock_channel = global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_FLOCK_DISTORTED)
 
 /datum/speech_module/output/bundled/flock_say/process(datum/say_message/message)
 	var/list/style = src.get_styling(message)
@@ -142,7 +142,7 @@
 
 /datum/speech_module/output/ion_flock
 	id = SPEECH_OUTPUT_FLOCK_ION
-	channel = SAY_CHANNEL_DISTORTED_FLOCK
+	channel = SAY_CHANNEL_FLOCK_DISTORTED
 
 /datum/speech_module/output/ion_flock/process(datum/say_message/message)
 	var/mind_ref = ""
