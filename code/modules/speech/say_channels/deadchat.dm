@@ -25,3 +25,6 @@
 
 /datum/say_channel/delimited/local/ghostly_whisper
 	channel_id = SAY_CHANNEL_GHOSTLY_WHISPER
+
+/datum/say_channel/delimited/local/ghostly_whisper/log_message()
+	return
