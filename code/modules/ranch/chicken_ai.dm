@@ -340,7 +340,7 @@
 			C.visible_message(SPAN_ALERT("[owner] hatches the eggs in the nesting box!"), SPAN_NOTICE("You hatch the eggs in the nesting box."))
 			var/left = 6
 			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/E in get_turf(C))
-				if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
+				if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken) && !E.infertile)
 					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/CE = E
 					var/datum/chicken_egg_props/egg_props = null
 					if(C.special_hatch(CE))
