@@ -67,6 +67,7 @@ toxic - poisons
 
 /datum/projectile/bullet/vbullet
 	name = "virtual bullet"
+	sname = "VR bullets"
 	shot_sound = 'sound/weapons/Gunshot.ogg'
 	damage = 10
 	damage_type = D_KINETIC
@@ -79,6 +80,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	damage = 22
+	sname = ".22 LR"
 	shot_sound = 'sound/weapons/smallcaliber.ogg' //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -89,7 +91,6 @@ toxic - poisons
 	ricochets = TRUE
 
 	a180
-		fullauto_valid = 1
 		default_firemode = /datum/firemode/single
 		damage = 18
 		shot_volume = 20
@@ -110,11 +111,13 @@ toxic - poisons
 				return min(2,standard_damage) // dont break shit as hard
 
 /datum/projectile/bullet/bullet_22/smartgun
+	sname = ".22 Smartgun"
 	shot_sound = 'sound/weapons/smartgun.ogg'
 	shot_volume = 70
 	silentshot = 0
 
 /datum/projectile/bullet/bullet_22/HP
+	sname = ".22 Hollow Point"
 	damage = 35
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -122,6 +125,7 @@ toxic - poisons
 	ricochets = TRUE
 
 /datum/projectile/bullet/bullet_22/match
+	sname = ".22 Match grade"
 	damage = 35
 	armor_ignored = 0.33
 	dissipation_delay = 15
@@ -135,6 +139,7 @@ toxic - poisons
 
 
 /datum/projectile/bullet/custom
+	sname = ".22 LR Custom"
 	name = "bullet"
 	damage = 1
 	damage_type = D_KINETIC
@@ -145,6 +150,7 @@ toxic - poisons
 
 //0.223
 /datum/projectile/bullet/assault_rifle
+	sname = "5.56x45mm NATO"
 	name = "bullet"
 	shot_sound = 'sound/weapons/assrifle.ogg'  // todo: single shot sound?
 	damage = 45
@@ -157,23 +163,13 @@ toxic - poisons
 	ricochets = TRUE
 
 	armor_piercing
+		sname = "5.56x45mm NATO AP"
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
 	remington
+		sname = "5.56x45mm Remington"
 		damage = 34
-
-/datum/projectile/bullet/assault_rifle/burst
-	sname = "burst fire"
-	damage = 45
-	default_firemode = /datum/firemode/two_burst
-	armor_piercing
-		damage_type = D_PIERCING
-		hit_type = DAMAGE_STAB
-		armor_ignored = 0.66
-	remington
-		damage = 26
-
 //0.308
 /datum/projectile/bullet/minigun
 	name = "bullet"
@@ -186,7 +182,7 @@ toxic - poisons
 	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 	ricochets = TRUE
 
 /datum/projectile/bullet/minigun/turret
@@ -216,8 +212,7 @@ toxic - poisons
 	damage = 31
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	default_firemode = /datum/firemode/single
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 	impact_image_state = "bullethole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -345,11 +340,9 @@ toxic - poisons
 			M.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 	auto
-		fullauto_valid = 1
+		default_firemode = /datum/firemode/automatic
 		sname = "full auto"
 		shot_volume = 66
-
-		default_firemode = /datum/firemode/single
 
 /datum/projectile/bullet/lmg/weak
 	damage = 1
@@ -375,9 +368,7 @@ toxic - poisons
 		damage = 20
 		default_firemode = /datum/firemode/three_burst
 		auto
-			fullauto_valid = 1
-
-			default_firemode = /datum/firemode/single
+			default_firemode = /datum/firemode/automatic
 
 
 /datum/projectile/bullet/nine_mm_NATO
@@ -406,8 +397,7 @@ toxic - poisons
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_NATO/auto
-	fullauto_valid = 1
-	default_firemode = /datum/firemode/single
+	default_firemode = /datum/firemode/automatic
 	shot_volume = 66
 	sname = "full auto"
 
@@ -431,8 +421,7 @@ toxic - poisons
 	sname = "burst fire"
 
 /datum/projectile/bullet/nine_mm_surplus/auto
-	fullauto_valid = 1
-	default_firemode = /datum/firemode/single
+	default_firemode = /datum/firemode/automatic
 	shot_volume = 66
 	sname = "full auto"
 

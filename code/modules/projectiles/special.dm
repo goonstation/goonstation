@@ -1286,7 +1286,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
-	fullauto_valid = 0
 	var/can_spawn_fluid = FALSE
 
 

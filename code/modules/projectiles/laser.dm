@@ -358,7 +358,6 @@ toxic - poisons
 		color_red = 1
 		color_green = 0.2
 		color_blue = 0.2
-		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
@@ -491,10 +490,9 @@ toxic - poisons
 	burst
 		damage = 15
 		cost = 30
-		default_firemode = /datum/firemode/three_burst
+		default_firemode = /datum/firemode/three_burst/automatic
 		icon_state = "bolt_burst"
 		shot_sound = 'sound/weapons/laser_c.ogg'
-		fullauto_valid = 1
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
@@ -576,7 +574,7 @@ toxic - poisons
 	color_blue = 0.51
 	cost = 10
 	damage = 12.5
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 	icon_state = "bolt_burst"
 	shot_sound = 'sound/weapons/laser_c.ogg'
 
@@ -588,7 +586,7 @@ toxic - poisons
 	color_blue = 0.28
 	cost = 10
 	damage = 12.5
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 	icon_state = "bolt_burst"
 	shot_sound = 'sound/weapons/laser_c.ogg'
 
@@ -758,7 +756,7 @@ toxic - poisons
 	dissipation_rate = 2
 	cost = 10
 	damage = 15
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 	shot_volume = 75
 
 /datum/projectile/laser/plasma/burst

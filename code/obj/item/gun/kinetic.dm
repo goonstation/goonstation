@@ -44,9 +44,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
 
-	/// What firemode is this gun set to use?
-	var/selected_firemode = null
-
 	/// Can you use the gun on ammo to reload?
 	var/allowReverseReload = TRUE
 
@@ -80,7 +77,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
-			. += "Each shot will currently use [src.current_projectile.cost] bullets!"
+			. += "Each shot will currently use [src.current_projectile.cost*src.current_firemode.shot_number] bullets!"
 		else
 			. += SPAN_ALERT("*ERROR* No output selected!")
 
@@ -100,22 +97,36 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	canshoot(mob/user)
 		var/ammo = src.ammo.amount_left
-		if (can_shoot_partially && ammo >= src.current_projectile.cost / src.current_projectile.firemode.shot_number)
+		var/datum/firemode/firemode = src.current_firemode ? current_firemode : src.current_projectile.firemode
+		if (can_shoot_partially && ammo >= src.current_projectile.cost)
 			return 1
-		else if (ammo >= src.current_projectile.cost)
+		else if (ammo >= src.current_projectile.cost * firemode.shot_number)
 			return 1
 		return 0
 
+	override_firemode()
+		var/datum/firemode/firemode = src.current_firemode ? current_firemode : src.current_projectile.firemode
+
+		// if we're lacking ammo, manually override the firemode with a lower burst count.
+		var/ammoRemaining = src.ammo.amount_left
+		var/max_shots = round(ammoRemaining/src.current_projectile.cost)
+		if (max_shots < firemode.shot_number)
+			var/datum/firemode/firemodeOverride = new src.current_projectile.firemode.type()
+			firemodeOverride.shot_number = max_shots
+			return firemodeOverride
+
+		// Otherwise, return the selected firemode.
+		return firemode
+
 	process_ammo(var/mob/user, var/datum/firemode/firemode)
 		if(can_shoot_partially)
-			var/ammo_per_shot = src.current_projectile.cost / src.current_projectile.firemode.shot_number
-			var/ammoCost = firemode.shot_number * ammo_per_shot
+			var/ammoCost = firemode.shot_number * src.current_projectile.cost
 			if(src.ammo.use(ammoCost))
 				handle_casings(firemode.shot_number)
 				return 1
 		else
 			if(src.ammo && src.current_projectile)
-				if(src.ammo.use(current_projectile.cost))
+				if(src.ammo.use(current_projectile.cost * firemode.shot_number))
 					handle_casings(firemode.shot_number)
 					return 1
 		if (src.click_sound)
@@ -189,19 +200,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.casings_to_eject < 0)
 				src.casings_to_eject = 0
 			src.casings_to_eject += num
-	override_firemode()
-		var/ammoRemaining = src.ammo.amount_left
-		if (ammoRemaining >= src.current_projectile.cost)
-			return null
-
-		var/ammo_per_shot = src.current_projectile.cost / selected_firemode.shot_number
-
-		var/max_shots = round(ammoRemaining/ammo_per_shot)
-		if (max_shots > 0)
-			var/datum/firemode/firemodeOverride = new src.current_projectile.firemode.type()
-			firemodeOverride.shot_number = max_shots
-			return firemodeOverride
-		return null
 
 	//attack_self(mob/user as mob)
 	//	return
@@ -657,7 +655,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.default_magazine = barrel.default_magazine
 		src.recoil_strength = barrel.recoil_strength
 		set_current_projectile(new barrel.default_projectile)
-		src.projectiles = list(current_projectile)
+		src.add_firemode(null, current_projectile)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
 		src.tooltip_rebuild = 1
 
@@ -766,6 +764,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
+		add_firemode(new/datum/firemode/automatic, null)
 		AddComponent(/datum/component/holdertargeting/fullauto/ramping, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
@@ -892,11 +891,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
-
 		if(throw_return)
-			projectiles = list(current_projectile)
+			add_firemode(new/datum/firemode/single, null)
 		else
-			projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
+			add_firemode(new/datum/firemode/single, null)
+			add_firemode(new/datum/firemode/automatic, null)
 			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
@@ -959,7 +958,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			default_magazine = /obj/item/ammo/bullets/bullet_9mm
 			ammo = new default_magazine
 			set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
-			projectiles = list(current_projectile)
+			add_firemode(new/datum/firemode/single, null)
 			UpdateIcon()
 
 /obj/item/gun/kinetic/uzi
@@ -989,7 +988,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
-		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
+		add_firemode(new/datum/firemode/automatic, null)
+		add_firemode(new/datum/firemode/three_burst, null)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
@@ -1001,27 +1001,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			spread_angle = 8
 			shoot_delay = 5
-
-	//warcrimes brought to you by bullets telling guns how to shoot!
-	attackby(obj/item/ammo/bullets/b, mob/user)
-		var/obj/previous_ammo = ammo
-		var/mode_was_auto = current_projectile.fullauto_valid
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
-			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
-				if(mode_was_auto)
-					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
-					projectiles = list(new/datum/projectile/bullet/nine_mm_surplus/burst, current_projectile)
-				else
-					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
-			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
-				if(mode_was_auto)
-					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
-					projectiles = list(new/datum/projectile/bullet/bullet_9mm/smg, current_projectile)
-				else
-					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
 
 /obj/item/gun/kinetic/greasegun
 	name = "\improper Grease Gun"
@@ -1282,6 +1261,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
+		add_firemode(new/datum/firemode/automatic, null)
 		AddComponent(/datum/component/holdertargeting/fullauto, 0.6)
 		..()
 
@@ -1330,7 +1310,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/veritate)
-		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
+		add_firemode(/datum/firemode/single, /datum/projectile/bullet/veritate)
+		add_firemode(/datum/firemode/three_burst, /datum/projectile/bullet/veritate)
 		..()
 
 	disposing()
@@ -3103,32 +3084,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
-		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
+		add_firemode(new/datum/firemode/single, null)
+		add_firemode(new/datum/firemode/two_burst, null)
 		..()
-
-	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
-		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
-		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
-			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
-				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
-					projectiles = list(new/datum/projectile/bullet/assault_rifle/armor_piercing, current_projectile)
-				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/armor_piercing)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
-			else // we switched from armor penetrating ammo to normal
-				if(mode_was_burst) // we were in burst shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst)
-					projectiles = list(new/datum/projectile/bullet/assault_rifle, current_projectile)
-				else // we were in single shot mode
-					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
-					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
+		if (istype(current_firemode, /datum/firemode/two_burst))
 			spread_angle = 12.5
 			shoot_delay = 4 DECI SECONDS
 		else
@@ -3166,17 +3128,19 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
-		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst/remington)
+		add_firemode(new/datum/firemode/single, null)
+		add_firemode(new/datum/firemode/two_burst, null)
 		..()
 
-	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
-		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
-		..()
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if (current_firemode.shot_number > 1 || current_firemode.full_auto)
+			P.power *= 0.75
+
 
 	attack_self(mob/user)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))
+		if (istype(current_firemode, new/datum/firemode/two_burst))
 			spread_angle = 7.5
 			shoot_delay = 4 DECI SECONDS
 		else
@@ -3226,7 +3190,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
-		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
+		add_firemode(new/datum/firemode/lmg, null)
+		add_firemode(new/datum/firemode/automatic, null)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
 		..()
 

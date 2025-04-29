@@ -220,7 +220,7 @@ proc/Create_Tommyname()
 
 	New()
 		set_current_projectile(new/datum/projectile/tommy)
-		projectiles = list(new/datum/projectile/tommy)
+		add_firemode(null, current_projectile)
 		..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -405,7 +405,7 @@ proc/Create_Tommyname()
 	cell_type = /obj/item/ammo/power_cell/high_power
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
-		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
+		add_firemode(null, current_projectile)
 		..()
 
 ////////////////////////////// Power machine

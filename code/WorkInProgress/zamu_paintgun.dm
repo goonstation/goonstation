@@ -16,7 +16,7 @@
 
 	New()
 		set_current_projectile(new /datum/projectile/paintball)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		src.inventory_counter?.update_number(0)
 		..()
 

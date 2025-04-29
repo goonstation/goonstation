@@ -50,7 +50,7 @@ TYPEINFO(/obj/item/gun/energy)
 		. = ..()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "[(length(firemodes) > 1) ? "It is set to [src.current_projectile.sname]. " : ""]There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 		else
 			. += "There is no cell loaded!"
 		if(current_projectile)
@@ -152,7 +152,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 	New()
 		set_current_projectile(new/datum/projectile/heavyion)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
@@ -174,7 +174,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	borg
@@ -187,7 +187,7 @@ TYPEINFO(/obj/item/gun/energy)
 	New()
 		..()
 		set_current_projectile(new/datum/projectile/energy_bolt/bouncy)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 
 /////////////////////////////////////LASERGUN
 /obj/item/gun/energy/laser_gun
@@ -203,16 +203,16 @@ TYPEINFO(/obj/item/gun/energy)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
 		New()
 			..()
+			firemodes = list()
 			set_current_projectile(new /datum/projectile/laser/virtual)
-			projectiles.len = 0
-			projectiles += current_projectile
+			add_firemode(null, current_projectile)
 
 
 ////////////////////////////////////// Antique laser gun
@@ -316,19 +316,19 @@ TYPEINFO(/obj/item/gun/energy/antique)
 		switch(src.evaluateQuality())
 			if(5 to INFINITY)
 				src.current_projectile = new/datum/projectile/laser
-				src.projectiles = list(current_projectile, new/datum/projectile/laser/glitter/burst)
+				add_firemode(null, current_projectile)
+				add_firemode(null, new/datum/projectile/laser/glitter/burst)
 				return 3
 			if(3 to 5)
 				src.current_projectile = new/datum/projectile/laser
-				src.projectiles = list(current_projectile)
+				add_firemode(null, current_projectile)
 				return 2
 			if(1 to 3)
 				src.current_projectile = new/datum/projectile/laser/glitter
-				src.projectiles = list(current_projectile)
+				add_firemode(null, current_projectile)
 				return 1
 			if(-INFINITY to 1)
 				src.current_projectile = null
-				src.projectiles = null
 				return 0
 
 //////////////////////////////////////// Phaser
@@ -345,7 +345,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light)
-		projectiles = list(current_projectile)
+		add_firemode(/datum/firemode/single, null)
 		..()
 
 /obj/item/gun/energy/phaser_gun/extended_mag
@@ -368,7 +368,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/phaser_huge)
@@ -395,7 +395,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
@@ -413,7 +413,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/smg)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
@@ -437,7 +437,6 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
@@ -448,7 +447,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 
 	New()
 		set_current_projectile(new/datum/projectile/rad_bolt)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 
@@ -483,7 +482,8 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile,new/datum/projectile/laser)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
 		..()
 	update_icon()
@@ -532,7 +532,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/diffuse)
-		projectiles = list(current_projectile,new/datum/projectile/laser/diffuse)
+		add_firemode(null, current_projectile)
 		..()
 
 	update_icon()
@@ -568,7 +568,8 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
-		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/laser/ntburst)
 		..()
 
 	update_icon()
@@ -601,7 +602,8 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread)
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgunslug)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/energy_bolt/tasershotgunslug)
 		..()
 
 
@@ -622,7 +624,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt_v)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 //////////////////////////////////////Crabgun
@@ -640,13 +642,12 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	rechargeable = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
 
 	New()
 		set_current_projectile(new/datum/projectile/claw)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	attackby(obj/item/b, mob/user)
@@ -673,7 +674,9 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 
 	New()
 		set_current_projectile(new/datum/projectile/wavegun)
-		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/bouncy)
+		add_firemode(null, new/datum/projectile/wavegun)
+		add_firemode(null, new/datum/projectile/wavegun/transverse)
+		add_firemode(null, new/datum/projectile/wavegun/bouncy)
 		..()
 
 	// Old phasers aren't around anymore, so the wave gun might as well use their better sprite (Convair880).
@@ -712,7 +715,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 
 	New()
 		set_current_projectile(new/datum/projectile/bfg)
-		projectiles = list(new/datum/projectile/bfg)
+		add_firemode(null, current_projectile)
 		..()
 
 	update_icon()
@@ -750,7 +753,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 
 	New()
 		set_current_projectile(new /datum/projectile/tele_bolt)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	// I overhauled everything down there. Old implementation made the telegun unreliable and crap, to be frank (Convair880).
@@ -883,7 +886,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 
 	New()
 		set_current_projectile(new /datum/projectile/energy_bolt_antighost)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 ///////////////////////////////////////Particle Blasters
@@ -927,7 +930,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	/*examine()
@@ -972,7 +975,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
@@ -995,7 +998,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/carbine)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 /obj/item/gun/energy/blaster_cannon
@@ -1019,7 +1022,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		c_flags |= ONBACK
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
@@ -1098,7 +1101,8 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/owl)
-		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
+		add_firemode(null, new/datum/projectile/owl)
+		add_firemode(null, new/datum/projectile/owl/owlate)
 		..()
 
 /obj/item/gun/energy/owl_safe
@@ -1113,7 +1117,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/owl)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 ///////////////////////////////////////Frog Gun (Shoots :getin: and :getout:)
@@ -1130,7 +1134,8 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/frog)
-		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
+		add_firemode(null, new/datum/projectile/bullet/frog)
+		add_firemode(null, new/datum/projectile/bullet/frog/getout)
 		..()
 
 ///////////////////////////////////////Shrink Ray
@@ -1145,7 +1150,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/shrink_beam)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 /obj/item/gun/energy/shrinkray/growray
@@ -1153,7 +1158,7 @@ TYPEINFO(/obj/item/gun_parts)
 	New()
 		..()
 		set_current_projectile(new/datum/projectile/shrink_beam/grow)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 
 // stinky ray
 /obj/item/gun/energy/stinkray
@@ -1167,7 +1172,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/bioeffect_beam/stinky)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 
@@ -1183,7 +1188,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/glitch/gun)
-		projectiles = list(new/datum/projectile/bullet/glitch/gun)
+		add_firemode(null, current_projectile)
 		..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -1211,7 +1216,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma)
-		projectiles = list(new/datum/projectile/laser/plasma)
+		add_firemode(null, current_projectile)
 		..()
 
 /obj/item/gun/energy/plasma_gun/vr
@@ -1267,7 +1272,6 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	is_syndicate = 1
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
@@ -1283,7 +1287,9 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 
 	New()
 		set_current_projectile(new/datum/projectile/pickpocket/steal)
-		projectiles = list(current_projectile, new/datum/projectile/pickpocket/plant, new/datum/projectile/pickpocket/harass)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/pickpocket/plant)
+		add_firemode(null, new/datum/projectile/pickpocket/harass)
 		..()
 
 	get_desc(dist)
@@ -1382,7 +1388,7 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	update_icon()
@@ -1416,6 +1422,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	muzzle_flash = "muzzle_flash_elec"
 	tooltip_flags = REBUILD_USER
 	var/emagged = FALSE
+	var/list/projectiles
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
@@ -1738,7 +1745,8 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	New()
 		..()
 		set_current_projectile(new/datum/projectile/energy_bolt/pulse)//uses 35PU per shot, so 8 shots
-		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 
 ///////////////////////////////////////Wasp Gun
@@ -1758,14 +1766,13 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/quadwasp)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 ///Crossbow that fires irradiating neutron projectiles like the nuclear reactor
@@ -1782,14 +1789,13 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
 
 	New()
 		set_current_projectile(new/datum/projectile/neutron(50))
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 
@@ -1809,7 +1815,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	New()
 		..()
 		set_current_projectile(new/datum/projectile/special/howitzer)
-		projectiles = list(new/datum/projectile/special/howitzer )
+		add_firemode(null, current_projectile)
 
 TYPEINFO(/obj/item/gun/energy/optio1)
 	mats = list("iridiumalloy" = 30,
@@ -1827,7 +1833,8 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/optio)
-		projectiles = list(current_projectile, new/datum/projectile/bullet/optio/hitscan)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/bullet/optio/hitscan)
 		..()
 
 TYPEINFO(/obj/item/gun/energy/signifer2)
@@ -1849,7 +1856,8 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
-		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/laser/signifer_lethal)
 		..()
 
 	update_icon()
@@ -1924,7 +1932,8 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/plasma/auto)
-		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/laser/plasma/burst)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
@@ -2033,8 +2042,8 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
-
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
+		add_firemode(null, current_projectile)
+		add_firemode(null,new/datum/projectile/energy_bolt/smgauto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
@@ -2066,7 +2075,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
-		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
+		add_firemode(null, current_projectile)
 		..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //it's experimental for a reason; use at your own risk!
@@ -2185,7 +2194,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	New()
 		processing_items |= src
 		set_current_projectile(new/datum/projectile/laser/makeshift)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	Exited(Obj, newloc)
@@ -2383,7 +2392,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	restrict_cell_type = /obj/item/ammo/power_cell/lasergat
 	New()
 		set_current_projectile(new/datum/projectile/laser/lasergat/burst)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
@@ -2421,7 +2430,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		. = ..()
 		color = list(0,0,1,1,0,0,0,1,0)
 		set_current_projectile(new bubble_type)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 
 /obj/item/gun/energy/bubble_gun/bomb
 	name = "Bubble Bomb Max ULTRAimpact"
@@ -2457,7 +2466,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread/laser)
-		projectiles = list(new/datum/projectile/special/spreader/tasershotgunspread/laser)
+		add_firemode(null, current_projectile)
 		..()
 
 	canshoot(mob/user)

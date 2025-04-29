@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
 		src.link_tank(B)
 		..()
-		src.current_projectile.fullauto_valid = 1
+		src.current_projectile.firemode.full_auto = 1
 		src.set_current_projectile(src.current_projectile)
 
 	proc/link_tank(obj/item/tank/jetpack/backtank/tank)
@@ -676,7 +676,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		if ("change_mode")
 			var/new_mode = params["mode"]
 			playsound(src, 'sound/effects/valve_creak.ogg', 15, TRUE)
-			src.current_projectile.fullauto_valid = 1
+			src.current_projectile.firemode.full_auto = 1
 			src.current_projectile.firemode.shot_number = 1
 			src.current_projectile.firemode.shot_delay = 2 DECI SECONDS
 			switch(new_mode)
@@ -693,10 +693,10 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 					src.current_projectile.firemode.shot_number = 4
 					src.chem_divisor = 4 //4 shots per burst
 					src.shoot_delay = 1 SECOND
-					src.current_projectile.fullauto_valid = 0
+					src.current_projectile.firemode.full_auto = 0
 				if("semi_auto") // single line (default)
 					src.mode = FLAMER_MODE_SINGLE
-					src.current_projectile.fullauto_valid = 0
+					src.current_projectile.firemode.full_auto = 0
 					src.spread_angle = 0
 					src.shoot_delay = 1 SECOND
 					src.chem_divisor = 1 //1 line per second

@@ -642,7 +642,7 @@
 
 	New()
 		set_current_projectile(new/datum/projectile/wonk)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 //FUCKABLE MOBS

@@ -431,9 +431,8 @@ toxic - poisons
 	sname = "full-auto"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	shot_sound_extrarange = 5
-	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 
 	disruption = 8
 
@@ -455,9 +454,8 @@ toxic - poisons
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 3
-	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
-	fullauto_valid = 1
+	default_firemode = /datum/firemode/automatic
 
 	disruption = 2
 

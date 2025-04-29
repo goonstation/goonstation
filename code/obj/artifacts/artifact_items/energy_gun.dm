@@ -26,8 +26,9 @@
 				for(var/datum/projectile/artifact/forceBullet as anything in forceBullets)
 					forceBullet.turretArt = null // not making this trigger faults on people who are shot, to prevent guns from feeling too unfair
 				AS.bullets = forceBullets
-			set_current_projectile(pick(AS.bullets))
-			projectiles = AS.bullets
+			var/datum/projectile/artifact/current_projectile = pick(AS.bullets)
+			set_current_projectile(current_projectile)
+			add_firemode(null, current_projectile)
 			AddComponent(/datum/component/cell_holder, new/obj/item/ammo/power_cell/self_charging/artifact(src,A.artitype,current_projectile.cost), swappable = FALSE)
 
 		src.setItemSpecial(null)

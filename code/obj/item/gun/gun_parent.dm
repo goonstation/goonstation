@@ -26,8 +26,15 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/spread_angle = 0
 	var/datum/projectile/current_projectile = null
-	var/list/projectiles = null
-	var/current_projectile_num = 1
+	var/list/firemodes[0][0] = null // List of projectile:firemode this gun can use
+	/// What firemode is this gun set to use? If null, defaults to the current projectile's default firemode.
+	var/datum/firemode/current_firemode = null
+
+	/// TRUE if this gun can fire multiple different projectile types. Used to reduce redundant info in firemode cycling.
+	var/multiple_projectiles = FALSE
+	/// TRUE if this gun can use multiple different firemodes. Used to reduce redundant info in firemode cycling.
+	var/multiple_firemodes = FALSE
+	var/current_firemode_num = 1
 	var/silenced = 0
 	///the "out of ammo oh no" click
 	var/click_sound = 'sound/weapons/Gunclick.ogg'
@@ -124,8 +131,29 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/check_lock(var/user as mob)
 	return 1
 
-///CHECK_FIREMODE
-///Return a non-null firemode to override the current firemode
+///ADD_FIREMODE
+/// Add a firemode to the gun.
+/// If a firemode is not passed, it will use the projectile's default firemode.
+/// If a projectile is passed, it will explicitly use that projectile.
+/// If P is null, it will instead respect the currently loaded ammo.
+/obj/item/gun/proc/add_firemode(var/datum/firemode/F, var/datum/projectile/P)
+	if (!src.firemodes)
+		src.firemodes = list()
+	var/len = length(firemodes)
+	if (len == 0)
+		src.current_firemode = F ? F : P.default_firemode
+
+	if (len > 0)
+		if (firemodes[len][2] != P)
+			multiple_projectiles = TRUE
+		if (firemodes[len][1] != F)
+			multiple_firemodes = TRUE
+	src.firemodes += null
+	src.firemodes[len+1] = list(F, P)
+	return
+
+///OVERRIDE_FIREMODE
+///Return a non-null firemode to override the projectile's default firemode
 /obj/item/gun/proc/override_firemode()
 	return
 
@@ -155,10 +183,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/attack_self(mob/user as mob)
 	..()
-	if(src.projectiles && length(src.projectiles) > 1)
-		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
-		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
+	if(src.firemodes && length(src.firemodes) > 1)
+		src.current_firemode_num = ((src.current_firemode_num) % src.firemodes.len) + 1
+		src.set_current_firemode(src.firemodes[src.current_firemode_num][1])
+		if (src.firemodes[src.current_firemode_num][2])
+			src.set_current_projectile(src.firemodes[src.current_firemode_num][2])
+		var/multivariate = multiple_firemodes && multiple_projectiles
+		var/string1 = ""
+		boutput(user, SPAN_NOTICE("You set the output to [multiple_firemodes ? "[src.current_firemode.name]":""][multivariate ? ", ":""][multiple_projectiles ? "[src.current_projectile.sname]":""]."))
 	return
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
@@ -210,9 +242,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/// Alter the firemode before shooting, like reducing shot_number.
-/obj/item/gun/proc/alter_firemode(var/datum/firemode/F)
-	return
 
 /obj/item/gun/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
@@ -304,8 +333,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
-	var/datum/firemode/fireMode = override_firemode()
-	if (!process_ammo(user, fireMode || current_projectile.firemode))
+	var/datum/firemode/FM = override_firemode()
+	if (!process_ammo(user, FM || current_projectile.firemode))
 		return FALSE
 
 	if (src.muzzle_flash)
@@ -333,10 +362,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	spread += (recoil/recoil_max) * recoil_inaccuracy_max
-	var/datum/firemode/FM = current_projectile.default_firemode
-	src.alter_firemode(FM)
 	for (var/i = 0; i < FM.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode = FM)
 		if (!P)
 			return FALSE
 		if (user == target)
@@ -425,7 +452,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	spread += (recoil/recoil_max) * recoil_inaccuracy_max
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode_override = fireMode)
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode = fireMode)
 	if (P)
 		P.forensic_ID = src.forensic_ID
 	P.spread = spread
@@ -514,9 +541,17 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 ///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
 /obj/item/gun/proc/set_current_projectile(datum/projectile/newProj)
+	if (!current_firemode)
+		src.current_firemode = new newProj.default_firemode()
+		SEND_SIGNAL(src, COMSIG_GUN_FIREMODE_CHANGED, current_firemode)
 	src.current_projectile = newProj
-	src.tooltip_rebuild = TRUE
+	src.tooltip_rebuild = EVAL_BOOL_TRUE
 	SEND_SIGNAL(src, COMSIG_GUN_PROJECTILE_CHANGED, newProj)
+
+///setter for current_projectile so we can have a signal attached. do not set current_projectile on guns without this proc
+/obj/item/gun/proc/set_current_firemode(datum/firemode/newFiremode)
+	src.current_firemode = newFiremode
+	SEND_SIGNAL(src, COMSIG_GUN_FIREMODE_CHANGED, newFiremode)
 
 /obj/item/gun/proc/do_camera_recoil(mob/user, turf/start, turf/target, POX, POY)
 	// calculate the mob's position relative to the target location

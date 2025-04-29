@@ -51,7 +51,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 	New()
 		current_projectile = new initial_proj
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
 		if(istype(loc, /mob/living))
 			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
