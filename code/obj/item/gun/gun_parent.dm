@@ -26,7 +26,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/spread_angle = 0
 	var/datum/projectile/current_projectile = null
-	var/list/firemodes[0][0] = null // List of projectile:firemode this gun can use
+	var/list/firemodes // List of projectile:firemode this gun can use
 	/// What firemode is this gun set to use? If null, defaults to the current projectile's default firemode.
 	var/datum/firemode/current_firemode = null
 
@@ -189,7 +189,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (src.firemodes[src.current_firemode_num][2])
 			src.set_current_projectile(src.firemodes[src.current_firemode_num][2])
 		var/multivariate = multiple_firemodes && multiple_projectiles
-		var/string1 = ""
 		boutput(user, SPAN_NOTICE("You set the output to [multiple_firemodes ? "[src.current_firemode.name]":""][multivariate ? ", ":""][multiple_projectiles ? "[src.current_projectile.sname]":""]."))
 	return
 
