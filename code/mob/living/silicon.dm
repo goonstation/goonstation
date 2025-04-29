@@ -757,29 +757,58 @@ var/global/list/module_editors = list()
 		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
 		src.owner.UpdateOverlays(distress, "battery_distress")
 		src.silicon = src.owner
-		src.next_sound_time = world.time + 5 SECONDS
-		src.silicon.show_text()
+		src.next_sound_time = TIME + 5 SECONDS
+		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
 
 	onUpdate(timePassed)
 		. = ..()
-		if(src.silicon.cell?.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+		if (isnull(src.silicon.cell))
+			if (isrobot(src.silicon))
+				src.silicon.setStatus("no_cell_robot", INFINITE_STATUS)
+			else if (isAI(src.silicon))
+				;
+			else if (isshell(src.silicon))
+				;
+			else if (isghostdrone(src.silicon))
+				;
 			src.remove_self()
-		if (world.time > src.next_sound_time)
+		else if(src.silicon.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else if (src.silicon.cell.charge == 0)
+			if (isrobot(src.silicon))
+				src.silicon.setStatus("no_power_robot", INFINITE_STATUS)
+			src.remove_self()
+		if (TIME > src.next_sound_time)
 			playsound(src.owner.loc, src.low_power_sound, 100, 1)
-			src.next_sound_time = world.time + 5 SECONDS
+			src.next_sound_time = TIME + 5 SECONDS
 
 	onRemove()
 		. = ..()
 		src.silicon = null
 		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
+		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
 
-/datum/statusEffect/killswitched
-	id = "killswitched"
-	name = "Killswitched"
-	desc = "You are going to die."
-	icon_state = "blinded3"
+/datum/statusEffect/low_power/robot
+	id = "low_power_robot"
+	var/mob/living/silicon/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+
+
+/datum/statusEffect/no_power
+	id = "no_power"
+	name = "No Power"
+	desc = "Your internal cell is completely out of charge."
+	icon_state = "no_power"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/mob/living/silicon/silicon
 
 	preCheck(atom/A)
 		if (!issilicon(A))
@@ -788,19 +817,134 @@ var/global/list/module_editors = list()
 
 	onAdd(optional)
 		. = ..()
+		src.silicon = src.owner
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		silicon.UpdateOverlays(distress, "battery_distress")
+		silicon.addOverlayComposition(/datum/overlayComposition/low_signal)
 
 	onUpdate(timePassed)
 		. = ..()
+		if (isnull(src.silicon.cell))
+			if (isrobot(silicon))
+				;
+			else if (isAI(silicon))
+				;
+			else if (isshell(silicon))
+				;
+			else if (isghostdrone(silicon))
+				;
+			src.remove_self()
+		else if (src.silicon.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else if (src.silicon.cell.charge > 0)
+			if (isrobot(silicon))
+				;
+			else if (isAI(silicon))
+				;
+			else if (isshell(silicon))
+				;
+			else if (isghostdrone(silicon))
+				;
+			src.remove_self()
+
 
 	onRemove()
 		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		silicon.ClearSpecificOverlays("battery_distress")
+		silicon.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/statusEffect/no_power/robot
+	id = "no_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated) R.upgrade_deactivate(robot)
+
+/datum/statusEffect/no_power/robot/no_cell
+	id = "no_cell_robot"
+	name = "No Power Cell"
+	desc = "You have no power cell installed!"
+	icon_state = "no_power"
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.ClearSpecificOverlays("battery_distress")
+		src.owner.UpdateOverlays(distress, "battery_distress")
+
+/datum/statusEffect/killswitched
+	id = "killswitched"
+	name = "Killswitched"
+	desc = "You are going to die."
+	icon_state = "blinded3"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/time_to_die
+
+	preCheck(atom/A)
+		if (!issilicon(A))
+			return FALSE
+		. = ..()
+
+	onAdd(kill_at)
+		. = ..()
+		src.time_to_die = kill_at
+
+	onUpdate(timePassed)
+		. = ..()
+		if (TIME > src.time_to_die)
+			src.do_killswitch()
+			src.remove_self()
 
 	proc/do_killswitch()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
 			if (M.client)
 				boutput(src, SPAN_ALERT("<b>Killswitch engaged!</b>"))
-				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
+				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
+
+/datum/statusEffect/killswitched/robot
+	id = "killswitched_robot"
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	do_killswitch()
+		. = ..()
+		// Pop the head compartment open and eject the brain
+		var/mob/living/silicon/robot/robot = src.owner
+		robot.eject_brain(fling = TRUE)
+		robot.update_appearance()
+		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+
+/datum/statusEffect/killswitched/ai
+	id = "killswitched_ai"
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	do_killswitch()
+		. = ..()
+
+
 
 /datum/statusEffect/lockdown
 	id = "lockdown"
@@ -850,44 +994,9 @@ var/global/list/module_editors = list()
 	onUpdate(timePassed)
 		. = ..()
 		src.robot.uneq_all()
-		for (var/obj/item/roboupgrade/R in robot.contents)
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated) R.upgrade_deactivate(robot)
 
 	onRemove()
 		. = ..()
 		src.robot = null
-
-/datum/statusEffect/no_power
-	id = "no_power"
-	name = "No Power"
-	desc = "Your internal cell is completely out of charge."
-	icon_state = "no_power"
-	unique = TRUE
-	effect_quality = STATUS_QUALITY_NEGATIVE
-
-	onAdd(optional)
-		. = ..()
-		if (!ismob(owner)) return
-		var/mob/M = owner
-		M.addOverlayComposition(/datum/overlayComposition/low_signal)
-
-	onUpdate(timePassed)
-		. = ..()
-		src.robot.uneq_all()
-		for (var/obj/item/roboupgrade/R in robot.contents)
-			if (R.activated) R.upgrade_deactivate(robot)
-
-	onRemove()
-		. = ..()
-		if (QDELETED(owner) || !ismob(owner)) return
-		var/mob/M = owner
-		M.removeOverlayComposition(/datum/overlayComposition/low_signal)
-
-/datum/statusEffect/no_power/no_cell
-	id = "no_cell"
-	name = "No Power Cell"
-	desc = "You have no power cell installed!"
-	icon_state = "no_power"
-
-	onAdd(optional)
-		. = ..()

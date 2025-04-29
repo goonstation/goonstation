@@ -2503,8 +2503,6 @@
 
 			if (power_use_tally < 0) power_use_tally = 0
 
-
-
 			return power_use_tally
 		else return 0
 
@@ -2528,19 +2526,14 @@
 				if (isalive(src))
 					sleep(0)
 					src.lastgasp()
+				src.setStatus("no_power_robot")
 				setunconscious(src)
 				for (var/obj/item/roboupgrade/R in src.contents)
 					if (R.activated)
 						R.upgrade_deactivate(src)
-			else if (src.cell.charge <= 100)
-				src.module_active = null
-
-				uneq_slot(1)
-				uneq_slot(2)
-				uneq_slot(3)
+			else if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				src.setStatus("low_power_robot", INFINITE_STATUS)
 				src.cell.use(1)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated) R.upgrade_deactivate(src)
 			else
 				var/efficient = 0
 				var/fix = 0
@@ -2595,8 +2588,6 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD && !src.hasStatus("low_power"))
-				src.setStatus("low_power", INFINITE_STATUS)
 
 		else
 			if (isalive(src))
@@ -2664,7 +2655,7 @@
 				killswitch = 0
 				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 
-				// Pop the head ompartment open and eject the brain
+				// Pop the head compartment open and eject the brain
 				src.eject_brain(fling = TRUE)
 				src.update_appearance()
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)

@@ -244,7 +244,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (isunconscious(user))
 				return
 			else
-				user.visible_message("<b>[user]</b> moves [R] into  [src].")
+				user.visible_message("<b>[user]</b> moves [R] into [src].")
 		R.remove_pulling()
 		R.set_loc(src)
 		src.occupant = R
