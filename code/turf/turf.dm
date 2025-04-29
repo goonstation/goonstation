@@ -1111,12 +1111,12 @@ TYPEINFO(/turf/simulated)
 
 /turf/simulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/grass
@@ -1186,7 +1186,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/wall/bombvr
