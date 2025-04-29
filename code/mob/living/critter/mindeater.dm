@@ -228,7 +228,7 @@
 	/// move from intangible to tangible state
 	proc/manifest()
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/become_tangible)
-		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
+		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags &= ~UNCRUSHABLE
 		src.density = TRUE
 		src.set_invisible()
@@ -244,7 +244,7 @@
 
 	/// move from tangible to intangible state
 	proc/demanifest()
-		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
+		src.event_handler_flags |= (MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags |= UNCRUSHABLE
 		src.density = FALSE
 		src.set_invisible()
