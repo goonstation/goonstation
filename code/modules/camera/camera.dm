@@ -23,8 +23,6 @@
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
-	/// Cameras only the AI can see through
-	var/ai_only = FALSE
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
@@ -72,8 +70,9 @@
 							/area/station/turret_protected/AIbasecore1,
 							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
-		src.ai_only = TRUE
 		src.prefix = "AI"
+		src.network = CAMERA_NETWORK_AI_ONLY
+		src.color = "#9999cc"
 
 	if (src.sticky)
 		autoposition(src.alternate_sprites)
@@ -336,8 +335,9 @@
 /// AI only camera
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
+	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
-	ai_only = TRUE // TODO: Make this a separate network instead of a flag
+	color = "#9999cc"
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining

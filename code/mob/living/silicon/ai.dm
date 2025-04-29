@@ -77,6 +77,10 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
 	"Wink (Inverted)" = "ai_wink-lod",\
+	"Wide Smile" = "ai_widesmile-dol",\
+	"Wide Smile (Inverted)" = "ai_widesmile-lod",\
+	"Sunglasses" = "ai_sunglasses-dol",\
+	"Sunglasses (Inverted)" = "ai_sunglasses-lod",\
 	"Devious" = "ai_devious-dol",\
 	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
@@ -99,6 +103,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		CAMERA_NETWORK_RANCH,
 		CAMERA_NETWORK_SCIENCE,
 		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
 	)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
@@ -923,12 +928,12 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if (single_camera?.camera_status)
-		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"byond://?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
 	else if (length(camera_list))
 		var/first_cam = TRUE
 		var/cameras_string = ""
 		for (var/obj/machinery/camera/camera in camera_list)
-			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"byond://?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
 			first_cam = FALSE
 		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
 	else
@@ -2812,4 +2817,3 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
-

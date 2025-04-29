@@ -4874,7 +4874,7 @@
 /area/station/crew_quarters/quartersA)
 "btM" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
@@ -5883,9 +5883,7 @@
 /area/station/quartermaster/office)
 "bHy" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -5909,9 +5907,7 @@
 /area/station/maintenance/outer/se)
 "bHA" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -7464,7 +7460,7 @@
 /area/station/medical/asylum/main)
 "cgS" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/clothing/suit/judgerobe,
 /obj/item/clothing/head/powdered_wig,
 /obj/item/pen/marker/red,
@@ -8869,9 +8865,7 @@
 /area/station/maintenance/inner/se)
 "cxC" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -11192,9 +11186,7 @@
 /area/station/hallway/primary/northwest)
 "djS" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
@@ -11408,7 +11400,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -20086,7 +20078,7 @@
 /area/station/medical/medbay/treatment)
 "fWH" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/incandescent/cool,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet/red/fancy/narrow{
@@ -22824,7 +22816,7 @@
 /area/station/crew_quarters/baroffice)
 "gPq" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -24145,9 +24137,7 @@
 /area/station/hallway/secondary/exit)
 "hka" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -29936,9 +29926,7 @@
 /area/station/security/equipment)
 "jbz" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -32798,9 +32786,7 @@
 /area/station/bridge/captain)
 "jTV" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -33721,6 +33707,19 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"khP" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/mining/staff_room)
 "kie" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -35314,9 +35313,7 @@
 /area/station/crew_quarters/garden)
 "kGl" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -44448,9 +44445,7 @@
 /area/station/medical/medbay/surgery/storage)
 "nxP" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
@@ -53951,9 +53946,7 @@
 /area/station/hallway/primary/northwest)
 "qsj" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent,
@@ -64296,7 +64289,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
+/obj/machinery/computer3/generic/personnel_management{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -71027,7 +71020,7 @@
 /area/station/crew_quarters/stockex)
 "vyo" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 12
 	},
 /obj/item/storage/pill_bottle/salicylic_acid,
@@ -73355,7 +73348,7 @@
 /area/station/crew_quarters/garden)
 "wiQ" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/blue,
 /area/spacehabitat/pool)
 "wiT" = (
@@ -79647,7 +79640,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	pixel_x = -13
 	},
 /turf/simulated/floor/carpet{
@@ -130426,7 +130419,7 @@ mYB
 lmA
 wCJ
 mYB
-ltB
+khP
 jme
 vYX
 xie

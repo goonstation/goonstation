@@ -79,11 +79,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		return
 
 	get_desc(dist, mob/user)
+		. = ..()
 		if (dist > 2)
 			return
 		if (!reagents)
 			return
-		. = "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
+		. += "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))

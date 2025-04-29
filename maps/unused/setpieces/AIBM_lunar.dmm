@@ -2870,7 +2870,7 @@
 /area/moon/museum)
 "hK" = (
 /obj/machinery/vending/cola/red,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/moon/museum/west)
@@ -2948,7 +2948,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/moon/museum/west)
@@ -5885,24 +5885,24 @@
 /area/shuttle/escape/station)
 "nM" = (
 /obj/machinery/computer3/generic/radio,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/kitchen)
 "nN" = (
 /obj/machinery/chem_dispenser/chemical,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "nO" = (
 /obj/machinery/chem_heater,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "nP" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
@@ -5911,7 +5911,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
@@ -5920,12 +5920,12 @@
 /obj/stocking{
 	pixel_y = 28
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/station/crew_quarters/kitchen)
 "nS" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -5956,13 +5956,13 @@
 	},
 /obj/machinery/computer3/generic/communications,
 /obj/item/disk/data/floppy/devkit,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/station/crew_quarters/kitchen)
 "nX" = (
 /obj/item/disk/data/floppy/read_only/network_progs,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/kitchen)
@@ -5990,13 +5990,13 @@
 	icon_state = "0-2";
 	tag = "icon-0-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/kitchen)
 "od" = (
 /obj/machinery/power/smes/magical,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6073,12 +6073,12 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2";
 	tag = "icon-1-2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6109,7 +6109,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6160,7 +6160,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/table,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6199,7 +6199,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6299,7 +6299,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "oN" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6319,7 +6319,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oR" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6413,7 +6413,7 @@
 	icon_state = "tube1";
 	tag = ""
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6441,7 +6441,7 @@
 /obj/machinery/optable,
 /obj/item/circular_saw,
 /obj/item/scalpel,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6540,7 +6540,7 @@
 /obj/item/circular_saw,
 /obj/item/staple_gun,
 /obj/item/scalpel,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6590,7 +6590,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pA" = (
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pB" = (
@@ -6601,7 +6601,7 @@
 /area/station/crew_quarters/kitchen)
 "pC" = (
 /obj/machinery/vending/electronics,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6633,7 +6633,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6722,7 +6722,7 @@
 /area/station/crew_quarters/kitchen)
 "pR" = (
 /obj/reagent_dispensers/foamtank,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6745,7 +6745,7 @@
 /area/station/crew_quarters/kitchen)
 "pW" = (
 /obj/machinery/sleeper,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6821,13 +6821,13 @@
 /obj/item/paint_can/random,
 /obj/item/paint_can/random,
 /obj/item/paint_can/random,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/crew_quarters/kitchen)
 "qf" = (
 /obj/item/cable_coil,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6840,12 +6840,12 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "qi" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/station/crew_quarters/kitchen)
 "qj" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/crew_quarters/kitchen)
@@ -6891,37 +6891,37 @@
 /turf/simulated/wall,
 /area/sim/area1)
 "qp" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/station/crew_quarters/kitchen)
 "qq" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/kitchen)
 "qr" = (
 /obj/machinery/vending/paint/broken,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/kitchen)
 "qs" = (
 /obj/machinery/light/small,
 /obj/machinery/genetics_scanner,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/kitchen)
 "qt" = (
 /obj/machinery/computer/genetics,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/station/crew_quarters/kitchen)
 "qu" = (
 /obj/submachine/seed_vendor,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/station/crew_quarters/kitchen)

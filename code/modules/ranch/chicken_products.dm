@@ -173,10 +173,16 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	var/happiness_value = 0
 	/// is this even an egg? Does it hatch into a chicken? Or is it like, a water balloon.
 	var/is_hatchable = TRUE
+	/// is this egg in the secret repo?
+	var/is_secret = FALSE
 
 	New(obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/owning_egg)
 		. = ..()
 		src.owner = owning_egg
+#ifdef SECRETS_ENABLED
+		if(src.is_secret)
+			src.owner.icon = '+secret/icons/obj/chickens_secret.dmi'
+#endif
 
 	/// do things before the mob is created
 	proc/BeforeHatch()

@@ -444,6 +444,7 @@ Contains:
 	manipulated_item.master = src
 	manipulated_item.layer = initial(manipulated_item.layer)
 	user.u_equip(manipulated_item)
+	user.u_equip(src)
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	src.w_class = max(src.w_class, manipulated_item.w_class)
@@ -463,6 +464,7 @@ Contains:
 	if(src.requires_admin_messaging())
 		message_admins("A [src.name] was created at [log_loc(src)]. Created by: [key_name(user)]")
 	// Since the assembly was done, return TRUE
+	user.put_in_hand_or_drop(src)
 	return TRUE
 
 /obj/item/assembly/proc/add_additional_component(var/atom/to_combine_atom, var/mob/user)
@@ -477,6 +479,7 @@ Contains:
 	manipulated_item.master = src
 	manipulated_item.layer = initial(manipulated_item.layer)
 	user.u_equip(manipulated_item)
+	user.u_equip(src)
 	manipulated_item.set_loc(src)
 	manipulated_item.add_fingerprint(user)
 	boutput(user, "You attach the [manipulated_item.name] to the [src.name].")
@@ -495,6 +498,7 @@ Contains:
 	src.UpdateIcon()
 	src.UpdateName()
 	// Since the assembly was done, return TRUE
+	user.put_in_hand_or_drop(src)
 	return TRUE
 
 
@@ -586,6 +590,26 @@ Contains:
 	var/obj/item/new_trigger = new /obj/item/device/timer(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	src.set_up_new(null, new_trigger, new_applier)
+
+/////////////////////////////////////// Timer/igniter/butt /////////////////////////
+
+/obj/item/assembly/time_ignite_butt
+	secured = TRUE
+
+/obj/item/assembly/time_ignite_butt/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/timer(src)
+	var/obj/item/new_applier = new /obj/item/device/igniter(src)
+	var/obj/item/new_target = new /obj/item/clothing/head/butt(src)
+	src.set_up_new(null, new_trigger, new_applier, new_target)
+
+/obj/item/assembly/time_ignite_butt/prearmed
+
+/obj/item/assembly/time_ignite_butt/prearmed/New()
+	..()
+	var/obj/item/device/timer/assembly_timer = src.trigger
+	assembly_timer.time = 2 SECONDS
+	SEND_SIGNAL(assembly_timer, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src)
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
 
@@ -745,6 +769,7 @@ Contains:
 	bomb_strength = 32
 
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
+	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////

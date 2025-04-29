@@ -29,7 +29,7 @@ var/global/list/mapNames = list(
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
-	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
+	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
@@ -46,7 +46,8 @@ var/global/list/mapNames = list(
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
-	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
+	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69),
+	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30)
 )
 
 /obj/landmark/map
@@ -1244,6 +1245,54 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list("the developer zone" = list(/area/station/devzone),
 		"the test chamber or space" = list(/area/space))
+
+
+/datum/map_settings/neon
+	name = "NEON"
+	display_name = "Neon Deepwater Research Facility, Abzu"
+	goonhub_map = "/maps/neon"
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/foreground/caustics,
+	)
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = EAST
+	default_shuttle = "oshan"
+	shuttle_map_turf = /turf/space/fluid
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the bridge" = list(/area/station/bridge),
+		"the quartermaster's office" = list(/area/station/quartermaster/office),
+		"the warehouse" = list(/area/station/storage/warehouse),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the main engineering room" = list(/area/station/engine/engineering),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the toxins lab" = list(/area/station/science/lab))
 
 
 /area/shuttle/merchant_shuttle/left_centcom

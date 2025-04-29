@@ -92,7 +92,7 @@
 
 		if(!closest)
 			return
-		else if (!closest.camera_status || closest.ai_only)
+		else if (!closest.camera_status || !(closest.network in src.camera_networks))
 			boutput(user, SPAN_ALERT("ERROR. Cannot connect to camera."))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 0)
 			return

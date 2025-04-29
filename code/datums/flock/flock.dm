@@ -374,7 +374,7 @@ proc/get_default_flock()
 				qdel(arrow)
 		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
 		var/prefix = "[SPAN_BOLD("\[[src.name]\]")] [SPAN_NAME("[pinger.name]")]"
-		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
+		boutput(F, "<span class='[class]'><a href='byond://?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
 
 // ANNOTATIONS

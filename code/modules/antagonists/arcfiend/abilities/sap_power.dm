@@ -123,6 +123,8 @@
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 
+		var/points_gained = 0
+
 		if (ishuman(src.target))
 			var/mob/living/carbon/human/H = src.target
 			if (isdead(H))
@@ -134,6 +136,7 @@
 				src.scary_message = TRUE
 			H.TakeDamage("All", 0, 5)
 			H.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
+			points_gained = SAP_LIMIT_MOB
 			holder.addPoints(SAP_LIMIT_MOB)
 
 		else if (issilicon(src.target))
@@ -147,6 +150,7 @@
 				src.scary_message = TRUE
 			S.TakeDamage("chest", 3, 0, DAMAGE_BURN)
 			S.cell.use(POWER_CELL_DRAIN_RATE)
+			points_gained = SAP_LIMIT_MOB
 			holder.addPoints(SAP_LIMIT_MOB)
 			S.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
 
@@ -154,7 +158,6 @@
 			var/area/A = get_area(src.target)
 			var/obj/machinery/power/apc/target_apc = A?.area_apc
 			var/obj/machinery/M = src.target
-			var/points_gained = 0
 			var/broken_mult = M.is_broken() ? SAP_MACHINE_BROKEN_MULT : 1
 
 			if (istype(src.target, /obj/machinery/power))
@@ -196,6 +199,10 @@
 			S.set_up(2, FALSE, src.holder.owner)
 			S.start()
 		playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 30, TRUE, FALSE, pitch = 0.8)
+
+		var/image/chat_maptext/chat_text = null
+		chat_text = make_chat_maptext(src.target, "<span class='c ps2p sh' style='color: #e6e600;'>+[points_gained]<span style='font-size: 1.5em'>⚡</span></span>", alpha = 180, time = 0.5 SECONDS)
+		chat_text.show_to(src.holder.owner.client)
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)
 		src.onRestart()

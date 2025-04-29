@@ -3885,20 +3885,20 @@
 /area/station/crew_quarters/clown)
 "yF" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer3/generic/bank_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yH" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/communications,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yI" = (
@@ -6765,6 +6765,9 @@
 "Sy" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "SF" = (
@@ -7256,6 +7259,12 @@
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"We" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "Wg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -83234,7 +83243,7 @@ bm
 Ix
 Ix
 LS
-cD
+We
 cD
 mA
 cD
