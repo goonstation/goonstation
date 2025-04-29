@@ -139,6 +139,10 @@
 	emag_act()
 		return
 
+	pull(mob/user)
+		. = ..()
+		logTheThing(LOG_GAMEMODE, src, "[src] is pulled by [user.mind.ckey]/[user.name] at [log_loc(src)].")
+
 	proc/attempt_open(mob/user)
 		for (var/obj/ganglocker/locker in range(1,src))
 			if (locker.gang == user.get_gang() && locked)
