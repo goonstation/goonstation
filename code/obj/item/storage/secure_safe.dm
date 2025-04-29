@@ -425,7 +425,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				#ifdef SECRETS_ENABLED
 					eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
-					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pheoinx,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
 				#endif
 				for (var/i=rand(1,1), i>0, i--) // think we need this for loop for error handling still
