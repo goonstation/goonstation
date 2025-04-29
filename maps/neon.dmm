@@ -10801,7 +10801,7 @@
 /area/station/security/checkpoint/cargo)
 "htR" = (
 /obj/table/wood,
-/obj/item/reagent_containers/food/snacks,
+/obj/item/reagent_containers/food/snacks/steak,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "htV" = (
