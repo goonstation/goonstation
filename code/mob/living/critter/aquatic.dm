@@ -40,6 +40,9 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		src.is_pet = 0
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
+	#ifdef MAP_OVERRIDE_NEON // plasma coral, neon uniqueness, strange wildlife happenings
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+	#endif
 	..()
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
@@ -530,6 +533,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	pet_text = "pokes"
 	speechverb_say = "quibbles"
 	speechverb_exclaim = "shudders"
+	blood_id = "hemolymph"
 	death_text = "%src% collapses in a heap on the ground!"
 	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
 	add_abilities = list(/datum/targetable/critter/sting)

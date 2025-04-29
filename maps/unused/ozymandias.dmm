@@ -5094,7 +5094,7 @@
 /area/station/crewquarters/cryotron)
 "bwX" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quartersA)
 "bxa" = (
@@ -10121,10 +10121,8 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/engineering)
 "cQK" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/medical{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -12209,10 +12207,7 @@
 	name = "Jury Sequestration"
 	})
 "drZ" = (
-/obj/machinery/computer/announcement{
-	name = "Executive Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/captain,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -17343,10 +17338,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -20682,10 +20675,8 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -33085,7 +33076,7 @@
 /area/station/bridge)
 "iNE" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/engine/engineering/ce)
 "iNH" = (
@@ -39991,10 +39982,8 @@
 /turf/space,
 /area/space)
 "kGk" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -42745,7 +42734,7 @@
 /area/station/bridge/reception)
 "lqB" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/blind_switch/area/north,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
@@ -46832,7 +46821,7 @@
 /area/station/mining/staff_room)
 "mrf" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -53390,8 +53379,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /obj/machinery/light/small{
 	dir = 8;
@@ -55083,10 +55071,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/storage)
 "oAV" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 4;
@@ -55975,7 +55961,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -56046,7 +56032,7 @@
 	})
 "oMX" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -58078,8 +58064,7 @@
 /obj/machinery/bot/firebot,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart packed with firebots.";
-	name = "firebot cart";
-	req_access_txt = "40"
+	name = "firebot cart"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -58644,10 +58629,8 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "pxh" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -64862,7 +64845,7 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -65099,7 +65082,7 @@
 	dir = 8
 	},
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
 "rgu" = (
@@ -66240,11 +66223,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/station{
 	dir = 8;
-	name = "Detention Announcement Computer";
-	req_access_txt = "2"
+	name = "Detention Announcement Computer"
 	},
+/obj/mapping_helper/access/brig,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/brig)
 "rvU" = (
@@ -70089,7 +70072,7 @@
 /area/station/ranch)
 "srK" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -71282,7 +71265,7 @@
 /area/station/security/detectives_office)
 "sGp" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/sauna)
 "sGq" = (
@@ -79292,7 +79275,7 @@
 /area/station/crew_quarters/lounge/backstage)
 "uEy" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
@@ -80852,7 +80835,7 @@
 "uWn" = (
 /obj/machinery/light/small,
 /obj/table/wood/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/sauna)
 "uWr" = (
@@ -81232,7 +81215,7 @@
 /area/station/hangar/science)
 "vaN" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -81711,7 +81694,7 @@
 /area/station/maintenance/east)
 "vgU" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24

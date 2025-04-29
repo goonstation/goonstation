@@ -20878,9 +20878,7 @@
 /obj/item/device/radio/intercom/botany{
 	dir = 1
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -21321,7 +21319,7 @@
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -25581,10 +25579,7 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -30318,10 +30313,8 @@
 	dir = 4;
 	tag = ""
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -32092,7 +32085,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "bIq" = (
@@ -33456,8 +33449,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
@@ -43078,7 +43070,7 @@
 /area/station/hangar/medical)
 "cgW" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_x = -4
 	},
 /obj/item/clothing/suit/judgerobe{
@@ -44116,7 +44108,7 @@
 /area/station/maintenance/west)
 "cix" = (
 /obj/table/auto,
-/obj/item/card/id/captains_spare{
+/obj/item/card/id/gold/captains_spare{
 	pixel_x = -8;
 	pixel_y = 10
 	},
@@ -45805,7 +45797,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "ckC" = (
@@ -45813,7 +45805,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "ckD" = (

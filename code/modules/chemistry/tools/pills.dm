@@ -260,6 +260,15 @@
 
 // drugs 420 all day
 
+/obj/item/reagent_containers/pill/CBD
+	name = "cannabidiol pill"
+	desc = "An alternative painkiller with no psychoactive effects."
+	icon_state = "pill23"
+
+	New()
+		. = ..()
+		reagents.add_reagent("CBD", 20)
+
 /obj/item/reagent_containers/pill/methamphetamine
 	name = "methamphetamine pill"
 	desc = "Methamphetamine is a highly effective and dangerous stimulant drug."

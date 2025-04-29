@@ -416,9 +416,9 @@
 /area/prefab/sea_sketch)
 "bQ" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
 "bR" = (
