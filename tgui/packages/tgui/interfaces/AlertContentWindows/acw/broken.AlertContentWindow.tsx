@@ -43,7 +43,7 @@ export const acw: AlertContentWindow = {
 
       <p>
         For more information, consult{' '}
-        <a href="https://wiki.ss13.co/Madness">the wiki</a>
+        <a href="https://wiki.ss13.co/Broken">the wiki</a>
       </p>
     </div>
   ),
