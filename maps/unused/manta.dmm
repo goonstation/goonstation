@@ -3006,7 +3006,7 @@
 /obj/machinery/computer/announcement/syndicate{
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "syndiepc14"
-},
+	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "akO" = (
