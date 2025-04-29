@@ -340,20 +340,24 @@
 			C.visible_message(SPAN_ALERT("[owner] hatches the eggs in the nesting box!"), SPAN_NOTICE("You hatch the eggs in the nesting box."))
 			var/left = 6
 			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/E in get_turf(C))
-				if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken) && !E.infertile)
-					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/CE = E
-					var/datum/chicken_egg_props/egg_props = null
-					if(C.special_hatch(CE))
-						var/prop_type = C.special_hatch(CE)
-						egg_props = new prop_type
-						egg_props.happiness_value = CE.chicken_egg_props.happiness_value
-						CE.chicken_egg_props = egg_props
-					else if(prob(50)) // dads
-						var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/temp = new C.egg_type
-						temp.chicken_egg_props.happiness_value += CE.chicken_egg_props.happiness_value // add on existing eggs happiness
-						temp.chicken_egg_props.happiness_value += C.happiness / 3 // add on hatching rooster's happiness
-						CE.chicken_egg_props = temp.chicken_egg_props
-						qdel(temp)
+				if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
+					if(E.infertile)
+						boutput(owner, SPAN_ALERT("One of the eggs was infertile and couldn't hatch!"))
+						return
+					else
+						var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/CE = E
+						var/datum/chicken_egg_props/egg_props = null
+						if(C.special_hatch(CE))
+							var/prop_type = C.special_hatch(CE)
+							egg_props = new prop_type
+							egg_props.happiness_value = CE.chicken_egg_props.happiness_value
+							CE.chicken_egg_props = egg_props
+						else if(prob(50)) // dads
+							var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/temp = new C.egg_type
+							temp.chicken_egg_props.happiness_value += CE.chicken_egg_props.happiness_value // add on existing eggs happiness
+							temp.chicken_egg_props.happiness_value += C.happiness / 3 // add on hatching rooster's happiness
+							CE.chicken_egg_props = temp.chicken_egg_props
+							qdel(temp)
 				E.hatch_c()
 				C.egg_pity_count = 0
 				C.egg_timer += C.egg_cooldown
