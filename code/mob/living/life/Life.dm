@@ -124,6 +124,12 @@
 	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
 
+/mob/living/stabilize()
+	..()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
+	restore_life_processes()
+
 /mob/living/disposing()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
@@ -446,14 +452,6 @@
 	if (hud)
 		hud.update_charge()
 		hud.update_tools()
-
-/mob/living/intangible/seanceghost/Life(parent)
-	if (..(parent))
-		return 1
-	if (!src.abilityHolder)
-		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-	else if (src.health < src.max_health)
-		src.health++
 
 /mob/living/object/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

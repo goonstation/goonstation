@@ -143,6 +143,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	gibbed
 		ckey = "gibbed"
 		name = "Office of Rick"
+	glowbold
+		ckey = "glowbold"
+		name = "Office of Glowbold"
 	grayshift
 		ckey = "grayshift"
 		name = "Office of Grayshift"

@@ -247,6 +247,9 @@
 	uses_default_material_appearance = FALSE
 	amount = 5
 
+/obj/item/material_piece/iridiumalloy/small
+	amount = 1
+
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
@@ -402,11 +405,6 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "bar"
 	default_material = "soulsteel"
 
-/obj/item/material_piece/metal/censorium
-	desc = "A bar of censorium. Nice try."
-	icon_state = "bar"
-	default_material = "censorium"
-
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
@@ -434,14 +432,27 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
 
+/obj/item/material_piece/plasmacoral
+	name = "chunk"
+	desc = "A strange piece of coral seemingly infused with plasmastone."
+	icon_state = "coral"
+	default_material = "plasmacoral"
+	uses_default_material_appearance = TRUE
+
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
-	icon_state = "bar"
+	icon_state = "rod"
 	default_material = "neutronium"
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
-	icon_state = "bar"
+	icon_state = "rod"
+	default_material = "plutonium"
+
+/obj/item/material_piece/plutonium_scrap
+	name = "scrap"
+	icon_state = "plutonium"
+	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold

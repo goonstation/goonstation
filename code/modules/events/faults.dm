@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/random_event/minor/fault)
 		var/obj/machinery/camera/C
 		var/list/obj/machinery/camera/possible_cameras = list()
 		for(var/i=1 to amount*3)
-			C = pick(camnets["SS13"])
+			C = pick(camnets[CAMERA_NETWORK_STATION])
 
 			if(istype(C, /obj/machinery/camera/television))
 				continue

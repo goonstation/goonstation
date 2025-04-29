@@ -248,6 +248,7 @@
 "aK" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
+	
 	},
 /obj/mapping_helper/access/brig,
 /turf/simulated/floor/circuit/red,
@@ -3746,12 +3747,12 @@
 "kB" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/space)
 "kC" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/space)
@@ -3903,14 +3904,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "kQ" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/space)
 "kR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/space)
@@ -8498,14 +8499,14 @@
 /area/space)
 "wi" = (
 /obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/darkpurple,
 /area/space)
@@ -9346,7 +9347,7 @@
 /area/space)
 "yf" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/space)
 "yg" = (
@@ -10003,7 +10004,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10387,7 +10388,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-
+	
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;

@@ -320,7 +320,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//announce winner
 		var/msg = "<br><span style='font-size: 1.25em;' class='internal'>"
-		msg += "The vote for next map has ended. The winning choice is '[src.voteChosenMap]'.<a href='?src=\ref[src];type=view_mapvote_report_simple;vote=[src.voteIndex]'>(View Tally)</a>"
+		msg += "The vote for next map has ended. The winning choice is '[src.voteChosenMap]'.<a href='byond://?src=\ref[src];type=view_mapvote_report_simple;vote=[src.voteIndex]'>(View Tally)</a>"
 		if (src.voteChosenMap == src.current)
 			msg += " (No change)"
 		msg += "</span><br><br>"
@@ -329,7 +329,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		//log this
 		logTheThing(LOG_ADMIN, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
 		logTheThing(LOG_DIARY, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
-		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
+		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='byond://?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
 
 	//rudely cancel the vote without counting votes/doing anything
 	proc/cancelMapVote()
@@ -581,7 +581,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		return list()
 
 	proc/chat_link()
-		return "<a href='?src=\ref[src]'>[src]</a>"
+		return "<a href='byond://?src=\ref[src]'>[src]</a>"
 
 	Topic(href, href_list)
 		. = ..()

@@ -1,3 +1,8 @@
+#define ID_COMPUTER_DEPARTMENT_ENGINEERING 1
+#define ID_COMPUTER_DEPARTMENT_MEDICAL 2
+#define ID_COMPUTER_DEPARTMENT_RESEARCH 3
+#define ID_COMPUTER_DEPARTMENT_SECURITY 4
+
 /obj/machinery/computer/card
 	name = "identification computer"
 	icon_state = "id"
@@ -16,7 +21,7 @@
 	var/list/supply_access_list = list(access_cargo, access_supply_console, access_mining, access_mining_outpost)
 	var/list/research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/medical_access_list = list(access_medical, access_medical_lockers, access_medlab, access_robotics, access_pathology)
-	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
+	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser, access_money)
 	var/list/allowed_access_list
 	var/departmentcomp = FALSE
@@ -31,7 +36,7 @@
 
 /obj/machinery/computer/card/New()
 	..()
-	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + command_access_list + security_access_list - access_maxsec - access_armory
+	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + medical_access_list + command_access_list + security_access_list
 /obj/machinery/computer/card/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id1"
@@ -143,22 +148,22 @@
 		var/list/command_jobs = list()
 
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/civilian))
-			if (initial(job.name) && job != /datum/job/civilian/AI && job != /datum/job/civilian/cyborg)
+			if (initial(job.name) && job.show_in_id_comp)
 				civilian_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/engineering))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				engineering_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/research))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				research_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/medical))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				medical_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/security))
-			if (initial(job.name))
+			if (initial(job.name) && job.show_in_id_comp)
 				security_jobs.Add(initial(job.name))
 		for (var/datum/job/job as anything in concrete_typesof(/datum/job/command))
-			if (initial(job.name) && job != /datum/job/command/head_of_security)
+			if (initial(job.name) && job.show_in_id_comp)
 				command_jobs.Add(initial(job.name))
 
 		var/list/civilian_access = list()
@@ -187,28 +192,28 @@
 
 		if (src.departmentcomp)
 			switch(src.department)
-				if (1) // eng
+				if (ID_COMPUTER_DEPARTMENT_ENGINEERING) // eng
 					civilian_jobs = list("Staff Assistant")
 					//stock engineering_jobs are good
 					medical_jobs = null
 					research_jobs = null
 					security_jobs = null
 					command_jobs = null
-				if (2) // med
+				if (ID_COMPUTER_DEPARTMENT_MEDICAL) // med
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
 					// stock medical_jobs are good
 					research_jobs = null
 					security_jobs = null
 					command_jobs = null
-				if (3) // research
+				if (ID_COMPUTER_DEPARTMENT_RESEARCH) // research
 					civilian_jobs = list("Staff Assistant")
 					engineering_jobs = null
 					medical_jobs = null
 					// stock research_jobs are good
 					security_jobs = null
 					command_jobs = null
-				if (4) // sec
+				if (ID_COMPUTER_DEPARTMENT_SECURITY) // sec
 					civilian_jobs = list("Staff Assistant", "Clown")
 					engineering_jobs = null
 					medical_jobs = null
@@ -390,7 +395,7 @@
 							src.modify.access -= access_type
 						else
 							src.modify.access += access_type
-						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+						src.modify.update_name()
 						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>) using [src.scan.registered]'s ID.")
 
 			if ("pronouns")
@@ -407,9 +412,6 @@
 				if (src.authenticated && src.modify)
 					var/t1 = params["assign"]
 
-					if(t1 == "Head of Security")
-						return
-
 					if (t1 == "Custom Assignment")
 						t1 = tgui_input_text(usr, "Enter a custom job assignment.", "Assignment")
 						if(!src.modify || !src.authenticated)
@@ -418,12 +420,7 @@
 						logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
-						// preserve accesses which are otherwise unobtainable
-						var/bonus_access = list()
-						for (var/access in src.modify.access)
-							if (!(access in get_all_accesses())) //fuck this proc name
-								bonus_access += list(access)
-						src.modify.access = get_access(t1) + bonus_access
+						src.update_card_accesses(get_access(t1))
 						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
@@ -433,7 +430,7 @@
 					if (params["style"])
 						update_card_style(params["style"])
 
-					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+					src.modify.update_name()
 
 			if ("reg")
 				if (src.authenticated)
@@ -446,7 +443,7 @@
 						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
 
-						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+						src.modify.update_name()
 
 						playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -493,11 +490,11 @@
 				var/slot = text2num_safe(params["apply"])
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
-				src.modify.access = selected_access_list.Copy()
-				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+				src.update_card_accesses(selected_access_list.Copy())
+				src.modify.update_name()
 				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
-				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+				src.modify.update_name()
 			if ("eject")
 				if (istype(src.eject,/obj/item/implantcase/access))
 					var/obj/item/implantcase/access/A = src.eject
@@ -515,7 +512,7 @@
 	proc/update_card_style(band_color)
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			if (band_color == "none")
-				src.modify.icon_state = "id"
+				src.modify.icon_state = "id_basic"
 			if (band_color == "civilian")
 				src.modify.icon_state = "id_civ"
 			if (band_color == "engineering")
@@ -528,6 +525,19 @@
 				src.modify.icon_state = "id_sec"
 			if (band_color == "command")
 				src.modify.icon_state = "id_com"
+
+	proc/update_card_accesses(var/list/access_list)
+		for(var/access in access_list) //Remove accesses this computer cannot give
+			if(!(access in src.allowed_access_list))
+				access_list -= access
+
+		for (var/access in src.modify.access)
+			if (access in access_list)
+				continue
+			if (!(access in get_all_accesses())) // preserve accesses which are otherwise unobtainable
+				access_list += access
+				continue
+		src.modify.access = access_list
 
 	proc/try_authenticate()
 		if ((!( src.authenticated ) && (src.scan || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr))) && (src.modify || src.mode)))
@@ -592,7 +602,7 @@
 
 /obj/machinery/computer/card/department/engineering
 	color = "#ffffcc" // look there's a lot of icons to edit just to add a single stripe of color to these computers
-	department = 1
+	department = ID_COMPUTER_DEPARTMENT_ENGINEERING
 	req_access = list(access_engineering_chief)
 	circuit_type = /obj/item/circuitboard/card/engineering
 
@@ -606,7 +616,7 @@
 
 /obj/machinery/computer/card/department/medical
 	color = "#99ccff"
-	department = 2
+	department = ID_COMPUTER_DEPARTMENT_MEDICAL
 	req_access = list(access_medical_director)
 	circuit_type = /obj/item/circuitboard/card/medical
 
@@ -621,7 +631,7 @@
 
 /obj/machinery/computer/card/department/research
 	color = "#cc99ff"
-	department = 3
+	department = ID_COMPUTER_DEPARTMENT_RESEARCH
 	req_access = list(access_research_director)
 	circuit_type = /obj/item/circuitboard/card/research
 
@@ -636,7 +646,7 @@
 
 /obj/machinery/computer/card/department/security
 	color = "#ff9999"
-	department = 4
+	department = ID_COMPUTER_DEPARTMENT_SECURITY
 	req_access = list(access_maxsec)
 	circuit_type = /obj/item/circuitboard/card/security
 
@@ -645,6 +655,10 @@
 	supply_access_list = list(access_cargo)
 	medical_access_list = list(access_medical)
 	research_access_list = list(access_research, access_chemistry, access_researchfoyer)
-	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_eva)
 
+#undef ID_COMPUTER_DEPARTMENT_ENGINEERING
+#undef ID_COMPUTER_DEPARTMENT_MEDICAL
+#undef ID_COMPUTER_DEPARTMENT_RESEARCH
+#undef ID_COMPUTER_DEPARTMENT_SECURITY
