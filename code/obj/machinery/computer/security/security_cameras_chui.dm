@@ -39,10 +39,10 @@ chui/window/security_cameras
 
 		var/cameras_list
 		for (var/obj/machinery/camera/C in L)
-			if (C.network == owner.network)
+			if (C.network in owner.camera_networks)
 				. = "[C.c_tag][C.camera_status ? null : " (Deactivated)"]"
 				// Don't draw if it's in favorites or AI core/upload
-				if ((C in owner.favorites) || C.ai_only)
+				if ((C in owner.favorites))
 					continue
 				// &#128190; is save symbol
 				cameras_list += \
@@ -261,7 +261,7 @@ chui/window/security_cameras
 
 		var/fav_cameras
 		for (var/obj/machinery/camera/C in owner.favorites)
-			if (C.network == owner.network)
+			if (C.network in owner.camera_networks)
 				. = "[C.c_tag][C.camera_status ? null : " (Deactivated)"]"
 				fav_cameras += \
 				{"<tr>

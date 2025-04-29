@@ -46,11 +46,10 @@ TYPEINFO(/obj/item/camera/large)
 		icon_state = "camera_zoom"
 		rarity = 3
 		pictures_left = 24
-		w_class = W_CLASS_NORMAL
 
 		New()
 			..()
-			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/machines/pod_switch.ogg')
+			AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/telephoto, 'sound/machines/pod_switch.ogg')
 
 
 	examine()

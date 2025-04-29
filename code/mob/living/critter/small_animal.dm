@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn_vuln = 1
 	void_mindswappable = TRUE
 	is_npc = TRUE
-	ai_type = /datum/aiHolder/wanderer
+	ai_type = /datum/aiHolder/wanderer/floor_only
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
@@ -328,6 +328,9 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 	shiny_chance = 0
+	gender = MALE
+	///Remy tries not to suggest the same thing twice in a row
+	var/last_recipe = null
 
 	New()
 		. = ..()
@@ -352,6 +355,40 @@ proc/filter_carrier_pets(var/type)
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
+
+	attackby(obj/item/reagent_containers/food/food, mob/user)
+		if (!istype(food))
+			return ..()
+		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
+			return
+		src.visible_message("[src] sniffs \the [food].")
+		var/list/possible_recipes = list()
+		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
+			if (istypes(food, recipe.ingredients))
+				possible_recipes += recipe
+		src.set_dir(get_dir(src, user))
+		src.ai.disable()
+		SPAWN(2 SECONDS)
+			if (length(possible_recipes))
+				if (length(possible_recipes) > 2)
+					possible_recipes -= src.last_recipe
+				src.emote("scream")
+				var/datum/cookingrecipe/chosen = pick(possible_recipes)
+				boutput(user, chosen.render())
+			else
+				src.visible_message("[src] shakes [his_or_her(src)] head sadly.")
+			sleep(1 SECOND)
+			src.ai.enable()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					FLICK("remy-exclaim", src)
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
+		return ..()
+
 
 /* ============================================= */
 /* ------------------ Turtle ------------------- */
@@ -5163,3 +5200,158 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.bioHolder.ActivatePoolEffect(src.bioHolder.GetEffectFromPool("jumpy"), overrideDNA=TRUE, grant_research=FALSE)
 
+/* =============================================== */
+/* -------------- Large Jellyfish ---------------- */
+/* =============================================== */
+
+/mob/living/critter/small_animal/large_jellyfish
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "An oversized and over-aggressive jellyfish. Oh no."
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish_large"
+	icon_state_dead = "jellyfish_large-dead"
+	blood_id = "hemolymph"
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	speechverb_ask = "blorps"
+	health_brute = 15
+	health_burn = 15
+	hand_count = 1
+
+	density = TRUE
+
+	base_move_delay = 13
+	base_walk_delay = 15
+
+	ai_type = /datum/aiHolder/ranged
+
+	faction = list(FACTION_AQUATIC)
+
+	meat_type = /obj/item/device/light/glowstick/green_on
+
+	New()
+		..()
+		src.remove_stam_mod_max("small_animal")
+		src.add_stam_mod_max("hallucigenia", -(STAMINA_MAX-100))
+		src.color = random_saturated_hex_color()
+		var/list/color_list = rgb2num(src.color || "#ffffff")
+		src.add_medium_light("jellyglow", color_list + list(100))
+		src.bioHolder.AddNewPoolEffect("plasma_metabolism", scramble=TRUE)
+		#ifdef MAP_OVERRIDE_NEON // they need to be immune to plasma coral on neon, otherwise *shrug
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		#endif
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/arcflash
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handzap"
+		HH.name = "tendrils"
+		HH.limb_name = "tendrils"
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","chitter")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, pitch = 0.7, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> chitters!")
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","chitter")
+				return 2
+		return ..()
+
+	death(var/gibbed)
+		playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, pitch = 0.6, channel=VOLUME_CHANNEL_EMOTE)
+		new /obj/item/reagent_containers/food/snacks/healgoo(get_turf(src))
+		..()
+
+/mob/living/critter/small_animal/large_jellyfish/grabby
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "An oversized and over-aggressive jellyfish. Oh no."
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish_large"
+	icon_state_dead = "jellyfish_large-dead"
+	blood_id = "hemolymph"
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	speechverb_ask = "blorps"
+	health_brute = 15
+	health_burn = 15
+	hand_count = 1
+
+	density = TRUE
+
+	base_move_delay = 2.3
+	base_walk_delay = 4
+
+	ai_type = /datum/aiHolder/pikaia
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
+	faction = list(FACTION_AQUATIC)
+
+	is_hulk()
+		.= 1
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "tendrils"
+		HH.limb_name = "tendrils"
+
+	emote(act, voluntary)
+		if (act == "flip")
+			if (!emote_check(voluntary, 2 SECONDS))
+				return
+			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+				var/mob/living/M = G.affecting
+				if (M == src)
+					continue
+				if (!G.affecting)
+					continue
+				animate_spin(src, prob(50) ? "L" : "R", 1, 0)
+				if (G.state >= GRAB_STRONG && isturf(src.loc) && isturf(G.affecting.loc))
+					src.emote("scream")
+					logTheThing(LOG_COMBAT, src, "crunches [constructTarget(G.affecting,"combat")] [log_loc(src)]")
+					M.lastattacker = get_weakref(src)
+					M.lastattackertime = world.time
+					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, pitch = 1.3)
+					src.visible_message(SPAN_ALERT("<B>[src] crunches [G.affecting]!</B>"))
+		else
+			return ..()
+
+	critter_attack(mob/target)
+		src.set_a_intent(INTENT_GRAB)
+		src.set_dir(get_dir(src, target))
+
+		var/list/params = list()
+		params["left"] = TRUE
+		params["ai"] = TRUE
+
+		var/obj/item/grab/G = src.equipped()
+		if (!istype(G)) //if it hasn't grabbed something, try to
+			if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+				src.drop_item()
+			src.hand_attack(target, params)
+		else
+			if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
+				src.drop_item()
+				return
+
+			if (G.state <= GRAB_PASSIVE)
+				G.AttackSelf(src)
+			else
+				src.emote("flip")
+				src.ai?.move_away(target,1)

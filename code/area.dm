@@ -322,15 +322,6 @@ TYPEINFO(/area)
 				return null
 		return R
 
-	/**
-	 * returns a list of objects matching type in an area
-	 */
-	proc/get_type(var/type)
-		. = list()
-		for (var/A in src)
-			if(istype(A, type))
-				. += A
-
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
@@ -1268,6 +1259,8 @@ ABSTRACT_TYPE(/area/adventure)
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
 	requires_power = FALSE
+#elif defined(MAP_OVERRIDE_NEON)
+	requires_power = FALSE
 #endif
 
 /area/abandonedmedicalship
@@ -1470,6 +1463,12 @@ TYPEINFO(/area/diner)
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
+
+/area/heated_pool
+	name = "Heated Pool"
+	requires_power = FALSE
+	icon_state = "red"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/watchful_eye_sensor
 	name = "Watchful Eye Sensor Satellite"
@@ -2422,6 +2421,10 @@ ABSTRACT_TYPE(/area/station/mining)
 	name = "Customs"
 	icon_state = "yellow"
 
+/area/station/bridge/execrestroom
+	name = "Executive Restroom"
+	icon_state = "blue"
+
 /area/station/bridge/reception
 	name = "Bridge Reception"
 	icon_state = "blue"
@@ -2902,6 +2905,18 @@ TYPEINFO(/area/station/engine/substation)
 	name = "North Electrical Substation"
 	do_not_irradiate = TRUE
 
+/area/station/engine/substation/northwest
+	name = "Northwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southwest
+	name = "Southwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southeast
+	name = "Southeast Electrical Substation"
+	do_not_irradiate = TRUE
+
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"
@@ -3142,6 +3157,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "Customs Security Checkpoint"
 /area/station/security/checkpoint/sec_foyer
 		name = "Security Foyer Checkpoint"
+/area/station/security/checkpoint/sec_foyer/no_teleblock
+	teleport_blocked = 0
 /area/station/security/checkpoint/podbay
 		name = "Pod Bay Security Checkpoint"
 /area/station/security/checkpoint/chapel
@@ -3567,6 +3584,11 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING
+
+/area/station/hangar/eng_mining_shared
+		name = "Submarine Bay (Engineering/Mining)"
+		station_map_colour = MAPC_MINING
+
 /area/station/hangar/security
 		name = "Submarine Bay (Security)"
 		station_map_colour = MAPC_SECURITY
@@ -4139,6 +4161,12 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "yellow"
 	permarads = 1
 	irradiated = 1
+
+/area/space/plasma_reef
+	name = "Plasma Reef"
+	icon_state = "purple"
+	ambient_light = OCEAN_LIGHT
+	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
 
 // // // // // // // // // // // //
 

@@ -4986,7 +4986,7 @@
 /area/crypt/graveyard)
 "fNz" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"
@@ -11391,12 +11391,7 @@
 /turf/unsimulated/floor/wood,
 /area/swampzone/interiors/bonktek/waffletek)
 "nAf" = (
-/obj/storage/secure/crate/gear{
-	anchored = 1;
-	desc = "There's no clear indication of what this box contains, but you're pretty sure it's not safe. There are small bolts anchoring it to the floor.";
-	name = "unmarked secure crate";
-	req_access_txt = "52"
-	},
+/obj/storage/secure/crate/gear/syndicate,
 /obj/item/storage/fanny/syndie,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"

@@ -304,35 +304,17 @@ ABSTRACT_TYPE(/datum/part_customization/human/organ)
 			slot = "right_eye"
 			part_type = /obj/item/organ/eye/cyber/configurable
 
-	missing
-		custom_icon = 'icons/ui/character_editor.dmi'
-		custom_icon_state = "missing"
-
-
-		apply_to(mob/living/carbon/human/human)
-			. = ..()
-			var/obj/item/organ/old_organ = human.organHolder?.get_organ(src.slot)
-			if(old_organ)
-				human.organHolder.drop_organ(src.slot)
-				qdel(old_organ)
-
-		eye_left
+		eye_missing_left
 			id = "eye_missing_left"
 			slot = "left_eye"
 			associated_trait_id = "eye_missing_left"
-			trait_cost = 1
+			part_type = /obj/item/organ/eye/glass
 
-			get_name()
-				return "missing left eye"
-
-		eye_right
+		eye_missing_right
 			id = "eye_missing_right"
 			slot = "right_eye"
 			associated_trait_id = "eye_missing_right"
-			trait_cost = 1
-
-			get_name()
-				return "missing right eye"
+			part_type = /obj/item/organ/eye/glass
 
 ///Lazy init singleton list
 var/list/datum/part_customization/part_customizations = null
