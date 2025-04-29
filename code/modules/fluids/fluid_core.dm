@@ -676,6 +676,21 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			I.color = F.finalcolor
 			I.alpha = F.finalalpha
 		src.show_submerged_image(F.my_depth_level)
+
+	if (F.my_depth_level == 1 && !isintangible(src))
+		var/obj/decal/ripple = new
+		ripple.plane = PLANE_DEFAULT
+		ripple.loc = F
+		ripple.icon = 'icons/obj/fluid.dmi'
+		ripple.icon_state = "ripple"
+		ripple.blend_mode = BLEND_INSET_OVERLAY
+		ripple.pixel_x += rand(-10, 10)
+		ripple.pixel_y += rand(-10, 10)
+		F.vis_contents += ripple
+		SPAWN(1 SECOND)
+			F.vis_contents -= ripple
+			qdel(ripple)
+
 	..()
 
 /mob/living/ExitedFluid(obj/fluid/F as obj)
