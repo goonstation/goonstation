@@ -768,7 +768,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 
 DEFINE_FLOORS(carpet/regalcarpet,
 	name = "regal carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "regal_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -781,7 +781,7 @@ DEFINE_FLOORS(carpet/regalcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/darkcarpet,
 	name = "dark carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "dark_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
@@ -794,7 +794,7 @@ DEFINE_FLOORS(carpet/darkcarpet/innercorner,
 
 DEFINE_FLOORS(carpet/clowncarpet,
 	name = "clown carpet";\
-	icon = 'icons/turf/floors.dmi';\
+	icon = 'icons/turf/floors/carpet.dmi';\
 	icon_state = "clown_carpet";\
 	step_material = "step_carpet";\
 	step_priority = STEP_PRIORITY_MED)
