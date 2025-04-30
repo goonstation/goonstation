@@ -60,9 +60,12 @@
 		src.demanifest()
 
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).add_mob(src)
 
 	disposing()
 		..()
+		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
 		src.remove_fake_mindeaters()
