@@ -16,10 +16,7 @@ interface PollOptionsSectionProps {
   options: string[];
 }
 
-export const PollOptionsSection = (
-  props: PollOptionsSectionProps,
-  context: unknown,
-) => {
+export const PollOptionsSection = (props: PollOptionsSectionProps) => {
   const {
     onAddOption,
     onChangeOption,

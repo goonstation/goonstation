@@ -21,7 +21,7 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
   targetCoords: [number, number, number];
 };
 
-export const BookmarksSection = (props: BookmarksSectionProps, context) => {
+export const BookmarksSection = (props: BookmarksSectionProps) => {
   const {
     bookmarks,
     maxBookmarks,
