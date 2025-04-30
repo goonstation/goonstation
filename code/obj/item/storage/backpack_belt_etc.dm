@@ -1092,7 +1092,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	desc = "A satchel containing larger medical supplies and instruments."
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
-	spawn_contents = list(/obj/item/robodefibrillator,
+	spawn_contents = list(/obj/item/robodefibrillator/recharging,
 	/obj/item/extinguisher/large)
 
 

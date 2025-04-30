@@ -149,7 +149,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			user.suiciding = 0
 		return 1
 
-/// the actul defib effect to the target patient
+/// the actual defib effect to the target patient
 /obj/item/robodefibrillator/proc/defibrillate(mob/living/patient, mob/living/user, suiciding = FALSE)
 	if (!isliving(patient))
 		return 0
@@ -257,7 +257,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 /obj/item/robodefibrillator/vr
 	icon = 'icons/effects/VR.dmi'
-	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 
 TYPEINFO(/obj/item/robodefibrillator/makeshift)
 	mats = null
@@ -340,6 +340,10 @@ TYPEINFO(/obj/item/robodefibrillator/mounted)
 		parent = null
 		..()
 
+TYPEINFO(/obj/item/robodefibrillator/recharging)
+	mats = null
+/obj/item/robodefibrillator/recharging
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 
 TYPEINFO(/obj/machinery/defib_mount)
 	mats = 25
