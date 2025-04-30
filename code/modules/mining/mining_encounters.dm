@@ -293,6 +293,17 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
+/datum/mining_encounter/zombie
+	name = "Hollow Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
+
 /datum/mining_encounter/artifact
 	name = "Fluctuating Asteroid"
 	rarity_tier = 2

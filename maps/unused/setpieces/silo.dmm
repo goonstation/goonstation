@@ -381,7 +381,7 @@
 /turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTHWEST)";
 	name = "carpet";
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	dir = 9
 	},
@@ -390,7 +390,7 @@
 /turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTH)";
 	name = "carpet";
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	dir = 1
 	},
@@ -399,7 +399,7 @@
 /turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTHEAST)";
 	name = "carpet";
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	dir = 5
 	},
@@ -415,14 +415,14 @@
 /turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (SOUTHWEST)";
 	name = "carpet";
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	dir = 10
 	},
 /area/space)
 "bk" = (
 /turf/unsimulated/outdoors/concrete{
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	name = "carpet"
 	},
@@ -431,7 +431,7 @@
 /turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (SOUTHEAST)";
 	name = "carpet";
-	icon = 'icons/turf/carpet.dmi';
+	icon = 'icons/turf/floors/carpet.dmi';
 	icon_state = "fgreen2";
 	dir = 6
 	},

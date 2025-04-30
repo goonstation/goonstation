@@ -1,4 +1,9 @@
 
+(t)wed apr 30 25
+(u)glowbold
+(p)23207
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The gibber can now process suitable critters.
 (t)mon apr 28 25
 (u)wisconsin, sunnyaries
 (p)23171

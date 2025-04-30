@@ -3747,12 +3747,12 @@
 "kB" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/space)
 "kC" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/space)
@@ -3904,14 +3904,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "kQ" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/space)
 "kR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/space)
