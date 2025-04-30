@@ -130,7 +130,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
 //#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT        // Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
@@ -146,16 +145,9 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
-//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
-//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
-//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
-//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
-//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
-//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
 
 //------------ Unit Test Framework ------------//
 
