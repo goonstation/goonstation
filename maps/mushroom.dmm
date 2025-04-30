@@ -15256,8 +15256,8 @@
 /obj/item/clipboard{
 	pixel_y = 3
 	},
-/obj/table/auto,
 /obj/machinery/recharger,
+/obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

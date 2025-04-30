@@ -8430,11 +8430,11 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
+/obj/machinery/recharger,
 /obj/item/bandage{
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/machinery/recharger,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aTZ" = (
@@ -15530,9 +15530,6 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "caf" = (
-/obj/stool/chair/blue{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -15540,6 +15537,7 @@
 	tag = ""
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/medical/staff)
 "cay" = (
@@ -26086,7 +26084,6 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/machinery/firealarm/west,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9
 	},
@@ -51675,6 +51672,7 @@
 	pixel_y = 4;
 	rand_pos = 0
 	},
+/obj/machinery/recharger,
 /obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1

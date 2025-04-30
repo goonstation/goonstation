@@ -48815,8 +48815,8 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/table/reinforced/auto,
 /obj/machinery/recharger,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "cTR" = (

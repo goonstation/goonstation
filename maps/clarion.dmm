@@ -15572,8 +15572,8 @@
 "eTn" = (
 /obj/table/auto,
 /obj/item/device/light/flashlight/penlight,
-/obj/item/medicaldiagnosis/stethoscope,
 /obj/machinery/recharger,
+/obj/item/medicaldiagnosis/stethoscope,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "eTy" = (

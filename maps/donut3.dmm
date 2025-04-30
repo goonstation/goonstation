@@ -10414,8 +10414,8 @@
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
 /obj/item/reagent_containers/syringe/haloperidol,
-/obj/item/reagent_containers/syringe/haloperidol,
 /obj/machinery/recharger,
+/obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cXs" = (

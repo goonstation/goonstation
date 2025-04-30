@@ -37517,10 +37517,10 @@
 	pixel_x = 5;
 	pixel_y = 15
 	},
+/obj/machinery/recharger,
 /obj/item/kitchen/food_box/sugar_box{
 	pixel_y = 6
 	},
-/obj/machinery/recharger,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},

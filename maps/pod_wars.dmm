@@ -800,11 +800,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
-"cF" = (
-/obj/machinery/recharger,
-/obj/table/auto,
-/turf/unsimulated/floor/bluewhite,
-/area/pod_wars/team1/medbay)
 "cG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9375,8 +9370,6 @@
 /area/pod_wars/spacejunk/reliant)
 "DQ" = (
 /obj/machinery/light/incandescent/netural,
-/obj/table/syndicate/auto,
-/obj/machinery/recharger,
 /turf/unsimulated/floor/redwhite,
 /area/pod_wars/team2/medbay)
 "DS" = (
@@ -28135,7 +28128,7 @@ Og
 mR
 ya
 ya
-cF
+BH
 pm
 FK
 Fk

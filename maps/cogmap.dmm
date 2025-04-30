@@ -30571,6 +30571,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
+/obj/machinery/recharger,
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6;
 	pixel_y = 1
@@ -30579,7 +30580,6 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/machinery/recharger,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "cjp" = (

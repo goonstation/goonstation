@@ -1225,7 +1225,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "ayE" = (
@@ -40664,12 +40663,12 @@
 "rPH" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
+/obj/machinery/recharger,
 /obj/item/clothing/mask/wrestling/blue,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/machinery/recharger,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "rQa" = (
@@ -51136,6 +51135,7 @@
 	})
 "wvC" = (
 /obj/machinery/vending/jobclothing/medical,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "wvX" = (
