@@ -1433,7 +1433,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage = 0
 	dissipation_delay = 7
 	hit_ground_chance = 50
-	shot_sound = 'sound/weapons/psi_bolt.ogg'
+	shot_sound = 'sound/misc/intruder/psi_bolt.ogg'
 
 	on_launch(obj/projectile/O)
 		var/mob/living/critter/mindeater/mindeater = O.shooter || O.mob_shooter
