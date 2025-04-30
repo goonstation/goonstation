@@ -158,6 +158,9 @@
 	initial_volume = 5
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
+	sliceable = TRUE
+	slice_amount = 2
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs
 
 	honeywheat
 		name = "slice of honey-wheat bread"

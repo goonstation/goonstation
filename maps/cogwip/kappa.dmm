@@ -782,7 +782,7 @@
 /area/space)
 "cy" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary/blue,
 /area/space)
 "cz" = (
@@ -1753,7 +1753,7 @@
 	},
 /area/space)
 "fy" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /turf/simulated/floor/blueblack{
 	icon_state = "blueblack";
 	dir = 1
@@ -3423,8 +3423,7 @@
 /obj/item/chem_grenade/metalfoam,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
+	name = "breach repair cart"
 	},
 /turf/simulated/floor/black,
 /area/space)

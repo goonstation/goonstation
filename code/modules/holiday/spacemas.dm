@@ -763,11 +763,6 @@ proc/compare_ornament_score(list/a, list/b)
 
 // Santa Stuff
 
-/obj/item/card/id/captains_spare/santa
-	name = "Spacemas Card"
-	registered = "Santa Claus"
-	assignment = "Spacemas Spirit"
-
 /mob/living/carbon/human/santa
 	New()
 		..()
