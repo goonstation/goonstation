@@ -116,7 +116,7 @@ interface SubjectRecord {
 }
 
 interface Subject {
-  preview: string | null;
+  preview: string;
   name: string;
   stat: Stat;
   health: number;
