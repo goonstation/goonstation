@@ -92,7 +92,7 @@
 					return
 				if (robot.emagged)
 					if (robot.client)
-						boutput(robot, SPAN_NOTICE("<b>Equipment lockdwon signal blocked!</b>"))
+						boutput(robot, SPAN_NOTICE("<b>Equipment lockdown signal blocked!</b>"))
 						return
 				robot.setStatus("lockdown_robot", ROBOT_LOCKDOWN_DURATION)
 				logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(robot,"combat")]'s equipment lockdown.")
