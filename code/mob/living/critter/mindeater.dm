@@ -35,8 +35,8 @@
 	var/lives = 3 // temporary lives for playtesting
 
 	New()
-		..()
 		src.name = "???" // set here so that in respawn popups the name doesn't appear as "???"
+		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -134,7 +134,7 @@
 		..()
 		if (A.density && A.material?.getProperty("reflective") > 7)
 			src.set_loc(get_turf(A))
-		else if (istype(A, /obj/machinery/door/airlock))
+		else if (istype(A, /obj/machinery/door/airlock) && !istype(A, /obj/machinery/door/airlock/pyro/weapons/secure))
 			var/obj/machinery/door/airlock/airlock = A
 			airlock.open()
 

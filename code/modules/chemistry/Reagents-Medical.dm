@@ -102,6 +102,9 @@ datum
 				if(M.hasStatus("recent_trauma"))
 					M.changeStatus("recent_trauma", -5 SECONDS * mult)
 				if(probmult(7)) M.emote("yawn")
+				if (probmult(5) && istype(M, /mob/living))
+					var/mob/living/L = M
+					L.cure_disease_by_path(/datum/ailment/mindmites)
 				..()
 				switch(counter += 1 * mult)
 					if(16 to 36)
@@ -818,6 +821,8 @@ datum
 					for(var/datum/ailment_data/disease/virus in M.ailments)
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))
 							M.cure_disease(virus)
+				if (probmult(25))
+					M.cure_disease_by_path(/datum/ailment/mindmites)
 				if(prob(20)) M.take_brain_damage(1 * mult)
 				if(probmult(50)) M.changeStatus("drowsy", 10 SECONDS)
 				if(probmult(10)) M.emote("drool")
@@ -1555,6 +1560,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_brain_damage(-3 * mult)
+				if (probmult(10) && istype(M, /mob/living))
+					var/mob/living/L = M
+					L.cure_disease_by_path(/datum/ailment/mindmites)
 				..()
 				return
 

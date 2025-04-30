@@ -169,22 +169,19 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
 		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 25, TRUE)
 		SPAWN(4 SECONDS)
-			src.cast_abil()
+			for (var/mob/living/L in src.nearby_mobs)
+				if (QDELETED(L))
+					src.nearby_mobs -= L
+				if (!length(src.nearby_mobs))
+					return
+			for (var/mob/living/L in (src.nearby_mobs + list(mindeater)))
+				if (L == src.holder.owner)
+					L.setStatus("mindeater_abducted_visible", 15 SECONDS, get_turf(L))
+				else
+					L.setStatus("mindeater_abducted_invisible", 15 SECONDS, get_turf(L))
+				L.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
 		SPAWN(24 SECONDS)
 			qdel(maze)
-
-	proc/cast_abil()
-		for (var/mob/living/L in src.nearby_mobs)
-			if (QDELETED(L))
-				src.nearby_mobs -= L
-		if (!length(src.nearby_mobs))
-			return
-		for (var/mob/living/L in (src.nearby_mobs + list(mindeater)))
-			if (L == src.holder.owner)
-				L.setStatus("mindeater_abducted_visible", 15 SECONDS, get_turf(L))
-			else
-				L.setStatus("mindeater_abducted_invisible", 15 SECONDS, get_turf(L))
-			L.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
 
 /area/veil_border
 	name = "Veil border"
@@ -445,6 +442,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (GET_ATOM_PROPERTY(src.target, PROP_MOB_MIND_EATEN_PERCENT) >= 25)
 			if (!ON_COOLDOWN(src.target, "mindeater_brain_drain_msg", 5 SECONDS))
 				boutput(src.target, SPAN_ALERT("<b>[pick(src.possible_messages)]</b>"))
+		if (GET_ATOM_PROPERTY(src.target, PROP_MOB_MIND_EATEN_PERCENT) >= 75)
+			src.target.contract_disease(/datum/ailment/mindmites, null, null, TRUE)
 
 	onEnd()
 		..()
