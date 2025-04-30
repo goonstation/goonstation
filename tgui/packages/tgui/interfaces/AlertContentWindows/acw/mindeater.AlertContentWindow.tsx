@@ -27,21 +27,28 @@ export const acw: AlertContentWindow = {
       </p>
       <p>
         2. Your goal is to absorb brain power from crew members! Use your
-        ability Brain Drain to do so, which will award you with Brain. Spend
-        Brain to cast your abilities.
+        ability Brain Drain to do so, which will award you with Brain, with
+        stealth and your Disguise ability. Spend Brain to cast your abilities.
       </p>
       <p>
         3. You cloak while in darkness. Being in light for too long, attacking,
-        or using certain abilities will reveal you. A visibility indicator next
-        to you shows if you are visible or not.
+        or using abilities will reveal you. A visibility indicator next to you
+        shows if you are visible or not.
       </p>
       <p>
         4. Your basic attack is a ranged attack that slows down those hit and
         prevents them from running.
       </p>
       <p>
-        5. Use your stealth and your Disguise ability to sneakily drain Brain
-        from the crew.
+        5. Start attacks by sneakily draining brain from crew members. When they
+        become aware of you, use Pierce the Veil, along with your evasive
+        abilities to avoid death. When you exit the created plane, finish them
+        off manually or through inflicted mindmites.
+      </p>
+      <p>
+        6. Targets with 75% of their brain drained will be afflicted with the
+        Mindmites ailment. This will cause mites that only they can see to
+        appear to attack them.
       </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
