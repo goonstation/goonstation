@@ -7,10 +7,9 @@
  */
 
 import { ChangeEventHandler, createRef, useCallback, useState } from 'react';
-import { Flex, Input, Section } from 'tgui-core/components';
+import { Button, Flex, Input, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 type Tag = [string, string, string];
@@ -184,7 +183,7 @@ export const BugReportForm = () => {
             <Flex.Item my={2}>
               <h2>Tags</h2>
               {tags.map((tag) => (
-                <ButtonCheckbox
+                <Button.Checkbox
                   key={tag[1]}
                   checked={tag[1] === chosenTag}
                   onClick={() => setTag(tag[1])}
@@ -192,7 +191,7 @@ export const BugReportForm = () => {
                   tooltipPosition="bottom"
                 >
                   {tag[0]}
-                </ButtonCheckbox>
+                </Button.Checkbox>
               ))}
             </Flex.Item>
             <Flex.Item my={2}>
@@ -234,14 +233,14 @@ export const BugReportForm = () => {
             </Flex.Item>
             <Flex.Item my={2}>
               <h2>Is this bug an exploit or related to secret content?</h2>
-              <ButtonCheckbox
+              <Button.Checkbox
                 checked={isSecret}
                 onClick={() => {
                   setIsSecret(!isSecret);
                 }}
               >
                 Exploit / Secret
-              </ButtonCheckbox>
+              </Button.Checkbox>
             </Flex.Item>
             <Flex.Item my={2}>
               <Flex style={{ 'justify-content': 'center' }}>

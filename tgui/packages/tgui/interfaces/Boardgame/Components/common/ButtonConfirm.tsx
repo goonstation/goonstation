@@ -1,6 +1,5 @@
 import { Component } from 'react';
-
-import { Button } from '../../../../components';
+import { Button } from 'tgui-core/components';
 
 type ButtonConfirmProps = {
   icon?: string;
@@ -44,7 +43,7 @@ export class ButtonConfirm extends Component<
         icon={icon}
         color={this.state.confirmState ? 'orange' : color}
         tooltip={this.state.confirmState ? confirmText : tooltipContent}
-        onMouseOut={() => this.setConfirmState(false)}
+        onMouseLeave={() => this.setConfirmState(false)}
         onClick={() => {
           if (this.state.confirmState) {
             onConfirm?.();

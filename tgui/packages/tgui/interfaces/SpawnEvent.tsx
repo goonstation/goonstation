@@ -7,7 +7,6 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
 interface SpawnEventData {
@@ -129,7 +128,7 @@ export const SpawnEvent = () => {
               {amount_to_spawn === 1 &&
                 spawn_type === 'mob_ref' &&
                 thing_name && (
-                  <ButtonCheckbox
+                  <Button.Checkbox
                     checked={spawn_directly}
                     onClick={() =>
                       act('set_spawn_directly', {
@@ -139,7 +138,7 @@ export const SpawnEvent = () => {
                     tooltip="Puts the ghost mind directly into the original mob instead of copying it."
                   >
                     Spawn as original
-                  </ButtonCheckbox>
+                  </Button.Checkbox>
                 )}
             </LabeledList.Item>
             <LabeledList.Item label="Spawn location">
@@ -167,7 +166,7 @@ export const SpawnEvent = () => {
                   <Button color="red" onClick={() => act('clear_antag')}>
                     x
                   </Button>
-                  <ButtonCheckbox
+                  <Button.Checkbox
                     checked={equip_antag}
                     tooltip="Give antag default equipment and abilities? Will overwrite anything already equipped in those slots."
                     onClick={() =>
@@ -175,7 +174,7 @@ export const SpawnEvent = () => {
                     }
                   >
                     Equip antags
-                  </ButtonCheckbox>
+                  </Button.Checkbox>
                 </>
               )}
               {!!incompatible_antag && (
@@ -188,17 +187,17 @@ export const SpawnEvent = () => {
               )}
             </LabeledList.Item>
             <LabeledList.Item label="DNR">
-              <ButtonCheckbox
+              <Button.Checkbox
                 checked={allow_dnr}
                 tooltip="Allow players who have set DNR to respawn in this event"
                 onClick={() => act('set_allow_dnr', { allow_dnr: !allow_dnr })}
               >
                 Allow DNR players
-              </ButtonCheckbox>
+              </Button.Checkbox>
             </LabeledList.Item>
             {spawn_type === 'job' && (
               <LabeledList.Item label="Manifest">
-                <ButtonCheckbox
+                <Button.Checkbox
                   checked={add_to_manifest}
                   tooltip="Add players spawned by this event to the station manifest"
                   onClick={() =>
@@ -206,7 +205,7 @@ export const SpawnEvent = () => {
                   }
                 >
                   Add to manifest
-                </ButtonCheckbox>
+                </Button.Checkbox>
               </LabeledList.Item>
             )}
             <LabeledList.Item label="Objective text">

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import {
   AnimatedNumber,
   Box,
+  Button,
   Icon,
   Input,
   Modal,
@@ -21,7 +22,6 @@ import {
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
-import { Button } from '../components';
 import { Window } from '../layouts';
 import {
   MatterState,
@@ -180,7 +180,7 @@ export const ReagentDispenser = () => {
               className="chem-dispenser__dispense-buttons"
               align="left"
               width="130px"
-              onMouseEnter={() => setHoverOverId(reagent.id)}
+              onMouseOver={() => setHoverOverId(reagent.id)}
               onMouseLeave={() => setHoverOverId('')}
               onClick={() => {
                 act('dispense', {
