@@ -15573,6 +15573,7 @@
 /obj/table/auto,
 /obj/item/device/light/flashlight/penlight,
 /obj/item/medicaldiagnosis/stethoscope,
+/obj/machinery/recharger,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "eTy" = (
@@ -41163,6 +41164,7 @@
 	dir = 4
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "xrO" = (

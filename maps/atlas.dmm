@@ -4405,9 +4405,7 @@
 	dir = 4;
 	icon_state = "line2"
 	},
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
+/obj/machinery/computer/operating/small,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
 "azj" = (
@@ -21319,6 +21317,7 @@
 	dir = 1;
 	pixel_y = 6
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "tfr" = (

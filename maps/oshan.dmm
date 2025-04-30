@@ -2321,6 +2321,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/blue/corner{
 	dir = 4
 	},
@@ -4495,6 +4496,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "apR" = (

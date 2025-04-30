@@ -26931,6 +26931,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

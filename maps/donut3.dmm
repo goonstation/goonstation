@@ -10415,6 +10415,7 @@
 /obj/table/glass/auto,
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
+/obj/machinery/recharger,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cXs" = (
@@ -59032,6 +59033,7 @@
 /area/station/medical/medbay/cloner)
 "rUN" = (
 /obj/storage/closet/office,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},

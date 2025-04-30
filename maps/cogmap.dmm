@@ -30579,6 +30579,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "cjp" = (
@@ -61545,6 +61546,7 @@
 /area/station/maintenance/central)
 "vnq" = (
 /obj/disposalpipe/segment,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},

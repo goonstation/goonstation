@@ -1225,6 +1225,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "ayE" = (
@@ -40668,6 +40669,7 @@
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "rQa" = (

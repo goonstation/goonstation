@@ -48816,6 +48816,7 @@
 	pixel_y = 6
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "cTR" = (
@@ -51724,6 +51725,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "dfl" = (

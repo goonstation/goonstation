@@ -264,7 +264,8 @@
 	},
 /area/station/medical/medbay/cloner)
 "afl" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/recharger,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -28571,6 +28572,7 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "lUK" = (

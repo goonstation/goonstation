@@ -8434,6 +8434,7 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
+/obj/machinery/recharger,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aTZ" = (
@@ -26085,6 +26086,7 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/machinery/firealarm/west,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9
 	},

@@ -15257,6 +15257,7 @@
 	pixel_y = 3
 	},
 /obj/table/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -39312,6 +39313,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
