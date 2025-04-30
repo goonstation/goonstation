@@ -1,5 +1,9 @@
 
 (t)wed apr 30 25
+(u)JORJ949
+(p)23153
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Using the wiki command as an antagonist now sends you to that antagonist's wiki page!
 (u)glowbold
 (p)23207
 (e)🆕📦|C-Feature, A-Game-Objects
