@@ -4,6 +4,8 @@
 /// Charge for defibrillators that draw from large power cells (i.e. the ones in APCs)
 #define DEFIB_CHARGE_LARGE_CELL_COST 500 WATTS
 
+// TODO: common abstract parent to split power cell / cell using defibs; requires large code & map repathing
+
 TYPEINFO(/obj/item/robodefibrillator)
 	mats = list("metal" = 10,
 				"conductive" = 15)
@@ -16,6 +18,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	icon_state = "defib-off"
 	item_state = "defib"
 	pickup_sfx = 'sound/items/pickup_defib.ogg'
+	inventory_counter_enabled = TRUE
 	var/icon_base = "defib"
 	/// Cooldown after charging a defib before it's chargable again
 	var/charge_time = 10 SECONDS
@@ -32,6 +35,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		. = ..()
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
+		src.UpdateIcon()
 
 	emag_act(var/mob/user)
 		if (!src.emagged)
@@ -83,7 +87,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 	examine(mob/user)
 		. = ..()
-		// TODO: common abstract parent; requires large code & map repathing
 		if (istype_exact(src, /obj/item/robodefibrillator) || istype_exact(src, /obj/item/robodefibrillator/vr))
 			var/list/ret = list()
 			if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
@@ -93,6 +96,15 @@ TYPEINFO(/obj/item/robodefibrillator)
 		else
 			. += "Each use of [src] will consume [src.cost]PU."
 
+	update_icon(...)
+		. = ..()
+		var/list/counter_ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, counter_ret) & CELL_RETURNED_LIST)
+			inventory_counter.update_percent(counter_ret["charge"], counter_ret["max_charge"])
+		else
+			inventory_counter.update_text("-")
+
+	/// Attempt to charge the defib paddles, using power. Only call parent if you're using power_cell
 	proc/try_charge(mob/user)
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			boutput(user, SPAN_ALERT("The internal cell doesn't have enough power to prime [src]!"))
@@ -100,13 +112,16 @@ TYPEINFO(/obj/item/robodefibrillator)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, src.cost)
 		if (ret & CELL_INSUFFICIENT_CHARGE)
 			boutput(user, SPAN_ALERT("[src] is now out of charge."))
+		src.UpdateIcon()
 		return TRUE
 
+	/// The charge status and fx on charge end
 	proc/charge(mob/user)
 		if(prob(1))
 			user.say("CLEAR!")
 		src.setStatus("defib_charged", 3 SECONDS)
 
+	/// handle defib charge status and do fx
 	proc/do_the_shocky_thing(mob/user as mob)
 		if (!src.hasStatus("defib_charged"))
 			user.show_text("[src] needs to be primed first!", "red")
@@ -134,6 +149,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			user.suiciding = 0
 		return 1
 
+/// the actul defib effect to the target patient
 /obj/item/robodefibrillator/proc/defibrillate(mob/living/patient, mob/living/user, suiciding = FALSE)
 	if (!isliving(patient))
 		return 0
@@ -148,7 +164,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		user.visible_message(SPAN_ALERT("<b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!"),\
 		SPAN_ALERT("You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!"))
 
-	if (src.emagged || patient.health < 0 || shockcure || prob(25 + suiciding) || (suiciding && prob(44)))
+	if (src.emagged || src.makeshift || patient.health < 0 || shockcure || prob(25 + suiciding) || (suiciding && prob(44)))
 		if (!do_the_shocky_thing(user))
 			// shit done didnt work dangit
 			return 0
@@ -259,6 +275,7 @@ TYPEINFO(/obj/item/robodefibrillator/makeshift)
 	New(obj/item/cell/attached_cell)
 		. = ..()
 		src.RemoveComponentsOfType(/datum/component/cell_holder)
+		src.inventory_counter.update_text("")
 		if (istype(attached_cell))
 			src.cell = attached_cell
 		else
@@ -290,6 +307,7 @@ TYPEINFO(/obj/item/robodefibrillator/cyborg)
 	New()
 		. = ..()
 		RemoveComponentsOfType(/datum/component/cell_holder)
+		src.inventory_counter.update_text("")
 
 	try_charge(mob/user)
 		var/mob/living/silicon/robot/robot = user
@@ -309,6 +327,7 @@ TYPEINFO(/obj/item/robodefibrillator/mounted)
 	New()
 		. = ..()
 		RemoveComponentsOfType(/datum/component/cell_holder)
+		src.inventory_counter.update_text("")
 
 	try_charge(mob/user)
 		if (!src.parent?.try_charge(user))

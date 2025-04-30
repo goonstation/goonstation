@@ -46,7 +46,8 @@ TYPEINFO(/obj/machinery/recharger)
 								/obj/item/mining_tool/powered/pickaxe, \
 								/obj/item/mining_tool/powered/hammer, \
 								/obj/item/ammo/power_cell, \
-								/obj/item/mining_tool/powered/shovel
+								/obj/item/mining_tool/powered/shovel, \
+								/obj/item/robodefibrillator
 								)
 
 	var/obj/item/charging = null
