@@ -224,7 +224,7 @@
 		update_amt_per_tile()
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (src.amt_per_tile > x)
+			if (src.amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -480,7 +480,7 @@
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		var/my_depth_level = 0
 		for(var/x in depth_levels)
-			if (amt_per_tile > x)
+			if (amt_per_tile >= x)
 				my_depth_level++
 			else
 				break
@@ -752,7 +752,7 @@
 		if (!removed_loc || src.qdeled || !src.reagents || !src.reagents.total_volume) //trying to stop the weird bug were a bunch of simultaneous splits removes all reagents
 			return 0
 		contained_amt = src.reagents.total_volume
-
+		connected += split_liq //include the actual splitting liquid object we're looking at
 		//remove some of contained_amt from src and add it to FG
 		src.can_update = 0
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0

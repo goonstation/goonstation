@@ -46,8 +46,8 @@ var/list/pw_rewards_tier3 = null
 	var/datum/pod_wars_team/team_SY
 
 	var/atom/movable/screen/hud/score_board/board
-	var/round_limit = 70 MINUTES
-	var/activate_control_points_time = 15 MINUTES
+	var/round_limit = 45 MINUTES
+	var/activate_control_points_time = 5 MINUTES
 	var/round_start_time					//value of TIME macro at post_setup proc call. IDK if this value is stored somewhere already.
 	var/did_ion_storm_happen = FALSE 		//set to true when the ion storm comes.
 
@@ -417,8 +417,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	..()
 
-datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
-	our_team.change_points(-1)
+/datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
+	our_team.change_points(-0.5)
 	var/nt_death = world.load_intra_round_value("nt_death")
 	var/sy_death = world.load_intra_round_value("sy_death")
 	if(isnull(nt_death))
@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	maxhealth = 100
 	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
-	speed = 1.7
+	speedmod = 0.59
 
 	New()
 		..()
@@ -1008,16 +1008,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/nt_wins = world.load_intra_round_value("nt_win")
-		var/nt_deaths = world.load_intra_round_value("nt_death")
-		if(isnull(nt_wins))
-			nt_wins = 0
-		if(isnull(nt_deaths))
-			nt_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "ntos")
 
 /obj/decoration/memorial/pod_war_stats_sy/
 	name = "Syndicate Mission Log"
@@ -1043,16 +1034,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/sy_wins = world.load_intra_round_value("sy_win")
-		var/sy_deaths = world.load_intra_round_value("sy_death")
-		if(isnull(sy_wins))
-			sy_wins = 0
-		if(isnull(sy_deaths))
-			sy_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "syndicate")
 
 /obj/decoration/memorial/memorial_left
 	name = "Memorial Inscription"

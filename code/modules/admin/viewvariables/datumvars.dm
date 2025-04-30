@@ -229,7 +229,6 @@
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
-	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
@@ -238,7 +237,6 @@
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReplaceExplosive=\ref[D]'>Replace with Explosive</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];Possess=\ref[D]'>Possess</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];AddPathogen=\ref[D]'>Add Random Pathogens Reagent</a>"
 
 
 		if (isitem(D))
@@ -607,15 +605,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
 		return
-	if (href_list["HardDelete"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_PA)
-			var/datum/D = locate(href_list["HardDelete"])
-			if(alert(src, "Are you sure you want to delete [D] of type [D.type]?",,"Yes","No") == "Yes")
-				del(D)
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to delete something all rude-like.")
-		return
 	if (href_list["Display"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -643,14 +632,6 @@
 				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
-		return
-	if (href_list["AddPathogen"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_PA)
-			var/obj/O = locate(href_list["AddPathogen"])
-			O.addpathogens()
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
 		return
 	if (href_list["KillCritter"])
 		USR_ADMIN_ONLY

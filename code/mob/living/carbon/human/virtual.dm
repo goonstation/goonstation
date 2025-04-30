@@ -15,6 +15,7 @@
 		src.bioHolder.mobAppearance.fartsound = "virtual"
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
+		src.sims = null
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 

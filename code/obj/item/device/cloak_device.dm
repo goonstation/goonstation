@@ -69,6 +69,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
 			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
+			user.playsound_local(src, "sparks", 50, 0)
 		src.active = FALSE
 		src.UpdateIcon()
 
@@ -133,7 +134,7 @@ TYPEINFO(/obj/item/cloaking_device)
 				src.AddComponent(/datum/component/send_to_target_mob, src)
 				src.hunter_key = M.mind.key
 				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-				flick("[src.base_icon_state]-tele", src)
+				FLICK("[src.base_icon_state]-tele", src)
 
 		disposing()
 			. = ..()

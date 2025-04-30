@@ -194,7 +194,7 @@ proc/create_fluff(datum/mind/target)
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/clothing/suit/hosmedal
+				steal_target = /obj/item/clothing/suit/security_badge/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
@@ -688,26 +688,6 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 				return 1
 		return 0
 
-/datum/objective/specialist/conspiracy
-	explanation_text = "Identify and eliminate any competing syndicate operatives on the station. Be careful not to be too obvious yourself, or they'll come after you!"
-
-	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return 0
-
-		if (!istype(ticker.mode, /datum/game_mode/spy))
-			return 0
-
-		var/datum/game_mode/spy/spymode = ticker.mode
-		for (var/datum/mind/mindCheck in spymode.leaders)
-			if (mindCheck == owner)
-				continue
-
-			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
-
-		return 1
-
 /datum/objective/specialist/absorb
 	medal_name = "Many names, many faces"
 	var/absorb_count
@@ -748,10 +728,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_vampire_blood(1) >= bloodcount)
-			return 1
-		else
-			return 0
+		var/datum/antagonist/vampire/antag_datum = owner.get_antagonist(ROLE_VAMPIRE)
+		return (antag_datum?.ability_holder?.get_vampire_blood(TRUE) >= bloodcount)
 
 /datum/objective/specialist/hunter/trophy
 	medal_name = "Dangerous Game"
@@ -995,16 +973,17 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 /datum/objective/specialist/salvager
 	proc/check_on_magpie(targetType, frameType=null)
 		. = 0
-		for(var/areaType in typesof(/area/salvager))
-			for (var/turf/T in get_area_turfs(areaType))
-				for (var/obj/O in T.contents)
-					if(istype(O, targetType))
-						if(frameType && targetType == /obj/item/electronics/frame )
-							var/obj/item/electronics/frame/F = O
-							if (istype(F.deconstructed_thing, frameType))
-								. += 1
-						else
+		for (var/turf/T in get_area_turfs(/area/salvager))
+			for (var/obj/O in T.contents)
+				if(istype(O, targetType))
+					if(frameType && targetType == /obj/item/electronics/frame )
+						var/obj/item/electronics/frame/F = O
+						if (istype(F.deconstructed_thing, frameType))
 							. += 1
+					else
+						. += 1
+				else if(frameType && istype(O, frameType))
+					. += 1
 
 /datum/objective/specialist/salvager/machinery
 	var/target_equipment = null
@@ -1056,9 +1035,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			var/list/L = owner.current.get_all_items_on_mob()
 			if (length(L))
 				for (var/obj/item/electronics/frame/F in L)
-					if (istype(F.deconstructed_thing, target_equipment))
+					if (istype(F.deconstructed_thing, src.target_equipment))
 						count++
-			count += check_on_magpie(/obj/item/electronics/frame, target_equipment)
+			count += check_on_magpie(/obj/item/electronics/frame, src.target_equipment)
 			return count >= target_count
 		else
 			return FALSE
@@ -1085,9 +1064,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		return target_equipment
 
 	check_completion()
-		if(owner.current && owner.current.check_contents_for_num(target_equipment, 1, TRUE))
+		if(owner.current && owner.current.check_contents_for_num(src.target_equipment, 1, TRUE))
 			return TRUE
-		else if(check_on_magpie(target_equipment))
+		else if(check_on_magpie(src.target_equipment))
 			return TRUE
 		else
 			return FALSE
@@ -1100,6 +1079,27 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			return 1
 		else
 			return 0
+
+/datum/objective/specialist/phoenix_collect_humans
+	explanation_text = "Collect 5 dead humans in your nest."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_humans) >= 5
+
+/datum/objective/specialist/phoenix_collect_critters
+	explanation_text = "Collect 5 dead critters in your nest."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.collected_critters) >= 5
+
+/datum/objective/specialist/phoenix_permafrost_areas
+	explanation_text= "Use Permafrost on 5 station areas."
+
+	check_completion()
+		var/mob/living/critter/space_phoenix/phoenix = src.owner.current
+		return length(phoenix?.permafrosted_areas) >= 5
 
 /////////////////////////////
 // Round-ending objectives //
@@ -1479,8 +1479,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
-		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powergoal)
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //

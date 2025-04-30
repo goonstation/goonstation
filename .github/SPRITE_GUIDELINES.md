@@ -1,7 +1,5 @@
 # Goonstation Spriting Guidelines
 
-{%hackmd @ZeWaka/dark-theme %}
-
 ## Spriting for Goonstation 🐝
 
 So, you want to contribute sprite art to Goonstation. Great! This set of guidelines details what's generally expected out of sprite contributions for Goonstation, and aims to provide helpful advice on the implementation and creation of sprites. As a disclaimer, this isn't a guide on 'How All Good Pixel Art Should Be Drawn', it's how sprites contributed specifically to Goonstation should be drawn.

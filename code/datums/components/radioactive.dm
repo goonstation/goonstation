@@ -23,6 +23,8 @@ TYPEINFO(/datum/component/radioactive)
 	var/_backup_color = null //so hacky
 	/// Internal, store of turf glow overlay
 	var/static/image/_turf_glow = null
+	/// Internal, reference to light component
+	var/datum/component/loctargeting/simple_light/our_light
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
@@ -63,7 +65,11 @@ TYPEINFO(/datum/component/radioactive)
 			src._backup_color = PA.color
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
-		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		if (isturf(PA))
+			PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
+		else
+			var/list/color_composition = rgb2num(color)
+			our_light = PA.AddComponent(/datum/component/loctargeting/simple_light, color_composition[1], color_composition[2], color_composition[3], color_composition[4], TRUE)
 		if(istype(PA, /turf))
 			if(isnull(src._turf_glow))
 				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
@@ -85,6 +91,7 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Remove(parent)
 		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light_\ref[src]")
+		QDEL_NULL(src.our_light)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
@@ -122,10 +129,10 @@ TYPEINFO(/datum/component/radioactive)
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
 			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100) * (src.effect_range - GET_DIST(M, PA) + 1) / (max(src.effect_range, 1)) * 0.8) //lnear, not inverse square because it plays nicer in game
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 			src.do_filters()

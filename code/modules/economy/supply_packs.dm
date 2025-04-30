@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/flour = 6,
 					/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig = 4,
-					/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/sugar = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 3,
@@ -418,6 +418,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
 
+/datum/supply_packs/janitor_sprayer
+	name = "WA-V3 Janitorial Sprayer"
+	desc = "x1 Brand new Wide Area V3 Cleaning Device, x1 Matching back-tank"
+	category = "Civilian Department"
+	containertype = /obj/storage/crate
+	containername = "WA-V3 Crate"
+	cost = PAY_TRADESMAN * 15 //pricy
+	contains = list(
+		/obj/item/gun/sprayer,
+		/obj/item/reagent_containers/glass/backtank
+	)
+
 /datum/supply_packs/hydronutrient
 	name = "Hydroponics: Nutrient Crate"
 	desc = "Five bulk jugs of the most essential plant nutrients"
@@ -538,12 +550,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/security_upgrade
 	name = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
-	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit"
+	desc = "1x Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, 1x Experimental Grenade Kit, 1x Stasis Rifle"
 	category = "Security Department"
 	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
-					/obj/item/clothing/head/helmet/hardhat/security/improved)
+					/obj/item/clothing/head/helmet/hardhat/security/improved,
+					/obj/item/gun/energy/stasis)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Experimental Security Equipment (Cardlocked \[Security Equipment])"
@@ -590,12 +603,22 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
 
+/datum/supply_packs/weapons5
+	name = "Weapons Crate - Phaser SMGs (Cardlocked \[Security Equipment])"
+	desc = "x2 Phaser SMGs"
+	category = "Security Department"
+	contains = list(/obj/item/gun/energy/phaser_smg = 2)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate/weapon
+	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
+	access = access_securitylockers
+
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
 	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
 	/obj/item/clothing/mask/gas = 4,
-	/obj/item/tank/mini_oxygen = 4,
+	/obj/item/tank/mini/oxygen = 4,
 	/obj/item/tank/air = 2,
 	/obj/item/clothing/head/emerg = 4,
 	/obj/item/clothing/suit/space/emerg = 4)
@@ -1102,6 +1125,17 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "ABCU Unit Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
+/datum/supply_packs/efif1
+	name = "EFIF-1 Construction System"
+	desc = "A top-of-the-line pod-mounted mass construction tool, suitable for large-scale repairs and offsite building projects."
+	category = "Engineering Department"
+	contains = list(/obj/item/shipcomponent/mainweapon/constructor/stocked,
+					/obj/item/paper/efif_disclaimer)
+	cost = PAY_DOCTORATE*15
+	containertype = /obj/storage/secure/crate
+	containername = "EFIF-1 Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /datum/supply_packs/janitor_supplies
 	name = "Janitorial Supplies Refill"
 	desc = "Supplies to restock your hard-working Janitor."
@@ -1124,17 +1158,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*4
 	containertype = /obj/storage/crate/packing
 	containername = "Utility Belt Crate"
-
-/datum/supply_packs/antibio
-	name = "Anti-Biological Hazard Supplies"
-	desc = " A couple of tools for combatting rogue biological lifeforms."
-	category = "Security Department"
-	contains = list(/obj/item/gun/flamethrower/assembled/loaded,
-					/obj/item/storage/box/flaregun)
-	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate
-	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
-	access = access_securitylockers
 
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"
@@ -1383,15 +1406,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Electronics Vending Machine Restocking Pack"
 
+/datum/supply_packs/clothing_vending_restock
+	name = "Clothing Vending Machine Restock Pack"
+	desc = "Various Vending Machine Restock Cartridges for departmental apparel vendors"
+	contains = list(/obj/item/vending/restock_cartridge/jobclothing/security,
+					/obj/item/vending/restock_cartridge/jobclothing/medical,
+					/obj/item/vending/restock_cartridge/jobclothing/engineering,
+					/obj/item/vending/restock_cartridge/jobclothing/catering,
+					/obj/item/vending/restock_cartridge/jobclothing/research,)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Clothing Vending Machine Restocking Pack"
+
 /*
 	Umm, apparently the packs below never get added? What's up with that. Construction mode :S -ZeWaka
 */
 
 /datum/supply_packs/banking_kit
 	name = "Banking Kit"
-	desc = "Circuit Boards: 1x Bank Records, 1x ATM"
-	contains = list(/obj/item/circuitboard/atm,
-					/obj/item/circuitboard/bank_data)
+	desc = "Circuit Boards: 1x ATM, Data Disks: 1x BankBoss"
+	contains = list(/obj/item/circuitboard/atm, /obj/item/disk/data/floppy/read_only/bank_progs)
 	hidden = 1
 	cost = PAY_IMPORTANT*5
 	containertype = /obj/storage/crate
@@ -1561,7 +1595,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 		return A
 
 /datum/supply_packs/complex/electronics_kit
-	name = "Mechanics Reconstruction Kit"
+	name = "Mechanics Reconstruction Kit (Cardlocked \[Chief Engineer])"
 	desc = "1x Ruckingenur frame, 1x Manufacturer frame, 1x reclaimer frame, 1x device analyzer, 1x soldering iron"
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/scanner,
@@ -1571,8 +1605,26 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
 	cost = PAY_TRADESMAN*10
+	containertype = /obj/storage/secure/crate/eng
+	access = access_engineering_chief
+	containername = "Mechanics Reconstruction Kit (Cardlocked \[Chief Engineer])"
+
+/datum/supply_packs/complex/barbershop_kit
+	name = "Barbershop Kit"
+	desc = "Everything one might need to open up a barbershop!"
+	category = "Civilian Department"
+	contains = list(/obj/item/electronics/soldering,
+					/obj/item/furniture_parts/barber_chair,
+					/obj/item/dye_bottle,
+					/obj/item/dye_bottle,
+					/obj/item/razor_blade,
+					/obj/item/scissors,
+					/obj/item/clothing/under/misc/barber,
+					/obj/item/clothing/gloves/latex)
+	frames = list(/obj/machinery/hair_dye_dispenser)
+	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/crate
-	containername = "Mechanics Reconstruction Kit"
+	containername = "Barbershop Kit"
 
 #ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
@@ -1601,6 +1653,16 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Magnet Kit"
 #endif
+
+/datum/supply_packs/complex/mining_rockbox
+	name = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	desc = "1x Rockbox™ Ore Cloud Storage Container"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/ore_cloud_storage_container)
+	cost = PAY_EMBEZZLED
+	containertype = /obj/storage/secure/crate/plasma
+	containername = "Rockbox™ Storage Container (Cardlocked \[Chief Engineer])"
+	access = access_engineering_chief
 
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
@@ -1993,8 +2055,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
 	cost = PAY_TRADESMAN
 	containername = "Newspaper Crate"
-	contains = list(/obj/item/paper/newspaper/rolled)
-	amount = 8
+	contains = list(/obj/item/paper/newspaper/rolled = 8)
 	containertype = /obj/storage/crate/packing
 
 /datum/supply_packs/electricguitar
@@ -2024,6 +2085,32 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/complex/player_piano
+	name = "Player Piano Kit"
+	desc = "1x Player Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Player Piano Kit"
+	frames = list(/obj/player_piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano
+	name = "Piano Kit"
+	desc = "1x Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Piano Kit"
+	frames = list(/obj/item/instrument/large/piano)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/complex/piano_grand
+	name = "Grand Piano Kit"
+	desc = "1x Grand Piano Kit"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*3
+	containername = "Grand Piano Kit"
+	frames = list(/obj/item/instrument/large/piano/grand)
+	containertype = /obj/storage/crate/wooden
 
 //Western
 /datum/supply_packs/west_coats

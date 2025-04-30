@@ -46,6 +46,7 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	has_impact_particles = TRUE
 
 //Any special things when it hits shit?
 	on_hit(atom/hit)
@@ -119,18 +120,48 @@ toxic - poisons
 	max_range = 30
 	projectile_speed = 20
 	sname = "assault laser"
-	shot_sound = 'sound/weapons/Laser.ogg'
+	shot_sound = 'sound/weapons/asslaser.ogg'
 	color_red = 0
 	color_green = 0
 	color_blue = 1
+	always_hits_structures = TRUE
 
 	on_hit(atom/hit, dir, obj/projectile/P)
 		fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_BLUE)
-		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+		if(!ismob(hit))
 			hit.ex_act(2)
 		else
 			hit.ex_act(3, src, 1.5) //don't stun humans nearly as much
 		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/cruiser
+	name = "obsidio beam"
+	icon_state = "elecorb"
+	damage = 100
+	cost = 65
+	dissipation_delay = 100
+	dissipation_rate = 0
+	max_range = 300
+	projectile_speed = 32
+	sname = "pulsed gigawatt beam"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+	brightness = 4
+	shot_number = 5
+	window_pass = 0
+
+	tick(var/obj/projectile/P)
+		var/T1 = get_turf(P)
+		if(!istype(T1,/turf/space))
+			fireflash_melting(T1, 0, rand(50000, 100000), 0, TRUE, CHEM_FIRE_BLUE, TRUE, FALSE)
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		elecflash(T,radius=2, power=500000, exclude_center = 0)
+		fireflash_melting(T, 1, rand(50000, 100000), 0, TRUE, CHEM_FIRE_BLUE, FALSE, TRUE)
+		hit.meteorhit()
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
@@ -245,6 +276,39 @@ toxic - poisons
 				P.special_data["angle"] = 0
 			..()
 
+	maser
+		name = "maser ray"
+		icon_state = "sinebeam1"
+		sname = "maser ray"
+		damage = 0.0001 /// to bypass 0 damage checks
+		dissipation_delay = 8
+		color_red = 1
+		color_green = 1
+		color_blue = 1
+		has_impact_particles = FALSE
+		var/pilot_dmg = 20
+		disruption = 5
+
+		on_hit(atom/hit)
+			if (istype(hit, /mob))
+				var/mob/M = hit
+				M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
+			else if (istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				var/mob/M = vehicle.pilot
+				if (istype(M))
+					var/damage_pilot = TRUE
+					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
+						if (shielding.active)
+							damage_pilot = FALSE
+					if (damage_pilot)
+						M.TakeDamage("All", burn = src.pilot_dmg, damage_type = DAMAGE_BURN)
+			..()
+
+		pod
+			pilot_dmg = 10
+
 	upgradeable
 		icon_state = "phaser_light"
 		var/datum/projectile/laser/light/launched = new/datum/projectile/laser/light
@@ -284,6 +348,17 @@ toxic - poisons
 				icon_state = "phaser_med"
 			else
 				icon_state = "phaser_light"
+	smg
+		name = "micro phaser bolt"
+		icon_state = "phaser_light"
+		sname = "micro phaser bolt"
+		damage = 8
+		cost = 10
+		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
+		fullauto_valid = 1
 
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
@@ -400,13 +475,18 @@ toxic - poisons
 		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 		I.set_loc(get_turf(P))
 		I.set_dir(P.dir)
-		flick("ion_fade", I)
+		FLICK("ion_fade", I)
 		I.icon_state = "blank"
 		I.pixel_x = P.pixel_x
 		I.pixel_y = P.pixel_y
 		SPAWN( 20 )
 			if (I && !I.disposed) qdel(I)*/
 
+	lawbringer
+		color_icon = "#00FFFF"
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		projectile_speed = 46 //it's not quite the carbine but let's make it a little faster to go with the ANGRY shot sound
+		shot_pitch = 0.8
 
 	burst
 		damage = 15
@@ -571,6 +651,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 45
 	impact_image_state = null
+	energy_particles_override = TRUE
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
@@ -657,6 +738,7 @@ toxic - poisons
 	brute
 		icon_state = "signifer2_brute"
 		damage_type = D_KINETIC
+		energy_particles_override = TRUE
 		color_red = 0.8
 		color_green = 0.1
 		color_blue = 0.1
@@ -711,9 +793,10 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit, dir, obj/projectile/P)
-		fireflash(get_turf(hit), 0)
+		elecflash(get_turf(hit),radius=0, power=10, exclude_center = 0)
 		hit.ex_act(2)
 		P.die() //explicitly kill projectile - not a mining laser
+
 
 /datum/projectile/laser/makeshift
 	cost = 1250
@@ -729,9 +812,10 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	icon_state = "lasergat_laser"
 	shot_volume = 50
+	dissipation_rate = 2
 	name = "single"
 	sname = "single"
-	damage = 14
+	damage = 10
 
 /datum/projectile/laser/lasergat/burst
 	name = "burst laser"

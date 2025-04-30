@@ -1,7 +1,7 @@
 //This file contains stuff that is still *mostly* my code.
 
 /*
-Proc: drawLine
+Proc: drawLineImg
 Arguments:
 	source: The source atom where the beam begins.
 	target: The target atom where the beam ends.
@@ -25,12 +25,12 @@ Arguments:
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
 				 If 0, will ignore the offsets and just go from source to target.
 Returns:
-	An instance of /datum/lineResult. See below drawLine.
+	An instance of /datum/lineResult. See below drawLineImg.
 		lineImage contains the finished line image. You will still need to output it for it to be visible. addGlobalImage is an option.
 		By default the image is attached to source. You can change this by setting the image's loc to something else.
 		crossed contains a list of crossed turfs if getCrossed was set to 1.
 */
-/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1)
+/proc/drawLineImg(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
@@ -95,7 +95,10 @@ Returns:
 		if(render_source_cap != null)
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		var/matrix/final_matrix = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.transform = final_matrix
+		if (applyTransform)
+			I.transform = final_matrix
 		result.lineImage = I
 
 	else if(mode == LINEMODE_STRETCH_NO_CLIP)
@@ -105,6 +108,7 @@ Returns:
 
 		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		result.transform = M
 		var/image/I = image(null,source)
 		I.appearance_flags = KEEP_APART  //Required for some odd reason.
 		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
@@ -113,21 +117,26 @@ Returns:
 			//This probably breaks dual-ended caps.
 			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE_REVERSED)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -158,6 +167,8 @@ Returns:
 /datum/lineResult
 	var/image/lineImage = null
 	var/list/crossed = null
+	/// The resulting transform applied to the line, null in the case of LINEMODE_SEGMENT because there's no single transform there.
+	var/matrix/transform = null
 
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
@@ -196,7 +207,7 @@ Returns:
 /proc/testLine()
 	var/atom/source = get_turf(usr)
 	var/atom/target = get_turf(pick(oview(5)))
-	var/datum/lineResult/R = drawLine(source, target, list("elec1","elec2","elec3"), "eleccap")
+	var/datum/lineResult/R = drawLineImg(source, target, list("elec1","elec2","elec3"), "eleccap")
 	var/globalImageKey = "linetest[rand(0,INFINITY)]"
 	R.lineImage.color = "#4b8aff"
 	addGlobalImage(R.lineImage, globalImageKey)
@@ -407,7 +418,7 @@ Returns:
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(target == null) target = new()
 		if(!over_object || !istype(over_object, /atom)) return
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = over_object
 		target.user = usr
 		if(over_object.loc != startingLoc && over_object != startingLoc) return
@@ -418,7 +429,7 @@ Returns:
 		if(object == src || (!isturf(object.loc) && !isturf(object))) return
 		if(!object || !istype(object, /atom)) return
 		if(target == null) target = new()
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = object
 		target.user = usr
 		startingLoc = get_turf(object)
@@ -736,7 +747,7 @@ Returns:
 	var/list/oneTurfsExpend = oneTurfs.Copy()
 	var/list/twoTurfsExpend = twoTurfs.Copy()
 
-	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
+	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
 
 	var/oneName = ""
 	var/twoName = ""
@@ -2994,7 +3005,7 @@ var/list/lag_list = new/list()
 		active = 1
 		walk_towards(src,L,3)
 		src.invisibility = INVIS_NONE
-		flick("apparition",src)
+		FLICK("apparition",src)
 		sleep(1.5 SECONDS)
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
@@ -3194,7 +3205,7 @@ var/list/lag_list = new/list()
 	name = "Place Grille"
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
-		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
+		var/obj/mesh/grille/L = new/obj/mesh/grille/steel(get_turf(target))
 		L.set_dir(user:dir)
 		return
 
@@ -3290,7 +3301,7 @@ var/list/lag_list = new/list()
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)
-			dat += "<A href='?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
+			dat += "<A href='byond://?src=\ref[src];set_mode=\ref[D]'>[D.name]</A> [active_mode == D ? "<<<" : ""]<BR>"
 			dat += "[D.desc]<BR><BR>"
 		user.Browse(dat, "window=engibox;can_minimize=0;can_resize=0;size=250x600")
 		onclose(user, "window=engibox")

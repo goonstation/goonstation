@@ -143,6 +143,9 @@ var/global/list/job_start_locations = list()
 	name = "Engineer"
 	icon_state = "engineer"
 
+/obj/landmark/start/job/technical_trainee
+	name = "Technical Trainee"
+	icon_state = "engineer"
 /obj/landmark/start/job/miner
 	name = "Miner"
 	icon_state = "miner"
@@ -157,6 +160,10 @@ var/global/list/job_start_locations = list()
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
+/obj/landmark/start/job/medical_trainee
+	name = "Medical Trainee"
+	icon_state = "medical_doctor"
+
 /obj/landmark/start/job/geneticist
 	name = "Geneticist"
 	icon_state = "geneticist"
@@ -167,6 +174,10 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start/job/scientist
 	name = "Scientist"
+	icon_state = "scientist"
+
+/obj/landmark/start/job/research_trainee
+	name = "Research Trainee"
 	icon_state = "scientist"
 
 // Security
@@ -199,7 +210,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_nt"
 
 /obj/landmark/start/job/podwars/NT/commander
-	name = "NanoTrasen Commander"
+	name = "NanoTrasen Pod Commander"
 	icon_state = "pod_nt_commander"
 
 /obj/landmark/start/job/podwars/syndie
@@ -207,7 +218,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "pod_syndie"
 
 /obj/landmark/start/job/podwars/syndie/commander
-	name = "Syndicate Commander"
+	name = "Syndicate Pod Commander"
 	icon_state = "pod_syndie_commander"
 
 /* ===== Antagonist Starts ===== */
@@ -271,6 +282,26 @@ var/global/list/job_start_locations = list()
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
+
+/obj/landmark/latejoin_job
+	name = "latejoin spawn marker"
+	icon_state = "x"
+
+/obj/landmark/latejoin_job/radio_show_host
+	name = "Radio Show Host Spawn"
+	name_override = LANDMARK_RADIO_SHOW_HOST_SPAWN
+
+/obj/landmark/latejoin_job/journalist
+	name = "Journalist Spawn"
+	name_override = LANDMARK_JOURNALIST_SPAWN
+
+/obj/landmark/latejoin_job/actor
+	name = "Actor Spawn"
+	name_override = LANDMARK_ACTOR_SPAWN
+
+/obj/landmark/latejoin_job/influencer
+	name = "Influencer Spawn"
+	name_override = LANDMARK_INFLUENCER_SPAWN
 
 /* ===== Misc Spawn/Start ===== */
 
@@ -499,13 +530,13 @@ var/global/list/job_start_locations = list()
 	name = "Void Diner"
 
 /obj/landmark/lrt/icemoon
-	name = "Moon X15"
+	name = "Senex"
 
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
 /obj/landmark/lrt/biodome
-	name = "Moon X05"
+	name = "Fatuus"
 
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"
@@ -524,6 +555,19 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/observatory
 	name = "Observatory"
+
+/obj/landmark/lrt/watchfuleye
+	name = "Watchful-Eye Sensor"
+
+/obj/landmark/icemoon_medal
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/mob/living/L = AM
+		if (istype(L) && !isintangible(L))
+			L.unlock_medal("Ice Cold", TRUE)
 
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
@@ -596,12 +640,14 @@ var/global/list/job_start_locations = list()
 		if(novis)
 			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			W.warptarget = T
+			W.warptarget_modifier = warptarget_modifier
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
 			if (T.vistarget)
 				if(warptarget_modifier)
 					T.vistarget.warptarget = T
+					T.vistarget.warptarget_modifier = warptarget_modifier
 				T.updateVis()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
@@ -616,6 +662,10 @@ var/global/list/job_start_locations = list()
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
 /// target turf for projecting its contents elsewhere
 /turf/var/turf/vistarget = null
+/// turfs to project speech to (overlaps with vistarget speech)
+/turf/var/list/listening_turfs = null
+/// turfs to project reachability of objects to  (overlaps somewhat with vistarget)
+/turf/var/list/reachable_turfs = null
 /// target turf for teleporting its contents elsewhere
 /turf/var/turf/warptarget = null
 /// control who gets warped to warptarget

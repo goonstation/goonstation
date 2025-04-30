@@ -32,7 +32,7 @@
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
-	var/notes = list("c4")
+	var/list/notes = list("c4")
 	var/note = "c4"
 	var/note_range = list("c2", "c7")
 	var/use_new_interface = FALSE
@@ -47,8 +47,10 @@
 	var/note_keys_string = ""
 	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
 	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
+	/// Can it go in a mechcomp component?
+	var/automatable = TRUE
 
-	New()
+	New(loc)
 		..()
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
@@ -68,29 +70,28 @@
 
 				newcontext.note = i
 				contextActions += newcontext
+		if(current_state >= GAME_STATE_WORLD_INIT)
+			initialize()
 
+	initialize()
 		if (src.use_new_interface)
-			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
-			src.note_keys_string = src.generate_keybinds(src.notes)
-			if(!src.note_keys_string)
-				src.note_keys_string = src.default_keys_string
-			src.sounds_instrument = list()
-			for (var/i in 1 to length(src.notes))
-				src.note = src.notes[i]
-				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
+			var/datum/instrument_data/instr_data = global.instrument_sound_bank.bank[initial(src.name)]
+			src.notes = instr_data.notes
+			src.note_keys_string = instr_data.note_keys_string
+			src.sounds_instrument = instr_data.sounds_instrument
 
-	proc/play_note(var/note, var/mob/user)
+	proc/play_note(var/note, var/mob/user, var/pitch_override = null, var/volume_override = null, var/use_cooldown = TRUE)
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
-		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+		if(use_cooldown && ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -162,6 +163,8 @@
 
 		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
 		for(var/i in start to end)
+			if(i > length(split_default_key_string))
+				break
 			. += split_default_key_string[i]
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -191,7 +194,7 @@
 			if("play_note")
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
-				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				src.play_note(note_to_play, ui.user, volume_override = volume, use_cooldown = FALSE)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")
@@ -226,8 +229,6 @@
 			ui_interact(user)
 		else
 			src.play(user)
-
-
 
 /* -------------------- Large Instruments -------------------- */
 
@@ -266,6 +267,21 @@
 
 	get_desc() // so it doesn't show up as an item on examining it
 		return
+
+	attack_ai(mob/user as mob)
+		..()
+		if (!in_interact_range(src, user)) // Instruments are not wireless
+			return
+
+		if (isAI(user))
+			var/mob/living/silicon/ai/borgo = user
+			if (borgo.deployed_to_eyecam)
+				return
+
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 /* -------------------- Piano -------------------- */
 
@@ -489,6 +505,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -496,6 +513,27 @@
 	desc_verb = list("honks")
 	note_time = 0.8 SECONDS
 	pick_random_note = 1
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+		..()
+
+	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
+
+	proc/assembly_setup(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		//we need to add the new icon for the bike-horn
+		parent_assembly.target_item_prefix = "bike-horn"
+
+	proc/assembly_application(var/manipulated_horn, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		src.play_note(rand(1, length(src.sounds_instrument)), user = null)
+
+	/// ----------------------------------------------
 
 	show_play_message(mob/user as mob)
 		return
@@ -527,10 +565,7 @@
 					JOB_XP(user, "Clown", 2)
 					break
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		var/sound_to_play = islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument
 		switch (event)
 			if ("pulse")
@@ -626,7 +661,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
+	wear_state = "whistle"
 	w_class = W_CLASS_TINY
+	c_flags = ONBELT
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -664,6 +701,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "security whistle"
 	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
+	wear_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
 
@@ -678,9 +716,28 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			break
 
 		if (length(bots))
-			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+			user.AddComponent(/datum/component/bot_command/security, bots, 3 SECONDS)
 
+/obj/item/instrument/whistle/janitor
+	name = "janitor whistle"
+	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
+	icon_state = "whistle-jani"
+	wear_state = "whistle-jani"
+	var/commandtime = 5 SECONDS
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/cleanbot/cleanbot in view(user.client.view, user))
+			if (cleanbot.emagged || !cleanbot.on)
+				continue
+			cleanbot.KillPathAndGiveUp(1, TRUE)
+			cleanbot.speak("Awaiting command...")
+			bots += cleanbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/bot_command/janitor, bots, src.commandtime)
 /* -------------------- Vuvuzela -------------------- */
 
 /obj/item/instrument/vuvuzela
@@ -706,10 +763,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
 
-	is_detonator_attachment()
-		return 1
-
-	detonator_act(event, var/obj/item/assembly/detonator/det)
+	detonator_act(event, var/obj/item/canbomb_detonator/det)
 		switch (event)
 			if ("pulse")
 				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
@@ -859,7 +913,23 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		some_poor_fucker.throw_at(T, 1, 1)
 		some_poor_fucker.changeStatus("knockdown", 2 SECONDS)
 
+/* -------------------- Glockenspiel -------------------- */
 
+/obj/item/instrument/glockenspiel
+	name = "glockenspiel"
+	desc = "A most dignified instrument."
+	icon_state = "glockenspiel"
+	item_state = "glockenspiel"
+	note_range = list("c5", "c8")
+	instrument_sound_directory = "sound/musical_instruments/glockenspiel/notes/"
+	sounds_instrument = null
+	note_time = 0.18 SECONDS
+	randomized_pitch = 0
+	use_new_interface = TRUE
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/instrument/cowbell
 	name = "cowbell"
@@ -924,6 +994,18 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
+
+/obj/item/instrument/roboscream
+	name = "scream synthesizer"
+	desc = "A cheap looking sound synthesizer. It has no buttons or controls."
+	icon_state = "scream_synth"
+	pick_random_note = TRUE
+	sounds_instrument = list('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg')
+	note_time = 5 SECONDS
+	automatable = FALSE
+
+	attack_self(mob/user)
+		return //no imitating borg screams
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

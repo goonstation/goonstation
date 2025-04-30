@@ -109,6 +109,17 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe
 	safe = 1
 
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy //Wine for Wander's office, very spicy drink
+	name = "Dragon's Wine"
+	desc = "A wine not served anywhere on earth, famous in certain communities for its taste strong enough to 'raise the dead' and subtle sweetness. Allegedly if you drink enough you'll burst into flames. Allegedly."
+	icon_state = "bottle-dragonwine"
+	heal_amt = 1
+	g_amt = 40
+	bottle_style = "dragonwine"
+	label = "dragonwine"
+	initial_volume = 100
+	initial_reagents = list("wine"=20,"dbreath" =80,)
+
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Champagne"
 	desc = "Fizzy wine used in celebrations. It's not technically champagne if it's not made using grapes from the Champagne region of France."
@@ -347,7 +358,7 @@
 /obj/item/cocktail_stuff
 	name = "cocktail doodad"
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	w_class = W_CLASS_TINY
 	rand_pos = 1
 

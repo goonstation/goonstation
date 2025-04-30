@@ -1,4 +1,5 @@
 #define PTLMINOUTPUT 1 MEGA WATT
+#define LASER_COOLDOWN_ID "PTL laser change cooldown"
 
 /obj/machinery/power/pt_laser
 	name = "power transmission laser"
@@ -8,14 +9,19 @@
 	density = 1
 	anchored = ANCHORED_ALWAYS
 	dir = EAST
+	layer = ABOVE_OBJ_LAYER + 0.1 //over lasers which are over mirrors :screm:
 	bound_height = 96
 	bound_width = 96
 	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
-	var/capacity = 1e15
+	var/max_dial_value = 999 // limitation of what can be set on the ui dial.
+	var/capacity = 200 MEGA WATTS // Under the gib amount to prevent players from pulsing a death laser.
 	var/charge = 0
 	var/charging = 0
 	var/load_last_tick = 0	//how much load did we put on the network last tick?
+	// How often you can change the output/firing status of the PTL
+	var/laser_cooldown = 1 SECOND
+	var/laser_output_needs_update = FALSE	// Does the PTL need to be updated this loop?
 	var/chargelevel = 0		//Power input
 	var/online = FALSE
 	var/obj/machinery/power/terminal/terminal = null
@@ -40,6 +46,8 @@
 
 	cheat
 		charge = INFINITY
+		can_fire()
+			return TRUE
 
 /obj/machinery/power/pt_laser/New()
 	..()
@@ -55,13 +63,18 @@
 						terminal = term
 						break dir_loop
 
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
+
 		if(!terminal)
 			status |= BROKEN
 			return
 
 		terminal.master = src
 
-		AddComponent(/datum/component/mechanics_holder)
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -76,6 +89,49 @@
 
 	..()
 
+/obj/machinery/power/pt_laser/proc/_toggle_input_mechchomp()
+	src.charging = !src.charging
+
+/obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newinput = text2num(inp.signal)
+	if (newinput != src.chargelevel && isnum_safe(newinput) && newinput > 0)
+		src.chargelevel = newinput
+		// Working backwards to update the ui based on the power we've set up.
+		if(chargelevel < 1 KILO WATT)
+			src.input_multi = 1 WATT
+		else if(chargelevel < 1 MEGA WATT)
+			src.input_multi = 1 KILO WATT
+		else if(chargelevel < 1 GIGA WATT)
+			src.input_multi = 1 MEGA WATT
+		else if(chargelevel < 1 TERA WATT)
+			src.input_multi = 1 GIGA WATT
+		else
+			src.input_multi = 1 TERA WATT
+		src.input_number = clamp((src.chargelevel/src.input_multi), 0, src.max_dial_value)
+
+/obj/machinery/power/pt_laser/proc/_toggle_output_mechchomp()
+	src.online = !src.online
+	src.update_output()
+
+/obj/machinery/power/pt_laser/proc/_set_output_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newoutput = text2num(inp.signal)
+	// We check against the absolute value of the current charge level, in case the PTL has been emagged.
+	if (newoutput != abs(src.output) && isnum_safe(newoutput) && newoutput > 0)
+		src.output = src.emagged ? -newoutput : newoutput
+		// Working backwards to update the ui based on the power we've set up.
+		if(newoutput >= 1 TERA WATT)
+			src.output_multi = 1 TERA WATT
+		else if(newoutput >= 1 GIGA WATT)
+			src.output_multi = 1 GIGA WATT
+		else
+			src.output_multi = 1 MEGA WATT
+		var/abs_output_number = clamp((newoutput / src.output_multi), 0, src.max_dial_value)
+		src.output_number = src.emagged ? -abs_output_number : abs_output_number
+		src.update_output()
+
+
 /obj/machinery/power/pt_laser/attackby(obj/item/I, mob/user)
 	var/obj/item/card/id/id_card = get_id_card(I)
 	if (istype(id_card))
@@ -89,6 +145,8 @@
 		// var/amount = tgui_input_number(user, "Withdraw how much?", "Withdraw amount", src.current_balance, src.current_balance, 0, 0, FALSE)
 		var/amount = input(user, "Withdraw how much?", "Withdraw amount", src.current_balance)
 		amount = clamp(amount, 0, src.current_balance)
+		if (!amount)
+			return TRUE
 		src.current_balance -= amount
 		account["current_money"] += amount
 
@@ -164,6 +222,16 @@
 		return 0
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
+#define START_FIRING "START_FIRING"
+#define CONTINUE_FIRING "CONTINUE_FIRING"
+#define STOP_FIRING "STOP_FIRING"
+#define NO_CHANGE "NO_CHANGE"
+/**
+	1. Calculate available power.
+	2. Figure out next state and power available.
+	3. Adjust battery charge and, `terminal.add_load` and set last_load.
+	4. Execute the new laser state.
+*/
 /obj/machinery/power/pt_laser/process(mult)
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
@@ -172,32 +240,51 @@
 	var/last_firing = firing
 	var/dont_update = 0
 	var/adj_output = abs(output)
+	var/starting_surplus = src.get_available_input_power() // Incoming power beyond battery charge we can use to fuel the laser, capped by chargelevel.
+	var/new_state = NO_CHANGE
+	var/power_used = 0
+	var/connected = terminal && !(src.status & BROKEN)
 
-	if(terminal && !(src.status & BROKEN))
-		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
-		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
-			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
-				charge += load * mult						// increase the charge if we did
-				load_last_tick = load
-				if (!src.is_charging) src.is_charging = TRUE
-		else
-			load_last_tick = 0
-			if (src.is_charging) src.is_charging = FALSE
+	if(connected)
+		src.excess = src.get_available_terminal_power()
 
-	if( charge > adj_output*mult)
-		adj_output *= mult
-
+	// Calculate next state and power needed
+	var/can_fire = src.can_fire()
 	if(online) // if it's switched on
 		if(!firing) //not firing
-
-			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
-				start_firing() //creates all the laser objects then activates the right ones
-				dont_update = 1 //so the firing animation runs
-				charge -= adj_output
-		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
-			stop_firing()
+			if(can_fire) //have power to fire
+				power_used += adj_output
+				new_state = START_FIRING
+		else if(!can_fire) //firing but not enough charge to sustain
+			power_used = starting_surplus + src.charge // We use all the surplus plus whats left of the charge.
+			new_state = STOP_FIRING
 		else //firing and have enough power to carry on
+			power_used += adj_output
+			new_state = CONTINUE_FIRING
+	else if (firing)
+		new_state = STOP_FIRING
+
+	// Consume power from network
+	var/adj_charge = clamp(starting_surplus - power_used, -src.charge, src.capacity - src.charge)
+	power_used -= min(0, adj_charge)
+	var/load = clamp(power_used, 0, starting_surplus)
+	if(terminal?.add_load(load))						// attempt to add the load to the terminal side network
+		src.charge += adj_charge				// adjust the charge if we did
+		src.load_last_tick = load
+	else if (connected) // So /cheat doesn't break
+		new_state = STOP_FIRING
+		src.is_charging = FALSE
+		load_last_tick = 0
+
+	// Execute new laser state
+	adj_output *= mult
+	switch(new_state)
+		if(START_FIRING)
+			start_firing() //creates all the laser objects then activates the right ones
+			dont_update = 1 //so the firing animation runs
+		if(CONTINUE_FIRING)
+			if (src.laser_output_needs_update)
+				src.update_laser_power()
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
 				if (!locate(/obj/linked_laser/ptl) in get_turf(L)) //safety because Uncross is somehow unreliable
 					affecting_mobs -= L
@@ -205,17 +292,22 @@
 				if(burn_living(L,adj_output)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
-			charge -= adj_output
-
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
+		if(STOP_FIRING) stop_firing()
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "output=[src.output]&firing=[src.firing]&charge=[src.charge]&currentbalance=[src.current_balance]&lifetimeearnings=[src.lifetime_earnings]")
+	src.laser_output_needs_update = FALSE
+	src.is_charging = src.charging && power_used > 0 ? FALSE : TRUE
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		UpdateIcon()
+#undef START_FIRING
+#undef CONTINUE_FIRING
+#undef STOP_FIRING
+#undef NO_CHANGE
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
 	var/proportion = 0
@@ -317,20 +409,50 @@
 	blocking_objects = list()
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
-	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || \
-				istype(O, /obj/laser_sink) || \
-				istype(O, /obj/machinery/vehicle) || \
-				istype(O, /obj/machinery/bot/mulebot) || \
-				istype(O, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
-				isrestrictedz(O.z))
+	for (var/atom/A as anything in blocking_objects)
+		if (istype(A, /obj/machinery/door/poddoor) || \
+				istype(A, /obj/laser_sink) || \
+				istype(A, /obj/machinery/vehicle) || \
+				istype(A, /obj/machinery/bot/mulebot) || \
+				istype(A, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				isrestrictedz(A.z))
 			continue
-		else if (prob((abs(output))/5e5))
-			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
-			qdel(O)
+
+		var/melt_prob = 0 //this var only exists for debug really
+		if (isturf(A))
+			var/turf_mult = istype(A, /turf/simulated/wall/auto/asteroid) ? 0.1 : 1
+			if (abs(output) < 100 MEGA WATTS * turf_mult) //hard threshold for turfs, you need a beeg laser
+				melt_prob = 0
+			else
+				melt_prob = abs(output) / (25 MEGA WATTS * turf_mult)
+			if (prob(melt_prob))
+				A.ex_act(2)
+			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
+				animate_meltspark(A)
+		else
+			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
+			if (istype(A, /obj/blob))
+				var/obj/blob/blob = A
+				blob.take_damage(min(100, round(melt_prob/2)), damtype = "laser")
+			else if (prob(melt_prob))
+				if (istype(A, /obj/geode))
+					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
+				else
+					A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
+					qdel(A)
+
+		if (QDELETED(A))
+			src.blocking_objects -= A //mmm yes for loop list modification
+
+
+/obj/machinery/power/pt_laser/proc/get_available_terminal_power()
+	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
+
+/obj/machinery/power/pt_laser/proc/get_available_input_power()
+	return src.charging * min(src.chargelevel, src.get_available_terminal_power())
 
 /obj/machinery/power/pt_laser/proc/can_fire()
-	return abs(src.output) <= src.charge
+	return (abs(src.output) <= src.charge + src.get_available_input_power()) & (abs(src.output) >= PTLMINOUTPUT)
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	src.laser?.traverse(/obj/linked_laser/ptl/proc/update_source_power)
@@ -369,6 +491,20 @@
 		"totalGridPower" = src.terminal?.powernet.avail,
 	)
 
+
+/obj/machinery/power/pt_laser/proc/update_output()
+	if(ON_COOLDOWN(src, LASER_COOLDOWN_ID, src.laser_cooldown))
+		src.laser_output_needs_update = TRUE
+		return
+
+	if(!src.output || !src.can_fire() || !src.online)
+		src.stop_firing()
+		return
+	if (src.firing)
+		src.update_laser_power()
+	else if (src.online)
+		src.start_firing()
+
 /obj/machinery/power/pt_laser/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -405,9 +541,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if (!src.online && src.firing)
-				src.stop_firing()
-			src.process(1)
+			src.update_output()
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -416,27 +550,21 @@
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
-			if(!src.output || !src.can_fire())
-				src.stop_firing()
-				return
-			if (src.firing)
-				src.update_laser_power()
-			else if (src.online)
-				src.start_firing()
+			src.update_output()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 		if("outputGW")
 			src.output_multi = 1 GIGA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 		if("outputTW")
 			src.output_multi = 1 TERA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 
 /obj/machinery/power/pt_laser/ex_act(severity)
@@ -466,10 +594,6 @@
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
 
-/*	L:head:up broke for no reason so I had to rewrite it.
-		if (istype(L:head, /obj/item/clothing/head/helmet/welding))
-			if(!L:head:up)
-				safety = 8*/
 		var/mob/living/carbon/human/newL = L
 		if (istype(newL.glasses, /obj/item/clothing/glasses/thermal) || newL.eye_istype(/obj/item/organ/eye/cyber/thermal))
 			safety = 0.5
@@ -497,8 +621,8 @@
 			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
 			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
-				L:sever_limb(limb)
-				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
+				if(L:sever_limb(limb))
+					L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
 		if(200 MEGA WATTS + 1 to 5 GIGA WATTS) //you really fucked up this time buddy
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
@@ -588,6 +712,8 @@
 /obj/linked_laser/ptl/become_endpoint()
 	..()
 	var/turf/next_turf = get_next_turf()
+	if (next_turf?.density)
+		src.source.blocking_objects |= next_turf
 	for (var/obj/object in next_turf)
 		if (src.is_blocking(object))
 			src.source.blocking_objects |= object
@@ -595,6 +721,7 @@
 /obj/linked_laser/ptl/release_endpoint()
 	..()
 	var/turf/next_turf = get_next_turf()
+	src.source.blocking_objects -= next_turf
 	for (var/obj/object in next_turf)
 		if (src.is_blocking(object))
 			src.source.blocking_objects -= object

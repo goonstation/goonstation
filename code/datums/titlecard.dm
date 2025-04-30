@@ -6,6 +6,8 @@
 	var/image_url = "images/titlecards/oshan_titlecard.png"
 	#elif defined(MAP_OVERRIDE_MANTA)
 	var/image_url = "images/titlecards/manta_titlecard.png"
+	#elif defined(MAP_OVERRIDE_POD_WARS)
+	var/image_url = "images/titlecards/podwars.png"
 	#else
 	var/image_url = "images/titlecards/main_titlecard.gif"
 	#endif
@@ -38,12 +40,20 @@
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()
+#if defined(BANISH_PREGAME_HTML)
+	var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+	if(T)
+		T = locate(T.x + 3, T.y, T.z)
+		if (locate(/obj/titlecard) in T) return
+		new /obj/titlecard(T)
+	return
+#else
 	last_pregame_html = {"<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'><style>@font-face{font-family:'PxPlus IBM VGA9';src:url([resource("misc/ibmvga9.ttf")]);}body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:contain;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
 	if (isnull(src.overlay_image_url))
 		last_pregame_html += {"#overlay{display:none;}"}
 	else
 		last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
-	last_pregame_html += {".area{white-space:pre;color:#fff;text-shadow: -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000, 2px 0px 0px #000, -2px 0px 0px #000, 0px 2px 0px #000, 0px -2px 0px #000;font:1em 'PxPlus IBM VGA9';-webkit-text-stroke:0.083em black;}a{text-decoration:none;}#leftside{position:fixed;left:0;bottom:0;}#tip{text-align: center; width: 80%; white-space: pre-wrap; font-size: 0.7em; margin: 10px auto auto auto;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}</style></head><body><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script><div id="overlay"></div><div id="tip" class="area"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
+	last_pregame_html += {".area{white-space:pre;color:#fff;text-shadow: -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000, 2px 0px 0px #000, -2px 0px 0px #000, 0px 2px 0px #000, 0px -2px 0px #000;font:1em 'PxPlus IBM VGA9';}a{text-decoration:none;}#leftside{position:fixed;left:0;bottom:0;}#tip{text-align: center; width: 80%; white-space: pre-wrap; font-size: 0.7em; margin: 10px auto auto auto;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}</style></head><body><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script><div id="overlay"></div><div id="tip" class="area"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
 	for(var/client/C)
 		if(istype(C.mob, /mob/new_player))
 			C << browse(last_pregame_html, "window=pregameBrowser")
@@ -52,6 +62,7 @@
 				var/mob/new_player/new_player = C.mob
 				new_player.pregameBrowserLoaded = TRUE
 	pregameHTML = last_pregame_html
+#endif
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text

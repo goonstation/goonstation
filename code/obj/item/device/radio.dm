@@ -391,10 +391,6 @@ var/list/headset_channel_lookup
 		receive += L
 
 	if(!protected)
-		for(var/mob/zoldorf/z in the_zoldorf)
-			if(z.client)
-				receive += z
-
 	// flockdrones and flockmind should hear all channels, but with terrible corruption
 		for(var/F in flocks)
 			var/datum/flock/flock = flocks[F]
@@ -469,7 +465,7 @@ var/list/headset_channel_lookup
 
 		if (length(heard_masked))
 			if (ishuman(M))
-				if (M:wear_id)
+				if (M:wear_id && length(M:wear_id:registered))
 					rendered = "[part_a][M:wear_id:registered][part_b][M.say_quote(messages[1])][part_c]"
 				else
 					rendered = "[part_a]Unknown[part_b][M.say_quote(messages[1])][part_c]"
@@ -479,7 +475,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_masked)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.name];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.name];track2=\ref[R];track=\ref[M]'>[M.name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -504,7 +500,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_normal)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[real_name ? real_name : M.real_name];track2=\ref[R];track=\ref[M]'>[real_name ? real_name : M.real_name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[real_name ? real_name : M.real_name];track2=\ref[R];track=\ref[M]'>[real_name ? real_name : M.real_name] ([eqjobname]) </a>[part_b][M.say_quote(messages[1])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) && M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -523,7 +519,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_voice)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][M.voice_message][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][M.voice_message][part_c]"
 				else if (isghostdrone(R))
 					thisR = "[part_a][M.voice_name][part_b][M.say_quote(messages[1])][part_c]"
 
@@ -544,7 +540,7 @@ var/list/headset_channel_lookup
 			for (var/mob/R in heard_garbled)
 				var/thisR = rendered
 				if (R.isAIControlled())
-					thisR = "[part_a]<a href='?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][M.say_quote(messages[2])][part_c]"
+					thisR = "[part_a]<a href='byond://?src=\ref[src];track3=[M.voice_name];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][M.say_quote(messages[2])][part_c]"
 
 				if (R.client && R.client.holder && ismob(M) &&  M.mind)
 					thisR = "<span class='adminHearing' data-ctx='[R.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -716,6 +712,17 @@ TYPEINFO(/obj/item/radiojammer)
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
 
+/obj/item/device/radio/hall_monitor
+	name = "Hall monitor's radio"
+	desc = "So you can listen to(eavesdrop on) station security(drama)."
+	icon_state = "radio"
+	has_microphone = FALSE
+	frequency = R_FREQ_SECURITY
+	locked_frequency = TRUE
+	speaker_range = 0
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = RADIOCL_SECURITY)
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -796,6 +803,25 @@ TYPEINFO(/obj/item/radiojammer)
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1
 
+// ----------------------- Assembly-procs -----------------------
+
+
+/// shock kit construction
+/obj/item/device/radio/electropack/proc/shock_kit_assembly(var/atom/to_combine_atom, var/mob/user)
+	user.u_equip(src)
+	user.u_equip(to_combine_atom)
+	var/obj/item/shock_kit/new_shock_kit = new /obj/item/shock_kit(get_turf(user), to_combine_atom, src)
+	user.put_in_hand_or_drop(new_shock_kit)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+// ----------------------- -------------- -----------------------
+
+/obj/item/device/radio/electropack/New()
+	..()
+	// Electropack + sec helmet  -> shock kit
+	src.AddComponent(/datum/component/assembly, /obj/item/clothing/head/helmet, PROC_REF(shock_kit_assembly), TRUE)
+
 /obj/item/device/radio/electropack/update_icon()
 	src.icon_state = "electropack[src.on]"
 
@@ -823,19 +849,6 @@ TYPEINFO(/obj/item/radiojammer)
 			. = TRUE
 			UpdateIcon()
 
-/obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user, W, src)
-		W.set_loc(A)
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(A)
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(A)
-		src.add_fingerprint(user)
-	return
-
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))//(signal.encryption != code))
 		return
@@ -853,11 +866,6 @@ TYPEINFO(/obj/item/radiojammer)
 #else
 			M.changeStatus("knockdown", 10 SECONDS)
 #endif
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()
@@ -881,11 +889,49 @@ TYPEINFO(/obj/item/radiojammer)
 	item_state = "signaler"
 	var/code = 30
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
+
+
+/obj/item/device/radio/signaler/New()
+	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+	// Timer + assembly-applier -> timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/obj/item/device/radio/signaler/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+	..()
+
+
+/// ----------- Assembly-Related Procs -----------
+
+/obj/item/device/radio/signaler/proc/assembly_manipulation(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/mob/user)
+	src.AttackSelf(user)
+
+/obj/item/device/radio/signaler/proc/assembly_application(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	src.send_signal()
+
+/obj/item/device/radio/signaler/proc/assembly_setup(var/manipulated_signaler, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	//once integrated in the assembly, we secure the radio
+	src.b_stat = 0
+
+/obj/item/device/radio/signaler/proc/assembly_get_state(var/manipulated_signaler, var/obj/item/assembly/parent_assembly)
+	//that's my secret, cap. I'm always armed.
+	return TRUE
+
+/// ----------------------------------------------
+
 
 /obj/item/device/radio/signaler/ui_data(mob/user)
 	. = ..()
@@ -894,24 +940,9 @@ TYPEINFO(/obj/item/radiojammer)
 		"sendButton" = TRUE,
 		)
 
-obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/instrument/bikehorn))
-		var/obj/item/assembly/radio_horn/A = new /obj/item/assembly/radio_horn( user )
-		W.set_loc(A)
-		A.part2 = W
-		W.layer = initial(W.layer)
-		user.u_equip(W)
-		user.put_in_hand_or_drop(A)
-		W.master = A
-		src.master = A
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(A)
-		A.part1 = src
-		src.add_fingerprint(user)
-		boutput(user, "You open the signaller and cram the [W.name] in there!")
+//obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	//Commenting this out so the SWORD PR gets merged without being summonable by normal players, so it can be tested first. Both the MSF and SWORD can still be spawned in with admin powers, obviously.
-	//else if (istype(W, /obj/item/cable_coil))
+	//if (istype(W, /obj/item/cable_coil))
 	//	W.amount -= 1
 	//	if (W.amount <= 0)
 	//		qdel(W)
@@ -922,9 +953,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	//	A.add_fingerprint(user)
 	//	boutput(user, "You open the signaller and attach some additional wires to it!")
 	//	qdel(src)
-	else
-		..()
-	return
+	//else
+	//	..()
+	//return
 
 /obj/item/device/radio/signaler/hear_talk()
 	return
@@ -952,17 +983,15 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 			message_admins("[key_name(usr)] signalled a radio on a tank transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
-		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
-			var/obj/item/assembly/rad_ignite/RI = src.master
-			logTheThing(LOG_BOMBING, usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency]. Contents: [log_reagents(RI.part3)]")
-			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
-
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
 			logTheThing(LOG_BOMBING, usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"] with code [src.code] on freq [src.frequency].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)
-			src.master.receive_signal(signal)
+			var/datum/signal/new_signal = get_free_signal()
+			new_signal.source = src
+			new_signal.data["message"] = "ACTIVATE"
+			src.master.receive_signal(new_signal)
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 
@@ -1014,6 +1043,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	anchored = ANCHORED
 	speaker_range = 0
 	chat_class = RADIOCL_INTERCOM
+	locked_frequency = TRUE
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -1033,18 +1063,24 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	. = ..()
 	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
-/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/proc/toggle_broadcast_mode(mob/user)
 	if (!broadcasting)
 		broadcasting = 1
 		src.icon_state = "transmitter-on"
-		boutput(user, "Now transmitting.")
+		src.visible_message("The [src] clicks on and begins transmitting.")
 	else
 		broadcasting = 0
 		src.icon_state = "transmitter"
-		boutput(user, "No longer transmitting.")
+		src.visible_message("The [src] whirrs down and stops transmitting.")
+
+/obj/item/device/radio/intercom/loudspeaker/attack_hand(mob/user)
+	. = ..()
+	src.toggle_broadcast_mode(user)
+
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	src.toggle_broadcast_mode(user)
 
 /obj/item/device/radio/intercom/loudspeaker/initialize()
-
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -1062,9 +1098,12 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	listening = 1
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
+
+	HELP_MESSAGE_OVERRIDE("")
 
 	New()
 		..()
@@ -1092,14 +1131,12 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 /obj/item/device/radio/intercom/loudspeaker/speaker/hear_talk()
 	return
 
-	//listening seems to refer to the device listening to the signals, not listening to voice
-
 /obj/item/device/radio/intercom/loudspeaker/speaker/send_hear()
 	var/list/hear = ..()
 
 	for (var/mob/M in hear)
 
-		flick("loudspeaker-transmitting",src)
+		FLICK("loudspeaker-transmitting",src)
 		playsound(src.loc, 'sound/misc/talk/speak_1.ogg', 50, 1)
 	return hear
 

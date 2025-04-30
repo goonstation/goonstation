@@ -457,7 +457,7 @@
 	var/success_sound
 
 	proc/success_feedback(atom/target, mob/user)
-		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		user.show_text(replacetext(success_text, "%target%", "[target]"), "blue")
 		if (success_sound)
 			playsound(target, success_sound, 50, TRUE)
 
@@ -607,7 +607,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target) && can_act(user)
+		. = (user.loc == target) && can_act(user) && user.can_interface_with_pods
 
 	board
 		name = "Board"
@@ -616,7 +616,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -630,7 +630,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -645,7 +645,7 @@
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
 			if (V.locked && V.lock)
-				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -659,7 +659,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -697,6 +697,26 @@
 			var/obj/machinery/vehicle/V = target
 			V.use_external_speaker()
 
+	change_thruster_direction
+		name = "Lateral Thruster Direction"
+		desc = "Change the lateral thrusters to move the ship left"
+		icon_state = "thrusters_left"
+
+		checkRequirements(atom/target, mob/user)
+			var/obj/machinery/vehicle/V = target
+			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
+
+		execute(atom/target, mob/user)
+			..()
+			var/obj/machinery/vehicle/V = target
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
+			thrusters.change_thruster_direction()
+			if (src.icon_state == "thrusters_right")
+				src.desc = "Change the lateral thrusters to move the ship left"
+				src.icon_state = "thrusters_left"
+			else
+				src.desc = "Change the lateral thrusters to move the ship right"
+				src.icon_state = "thrusters_right"
 
 /datum/contextAction/cellphone
 	name = "Cellphone action"
@@ -848,129 +868,289 @@
 			M.set_icon_state("[M.prefix]-[M.setting]")
 		M.tooltip_rebuild = 1
 
-	green
-		name = "Set Green"
-		desc = "Sets the manufacturer to produce green lamps."
-		icon_state = "green"
+/datum/contextAction/lamp_manufacturer/col_page_1/to_page_2
+	name = "Page 2"
+	desc = "Switch to a palette of milder colors."
+	icon_state = "page_2"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "green"
-			M.dispensing_tube = /obj/item/light/tube/green
-			M.dispensing_bulb = /obj/item/light/bulb/green
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		var/datum/contextLayout/experimentalcircle/layout = M.contextLayout
+		layout.dist = 40 //more options, bigger
+		M.setting_context_actions = M.page_2_actions + M.common_actions
+		M.AttackSelf(user)
+		..()
 
-	yellow
-		name = "Set Yellow"
-		desc = "Sets the manufacturer to produce yellow lamps."
-		icon_state = "yellow"
+/datum/contextAction/lamp_manufacturer/col_page_2/to_page_1
+	name = "Page 1"
+	desc = "Switch to a palette of flashier colors."
+	icon_state = "page_1"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "yellow"
-			M.dispensing_tube = /obj/item/light/tube/yellow
-			M.dispensing_bulb = /obj/item/light/bulb/yellow
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		var/datum/contextLayout/experimentalcircle/layout = M.contextLayout
+		layout.dist = 34 //less options, smaller
+		M.setting_context_actions = M.page_1_actions + M.common_actions
+		M.AttackSelf(user)
+		..()
 
-	red
-		name = "Set Red"
-		desc = "Sets the manufacturer to produce red lamps."
-		icon_state = "red"
+/datum/contextAction/lamp_manufacturer/col_page_1/white
+	name = "Set White"
+	desc = "Sets the manufacturer to produce white lamps."
+	icon_state = "white"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "red"
-			M.dispensing_tube = /obj/item/light/tube/red
-			M.dispensing_bulb = /obj/item/light/bulb/red
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "white"
+		M.dispensing_tube = /obj/item/light/tube
+		M.dispensing_bulb = /obj/item/light/bulb
+		..()
 
-	white
-		name = "Set White"
-		desc = "Sets the manufacturer to produce white lamps."
-		icon_state = "white"
+/datum/contextAction/lamp_manufacturer/col_page_1/red
+	name = "Set Red"
+	desc = "Sets the manufacturer to produce red lamps."
+	icon_state = "red"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "white"
-			M.dispensing_tube = /obj/item/light/tube
-			M.dispensing_bulb = /obj/item/light/bulb
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "red"
+		M.dispensing_tube = /obj/item/light/tube/red
+		M.dispensing_bulb = /obj/item/light/bulb/red
+		..()
 
-	removal
-		name = "Toggle Fitting Removal"
-		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
-		icon_state = "close"
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.removing_toggled = !M.removing_toggled
-			boutput(user, SPAN_NOTICE("Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"]."))
-			..()
+/datum/contextAction/lamp_manufacturer/col_page_1/yellow
+	name = "Set Yellow"
+	desc = "Sets the manufacturer to produce yellow lamps."
+	icon_state = "yellow"
 
-	bulbs
-		name = "Fitting Production: Bulbs"
-		desc = "Sets the manufacturer to produce bulb wall fittings."
-		icon_state = "bulb"
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light/small
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "yellow"
+		M.dispensing_tube = /obj/item/light/tube/yellow
+		M.dispensing_bulb = /obj/item/light/bulb/yellow
+		..()
 
-	tubes
-		name = "Fitting Production: Tubes"
-		desc = "Sets the manufacturer to produce tube wall fittings."
-		icon_state = "tube"
+/datum/contextAction/lamp_manufacturer/col_page_1/green
+	name = "Set Green"
+	desc = "Sets the manufacturer to produce green lamps."
+	icon_state = "green"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "green"
+		M.dispensing_tube = /obj/item/light/tube/green
+		M.dispensing_bulb = /obj/item/light/bulb/green
+		..()
 
-	blacklight
-		name = "Set Blacklight"
-		desc = "Sets the manufacturer to produce blacklight lamps."
-		icon_state = "blacklight"
+/datum/contextAction/lamp_manufacturer/col_page_1/cyan
+	name = "Set Cyan"
+	desc = "Sets the manufacturer to produce cyan lamps."
+	icon_state = "cyan"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "blacklight"
-			M.dispensing_tube = /obj/item/light/tube/blacklight
-			M.dispensing_bulb = /obj/item/light/bulb/blacklight
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "cyan"
+		M.dispensing_tube = /obj/item/light/tube/cyan
+		M.dispensing_bulb = /obj/item/light/bulb/cyan
+		..()
 
-	purple
-		name = "Set Purple"
-		desc = "Sets the manufacturer to produce purple lamps."
-		icon_state = "purple"
+/datum/contextAction/lamp_manufacturer/col_page_1/blue
+	name = "Set Blue"
+	desc = "Sets the manufacturer to produce blue lamps."
+	icon_state = "blue"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "purple"
-			M.dispensing_tube = /obj/item/light/tube/purple
-			M.dispensing_bulb = /obj/item/light/bulb/purple
-			..()
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "blue"
+		M.dispensing_tube = /obj/item/light/tube/blue
+		M.dispensing_bulb = /obj/item/light/bulb/blue
+		..()
 
-	blue
-		name = "Set Blue"
-		desc = "Sets the manufacturer to produce blue lamps."
-		icon_state = "blue"
+/datum/contextAction/lamp_manufacturer/col_page_1/purple
+	name = "Set Purple"
+	desc = "Sets the manufacturer to produce purple lamps."
+	icon_state = "purple"
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "blue"
-			M.dispensing_tube = /obj/item/light/tube/blue
-			M.dispensing_bulb = /obj/item/light/bulb/blue
-			..()
-	cyan
-		name = "Set Cyan"
-		desc = "Sets the manufacturer to produce cyan lamps."
-		icon_state = "cyan"
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "purple"
+		M.dispensing_tube = /obj/item/light/tube/purple
+		M.dispensing_bulb = /obj/item/light/bulb/purple
+		..()
 
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "cyan"
-			M.dispensing_tube = /obj/item/light/tube/cyan
-			M.dispensing_bulb = /obj/item/light/bulb/cyan
-			..()
+/datum/contextAction/lamp_manufacturer/col_page_1/blacklight
+	name = "Set Blacklight"
+	desc = "Sets the manufacturer to produce blacklight lamps."
+	icon_state = "blacklight"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "blacklight"
+		M.dispensing_tube = /obj/item/light/tube/blacklight
+		M.dispensing_bulb = /obj/item/light/bulb/blacklight
+		..()
+
+//work harder, not smarter
+/datum/contextAction/lamp_manufacturer/col_page_2/cool
+	name = "Set Cool"
+	desc = "Sets the manufacturer to produce cool lamps."
+	icon_state = "cool"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "cool"
+		M.dispensing_tube = /obj/item/light/tube/cool
+		M.dispensing_bulb = /obj/item/light/bulb/cool
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/very_cool
+	name = "Set Very Cool"
+	desc = "Sets the manufacturer to produce very cool lamps. Very cool as in colour temperature, the lamps themselves don't enjoy significant reputations."
+	icon_state = "very_cool"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "very cool"
+		M.dispensing_tube = /obj/item/light/tube/cool/very
+		M.dispensing_bulb = /obj/item/light/bulb/cool/very
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/warm
+	name = "Set Warm"
+	desc = "Sets the manufacturer to produce warm lamps."
+	icon_state = "warm"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "warm"
+		M.dispensing_tube = /obj/item/light/tube/warm
+		M.dispensing_bulb = /obj/item/light/bulb/warm
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/very_warm
+	name = "Set Very Warm"
+	desc = "Sets the manufacturer to produce very warm lamps."
+	icon_state = "very_warm"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "very warm"
+		M.dispensing_tube = /obj/item/light/tube/warm/very
+		M.dispensing_bulb = /obj/item/light/bulb/warm/very
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/harsh
+	name = "Set Harsh"
+	desc = "Sets the manufacturer to produce harsh lamps."
+	icon_state = "harsh"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "harsh"
+		M.dispensing_tube = /obj/item/light/tube/harsh
+		M.dispensing_bulb = /obj/item/light/bulb/harsh
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/very_harsh
+	name = "Set Very Harsh"
+	desc = "Sets the manufacturer to produce very harsh lamps."
+	icon_state = "very_harsh"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "very harsh"
+		M.dispensing_tube = /obj/item/light/tube/harsh/very
+		M.dispensing_bulb = /obj/item/light/bulb/harsh/very
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/reddish
+	name = "Set Reddish"
+	desc = "Sets the manufacturer to produce reddish lamps."
+	icon_state = "reddish"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "reddish"
+		M.dispensing_tube = /obj/item/light/tube/reddish
+		M.dispensing_bulb = /obj/item/light/bulb/reddish
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/yellowish
+	name = "Set Yellowish"
+	desc = "Sets the manufacturer to produce yellowish lamps."
+	icon_state = "yellowish"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "yellowish"
+		M.dispensing_tube = /obj/item/light/tube/yellowish
+		M.dispensing_bulb = /obj/item/light/bulb/yellowish
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/greenish
+	name = "Set Greenish"
+	desc = "Sets the manufacturer to produce greenish lamps."
+	icon_state = "greenish"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "greenish"
+		M.dispensing_tube = /obj/item/light/tube/greenish
+		M.dispensing_bulb = /obj/item/light/bulb/greenish
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/blueish
+	name = "Set Blueish"
+	desc = "Sets the manufacturer to produce blueish lamps."
+	icon_state = "blueish"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "blueish"
+		M.dispensing_tube = /obj/item/light/tube/blueish
+		M.dispensing_bulb = /obj/item/light/bulb/blueish
+		..()
+
+/datum/contextAction/lamp_manufacturer/col_page_2/purpleish
+	name = "Set Purpleish"
+	desc = "Sets the manufacturer to produce purpleish lamps."
+	icon_state = "purpleish"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.setting = "purpleish"
+		M.dispensing_tube = /obj/item/light/tube/purpleish
+		M.dispensing_bulb = /obj/item/light/bulb/purpleish
+		..()
+
+/datum/contextAction/lamp_manufacturer/setting/tubes
+	name = "Fitting Production: Tubes"
+	desc = "Sets the manufacturer to produce tube wall fittings."
+	icon_state = "tube"
+
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.dispensing_fitting = /obj/machinery/light
+		..()
+
+/datum/contextAction/lamp_manufacturer/setting/bulbs
+	name = "Fitting Production: Bulbs"
+	desc = "Sets the manufacturer to produce bulb wall fittings."
+	icon_state = "bulb"
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.dispensing_fitting = /obj/machinery/light/small
+		..()
+
+/datum/contextAction/lamp_manufacturer/setting/removal
+	name = "Toggle Fitting Removal"
+	desc = "Toggles the manufacturer between removing fittings and replacing lamps."
+	icon_state = "remove"
+	execute(var/atom/target, var/mob/user)
+		var/obj/item/lamp_manufacturer/M = target
+		M.removing_toggled = !M.removing_toggled
+		boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+		..()
 
 /datum/contextAction/card
 	icon = 'icons/ui/context16x16.dmi'

@@ -231,8 +231,7 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
-		var/num = hex2num(copytext(md5(src.get_heard_name(just_name_itself=TRUE)), 1, 7))
-		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+		var/maptext_color = dead_maptext_color(src.get_heard_name(just_name_itself=TRUE))
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -279,7 +278,7 @@
 			if (!the_wraith.hearghosts)
 				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -572,25 +571,22 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
-	if (src.emote_allowed)
-		if (dead_check && isdead(src))
-			src.emote_allowed = FALSE
-			return FALSE
-		if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
-			return FALSE
-		if (world.time >= (src.last_emote_time + src.last_emote_wait))
-			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = FALSE
-				src.last_emote_time = world.time
-				src.last_emote_wait = time
-				SPAWN(time)
-					src.emote_allowed = TRUE
-			return TRUE
-		else
-			return FALSE
-	else
+	if ((!src.emote_allowed))
 		return FALSE
-
+	if (dead_check && isdead(src))
+		src.emote_allowed = FALSE
+		return FALSE
+	if (voluntary && (src.hasStatus("unconscious") || src.hasStatus("paralysis") || isunconscious(src)))
+		return FALSE
+	if (world.time >= (src.last_emote_time + src.last_emote_wait))
+		if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
+			src.emotes_on_cooldown = TRUE
+			src.last_emote_time = world.time
+			src.last_emote_wait = time
+			SPAWN(time)
+				src.emotes_on_cooldown = FALSE
+		return TRUE
+	return FALSE
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
@@ -939,7 +935,7 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat."))
 
-/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/show_message(msg, type, alt, alt_type, group = "", just_maptext, image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
 	if(isnull(msg) && isnull(assoc_maptext))
@@ -1001,7 +997,7 @@
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
+/mob/visible_message(message, self_message, blind_message, group = "")
 	for (var/mob/M in AIviewers(src))
 		if (!M.client && !isAI(M))
 			continue
@@ -1015,7 +1011,7 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message, var/group = "")
+/atom/proc/visible_message(message, blind_message, group = "")
 	for (var/mob/M in AIviewers(src))
 		if (!M.client)
 			continue
@@ -1051,6 +1047,12 @@
 // it was about time we had this instead of just visible_message()
 /atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
+		if (istype(M, /mob/living/silicon/ai) && !M.client && M.hearing_check(1)) //if heard, relay msg to client mob if they're in aieye form
+			var/mob/living/silicon/ai/mainframe = M
+			var/mob/message_mob = mainframe.get_message_mob()
+			if(isAIeye(message_mob))
+				message_mob.show_message(message, null, alt, alt_type, group, just_maptext, assoc_maptext) // type=null as AIeyes can't hear directly
+			continue
 		if (!M.client)
 			continue
 		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
@@ -1139,7 +1141,7 @@
 		flockmindRendered = rendered // no need for URLs
 	else
 		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
-		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='byond://?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
 			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 
@@ -1169,3 +1171,13 @@
 
 		if(thisR != "")
 			boutput(M, thisR)
+
+/// Generate a hue for maptext from a given name
+/proc/living_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
+/// Generate a desatureated hue for maptext from a given name
+/proc/dead_maptext_color(given_name)
+	var/num = hex2num(copytext(md5(given_name), 1, 7))
+	return hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)

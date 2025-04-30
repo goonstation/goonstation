@@ -29,6 +29,7 @@
 
 
 // requires atten to be defined outside
+// consider: caching atten below, precomputed
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
 	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \

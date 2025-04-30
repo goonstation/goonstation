@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 							RSO.shear_overload()
 			else
 				SPAWN(0.1 SECONDS)
-					flick("drill-extract",src.drawlight)
+					FLICK("drill-extract",src.drawlight)
 
 			playsound(src.loc, 'sound/machines/siphon_run.ogg', 50, !extract_progressed) //noise warbles if no progress occurred
 
@@ -445,10 +445,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.toggling = TRUE
 		playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 		src.icon_state = "drill-low"
-		flick("drilldrop",src)
+		FLICK("drilldrop",src)
 		SPAWN(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				if (res.status & BROKEN) continue
+				var/turf/T = get_turf(res)
+				if (ON_COOLDOWN(T, "resonator_anti_stack", 1 DECI SECOND)) continue
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -476,7 +478,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.clear_siphon_console()
 		SPAWN(1 SECOND)
 			src.icon_state = "drill-high"
-			flick("drillraise",src)
+			FLICK("drillraise",src)
 			SPAWN(3 SECONDS)
 				src.toggling = FALSE
 
@@ -661,6 +663,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(paired_core)
 				src.build_net_update(null,SIGBUILD_REGULAR)
 			return
+
+	overload_act()
+		if (src.status & BROKEN)
+			return FALSE
+		src.shear_overload()
+		return TRUE
 
 	examine()
 		. = ..()

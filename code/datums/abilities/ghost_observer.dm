@@ -152,7 +152,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		src.addAbility(/datum/targetable/ghost_observer/reenter_corpse)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_lighting)
 		src.addAbility(/datum/targetable/ghost_observer/toggle_ghosts)
-		if (istype(ticker.mode, /datum/game_mode/gang))
+		src.addAbility(/datum/targetable/ghost_observer/toggle_health)
+		src.addAbility(/datum/targetable/ghost_observer/view_minimap)
+		if (istype(ticker?.mode, /datum/game_mode/gang))
 			src.addAbility(/datum/targetable/ghost_observer/toggle_gang_overlay)
 
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
@@ -290,6 +292,19 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (holder && istype(holder.owner, /mob/dead/observer))
 			var/mob/dead/observer/ghost = holder.owner
 			ghost.toggle_ghosts()
+
+/datum/targetable/ghost_observer/toggle_health
+	name = "Toggle Seeing Health"
+	desc = "Toggle seeing health status."
+	icon_state = "toggle-health"
+	targeted = 0
+	cooldown = 0
+
+	cast(atom/target)
+		. = ..()
+		if (holder && istype(holder.owner, /mob/dead/observer))
+			var/mob/dead/observer/ghost = holder.owner
+			ghost.show_health()
 
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"

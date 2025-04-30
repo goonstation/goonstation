@@ -101,7 +101,6 @@ var/global/list/material_cache
 					strPrefix += " [X]"
 				strPrefix = trimtext(strPrefix)
 				src.name_prefix(strPrefix ? strPrefix : "")
-				src.name_prefix(length(getQualityName(mat1.getQuality())) ? getQualityName(mat1.getQuality()) : "")
 			src.name_prefix(mat1.getName() ? mat1.getName() : "")
 			if(use_descriptors)
 				var/strSuffix = jointext(mat1.getSuffixes(), " ")
@@ -180,9 +179,20 @@ var/global/list/material_cache
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
+		var/start_time = TIME
 		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
+		if (TIME != start_time) //we took longer than a tick
+			logTheThing(LOG_DEBUG, src, "is_valid_icon_state took [TIME - start_time] ticks(!!!) to cache [icon]")
 	return state in global.valid_icon_states[icon]
+
+proc/get_icon_states(icon)
+	. = global.valid_icon_states[icon]
+	if(isnull(.))
+		global.valid_icon_states[icon] = list()
+		. = icon_states(icon)
+		for(var/icon_state in .)
+			global.valid_icon_states[icon][icon_state] = 1
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -364,58 +374,6 @@ var/global/list/material_cache
 			return "Rubber"
 		else
 			return "Unknown"
-
-/// Simply returns a string for a given quality. Used as prefix for objects.
-/proc/getQualityName(var/quality)
-	switch(quality)
-		if(-INFINITY to -101)
-			return "useless"
-		if(-100 to -91)
-			return "atrocious"
-		if(-90 to -81)
-			return "wretched"
-		if(-80 to -71)
-			return "crap"
-		if(-70 to -61)
-			return "awful"
-		if(-60 to -51)
-			return "terrible"
-		if(-50 to -41)
-			return "bad"
-		if(-40 to -31)
-			return "shabby"
-		if(-30 to -21)
-			return "mediocre"
-		if(-20 to -11)
-			return "low-quality"
-		if(-10 to -1)
-			return "poor"
-		if(0)
-			return ""
-		if(1 to 10)
-			return "decent"
-		if(11 to 20)
-			return "fine"
-		if(21 to 30)
-			return "good"
-		if(31 to 40)
-			return "great"
-		if(41 to 50)
-			return "high-quality"
-		if(51 to 60)
-			return "excellent"
-		if(61 to 70)
-			return "superb"
-		if(71 to 80)
-			return "incredible"
-		if(81 to 90)
-			return "amazing"
-		if(91 to 100)
-			return "supreme"
-		if(101 to INFINITY)
-			return "perfect"
-		else
-			return "odd"
 
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)

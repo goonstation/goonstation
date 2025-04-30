@@ -38,7 +38,6 @@ TYPEINFO(/obj/item/saw)
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
-	override_attack_hand = 1
 	can_hold_items = 0
 	stamina_damage = 30
 	stamina_cost = 15
@@ -84,12 +83,12 @@ TYPEINFO(/obj/item/saw)
 
 		if (src.active)
 
-			user.lastattacked = target
-			target.lastattacker = user
+			user.lastattacked = get_weakref(target)
+			target.lastattacker = get_weakref(user)
 			target.lastattackertime = world.time
 
 			if (ishuman(target))
-				if (ishuman(user) && saw_surgery(target,user))
+				if (ishuman(user) && (!is_special && saw_surgery(target,user)))
 					take_bleeding_damage(target, user, 2, DAMAGE_CUT)
 					return
 				else if (!isdead(target))
@@ -457,8 +456,9 @@ TYPEINFO(/obj/item/plantanalyzer)
 	name = "garden trowel"
 	desc = "A tool to uproot plants and transfer them to decorative pots"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "trowel"
 
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
@@ -497,6 +497,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
+					playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
 					if(pot.GetOverlayImage("plantoverlay"))
 						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
 						plantyboi_plantoverlay.pixel_x = 2

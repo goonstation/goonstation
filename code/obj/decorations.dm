@@ -71,7 +71,7 @@
 			if (I.hitsound)
 				playsound(I, I.hitsound, 50, 1)
 			src._health -= I.force
-			user.lastattacked = src
+			user.lastattacked = get_weakref(src)
 			if (src._health <= 0)
 				if (src.falling)
 					return
@@ -227,7 +227,7 @@
 
 /obj/shrub
 	name = "shrub"
-	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not. "
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = ANCHORED
@@ -284,7 +284,7 @@
 		else if (destroyed)
 			return ..()
 
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
 			graze(user)
 			return 0
@@ -343,14 +343,14 @@
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
 
 	attackby(var/obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		hit_twitch(src)
 		attack_particle(user,src)
 		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
 
-	proc/graze(mob/living/carbon/human/user)
+	proc/take_bite()
 		src.bites -= 1
 		var/desired_mask = (src.bites / initial(src.bites)) * 5
 		desired_mask = round(desired_mask)
@@ -360,6 +360,10 @@
 			current_mask = desired_mask
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
+		if(src.bites <= 0)
+			destroy()
+
+	proc/graze(mob/living/carbon/human/user)
 		eat_twitch(user)
 		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
@@ -373,9 +377,13 @@
 			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
-		if(src.bites <= 0)
-			destroy()
+		src.take_bite()
+
 		return 0
+
+	clamp_act(mob/clamper, obj/item/clamp)
+		src.take_bite()
+		return TRUE
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
@@ -428,10 +436,17 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 	is_syndicate = TRUE
+
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
+
+	get_desc(dist, mob/user)
+		if(istraitor(user) || isnukeop(user) || user.mind?.get_antagonist(ROLE_SLEEPER_AGENT)) //no issleeperagent() >:(
+			. += SPAN_ALERT("<b>The latest in syndicate spy technology. </b>")
+		else
+			. += "Is that an antenna? "
 
 	proc/fuck_up()
 		var/datum/effects/system/spark_spread/S = new
@@ -479,6 +494,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
+		message_ghosts("<b>[src]</b> has been VIOLENTLY DESTROYED at [log_loc(src, ghostjump=TRUE)].")
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))
@@ -492,7 +508,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				boutput(M, SPAN_ALERT("You suddenly feel hollow. Something very dear to you has been lost."))
 
 	graze(mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (user.mind && user.mind.assigned_role == "Captain")
 			boutput(user, SPAN_NOTICE("You catch yourself almost taking a bite out of your precious bonzai but stop just in time!"))
 			return
@@ -701,6 +717,20 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "blindsH-R-o"
 		base_state = "blindsH-R"
 
+	closed
+		open = 0
+		opacity = 1
+		icon_state = "blindsH-c"
+		left
+			icon_state = "blindsH-L-c"
+			base_state = "blindsH-L"
+		middle
+			icon_state = "blindsH-M-c"
+			base_state = "blindsH-M"
+		right
+			icon_state = "blindsH-R-o"
+			base_state = "blindsH-R"
+
 	vertical
 		icon_state = "blindsV-o"
 		base_state = "blindsV"
@@ -714,6 +744,21 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		right
 			icon_state = "blindsV-R-o"
 			base_state = "blindsV-R"
+
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blindsV-L-c"
+				base_state = "blindsV-L"
+			middle
+				icon_state = "blindsV-M-c"
+				base_state = "blindsV-M"
+			right
+				icon_state = "blindsV-R-c"
+				base_state = "blindsV-R"
 
 	cog2
 		icon_state = "blinds_cog2-o"
@@ -729,11 +774,26 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			icon_state = "blinds_cog2-R-o"
 			base_state = "blinds_cog2-R"
 
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blinds_cog2-L-o"
+				base_state = "blinds_cog2-L"
+			middle
+				icon_state = "blinds_cog2-M-o"
+				base_state = "blinds_cog2-M"
+			right
+				icon_state = "blinds_cog2-R-o"
+				base_state = "blinds_cog2-R"
+
 /obj/blind_switch
 	name = "blind switch"
 	desc = "A switch for opening the blinds."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
 	var/on = 0
@@ -767,7 +827,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 	proc/toggle(var/new_state)
 		src.on = new_state
-		src.icon_state = "light[!(src.on)]"
+		src.icon_state = "blind[!(src.on)]"
 		src.UpdateIcon()
 
 	proc/toggle_group()
@@ -787,38 +847,78 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 /obj/blind_switch/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 // left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
+
+	on
+		on = 1
+		icon_state = "blind0"
 
 /obj/sign_switch
 	name = "sign switch"
@@ -973,12 +1073,14 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	density = 0
 	layer = 6
 	var/on = 0
+	///List of dummy objects that contain the actual light overlays
+	var/list/light_overlay_dummies = list()
 	var/datum/light/point/light
 
 	New()
 		..()
 		light = new
-		light.set_brightness(1)
+		light.set_brightness(0.8)
 		light.set_color(2,2,2)
 		light.set_height(2.4)
 		light.attach(src)
@@ -986,16 +1088,51 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	attack_hand(mob/user)
 		src.toggle_on()
 
+	proc/add_lights()
+		SPAWN(0) //SDMM doesn't seem to understand waitfor sooo
+			for (var/i in 1 to 8)
+				var/type = prob(50) ? pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/oscillator))
+				var/obj/overlay/simple_light/disco_lighting/overlay = new type()
+				overlay.alpha = 0
+				animate(overlay, alpha = 255, time = 1 SECOND, flags = ANIMATION_PARALLEL)
+
+				var/obj/dummy/dummy = new() //byond's animation system sucks, the colour changing animations interfere with the orbit so we do THIS SHIT
+				dummy.mouse_opacity = FALSE
+				dummy.vis_contents += overlay
+				src.vis_contents += dummy
+				src.light_overlay_dummies += dummy
+				animate_orbit(dummy, radius = 64, time = 4 SECONDS)
+
+				sleep(0.5 SECONDS)
+				if (!src.on)
+					return
+
+	proc/remove_lights()
+		for (var/obj/dummy/overlay as anything in src.light_overlay_dummies)
+			src.light_overlay_dummies -= overlay
+			overlay.vis_contents = null
+			qdel(overlay)
+
 	proc/toggle_on()
+		if (!src.on && GET_COOLDOWN(src, "disco_ball_antispam")) //recently turned off, don't spam to stack overlays
+			return
 		src.on = !src.on
 		src.icon_state = "disco[src.on]"
 		if (src.on)
-			light.enable()
+			src.add_lights()
+			src.light.enable()
 			if (!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles_disco, src))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparkles_disco(src))
 		else
-			light.disable()
+			ON_COOLDOWN(src, "disco_ball_antispam", 1 SECOND)
+			src.light.disable()
+			src.remove_lights()
 			particleMaster.RemoveSystem(/datum/particleSystem/sparkles_disco, src)
+
+	disposing()
+		if (src.on)
+			src.remove_lights()
+		..()
 
 /obj/admin_plaque
 	name = "Admin's Office"
@@ -1736,18 +1873,53 @@ obj/decoration/pottedfern
 	density = 1
 	anchored = ANCHORED
 	opacity = 0
-
+	var/on = TRUE
 	var/datum/light/light
+	var/movable = TRUE
+	var/extinguishable = TRUE
 
 	New()
-		UpdateParticles(new/particles/barrel_embers, "embers")
-		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
-		light.enable()
+		src.set_on(src.on, TRUE)
 		..()
+
+	get_help_message(dist, mob/user)
+		return "You can use a <b>wrench</b> to [src.anchored ? "unbolt it" : "bolt it down"]."
+
+	proc/set_on(on, quiet = FALSE)
+		if (on)
+			src.UpdateParticles(new/particles/barrel_embers, "embers")
+			src.UpdateParticles(new/particles/barrel_smoke, "smoke")
+			src.light.enable()
+			src.on = TRUE
+			name = initial(name)
+			desc = initial(desc)
+			if (!quiet)
+				playsound(src, 'sound/effects/lit.ogg', 80, 0, 1)
+			global.processing_items |= src //shut up
+		else
+			src.light.disable()
+			src.ClearAllParticles()
+			src.on = FALSE
+			src.name = "crusty barrel"
+			src.desc = "A grody old barrel full of flammable looking wood."
+			global.processing_items -= src
+		src.UpdateIcon()
+
+	proc/process()
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		T.hotspot_expose(T0C + 300, 100, TRUE, FALSE)
+
+	update_icon(...)
+		if (src.on)
+			src.icon_state = "barrel1"
+		else
+			src.icon_state = "barrel-planks"
 
 	disposing()
 		light.disable()
@@ -1758,8 +1930,28 @@ obj/decoration/pottedfern
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
-			if(!C.on)
+			if(!C.on && src.on)
 				C.light(user, SPAN_ALERT("[user] lights the [C] with [src]. That seems appropriate."))
+			return
+		if (src.movable && (isscrewingtool(W) || iswrenchingtool(W)))
+			if (istype(src.loc, /turf/space))
+				boutput(user, SPAN_ALERT("There's nothing to bolt it to!"))
+				return
+			src.anchored = !src.anchored
+			src.visible_message(SPAN_NOTICE("[user] [src.anchored ? "bolts down" : "unbolts"] [src]"))
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
+			return
+		if (W.firesource && !src.on)
+			src.set_on(TRUE)
+			W.firesource_interact()
+			return
+		. = ..()
+
+	reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+		if (..() || !src.extinguishable)
+			return
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 20)
+			src.set_on(FALSE)
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
@@ -1809,12 +2001,12 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 		playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 		if (on)
 			on = FALSE
-			flick("wall-lever-up-anim", src)
+			FLICK("wall-lever-up-anim", src)
 			src.icon_state = "wall-lever-up"
 			src.off()
 		else
 			on = TRUE
-			flick("wall-lever-down-anim", src)
+			FLICK("wall-lever-down-anim", src)
 			src.icon_state = "wall-lever-down"
 			src.on()
 
@@ -1823,3 +2015,86 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+
+
+ADMIN_INTERACT_PROCS(/obj/lever/custom, proc/set_up)
+/obj/lever/custom
+	var/datum/target = null
+	var/on_proc = ""
+	var/off_proc = ""
+
+	proc/set_up()
+		var/list/data = usr.client.get_proccall_arglist(list(
+			ARG_INFO("target_datum", DATA_INPUT_REFPICKER, "Target"),
+			ARG_INFO("on_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled ON"),
+			ARG_INFO("off_proc", DATA_INPUT_TEXT, "Name of proc to call when the lever is pulled OFF")
+		))
+		src.target = data["target_datum"]
+		src.on_proc = data["on_proc"]
+		src.off_proc = data["off_proc"]
+
+	on()
+		if (src.target && length(src.on_proc))
+			call(src.target, src.on_proc)()
+
+	off()
+		if (src.target && length(src.off_proc))
+			call(src.target, src.off_proc)()
+
+
+/obj/decoration/paperstack/massive
+	name = "Pile of papers"
+	desc = "The pile of papers is so overwhelming it crush you."
+	icon = 'icons/obj/large/48x48.dmi'
+	icon_state = "paperstack-massive"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/large
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-large"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/tall
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-tall"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/mid
+	name = "Pile of papers"
+	desc = "The pile looks impressive, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-mid"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/small
+	name = "Pile of papers"
+	desc = "A small pile of papers neatly stacked."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-small"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/ritual
+	name = "Strange drawing"
+	desc = "Looks like someone made a fancy design here, how cool! Wonder what the candles are for."
+	icon_state = "ritual"
+	icon = 'icons/misc/wander_stuff.dmi'
+	anchored = ANCHORED_ALWAYS
+	density = 0
+	plane = PLANE_NOSHADOW_BELOW
+
+/obj/decoration/wineholder
+	name = "Wall mounted wine holder"
+	desc = "A shelf attached to the wall holding several bottles of wine."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "wineholder"
+	anchored = ANCHORED
+	density = 0

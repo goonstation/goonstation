@@ -645,10 +645,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		name = "warm donk-pocket"
 		warm = DONK_WARM
 
-		New()
-			..()
+	New()
+		..()
+		if (src.warm)
 			src.cooltime()
-			return
 
 	heal(var/mob/M)
 		if(src.warm == DONK_SCALDING)
@@ -795,11 +795,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if (H.bioHolder.HasEffect("accent_swedish"))
 					return
 				boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
-				if(prob(30))
-					H.changeStatus("stunned", 2 SECONDS)
-					boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
-					var/vomit_message = SPAN_ALERT("[H] vomits, unable to handle the fishy stank!")
-					H.vomit(0, null, vomit_message)
+				H.nauseate(1)
 
 	disposing()
 		processing_items.Remove(src)
@@ -940,7 +936,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			name = "[random_spaghetti_name()] noodles"
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == "spag_plain" )// don't forget, other shit inherits this too!
+		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup) && icon_state == /obj/item/reagent_containers/food/snacks/spaghetti::icon_state)// don't forget, other shit inherits this too!
 			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
 			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
 			if (user.mob_flags & IS_BONEY)
@@ -971,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return ..()
 
 	heal(var/mob/M) // ditto goddammit - arrabiata is not fuckin bland you dorks
-		if (icon_state == "spag_plain")
+		if (icon_state == /obj/item/reagent_containers/food/snacks/spaghetti::icon_state)
 			boutput(M, SPAN_ALERT("This is really bland."))
 		. = ..()
 
@@ -1298,13 +1294,54 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	food_effects = list("food_explosion_resist")
 	meal_time_flags = MEAL_TIME_BREAKFAST
+	var/random_bagel = TRUE
 
 	New()
 		..()
-		if(rand(1,3) == 1)
-			src.icon_state = "seedbagel"
-			src.name = "seed bagel"
-			src.desc = "A bagel. But with seeds on it!"
+		if (random_bagel)
+			if(prob(33))
+				src.icon_state = "seedbagel"
+				src.name = "seed bagel"
+				src.desc = "A bagel. But with seeds on it!"
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/cream))
+			boutput(user, SPAN_NOTICE("You top the bagel with cream cheese!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/creamcheese/D = new/obj/item/reagent_containers/food/snacks/bagel/creamcheese(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon))
+			boutput(user, SPAN_NOTICE("You top the bagel with tasty, salty lox!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/lox/D = new/obj/item/reagent_containers/food/snacks/bagel/lox(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+
+	creamcheese
+		name = "cream cheese bagel"
+		desc = "This bagel has cream cheese on it. Yum!"
+		icon_state = "bagel-creamcheese"
+		heal_amt = 2
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("cream"=10)
+		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
+
+	lox
+		name = "lox bagel"
+		desc = "Lovingly topped with salty salmon."
+		icon_state = "bagel-lox"
+		heal_amt = 4
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("salt"=5)
+		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
+
 
 /obj/item/reagent_containers/food/snacks/crumpet
 	name = "crumpet"
@@ -1353,6 +1390,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_color = "#A76933"
 	heal_amt = 1
 
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin/spawnable
+	initial_reagents = list("psilocybin" = 40)
+
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It doesn't smell of anything."
@@ -1378,7 +1418,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		flick("ectoplasm-a", src)
+		FLICK("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
 
 	heal(mob/M)
@@ -1968,6 +2008,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/omelette/bee
 	name = "deep-space hell omelette"
 	desc = "<tt>BEE EGGS</tt> make this a delightful breakfast food."
+	icon_state = "hell-omelette"
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/pancake
@@ -2409,6 +2450,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "onigiri"
 
+/obj/item/reagent_containers/food/snacks/sushi_slice
+	name = "sushi roll"
+	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
+	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
+	icon_state = "sushi_rolls"
+	bites_left = 1
+
 /obj/item/reagent_containers/food/snacks/sushi_roll
 	name = "sushi roll"
 	desc = "A roll of seaweed, sticky rice, and freshly caught fish of unknown origin."
@@ -2418,89 +2466,44 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 4
 	heal_amt = 2
 	food_effects = list("food_hp_up_big")
-	var/cut = 0
-
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if (src.cut == 1)
-				boutput(user, SPAN_ALERT("This has already been cut."))
-				return
-			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
-			var/makepieces = src.bites_left
-			while (makepieces > 0)
-				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type(get_turf(src))
-				S.cut = 1
-				S.bites_left = 1
-				S.icon_state = "sushi_rolls"
-				S.quality = src.quality
-				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
-				S.pixel_x = rand(-6, 6)
-				S.pixel_y = rand(-6, 6)
-				makepieces--
-			qdel (src)
+	slice_product = /obj/item/reagent_containers/food/snacks/sushi_slice
+	sliceable = TRUE
+	slice_amount = 4
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!src.cut)
-			if (user == target)
-				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
-				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-				return
-			else
-				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-				return
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
 		else
-			..()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
 
 	attack_self(mob/user as mob)
 		attack(user, user)
+
+/obj/item/reagent_containers/food/snacks/sushi_slice/custom
+	icon_state = "chopped_sushiroll"
 
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushiroll"
 	food_color = "#5E6351"
+	slice_product = /obj/item/reagent_containers/food/snacks/sushi_slice/custom
 
-	attackby(obj/item/W, mob/user)
-		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
-			if(src.cut == 1)
-				boutput(user, SPAN_ALERT("This has already been cut."))
-				return
-			if(istype(src.loc,/mob))
-				user.u_equip(src)
-				src.set_loc(user)
-			boutput(user, SPAN_NOTICE("You cut the sushi roll into pieces."))
-			var/makepieces = src.bites_left
-			var/spawnloc = get_turf(src)
-			while (makepieces > 0)
-				var/obj/item/reagent_containers/food/snacks/sushi_roll/S = new src.type//src.type(get_turf(src))
-				S.cut = 1
-				S.bites_left = 1
-				S.icon_state = "chopped_sushiroll"
-				S.quality = src.quality
-				src.reagents.trans_to(S, src.reagents.total_volume/makepieces)
-				S.pixel_x = rand(-6, 6)
-				S.pixel_y = rand(-6, 6)
-				for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
-					var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
-					var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"chopped_[src.overlay_refs[i]]")
-					overlay.color = buffer.color
-					S.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
-				for(var/b=1,b<=src.food_effects.len,b++)
-					if(src.food_effects[b] in S.food_effects)
-						continue
-					S.food_effects += src.food_effects[b]
-				S.set_loc(spawnloc)
-				makepieces--
-			qdel(src)
-		else if(istype(W,/obj/item/kitchen/utensil/fork))
-			src.Eat(user,user)
-		else
-			..()
+	process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		. = ..()
+		for(var/i=1,i<=src.overlays.len,i++) //transferring any overlays to the cut form
+			var/image/buffer = src.GetOverlayImage("[src.overlay_refs[i]]")
+			var/image/overlay = new /image('icons/obj/foodNdrink/food_sushi.dmi',"chopped_[src.overlay_refs[i]]")
+			overlay.color = buffer.color
+			slice.UpdateOverlays(overlay,"[src.overlay_refs[i]]")
 
 /obj/item/reagent_containers/food/snacks/nigiri_roll
 	name = "nigiri roll"
 	desc = "A ball of sticky rice with a slice of freshly caught fish on top."
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
-	icon_state = "nigiri"
+	icon_state = "nigiri1"
 	bites_left = 2
 	heal_amt = 2
 	food_effects = list("food_energized_big")
@@ -2562,7 +2565,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "zongzi-wrapped"
 	bites_left = 3
 	heal_amt = 2
-	var/unwrapped = 0
+	var/unwrapped = FALSE
 	food_effects = list("food_all", "food_energized_big")
 
 
@@ -2580,9 +2583,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attack_self(mob/user as mob)
 		if (unwrapped)
 			attack(user, user)
+			return
 
-		unwrapped = 1
-		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
+		unwrapped = TRUE
+		user.visible_message("[user] unwraps [src]!", "You unwrap [src].")
 		icon_state = "zongzi"
 		desc = "A glutinous rice snack. The distinctive bamboo leaf wrapper seems to be missing."
 
@@ -2732,6 +2736,43 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
+
+/obj/item/reagent_containers/food/snacks/danish_cheese
+	name = "cheese danish"
+	desc = "A delicious little parcel of pastry and cheese."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_cheese"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#ffc758"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/cinnamonbun
+	name = "cinnamon bun"
+	desc = "A delicious little pastry roll with a swirl of cinnamon."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cinnamonbun"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#C58C66"
+	initial_volume = 20
+	initial_reagents = list("sugar"=10, "cinnamon"=10)
+	food_effects = list("food_burn","food_warm")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/chocolate_cherry
+	name = "chocolate covered cherry"
+	desc = "A cherry lovingly covered in chocolate with a cream filling."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "chocolate_cherry"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#492b21"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/tandoorichicken
 	name = "tandoori chicken"
@@ -2972,24 +3013,30 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 	food_effects = list("food_warm","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/brownie_batch
-	name = "brownies"
-	desc = "A whole batch of freshly baked and chewy brownies."
+/obj/item/reagent_containers/food/snacks/flapjack
+	name = "flapjack"
+	desc = "A golden brown square of syrupy goodness. Yum!"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "brownie_batch"
+	icon_state = "flapjack"
+	bites_left = 3
+	heal_amt = 2
+	food_color = "#CE8F40"
+	initial_volume = 10
+	initial_reagents = list("sugar" = 5)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
+/obj/item/reagent_containers/food/snacks/dessert_batch
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	bites_left = 12
 	heal_amt = 2
-	food_color = "#38130C"
 	initial_volume = 40
-	initial_reagents = list("chocolate" = 20)
-	food_effects = list("food_warm","food_energized")
 	sliceable = TRUE
-	slice_product = /obj/item/reagent_containers/food/snacks/brownie
 	slice_amount = 4
 	slice_suffix = "square"
 	w_class = W_CLASS_BULKY
 	use_bite_mask = FALSE
-
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user == target)
 			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
@@ -3001,3 +3048,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 
 	attack_self(mob/user as mob)
 		attack(user, user)
+
+
+/obj/item/reagent_containers/food/snacks/dessert_batch/brownie
+	name = "brownies"
+	desc = "A whole batch of freshly baked and chewy brownies."
+	icon_state = "brownie_batch"
+	food_color = "#38130C"
+	initial_reagents = list("chocolate" = 20)
+	food_effects = list("food_warm","food_energized")
+	slice_product = /obj/item/reagent_containers/food/snacks/brownie
+
+/obj/item/reagent_containers/food/snacks/dessert_batch/flapjack
+	name = "flapjack tray"
+	desc = "A whole batch of freshly baked golden flapjacks."
+	icon_state = "flapjack_batch"
+	food_color = "#CE8F40"
+	initial_reagents = list("sugar" = 20)
+	food_effects = list("food_warm","food_energized")
+	slice_product = /obj/item/reagent_containers/food/snacks/flapjack

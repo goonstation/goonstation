@@ -5,7 +5,6 @@
 	icon_state = "polarize"
 	cooldown = 12 SECONDS
 	pointCost = 50
-	container_safety_bypass = TRUE
 	var/range = 4
 	var/duration = 20 SECONDS
 

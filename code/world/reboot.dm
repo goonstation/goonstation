@@ -1,7 +1,23 @@
+var/reboot_file_path = "data/restarting"
+
+/proc/Create_reboot_file()
+	file(reboot_file_path) << ""
+
+/proc/Remove_reboot_file()
+	if (fexists(reboot_file_path))
+		fdel(reboot_file_path)
+
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()
+	shutdown_byond_tracy()
+	disable_auxtools_debugger()
+	Create_reboot_file()
 	return ..()
+
+/proc/Shutdown_server()
+	Create_reboot_file()
+	shutdown()
 
 /proc/Reboot_server(var/retry)
 	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
@@ -39,6 +55,7 @@
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	save_intraround_eggs()
 	logTheThing(LOG_ADMIN, null, "Gamelogger stats BANDAID. [json_encode(game_stats.stats)]")
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
 	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
@@ -73,7 +90,7 @@
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
 #endif
-	shutdown()
+	Shutdown_server()
 #endif
 
 	SPAWN(world.tick_lag)
@@ -100,30 +117,43 @@
 #endif
 
 	sleep(5 SECONDS) // wait for sound to play
-	if(config.update_check_enabled)
-		world.installUpdate()
 
-	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
-	//this is to avoid memory leaks from leaving the server running for long periods
-	if (fexists("data/hard-reboot"))
-		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "hardrestart")
+	var/doShutdown = FALSE
 
-		logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
-		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
+	if (world.installUpdate())
+		ehjax.sendAll(clients, "browseroutput", "updaterestart")
+		#ifdef LIVE_SERVER
+		logTheThing(LOG_DIARY, null, "Updates found, triggering shutdown", "debug")
+		doShutdown = TRUE
+		#endif
 
-		fdel("data/hard-reboot")
-		shutdown()
+	if (!doShutdown)
+		//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
+		//this is to avoid memory leaks from leaving the server running for long periods
+		if (fexists(global.hardRebootFilePath))
+			//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
+			ehjax.sendAll(clients, "browseroutput", "hardrestart")
+			logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
+			message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
+			doShutdown = TRUE
+		else
+			//Tell client browserOutput that a restart is happening RIGHT NOW
+			ehjax.sendAll(clients, "browseroutput", "roundrestart")
+
+	if (doShutdown)
+		Shutdown_server()
 	else
-		//Tell client browserOutput that a restart is happening RIGHT NOW
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "roundrestart")
-
 		world.Reboot()
 
 
 /world/proc/installUpdate()
+	if (!config.update_check_enabled) return FALSE
+	#ifdef LIVE_SERVER
+	// On live servers, supervisor process will install updates on game boot
+	if (length(flist("update/")))
+		return TRUE
+	#else
+
 	// Simple check to see if a new dmb exists in the update folder
 	logTheThing(LOG_DIARY, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
 	if(fexists("update/[config.dmb_filename].dmb"))
@@ -140,13 +170,21 @@
 		// Delete .dyn.rsc so that stupid shit doesn't happen
 		fdel("[config.dmb_filename].dyn.rsc")
 
+		if (world.system_type == UNIX && shell())
+			shell("find ./tools -type f -name '*.sh' -o -name 'dc' -exec chmod +x {} \\;")
+
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
+		return TRUE
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
+
+	#endif
+	return FALSE
 
 
 /// EXPERIMENTAL STUFF
 
 /world/Del()
+	shutdown_byond_tracy()
 	disable_auxtools_debugger()
 	. = ..()

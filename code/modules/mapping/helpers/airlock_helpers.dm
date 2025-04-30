@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 	var/weld = FALSE
 
 	setup()
-		for (var/obj/machinery/door/airlock/D in src.loc)
+		for (var/obj/machinery/door/airlock/D in get_turf(src))
 			if (src.bolt)
 				D.locked = TRUE
 			if (src.weld)
@@ -48,7 +48,50 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 	setup()
 		if (!src.cycle_id)
 			CRASH("[src] has no cycle ID set. Coords: [src.x], [src.y], [src.z]")
-		for (var/obj/machinery/door/airlock/D in src.loc)
+		for (var/obj/machinery/door/airlock/D in get_turf(src))
 			D.cycle_id = src.cycle_id
 			D.cycle_enter_id = src.enter_id
 			D.attempt_cycle_link()
+
+/obj/mapping_helper/airlock/breaker
+	name = "fake airlock converter"
+	desc = "Turns a real door into a false one that can't be opened."
+	icon_state = "broken"
+
+	setup()
+		// use the bolt and weld vars to determine how the fake door should look.
+		for (var/atom/A in get_turf(src))
+			if (istype(A, /obj/mapping_helper/airlock/bolter))
+				src.bolt = TRUE
+				qdel(A)
+				continue
+			if (istype(A, /obj/mapping_helper/airlock/welder))
+				src.weld = TRUE
+				qdel(A)
+				continue
+		var/counter = 0
+		for (var/obj/machinery/door/airlock/D in get_turf(src))
+			counter++
+			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken(D.loc)
+			if (!src.bolt && D.locked) // it's possible for a bolter to activate first
+				src.bolt = TRUE
+			if (src.weld || D.welded)
+				F.UpdateOverlays(image(D.icon, D.welded_icon_state), "weld")
+			// set icon on the fake image
+			F.icon = D.icon
+			F.icon_state = (src.bolt ? "[D.icon_base]_locked" : D.icon_state)
+			F.name = D.name
+			F.desc = D.desc
+			F.density = D.density
+			qdel(D)
+		if (counter > 1)
+			CRASH("[counter] airlocks on tile [src.x], [src.y], [src.x]")
+
+/obj/mapping_helper/airlock/aiDisabler
+	name = "airlock aiDisabler"
+	icon_state = "aiDisable"
+
+	setup()
+		. = ..()
+		for (var/obj/machinery/door/airlock/secure_airlock in get_turf(src))
+			secure_airlock.aiControlDisabled = TRUE

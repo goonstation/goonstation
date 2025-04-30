@@ -178,8 +178,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				. = ""
 				for (var/datum/geneboothproduct/P as() in offered_genes)
 					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
 
 			else
 				. += "[src] has no products available for purchase right now."
@@ -202,7 +202,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
 						if(!isnum_safe(price))
 							return
-						price = max(price,0)
+						price = ceil(clamp(price, 0, 999999))
 						P.cost = price
 
 				if("lock")
@@ -400,7 +400,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 					src.eject_occupant(0,0, direction)
 
 	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		letgo_hp -= W.force
 		attack_particle(user,src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)

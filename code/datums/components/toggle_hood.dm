@@ -1,5 +1,4 @@
 /datum/component/toggle_hood
-	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/hooded = FALSE
 	var/hood_style = null
 	var/obj/item/clothing/suit/suit = null
@@ -10,6 +9,7 @@
 	if(!istype(parent, /obj/item/clothing/suit))
 		return COMPONENT_INCOMPATIBLE
 	src.hooded = hooded
+	src.suit?.hooded = src.hooded
 	src.hood_style = hood_style
 	src.suit = parent
 	if (!islist(suit.ability_buttons))
@@ -22,11 +22,15 @@
 
 /datum/component/toggle_hood/proc/flip_hood(atom/movable/thing, mob/user)
 	src.hooded = !src.hooded
-	suit.over_hair = !suit.over_hair
-	suit.body_parts_covered ^= HEAD
+	src.suit.hooded = src.hooded
+
 	if (ismob(suit.loc))
 		var/mob/M = suit.loc
+		if (!ishuman(M))
+			suit.body_parts_covered ^= HEAD
+			suit.over_hair = !suit.over_hair
 		M.set_clothing_icon_dirty()
+
 	suit.UpdateIcon()
 	user.visible_message("[user] flips [his_or_her(user)] [suit.name]'s hood.")
 

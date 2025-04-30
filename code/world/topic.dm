@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub_ci_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -530,7 +530,7 @@
 
 				if (M?.client)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: [SPAN_MESSAGE("[game_msg]")]"))
-					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 
@@ -541,7 +541,7 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
 								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
@@ -735,7 +735,7 @@
 			if ("youtube")
 				if (!plist["data"]) return 0
 
-				play_music_remote(json_decode(plist["data"]))
+				play_music_remote(json_decode(plist["data"]), from_topic = TRUE)
 
 				// trigger cooldown so radio station doesn't interrupt our cool music
 				var/duration = text2num(plist["duration"])
@@ -867,13 +867,13 @@
 				)
 
 				var/datum/player/player = make_player(plist["ckey"])
-				if(isnull(player.last_seen))
+				if(!player.cached_round_stats)
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
 				player.cloudSaves.fetch()
 				for(var/kkey in player.cloudSaves.data)
-					if(kkey in list("admin_preferences", "buildmode"))
+					if((kkey in list("admin_preferences", "buildmode")) || findtext(kkey, regex(@"^custom_job_\d+$")))
 						continue
 					response[kkey] = player.cloudSaves.data[kkey]
 				response["cloudsaves"] = player.cloudSaves.saves

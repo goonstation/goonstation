@@ -114,6 +114,8 @@
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (src.remove_bandage(target, user))
 			return 1
 		if (snip_surgery(target, user))
@@ -160,6 +162,8 @@
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (scalpel_surgery(target, user))
 			return 1
 		..()
@@ -175,6 +179,69 @@
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+/obj/item/razor_blade/barberang
+	desc = "Used to cut facial hair. This one seems sharper than normal."
+	force = 12
+	throwforce = 20
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	var/obj/item/clothing/head/wig/stolen_hair
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if( ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				user.put_in_hand_or_drop(src)
+				if(stolen_hair)
+					var/obj/item/clothing/head/wig/I = stolen_hair
+					user.put_in_hand_or_drop(I)
+					stolen_hair = null
+
+				return
+			else if (ishuman(hit_atom))
+				var/mob/living/carbon/human/victim = hit_atom
+				playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 50)
+				var/yoinked = FALSE
+				if(!stolen_hair)
+					if(istype(victim.head, /obj/item/clothing/head/wig))
+						//they are wearing a wig
+						stolen_hair = victim.head
+						victim.u_equip(stolen_hair)
+						boutput(victim, SPAN_ALERT("the [src] snatches your wig right off your head!"))
+						yoinked = TRUE
+					else if(!victim.is_bald())
+						//they have hair to yoink
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_bottom"].color, victim.bioHolder.mobAppearance.customizations["hair_bottom"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_middle"].color, victim.bioHolder.mobAppearance.customizations["hair_middle"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_top"].color, victim.bioHolder.mobAppearance.customizations["hair_top"].style)
+						stolen_hair = victim.create_wig()
+						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
+						yoinked = TRUE
+				if(yoinked)
+					victim.changeStatus("knockdown", 4 SECONDS)
+					victim.force_laydown_standup()
+				else
+					boutput(victim, SPAN_ALERT("the [src] slashes your head really bad!"))
+					take_bleeding_damage(victim, user, throwforce)
+					throw_return = FALSE
+					SPAWN(2 SECONDS)
+						throw_return = TRUE
+
+		. = ..()
+
+	proc/spawn_hair_clipping(var/mob/living/carbon/human/M, var/color, var/old_style)
+		if (!M || !M.loc)
+			return
+		if (!color)
+			return
+		if (istype(old_style, /datum/customization_style/none))
+			return
+
+		var/obj/decal/cleanable/hair/hair = new(M.loc)
+		hair.color = color
+		hair.update_color()
 
 /obj/item/dye_bottle
 	name = "hair dye bottle"
@@ -214,6 +281,14 @@
 			if (EYES)
 				which_part = "eyes"
 		boutput(user, SPAN_HINT("You change your grip on the [src] to one that'll aim for the recipient's [which_part]."))
+
+	proc/use_dye(all = FALSE)
+		if (all)
+			src.uses_left = 0
+		else
+			src.uses_left--
+		if (src.uses_left <= 0)
+			src.ClearSpecificOverlays("dye_color")
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -293,11 +368,11 @@
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
 			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 				famtofuckup.emote("scream")
@@ -313,19 +388,19 @@
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
 						if(MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
 						if(TOP_DETAIL)
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
 
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
@@ -343,15 +418,13 @@
 												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye(TRUE)
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
-				src.uses_left --
+				src.use_dye()
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
-				src.uses_left = 0
-				src.ClearSpecificOverlays("dye_color")
+				src.use_dye()
 
 		M.update_colorful_parts()
 	return 1
@@ -437,6 +510,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				src.bottle = bottle
 
 	ui_act(action, params)
+		. = ..()
 		if(status & BROKEN)
 			return
 		if(usr.stat || usr.restrained())

@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	var/on = FALSE
 	var/inlet_flow = 100 // percentage
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
-	volume = 750
+	volume = 1000
 	desc = "A device which filters out harmful air from an area."
 	p_class = 1.5
 
@@ -24,7 +24,9 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 
 	New()
 		..()
-		src.buffer = new(src, 500)
+		src.buffer = new(src)
+		src.buffer.reagents.maximum_volume = 100
+
 		src.create_reagents(500)
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
@@ -56,7 +58,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub_turf(turf/simulated/T, flow)
 	var/datum/gas_mixture/environment = T.return_air()
-	var/datum/gas_mixture/removed = T.remove_air(TOTAL_MOLES(environment) * flow / 100)
+	var/datum/gas_mixture/removed = T.remove_air(min(TOTAL_MOLES(environment) * flow / 100, 100))
 	T.assume_air(src.scrub(removed))
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub_mixture(datum/gas_mixture/environment, flow)
@@ -79,18 +81,17 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		return
 
 	if(on)
-		var/active_power_usage = src.inlet_flow * 50 WATTS
+		var/active_power_usage = 1 KILO WATT + src.inlet_flow * 10 WATTS // up to 2 kilowatts per tick just to run it
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
 			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
-				F.group.drain(F, inlet_flow / 8, src.buffer)
-				active_power_usage += src.buffer.reagents.total_volume * 5 KILO WATTS
-				// src.buffer.reagents.remove_any(src.buffer.reagents.total_volume/2)
-				if (src.reagents.total_volume < src.reagents.maximum_volume)
-					src.buffer.transfer_all_reagents(src)
-				else
+				F.group.drain(F, src.inlet_flow / 8, src.buffer, remove_reagent = FALSE)
+				active_power_usage += src.buffer.reagents.total_volume * 50 WATTS // max 100 reagents * 50 = 5 Kilowatts per tick of fluid usage
+				var/amount_to_transfer = src.reagents.maximum_volume - src.reagents.total_volume
+				src.buffer.reagents.trans_to(src, amount_to_transfer)
+				if (src.buffer.reagents.total_volume) // whatever's left, dump it on the ground
 					src.buffer.reagents.reaction(get_turf(src), TOUCH, src.buffer.reagents.total_volume)
 				src.buffer.reagents.clear_reagents()
 
@@ -102,12 +103,12 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 				if(issimulatedturf(T) && isfloor(T))
 					src.scrub_turf(T, T == src.loc ? src.inlet_flow : src.inlet_flow / 2)
 		var/filtered_out_moles = TOTAL_MOLES(src.air_contents) - original_my_moles
-		active_power_usage += filtered_out_moles * 700 WATTS
-		A.use_power(active_power_usage, ENVIRON)
+		active_power_usage += filtered_out_moles * 70 WATTS
+		src.use_power(active_power_usage, ENVIRON)
 		src.updateDialog()
 	src.UpdateIcon()
 
-/obj/machinery/portable_atmospherics/scrubber/return_air()
+/obj/machinery/portable_atmospherics/scrubber/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)

@@ -4,9 +4,9 @@
  */
 
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss';
+@use '../base';
+@use '../colors';
+@use '../functions';
 
 $title-text-color: base.$color-fg !default;
 $background-color: base.$color-bg-section !default;
@@ -141,3 +141,22 @@ $separator-color: colors.$primary !default;
 .Section .Section .Section .Section__titleText {
   font-size: base.em(12px);
 }
+
+// |GOONSTATION-CHANGE| Bug in tgui-styles not present in previous Goonstation code, commented out but included for completeness
+// .section__flex {
+//   display: flex;
+//   flex-flow: column;
+// }
+
+// .section__flex .content {
+//   overflow: auto;
+//   flex-grow: 1;
+// }
+
+// .content__noTopPadding {
+//   padding-top: 0;
+// }
+
+// .content__stretchContents {
+//   height: calc(100% - 3rem);
+// }

@@ -17,7 +17,6 @@ datum
 		var/id = "reagent"
 		var/description = ""
 		var/datum/reagents/holder = null
-		var/list/pathogen_nutrition = null
 		var/reagent_state = SOLID
 		var/data = null
 		var/volume = 0
@@ -57,7 +56,7 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
-		var/threshold_volume = null //defaults to not using threshold
+		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
@@ -169,23 +168,22 @@ datum
 								boutput(H, "<span class='alert'><b>The water! It[pick(" burns"," hurts","'s so terrible","'s ruining your skin"," is your true mortal enemy!")]!</b></span>", group = "aquaphobia")
 							if (!ON_COOLDOWN(H, "bingus_damage", 3 SECONDS))
 								random_burn_damage(H, clamp(0.3 * volume, 4, 20))
-						if (H.sims)
-							if (hygiene_value)
-								var/hygiene = H.sims.getValue("Hygiene")
-								var/hygiene_restore = hygiene_value
-								var/hygiene_cap = 100 - H.get_chem_protection() * 4 // Hygiene will not restore above this cap; typical minimum of 40%
-								var/hygiene_distance_from_cap = hygiene_cap - hygiene
-								var/hygiene_change = min(volume * hygiene_restore * (1 - (H.get_chem_protection() / 100)), max(hygiene_distance_from_cap, 0))
+						var/hygiene = H.sims?.getValue("Hygiene")
+						if (hygiene_value && H.sims && hygiene >= 0)
+							var/hygiene_restore = hygiene_value
+							var/hygiene_cap = 100 - H.get_chem_protection() * 4 // Hygiene will not restore above this cap; typical minimum of 40%
+							var/hygiene_distance_from_cap = hygiene_cap - hygiene
+							var/hygiene_change = min(volume * hygiene_restore * (1 - (H.get_chem_protection() / 100)), max(hygiene_distance_from_cap, 0))
 
-								if (H.mutantrace.aquaphobic)
-									if (istype(src, /datum/reagent/oil))
-										hygiene_restore = 3
-									else if (istype(src, /datum/reagent/water))
-										hygiene_restore = -3
-								if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 100) && hygiene_change == 0)
-									if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
-										boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
-								H.sims.affectMotive("Hygiene", hygiene_change)
+							if (H.mutantrace.aquaphobic)
+								if (istype(src, /datum/reagent/oil))
+									hygiene_restore = 3
+								else if (istype(src, /datum/reagent/water))
+									hygiene_restore = -3
+							if (hygiene_distance_from_cap == 0 && !(hygiene_cap == 100) && hygiene_change == 0)
+								if(!ON_COOLDOWN(H, "Hygiene_restoration_blocked_by_clothes", 1 MINUTE))
+									boutput(M, SPAN_ALERT("Your clothes prevent you from getting any cleaner!"))
+							H.sims.affectMotive("Hygiene", hygiene_change)
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
@@ -239,17 +237,10 @@ datum
 				return
 			if (!holder)
 				holder = M.reagents
-			var/deplRate = depletion_rate
+			var/deplRate = src.calculate_depletion_rate(M, mult)
+
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.traitHolder.hasTrait("slowmetabolism"))
-					deplRate /= 2
-				if (H.organHolder && !ischangeling(H))
-					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
-						deplRate /= 2
-					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
-						deplRate /= 2
-
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)
@@ -259,7 +250,7 @@ datum
 						H.sims.affectMotive("Bladder", bladder_value)
 					if (src.energy_value)
 						H.sims.affectMotive("Energy", energy_value)
-			deplRate = deplRate * mult
+
 			if (addiction_prob)
 				src.handle_addiction(M, deplRate, addiction_prob)
 
@@ -274,6 +265,19 @@ datum
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return
+
+		///This calculates the depletion rate of a chem. In case you want to modify the result of the chems normal depletion rate
+		proc/calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+			SHOULD_CALL_PARENT(TRUE)
+
+			var/resulting_depletion = src.depletion_rate * mult
+			if (isliving(affected_mob))
+				var/mob/living/living_mob = affected_mob
+				resulting_depletion *= living_mob.get_chem_depletion_multiplier()
+
+			return resulting_depletion
+
+
 
 		//when we entirely drained from sstem, do this
 		proc/on_mob_life_complete(var/mob/M)
@@ -311,7 +315,7 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
+		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
@@ -336,13 +340,13 @@ datum
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				AD = new
+				AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday
 				AD.name = "[src.name] addiction"
 				AD.affected_mob = M
 				AD.max_severity = src.max_addiction_severity
-				M.ailments += AD
+				M.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))

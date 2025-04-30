@@ -1,4 +1,4 @@
-/**
+/*
  * tgui states
  *
  * Base state and helpers for states. Just does some sanity checks, implement

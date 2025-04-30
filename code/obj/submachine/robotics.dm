@@ -315,14 +315,27 @@
 	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
 	var/dispensing_fitting = /obj/machinery/light
 	var/list/setting_context_actions
-	contextLayout = new /datum/contextLayout/experimentalcircle
+	var/list/common_actions
+	var/list/page_1_actions
+	var/list/page_2_actions
 
 	New()
 		..()
+		contextLayout = new /datum/contextLayout/experimentalcircle(Dist = 34)
 		setting_context_actions = list()
-		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer)) //see context_actions.dm for those
+		common_actions = list()
+		page_1_actions = list()
+		page_2_actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer/setting)) //see context_actions.dm for those
 			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
-			setting_context_actions += action
+			common_actions += action
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer/col_page_1)) //see context_actions.dm for those
+			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
+			page_1_actions += action
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer/col_page_2)) //see context_actions.dm for those
+			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
+			page_2_actions += action
+		setting_context_actions = page_1_actions + common_actions
 
 	attack_self(var/mob/user as mob)
 		user.showContextActions(setting_context_actions, src, contextLayout)
@@ -389,13 +402,7 @@
 				if (src.metal_ammo == src.max_ammo)
 					boutput(user, "The lamp manufacturer is full.")
 				else
-					var/loadAmount = 0
-					if (S.amount < src.load_interval)
-						loadAmount = S.amount
-					else
-						loadAmount = src.load_interval
-					if ((src.metal_ammo + loadAmount) > src.max_ammo)
-						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
+					var/loadAmount = min(src.load_interval, S.amount, src.max_ammo - src.metal_ammo) //as much as we can load at one time, have, or can fit
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
 					playsound(src, 'sound/machines/click.ogg', 25, TRUE)

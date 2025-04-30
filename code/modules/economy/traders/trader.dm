@@ -18,9 +18,16 @@
 	// these are the base lists of commodities this trader will have
 	var/list/base_goods_buy = list()
 	var/list/base_goods_sell = list()
-	// these are the max amount of entries the trader will have on each list
-	var/max_goods_buy = 1
-	var/max_goods_sell = 1
+
+	// The rarities used to iterate over
+	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
+	// list to determine how many items per rarity we have
+	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
+	var/list/amount_of_items_per_rarity = list(
+		TRADER_RARITY_COMMON = 3,
+		TRADER_RARITY_UNCOMMON = 2,
+		TRADER_RARITY_RARE = 1,
+	)
 	// and these three are the active ones used for gameplay
 	var/list/goods_buy = list()
 	var/list/goods_sell = list()
@@ -90,10 +97,6 @@
 		..()
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
-		if (src.max_goods_buy > src.base_goods_buy.len)
-			src.max_goods_buy = length(src.base_goods_buy)
-		if (src.max_goods_sell > src.base_goods_sell.len)
-			src.max_goods_sell = length(src.base_goods_sell)
 		src.set_up_goods()
 
 	proc/set_up_goods()
@@ -103,27 +106,29 @@
 		src.goods_sell = new/list()
 		src.wipe_cart()
 
-		var/list/goods_buy_temp = list()
-		goods_buy_temp |= base_goods_buy
-		var/list/goods_sell_temp = list()
-		goods_sell_temp |= base_goods_sell
+		var/list/goods_buy_temp[(length(rarities))]
+		for(var/i in rarities)
+			var/list/L = base_goods_buy[i]
+			goods_buy_temp[i] = L.Copy()
 
-		var/howmanybuy = rand(1,src.max_goods_buy)
-		while(howmanybuy > 0)
-			howmanybuy--
-			var/the_commodity = pick(goods_buy_temp)
-			var/datum/commodity/COM = new the_commodity(src)
-			src.goods_buy += COM
-			goods_buy_temp -= the_commodity
+		var/list/goods_sell_temp[(length(rarities))]
+		for(var/i in rarities)
+			var/list/L = base_goods_sell[i]
+			goods_sell_temp[i] = L.Copy()
 
-		var/howmanysell = rand(1,src.max_goods_sell)
-		while(howmanysell > 0)
-			howmanysell--
-			var/the_commodity = pick(goods_sell_temp)
-			var/datum/commodity/COM = new the_commodity(src)
-			if(COM.type == /datum/commodity) logTheThing(LOG_DEBUG, src, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
-			src.goods_sell += COM
-			goods_sell_temp -= the_commodity
+		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
+		for (var/rarity in src.rarities)
+			for (var/i in 1 to src.amount_of_items_per_rarity[rarity])
+				if(length(goods_buy_temp[rarity]) >= i)
+					var/buy_com = pick(goods_buy_temp[rarity])
+					var/datum/commodity/new_buy_com = new buy_com(src)
+					src.goods_buy += new_buy_com
+					goods_buy_temp[rarity] -= buy_com
+				if(length(goods_sell_temp[rarity]) >= i)
+					var/sell_com = pick(goods_sell_temp[rarity])
+					var/datum/commodity/new_sell_com = new sell_com(src)
+					src.goods_sell += new_sell_com
+					goods_sell_temp[rarity] -= sell_com
 
 	proc/haggle(var/datum/commodity/goods,var/askingprice,var/buying = 0)
 		// if something's gone wrong and there's no input, reject the haggle

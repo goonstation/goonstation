@@ -14,13 +14,13 @@
 	else
 		return 0
 
-/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0, var/mob/victim = null)
 	if (!isvampire(src) && !isvampiricthrall(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
-		AH.change_vampire_blood(change, total_blood, set_null)
+		AH.change_vampire_blood(change, total_blood, set_null, victim)
 	else
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
@@ -69,8 +69,9 @@
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
-	var/vamp_blood_tracking = 1
 	var/mob/vamp_isbiting = null
+	///For blood tracking
+	var/mob/last_victim = null
 #ifdef BONUS_POINTS
 	vamp_blood = 99999
 	points = 99999
@@ -131,14 +132,20 @@
 					owner_human.update_face()
 					owner_human.update_body()
 			else
-				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
+				if (ishuman(owner))
+					changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = FALSE, var/mob/victim = null)
+		if (victim)
+			if (src.last_victim != victim)
+				src.last_victim = victim
+				var/datum/targetable/vampire/blood_tracking/tracker = src.getAbility(/datum/targetable/vampire/blood_tracking)
+				tracker?.update_target(victim)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -157,7 +164,7 @@
 			if (set_null)
 				src.points = 0
 			else
-				src.points = max(src.points + change, 0)
+				src.points = clamp(src.points + change, 0, src.vamp_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
@@ -171,24 +178,6 @@
 		else
 			return src.points
 
-	proc/blood_tracking_output(var/deduct = 0)
-		if (!src.owner || !ismob(src.owner))
-			return
-
-		if (!istype(src, /datum/abilityHolder/vampire))
-			return
-
-		if (!src.vamp_blood_tracking)
-			return
-
-		if (deduct > 1)
-			boutput(src.owner, SPAN_NOTICE("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
-
-		else
-			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
-
-		return
-
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
 			return
@@ -200,7 +189,8 @@
 			src.last_power = 1
 
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
-			src.addAbility(/datum/targetable/vampire/enthrall)
+			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
+				src.addAbility(/datum/targetable/vampire/enthrall)
 			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)

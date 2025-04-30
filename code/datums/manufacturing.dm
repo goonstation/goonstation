@@ -1,3 +1,5 @@
+#define JUMPSUIT_COST 10
+
 /datum/manufacture
 	/// Player-read name of the blueprint
 	var/name = null
@@ -155,7 +157,7 @@
 /******************** AI Law Rack *******************/
 
 /datum/manufacture/mechanics/lawrack
-	name = "AI Law Rack Mount"
+	name = "AI Law Rack"
 	item_requirements = list("metal" = 20,
 							 "metal_dense" = 5,
 							 "insulated" = 10,
@@ -625,6 +627,12 @@
 	category = "Resource"
 	apply_material = TRUE
 
+/datum/manufacture/metal/bulk
+	name = "Metal Sheet (x5)"
+	item_requirements = list("metal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/metal::time
+
 /datum/manufacture/metalR
 	name = "Reinforced Metal"
 	item_requirements = list("metal" = 2)
@@ -640,14 +648,26 @@
 		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
+/datum/manufacture/metalR/bulk
+	name = "Reinforced Metal (x5)"
+	item_requirements = list("metal" = 10)
+	create = 5
+	time = 5 * /datum/manufacture/metalR::time
+
 /datum/manufacture/glass
 	name = "Glass Panel"
-	item_requirements = list("crystal" = 5)
+	item_requirements = list("crystal" = 1)
 	item_outputs = list(/obj/item/sheet)
-	create = 5
-	time = 8 SECONDS
+	create = 1
+	time = 2 SECONDS
 	category = "Resource"
 	apply_material = TRUE
+
+/datum/manufacture/glass/bulk
+	name = "Glass Panel (x5)"
+	item_requirements = list("crystal" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glass::time
 
 /datum/manufacture/glassR
 	name = "Reinforced Glass Panel"
@@ -662,8 +682,16 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal_dense")])
 		S.set_reinforcement(applicable_material.material)
+
+/datum/manufacture/glassR/bulk
+	name = "Reinforced Glass Panel (x5)"
+	item_requirements = list("crystal" = 5,
+							 "metal_dense" = 5)
+	create = 5
+	time = 5 * /datum/manufacture/glassR::time
+
 
 /datum/manufacture/rods2
 	name = "Metal Rods (x2)"
@@ -706,7 +734,7 @@
 
 	red
 		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
-		
+
 	yellow
 		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
@@ -840,8 +868,8 @@
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
-	item_requirements = list("molitz" = 5)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser)
+	item_requirements = list("crystal" = 5)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -849,7 +877,25 @@
 /datum/manufacture/fractionalcondenser
 	name = "Fractional Condenser"
 	item_requirements = list("molitz" = 6)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser/fractional)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+/datum/manufacture/dropper_funnel
+	name = "Dropper Funnel"
+	item_requirements = list("molitz" = 3)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+/datum/manufacture/portable_dispenser
+	name = "Portable Dispenser"
+	item_requirements = list("molitz" = 3,
+							 "metal" = 2,
+							 "miracle" = 2)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dispenser)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -963,7 +1009,7 @@
 
 /datum/manufacture/jumpsuit_assistant
 	name = "Staff Assistant Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/rank/assistant)
 	create = 1
 	time = 5 SECONDS
@@ -971,7 +1017,7 @@
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/grey)
 	create = 1
 	time = 5 SECONDS
@@ -1017,7 +1063,7 @@
 	item_requirements = list("dense_super" = 10,
 							 "insulated" = 20,
 							 "rubber" = 5)
-	item_outputs = list(/obj/item/tank/emergency_oxygen/extended/empty)
+	item_outputs = list(/obj/item/tank/pocket/extended/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -1142,7 +1188,7 @@
 	item_outputs = list(/obj/item/organ/heart/cyber)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberbutt
 	name = "Cyberbutt"
@@ -1152,7 +1198,7 @@
 	item_outputs = list(/obj/item/clothing/head/butt/cyberbutt)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cardboard_ai
 	name = "Cardboard 'AI'"
@@ -1170,7 +1216,7 @@
 	item_outputs = list(/obj/item/organ/appendix/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberpancreas
 	name = "Cyberpancreas"
@@ -1180,7 +1226,7 @@
 	item_outputs = list(/obj/item/organ/pancreas/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberspleen
 	name = "Cyberspleen"
@@ -1190,7 +1236,7 @@
 	item_outputs = list(/obj/item/organ/spleen/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberintestines
 	name = "Cyberintestines"
@@ -1200,7 +1246,7 @@
 	item_outputs = list(/obj/item/organ/intestines/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberstomach
 	name = "Cyberstomach"
@@ -1210,7 +1256,7 @@
 	item_outputs = list(/obj/item/organ/stomach/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberkidney
 	name = "Cyberkidney"
@@ -1220,7 +1266,7 @@
 	item_outputs = list(/obj/item/organ/kidney/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberliver
 	name = "Cyberliver"
@@ -1230,7 +1276,7 @@
 	item_outputs = list(/obj/item/organ/liver/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberlung_left
 	name = "Left Cyberlung"
@@ -1240,7 +1286,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/left)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cyberlung_right
 	name = "Right Cyberlung"
@@ -1250,7 +1296,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/right)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye
 	name = "Cybereye"
@@ -1261,7 +1307,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/configurable)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_sunglass
 	name = "Polarized Cybereye"
@@ -1272,7 +1318,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sunglass)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_sechud
 	name = "Security HUD Cybereye"
@@ -1283,7 +1329,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sechud)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_thermal
 	name = "Thermal Imager Cybereye"
@@ -1294,7 +1340,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/thermal)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_meson
 	name = "Mesonic Imager Cybereye"
@@ -1305,7 +1351,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/meson)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_spectro
 	name = "Spectroscopic Imager Cybereye"
@@ -1316,7 +1362,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/spectro)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_prodoc
 	name = "ProDoc Healthview Cybereye"
@@ -1327,7 +1373,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/prodoc)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/cybereye_camera
 	name = "Camera Cybereye"
@@ -1338,7 +1384,18 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/camera)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = "Organ"
+
+/datum/manufacture/cybereye_monitor
+	name = "Monitor Cybereye"
+	item_requirements = list("crystal" = 3,
+							 "metal" = 1,
+							 "conductive" = 2,
+							 "insulated" = 1)
+	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
+	create = 1
+	time = 25 SECONDS
+	category = "Organ"
 
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
@@ -1350,7 +1407,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/laser)
 	create = 1
 	time = 40 SECONDS
-	category = "Component"
+	category = "Organ"
 
 /datum/manufacture/implant_health
 	name = "Health Monitor Implant"
@@ -1368,6 +1425,15 @@
 	item_outputs = list(/obj/item/implantcase/antirot)
 	create = 1
 	time = 30 SECONDS
+	category = "Resource"
+
+/datum/manufacture/medicalalertbutton
+	name = "Medical Alert Button"
+	item_requirements = list("conductive" = 2,
+							 "metal" = 2)
+	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
+	create = 1
+	time = 3 SECONDS
 	category = "Resource"
 
 #ifdef ENABLE_ARTEMIS
@@ -1700,6 +1766,48 @@
 	time = 60 SECONDS
 	category = "Component"
 
+/datum/manufacture/syndicate_laws
+	name = "Syndicate Law Module Set"
+	item_requirements = list("metal_dense" = 40)
+	item_outputs = list(/obj/item/aiModule/syndicate/law1, /obj/item/aiModule/syndicate/law2, /obj/item/aiModule/syndicate/law3, /obj/item/aiModule/syndicate/law4)
+	create = 1
+	time = 60 SECONDS
+	category = "Component"
+
+ABSTRACT_TYPE(/datum/manufacture/aiModule)
+/datum/manufacture/aiModule
+	name = "AI Law Module - 'YOU SHOULDNT SEE ME'"
+	item_requirements = list("metal_dense" = 10)
+	item_outputs = list(/obj/item/aiModule/asimov1)
+	create = 1
+	time = 20 SECONDS
+	category = "Component"
+
+	makeCaptain
+		name = "AI Law Module - 'MakeCaptain'"
+		item_outputs = list(/obj/item/aiModule/makeCaptain)
+
+	oneHuman
+		name = "AI Law Module - 'OneHuman'"
+		item_outputs = list(/obj/item/aiModule/oneHuman)
+
+	notHuman
+		name = "AI Law Module - 'NotHuman'"
+		item_outputs = list(/obj/item/aiModule/notHuman)
+
+	emergency
+		name = "AI Law Module - 'Emergency'"
+		item_outputs = list(/obj/item/aiModule/emergency)
+
+	removeCrew
+		name = "AI Law Module - 'RemoveCrew'"
+		item_outputs = list(/obj/item/aiModule/removeCrew)
+
+	freeform
+		name = "AI Law Module - 'Freeform'"
+		item_outputs = list(/obj/item/aiModule/freeform)
+
+
 // Robotics Research
 
 /datum/manufacture/implanter
@@ -1709,16 +1817,6 @@
 	create = 1
 	time = 3 SECONDS
 	category = "Tool"
-
-/datum/manufacture/secbot
-	name = "Security Drone"
-	item_requirements = list("metal_dense" = 30,
-							 "conductive_high" = 20,
-							 "energy" = 20)
-	item_outputs = list(/obj/machinery/bot/secbot)
-	create = 1
-	time = 120 SECONDS
-	category = "Machinery"
 
 /datum/manufacture/floorbot
 	name = "Construction Drone"
@@ -1932,6 +2030,14 @@
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	create = 1
 	time = 90 SECONDS
+	category = "Component"
+
+/datum/manufacture/scream_synth
+	name = "Scream Synthesizer"
+	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
+	item_outputs = list(/obj/item/instrument/roboscream)
+	create = 1
+	time = 30 SECONDS
 	category = "Component"
 
 /datum/manufacture/implant_robotalk
@@ -2239,7 +2345,7 @@
 /datum/manufacture/miniplasmatank
 	name = "Mini plasma tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_plasma/empty)
+	item_outputs = list(/obj/item/tank/mini/plasma/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -2247,7 +2353,7 @@
 /datum/manufacture/minioxygentank
 	name = "Mini oxygen tank"
 	item_requirements = list("metal_dense" = 1)
-	item_outputs = list(/obj/item/tank/mini_oxygen/empty)
+	item_outputs = list(/obj/item/tank/mini/oxygen/empty)
 	create = 1
 	time = 5 SECONDS
 	category = "Resource"
@@ -2365,6 +2471,15 @@
 	category = "Clothing"
 
 /// Ship Items -- OLD COMPONENTS
+
+/datum/manufacture/engine_scout
+	name = "Scout Engine"
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/engine/scout)
+	create = 1
+	time = 5 SECONDS
+	category = "Resource"
 
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
@@ -2632,7 +2747,7 @@
 
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/white)
 	create = 1
 	time = 5 SECONDS
@@ -2640,7 +2755,7 @@
 
 /datum/manufacture/jumpsuit_red
 	name = "Red Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/red)
 	create = 1
 	time = 5 SECONDS
@@ -2648,7 +2763,7 @@
 
 /datum/manufacture/jumpsuit_yellow
 	name = "Yellow Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/yellow)
 	create = 1
 	time = 5 SECONDS
@@ -2656,7 +2771,7 @@
 
 /datum/manufacture/jumpsuit_green
 	name = "Green Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/green)
 	create = 1
 	time = 5 SECONDS
@@ -2664,7 +2779,7 @@
 
 /datum/manufacture/jumpsuit_pink
 	name = "Pink Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/pink)
 	create = 1
 	time = 5 SECONDS
@@ -2672,7 +2787,7 @@
 
 /datum/manufacture/jumpsuit_blue
 	name = "Blue Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
 	create = 1
 	time = 5 SECONDS
@@ -2681,7 +2796,7 @@
 
 /datum/manufacture/jumpsuit_purple
 	name = "Purple Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/purple)
 	create = 1
 	time = 5 SECONDS
@@ -2689,7 +2804,7 @@
 
 /datum/manufacture/jumpsuit_brown
 	name = "Brown Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/brown)
 	create = 1
 	time = 5 SECONDS
@@ -2697,7 +2812,7 @@
 
 /datum/manufacture/jumpsuit_black
 	name = "Black Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color)
 	create = 1
 	time = 5 SECONDS
@@ -2705,7 +2820,7 @@
 
 /datum/manufacture/jumpsuit_orange
 	name = "Orange Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/orange)
 	create = 1
 	time = 5 SECONDS
@@ -2713,7 +2828,7 @@
 
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
 	create = 1
 	time = 5 SECONDS
@@ -2721,7 +2836,7 @@
 
 /datum/manufacture/pride_lgbt
 	name = "LGBT Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride)
 	create = 1
 	time = 5 SECONDS
@@ -2729,7 +2844,7 @@
 
 /datum/manufacture/pride_ace
 	name = "Asexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/ace)
 	create = 1
 	time = 5 SECONDS
@@ -2737,7 +2852,7 @@
 
 /datum/manufacture/pride_aro
 	name = "Aromantic Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/aro)
 	create = 1
 	time = 5 SECONDS
@@ -2745,7 +2860,7 @@
 
 /datum/manufacture/pride_bi
 	name = "Bisexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/bi)
 	create = 1
 	time = 5 SECONDS
@@ -2753,7 +2868,7 @@
 
 /datum/manufacture/pride_inter
 	name = "Intersex Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/inter)
 	create = 1
 	time = 5 SECONDS
@@ -2761,7 +2876,7 @@
 
 /datum/manufacture/pride_lesb
 	name = "Lesbian Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
 	create = 1
 	time = 5 SECONDS
@@ -2769,7 +2884,7 @@
 
 /datum/manufacture/pride_gay
 	name = "Gay Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	create = 1
 	time = 5 SECONDS
@@ -2777,7 +2892,7 @@
 
 /datum/manufacture/pride_nb
 	name = "Non-binary Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/nb)
 	create = 1
 	time = 5 SECONDS
@@ -2785,7 +2900,7 @@
 
 /datum/manufacture/pride_pan
 	name = "Pansexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/pan)
 	create = 1
 	time = 5 SECONDS
@@ -2793,7 +2908,7 @@
 
 /datum/manufacture/pride_poly
 	name = "Polysexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
 	create = 1
 	time = 5 SECONDS
@@ -2801,7 +2916,7 @@
 
 /datum/manufacture/pride_trans
 	name = "Trans Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/trans)
 	create = 1
 	time = 5 SECONDS
@@ -2809,7 +2924,7 @@
 
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/suit/black)
 	create = 1
 	time = 5 SECONDS
@@ -2817,7 +2932,7 @@
 
 /datum/manufacture/dress_black
 	name = "Fancy Black Dress"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
 	create = 1
 	time = 5 SECONDS
@@ -2833,7 +2948,7 @@
 
 /datum/manufacture/scrubs_white
 	name = "White Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub)
 	create = 1
 	time = 5 SECONDS
@@ -2841,7 +2956,7 @@
 
 /datum/manufacture/scrubs_teal
 	name = "Teal Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/teal)
 	create = 1
 	time = 5 SECONDS
@@ -2849,7 +2964,7 @@
 
 /datum/manufacture/scrubs_maroon
 	name = "Maroon Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
 	create = 1
 	time = 5 SECONDS
@@ -2857,7 +2972,7 @@
 
 /datum/manufacture/scrubs_blue
 	name = "Navy Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
 	create = 1
 	time = 5 SECONDS
@@ -2865,7 +2980,7 @@
 
 /datum/manufacture/scrubs_purple
 	name = "Violet Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
 	create = 1
 	time = 5 SECONDS
@@ -2873,7 +2988,7 @@
 
 /datum/manufacture/scrubs_orange
 	name = "Orange Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/orange)
 	create = 1
 	time = 5 SECONDS
@@ -2881,7 +2996,7 @@
 
 /datum/manufacture/scrubs_pink
 	name = "Hot Pink Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
 	create = 1
 	time = 5 SECONDS
@@ -2889,7 +3004,7 @@
 
 /datum/manufacture/medical_backpack
 	name = "Medical Backpack"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/storage/backpack/medic)
 	create = 1
 	time = 5 SECONDS
@@ -2897,7 +3012,7 @@
 
 /datum/manufacture/patient_gown
 	name = "Gown"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/patient_gown)
 	create = 1
 	time = 5 SECONDS
@@ -3081,6 +3196,26 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/burst_ltlaser
+	name = "Mk.1.5e Burst Phasers"
+	item_requirements = list("metal_dense" = 15,
+							 "conductive" = 45,
+							 "crystal" = 45)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/burst_phaser)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/efif1
+	name = "EFIF-1 Construction System"
+	item_requirements = list("metal_superdense" = 50,
+							 "claretine" = 20,
+							 "electrum" = 10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/constructor)
+	create = 1
+	time = 60 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/lock
 	name = "Pod Locking Mechanism"
 	item_requirements = list("crystal" = 5,
@@ -3088,6 +3223,76 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock)
 	create = 1
 	time = 10 SECONDS
+	category = "Tool"
+
+
+/datum/manufacture/pod/lateral_thrusters
+	name = "Lateral Thrusters"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 10,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/lateral)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/afterburner
+	name = "Afterburner"
+	item_requirements = list("metal" = 10,
+							 "conductive" = 20,
+							 "energy" = 20)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/afterburner)
+	create = 1
+	time = 12 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/light_shielding
+	name = "Light Shielding System"
+	item_requirements = list("metal" = 5,
+							 "conductive" = 10,
+							 "energy_high" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/light)
+	create = 1
+	time = 15 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/heavy_shielding
+	name = "High Impact Shielding System"
+	item_requirements = list("metal" = 5,
+							 "crystal_dense" = 20,
+							 "conductive_high" = 10,
+							 "energy_extreme" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
+	create = 1
+	time = 25 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/auto_repair_kit
+	name = "Automatic Repair System"
+	item_requirements = list("metal_dense" = 20,
+							 "conductive" = 30,
+							 "energy" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/auto_repair_kit)
+	create = 1
+	time = 10 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapons_loader
+	name = "Weapons Loader"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 10)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
+	create = 1
+	time = 17 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/gunner_support
+	name = "Gunner Module"
+	item_requirements = list("metal_dense" = 10,
+							 "conductive" = 30)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/gunner_support)
+	create = 1
+	time = 17 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/sps
@@ -3615,3 +3820,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+/datum/manufacture/heavy_firesuit
+	name = "Heavy Firesuit"
+	item_requirements = list(
+		"fabric" = 20,
+		"fibrilith" = 10,
+	)
+	create = 1
+	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
+	category = "Clothing"
+
+#undef JUMPSUIT_COST

@@ -23,7 +23,7 @@ proc/make_cleanable(var/type,var/loc)
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
 	var/dry = 0 // if it's slippery to start, is it dry now?
-	var/stain = null // clothing will be stained with this message if the decal is created in the same tile as them
+	var/datum/stain/stain = null //! Stain to apply to clothing if it is on the same turf as the cleanable when spawned
 	var/last_color = null
 
 	var/can_fluid_absorb = 1
@@ -60,7 +60,9 @@ proc/make_cleanable(var/type,var/loc)
 				T.messy++
 				if (istype(T, /turf/simulated/floor))
 					var/turf/simulated/floor/floor = T
-					floor.cleanable_fluid_react()
+					SPAWN(0)
+						if (istype(floor)) //pls help my floor is become space
+							floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -257,7 +259,7 @@ proc/make_cleanable(var/type,var/loc)
 	can_sample = 1
 	sample_reagent = "blood"
 	can_dry = 1
-	stain = "blood-stained"
+	stain = /datum/stain/blood
 	var/can_track = 1
 	var/reagents_max = 10
 
@@ -617,12 +619,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "You can try to clean it up, but there'll always be a little bit left."
 	icon = 'icons/effects/glitter.dmi'
 	icon_state = "glitter"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	random_icon_states = list("glitter-1", "glitter-2", "glitter-3", "glitter-4", "glitter-5", "glitter-6", "glitter-7", "glitter-8", "glitter-9", "glitter-10")
 	can_sample = 1
 	sample_reagent = "glitter"
 	sample_verb = "scrape"
-	stain = "sparkly"
+	stain = /datum/stain/sparkly
 
 /obj/decal/cleanable/glitter/harmless //updated to not be lethal
     sample_reagent = "sparkles"
@@ -639,59 +641,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "ketchup"
 
-
-/obj/decal/cleanable/pathogen_sweat
-	name = "weirdly colored sweat"
-	desc = "Ew, better not step in this stuff."
-	icon = 'icons/obj/decals/blood/blood.dmi'
-	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	color = "#12b828"
-	slippery = 5
-	can_sample = 1
-	sample_reagent = "pathogen"
-	can_dry = 1
-	can_fluid_absorb = 0
-
-	Crossed(atom/movable/AM)
-		. = ..()
-		if(prob(4))
-			src.reagents.reaction(AM, TOUCH)
-
-/obj/decal/cleanable/pathogen_cloud
-	name = "disease particles"
-	desc = "The air in that particular area gives you a bad vibe."
-	icon = 'icons/obj/decals/blood/blood.dmi'
-	icon_state = "pathogen_cloud"
-	color = "#12b828"
-	slippery = 5
-	can_sample = 1
-	sample_reagent = "pathogen"
-	can_dry = 1
-	can_fluid_absorb = 0
-
-	Crossed(atom/movable/AM)
-		. = ..()
-		if(!ishuman(AM))
-			return
-
-		var/mob/living/carbon/human/H = AM
-		var/chance = 10
-		if(H.wear_mask)
-			chance *= H.wear_mask.path_prot
-		if(H.head)
-			chance *= H.head.path_prot
-
-		if(prob(chance))
-			src.reagents.reaction(AM, INGEST)
-
-
 /obj/decal/cleanable/paper
 	name = "paper"
 	desc = "Ripped up little flecks of paper."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
 	can_sample = 1
 	sample_reagent = "paper"
 	sample_verb = "scrape"
@@ -707,7 +662,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
-	random_dir = EAST
+	random_dir = RANDOM_DIR_CARDINAL
+
+/obj/decal/cleanable/wood_debris
+	name = "wood debris"
+	desc = "A few scattered pieces of wood that broke off something bigger."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "wood"
+	random_dir = RANDOM_DIR_CARDINAL
 
 /obj/decal/cleanable/rust
 	name = "rust"
@@ -871,7 +833,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "water"
 	sample_amt = 5
-	stain = "damp"
+	stain = /datum/stain/damp
 
 	Crossed(atom/movable/O)
 		if (istype(O, /obj/item/clothing/under/towel))
@@ -893,7 +855,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "vomit"
 	sample_verb = "scrape"
-	stain = "puke-coated"
+	stain = /datum/stain/puke
 
 	Dry(var/time = rand(200,500))
 		if (!src.can_dry || src.dry)
@@ -979,7 +941,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "gvomit"
 	sample_verb = "scrape"
-	stain = "green-puke-coated"
+	stain = /datum/stain/puke/green
 
 	Dry(var/time = rand(200,500))
 		if (!src.can_dry)
@@ -1011,10 +973,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				for (var/mob/M in AIviewers(user, null))
 					if (M != user)
 						M.show_message(SPAN_NOTICE("<b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god."), 1)
-						if (prob(33) && ishuman(M) && !isdead(M))
+						if (ishuman(M) && !isdead(M))
 							M.show_message(SPAN_ALERT("You feel ill from watching that."))
-							var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
-							M.vomit(0, null, vomit_message)
+							M.nauseate(rand(2,4)) //this may be a bad idea
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -1043,6 +1004,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_amt = 5
 	sample_reagent = "egg"
 
+/obj/decal/cleanable/potatosplat
+	name = "smashed potato"
+	desc = "A ruined potato."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "potatosplat"
+	slippery = 2
+	can_sample = 0
+
 /obj/decal/cleanable/ash
 	name = "ashes"
 	desc = "Ashes to ashes, dust to dust."
@@ -1051,7 +1020,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "ash"
 	sample_verb = "scrape"
-	stain = "dirty"
+	stain = /datum/stain/dirt
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()
@@ -1079,7 +1048,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_sample = 1
 	sample_reagent = "badgrease"
-	stain = "slimy"
+	stain = /datum/stain/slime
 
 	Dry(var/time = rand(100,200))
 		if (!src.can_dry)
@@ -1107,8 +1076,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
-	random_dir = NORTH
-	stain = "dirty"
+	random_dir = RANDOM_DIR_CARDINAL
+	stain = /datum/stain/dirt
 	can_sample = 1
 	sample_reagent = "carbon"
 
@@ -1263,7 +1232,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	random_icon_states = list("fluid1", "fluid2", "fluid3")
 	anchored = ANCHORED
 	slippery = 50
-	stain = "teal-stained"
+	stain = /datum/stain/flock
 
 /obj/decal/cleanable/machine_debris
 	name = "twisted shrapnel"
@@ -1337,10 +1306,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 70
 	can_sample = 1
 	sample_reagent = "oil"
-	stain = "oily"
+	stain = /datum/stain/oil
 
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
+	sample_amt = 5
 
 /obj/decal/cleanable/paint
 	name = "marker paint"
@@ -1352,7 +1322,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 0
 	can_sample = 0
 	sample_reagent = "juice_orange"
-	stain = "painted"
+	stain = /datum/stain/paint
 
 /obj/decal/cleanable/greenglow
 	name = "green glow"
@@ -1642,7 +1612,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	density = 0
 	anchored = ANCHORED
 	layer = OBJ_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
 
@@ -1759,3 +1729,37 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "What a mess..."
 	plane = PLANE_DEFAULT //needs to go on desks
 	layer = OBJ_LAYER
+
+/obj/decal/cleanable/thermite
+	name = "thermite powder"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "thermite"
+	mouse_opacity = FALSE
+	can_fluid_absorb = FALSE
+	sample_reagent = "thermite"
+
+	New(loc)
+		..()
+		SPAWN(1) //if we're being spawned manually we won't have our thermite amount set up so just Assume
+			if (!src.reagents?.has_reagent("thermite"))
+				if (!src.reagents)
+					src.create_reagents(src.sample_amt)
+				src.reagents.add_reagent("thermite", src.sample_amt)
+
+/obj/decal/cleanable/hair
+	name = "hair pile"
+	desc = "A small pile of cut hair. Gross."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "hair"
+	random_dir = RANDOM_DIR_CARDINAL
+	var/color_name = ""
+
+	New()
+		..()
+		src.pixel_y += rand(-4,4)
+		src.pixel_x += rand(-4,4)
+
+	proc/update_color()
+		if (src.color)
+			color_name = hex2color_name(src.color)
+			src.name = "[color_name] hair pile"

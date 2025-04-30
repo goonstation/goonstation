@@ -942,12 +942,12 @@
 			if (!src.monitored_proc)
 				// no proc to check.
 				return 0
-			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+			if (src.monitored_var && !istype(src.monitored.vars[monitored_var], /datum))
 				// If we're calling a proc on a var it better be something we can call a proc on
 				return 0
 
 			// So what ARE we calling this proc on then?
-			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+			src.effective_callee = (src.monitored_var ? src.monitored.vars[src.monitored_var] : src.monitored)
 
 			if (!hascall(src.effective_callee, monitored_proc))
 				// does it have this proc?
@@ -1247,9 +1247,9 @@
 			update_delay = 1
 
 			get_value()
-				if (!src.monitored["stats"]["lastdeath"])
+				if (!src.monitored.vars["stats"]["lastdeath"])
 					return "None... yet</span>"
-				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+				return "[src.monitored.vars["stats"]["lastdeath"]["name"]]</span><br>[src.monitored.vars["stats"]["lastdeath"]["whereText"]]"
 
 
 
@@ -1541,7 +1541,7 @@ Read the rules, don't grief, and have fun!</div>"}
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+New? <a style='color: #88f;' href="https://wiki.ss13.co/Super_Quick_Tutorial" target="_blank">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
 Need an admin? Message us with \[F1].
 

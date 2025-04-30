@@ -52,9 +52,11 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
 	planttype = /datum/plant/maneater
+	can_bleed = FALSE
 	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
+	var/list/preferred_spices = list("mustard", "soysauce", "msg", "salt", "enriched_msg", "ketchup", "pepper", "butter") //! a list of chems the maneater enjoys in its food (humans)
 
 /mob/living/critter/plant/maneater/New()
 	src.devoured_items = list()
@@ -299,15 +301,13 @@
 				return SPAN_ALERT("<b>[src] snarls!</b>")
 	return ..()
 
-/mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
 	//We vomit out an item, if we have eaten some.
-	if(length(src.devoured_items) > 0)
+	. = ..()
+	if(. && length(src.devoured_items) > 0)
 		var/obj/item/handled_item = pick(src.devoured_items)
 		handled_item.set_loc(get_turf(src))
 		src.devoured_items -= handled_item
-	..()
 
 /mob/living/critter/plant/maneater/polymorph
 	name = "man-eating plant"

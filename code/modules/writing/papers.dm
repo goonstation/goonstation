@@ -96,6 +96,13 @@
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
 
+/obj/item/paper/efif_disclaimer
+	name = "'EFIF-1 Operational Disclaimer'"
+	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
+	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may obstruct your pod's clearance, and should be constructed with caution.<BR>\n<BR>\n
+	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
+
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
 	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written
@@ -598,7 +605,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<tr>
 	<td><b>"Execute" / "Exterminate"</b></td>
 	<td>30 PU</td>
-	<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+	<td>Turn your Lawbringer™ into your favourite sidearm with these only slightly radioactive blaster rounds!</td>
 	</tr>
 	<tr>
 	<td><b>"Hotshot" / "Incendiary"</b></td>
@@ -616,9 +623,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 	</tr>
 	<tr>
-	<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
+	<td><b>"Bigshot" / "High Power" / "Assault"</b></td>
 	<td>170 PU</td>
-	<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+	<td>You'll be the talk of the station when you bust down a wall with one of these high power assault lasers! May cause small fires and molten metal puddles.</td>
 	</tr>
 	<tr>
 	<td><b>"Clownshot" / "Clown"</b></td>
@@ -1044,6 +1051,17 @@ proc/spawn_kitchen_note()
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
 
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
+
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
@@ -1190,6 +1208,31 @@ proc/spawn_kitchen_note()
 	You know where to find us larry, bring the money, 100,000 credits.
 	"}
 
+/obj/item/paper/radshuttle
+	name = "bloody note"
+	desc = "The bottom half of this paper is soaked in blood."
+	icon_state = "paper_caution_bloody"
+	info = {"<span style="color:red;font-family:Lucida Handwriting;">
+	ten souls aboard<br>
+	no food, no water, no medkids, the worst toilet in the universe,<br>
+	all crammed into the space of the crew lounge.<br><br>
+
+	Donnovan keeps looking at the engine compartment - hes scared.<br>
+	seats by the back are blistering hot; the front is witch-tit cold.<br>
+	probably has something to do with why people are throwing up so much.<br><br>
+
+	this shuttle was a damn garbage scow ten hours ago! I dont deserve this! <br>
+	I just had a bad performance review for the month! <br>
+	station transfer my ass!<br>
+	this whole damn thing is a detroit pink slip for ten people!<br><br>
+
+	the others killed the security guard to to vent their anger,<br>
+	another guy got beat so bad he crawled out the airlock.<br><br>
+
+	Tonio is playing us farewell on that weird mouth organ. bless the man.<br>
+	they took all my space cash before we left.<br>
+	so I gave him my old lucky coin for a tip.<br>"}
+
 /obj/item/paper/labdrawertips
 	name = "stern lab safety warning"
 	icon_state = "paper"
@@ -1200,6 +1243,49 @@ proc/spawn_kitchen_note()
 	melting holes in the floor because you tried to grab a
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
+	"}
+
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
+
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
 	"}
 
 /obj/item/paper/marionette_implant_readme
@@ -1292,3 +1378,126 @@ proc/spawn_kitchen_note()
 
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y
+
+/obj/item/paper/wanderpoem
+	name = "A freshly written poem"
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "paper-red"
+	info = {"
+	<span style="color:red;font-family:Lucida Handwriting;">
+	<p> Winter arrived. <p> <br>
+	<p>Winter arrived years ago, <p> <br>
+	<p>its frost creeping into that well churned soil. <p> <br>
+	<p>My world grew silent as the crystalline cold silenced the birds, <p> <br>
+	<p>made fallow the fields. <p> <br>
+	<p>Is winter not what one would wish for when aggrieved by that summer of sweltering hysteria. <p> <br>
+	<p>Those that bound me to then had wilted into the soil, their flowers turning to drifting dust. <p> <br>
+	<p>The fields of chance further grew only that which could harm me, <p> <br>
+	<p>the cacophonous cries surrounding served only to create doubt where none could be left. <p> <br>
+	<p>Quietus came and offered its hand to me, <p> <br>
+	<p>I took it. <p> <br> <br>
+
+	<p>Its hand froze all in perfect peace, <p> <br>
+	<p>I looked out into a world of pure white. <p> <br>
+	<p>In contradiction, I embraced this death with one hand, <p> <br>
+	<p>yet could not tear another from the only warmth that remained. <p> <br>
+	<p>That dithering flame wandered among the kindling I had set for it, <p> <br>
+	<p>it leaped to and fro from precious branch to branch. <p> <br>
+	<p>I came to understand more of myself then, <p> <br>
+	<p>I understood that this part of myself could not be excised. <p> <br>
+	<p>Peace was more than an end, <p> <br>
+	<p>more than the winter of a soul. <p> <br>
+	<p>Spring came, <p> <br>
+	<p>spring came at last. <p> <br>
+	"}
+
+/obj/item/paper/packets
+	name = "Frequency reference sheet"
+	New()
+		..()
+		info = {"
+			<h2>Nanotrasen wireless technology data reference sheet 8.2</h2>
+			<table>
+				<tr>
+					<th>Category</th>
+					<th>Frequency</th>
+				</tr>
+
+			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
+			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
+			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
+			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>
+			<tr><td>Bot navbeacons</td><td>[format_frequency(FREQ_NAVBEACON)]kHz</td></tr>
+			<tr><td>Secure storage</td><td>[format_frequency(FREQ_SECURE_STORAGE)]kHz</td></tr>
+			<tr><td>Fire and air alarms</td><td>[format_frequency(FREQ_ALARM)]kHz</td></tr>
+			<tr><td>Hydroponics trays</td><td>[format_frequency(FREQ_HYDRO)]kHz</td></tr>
+			<tr><td>Harmonic siphon</td><td>[format_frequency(FREQ_HARMONIC_SIPHON)]kHz</td></tr>
+			<tr><td>Transception interlink</td><td>[format_frequency(FREQ_TRANSCEPTION_SYS)]kHz</td></tr>
+			<tr><td>Status displays</td><td>[format_frequency(FREQ_STATUS_DISPLAY)]kHz</td></tr>
+			<tr><td>Bot control</td><td>[format_frequency(FREQ_BOT_CONTROL)]kHz</td></tr>
+			<tr><td>GPS</td><td>[format_frequency(FREQ_GPS)]kHz</td></tr>
+			<tr><td>Ruckingenur kit</td><td>[format_frequency(FREQ_RUCK)]kHz</td></tr>
+			<tr><td>Guardbuddies</td><td>[format_frequency(FREQ_BUDDY)]kHz</td></tr>
+			<tr><td>Tourbot navbeacons</td><td>[format_frequency(FREQ_TOUR_NAVBEACON)]kHz</td></tr>
+			<tr><td>Signalers</td><td>[format_frequency(FREQ_SIGNALER)]kHz</td></tr>
+			<tr><td>Pod door controls</td><td>[format_frequency(FREQ_DOOR_CONTROL)]kHz</td></tr>
+			<tr><td>Mail chutes</td><td>[format_frequency(FREQ_MAIL_CHUTE)]kHz</td></tr>
+			<tr><td>Air alarm control</td><td>[format_frequency(FREQ_AIR_ALARM_CONTROL)]kHz</td></tr>
+			<tr><td>Tracking implants</td><td>[format_frequency(FREQ_TRACKING_IMPLANT)]kHz</td></tr>
+			<tr><td>Power systems</td><td>[format_frequency(FREQ_POWER_SYSTEMS)]kHz</td></tr>
+			<tr><td>Armory authorization \[RESTRICTED\]</td><td>[format_frequency(FREQ_ARMORY)]kHz</td></tr>
+			</table>
+			<br><br>
+			<i>Intelligent data ordering system proprietary, copyright of Nanotrasen (2053)</i>
+		"}
+
+//TODO: maybe a stamp for the classified thing?
+//also apparently W3schools lied to me and there is no websafe handwriting font, so these just default to Times >:(
+/obj/item/paper/pipebombs
+	name = "\improper Terra cell improvised explosive manual"
+	icon_state = "paper_burned"
+	var/detonating = FALSE
+
+	New()
+		. = ..()
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(turf_changed))
+		info = {"
+		<h2>\[FOR TERRA EYES ONLY\]</h2>
+		<b>Warning: this paper will self destruct if removed from listening outpost [rand(1,19)][pick("A", "B", "θ")].</b><br><br>
+		The pipebomb is the workhorse of the syndicate infiltrator on a budget. The... highly explosive workhorse.<br><br>
+		<b>Step 1:</b> Form three metal sheets into a pipe frame.<br>
+		<b>Step 2:</b> Weld them up nice and tight. Eye protection is <strike>recommended</strike> <span style="color:red;font-family:Brush Script MT;">for NERDS.</span><br>
+		<b>Step 3:</b> Add your payload. A lot of mundane things can produce some surprisingly nasty effects when shoved into a pipebomb so creativity is recommended. Here's a list of the more "effective" options:
+		<ul>
+			<li>Glass shards and metal scrap: Yeah take a guess what these do. Simple but effective at hurting people.</li>
+			<li>Glowsticks: splashes victims with a little boiling radium. Nasty.</li>
+			<li>Cloth: deadens the explosion, making it five times less powerful. Sounds useless but sometimes you want the attention to be on the other things you've stuck in your pipebomb.</li>
+			<li>Detached human butts: ██████ ███ █████, ██ ████ █████ -<span style="color:blue;font-family:Gochi Hand;">what the FUCK? NO! WHY WOULD YOU DO THAT??</span></li>
+			<li>Telecrystals: Hemera scientists will tell you blowing up telecrystals can lead to "catastrophically unstable telepositional events". Sounds like fun!</li>
+			<li>RCD cartridges: randomly punches holes in the floor and builds grilles out of compressed matter.</li>
+			<li>Wires and power cells: putting both wire and a cell in your bomb will cause high voltage arcs from the point of detonation.</li>
+			<li>Plasmastone: releases a substantial amount of plasma gas upon detonation. <span style="font-family:Brush Script MT;">NB: this isn't very useful if you just blew a hole in the hull - maybe try combining with cloth?</span></li>
+		</ul>
+		Remember you can usually only fit three items total into a pipe frame.<br>
+		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
+		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
+		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>
+
+		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
+		"}
+
+	proc/turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		if (!src.detonating && !istype(new_turf?.loc, /area/listeningpost))
+			src.detonating = TRUE
+			visible_message(SPAN_ALERT("The paper starts to beep. Huh??"))
+			SPAWN(-1)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 0.9)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.2)
+				sleep(1 SECOND)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 30, FALSE, pitch = 1.4)
+				sleep(1 SECOND)
+				src.blowthefuckup(0.5)
+	disposing()
+		. = ..()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)

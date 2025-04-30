@@ -341,7 +341,7 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
+			if (!istype(H.head, /obj/item/clothing/head/helmet) && !istype(H.head, /obj/item/clothing/head/headband && istype(H.head, /obj/item/clothing/head))) // ha...
 				var/obj/item/clothing/head/M = H.head
 				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
@@ -749,6 +749,7 @@
 			if (H.head)
 				var/obj/item/clothing/M = H.head
 				var/obj/item/clothing/head/det_hat/gadget/G = H.head
+				var/obj/item/clothing/head/det_hat/folded_scuttlebot/S = H.head
 				if (istype(G))
 					var/prev = M.name
 					G.icon_state = "inspector"
@@ -757,6 +758,18 @@
 					G.inspector = TRUE
 					H.set_clothing_icon_dirty()
 					succ = TRUE
+
+				else if (istype(S))
+					var/prev = M.name
+					S.icon_state = "inspector"
+					S.item_state = "inspector"
+					S.name = "inspector's hat"
+					S.real_name = "inspector's hat"
+					S.desc = "A hat for the modern detective. It looks a bit heavier than it should. (Base Item: [prev])"
+					S.inspector = TRUE
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/head/det_hat))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -792,7 +805,7 @@
 					succ = TRUE
 
 			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
+				var/obj/item/clothing/gloves/M = H.gloves
 				if (istype(M, /obj/item/clothing/gloves/black))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -800,6 +813,7 @@
 					M.name = "inspector's gloves"
 					M.real_name = "inspector's gloves"
 					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					M.fingertip_color = "#2d3c52"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -892,6 +906,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#3c6dc3"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1063,6 +1078,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#d73715"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1205,32 +1221,6 @@
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
-
-/*
-/datum/achievementReward/secbelt
-	title = "(Skin) Security Toolbelt"
-	desc = "Turns your worn Utility Belt into a Security Toolbelt."
-	required_medal = "Suitable? How about the Oubliette?!"
-
-	rewardActivate(var/mob/living/carbon/human/activator)
-
-	rewardActivate(var/mob/activator)
-		if (!ishuman(activator))
-			return
-
-		var/mob/living/carbon/human/H = activator
-
-		if (H.belt && istype(H.belt, /obj/item/storage/belt/utility))
-			var/obj/item/storage/belt/utility/M = H.belt
-			var/prev = M.name
-			M.icon_state = "secbelt"
-			M.item_state = "secbelt"
-			M.name = "security toolbelt"
-			M.real_name = "security toolbelt"
-			M.desc = "For the trend-setting Security Officer on the go. (Base Item: [prev])"
-			H.set_clothing_icon_dirty()
-		return
-*/
 
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
@@ -1396,7 +1386,7 @@
 /datum/achievementReward/beefriend
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
-	required_medal = "Bombini is missing!"
+	required_medal = "Bombini is Missing!"
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
@@ -1439,6 +1429,7 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
+
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."

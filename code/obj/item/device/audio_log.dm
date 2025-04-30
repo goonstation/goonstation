@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			speaker_name = "Unknown"
 
 		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)
-			if (speaker:wear_id)
+			if (speaker:wear_id && length(speaker:wear_id:registered))
 				speaker_name = speaker:wear_id:registered
 			else
 				speaker_name = "Unknown"
@@ -327,8 +327,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			name_colours[unique_names[1]] = text_colour
 			return
 
-		var/list/text_rgb = hex_to_rgb_list(text_colour)
-		var/list/text_hsl = rgb2hsl(text_rgb[1], text_rgb[2], text_rgb[3])
+		var/list/text_hsl = hex_to_hsl_list(text_colour)
 		var/lightness_part = 60 / (length(unique_names) + 1)
 
 		for (var/i in 1 to length(unique_names))
@@ -449,7 +448,7 @@ TYPEINFO(/obj/item/device/audio_log)
 								"Re-routing remaaaaaainiiiiiing power to top-deck cyro-sleepers.",
 								"*humming electronics*",
 								"Autopilot disengaged.",
-								"Delopying emergency beacon.",
+								"Deploying emergency beacon.",
 								"Central c-c-cOmpUtEr shut- d-dow-ow-ow-ownnnnn in 5,",
 								"4,",
 								"3-",

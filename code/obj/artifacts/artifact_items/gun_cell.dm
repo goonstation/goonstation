@@ -31,7 +31,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
+		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
 			. += SPAN_ARTHINT(A.examine_hint)
 
 	UpdateName()
@@ -62,7 +62,7 @@
 
 /datum/artifact/energyammo
 	associated_object = /obj/item/ammo/power_cell/self_charging/artifact
-	type_name = "Small power cell"
+	type_name = "Small Power Cell"
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")

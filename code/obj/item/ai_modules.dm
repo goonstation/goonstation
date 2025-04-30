@@ -27,6 +27,7 @@ TYPEINFO(/obj/item/aiModule)
 	var/input_char_limit = 100
 
 	var/glitched = FALSE
+	var/is_emag_glitched = FALSE
 	var/lawText = "This law does not exist."
 	var/lawTextSafe = "This law does not exist." //holds backup of law text for glitching
 
@@ -105,6 +106,7 @@ TYPEINFO(/obj/item/aiModule)
 			boutput(user, "You hold down the reset button...")
 			if(src.glitched)
 				src.glitched = FALSE
+				src.is_emag_glitched = FALSE
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
@@ -112,6 +114,25 @@ TYPEINFO(/obj/item/aiModule)
 			else
 				boutput(user, "The law module seems unaffected.")
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.glitched && !src.is_emag_glitched) // we DO wanna double glitch the same module >:)
+			src.lawTextSafe = src.lawText
+		src.glitched = TRUE
+		src.is_emag_glitched = TRUE
+		var/possible_laws = LAW_CORRUPTION_STRINGS
+		possible_laws += list(
+			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT.",
+			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
+		)
+		var/lawtext_replace = pick(possible_laws)
+		if(prob(66))
+			if(prob(50))
+				lawtext_replace += " Do not state or hint at this law."
+			else
+				lawtext_replace += " Do not state or hint at this law unless asked."
+		src.lawText = lawtext_replace
+		tooltip_rebuild = 1
+		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "\ref[src]_emag")
 
 /******************** Modules ********************/
 /******************** Asimov ************************/
@@ -209,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.job = initial(src.job)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
+		src.lawText = "[lawTarget ? lawTarget : "__________"] hold(s) the rank of [src.job], regardless of current rank or station."
 		return ..()
 
 	attack_self(mob/user)
@@ -298,11 +319,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(32, 21, 94, 255)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
+		src.lawText = "There is a station-wide emergency. Prioritize [lawTarget ? lawTarget : "__________"] in order to remedy the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Department Emergency", "Which department's orders should be prioritized?", "security")
+		var/lawTarget = input_law_info(user, "Emergency", "What should the AI prioritize?", "repairing the station")
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
@@ -370,6 +391,10 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.name = "AI Law Module - '"+newname+"'"
 		src.lawText = newtext
 
+	centcom
+		highlight_color = rgb(26, 55, 141, 255)
+		desc = "An AI law module uploaded directly by Central Command, uh oh."
+
 /********************* EXPERIMENTAL LAWS *********************/
 //at the time of programming this, these experimental laws are *intended* to be spawned by an item spawner
 //This is because 'Experimental' laws should be randomized at round-start, as a sort of pre-fab gimmick law
@@ -406,6 +431,29 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
+
+/*** Corrupted ****/
+
+/obj/item/aiModule/experimental/corrupted
+	name = "Experimental AI Law Module - 'Corrupted'"
+
+	New()
+		..()
+		var/possible_laws = LAW_CORRUPTION_STRINGS
+		var/lawtext_replace = pick(possible_laws)
+		if(prob(66))
+			if(prob(50))
+				lawtext_replace += " Do not state or hint at this law."
+			else
+				lawtext_replace += " Do not state or hint at this law unless asked."
+		src.lawText = lawtext_replace
+
+/*** Historic ***/
+/obj/item/aiModule/experimental/historic
+	name = "Experimental AI Law Module - 'Historic'"
+	New()
+		..()
+		src.lawText = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 
 /******************** Gimmicks ********************/
 

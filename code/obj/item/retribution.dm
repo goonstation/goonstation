@@ -153,7 +153,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE
 				scan_target.ex_act(1)
-			else if (istype(scan_target, /obj/grille))
+			else if (istype(scan_target, /obj/mesh/grille))
 				create_scan_decal = TRUE
 				window_step++
 				scan_target.ex_act(1)
@@ -204,7 +204,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 /obj/decal/purge_beam
 	name = "Linear Purge Beam"
-	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	desc = "A powerful laser. Standing in its path isn't the wisest of choices."
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
@@ -220,7 +220,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 /obj/decal/purge_beam_end
 	name = "Linear Purge Beam"
-	desc = "A powerful laser. Standing in it's path isn't the wisest of choices."
+	desc = "A powerful laser. Standing in its path isn't the wisest of choices."
 	anchored = ANCHORED
 	density = 0
 	opacity = 0

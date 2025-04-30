@@ -246,21 +246,8 @@
 					waiting--
 			else
 				if (waiting <= 0)
-					var/live = 0
 					var/pc = 0
-					for (var/obj/critter/C in gauntlet)
-						if (!C.alive)
-							showswirl(get_turf(C))
-							qdel(C)
-						else
-							live++
-					for (var/mob/living/critter/C in gauntlet)
-						if (isdead(C))
-							showswirl(get_turf(C))
-							qdel(C)
-						else
-							live++
-					if (!live)
+					if (length(src.critters_left) == 0)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
 						if (!isdead(M) && M.client)
@@ -338,7 +325,7 @@
 		resetting = 0
 
 	proc/spawnGear(var/turf/target, var/mob/forwhom)
-		new /obj/item/storage/backpack/NT(target)
+		new /obj/item/storage/backpack/empty/NT(target)
 		new /obj/item/clothing/suit/armor/tdome/yellow(target)
 		var/list/masks = list(/obj/item/clothing/mask/batman, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/moustache, /obj/item/clothing/mask/gas/swat, /obj/item/clothing/mask/owl_mask, /obj/item/clothing/mask/hunter, /obj/item/clothing/mask/skull, /obj/item/clothing/mask/spiderman)
 		var/masktype = pick(masks)
@@ -354,15 +341,15 @@
 		for (var/medtype in list(/obj/item/storage/firstaid/vr/regular, /obj/item/storage/firstaid/vr/fire, /obj/item/storage/firstaid/vr/brute, /obj/item/storage/firstaid/vr/toxin, /obj/item/reagent_containers/pill/vr/mannitol, /obj/item/storage/box/donkpocket_w_kit/vr))
 			new medtype(target)
 
-	proc/increaseCritters(var/obj/critter/C)
-		var/name = initial(C.name)
+	proc/increaseCritters(atom/mob_or_critter)
+		var/name = initial(mob_or_critter.name)
 		if (!(name in critters_left))
 			critters_left += name
 			critters_left[name] = 0
 		critters_left[name] += 1
 
-	proc/decreaseCritters(var/obj/critter/C)
-		var/name = initial(C.name)
+	proc/decreaseCritters(atom/mob_or_critter)
+		var/name = initial(mob_or_critter.name)
 		if (!(name in critters_left))
 			return
 		critters_left[name] -= 1
@@ -573,9 +560,9 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 /obj/observable/gauntlet
-	name = "The Gauntlet Arena"
+	name = "V-Space - Gauntlet Arena"
 	has_camera = 1
-	cam_network = "public"
+	cam_network = CAMERA_NETWORK_VSPACE
 
 /datum/gauntletDrop
 	var/name = "Drop"
@@ -622,6 +609,10 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		melee
 			minimum_level = 15
 			supplies = list(/obj/item/artifact/melee_weapon)
+
+		talisman
+			minimum_level = 35
+			supplies = list(/obj/item/artifact/talisman)
 
 	inactive_artifact
 		name = "An Artifact"
@@ -782,6 +773,12 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = -2
 		minimum_level = 15
 		supplies = list(/obj/item/storage/firstaid/vr/toxin, /obj/item/storage/firstaid/vr/oxygen, /obj/item/storage/firstaid/vr/brain, /obj/item/reagent_containers/emergency_injector/vr/calomel)
+
+	chair
+		name = "Chair"
+		point_cost = -1
+		minimum_level = 20
+		supplies = list(/obj/item/chair/folded)
 
 /datum/gauntletEvent
 	var/name = "Event"
@@ -1033,13 +1030,16 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
+				C.butcherable = FALSE
 				C.health *= health_multiplier //for critters that don't user health holders
+				C.faction = list(FACTION_GUANTLET)
 				for(var/damage_key in C.healthlist) //for critters that do
 					var/datum/healthHolder/HH = C.healthlist[damage_key]
 					HH.maximum_value *= health_multiplier
 					HH.value *= health_multiplier
 			else
 				CRASH("Gauntlet tried to spawn [identify_object(mob_or_critter)], but only /mob/living or /obj/critter are allowed.")
+			mob_or_critter.AddComponent(/datum/component/gauntlet_critter)
 			if (ev)
 				ev.onSpawn(mob_or_critter)
 			count--
@@ -1051,7 +1051,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	mimic
 		name = "Mimic"
 		point_cost = 1
-		count = 6
+		count = 3
 		types = list(/mob/living/critter/mimic/virtual)
 
 	meaty
@@ -1063,19 +1063,19 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	martian
 		name = "Martian"
 		point_cost = 1
-		count = 6
+		count = 3
 		types = list(/mob/living/critter/martian)
 
 	soldier
 		name = "Martian Soldier"
 		point_cost = 3
-		count = 4
+		count = 2
 		types = list(/mob/living/critter/martian/soldier)
 
 	warrior
 		name = "Martian Warrior"
 		point_cost = 3
-		count = 2
+		count = 1
 		types = list(/mob/living/critter/martian/warrior)
 
 	mutant
@@ -1087,7 +1087,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	martian_assorted
 		name = "Martian Assortment"
 		point_cost = 6
-		count = 12
+		count = 6
 		types = list(/mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/warrior)
 
 	bear
@@ -1148,7 +1148,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Micro Man"
 		point_cost = 3
 		count = 0.1
-		types = list(/obj/critter/microman)
+		types = list(/mob/living/critter/microman)
 
 	spiderbaby
 		name = "Spider Baby"
@@ -1227,6 +1227,66 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = 5
 		count = 2
 		types = list(/mob/living/critter/plant/maneater)
+
+	feral_hog
+		name = "Feral Hog"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/small_animal/pig/feral_hog)
+
+	trench
+		name = "The Trench"
+		point_cost = 8
+		count = 12
+		types = list(/mob/living/critter/small_animal/trilobite, /mob/living/critter/small_animal/hallucigenia, /mob/living/critter/small_animal/pikaia)
+
+	trilobite
+		name = "Trilobite"
+		point_cost = 3
+		count = 2
+		types = list(/mob/living/critter/small_animal/trilobite)
+
+	hallucigenia
+		name = "Hallucigenia"
+		point_cost = 4
+		count = 2
+		types = list(/mob/living/critter/small_animal/hallucigenia)
+
+	pikaia
+		name = "Pikaia"
+		point_cost = 3
+		count = 2
+		types = list(/mob/living/critter/small_animal/pikaia)
+
+	sawfly
+		name = "Sawfly"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/robotic/sawfly/ai_controlled)
+
+	snake
+		name = "Snake"
+		point_cost = 2
+		count = 4
+		types = list(/mob/living/critter/small_animal/snake)
+
+	scorpion
+		name = "Scorpion"
+		point_cost = 9
+		count = 2
+		types = list(/mob/living/critter/small_animal/scorpion)
+
+	wasp
+		name = "Wasp"
+		point_cost = 5
+		count = 2
+		types = list(/mob/living/critter/small_animal/wasp)
+
+	rattlesnake
+		name = "Rattlesnake"
+		point_cost = 7
+		count = 2
+		types = list(/mob/living/critter/small_animal/rattlesnake)
 
 	fallback
 		name = "Floating Eyes"

@@ -77,6 +77,7 @@
 	/// color_matrix: the client's game color (tint)
 	var/saturation_matrix = COLOR_MATRIX_IDENTITY
 	var/color_matrix = COLOR_MATRIX_IDENTITY
+	var/colorblind_matrix = COLOR_MATRIX_IDENTITY
 
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
@@ -92,7 +93,7 @@
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
-	var/chui/window/keybind_menu/keybind_menu = null
+	var/datum/keybind_menu/keybind_menu = null
 
 	var/delete_state = DELETE_STOP
 
@@ -112,8 +113,16 @@
 
 	var/hand_ghosts = 1 //pickup ghosts inhand
 
+	var/dark_screenflash = FALSE
+
+	var/protanopia_toggled = FALSE
+	var/deuteranopia_toggled = FALSE
+	var/tritanopia_toggled = FALSE
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
+		logTheThing(LOG_AUDIT, src, message)
+	else if (!src.holder)
 		logTheThing(LOG_AUDIT, src, message)
 
 /client/proc/updateXpRewards()
@@ -191,8 +200,8 @@
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
-	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]")
-	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
+	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
 	login_success = 0
 
@@ -238,6 +247,12 @@
 
 	if (join_motd)
 		boutput(src, "<div class='motd'>[join_motd]</div>")
+
+	//this is a little spooky to be doing here because the poll list never gets cleared out but I don't think it'll be too bad and I blame Sov if it is
+	var/list/active_polls = global.poll_manager.get_active_poll_names()
+	if (length(active_polls))
+		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
+		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
 
 	if (IsGuestKey(src.key))
 		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
@@ -298,6 +313,10 @@
 				del(src)
 			return
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
 	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
@@ -306,7 +325,7 @@
 		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
 		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -339,10 +358,6 @@
 		//Load custom chat
 		SPAWN(-1)
 			src.chatOutput.start()
-
-	// Record a login, sets player.id, which is used by almost every future API call for a player
-	// So we need to do this early, and outside of a spawn
-	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
@@ -402,6 +417,7 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
@@ -460,8 +476,8 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
 				if (!cdn)
-					//src << browse_rsc(file("browserassets/images/changelog/postcardsmall.jpg"))
-					src << browse_rsc(file("browserassets/images/changelog/88x31.png"))
+					//src << browse_rsc(file("browserassets/src/images/changelog/postcardsmall.jpg"))
+					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
 				changes()
 
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
@@ -478,21 +494,16 @@
 		// check client version validity
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Consider updating BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
-	#if (BUILD_TIME_UNIX < 1719817200) //cut off sept 1st, 2024 (for forced 515)
-			else
-				tgui_alert(src, "Version enforcement will be enabled September 1st, 2024. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
-	#else
+			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-	#endif
-		if (src.byond_version >= 516)
-			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download/")
+		if (src.byond_version >= 517)
+			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -577,6 +588,8 @@
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
+	if(byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -629,8 +642,14 @@
 
 	//tg controls end
 
-	use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
-	use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
+	if (src.byond_version >= 516)
+		use_chui = FALSE
+		winset(src, "use_chui", "is-checked=false")
+		use_chui_custom_frames = FALSE
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+	else
+		use_chui = winget( src, "menu.use_chui", "is-checked" ) == "true"
+		use_chui_custom_frames = winget( src, "menu.use_chui_custom_frames", "is-checked" ) == "true"
 
 	//wow its the future we can choose between 3 fps values omg
 	if (winget( src, "menu.fps_chunky", "is-checked" ) == "true")
@@ -655,6 +674,8 @@
 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
+
+	dark_screenflash = winget( src, "menu.toggle_dark_screenflashes", "is-checked") == "true"
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -928,17 +949,11 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	src.Browse( {"<center><h2>Goonstation RP Server Guidelines and Rules</h2></center><hr>
-	Welcome to [station_name(1)]!<br>The roleplay servers use our main rules and unique roleplay rules listed below. If you do not agree to this second set of rules, please play on our Classic servers.<hr>
-		<ol><li><b>Make an effort to roleplay.</b> Play a coherent, believable character. Playing a violent or racist character is not allowed. Play your character as though they wish to keep their job at Nanotrasen. This includes listening to security and the chain of command and, if you are a member of command, taking your job as a leader seriously in-character. Only minor crime is permitted for non-antagonists. Avoid memes (e.g. sus, pog, amogus), txt spk (e.g. lol, wtf), and out of game terminology when you are playing your character. LOOC is available if you need to communicate out of character.</li>
-		<li><b>Escalate through roleplay before attacking other players.</b> The goal of the roleplay server is character interaction and interesting scenarios. Both crew and antagonists are expected to roleplay escalation before engaging in hostilities. As an antagonist, your goal is to increase, not decrease, roleplay opportunities. Give people a sense of dread, an obvious motive, or some means of roleplaying and reacting, before you harm them. As security, your priority is the crew’s safety and maintaining the peace. You should treat criminals fairly and determine appropriate consequences for their actions. Enemies to Nanotrasen such as confirmed non-human antagonists and open syndicate members may be treated harshly.</li>
-		<li><b>After you’ve selected a job, be sure to stay in your lane.</b> While you are capable of doing anything within the game mechanics, allow those who have selected the relevant job to attempt the task first. As an example, breaking into medical and treating yourself when there are medical staff present is not okay. Choosing captain just to go and work the genetics machine all round is not acceptable.</li>
-		<li><b>As an antagonist you are free to kill and grief, provided you escalate per rule 2.</b> You are not required to be evil, but you do have a broad toolset to push the round forward and make things exciting. Treat your role as an interesting challenge and not an excuse to destroy other people’s game experiences. Your objectives do not allow you to ignore any rule, RP or otherwise. As an antagonist, you are not protected against being murdered or griefed, but it is expected that the crew roleplays and does not kill you just for the sake of killing an antagonist.</li>
-		<li><b>Do not use out of game information in game.</b> Only use in-game information; the things your character can perceive or could know. While we have no hard rule on what a character can and cannot know, be reasonable about your character’s knowledge and capabilities. Do not call out antagonists based on information that is only obvious as a player. For example, the drowsiness effects on your screen are not a good in-character basis to call out a changeling. The debris and adventure zones are for enhancing roleplay. Rushing through them for the sake of items alone is prohibited. It is reasonable for the crew to assume people with syndicate gear such as red space suits are antagonists.</li>
-		<li><b>Be kind to other players.</b> Be respectful and considerate of other players, as their experiences are just as important as your own. Do not use LOOC or other means of communication to put down other players or accuse them of rulebreaking. If your problem with another player extends to rulebreaking, press F1 to contact the admins. It is your responsibility to respect the boundaries of others when you RP. If you feel uncomfortable, or worry that people are uncomfortable, don’t be afraid to use LOOC to communicate. Furthermore, do not advantage your friends in game or exclude others from roleplaying opportunities without good cause.</li>
-		<li><b>These rules are extra rules for the roleplay server.</b> The core rules still apply to the roleplay server. Do not argue with the administration about the RP rules or core rules.</li></ol>
-<p><br /></p><center>
-"}, "window=rprules;title=RP+Rules" )
+	var/cant_interact_time = null
+	if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+		cant_interact_time = 15 SECONDS
+
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
 #endif
 
 /client/verb/changeServer(var/server as text)
@@ -1048,7 +1063,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1087,7 +1102,7 @@ var/global/curr_day = null
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1124,15 +1139,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
-					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 				else
 					if (M.client && M.client.holder)
-						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
-						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
-						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
 
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -1145,7 +1160,7 @@ var/global/curr_day = null
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 
@@ -1154,10 +1169,6 @@ var/global/curr_day = null
 			var/t1 = text("window=[window]")
 			usr.remove_dialogs()
 			usr.Browse(null, t1)
-			//Special cases
-			switch (window)
-				if ("aialerts")
-					usr:viewalerts = 0
 
 		//A thing for the chat output to call so that links open in the user's default browser, rather than IE
 		if ("openLink")
@@ -1233,6 +1244,12 @@ var/global/curr_day = null
 	if (src.mob?.respect_view_tint_settings)
 		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
+/client/verb/toggle_dark_screenflashes()
+	set hidden = 1
+	set name = "toggle-dark-screenflashes"
+
+	dark_screenflash = !dark_screenflash
+
 /client/verb/adjust_saturation()
 	set hidden = TRUE
 	set name = "adjust-saturation"
@@ -1256,6 +1273,8 @@ var/global/curr_day = null
 
 	else
 		src.recoil_controller?.disable()
+
+
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1397,6 +1416,10 @@ var/global/curr_day = null
 /client/verb/set_chui()
 	set hidden = 1
 	set name = "set-chui"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui", "is-checked=false")
+		return
 	if (src.use_chui)
 		src.use_chui = 0
 	else
@@ -1405,6 +1428,10 @@ var/global/curr_day = null
 /client/verb/set_chui_custom_frames()
 	set hidden = 1
 	set name = "set-chui-custom-frames"
+	if (byond_version >= 516)
+		tgui_alert(mob, "Error: Chui is deprecated in BYOND 516+ and cannot be enabled.", "Chui Deprecation")
+		winset(src, "use_chui_custom_frames", "is-checked=false")
+		return
 	if (src.use_chui_custom_frames)
 		src.use_chui_custom_frames = 0
 	else
@@ -1440,6 +1467,78 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "set-hand-ghosts"
 	hand_ghosts = winget( src, "menu.use_hand_ghosts", "is-checked" ) == "true"
+
+/client/verb/disable_colorblind_modes()
+	set hidden = TRUE
+	set name = "disable-colorblind-modes"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_protanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-protanopia-mode"
+
+	if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.protanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_PROTANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.protanopia_toggled = !src.protanopia_toggled
+	src.deuteranopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_deuteranopia_mode()
+	set hidden = TRUE
+	set name = "toggle-deuteranopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.tritanopia_toggled)
+		src.toggle_tritanopia_mode()
+
+	if (!src.deuteranopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_DEUTERANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.deuteranopia_toggled = !src.deuteranopia_toggled
+	src.protanopia_toggled = FALSE
+	src.tritanopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
+
+/client/verb/toggle_tritanopia_mode()
+	set hidden = TRUE
+	set name = "toggle-tritanopia-mode"
+
+	if (src.protanopia_toggled)
+		src.toggle_protanopia_mode()
+	else if (src.deuteranopia_toggled)
+		src.toggle_deuteranopia_mode()
+
+	if (!src.tritanopia_toggled)
+		src.colorblind_matrix = COLOR_MATRIX_TRITANOPIA_ACCESSIBILITY
+	else
+		src.colorblind_matrix = COLOR_MATRIX_IDENTITY
+	src.set_color()
+	src.tritanopia_toggled = !src.tritanopia_toggled
+	src.protanopia_toggled = FALSE
+	src.deuteranopia_toggled = FALSE
+
+	src.mob?.update_active_matrix()
 
 //These size helpers are invisible browser windows that help with getting client screen dimensions
 /client/proc/initSizeHelpers()

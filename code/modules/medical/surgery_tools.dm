@@ -54,7 +54,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!scalpel_surgery(target, user))
+		if (is_special || !scalpel_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -122,7 +122,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!saw_surgery(target, user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -189,7 +189,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!spoon_surgery(target, user))
+		if (is_special || !spoon_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -308,6 +308,19 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/implant/projectile/staple))
+			if (src.ammo + 1 > initial(src.ammo))
+				boutput(user, SPAN_NOTICE("\The [src] is already filled with staples!"))
+				return
+			boutput(user, SPAN_NOTICE("You load \the [I] into \the [src]."))
+			src.ammo += 1
+			qdel(I)
+			return
+		if (istype(I, /obj/item/gun/kinetic/zipgun))
+			I.Attackby(src, user)
+			return
+		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -337,6 +350,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/mounted = FALSE
 	var/obj/item/cell/cell = null
 
 	emag_act(var/mob/user)
@@ -374,7 +388,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			flick("[src.icon_base]-shock", src)
+			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
@@ -399,7 +413,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		flick("[src.icon_base]-shock", src)
+		FLICK("[src.icon_base]-shock", src)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
@@ -490,10 +504,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
-
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
 					; // do nothing
@@ -596,11 +606,10 @@ TYPEINFO(/obj/item/robodefibrillator)
 		newcell.set_loc(src)
 
 
-
-
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
+	mounted = TRUE
 
 	disposing()
 		parent?.defib = null
@@ -625,7 +634,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
-		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(put_back_defib))
 
 	emag_act()
 		..()
@@ -639,7 +648,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	process()
 		if(!QDELETED(src.defib))
-			handle_move()
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				src.put_back_defib()
 		else
 			src.defib = null
 		..()
@@ -652,40 +662,34 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if(!defib || QDELETED(defib))
 			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
 			return //maybe a bird ate it
 		if(defib.loc != src)
 			return //if someone else has it, don't put it in user's hand
+		src.AddComponent(/datum/component/cord, src.defib, base_offset_x = 0, base_offset_y = -2)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move), TRUE)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (W == src.defib)
 			src.put_back_defib()
-
-	/// Check to see if the defib is too far away from the mount.
-	proc/handle_move()
-		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(src.defib, src) > 0)
-				src.put_back_defib()
 
 	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
 		if (src.defib)
+			src.RemoveComponentsOfType(/datum/component/cord)
 			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
-
+			src.ClearSpecificOverlays("cord_\ref[src]")
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
-
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */
@@ -714,6 +718,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (!suture_surgery(target,user))
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -1079,9 +1085,15 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
+			if (istype(O, /obj/storage)) // don't eat closets/crates
+				continue
+			if (istype(O, /obj/item/body_bag)) // don't eat other deployed bodybags
+				var/obj/item/body_bag/other_bag = O
+				if (other_bag.w_class == W_CLASS_BULKY)
+					continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
-			if (!M.lying || M.anchored || M.buckled)
+			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
 		src.open = 0

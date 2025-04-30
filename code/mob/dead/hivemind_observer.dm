@@ -37,7 +37,7 @@
 		set hidden = 1
 
 	disposing()
-		observers -= src
+		LAZYLISTREMOVE(observers, src)
 		hivemind_owner?.hivemind -= src
 		..()
 
@@ -78,7 +78,7 @@
 		point.layer = EFFECTS_LAYER_1
 		point.plane = PLANE_HUD
 		var/list/client/viewers = new
-		for (var/mob/member in hivemind_owner.get_current_hivemind())
+		for (var/mob/member in (hivemind_owner.get_current_hivemind() | hivemind_owner.owner.observers))
 			if (!member.client)
 				continue
 			boutput(member, SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target]."))

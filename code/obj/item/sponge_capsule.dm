@@ -20,14 +20,14 @@
 						/obj/critter/bat,
 						/obj/critter/domestic_bee,
 						/mob/living/critter/small_animal/mouse,
-						/obj/critter/opossum,
+						/mob/living/critter/small_animal/opossum,
 						/obj/critter/parrot/eclectus,
 						/mob/living/critter/small_animal/pig,
 						/mob/living/critter/small_animal/walrus)
 
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
-	animals = list(/obj/critter/microman,
+	animals = list(/mob/living/critter/microman,
 					/mob/living/critter/bear,
 					/mob/living/critter/spider,
 					/mob/living/critter/brullbar,
@@ -77,13 +77,16 @@
 				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
 				human_idiot.organHolder.stomach.eject(src)
 				human_idiot.organHolder.stomach.take_damage(30)
+				human_idiot.TakeDamage("all", 10)
+				human_idiot.changeStatus("knockdown", 3 SECONDS)
+				hit_twitch(human_idiot)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
 	var/atom/C = new animal_to_spawn(T)
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
-		M.faction |= FACTION_SPONGE
+		LAZYLISTADDUNIQUE(M.faction, FACTION_SPONGE)
 	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 

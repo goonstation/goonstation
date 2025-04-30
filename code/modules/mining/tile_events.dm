@@ -34,8 +34,23 @@
 			return
 		var/obj/item/I = new gem_type
 		I.set_loc(AST)
-		I.quality = AST.quality + rand(-50,50)
-		I.name = "[getGemQualityName(I.quality)] [I.name]"
+
+/datum/ore/event/rare_metal
+	analysis_string = "Unusual metal deposit detected."
+	excavation_string = "Something metallic tumbles out of the collapsing rock!"
+	scan_decal = "scan-rare_metal"
+	var/static/list/metals_to_pick = list(/obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/iridium = 100,
+
+										  /obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium = 50,
+										  /obj/item/material_piece/neutronium = 10
+										 )
+
+	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		var/metal_to_drop = weighted_pick(src.metals_to_pick)
+		for (var/i in 1 to rand(1, 3))
+			new metal_to_drop(AST)
 
 /datum/ore/event/geode
 	analysis_string = "Large crystalline formations detected."

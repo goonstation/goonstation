@@ -210,7 +210,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 		return
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
-	flick("[base_state]_flash", src)
+	FLICK("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
@@ -231,7 +231,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 	anchored = UNANCHORED
 	base_state = "pflash"
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER
 	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
 
@@ -251,7 +250,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 	else
 		icon_state = "[base_state]1-p"
 
-/obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/flasher/portable/EnteredProximity(atom/movable/AM)
 	if (!src.anchored || src.disable)
 		return
 
@@ -289,7 +288,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 			UpdateIcon()
 			user.show_message(SPAN_ALERT("[src] can now be moved."))
 			src.UpdateOverlays(null, "anchor")
-			remove_use_proximity()
+			src.RemoveComponentsOfType(/datum/component/proximity)
 
 		else if (src.anchored)
 			if (powered())
@@ -297,4 +296,4 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 			UpdateIcon()
 			user.show_message(SPAN_ALERT("[src] is now secured."))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
-			setup_use_proximity()
+			src.AddComponent(/datum/component/proximity)

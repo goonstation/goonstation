@@ -26,7 +26,8 @@
 	if (!msg)
 		return
 
-	var/logLine = global.logLength + 1
+	//TOOD: re-add this when the goonhub logs support it
+	// var/logLine = global.logLength + 1
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/antag_text = ""
 	for (var/datum/antagonist/antag in client.mob.mind.antagonists)
@@ -35,7 +36,7 @@
 	ircmsg["key"] = client.key
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text][client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][trimtext(antag_text)]]")
 	ircmsg["msg"] = html_decode(msg)
-	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
+	ircmsg["log_link"] = "[goonhub_href("/admin/logs/[roundId]")]"
 	var/unique_message_id = md5("ahelp" + json_encode(ircmsg))
 	ircmsg["msgid"] = unique_message_id
 
@@ -46,7 +47,7 @@
 			if (C.player_mode && !C.player_mode_ahelp)
 				continue
 			else
-				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font>"))
+				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font>"))
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
 						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
@@ -69,8 +70,7 @@
 		var/ircmsg_fah[] = new()
 		ircmsg_fah["key"] = "Loggo"
 		ircmsg_fah["name"] = "First Adminhelp Notice"
-		// ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
+		ircmsg_fah["msg"] = "Logs for this round can be found here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export_async("help", ircmsg_fah)
 
 	ircbot.export_async("help", ircmsg)
@@ -143,7 +143,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='byond://?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -208,13 +208,13 @@
 				</div>
 				"}, forceScroll=TRUE)
 			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 			M.client.make_sure_chat_is_open()
 		else
 			// Sender is not admin
 			if (M.client && M.client.holder)
 				// But recipient is
-				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			else
 				boutput(M, "<span class='alert bigPM'>Reply PM from-<b>[user_keyname]</b>: [t]</span>")
@@ -232,4 +232,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]"))
+					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]"))

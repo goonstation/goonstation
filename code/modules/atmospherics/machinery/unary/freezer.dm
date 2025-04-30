@@ -9,6 +9,10 @@
 	var/min_temp_possible = 73.15 KELVIN
 	var/max_temp_possible = T20C
 
+/obj/machinery/atmospherics/unary/cold_sink/freezer/New()
+	..()
+	src.AddComponent(/datum/component/obj_projectile_damage)
+
 /obj/machinery/atmospherics/unary/cold_sink/freezer/update_icon()
 	icon_state = src.on ? "freezer_1" : "freezer_0"
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, FALSE)
@@ -16,7 +20,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
 	..()
 	if(prob(5) && src.on)
-		playsound(src.loc, ambience_atmospherics, 30, 1)
+		playsound(src.loc, pick(ambience_atmospherics), 30, 1)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -45,6 +49,23 @@
 		ui.set_autoupdate(TRUE)
 		ui.open()
 
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/I, mob/user) //let's just make these breakable for now
+	if (I.force)
+		src.visible_message(SPAN_ALERT("[user] hits \the [src] with \a [I]!"))
+		user.lastattacked = get_weakref(src)
+		attack_particle(user, src)
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, TRUE)
+		logTheThing(LOG_STATION, user, "attacks [src] [log_atmos(src)] with [I] at [log_loc(src)].")
+		src.changeHealth(-I.force)
+	..()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/onDestroy()
+	var/atom/location = src.loc
+	location.assume_air(air_contents)
+	air_contents = null
+	src.gib(location)
+	..()
 
 // Medbay and kitchen freezers start at correct temperature to avoid pointless busywork.
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo

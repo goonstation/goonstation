@@ -50,6 +50,8 @@
 /datum/movement_modifier/disoriented
 	additive_slowdown = 7
 
+/datum/movement_modifier/tagged
+	additive_slowdown = 3
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
 
@@ -80,13 +82,19 @@
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
-/datum/movement_modifier/reagent/energydrink // also meth //also mechboots (for now)
+/datum/movement_modifier/reagent/energydrink // also meth
 	ask_proc = 1
 
 /datum/movement_modifier/reagent/energydrink/modifiers(mob/user, move_target, running)
 	if (user.movement_modifiers[/datum/movement_modifier/disoriented])
 		return list(0,0.85)
 	return list(0,0.5)
+
+/datum/movement_modifier/artifact_talisman_swiftness
+	ask_proc = 1
+
+	modifiers(mob/user, move_target, running)
+		return list(0, 1 - GET_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS))
 
 // robot legs for humans
 /datum/movement_modifier/robotleg_right
@@ -291,10 +299,14 @@
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
 
-// pathogen stuff
+/datum/movement_modifier/slither
+	ask_proc = 1
 
-/datum/movement_modifier/patho_oxygen
-	multiplicative_slowdown = 0.75
+/datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
+	if (user.lying)
+		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
+		return list(0-(applied_modifier),1)
+	else return list(0, 1)
 
 // shivering
 
@@ -311,3 +323,6 @@
 
 /datum/movement_modifier/syndie_fishing
 	multiplicative_slowdown = 1.5
+
+/datum/movement_modifier/healbot
+	additive_slowdown = -0.4

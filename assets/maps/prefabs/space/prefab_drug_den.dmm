@@ -93,7 +93,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "eN" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_open";
@@ -199,20 +199,20 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "mE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
 /area/noGenerate)
 "mT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
 /area/noGenerate)
 "ng" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -263,7 +263,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
 "qh" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -435,7 +435,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "BO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/spraybottle/cleaner{
 	pixel_x = -8;
 	pixel_y = -4
@@ -560,7 +560,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "Jl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -856,7 +856,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "UL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -5;
 	pixel_y = 1
@@ -867,7 +867,7 @@
 /area/noGenerate)
 "UU" = (
 /obj/disposaloutlet/east,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},

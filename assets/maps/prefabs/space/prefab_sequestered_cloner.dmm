@@ -355,6 +355,10 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
+"vE" = (
+/obj/item/device/multitool/orange,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
 "xn" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -1255,7 +1259,7 @@ rk
 pT
 RZ
 WS
-tJ
+vE
 tI
 "}
 (12,1,1) = {"

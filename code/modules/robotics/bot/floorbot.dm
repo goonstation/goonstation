@@ -90,14 +90,14 @@
 /obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
-	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
+	dat += "Status: \[<A href='byond://?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
 	dat += "Tiles left: [src.amount]<BR>"
 	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>"
 	if (!src.locked)
 		dat += "<hr>"
-		dat += "Improves floors: \[<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
-		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
+		dat += "Improves floors: \[<A href='byond://?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Finds tiles: \[<A href='byond://?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Make single pieces of metal into tiles when empty: \[<A href='byond://?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
 	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
@@ -146,19 +146,15 @@
 /obj/machinery/bot/floorbot/attackby(var/obj/item/W , mob/user as mob)
 	if (istype(W, /obj/item/tile))
 		var/obj/item/tile/T = W
-		if (src.amount >= max_tiles)
+		var/space_left = src.max_tiles - src.amount
+		if (space_left < 1)
 			return
-		var/loaded = 0
-		if (src.amount + T.amount > max_tiles)
-			var/i = max_tiles - src.amount
-			src.amount += i
-			T.amount -= i
-			loaded = i
-		else
-			src.amount += T.amount
-			loaded = T.amount
-			qdel(T)
-		boutput(user, SPAN_ALERT("You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"))
+		var/moving_tiles = space_left
+		if (space_left > T.amount)
+			moving_tiles = T.amount
+		T.change_stack_amount(moving_tiles * -1)
+		src.amount += moving_tiles
+		boutput(user, SPAN_ALERT("You load [moving_tiles] tiles into the floorbot. It now contains [src.amount] tiles!"))
 		src.UpdateIcon()
 	//Regular ID
 	else
@@ -390,6 +386,9 @@
 		src.target = null
 		src.repairing = 0
 		return
+	if (ismob(T.loc))
+		var/mob/M = T.loc
+		M.drop_item(T, FALSE)
 	if (src.amount + T.amount > max_tiles)
 		var/i = max_tiles - src.amount
 		src.amount += i
@@ -439,6 +438,9 @@
 /// This one starts turned on
 /obj/machinery/bot/floorbot/active
 	on = TRUE
+
+/obj/machinery/bot/floorbot/active/improvefloors
+	improvefloors = TRUE
 
 /////////////////////////////////
 //////Floorbot Construction//////

@@ -604,7 +604,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this firelock useless.  Well I mean actually it doesnt have much at all, but it's probably in key areas or something.  Get off my back."
 	},
 /turf/unsimulated/floor/red,
@@ -712,7 +712,7 @@
 	},
 /area/moon/underground)
 "ck" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -730,7 +730,7 @@
 	},
 /area/moon/underground)
 "cm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -741,7 +741,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cn" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -774,7 +774,7 @@
 	},
 /area/moon/underground)
 "cq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -785,7 +785,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -1407,7 +1407,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "dX" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -1565,7 +1565,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "es" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "It's jammed, apparently.  Or just really locked.";
 	name = "sealed airlock"
 	},
@@ -1595,7 +1595,7 @@
 	},
 /area/moon/underground)
 "ez" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -1621,7 +1621,7 @@
 	},
 /area/moon/underground)
 "eC" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -1633,7 +1633,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "eD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -1668,7 +1668,7 @@
 /turf/cordon,
 /area/cordon)
 "eI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1679,7 +1679,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -1718,7 +1718,7 @@
 	},
 /area/moon/underground)
 "eQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -1729,7 +1729,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -2350,7 +2350,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "gG" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -2749,7 +2749,7 @@
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -3452,7 +3452,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -3466,7 +3466,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -3827,11 +3827,11 @@
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jB" = (
@@ -4004,7 +4004,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jR" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -4090,7 +4090,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ka" = (
@@ -4111,7 +4111,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "kb" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4123,7 +4123,7 @@
 	},
 /area/moon/museum/west)
 "kc" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4135,7 +4135,7 @@
 	},
 /area/moon/museum/west)
 "kd" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4172,7 +4172,7 @@
 	},
 /area/moon/museum)
 "kh" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4184,7 +4184,7 @@
 	},
 /area/moon/museum)
 "ki" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4584,7 +4584,7 @@
 /area/moon/museum/west)
 "kX" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/grey/side{
 	dir = 1
 	},
@@ -4673,7 +4673,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "lf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -5128,7 +5128,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "mh" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5141,7 +5141,7 @@
 	},
 /area/moon/museum)
 "mi" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5159,7 +5159,7 @@
 	},
 /area/moon/museum/giftshop)
 "mk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -5606,7 +5606,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "nf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -6324,7 +6324,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "oS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -6446,7 +6446,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "pi" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -6501,7 +6501,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -6557,7 +6557,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "pw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -7131,7 +7131,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -7143,7 +7143,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "ra" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -7154,7 +7154,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 4;
 	icon_state = "rwindow"
@@ -7211,7 +7211,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ri" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 8;
 	icon_state = "rwindow"
@@ -7400,7 +7400,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -7411,7 +7411,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 4;
 	icon_state = "rwindow"

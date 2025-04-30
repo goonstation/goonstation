@@ -15,6 +15,8 @@
 		SPAWN(0)
 			src.ArtifactSetup()
 
+		src.RemoveComponentsOfType(/datum/component/reagent_overlay)
+
 		if (prob(15))
 			src.reagents.inert = TRUE
 
@@ -107,6 +109,8 @@
 			reagents.add_reagent("omnizine", 50)
 		if (prob(15))
 			reagents.add_reagent("mutagen", 30)
+		if (prob(5))
+			reagents.add_reagent("hyper_vomitium", 10)
 		if (prob(10))
 			reagents.add_reagent("omega_mutagen", 30)
 		if (prob(5))

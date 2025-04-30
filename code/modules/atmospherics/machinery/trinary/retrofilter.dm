@@ -52,7 +52,7 @@
 		if (!issilicon(user) && src.locked)
 			dat += "[gases[i]]: [(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]<br>"
 		else
-			dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
+			dat += "[gases[i]]: <a href='byond://?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
 	var/pressure = MIXTURE_PRESSURE(src.air1)
 	var/total_moles = TOTAL_MOLES(src.air1)
@@ -79,7 +79,7 @@
 	else
 		dat += "Nitrogen: 0%<br>Oxygen: 0%<br>Carbon Dioxide: 0%<br>Plasma: 0%<br>"
 
-	dat += "<br><A href='?src=\ref[src];close=1'>Close</A>"
+	dat += "<br><A href='byond://?src=\ref[src];close=1'>Close</A>"
 
 	user.Browse(dat, "window=pipefilter;size=300x365")
 	onclose(user, "pipefilter")

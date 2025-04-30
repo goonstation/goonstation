@@ -15,7 +15,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "av" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -32,8 +32,15 @@
 /obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"bc" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "bi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -43,7 +50,7 @@
 	},
 /area/space)
 "ce" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -103,7 +110,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "fp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -113,6 +120,10 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
+"fw" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/built_zone)
 "fB" = (
 /obj/machinery/door/airlock/external,
 /obj/cable{
@@ -138,13 +149,28 @@
 	tag = "icon-wall_trans"
 	},
 /area/shuttle/arrival/station)
+"gA" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "gL" = (
 /obj/machinery/lawrack,
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"gT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "hB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -172,6 +198,17 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"iy" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "iQ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -194,6 +231,7 @@
 "jn" = (
 /obj/machinery/light/small/floor/harsh/very,
 /obj/storage/crate/furnacefuel,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -254,8 +292,8 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "lz" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk{
+/obj/mesh/catwalk,
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/shuttlebay{
@@ -293,7 +331,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "mg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/shuttlebay{
@@ -305,7 +343,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "mT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -417,6 +455,29 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"qO" = (
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/rack,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "qX" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
@@ -455,6 +516,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/arrival/station)
+"sp" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "sG" = (
 /obj/window/reinforced/west{
 	dir = 4;
@@ -475,7 +543,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "tb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -516,7 +584,7 @@
 	},
 /area/built_zone)
 "vg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/decal/poster/wallsign/warning3,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -589,7 +657,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "yL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/beacon,
@@ -602,6 +670,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"ze" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "zB" = (
 /obj/stool/chair{
 	dir = 8
@@ -645,7 +717,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "AG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -654,7 +726,7 @@
 	},
 /area/space)
 "BB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -679,6 +751,36 @@
 	icon_state = "engine_caution_south"
 	},
 /area/shuttle/arrival/station)
+"CB" = (
+/obj/storage/crate/wooden,
+/obj/item/sheet/plastic/fullstack,
+/obj/item/sheet/plastic/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/glass/fullstack,
+/obj/item/sheet/glass/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/tile/steel/fullstack,
+/obj/item/tile/steel/fullstack,
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "CP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -718,10 +820,11 @@
 	},
 /area/space)
 "Dm" = (
+/obj/landmark/supply_delivery,
 /turf/space,
-/area/supply/delivery_point)
+/area/space)
 "DL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -862,8 +965,15 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"GP" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "HG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -927,8 +1037,20 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"JB" = (
+/obj/table/reinforced/auto,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "JL" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -951,7 +1073,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "Kl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -968,8 +1090,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"Kv" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "KD" = (
-/obj/machinery/computer/bank_data{
+/obj/machinery/computer3/generic/bank_data{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,
@@ -985,10 +1111,10 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "KP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -1006,8 +1132,17 @@
 	icon_state = "engine_caution_north"
 	},
 /area/shuttle/arrival/station)
+"My" = (
+/obj/machinery/door_control/east{
+	id = "construction_storeroom"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "MD" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "MN" = (
@@ -1017,6 +1152,18 @@
 	drive_range = 100;
 	id = "artlabgun"
 	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"No" = (
+/obj/table/reinforced/auto,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1174,7 +1321,7 @@
 	},
 /area/shuttle/arrival/station)
 "Rv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1199,6 +1346,18 @@
 /obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"SD" = (
+/obj/table/reinforced/auto,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "SE" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/camera{
@@ -1225,6 +1384,32 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"TJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/built_zone)
+"TP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"Ub" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door_control/north{
+	dir = 2;
+	id = "construction_storeroom"
+	},
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "Ud" = (
 /obj/window/reinforced/west{
 	dir = 4;
@@ -1272,10 +1457,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor/industrial,
 /area/built_zone)
 "UQ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -1307,6 +1490,13 @@
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"Xf" = (
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = "construction_storeroom"
+	},
+/turf/simulated/floor/plating,
+/area/built_zone)
 "Xp" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -1333,7 +1523,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Yw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -1354,19 +1544,12 @@
 /turf/space,
 /area/space)
 "YG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
 	},
 /area/space)
-"YO" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_floor";
-	tag = "icon-wall_floor (WEST)"
-	},
-/area/shuttle/arrival/station)
 "YP" = (
 /obj/lattice{
 	dir = 6;
@@ -44007,14 +44190,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+HK
+fw
+fw
+HK
+HK
+ps
+ps
+Ya
 ay
 ay
 ay
@@ -44309,14 +44492,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+HK
+qO
+zH
+sp
+HK
+TJ
+gT
+ap
 ay
 ay
 ay
@@ -44611,14 +44794,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+fw
+JB
+zH
+bc
+Xf
+ze
+Kv
+ap
 ay
 ay
 ay
@@ -44913,14 +45096,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+fw
+SD
+zH
+bc
+Xf
+ze
+Kv
+ap
 ay
 ay
 ay
@@ -45215,14 +45398,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
+HK
+No
+zH
+bc
+Xf
 UN
-ay
-ay
+Kv
+ap
 ay
 ay
 ay
@@ -45517,14 +45700,14 @@ ay
 ay
 ay
 ay
-ay
-ay
-ay
-ay
-ay
-Fg
-ay
-ay
+HK
+CB
+My
+zH
+HK
+Ub
+Kv
+ap
 ay
 ay
 ay
@@ -45819,11 +46002,11 @@ ay
 ay
 ay
 ay
-ay
 HK
 HK
-UQ
-UQ
+HK
+gA
+HK
 Oz
 HK
 HK
@@ -47636,7 +47819,7 @@ HK
 fU
 Fg
 jn
-zH
+TP
 HK
 HK
 ay
@@ -47652,7 +47835,7 @@ xY
 xY
 xY
 tK
-YO
+SL
 SL
 SL
 jp
@@ -47938,7 +48121,7 @@ UQ
 pT
 Fg
 zH
-zH
+GP
 MN
 UQ
 ay
@@ -48240,7 +48423,7 @@ HK
 HK
 Oz
 UQ
-UQ
+iy
 Ok
 HK
 ps

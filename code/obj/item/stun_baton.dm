@@ -48,6 +48,7 @@ TYPEINFO(/obj/item/baton)
 	var/flipped = FALSE
 
 	var/item_special_path = /datum/item_special/spark/baton
+	var/harm_sound = "swing_hit"
 
 	New()
 		..()
@@ -175,7 +176,7 @@ TYPEINFO(/obj/item/baton)
 			if ("failed")
 				logTheThing(LOG_COMBAT, user, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!"))
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
 
 			if ("failed_stun")
@@ -197,7 +198,7 @@ TYPEINFO(/obj/item/baton)
 				user.visible_message(SPAN_ALERT("<B>[victim] has been stunned with the [src.name] by [user]!</B>"))
 				logTheThing(LOG_COMBAT, user, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
 
 			else
@@ -223,8 +224,8 @@ TYPEINFO(/obj/item/baton)
 
 		// Some after attack stuff.
 		if (user && ismob(user))
-			user.lastattacked = dude_to_stun
-			dude_to_stun.lastattacker = user
+			user.lastattacked = get_weakref(dude_to_stun)
+			dude_to_stun.lastattacker = get_weakref(user)
 			dude_to_stun.lastattackertime = world.time
 
 		return TRUE
@@ -270,7 +271,7 @@ TYPEINFO(/obj/item/baton)
 		switch (user.a_intent)
 			if ("harm")
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
-					playsound(src, "swing_hit", 50, 1, -1)
+					playsound(src, src.harm_sound, 50, 1, -1)
 					..()
 				else
 					src.do_stun(user, target, "failed_harm", 1)
@@ -359,11 +360,11 @@ TYPEINFO(/obj/item/baton/cane)
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
 	icon_state = "stuncane"
-	item_state = "cane"
+	item_state = "cane-A"
 	icon_on = "stuncane_active"
 	icon_off = "stuncane"
-	item_on = "cane"
-	item_off = "cane"
+	item_on = "cane-A"
+	item_off = "cane-D"
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging
 	can_swap_cell = 0
@@ -408,8 +409,8 @@ TYPEINFO(/obj/item/baton/ntso)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
-	icon_state = "ntso_baton-c"
-	item_state = "ntso-baton-c"
+	icon_state = "ntso-baton-a-1"
+	item_state = "ntso-baton-a"
 	force = 7
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
@@ -418,10 +419,10 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
+	w_class = W_CLASS_NORMAL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	rechargable = 0
-	is_active = FALSE
+	is_active = TRUE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
@@ -430,7 +431,7 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_special_path = /datum/item_special/spark/ntso
 
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
-	var/state = EXTENDO_BATON_CLOSED_AND_OFF
+	var/state = EXTENDO_BATON_OPEN_AND_ON
 
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
@@ -522,3 +523,78 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+
+
+TYPEINFO(/obj/item/baton/windup)
+	mats = null
+/obj/item/baton/windup
+	name = "Mod. 41 'Izar' baton"
+	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."
+	is_active = FALSE
+	pickup_sfx = 'sound/items/pickup_2.ogg'
+	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	icon_state = "windup_baton"
+	item_state = "windup_baton-off"
+	icon_on = "windup_baton-A"
+	icon_off = "windup_baton"
+	item_on = "windup_baton-A"
+	item_off = "windup_baton-D"
+	force = 10
+	throwforce = 7
+	contraband = 4
+	can_swap_cell = FALSE
+
+	var/recharge_time = 5 SECONDS
+
+	attack_self(var/mob/user)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
+		if (GET_COOLDOWN(src, "baton_cooldown"))
+			user.show_text("[src] is [src.hasStatus("baton_charged") ? "already primed" : "still recharging"]!", "red")
+			return
+
+		if (!GET_COOLDOWN(src, "baton_charged"))
+			user.visible_message("<span class='alert'>[user] begins to prime the [src].</span>",\
+			"<span class='notice'>You begin to prime the [src].</span>",\
+			"<span class='alert'>You hear an electrical whine.</span>")
+			playsound(user, 'sound/effects/chargeupbaton.ogg', 90, 0)
+			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
+
+	proc/charge(var/mob/user)
+		ON_COOLDOWN(src, "baton_charged", src.recharge_time)
+		src.is_active = TRUE
+		src.UpdateIcon()
+		user.update_inhands()
+		SPAWN(src.recharge_time)
+			if (!QDELETED(src) && src.is_active)
+				src.deactivate(user)
+
+	proc/deactivate(mob/user)
+		src.is_active = FALSE
+		src.UpdateIcon()
+		user?.update_inhands()
+
+	do_stun(mob/user, mob/target, type)
+		if (type != "stun")
+			. = ..()
+			if (type == "failed" || type == "failed_harm") //you stunned yourself, turn off
+				src.deactivate(user)
+			return .
+		if (!GET_COOLDOWN(src, "baton_charged"))
+			return ..(user, target, "failed_stun") //not charged, prod them
+
+		ON_COOLDOWN(src, "baton_cooldown", src.recharge_time)
+
+		target.do_disorient(src.disorient_stamina_damage, disorient = 80)
+		target.changeStatus("knockdown", src.recharge_time)
+		target.TakeDamage("All", burn = 6) //owchie
+
+		user.visible_message(SPAN_ALERT("<B>[target] has been stunned with the [src.name] by [user]!</B>"))
+		logTheThing(LOG_COMBAT, user, "stuns [constructTarget(target,"combat")] with the [src.name] at [log_loc(target)].")
+		playsound(target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, TRUE, -10)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
+		OVERRIDE_COOLDOWN(src, "baton_charged", 0)
+		target.force_laydown_standup()
+		src.deactivate(user)

@@ -100,8 +100,8 @@ TYPEINFO(/obj/item/device/chameleon)
 		if(disrupt_on_drop)
 			disrupt()
 
-	attack_self()
-		toggle()
+	attack_self(mob/user)
+		toggle(user)
 
 	get_desc(dist)
 		if (dist < 1 && !istype(src, /obj/item/device/chameleon/bomb))
@@ -129,10 +129,16 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target) && target.alpha > 5)
+			var/icon/testIcon = getFlatIcon(target)
+			if(!testIcon) //weird edgecases
+				return
+
 			if (!cham)
 				cham = new(src)
 				cham.master = src
@@ -143,14 +149,14 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.real_name = target.name
 			cham.desc = target.desc
 			cham.real_desc = target.desc
-			cham.icon = getFlatIcon(target)
+			cham.icon = testIcon
 			cham.set_dir(target.dir)
 			can_use = 1
 			tooltip_rebuild = 1
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
-	proc/toggle()
+	proc/toggle(mob/user)
 		if (!can_use)
 			return
 
@@ -163,25 +169,25 @@ TYPEINFO(/obj/item/device/chameleon)
 			for (var/atom/movable/A in cham)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
-			boutput(usr, SPAN_NOTICE("You deactivate the [src]."))
+			boutput(user, SPAN_NOTICE("You deactivate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 		else
 			if (istype(src.loc, /obj/dummy/chameleon)) //No recursive chameleon projectors!!
-				boutput(usr, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
+				boutput(user, SPAN_ALERT("As your finger nears the power button, time seems to slow, and a strange silence falls.  You reconsider turning on a second projector."))
 				return
 
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
-			usr.set_loc(cham)
 			src.active = 1
+			user.set_loc(cham)
 
-			boutput(usr, SPAN_NOTICE("You activate the [src]."))
+			boutput(user, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))
-			flick("emppulse",anim)
+			FLICK("emppulse",anim)
 			SPAWN(0.8 SECONDS)
 				anim.set_loc(src)
 
@@ -250,7 +256,9 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)

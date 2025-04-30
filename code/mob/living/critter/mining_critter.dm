@@ -45,7 +45,7 @@
 	health_brute = 25
 	health_brute_vuln = 1
 	health_burn = 25
-	health_burn_vuln = 0.1
+	health_burn_vuln = 0.3
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
@@ -57,10 +57,16 @@
 
 	New()
 		..()
-		src.faction |= FACTION_FERMID
+		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
+
 
 	is_spacefaring()
 		return TRUE
@@ -116,10 +122,10 @@
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
-		if (!sting.disabled && sting.cooldowncheck())
+		if (sting && !sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
-		else if (!bite.disabled && bite.cooldowncheck())
+		else if (bite && !bite.disabled && bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
 
@@ -373,6 +379,12 @@
 	butcherable = BUTCHER_ALLOWED
 	var/tamed = FALSE
 	var/seek_ore = TRUE
+	var/food_blacklist = list(\
+	/obj/item/raw_material/shard,
+	/obj/item/raw_material/scrap_metal,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/uqill,
+	/obj/item/raw_material/fibrilith)
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
@@ -380,6 +392,11 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	is_spacefaring()
 		return TRUE
@@ -397,7 +414,7 @@
 
 	attackby(obj/item/I, mob/M)
 		if(istype(I, /obj/item/raw_material) && !isdead(src))
-			if((istype(I, /obj/item/raw_material/shard)) || (istype(I, /obj/item/raw_material/scrap_metal)))
+			if((istypes(I, food_blacklist)))
 				src.visible_message("[M] tries to feed [src] but they won't take it!")
 				return
 			if (src.tamed)
@@ -416,8 +433,7 @@
 	seek_food_target(var/range = 5)
 		. = list()
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
-			if (istype(ore, /obj/item/raw_material/shard)) continue
-			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
+			if (istypes(ore, food_blacklist)) continue
 			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 

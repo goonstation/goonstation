@@ -46,9 +46,8 @@ TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon = 'icons/obj/doors/Doorext.dmi'
-	req_access_txt = "52"
+	req_access = list(access_syndicate_shuttle)
 	cant_emag = TRUE
-	cyborgBumpAccess = FALSE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
@@ -66,7 +65,7 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/Doorcom.dmi'
-	req_access_txt = "57"
+	req_access = list(access_centcom)
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
 	hardened = TRUE
@@ -88,16 +87,16 @@ TYPEINFO(/obj/machinery/door/airlock/centcom)
 	visible = 0
 
 /obj/machinery/door/airlock/glass/command
-		name = "command airlock"
-		icon = 'icons/obj/doors/Doorcom-glass.dmi'
-		req_access = list(access_heads)
+	name = "command airlock"
+	icon = 'icons/obj/doors/Doorcom-glass.dmi'
+	req_access = list(access_heads)
 
 /obj/machinery/door/airlock/glass/engineering
-		name = "engineering airlock"
-		icon = 'icons/obj/doors/Dooreng-glass.dmi'
-		req_access = list(access_engineering)
+	name = "engineering airlock"
+	icon = 'icons/obj/doors/Dooreng-glass.dmi'
+	req_access = list(access_engineering)
 
 /obj/machinery/door/airlock/glass/medical
-		name = "medical airlock"
-		icon = 'icons/obj/doors/Doormed-glass.dmi'
-		req_access = list(access_medical)
+	name = "medical airlock"
+	icon = 'icons/obj/doors/Doormed-glass.dmi'
+	req_access = list(access_medical)

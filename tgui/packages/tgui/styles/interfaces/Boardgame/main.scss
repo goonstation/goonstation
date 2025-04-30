@@ -1,5 +1,7 @@
 @use 'sass:meta';
-@use '../../base.scss';
+@use 'sass:color';
+@use '../../base';
+@use '../../functions' as *;
 
 // The window, everything that isn't components
 
@@ -21,16 +23,11 @@
 
     display: flex;
     flex-direction: row;
-    background-color: darken(rgb(131, 100, 74), 30%);
+    background-color: color.adjust(rgb(131, 100, 74), $lightness: -30%);
 
     &* {
-      -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-      -khtml-user-select: none; /* Konqueror HTML */
-      -moz-user-select: none; /* Old versions of Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
-      user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
+      user-select: none; /* technically no worky for ie */
     }
   }
 

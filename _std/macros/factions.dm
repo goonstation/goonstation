@@ -26,9 +26,13 @@
 #define FACTION_DERELICT		"derelict"
 /// Space Ants
 #define FACTION_FERMID			"fermid"
+/// Gauntlet-spawned
+#define FACTION_GUANTLET		"gauntlet"
+/// Mercenaries
+#define FACTION_MERCENARY		"mercenary"
 
 /// Returns TRUE if ourguy is enemies with otherguy FALSE otherwise
-proc/faction_check(var/mob/ourguy, var/mob/otherguy, var/attack_neutral)
+proc/faction_check(mob/ourguy, mob/otherguy, attack_neutral)
 	if (length(ourguy.faction & otherguy.faction)) // Same faction
 		return FALSE
 	if ((FACTION_NEUTRAL in otherguy.faction) && !attack_neutral) // If neutral and we don't want to attack them, don't attack

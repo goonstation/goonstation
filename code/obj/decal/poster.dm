@@ -1,4 +1,4 @@
-
+#define IMG_OFFSET 20
 /obj/decal/poster
 	desc = "A piece of paper with an image on it. Clearly dealing with incredible technology here."
 	name = "poster"
@@ -25,7 +25,7 @@
 		if (!C || !src.popup_win)
 			return
 		// wtf why is this using wizardtips... with a custom size... fuck it im leaving this one out of the centralization -singh
-		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw]x[imgh];title=Antagonist Tips")
+		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Antagonist Tips")
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
@@ -718,20 +718,37 @@
 				var/which = pick(
 					// the fuck II poster
 					30;"fuckII",
-					// new contest winners
+					// contest winners from January 2021 and June 2024
 					50;"contest1",
 					50;"contest2",
 					50;"contest3",
 					50;"contest4",
 					50;"contest5",
-					// new contest not-winners but cool nonetheless
+					50;"contest6",
+					50;"contest7",
+					50;"contest8",
+					50;"contest9",
+					50;"contest10",
+					50;"contest11",
+					50;"contest12",
+					50;"contest13",
+					50;"contest14",
+					50;"contest15",
+					50;"contest16",
+					// poster contest not-winners but cool nonetheless
 					5 ;"contest-other1",
 					5 ;"contest-other2",
 					5 ;"contest-other3",
 					5 ;"contest-other4",
 					5 ;"contest-other5",
 					5 ;"contest-other6",
-					5 ;"contest-other7"
+					5 ;"contest-other7",
+					5 ;"contest-other8",
+					5 ;"contest-other9",
+					5 ;"contest-other10",
+					5 ;"contest-other11",
+					5 ;"contest-other12",
+					5 ;"contest-other13"
 					)
 				switch(which)
 					if("fuckII")
@@ -753,6 +770,48 @@
 					if("contest5")
 						src.name = "Work! Ranch"
 						src.icon_state = "work_ranch"
+					if("contest6")
+						src.name = "Red Saw"
+						src.icon_state = "red_saw"
+					if("contest7")
+						src.name = "Men in Red"
+						src.icon_state = "men_in_red"
+						src.desc = "The classic 50's movie with the highest amount of explosives used on set ever."
+					if("contest8")
+						src.name = "Capy King"
+						src.icon_state = "capy_king"
+						src.desc = "Who thought it was a good idea to bring the capybaby this close to the sun?"
+					if("contest9")
+						src.name = "Pie Hard"
+						src.icon_state = "pie_hard"
+						src.desc = "\"Something smells funny. The HoS is against Don McClown...and that's just the way he honks it.\""
+					if("contest10")
+						src.name = "Parting Red"
+						src.icon_state = "parting_red"
+					if("contest11")
+						src.name = "Mentors"
+						src.icon_state = "mentors"
+					if("contest12")
+						src.name = "Changer III"
+						src.icon_state = "changeriii"
+						src.desc = "Coming this summer...a totally fictional horror story. NOT based on a true story."
+					if("contest13")
+						src.name = "Clown"
+						src.icon_state = "clown"
+					if("contest14")
+						src.name = "Planet Abzu"
+						src.icon_state = "planet_abzu"
+						src.desc = {"\"This summer, take a journey to a cambrian world untouched by time and discover the mysteries
+								lying beneath the waves of this distant ocean planet.
+								A nature documentary presented by David Spacenborough.\""}
+					if("contest15")
+						src.name = "Fuckin Monky"
+						src.icon_state = "fuckin_monky"
+						src.desc = "This summer...based on real events (maybe)...the damn monkeys!"
+					if("contest16")
+						src.name = "Wraithbusters"
+						src.icon_state = "wraithbusters"
+						src.desc = "\"If there's something strange / In your stationhood. / Who you gonna call? / (Wraithbusters!)\""
 					if("contest-other1")
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
@@ -774,6 +833,26 @@
 					if("contest-other7")
 						src.name = "Code"
 						src.icon_state = "code"
+					if("contest-other8")
+						src.name = "Click 2"
+						src.icon_state = "click2"
+						src.desc = "\"What if the greatest movie of all time had a sequel?\""
+					if("contest-other9")
+						src.name = "Biodome"
+						src.icon_state = "biodome"
+					if("contest-other10")
+						src.name = "Rat"
+						src.icon_state = "rat"
+					if("contest-other11")
+						src.name = "The Honkinator"
+						src.icon_state = "the_honkinator"
+					if("contest-other12")
+						src.name = "The Cluwne"
+						src.icon_state = "the_cluwne"
+						src.desc = "\"This summer...things are getting...honked.\""
+					if("contest-other13")
+						src.name = "Cluwne XVII"
+						src.icon_state = "cluwnexvii"
 
 			attack_hand(mob/user)
 				. = ..()
@@ -923,14 +1002,14 @@
 			var/icon_award = "rddiploma"
 			var/icon_empty = "frame"
 			var/glass_type = /obj/item/sheet/glass
+			var/obj/item/award_item
 			icon_state = "rddiploma"
 			pixel_y = -6
 
 			New()
 				..()
-				var/obj/item/M = new award_type(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
+				src.award_item = new award_type(src)
+				src.award_item.desc = src.desc
 
 			get_desc()
 				if(award_text)
@@ -962,10 +1041,9 @@
 
 					if (1)
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-						var/obj/item/award_item = locate(award_type) in src
-						if(award_item)
-							award_item.desc = src.desc
-							user.put_in_hand_or_drop(award_item)
+						if(istype(src.award_item) && src.award_item.loc == src)
+							src.award_item.desc = src.desc
+							user.put_in_hand_or_drop(src.award_item)
 							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
 							src.icon_state = icon_empty
 							src.add_fingerprint(user)
@@ -976,7 +1054,7 @@
 					return
 
 				if (src.usage_state == 2)
-					if (istype(W, award_type))
+					if (istype(W, src.award_type))
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						user.u_equip(W)
 						W.set_loc(src)
@@ -1002,13 +1080,19 @@
 		framed_award/hos_medal
 			name = "framed medal"
 			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal
+			award_type = /obj/item/clothing/suit/security_badge/hosmedal
 			award_name = "medal"
 			owner_job = "Head of Security"
 			icon_glass = "medal1"
 			icon_award = "medal"
 			icon_empty = "frame"
 			icon_state = "medal"
+
+			New()
+				..()
+				if (istype(src.award_item, src.award_type))
+					var/obj/item/clothing/suit/security_badge/hosmedal/medal = src.award_item
+					medal.award_text = src.get_award_text()
 
 			attackby(obj/item/W, mob/user)
 				if (user.stat)
@@ -1104,7 +1188,7 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=How to Build a Space Pod")
 
 /obj/decal/poster/wallsign/pod_build/nt
 	icon_state = "nt-pod-poster"
@@ -1124,7 +1208,20 @@
 		if (!C || !src.popup_win)
 			return
 
-		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Map")
+
+/obj/decal/poster/miners_almanac
+	name = "Miner's almanac"
+	desc = "An informational poster kindly provided by Gragg Industries."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "almanac"
+	popup_win = TRUE
+	imgw = 605
+	imgh = 784
+
+	show_popup_win(client/C)
+		C?.Browse("<img src=\"[resource("images/miners_almanac.png")]\">","window=Almanac;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Miner's Almanac")
+
 
 /obj/decal/poster/banner
 	name = "banner"
@@ -1192,3 +1289,5 @@
 				clear_banner()
 			else
 				return
+
+#undef IMG_OFFSET

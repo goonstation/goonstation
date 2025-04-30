@@ -1,0 +1,1117 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/turf/cordon,
+/area/cordon)
+"bM" = (
+/turf/unsimulated/floor/blueblack/corner{
+	dir = 1
+	},
+/area/space)
+"cO" = (
+/obj/indestructible/invisible_block,
+/turf/space,
+/area/space)
+"eG" = (
+/obj/indestructible/shuttle_corner,
+/turf/space,
+/area/space)
+"fc" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/teleport/portal_ring,
+/turf/unsimulated/floor/black,
+/area/space)
+"gM" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/computer/security/telescreen{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"hr" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/obj/landmark{
+	name = "HTR_BOTS"
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"iC" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"jk" = (
+/obj/machinery/computer/shuttle/embedded/south,
+/obj/stool/chair/comfy/shuttle/pilot,
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"lR" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"mE" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"nb" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/fakeobject/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"nT" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/space)
+"oD" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/landmark{
+	name = "HTR_BOTS"
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"pd" = (
+/turf/unsimulated/floor/black,
+/area/space)
+"pE" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/fakeobject/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"pG" = (
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 1
+	},
+/area/space)
+"qI" = (
+/obj/machinery/vending/htr_team,
+/turf/unsimulated/floor/blueblack,
+/area/space)
+"sq" = (
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"tm" = (
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/blueblack/corner,
+/area/space)
+"un" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/teleport/portal_generator,
+/turf/unsimulated/floor/black,
+/area/space)
+"uG" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 5;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/space)
+"vs" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/computer/security/telescreen{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"wB" = (
+/turf/unsimulated/floor/blueblack{
+	dir = 6
+	},
+/area/space)
+"xB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "corner"
+	},
+/turf/space,
+/area/space)
+"yC" = (
+/obj/machinery/light/small/floor/cool,
+/turf/unsimulated/floor/blue,
+/area/space)
+"yT" = (
+/obj/landmark{
+	name = "HTR_VENDOR"
+	},
+/turf/unsimulated/floor/blueblack/corner{
+	dir = 4
+	},
+/area/space)
+"yZ" = (
+/turf/unsimulated/floor/blueblack{
+	dir = 10
+	},
+/area/space)
+"zP" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"zT" = (
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/blueblack/corner{
+	dir = 4
+	},
+/area/space)
+"Bf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "corner"
+	},
+/turf/space,
+/area/space)
+"CX" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/black,
+/area/space)
+"Dp" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Fd" = (
+/turf/unsimulated/floor/stairs/dark,
+/area/space)
+"Ff" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"FD" = (
+/turf/space,
+/area/space)
+"FQ" = (
+/obj/machinery/door/poddoor/blast/single{
+	dir = 8;
+	icon_state = "bdoorsingle1";
+	id = "hangar_wizard";
+	name = "external blast door"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
+"GH" = (
+/obj/machinery/vehicle/miniputt/nt_light{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/space)
+"Hm" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"Ii" = (
+/turf/unsimulated/floor/blueblack{
+	dir = 8
+	},
+/area/space)
+"IA" = (
+/turf/unsimulated/floor/blue,
+/area/space)
+"IH" = (
+/obj/stool/chair/comfy/shuttle/pilot,
+/obj/landmark{
+	name = "HTR_TEAM"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"IJ" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/fakeobject/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"IQ" = (
+/obj/landmark{
+	name = "HTR_BOTS"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"IX" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
+/turf/unsimulated/floor/black,
+/area/space)
+"IY" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/unsimulated/floor/black,
+/area/space)
+"Jh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"JL" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/sleeper,
+/turf/unsimulated/floor/plating,
+/area/space)
+"JV" = (
+/obj/item/htr_minimap_controller,
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"Ki" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/computer/security/telescreen{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"KU" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "line-broken1"
+	},
+/turf/unsimulated/floor/circuit,
+/area/space)
+"LB" = (
+/obj/machinery/light/small/floor/warm,
+/turf/unsimulated/floor/blue,
+/area/space)
+"NA" = (
+/obj/landmark{
+	name = "HTR_VENDOR"
+	},
+/turf/unsimulated/floor/blueblack/corner,
+/area/space)
+"OO" = (
+/turf/unsimulated/floor/plating,
+/area/space)
+"PM" = (
+/obj/machinery/computer/security/telescreen{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Qg" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	icon_state = "airlock_closed"
+	},
+/turf/unsimulated/floor/plating/random,
+/area/space)
+"Qv" = (
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/plating/random,
+/area/space)
+"QZ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"RJ" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	icon_state = "airlock_closed"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"SF" = (
+/obj/machinery/light/small/floor/cool,
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"SX" = (
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"Tm" = (
+/obj/machinery/light/small/floor/cool,
+/turf/unsimulated/floor/black,
+/area/space)
+"TT" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 10
+	},
+/turf/space,
+/area/space)
+"TX" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "line-broken1"
+	},
+/obj/machinery/computer/teleporter{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"UN" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/unsimulated/floor/plating,
+/area/space)
+"UQ" = (
+/turf/unsimulated/floor/blueblack{
+	dir = 4
+	},
+/area/space)
+"Va" = (
+/obj/minimap/map_computer/htr_team,
+/turf/unsimulated/floor/blueblack/corner{
+	dir = 8
+	},
+/area/space)
+"Vo" = (
+/turf/space/dense,
+/area/space)
+"Vq" = (
+/obj/fakeobject/shuttlethruster{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"VP" = (
+/turf/unsimulated/floor/blueblack{
+	dir = 1
+	},
+/area/space)
+"Ym" = (
+/obj/machinery/sleeper,
+/turf/unsimulated/floor/plating,
+/area/space)
+"Yn" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/unsimulated/floor/shuttle,
+/area/space)
+"ZT" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/space)
+
+(1,1,1) = {"
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+"}
+(2,1,1) = {"
+ao
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+ao
+"}
+(3,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(4,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(5,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(6,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+eG
+nT
+Qg
+nT
+QZ
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(7,1,1) = {"
+ao
+Vo
+FD
+eG
+nT
+FQ
+nT
+nT
+Qv
+nT
+nT
+QZ
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(8,1,1) = {"
+ao
+Vo
+Vq
+IJ
+CX
+GH
+nT
+nT
+RJ
+nT
+pd
+nT
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(9,1,1) = {"
+ao
+Vo
+TT
+nb
+pd
+Jh
+IX
+pd
+Tm
+pd
+pd
+nT
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(10,1,1) = {"
+ao
+Vo
+uG
+pE
+Ff
+Ff
+nT
+Ki
+Ff
+Ff
+Ff
+nT
+QZ
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(11,1,1) = {"
+ao
+Vo
+FD
+mE
+nT
+nT
+nT
+nT
+nT
+nT
+SX
+nT
+nT
+nT
+UN
+nT
+UN
+QZ
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(12,1,1) = {"
+ao
+Vo
+eG
+nT
+tm
+UQ
+UQ
+UQ
+UQ
+Va
+sq
+IQ
+nT
+gM
+hr
+KU
+KU
+KU
+Bf
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(13,1,1) = {"
+ao
+Vo
+nT
+NA
+wB
+IA
+IA
+IA
+IA
+VP
+SF
+SX
+Yn
+Fd
+SX
+Hm
+SX
+IH
+ZT
+cO
+FD
+FD
+FD
+Vo
+ao
+"}
+(14,1,1) = {"
+ao
+Vo
+nT
+qI
+yC
+IA
+IA
+LB
+IA
+VP
+SX
+JV
+UN
+SX
+SF
+Hm
+SF
+jk
+ZT
+pG
+FD
+FD
+FD
+Vo
+ao
+"}
+(15,1,1) = {"
+ao
+Vo
+nT
+yT
+yZ
+IA
+IA
+IA
+IA
+VP
+SF
+SX
+Yn
+Fd
+SX
+Hm
+SX
+IH
+ZT
+cO
+FD
+FD
+FD
+Vo
+ao
+"}
+(16,1,1) = {"
+ao
+Vo
+mE
+nT
+zT
+Ii
+Ii
+Ii
+Ii
+bM
+sq
+IQ
+nT
+vs
+oD
+lR
+lR
+lR
+xB
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(17,1,1) = {"
+ao
+Vo
+FD
+eG
+nT
+nT
+nT
+nT
+nT
+nT
+SX
+nT
+nT
+nT
+UN
+nT
+UN
+xB
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(18,1,1) = {"
+ao
+Vo
+Vq
+IJ
+JL
+zP
+nT
+un
+fc
+TX
+iC
+nT
+xB
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(19,1,1) = {"
+ao
+Vo
+TT
+nb
+Ym
+OO
+IY
+pd
+pd
+pd
+pd
+nT
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(20,1,1) = {"
+ao
+Vo
+uG
+pE
+Ym
+OO
+nT
+PM
+Tm
+pd
+pd
+nT
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(21,1,1) = {"
+ao
+Vo
+FD
+mE
+nT
+nT
+nT
+Dp
+Dp
+Dp
+nT
+xB
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(22,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+mE
+nT
+nT
+nT
+xB
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(23,1,1) = {"
+ao
+Vo
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+FD
+Vo
+ao
+"}
+(24,1,1) = {"
+ao
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+Vo
+ao
+"}
+(25,1,1) = {"
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+"}

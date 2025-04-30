@@ -77,7 +77,7 @@
 
 		summon
 			New()
-				flick("skeleton_summon", src)
+				FLICK("skeleton_summon", src)
 				..()
 
 
@@ -186,22 +186,6 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "firex"
 	anchored = ANCHORED
-
-/obj/fakeobject/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED
-
-/obj/fakeobject/airlock_broken
-	name = "rusted airlock"
-	desc = "Rust has rendered this airlock useless."
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "doorl";
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
 
 /obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
@@ -363,7 +347,7 @@
 	density = 1
 
 /obj/fakeobject/lawrack
-	name = "defunct AI Law Mount Rack"
+	name = "defunct AI Law Rack"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one looks non-functional."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "airack_empty"
@@ -393,3 +377,149 @@
 	icon_state = "arrival_missile_synd-crash"
 	bound_width = 32
 	bound_height = 64
+
+// pathology
+
+/obj/fakeobject/centrifuge
+	name = "Centrifuge"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "centrifuge0"
+	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
+	anchored = ANCHORED
+	density = 1
+
+/obj/fakeobject/microscope
+	name = "Microscope"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "microscope0"
+	desc = "A device which provides a magnified view of a culture in a petri dish."
+
+/obj/fakeobject/synthomatic
+	name = "Synth-O-Matic"
+	desc = "The leading technological assistant in synthesizing cures for certain pathogens."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "synth1"
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/autoclave
+	name = "Autoclave"
+	desc = "A bulky machine used for sanitizing pathogen growth equipment."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "autoclave"
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/incubator
+	name = "Incubator"
+	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "incubator"
+	anchored = ANCHORED
+	density = 1
+
+/obj/fakeobject/pathogen_manipulator
+	name = "Pathogen Manipulator"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "manipulator"
+	desc = "A large, softly humming machine."
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/pathogen_computer
+	name = "Pathology Research"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "pathologyb"
+	desc = "A bulky machine used to control the pathogen manipulator. It looks super old and busted."
+
+/obj/fakeobject/pathology_vendor
+	name = "Path-o-Matic"
+	desc = "Pathology equipment dispenser. It looks super old and busted."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "med-broken"
+
+/obj/fakeobject/bigcabinets
+	name = "equipment cabinet"
+	desc = "Some sort of electronic equipment in a freestanding enclosure."
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "bigcabinet1"
+	bound_width = 32
+	bound_height = 64
+	anchored = 1
+	density = 1
+
+	gauges
+		icon_state = "bigcabinet2"
+
+	gaugeswithlamp
+		icon_state = "bigcabinet3"
+
+	monitors
+		name = "AV Monitors"
+		icon_state = "bigcabinet4"
+
+	rackmount
+		icon_state = "bigcabinet5"
+
+	slider
+		icon_state = "bigcabinet6"
+
+	doorcontrol
+		name = "access console"
+		icon_state = "doorcontrol"
+
+/obj/fakeobject/bigatmos
+	name = "atmospherics equipment"
+	desc = "Industrial-scale air-handling equipment."
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "bigatmos1"
+	bound_width = 32
+	bound_height = 64
+	anchored = 1
+	density = 1
+
+	bigatmos2
+		icon_state = "bigatmos2"
+
+	bigatmos3
+		icon_state = "bigatmos3"
+
+/obj/fakeobject/biggercabinets
+	name = "big equipment cabinet"
+	desc = "An even bigger enclosure for industrial equipment."
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "displays"
+	bound_width = 64
+	bound_height = 64
+	anchored = 1
+	density = 1
+
+	gauges
+		icon_state = "gauges"
+
+	lockdown
+		icon_state = "lockdown"
+
+	recorders
+		name = "chart recorders"
+		desc = "Paper chart recorders, with a little robotic pen inscribing sensor readings on each side."
+		icon_state = "recorders"
+
+/obj/fakeobject/tower
+	name = "sensor mast"
+	desc = "A tall pylon with various sensor and antenna mounts."
+	icon = 'icons/obj/large/32x96.dmi'
+	icon_state = "tower1"
+	bound_width = 32
+	bound_height = 32 // ignore the top part i guess
+	anchored = 1
+	density = 1
+
+	tower2
+		icon_state = "tower2"
+
+	huge
+		icon = 'icons/obj/large/96x160.dmi'
+		icon_state = "tower"
+		bound_width = 96
+		bound_height = 64
