@@ -1451,13 +1451,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			return
 		if (istype(L, /mob/living/critter/mindeater))
 			return
-		L.changeStatus("staggered", 0.75 SECONDS)
+		L.changeStatus("staggered", 1.5 SECONDS)
 		L.setStatus("mindeater_psi_slow", 5 SECONDS)
 		if (L.reagents)
 			var/amt = min(max(L.reagents.total_volume - L.reagents.get_reagent_amount("toxin"), 0), 5)
 			if (amt > 0)
 				L.reagents.remove_any_except(amt, "toxin")
-				L.reagents.add_reagent("toxin", amt)
+				L.reagents.add_reagent("toxin", amt / 5)
 
 	on_pointblank(obj/projectile/O, mob/target)
 		if (istype(target))

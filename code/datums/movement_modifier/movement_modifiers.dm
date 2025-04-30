@@ -329,4 +329,4 @@
 
 // projectiles
 /datum/movement_modifier/psi_bolt
-	multiplicative_slowdown = 1.25
+	multiplicative_slowdown = 1.5

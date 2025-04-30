@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (T.density)
 			boutput(mindeater, SPAN_ALERT("Something is blocking this turf!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		for (var/atom/A as anything in get_turf(mindeater))
+		for (var/atom/A as anything in T)
 			if (A.density)
 				boutput(mindeater, SPAN_ALERT("Something is blocking this turf!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN

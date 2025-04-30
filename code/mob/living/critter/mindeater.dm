@@ -13,11 +13,13 @@
 	metabolizes = FALSE
 	reagent_capacity = 0
 
+	/*
 	speechverb_say = "hums"
 	speechverb_gasp = "hums"
 	speechverb_stammer = "hums"
 	speechverb_exclaim = "hums"
 	speechverb_ask = "hums"
+	*/
 
 	/// shows whether this mindeater is visible to all or not
 	var/image/mindeater_visibility_indicator/vis_indicator
@@ -104,8 +106,8 @@
 		src.death(FALSE)
 
 	setup_healths()
-		add_hh_flesh(100, 1)
-		add_hh_flesh_burn(100, 1)
+		add_hh_flesh(62, 1)
+		add_hh_flesh_burn(62, 1)
 
 	setup_hands()
 		..()
