@@ -101,7 +101,7 @@
 				var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 				if (QDELETED(robot))
 					return
-				if(robot.emagged)
+				if (robot.emagged)
 					return
 				robot.delStatus("lockdown_robot")
 				logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(robot, "combat")]'s equipment lock.")
