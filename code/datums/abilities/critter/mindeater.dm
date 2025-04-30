@@ -23,14 +23,16 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 /datum/targetable/critter/mindeater
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
 	icon_state = "template"
-	/// reveals the mindeater on use
+	/// reveals the mindeater on use, but doesn't reveal disguise
 	var/reveals_on_use = FALSE
+	/// reveals mindeater and removes disguise
+	var/full_reveal_on_use = FALSE
 
 	cast(atom/target)
 		..()
-		if (src.reveals_on_use)
+		if (src.reveals_on_use || src.full_reveal_on_use)
 			var/mob/living/critter/mindeater/mindeater = src.holder.owner
-			mindeater.reveal()
+			mindeater.reveal(src.full_reveal_on_use)
 
 	proc/get_nearest_human_or_silicon(atom/target)
 		if (isliving(target))
@@ -39,6 +41,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			if (!(ishuman(L) || issilicon(L)))
 				continue
 			return L
+
+	proc/get_nearest_mob_or_fake_mindeater(atom/target)
+		if (isliving(target) || istype(target, /obj/dummy/fake_mindeater))
+			return target
+		for (var/atom/A in view(1, get_turf(target)))
+			if (!(ishuman(A) || issilicon(A) || istype(target, /obj/dummy/fake_mindeater)))
+				continue
+			return A
 
 	proc/get_nearest_living(atom/target)
 		if (isliving(target))
@@ -98,6 +108,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 6
+	reveals_on_use = TRUE
 
 	tryCast(atom/target)
 		target = src.get_nearest_human_or_silicon(target)
@@ -118,6 +129,68 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 		actions.start(new /datum/action/bar/private/mindeater_brain_drain(target), src.holder.owner)
 
+/datum/targetable/critter/mindeater/pierce_the_veil
+	name = "Pierce the Veil"
+	desc = "Take nearby mobs to a localized dimensional plane for 15 seconds."
+	icon_state = "brain_drain"
+	cooldown = 60 SECONDS
+	max_range = 5
+	var/plane_width = 21
+	pointCost = 25
+	reveals_on_use = TRUE
+	var/list/nearby_mobs = list()
+
+	tryCast()
+		src.nearby_mobs = list()
+		for (var/mob/living/L in range(src.max_range, src.holder.owner))
+			if (GET_DIST(L, src.holder.owner) > src.max_range)
+				continue
+			if (!(istype(L, /mob/living/carbon/human) || istype(L, /mob/living/silicon)))
+				continue
+			if (isdead(L))
+				continue
+			src.nearby_mobs += L
+			break
+		if (!length(src.nearby_mobs))
+			boutput(src.holder.owner, SPAN_ALERT("There are no nearby mobs to take with you!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		. = ..()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+
+		var/datum/allocated_region/maze = global.region_allocator.allocate(src.plane_width, src.plane_width)
+		maze.clean_up()
+
+		var/turf/center = maze.get_center()
+
+		var/dmm_suite/map_loader = new
+		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
+		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 25, TRUE)
+		SPAWN(4 SECONDS)
+			src.cast_abil()
+		SPAWN(24 SECONDS)
+			qdel(maze)
+
+	proc/cast_abil()
+		for (var/mob/living/L in src.nearby_mobs)
+			if (QDELETED(L))
+				src.nearby_mobs -= L
+		if (!length(src.nearby_mobs))
+			return
+		for (var/mob/living/L in (src.nearby_mobs + list(mindeater)))
+			if (L == src.holder.owner)
+				L.setStatus("mindeater_abducted_visible", 15 SECONDS, get_turf(L))
+			else
+				L.setStatus("mindeater_abducted_invisible", 15 SECONDS, get_turf(L))
+			L.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
+
+/area/veil_border
+	name = "Veil border"
+	teleport_blocked = 2
+	allowed_restricted_z = TRUE
+
 /datum/targetable/critter/mindeater/telekinesis
 	name = "Telekinesis"
 	desc = "Pull a few items from a target location to you and steal them for a few seconds."
@@ -125,7 +198,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
-	reveals_on_use = TRUE
+	full_reveal_on_use = TRUE
 	max_range = 6
 	pointCost = 10
 
@@ -193,7 +266,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/spatial_swap
 	name = "Spatial Swap"
-	desc = "Swap the location of yourself and another living creature."
+	desc = "Swap the location of yourself and another living creature or fake version of yourself."
 	icon_state = "spatial_swap"
 	cooldown = 20 SECONDS
 	targeted = TRUE
@@ -202,7 +275,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	pointCost = 15
 
 	tryCast(atom/target)
-		target = src.get_nearest_living(target)
+		target = src.get_nearest_mob_or_fake_mindeater(target)
 		if (!target)
 			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -210,10 +283,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 	cast(atom/target)
 		. = ..()
-		var/mob/living/L = target
+		var/atom/movable/AM = target
 		var/turf/T1 = get_turf(src.holder.owner)
-		var/turf/T2 = get_turf(L)
-		L.set_loc(T1)
+		var/turf/T2 = get_turf(AM)
+		AM.set_loc(T1)
 		src.holder.owner.set_loc(T2)
 
 /datum/targetable/critter/mindeater/create
@@ -266,7 +339,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	desc = "Create shades of yourself, swapping places with one, that move when you do."
 	icon_state = "shades"
 	cooldown = 30 SECONDS
-	reveals_on_use = TRUE
+	full_reveal_on_use = TRUE
 	pointCost = 25
 
 	cast(atom/target)

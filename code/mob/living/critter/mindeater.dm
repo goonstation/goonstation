@@ -78,6 +78,8 @@
 		if (src.pulling)
 			src.reveal(FALSE)
 			return
+		if (src.hasStatus("mindeater_abducted_visible"))
+			return
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")
 			if (!src.hasStatus("mindeater_appearing") && !src.is_visible())
@@ -236,8 +238,9 @@
 		src.set_invisible()
 		src.alpha = 255
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/create)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/shades)
@@ -251,8 +254,9 @@
 		src.set_invisible()
 		src.alpha = 150
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/create)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/shades)

@@ -3752,3 +3752,26 @@
 	visible = FALSE
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	movement_modifier = /datum/movement_modifier/psi_bolt
+
+/datum/statusEffect/piercing_the_veil
+	var/turf/start_turf
+
+	onAdd(optional)
+		..()
+		src.start_turf = optional
+
+	onRemove()
+		..()
+		var/mob/living/L = src.owner
+		if (!QDELETED(L))
+			L.set_loc(start_turf)
+
+/datum/statusEffect/piercing_the_veil/visible
+	id = "mindeater_abducted_visible"
+	icon_state = "mindeater_abducted"
+	desc = "You are currently piercing the veil, in a localized plane."
+	visible = TRUE
+
+/datum/statusEffect/piercing_the_veil/invisible
+	id = "mindeater_abducted_invisible"
+	visible = FALSE
