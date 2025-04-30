@@ -1458,38 +1458,6 @@ or don't if it uses a custom topopen overlay
 			else
 				src.aiRestorePowerRoutine = 0
 
-/mob/living/silicon/ai/process_killswitch()
-	var/message_mob = get_message_mob()
-
-	if(killswitch_at && killswitch)
-		var/killswitch_time = round((killswitch_at - TIME)/10, 1)
-
-		if(killswitch_time <= 10)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [killswitch_time]</b>"))
-		if(killswitch_time <= 0)
-			if(src.client)
-				boutput(message_mob, SPAN_ALERT("<B>Killswitch Process Complete!</B>"))
-			killswitch = 0
-			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-			// doink
-			src.brain.take_damage(20,20)
-			if(src.fire_res_on_core)
-				src.TakeDamage( null, src.health)
-			else
-				src.TakeDamage( null, src.health, src.health)
-			src.eject_brain()
-
-
-/mob/living/silicon/ai/process_locks()
-	if(weapon_lock)
-		src.setStatus("unconscious", 5 SECONDS)
-		weaponlock_time --
-		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
-			weapon_lock = 0
-			weaponlock_time = 120
-
 /mob/living/silicon/ai/updatehealth()
 	if (src.nodamage == 0)
 		if(src.fire_res_on_core)
@@ -2817,3 +2785,43 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
+
+/datum/statusEffect/lockdown/ai
+	id = "lockdown_ai"
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+		src.owner.setStatus("unconscious", 5 SECONDS)
+
+/datum/statusEffect/killswitched/ai
+	id = "killswitched_ai"
+	var/mob/living/silicon/ai/ai
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.ai = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		var/time_remaining = round((src.time_to_die - TIME)/10, 1)
+		var/message_mob = src.ai.get_message_mob()
+
+		if (time_remaining <= 10)
+			if(src.ai.client && message_mob)
+				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [time_remaining]</b>"))
+
+	do_killswitch()
+		. = ..()
+		src.ai.brain.take_damage(20, 20)
+		src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
+		src.ai.eject_brain()

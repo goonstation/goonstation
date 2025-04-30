@@ -2647,19 +2647,6 @@
 		else
 			death()
 
-	process_killswitch()
-		if(killswitch)
-			if(killswitch_at <= TIME)
-				if(src.client)
-					boutput(src, SPAN_ALERT("<B>Killswitch Activated!</B>"))
-				killswitch = 0
-				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-
-				// Pop the head compartment open and eject the brain
-				src.eject_brain(fling = TRUE)
-				src.update_appearance()
-				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
-
 	proc/internal_paint_part(var/image/part_image, var/list/color_matrix)
 		var/image/paint = image(part_image.icon, part_image.icon_state, layer=part_image.layer)
 		paint.color = color_matrix
@@ -3592,5 +3579,112 @@
 						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
+
+/datum/statusEffect/low_power/robot
+	id = "low_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		if (isnull(src.robot.cell))
+			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+			src.remove_self()
+		else if (src.robot.cell.charge == 0)
+			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
+			src.remove_self()
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+
+/datum/statusEffect/no_power/robot
+	id = "no_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated) R.upgrade_deactivate(robot)
+		if (isnull(src.robot.cell))
+			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+			src.remove_self()
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else if (src.robot.cell.charge > 0)
+			src.robot.setStatus("low_power_robot")
+			src.remove_self()
+
+/datum/statusEffect/no_power/robot/no_cell
+	id = "no_cell_robot"
+	name = "No Power Cell"
+	desc = "You have no power cell installed!"
+	icon_state = "no_power"
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.ClearSpecificOverlays("battery_distress")
+		src.owner.UpdateOverlays(distress, "battery_distress")
+
+
+/datum/statusEffect/lockdown/robot
+	id = "lockdown_robot"
+	maxDuration = 2 MINUTES
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+
+	onRemove()
+		. = ..()
+		src.robot = null
+
+/datum/statusEffect/killswitch/robot
+	id = "killswitch_robot"
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	do_killswitch()
+		. = ..()
+		// Pop the head compartment open and eject the brain
+		var/mob/living/silicon/robot/robot = src.owner
+		robot.eject_brain(fling = TRUE)
+		robot.update_appearance()
+		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 #undef can_step_sfx

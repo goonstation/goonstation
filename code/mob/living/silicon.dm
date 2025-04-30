@@ -270,12 +270,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (ismob(target))
 		src.cell?.use(W.stamina_cost)
 
-/mob/living/proc/process_killswitch()
-	return
-
-/mob/living/proc/process_locks()
-	return
-
 /mob/living/proc/robot_talk(var/message)
 
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
@@ -762,22 +756,6 @@ var/global/list/module_editors = list()
 
 	onUpdate(timePassed)
 		. = ..()
-		if (isnull(src.silicon.cell))
-			if (isrobot(src.silicon))
-				src.silicon.setStatus("no_cell_robot", INFINITE_STATUS)
-			else if (isAI(src.silicon))
-				;
-			else if (isshell(src.silicon))
-				;
-			else if (isghostdrone(src.silicon))
-				;
-			src.remove_self()
-		else if(src.silicon.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
-			src.remove_self()
-		else if (src.silicon.cell.charge == 0)
-			if (isrobot(src.silicon))
-				src.silicon.setStatus("no_power_robot", INFINITE_STATUS)
-			src.remove_self()
 		if (TIME > src.next_sound_time)
 			playsound(src.owner.loc, src.low_power_sound, 100, 1)
 			src.next_sound_time = TIME + 5 SECONDS
@@ -788,19 +766,6 @@ var/global/list/module_editors = list()
 		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
 		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
 
-/datum/statusEffect/low_power/robot
-	id = "low_power_robot"
-	var/mob/living/silicon/robot
-
-	preCheck(atom/A)
-		if (!isrobot(A))
-			return FALSE
-		. = ..()
-
-	onUpdate(timePassed)
-		. = ..()
-
-
 /datum/statusEffect/no_power
 	id = "no_power"
 	name = "No Power"
@@ -808,7 +773,9 @@ var/global/list/module_editors = list()
 	icon_state = "no_power"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/low_power_sound = 'sound/voice/Sad_Robot.ogg'
 	var/mob/living/silicon/silicon
+	var/next_sound_time
 
 	preCheck(atom/A)
 		if (!issilicon(A))
@@ -818,133 +785,22 @@ var/global/list/module_editors = list()
 	onAdd(optional)
 		. = ..()
 		src.silicon = src.owner
-		var/image/distress = src.owner.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
-		silicon.UpdateOverlays(distress, "battery_distress")
-		silicon.addOverlayComposition(/datum/overlayComposition/low_signal)
+		var/image/distress = src.silicon.SafeGetOverlayImage("battery_distress", 'icons/mob/robots_decor.dmi', "battery-distress", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.silicon.UpdateOverlays(distress, "battery_distress")
+		src.silicon.addOverlayComposition(/datum/overlayComposition/low_signal)
+		src.silicon.show_text(SPAN_ALERT("<b>You've completely run out of power!</b>"))
 
 	onUpdate(timePassed)
 		. = ..()
-		if (isnull(src.silicon.cell))
-			if (isrobot(silicon))
-				;
-			else if (isAI(silicon))
-				;
-			else if (isshell(silicon))
-				;
-			else if (isghostdrone(silicon))
-				;
-			src.remove_self()
-		else if (src.silicon.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
-			src.remove_self()
-		else if (src.silicon.cell.charge > 0)
-			if (isrobot(silicon))
-				;
-			else if (isAI(silicon))
-				;
-			else if (isshell(silicon))
-				;
-			else if (isghostdrone(silicon))
-				;
-			src.remove_self()
-
+		if (TIME > src.next_sound_time)
+			playsound(src.owner.loc, src.low_power_sound, 100, 1)
+			src.next_sound_time = TIME + 5 SECONDS
 
 	onRemove()
 		. = ..()
 		if (QDELETED(owner) || !ismob(owner)) return
 		silicon.ClearSpecificOverlays("battery_distress")
 		silicon.removeOverlayComposition(/datum/overlayComposition/low_signal)
-
-/datum/statusEffect/no_power/robot
-	id = "no_power_robot"
-	var/mob/living/silicon/robot/robot
-
-	preCheck(atom/A)
-		if (!isrobot(A))
-			return FALSE
-		. = ..()
-
-	onAdd(optional)
-		. = ..()
-		src.robot = src.owner
-
-	onUpdate(timePassed)
-		. = ..()
-		src.robot.module_active = null
-		src.robot.uneq_all()
-		for (var/obj/item/roboupgrade/R in robot.contents)
-			if (R.activated) R.upgrade_deactivate(robot)
-
-/datum/statusEffect/no_power/robot/no_cell
-	id = "no_cell_robot"
-	name = "No Power Cell"
-	desc = "You have no power cell installed!"
-	icon_state = "no_power"
-
-	onAdd(optional)
-		. = ..()
-		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
-		src.owner.ClearSpecificOverlays("battery_distress")
-		src.owner.UpdateOverlays(distress, "battery_distress")
-
-/datum/statusEffect/killswitched
-	id = "killswitched"
-	name = "Killswitched"
-	desc = "You are going to die."
-	icon_state = "blinded3"
-	unique = TRUE
-	effect_quality = STATUS_QUALITY_NEGATIVE
-	var/time_to_die
-
-	preCheck(atom/A)
-		if (!issilicon(A))
-			return FALSE
-		. = ..()
-
-	onAdd(kill_at)
-		. = ..()
-		src.time_to_die = kill_at
-
-	onUpdate(timePassed)
-		. = ..()
-		if (TIME > src.time_to_die)
-			src.do_killswitch()
-			src.remove_self()
-
-	proc/do_killswitch()
-		if (ismob(src.owner))
-			var/mob/M = src.owner
-			if (M.client)
-				boutput(src, SPAN_ALERT("<b>Killswitch engaged!</b>"))
-				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
-
-/datum/statusEffect/killswitched/robot
-	id = "killswitched_robot"
-
-	preCheck(atom/A)
-		if (!isrobot(A))
-			return FALSE
-		. = ..()
-
-	do_killswitch()
-		. = ..()
-		// Pop the head compartment open and eject the brain
-		var/mob/living/silicon/robot/robot = src.owner
-		robot.eject_brain(fling = TRUE)
-		robot.update_appearance()
-		robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
-
-/datum/statusEffect/killswitched/ai
-	id = "killswitched_ai"
-
-	preCheck(atom/A)
-		if (!isAI(A))
-			return FALSE
-		. = ..()
-
-	do_killswitch()
-		. = ..()
-
-
 
 /datum/statusEffect/lockdown
 	id = "lockdown"
@@ -966,37 +822,33 @@ var/global/list/module_editors = list()
 			var/mob/M = src.owner
 			M.show_text(SPAN_ALERT("<b>Equipment lockdown disengaged!</b>"))
 
-/datum/statusEffect/lockdown/ai
-	id = "lockdown_ai"
+/datum/statusEffect/killswitch
+	id = "killswitch"
+	name = "Killswitched"
+	desc = "You are going to die."
+	icon_state = "blinded3"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/time_to_die
 
 	preCheck(atom/A)
-		if (!isAI(A))
+		if (!issilicon(A))
 			return FALSE
 		. = ..()
 
-	onAdd(optional)
+	onAdd()
 		. = ..()
-
-/datum/statusEffect/lockdown/robot
-	id = "lockdown_robot"
-	maxDuration = 2 MINUTES
-	var/mob/living/silicon/robot/robot
-
-	preCheck(atom/A)
-		if (!isrobot(A))
-			return FALSE
-		. = ..()
-
-	onAdd(optional)
-		. = ..()
-		src.robot = src.owner
+		src.time_to_die = TIME + src.duration
 
 	onUpdate(timePassed)
 		. = ..()
-		src.robot.uneq_all()
-		for (var/obj/item/roboupgrade/R in src.robot.contents)
-			if (R.activated) R.upgrade_deactivate(robot)
+		if (TIME > src.time_to_die)
+			src.do_killswitch()
+			src.remove_self()
 
-	onRemove()
-		. = ..()
-		src.robot = null
+	proc/do_killswitch()
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			if (M.client)
+				boutput(src, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")

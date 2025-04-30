@@ -395,8 +395,6 @@
 		if (src.health < 0)
 			death()
 
-	process_killswitch()
-	process_locks()
 	update_canmove()
 
 	for (var/obj/item/parts/robot_parts/part in src.contents)
@@ -420,9 +418,7 @@
 			// sure keep trying to use power i guess.
 			use_power()
 
-
 	hud.update()
-	process_killswitch()
 
 /mob/living/silicon/hivebot/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
