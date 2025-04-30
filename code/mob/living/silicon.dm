@@ -843,6 +843,6 @@ var/global/list/module_editors = list()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
 			if (M.client)
-				boutput(src, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				boutput(M, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
 				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
 				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")
