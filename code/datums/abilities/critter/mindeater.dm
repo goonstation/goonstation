@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
 	desc = "Take nearby mobs to a localized dimensional plane for 15 seconds."
-	icon_state = "brain_drain"
+	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 5
 	var/plane_width = 21
@@ -160,17 +160,17 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 
-		var/datum/allocated_region/maze = global.region_allocator.allocate(src.plane_width, src.plane_width)
-		maze.clean_up()
+		var/datum/allocated_region/veil_border = global.region_allocator.allocate(src.plane_width, src.plane_width)
+		veil_border.clean_up()
 
-		var/turf/center = maze.get_center()
+		var/turf/center = veil_border.get_center()
 
 		var/dmm_suite/map_loader = new
 		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
 		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 25, TRUE)
 		SPAWN(4 SECONDS)
 			for (var/mob/living/L in src.nearby_mobs)
-				if (QDELETED(L))
+				if (QDELETED(L) || L.hasStatus("mindeater_abducted_invisible"))
 					src.nearby_mobs -= L
 				if (!length(src.nearby_mobs))
 					return
@@ -180,8 +180,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				else
 					L.setStatus("mindeater_abducted_invisible", 15 SECONDS, get_turf(L))
 				L.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
-		SPAWN(24 SECONDS)
-			qdel(maze)
+			sleep(15.1 SECONDS)
+			qdel(veil_border)
 
 /area/veil_border
 	name = "Veil border"
@@ -416,12 +416,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	resumable = FALSE
 	color_success = "#4444FF"
 	var/mob/living/target
-	var/static/list/possible_messages = list("You feel your memories fading!",
-											 "Something is feasting on your mind!",
-											 "Your mind is being sucked away!",
-											 "You see visions of an eldritch being!",
-											 "Something is trying to take control of your mind!"
-											)
 
 	New(atom/target)
 		..()
@@ -439,11 +433,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (GET_ATOM_PROPERTY(src.target, PROP_MOB_MIND_EATEN_PERCENT) >= 25)
-			if (!ON_COOLDOWN(src.target, "mindeater_brain_drain_msg", 5 SECONDS))
-				boutput(src.target, SPAN_ALERT("<b>[pick(src.possible_messages)]</b>"))
-		if (GET_ATOM_PROPERTY(src.target, PROP_MOB_MIND_EATEN_PERCENT) >= 75)
-			src.target.contract_disease(/datum/ailment/mindmites, null, null, TRUE)
 
 	onEnd()
 		..()
@@ -454,10 +443,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (ishuman(src.target))
 			src.target.take_brain_damage(1)
 			var/mob/living/carbon/human/H = src.target
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, src.owner, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) + 3)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, H, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) + 3)
+			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS)
 			var/pct = GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT)
 			if (pct >= 100)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, src.owner, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) - (pct - 100))
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, H, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) - (pct - 100))
 				H.brain_level.set_icon_state("complete")
 			else
 				H.brain_level.set_icon_state(min(round(pct, 10), INTRUDER_MAX_BRAIN_THRESHOLD))

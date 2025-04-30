@@ -3775,3 +3775,45 @@
 /datum/statusEffect/piercing_the_veil/invisible
 	id = "mindeater_abducted_invisible"
 	visible = FALSE
+
+/datum/statusEffect/mind_being_eaten
+	id = "mindeater_mind_eating"
+	visible = FALSE
+	var/static/list/low_pct_messages = list("Your head feels off.",
+											 "Something is... eating your mind?",
+											 "What is that noise?",
+											 "You see visions of an ancient eldritch being.",
+											 "Oh god, what is that thing?",
+											 "You feel your memories fading",
+											 "You feel your mind being sucked away",
+											 "Something is trying to take control of your mind!")
+
+	var/static/list/high_pct_messages = list("Why are you thinking that way?",
+										     "Let us in",
+											 "Open the door, we are here",
+											 "Why are you doing that?",
+											 "Your thoughts are strange, human",
+											 "Your vessel is strange, human",
+											 "Your senses are strange, human",
+											 "Do you see the door? Open it",
+											 "Let your mind go",
+											 "Cease your being")
+
+	onUpdate(timePassed)
+		..()
+		var/mob/living/L = src.owner
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) < 25)
+			if (!L.hasStatus("broken_madness"))
+				L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+			if (prob(5))
+				boutput(L, SPAN_ALERT("<b>[pick(src.low_pct_messages)]</b>"))
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) >= 25)
+			L.addOverlayComposition(/datum/overlayComposition/insanity/large)
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) >= 75)
+			L.contract_disease(/datum/ailment/mindmites, null, null, TRUE)
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) >= 100)
+			if (prob(5))
+				boutput(L, SPAN_ALERT("<i>[pick(src.high_pct_messages)]</i>"))
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) <= 0)
+			src.owner.delStatus(src)

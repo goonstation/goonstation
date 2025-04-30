@@ -1560,9 +1560,12 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_brain_damage(-3 * mult)
-				if (probmult(10) && istype(M, /mob/living))
+				if (istype(M, /mob/living))
 					var/mob/living/L = M
-					L.cure_disease_by_path(/datum/ailment/mindmites)
+					if (probmult(10))
+						L.cure_disease_by_path(/datum/ailment/mindmites)
+					if (HAS_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT))
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT, L, max(GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) - 2, 0))
 				..()
 				return
 
