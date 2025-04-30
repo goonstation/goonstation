@@ -2478,7 +2478,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("lockdown_robot") || \
 		M.hasStatus("lockdown_ai") || \
 		M.hasStatus("no_power_robot") || \
-		M.hasStatus("no_cell_robot")
+		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
