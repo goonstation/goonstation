@@ -426,16 +426,19 @@ proc/filter_carrier_pets(var/type)
 		var/state = "turtle"
 		if(!isalive(src))
 			state += "-dead"
-		else if(src.shell_count)
-			src.icon_state = "turtle-shell"
-			return
+			if (costume_name)
+				src.UpdateOverlays(costume_dead, "costume")
+		else
+			if(src.shell_count)
+				src.icon_state = "turtle-shell"
+				return
+			if (costume_name)
+				src.UpdateOverlays(costume_alive, "costume")
 		if(src.wearing_beret)
 			state += "-beret"
 			if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
 				state += "-com"
 		src.icon_state = state
-		if (costume_name)
-			src.UpdateOverlays(costume_dead, "costume")
 
 	bullet_act(var/obj/projectile/P)
 		switch(P.proj_data.damage_type)
