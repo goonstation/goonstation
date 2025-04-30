@@ -56,6 +56,7 @@
 		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/gps, // Let's them assist with telesci
 		/obj/item/extinguisher/large/cyborg,
+		/obj/item/places_pipes/research,
 		/obj/item/hand_labeler,
 		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/pen/omni,
@@ -117,6 +118,7 @@
 		/obj/item/tool/omnitool/silicon,
 		/obj/item/weldingtool,
 		/obj/item/rcd,
+		/obj/item/places_pipes,
 		/obj/item/deconstructor/borg,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/powered/shovel,
