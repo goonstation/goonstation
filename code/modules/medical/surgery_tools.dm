@@ -393,6 +393,18 @@ TYPEINFO(/obj/item/robodefibrillator)
 			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
+		if (isrobot(user))
+			var/mob/living/silicon/robot/robot = user
+			if (isnull(robot.cell) || robot.cell.charge < DEFIB_CHARGE_COST)
+				boutput(user, SPAN_ALERT("You don't have enough charge to prime [src]!"))
+				return
+			robot.cell.charge -= DEFIB_CHARGE_COST
+		else
+			var/area/A = get_area(src)
+			if (!A.powered(EQUIP))
+				boutput(user, SPAN_ALERT("There's no local power to prime [src]!"))
+				return
+			A.use_power(DEFIB_CHARGE_COST, EQUIP)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
 			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
 			return
@@ -402,14 +414,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
-		if (isrobot(user))
-			var/mob/living/silicon/robot/robot = user
-			if (isnull(robot.cell) || robot.cell.charge < DEFIB_CHARGE_COST)
-				boutput(user, SPAN_ALERT("You don't have enough charge to prime [src]!"))
-			robot.cell.charge -= DEFIB_CHARGE_COST
-		else
-			var/area/A = get_area(src)
-			A.use_power(DEFIB_CHARGE_COST, EQUIP)
 		if(prob(1))
 			user.say("CLEAR!")
 		src.setStatus("defib_charged", 3 SECONDS)
