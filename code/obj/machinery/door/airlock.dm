@@ -1177,9 +1177,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	return TRUE
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (src.aiControlDisabled == 1) return

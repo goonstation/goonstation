@@ -276,9 +276,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 		actions.start(try_convert, user)
 
 /obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
-	. = ..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	var/mob/living/silicon/ai/mainframe = null

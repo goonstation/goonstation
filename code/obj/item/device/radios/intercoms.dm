@@ -98,9 +98,10 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 /obj/item/device/radio/intercom/receive_silicon_hotkey(var/mob/user)
-	..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	if (!isAIeye(user))
