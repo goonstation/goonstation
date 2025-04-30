@@ -334,6 +334,8 @@ CONTAINS:
 /* -------------------- Defib -------------------- */
 /* =============================================== */
 
+#define DEFIB_CHARGE_COST 500 WATTS
+
 TYPEINFO(/obj/item/robodefibrillator)
 	mats = 10
 
@@ -400,6 +402,14 @@ TYPEINFO(/obj/item/robodefibrillator)
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
+		if (isrobot(user))
+			var/mob/living/silicon/robot/robot = user
+			if (isnull(robot.cell) || robot.cell.charge < DEFIB_CHARGE_COST)
+				boutput(user, SPAN_ALERT("You don't have enough charge to prime [src]!"))
+			robot.cell.charge -= DEFIB_CHARGE_COST
+		else
+			var/area/A = get_area(src)
+			A.use_power(DEFIB_CHARGE_COST, EQUIP)
 		if(prob(1))
 			user.say("CLEAR!")
 		src.setStatus("defib_charged", 3 SECONDS)
@@ -690,6 +700,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 			src.ClearSpecificOverlays("cord_\ref[src]")
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
+
+#undef DEFIB_CHARGE_COST
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */
