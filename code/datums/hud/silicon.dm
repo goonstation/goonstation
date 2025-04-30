@@ -15,8 +15,22 @@
 		killswitch.invisibility = INVIS_ALWAYS
 
 	proc/update_health()
-		if (silicon.killswitch)
-			var/timeleft = round((silicon.killswitch_at - TIME)/10, 1)
+		var/datum/statusEffect/killswitch/killswitch_status
+		if (isrobot(silicon))
+			var/mob/living/silicon/robot/robot = silicon
+			if (robot.mainframe)
+				killswitch_status = robot.mainframe.hasStatus("killswitch_ai")
+			else
+				killswitch_status = silicon.hasStatus("killswitch_robot")
+		else if (isshell(silicon))
+			var/mob/living/silicon/hivebot/eyebot/eyebot = silicon
+			if (eyebot.mainframe)
+				killswitch_status = eyebot.mainframe.hasStatus("killswitch_ai")
+		else if (isAI(silicon))
+			killswitch_status = silicon.hasStatus("killswitch_ai")
+
+		if (killswitch_status)
+			var/timeleft = round((killswitch_status.duration)/10, 1)
 			timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 
 			killswitch.invisibility = INVIS_NONE

@@ -166,10 +166,18 @@
 				sid++
 
 		try_equip_at(var/i)
-			if (!master || !master.cell || master.cell.charge <= 100)
+			if (!master)
+				update_equipment()
+				return
+			if (!master.cell || master.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				boutput(master, SPAN_ALERT("You don't have enough power to equip this!"))
 				update_equipment()
 				return
 			if (!master.module || !show_items)
+				update_equipment()
+				return
+			if (master.hasStatus("lockdown_robot"))
+				boutput(master, SPAN_ALERT("Your equipment is locked down!"))
 				update_equipment()
 				return
 			var/content_id = items_screen + i - 1

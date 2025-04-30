@@ -2813,7 +2813,7 @@ proc/get_mobs_trackable_by_AI()
 
 	onUpdate(timePassed)
 		. = ..()
-		var/time_remaining = round((src.time_to_die - TIME)/10, 1)
+		var/time_remaining = round((src.duration)/10, 1)
 		var/message_mob = src.ai.get_message_mob()
 
 		if (time_remaining <= 10)

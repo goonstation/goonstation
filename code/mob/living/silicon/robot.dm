@@ -1994,6 +1994,9 @@
 			if (!src.cell)
 				src.show_text("You do not have a power cell!", "red")
 				return
+			if (src.cell.charge == 0)
+				src.show_text("You do not have enough power to activate \the [upgrade]!", "red")
+				return
 			if (src.cell.charge >= upgrade.drainrate)
 				src.cell.use(upgrade.drainrate)
 			else
@@ -2523,14 +2526,7 @@
 		..()
 		if (src.cell)
 			if(src.cell.charge <= 0)
-				if (isalive(src))
-					sleep(0)
-					src.lastgasp()
-				src.setStatus("no_power_robot")
-				setunconscious(src)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated)
-						R.upgrade_deactivate(src)
+				src.setStatus("no_power_robot", INFINITE_STATUS)
 			else if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
 				src.setStatus("low_power_robot", INFINITE_STATUS)
 				src.cell.use(1)
@@ -2588,12 +2584,8 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-
 		else
-			if (isalive(src))
-				sleep(0)
-				src.lastgasp()
-			setunconscious(src)
+			src.setStatus("no_cell_robot", INFINITE_STATUS)
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -3596,11 +3588,11 @@
 	onUpdate(timePassed)
 		. = ..()
 		if (isnull(src.robot.cell))
+			src.remove_self()
 			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
-			src.remove_self()
 		else if (src.robot.cell.charge == 0)
-			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
 			src.remove_self()
+			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
 		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
 			src.remove_self()
 
@@ -3616,34 +3608,59 @@
 	onAdd(optional)
 		. = ..()
 		src.robot = src.owner
+		src.robot.radio?.bricked = TRUE
+		src.robot.default_radio?.bricked = TRUE
+		src.robot.ai_radio?.bricked = TRUE
+		APPLY_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
 
 	onUpdate(timePassed)
 		. = ..()
 		src.robot.module_active = null
 		src.robot.uneq_all()
+		src.robot.radio?.bricked = TRUE
+		src.robot.default_radio?.bricked = TRUE
+		src.robot.ai_radio?.bricked = TRUE
 		for (var/obj/item/roboupgrade/R in robot.contents)
-			if (R.activated) R.upgrade_deactivate(robot)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
 		if (isnull(src.robot.cell))
-			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
-			src.remove_self()
+			if (!src.robot.hasStatus("no_cell_robot"))
+				src.remove_self()
+				src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
 		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
 			src.remove_self()
 		else if (src.robot.cell.charge > 0)
-			src.robot.setStatus("low_power_robot")
 			src.remove_self()
+			src.robot.setStatus("low_power_robot")
+
+	onRemove()
+		. = ..()
+		src.robot.radio?.bricked = FALSE
+		src.robot.default_radio?.bricked = FALSE
+		src.robot.ai_radio?.bricked = FALSE
+		REMOVE_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
 
 /datum/statusEffect/no_power/robot/no_cell
 	id = "no_cell_robot"
 	name = "No Power Cell"
 	desc = "You have no power cell installed!"
 	icon_state = "no_power"
+	power_alarm_sound = 'sound/machines/found.ogg'
 
 	onAdd(optional)
 		. = ..()
 		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
 		src.owner.ClearSpecificOverlays("battery_distress")
-		src.owner.UpdateOverlays(distress, "battery_distress")
+		src.owner.UpdateOverlays(distress, "battery_missing")
 
+	onUpdate(timePassed)
+		. = ..()
+		if (!isnull(src.silicon.cell) && src.owner)
+			src.remove_self()
+
+	onRemove()
+		. = ..()
+		src.owner.ClearSpecificOverlays("battery_missing")
 
 /datum/statusEffect/lockdown/robot
 	id = "lockdown_robot"
@@ -3658,6 +3675,11 @@
 	onAdd(optional)
 		. = ..()
 		src.robot = src.owner
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
 
 	onUpdate(timePassed)
 		. = ..()

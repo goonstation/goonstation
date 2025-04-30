@@ -737,7 +737,7 @@ var/global/list/module_editors = list()
 	icon_state = "stam-"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
-	var/low_power_sound = 'sound/voice/Sad_Robot.ogg'
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
 	var/mob/living/silicon/silicon
 	var/next_sound_time
 
@@ -757,12 +757,11 @@ var/global/list/module_editors = list()
 	onUpdate(timePassed)
 		. = ..()
 		if (TIME > src.next_sound_time)
-			playsound(src.owner.loc, src.low_power_sound, 100, 1)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
 			src.next_sound_time = TIME + 5 SECONDS
 
 	onRemove()
 		. = ..()
-		src.silicon = null
 		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
 		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
 
@@ -773,7 +772,7 @@ var/global/list/module_editors = list()
 	icon_state = "no_power"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
-	var/low_power_sound = 'sound/voice/Sad_Robot.ogg'
+	var/power_alarm_sound = 'sound/voice/Sad_Robot.ogg'
 	var/mob/living/silicon/silicon
 	var/next_sound_time
 
@@ -793,7 +792,7 @@ var/global/list/module_editors = list()
 	onUpdate(timePassed)
 		. = ..()
 		if (TIME > src.next_sound_time)
-			playsound(src.owner.loc, src.low_power_sound, 100, 1)
+			playsound(src.owner.loc, src.power_alarm_sound, 100, 1)
 			src.next_sound_time = TIME + 5 SECONDS
 
 	onRemove()
@@ -829,26 +828,21 @@ var/global/list/module_editors = list()
 	icon_state = "blinded3"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
-	var/time_to_die
 
 	preCheck(atom/A)
 		if (!issilicon(A))
 			return FALSE
 		. = ..()
 
-	onAdd()
+	onRemove()
 		. = ..()
-		src.time_to_die = TIME + src.duration
-
-	onUpdate(timePassed)
-		. = ..()
-		if (TIME > src.time_to_die)
+		if (src.duration <= 0)
 			src.do_killswitch()
-			src.remove_self()
 
 	proc/do_killswitch()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
 			if (M.client)
 				boutput(src, SPAN_ALERT("<b>Killswitch Process Complete!</b>"))
+				playsound(M.loc, 'sound/machines/ding.ogg', 100, 1)
 				logTheThing(LOG_COMBAT, M, "has died to the killswitch self destruct protocol")

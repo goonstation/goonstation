@@ -142,13 +142,14 @@
 			"name" = A.name,
 			"mob_ref" = "\ref[A]",
 			"status" = A.stat,
-			"killswitch_time" = killswitch_ai_status ? round((killswitch_ai_status.time_to_die - TIME) / 10, 1) : null
+			"killswitch_time" = killswitch_ai_status ? round((killswitch_ai_status.duration) / 10, 1) : null
 		))
 
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			if(QDELETED(R))
 				continue
-			var/datum/statusEffect/killswitch/killswitch_robot_status = A.hasStatus("killswitch_robot")
+			var/datum/statusEffect/killswitch/killswitch_robot_status = R.hasStatus("killswitch_robot")
+			var/datum/statusEffect/lockdown/lockdown_robot_status = R.hasStatus("lockdown_robot")
 			cyborgs += list(list(
 				"name" = R.name,
 				"mob_ref" = "\ref[R]",
@@ -157,8 +158,8 @@
 				"cell_charge" = R.cell?.charge,
 				"cell_maxcharge" = R.cell?.maxcharge,
 				"module" = R.module ? capitalize(R.module.name) : null,
-				"lock_time" = R.weapon_lock ? round(R.weaponlock_time, 1) : null,
-				"killswitch_time" = killswitch_robot_status ? round((killswitch_robot_status.time_to_die - TIME) / 10, 1) : null
+				"lock_time" = lockdown_robot_status ? round(lockdown_robot_status.duration/10, 1) : null,
+				"killswitch_time" = killswitch_robot_status ? round((killswitch_robot_status.duration) / 10, 1) : null
 			))
 
 	return list(ais, cyborgs)
