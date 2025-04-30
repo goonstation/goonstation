@@ -19,7 +19,7 @@
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	animate_movement = NO_STEPS //Stop shifting around recycled particles.
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	var/atom/target = null // target location for directional particles
 	var/override_state = null
 	var/death = 0
@@ -372,6 +372,35 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			animate(par, time = 10, transform = first, pixel_y = 96, alpha = 250)
 			animate(transform = second, time = 10, pixel_y = 96 + rand(-32, 32), pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
 			animate(transform = third, time = 7, pixel_y = 0, easing = LINEAR_EASING|EASE_OUT, alpha = 0)
+
+			MatrixInit()
+
+
+/datum/particleType/fireworks_pop
+	name = "fireworks_pop"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "wpart"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+		third = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.blend_mode = BLEND_ADD
+			par.color = rgb(rand(0, 255),rand(0, 255),rand(0, 255))
+
+			first.Turn(rand(-180, 180))
+			second.Turn(rand(-90, 90))
+			second.Scale(0.5,0.5)
+			third.Turn(rand(-90, 90))
+
+			if(!istype(par)) return
+			animate(par, time = 0, transform = first, alpha = 250)
+			var/pix_Y = rand(-32, 32)
+			animate(transform = second, time = 5, pixel_y = pix_Y, pixel_x = rand(-32, 32) + par.pixel_x, easing = SINE_EASING, alpha = 200)
+			animate(transform = third, time = 7, pixel_y = pix_Y-rand(22,30), easing = LINEAR_EASING|EASE_OUT, alpha = 0)
 
 			MatrixInit()
 
@@ -1111,6 +1140,16 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				SpawnParticle()
 			Die()
 
+/datum/particleSystem/fireworks_pop
+	New(var/atom/location = null)
+		..(location, "fireworks_pop", 35)
+
+	Run()
+		if (..())
+			for(var/i=0, i<rand(40,50), i++)
+				SpawnParticle()
+			Die()
+
 /datum/particleSystem/confetti
 	New(var/atom/location = null)
 		..(location, "confetti", 35)
@@ -1480,4 +1519,37 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/glow_stick_dance
 	New(var/atom/location = null, var/light_color)
 		..(location, "glow_stick_dance", 9.9, light_color)
+		SpawnParticle()
+
+/datum/particleType/glasses_sparkle
+	name = "glasses_sparkle"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if(..())
+			par.pixel_x = rand(0,1) ? -8:  8
+			par.pixel_y = 6 + rand(2, 4)
+
+			var/rot = rand(-90, 90)
+
+			first.Turn(rot)
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(11)
+			animate(par, transform = first, time = 5, alpha = 245)
+
+			first.Scale(0.1 / 11)
+			first.Turn(rot)
+			animate(transform = first, time = 15, alpha = 50)
+			first.Reset()
+
+/datum/particleSystem/glasses_sparkle
+	New(var/atom/location = null, var/glasses_color)
+		..(location, "glasses_sparkle", 9.9, glasses_color)
 		SpawnParticle()

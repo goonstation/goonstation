@@ -90,7 +90,7 @@
 
 		onActivate(var/client/C)
 			master.setFlag(C, "card_reward", "taken")
-			C.mob.put_in_hand_or_drop(new/obj/item/card/id/blank_polaris, C.mob.hand)
+			C.mob.put_in_hand_or_drop(new/obj/item/card/id/nanotrasen, C.mob.hand)
 			return
 
 	nt_reward_b
@@ -297,21 +297,21 @@
 	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboarddebug
 	name = "syndicate circuit board"
 	desc = "Rather complex circuit board, ripped straight from a syndicate drone's internal mechanism. Maybe someone would be interested in this?"
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2"
-	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
+	event_handler_flags = IMMUNE_OCEAN_PUSH | USE_FLUID_ENTER
 
 /obj/item/factionrep/ntboardfried
 	name = "fried syndicate circuit board"
 	desc = "This illegal-looking circuit board is fried. Looks like it was overloaded somehow, rendering it useless."
 	icon = 'icons/misc/factionrewards.dmi'
 	icon_state = "droneboard2fried"
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 /obj/item/clothing/under/gimmick/seaman
 	name = "seaman's uniform"

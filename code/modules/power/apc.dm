@@ -1451,10 +1451,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
 	operating = 0
 	update()
+
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
 
 // overload all the lights in this APC area
 

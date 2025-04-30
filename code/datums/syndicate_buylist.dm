@@ -92,6 +92,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/generic/rifle
+	name = "Old Hunting Rifle"
+	items = list(/obj/item/storage/box/hunting_rifle)
+	cost = 7
+	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
 	items = list(/obj/item/gun/energy/crossbow)
@@ -342,17 +349,17 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
-	items = list(/obj/item/pipebomb/bomb/miniature_syndicate)
+	items = list(/obj/item/assembly/timer_ignite_pipebomb/mini_syndicate)
 	cost = 3
 	vr_allowed = FALSE
-	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
+	desc = "A rather volatile pipe bomb packed with miniature syndicate troops. Assembled and ready for use"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	items = list(/obj/item/device/chameleon)
-	cost = 5
+	cost = 3
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
@@ -1164,14 +1171,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	cost = 2
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	br_allowed = TRUE
-
-/datum/syndicate_buylist/traitor/rifle
-	name = "Old Hunting Rifle"
-	items = list(/obj/item/storage/box/hunting_rifle)
-	cost = 7
-	job = list("Pest Control Specialist")
-	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
-	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"

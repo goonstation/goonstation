@@ -924,7 +924,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
@@ -1044,6 +1044,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#114444"
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
+
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
 
 	algae
 		name = "sea foam"
@@ -2729,6 +2739,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()

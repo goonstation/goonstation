@@ -649,7 +649,42 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 		return 0
 
+ABSTRACT_TYPE(/datum/objective/madness)
+/datum/objective/madness
 
+/datum/objective/madness/hate_department
+	set_up()
+		src.explanation_text = "Your mind fills with a burning need to destroy [pick("Genetics", "Genetics", "Catering", "Botany", "all janitors", "Medbay", "Cargo", "the research department")]."
+
+/datum/objective/madness/greed
+	set_up()
+		src.explanation_text = "You are filled with an overwhelming need for [pick("blood", "money", "sharp things", "welding fuel", "plasma")]."
+
+/datum/objective/madness/kill
+	set_up()
+		var/list/valid_targets = list()
+		for (var/mob/living/M in mobs)
+			if (!isalive(M))
+				continue
+			if (istype(M, /mob/living/critter/small_animal/cat/jones))
+				valid_targets |= "Jones, the captain's cat"
+			else if (istype(M, /mob/living/critter/small_animal/turtle/sylvester))
+				valid_targets |= "Sylvester, the HoS's turtle"
+			else if (istype(M, /mob/living/critter/small_animal/opossum/morty))
+				//might be a little hard to kill this one but also we're insane so it fits
+				valid_targets |= "Morty, the morgue opossum"
+			else if (istype(M, /mob/living/carbon/human/npc/monkey/stirstir))
+				valid_targets |= "Monsieur Stirstir, security's prisoner"
+			else if (istype(M, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/ai = M
+				if (ai.client || ai.deployed_to_eyecam || ai.deployed_shell) //they're probably logged in somewhere
+					valid_targets |= "[M.real_name], the AI"
+			else if (istype(M, /mob/living/carbon/human))
+				if (M.job == "Captain" && M.client)
+					valid_targets |= "[M.real_name], the captain"
+		if (!length(valid_targets))
+			valid_targets += "an innocent"
+		src.explanation_text = "You see it now, the only way to prevent total calamity is to offer up the death of [pick(valid_targets)]."
 /*
 /datum/objective/regular/borgdeath
 	explanation_text = "Deactivate or destroy all Cyborgs on the station. If you end up borged, you do not need to kill yourself or be un-borged to win."
@@ -693,11 +728,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	var/absorb_count
 
 	set_up()
-#ifdef RP_MODE
-		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
-#else
-		absorb_count = min(10, (ticker.minds.len - 1))
-#endif
+		absorb_count = clamp(round((ticker.minds.len - 1) / 4), 2, 6)
 		explanation_text = "Absorb the DNA of at least [absorb_count] more crew members in addition to the one you started with, and escape on the shuttle alive."
 
 	check_completion()
@@ -720,11 +751,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	var/bloodcount
 
 	set_up()
-#ifdef RP_MODE
-		bloodcount = rand(40,80) * 10
-#else
-		bloodcount = rand(60,100) * 10
-#endif
+		bloodcount = rand(50,90) * 10
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
@@ -973,16 +1000,17 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 /datum/objective/specialist/salvager
 	proc/check_on_magpie(targetType, frameType=null)
 		. = 0
-		for(var/areaType in typesof(/area/salvager))
-			for (var/turf/T in get_area_turfs(areaType))
-				for (var/obj/O in T.contents)
-					if(istype(O, targetType))
-						if(frameType && targetType == /obj/item/electronics/frame )
-							var/obj/item/electronics/frame/F = O
-							if (istype(F.deconstructed_thing, frameType))
-								. += 1
-						else
+		for (var/turf/T in get_area_turfs(/area/salvager))
+			for (var/obj/O in T.contents)
+				if(istype(O, targetType))
+					if(frameType && targetType == /obj/item/electronics/frame )
+						var/obj/item/electronics/frame/F = O
+						if (istype(F.deconstructed_thing, frameType))
 							. += 1
+					else
+						. += 1
+				else if(frameType && istype(O, frameType))
+					. += 1
 
 /datum/objective/specialist/salvager/machinery
 	var/target_equipment = null
@@ -1034,9 +1062,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 			var/list/L = owner.current.get_all_items_on_mob()
 			if (length(L))
 				for (var/obj/item/electronics/frame/F in L)
-					if (istype(F.deconstructed_thing, target_equipment))
+					if (istype(F.deconstructed_thing, src.target_equipment))
 						count++
-			count += check_on_magpie(/obj/item/electronics/frame, target_equipment)
+			count += check_on_magpie(/obj/item/electronics/frame, src.target_equipment)
 			return count >= target_count
 		else
 			return FALSE
@@ -1063,9 +1091,9 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		return target_equipment
 
 	check_completion()
-		if(owner.current && owner.current.check_contents_for_num(target_equipment, 1, TRUE))
+		if(owner.current && owner.current.check_contents_for_num(src.target_equipment, 1, TRUE))
 			return TRUE
-		else if(check_on_magpie(target_equipment))
+		else if(check_on_magpie(src.target_equipment))
 			return TRUE
 		else
 			return FALSE
@@ -1470,11 +1498,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 	var/powergoal
 
 	set_up()
-#ifdef RP_MODE
 		powergoal = rand(350,400) * 10
-#else
-		powergoal = rand(450,500) * 10
-#endif
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()

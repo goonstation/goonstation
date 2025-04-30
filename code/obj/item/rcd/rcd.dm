@@ -257,7 +257,7 @@ TYPEINFO(/obj/item/rcd)
 		qdel(A)
 
 	proc/handle_floors_and_walls(atom/A, mob/user)
-		if (istype(A, /turf/simulated/floor))
+		if (istype(A, /turf/simulated/floor) || istype(A, /turf/simulated/space_phoenix_ice_tunnel))
 			src.do_rcd_action(user, A, "building a wall", matter_create_wall, time_create_wall, PROC_REF(handle_build_wall), src)
 			return
 
@@ -331,9 +331,9 @@ TYPEINFO(/obj/item/rcd)
 			src.do_rcd_action(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall, PROC_REF(do_deconstruct_wall), src)
 			return
 
-		if (istype(A, /turf/simulated/floor))
+		if (istype(A, /turf/simulated/floor) || istype(A, /turf/simulated/space_phoenix_ice_tunnel))
 			var/turf/simulated/floor/T = A
-			if(T.intact)
+			if(istype(T) && T.intact)
 				var/datum/material/mat = istext(T.default_material) ? getMaterial(T.default_material) : T.default_material
 				if(length(restricted_materials) && !(mat?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")

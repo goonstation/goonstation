@@ -664,6 +664,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.build_net_update(null,SIGBUILD_REGULAR)
 			return
 
+	overload_act()
+		if (src.status & BROKEN)
+			return FALSE
+		src.shear_overload()
+		return TRUE
+
 	examine()
 		. = ..()
 		if(maglocked && src.x_torque)

@@ -1,4 +1,365 @@
 
+(t)mon apr 28 25
+(u)wisconsin, sunnyaries
+(p)23171
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Added 9 new food items, most to do with rice.
+(+)Sliced Bread can be cut into Breadcrumbs, a new ingredient.
+(u)Cindertroy
+(p)23179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added 3 more ATMs to Neon
+(u)LeahTheTech
+(*)Remy will now suggest a recipe if you offer him an ingredient.
+(t)sun apr 27 25
+(u)Sord, Leah, Jan + seamonsters by Thrush
+(p)23105
+(e)🗺🔧❗|A-Mapping, A-Tooling, E-FUCK
+(*)Added a new underwater map, Neon. Neon replaces Atlas as the lowpop map (Max votable playercount 30).
+(*)Neon is built within a strange reef where the coral is made of plasma. The plasma has been having strange effects on the wildlife.
+(*)All gas vented underwater now becomes bubbles. Bubbles eventually "pop" and dissipate. Large bubbles can be breathed from. Bubbles can be captured using portable pumps or air scrubbers.
+(*)Neon comes with a new unique rare antag type, the "Broken", which can spawn via a random event.
+(*)Neon features a new solars-like power generation method, the current driven Turbine. Wrench turbine shafts and use one of the four turbines located around maintenance to find the sweet spot in the current to generate the small amounts of power.
+(+)There are unique mobs located within the plasma coral reefs which contain a new genetic mutation.
+(+)Currents outside the north and south side of the station can be counteracted with a jetpack or magboots.
+(+)Any non antagonists, regardless of mindhack protection implants or traits, can become "Broken"
+(+)To opt into becoming the "Broken" you can enable "Other Foes" in your character preferences.
+(+)All "Broken" share the same randomly picked objective.
+(+)Haloperidol can be used to cure the "Broken" faster.
+(u)LeahTheTech
+(*)Glue no longer falls off on its own, instead the more glue you use the harder the object will be to remove.
+(*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
+(u)FlameArrow57
+(p)22828
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fixed being unable to build walls over or using an RCD on Space Phoenix ice tunnels
+(u)Garash
+(p)22290
+(e)🪲📄|C-Bug, A-UI
+(+)Keybind menu now allows to bind special keys such as shift, ctrl, alt...
+(u)bobbis dobbis
+(p)22923
+(e)🆕🎨📡|C-Feature, C-Sprites, A-AI
+(+)Added sunglasses and wide smile ai faces
+(u)glowbold
+(p)22930
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)You can get fireworks out of firework boxes by using a snipping tool on them. Try not to blow your hands off.
+(u)JORJ949 & glowbold
+(p)23041
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Customs offices have a personnel management computer, containing BankBoss, SecMate, and RoleControl.
+(u)LorrMaster
+(p)23100
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Can set other people's internals in slots other than the back.
+(t)sat apr 26 25
+(u)glowbold
+(p)23037
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawyers get a special legal license they can show off.
+(u)Flappybat
+(p)23141
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Deconstructing an object will unglue anything that is glued to it.
+(t)fri apr 25 25
+(u)LeahTheTech
+(p)23120
+(e)🚄|C-Performance
+(*)Reduced ocean clutter spawns in an attempt to improve client performance.
+(u)JORJ949
+(p)23114
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Clicking the Wiki button now opens your job's wiki page
+(u)glowbold
+(p)23044
+(e)⚖🌠|C-Balance, A-Events
+(+)White holes throw items through the edge of their effect. Update your containment protocols!
+(t)wed apr 23 25
+(u)Lord_Earthfire
+(p)23090
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Buttbombs have been removed. Instead, butts can be attached onto trigger/igniter assemblies for the same effect.
+(+)Butts can be attached with timers/mousetraps/prox sensors/health analysers/signalers to fart when activated
+(+)Butts in assemblies emit small amounts of fart gas when triggered.
+(u)TDHooligan
+(p)23091
+(e)⚖|C-Balance
+(+)Gangs armor vest is cheaper.
+(u)glowbold
+(p)23076
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can load staples into a zip gun by using a staple gun or stapler on it.
+(t)tue apr 22 25
+(u)glowbolds
+(p)23096
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Arcfiends recieve a text popup showing how much power they're draining from targets.
+(u)LeahTheTech
+(*)The "liquid plasma" disease reagent has been renamed to "activated plasma".
+(u)Lord_Earthfire
+(p)23095
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Adding items onto assemblies puts the finished assembly into your hand.
+(u)Jan.antilles
+(p)22922
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)Syndicate Intelligence maximum length reduced from 4000 to 2000 characters.
+(u)glowbold
+(p)23080
+(e)⚖🔨|C-Balance, A-Player-Actions
+(+)The SMES Human gene is as rare as x-ray/gamma ray. There is a gene combination recipe to create it.
+(t)mon apr 21 25
+(u)LeahTheTech + Cogwerks
+(*)Added an informational poster to all mining departments.
+(u)CalliopeSoups
+(p)23024
+(e)⚖|C-Balance
+(+)Chem condensers now accept any crystal material.
+(t)sun apr 20 25
+(u)Emily
+(*)Ranch Module moved to open source. Please report bugs to Emily. Happy Easter 420!
+(u)JORJ949
+(p)22879
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Command now have spare circuit boards for their departmental ID and announcement computers.
+(u)Lord_Earthfire
+(p)23053
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Promity sensors and timers start out a a 5 second timer. You are still able to set them to a lower time, if you want.
+(t)sat apr 19 25
+(u)FlameArrow57
+(p)22789
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Asteroids may now contain a rare metal, such as plutonium
+(u)CalliopeSoups
+(p)23049
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now throw people into open washing machines.
+(u)glowbold
+(p)22950
+(e)🪲🔄📦⚗|C-Bug, C-Rework, A-Game-Objects, A-Chemistry
+(*)Portable air scrubbers use less power, but process less air at a time. You may want to bring more than one to the next toxins workplace "accident".
+(u)Nexusuxen
+(p)22908
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The glow from radioactive stuff will still shine around you even when you equip or pick them up.
+(u)glowbold
+(p)22865
+(e)⛔📄🔨|C-Removal, A-UI, A-Player-Actions
+(+)Zoldorf cannot be possesed by the once-living.
+(t)fri apr 18 25
+(u)JORJ949
+(p)22940
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)Armory weapons racks now require armory access unless hacked or authorised.
+(u)Lord_Earthfire
+(p)23035
+(e)🎨🔄📦|C-Sprites, C-Rework, A-Game-Objects
+(*)Removes non-assembly pipebombs from the game. Every type of pipebomb (mini-syndicates, controlled demolition pipes) spawn as timer/igniter/pipebomb-assemblies now.
+(+)Mini syndicate pipebombs and controlled demolition pipes now have been given cabled pipebomb forms that can be gained from disassembling their corresponding assemblies, ready to be used in other assemblies.
+(+)Applying cables during the pipebomb crafting process now consumes 3 pieces of the cable coil
+(u)Lord_Earthfire
+(p)23036
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Falling while juggling assemblies might set them off, even if you were very and absolutely clowntastically sure they were unsecured.
+(u)LeahTheTech
+(+)Timers are now accurate to the second.
+(t)wed apr 16 25
+(u)LeahTheTech
+(+)It is with great sadness I must inform you that foam darts no longer cook off due to intense heat.
+(u)Lord_Earthfire
+(p)22115
+(e)🪲🎨🔄📦|C-Bug, C-Sprites, C-Rework, A-Game-Objects
+(*)The way of constructing igniter/pipebomb/whatever-assemblies has been completely reworked. Check out the PR page for full details.
+(*)The assembly of canbombs has been changed. You start their construction with a timer/multitool/plasma-tank-assembly, add an igniter to it, add some cabling and then you can complete the construction or add additions like bikehorns or signalers to it.
+(t)mon apr 14 25
+(u)JORJ949
+(p)22946
+(e)🔄🏅|C-Rework, A-Medal
+(*)Changed how the "Suitable? How about the Oubliette?!" medal is obtained. See the PR or Wiki for details!
+(u)glowbold
+(p)22943
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Click-dragging barcodes will not attach them to objects or mobs.
+(*)The cyborg Mining module now has a portable barcoder.
+(t)sat apr 12 25
+(u)glowbold
+(p)22928
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Silicons use power when attacking mobs with tools.
+(u)JORJ949
+(p)22911
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Nanotrasen Officials now have special badges!
+(u)JORJ949
+(p)22910
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Whistles can now be worn on the belt!
+(u)glowbold
+(p)22924
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Mechanics Reconstruction Kit requires Chief Engineer access to unlock.
+(u)CalliopeSoups
+(p)22942
+(e)🎨|C-Sprites
+(+)You can now play basketball with skeleton crew's heads.
+(u)glowbold
+(p)22871
+(e)🧫🔄📄🧛|C-Experimental, C-Rework, A-UI, A-Gamemodes
+(*)Arcfiend Sap Power and Discharge have been reworked. More details in minor notes.
+(+)Sap Power pulls from APCs, SMESs, and Machines at roughly half the current rate.
+(+)Sapping power from a broken machine/APC/SMES doubles the amount of power you receive.
+(+)Discharge can target machines, including APCs and SMESs, to overload and break them.
+(u)Facsimile, swinglow20
+(p)21058
+(e)🆕🎨🔄📦|C-Feature, C-Sprites, C-Rework, A-Game-Objects
+(*)Adds the Text to Music component, a smaller version of the Player Piano. See the book in the MechComp vendor for more details.
+(t)fri apr 11 25
+(u)Sord
+(+)You can now order fully automatic (but weaker) Phaser SMGs from cargo.
+(+)The phaser rack in the armory now has a chance to be a phaser SMG rack or normal phaser rack.
+(u)LeahTheTech
+(*)All pod wars manufacturers on the same team now share their resources.
+(u)RubberRats
+(p)22936
+(e)🪲🍝|C-Bug, A-Catering
+(+)Unbreaks several cooking recipes, whoops!
+(t)thu apr 10 25
+(u)RubberRats
+(p)22921
+(e)📦|A-Game-Objects
+(+)Adds the buclear nomb.
+(t)wed apr 09 25
+(u)tarmunora
+(+)Added glass eyes.
+(u)Dr. Cogwerks
+(+)Detectives now start with a zoomable fancy camera in their bag
+(+)Press Shift to zoom, like the sniper rifle
+(t)tue apr 08 25
+(u)RubberRats
+(p)22914
+(e)|
+(+)Rockworms no longer eat their own poop.
+(u)Facsimile
+(p)22830
+(e)🔊📦|C-Sound, A-Game-Objects
+(+)Increases the Glockenspiel's loudness.
+(u)glowbold
+(p)22892
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)SMES units broken by explosions will emit dangerous shocks and stop charging. They can be repaired with common engineering tools and wires.
+(t)mon apr 07 25
+(u)RubberRats
+(p)22895
+(e)🔎🍝|C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed internally, please report any issues that crop up
+(u)CalliopeSoups
+(p)22818
+(e)🎨🔨|C-Sprites, A-Player-Actions
+(+)Type *nudge or *adjust to do the funny nerd glasses push up. Further fx support for basic glasses and most goggles.
+(t)sun apr 06 25
+(u)sunnyaries
+(p)22665
+(e)🆕|C-Feature
+(+)Added cyborg legs as part of character customization.
+(u)sunnyaries
+(p)22664
+(e)⚖|C-Balance
+(+)Light borg legs no longer negate speed penalties.
+(u)Xenomni, Ribbie
+(p)22690
+(e)🆕🎨|C-Feature, C-Sprites
+(*)Added denim dresses to clothing booth.
+(+)Added six different colored denim dresses to the clothing booth; blue, turquoise, white, black, grey and khaki, purchasable for 50 credits.
+(u)glowbold
+(p)22737
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Journalists, Hollywood Actors, and Influencers spawn on the NSV Renanin with the Radio Show Host.
+(+)The NSV Renanin is outfitted with a printing press, TV studio, green room, cargo pad, and emergency pod manufacturer.
+(u)JORJ949
+(p)22778
+(e)⚖⛔🐣|C-Balance, C-Removal, A-Respawning
+(+)Chaplains can roll roundstart vampire again (They are immune to burning in the chapel).
+(u)Colossusqw
+(p)21781
+(e)🆕🎨⚖🧛🔨|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Player-Actions
+(*)Changelings now have a variety of sting options to choose from, sharing a collective cooldown. (Minor changes for details)
+(+)Now changelings can swap between a neurotoxin sting(50us, 140s cooldown), a neurodepressant (5u, 20s), hemotoxin (9u, 30s), and madness toxin sting (15u, 240s cooldown, 5 DNA points).
+(+)Neurotoxin now paralyses instead of causing a KO, and is a changeling sting both in the classic and RP server.
+(u)Vic
+(p)22779
+(e)💅🐁|C-QoL, A-Critters
+(+)Ghostcritters no longer get hurt by ants. Go for that floor pickle!
+(t)sat apr 05 25
+(u)glowbold
+(p)22872
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Footprints in snow.
+(u)FlameArrow57
+(p)22855
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)SMES units are now mechscannable
+(u)FlameArrow57
+(p)22422
+(e)🆕🎨📦🚗|C-Feature, C-Sprites, A-Game-Objects, A-Vehicles
+(+)Added a new pod gunner module component. It allows passengers to fire weak phaser bolts while the ship's main weapon is active in an ordinal direction through left clicking. Shared cooldown among all passengers
+(u)Jan.antilles
+(p)22853
+(e)⚖|C-Balance
+(+)Securitrons can no longer be printed from the robotics fabricator, and have to be assembled by hand.
+(t)fri apr 04 25
+(u)RubberRats
+(p)22806
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Silver has been given a unique overdose effect
+(t)thu apr 03 25
+(u)LeahTheTech
+(+)Stinging nettles will no longer sting maneaters.
+(u)glowbold
+(p)22838
+(e)🆕🔊🔨|C-Feature, C-Sound, A-Player-Actions
+(+)The wonderful sound of snow crushed under foot.
+(u)glowbold
+(p)22794
+(e)🆕💪|C-Feature, A-Traits
+(+)Characters with a missing eye get an eyepatch on spawn.
+(u)Cogwerks
+(e)📦|B-Game-objects
+(+)Detective's forensics closet now has a version of the camera with a scope component for telephoto surveillance
+(t)tue apr 1 25
+(u)LeahTheTech
+(*)Improved workplace flow.
+(+)Removed Herobrine.
+(u)Azrun
+(e)🆕📦💳|C-Feature, C-Sprites, A-Game-Objects
+(+)Salvagers got their hands on some ID cards.
+(t)mon mar 31 25
+(u)CalliopeSoups
+(p)22753
+(e)|
+(+)You can now put heads ontop of mechcomp cabinets like hats.
+(u)LeahTheTech
+(p)22804
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added flapjack, made with oatmeal, syrup and butter.
+(u)Dr. Cogwerks
+(e)📦🔊🎨|B-Game-Objects, C-Sound, C-Sprites
+(*)Updated hunting rifle to actually have a scope - wasn't meant to be a pointblank gun
+(*)OHR moved to standard traitor buylist
+(*)Chameleon projector made cheaper
+(*)New super-accurate competition pistol and anti-materiel cannon as nuke commander buylist options
+(*)Added slight warmup with visual indicator for RPG and multi-rocket launcher being shouldered
+(*)Less teamkills - more drama hopefully
+(t)sun mar 30 25
+(u)LeahTheTech
+(p)22793
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Ammo will cook off when exposed to high temperatures. Ammo in your inventory or in a gun is unaffected.
+(u)glowbold
+(p)22782
+(e)🆕|C-Feature
+(+)Miners may be tasked with taming rockworms as a crew objective.
 (t)sat mar 29 25
 (u)glowbold
 (p)22646

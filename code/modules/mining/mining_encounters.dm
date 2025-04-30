@@ -9,6 +9,26 @@
 	proc/generate(var/obj/magnet_target_marker/target)
 		return 0
 
+	proc/create_round_asteroid(obj/magnet_target_marker/target)
+		var/list/generated_turfs = list()
+		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
+		var/magnetic_center = mining_controls.magnetic_center
+		var/area_restriction = /area/mining/magnet
+		if (target)
+			magnetic_center = target.magnetic_center
+			area_restriction = null
+			size = min(size,min(target.width,target.height))
+
+		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
+
+		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+			AST.space_overlays()
+
+		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
+			AST.UpdateIcon()
+
+		return generated_turfs
+
 /datum/mining_encounter/asteroid_small
 	name = "Small Asteroid"
 	rarity_tier = -1
@@ -273,6 +293,29 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
+/datum/mining_encounter/zombie
+	name = "Hollow Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
+
+/datum/mining_encounter/artifact
+	name = "Fluctuating Asteroid"
+	rarity_tier = 2
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs = src.create_round_asteroid(target)
+
+		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
+		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
+
 
 /datum/mining_encounter/flock
 	name = "Flock Asteroid"
@@ -295,23 +338,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"miraclium",rand(2,9))
 
@@ -323,23 +350,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"mauxite",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -352,23 +363,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		var/list/left = Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"gold",rand(2,4))
 		Turfspawn_Asteroid_SeedSpecificOre(left,"syreline",rand(3,6))
@@ -382,23 +377,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"molitz",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -411,23 +390,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"pharosium",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -440,23 +403,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"bohrum",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -469,23 +416,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"char",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -498,23 +429,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"nanite cluster",rand(2,5))
 
@@ -526,23 +441,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(1,4))
 
@@ -554,23 +453,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"cerenkite",rand(2,8))
 
@@ -582,23 +465,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"koshmarite",rand(2,8))
 
@@ -610,23 +477,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"viscerite",rand(2,8))
 
@@ -638,23 +489,7 @@
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
 			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
-
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
-
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"starstone",rand(1,2))
 // Terrain Gen Procs
@@ -1075,7 +910,7 @@
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
 			if (prob(O.event_chance) && length(O.events) > 0)
-				var/new_event = pick(O.events)
+				var/new_event = weighted_pick(O.events)
 				var/datum/ore/event/E = new new_event
 				E.set_up(O)
 				AST.set_event(E)
@@ -1103,5 +938,14 @@
 			amount++
 			continue
 		AST.set_event(E)
+
+/proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs, num_artifacts)
+	var/turf/simulated/wall/auto/asteroid/AST
+
+	shuffle_list(turfs)
+
+	for (var/i in 1 to min(length(turfs), num_artifacts))
+		AST = turfs[i]
+		AST.set_event(/datum/ore/event/artifact)
 
 #undef TURF_SPAWN_EDGE_LIMIT

@@ -549,15 +549,19 @@
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
-			if (ship.sensors)
-				if (ship.sensors.active)
-					var/obj/machinery/vehicle/target_pod = target
-					if (src.loc != target_pod && istype(target_pod))
-						ship.sensors.end_tracking()
-						ship.sensors.quick_obtain_target(target_pod)
-				else
-					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			if (ship.pilot == src)
+				if (ship.sensors)
+					if (ship.sensors.active)
+						var/obj/machinery/vehicle/target_pod = target
+						if (src.loc != target_pod && istype(target_pod))
+							ship.sensors.end_tracking()
+							ship.sensors.quick_obtain_target(target_pod)
+					else
+						if (istype(target, /obj/machinery/vehicle))
+							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
+			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+				support_gunner.fire_at(target, src)
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
@@ -1247,7 +1251,6 @@
 		if (( \
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
-			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
@@ -1275,13 +1278,6 @@
 						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !my_client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
-			else if(istype(M, /mob/zoldorf))
-				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (GET_DIST(M,say_location) <= viewrange)
-					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
-						M.show_message(thisR, 2, assoc_maptext = chat_text)
-				else
-					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
 

@@ -477,7 +477,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
-		path = /obj/item/tank/emergency_oxygen  // oh boy they'll need this if they are unlucky
+		path = /obj/item/tank/pocket/oxygen  // oh boy they'll need this if they are unlucky
 		icon = 'icons/obj/large/32x64.dmi'
 		icon_state = "arrival_missile"
 		icon_dir = SOUTH

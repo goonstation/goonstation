@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	icon_state = "nuclearbomb"//1"
 	density = 1
 	anchored = UNANCHORED
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	_health = 150
 	_max_health = 150
 	processing_tier = PROCESSING_FULL
@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
+	var/emagged = FALSE
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
 	var/obj/item/record/record = null
@@ -365,6 +366,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.take_damage(power)
 		return
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(!src.emagged)
+			boutput(user, SPAN_ALERT("You try jamming [E] into [src]'s authentication disk slot. That's definitely gonna void the warranty."))
+			src.name = "buclear nomb"
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
+
 	meteorhit()
 		src.take_damage(rand(30,60))
 
@@ -599,11 +608,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return FALSE
 
 	get_desc(dist, mob/user)
-		var/can_user_recognize = !extremely_convincing && \
-			( \
-				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
-				dist <= src.recognizable_range || (FACTION_SYNDICATE in user?.faction) \
-			)
+		var/can_user_recognize = !extremely_convincing && (istrainedsyndie(user) || dist <= src.recognizable_range)
 		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
 			. = "<br>An extremely powerful balloon capable of deceiving the whole station."
 		else

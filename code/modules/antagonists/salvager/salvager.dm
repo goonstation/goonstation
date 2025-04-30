@@ -42,12 +42,14 @@
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), SLOT_BACK)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), SLOT_SHOES)
 		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), SLOT_GLOVES)
 		H.equip_if_possible(new /obj/item/salvager(H), SLOT_BELT)
 		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), SLOT_WEAR_ID)
+		var/obj/item/device/pda2/salvager_pda = locate() in H
+		salvager_pda.insert_id_card(new /obj/item/card/id/salvager(H), H)
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_IN_BACKPACK)

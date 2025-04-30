@@ -12,7 +12,7 @@ datum/mind
 	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
-	var/miranda // sec's miranda rights thingy.
+	var/miranda = null // sec's miranda rights thingy.
 
 	var/violated_hippocratic_oath = 0
 	var/soul = 100 // how much soul we have left
@@ -106,7 +106,7 @@ datum/mind
 			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
-				tgui_process.on_transfer(current, new_character)
+				tgui_process?.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
 			current.oldmind = src
 			current.mind = null
@@ -221,8 +221,9 @@ datum/mind
 		miranda = new_text
 
 	proc/get_miranda()
-		if (islist(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
-			return call(src.miranda[1])()
+		if (isnull(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
+			var/datum/job/job = find_job_in_controller_by_string(src.assigned_role)
+			return job.get_default_miranda()
 		return src.miranda
 
 	proc/show_miranda(mob/recipient)

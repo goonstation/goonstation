@@ -143,7 +143,6 @@
 		/datum/manufacture/stapler,
 		/datum/manufacture/surgical_spoon,
 		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
 		/datum/manufacture/medbot,
 		/datum/manufacture/firebot,
 		/datum/manufacture/floorbot,
@@ -397,6 +396,7 @@
 		/datum/manufacture/pod/heavy_shielding,
 		/datum/manufacture/pod/auto_repair_kit,
 		/datum/manufacture/pod/weapons_loader,
+		/datum/manufacture/pod/gunner_support,
 		/datum/manufacture/beaconkit,
 		/datum/manufacture/podgps
 	)
@@ -667,6 +667,8 @@
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
+		/datum/manufacture/turbine_shaft,
+		/datum/manufacture/current_turbine,
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
 		/datum/manufacture/cable/reinforced,
