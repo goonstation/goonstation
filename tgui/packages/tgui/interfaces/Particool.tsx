@@ -423,7 +423,7 @@ const ParticleGeneratorEntry = (props) => {
   );
 };
 
-const ParticleTextEntry = (props, context) => {
+const ParticleTextEntry = (props) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
 

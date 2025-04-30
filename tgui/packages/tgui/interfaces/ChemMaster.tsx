@@ -387,7 +387,7 @@ export const MakePills = (props) => {
   );
 };
 
-export const MakeBottle = (props, context) => {
+export const MakeBottle = (props) => {
   const { act, data } = useBackend<ChemMasterData>();
 
   const [bottle_amount, set_bottle_amount] = useSharedState(

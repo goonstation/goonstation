@@ -95,7 +95,7 @@ const Status = () => {
   );
 };
 
-const InputControls = (props, context) => {
+const InputControls = (props) => {
   const { act, data } = useBackend<PowerTransmissionLaserData>();
   const {
     isChargingEnabled,

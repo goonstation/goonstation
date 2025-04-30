@@ -24,7 +24,7 @@ type Status = {
   color: string;
 };
 
-export const ManualAnnouncement = (_props, context) => {
+export const ManualAnnouncement = (_props) => {
   const { act, data } = useBackend<AnnouncementCompData>();
   const { card_name, status_message, time, max_length } = data;
 

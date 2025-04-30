@@ -163,7 +163,7 @@ export const AppearanceEditor = (props) => {
   );
 };
 
-const ColorInput = (params, context) => {
+const ColorInput = (params) => {
   const { color, onChange, fix } = params;
 
   const r = parseInt(color.substr(1, 2), 16);
