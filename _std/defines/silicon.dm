@@ -19,3 +19,6 @@
 #define ROBOT_KILLSWITCH_DURATION 1 MINUTE
 /// AI killswitch timer duration
 #define AI_KILLSWITCH_DURATION 3 MINUTES
+
+/// Cyborg lockdown timer duration
+#define ROBOT_LOCKDOWN_DURATION 2 MINUTES
