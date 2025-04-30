@@ -121,9 +121,7 @@ export const ChemRequester = () => {
                     onChange={(e, value) => {
                       act('set_notes', { notes: value });
                     }}
-                  >
-                    {notes}
-                  </Input>
+                  />
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
