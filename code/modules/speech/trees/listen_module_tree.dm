@@ -177,7 +177,7 @@
 				return
 
 	// Add a copy of the message to the message buffers of all importing listen module trees.
-	if (message.flags & SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES)
+	if (!(message.flags & SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES))
 		for (var/datum/listen_module_tree/tree as anything in src.message_importing_trees)
 			if (!tree.enabled)
 				continue
