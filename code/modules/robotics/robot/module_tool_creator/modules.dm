@@ -146,7 +146,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/device/light/flashlight,
 		/obj/item/tool/omnitool/silicon,
-		/obj/item/robodefibrillator,
+		/obj/item/robodefibrillator/cyborg,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
