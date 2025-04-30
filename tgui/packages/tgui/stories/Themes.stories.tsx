@@ -25,7 +25,7 @@ const Story = () => {
           <Input
             placeholder="theme_name"
             value={theme}
-            onInput={(_e, value) => setTheme(value)}
+            onChange={(value) => setTheme(value)}
           />
         </LabeledList.Item>
       </LabeledList>

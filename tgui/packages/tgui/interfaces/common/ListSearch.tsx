@@ -44,7 +44,7 @@ export const ListSearch = (props: ListSearchProps) => {
         <Input
           autoFocus={autoFocus}
           fluid
-          onInput={handleSearch}
+          onChange={handleSearch}
           placeholder={searchPlaceholder}
           value={currentSearch}
         />

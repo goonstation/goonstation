@@ -58,7 +58,11 @@ export const BanList = (props: BanListProps) => {
       <Stack.Item>
         <Flex pt={1}>
           <Flex.Item direction="column" mx={1} wrap="wrap">
-            <Input value={searchText} onInput={handleSearchTextChange} mr={1} />
+            <Input
+              value={searchText}
+              onChange={handleSearchTextChange}
+              mr={1}
+            />
             <Button icon="magnifying-glass" onClick={handleSearch}>
               Search
             </Button>

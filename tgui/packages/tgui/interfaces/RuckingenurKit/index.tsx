@@ -31,7 +31,7 @@ export const RuckingenurKit = () => {
           buttons={
             <label>
               Filter items:{' '}
-              <Input value={filter} onInput={(value) => setFilter(value)} />
+              <Input value={filter} onChange={(value) => setFilter(value)} />
             </label>
           }
         >

@@ -25,7 +25,7 @@ export const ChemiCompilerTextArea = () => {
   return (
     <TextArea
       value={localInputValue}
-      onInput={(value) => {
+      onChange={(value) => {
         setLocalInputValue(value);
         act('updateInputValue', { value });
       }}
