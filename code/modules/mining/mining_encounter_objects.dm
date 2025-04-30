@@ -76,6 +76,9 @@
 		..()
 		src.pedestals = null
 
+	allowed(mob/M)
+		return FALSE
+
 	proc/check_puzzle_solved()
 		var/pedestals_on = 0
 		SPAWN(0.1 SECOND) // to prevent race condition for opening the door upon making an activation and deactivation at the same time
@@ -132,13 +135,6 @@
 		src.target = target
 		src.converter = converter
 
-	onUpdate()
-		..()
-		var/mob/living/critter/flock/F = owner
-		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
 	onStart()
 		..()
 		if (src.interrupt_check())
@@ -146,12 +142,21 @@
 			return
 		src.decal = start_flock_conversion(src.target)
 
+	onUpdate()
+		..()
+		if (src.interrupt_check())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 	onInterrupt(var/flag)
 		..()
 		QDEL_NULL(src.decal)
 
 	onEnd()
 		..()
+		if (src.interrupt_check())
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		QDEL_NULL(src.decal)
 		flock_convert_turf(target)
 		playsound(target, 'sound/items/Deconstruct.ogg', 30, TRUE, extrarange = -10)
