@@ -50,9 +50,9 @@
 						var/mob/living/silicon/ai/ai_player = locate(params["mob_ref"])
 						if (QDELETED(ai_player))
 							return
-						message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(message)]."))
-						logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(message,"combat")]")
-						ai_player.setStatus("killswitched_ai", AI_KILLSWITCH_DURATION)
+						message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(ai_player)]."))
+						logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(ai_player,"combat")]")
+						ai_player.setStatus("killswitch_ai", AI_KILLSWITCH_DURATION)
 					else
 						boutput(usr, SPAN_ALERT("Access Denied."))
 				return TRUE
@@ -60,9 +60,9 @@
 				var/mob/living/silicon/ai/ai_player = locate(params["mob_ref"])
 				if (QDELETED(ai_player))
 					return
-				ai_player.delStatus("killswitched_ai")
-				message_admins(SPAN_ALERT("[key_name(usr)] has stopped the AI self destruct on [key_name(message, 1, 1)]."))
-				logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(message,"combat")].")
+				ai_player.delStatus("killswitch_ai")
+				message_admins(SPAN_ALERT("[key_name(usr)] has stopped the AI self destruct on [key_name(ai_player, 1, 1)]."))
+				logTheThing(LOG_COMBAT, usr, "has stopped the AI killswitch process on [constructTarget(ai_player,"combat")].")
 				return TRUE
 			if ("start_silicon_killswitch")
 				var/obj/item/card/id/I = usr.equipped()
@@ -137,7 +137,7 @@
 	var/list/cyborgs = list()
 
 	for_by_tcl(A, /mob/living/silicon/ai)
-		var/datum/statusEffect/killswitched/killswitch_ai_status = A.hasStatus("killswitched_ai")
+		var/datum/statusEffect/killswitch/killswitch_ai_status = A.hasStatus("killswitch_ai")
 		ais += list(list(
 			"name" = A.name,
 			"mob_ref" = "\ref[A]",
@@ -148,7 +148,7 @@
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			if(QDELETED(R))
 				continue
-			var/datum/statusEffect/killswitched/killswitch_robot_status = A.hasStatus("killswitched_robot")
+			var/datum/statusEffect/killswitch/killswitch_robot_status = A.hasStatus("killswitch_robot")
 			cyborgs += list(list(
 				"name" = R.name,
 				"mob_ref" = "\ref[R]",

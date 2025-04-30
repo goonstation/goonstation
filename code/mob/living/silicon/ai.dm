@@ -2798,8 +2798,8 @@ proc/get_mobs_trackable_by_AI()
 		. = ..()
 		src.owner.setStatus("unconscious", 5 SECONDS)
 
-/datum/statusEffect/killswitched/ai
-	id = "killswitched_ai"
+/datum/statusEffect/killswitch/ai
+	id = "killswitch_ai"
 	var/mob/living/silicon/ai/ai
 
 	preCheck(atom/A)
