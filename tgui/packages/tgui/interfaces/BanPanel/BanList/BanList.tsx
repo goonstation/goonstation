@@ -43,7 +43,7 @@ export const BanList = (props: BanListProps) => {
   const [searchFilter, setSearchFilter] = useState(BanPanelSearchFilter.ckey);
   const handleSearch = () =>
     action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
-  const handleSearchTextChange = (_e, value: string) => setSearchText(value);
+  const handleSearchTextChange = (value: string) => setSearchText(value);
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
   const handlePerPageChange = (value: number) => action.setPerPage(value);

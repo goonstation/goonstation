@@ -213,7 +213,7 @@ export const SpawnEvent = () => {
                 value={objective_text}
                 fluid
                 height={5}
-                onChange={(_, value) =>
+                onChange={(value) =>
                   act('set_objective_text', { objective_text: value })
                 }
               />

@@ -34,7 +34,7 @@ export const ChatPageSettings = (props) => {
           <Input
             width="100%"
             value={page.name}
-            onChange={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateChatPage({
                   pageId: page.id,

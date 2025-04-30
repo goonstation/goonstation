@@ -120,7 +120,7 @@ export const ObserverMenu = () => {
                 width={20}
                 autoFocus
                 autoSelect
-                onInput={(_, value) => onSearch(value)}
+                onInput={(value) => onSearch(value)}
                 placeholder="Search by name or job"
                 value={searchQuery}
               />

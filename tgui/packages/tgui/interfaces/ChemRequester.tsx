@@ -115,7 +115,7 @@ export const ChemRequester = () => {
                     width="100%"
                     value={notes}
                     maxLength={65}
-                    onChange={(e, value) => {
+                    onChange={(value) => {
                       act('set_notes', { notes: value });
                     }}
                   />

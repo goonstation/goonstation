@@ -358,7 +358,7 @@ const SearchBar = (props) => {
         event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
       }}
-      onInput={(_, value) => onSearch(value)}
+      onInput={(value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />

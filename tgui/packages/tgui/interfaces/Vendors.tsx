@@ -132,7 +132,7 @@ export const Vendors = () => {
                       </Button>
                       <Button.Input
                         defaultValue={name}
-                        onCommit={(e, value) => act('rename', { name: value })}
+                        onCommit={(value) => act('rename', { name: value })}
                       >
                         {name}
                       </Button.Input>
@@ -181,7 +181,7 @@ export const Vendors = () => {
                             tooltip="Set as displayed product"
                           />
                           <Button.Input
-                            onCommit={(_e, value) => {
+                            onCommit={(value) => {
                               const parsedPrice = parseInt(value, 10);
                               if (!isNaN(parsedPrice)) {
                                 act('setPrice', {

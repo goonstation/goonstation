@@ -34,7 +34,7 @@ export const ListSearch = (props: ListSearchProps) => {
     searchPlaceholder = 'Search...',
     selectedOption = null,
   } = props;
-  const handleSearch = (_e, value: string) => {
+  const handleSearch = (value: string) => {
     onSearch(value);
   };
   const cn = classes(['list-search-interface', className]);

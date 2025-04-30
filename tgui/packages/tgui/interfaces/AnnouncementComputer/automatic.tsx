@@ -28,7 +28,7 @@ export const AutomaticAnnouncement = (_props: unknown) => {
         <Stack.Item>
           <Input
             fluid
-            onChange={(e, value) => act('arrival_message', { value })}
+            onChange={(value) => act('arrival_message', { value })}
             placeholder="Type something..."
             value={arrivalalert}
           />

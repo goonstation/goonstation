@@ -385,7 +385,7 @@ export const ChemGroups = () => {
             <Input
               placeholder="Group Name"
               value={groupName}
-              onInput={(_e, value: string) => setGroupName(value)}
+              onInput={(value: string) => setGroupName(value)}
             />
             <Button
               icon="plus-circle"

@@ -135,7 +135,7 @@ export const BioEffect = (props) => {
                 <Input
                   width={25}
                   value={booth.desc}
-                  onChange={(_, desc) =>
+                  onChange={(desc) =>
                     setBooth({
                       ref: booth.ref,
                       price: booth.price,

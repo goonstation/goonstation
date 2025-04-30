@@ -87,7 +87,7 @@ export function SettingsGeneral(props) {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(e, value) =>
+                  onChange={(value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,

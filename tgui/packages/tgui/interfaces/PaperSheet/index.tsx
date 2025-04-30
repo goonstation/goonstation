@@ -290,8 +290,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return out;
   };
 
-  const onInputHandler = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    let value = (event.target as HTMLTextAreaElement).value;
+  const onInputHandler = (value) => {
     if (value !== textAreaText) {
       const combinedLength = oldText.length + textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {

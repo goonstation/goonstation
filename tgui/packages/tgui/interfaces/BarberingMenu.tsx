@@ -67,7 +67,7 @@ const HairStyleSearchBox = (props) => {
       <Stack.Item grow>
         <Input
           style={{ width: '100%' }}
-          onInput={(_e, value) => onInput(value)}
+          onInput={(value) => onInput(value)}
           placeholder="Search..."
         />
       </Stack.Item>

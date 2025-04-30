@@ -49,7 +49,7 @@ export const FilterEntry = (props) => {
           />
           <Button.Input
             placeholder={name}
-            onCommit={(e, new_name) =>
+            onCommit={(new_name) =>
               act('rename_filter', {
                 name: name,
                 new_name: new_name,

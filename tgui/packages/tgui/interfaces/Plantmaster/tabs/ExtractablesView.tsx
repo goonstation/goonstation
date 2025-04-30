@@ -141,7 +141,7 @@ const MemoizedExtractablesView = memo(
                   textColor="#FFFFFF"
                   defaultValue={item.name}
                   currentValue={item.name}
-                  onCommit={(_e, new_name) =>
+                  onCommit={(new_name) =>
                     act('label', {
                       label_ref: item.item_ref,
                       label_new: new_name,

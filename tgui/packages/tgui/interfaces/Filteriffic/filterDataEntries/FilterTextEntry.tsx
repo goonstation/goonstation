@@ -24,7 +24,7 @@ export const FilterTextEntry = (props: FilterTextEntryProps) => {
     <Input
       value={value ?? ''}
       width="250px"
-      onInput={(_e, value) =>
+      onInput={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {

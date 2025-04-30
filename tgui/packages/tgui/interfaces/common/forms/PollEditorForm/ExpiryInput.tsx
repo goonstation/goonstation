@@ -49,7 +49,7 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
       expiryValue: '',
     });
   };
-  const handleChangeValuePart = (_e: unknown, newValue: string) =>
+  const handleChangeValuePart = (newValue: string) =>
     onChange({
       expiryType,
       expiryValue: newValue,

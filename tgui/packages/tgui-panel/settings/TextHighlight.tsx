@@ -149,7 +149,7 @@ function TextHighlightSetting(props) {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onInput={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -164,7 +164,7 @@ function TextHighlightSetting(props) {
         height="3em"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        onChange={(e, value) =>
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,
