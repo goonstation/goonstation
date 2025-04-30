@@ -310,10 +310,11 @@
 	src.UpdateDamageIcon()
 	return
 
-/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
+/mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE, hit_twitch = TRUE)
 	if (src.nodamage || QDELETED(src)) return
 
-	hit_twitch(src)
+	if (hit_twitch)
+		hit_twitch(src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal") && !bypass_reversal)
 		src.HealDamage(zone, brute, burn, tox, TRUE)
@@ -640,8 +641,6 @@
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
-
-	src.brain_level.set_icon_state(min(round(src.get_brain_damage(), 10), INTRUDER_MAX_BRAIN_THRESHOLD))
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

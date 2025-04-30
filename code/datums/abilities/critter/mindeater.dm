@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Regenerate"
 	desc = "Consume Brain to regenerate health."
 	icon_state = "regenerate"
-	pointCost = 5
+	pointCost = 1
 
 	tryCast()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Drain 3 brain per second from a target in range."
+	desc = "Drain 3 brain power per second from a target in range."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 7
-	pointCost = 25
+	pointCost = 15
 
 	tryCast(atom/target)
 		target = src.get_nearest_living(target)
@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 45 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
-	pointCost = 15
+	pointCost = 10
 
 	cast(atom/target)
 		. = ..()
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Disguise"
 	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
-	pointCost = 50
+	pointCost = 0
 	reveals_on_use = TRUE
 	var/chosen_option
 
@@ -330,7 +330,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			return
 
 		var/mob/living/critter/mindeater/mindeater = src.owner
-		mindeater.HealDamage("All", 5, 5)
+		mindeater.HealDamage("All", 3, 3)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		abil_holder.deductPoints(1)
 		src.onRestart()
@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (src.target.get_brain_damage() >= 60)
+		if (GET_ATOM_PROPERTY(src.target, PROP_MOB_MIND_EATEN_PERCENT) >= 25)
 			if (!ON_COOLDOWN(src.target, "mindeater_brain_drain_msg", 5 SECONDS))
 				boutput(src.target, SPAN_ALERT("<b>[pick(src.possible_messages)]</b>"))
 
@@ -380,7 +380,25 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			return
 
 		if (ishuman(src.target))
-			src.target.take_brain_damage(3)
+			src.target.take_brain_damage(1)
+			var/mob/living/carbon/human/H = src.target
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, src.owner, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) + 3)
+			var/pct = GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT)
+			if (pct >= 100)
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, src.owner, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) - (pct - 100))
+				H.brain_level.set_icon_state("complete")
+			else
+				H.brain_level.set_icon_state(min(round(pct, 10), INTRUDER_MAX_BRAIN_THRESHOLD))
+			var/pick = rand(1, 4)
+			switch (pick)
+				if (1)
+					H.take_brain_damage(1)
+				if (2)
+					H.TakeDamage("All", 1, hit_twitch = FALSE)
+				if (3)
+					H.TakeDamage("All", burn = 1, hit_twitch = FALSE)
+				if (4)
+					H.TakeDamage("All", tox = 1, hit_twitch = FALSE)
 		else if (istype(src.target, /mob/living/silicon/ai))
 			src.target.TakeDamage("All", 15, damage_type = DAMAGE_CRUSH) // 15 - 20 seconds to kill
 		else
