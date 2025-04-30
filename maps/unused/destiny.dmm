@@ -14373,7 +14373,7 @@
 /area/listeningpost)
 "bAZ" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/listeningpost)
@@ -14381,14 +14381,14 @@
 /obj/machinery/vending/cola/blue{
 	credit = 12
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetN"
 	},
 /area/listeningpost)
 "bBb" = (
 /obj/submachine/chef_sink/chem_sink,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/listeningpost)
@@ -14420,12 +14420,12 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "bBf" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/listeningpost)
 "bBg" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpet2"
 	},
@@ -14434,7 +14434,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/listeningpost)
@@ -14459,7 +14459,7 @@
 	},
 /area/listeningpost)
 "bBl" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/listeningpost)
@@ -14481,7 +14481,7 @@
 "bBo" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/listeningpost)
@@ -14489,7 +14489,7 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetS"
 	},
@@ -14498,7 +14498,7 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/item/pinpointer,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/listeningpost)

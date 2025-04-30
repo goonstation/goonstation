@@ -1422,7 +1422,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -3257,7 +3257,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3438,7 +3438,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5091,7 +5091,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -5937,7 +5937,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6055,7 +6055,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -6171,7 +6171,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -6347,7 +6347,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6392,7 +6392,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -7334,7 +7334,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -7381,7 +7381,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -10046,7 +10046,7 @@
 /turf/space,
 /area/meteor/dock)
 "zQ" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/sim/area2)
@@ -10058,7 +10058,7 @@
 	desc = "A data logging utility represented as an audio logger.";
 	name = "Audiolog"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
@@ -10067,17 +10067,17 @@
 /obj/landmark{
 	name = "det_net"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
 "zT" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/sim/area2)
 "zU" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/sim/area2)
@@ -10120,7 +10120,7 @@
 	},
 /area/meteor/dock)
 "zZ" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/sim/area2)
@@ -10132,13 +10132,13 @@
 	},
 /obj/item/pen,
 /obj/item/pen,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/sim/area2)
 "Ab" = (
 /obj/table/woodentable,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/sim/area2)
@@ -10149,12 +10149,12 @@
 /obj/item/paper_bin{
 	pixel_y = 9
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpet2"
 	},
 /area/sim/area2)
 "Ad" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetE"
 	},
 /area/sim/area2)
@@ -10228,7 +10228,7 @@
 	},
 /area/sim/area2)
 "Ak" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/sim/area2)
@@ -10976,7 +10976,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -19215,7 +19215,7 @@
 /obj/stool/bed,
 /obj/landmark/start/job/captain,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
