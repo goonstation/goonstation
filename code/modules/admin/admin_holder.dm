@@ -191,6 +191,7 @@
 			"Delete",\
 			"Create Poster",\
 			"Set Material",\
+			"Say",\
 			)
 
 
