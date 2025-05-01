@@ -3887,13 +3887,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"yH" = (
+"yF" = (
 /obj/decal/stage_edge,
-/obj/machinery/computer/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yI" = (
@@ -4239,15 +4239,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"BC" = (
-/obj/decal/stage_edge,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer3/generic/personnel_management,
-/turf/simulated/floor/wood/two,
-/area/station/bridge)
 "BE" = (
 /obj/cable/orange,
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -4342,6 +4333,14 @@
 /obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Cf" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "Ch" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5448,6 +5447,15 @@
 /area/station/bridge)
 "Jf" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
+/area/station/bridge)
+"Jg" = (
+/obj/decal/stage_edge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor/wood/two,
 /area/station/bridge)
 "Jh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -6760,11 +6768,6 @@
 	icon_state = "1-4"
 	},
 /obj/storage/secure/closet/command/hos,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
-"Sy" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "SF" = (
@@ -48868,7 +48871,7 @@ CI
 aG
 up
 wA
-BC
+yF
 Bc
 Db
 Fy
@@ -49170,7 +49173,7 @@ rs
 sJ
 uC
 wM
-yH
+Jg
 Be
 Dn
 FA
@@ -50697,7 +50700,7 @@ Oc
 QF
 kD
 oF
-Sy
+Cf
 aG
 Rf
 Rf

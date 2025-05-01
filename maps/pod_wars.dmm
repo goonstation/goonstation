@@ -504,7 +504,7 @@
 /area/pod_wars/team1/bar)
 "bO" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -2751,7 +2751,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -4034,7 +4034,7 @@
 /area/pod_wars/spacejunk/nancy/warehouse)
 "ne" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -8253,7 +8253,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -11589,7 +11589,7 @@
 "KQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -12397,7 +12397,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/pod_wars/spacejunk/nancy)

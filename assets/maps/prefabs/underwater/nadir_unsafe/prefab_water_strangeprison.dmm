@@ -293,16 +293,13 @@
 "bc" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Security";
-	req_access_txt = "1"
+	name = "Security"
 	},
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "bd" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
@@ -355,9 +352,7 @@
 	},
 /area/prefab/sea_prison)
 "bo" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
@@ -402,8 +397,7 @@
 "bw" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Security";
-	req_access_txt = "1"
+	name = "Security"
 	},
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,

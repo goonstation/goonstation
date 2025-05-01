@@ -70,13 +70,33 @@ TYPEINFO(/obj/machinery/gibber)
 	if(src.occupant)
 		boutput(user, SPAN_ALERT("The gibber is full, empty it first!"))
 		return
-	if (!(istype(G, /obj/item/grab)) || !ishuman(G.affecting))
+	if (!(istype(G, /obj/item/grab)))
 		boutput(user, SPAN_ALERT("This item is not suitable for the gibber!"))
 		return
+	if (!(ishuman(G.affecting) || ismobcritter(G.affecting) || iscritter(G.affecting)))
+		boutput(user, SPAN_ALERT("This creature is not suitable for the gibber."))
+		return
+	var/monster = FALSE
+	if (ismobcritter(G.affecting))
+		var/mob/living/critter/critter = G.affecting
+		switch (critter.butcherable)
+			if (BUTCHER_NOT_ALLOWED)
+				boutput(user, SPAN_ALERT("This creature is not suitable for the gibber."))
+				return
+			if (BUTCHER_YOU_MONSTER)
+				monster = TRUE
+	else if (iscritter(G.affecting))
+		var/obj/critter/critter = G.affecting
+		switch (critter.butcherable)
+			if (BUTCHER_NOT_ALLOWED)
+				boutput(user, SPAN_ALERT("This creature is not suitable for the gibber."))
+				return
+			if (BUTCHER_YOU_MONSTER)
+				monster = TRUE
 	if (!isdead(G.affecting))
 		boutput(user, SPAN_ALERT("[G.affecting.name] needs to be dead first!"))
 		return
-	user.visible_message(SPAN_ALERT("[user] starts to put [G.affecting] onto the gibber!"))
+	user.visible_message(SPAN_ALERT("[user] starts to put [G.affecting] onto the gibber[monster ? ", <b>WHAT A MONSTER</b>" :""]!"))
 	src.add_fingerprint(user)
 	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/gibber/proc/gibber_action, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null)
 
@@ -208,6 +228,12 @@ TYPEINFO(/obj/machinery/gibber)
 	var/obj/item/reagent_containers/food/snacks/ingredient/meat/generated_meat
 	if (ischangeling(meat_source))
 		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
+	else if (ismobcritter(meat_source))
+		var/mob/living/critter/critter = meat_source
+		generated_meat = new critter.meat_type(spawn_location)
+	else if (iscritter(meat_source))
+		var/obj/critter/critter = meat_source
+		generated_meat = new critter.meat_type(spawn_location)
 	else
 		if(decomposed_level < 3) // fresh or fresh enough
 			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location, meat_source)

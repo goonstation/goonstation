@@ -180,6 +180,17 @@
 	},
 /turf/space,
 /area/space)
+"aaL" = (
+/obj/machinery/computer/announcement{
+	name = "Radio Station Announcement Computer";
+	req_access = null;
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/radiostation/bridge)
 "aaM" = (
 /obj/table/auto,
 /obj/item/device/audio_log/radioship/large/distress,
@@ -5786,11 +5797,6 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aGu" = (
-/turf/simulated/floor{
-	icon_state = "carpetNE"
-	},
-/area/radiostation/bedroom)
 "aGv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -14180,13 +14186,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
-"biZ" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
-	icon_state = "carpetSE"
-	},
-/area/radiostation/bedroom)
 "bja" = (
 /obj/item/storage/toilet{
 	dir = 8
@@ -15386,6 +15385,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/tv_set)
+"byl" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/grime,
+/area/diner/motel/pool)
 "byK" = (
 /obj/stool/chair/yellow,
 /turf/unsimulated/floor/honeyblocks,
@@ -18801,14 +18806,6 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/radiostation/tv_set)
-"jWl" = (
-/obj/storage/secure/closet/personal,
-/obj/item/device/microphone,
-/obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/radiostation/bedroom)
 "jYd" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/diner/hallway)
@@ -19249,6 +19246,11 @@
 "lab" = (
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"lae" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNE"
+	},
+/area/radiostation/bedroom)
 "laI" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -19368,17 +19370,6 @@
 	},
 /turf/space,
 /area/salvage_trader)
-"llG" = (
-/obj/machinery/computer/announcement{
-	name = "Radio Station Announcement Computer";
-	req_access = null;
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/darkblueblack,
-/area/radiostation/bridge)
 "lma" = (
 /obj/computerframe,
 /turf/simulated/floor/plating,
@@ -20724,6 +20715,14 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"ouf" = (
+/obj/storage/secure/closet/personal,
+/obj/item/device/microphone,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNW"
+	},
+/area/radiostation/bedroom)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -21623,6 +21622,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/salvage_trader)
+"qvF" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSW"
+	},
+/area/radiostation/bedroom)
 "qyc" = (
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -23024,12 +23029,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
-"tQQ" = (
-/obj/table/reinforced/auto,
-/obj/linen_bin/towel,
-/obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/floor/grime,
-/area/diner/motel/pool)
 "tQT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -24536,12 +24535,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"xzt" = (
-/obj/table/wood/auto/desk,
-/turf/simulated/floor{
-	icon_state = "carpetSW"
-	},
-/area/radiostation/bedroom)
 "xCP" = (
 /obj/warp_beacon/diner,
 /obj/lattice,
@@ -24655,6 +24648,13 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/hallway)
+"xTQ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSE"
+	},
+/area/radiostation/bedroom)
 "xVr" = (
 /mob/living/critter/zombie/scientist,
 /obj/machinery/telejam/active,
@@ -84351,7 +84351,7 @@ crC
 bxI
 jij
 crC
-tQQ
+byl
 moj
 vRZ
 qhW
@@ -108466,7 +108466,7 @@ aaa
 aaw
 aaB
 jEf
-llG
+aaL
 xcP
 aat
 ach
@@ -109399,9 +109399,9 @@ adg
 adg
 agJ
 fzx
-jWl
+ouf
 foM
-xzt
+qvF
 hKk
 boO
 bjC
@@ -109701,9 +109701,9 @@ wbC
 uqk
 agU
 dzN
-aGu
+lae
 aIR
-biZ
+xTQ
 agJ
 bjl
 bjB
