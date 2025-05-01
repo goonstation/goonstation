@@ -15572,7 +15572,7 @@
 "eTn" = (
 /obj/table/auto,
 /obj/item/device/light/flashlight/penlight,
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/item/medicaldiagnosis/stethoscope,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -38068,6 +38068,9 @@
 	pixel_x = 4;
 	pixel_y = 12
 	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
 /obj/item/matchbook{
 	pixel_x = 3;
 	pixel_y = -3
@@ -41164,7 +41167,6 @@
 	dir = 4
 	},
 /obj/landmark/start/job/medical_doctor,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "xrO" = (

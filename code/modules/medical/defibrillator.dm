@@ -8,7 +8,8 @@
 
 TYPEINFO(/obj/item/robodefibrillator)
 	mats = list("metal" = 10,
-				"conductive" = 15)
+				"conductive" = 15,
+				"crystal" = 5,)
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
@@ -34,7 +35,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	New()
 		. = ..()
 		var/cell = new cell_type
-		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
+		AddComponent(/datum/component/cell_holder, cell)
 		src.UpdateIcon()
 
 	emag_act(var/mob/user)
@@ -320,9 +321,13 @@ TYPEINFO(/obj/item/robodefibrillator/cyborg)
 TYPEINFO(/obj/item/robodefibrillator/mounted)
 	mats = null
 /obj/item/robodefibrillator/mounted
-	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
+	icon_state = "defib-mounted-off"
+	icon_base = "defib-mounted"
 	w_class = W_CLASS_BULKY
 	cost = DEFIB_CHARGE_LARGE_CELL_COST
+
+	/// Parent mount, temporarily set while not attached
+	var/obj/machinery/defib_mount/parent = null
 
 	New()
 		. = ..()
@@ -352,7 +357,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
 	desc = "Uses electrical currents to restart the hearts of critical patients."
-	icon_state = "defib1"
+	icon_state = "defib-mounted1"
 	anchored = ANCHORED
 	density = 0
 	status = REQ_PHYSICAL_ACCESS
@@ -385,9 +390,9 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	update_icon()
 		if (defib && defib.loc == src)
-			icon_state = "defib1"
+			icon_state = "defib-mounted1"
 		else
-			icon_state = "defib0"
+			icon_state = "defib-mounted0"
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
@@ -428,6 +433,19 @@ TYPEINFO(/obj/machinery/defib_mount)
 			src.ClearSpecificOverlays("cord_\ref[src]")
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
+
+/// Defibrillator-only charger
+/obj/machinery/recharger/defibrillator
+	name = "defibrillator recharger"
+	desc = "An anchored minature recharging device. This one is specially designed for defibrillators."
+	icon = 'icons/obj/compact_machines.dmi'
+	icon_state = "defib-charger0"
+	sprite_empty = "defib-charger0"
+	sprite_charging = "defib-charger1"
+	sprite_complete = "defib-charger2"
+	sprite_error = "defib-charger3"
+
+	accepted_types = list(/obj/item/robodefibrillator)
 
 #undef DEFIB_CHARGE_SMALL_CELL_COST
 #undef DEFIB_CHARGE_LARGE_CELL_COST

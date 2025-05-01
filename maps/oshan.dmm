@@ -1712,6 +1712,9 @@
 /obj/decal/poster/wallsign/poster_eyetest{
 	pixel_y = 32
 	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
 /obj/item/reagent_containers/food/snacks/candy/peach_ring{
 	pixel_x = 10;
 	pixel_y = -2
@@ -2321,7 +2324,6 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/blue/corner{
 	dir = 4
 	},
@@ -4493,7 +4495,7 @@
 /obj/item/robodefibrillator,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/cable{
 	icon_state = "0-2"
 	},

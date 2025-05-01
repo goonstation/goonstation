@@ -16929,10 +16929,10 @@
 	tag = ""
 	},
 /obj/table/round/auto,
+/obj/machinery/recharger/defibrillator,
 /obj/item/paper/book/from_file/dealing_with_clonelieness{
 	pixel_y = 5
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -37517,7 +37517,7 @@
 	pixel_x = 5;
 	pixel_y = 15
 	},
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/item/kitchen/food_box/sugar_box{
 	pixel_y = 6
 	},

@@ -43,11 +43,12 @@ TYPEINFO(/obj/machinery/recharger)
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
 								/obj/item/cargotele, \
-								/obj/item/mining_tool/powered/pickaxe, \
-								/obj/item/mining_tool/powered/hammer, \
+								/obj/item/mining_tool/powered/, \
 								/obj/item/ammo/power_cell, \
-								/obj/item/mining_tool/powered/shovel, \
-								/obj/item/robodefibrillator
+								/obj/item/hand_tele, \
+								/obj/item/power_pack, \
+								/obj/item/terminus_drive, \
+								/obj/item/robodefibrillator, \
 								)
 
 	var/obj/item/charging = null
@@ -97,6 +98,9 @@ TYPEINFO(/obj/machinery/recharger)
 	if (isrobot(user))
 		return
 	if (src.charging)
+		return
+	if (!(G.type in accepted_types))
+		boutput(user, SPAN_ALERT("You cannot put [G] in [src]."))
 		return
 
 	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)

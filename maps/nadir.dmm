@@ -263,13 +263,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
-"afl" = (
-/obj/machinery/recharger,
-/obj/table/reinforced/auto,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "afo" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
@@ -28568,11 +28561,13 @@
 	pixel_x = 4;
 	pixel_y = 1
 	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
+	},
 /obj/item/nanoloom_cartridge{
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "lUK" = (
@@ -39771,6 +39766,13 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/artifact)
+"qNF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger/defibrillator,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "qNO" = (
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/southwest)
@@ -100231,7 +100233,7 @@ kYc
 shx
 xCc
 erf
-afl
+bcp
 kIi
 kVJ
 wah
@@ -103855,7 +103857,7 @@ fBA
 uwJ
 ijC
 kQL
-bcp
+qNF
 ixn
 lXO
 fAX

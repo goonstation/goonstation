@@ -4713,16 +4713,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"Ey" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "EC" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/landmark/start/job/medical_doctor,
@@ -6998,6 +6988,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/item/hemostat,
+/obj/machinery/recharger/defibrillator,
 /obj/item/suture,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -58560,7 +58551,7 @@ Nw
 Nw
 Nw
 Nw
-Ey
+Rq
 JX
 Ub
 Kc

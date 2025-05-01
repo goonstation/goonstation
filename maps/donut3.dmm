@@ -10414,7 +10414,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
 /obj/item/reagent_containers/syringe/haloperidol,
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -36374,6 +36374,7 @@
 	pixel_x = 7;
 	pixel_y = 23
 	},
+/obj/machinery/recharger/defibrillator,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
@@ -59033,7 +59034,6 @@
 /area/station/medical/medbay/cloner)
 "rUN" = (
 /obj/storage/closet/office,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},

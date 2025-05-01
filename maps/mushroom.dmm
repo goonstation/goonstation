@@ -15256,7 +15256,7 @@
 /obj/item/clipboard{
 	pixel_y = 3
 	},
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -24956,6 +24956,7 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/mask/surgical,
+/obj/machinery/recharger/defibrillator,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -39313,7 +39314,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},

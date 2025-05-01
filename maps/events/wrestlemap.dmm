@@ -4036,6 +4036,7 @@
 	pixel_x = -6;
 	pixel_y = -8
 	},
+/obj/machinery/recharger/defibrillator,
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_x = -8;
 	pixel_y = 7
@@ -21079,6 +21080,7 @@
 	pixel_x = -5;
 	pixel_y = 7
 	},
+/obj/machinery/recharger/defibrillator,
 /obj/item/paper/cryo,
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -40663,8 +40665,8 @@
 "rPH" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/machinery/recharger,
 /obj/item/clothing/mask/wrestling/blue,
+/obj/machinery/recharger/defibrillator,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
@@ -51135,7 +51137,6 @@
 	})
 "wvC" = (
 /obj/machinery/vending/jobclothing/medical,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "wvX" = (

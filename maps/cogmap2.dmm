@@ -47959,6 +47959,7 @@
 "cQW" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
+/obj/machinery/recharger/defibrillator,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/staff)
 "cQX" = (
@@ -48815,7 +48816,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/machinery/recharger,
+/obj/machinery/recharger/defibrillator,
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
@@ -51725,7 +51726,6 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/medbay/psychiatrist)
 "dfl" = (

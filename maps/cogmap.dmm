@@ -30571,7 +30571,6 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/machinery/recharger,
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6;
 	pixel_y = 1
@@ -30580,6 +30579,7 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
+/obj/machinery/recharger/defibrillator,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "cjp" = (
@@ -37771,14 +37771,19 @@
 /area/station/mining/staff_room)
 "dJb" = (
 /obj/table/auto,
-/obj/item/plate,
+/obj/item/plate{
+	pixel_x = -6
+	},
 /obj/item/reagent_containers/food/snacks/plant/apple{
-	pixel_x = -2;
+	pixel_x = -6;
 	pixel_y = 3
 	},
 /obj/item/kitchen/food_box/lollipop{
 	pixel_x = 9;
-	pixel_y = 11
+	pixel_y = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
 	},
 /obj/decal/stage_edge,
 /turf/simulated/floor/wood/two,
@@ -61546,7 +61551,6 @@
 /area/station/maintenance/central)
 "vnq" = (
 /obj/disposalpipe/segment,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},

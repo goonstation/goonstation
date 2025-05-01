@@ -21312,8 +21312,8 @@
 "tfi" = (
 /obj/machinery/light/incandescent,
 /obj/table/auto,
-/obj/machinery/recharger,
 /obj/random_item_spawner/medicine,
+/obj/machinery/recharger/defibrillator,
 /obj/item/device/radio/intercom/medical{
 	dir = 1;
 	pixel_y = 6
