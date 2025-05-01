@@ -39,7 +39,7 @@ export const PollEditorForm = (props: PollEditorFormProps) => {
 
   const handleChangeServer = (value: string) =>
     onSettingsUpdate({ servers: value });
-  const handleChangeTitle = (_e: unknown, value: string) =>
+  const handleChangeTitle = (value: string) =>
     onSettingsUpdate({ title: value });
   const handleChangeExpiry = (newExpiry: ExpiryOptions) =>
     onSettingsUpdate({
