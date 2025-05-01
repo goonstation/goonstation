@@ -467,8 +467,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		display_health_maptext(target, user)
-
+		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
 
 		if (isdead(target))
@@ -1210,4 +1209,4 @@ TYPEINFO(/obj/item/device/appraisal)
 			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
 
-		global.display_appraisal_maptext(A, user, sell_value)
+		DISPLAY_MAPTEXT(A, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/appraisal, sell_value)

@@ -1360,36 +1360,25 @@ or don't if it uses a custom topopen overlay
 	if (!message)
 		return
 
-	var/list/client/recipients = list()
+	var/list/mob/recipients = list()
 	if (m_type & 1)
-		for (var/mob/M as anything in viewers(src, null))
-			if (!M.client)
-				continue
-
-			recipients += M.client
+		recipients = viewers(src, null)
 
 	else if (m_type & 2)
-		for (var/mob/M in hearers(src, null))
-			if (!M.client)
-				continue
-
-			recipients += M.client
+		recipients = hearers(src, null)
 
 	else if (!isturf(src.loc))
 		var/atom/A = src.loc
 		for (var/mob/M in A.contents)
-			if (!M.client)
-				continue
-
-			recipients += M.client
+			recipients += M
 
 	logTheThing(LOG_SAY, src, "EMOTE: [message]")
 	act = lowertext(act)
-	for (var/client/client as anything in recipients)
-		client.mob.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		global.display_emote_maptext(src, recipients, maptext_out)
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 
 /mob/living/silicon/ai/clamp_values()

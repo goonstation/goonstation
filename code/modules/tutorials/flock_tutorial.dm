@@ -61,8 +61,7 @@
 		qdel(src)
 
 	proc/make_maptext(atom/target, msg)
-		var/image/maptext/text = new /image/maptext
-		text.maptext = "<span class='vga c ol' style=\"font-size: 9pt;\">[msg]</span>"
+		var/image/maptext/flock_tutorial/text = NEW_MAPTEXT(/image/maptext/flock_tutorial, msg)
 		text.loc = get_turf(target)
 		src.fowner.abilityHolder.get_controlling_mob().client.images += text
 

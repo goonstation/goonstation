@@ -34,6 +34,7 @@
 
 /atom/movable/maptext_holder/disposing()
 	for (var/image/line as anything in src.lines)
+		src.client.images -= line
 		qdel(line)
 
 	src.parent.maptext_holders_by_client -= src.client
@@ -56,10 +57,8 @@
 		qdel(text)
 		return
 
-	// Push all maptext lines upwards.
 	var/text_height = (text.maptext_height / 6) * (1 + round(length(strip_html_tags(text.maptext)) / 40))
 	src.aggregate_height += text_height
-	animate(src, pixel_y = pixel_y + text_height, time = MAPTEXT_FADE_IN_DURATION)
 
 	// Add the new maptext line.
 	text.loc = src
@@ -67,12 +66,15 @@
 	src.lines += text
 	src.client.images += text
 
-	// Handle the fade-in animation.
+	// Set up the fade-in animation.
 	var/target_alpha = text.alpha
 	var/target_pixel_y = text.pixel_y
 	text.alpha = 0
 	text.pixel_y += text_height - MAPTEXT_FADE_IN_DISTANCE
 
+	// Push all maptext lines upwards.
+	animate(src, pixel_y = src.pixel_y + text_height, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
+	// Animate the new line's fade-in.
 	animate(text, alpha = target_alpha, pixel_y = target_pixel_y, time = MAPTEXT_FADE_IN_DURATION, flags = ANIMATION_PARALLEL)
 
 	// Remove the maptext line after a short delay.
@@ -80,10 +82,16 @@
 		if (QDELETED(src))
 			return
 
-		src.lines -= text
+		// Animate the line's fade-out.
 		animate(text, alpha = 0, pixel_y = text.pixel_y + MAPTEXT_FADE_OUT_DISTANCE, time = MAPTEXT_FADE_OUT_DURATION, flags = ANIMATION_PARALLEL)
 
+		// Delete the line and clean up.
 		SPAWN(MAPTEXT_FADE_OUT_DURATION + 1)
+			if (QDELETED(src))
+				return
+
+			src.lines -= text
+			src.client.images -= text
 			qdel(text)
 
 			if (!length(src.lines))
