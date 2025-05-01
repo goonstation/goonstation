@@ -48,7 +48,7 @@ export const Icon = (props: IconProps) => {
     const faName = name.replace(FA_OUTLINE_REGEX, '');
     const preprendFa = !faName.startsWith('fa-');
 
-    iconClass = faRegular ? 'fa-regular ' : 'fa-solid ';
+    iconClass = faRegular ? 'far ' : 'fas ';
     if (preprendFa) {
       iconClass += 'fa-';
     }
