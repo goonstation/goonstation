@@ -131,11 +131,10 @@ export const Vendors = () => {
                         Loading Chute
                       </Button>
                       <Button.Input
-                        defaultValue={name}
+                        value={name}
                         onCommit={(value) => act('rename', { name: value })}
-                      >
-                        {name}
-                      </Button.Input>
+                        buttonText={name}
+                      />
                     </>
                   )}
                   <Flex justify="space-between" align="stretch">
@@ -190,11 +189,9 @@ export const Vendors = () => {
                                 });
                               }
                             }}
-                            defaultValue="0"
-                            currentValue={`${cost ?? 0}`}
-                          >
-                            Set Price
-                          </Button.Input>
+                            value={`${cost ?? 0}`}
+                            buttonText="Set Price"
+                          />
                         </ProductList.Cell>
                       ) : undefined;
                     return (
