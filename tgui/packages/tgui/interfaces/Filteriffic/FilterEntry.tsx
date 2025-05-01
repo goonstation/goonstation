@@ -48,7 +48,7 @@ export const FilterEntry = (props) => {
             }
           />
           <Button.Input
-            placeholder={name}
+            value={name}
             onCommit={(new_name) =>
               act('rename_filter', {
                 name: name,
@@ -56,9 +56,8 @@ export const FilterEntry = (props) => {
               })
             }
             width="90px"
-          >
-            Rename
-          </Button.Input>
+            buttonText="Rename"
+          />
           <Button.Confirm
             icon="minus"
             onClick={() => act('remove_filter', { name: name })}
