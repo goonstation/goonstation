@@ -60,9 +60,9 @@ $bg-map: colors.$bg-map !default;
     margin-bottom: 0;
   }
 
-  .fa,
-  .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular // |GOONSTATION-CHANGE|
+  .fas,
+  .fas-solid, // |GOONSTATION-CHANGE|
+  .fas-regular // |GOONSTATION-CHANGE|
   {
     margin-left: 0; // ZeWaka: Changed from -0.25em due to FA6 offset
     margin-right: 0; // Mordent: Changed from -0.25em due to FA6 offset
@@ -79,18 +79,18 @@ $bg-map: colors.$bg-map !default;
 
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa,
-  .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular // |GOONSTATION-CHANGE|
+  .fas,
+  .fas-solid, // |GOONSTATION-CHANGE|
+  .fas-regular // |GOONSTATION-CHANGE|
   {
     margin-right: 0.25em;
   }
 }
 
 .Button--hasContent.Button--iconPosition--right {
-  .fa,
-  .fa-solid, // |GOONSTATION-CHANGE|
-  .fa-regular // |GOONSTATION-CHANGE|
+  .fas,
+  .fas-solid, // |GOONSTATION-CHANGE|
+  .fas-regular // |GOONSTATION-CHANGE|
   {
     margin-right: 0px;
     margin-left: 3px;
