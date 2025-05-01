@@ -14,7 +14,8 @@
 	New()
 		..()
 		setup_material()
-		_update_stack_appearance()
+		if (material)
+			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	proc/setup_material()
 		.=0
