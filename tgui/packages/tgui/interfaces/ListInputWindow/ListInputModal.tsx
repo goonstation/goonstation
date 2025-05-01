@@ -355,10 +355,9 @@ const SearchBar = (props) => {
       fluid
       id="search_bar"
       onEnter={(event) => {
-        event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
       }}
-      onInput={(value) => onSearch(value)}
+      onChange={(value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />

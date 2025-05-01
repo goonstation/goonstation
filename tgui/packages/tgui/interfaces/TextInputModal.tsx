@@ -1,5 +1,5 @@
 import { isEscape, KEY } from 'common/keys';
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -120,15 +120,14 @@ const InputArea = (props: {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (visualMultiline && event.shiftKey) {
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!(event.key === KEY.Enter) || (visualMultiline && event.shiftKey)) {
           return;
         }
         event.preventDefault();
         act('submit', { entry: input });
       }}
       onChange={(value) => onType(value)}
-      onInput={(value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />
