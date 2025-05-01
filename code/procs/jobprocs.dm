@@ -607,9 +607,6 @@ Equip items from body traits.
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
-				if(!islist(D.name_suffixes))
-					//Name_suffixes wasn't a list, but it is now.
-					D.name_suffixes = list()
 				D.name_suffix("([src.real_name])")
 				D.UpdateName()
 
