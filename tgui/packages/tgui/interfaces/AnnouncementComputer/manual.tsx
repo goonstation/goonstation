@@ -72,8 +72,8 @@ export const ManualAnnouncement = (_props) => {
           <Input
             autoFocus
             fluid
-            onInput={(e) => onType(e)}
-            onChange={() => onChange()}
+            onChange={(v) => onType(v)}
+            onBlur={() => onChange()}
             placeholder="Type something..."
             value={input}
           />
