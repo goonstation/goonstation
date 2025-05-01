@@ -75,7 +75,7 @@ export const BookmarksSection = (props: BookmarksSectionProps) => {
             <Input
               width="100%"
               value={newBookmarkName}
-              onInput={(value: string) => setNewBookmarkName(value)}
+              onChange={(value: string) => setNewBookmarkName(value)}
               placeholder="New bookmark"
               onEnter={(value: string) => handleAddBookmark(value)}
               maxLength={32}

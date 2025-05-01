@@ -232,7 +232,7 @@ const DataInputTextEntry = (props) => {
       <Input
         value={value}
         width="200px"
-        onInput={(value) =>
+        onChange={(value) =>
           act('modify_value', {
             name: name,
             value: value,

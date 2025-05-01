@@ -402,18 +402,18 @@ const ParticleGeneratorEntry = (props) => {
         <LabeledList>
           <LabeledList.Item label="type">
             <Tooltip position="bottom" content={`${generatorTypes.join(', ')}`}>
-              <Input value={genType} onInput={(val) => setGenType(val)} />
+              <Input value={genType} onChange={(val) => setGenType(val)} />
             </Tooltip>
           </LabeledList.Item>
           <LabeledList.Item label="A">
-            <Input value={a} onInput={(val) => setA(val)} />
+            <Input value={a} onChange={(val) => setA(val)} />
           </LabeledList.Item>
           <LabeledList.Item label="B">
-            <Input value={b} onInput={(val) => setB(val)} />
+            <Input value={b} onChange={(val) => setB(val)} />
           </LabeledList.Item>
           <LabeledList.Item label="Rand Type">
             <Tooltip position="bottom" content={`${randTypes.join(', ')}`}>
-              <Input value={rand} onInput={(val) => setRand(val)} />
+              <Input value={rand} onChange={(val) => setRand(val)} />
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>
@@ -432,7 +432,7 @@ const ParticleTextEntry = (props) => {
       <Input
         value={value}
         width="250px"
-        onInput={(value) =>
+        onChange={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -457,7 +457,7 @@ const ParticleNumListEntry = (props) => {
       <Input
         value={valArr.join(',')}
         width="250px"
-        onInput={(val) =>
+        onChange={(val) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -482,7 +482,7 @@ const ParticleListEntry = (props) => {
       <Input
         value={valArr.join(',')}
         width="250px"
-        onInput={(val) =>
+        onChange={(val) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -506,7 +506,7 @@ const ParticleColorNonGenEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onInput={(value) =>
+        onChange={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
