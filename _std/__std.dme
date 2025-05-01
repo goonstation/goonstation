@@ -82,6 +82,7 @@
 #include "defines\living.dm"
 #include "defines\logging.dm"
 #include "defines\manufacturing.dm"
+#include "defines\maptext.dm"
 #include "defines\materials.dm"
 #include "defines\mechanics.dm"
 #include "defines\medals.dm"
