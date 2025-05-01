@@ -26946,18 +26946,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"sDd" = (
-/obj/stool/chair/comfy/flock,
-/obj/machinery/light/flock{
-	dir = 1;
-	pixel_y = 9
-	},
-/mob/living/critter/flock/drone{
-	dormant = 1
-	},
-/obj/machinery/recharger/defibrillator,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
 "sDl" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
@@ -48604,7 +48592,7 @@ but
 nBe
 nBe
 nBe
-sDd
+iFy
 aNk
 aNk
 kga
