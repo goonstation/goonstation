@@ -131,12 +131,12 @@ export const BugReportForm = () => {
   const handleCancel = useCallback(() => act('cancel'), [act]);
   // TODO: reduce copy-paste
   const handleTitleChange = useCallback(
-    (_e: unknown, value: string) =>
+    (value: string) =>
       setFormState((prevState) => ({ ...prevState, title: value })),
     [],
   );
   const handleDescriptionChange = useCallback(
-    (_e: unknown, value: string) =>
+    (value: string) =>
       setFormState((prevState) => ({ ...prevState, description: value })),
     [],
   );
@@ -146,7 +146,7 @@ export const BugReportForm = () => {
     [],
   );
   const handleExpectedBehaviorChange = useCallback(
-    (_e: unknown, value: string) =>
+    (value: string) =>
       setFormState((prevState) => ({ ...prevState, expectedBehavior: value })),
     [],
   );

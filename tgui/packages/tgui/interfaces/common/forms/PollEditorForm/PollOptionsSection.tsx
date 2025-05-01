@@ -80,7 +80,7 @@ interface PollOptionListItemProps {
 
 const PollOptionListItem = (props: PollOptionListItemProps) => {
   const { label, onChange, onRemove, onReorder, reordering, value } = props;
-  const handleChange = (e: unknown, value: string) => onChange(value);
+  const handleChange = (value: string) => onChange(value);
   const buttons = (
     <>
       {reordering === 'self' && (
