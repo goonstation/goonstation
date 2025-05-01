@@ -997,14 +997,13 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	item_state = "keytar"
 	two_handed = 1
 	force = 10
-	note_range = list("c2", "b7")
+	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
-	//Start at E1
-	// key_offset = 5
+	volume = 20
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
