@@ -15245,7 +15245,7 @@
 "ecS" = (
 /obj/item/paper_bin{
 	pixel_x = -5;
-	pixel_y = 2
+	pixel_y = -4
 	},
 /obj/item/stamp{
 	pixel_y = 1
@@ -15254,9 +15254,12 @@
 	pixel_x = 4
 	},
 /obj/item/clipboard{
-	pixel_y = 3
+	pixel_y = 3;
+	pixel_x = 10
 	},
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
 /obj/table/auto,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -24956,7 +24959,9 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/mask/surgical,
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/bluewhite{
 	dir = 6

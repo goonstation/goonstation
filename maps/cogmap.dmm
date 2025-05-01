@@ -30557,9 +30557,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/clipboard{
-	pixel_x = -7
-	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -30572,14 +30569,16 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
+	pixel_x = -9;
 	pixel_y = 1
 	},
 /obj/item/clothing/glasses/healthgoggles{
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 3
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "cjp" = (
@@ -40783,10 +40782,13 @@
 	pixel_y = 4
 	},
 /obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 4
+	pixel_x = -1;
+	pixel_y = 3
 	},
 /obj/mapping_helper/access/medical,
+/obj/item/clipboard{
+	pixel_x = -7
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "fLo" = (

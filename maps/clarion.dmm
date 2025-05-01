@@ -15571,9 +15571,16 @@
 /area/station/medical/head)
 "eTn" = (
 /obj/table/auto,
-/obj/item/device/light/flashlight/penlight,
-/obj/machinery/recharger/defibrillator,
-/obj/item/medicaldiagnosis/stethoscope,
+/obj/item/device/light/flashlight/penlight{
+	pixel_x = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
+	},
+/obj/item/medicaldiagnosis/stethoscope{
+	pixel_x = -2;
+	pixel_y = -1
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "eTy" = (

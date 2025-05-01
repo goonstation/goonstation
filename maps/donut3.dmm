@@ -10413,9 +10413,13 @@
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
-/obj/item/reagent_containers/syringe/haloperidol,
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = -11
+	},
 /obj/machinery/recharger/defibrillator,
-/obj/item/reagent_containers/syringe/haloperidol,
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = 8
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cXs" = (
@@ -36363,7 +36367,7 @@
 /area/station/library/reading1)
 "kYU" = (
 /obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 6;
+	pixel_x = 9;
 	pixel_y = 2
 	},
 /obj/item/clipboard{

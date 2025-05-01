@@ -48816,7 +48816,9 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 9
+	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)

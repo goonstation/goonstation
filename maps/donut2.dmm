@@ -8423,16 +8423,18 @@
 "aTY" = (
 /obj/table/auto,
 /obj/item/robodefibrillator{
-	pixel_x = 5;
-	pixel_y = 15
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/bandage{
 	pixel_x = 9;
 	pixel_y = 3
 	},
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
 /obj/item/bandage{
-	pixel_x = -2;
+	pixel_x = 16;
 	pixel_y = 3
 	},
 /turf/simulated/floor/white,
@@ -51665,15 +51667,18 @@
 "xjR" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8;
+	pixel_x = -9;
 	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/snacks/burger/heartburger{
-	pixel_y = 4;
-	rand_pos = 0
+	pixel_y = 3;
+	rand_pos = 0;
+	pixel_x = 9
 	},
 /obj/machinery/recharger/defibrillator,
-/obj/item/kitchen/food_box/sugar_box,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 17
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},

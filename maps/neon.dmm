@@ -26928,7 +26928,7 @@
 	tag = ""
 	},
 /obj/machinery/recharger/defibrillator{
-	pixel_y = 5
+	pixel_y = 7
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 8;

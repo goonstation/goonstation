@@ -28554,9 +28554,7 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/auto,
-/obj/item/robodefibrillator{
-	pixel_y = 13
-	},
+/obj/item/robodefibrillator,
 /obj/item/device/nanoloom{
 	pixel_x = 4;
 	pixel_y = 1

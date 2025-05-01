@@ -4495,7 +4495,9 @@
 /obj/item/robodefibrillator,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 9
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},

@@ -16930,9 +16930,6 @@
 	},
 /obj/table/round/auto,
 /obj/machinery/recharger/defibrillator,
-/obj/item/paper/book/from_file/dealing_with_clonelieness{
-	pixel_y = 5
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -35655,6 +35652,23 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gyF" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/item/paper/book/from_file/dealing_with_clonelieness{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "gzl" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -37508,18 +37522,22 @@
 	})
 "hLJ" = (
 /obj/table/auto,
-/obj/item/kitchen/food_box/donut_box,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 12
+	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/item/robodefibrillator{
-	pixel_x = 5;
-	pixel_y = 15
+	pixel_x = 10;
+	pixel_y = 4
 	},
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = -3
+	},
 /obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 6
+	pixel_y = 19
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -95144,7 +95162,7 @@ bcS
 efc
 bkY
 bmh
-cgi
+gyF
 bsI
 caj
 aZl

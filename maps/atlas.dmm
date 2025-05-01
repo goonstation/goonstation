@@ -21313,7 +21313,9 @@
 /obj/machinery/light/incandescent,
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
-/obj/machinery/recharger/defibrillator,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 4
+	},
 /obj/item/device/radio/intercom/medical{
 	dir = 1;
 	pixel_y = 6
