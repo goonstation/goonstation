@@ -1,8 +1,6 @@
 /**
  *	Maptext images are special subtypes of images without an icon with the sole purpose of displaying maptext to a single client.
- *	As a result of being an image, each subtype requires a special constructor proc in lieu of `New()`; this is a result of BYOND
- *	treating an argument passed to an image's `New()` as an argument for `image()`. This has been clarified by Lummox as intended
- *	behaviour.
+ *	Maptext images should never be instantiated directly using `new`; use the `NEW_MAPTEXT` macro instead.
  */
 /image/maptext
 	icon = null
