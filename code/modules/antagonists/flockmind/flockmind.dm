@@ -3,6 +3,7 @@
 	display_name = "flockmind"
 	mob_path = /mob/living/intangible/flock/flockmind
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Flockmind"
 	var/datum/flock/flock = null
 
 	give_equipment()

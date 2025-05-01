@@ -42,7 +42,7 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	is_npc = 0
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	butcher_time = 0.2 SECONDS
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 
