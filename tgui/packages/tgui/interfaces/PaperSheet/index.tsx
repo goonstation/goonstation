@@ -403,7 +403,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             fontFamily={fontFamily}
             height={window.innerHeight - 60 + 'px'}
             backgroundColor={backgroundColor}
-            onInput={onInputHandler}
+            onChange={onInputHandler}
             onKeyDown={onKeyDownHandler}
           />
         ) : (

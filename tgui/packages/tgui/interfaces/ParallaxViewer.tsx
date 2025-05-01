@@ -174,7 +174,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               <Input
                 value={sourceData.icon_state}
                 width="250px"
-                onInput={(value) =>
+                onChange={(value) =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
@@ -338,7 +338,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                   <Input
                     value={sourceData.color}
                     width="90px"
-                    onInput={(e, value) =>
+                    onChange={(value) =>
                       act('modify', {
                         byondRef: sourceData.byondRef,
                         group: props.group_key,

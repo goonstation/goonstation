@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -70,7 +70,7 @@ export const SwingSignTIM = () => {
 
 interface InputAreaProps {
   input: string;
-  onType: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
+  onType: (v: string) => void;
 }
 
 /** Gets the user input and invalidates if there's a constraint. */
@@ -91,7 +91,7 @@ const InputArea = (props: InputAreaProps) => {
         height="100%"
         textAlign="center"
         fontFamily="Consolas"
-        onInput={onType}
+        onChange={onType}
         onEnter={() => {
           act('submit', { entry: input });
         }}

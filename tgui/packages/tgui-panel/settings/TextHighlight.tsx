@@ -149,7 +149,7 @@ function TextHighlightSetting(props) {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,

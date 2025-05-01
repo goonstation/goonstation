@@ -161,7 +161,7 @@ export const MusicInstrument = () => {
                 <Input
                   className="instrument__input_keyorder"
                   value={noteKeysOrder.join('')}
-                  onInput={(v) => setNoteKeysOrder(v.split(''))}
+                  onChange={(v) => setNoteKeysOrder(v.split(''))}
                 />
                 <Box className="instrument__instructions" fontSize="0.8em" bold>
                   Type in the order you wish the keybindings to be placed
