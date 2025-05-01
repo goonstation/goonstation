@@ -5,6 +5,7 @@
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
 	succinct_end_of_round_antagonist_entry = TRUE
 	remove_on_death = TRUE
+	wiki_link = "https://wiki.ss13.co/Revolutionary"
 
 	New()
 		. = ..()

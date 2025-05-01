@@ -106,7 +106,14 @@
 
 /proc/generate_ingame_wiki_link(client/our_user)
 	. = "https://wiki.ss13.co/"
-	if (our_user.mob.mind?.assigned_role)
-		var/datum/job/Job = find_job_in_controller_by_string(our_user.mob.mind?.assigned_role)
+	var/datum/mind/user_mind = our_user.mob.mind
+	if(!user_mind)
+		return
+	if (user_mind.assigned_role)
+		var/datum/job/Job = find_job_in_controller_by_string(user_mind.assigned_role)
 		if(Job.wiki_link)
 			. = Job.wiki_link
+	if (user_mind.is_antagonist())
+		for (var/datum/antagonist/antagonist_role in user_mind.antagonists)
+			if(antagonist_role.wiki_link)
+				. = antagonist_role.wiki_link //Keep going until you get the most recent antag (its probably the one you want the page for)

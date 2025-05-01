@@ -1042,3 +1042,12 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	use_bite_mask = FALSE
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	w_class = W_CLASS_BULKY
+
+/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs
+	name = "breadcrumbs"
+	desc = "Some dried breadcrumbs."
+	icon_state = "breadcrumbs"
+	bites_left = 1
+	heal_amt = 0
+	initial_volume = 1
+	initial_reagents = list("bread"=1)

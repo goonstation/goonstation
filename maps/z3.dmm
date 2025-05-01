@@ -5806,7 +5806,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aGu" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/radiostation/bedroom)
@@ -14202,7 +14202,7 @@
 "biZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/radiostation/bedroom)
@@ -18838,7 +18838,7 @@
 /obj/storage/secure/closet/personal,
 /obj/item/device/microphone,
 /obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
@@ -24525,7 +24525,7 @@
 /area/timewarp)
 "xzt" = (
 /obj/table/wood/auto/desk,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/radiostation/bedroom)

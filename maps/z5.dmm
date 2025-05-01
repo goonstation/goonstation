@@ -1506,7 +1506,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "rD" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpetS"
 	},
@@ -3145,7 +3145,7 @@
 /area/tech_outpost)
 "CC" = (
 /obj/storage/secure/closet/engineering/mechanic,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetNE"
 	},
@@ -3761,7 +3761,7 @@
 "GN" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetN"
 	},
@@ -4161,7 +4161,7 @@
 /turf/space,
 /area/noGenerate)
 "Js" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetSE"
 	},
@@ -4676,7 +4676,7 @@
 	pixel_x = -32
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "carpetNW"
 	},
@@ -5935,7 +5935,7 @@
 /area/mining/manufacturing)
 "Vz" = (
 /obj/item/cigbutt,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "carpetSW"
 	},
