@@ -14,6 +14,7 @@
 	New()
 		..()
 		setup_material()
+		_update_stack_appearance()
 
 	proc/setup_material()
 		.=0
