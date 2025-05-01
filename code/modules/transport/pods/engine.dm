@@ -36,10 +36,10 @@
 			wormholeQueued = 0
 
 	deactivate()
-		..()
-		ship.powercapacity = 0
 		if (src.active)
 			src.ship.speedmod /= src.engine_speed
+		..()
+		ship.powercapacity = 0
 		for(var/obj/item/shipcomponent/S in ship.components)
 			if(S.active)
 				S.deactivate()
