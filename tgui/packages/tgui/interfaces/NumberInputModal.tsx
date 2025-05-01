@@ -108,10 +108,10 @@ const InputArea = (props) => {
           autoSelect
           fluid
           allowFloats={!round_input}
-          minValue={min_value}
-          maxValue={max_value}
+          minValue={min_value || undefined}
+          maxValue={max_value || undefined}
           onChange={(value) => onChange(value)}
-          onBlur={(_, value) => onBlur(value)}
+          onBlur={(value) => onBlur(value)}
           onEnter={(value) => act('submit', { entry: value })}
           value={input}
         />
