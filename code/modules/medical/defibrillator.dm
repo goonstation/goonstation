@@ -2,7 +2,7 @@
 /// Charge for defibrillators with internal small power cells
 #define DEFIB_CHARGE_SMALL_CELL_COST 25 WATTS
 /// Charge for defibrillators that draw from large power cells (i.e. the ones in APCs)
-#define DEFIB_CHARGE_LARGE_CELL_COST 500 WATTS
+#define DEFIB_CHARGE_LARGE_CELL_COST 100 WATTS
 
 // TODO: common abstract parent to split power cell / cell using defibs; requires large code & map repathing
 
