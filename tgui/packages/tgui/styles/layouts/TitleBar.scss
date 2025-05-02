@@ -64,17 +64,6 @@
     }
   }
 
-  &__refreshSpinner {
-    position: absolute;
-    top: 0;
-    right: 48px;
-    right: base.rem(48px);
-    font-size: 20px;
-    font-size: base.rem(20px);
-    line-height: 32px !important;
-    line-height: base.rem(32px) !important;
-  }
-
   &__close {
     cursor: var(--cursor-pointer);
     opacity: 0.5;

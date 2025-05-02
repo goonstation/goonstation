@@ -5,60 +5,60 @@
  * @license MIT
  */
 @use 'sass:color';
-@use 'sass:meta';
+// @use 'sass:meta';
 
-$generic: #484455;
-$accent: #4f56a5;
-$border-color: #7b86ff;
+// $generic: #484455;
+// $accent: #4f56a5;
+// $border-color: #7b86ff;
 
-@use '../colors' with (
-  $fg-map-keys: (),
-  $bg-map-keys: (),
-  $primary: $accent
-);
-@use '../base' with (
-  $color-bg: color.scale($generic, $lightness: -45%),
-  $border-radius: 2px
-);
-.theme-generic {
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': $accent,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: (
-      'color-default-fill': $accent,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('../components/Section.scss');
+// @use '../colors' with (
+//   $fg-map-keys: (),
+//   $bg-map-keys: (),
+//   $primary: $accent
+// );
+// @use '../base' with (
+//   $color-bg: color.scale($generic, $lightness: -45%),
+//   $border-radius: 2px
+// );
+// .theme-generic {
+//   // Components
+//   @include meta.load-css(
+//     '../components/Button.scss',
+//     $with: (
+//       'color-default': $accent,
+//       'color-transparent-text': rgba(227, 240, 255, 0.75)
+//     )
+//   );
+//   @include meta.load-css(
+//     '../components/ProgressBar.scss',
+//     $with: (
+//       'color-default-fill': $accent,
+//       'background-color': rgba(0, 0, 0, 0.5)
+//     )
+//   );
+//   @include meta.load-css('../components/Section.scss');
 
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': $border-color)
-  );
-  @include meta.load-css(
-    '../components/TextArea.scss',
-    $with: ('border-color': $border-color)
-  );
-  @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': $border-color)
-  );
+//   @include meta.load-css(
+//     '../components/Input.scss',
+//     $with: ('border-color': $border-color)
+//   );
+//   @include meta.load-css(
+//     '../components/TextArea.scss',
+//     $with: ('border-color': $border-color)
+//   );
+//   @include meta.load-css(
+//     '../components/NumberInput.scss',
+//     $with: ('border-color': $border-color)
+//   );
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($generic, $lightness: -25%))
-  );
-  .Layout__content {
-    background-image: none;
-  }
-}
+//   // Layouts
+//   @include meta.load-css('../layouts/Layout.scss');
+//   @include meta.load-css('../layouts/Window.scss');
+//   @include meta.load-css(
+//     '../layouts/TitleBar.scss',
+//     $with: ('background-color': color.scale($generic, $lightness: -25%))
+//   );
+//   .Layout__content {
+//     background-image: none;
+//   }
+// }

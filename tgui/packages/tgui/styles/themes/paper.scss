@@ -3,64 +3,27 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors' with (
-  $primary: #ffffff,
-  $bg-lightness: 25%,
-  $fg-lightness: -10%,
-  // Commenting out color maps will adjust all colors based on the lightness
-  // settings above, but will add extra 10KB to the theme.
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base' with (
-  $color-fg: #000000,
-  $color-bg: #dfdfdf,
-  $color-bg-grad-spread: 0%
-);
-
-$font-size: 24px;
-
-// A fat warning to anyone who wants to use this: this only half works.
-// It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
-.theme-paper {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-paper:root {
+  // Base
+  --color-base: hsl(0, 0%, 90%);
+  --secondary-lightness-adjustment: -3;
+  --color-section: hsla(0, 0%, 0%, 0.1);
+  --color-primary: var(--color-white);
+  --color-text: var(--color-black);
+  --color-scrollbar-base: var(--color-white);
+  --color-scrollbar-thumb: var(--color-light-grey);
+  --border-primary-saturation: 0;
+  --base-gradient-spread: 0;
 
   // Components
-  @include meta.load-css('../components/Tabs.scss');
-  @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.1))
-  );
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #363636,
-      'color-selected': #9d0808,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00,
-      'color-transparent-text': rgba(0, 0, 0, 0.5)
-    )
-  );
+  --button-background-default: hsl(50, 50%, 90%);
+  --button-background-selected: hsl(0, 100%, 30%);
+  --button-background-caution: hsl(30, 90%, 40%);
+  --button-background-danger: hsl(60, 100%, 30%);
 
-  // Layouts
-  @include meta.load-css(
-    '../layouts/Layout.scss',
-    $with: ('scrollbar-color-multiplier': -1)
-  );
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: (
-      'text-color': rgba(0, 0, 0, 0.75),
-      'background-color': base.$color-bg,
-      'shadow-color-core': rgba(0, 0, 0, 0.25)
-    )
-  );
+  .Layout__content {
+    background-image: none;
+  }
 
   .PaperInput {
     position: relative;
@@ -68,9 +31,9 @@ $font-size: 24px;
     width: 120px;
     border: none;
     background: transparent;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--color-black);
     outline: none;
-    background-color: rgba(255, 255, 62, 0.8);
+    background-color: hsla(60, 100%, 60%, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -99,23 +62,14 @@ $font-size: 24px;
     padding: 0 6px;
     font-family: Verdana, sans-serif;
     background-color: transparent;
-    color: #fff;
+    color: hsl(0, 0%, 100%);
     color: inherit;
 
-    &:-ms-input-placeholder {
+    &::placeholder {
       font-style: italic;
-      color: #777;
-      color: rgba(255, 255, 255, 0.45);
+      color: hsl(0, 0%, 47%);
+      color: hsla(0, 0%, 100%, 0.45);
     }
-  }
-
-  .Layout__content {
-    background-image: none;
-  }
-
-  .Window {
-    background-image: none;
-    color: base.$color-fg;
   }
 
   .paper-text {
@@ -124,9 +78,9 @@ $font-size: 24px;
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid var(--color-black);
       outline: none;
-      background-color: rgba(255, 255, 62, 0.8);
+      background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
@@ -138,9 +92,9 @@ $font-size: 24px;
       display: inline-block;
       border: none;
       background: transparent;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid var(--color-black);
       outline: none;
-      background-color: rgba(255, 255, 62, 0.8);
+      background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
@@ -158,9 +112,9 @@ $font-size: 24px;
 
     border: none;
     background: transparent;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid var(--color-black);
     outline: none;
-    background-color: rgba(255, 255, 62, 0.8);
+    background-color: hsla(60, 100%, 60%, 0.8);
     padding: 0 4px;
     margin-right: 2px;
     line-height: 17px;
@@ -172,27 +126,13 @@ $font-size: 24px;
 
       border: none;
       background: transparent;
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid var(--color-black);
       outline: none;
-      background-color: rgba(255, 255, 62, 0.8);
+      background-color: hsla(60, 100%, 60%, 0.8);
       padding: 0 4px;
       margin-right: 2px;
       line-height: 17px;
       overflow: visible;
     }
-  }
-
-  // |GOONSTATION-CHANGE|
-
-  .artifactType3 {
-    background-color: #c9acac;
-  }
-
-  .artifactType2 {
-    background-color: #ccc6b0;
-  }
-
-  .artifactType1 {
-    background-color: #adc2d3;
   }
 }

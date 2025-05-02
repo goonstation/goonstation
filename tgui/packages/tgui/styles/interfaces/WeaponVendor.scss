@@ -1,23 +1,22 @@
 @use '../colors';
 @use '../functions' as *;
-@use '../components/Button';
 
 $categories: (
-  'sidearm': colors.$teal,
-  'loadout': colors.$yellow,
-  'utility': colors.$blue,
-  'ammo': colors.$orange,
-  'assistant': colors.$grey,
-  'fishing': colors.$blue,
+  'sidearm': var(--color-teal),
+  'loadout': var(--color-yellow),
+  'utility': var(--color-blue),
+  'ammo': var(--color-orange),
+  'assistant': var(--color-grey),
+  'fishing': var(--color-blue),
 );
 
-.WeaponVendor {
-  @each $category, $color in $categories {
-    .Button__#{$category} {
-      @include Button.button-color($color);
-    }
-  }
-}
+// .WeaponVendor {
+//   @each $category, $color in $categories {
+//     .Button__#{$category} {
+//       @include Button.button-color($color);
+//     }
+//   }
+// }
 
 @each $category, $color in $categories {
   .WeaponVendor__Credits {
@@ -35,6 +34,6 @@ $categories: (
 
 .WeaponVendor__Row {
   &:not(:last-child) {
-    border-bottom: 2px solid colors.bg(colors.$primary);
+    border-bottom: 2px solid colors.bg(--color-primary);
   }
 }
