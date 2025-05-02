@@ -1457,7 +1457,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			var/amt = min(max(L.reagents.total_volume - L.reagents.get_reagent_amount("toxin"), 0), 1)
 			if (amt > 0)
 				L.reagents.remove_any_except(amt, "toxin")
-				L.reagents.add_reagent("toxin", amt / 0.25)
+				L.reagents.add_reagent("toxin", amt / 4)
 
 	on_pointblank(obj/projectile/O, mob/target)
 		if (istype(target))
