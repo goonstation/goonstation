@@ -302,10 +302,12 @@
 			temp = new /mob/living/critter/small_animal/mouse
 			src.icon = temp.icon
 			src.icon_state = temp.icon_state
+			src.flags |= (TABLEPASS | DOORPASS)
 		else if (option == "Cockroach")
 			temp = new /mob/living/critter/small_animal/cockroach
 			src.icon = temp.icon
 			src.icon_state = temp.icon_state
+			src.flags |= (TABLEPASS | DOORPASS)
 		else if (option == "Human")
 			temp = new /mob/living/carbon/human/normal/assistant
 			randomize_look(temp, change_name = FALSE)
@@ -347,6 +349,8 @@
 		src.icon_state = initial(src.icon_state)
 		src.bioHolder.mobAppearance.gender = initial(src.gender)
 		src.update_name_tag(src.name)
+
+		src.flags &= ~(TABLEPASS | DOORPASS)
 
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
