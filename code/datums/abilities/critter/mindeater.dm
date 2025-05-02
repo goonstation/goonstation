@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Gain 3 Intellect per second from a target in range."
+	desc = "Gain 3 Intellect per second from a target in range. Intellect gained is reduced by mind-shielding drugs."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -102,6 +102,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only use this ability on alive targets!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (L.hasStatus("mindeater_brain_draining"))
+			boutput(src.holder.owner, SPAN_ALERT("This target is already being brain drained!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
@@ -170,7 +173,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/paralyze
 	name = "Paralyze"
-	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement.
+	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement and reduce their vision.
 			For each 10 Intellect on them, make them take 1 step towards you and receive a stab."}
 	cooldown = 30 SECONDS
 	targeted = TRUE
@@ -199,6 +202,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		SPAWN(0)
 			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
 			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
+			L.addOverlayComposition(/datum/overlayComposition/weldingmask)
+			L.updateOverlaysClient(L.client)
+
 			for (var/i in 1 to floor(GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) / 10))
 				sleep(0.75 SECONDS)
 				L.Move(get_step(L, get_dir(L, mindeater)), get_dir(L, mindeater))
@@ -206,6 +212,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				playsound(get_turf(L), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
+			L.removeOverlayComposition(/datum/overlayComposition/weldingmask)
+			L.updateOverlaysClient(L.client)
 
 /datum/targetable/critter/mindeater/cosmic_light
 	name = "Cosmic Light"
@@ -342,7 +350,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		return !abil_holder.pointCheck(1, TRUE) || mindeater.get_health_percentage() >= 1
 
 /datum/action/bar/private/mindeater_brain_drain
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
 	duration = 1 SECONDS
 	resumable = FALSE
 	color_success = "#4444FF"
@@ -374,7 +382,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (ishuman(src.target))
 			var/mob/living/critter/mindeater/mindeater = src.owner
 			mindeater.collect_intellect(src.target, 3)
-			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS)
+			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS, src.owner)
 
 			var/mob/living/carbon/human/H = src.target
 			H.take_brain_damage(1)
@@ -405,4 +413,4 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
 		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || \
-				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_INTELLECT_THRESHOLD) || isdead(src.target)
+				(istype(src.target, /mob/living/carbon/human) && GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD) || isdead(src.target)

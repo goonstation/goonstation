@@ -390,6 +390,16 @@
 
 		return ..()
 
+/datum/overlayComposition/mindeater_paralysis
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
+		dither.d_icon_state = "steelmask"
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		definitions.Add(dither)
+
+		return ..()
 
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/limited_sight

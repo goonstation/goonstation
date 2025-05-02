@@ -26,3 +26,4 @@
 #define CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS "phoenix_temperature_overlays"
 #define CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS "intrusion_gamemode_overlays"
 #define CLIENT_IMAGE_GROUP_MINDMITE_VISION "intrusion_mindmite_vision"
+#define CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION "intrusion_mindeater_structure_vision"

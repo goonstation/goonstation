@@ -3798,25 +3798,84 @@
 											 "Do you see the door? Open it",
 											 "Let your mind go",
 											 "Cease your being")
+	var/mob/living/critter/mindeater/owning_mindeater
+
+	onAdd(optional)
+		..()
+		src.owning_mindeater = optional
 
 	onUpdate(timePassed)
 		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
 		var/mob/living/L = src.owner
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) < 25)
-			if (!L.hasStatus("broken_madness"))
+			if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
 				L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
-			if (prob(5))
+				L.ClearSpecificParticles("mindeater_mind_eating")
+				L.ClearSpecificParticles("mindeater_mind_eating-directional")
+			if (probmult(5))
 				boutput(L, SPAN_ALERT("<b>[pick(src.low_pct_messages)]</b>"))
+
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 25)
-			L.addOverlayComposition(/datum/overlayComposition/insanity/large)
-		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 75)
-			L.contract_disease(/datum/ailment/mindmites, null, null, TRUE)
-		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 100)
-			if (prob(5))
+			if (!L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
+				L.addOverlayComposition(/datum/overlayComposition/insanity/large)
+				L.UpdateParticles(new /particles/mindeater_mind_eating, "mindeater_mind_eating")
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 50)
+			if (probmult(5))
 				boutput(L, SPAN_ALERT("<i>[pick(src.high_pct_messages)]</i>"))
+			if (!ON_COOLDOWN(L, "mindeater_directional_particle_clear", 1 SECOND))
+				L.ClearSpecificParticles("mindeater_mind_eating")
+				L.ClearSpecificParticles("mindeater_mind_eating-directional")
+				var/particles/mindeater_mind_eating/directional/effect = new(src.owning_mindeater, L)
+				L.UpdateParticles(effect, "mindeater_mind_eating-directional")
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 75)
+			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(L)
+			if (probmult(5))
+				var/list/turfs_in_view = list()
+				for (var/turf/T in view(6, L))
+					for (var/obj/O in T)
+						if (O.density)
+							continue
+						turfs_in_view += T
+				if (length(turfs_in_view))
+					new /obj/dummy/mindeater_structure(pick(turfs_in_view))
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(L)
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 100)
+			L.setStatus("mindeater_mind_eaten_warp")
+		else
+			L.delStatus("mindeater_mind_eaten_warp")
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) <= 0)
 			src.owner.delStatus(src)
+
+	onRemove()
+		..()
+		src.owning_mindeater = null
+		var/mob/living/L = src.owner
+		if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
+			L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+			L.ClearSpecificParticles("mindeater_mind_eating")
+			L.ClearSpecificParticles("mindeater_mind_eating-directional")
+
+/datum/statusEffect/mindeater_mind_eaten_warp
+	id = "mindeater_mind_eaten_warp"
+	visible = FALSE
+
+	onAdd()
+		..()
+		animate_wave(src.owner, 2)
+
+	onRemove()
+		..()
+		for(var/i in 1 to 2)
+			var/dm_filter/f = src.owner.get_filter("wave-[i]")
+			f.offset = 0
+			src.owner.remove_filter("wave-[i]")
+		animate(src.owner)
 
 /datum/statusEffect/cosmic_light
 	id = "mindeater_cosmic_light"
@@ -3850,7 +3909,7 @@
 		for (var/mob/living/carbon/human/H as anything in nearby_mobs)
 			if (!src.is_valid_mob(H))
 				continue
-			mindeater.collect_intellect(H, 1 * max(round(timePassed / LIFE_PROCESS_TICK_SPACING, 1), 1))
+			mindeater.collect_intellect(H, 1 * max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING)
 
 	onRemove()
 		..()

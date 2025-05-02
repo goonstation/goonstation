@@ -57,11 +57,13 @@
 
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).add_mob(src)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(src)
 
 	disposing()
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).remove_mob(src)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
 
@@ -266,10 +268,17 @@
 		if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= 100)
 			H.brain_level.set_icon_state("complete")
 		else
-			H.brain_level.set_icon_state(min(round(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED), 10), INTRUDER_MAX_INTELLECT_THRESHOLD))
+			H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, INTRUDER_MAX_INTELLECT_THRESHOLD)
 
 		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
-		abil_holder.addPoints(points)
+		if (H.reagents.has_reagent("ethanol"))
+			abil_holder.addPoints(points * 5 / 6)
+		else if (H.reagents.has_reagent("morphine"))
+			abil_holder.addPoints(points / 2)
+		else if (H.reagents.has_reagent("haloperidol"))
+			abil_holder.addPoints(points / 3)
+		else
+			abil_holder.addPoints(points)
 
 	/// disguise as an entity
 	proc/disguise(option)
@@ -363,6 +372,51 @@
 		else if (istype(A, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = A
 			airlock.open()
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		var/obj/projectile/P = AM
+		if (istype(P) && !istype(P.proj_data, /datum/projectile/special/psi_bolt))
+			src.reveal_fake()
+
+/obj/dummy/mindeater_structure
+	name = "spire"
+	real_name = "mindeater"
+	desc = "Some sort of ancient structure. You feel your mind slipping away just looking at it."
+	icon = null
+	icon_state = null
+	density = FALSE
+	anchored = ANCHORED_ALWAYS
+	var/image/mob_appearance
+
+	New(turf/newLoc)
+		..()
+		SPAWN(rand(30, 60) SECONDS)
+			src.reveal_fake()
+
+		src.mob_appearance = image('icons/mob/critter/nonhuman/intruder.dmi', src, "spire")
+		src.mob_appearance.alpha = 0
+		animate(src.mob_appearance, alpha = 255, time = 1 SECOND)
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_image(src.mob_appearance)
+
+	disposing()
+		..()
+		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_image(src.mob_appearance)
+		QDEL_NULL(src.mob_appearance)
+
+	attack_hand(mob/user)
+		..()
+		src.reveal_fake()
+
+	attackby(obj/item/I, mob/user)
+		..()
+		src.reveal_fake()
+
+	proc/reveal_fake()
+		animate_wave(src, 5)
+		animate(src, 1 SECOND, flags = ANIMATION_PARALLEL, alpha = 0)
+		SPAWN(1 SECOND)
+			qdel(src)
 
 	Crossed(atom/movable/AM)
 		. = ..()
