@@ -7,7 +7,7 @@
 
 /mob/var/movement_last_modified = 0 //! When mob's movement was last modified
 /mob/var/movement_last_delay = 0 //! The last speed the mob was moving at
-/mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified
+/mob/var/movement_last_progress = 0 //! The progress of the move the mob was at when it was last modified. between 0-1
 
 /mob/hotkey(name)
 	var/datum/movement_controller/controller = src.override_movement_controller
