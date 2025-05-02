@@ -69,7 +69,7 @@
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
 	// easy out for if no access is required
-	if (src.check_access(null))
+	if (src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
 		// check for admin access override
@@ -119,14 +119,7 @@
  */
 /obj/proc/check_access(obj/item/I)
 	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
+	if (!src.has_access_requirements)
 		return 1
 
 	var/obj/item/card/id/ID = get_id_card(I)
@@ -153,31 +146,6 @@
 		// meets all access requirements for the access group
 		if (has_access)
 			return 1
-	return 0
-
-//put in access num, check if i have that
-/obj/proc/has_access(var/acc)
-	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
-		return 1
-
-	for (var/req_access_group in src.req_access)
-		// access group is a list
-		if (islist(req_access_group))
-			var/list/req_access_group_list = req_access_group
-			if (acc in req_access_group_list)
-				return 1
-		// access group is a single number
-		else if (req_access_group == acc)
-			return 1
-
 	return 0
 
 /**
