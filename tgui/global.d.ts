@@ -42,6 +42,11 @@ type ByondType = {
   windowId: string;
 
   /**
+   * True if javascript is running in BYOND.
+   */
+  IS_BYOND: boolean;
+
+  /**
    * The major version of byond.
    */
   BYOND_MAJOR: string;
@@ -50,6 +55,11 @@ type ByondType = {
    * The minor (build) version of byond.
    */
   BYOND_MINOR: string;
+
+  /**
+   * Version of Blink engine of WebView2. Null if N/A.
+   */
+  BLINK: number | null;
 
   /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
@@ -173,6 +183,11 @@ type ByondType = {
    * Maps icons to their ref
    */
   iconRefMap: Record<string, string>;
+
+  /**
+   * Downloads a blob, platform-agnostic
+   */
+  saveBlob(blob: Blob, filename: string, ext: string): void;
 };
 
 /**
@@ -185,4 +200,9 @@ interface Window {
   Byond: ByondType;
   __store__: Store<unknown, AnyAction>;
   __augmentStack__: (store: Store) => StackAugmentor;
+
+  // 516 byondstorage API.
+  hubStorage: Storage;
+  domainStorage: Storage;
+  serverStorage: Storage;
 }

@@ -9,7 +9,6 @@
 .swcrc
 /docs
 /public
-/packages/tgui-polyfill
 /packages/tgfont/static
 **/*.json
 **/*.yml

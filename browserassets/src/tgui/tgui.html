@@ -48,19 +48,11 @@
 			// Backwards compatibility
 			window.__windowId__ = Byond.windowId;
 			// Prevent some default window shortcuts that annoy people
-			window.addEventListener("keydown", function(event){
+			window.addEventListener("keydown", function (event) {
 				if (event.ctrlKey && ["o", "l", "n"].includes(event.key)) {
 					event.preventDefault()
 				}
 			})
-			// Trident engine version
-			Byond.TRIDENT = (function () {
-				var groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
-				var majorVersion = groups && groups[1];
-				return majorVersion
-					? parseInt(majorVersion, 10)
-					: null;
-			})();
 
 			// Blink engine version
 			Byond.BLINK = (function () {
@@ -70,7 +62,7 @@
 			})();
 
 			// Basic checks to detect whether this page runs in BYOND
-			var isByond = (Byond.TRIDENT !== null || Byond.BLINK !== null || window.cef_to_byond)
+			var isByond = (Byond.BLINK !== null || window.cef_to_byond)
 				&& location.hostname === '127.0.0.1'
 				&& location.search !== '?external';
 			//As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
@@ -367,6 +359,38 @@
 			Byond.loadCss = function (url, sync) {
 				loadAsset({ url: url, sync: sync, type: 'css' });
 			};
+
+			Byond.saveBlob = function (blob, filename, ext) {
+				if (window.navigator.msSaveBlob) {
+					window.navigator.msSaveBlob(blob, filename);
+				} else if (window.showSaveFilePicker) {
+					var accept = {};
+					accept[blob.type] = [ext];
+
+					var opts = {
+						suggestedName: filename,
+						types: [
+							{
+								description: 'SS13 file',
+								accept: accept,
+							},
+						],
+					};
+
+					window
+						.showSaveFilePicker(opts)
+						.then(function (file) {
+							return file.createWritable();
+						})
+						.then(function (file) {
+							return file.write(blob).then(function () {
+								return file.close();
+							});
+						})
+						.catch(function () { });
+				}
+			};
+
 			// Icon cache
 			Byond.iconRefMap = {};
 		})();
@@ -641,8 +665,6 @@
 </head>
 
 <body>
-
-	<!-- tgui:inline-polyfill -->
 	<!-- tgui:assets -->
 	<!-- tgui:inline-html-start -->
 	<!-- tgui:inline-html -->
@@ -655,14 +677,14 @@
 	<!-- Fatal error container -->
 	<div id="FatalError" class="FatalError">
 		<div class="FatalError__logo">
- ███████████                                       ███████     █████████
-░█░░░███░░░█                                     ███░░░░░███  ███░░░░░███
-░   ░███  ░   ██████  ████████  █████████████   ███     ░░███░███    ░░░
-    ░███     ███░░███░░███░░███░░███░░███░░███ ░███      ░███░░█████████
-    ░███    ░███████  ░███ ░░░  ░███ ░███ ░███ ░███      ░███ ░░░░░░░░███
-    ░███    ░███░░░   ░███      ░███ ░███ ░███ ░░███     ███  ███    ░███
-    █████   ░░██████  █████     █████░███ █████ ░░░███████░  ░░█████████
-   ░░░░░     ░░░░░░  ░░░░░     ░░░░░ ░░░ ░░░░░    ░░░░░░░     ░░░░░░░░░
+			███████████ ███████ █████████
+			░█░░░███░░░█ ███░░░░░███ ███░░░░░███
+			░ ░███ ░ ██████ ████████ █████████████ ███ ░░███░███ ░░░
+			░███ ███░░███░░███░░███░░███░░███░░███ ░███ ░███░░█████████
+			░███ ░███████ ░███ ░░░ ░███ ░███ ░███ ░███ ░███ ░░░░░░░░███
+			░███ ░███░░░ ░███ ░███ ░███ ░███ ░░███ ███ ███ ░███
+			█████ ░░██████ █████ █████░███ █████ ░░░███████░ ░░█████████
+			░░░░░ ░░░░░░ ░░░░░ ░░░░░ ░░░ ░░░░░ ░░░░░░░ ░░░░░░░░░
 		</div>
 		<marquee class="FatalError__header">
 			A fatal exception has occurred in the TermOS TGUI subsystem.
