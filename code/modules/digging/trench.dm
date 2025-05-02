@@ -93,8 +93,8 @@
 
 	edge_overlays()
 		for (var/turf/T in orange(src, 1))
-			if (istype(T, /turf/simulated/floor/auto))
-				var/turf/simulated/floor/auto/TA = T
+			if (istype(T, /turf/unsimulated/floor/auto))
+				var/turf/unsimulated/floor/auto/TA = T
 				if (TA.edge_priority_level >= src.edge_priority_level)
 					continue
 			var/direction = get_dir(T, src)
