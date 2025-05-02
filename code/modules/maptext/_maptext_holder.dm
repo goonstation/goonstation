@@ -33,8 +33,8 @@
 	src.lines = list()
 
 /atom/movable/maptext_holder/disposing()
-	for (var/image/line as anything in src.lines)
-		src.client.images -= line
+	for (var/image/maptext/line as anything in src.lines)
+		src.client?.images -= line
 		qdel(line)
 
 	src.parent.maptext_holders_by_client -= src.client
@@ -91,7 +91,7 @@
 				return
 
 			src.lines -= text
-			src.client.images -= text
+			src.client?.images -= text
 			qdel(text)
 
 			if (!length(src.lines))
