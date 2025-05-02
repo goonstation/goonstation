@@ -14,4 +14,3 @@ export { ItemList } from './goonstation/ItemList';
 export { Placeholder } from './goonstation/Placeholder';
 export { Knob } from './Knob';
 export { Modal } from './Modal';
-export { Slider } from './Slider';
