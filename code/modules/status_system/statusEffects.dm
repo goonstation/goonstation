@@ -3754,27 +3754,70 @@
 	movement_modifier = /datum/movement_modifier/psi_bolt
 
 /datum/statusEffect/piercing_the_veil
+	id = "mindeater_abducted"
+	icon_state = "mindeater_abducted"
+	name = "Abducted"
+	desc = "You're trapped at the border of the Intruder plane! Survive, and you might just make it back."
 	var/turf/start_turf
+	var/datum/allocated_region/alloc_region
+	var/list/active_mindmites = list()
 
 	onAdd(optional)
 		..()
-		src.start_turf = optional
+		src.start_turf = optional[1]
+		src.alloc_region = optional[2]
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+
+		if (probmult(50))
+			var/mob/living/carbon/human/H = src.owner
+			H.take_brain_damage(1 * mult)
+
+		if (probmult(20) && length(src.active_mindmites) < 5)
+			var/turf/T = get_turf(src.owner)
+			var/list/turfs_in_view = list()
+			for (var/turf/turf_to_check in view(5, src.owner))
+				if (turf_to_check.density)
+					continue
+				turfs_in_view += turf_to_check
+			if (length(turfs_in_view))
+				T = pick(turfs_in_view)
+				var/mob/living/critter/mindmite/mite = new(locate(T.x, T.y, T.z), target_mob = src.owner, associated_status = src)
+				src.active_mindmites += mite
 
 	onRemove()
 		..()
 		var/mob/living/L = src.owner
 		if (!QDELETED(L))
-			L.set_loc(start_turf)
+			L.set_loc(src.start_turf)
+		QDEL_NULL(alloc_region)
 
-/datum/statusEffect/piercing_the_veil/visible
-	id = "mindeater_abducted_visible"
-	icon_state = "mindeater_abducted"
-	desc = "You are currently piercing the veil, in a localized plane."
-	visible = TRUE
+		for (var/mite in src.active_mindmites)
+			qdel(mite)
+		src.active_mindmites = null
 
-/datum/statusEffect/piercing_the_veil/invisible
-	id = "mindeater_abducted_invisible"
-	visible = FALSE
+/datum/statusEffect/pierce_the_veil_channel_shield
+	id = "pierce_the_veil_shield"
+	icon_state = "mindeater_pierce_the_veil_shield"
+	name = "3 Charge Shield"
+	desc = "You have a shield with 3 charges that are removed upon being attacked. If the charges run out, Pierce the Veil is cancelled."
+	var/hits_left = 3
+
+	onAdd()
+		..()
+		src.owner.color = "#ff08f3"
+
+	onRemove()
+		..()
+		src.owner.color = null
+		actions.stop(/datum/action/bar/mindeater_pierce_the_veil, src.owner)
+
+	proc/process_hit()
+		src.hits_left--
+		if (src.hits_left <= 0)
+			src.owner.delStatus(src)
 
 /datum/statusEffect/mind_being_eaten
 	id = "mindeater_mind_eating"
@@ -3835,6 +3878,8 @@
 			if (probmult(5))
 				var/list/turfs_in_view = list()
 				for (var/turf/T in view(6, L))
+					if (T.density)
+						continue
 					for (var/obj/O in T)
 						if (O.density)
 							continue

@@ -1541,7 +1541,6 @@
 #include "code\modules\medical\diseases\lycanthropy.dm"
 #include "code\modules\medical\diseases\malady.dm"
 #include "code\modules\medical\diseases\medusa.dm"
-#include "code\modules\medical\diseases\mindmites.dm"
 #include "code\modules\medical\diseases\monkey_madness.dm"
 #include "code\modules\medical\diseases\necrotic_degeneration.dm"
 #include "code\modules\medical\diseases\panacaea.dm"

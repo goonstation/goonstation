@@ -12,7 +12,6 @@
 	name = "chase"
 	minimum_task_ticks = 1
 	maximum_task_ticks = 1
-	move_through_space = TRUE
 	score_by_distance_only = FALSE
 
 	on_tick()

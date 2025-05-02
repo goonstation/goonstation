@@ -34,6 +34,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			var/mob/living/critter/mindeater/mindeater = src.holder.owner
 			mindeater.reveal(src.full_reveal_on_use)
 
+	proc/get_nearest_human(atom/target)
+		if (isliving(target))
+			return target
+		for (var/mob/living/L in view(1, get_turf(target)))
+			if (!ishuman(L))
+				continue
+			return L
+
 	proc/get_nearest_human_or_silicon(atom/target)
 		if (isliving(target))
 			return target
@@ -226,57 +234,30 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
-	desc = "Take nearby mobs to a localized dimensional plane for 15 seconds."
+	desc = "Channel using a 3 charge shield to send a mob that you have 100 Intellect on to the border of the Intruder plane for 60 seconds, where they must survive in an arena."
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 5
-	var/plane_width = 21
-	pointCost = 25
+	targeted = TRUE
+	target_anything = TRUE
+	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
 	reveals_on_use = TRUE
-	var/list/nearby_mobs = list()
 
-	tryCast()
-		src.nearby_mobs = list()
-		for (var/mob/living/L in range(src.max_range, src.holder.owner))
-			if (GET_DIST(L, src.holder.owner) > src.max_range)
-				continue
-			if (!(istype(L, /mob/living/carbon/human) || istype(L, /mob/living/silicon)))
-				continue
-			if (isdead(L))
-				continue
-			src.nearby_mobs += L
-			break
-		if (!length(src.nearby_mobs))
-			boutput(src.holder.owner, SPAN_ALERT("There are no nearby mobs to take with you!"))
+	tryCast(atom/target)
+		target = src.get_nearest_human(target)
+		if (!target)
+			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) < src.pointCost)
+			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-
-		var/datum/allocated_region/veil_border = global.region_allocator.allocate(src.plane_width, src.plane_width)
-		veil_border.clean_up()
-
-		var/turf/center = veil_border.get_center()
-
-		var/dmm_suite/map_loader = new
-		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
 		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 25, TRUE)
-		SPAWN(4 SECONDS)
-			for (var/mob/living/L in src.nearby_mobs)
-				if (QDELETED(L) || L.hasStatus("mindeater_abducted_invisible"))
-					src.nearby_mobs -= L
-				if (!length(src.nearby_mobs))
-					return
-			for (var/mob/living/L in (src.nearby_mobs + list(mindeater)))
-				if (L == src.holder.owner)
-					L.setStatus("mindeater_abducted_visible", 15 SECONDS, get_turf(L))
-				else
-					L.setStatus("mindeater_abducted_invisible", 15 SECONDS, get_turf(L))
-				L.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
-			sleep(15.1 SECONDS)
-			qdel(veil_border)
+		actions.start(new /datum/action/bar/mindeater_pierce_the_veil(target), mindeater)
 
 /area/veil_border
 	name = "Veil border"
@@ -414,3 +395,55 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
 		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || \
 				(istype(src.target, /mob/living/carbon/human) && GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD) || isdead(src.target)
+
+/datum/action/bar/mindeater_pierce_the_veil
+	interrupt_flags = INTERRUPT_ACTION
+	duration = 5 SECONDS
+	resumable = FALSE
+	color_success = "#4444FF"
+	var/mob/living/target
+
+	New(atom/target)
+		..()
+		src.target = target
+
+	onStart()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.owner.setStatus("pierce_the_veil_shield", src.duration + 0.1 SECOND)
+
+	onUpdate()
+		..()
+		if (src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(src.check_for_interrupt())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		var/datum/allocated_region/veil_border = global.region_allocator.allocate(21, 21)
+		veil_border.clean_up()
+
+		var/turf/center = veil_border.get_center()
+
+		var/dmm_suite/map_loader = new
+		map_loader.read_map(file2text("assets/maps/allocated/intruder_veil_border.dmm"), center.x - 10, center.y - 10, center.z)
+		src.target.setStatus("mindeater_abducted", 60 SECONDS, list(get_turf(src.target), veil_border))
+		src.target.set_loc(locate(center.x + rand(-1, 1), center.y + rand(-1, 1), center.z))
+
+		src.owner.delStatus("pierce_the_veil_shield")
+
+	onInterrupt()
+		..()
+		src.owner.delStatus("pierce_the_veil_shield")
+
+	proc/check_for_interrupt()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
+		var/datum/targetable/critter/mindeater/pierce_the_veil/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		return isdead(src.target) || GET_DIST(src.target, mindeater) >= abil.max_range

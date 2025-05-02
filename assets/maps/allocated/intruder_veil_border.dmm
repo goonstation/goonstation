@@ -3,12 +3,8 @@
 /turf/unsimulated/floor/void,
 /area/veil_border)
 "f" = (
-/obj/map/light/graveyard,
+/obj/map/light/purple,
 /turf/simulated/floor,
-/area/veil_border)
-"h" = (
-/obj/map/light/graveyard,
-/turf/unsimulated/floor/void,
 /area/veil_border)
 "j" = (
 /turf/simulated/wall/auto,
@@ -25,7 +21,7 @@
 /area/veil_border)
 "L" = (
 /obj/decal/floatingtiles/random,
-/obj/map/light/graveyard,
+/obj/map/light/purple,
 /turf/unsimulated/floor/void,
 /area/veil_border)
 
@@ -132,7 +128,7 @@ H
 A
 A
 A
-I
+L
 A
 A
 A
@@ -155,7 +151,7 @@ A
 A
 A
 A
-f
+A
 A
 A
 A
@@ -174,15 +170,15 @@ a
 H
 H
 A
-A
-A
-a
+f
 A
 a
 A
+a
 A
 A
-I
+A
+L
 A
 H
 H
@@ -264,8 +260,8 @@ a
 H
 A
 A
-A
-h
+f
+a
 A
 I
 A
@@ -275,8 +271,8 @@ a
 A
 j
 j
-L
-A
+I
+f
 A
 A
 H
@@ -358,7 +354,7 @@ a
 H
 H
 A
-A
+f
 A
 A
 I
@@ -366,7 +362,7 @@ A
 A
 A
 a
-A
+f
 A
 H
 H
@@ -385,7 +381,7 @@ A
 a
 a
 a
-f
+A
 A
 A
 A
@@ -408,7 +404,7 @@ H
 A
 A
 A
-A
+f
 A
 A
 A

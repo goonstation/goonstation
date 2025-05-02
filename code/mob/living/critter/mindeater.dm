@@ -56,13 +56,11 @@
 		src.demanifest()
 
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
-		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).add_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(src)
 
 	disposing()
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
-		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).remove_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
@@ -129,6 +127,23 @@
 		src.hp_indicator.set_icon_state(round(src.get_health_percentage() * 100, 20))
 		if (brute > 0 || burn > 0 || tox > 0)
 			src.reveal()
+
+	attack_hand(mob/living/M)
+		..()
+		if (M.a_intent == INTENT_HARM)
+			for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+				shield.process_hit()
+
+	attackby(obj/item/I, mob/M)
+		..()
+		for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+			shield.process_hit()
+
+	bullet_act(obj/projectile/P)
+		..()
+		if (!istype(P.proj_data, /datum/projectile/special/psi_bolt))
+			for (var/datum/statusEffect/pierce_the_veil_channel_shield/shield in src.statusEffects)
+				shield.process_hit()
 
 	bump(atom/A)
 		..()
