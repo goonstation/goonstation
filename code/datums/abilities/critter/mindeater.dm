@@ -192,6 +192,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		var/mob/living/L = target
 
+		playsound(get_turf(mindeater), 'sound/misc/intruder/paralyze.ogg', 25, TRUE)
 		if (abs(dir2angle(L.dir) - dir2angle(get_dir(L, mindeater))) > 45)
 			boutput(src.holder.owner, SPAN_ALERT("The target was looking away from you!"))
 			return

@@ -947,6 +947,7 @@ var/global/list/soundCache = list(
  	"sound/misc/hastur/tentacle_walk.ogg" = 'sound/misc/hastur/tentacle_walk.ogg',\
  	"sound/misc/headspiderability.ogg" = 'sound/misc/headspiderability.ogg',\
  	"sound/misc/intruder/mindeater_abduct.ogg" = 'sound/misc/intruder/mindeater_abduct.ogg',\
+ 	"sound/misc/intruder/paralyze.ogg" = 'sound/misc/intruder/paralyze.ogg',\
  	"sound/misc/intruder/psi_bolt.ogg" = 'sound/misc/intruder/psi_bolt.ogg',\
  	"sound/misc/jaws.ogg" = 'sound/misc/jaws.ogg',\
  	"sound/misc/jester_laugh.ogg" = 'sound/misc/jester_laugh.ogg',\
