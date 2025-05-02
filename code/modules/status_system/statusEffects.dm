@@ -3706,3 +3706,29 @@
 		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
 		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
 		mob_owner.mind.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+
+/datum/statusEffect/mimicDisguise
+	id = "mimic_disguise"
+	name = "Disguised"
+	desc = "Your speed and vitality are matching with your disguise."
+	visible = TRUE
+	var/last_amount = null
+
+	onUpdate(last_amount)
+		..()
+		var/mob/living/critter/mimic/mob_owner = src.owner
+		var/new_amount = mob_owner.pixel_amount
+		var/health = null
+		if (new_amount != last_amount) // sprite sizes are sorted into brackets
+			if (new_amount <= 80)
+				health = 10
+			else if (new_amount <= 300)
+				health = 30
+			else
+				health = new_amount / 12
+				if (health > 120)
+					health = 120
+			mob_owner.max_health = health
+
+
+
