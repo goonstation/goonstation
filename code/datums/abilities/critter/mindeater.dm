@@ -188,79 +188,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	teleport_blocked = 2
 	allowed_restricted_z = TRUE
 
-/datum/targetable/critter/mindeater/telekinesis
-	name = "Telekinesis"
-	desc = "Pull a few items from a target location to you and steal them for a few seconds."
-	icon_state = "telekinesis"
-	cooldown = 30 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	full_reveal_on_use = TRUE
-	max_range = 6
-	pointCost = 10
-
-	tryCast(atom/target)
-		var/found_item = FALSE
-		for (var/atom/A in view(1, get_turf(target)))
-			if (istype(A, /obj/item))
-				var/obj/item/I = A
-				if (!I.anchored)
-					found_item = TRUE
-					break
-			else if (istype(A, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = A
-				if (H.l_hand)
-					found_item = TRUE
-					break
-				if (H.r_hand)
-					found_item = TRUE
-					break
-			else if (istype(A, /mob/living/critter))
-				var/mob/living/critter/C = A
-				for (var/datum/handHolder/handholder as anything in C.hands)
-					if (handholder.item)
-						found_item = TRUE
-						break
-
-		if (!found_item)
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-
-		return ..()
-
-	cast(atom/target)
-		. = ..()
-		var/list/item_candidates = list()
-		var/list/chosen_items = list()
-		for (var/atom/A in view(1, get_turf(target)))
-			if (istype(A, /obj/item))
-				var/obj/item/I = A
-				if (!I.anchored)
-					item_candidates += A
-			else if (istype(A, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = A
-				if (H.l_hand)
-					item_candidates |= H.l_hand
-				if (H.r_hand)
-					item_candidates |= H.r_hand
-			else if (istype(A, /mob/living/critter))
-				var/mob/living/critter/C = A
-				for (var/datum/handHolder/handholder as anything in C.hands)
-					if (handholder.item)
-						item_candidates |= handholder.item
-
-		shuffle_list(item_candidates)
-		for (var/i in 1 to min(5, length(item_candidates)))
-			chosen_items += item_candidates[i]
-
-		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		for (var/obj/item/I as anything in chosen_items)
-			animate(I, 1 SECOND, easing = LINEAR_EASING, alpha = 0)
-			SPAWN(1 SECOND)
-				animate(I, 0.5 SECONDS, alpha = 255)
-				mindeater.levitate_item(I)
-				sleep(10 SECONDS)
-				mindeater.drop_levitated_item(I)
-
 /datum/targetable/critter/mindeater/spatial_swap
 	name = "Spatial Swap"
 	desc = "Swap the location of yourself and another living creature or fake version of yourself."
@@ -330,50 +257,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		mindeater.undisguise()
-
-/datum/targetable/critter/mindeater/shades
-	name = "Shades"
-	desc = "Create shades of yourself, swapping places with one, that move when you do."
-	icon_state = "shades"
-	cooldown = 30 SECONDS
-	full_reveal_on_use = TRUE
-	pointCost = 25
-
-	cast(atom/target)
-		. = ..()
-		var/list/adjacent_turfs = list()
-		if (prob(50))
-			adjacent_turfs += get_step(src.holder.owner, NORTH)
-			adjacent_turfs += get_step(src.holder.owner, EAST)
-			adjacent_turfs += get_step(src.holder.owner, WEST)
-			adjacent_turfs += get_step(src.holder.owner, SOUTH)
-		else
-			adjacent_turfs += get_step(src.holder.owner, NORTHEAST)
-			adjacent_turfs += get_step(src.holder.owner, NORTHWEST)
-			adjacent_turfs += get_step(src.holder.owner, SOUTHEAST)
-			adjacent_turfs += get_step(src.holder.owner, SOUTHWEST)
-
-		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		var/list/fake_mindeaters = list()
-		for (var/turf/T as anything in adjacent_turfs)
-			var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(src.holder.owner))
-			fake.glide_size = src.holder.owner.glide_size
-			fake_mindeaters += fake
-		for (var/i in 1 to length(fake_mindeaters))
-			var/obj/dummy/fake_mindeater/fake = fake_mindeaters[i]
-			fake.set_loc(adjacent_turfs[i])
-			fake.set_dir(src.holder.owner.dir)
-
-		mindeater.setup_fake_mindeaters(fake_mindeaters)
-
-		if (prob(80))
-			shuffle_list(fake_mindeaters)
-			var/turf/T1 = get_turf(fake_mindeaters[1])
-			var/turf/T2 = get_turf(mindeater)
-			mindeater.set_loc(T1)
-			var/obj/dummy/fake_mindeater/fake = fake_mindeaters[1]
-			fake.set_loc(T2)
-			fake.set_dir(src.holder.owner.dir)
 
 /datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT

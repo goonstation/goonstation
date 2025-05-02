@@ -25,10 +25,6 @@
 	var/image/mindeater_visibility_indicator/vis_indicator
 	/// shows health of the mindeater
 	var/image/mindeater_health_indicator/hp_indicator
-	/// fake mindeaters created through associated ability
-	var/list/fake_mindeaters = null
-	/// items being levitated through associated ability
-	var/list/levitated_items = list()
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
@@ -68,7 +64,6 @@
 		get_image_group(CLIENT_IMAGE_GROUP_MINDMITE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
-		src.remove_fake_mindeaters()
 
 	Life()
 		. = ..()
@@ -198,11 +193,6 @@
 		src.reveal()
 		return ..()
 
-	set_dir(new_dir) // had issues with COMSIG_MOVABLE_DIR_CHANGED
-		..()
-		for (var/atom/movable/AM as anything in src.fake_mindeaters)
-			AM.set_dir(new_dir)
-
 	/// returns if the turf is bright enough to reveal the mindeater
 	proc/on_bright_turf()
 		var/turf/T = get_turf(src)
@@ -245,8 +235,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/create)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/shades)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 	/// move from tangible to intangible state
@@ -261,56 +250,11 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/create)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/shades)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/become_tangible)
 
 		src.remove_pulling()
-
-	/// create fake mindeaters for associated ability
-	proc/setup_fake_mindeaters(list/fakes)
-		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(move_fake_mindeaters))
-		src.fake_mindeaters = fakes
-		SPAWN(10 SECONDS)
-			src.remove_fake_mindeaters()
-
-	/// remove fake mindeaters for associated ability
-	proc/remove_fake_mindeaters()
-		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-		for (var/obj/dummy/fake_mindeater/fake as anything in src.fake_mindeaters)
-			qdel(fake)
-			src.fake_mindeaters -= fake
-
-	proc/move_fake_mindeaters(atom/thing, new_loc, direct)
-		for (var/atom/movable/AM as anything in src.fake_mindeaters)
-			AM.Move(get_step(AM, direct))
-
-	/// levitate an item with associated ability
-	proc/levitate_item(obj/item/I)
-		var/mob/living/L = I.loc
-		if (istype(L))
-			L.drop_item(I)
-		src.levitated_items += I
-		I.set_loc(src)
-		src.vis_contents += I
-		I.Scale(2 / 3, 2 / 3)
-		if (prob(50))
-			I.pixel_x = 12 + rand(-4, 4)
-		else
-			I.pixel_x = -12 + rand(-4, 4)
-		I.pixel_y = rand(-8, 16)
-		animate_levitate(I)
-
-	/// drop a levitated item
-	proc/drop_levitated_item(obj/item/I)
-		if (!(I in src.levitated_items))
-			return
-		src.levitated_items -= I
-		I.set_loc(get_turf(src))
-		src.vis_contents -= I
-		animate(I)
-		I.Scale(3 / 2, 3 / 2)
 
 	/// disguise as an entity
 	proc/disguise(option)
