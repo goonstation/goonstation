@@ -137,6 +137,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 45 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	max_range = 7
 
 	cast(atom/target)
 		. = ..()
@@ -151,7 +152,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 7
-	pointCost = 15
+
+	tryCast(atom/target)
+		target = src.get_nearest_mob_or_fake_mindeater(target)
+		if (!target)
+			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures or fake mindeaters!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		. = ..()
+		var/atom/movable/AM = target
+		var/turf/T1 = get_turf(src.holder.owner)
+		var/turf/T2 = get_turf(AM)
+		AM.set_loc(T1)
+		src.holder.owner.set_loc(T2)
+
 
 	tryCast(atom/target)
 		target = src.get_nearest_mob_or_fake_mindeater(target)
