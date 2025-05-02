@@ -3602,3 +3602,18 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'
+
+/obj/item/gun/kinetic/sawnoff/fan
+	name = "\improper Friend-A-Nobody"
+	desc = "This shotgun is even more sawn off than usual."
+	icon_state = "fan"
+	recoil_strength = 40
+
+	New()
+		..()
+		src.name = "\improper Friend-A-Nobody"
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+		. = ..()
+		// flings you in the opposite direction
+		user.throw_at(get_edge_cheap(get_turf(src), get_dir(target, start)), 5, 2, thrown_from=start, thrown_by=user, throw_type=THROW_CHAIRFLIP)
