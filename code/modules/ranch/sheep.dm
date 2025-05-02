@@ -17,7 +17,7 @@
 	can_disarm = 1
 	can_help = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	butcher_time = 0.2 SECONDS
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/sheep
 

@@ -2,6 +2,7 @@
 	id = ROLE_VAMPIRE
 	display_name = "vampire"
 	antagonist_icon = "vampire"
+	wiki_link = "https://wiki.ss13.co/Vampire"
 
 	/// The ability holder of this vampire, containing their respective abilities. This is also used for tracking blood, at the moment.
 	var/datum/abilityHolder/vampire/ability_holder

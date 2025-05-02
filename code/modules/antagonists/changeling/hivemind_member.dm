@@ -2,6 +2,7 @@
 	id = ROLE_CHANGELING_HIVEMIND_MEMBER
 	display_name = "changeling hivemind member"
 	remove_on_clone = TRUE
+	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	give_equipment()
 		var/datum/abilityHolder/changeling/master_ability_holder = src.master.current.get_ability_holder(/datum/abilityHolder/changeling)

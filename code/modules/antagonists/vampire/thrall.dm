@@ -4,6 +4,7 @@
 	antagonist_icon = "vampthrall"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	wiki_link = "https://wiki.ss13.co/Vampire#Thralls"
 
 	/// The ability holder of the master of this vampire thrall, which is to be used alongside `src.master`, due to vampire TEGs.
 	var/datum/abilityHolder/vampire/master_ability_holder

@@ -3,6 +3,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	antagonist_icon = "changeling"
+	wiki_link = "https://wiki.ss13.co/Changeling"
 	var/critter_type = null
 	var/speech_output = SPEECH_OUTPUT_HIVECHAT
 	var/datum/abilityHolder/changeling/master_ability_holder

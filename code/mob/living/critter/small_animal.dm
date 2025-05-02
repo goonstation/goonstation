@@ -3716,7 +3716,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	player_can_spawn_with_pet = TRUE
@@ -4727,7 +4727,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 	icon_state_dead = "lavacrab-dead"
 	density = TRUE
 	anchored = ANCHORED
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_burn_vuln = 0.1
 	health_brute_vuln = 0.5
 	death_text = "%src% flops over dead!"
@@ -5029,7 +5029,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 	health_burn = 10
 	flags = NOSPLASH | TABLEPASS
 	generic = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	no_stamina_stuns = TRUE
 	has_genes = FALSE
 
