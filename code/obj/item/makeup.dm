@@ -277,7 +277,6 @@
 			if(src.makeuptype == "eyeshadow_gold")
 				makeup_color = pick(eyeshadow_gold_colors)
 			actions.start(new /datum/action/bar/icon/apply_eyeshadow(target, src, target == user ? 40 : 60), user)
-			return
 		else
 			return ..()
 
