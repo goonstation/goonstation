@@ -1185,6 +1185,20 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 					edge_overlay.plane = PLANE_FLOOR
 					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
+/turf/unsimulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
