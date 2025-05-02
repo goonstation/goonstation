@@ -168,21 +168,43 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		AM.set_loc(T1)
 		src.holder.owner.set_loc(T2)
 
+/datum/targetable/critter/mindeater/paralyze
+	name = "Paralyze"
+	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement.
+			For each 10 Intellect on them, make them take 1 step towards you and receive a stab."}
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	max_range = 5
 
 	tryCast(atom/target)
-		target = src.get_nearest_mob_or_fake_mindeater(target)
+		target = src.get_nearest_human_or_silicon(target)
 		if (!target)
 			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) < 10)
+			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
 
 	cast(atom/target)
 		. = ..()
-		var/atom/movable/AM = target
-		var/turf/T1 = get_turf(src.holder.owner)
-		var/turf/T2 = get_turf(AM)
-		AM.set_loc(T1)
-		src.holder.owner.set_loc(T2)
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		var/mob/living/L = target
+
+		if (abs(dir2angle(L.dir) - dir2angle(get_dir(L, mindeater))) > 45)
+			boutput(src.holder.owner, SPAN_ALERT("The target was looking away from you!"))
+			return
+		SPAWN(0)
+			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
+			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
+			for (var/i in 1 to floor(GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) / 10))
+				sleep(0.75 SECONDS)
+				L.Move(get_step(L, get_dir(L, mindeater)), get_dir(L, mindeater))
+				take_bleeding_damage(L, null, 2.5, pick(DAMAGE_CUT, DAMAGE_STAB))
+				playsound(get_turf(L), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
+			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
+			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"

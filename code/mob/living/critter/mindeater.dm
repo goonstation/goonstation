@@ -235,6 +235,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
@@ -250,6 +251,7 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/manifest)
