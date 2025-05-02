@@ -12,7 +12,6 @@ export { Pointer } from './goonstation/colorful/Pointer';
 export { Image } from './goonstation/Image';
 export { ItemList } from './goonstation/ItemList';
 export { Placeholder } from './goonstation/Placeholder';
-export { Icon } from './Icon';
 export { Knob } from './Knob';
 export { Modal } from './Modal';
 export { Slider } from './Slider';
