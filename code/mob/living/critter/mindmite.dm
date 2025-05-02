@@ -74,8 +74,6 @@
 		..()
 		var/pick = rand(1, 4)
 		switch (pick)
-			if (1)
-				target.take_brain_damage(3)
 			if (2)
 				target.TakeDamage("All", 5)
 			if (3)
