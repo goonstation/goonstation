@@ -98,7 +98,7 @@
 		for (var/datum/statusEffect/status in src.statusEffects)
 			qdel(status)
 		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
-		var/datum/targetable/critter/mindeater/become_tangible/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/become_tangible/)
+		var/datum/targetable/critter/mindeater/manifest/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/manifest/)
 		abil_holder.deductPoints(abil_holder.points)
 		abil.doCooldown()
 
@@ -224,7 +224,7 @@
 
 	/// move from intangible to tangible state
 	proc/manifest()
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/become_tangible)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/manifest)
 		src.event_handler_flags &= ~(MOVE_NOCLIP | IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP)
 		src.flags &= ~UNCRUSHABLE
 		src.density = TRUE
@@ -252,7 +252,7 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/become_tangible)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/manifest)
 
 		src.remove_pulling()
 

@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				continue
 			return L
 
-/datum/targetable/critter/mindeater/become_tangible
+/datum/targetable/critter/mindeater/manifest
 	name = "Manifest"
 	desc = "Merge yourself into reality, becoming tangible."
 	icon_state = "manifest"
@@ -80,26 +80,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		mindeater.manifest()
-
-/datum/targetable/critter/mindeater/regenerate
-	name = "Regenerate"
-	desc = "Use Intellect to regenerate health."
-	icon_state = "regenerate"
-	pointCost = 1
-
-	tryCast()
-		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		if (mindeater.get_health_percentage() >= 1)
-			boutput(mindeater, SPAN_ALERT("You're already at full health!"))
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		return ..()
-
-	cast(atom/target)
-		. = ..()
-		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_regenerate))
-			actions.stop(/datum/action/bar/private/mindeater_regenerate, src.holder.owner)
-		else
-			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
@@ -128,6 +108,65 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cast(atom/target)
 		. = ..()
 		actions.start(new /datum/action/bar/private/mindeater_brain_drain(target), src.holder.owner)
+
+/datum/targetable/critter/mindeater/regenerate
+	name = "Regenerate"
+	desc = "Use Intellect to regenerate health."
+	icon_state = "regenerate"
+	pointCost = 1
+
+	tryCast()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		if (mindeater.get_health_percentage() >= 1)
+			boutput(mindeater, SPAN_ALERT("You're already at full health!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		. = ..()
+		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_regenerate))
+			actions.stop(/datum/action/bar/private/mindeater_regenerate, src.holder.owner)
+		else
+			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
+
+
+/datum/targetable/critter/mindeater/project
+	name = "Create"
+	desc = "Create a fake Mindeater at the target location."
+	icon_state = "create"
+	cooldown = 45 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		. = ..()
+		var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(target))
+		fake.set_dir(src.holder.owner.dir)
+
+/datum/targetable/critter/mindeater/spatial_swap
+	name = "Spatial Swap"
+	desc = "Swap the location of yourself and another living creature or fake version of yourself."
+	icon_state = "spatial_swap"
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	max_range = 7
+	pointCost = 15
+
+	tryCast(atom/target)
+		target = src.get_nearest_mob_or_fake_mindeater(target)
+		if (!target)
+			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return ..()
+
+	cast(atom/target)
+		. = ..()
+		var/atom/movable/AM = target
+		var/turf/T1 = get_turf(src.holder.owner)
+		var/turf/T2 = get_turf(AM)
+		AM.set_loc(T1)
+		src.holder.owner.set_loc(T2)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
@@ -187,45 +226,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Veil border"
 	teleport_blocked = 2
 	allowed_restricted_z = TRUE
-
-/datum/targetable/critter/mindeater/spatial_swap
-	name = "Spatial Swap"
-	desc = "Swap the location of yourself and another living creature or fake version of yourself."
-	icon_state = "spatial_swap"
-	cooldown = 20 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	max_range = 7
-	pointCost = 15
-
-	tryCast(atom/target)
-		target = src.get_nearest_mob_or_fake_mindeater(target)
-		if (!target)
-			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		return ..()
-
-	cast(atom/target)
-		. = ..()
-		var/atom/movable/AM = target
-		var/turf/T1 = get_turf(src.holder.owner)
-		var/turf/T2 = get_turf(AM)
-		AM.set_loc(T1)
-		src.holder.owner.set_loc(T2)
-
-/datum/targetable/critter/mindeater/create
-	name = "Create"
-	desc = "Create a fake Mindeater at the target location."
-	icon_state = "create"
-	cooldown = 45 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-	pointCost = 10
-
-	cast(atom/target)
-		. = ..()
-		var/obj/dummy/fake_mindeater/fake = new /obj/dummy/fake_mindeater(get_turf(target))
-		fake.set_dir(src.holder.owner.dir)
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
