@@ -347,7 +347,7 @@
 	station_bounties[/obj/item/firstbill] = 2
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
-	station_bounties[/obj/item/card/id/captains_spare] = 3
+	station_bounties[/obj/item/card/id/gold/captains_spare] = 3
 	station_bounties[/obj/item/rcd] = 2
 	station_bounties[/obj/item/rcd/construction/chiefEngineer] = 3
 

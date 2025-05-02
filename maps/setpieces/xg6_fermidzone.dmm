@@ -4118,7 +4118,7 @@
 	status = 2
 	},
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -8060,7 +8060,7 @@
 "Hf" = (
 /obj/machinery/light/small,
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/unsimulated/floor/sanitary,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -10210,11 +10210,9 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "PN" = (
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/syndicate/commander{
 	dir = 4;
-	icon_state = "datasec";
-	name = "Shen Kuo Observatory Announcement Console";
-	req_access_txt = "76"
+	name = "Shen Kuo Observatory Announcement Console"
 	},
 /obj/map/light/screen,
 /turf/unsimulated/floor/redblack{

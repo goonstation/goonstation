@@ -5028,6 +5028,17 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 		..()
 		src.hat.name = "Mabel's beret"
 
+/obj/machinery/bot/guardbot/old/tourguide/neon
+	name = "Earle"
+	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around! This one has a little name tag on the front labeled 'Earle'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sea_captain
+
+	New()
+		..()
+		src.hat.name = "Earle's ship captain hat"
+
 /obj/machinery/computer/hug_console
 	name = "Hug Console"
 	desc = "A hug console? It has a small opening on the top."

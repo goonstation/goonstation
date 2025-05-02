@@ -358,9 +358,9 @@
 
 	get_desc(dist, mob/user)
 		if (user.mind.is_antagonist())
-			. += SPAN_ALERT("<b>Good.</b>")
+			. += SPAN_ALERT("<b>Good.</b> ")
 		else
-			. += "Keep it safe!"
+			. += "Keep it safe! "
 		. += ..()
 /obj/item/device/radio/headset/detective
 	name = "detective's headset"

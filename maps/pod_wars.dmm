@@ -504,7 +504,7 @@
 /area/pod_wars/team1/bar)
 "bO" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -849,6 +849,11 @@
 /obj/machinery/r_door_control/podbay/t1d4/new_walls/west,
 /turf/space,
 /area/space)
+"cN" = (
+/obj/machinery/light/incandescent,
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/pod_wars/team2/power)
 "cO" = (
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team2/magnet)
@@ -1427,8 +1432,8 @@
 "eK" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
-	chargelevel = 15000;
-	output = 10000
+	chargelevel = 60000;
+	output = 40000
 	},
 /obj/cable,
 /turf/simulated/floor/engine,
@@ -2746,7 +2751,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -3809,8 +3814,8 @@
 "mq" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
-	chargelevel = 15000;
-	output = 10000
+	chargelevel = 60000;
+	output = 40000
 	},
 /obj/cable,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -4029,7 +4034,7 @@
 /area/pod_wars/spacejunk/nancy/warehouse)
 "ne" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -5686,11 +5691,10 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "sp" = (
-/obj/machinery/computer/announcement{
+/obj/machinery/computer/announcement/syndicate{
 	dir = 8;
-	icon_state = "datasec";
-	name = "Syndicate Announcement Computer";
-	req_access = null
+	req_access = null;
+	area_name = null
 	},
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
@@ -8249,7 +8253,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -10258,6 +10262,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/powergen)
+"Gz" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/pod_wars/team2/power)
 "GA" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor,
@@ -10749,6 +10757,9 @@
 	dir = 9
 	},
 /area/pod_wars/spacejunk/fstation)
+"Il" = (
+/turf/simulated/wall/auto/asteroid,
+/area/pod_wars/asteroid/minor)
 "Im" = (
 /obj/machinery/power/furnace{
 	desc = "Wow. This thing puts out a lot of heat! If only we had some carbon based material we could shove in here to burn...";
@@ -11578,7 +11589,7 @@
 "KQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -12386,7 +12397,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
 /area/pod_wars/spacejunk/nancy)
@@ -79774,9 +79785,9 @@ eC
 eC
 Uo
 eC
-eC
-eC
-eC
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -79977,7 +79988,7 @@ Uo
 Uo
 Uo
 Uo
-eC
+Uo
 Uo
 Uo
 eC
@@ -80177,11 +80188,11 @@ eC
 Uo
 Uo
 Uo
-Uo
-Uo
-Uo
-Uo
-Uo
+Il
+eC
+eC
+eC
+Il
 Uo
 eC
 eC
@@ -80379,11 +80390,11 @@ eC
 eC
 Uo
 Uo
-Uo
-Uo
-Uo
-Uo
-Uo
+eC
+eC
+eC
+eC
+eC
 Uo
 Uo
 eC
@@ -80579,13 +80590,13 @@ eC
 eC
 eC
 eC
+Uo
+Uo
+eC
+Il
 eC
 eC
-Uo
-Uo
-Uo
-Uo
-Uo
+Il
 Uo
 Uo
 eC
@@ -80781,13 +80792,13 @@ eC
 eC
 eC
 eC
+Uo
+Uo
+eC
+Il
 eC
 eC
-Uo
-Uo
-Uo
-Uo
-Uo
+eC
 Uo
 eC
 eC
@@ -80984,13 +80995,13 @@ eC
 eC
 eC
 eC
-eC
-eC
 Uo
 Uo
 Uo
 Uo
-eC
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -81187,11 +81198,11 @@ eC
 eC
 eC
 eC
-eC
-eC
-eC
-eC
-eC
+Uo
+Uo
+Uo
+Uo
+Uo
 eC
 eC
 eC
@@ -85807,7 +85818,7 @@ eC
 eC
 za
 za
-za
+eC
 za
 eC
 za
@@ -127296,7 +127307,7 @@ jC
 nV
 Dx
 gq
-xg
+Gz
 pP
 fv
 We
@@ -127700,7 +127711,7 @@ uV
 nV
 Sg
 gq
-pP
+cN
 xg
 cv
 sJ
@@ -128104,7 +128115,7 @@ rK
 ye
 xc
 oN
-xg
+Gz
 xg
 Nz
 xg
@@ -128710,7 +128721,7 @@ OL
 OL
 aX
 OA
-xg
+Gz
 pP
 xg
 xg

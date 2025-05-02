@@ -1,4 +1,94 @@
 
+(t)fri may 02 25
+(u)glowbold
+(p)23199
+(e)⚖💊|C-Balance, A-Medical
+(*)Common first aid kits do not contain health analyzers, but have more apt supplies for the damage type they're associated with.
+(u)JORJ949
+(p)23203
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Security pinpointers and disks now come labelled with the owner's name, this label can be removed with a hand labeler.
+(t)thu may 01 25
+(u)EmeraldCrow
+(p)23232
+(e)📦|A-Game-Objects
+(+)Fixes Tommy Guillaume figurine.
+(t)wed apr 30 25
+(u)Jan.antilles
+(p)23004
+(e)|
+(+)Hand-assembled cleanbots can now be named with a pen before adding the final robot arm.
+(u)JORJ949
+(p)23153
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Using the wiki command as an antagonist now sends you to that antagonist's wiki page!
+(u)glowbold
+(p)23207
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The gibber can now process suitable critters.
+(t)mon apr 28 25
+(u)wisconsin, sunnyaries
+(p)23171
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Added 9 new food items, most to do with rice.
+(+)Sliced Bread can be cut into Breadcrumbs, a new ingredient.
+(u)Cindertroy
+(p)23179
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added 3 more ATMs to Neon
+(u)LeahTheTech
+(*)Remy will now suggest a recipe if you offer him an ingredient.
+(t)sun apr 27 25
+(u)Sord, Leah, Jan + seamonsters by Thrush
+(p)23105
+(e)🗺🔧❗|A-Mapping, A-Tooling, E-FUCK
+(*)Added a new underwater map, Neon. Neon replaces Atlas as the lowpop map (Max votable playercount 30).
+(*)Neon is built within a strange reef where the coral is made of plasma. The plasma has been having strange effects on the wildlife.
+(*)All gas vented underwater now becomes bubbles. Bubbles eventually "pop" and dissipate. Large bubbles can be breathed from. Bubbles can be captured using portable pumps or air scrubbers.
+(*)Neon comes with a new unique rare antag type, the "Broken", which can spawn via a random event.
+(*)Neon features a new solars-like power generation method, the current driven Turbine. Wrench turbine shafts and use one of the four turbines located around maintenance to find the sweet spot in the current to generate the small amounts of power.
+(+)There are unique mobs located within the plasma coral reefs which contain a new genetic mutation.
+(+)Currents outside the north and south side of the station can be counteracted with a jetpack or magboots.
+(+)Any non antagonists, regardless of mindhack protection implants or traits, can become "Broken"
+(+)To opt into becoming the "Broken" you can enable "Other Foes" in your character preferences.
+(+)All "Broken" share the same randomly picked objective.
+(+)Haloperidol can be used to cure the "Broken" faster.
+(u)LeahTheTech
+(*)Glue no longer falls off on its own, instead the more glue you use the harder the object will be to remove.
+(*)Examining an item in your hand will now tell you the rough temperature of the reagents contained in it. So you can tell if that delicious deep-fried pickled banana, pencil and glowstick sandwich is going to scald your mouth.
+(u)FlameArrow57
+(p)22828
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fixed being unable to build walls over or using an RCD on Space Phoenix ice tunnels
+(u)Garash
+(p)22290
+(e)🪲📄|C-Bug, A-UI
+(+)Keybind menu now allows to bind special keys such as shift, ctrl, alt...
+(u)bobbis dobbis
+(p)22923
+(e)🆕🎨📡|C-Feature, C-Sprites, A-AI
+(+)Added sunglasses and wide smile ai faces
+(u)glowbold
+(p)22930
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)You can get fireworks out of firework boxes by using a snipping tool on them. Try not to blow your hands off.
+(u)JORJ949 & glowbold
+(p)23041
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Customs offices have a personnel management computer, containing BankBoss, SecMate, and RoleControl.
+(u)LorrMaster
+(p)23100
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Can set other people's internals in slots other than the back.
+(t)sat apr 26 25
+(u)glowbold
+(p)23037
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawyers get a special legal license they can show off.
+(u)Flappybat
+(p)23141
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Deconstructing an object will unglue anything that is glued to it.
 (t)fri apr 25 25
 (u)LeahTheTech
 (p)23120

@@ -1375,6 +1375,126 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 		..()
 
+
+#define ROMAN_CANDLE_UNLIT 0
+#define ROMAN_CANDLE_LIT 1
+#define ROMAN_CANDLE_BURNT 2
+
+/obj/item/roman_candle
+	name = "roman candle"
+	desc = "Contains 10 exploding stars. Only use outdoors. Only point towards sky. All liability is waived."
+	icon = 'icons/obj/items/sparklers.dmi'
+	icon_state = "sparkler-off"
+	inhand_image_icon = 'icons/obj/items/sparklers.dmi'
+	item_state = "sparkler-off"
+	w_class = W_CLASS_SMALL
+	var/base_icon_state = "sparkler-"
+	var/state = ROMAN_CANDLE_UNLIT
+	var/charges = 10
+
+/obj/item/roman_candle/New()
+	. = ..()
+	src.charges = rand(8,10) // cheap ass fireworks
+
+/obj/item/roman_candle/attackby(obj/item/W, mob/user, params)
+	if (src.state == ROMAN_CANDLE_UNLIT)
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+			src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
+
+		else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+			src.light(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
+
+		else if (istype(W, /obj/item/device/igniter))
+			src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
+
+		else if (istype(W, /obj/item/device/light/zippo) && W:on)
+			src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
+
+		else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
+
+		else if (W.burning)
+			src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
+	else
+		return ..()
+
+/obj/item/roman_candle/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	if((temperature > T0C+400))
+		src.light(src.loc, SPAN_ALERT("\The [src] cooks off!"))
+	..()
+
+/obj/item/roman_candle/reagent_act(reagent_id, volume, datum/reagentsholder_reagents)
+	if (src.state == ROMAN_CANDLE_LIT)
+		if (reagent_id == "ff-foam" || reagent_id == "water" && volume >= 10)
+			src.snuff(src.loc)
+	. = ..()
+
+/obj/item/roman_candle/process()
+	if (src.state != ROMAN_CANDLE_LIT)
+		processing_items -= src
+		return
+
+	var/turf/T = get_turf(src.loc)
+
+	if (T)
+		T.hotspot_expose(700,5)
+
+	if (prob(66))
+		var/direction = pick(alldirs)
+		var/turf/location = src.loc
+		if (ismob(location))
+			var/mob/M = location
+			if (M.find_in_hand(src))
+				location = M.loc
+				direction = M.dir
+		src.shoot_firework(T, direction)
+
+/obj/item/roman_candle/update_icon()
+	. = ..()
+	var/new_state = src.base_icon_state
+	switch (src.state)
+		if(ROMAN_CANDLE_UNLIT)
+			new_state += "off"
+		if(ROMAN_CANDLE_LIT)
+			new_state += "on"
+		if(ROMAN_CANDLE_BURNT)
+			new_state += "burnt"
+	src.icon_state = new_state
+	src.item_state = new_state
+
+/obj/item/roman_candle/proc/light(mob/user, message)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_UNLIT) return
+	src.state = ROMAN_CANDLE_LIT
+	logTheThing(LOG_STATION, user, "lights the [src] at [log_loc(src)].")
+	src.hit_type = DAMAGE_BURN
+	src.force = 3
+	src.UpdateIcon()
+	processing_items |= src
+	if(istype(user))
+		user.update_inhands()
+
+/obj/item/roman_candle/proc/shoot_firework(turf/T, direction)
+	var/datum/projectile/special/firework/firework = new
+	shoot_projectile_ST_pixel_spread(src.loc, firework, get_step(src.loc, direction))
+	src.charges--
+	if (src.charges <= 0)
+		src.snuff(src.loc)
+
+/obj/item/roman_candle/proc/snuff(mob/user)
+	if (!src) return
+	if (src.state != ROMAN_CANDLE_LIT) return
+	src.state = ROMAN_CANDLE_BURNT
+	src.UpdateIcon()
+	processing_items -= src
+	if (istype(user))
+		user.update_inhands()
+
+#undef ROMAN_CANDLE_UNLIT
+#undef ROMAN_CANDLE_LIT
+#undef ROMAN_CANDLE_BURNT
+
+
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
@@ -1993,62 +2113,62 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (istype(hero))
 					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
 				else // leave a radium puddle instead
-					for (var/turf/splat in view(1,src.loc))
+					for (var/turf/splat in view(1,origin))
 						make_cleanable( /obj/decal/cleanable/greenglow,splat)
-					for (var/mob/M in view(3,src.loc))
+					for (var/mob/M in view(3,origin))
 						if(iscarbon(M))
 							if (M.reagents)
 								M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
 						boutput(M, SPAN_ALERT("You are splashed with hot green liquid!"))
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(origin, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,src.loc))
+					playsound(origin, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,origin))
 					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(origin))
 				else
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(origin))
 			if (meat)
 				if (meat > 1)
-					gibs(src.loc)
-				for (var/turf/splat in view(meat,src.loc))
+					gibs(origin)
+				for (var/turf/splat in view(meat,origin))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
 				if (ghost > 1)
-					for (var/mob/M in view(2+ghost,src.loc))
+					for (var/mob/M in view(2+ghost,origin))
 						if(iscarbon(M))
 							boutput(M, SPAN_ALERT("You are yanked by an unseen force!"))
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
 							M.throw_at(origin, yank_distance, 2)
-				for (var/obj/O in view(1,src.loc))
+				for (var/obj/O in view(1,origin))
 					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
 				throw_shrapnel(origin, 4, extra_shrapnel * (istype(hero) ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
-				for (var/mob/living/L in view(5, src.loc))
+				for (var/mob/living/L in view(5, origin))
 					target_count++
 				if (target_count)
-					for (var/mob/living/L in oview(5, src.loc))
+					for (var/mob/living/L in oview(5, origin))
 						// reducing range increases impact, reduce mob shock intensity instead
 						arcFlash(src, L, max((charge*7) / (target_count * (istype(hero) ? 2 : 1)), 1))
 				else
-					for (var/turf/T in oview(3,src.loc))
+					for (var/turf/T in oview(3,origin))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(istype(hero) ? 1 : 3,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3,origin))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
 				if (istype(hero))
 					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), origin))
 					src.reagents.reaction(T,1,5)
 
 			if (istype(hero))
@@ -2059,7 +2179,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(4,src.loc))
+				for (var/mob/M in view(4,origin))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
 						var/turf/warp_to = get_turf(pick(orange(3 * tele, M.loc)))
 						if (isturf(warp_to))
@@ -2068,18 +2188,18 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 							boutput(M, SPAN_ALERT("You suddenly teleport ..."))
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
-				for (var/turf/T in view(rcd,src.loc))
+				playsound(origin, 'sound/items/Deconstruct.ogg', 70, TRUE)
+				for (var/turf/T in view(rcd,origin))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
 						F.setMaterial(getMaterial(rcd_mat))
 				if (rcd > 1)
-					for (var/turf/T in view(3,src.loc))
+					for (var/turf/T in view(3,origin))
 						if (prob(rcd * 10))
 							new /obj/mesh/grille/steel(T)
 
 			if (plasma)
-				for (var/turf/simulated/floor/target in range(1,src.loc))
+				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
@@ -2093,7 +2213,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (throw_objs.len && length(throw_objs) > 0)
 				var/count = 20
 				var/obj/spawn_item
-				for (var/mob/living/L in oview(5, src.loc))
+				for (var/mob/living/L in oview(5, origin))
 					spawn_item = pick(throw_objs)
 					var/obj/O = new spawn_item(origin)
 					if (istype(O,/obj/item/reagent_containers/patch))
@@ -2102,7 +2222,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					O.throw_at(L, istype(hero) ? 2 : 5, 3) // thrown short of far targets
 					count--
 				if (count > 0)
-					for (var/turf/target in oview(4,src.loc))
+					for (var/turf/target in oview(4,origin))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
 							var/obj/O = new spawn_item(origin)
