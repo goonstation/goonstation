@@ -3470,3 +3470,6 @@
 	if (src.bioHolder?.mobAppearance)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
+
+/mob/proc/update_movement_modifiers()
+	process_movespeed_update()

@@ -2403,10 +2403,3 @@
 
 /mob/living/HealBleeding(amt)
 	src.bleeding = max(src.bleeding - amt, 0)
-
-/mob/living/changeStatus(statusId, duration, optional)
-	..()
-	process_movespeed_update()
-/mob/living/delStatus(statusId, duration, optional)
-	..()
-	process_movespeed_update()

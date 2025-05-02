@@ -72,7 +72,6 @@
 
 
 /mob/proc/get_move_delay()
-	var/mob/living/carbon/human/H = src
 	var/delay = max(src.movement_delay(get_step(src,src.move_dir), is_running), world.tick_lag) // don't divide by zero
 	if (move_dir & (move_dir-1))
 		delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
@@ -99,11 +98,11 @@
 		// calculate how much the player's moved at their previous speed
 		var/previous_delay = next_move - prev_move
 		var/move_complete = (world.time - prev_move)/previous_delay
-
 		var/new_delay = get_move_delay()
-		src.glide_size = (world.icon_size / ceil(new_delay / world.tick_lag))
+
+		// set the new delay to the time it would take to finish the previous move at the new speed
 		var/modded_move = lerp(new_delay,previous_delay,move_complete)
-		// set the new delay to the time it would take to move at the new speed
+		src.glide_size = (world.icon_size / ceil(new_delay / world.tick_lag))
 		next_move = prev_move + modded_move
 		return
 
