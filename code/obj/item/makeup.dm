@@ -307,29 +307,37 @@
 
 /obj/item/storage/makeup_bag/dark
 	name = "mysterious makeup bag"
-	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "dark_makeupbag"
 	item_state = "dark_makeupbag"
 	desc = "A fabric pouch with a mysterious design meant to keep all of your expensive beauty products safe while traveling."
 
 /obj/item/storage/makeup_bag/gold
 	name = "luxury makeup bag"
-	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "gold_makeupbag"
 	item_state = "gold_makeupbag"
 	desc = "An extravagant fabric pouch meant to keep all of your expensive beauty products safe while traveling."
 
-/obj/item/storage/makeup_bag/gold/full
+/obj/item/storage/makeup_bag/full
+
+/obj/item/storage/makeup_bag/full/gold
+	name = "luxury makeup bag"
+	icon_state = "gold_makeupbag"
+	item_state = "gold_makeupbag"
+	desc = "An extravagant fabric pouch meant to keep all of your expensive beauty products safe while traveling."
 	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy/gold,
 	/obj/item/makeup/eyeshadow/gold,
 	/obj/item/makeup/blush/gold)
 
-/obj/item/storage/makeup_bag/dark/full
+/obj/item/storage/makeup_bag/full/dark
+	name = "mysterious makeup bag"
+	icon_state = "dark_makeupbag"
+	item_state = "dark_makeupbag"
+	desc = "A fabric pouch with a mysterious design meant to keep all of your expensive beauty products safe while traveling."
 	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy,
 	/obj/item/makeup/eyeshadow/dark,
 	/obj/item/makeup/blush/dark)
 
-/obj/item/storage/makeup_bag/full
+/obj/item/storage/makeup_bag/full/light
 	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy/light,
 	/obj/item/makeup/eyeshadow/light,
 	/obj/item/makeup/blush/light)

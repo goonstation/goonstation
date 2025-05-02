@@ -685,6 +685,9 @@ Equip items from body traits.
 		var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 		trinket = the_chair
 		the_chair.buckle_in(src, src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("makeup"))
+		var/random_makeup_path = pick(childrentypesof(/obj/item/storage/makeup_bag/full))
+		trinket = new random_makeup_path(src)
 	else
 		trinket = new T(src)
 
