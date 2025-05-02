@@ -26,9 +26,9 @@ export const acw: AlertContentWindow = {
         state upon death.
       </p>
       <p>
-        2. Your goal is to absorb brain power from crew members! Use your
-        ability Brain Drain to do so, which will award you with Brain, with
-        stealth and your Disguise ability. Spend Brain to cast your abilities.
+        2. Your goal is to gain Intellect from crew members! Use your
+        ability Brain Drain to do so, which will award you with Intellect, through
+        stealth and your Disguise ability. Abilities are either free to cast or have unique effects depending on how much Intellect has been collected on a target.
       </p>
       <p>
         3. You cloak while in darkness. Being in light for too long, attacking,
@@ -44,11 +44,6 @@ export const acw: AlertContentWindow = {
         become aware of you, use Pierce the Veil, along with your evasive
         abilities to avoid death. When you exit the created plane, finish them
         off manually or through inflicted mindmites.
-      </p>
-      <p>
-        6. Targets with 75% of their brain drained will be afflicted with the
-        Mindmites ailment. This will cause mites that only they can see to
-        appear to attack them.
       </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>

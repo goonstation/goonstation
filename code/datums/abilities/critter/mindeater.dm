@@ -1,13 +1,13 @@
 /datum/abilityHolder/mindeater
 	usesPoints = TRUE
-	var/max_points = 100
+	var/max_points = INTRUDER_MAX_INTELLECT_THRESHOLD
 
 	var/brain_stored = 0
 
 	onAbilityStat()
 		..()
 		. = list()
-		.["Brain:"] = "[src.points]/[src.max_points]"
+		.["Intellect:"] = "[src.points]/[src.max_points]"
 
 	addPoints(add_points, target_ah_type)
 		..()
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/regenerate
 	name = "Regenerate"
-	desc = "Consume Brain to regenerate health."
+	desc = "Use Intellect to regenerate health."
 	icon_state = "regenerate"
 	pointCost = 1
 
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Drain 3 brain power per second from a target in range."
+	desc = "Gain 3 Intellect per second from a target in range."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -117,8 +117,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans and silicons!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (istype(L, /mob/living/carbon/human))
-			if (L.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD)
-				boutput(src.holder.owner, SPAN_ALERT("This target has received too much brain damage!"))
+			if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) > INTRUDER_MAX_INTELLECT_THRESHOLD)
+				boutput(src.holder.owner, SPAN_ALERT("You can't get any more Intellect out of this target!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only use this ability on alive targets!"))
@@ -443,14 +443,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (ishuman(src.target))
 			src.target.take_brain_damage(1)
 			var/mob/living/carbon/human/H = src.target
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, H, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) + 3)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + 3)
 			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS)
-			var/pct = GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT)
+			var/pct = GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED)
 			if (pct >= 100)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT, H, GET_ATOM_PROPERTY(H, PROP_MOB_MIND_EATEN_PERCENT) - (pct - 100))
+				APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) - (pct - 100))
 				H.brain_level.set_icon_state("complete")
 			else
-				H.brain_level.set_icon_state(min(round(pct, 10), INTRUDER_MAX_BRAIN_THRESHOLD))
+				H.brain_level.set_icon_state(min(round(pct, 10), INTRUDER_MAX_INTELLECT_THRESHOLD))
 			var/pick = rand(1, 4)
 			switch (pick)
 				if (1)
@@ -480,4 +480,4 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
 		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || \
-				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_BRAIN_THRESHOLD) || isdead(src.target)
+				(istype(src.target, /mob/living/carbon/human) && src.target.get_brain_damage() > INTRUDER_MAX_INTELLECT_THRESHOLD) || isdead(src.target)

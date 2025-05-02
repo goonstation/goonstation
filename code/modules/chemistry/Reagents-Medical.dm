@@ -1564,8 +1564,8 @@ datum
 					var/mob/living/L = M
 					if (probmult(10))
 						L.cure_disease_by_path(/datum/ailment/mindmites)
-					if (HAS_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT))
-						APPLY_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT, L, max(GET_ATOM_PROPERTY(L, PROP_MOB_MIND_EATEN_PERCENT) - 2, 0))
+					if (HAS_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED))
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED, L, max(GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) - 2, 0))
 				..()
 				return
 
