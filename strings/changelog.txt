@@ -1,4 +1,9 @@
 
+(t)fri may 02 25
+(u)JORJ949
+(p)23203
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Security pinpointers and disks now come labelled with the owner's name, this label can be removed with a hand labeler.
 (t)thu may 01 25
 (u)EmeraldCrow
 (p)23232
