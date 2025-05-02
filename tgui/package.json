@@ -24,9 +24,6 @@
   "dependencies": {
     "@swc/core": "^1.9.2",
     "@swc/jest": "^0.2.37",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^20.17.6",
-    "@types/webpack-env": "^1.18.5",
     "@typescript-eslint/parser": "^8.14.0",
     "@typescript-eslint/utils": "^8.14.0",
     "css-loader": "^7.1.2",
@@ -56,5 +53,10 @@
     "webpack": "^5.96.1",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.0",
+    "@types/webpack-env": "^1.18.8"
   }
 }
