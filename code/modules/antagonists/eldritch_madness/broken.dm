@@ -3,6 +3,7 @@
 	id = ROLE_BROKEN
 	remove_on_death = TRUE
 	remove_on_clone = TRUE //just to be sure
+	wiki_link = "https://wiki.ss13.co/Broken"
 	var/static/shared_objective_text = null
 
 /datum/antagonist/broken/announce()
