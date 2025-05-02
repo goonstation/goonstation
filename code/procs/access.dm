@@ -119,7 +119,7 @@
  */
 /obj/proc/check_access(obj/item/I)
 	// no requirements
-	if (!src.has_access_requirements)
+	if (!src.has_access_requirements())
 		return 1
 
 	var/obj/item/card/id/ID = get_id_card(I)
