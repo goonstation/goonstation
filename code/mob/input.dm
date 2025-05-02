@@ -1,10 +1,13 @@
 
-/mob/var/prev_loc = 0
-/mob/var/prev_move = 0
-/mob/var/move_dir = 0
-/mob/var/next_move = 0
-/mob/var/is_running = 0
+/mob/var/prev_loc = 0 //! The location of the mob before it last moved
+/mob/var/move_dir = 0 //! The direction the mob is moving/last moved
+/mob/var/prev_move = 0 //! The time the mob last moved
+/mob/var/next_move = 0 //! The next time the mob can move
+/mob/var/is_running = 0 //! If the mob is running
 
+/mob/var/movement_last_modified = 0 //! When mob's movement was last modified
+/mob/var/movement_last_delay = 0 //! The last speed the mob was moving at
+/mob/var/movement_last_progress = 0 //! The last direction the mob was moving in
 
 /mob/hotkey(name)
 	var/datum/movement_controller/controller = src.override_movement_controller
@@ -82,33 +85,24 @@
 		if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
 			if (G.state > GRAB_STRONG)
 				delay += G.assailant.p_class
-
-	var/list/stepped = list()
-	for (var/obj/item/grab/G as anything in src.grabbed_by)
-		if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue
-		if (G.state < GRAB_AGGRESSIVE) continue
-		if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
-			return
-		delay += G.assailant.p_class
-		stepped |= G.assailant
 	return delay
 
 /mob/proc/process_movespeed_update()
 	if (next_move > world.time)
-		// calculate how much the player's moved at their previous speed
-		var/previous_delay = next_move - prev_move
-		var/move_complete = (world.time - prev_move)/previous_delay
 		var/new_delay = get_move_delay()
 
-		// set the new delay to the time it would take to finish the previous move at the new speed
-		var/modded_move = lerp(new_delay,previous_delay,move_complete)
+		// calculate how far the player has moved
+		var/move_complete = src.movement_last_progress + (world.time - src.movement_last_modified)/src.movement_last_delay
+
 		src.glide_size = (world.icon_size / ceil(new_delay / world.tick_lag))
-		next_move = prev_move + modded_move
+		next_move = world.time + (1-move_complete)*new_delay
+		src.movement_last_modified = world.time
+		src.movement_last_delay = new_delay
+		src.movement_last_progress = move_complete
 		return
 
 /mob/proc/process_move(keys)
 	set waitfor = 0
-
 	var/datum/movement_controller/controller = src.override_movement_controller
 	if (controller)
 		return controller.process_move(src, keys)
@@ -135,6 +129,9 @@
 			H.pushing = 0
 
 		var/delay = get_move_delay()
+		movement_last_delay = delay
+		movement_last_modified = world.time
+		movement_last_progress = 0
 		var/move_dir = src.move_dir
 		if (src.client && src.client.flying || (ismob(src) && HAS_ATOM_PROPERTY(src, PROP_MOB_NOCLIP)))
 			if(isnull(get_step(src, move_dir)))
@@ -287,7 +284,9 @@
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
 							step(G.assailant, move_dir)
+							delay += G.assailant.p_class
 							stepped |= G.assailant
+
 
 					if (src.loc != old_loc)
 						if (is_running)
