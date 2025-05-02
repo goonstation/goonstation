@@ -309,7 +309,7 @@ proc/compare_ornament_score(list/a, list/b)
 	EPHEMERAL_XMAS
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
-	icon = 'icons/effects/160x160.dmi'
+	icon = 'icons/obj/xmastree.dmi'
 	icon_state = "xmastree_2023"
 	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -762,11 +762,6 @@ proc/compare_ornament_score(list/a, list/b)
 		..()
 
 // Santa Stuff
-
-/obj/item/card/id/captains_spare/santa
-	name = "Spacemas Card"
-	registered = "Santa Claus"
-	assignment = "Spacemas Spirit"
 
 /mob/living/carbon/human/santa
 	New()

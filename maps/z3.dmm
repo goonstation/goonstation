@@ -183,7 +183,7 @@
 "aaL" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = "";
+	req_access = null;
 	dir = 1
 	},
 /obj/cable{
@@ -5806,7 +5806,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aGu" = (
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
 /area/radiostation/bedroom)
@@ -14202,7 +14202,7 @@
 "biZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSE"
 	},
 /area/radiostation/bedroom)
@@ -15407,7 +15407,7 @@
 /area/radiostation/tv_set)
 "byl" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
@@ -18838,7 +18838,7 @@
 /obj/storage/secure/closet/personal,
 /obj/item/device/microphone,
 /obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/radiostation/bedroom)
@@ -24525,7 +24525,7 @@
 /area/timewarp)
 "xzt" = (
 /obj/table/wood/auto/desk,
-/turf/simulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/radiostation/bedroom)

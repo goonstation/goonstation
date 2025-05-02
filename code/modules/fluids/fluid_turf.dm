@@ -11,10 +11,6 @@
 #define SPAWN_HOSTILE 128
 #define SPAWN_ACID_DOODADS 256
 
-
-/turf/proc/make_light() //dummyproc so we can inherit
-	.=0
-
 /turf/space/fluid
 	name = "ocean floor"
 	icon = 'icons/turf/outdoors.dmi'
@@ -40,18 +36,8 @@
 
 	turf_flags = FLUID_MOVE
 
-	var/datum/light/point/light = 0
-	var/light_r = 0.16
-	var/light_g = 0.6
-	var/light_b = 0.8
-
-	var/light_brightness = 0.8
-	var/light_height = 3
-
 	var/spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH
 	var/randomIcon = 1
-
-	var/generateLight = 1 //do we sometimes generate a special light?
 
 	var/captured = 0 //Thermal vent collector on my tile? (messy i know, but faster lookups later)
 
@@ -98,55 +84,6 @@
 		src.name = ocean_name
 		#endif
 
-		if(ocean_color)
-			var/fluid_color = hex_to_rgb_list(ocean_color)
-			light_r = fluid_color[1] / 255
-			light_g = fluid_color[2] / 255
-			light_b = fluid_color[3] / 255
-
-		//let's replicate old behavior
-		if (generateLight)
-			generateLight = 0
-			if (z != 3) //nono z3
-				for (var/dir in alldirs)
-					var/turf/T = get_step(src,dir)
-					if (istype(T, /turf/simulated))
-						generateLight = 1
-						break
-
-		if (generateLight)
-			START_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
-
-	Del()
-		. = ..()
-		if (generateLight)
-			STOP_TRACKING_CAT(TR_CAT_LIGHT_GENERATING_TURFS)
-
-	make_light()
-		if (!light)
-			light = new
-			light.attach(src)
-		light.set_brightness(light_brightness)
-		light.set_color(light_r, light_g, light_b)
-		light.set_height(light_height)
-		light.enable()
-
-	proc/bake_light()
-
-
-		sleep(0.1 SECONDS)
-		for(var/obj/overlay/tile_effect/lighting/L in src)
-			src.icon = getFlatIcon(L)
-			qdel(L)
-
-	proc/update_light()
-		if (light)
-			light.disable()
-			light.set_brightness(light_brightness)
-			light.set_color(light_r, light_g, light_b)
-			light.set_height(light_height)
-			light.enable()
-
 //space/fluid/ReplaceWith() this is for future ctrl Fs
 	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = NORTH, force = 0)
 		.= ..(what, keep_old_material, handle_air)
@@ -168,25 +105,25 @@
 				if (prob(1))
 					new /obj/item/seashell(src)
 			else
-				if (prob(5))
+				if (prob(2))
 					new /obj/item/seashell(src)
 
 		if (spawningFlags & SPAWN_PLANTS)
-			if (prob(8))
+			if (prob(4))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant) : (childrentypesof(/obj/sea_plant) - /obj/sea_plant/anemone/lit) )
 				var/obj/sea_plant/P = new plant(src)
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
 		if (spawningFlags & SPAWN_PLANTSMANTA)
-			if (prob(8))
+			if (prob(4))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant_manta) : (childrentypesof(/obj/sea_plant_manta) - /obj/sea_plant_manta/anemone/lit) )
 				var/obj/sea_plant_manta/P = new plant(src)
 				//mbc : bleh init() happens BFORRE this, most likely
 				P.initialize()
 
 		if (spawningFlags & SPAWN_ACID_DOODADS)
-			if (prob(8))
+			if (prob(4))
 				var/obj/doodad = pick( childrentypesof(/obj/nadir_doodad) )
 				var/obj/nadir_doodad/D = new doodad(src)
 				D.initialize()
@@ -197,7 +134,7 @@
 				new /obj/critter/gunbot/drone/buzzdrone/fish(src)
 			else if (src.z == 5 && prob(1) && prob(4))
 				new /obj/critter/gunbot/drone/gunshark(src)
-			else if (prob(1) && prob(20))
+			else if (prob(1) && prob(15))
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
 				new fish(src)
 			else if (src.z == 5 && prob(1) && prob(9) && prob(90))
@@ -249,9 +186,7 @@
 		if(notifier.ocean_canpass())
 			processing_fluid_turfs |= src
 		else
-			if (processing_fluid_turfs.Remove(src))
-				if (src.light)
-					src.light.disable()
+			processing_fluid_turfs.Remove(src)
 
 	Entered(atom/movable/A as mob|obj) //MBC : I was too hurried and lazy to make this actually apply reagents on touch. this is a note to myself. FUCK YOUUU
 		..()
@@ -308,7 +243,6 @@
 	icon_state = "pit"
 	spawningFlags = 0
 	randomIcon = FALSE
-	generateLight = FALSE
 
 	allow_hole = FALSE
 
@@ -333,6 +267,7 @@
 		src.AddComponent(/datum/component/pitfall/target_area,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetArea = /area/trench_landing)
 
 	edge
@@ -361,6 +296,7 @@
 		src.AddComponent(/datum/component/pitfall/target_coordinates,\
 			BruteDamageMax = 6,\
 			FallTime = 0.3 SECONDS,\
+			DeleteFlotsam = TRUE,\
 			TargetZ = 5,\
 			LandingRange = 8)
 
@@ -371,7 +307,6 @@
 	temperature = TRENCH_TEMP
 	fullbright = 0
 	luminosity = 1
-	generateLight = 0
 	allow_hole = 0
 #ifdef MAP_OVERRIDE_NADIR
 	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE | SPAWN_ACID_DOODADS
@@ -421,7 +356,6 @@
 /turf/space/fluid/cenote
 	fullbright = 0
 	luminosity = 1
-	generateLight = 0
 	spawningFlags = null
 	allow_hole = 0
 	icon_state = "cenote"
@@ -444,7 +378,6 @@
 //Manta
 /turf/space/fluid/manta
 	luminosity = 1
-	generateLight = 0
 	spawningFlags = SPAWN_PLANTSMANTA
 	turf_flags = MANTA_PUSH
 
@@ -491,7 +424,6 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/elevator_shaft)
 /turf/space/fluid/acid
 	name = "acid sea floor"
 	spawningFlags = SPAWN_ACID_DOODADS
-	generateLight = 0
 	temperature = TRENCH_TEMP
 
 	clear
