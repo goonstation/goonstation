@@ -28,6 +28,7 @@
 	var/last_disturbed = INFINITY
 	///Time taken to hide if we sit still (Life interval dependent)
 	var/rehide_time = 5 SECONDS
+	var/pixel_amount = null
 
 	New()
 		..()
@@ -70,6 +71,8 @@
 		src.stop_hiding()
 
 	proc/disguise_as(var/obj/target)
+		var/icon/I = getFlatIcon(target)
+		var/pixels = null
 		src.appearance = target
 		src.dir = target.dir
 		src.invisibility = initial(src.invisibility)
@@ -77,6 +80,12 @@
 		src.plane = initial(src.plane)
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
+		for(var/y = 1, y <= I.Height(), y++)
+			for(var/x = 1, x <= I.Width(), x++)
+				var/nullcheck = I.GetPixel(x, y)
+				if(nullcheck != null)
+					pixels++
+		src.pixel_amount = pixels
 
 	proc/start_hiding()
 		if (src.is_hiding)
@@ -123,37 +132,6 @@
 		. = ..()
 		if (!src.is_hiding && (TIME - src.last_disturbed > src.rehide_time))
 			src.start_hiding()
-
-/datum/targetable/critter/mimic
-	name = "Mimic Object"
-	desc = "Disguise yourself as a target object."
-	icon_state = "mimic"
-	cooldown = 30 SECONDS
-	targeted = TRUE
-	target_anything = TRUE
-
-	cast(atom/target)
-		if (..())
-			return TRUE
-		if (!isobj(target))
-			boutput(holder.owner, SPAN_ALERT("You can't mimic this!"))
-			return TRUE
-		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
-			return TRUE
-		var/mob/living/critter/mimic/parent = holder.owner
-		parent.disguise_as(target)
-		boutput(holder.owner, SPAN_ALERT("You mimic [target]."))
-		return FALSE
-
-/datum/targetable/critter/sting/mimic
-	name = "Mimicotoxin Sting"
-	desc = "Inject your target with a confusing toxin."
-	venom_ids = list("mimicotoxin")
-	inject_amount = 15
-
-	antag_spawn
-		inject_amount = 17 //enough to blind someone for a few seconds
 
 /mob/living/critter/mimic/antag_spawn
 	//same health as a firebot

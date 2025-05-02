@@ -169,6 +169,7 @@
 #include "code\datums\abilities\critter\invisibility.dm"
 #include "code\datums\abilities\critter\maneater_devour.dm"
 #include "code\datums\abilities\critter\mark.dm"
+#include "code\datums\abilities\critter\mimic.dm"
 #include "code\datums\abilities\critter\ocean.dm"
 #include "code\datums\abilities\critter\powerkick.dm"
 #include "code\datums\abilities\critter\powerstomp.dm"
