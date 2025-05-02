@@ -32349,7 +32349,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer3/generic/personnel_management{
+/obj/machinery/computer/card{
 	dir = 4
 	},
 /turf/simulated/floor/greenblack/corner,
@@ -37409,11 +37409,11 @@
 /area/station/hallway/primary/south)
 "vjs" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
