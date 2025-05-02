@@ -2871,6 +2871,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass"
+	can_dig = TRUE
 
 	New()
 		..()
@@ -2882,6 +2883,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass_edge"
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")

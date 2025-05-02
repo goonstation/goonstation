@@ -1233,6 +1233,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state_edge = "dirtedge"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"
@@ -1242,6 +1243,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
 	var/tuft_prob = 2
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1344,6 +1346,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 	turf_flags = MOB_STEP
+	can_dig = TRUE
 
 	New()
 		. = ..()
