@@ -24,8 +24,12 @@
 	. = ..()
 
 	src.parent = parent
-	src.RegisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_listener))
-	src.update_outermost_listener()
+
+	if (isturf(src.parent))
+		src.outermost_listener = src.parent
+	else
+		src.RegisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_listener))
+		src.update_outermost_listener()
 
 /datum/outermost_listener_tracker/disposing()
 	src.UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)

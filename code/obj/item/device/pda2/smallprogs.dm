@@ -880,7 +880,7 @@ Code:
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
-			global.display_alert_maptext(usr, "[alert_title] Emergency alert sent.", alert_color)
+			DISPLAY_MAPTEXT(usr, hearers(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/alert, "[alert_title] Emergency alert sent.", alert_color)
 			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.master]."),
 			SPAN_ALERT("You see [usr] press a button on the side of their [src.master]."))

@@ -111,7 +111,7 @@ TYPEINFO(/obj/health_scanner)
 		else
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 0, 0, 0, 1)]"
-				display_health_maptext(H, H)
+				DISPLAY_MAPTEXT(H, list(H), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 

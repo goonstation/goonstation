@@ -95,15 +95,15 @@
 		else
 			targets = list(src.holder)
 
-		var/list/client/recipients = list()
+		var/list/mob/recipients = list()
 		for (var/mob/M as anything in targets)
-			if(!src.can_mob_observe(M) || !M.client)
+			if(!src.can_mob_observe(M))
 				continue
 
-			recipients += M.client
+			recipients += M
 			M.show_message(SPAN_EMOTE("[message]"))
 
-		global.display_emote_maptext(src, recipients, maptext_out)
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")

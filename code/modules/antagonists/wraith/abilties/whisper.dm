@@ -29,7 +29,7 @@
 		logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-		global.display_wraith_whisper_maptext(target, src.holder.owner, message)
+		DISPLAY_MAPTEXT(target, list(target), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/wraith_whisper, message, src.holder.owner)
 
 		boutput(usr, "<b>You whisper to [target]:</b> [message]")
 		boutput(target, "<b>A netherworldly voice whispers into your ears... </b> [message]")

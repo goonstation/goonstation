@@ -10,7 +10,7 @@
 		var/atom/movable/outermost
 		var/matched_loc = FALSE
 
-		while (!isturf(speaker_loc))
+		while (ismovable(speaker_loc))
 			if (isnull(speaker_loc))
 				return
 

@@ -624,7 +624,7 @@
 		else
 			content = "+[score]\n [vandalism_tracker[targetArea]]/[vandalism_tracker_target[targetArea]]"
 
-		global.display_gang_vandalism_maptext(location, (src.members + src.leader), content)
+		DISPLAY_MAPTEXT(location, (src.members + src.leader), MAPTEXT_MIND_RECIPIENTS_WITH_OBSERVERS, /image/maptext/gang_vandalism, content)
 
 	/// Checks to see if <location> is one the gang has to vandalise. If so, adds <amount> progress.
 	proc/do_vandalism(amount, turf/location)
@@ -672,9 +672,9 @@
 		if (!showText)
 			return
 		if (location)
-			global.display_gang_score_maptext(location, (src.members + src.leader), amount)
+			DISPLAY_MAPTEXT(location, (src.members + src.leader), MAPTEXT_MIND_RECIPIENTS_WITH_OBSERVERS, /image/maptext/gang_score, amount)
 		else if (bonusMind)
-			global.display_gang_score_maptext(bonusMob, list(bonusMind), amount)
+			DISPLAY_MAPTEXT(bonusMob, list(bonusMind), MAPTEXT_MIND_RECIPIENTS_WITH_OBSERVERS, /image/maptext/gang_score, amount)
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
 		if(length(src.members) >= src.current_max_gang_members)
@@ -1937,7 +1937,7 @@
 		if (!is_aggregating_item_scores)
 			is_aggregating_item_scores = TRUE
 			SPAWN (aggregate_item_score_time)
-				global.display_gang_score_maptext(get_turf(src), (src.gang.members + src.gang.leader), src.aggregate_score_count)
+				DISPLAY_MAPTEXT(src, (src.gang.members + src.gang.leader), MAPTEXT_MIND_RECIPIENTS_WITH_OBSERVERS, /image/maptext/gang_score, src.aggregate_score_count)
 				aggregate_score_count = 0
 				is_aggregating_item_scores = FALSE
 		aggregate_score_count += score
@@ -2905,7 +2905,7 @@
 		score = ceil(mappedHeat * GANG_TAG_POINTS_PER_HEAT)
 		owners.score_turf += score
 		owners.add_points(score)
-		global.display_gang_score_maptext(get_turf(src), (src.owners.members + src.owners.leader), score)
+		DISPLAY_MAPTEXT(src, (src.owners.members + src.owners.leader), MAPTEXT_MIND_RECIPIENTS_WITH_OBSERVERS, /image/maptext/gang_score, score)
 		heatTracker.icon_state = "gang_heat_[mappedHeat]"
 
 	New()
