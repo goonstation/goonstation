@@ -112,7 +112,7 @@
 	name = "lipstick"
 	desc = "A tube of wax, oil and pigment that is intended to be used to color a person's lips."
 	icon = 'icons/obj/items/makeup.dmi'
-	icon_state = "dark_lipstick0"
+	icon_state = "dark_lipstick"
 	click_delay = 0.7 SECONDS
 
 
@@ -282,17 +282,14 @@
 
 /obj/item/makeup/eyeshadow/light
 	name = "eyeshadow"
-	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_light"
 
 /obj/item/makeup/eyeshadow/dark
 	name = "eyeshadow"
-	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_dark"
 
 /obj/item/makeup/eyeshadow/gold
 	name = "eyeshadow"
-	desc = "this is eyeshadow"
 	makeuptype = "eyeshadow_gold"
 
 //Makeup Bags
@@ -334,5 +331,5 @@
 
 /obj/item/storage/makeup_bag/full
 	spawn_contents = list(/obj/item/pen/crayon/lipstick/fancy/light,
-	/obj/item/makeup/eyeshadow,
-	/obj/item/makeup/blush)
+	/obj/item/makeup/eyeshadow/light,
+	/obj/item/makeup/blush/light)
