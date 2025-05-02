@@ -3817,3 +3817,47 @@
 
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) <= 0)
 			src.owner.delStatus(src)
+
+/datum/statusEffect/cosmic_light
+	id = "mindeater_cosmic_light"
+	name = "Cosmic Light"
+	desc = "You're emitting a light that causes you to gain Intellect from nearby humans looking towards you."
+	icon_state = "mindeater_cosmic_light"
+	var/obj/dummy/rays_holder
+
+	onAdd()
+		..()
+		src.owner.add_simple_light("cosmic_light", rgb2num("#6302ff") + list(255))
+		src.rays_holder = new
+		src.rays_holder.blend_mode = BLEND_ADD
+		src.rays_holder.add_filter("cosmic_light_rays", 0, rays_filter(size = 32, color = "#5900ff", offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
+		var/dm_filter/filter = src.rays_holder.get_filter("cosmic_light_rays")
+		UNLINT(animate(filter, time = 5 MINUTES, loop = -1, offset = filter.offset + 100))
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.vis_contents += src.rays_holder
+
+	onUpdate(timePassed)
+		..()
+		var/list/nearby_mobs = viewers(6, get_turf(src.owner))
+		for (var/mob/M in nearby_mobs)
+			if (!src.is_valid_mob(M))
+				nearby_mobs -= M
+
+		if (!length(nearby_mobs))
+			return
+
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		for (var/mob/living/carbon/human/H as anything in nearby_mobs)
+			if (!src.is_valid_mob(H))
+				continue
+			mindeater.collect_intellect(H, 1 * max(round(timePassed / LIFE_PROCESS_TICK_SPACING, 1), 1))
+
+	onRemove()
+		..()
+		src.owner.remove_simple_light("cosmic_light")
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.vis_contents -= src.rays_holder
+		QDEL_NULL(src.rays_holder)
+
+	proc/is_valid_mob(mob/M)
+		return ishuman(M) && !isdead(M) && (M in viewers(6, get_turf(src.owner))) && (abs(dir2angle(M.dir) - dir2angle(get_dir(M, src.owner))) <= 45)

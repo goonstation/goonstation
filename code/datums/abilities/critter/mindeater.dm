@@ -207,6 +207,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
 
+/datum/targetable/critter/mindeater/cosmic_light
+	name = "Cosmic Light"
+	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you."
+	cooldown = 0//45 SECONDS
+
+	cast(atom/target)
+		. = ..()
+		src.holder.owner.setStatus("mindeater_cosmic_light", 7.5 SECONDS)
+
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
 	desc = "Take nearby mobs to a localized dimensional plane for 15 seconds."
@@ -363,16 +372,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			return
 
 		if (ishuman(src.target))
-			src.target.take_brain_damage(1)
-			var/mob/living/carbon/human/H = src.target
-			APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + 3)
+			var/mob/living/critter/mindeater/mindeater = src.owner
+			mindeater.collect_intellect(src.target, 3)
 			src.target.setStatus("mindeater_mind_eating", INFINITE_STATUS)
-			var/pct = GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED)
-			if (pct >= 100)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) - (pct - 100))
-				H.brain_level.set_icon_state("complete")
-			else
-				H.brain_level.set_icon_state(min(round(pct, 10), INTRUDER_MAX_INTELLECT_THRESHOLD))
+
+			var/mob/living/carbon/human/H = src.target
+			H.take_brain_damage(1)
 			var/pick = rand(1, 4)
 			switch (pick)
 				if (1)
@@ -387,9 +392,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			src.target.TakeDamage("All", 15, damage_type = DAMAGE_CRUSH) // 15 - 20 seconds to kill
 		else
 			src.target.TakeDamage("head", 10, damage_type = DAMAGE_CRUSH) // ~15 seconds to kill a standard cyborg
-		var/mob/living/critter/mindeater/mindeater = src.owner
-		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
-		abil_holder.addPoints(3)
+
 		src.onRestart()
 
 	onInterrupt(flag)

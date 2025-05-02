@@ -233,10 +233,11 @@
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/regenerate)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
-		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/project)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/cosmic_light)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 	/// move from tangible to intangible state
@@ -249,14 +250,26 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_ACTING_INTANGIBLE, src)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/brain_drain)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/regenerate)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/spatial_swap)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
-		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/project)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/cosmic_light)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/manifest)
 
 		src.remove_pulling()
+
+	/// gain intellect points from target mob
+	proc/collect_intellect(mob/living/carbon/human/H, points)
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, min(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) + points, 100))
+		if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) >= 100)
+			H.brain_level.set_icon_state("complete")
+		else
+			H.brain_level.set_icon_state(min(round(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED), 10), INTRUDER_MAX_INTELLECT_THRESHOLD))
+
+		var/datum/abilityHolder/abil_holder = src.get_ability_holder(/datum/abilityHolder/mindeater)
+		abil_holder.addPoints(points)
 
 	/// disguise as an entity
 	proc/disguise(option)
