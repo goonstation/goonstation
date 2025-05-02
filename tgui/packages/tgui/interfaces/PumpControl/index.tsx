@@ -58,7 +58,7 @@ const PumpSettings = (props) => {
                 maxValue={pump.max_output}
                 unit="kPa"
                 stepPixelSize={0.05}
-                onChange={(_e: any, value: number) => setPressure(value)}
+                onChange={(_e, value) => setPressure(value)}
               />
             </Stack.Item>
           </Stack>

@@ -127,7 +127,7 @@ const InputArea = (props: {
         event.preventDefault();
         act('submit', { entry: input });
       }}
-      onChange={(value) => onType(value)}
+      onBlur={(value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />

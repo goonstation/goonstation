@@ -290,7 +290,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return out;
   };
 
-  const onInputHandler = (value) => {
+  const onInputHandler = (value: string) => {
     if (value !== textAreaText) {
       const combinedLength = oldText.length + textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {
@@ -323,7 +323,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     }
   };
 
-  const finalUpdate = (newText) => {
+  const finalUpdate = (newText: string) => {
     const { act } = useBackend();
     const finalProcessing = createPreview(newText, true);
     act('save', finalProcessing);

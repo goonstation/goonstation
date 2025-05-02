@@ -86,12 +86,8 @@ export const Radio = () => {
                           maxValue={MAX_FREQ}
                           stepPixelSize={2}
                           format={formatFrequency}
-                          onDrag={(_e: any, value: number) =>
-                            setFrequency(value, false)
-                          }
-                          onChange={(_e: any, value: number) =>
-                            setFrequency(value, true)
-                          }
+                          onDrag={(_e, value) => setFrequency(value, false)}
+                          onChange={(_e, value) => setFrequency(value, true)}
                         />
                       )}
                     </Stack.Item>

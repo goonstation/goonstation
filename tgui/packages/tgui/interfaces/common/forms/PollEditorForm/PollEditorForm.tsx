@@ -77,7 +77,7 @@ export const PollEditorForm = (props: PollEditorFormProps) => {
               <Input
                 width="100%"
                 placeholder="Title..."
-                onChange={handleChangeTitle}
+                onBlur={handleChangeTitle}
                 value={title}
               />
             </LabeledList.Item>

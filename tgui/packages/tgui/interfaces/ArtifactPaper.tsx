@@ -99,7 +99,7 @@ export const ArtifactPaper = () => {
             value={artifactFaults}
             fluid
             height={5}
-            onChange={(x) => act('fault', { newFaults: x })}
+            onBlur={(x) => act('fault', { newFaults: x })}
             backgroundColor={paperColor}
           />
           <h3>Additional Information</h3>
@@ -107,7 +107,7 @@ export const ArtifactPaper = () => {
             value={artifactDetails}
             fluid
             height={10}
-            onChange={(x) => act('detail', { newDetail: x })}
+            onBlur={(x) => act('detail', { newDetail: x })}
             backgroundColor={paperColor}
           />
         </Section>

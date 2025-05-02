@@ -73,7 +73,7 @@ export const InputAndButtonsSection = () => {
             onKeyUp={handleHistoryPrevious}
             onKeyDown={handleHistoryNext}
             onEnter={handleInputEnter}
-            onChange={handleInputChange}
+            onBlur={handleInputChange}
           />
         </Flex.Item>
         <Flex.Item>

@@ -142,7 +142,7 @@ export const CentComViewer = () => {
                   <Input
                     width="50vw"
                     value={key}
-                    onChange={(value) => act('updateKey', { value })}
+                    onBlur={(value) => act('updateKey', { value })}
                   />
                 </>
               }

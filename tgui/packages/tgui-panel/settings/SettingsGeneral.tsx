@@ -87,13 +87,13 @@ export function SettingsGeneral(props) {
                 <Input
                   width={'100%'}
                   value={fontFamily}
-                  onChange={(value) =>
+                  onBlur={(value) => {
                     dispatch(
                       updateSettings({
                         fontFamily: value,
                       }),
-                    )
-                  }
+                    );
+                  }}
                 />
                 <Button
                   ml={0.5}

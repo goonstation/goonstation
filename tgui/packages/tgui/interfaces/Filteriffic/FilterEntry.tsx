@@ -40,12 +40,12 @@ export const FilterEntry = (props) => {
             maxValue={Infinity}
             minValue={-Infinity}
             step={1}
-            onChange={(value) =>
+            onChange={(value) => {
               act('change_priority', {
                 name: name,
                 new_priority: value,
-              })
-            }
+              });
+            }}
           />
           <Button.Input
             value={name}

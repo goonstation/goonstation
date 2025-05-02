@@ -115,7 +115,7 @@ export const ChemRequester = () => {
                     width="100%"
                     value={notes}
                     maxLength={65}
-                    onChange={(value) => {
+                    onBlur={(value) => {
                       act('set_notes', { notes: value });
                     }}
                   />

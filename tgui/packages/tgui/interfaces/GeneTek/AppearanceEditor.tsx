@@ -191,7 +191,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={r}
         color="red"
-        onChange={(_, newR) => onComponentChange(Math.round(newR), g, b)}
+        onChange={(_e, newR) => onComponentChange(Math.round(newR), g, b)}
       />
       <Knob
         inline
@@ -200,7 +200,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={g}
         color="green"
-        onChange={(_, newG) => onComponentChange(r, Math.round(newG), b)}
+        onChange={(_e, newG) => onComponentChange(r, Math.round(newG), b)}
       />
       <Knob
         inline
@@ -209,7 +209,7 @@ const ColorInput = (params) => {
         maxValue={fix ? 190 : 255}
         value={b}
         color="blue"
-        onChange={(_, newB) => onComponentChange(r, g, Math.round(newB))}
+        onChange={(_e, newB) => onComponentChange(r, g, Math.round(newB))}
       />
     </Box>
   );

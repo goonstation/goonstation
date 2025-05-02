@@ -165,7 +165,7 @@ export const MinimapController = () => {
                           placeholder="Marker Name"
                           fluid
                           value={name}
-                          onChange={(value) => setName(value)}
+                          onBlur={(value) => setName(value)}
                         />
                         <Dropdown
                           selected={icon}

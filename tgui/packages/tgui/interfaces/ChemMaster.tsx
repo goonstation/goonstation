@@ -575,7 +575,7 @@ export const OperationsSection = (props) => {
           <Input
             value={item_name}
             placeholder={placeholder}
-            onChange={(value) => {
+            onBlur={(value) => {
               set_item_name(value);
             }}
             maxLength={data.name_max_len}

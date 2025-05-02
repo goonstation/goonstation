@@ -54,7 +54,7 @@ export const MixingDesk = () => {
             act('say', { message: msg });
             setMessage('');
           }}
-          onChange={(msg) => setMessage(msg)}
+          onBlur={(msg) => setMessage(msg)}
         />
       </Box>
       <br />

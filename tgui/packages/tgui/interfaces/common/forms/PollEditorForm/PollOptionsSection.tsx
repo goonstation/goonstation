@@ -115,7 +115,7 @@ const PollOptionListItem = (props: PollOptionListItemProps) => {
         width="100%"
         value={value}
         placeholder="Option text..."
-        onChange={handleChange}
+        onBlur={handleChange}
       />
     </LabeledList.Item>
   );

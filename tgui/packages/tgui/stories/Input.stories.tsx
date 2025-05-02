@@ -22,13 +22,16 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+const Story = () => {
   const [number, setNumber] = useState(0);
   const [text, setText] = useState('Sample text');
   return (
     <Section>
       <LabeledList>
-        <LabeledList.Item label="Input">
+        <LabeledList.Item label="Input (onBlur)">
+          <Input value={text} onBlur={(value) => setText(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Input (onChange)">
           <Input value={text} onChange={(value) => setText(value)} />
         </LabeledList.Item>
         <LabeledList.Item label="NumberInput (onChange)">

@@ -167,13 +167,13 @@ const DataInputColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onChange={(value) =>
+        onChange={(value) => {
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          })
-        }
+          });
+        }}
       />
     </Tooltip>
   );
@@ -232,13 +232,13 @@ const DataInputTextEntry = (props) => {
       <Input
         value={value}
         width="200px"
-        onChange={(value) =>
+        onChange={(value) => {
           act('modify_value', {
             name: name,
             value: value,
             type: type,
-          })
-        }
+          });
+        }}
       />
     </Tooltip>
   );

@@ -174,14 +174,14 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               <Input
                 value={sourceData.icon_state}
                 width="250px"
-                onChange={(value) =>
+                onChange={(value) => {
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
                     type: 'icon_state',
                     value: value,
-                  })
-                }
+                  });
+                }}
               />
             </LabeledList.Item>
 
@@ -338,14 +338,14 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                   <Input
                     value={sourceData.color}
                     width="90px"
-                    onChange={(value) =>
+                    onChange={(value) => {
                       act('modify', {
                         byondRef: sourceData.byondRef,
                         group: props.group_key,
                         type: 'color',
                         value: value,
-                      })
-                    }
+                      });
+                    }}
                   />
                   <Button
                     icon="table-cells"

@@ -38,12 +38,12 @@ export const DoorTimer = () => {
                         maxValue={data.maxTime}
                         value={data.time}
                         format={(v) => formatTime(v * 10)}
-                        onDrag={(_e: any, time: number) =>
-                          act('set-time', { time })
-                        }
-                        onChange={(_e: any, time: number) =>
-                          act('set-time', { time, finish: true })
-                        }
+                        onDrag={(_e: unknown, time: number) => {
+                          act('set-time', { time });
+                        }}
+                        onChange={(_e: unknown, time: number) => {
+                          act('set-time', { time, finish: true });
+                        }}
                       />
                     </Stack.Item>
                     <Stack.Item>

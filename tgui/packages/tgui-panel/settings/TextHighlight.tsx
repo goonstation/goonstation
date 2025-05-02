@@ -149,14 +149,14 @@ function TextHighlightSetting(props) {
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onChange={(value) =>
+            onChange={(value) => {
               dispatch(
                 updateHighlightSetting({
                   id: id,
                   highlightColor: value,
                 }),
-              )
-            }
+              );
+            }}
           />
         </Stack.Item>
       </Stack>
