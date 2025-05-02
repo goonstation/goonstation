@@ -5,6 +5,7 @@
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
 	faction = list(FACTION_SYNDICATE)
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
 
 	var/static/commander_title
 	var/static/available_callsigns
