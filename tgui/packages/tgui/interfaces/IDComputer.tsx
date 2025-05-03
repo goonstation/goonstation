@@ -34,6 +34,7 @@ const DeptBox = (props) => {
 
     accesses,
     target_accesses,
+    target_has_disallowed_accesses,
   } = props;
   return (
     <Section
@@ -49,6 +50,7 @@ const DeptBox = (props) => {
             <>
               {!isCustomRank && (
                 <Button
+                  disabled={target_has_disallowed_accesses}
                   onClick={() => act('assign', { assign: job, style: style })}
                   key={job}
                   selected={job === current_job}
@@ -67,6 +69,7 @@ const DeptBox = (props) => {
                     mx="0.2rem"
                   />
                   <Button
+                    disabled={target_has_disallowed_accesses}
                     icon="check"
                     tooltip="Apply"
                     onClick={() => act('apply', { apply: index + 1 })}
@@ -268,7 +271,7 @@ export const IDComputer = () => {
 
                   {/* Jobs organised into sections */}
                   <Section title="Standard Job Assignment">
-                    {target_has_disallowed_accesses && (
+                    {!!target_has_disallowed_accesses && (
                       <NoticeBox mt="0.5rem" danger>
                         This terminal is not authorized to edit some accesses on{' '}
                         <em>{target_name}</em>.
@@ -284,6 +287,9 @@ export const IDComputer = () => {
                             current_job={target_rank}
                             jobs={jobGrouping.jobs}
                             style={jobGrouping.style}
+                            target_has_disallowed_accesses={
+                              target_has_disallowed_accesses
+                            }
                           />
                         ),
                     )}
@@ -293,6 +299,9 @@ export const IDComputer = () => {
                       current_job={target_rank}
                       jobs={custom_names}
                       isCustomRank
+                      target_has_disallowed_accesses={
+                        target_has_disallowed_accesses
+                      }
                     />
                   </Section>
 

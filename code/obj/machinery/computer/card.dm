@@ -311,7 +311,7 @@
 				continue
 			if(!(access in src.allowed_access_list))
 				return TRUE
-		return
+		return FALSE
 
 	proc/access_data(var/A)
 		. = list(list(
