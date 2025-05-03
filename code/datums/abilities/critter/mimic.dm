@@ -44,7 +44,6 @@
 		M.setStatus("mimic_disguise", INFINITE_STATUS)
 		M.disguise_as(HH)
 
-
 	onInterrupt()
 		..()
 		var/mob/living/critter/M = owner
