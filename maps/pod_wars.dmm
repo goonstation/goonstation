@@ -1573,6 +1573,10 @@
 	dir = 8
 	},
 /area/pod_wars/spacejunk/memorial_stats)
+"fh" = (
+/obj/machinery/plantpot,
+/turf/simulated/floor/green/side,
+/area/pod_wars/spacejunk/fstation/mess)
 "fi" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/blue/corner{
@@ -3339,6 +3343,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "kY" = (
+/obj/machinery/gibber/output_east,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -7253,9 +7258,14 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "xn" = (
-/obj/machinery/gibber/output_east,
-/turf/simulated/floor/green/side,
-/area/pod_wars/spacejunk/fstation/mess)
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/pod_wars/spacejunk/fstation)
 "xo" = (
 /obj/deployable_turret/pod_wars/nt/activated/south,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -9100,6 +9110,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -13211,7 +13222,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "Qx" = (
-/obj/machinery/vending/snack,
+/obj/submachine/seed_vendor,
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "Qy" = (
@@ -14601,6 +14612,12 @@
 	dir = 4
 	},
 /area/pod_wars/spacejunk/fstation)
+"UP" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/green/side{
+	dir = 8
+	},
+/area/pod_wars/spacejunk/fstation)
 "UQ" = (
 /obj/item/organ/eye,
 /turf/simulated/wall/auto/asteroid/pod_wars,
@@ -15149,7 +15166,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "WD" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/plantpot,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -15159,7 +15176,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/crewlounge)
 "WF" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/vending/hydroponics,
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "WG" = (
@@ -74549,7 +74566,7 @@ ka
 jL
 Vz
 Uf
-Op
+fh
 ka
 Jy
 CR
@@ -74753,7 +74770,7 @@ EN
 Uf
 WF
 ka
-Jy
+xn
 SN
 aK
 JX
@@ -75155,7 +75172,7 @@ ka
 Ud
 Ok
 Uf
-xn
+Op
 Qa
 Qa
 Qa
@@ -76166,7 +76183,7 @@ GN
 sh
 hc
 ax
-lj
+UP
 lj
 pa
 Wk
