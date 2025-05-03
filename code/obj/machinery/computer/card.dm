@@ -432,7 +432,7 @@
 						logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 						playsound(src.loc, "keyboard", 50, 1, -15)
 					else
-						src.update_card_accesses(get_access(t1), usr)
+						src.update_card_accesses(get_access(t1))
 						logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 					//Wire: This possibly happens after the input() above, so we re-do the initial checks
@@ -502,7 +502,7 @@
 				var/slot = text2num_safe(params["apply"])
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
-				src.update_card_accesses(selected_access_list.Copy(), usr)
+				src.update_card_accesses(selected_access_list.Copy())
 				src.modify.update_name()
 				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
@@ -538,7 +538,7 @@
 			if (band_color == "command")
 				src.modify.icon_state = "id_com"
 
-	proc/update_card_accesses(var/list/access_list, var/mob/user)
+	proc/update_card_accesses(var/list/access_list)
 		for(var/access in access_list) //Remove accesses this computer cannot give
 			if(!(access in src.allowed_access_list))
 				access_list -= access
