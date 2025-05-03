@@ -3710,9 +3710,15 @@
 /datum/statusEffect/mimicDisguise
 	id = "mimic_disguise"
 	name = "Disguised"
-	desc = "Your speed and vitality are matching with your disguise."
+	desc = "Your speed and health are matching with your disguise."
 	visible = TRUE
+	var/speed = "normal"
 	var/last_amount = null
+
+	getTooltip()
+		var/mob/living/critter/mimic/mob_owner = src.owner
+		return "Health: [mob_owner.max_health], Speed: [speed]"
+
 
 	onUpdate(last_amount)
 		..()
@@ -3720,15 +3726,20 @@
 		var/new_amount = mob_owner.pixel_amount
 		var/health = null
 		if (new_amount != last_amount) // sprite sizes are sorted into brackets
-			if (new_amount <= 80)
-				health = 10
-			else if (new_amount <= 300)
+			if (new_amount <= 300)
 				health = 30
+			else if (new_amount <= 160)
+				health = 20
+			else if (new_amount <= 60)
+				health = 10
 			else
 				health = new_amount / 12
 				if (health > 120)
 					health = 120
+			src.last_amount = new_amount
 			mob_owner.max_health = health
+			mob_owner.health = mob_owner.max_health
+
 
 
 

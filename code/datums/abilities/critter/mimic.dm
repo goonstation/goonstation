@@ -5,6 +5,7 @@
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	cooldown_after_action = TRUE
 	var/d_target = null
 
 	cast(atom/target)
@@ -23,25 +24,27 @@
 		return FALSE
 
 /datum/action/bar/private/mimic
-	duration = 1 SECOND
+	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	var/datum/targetable/critter/mimic/A
+	var/datum/targetable/critter/mimic/mimic
 	var/obj/HH
 	var/mob/living/critter/mimic/M
 
-	New(user,target,Disguise)
+	New(user,target,Mimic)
 		HH = target
-		A = Disguise
+		mimic = Mimic
 		M = user
 		..()
 
 	onEnd()
 		..()
+		var/mob/living/critter/mimic/M = src.owner
+		var/datum/targetable/critter/mimic/abil = M.getAbility(/datum/targetable/critter/mimic)
+		abil.afterAction()
 		M.disguise_as(HH)
 
 	onInterrupt()
 		..()
-
 		var/mob/living/critter/M = owner
 		boutput(M, SPAN_ALERT("Your transformation was interrupted!"))
-		A.last_cast = 0 //reset cooldown
+
