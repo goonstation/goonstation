@@ -97,6 +97,12 @@ TYPEINFO(/obj/strip_door)
 		src.underlays = null
 		src.UpdateIcon()
 
+	proc/toggle_anchored(mob/user)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1)
+		boutput(user, SPAN_NOTICE("You [src.anchored ? "unanchor" : "anchor"] the [src]."))
+		src.anchored = !src.anchored
+		src.update_neighbors()
+
 	update_icon()
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
@@ -187,10 +193,7 @@ TYPEINFO(/obj/strip_door)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 30, 1, -2)
 			src.change_direction()
 		if(iswrenchingtool(I))
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1)
-			boutput(user, SPAN_NOTICE("You [src.anchored ? "unanchor" : "anchor"] the [src]."))
-			src.anchored = !src.anchored
-			src.update_neighbors()
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/toggle_anchored, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 		if(src.flap_material)
 			if (issnippingtool(I))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/snip_flaps, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
