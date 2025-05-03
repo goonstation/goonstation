@@ -270,7 +270,8 @@ export const IDComputer = () => {
                   <Section title="Standard Job Assignment">
                     {target_has_disallowed_accesses && (
                       <NoticeBox mt="0.5rem" danger>
-                        This terminal is not authorized to edit some accesses on <em>{target_name}</em>.
+                        This terminal is not authorized to edit some accesses on{' '}
+                        <em>{target_name}</em>.
                       </NoticeBox>
                     )}
                     {standard_jobs.map(
