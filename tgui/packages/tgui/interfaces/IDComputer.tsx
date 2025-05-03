@@ -114,6 +114,7 @@ interface IDComputerData {
   standard_jobs: StandardJob[];
   accesses_by_area: AccessByArea[];
   icons: CardIcon[];
+  target_has_disallowed_accesses: boolean;
 }
 
 interface StandardJob {
@@ -152,6 +153,7 @@ export const IDComputer = () => {
     standard_jobs,
     accesses_by_area,
     icons,
+    target_has_disallowed_accesses,
   } = data;
 
   return (
@@ -266,6 +268,11 @@ export const IDComputer = () => {
 
                   {/* Jobs organised into sections */}
                   <Section title="Standard Job Assignment">
+                    {target_has_disallowed_accesses && (
+                      <NoticeBox mt="0.5rem" danger>
+                        This terminal is not authorized to edit some accesses on <em>{target_name}</em>.
+                      </NoticeBox>
+                    )}
                     {standard_jobs.map(
                       (jobGrouping) =>
                         jobGrouping.jobs && (
