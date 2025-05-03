@@ -3711,6 +3711,7 @@
 	id = "mimic_disguise"
 	name = "Disguised"
 	desc = "Your speed and health are matching with your disguise."
+	icon_state = "mimicface"
 	visible = TRUE
 	movement_modifier = /datum/movement_modifier/mimic
 	var/last_speed = null

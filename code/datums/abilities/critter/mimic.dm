@@ -2,7 +2,7 @@
 	name = "Mimic Object"
 	desc = "Disguise yourself as a target object."
 	icon_state = "mimic"
-	cooldown = 30 SECONDS
+	cooldown = 45 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	cooldown_after_action = TRUE
