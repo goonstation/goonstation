@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cast(atom/target)
 		. = ..()
 		if (actions.hasAction(src.holder.owner, /datum/action/bar/private/mindeater_regenerate))
-			actions.stop(/datum/action/bar/private/mindeater_regenerate, src.holder.owner)
+			actions.stopId(/datum/action/bar/private/mindeater_regenerate, src.holder.owner)
 		else
 			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
 

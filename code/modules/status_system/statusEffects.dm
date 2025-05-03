@@ -3812,7 +3812,7 @@
 	onRemove()
 		..()
 		src.owner.color = null
-		actions.stop(/datum/action/bar/mindeater_pierce_the_veil, src.owner)
+		actions.stopId(/datum/action/bar/mindeater_pierce_the_veil, src.owner)
 
 	proc/process_hit()
 		src.hits_left--
@@ -3894,8 +3894,8 @@
 		else
 			L.delStatus("mindeater_mind_eaten_warp")
 
-		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) <= 0)
-			src.owner.delStatus(src)
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) <= 0 || isdead(L))
+			L.delStatus(src)
 
 	onRemove()
 		..()
@@ -3934,6 +3934,7 @@
 		src.owner.add_simple_light("cosmic_light", rgb2num("#6302ff") + list(255))
 		src.rays_holder = new
 		src.rays_holder.blend_mode = BLEND_ADD
+		src.rays_holder.mouse_opacity = 0
 		src.rays_holder.add_filter("cosmic_light_rays", 0, rays_filter(size = 32, color = "#5900ff", offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
 		var/dm_filter/filter = src.rays_holder.get_filter("cosmic_light_rays")
 		UNLINT(animate(filter, time = 5 MINUTES, loop = -1, offset = filter.offset + 100))
