@@ -136,9 +136,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		else
 			actions.start(new /datum/action/bar/private/mindeater_regenerate(), src.holder.owner)
 
-
 /datum/targetable/critter/mindeater/project
-	name = "Create"
+	name = "Project"
 	desc = "Create a fake Mindeater at the target location."
 	icon_state = "create"
 	cooldown = 45 SECONDS
@@ -159,6 +158,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	max_range = 7
+	full_reveal_on_use = TRUE
 
 	tryCast(atom/target)
 		target = src.get_nearest_mob_or_fake_mindeater(target)
