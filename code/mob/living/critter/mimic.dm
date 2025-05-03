@@ -154,9 +154,5 @@
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
 
-	New()
-		..()
-		src.setStatus("mimic_disguise", INFINITE_STATUS)
-
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)

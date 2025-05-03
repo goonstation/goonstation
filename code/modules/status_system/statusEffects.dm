@@ -3712,33 +3712,51 @@
 	name = "Disguised"
 	desc = "Your speed and health are matching with your disguise."
 	visible = TRUE
-	var/speed = "normal"
+	movement_modifier = /datum/movement_modifier/mimic
+	var/last_speed = null
 	var/last_amount = null
+	var/speed_string = null
 
 	getTooltip()
 		var/mob/living/critter/mimic/mob_owner = src.owner
-		return "Health: [mob_owner.max_health], Speed: [speed]"
+		return "Health: [mob_owner.max_health], Speed: [speed_string]"
 
-
-	onUpdate(last_amount)
+	onUpdate()
 		..()
 		var/mob/living/critter/mimic/mob_owner = src.owner
 		var/new_amount = mob_owner.pixel_amount
-		var/health = null
-		if (new_amount != last_amount) // sprite sizes are sorted into brackets
-			if (new_amount <= 300)
-				health = 30
-			else if (new_amount <= 160)
-				health = 20
-			else if (new_amount <= 60)
-				health = 10
-			else
-				health = new_amount / 12
-				if (health > 120)
-					health = 120
+		if (new_amount != src.last_amount)
 			src.last_amount = new_amount
-			mob_owner.max_health = health
-			mob_owner.health = mob_owner.max_health
+			scale()
+
+	proc/scale()
+		var/health = null
+		var/mob/living/critter/mimic/mob_owner = src.owner
+		REMOVE_MOVEMENT_MODIFIER(mob_owner, src.movement_modifier, src)
+		if (src.last_amount <= 60)
+			src.movement_modifier = /datum/movement_modifier/mimic/mimic_fast
+			health = 10
+			speed_string = "Fast!"
+		else if (src.last_amount <= 160)
+			src.movement_modifier = /datum/movement_modifier/mimic
+			health = 20
+			speed_string = "Normal."
+		else
+			health = src.last_amount / 12
+			if (health > 120)
+				health = 120
+
+		if (health > 50 && health < 90)
+			src.movement_modifier = /datum/movement_modifier/mimic/mimic_slow
+			speed_string = "Slow."
+		else if (health >= 90)
+			src.movement_modifier = /datum/movement_modifier/mimic/mimic_superslow
+			speed_string = "Super slow..."
+		APPLY_MOVEMENT_MODIFIER(mob_owner, src.movement_modifier, src)
+		src.getTooltip()
+
+
+
 
 
 

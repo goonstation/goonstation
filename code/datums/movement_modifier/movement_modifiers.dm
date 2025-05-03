@@ -326,3 +326,15 @@
 
 /datum/movement_modifier/healbot
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/mimic
+	additive_slowdown = 0
+
+/datum/movement_modifier/mimic/mimic_fast
+	additive_slowdown = -1
+
+/datum/movement_modifier/mimic/mimic_slow
+	additive_slowdown = 2
+
+/datum/movement_modifier/mimic/mimic_superslow
+	additive_slowdown = 5

@@ -41,7 +41,9 @@
 		var/mob/living/critter/mimic/M = src.owner
 		var/datum/targetable/critter/mimic/abil = M.getAbility(/datum/targetable/critter/mimic)
 		abil.afterAction()
+		M.setStatus("mimic_disguise", INFINITE_STATUS)
 		M.disguise_as(HH)
+
 
 	onInterrupt()
 		..()
