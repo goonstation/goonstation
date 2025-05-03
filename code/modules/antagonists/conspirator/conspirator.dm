@@ -1,7 +1,7 @@
 /datum/antagonist/conspirator
 	id = ROLE_CONSPIRATOR
 	display_name = "conspirator"
-
+	wiki_link = "https://wiki.ss13.co/Conspirator"
 	var/static/list/datum/mind/conspirators
 	var/static/datum/objective/conspiracy/conspirator_objective
 	var/static/meeting_point

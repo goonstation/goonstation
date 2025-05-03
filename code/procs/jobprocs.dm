@@ -607,7 +607,8 @@ Equip items from body traits.
 				R.fields["mind"] = src.mind
 				D.root.add_file(R)
 
-				D.name = "data disk - '[src.real_name]'"
+				D.name_suffix("([src.real_name])")
+				D.UpdateName()
 
 			if(JOB.badge)
 				var/obj/item/clothing/suit/security_badge/badge = new JOB.badge(src)

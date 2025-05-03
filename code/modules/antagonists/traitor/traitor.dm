@@ -3,6 +3,7 @@
 	display_name = "traitor"
 	antagonist_icon = "traitor"
 	popup_name_override = "traitorhard" //Will be set to ROLE_TRAITOR once given an uplink
+	wiki_link = "https://wiki.ss13.co/Traitor"
 
 	/// Our initial uplink. This is only used to determine the popup shown to the player, so it isn't too important to track.
 	var/obj/item/uplink/uplink

@@ -147,6 +147,10 @@
 			if (length(tracklist))
 				var/obj/item/pinpointer/secweapons/P = new(src.loc)
 				P.track(tracklist)
+				P.name_suffix("([usr.real_name])")
+				P.UpdateName()
+				usr.put_in_hand_or_eject(P)
+
 
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
