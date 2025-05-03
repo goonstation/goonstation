@@ -405,11 +405,6 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "bar"
 	default_material = "soulsteel"
 
-/obj/item/material_piece/metal/censorium
-	desc = "A bar of censorium. Nice try."
-	icon_state = "bar"
-	default_material = "censorium"
-
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."

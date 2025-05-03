@@ -2,6 +2,7 @@
 	id = ROLE_GANG_MEMBER
 	display_name = "gang member"
 	antagonist_icon = "gang"
+	wiki_link = "https://wiki.ss13.co/Gang"
 
 	/// The gang that this gang member belongs to.
 	var/datum/gang/gang

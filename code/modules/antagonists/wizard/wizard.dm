@@ -5,6 +5,7 @@
 	success_medal = "You're no Elminster!"
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Wizard"
 	var/list/datum/SWFuplinkspell/purchased_spells = list()
 
 	/// The ability holder of this wizard, containing their respective abilities.
