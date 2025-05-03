@@ -8,11 +8,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	abilities = list(/obj/ability_button/reset_view)
-	var/list/network = list("SS13")
+	var/list/camera_networks = list(CAMERA_NETWORK_STATION)
 	var/obj/machinery/camera/current = null
 	// Sin but we need to know for disposing to clear viewer list on current
 	var/mob/last_viewer = null
-	var/can_view_ai = FALSE
 
 	disposing()
 		src.disconnect_user(src.last_viewer)
@@ -56,9 +55,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/list/displayed_cameras = list()
 
 		for (var/obj/machinery/camera/camera as anything in cameras)
-			if (camera.network in src.network)
-				if (camera.ai_only && !src.can_view_ai)
-					continue
+			if (camera.network in src.camera_networks)
 				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
 
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
@@ -70,52 +67,63 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 /obj/item/device/camera_viewer/public
 	desc = "A portable video monitor, connected to the public camera network."
-	network = list("public")
+	camera_networks = list(CAMERA_NETWORK_PUBLIC)
 
 /obj/item/device/camera_viewer/security
 	name = "security monitor"
 	desc = "A portable video monitor, connected to the security camera network."
-	network = list("SS13", "Zeta", "Mining")
+	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_MINING)
 	color = "#e49191"
 
 /obj/item/device/camera_viewer/ranch
 	name = "baby monitor"
 	desc = "A portable video monitor, connected to the ranch camera network."
-	network = list("ranch")
+	camera_networks = list(CAMERA_NETWORK_RANCH)
 	color = "#AAFF99"
 
 /obj/item/device/camera_viewer/telesci
 	name = "expedition monitor"
 	desc = "A portable video monitor, connected to multiple expedition cameras."
-	network = list("telesci")
+	camera_networks = list(CAMERA_NETWORK_TELESCI)
 	color = "#efb4e5"
 
 /obj/item/device/camera_viewer/robot
 	name = "robot monitor"
 	desc = "A portable video monitor, connected to multiple internal machine cameras."
-	network = list("Robots")
+	camera_networks = list(CAMERA_NETWORK_ROBOTS)
 	color = "#899a95"
 
 /obj/item/device/camera_viewer/outpost/science
 	name = "science outpost monitor"
 	desc = "A portable video monitor, connected to the science outpost camera network."
-	network = list("Zeta")
+	camera_networks = list(CAMERA_NETWORK_SCIENCE)
 	color = "#efb4e5"
 
 /obj/item/device/camera_viewer/outpost/mining
 	name = "mining outpost monitor"
 	desc = "A portable video monitor, connected to the mining outpost camera network."
-	network = list("Mining")
+	camera_networks = list(CAMERA_NETWORK_MINING)
 	color = "#daa85c"
 
 /obj/item/device/camera_viewer/sticker
 	name = "camera monitor"
 	desc = "A portable video monitor connected to a network of spy cameras."
-	network = list("stickers")
+	camera_networks = list(CAMERA_NETWORK_STICKERS)
 
 /obj/item/device/camera_viewer/omniview
 	name = "ADMIN CRIMES MONITOR"
 	desc = "A portable video monitor, connected to EVERY NETWORK!"
-	network = list("Mining", "Zeta", "Robots", "ranch", "SS13", "public", "VR")
-	can_view_ai = TRUE
+	camera_networks = list(
+		CAMERA_NETWORK_STATION,
+		CAMERA_NETWORK_PUBLIC,
+		CAMERA_NETWORK_ROBOTS,
+		CAMERA_NETWORK_RANCH,
+		CAMERA_NETWORK_MINING,
+		CAMERA_NETWORK_SCIENCE,
+		CAMERA_NETWORK_VSPACE,
+		CAMERA_NETWORK_TELESCI,
+		CAMERA_NETWORK_STICKERS,
+		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
+	)
 	default_material = "miracle"

@@ -3,6 +3,7 @@
 	id = ROLE_SLEEPER_AGENT
 	display_name = "sleeper agent"
 	antagonist_icon = "traitor"
+	wiki_link = "https://wiki.ss13.co/Sleeper_Agent"
 	var/dead_drop
 
 /datum/antagonist/sleeper_agent/remove_self(take_gear, source)

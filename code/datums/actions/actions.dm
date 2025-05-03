@@ -612,20 +612,10 @@
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
-
 				// Re-added (Convair880).
-				if (istype(I, /obj/item/mousetrap/))
-					var/obj/item/mousetrap/MT = I
-					if (MT?.armed)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
-				else if (istype(I, /obj/item/mine))
-					var/obj/item/mine/M = I
-					if (M.armed && M.used_up != 1)
-						for (var/mob/O in AIviewers(owner))
-							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
-						M.triggered(source)
+				if SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, source)
+					for (var/mob/O in AIviewers(owner))
+						O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 
 				target.u_equip(I)
 				I.set_loc(target.loc)
@@ -722,29 +712,37 @@
 				remove_internals = 0
 	onEnd()
 		..()
-		if(owner && target && BOUNDS_DIST(owner, target) == 0)
-			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
-			if(remove_internals)
-				target.internal.add_fingerprint(owner)
-				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
-					T.icon_state = "airoff"
-				target.internal = null
+		if(!owner || !target || !BOUNDS_DIST(owner, target) == 0)
+			return
+		SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+		if(remove_internals)
+			target.internal.add_fingerprint(owner)
+			for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
+				T.icon_state = "airoff"
+			target.internal = null
+			target.update_inv()
+			for(var/mob/O in AIviewers(owner))
+				O.show_message(SPAN_ALERT("<B>[owner] removes [target]'s internals!</B>"), 1)
+		else
+			if (!istype(target.wear_mask, /obj/item/clothing/mask))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!HAS_FLAG(target.wear_mask.c_flags, MASKINTERNALS))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			var/list/eq_list = list(src.target.back, src.target.belt, src.target.r_hand, src.target.l_hand, src.target.r_store, src.target.l_store)
+			for(var/I in eq_list)
+				if(!istype(I, /obj/item/tank))
+					continue
+				var/obj/item/tank/tank = I
+				tank.toggle_valve()
 				target.update_inv()
-				for(var/mob/O in AIviewers(owner))
-					O.show_message(SPAN_ALERT("<B>[owner] removes [target]'s internals!</B>"), 1)
-			else
-				if (!istype(target.wear_mask, /obj/item/clothing/mask))
-					interrupt(INTERRUPT_ALWAYS)
-					return
-				else
-					if (istype(target.back, /obj/item/tank))
-						target.internal = target.back
-						target.update_inv()
-						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
-							T.icon_state = "airon"
-						for(var/mob/M in AIviewers(target, 1))
-							M.show_message(text("[] is now running on internals.", src.target), 1)
-						target.internal.add_fingerprint(owner)
+				for(var/mob/M in AIviewers(target, 1))
+					M.show_message(text("[] is now running on internals.", src.target), 1)
+				target.internal.add_fingerprint(owner)
+				return
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
 	duration = 40
@@ -1172,13 +1170,13 @@
 
 	onUpdate() //check for special conditions that could interrupt the picking-up here.
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || !can_act(src.owner)) //If the thing is suddenly out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working)  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
+		if(BOUNDS_DIST(owner, target) > 0 || picker == null || target == null || owner == null || picker.working || !can_act(src.owner))  //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		else
@@ -1227,6 +1225,8 @@
 		if(picker == null || owner == null) //Interrupt if the user or the magpicker disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (!can_act(src.owner))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()

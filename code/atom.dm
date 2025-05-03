@@ -350,6 +350,7 @@ TYPEINFO(/atom)
 /atom/Cross(atom/movable/mover)
 	return (!density)
 
+/// called when atom AM crosses onto where this atom is
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
@@ -357,6 +358,7 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
+/// called when atom AM enters the contents of this atom
 /atom/Entered(atom/movable/AM, atom/OldLoc)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im cargo culter
@@ -364,6 +366,7 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
+/// called when atom AM uncrosses where this atom is
 /atom/Uncrossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im also cargo culter
@@ -546,10 +549,6 @@ TYPEINFO(/atom/movable)
 
 
 /atom/movable/disposing()
-	if (temp_flags & MANTA_PUSHING)
-		mantaPushList.Remove(src)
-		temp_flags &= ~MANTA_PUSHING
-
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
@@ -1018,15 +1017,17 @@ TYPEINFO(/atom/movable)
 /atom/proc/on_reagent_transfer()
 	return
 
+/// called when this atom is bumped by the argument
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-/// override this instead of Bump
+/// override this instead of Bump. called when this atom bumps the argument.
 /atom/movable/proc/bump(atom/A)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
+/// -- do not override, override /atom/movable/bump instead --. called when this atom bumps the argument
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!(A.flags & ON_BORDER))
@@ -1413,3 +1414,12 @@ TYPEINFO(/atom/movable)
 ///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
 /atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
 	return TRUE
+
+///Removes anything that is glued to this atom
+/atom/proc/unglue_attached_to()
+	var/atom/Aloc = isturf(src) ? src : src.loc
+	for(var/atom/movable/AM in Aloc)
+		var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+		// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+		if(glued_comp?.glued_to == src && !isnull(glued_comp.glue_removal_time))
+			qdel(glued_comp)

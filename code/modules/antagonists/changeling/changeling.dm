@@ -2,6 +2,7 @@
 	id = ROLE_CHANGELING
 	display_name = "changeling"
 	antagonist_icon = "changeling"
+	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	/// The ability holder of this changeling, containing their respective abilities. This is also used for tracking absorbtions, at the moment.
 	var/datum/abilityHolder/changeling/ability_holder
@@ -28,12 +29,7 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/scream)
 		src.ability_holder.addAbility(/datum/targetable/changeling/spit)
 		src.ability_holder.addAbility(/datum/targetable/changeling/stasis)
-#ifdef RP_MODE
-		src.ability_holder.addAbility(/datum/targetable/changeling/sting/capulettium)
-#else
-		src.ability_holder.addAbility(/datum/targetable/changeling/sting/neurotoxin)
-#endif
-		src.ability_holder.addAbility(/datum/targetable/changeling/sting/lsd)
+		src.ability_holder.addAbility(/datum/targetable/changeling/sting/chemical)
 		src.ability_holder.addAbility(/datum/targetable/changeling/sting/dna)
 		src.ability_holder.addAbility(/datum/targetable/changeling/transform)
 		src.ability_holder.addAbility(/datum/targetable/changeling/morph_arm)
@@ -61,12 +57,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/scream)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/spit)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/stasis)
-#ifdef RP_MODE
-		src.ability_holder.removeAbility(/datum/targetable/changeling/sting/capulettium)
-#else
-		src.ability_holder.removeAbility(/datum/targetable/changeling/sting/neurotoxin)
-#endif
-		src.ability_holder.removeAbility(/datum/targetable/changeling/sting/lsd)
+		src.ability_holder.removeAbility(/datum/targetable/changeling/sting/chemical)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/sting/dna)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/dna_target_select)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/transform)

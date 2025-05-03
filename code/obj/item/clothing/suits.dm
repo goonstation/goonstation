@@ -1335,77 +1335,21 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
-	team_num = TEAM_SYNDICATE
 	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	setupProperties()
-		..()
-		setProperty("heatprot", 35)
-
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
-
-	setupProperties()
-		..()
-		setProperty("chemprot",60)
-		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
-
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	commissar_greatcoat
-		name = "commander's great coat"
-		icon_state = "commissar_greatcoat"
-		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
-		team_num = TEAM_SYNDICATE
-		hides_from_examine = C_UNIFORM|C_SHOES
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
-
-		setupProperties()
-			..()
-			setProperty("exploprot", 40)
-			setProperty("meleeprot", 6)
-			setProperty("rangedprot", 3)
-			setProperty("radprot", 50)
-
-	knight // nukie melee class armor
-		name = "citadel heavy combat cuirass"
-		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
-		icon_state = "syndie_specialist-knight"
-		item_state = "syndie_specialist-knight"
-
-		setupProperties()
-			..()
-			setProperty("meleeprot", 6)
-			setProperty("rangedprot", 1)
-			setProperty("exploprot", 40)
-			setProperty("space_movespeed", 0.9)
-			setProperty("disorient_resist", 65)
-			setProperty("radprot", 50)
+	setupProperties()
+		..()
+		setProperty("chemprot",60)
+		setProperty("heatprot", 35)
+		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1420,33 +1364,66 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setProperty("rangedprot", 1.5)
 			setProperty("radprot", 50)
 
+		commissar_greatcoat
+			name = "commander's great coat"
+			icon_state = "commissar_greatcoat"
+			desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+			hides_from_examine = C_UNIFORM|C_SHOES
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
+
+		knight // nukie melee class armor
+			name = "citadel heavy combat cuirass"
+			desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
+			icon_state = "syndie_specialist-knight"
+			item_state = "syndie_specialist-knight"
+
+			setupProperties()
+				..()
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 1)
+				setProperty("exploprot", 40)
+				setProperty("space_movespeed", 0.9)
+				setProperty("disorient_resist", 65)
+
+		heavy
+			name = "specialist heavy operative combat armor"
+			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+			icon_state = "syndie_specialist-heavy"
+			item_state = "syndie_specialist-heavy"
+
+			setupProperties()
+				..()
+				setProperty("meleeprot", 9)
+				setProperty("rangedprot", 2)
+
 		medic
 			name = "specialist operative medic uniform"
-			desc = "A syndicate issue combat dress system, pressurized for space travel."
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Has additional viral protection."
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
-
-			body_parts_covered = TORSO|LEGS|ARMS
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("radprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
-			desc = "A syndicate issue combat dress system, pressurized for space travel."
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Advanced servos increase the speed of the wearer."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
 			setupProperties()
 				..()
 				setProperty("space_movespeed", -0.25)
-				setProperty("radprot", 50)
 
 
 		firebrand
 			name = "specialist operative firesuit"
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Fireproof."
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
 
@@ -1455,39 +1432,29 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			setupProperties()
 				..()
 				setProperty("heatprot", 100)
-				setProperty("radprot", 50)
 
 		engineer
 			name = "specialist operative engineering uniform"
 			icon_state = "syndie_specialist-engineer"
 			item_state = "syndie_specialist-engineer"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		sniper
 			name = "specialist operative marksman's suit"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		grenadier
 			name = "specialist operative bombsuit"
+			desc = "A syndicate issue combat dress system, pressurized for space travel. Has additional explosion resistance."
 
 			setupProperties()
 				..()
 				setProperty("exploprot", 60)
-				setProperty("radprot", 50)
 
 		bard
 			name = "road-worn stage uniform"
 			icon_state = "syndie_specialist-bard"
 			item_state = "syndie_specialist-bard"
-			setupProperties()
-				..()
-				setProperty("radprot", 50)
 
 		unremovable
 			cant_self_remove = 1
@@ -1714,12 +1681,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	specialist
-		name = "specialist heavy operative combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
-
 TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
@@ -1752,18 +1713,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	pilot
 		name = "NT space suit"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
-		team_num = TEAM_NANOTRASEN
-		#ifdef MAP_OVERRIDE_POD_WARS
-		attack_hand(mob/user)
-			if (get_pod_wars_team_num(user) == team_num)
-				..()
-			else
-				boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
-				make_fake_explosion(src)
-				user.u_equip(src)
-				src.dropped(user)
-				qdel(src)
-		#endif
 
 		setupProperties()
 			..()
@@ -1775,18 +1724,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
 			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been painted blue?"
-			team_num = TEAM_NANOTRASEN
-			#ifdef MAP_OVERRIDE_POD_WARS
-			attack_hand(mob/user)
-				if (get_pod_wars_team_num(user) == team_num)
-					..()
-				else
-					boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
-					make_fake_explosion(src)
-					user.u_equip(src)
-					src.dropped(user)
-					qdel(src)
-			#endif
 
 			setupProperties()
 				..()
@@ -2202,7 +2139,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
-	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
 
@@ -2218,10 +2154,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	proc/show_off_badge(var/mob/user, var/mob/target = null)
 		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
+		var/regex/nt_regex = new(@"^[Nn]ano[Tt]rasen\b")
+		var/job_to_show = replacetext(badge_owner_job, nt_regex, "") //Remove NT so you get "Nanotrasen's Finest Security Consultant"
+		var/descriptive_text = "[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [job_to_show]: [badge_owner_name].")]"
 		if (istype(target))
-			user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge at [target.name]: <br>[descriptive_text]", "You show off the badge to [target.name]: <br>[descriptive_text]")
 		else
-			user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+			user.visible_message("[user] flashes the badge: <br>[descriptive_text]", "You show off the badge: <br>[descriptive_text]")
 		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack_self(mob/user as mob)
@@ -2253,6 +2192,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
 	icon_state = "security_badge_paper"
 
+/obj/item/clothing/suit/security_badge/nanotrasen
+	name = "Nanotrasen Badge"
+	desc = "An official badge for a Nanotrasen Responder."
+	icon_state = "security_badge_nanotrasen"
+
 /obj/item/clothing/suit/security_badge/hosmedal
 	name = "war medal"
 	desc = ""
@@ -2277,6 +2221,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
+
+/obj/item/clothing/suit/security_badge/attorney
+	name = "legal license"
+	desc = "A very tasteful business card that exudes professionalism. It even has a watermark."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "businesscard"
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	item_state = "security_badge_paper"
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_state = "security_badge_paper"
 
 /obj/item/clothing/suit/snow
 	name = "snow suit"
@@ -2612,3 +2566,45 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 	item_state = "naturerobe"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
+
+// Denim Dresses
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/dress/denim)
+/obj/item/clothing/suit/dress/denim
+	name = "denim dress"
+	desc = "A pair of overalls with legs lopped off! Breezy and stylish."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/suit/dress/denim/blue
+	name = "blue denim dress"
+	icon_state = "denim_dress-blue"
+	item_state = "denim_dress-blue"
+
+/obj/item/clothing/suit/dress/denim/turquoise
+	name = "turquoise denim dress"
+	icon_state = "denim_dress-turquoise"
+	item_state = "denim_dress-turquoise"
+
+/obj/item/clothing/suit/dress/denim/white
+	name = "white denim dress"
+	icon_state = "denim_dress-white"
+	item_state = "denim_dress-white"
+
+/obj/item/clothing/suit/dress/denim/black
+	name = "black denim dress"
+	icon_state = "denim_dress-black"
+	item_state = "denim_dress-black"
+
+/obj/item/clothing/suit/dress/denim/grey
+	name = "grey denim dress"
+	icon_state = "denim_dress-grey"
+	item_state = "denim_dress-grey"
+
+/obj/item/clothing/suit/dress/denim/khaki
+	name = "khaki denim dress"
+	icon_state = "denim_dress-khaki"
+	item_state = "denim_dress-khaki"

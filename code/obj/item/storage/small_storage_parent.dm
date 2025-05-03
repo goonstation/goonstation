@@ -64,11 +64,11 @@
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	icon_state = "emergbox"
-	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff(onlyMaskAndOxygen)
 		..()
 		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
-			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
+			src.storage.add_contents(new /obj/item/tank/pocket/oxygen(src))
 		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
 			src.storage.add_contents(new /obj/item/crowbar/red(src))
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
@@ -82,7 +82,7 @@
 
 
 /obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
-	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff()
 		..(TRUE)
 

@@ -484,6 +484,7 @@
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 1
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 	//two_handed = 1
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/dowse_dist_fuzz = 3
@@ -864,6 +865,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	density = 1
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4

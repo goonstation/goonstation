@@ -199,10 +199,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return R
 
 	proc/remove_any_except(var/amount=1, var/exception)
-		if(amount > total_volume) amount = total_volume
+		if (!(exception in src.reagent_list))
+			src.remove_any(amount)
+			return
+
+		var/datum/reagent/exception_reagent = reagent_list[exception]
+		var/effective_total_volume = total_volume - exception_reagent.volume
+		if(amount > effective_total_volume) amount = effective_total_volume
 		if(amount <= 0) return
 
-		var/remove_ratio = amount/total_volume
+		var/remove_ratio = amount/effective_total_volume
 
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)
@@ -745,11 +751,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								dmg_multiplier = paramslist["dmg_multiplier"]
 
 						if(C.bioHolder)
-							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
+							if(temp_to_burn_with > C.scald_temp() && !C.is_heat_resistant())
 								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
-							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
+							else if(temp_to_burn_with < C.frostburn_temp() && !C.is_cold_resistant())
 								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)

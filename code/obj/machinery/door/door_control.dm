@@ -26,6 +26,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open), 3 = nulls access (non-reversable!) - Does not change behavior for poddoors or conveyors
+	var/single_use = FALSE //If TRUE will qdel self after use
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -602,6 +603,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 						M.operating = 0
 			M.setdir()
 
+	if(src.single_use)
+		qdel(src)
+		return
+
 	if(src.cooldown)
 		inuse = TRUE
 		sleep(src.cooldown)
@@ -673,7 +678,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR) || user.mind?.get_antagonist(ROLE_NUKEOP) || user.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER))
+	if (istrainedsyndie(user))
 		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
 		src.toggle()
 		if (src.entrance_scanner)
@@ -1298,6 +1303,14 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	name = "Remote Door Bolt Control"
 	desc = "A remote control switch for a door's locking bolts."
 	controlmode = 2
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	new_walls
 		north
