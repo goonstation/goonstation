@@ -600,7 +600,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
 
 			fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-			fluid_lines.appearance_flags = RESET_ALPHA
+			fluid_lines.appearance_flags = RESET_COLOR
 			fluid_lines.blend_mode = BLEND_ADD
 			src.overlay_images[overlay_key] = fluid_lines
 
@@ -624,7 +624,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.overlay_images[overlay_key] = wall_overlay
 
 			wall_fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-			wall_fluid_lines.appearance_flags = RESET_ALPHA
+			wall_fluid_lines.appearance_flags = RESET_COLOR
 			wall_fluid_lines.blend_mode = BLEND_ADD
 			wall_fluid_lines.icon_state = "[wall_overlay.icon_state]_lines"
 			wall_fluid_lines.pixel_x = pox
