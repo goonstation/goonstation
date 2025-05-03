@@ -8,9 +8,10 @@
 	var/datum/listen_module_tree/target_listen_tree
 
 /datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree)
-	src.target_listen_tree = target_listen_tree
 	src.request_enable()
+
 	. = ..()
+	src.update_target_listen_tree(target_listen_tree)
 
 /datum/listen_module_tree/auxiliary/disposing()
 	src.update_target_listen_tree(null)

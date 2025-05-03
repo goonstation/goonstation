@@ -8,8 +8,8 @@
 	var/datum/speech_module_tree/target_speech_tree
 
 /datum/speech_module_tree/auxiliary/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list(), datum/speech_module_tree/target_speech_tree)
-	src.target_speech_tree = target_speech_tree
 	. = ..()
+	src.update_target_speech_tree(target_speech_tree)
 
 /datum/speech_module_tree/auxiliary/disposing()
 	src.update_target_speech_tree(null)
