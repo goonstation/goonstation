@@ -26,24 +26,26 @@ export const acw: AlertContentWindow = {
         state upon death.
       </p>
       <p>
-        2. Your goal is to gain Intellect from crew members! Use your
-        ability Brain Drain to do so, which will award you with Intellect, through
-        stealth and your Disguise ability. Abilities are either free to cast or have unique effects depending on how much Intellect has been collected on a target.
+        2. Your goal is to gain Intellect from crew members! Use your ability
+        Brain Drain to do so, which will award you with Intellect. Stealth and
+        your Disguise ability will help you.
       </p>
       <p>
         3. You cloak while in darkness. Being in light for too long, attacking,
-        or using abilities will reveal you. A visibility indicator next to you
-        shows if you are visible or not.
+        or using most abilities will reveal you. A visibility indicator next to
+        you shows if you are visible or not.
       </p>
       <p>
         4. Your basic attack is a ranged attack that slows down those hit and
-        prevents them from running.
+        prevents them from running. It drains chemicals, replacing them with
+        toxins.
       </p>
       <p>
         5. Start attacks by sneakily draining brain from crew members. When they
-        become aware of you, use Pierce the Veil, along with your evasive
-        abilities to avoid death. When you exit the created plane, finish them
-        off manually or through inflicted mindmites.
+        become aware of you, use your ranged attack to slow them down. Use
+        Project and Spatial Swap for evation as needed. Use Project, Spatial
+        Swap, Paralyze, and Cosmic Light to gain asa much Intellect as you can.
+        Finish off the attack with by using Pierce the Veil on the target.
       </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
