@@ -182,12 +182,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	full_reveal_on_use = TRUE
 	max_range = 5
 
 	tryCast(atom/target)
-		target = src.get_nearest_human_or_silicon(target)
+		target = src.get_nearest_human(target)
 		if (!target)
-			boutput(src.holder.owner, SPAN_ALERT("You can only target living creatures!"))
+			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) < 10)
 			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
@@ -199,7 +200,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
 		var/mob/living/L = target
 
-		playsound(get_turf(mindeater), 'sound/misc/intruder/paralyze.ogg', 25, TRUE)
+		playsound(get_turf(mindeater), 'sound/misc/intruder/paralyze.ogg', 35, TRUE)
 		if (abs(dir2angle(L.dir) - dir2angle(get_dir(L, mindeater))) > 45)
 			boutput(src.holder.owner, SPAN_ALERT("The target was looking away from you!"))
 			return
@@ -225,6 +226,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Cosmic Light"
 	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you."
 	cooldown = 0//45 SECONDS
+	full_reveal_on_use = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -239,7 +241,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	targeted = TRUE
 	target_anything = TRUE
 	pointCost = INTRUDER_MAX_INTELLECT_THRESHOLD
-	reveals_on_use = TRUE
+	full_reveal_on_use = TRUE
 
 	tryCast(atom/target)
 		target = src.get_nearest_human(target)
