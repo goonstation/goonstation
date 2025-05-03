@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/brain_drain
 	name = "Brain Drain"
-	desc = "Gain 3 Intellect per second from a target in range. Intellect gained is reduced by mind-shielding drugs."
+	desc = "Gain 3 Intellect per second from a target in range. Intellect gained is reduced by mind-shielding drugs. Reveals you on use."
 	icon_state = "brain_drain"
 	targeted = TRUE
 	target_anything = TRUE
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/spatial_swap
 	name = "Spatial Swap"
-	desc = "Swap the location of yourself and another living creature or fake version of yourself."
+	desc = "Swap the location of yourself and another living creature or fake version of yourself. Full reveals you on use."
 	icon_state = "spatial_swap"
 	cooldown = 20 SECONDS
 	targeted = TRUE
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 /datum/targetable/critter/mindeater/paralyze
 	name = "Paralyze"
 	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement and reduce their vision.
-			For each 10 Intellect on them, make them take 1 step towards you and receive a stab."}
+			For each 10 Intellect on them, make them take 1 step towards you and receive a stab. Full reveals you on use."}
 	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -224,7 +224,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/cosmic_light
 	name = "Cosmic Light"
-	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you."
+	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you. Full reveals you on use."
 	cooldown = 0//45 SECONDS
 	full_reveal_on_use = TRUE
 
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 
 /datum/targetable/critter/mindeater/pierce_the_veil
 	name = "Pierce the Veil"
-	desc = "Channel using a 3 charge shield to send a mob that you have 100 Intellect on to the border of the Intruder plane for 60 seconds, where they must survive in an arena."
+	desc = "Channel using a 3 charge shield to send a mob that you have 100 Intellect on to the border of the Intruder plane for 60 seconds, where they must survive in an arena. Full reveals you on use."
 	icon_state = "pierce_the_veil"
 	cooldown = 60 SECONDS
 	max_range = 5
@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 25, TRUE)
+		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 35, TRUE)
 		actions.start(new /datum/action/bar/mindeater_pierce_the_veil(target), mindeater)
 
 /area/veil_border
