@@ -159,7 +159,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/dropped(mob/user as mob)
 	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
-	scope?.icon_state = "scope_on"
+	scope?.icon_state = "scope_off"
 	..()
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
