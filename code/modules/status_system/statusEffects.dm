@@ -3739,7 +3739,7 @@
 			speed_string = "Fast!"
 		else if (src.last_amount <= 160)
 			src.movement_modifier = /datum/movement_modifier/mimic
-			health = 20
+			health = 25
 			speed_string = "Normal."
 		else
 			health = src.last_amount / 12
