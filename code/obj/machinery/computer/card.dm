@@ -547,7 +547,7 @@
 			if (access in access_list)
 				continue
 			if (!(access in get_all_accesses())) // preserve accesses which are otherwise unobtainable
-				access_list += access //But don't mention keeping them (e.g. don't out agent cards)
+				access_list += access
 				continue
 			if (!(access in src.allowed_access_list)) // Add accesses this computer cannot remove
 				access_list += access
