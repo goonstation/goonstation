@@ -1,4 +1,9 @@
 
+(t)sat may 03 25
+(u)glowbold
+(p)22932
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Vampires gain the starting ability Illusory Shroud. While in darkness, it shrouds you in mist and completely hides your identity.
 (t)fri may 02 25
 (u)glowbold
 (p)23199
