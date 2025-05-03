@@ -25,6 +25,8 @@
 	var/image/mindeater_visibility_indicator/vis_indicator
 	/// shows health of the mindeater
 	var/image/mindeater_health_indicator/hp_indicator
+	/// currently casting paralyze ability
+	var/casting_paralyze = FALSE
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
@@ -76,7 +78,7 @@
 		if (src.pulling)
 			src.reveal(FALSE)
 			return
-		if (src.hasStatus("mindeater_abducted_visible"))
+		if (actions.hasAction(src, /datum/action/bar/private/mindeater_brain_drain) || src.casting_paralyze || actions.hasAction(src, /datum/action/bar/mindeater_pierce_the_veil))
 			return
 		if (src.on_bright_turf())
 			src.delStatus("mindeater_cloaking")

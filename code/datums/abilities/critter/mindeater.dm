@@ -104,10 +104,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (!(istype(L, /mob/living/carbon/human) || istype(L, /mob/living/silicon)))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans and silicons!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (istype(L, /mob/living/carbon/human))
-			if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) > INTRUDER_MAX_INTELLECT_THRESHOLD)
-				boutput(src.holder.owner, SPAN_ALERT("You can't get any more Intellect out of this target!"))
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only use this ability on alive targets!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -208,6 +204,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			boutput(src.holder.owner, SPAN_ALERT("The target was looking away from you!"))
 			return
 		SPAWN(0)
+			mindeater.casting_paralyze = TRUE
 			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
 			APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
 			L.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -218,6 +215,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 				L.Move(get_step(L, get_dir(L, mindeater)), get_dir(L, mindeater))
 				take_bleeding_damage(L, null, 2.5, pick(DAMAGE_CUT, DAMAGE_STAB))
 				playsound(get_turf(L), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
+			mindeater.casting_paralyze = FALSE
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, mindeater)
 			REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTTURN, mindeater)
 			L.removeOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -393,8 +391,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		var/mob/living/critter/mindeater/mindeater = src.owner
 		var/datum/abilityHolder/abil_holder = mindeater.get_ability_holder(/datum/abilityHolder/mindeater)
 		var/datum/targetable/critter/mindeater/brain_drain/abil = abil_holder.getAbility(/datum/targetable/critter/mindeater/brain_drain)
-		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || \
-				(istype(src.target, /mob/living/carbon/human) && GET_ATOM_PROPERTY(src.target, PROP_MOB_INTELLECT_COLLECTED) >= INTRUDER_MAX_INTELLECT_THRESHOLD) || isdead(src.target)
+		return !(src.target in viewers(abil.max_range, get_turf(src.owner))) || isdead(src.target)
 
 /datum/action/bar/mindeater_pierce_the_veil
 	interrupt_flags = INTERRUPT_ACTION
