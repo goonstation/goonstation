@@ -41,8 +41,8 @@
 	// botany
 		/obj/item/reagent_containers/glass/happyplant = 20,\
 	// ranch
-		/obj/item/reagent_containers/glass/bottle/oldcoot = 20,\
-		/obj/item/reagent_containers/food/snacks/ranch_feed_bag/loot = 20,\
+		/obj/item/reagent_containers/food/snacks/ranch_feed_bag/age = 20,\
+		/obj/item/reagent_containers/food/snacks/ranch_feed_bag/loot_antiage = 20,\
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm

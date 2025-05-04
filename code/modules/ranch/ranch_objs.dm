@@ -540,7 +540,15 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		else
 			. = ..()
 
-	loot // for mining crates
+	loot_age
+		name = "Dehab Mortality Feed"
+		desc = "A hand-knitted bag of feed which somehow creaks, it has a small label mentioning rapid ageing."
+		feed_flags = list("clockwork")
+		new()
+			..()
+			reagents.add_reagent("ageinium", 40)
+
+	loot_antiage // for mining crates
 		name = "Ambrosia Immortality Feed"
 		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
 		feed_flags = list("ageless", "chicken_egg")
