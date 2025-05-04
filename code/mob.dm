@@ -2800,6 +2800,8 @@
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()

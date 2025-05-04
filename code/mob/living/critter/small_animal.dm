@@ -328,6 +328,9 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 	shiny_chance = 0
+	gender = MALE
+	///Remy tries not to suggest the same thing twice in a row
+	var/last_recipe = null
 
 	New()
 		. = ..()
@@ -352,6 +355,40 @@ proc/filter_carrier_pets(var/type)
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
+
+	attackby(obj/item/reagent_containers/food/food, mob/user)
+		if (!istype(food))
+			return ..()
+		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
+			return
+		src.visible_message("[src] sniffs \the [food].")
+		var/list/possible_recipes = list()
+		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
+			if (istypes(food, recipe.ingredients))
+				possible_recipes += recipe
+		src.set_dir(get_dir(src, user))
+		src.ai.disable()
+		SPAWN(2 SECONDS)
+			if (length(possible_recipes))
+				if (length(possible_recipes) > 2)
+					possible_recipes -= src.last_recipe
+				src.emote("scream")
+				var/datum/cookingrecipe/chosen = pick(possible_recipes)
+				boutput(user, chosen.render())
+			else
+				src.visible_message("[src] shakes [his_or_her(src)] head sadly.")
+			sleep(1 SECOND)
+			src.ai.enable()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					FLICK("remy-exclaim", src)
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
+		return ..()
+
 
 /* ============================================= */
 /* ------------------ Turtle ------------------- */
@@ -423,29 +460,22 @@ proc/filter_carrier_pets(var/type)
 			. += "And he's wearing an adorable costume! Wow!"
 
 	update_icon()
-		if (isalive(src))
-			if (src.shell_count)
-				src.icon_state = "turtle-shell"
-			else if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "turtle-beret"
-				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-beret-com"
-			else
-				src.icon_state = "turtle"
-			if (costume_name)
-				src.UpdateOverlays(costume_alive, "costume")
-
-		else
-			if (src.wearing_beret)
-				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat) || istype(wearing_beret, /obj/item/clothing/head/hosberet))
-					src.icon_state = "turtle-dead-beret"
-				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-dead-beret-com"
-			else
-				src.icon_state = "turtle-dead"
+		var/state = "turtle"
+		if(!isalive(src))
+			state += "-dead"
 			if (costume_name)
 				src.UpdateOverlays(costume_dead, "costume")
+		else
+			if(src.shell_count)
+				src.icon_state = "turtle-shell"
+				return
+			if (costume_name)
+				src.UpdateOverlays(costume_alive, "costume")
+		if(src.wearing_beret)
+			state += "-beret"
+			if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+				state += "-com"
+		src.icon_state = state
 
 	bullet_act(var/obj/projectile/P)
 		switch(P.proj_data.damage_type)
@@ -3689,7 +3719,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	player_can_spawn_with_pet = TRUE
@@ -4700,7 +4730,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "lavacrab-dead"
 	density = TRUE
 	anchored = ANCHORED
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_burn_vuln = 0.1
 	health_brute_vuln = 0.5
 	death_text = "%src% flops over dead!"
@@ -5002,7 +5032,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	flags = NOSPLASH | TABLEPASS
 	generic = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	no_stamina_stuns = TRUE
 	has_genes = FALSE
 
