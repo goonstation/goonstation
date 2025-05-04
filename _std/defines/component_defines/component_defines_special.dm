@@ -160,7 +160,9 @@
 #define COMSIG_DOOR_OPENED "door_opened"
 
 // ---- Sniper Scope integration with other gun components ----
-/// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off
+/// Sent to an item when its sniper_scope components are enabled or disabled, TRUE if enabled and FALSE if disabled
+#define COMSIG_SCOPE_ENABLED "sniper_scope_enabled"
+/// Sent to an item when its sniper_scope components scope is toggled by sprinting, TRUE if on and FALSE if off
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"
 /// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
 #define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"

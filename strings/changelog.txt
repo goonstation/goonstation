@@ -1,4 +1,22 @@
 
+(t)sat may 03 25
+(u)TDHooligan
+(p)20352
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Sniper rifles now have an item ability to toggle their scope. You can now sprint with sniper rifles equipped.
+(u)glowbold
+(p)22932
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Vampires gain the starting ability Illusory Shroud. While in darkness, it shrouds you in mist and completely hides your identity.
+(t)fri may 02 25
+(u)glowbold
+(p)23199
+(e)⚖💊|C-Balance, A-Medical
+(*)Common first aid kits do not contain health analyzers, but have more apt supplies for the damage type they're associated with.
+(u)JORJ949
+(p)23203
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Security pinpointers and disks now come labelled with the owner's name, this label can be removed with a hand labeler.
 (t)thu may 01 25
 (u)EmeraldCrow
 (p)23232

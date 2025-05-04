@@ -139,6 +139,10 @@
 	emag_act()
 		return
 
+	pull(mob/user)
+		. = ..()
+		logTheThing(LOG_GAMEMODE, user, "starts pulling [src] at [log_loc(src)].")
+
 	proc/attempt_open(mob/user)
 		for (var/obj/ganglocker/locker in range(1,src))
 			if (locker.gang == user.get_gang() && locked)

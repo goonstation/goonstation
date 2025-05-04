@@ -225,6 +225,9 @@
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
 
+/obj/item/shipcomponent/mainweapon/gun/pod_wars //normal nukies can have the fun version
+	firerate = 20
+
 /obj/item/shipcomponent/mainweapon/minigun
 	name = "Minigun"
 	desc = "A low damage but high firerate anti-personnel minigun stuffed into a pod weapon."

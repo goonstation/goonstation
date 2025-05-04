@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/mob/intangible/flocktrace
 	id = ROLE_FLOCKTRACE
 	display_name = "flocktrace"
+	antagonist_icon = "flocktrace"
 	uses_pref_name = FALSE
 	mob_path = /mob/living/intangible/flock/trace
 	wiki_link = "https://wiki.ss13.co/Flockmind#Flocktrace"
