@@ -650,7 +650,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/obj/item/storage/firstaid/brain/B6 = new(src)
 			B6.pixel_y = -6
 			B6.pixel_x = 6
+
+			var/obj/item/storage/firstaid/mental/B7 = new(src)
+			B6.pixel_y = 0
+			B6.pixel_x = 0
 			return 1
+
 
 /obj/storage/secure/closet/medical/anesthetic
 	name = "anesthetic storage locker"
