@@ -836,7 +836,6 @@
 	pixel_y = -7;
 	pixel_x = 11;
 	icon_state = "bullethole-large";
-	plane = s
 	},
 /obj/decoration/bullethole{
 	pixel_y = -18;
@@ -1594,7 +1593,7 @@
 "do" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	icon_state = "leadjunction_white";
-	desc = s;
+	desc = "It's got a hole shot right through it.";
 	opacity = 0
 	},
 /area/moon/underground/hemera{
@@ -20564,7 +20563,7 @@
 	},
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
 	icon_state = "leadjunction_white";
-	desc = s"It's been punctured by a large and powerful bullet. You can see right through the hole.";
+	desc = "It's been punctured by a large and powerful bullet. You can see right through the hole.";
 	opacity = 0
 	},
 /area/moon/underground{
