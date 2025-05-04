@@ -341,6 +341,7 @@
 			var/left = 6
 			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/E in get_turf(C))
 				if (E.infertile)
+					var/turf/T = get_turf(C)
 					C.visible_message(SPAN_ALERT("[owner] tries to hatch a infertile egg and breaks it open!"))
 					playsound(E.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 					make_cleanable(/obj/decal/cleanable/eggsplat,C)
