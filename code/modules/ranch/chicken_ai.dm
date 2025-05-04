@@ -344,7 +344,7 @@
 					var/turf/T = get_turf(C)
 					C.visible_message(SPAN_ALERT("[owner] tries to hatch a infertile egg and breaks it open!"))
 					playsound(E.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-					make_cleanable(/obj/decal/cleanable/eggsplat,C)
+					make_cleanable(/obj/decal/cleanable/eggsplat,T)
 					qdel (E)
 					return
 				else if(istype(E,/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
