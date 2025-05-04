@@ -639,21 +639,21 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B3.pixel_y = 0
 			B3.pixel_x = -6
 
-			var/obj/item/storage/firstaid/toxin/B4 = new(src)
+			var/obj/item/storage/firstaid/mental/B4 = new(src)
 			B4.pixel_y = 0
-			B4.pixel_x = 6
+			B4.pixel_x = 0
 
-			var/obj/item/storage/firstaid/oxygen/B5 = new(src)
-			B5.pixel_y = -6
-			B5.pixel_x = -6
+			var/obj/item/storage/firstaid/toxin/B5 = new(src)
+			B5.pixel_y = 0
+			B5.pixel_x = 6
 
-			var/obj/item/storage/firstaid/brain/B6 = new(src)
+			var/obj/item/storage/firstaid/oxygen/B6 = new(src)
 			B6.pixel_y = -6
-			B6.pixel_x = 6
+			B6.pixel_x = -6
 
-			var/obj/item/storage/firstaid/mental/B7 = new(src)
-			B7.pixel_y = 0
-			B7.pixel_x = 0
+			var/obj/item/storage/firstaid/brain/B7 = new(src)
+			B7.pixel_y = -6
+			B7.pixel_x = 6
 			return 1
 
 
