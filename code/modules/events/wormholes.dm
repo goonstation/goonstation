@@ -39,7 +39,7 @@ var/global/list/turf/random_floor_turfs = null
 		if (T in random_floor_turfs)
 			continue
 		var/area/A = get_area(T)
-		if (IS_ARRIVALS(A) || istype(A, /area/listeningpost))
+		if (IS_ARRIVALS(A) || (A.teleport_blocked && !istype(A, /area/station/security)))
 			continue
 		if(istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
 			random_floor_turfs += T
