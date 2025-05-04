@@ -1,7 +1,6 @@
-/// Mixing time in seconds
-#define MIX_TIME 2 SECONDS
-
-var/list/mixer_recipes = list()
+//oven power settings
+#define OVEN_LOW "Low"
+#define OVEN_HIGH "High"
 
 ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 /obj/machinery/cookingmachine
@@ -20,6 +19,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 	var/list/to_remove = list() //items being used in the current recipe
 	var/list/allowed = list(/obj/item)
 	var/working = FALSE
+	var/time_finish
 
 	attack_hand(var/mob/user)
 		if (isghostdrone(user))
@@ -67,8 +67,37 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			return src.Attackby(W, user)
 		return ..()
 
+	process()
+		. = ..()
+		if (status & (NOPOWER|BROKEN))
+			UnsubscribeProcess()
+			return
+
+		var/amount = length(src.contents)
+		if (!amount)
+			UnsubscribeProcess()
+			return
+
+		if (TIME < src.time_finish)
+			return
+
+		var/obj/item/F = src.cook_item()
+		F.set_loc(src.loc)
+
+		src.handle_leftovers
+
+		src.working = 0
+		src.UpdateIcon()
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		tgui_process.update_uis(src)
+
+		src.power_usage = 0
+		UnsubscribeProcess()
+		return
+
 	proc/get_valid_recipe()
 		for (var/datum/cookingrecipe/R in src.possible_recipes)
+			src.to_remove.len = 0
 			if (src.can_cook_recipe(R))
 				return R
 		return null
@@ -85,9 +114,10 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		for(var/obj/item/I in src.contents)
 			if(istype(I, recipeitem))
 				count++
-		if (count < recipecount)
-			return FALSE
-		return TRUE
+				to_remove += I
+				(count >= recipecount)
+					return TRUE
+		return FALSE
 
 	proc/load_item(obj/item/ingredient, mob/user)
 		if(!locate(ingredient.type) in src.contents)
@@ -111,7 +141,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			if(oven_recipes_by_ingredient[considered_type])
 				var/output = oven_recipes_by_ingredient[considered_type] //bit of a hack, remember to change when cooking flags are added
 				if(oven_recipes_by_ingredient[considered_type.parent_type])
-					output += oven_recipes_by_ingredient[considered_type.parent_type] //this ensure the more specific recipes are checked first
+					output += oven_recipes_by_ingredient[considered_type.parent_type] //this ensures the more specific recipes are checked first
 				return output
 			else
 				considered_type = considered_type.parent_type
@@ -120,30 +150,43 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 	proc/cooking_power() //used to find cook amounts on
 		return cooktime/10
 
+	proc/start_cook()
+		if (!length(src.contents))
+			boutput(usr, SPAN_ALERT("There's nothing in [src]."))
+			return
+		src.working = 1
+		src.time_finish = TIME + src.cooktime
+		src.power_usage = src.power_active
+		tgui_process.update_uis(src)
+		src.UpdateIcon()
+		SubscribeToProcess()
+
 	/// Called when the machine finishes cooking
-	proc/cook_food()
-		var/output = null
+	proc/finish_cook()
+		var/obj/item/output = null
 		var/quality = null
 		var/cook_amount = src.cooking_power()
 		var/datum/cookingrecipe/R = src.get_valid_recipe()
+		var/obj/item/food/snacks/F
 		if (R)
 			// this is null if it uses normal outputs (see below),
 			// otherwise it will be the created item from this
 			output = R.specialOutput(src)
 			if (isnull(output))
-				output = R.output
+				output = new R.output
 			if(R.cookbonus)
 				recipebonus = R.cookbonus
 				if (abs(cook_amount - R.cookbonus) <= 1)
 					// if -1, 0, or 1, you did ok
-					quality = 5
+					output.quality = 5
 				else if (cook_amount >= R.cookbonus + 5)
 					// you burned it
-					output = /obj/item/reagent_containers/food/snacks/yuck/burn
-					quality = 0
+					output = new /obj/item/reagent_containers/food/snacks/yuck/burn
+					output.quality = 0
 				else// mediocre meals
-					quality = clamp(5 - abs(R.cookbonus - cook_amount), 0, 5)
+					output.quality = clamp(5 - abs(R.cookbonus - cook_amount), 0, 5)
 			if(R.useshumanmeat)
+				var/obj/item/reagent_containers/food/snacks/F = output
 				var/foodname = F.name
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 					F.name = "[M.subjectname] [foodname]"
@@ -158,26 +201,195 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
 		if (isnull(output))
-			output = /obj/item/reagent_containers/food/snacks/yuck
+			output = new /obj/item/reagent_containers/food/snacks/yuck
+			output.quality = rand(-5, 1) //small chance of being actually edible
 		// this only happens if the output is a yuck item, either from an
 		// invalid recipe or otherwise...
-		if (src.contents.len == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
-			for (var/obj/item/reagent_containers/food/snacks/F in src)
-				if(F.quality < 1)
-					// @TODO cooktime == F.quality can never happen here
-					// (cooktime is the time the oven is set to from 1-10,
-					//  and F.quality has to be 0 or below to get here)
-					recook = 1
-					if (cooktime == F.quality) F.quality = 1.5
-					else if (cooktime == F.quality + 1) F.quality = 1
-					else if (cooktime == F.quality - 1) F.quality = 1
-					else if (cooktime <= F.quality - 5) F.quality = 0.5
-					else if (cooktime >= F.quality + 5)
-						output = /obj/item/reagent_containers/food/snacks/yuck/burn
-						bonus = 0
+		for (var/obj/item/I in to_remove)
+			qdel(I)
+		to_remove.len = 0
+		handle_leftovers()
+		possible_recipes.len = 0
+		return output
+
+	proc/handle_leftovers() ///what to do with things that weren't part of the recipe
+		for(obj/item/I in src.contents)
+			qdel(I)
+
+TYPEINFO(/obj/machinery/cookingmachine/oven)
+	mats = 18
+
+/obj/machinery/cookingmachine/oven
+	name = "oven"
+	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
+	icon_state = "oven_off"
+	object_flags = NO_GHOSTCRITTER
+	cooktime = 5 SECONDS
+	var/emagged = TRUE
+	var/heat = OVEN_LOW
+	var/static/tmp/recipe_html = null // see: create_oven_recipe_html()
+	var/icon_idle = "oven_off"
+	var/icon_active = "oven_bake"
+
+	//these are for recipe previews
+	var/list/possible_recipe_icons = list()
+	var/list/possible_recipe_names = list()
+	var/output_icon
+	var/output_name
+	var/output_time
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!emagged)
+			emagged = TRUE
+			if (user)
+				boutput(user, SPAN_NOTICE("[src] produces a strange grinding noise."))
+			return TRUE
+		else
+			return FALSE
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Oven")
+			ui.open()
+
+	ui_data(mob/user)
+		src.get_recipes()
+		. = list(
+			"time" = src.time,
+			"heat" = src.heat,
+			"cooking" = src.working,
+			"content_icons" = src.get_content_icons(),
+			"content_names" = src.get_content_names(),
+			"recipe_icons" = src.possible_recipe_icons,
+			"recipe_names" = src.possible_recipe_names,
+			"output_icon" = src.output_icon,
+			"output_name" = src.output_name,
+			"cook_time" = src.output_time
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		. = TRUE
+		switch (action)
+			if ("set_time")
+				src.cooktime = params["time"] SECONDS
+			if ("set_heat")
+				src.heat = params["heat"]
+			if ("start")
+				src.start_cook()
+			if ("eject_all")
+				for (var/obj/item/I in src.contents)
+					src.eject_item(I)
+			if ("eject")
+				var/obj/item/thing_to_eject = src.contents[params["ejected_item"]]
+				if (thing_to_eject)
+					src.eject_item(I)
+			if ("open_recipe_book")
+				usr.Browse(recipe_html, "window=recipes;size=500x700")
+
+	proc/get_content_icons()
+		if (!length(src.contents))
+			return
+		var/list/contained = list()
+		for (var/obj/item/I in src.contents)
+			contained += icon2base64(getFlatIcon(I), "chef_oven-\ref[src]")
+		return contained
+
+	proc/get_content_names()
+		if (!length(src.contents))
+			return
+		var/list/contained = list()
+		for (var/obj/item/I in src.contents)
+			contained += I.name
+		return contained
+
+	proc/get_recipes()
+		src.possible_recipe_icons = list()
+		src.possible_recipe_names = list()
+		src.output_icon = null
+		src.output_name = null
+		src.output_time = null
+
+		var/datum/cookingrecipe/possible = src.get_valid_recipe()
+		if (!possible)
+			return
+
+		for(var/I in possible.ingredients)
+			var/atom/item_path = I
+			src.possible_recipe_icons += icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
+
+		if (ispath(possible.output))
+			var/atom/item_path = possible.output
+			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
+			src.output_name = initial(item_path.name)
+
+		if (possible.cookbonus < 10)
+			src.output_time = "[possible.cookbonus] seconds low"
+		else
+			src.output_time = "[floor(possible.cookbonus/2)] seconds high"
+
+	cooking_power()
+		return src.cooktime / 10 * (src.heat == OVEN_HIGH ? 2 : 1)
+
+	finish_cook()
+		// If emagged produce random output.
+		if (emagged)
+			var/obj/item/output
+			// Enforce GIGO and prevent infinite reuse
+			var/contentsok = FALSE
+			for(var/obj/item/I in src.contents)
+				if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
+					contentsok = FALSE
+					break
+				if(istype(I, /obj/item/reagent_containers/food))
+					var/obj/item/reagent_containers/food/F = I
+					if (F.from_emagged_oven) // hyphz checked heal_amt but I think this custom var is a nicer solution (also I'm not sure that valid food not from an emagged oven will never have a heal_amt of 0 (because I am lazy and don't want to read the code))
+						contentsok = FALSE
+						break
+				// Pick a random recipe
+			var/datum/cookingrecipe/xrecipe = pick(src.recipes)
+			var/xrecipeok = TRUE
+			// Don't choose recipes with human meat since we don't have a name for them
+			if (xrecipe.useshumanmeat)
+				xrecipeok = FALSE
+			// Don't choose recipes with special outputs since we don't have valid inputs for them
+			if (isnull(xrecipe.output))
+				xrecipeok = FALSE
+			// Bail out to a mess if we didn't get a valid recipe
+			if (xrecipeok && contentsok)
+				output = new xrecipe.output
+			else
+				output = new /obj/item/reagent_containers/food/snacks/yuck
+			output.quality = 0
+			return output
+		. = ..()
+
+	UpdateIcon(...)
+		if (!src || !istype(src))
+			return
+		if(src.working)
+			src.icon = src.icon_active
+		else
+			src.icon = src.icon_idle
 
 
-
+	custom_suicide = TRUE
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return FALSE
+		user.visible_message(SPAN_ALERT("<b>[user] shoves [his_or_her(user)] head in the oven and turns it on.</b>"))
+		src.icon_state = "oven_bake"
+		user.TakeDamage("head", 0, 150)
+		sleep(5 SECONDS)
+		src.icon_state = "oven_off"
+		SPAWN(55 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return TRUE
 
 TYPEINFO(/obj/machinery/cookingmachine/mixer)
 	mats = 15
@@ -195,7 +407,6 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 	var/image/blender_powered
 	var/image/blender_working
 	var/list/recipes = null
-	var/timeMixEnd = 0
 
 	New()
 		..()
@@ -254,7 +465,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 				. = TRUE
 
 			if ("mix")
-				src.mix()
+				src.start_cook()
 				. = TRUE
 
 			if ("ejectAll")
@@ -264,98 +475,28 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
 				. = TRUE
 
-	proc/bowl_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
-		var/count = 0
-		for(var/obj/item/I in src.contents)
-			if(istype(I, recipeitem))
-				count++
-				to_remove += I
-
-		if (count < recipecount)
-			return 0
-		return 1
-
-	proc/mix()
-
-		var/amount = length(src.contents)
-		if (!amount)
-			boutput(usr, SPAN_ALERT("There's nothing in the mixer."))
-			return
-		src.working = 1
-		src.timeMixEnd = TIME + MIX_TIME
-		src.power_usage = MIXER_MIXING_POWER_USAGE
-
-		tgui_process.update_uis(src)
-		src.UpdateIcon()
-		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
-		SubscribeToProcess()
-
-	process()
-		. = ..()
-		if (status & (NOPOWER|BROKEN))
-			UnsubscribeProcess()
-			return
-
-		var/amount = length(src.contents)
-		if (!amount)
-			UnsubscribeProcess()
-			return
-
-		if (TIME < src.timeMixEnd)
-			return
-
-		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		var/derivename = 0
-		check_recipe:
-			for (var/datum/cookingrecipe/R in src.recipes)
-				to_remove.len = 0
-				for(var/I in R.ingredients)
-					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
-				output = R.specialOutput(src)
-				if (!output)
-					output = R.output
-				if (R.useshumanmeat)
-					derivename = 1
-				break
-
-		if (!isnull(output))
-			var/obj/item/reagent_containers/food/snacks/F
-			if (ispath(output))
-				F = new output(get_turf(src))
+	get_recipes_from_ingredient(obj/item/ingredient) //this is a gross hack
+		var/considered_type = ingredient.type
+		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
+			if(mixer_recipes_by_ingredient[considered_type])
+				var/output = mixer_recipes_by_ingredient[considered_type]
+				if(mixer_recipes_by_ingredient[considered_type.parent_type])
+					output += mixer_recipes_by_ingredient[considered_type.parent_type]
+				return output
 			else
-				F = output
-				F.set_loc(get_turf(src))
+				considered_type = considered_type.parent_type
+		return
 
-			if (derivename)
-				var/foodname = F.name
-				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
-					F.name = "[M.subjectname] [foodname]"
-					F.desc += " It sort of smells like [M.subjectjob ? M.subjectjob : "pig"]s."
-					if(!isnull(F.unlock_medal_when_eaten))
-						continue
-					else if (M.subjectjob && M.subjectjob == "Clown")
-						F.unlock_medal_when_eaten = "That tasted funny"
-					else
-						F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-		for (var/obj/item/I in to_remove)
-			qdel(I)
-		to_remove.len = 0
+	start_cook()
+		..()
+		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 
+	handle_leftovers()
 		for (var/obj/I in src.contents)
 			I.set_loc(src.loc)
 			src.visible_message(SPAN_ALERT("[I] is tossed out of [src]!"))
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			I.throw_at(edge, 25, 4)
-
-		src.working = 0
-		src.UpdateIcon()
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-		tgui_process.update_uis(src)
-
-		src.power_usage = 0
-		UnsubscribeProcess()
-		return
 
 	power_change()
 		. = ..()
