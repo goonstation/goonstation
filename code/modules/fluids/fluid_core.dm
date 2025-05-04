@@ -678,20 +678,25 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		src.show_submerged_image(F.my_depth_level)
 
 	if (F.my_depth_level == 1 && !isintangible(src))
-		var/obj/decal/ripple = new
-		ripple.plane = PLANE_DEFAULT
+		var/obj/decal/puddle_ripple/ripple = new
 		ripple.loc = F
-		ripple.icon = 'icons/obj/fluid.dmi'
-		ripple.icon_state = "ripple"
-		ripple.blend_mode = BLEND_INSET_OVERLAY
-		ripple.pixel_x += rand(-10, 10)
-		ripple.pixel_y += rand(-10, 10)
 		F.vis_contents += ripple
 		SPAWN(1 SECOND)
 			F.vis_contents -= ripple
 			qdel(ripple)
 
 	..()
+
+/obj/decal/puddle_ripple
+	plane = PLANE_DEFAULT
+	icon = 'icons/obj/fluid.dmi'
+	icon_state = "ripple"
+	blend_mode = BLEND_INSET_OVERLAY
+
+	New()
+		..()
+		src.pixel_x += rand(-10, 10)
+		src.pixel_y += rand(-10, 10)
 
 /mob/living/ExitedFluid(obj/fluid/F as obj)
 	if (src.is_submerged == 0) return
