@@ -179,6 +179,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Paralyze"
 	desc = {"Cast on a target you have Intellect on, only successful if they are facing you. Paralyzes them, making them unable to control their movement and reduce their vision.
 			For each 10 Intellect on them, make them take 1 step towards you and receive a stab. Full reveals you on use."}
+	icon_state = "paralyze"
 	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
@@ -225,6 +226,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 /datum/targetable/critter/mindeater/cosmic_light
 	name = "Cosmic Light"
 	desc = "Cast a purple light from you to gain Intellect from nearby mobs looking towards you. Full reveals you on use."
+	icon_state = "cosmic_light"
 	cooldown = 20 SECONDS
 	full_reveal_on_use = TRUE
 
