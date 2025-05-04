@@ -540,6 +540,11 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		else
 			. = ..()
 
+	loot // for mining crates
+		name = "Ambrosia Immortality Feed"
+		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
+		feed_flags = list("ageless", "chicken_egg")
+
 /obj/decal/cleanable/ranch_feed
 	name = "feed"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'

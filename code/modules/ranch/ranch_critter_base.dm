@@ -434,7 +434,8 @@
 				C.age += get_multiplier()*2
 
 			else if(C.reagents.has_reagent("deageinium"))
-				c.age += get_multiplier()/4
+				if(C.age > 10)
+					C.age--
 
 			else if (C.named)
 				C.age += get_multiplier()/20
