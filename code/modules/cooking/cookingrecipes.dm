@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/cookbonus = null // how much cooking it needs to get a healing bonus
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
-	var/category = "Unsorted" /// category for sorting, use null to hide
+	var/category = "Unsorted" // category for sorting, use null to hide
 
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
