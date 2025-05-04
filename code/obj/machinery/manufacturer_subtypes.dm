@@ -204,6 +204,7 @@
 		/obj/item/material_piece/glass = 2,
 		/obj/item/material_piece/cloth/cottonfabric = 2)
 	available = list(
+		/datum/manufacture/scanner,
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
 		/datum/manufacture/surgical_scissors,

@@ -1070,6 +1070,16 @@
 
 /******************** Medical **************************/
 
+/datum/manufacture/scanner
+	name = "Health Scanner"
+	item_requirements = list("metal" = 0.5,
+							 "conductive" = 0.2,
+							  "crystal" = 0.1)
+	item_outputs = list(/obj/item/device/analyzer/healthanalyzer)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
 /datum/manufacture/scalpel
 	name = "Scalpel"
 	item_requirements = list("metal" = 1)
