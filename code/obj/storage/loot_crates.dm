@@ -42,9 +42,7 @@
 		/obj/item/reagent_containers/glass/happyplant = 20,\
 	// ranch
 		/obj/item/reagent_containers/glass/bottle/oldcoot = 20,\
-		list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pet,\
-		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pet,\
-		/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/pet) = 30,\
+		/obj/item/reagent_containers/glass/bottle/younggun = 20,\
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm

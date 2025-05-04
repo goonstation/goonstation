@@ -1434,6 +1434,31 @@ datum
 				..()
 				return
 
+		deageinium
+			name = "deageinium"
+			id = "deageinium"
+			description = "A overenergetic jelly that writhes with childlike excitement."
+			reagent_state = LIQUID
+			fluid_r = 89
+			fluid_g = 242
+			fluid_b = 140
+			transparency = 128
+			viscosity = 0.8
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if(prob(30) && istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age > 5)
+						H.bioHolder.age -= 1 * mult
+					if (probmult(10))
+						boutput(H, SPAN_ALERT("You feel [pick("young", "energetic", "inexperienced", "tempermental", "odd")]."))
+					if (probmult(4))
+						H.emote("scream")
+				..()
+				return
+
 		denatured_enzyme
 			name = "denatured enzyme"
 			id = "denatured_enzyme"

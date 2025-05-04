@@ -653,6 +653,18 @@ TYPEINFO(/obj/item/plantanalyzer)
 		..()
 		reagents.add_reagent("ageinium", 40)
 
+/obj/item/reagent_containers/glass/bottle/younggun
+	name = "Deageinium Poultry Formula"
+	desc = "A angsty bottle with labeling detailing younger youth and fitness."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "bottle_3"
+	amount_per_transfer_from_this = 10
+	initial_volume = 40
+
+	New()
+		..()
+		reagents.add_reagent("deageinium", 40)
+
 /obj/item/reagent_containers/glass/happyplant
 	name = "Happy Plant Mixture"
 	desc = "250 units of things that make plants grow happy!"
