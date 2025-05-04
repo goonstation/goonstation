@@ -372,7 +372,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/storage/firstaid/toxin = 2,
 					/obj/item/storage/firstaid/oxygen,
 					/obj/item/storage/firstaid/brain,
-					/obj/item/storage/firstaid/menta)
+					/obj/item/storage/firstaid/mental)
 	cost = PAY_DOCTORATE*3
 	containertype = /obj/storage/crate/medical
 	containername = "Medical: First Aid Crate"
