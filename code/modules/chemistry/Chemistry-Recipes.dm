@@ -4874,9 +4874,9 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 
-	deageinium
+	deageinium_alt
 		name = "Deageinium"
-		id = "deageinium"
+		id = "deageinium_alt"
 		result = "deageinium"
 		required_reagents = list("ageinium" = 1, "reversium" = 1)
 		result_amount = 1
