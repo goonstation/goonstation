@@ -64453,6 +64453,7 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "xuC" = (

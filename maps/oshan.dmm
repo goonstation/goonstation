@@ -40323,6 +40323,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "nYa" = (

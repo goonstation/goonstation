@@ -72645,6 +72645,7 @@
 	rand_pos = 0
 	},
 /obj/machinery/light/incandescent,
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/medical/medbay/psychiatrist)
 "uFD" = (
