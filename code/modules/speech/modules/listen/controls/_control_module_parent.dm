@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/listen_module/control/client_verb)
 /// Updates a client's verbs when they log out of the parent tree's listener parent.
 /datum/listen_module/control/client_verb/proc/client_logout(mob/parent, client/client_override)
 	var/client/C = client_override || parent.last_client
-	C.verbs -= src.proc_path
+	C?.verbs -= src.proc_path
 
 /// Updates a client's verbs when they log into the parent tree's listener parent.
 /datum/listen_module/control/client_verb/proc/client_login(mob/parent)

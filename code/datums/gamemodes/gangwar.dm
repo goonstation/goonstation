@@ -211,7 +211,7 @@
 
 /proc/broadcast_to_all_gangs(message)
 	for (var/datum/gang/gang as anything in global.get_all_gangs())
-		gang.announcer_say_source.say(message)
+		gang.announcer_say_source.say(message, flags = SAYFLAG_IGNORE_HTML)
 
 /// For a given tile, this contains the number of gang tags that see or influence this tile for a gang. Used to track overlays.
 /datum/gangtileclaim
