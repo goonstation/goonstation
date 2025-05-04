@@ -19,6 +19,7 @@
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
 #define WEAPON_VENDOR_CATEGORY_FISHING "fishing"
+#define WEAPON_VENDOR_CATEGORY_ARMOR "armor"
 
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
@@ -35,7 +36,7 @@
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
 #ifdef BONUS_POINTS
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 999, WEAPON_VENDOR_CATEGORY_LOADOUT = 999, WEAPON_VENDOR_CATEGORY_UTILITY = 999, WEAPON_VENDOR_CATEGORY_AMMO = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 999, WEAPON_VENDOR_CATEGORY_LOADOUT = 999, WEAPON_VENDOR_CATEGORY_UTILITY = 999, WEAPON_VENDOR_CATEGORY_AMMO = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999)
 #else
 	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 #endif
@@ -315,6 +316,7 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_ARMOR]++
 		..()
 
 /obj/submachine/weapon_vendor/podwars/neutral // Neutral for admin gimmicks, spawns non-team aligned gear usable by anyone
@@ -360,6 +362,9 @@
 		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/pw_NTcomtac
 
+		materiel_stock += new/datum/materiel/armor/pw_NT_medic
+		materiel_stock += new/datum/materiel/armor/pw_NT_eng
+
 /obj/submachine/weapon_vendor/podwars/SY
 	token_accepted = /obj/item/requisition_token/podwars/SY
 	color = "#ff9966" // so it's easy to tell which one you spawned
@@ -379,6 +384,9 @@
 		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/pw_SYcomtac
+
+		materiel_stock += new/datum/materiel/armor/pw_SY_medic
+		materiel_stock += new/datum/materiel/armor/pw_SY_eng
 
 // Materiel avaliable for purchase:
 
@@ -407,6 +415,9 @@
 
 /datum/materiel/fishing_gear
 	category = WEAPON_VENDOR_CATEGORY_FISHING
+
+/datum/materiel/armor
+	category = WEAPON_VENDOR_CATEGORY_ARMOR
 
 //SECURITY
 
@@ -811,6 +822,36 @@
 	path = /obj/item/storage/belt/medical/podwars
 	description = "A medical belt preloaded with menders, hypospray, suture, defibrilator, an upgraded health analyzer, and upgraded health hud goggles."
 
+/datum/materiel/armor/pw_NT_pilot
+	name = "nanotrasen pod pilot suit"
+	path = /obj/item/clothing/suit/space/pod_wars/NT
+	description = "Standard suit worn by Pod Pilots (Only difference between these suits is cosmetic)"
+
+/datum/materiel/armor/pw_NT_medic
+	name = "nanotrasen pod medic suit"
+	path = /obj/item/clothing/suit/space/pod_wars/NT/medic
+	description = "Standard suit worn by Pod Medics (Only difference between these suits is cosmetic)"
+
+/datum/materiel/armor/pw_NT_eng
+	name = "nanotrasen pod engineer suit"
+	path = /obj/item/clothing/suit/space/pod_wars/NT/eng
+	description = "Standard suit worn by Pod Engineers (Only difference between these suits is cosmetic)"
+
+/datum/materiel/armor/pw_SY_pilot
+	name = "syndicate pod pilot suit"
+	path = /obj/item/clothing/suit/space/pod_wars/SY
+	description = "Standard suit worn by Pod Pilots (Only difference between these suits is cosmetic)"
+
+/datum/materiel/armor/pw_SY_medic
+	name = "syndicate pod medic suit"
+	path = /obj/item/clothing/suit/space/pod_wars/SY/medic
+	description = "Standard suit worn by Pod Medics (Only difference between these suits is cosmetic)"
+
+/datum/materiel/armor/pw_SY_eng
+	name = "syndicate pod engineer suit"
+	path = /obj/item/clothing/suit/space/pod_wars/SY/eng
+	description = "Standard suit worn by Pod Engineers (Only difference between these suits is cosmetic)"
+
 // End of pod wars stuff
 
 
@@ -863,3 +904,4 @@
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
 #undef WEAPON_VENDOR_CATEGORY_ASSISTANT
 #undef WEAPON_VENDOR_CATEGORY_FISHING
+#undef WEAPON_VENDOR_CATEGORY_ARMOR
