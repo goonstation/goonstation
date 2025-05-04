@@ -527,19 +527,24 @@ TYPEINFO(/obj/item/rcd)
 		else if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
-			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+
+			if ((user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
-					if (H.organHolder.butt == null)
-						user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
-						return
-					else
-						surgery_target = H.organHolder.get_organ("butt")
+					var/datum/surgery/surg = H.surgeryHolder?.get_surgery("butt_surgery")
+					if (surg.surgery_possible(user))
+						if (H.organHolder.butt == null)
+							user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
+							return
+						else
+							surgery_target = H.organHolder.get_organ("butt")
 				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
-					if (H.limbs.vars[user.zone_sel.selecting] == null)
-						user.visible_message(SPAN_ALERT("<b>Tries to remove one of [target]'s limbs, but it's already gone!</b> "))
-						return
-					else
-						surgery_target = H.limbs.vars[user.zone_sel.selecting]
+					var/datum/surgery/surg = H.surgeryHolder?.get_surgery("[user.zone_sel.selecting]_surgery")
+					if (surg.surgery_possible(user))
+						if (H.limbs.vars[user.zone_sel.selecting] == null)
+							user.visible_message(SPAN_ALERT("<b>Tries to remove one of [target]'s limbs, but it's already gone!</b> "))
+							return
+						else
+							surgery_target = H.limbs.vars[user.zone_sel.selecting]
 
 				if (surgery_target == null)
 					return

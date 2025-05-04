@@ -297,14 +297,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(attacher)
 			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
 
-			if(!can_act(attacher))
-				return
-			if(!src.easy_attach)
-				if(!surgeryCheck(attachee, attacher))
-					return
-			if(attacher.zone_sel.selecting != slot)
-				return ..()
-
 			attacher.remove_item(src)
 
 			playsound(attachee, 'sound/effects/attach.ogg', 50, TRUE)
@@ -330,9 +322,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 			attachee.hud.update_hands()
 
 		return TRUE
-
-	proc/surgery(var/obj/item/I) //placeholder
-		return
 
 	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
 		if(no_icon)

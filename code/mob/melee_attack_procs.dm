@@ -24,10 +24,10 @@
 		src.visible_message(SPAN_ALERT("<B>[src] tries to perform CPR, but it's too late for [M]!</B>"))
 		return
 	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
-	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
+/*	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
 		if (M.organHolder.build_region_buttons())
 			src.showContextActions(M.organHolder.contexts, M, M.organHolder.contextLayout)
-			return
+			return*/
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves

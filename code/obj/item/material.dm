@@ -565,9 +565,9 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(is_special || !scalpel_surgery(target, user)) return ..()
-		else return
+	// attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	// 	if(is_special || !scalpel_surgery(target, user)) return ..()
+	// 	else return
 
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))

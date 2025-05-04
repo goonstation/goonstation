@@ -54,12 +54,19 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (is_special || !scalpel_surgery(target, user))
+
+		if (is_special)
 			return ..()
-		else
-			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(target,5)
-			return
+
+		if (isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
@@ -122,12 +129,16 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (is_special || !saw_surgery(target,user))
-			return ..()
-		else
-			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(target,5)
-			return
+		if (!is_special && isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
+		return ..()
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -189,13 +200,16 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (is_special || !spoon_surgery(target, user))
-			return ..()
-		else
-			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(target,5)
-			return
-
+		if (!is_special && isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder)
+				if (H.surgeryHolder.perform_surgery(user, src))
+					if (src.reagents && src.reagents.total_volume)
+						src.reagents.trans_to(target,5)
+					return
+				else
+					return ..()
+		return ..()
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -298,15 +312,8 @@ CONTAINS:
 				logTheThing(LOG_COMBAT, user, "staples [K] to [constructTarget(H,"combat")]'s head")
 				return
 
-		if (!surgeryCheck(H, user))
-			return ..()
+		return ..()
 
-		if (user.zone_sel.selecting in H.limbs.vars) //ugly copy paste in surgery_procs.dm for suture
-			var/obj/item/parts/surgery_limb = H.limbs.vars[user.zone_sel.selecting]
-			if (istype(surgery_limb))
-				src.ammo--
-				surgery_limb.surgery(src)
-			return
 
 	attackby(obj/item/I, mob/user, params)
 		if (istype(I, /obj/item/implant/projectile/staple))
@@ -717,29 +724,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	var/in_use = 0
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (is_special)
-			return ..()
-		if (!suture_surgery(target,user))
-			if (ishuman(target))
-				var/mob/living/carbon/human/H = target
-				var/zone = user.zone_sel.selecting
-				var/surgery_status = H.get_surgery_status(zone)
-				if (surgery_status && H.organHolder)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(1,2), Vrb = "sutur"), user)
-					src.in_use = 1
-				else if (H.bleeding)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, Vrb = "sutur"), user)
-					src.in_use = 1
-				else
-					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
-					H.organHolder.chest.op_stage = 0
-					H.organHolder.close_surgery_regions()
-					src.in_use = 0
-					return
-		else
-			return
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -750,6 +734,20 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
+			var/mob/living/carbon/human/human = target
+
+			if (is_special)
+				return ..()
+			if (human.surgeryHolder.will_perform_surgery(user,src))
+				human.surgeryHolder.perform_surgery(user,src)
+				return
+		if (user.a_intent != INTENT_HARM)
+			boutput(user, SPAN_ALERT("[target] has no wounds or incisions to close!"))
+			return
+		return ..()
 
 /obj/item/suture/vr
 	icon = 'icons/effects/VR.dmi'
@@ -802,7 +800,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/zone = user.zone_sel.selecting
-			var/surgery_status = H.get_surgery_status(zone)
+			var/surgery_status = H.surgeryHolder.get_active_surgeries(zone)
 			if (surgery_status && H.organHolder)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
@@ -903,14 +901,15 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (zone && surgery_status)
 				target.visible_message(SPAN_SUCCESS("[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool]."),
 				SPAN_SUCCESS("[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool]."))
+				target.surgeryHolder.cancel_all()
 				if (target.organHolder)
 					if (zone == "chest")
 						if (target.organHolder.heart)
 							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
 							target.organHolder.chest.op_stage = 0
-						if (target.organHolder.back_op_stage)
-							target.organHolder.back_op_stage = BACK_SURGERY_CLOSED
+						target.surgeryHolder.cancel_surgery("lower_back_surgery")
+
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
@@ -1126,32 +1125,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_cost = 0
 	stamina_crit_chance = 15
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!ishuman(target))
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		var/mob/living/carbon/human/H = target
-		var/surgery_status = H.get_surgery_status(user.zone_sel.selecting)
-		if (!surgery_status)
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		if (!surgeryCheck(H, user))
-			if (user.a_intent == INTENT_HELP)
-				return
-			return ..()
-		if (H.chest_cavity_clamped && !H.bleeding)
-			boutput(user, SPAN_NOTICE("[target]'s blood vessels are already clamped."))
-			return
-		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
-			user.tri_message(H, SPAN_ALERT("<b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src]."),\
-				SPAN_ALERT("You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src]."),\
-				SPAN_ALERT("[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src]."))
-
-			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
-			return
 
 /* ======================================================= */
 /* -------------------- Reflex Hammer -------------------- */

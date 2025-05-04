@@ -105,6 +105,7 @@
 		if (src.on == 0)
 			src.on = 1
 			src.firesource = FIRESOURCE_OPEN_FLAME
+			src.tool_flags = src.tool_flags & TOOL_CAUTERY
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -194,11 +195,6 @@
 			var/mob/living/M = target
 			if (is_special)
 				return ..()
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-					if (src.cautery_surgery(H, user, 5, src.on))
-						return
 			if (M.getStatusDuration("burning") && src.on == 0)
 				if (M == user)
 					src.light(user, SPAN_ALERT("<b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body. That's dedication! Or crippling addiction."))
@@ -210,7 +206,7 @@
 					src.light(user, SPAN_ALERT("<b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body."))
 				else
 					src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [M]. Good thinking!"))
-			else if (src.on == 1)
+			else if (src.on == 1 && user.intent == INTENT_HARM)
 				src.put_out(user, SPAN_ALERT("<b>[user]</b> puts [src] out on [target]."))
 				if (ishuman(target))
 					var/mob/living/carbon/human/chump = target
@@ -1116,9 +1112,9 @@
 					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [fella]'s [smoke] with [src]."))
 					fella.set_clothing_icon_dirty()
 					return
-				else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-					src.cautery_surgery(fella, user, 5, src.on)
-					return ..()
+				// else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
+				// 	src.cautery_surgery(fella, user, 5, src.on)
+				// 	return ..()
 				else
 					user.visible_message(SPAN_ALERT("<b>[user]</b> puts out [src] on [fella]!"),\
 					SPAN_ALERT("You put out [src] on [fella]!"))
@@ -1198,6 +1194,7 @@
 	proc/activate(mob/user as mob)
 		src.on = 1
 		src.firesource = FIRESOURCE_OPEN_FLAME
+		src.tool_flags = TOOL_CAUTERY
 		set_icon_state(src.icon_on)
 		src.item_state = "[item_state_base]on"
 		FLICK("[icon_state]_open", src)
@@ -1210,6 +1207,7 @@
 	proc/deactivate(mob/user as mob)
 		src.on = 0
 		src.firesource = FALSE
+		src.tool_flags = 0
 		set_icon_state(src.icon_off)
 		src.item_state = "[item_state_base]"
 		FLICK("[icon_state]_close", src)
@@ -1221,20 +1219,20 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
-			var/mob/living/carbon/human/fella = target
+			var/mob/living/carbon/human/human = target
 
 			if (is_special)
 				return ..()
 			if (src.on)
-				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
-					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
-					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [fella]'s [smoke] with [src]."))
-					fella.set_clothing_icon_dirty()
+				if (human.wear_mask && istype(human.wear_mask, /obj/item/clothing/mask/cigarette))
+					var/obj/item/clothing/mask/cigarette/smoke = human.wear_mask // aaaaaaa
+					smoke.light(user, SPAN_ALERT("<b>[user]</b> lights [human]'s [smoke] with [src]."))
+					human.set_clothing_icon_dirty()
 					return
 
-			if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
-				if (src.cautery_surgery(target, user, 10, src.on))
-					return
+			if (human.surgeryHolder.will_perform_surgery(user,src))
+				human.surgeryHolder.perform_surgery(user,src)
+				return
 
 		user.visible_message(SPAN_ALERT("<b>[user]</b> waves [src] around in front of [target]'s face! OoOo, are ya scared?![src.on ? "" : " No, probably not, since [src] is closed."]"))
 		return

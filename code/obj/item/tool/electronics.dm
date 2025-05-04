@@ -996,27 +996,30 @@
  // here be extra surgery penalties
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
-		if(!surgeryCheck(target, user)) // if it ain't surgery compatible, do whatever!
-			return ..()
+		if (isliving(target))
+			var/mob/living/H = target
+			if (H.surgeryHolder && !is_special)
+				if (H.surgeryHolder.will_perform_surgery(user, src))
+					if(prob(20))// doing surgery with a buzzsaw isn't a good idea
+						user.visible_message(SPAN_ALERT("<b>[user]</b> messes up and injures [himself_or_herself(user)] with the [src]! "))
+						random_brute_damage(user, 7)
+						take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
+						playsound(user, 'sound/machines/chainsaw.ogg', 70)
+						return
 
-		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
-			user.visible_message(SPAN_ALERT("<b>[user]</b> messes up and injures [himself_or_herself(user)] with the [src]! "))
-			random_brute_damage(user, 7)
-			take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
-			playsound(user, 'sound/machines/chainsaw.ogg', 70)
+					else if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
+						playsound(user, 'sound/machines/chainsaw.ogg', 70)
+						user.visible_message(SPAN_ALERT("<b>[user] fucks up really badly and maims [himself_or_herself(user)] with the [src]! </b> "))
+						random_brute_damage(user, 15)
+						take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
+						user.emote("scream")
+						JOB_XP(user, "Clown", 3)
+						return
+					H.surgeryHolder.perform_surgery(user, src)
+					return
+		..()
 
 
-		else if(user?.bioHolder.HasEffect("clumsy") && prob(40)) // ESPECIALLY if you're a stupid clown
-			playsound(user, 'sound/machines/chainsaw.ogg', 70)
-			user.visible_message(SPAN_ALERT("<b>[user] fucks up really badly and maims [himself_or_herself(user)] with the [src]! </b> "))
-			random_brute_damage(user, 15)
-			take_bleeding_damage(user, null, 15, DAMAGE_CUT, 1)
-			user.emote("scream")
-			JOB_XP(user, "Clown", 3)
-
-
-		else if(!is_special) // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
-			saw_surgery(target,user)
 
 
 /obj/item/deconstructor/borg

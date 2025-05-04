@@ -753,9 +753,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
 		var/mob/living/carbon/human/surgeon = usr
-		if (surgeryCheck(patient, surgeon))
-			if (insertChestItem(patient, surgeon, src))
-				return
+		if (patient.surgeryHolder?.get_surgery_complete("torso_surgery"))
+			var/datum/surgery/item/chest_surgery = patient.surgeryHolder.get_surgery("chest_item_surgery")
+			if (chest_surgery.can_perform_surgery(surgeon, src))
+				chest_surgery.do_shortcut(surgeon,src)
 
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
@@ -1291,6 +1292,13 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!target || !user) // not sure if this is the right thing...
 		return
 
+	if (isliving(target) && !is_special)
+		// if we're used in a surgery step, cancel the remaining attack
+		var/mob/living/H = target
+		if (H.surgeryHolder)
+			if (H.surgeryHolder.perform_surgery(user, src))
+				return
+
 	if (src.Eat(target, user)) // All those checks were done in there anyway
 		return
 
@@ -1533,10 +1541,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (. && src.loc && ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inhands()
-
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 	//if (!src.arm_icon) return //ANYTHING GOES!~!
-
+	return
+/*
 	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop || src.two_handed)
 		boutput(attacher, SPAN_ALERT("You try to attach [src] to [attachee]'s stump, but it politely declines!"))
 		return
@@ -1576,7 +1584,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	SPAWN(rand(150,200))
 		if (new_arm.remove_stage == 2) new_arm.remove()
 
-	return
+	return*/
 
 /obj/item/proc/handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
 	//Refactor of the item removal code. Fuck having that shit defined in human.dm >>>>>>:C
