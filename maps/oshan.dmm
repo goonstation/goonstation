@@ -34717,7 +34717,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/space/fluid,
 /area/space)
 "gDO" = (
 /obj/disposalpipe/segment,

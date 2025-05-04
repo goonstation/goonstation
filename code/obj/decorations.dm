@@ -1287,6 +1287,11 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			name = "Space Station 10"
 			desc = "Looks like the regional Nanotrasen hub station passing by your orbit."
 			icon_state = "ss10"
+	earth
+		name = "Earth"
+		desc = "Oh shit, it's Earth!"
+		icon = 'icons/obj/large/160x160.dmi'
+		icon_state = "earthrise"
 
 obj/decoration
 
