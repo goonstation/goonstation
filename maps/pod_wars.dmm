@@ -15166,7 +15166,9 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "WD" = (
-/obj/machinery/plantpot,
+/obj/machinery/plantpot{
+	anchored = 1
+	},
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
