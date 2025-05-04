@@ -122,8 +122,13 @@
 	name = "mental health first aid"
 	icon_state = "mental1"
 	item_state = "mental1"
-	desc = "A medical kit deticated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, a hot chocolate to dip them in, a stress ball, and a plushie."
+	desc = "A medical kit deticated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, two hot chocolate to dip them in while sharing, a stress ball, and a lollipop to fight over."
 	kit_styles = list("mental1", "mental2", "mental3")
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut = 3,\
+	/obj/item/reagent_containers/food/drinks/bottle/soda/xmas = 2,\
+	/obj/item/toy/plush/small/stress_ball,\
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical)
+
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"
