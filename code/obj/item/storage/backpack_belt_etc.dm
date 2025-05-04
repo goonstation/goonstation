@@ -275,6 +275,8 @@
 	var/cell_port_open = FALSE
 	///Disallows recharging of weaponry
 	var/safety_regulator = TRUE
+	HELP_MESSAGE_OVERRIDE("Use the portable recharge bay in-hand to open and close the cell compartment.\
+	<br>While open, use a large cell in-hand to place it inside, or an open hand to remove an existing cell.")
 
 	New()
 		..()
