@@ -123,6 +123,10 @@
 		name = "galactic coordinate disk - 'Senex'"
 		target_name = "Senex"
 
+	icemoon2
+		name = "galactic coordinate disk - 'Senex II'"
+		target_name = "Senex II"
+
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
 		icon_state = "datadisktele1"
