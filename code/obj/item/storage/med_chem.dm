@@ -118,6 +118,12 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer)
 
+/obj/item/storage/firstaid/mental
+	name = "mental health first aid"
+	icon_state = "mental1"
+	item_state = "mental1"
+	desc = "A medical kit deticated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, a hot chocolate to dip them in, a stress ball, and a plushie."
+	kit_styles = list("mental1", "mental2", "mental3")
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"
