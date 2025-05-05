@@ -532,6 +532,7 @@
 		return ..()
 
 
+
 /datum/overlayComposition/insanity
 	var/scale = 1
 	New()

@@ -1,3 +1,6 @@
+// god damn it
+// TODO: make microwaves use /datum/cookingRecipe, somehow
+// possibly reclaim /datum/recipe
 /datum/recipe
 	var/egg_amount = 0
 	var/flour_amount = 0

@@ -275,6 +275,8 @@
 	var/cell_port_open = FALSE
 	///Disallows recharging of weaponry
 	var/safety_regulator = TRUE
+	HELP_MESSAGE_OVERRIDE("Use the portable recharge bay in-hand to open and close the cell compartment.\
+	<br>While open, use a large cell in-hand to place it inside, or an open hand to remove an existing cell.")
 
 	New()
 		..()
@@ -1187,28 +1189,28 @@ TYPEINFO(/obj/item/inner_tube)
 	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars, /obj/item/survival_machete)
 
 /obj/item/storage/belt/podwars/NTpistol
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/survival_machete)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/survival_machete/NT)
 
 /obj/item/storage/belt/podwars/SYpistol
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/survival_machete/syndicate)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/survival_machete/SY)
 
 /obj/item/storage/belt/podwars/smg
 	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg, /obj/item/survival_machete)
 
 /obj/item/storage/belt/podwars/NTsmg
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen, /obj/item/survival_machete)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen, /obj/item/survival_machete/NT)
 
 /obj/item/storage/belt/podwars/SYsmg
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate, /obj/item/survival_machete/syndicate)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate, /obj/item/survival_machete/SY)
 
 /obj/item/storage/belt/podwars/shotgun
 	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun, /obj/item/survival_machete)
 
 /obj/item/storage/belt/podwars/NTshotgun
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen, /obj/item/survival_machete)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen, /obj/item/survival_machete/NT)
 
 /obj/item/storage/belt/podwars/SYshotgun
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate, /obj/item/survival_machete/syndicate)
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate, /obj/item/survival_machete/SY)
 
 /obj/item/storage/belt/podwars/advanced
 	name = "tactical belt"

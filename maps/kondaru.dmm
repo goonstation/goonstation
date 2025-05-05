@@ -11867,6 +11867,7 @@
 /obj/machinery/phone/wall{
 	pixel_x = 24
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},

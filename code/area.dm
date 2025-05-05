@@ -6045,6 +6045,7 @@ area/station/security/visitation
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN
+	requires_power = FALSE
 
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
@@ -6116,6 +6117,7 @@ area/station/security/visitation
 
 /area/pod_wars/team2
 	station_map_colour = MAPC_SYNDICATE
+	requires_power = FALSE
 
 /area/pod_wars/team2/bridge
 	name = "Lodbrok Bridge"
@@ -6376,3 +6378,11 @@ MAJOR_AST(29)
 MAJOR_AST(30)
 
 #undef MAJOR_AST
+
+/area/tutorial
+	name = "Tutorial Zone"
+	requires_power = FALSE
+	icon_state = "yellow"
+/area/tutorial/depowered
+	requires_power = TRUE
+	icon_state = "red"

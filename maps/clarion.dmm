@@ -31810,6 +31810,7 @@
 	layer = 3;
 	pixel_y = 14
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
 "qDZ" = (
