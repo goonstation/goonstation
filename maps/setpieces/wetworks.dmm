@@ -3611,7 +3611,7 @@
 	color = "aqua"
 	})
 "zl" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

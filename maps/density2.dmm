@@ -6627,7 +6627,7 @@
 /turf/simulated/floor/marble,
 /area/station/ranch)
 "Rj" = (
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -6906,7 +6906,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Tv" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)

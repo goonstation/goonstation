@@ -34944,7 +34944,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "gbQ" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -56500,7 +56500,7 @@
 /area/station/hallway/primary/east)
 "vnl" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer{
+/obj/machinery/cookingmachine/mixer{
 	pixel_y = 6;
 	pixel_x = 5
 	},
@@ -59074,7 +59074,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/simulated/floor/white,

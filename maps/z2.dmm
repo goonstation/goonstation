@@ -3551,7 +3551,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ars" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "aru" = (
@@ -3904,7 +3904,7 @@
 	brightness = 2;
 	dir = 4
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
@@ -33747,7 +33747,7 @@
 /obj/table/reinforced/auto{
 	layer = 2
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "czR" = (
@@ -43105,7 +43105,7 @@
 /area/afterlife/bar)
 "daO" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -43892,7 +43892,7 @@
 /area/afterlife/bar)
 "ddx" = (
 /obj/map/light/brighterwhite,
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	desc = "An appliance back from the dead.";
 	dir = 8;
 	name = "salvaged oven"
@@ -50577,11 +50577,11 @@
 /area/centcom/lounge)
 "dHk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHl" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHm" = (
@@ -60669,7 +60669,7 @@
 /area/observatory)
 "iMC" = (
 /obj/lattice,
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "iNm" = (

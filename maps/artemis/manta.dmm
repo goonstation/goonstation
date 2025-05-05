@@ -477,7 +477,7 @@
 /turf/simulated/floor/black,
 /area/ship/manta)
 "JP" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4;
 	icon_state = "oven_off"
 	},
@@ -512,7 +512,7 @@
 /area/ship/manta)
 "MW" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/manta)
 "Oi" = (

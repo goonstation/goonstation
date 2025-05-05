@@ -687,7 +687,7 @@
 	})
 "oc" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/minitiles,
 /area/prefab{
 	requires_power = 1;
@@ -2557,7 +2557,7 @@
 /turf/simulated/floor/auto/snow/rough,
 /area/space)
 "Yj" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/light/small/warm{
 	dir = 1;
 	pixel_y = 8

@@ -5874,7 +5874,7 @@
 	teleport_blocked = 1
 	})
 "BU" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/unsimulated/floor/grey/checker,
 /area/adventure{
 	name = "Caer Vedwyd";

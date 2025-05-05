@@ -512,7 +512,7 @@
 /area/shuttle/sea_elevator)
 "sR" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/machinery/light/incandescent/warm{
 	dir = 4;
 	nostick = 1;
@@ -1028,7 +1028,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "Jv" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)

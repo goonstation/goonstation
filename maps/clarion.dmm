@@ -13237,7 +13237,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
-/obj/machinery/mixer{
+/obj/machinery/cookingmachine/mixer{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -13726,7 +13726,7 @@
 /area/station/chapel/sanctuary)
 "dty" = (
 /obj/machinery/firealarm/north,
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -22420,7 +22420,7 @@
 	},
 /area/station/hallway/primary/south)
 "jGn" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/landmark/bill_spawn,
 /obj/machinery/alarm{
 	pixel_y = 23

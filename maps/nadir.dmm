@@ -9684,7 +9684,7 @@
 	})
 "ers" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer{
+/obj/machinery/cookingmachine/mixer{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -42512,7 +42512,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "sec" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -50372,7 +50372,7 @@
 	name = "Kitchen Shutter Control";
 	pixel_y = 24
 	},
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "vAw" = (

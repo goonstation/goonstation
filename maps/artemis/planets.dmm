@@ -801,7 +801,7 @@
 /area/ship/artemis)
 "uZ" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "vc" = (
@@ -941,7 +941,7 @@
 /area/space)
 "Ae" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "Ai" = (
@@ -1359,7 +1359,7 @@
 /turf/unsimulated/wall/void,
 /area/background_canvas)
 "Ke" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4;
 	icon_state = "oven_off"
 	},
@@ -1395,7 +1395,7 @@
 /turf/simulated/floor/purple,
 /area/ship/artemis)
 "Ln" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4;
 	icon_state = "oven_off"
 	},

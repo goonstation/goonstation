@@ -36281,7 +36281,7 @@
 	name = "kitchen counter";
 	icon_state = "4"
 	},
-/obj/machinery/mixer{
+/obj/machinery/cookingmachine/mixer{
 	pixel_y = 5;
 	pixel_x = -4
 	},
@@ -43077,7 +43077,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/disposal/small/north{
 	pixel_y = 32;
 	name = "Lay-Z Chef Prison Food Chute"
@@ -45710,7 +45710,7 @@
 	},
 /area/station/crew_quarters/kitchen/freezer)
 "tCO" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;

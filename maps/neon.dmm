@@ -3822,7 +3822,7 @@
 /turf/simulated/floor,
 /area/radiostation/podbay)
 "cSL" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -20173,7 +20173,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
 "nUR" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "nUZ" = (
@@ -28000,7 +28000,7 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tnR" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /obj/machinery/light_switch/west,
@@ -28965,7 +28965,7 @@
 /area/station/engine/elect)
 "tTp" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/machinery/phone/wall{
 	pixel_x = 24;
 	pixel_y = 6
@@ -35595,7 +35595,7 @@
 /area/station/medical/medbay/pharmacy)
 "ykD" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ykF" = (

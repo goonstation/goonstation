@@ -6035,7 +6035,7 @@
 /area/pod_wars/spacejunk/reliant)
 "wk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "wl" = (
@@ -6168,7 +6168,7 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "wG" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -6384,7 +6384,7 @@
 /turf/space,
 /area/space)
 "xw" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /turf/simulated/floor/yellow,
@@ -10714,7 +10714,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/uvb67/crew)
 "MS" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -10805,7 +10805,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Nm" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/unsimulated/floor/sanitary/white,
@@ -11767,7 +11767,7 @@
 "QV" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/restaurant)
 "QW" = (
@@ -12494,7 +12494,7 @@
 /area/space)
 "Tl" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/unsimulated/floor/sanitary/white,
 /area/pod_wars/team2/bar)
 "Tn" = (
@@ -13278,7 +13278,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Wm" = (
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/table/auto,
 /turf/simulated/floor/green/side{
 	dir = 10

@@ -5054,7 +5054,7 @@
 /area/station/hallway/secondary/construction)
 "aqM" = (
 /obj/decal/cleanable/cobweb2,
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	desc = "Still works, sorta.";
 	name = "grungy oven"
 	},
@@ -5976,12 +5976,12 @@
 /area/station/crew_quarters/catering)
 "ats" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "att" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/machinery/light_switch/north,
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -9871,14 +9871,14 @@
 /area/station/crew_quarters/bar)
 "aDx" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDy" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/disposalpipe/segment/food{
 	dir = 8;
 	icon_state = "pipe-c"
