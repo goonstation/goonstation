@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 /obj/item/survival_knife
 	name = "pilot survival knife"
-	desc = "A lightweight carbon steel knife that allows you to move faster in fights, colored for your stabbbing pleasure."
+	desc = "A lightweight carbon steel knife that allows you to move faster in fights, colored for your stabbbbing pleasure."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "surv_knife_nt"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 /obj/item/survival_axe
 	name = "pilot survival axe"
-	desc = "An axe with a pick-shaped end on the back, intended to be used to get through doors, windows in an emergency, and the skulls of your enemy."
+	desc = "An axe with a pick-shaped end on the back, intended to be used to get through doors or windows in an emergency, and the skulls of your enemy."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "surv_axe_nt"
