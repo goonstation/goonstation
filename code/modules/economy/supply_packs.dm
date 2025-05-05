@@ -364,15 +364,14 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/medicalfirstaid
 	name = "Medical: First Aid Crate"
-	desc = "x11 Assorted First Aid Kits"
+	desc = "x10 Assorted First Aid Kits"
 	category = "Medical Department"
 	contains = list(/obj/item/storage/firstaid/regular = 2,
 					/obj/item/storage/firstaid/brute = 2,
 					/obj/item/storage/firstaid/fire = 2,
 					/obj/item/storage/firstaid/toxin = 2,
 					/obj/item/storage/firstaid/oxygen,
-					/obj/item/storage/firstaid/brain,
-					/obj/item/storage/firstaid/mental)
+					/obj/item/storage/firstaid/brain)
 	cost = PAY_DOCTORATE*3
 	containertype = /obj/storage/crate/medical
 	containername = "Medical: First Aid Crate"
