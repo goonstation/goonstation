@@ -1,3 +1,4 @@
+// These defintely aren't food. Why the hell were they in the food_and_drink folder?
 /obj/item/reagent_containers/bath_bomb
 	name = "Discount Dan's Bath Bomb"
 	desc = "a bath bomb"

@@ -16785,7 +16785,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lvz" = (
@@ -19213,6 +19213,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/hos,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "nhO" = (
