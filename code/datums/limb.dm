@@ -408,7 +408,7 @@
 
 		shoot(atom/target, mob/user, pointblank = FALSE, params)
 			var/mob/living/critter/mindeater/mindeater = user
-			if (mindeater.is_intangible())
+			if (mindeater.is_intangible() || (mindeater.disguised && !mindeater.can_fire_when_disguised))
 				return
 			return ..()
 

@@ -5,6 +5,8 @@
 	icon = 'icons/mob/critter/nonhuman/intruder.dmi'
 	icon_state = "intruder"
 
+	custom_hud_type = /datum/hud/critter/mindeater
+
 	hand_count = 1
 
 	can_bleed = FALSE
@@ -31,6 +33,9 @@
 	var/disguised = FALSE
 
 	var/lives = 3 // temporary lives for playtesting
+
+	/// can fire psi bolts when disguised
+	var/can_fire_when_disguised = TRUE
 
 	New()
 		src.name = "???" // set here so that in respawn popups the name doesn't appear as "???"
@@ -361,6 +366,14 @@
 		if (src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/clear_disguise))
 			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
 			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
+
+	proc/toggle_psi_bolt()
+		src.can_fire_when_disguised = !src.can_fire_when_disguised
+
+		if (src.can_fire_when_disguised)
+			boutput(src, SPAN_NOTICE("You can now fire psi bolts when disguised."))
+		else
+			boutput(src, SPAN_NOTICE("You will no longer fire psi bolts when disguised."))
 
 /obj/dummy/fake_mindeater
 	name = "???"
