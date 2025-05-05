@@ -1,7 +1,7 @@
 /**
- *	Listen module tree datums handle applying the effects of listen modifier modules to say message datums received by
- *	the parent atom from an listen input module. All say message datums will be processed here prior to being passed to
- *	listen effect modules.
+ *	Listen module tree datums handle applying the effects of languages and listen modifier modules to say message datums
+ *	received by any listen input modules registered to itself. Processed messages are then stored in the message buffer
+ *	before being sent to listen effect modules.
  */
 /datum/listen_module_tree
 	/// If disabled, this listen module tree will not receive any messages.
