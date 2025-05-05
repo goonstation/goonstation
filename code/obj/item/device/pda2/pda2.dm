@@ -311,13 +311,6 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
-	technical_assistant
-		name = "Technical Assistant PDA"
-		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
-		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
-		setup_default_module = /obj/item/device/pda_module/tray
-		alertgroups = list(MGA_MAIL,MGA_RADIO)
-
 	mining
 		name = "Mining PDA"
 		icon_state = "pda-q"

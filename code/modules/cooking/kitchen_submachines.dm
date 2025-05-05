@@ -1,4 +1,4 @@
-
+//TODO: Make these not submachines, possibly break out into their own files
 TYPEINFO(/obj/submachine/chef_sink)
 	mats = 12
 
