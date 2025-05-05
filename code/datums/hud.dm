@@ -33,9 +33,9 @@
 /// 516 hack fix for screen_loc issues with the TGUI ByondUI element
 /atom/movable/screen/proc/fix_screen_loc(x, y, px, py)
     set waitfor = FALSE
-    sleep(0.1 SECONDS)
+    sleep(0.5 SECONDS)
     screen_loc = "[x]:100:0,100:0"
-    sleep(0.1 SECONDS)
+    sleep(0.5 SECONDS)
     screen_loc = "[x]:[px],[y]:[py]"
 
 /atom/movable/screen/hud
