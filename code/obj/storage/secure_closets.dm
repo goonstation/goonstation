@@ -643,7 +643,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B4.pixel_y = 0
 			B4.pixel_x = 6
 
-			var/obj/item/storage/firstaid/oxygen/B4 = new(src)
+			var/obj/item/storage/firstaid/oxygen/B5 = new(src)
 			B5.pixel_y = -6
 			B5.pixel_x = -6
 
