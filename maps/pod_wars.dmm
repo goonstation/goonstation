@@ -3343,7 +3343,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "kY" = (
-/obj/machinery/gibber/output_east,
+/obj/machinery/gibber/output_west,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
