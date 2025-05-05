@@ -265,6 +265,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	name = "Veil border"
 	teleport_blocked = 2
 	allowed_restricted_z = TRUE
+	sound_loop = 'sound/misc/intruder/veil_border_ambience.ogg'
+	sound_group = "veil border"
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
@@ -413,7 +415,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if(src.check_for_interrupt())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.owner.setStatus("pierce_the_veil_shield", src.duration + 0.1 SECOND)
+		src.owner.setStatus("pierce_the_veil_shield", INFINITE_STATUS)
 
 	onUpdate()
 		..()
