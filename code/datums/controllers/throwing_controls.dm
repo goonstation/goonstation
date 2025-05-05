@@ -143,6 +143,8 @@ var/global/datum/controller/throwing/throwing_controller = new
 				break
 
 		if(end_throwing)
+			if (thr.throw_type == THROW_PHASE)
+				thing.event_handler_flags = initial(thing.event_handler_flags)
 			thrown -= thr
 			if(thr.end_throw_callback)
 				if(thr.end_throw_callback.Invoke(thr)) // pass /datum/thrown_thing, return 1 to continue the throw, might be useful!
