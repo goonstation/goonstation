@@ -124,6 +124,7 @@
 	item_state = "mental1"
 	desc = "A medical kit dedicated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, a hot chocolate to dip them, a stress ball, some haloperidol for the extreme cases and a lollipop."
 	kit_styles = list("mental1", "mental2", "mental3")
+	can_hold = list(/obj/item/toy/plush/small/stress_ball)
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut = 3,\
 	/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,\
 	/obj/item/toy/plush/small/stress_ball,\
