@@ -561,7 +561,7 @@ Contains:
 	src.UpdateIcon()
 	src.add_fingerprint(user)
 	to_combine_atom.add_fingerprint(user)
-	var/obj/item/canbomb_detonator/new_detonator = new /obj/item/canbomb_detonator(get_turf(user), src, to_combine_atom)
+	var/obj/item/canbomb_detonator/new_detonator = new /obj/item/canbomb_detonator(payload, src, to_combine_atom)
 	new_detonator.master = payload // i swear, i want to kill that master-variable sooooo bad
 	new_detonator.attachedTo = payload
 	new_detonator.builtBy = user
