@@ -1747,7 +1747,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
-	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp)
+	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 
 /datum/job/special/random/artist
