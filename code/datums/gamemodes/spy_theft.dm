@@ -496,7 +496,7 @@
 	big_station_bounties[/obj/machinery/manufacturer/medical] = 2
 	big_station_bounties[/obj/machinery/manufacturer/general] = 1
 
-	big_station_bounties[/obj/submachine/chef_oven] = 1
+	big_station_bounties[/obj/machinery/cookingmachine/oven] = 1
 	big_station_bounties[/obj/machinery/gibber] = 1
 
 	big_station_bounties[/obj/machinery/bot/guardbot] = 1

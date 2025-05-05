@@ -534,7 +534,7 @@
 	/obj/item/instrument/large/jukebox, \
 	/obj/submachine/claw_machine, \
 	/obj/submachine/chem_extractor, \
-	/obj/submachine/chef_oven, \
+	/obj/machinery/cookingmachine/oven, \
 	/obj/submachine/chef_sink, \
 	/obj/machinery/launcher_loader, \
 	/obj/machinery/optable, \
@@ -548,7 +548,7 @@
 	/obj/machinery/portable_atmospherics, \
 	/obj/machinery/ai_status_display, \
 	/obj/securearea, \
-	/obj/machinery/mixer, \
+	/obj/machinery/cookingmachine/mixer, \
 	/obj/submachine/foodprocessor, \
 	\
 )

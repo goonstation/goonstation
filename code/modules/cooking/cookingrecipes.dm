@@ -1,3 +1,4 @@
+#define PRIORITY_NORMAL 0
 ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
 	var/list/ingredients
@@ -5,6 +6,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
 	var/category = "Unsorted" /// category for sorting, use null to hide
+	var/priority = PRIORITY_NORMAL
 
 
 	proc/specialOutput(var/obj/submachine/ourCooker)
@@ -2481,3 +2483,4 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
+#undef PRIORITY_NORMAL

@@ -81,10 +81,10 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		if (TIME < src.time_finish)
 			return
 
-		var/obj/item/F = src.cook_item()
+		var/obj/item/F = src.finish_cook()
 		F.set_loc(src.loc)
 
-		src.handle_leftovers
+		src.handle_leftovers()
 
 		src.working = 0
 		src.UpdateIcon()
@@ -115,7 +115,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			if(istype(I, recipeitem))
 				count++
 				to_remove += I
-				(count >= recipecount)
+				if(count >= recipecount)
 					return TRUE
 		return FALSE
 
@@ -136,15 +136,16 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 				src.possible_recipes -= src.get_recipes_from_ingredient(ingredient)
 
 	proc/get_recipes_from_ingredient(obj/item/ingredient)
+		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		var/considered_type = ingredient.type
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
-			if(oven_recipes_by_ingredient[considered_type])
-				var/output = oven_recipes_by_ingredient[considered_type] //bit of a hack, remember to change when cooking flags are added
-				if(oven_recipes_by_ingredient[considered_type.parent_type])
-					output += oven_recipes_by_ingredient[considered_type.parent_type] //this ensures the more specific recipes are checked first
+			if(RM.oven_recipes_by_ingredient[considered_type])
+				var/output = RM.oven_recipes_by_ingredient[considered_type] //bit of a hack, remember to change when cooking flags are added
+				if(RM.oven_recipes_by_ingredient[type2parent(considered_type)])
+					output += RM.oven_recipes_by_ingredient[type2parent(considered_type)] //this ensures the more specific recipes are checked first
 				return output
 			else
-				considered_type = considered_type.parent_type
+				considered_type = type2parent(considered_type)
 		return
 
 	proc/cooking_power() //used to find cook amounts on
@@ -164,10 +165,9 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 	/// Called when the machine finishes cooking
 	proc/finish_cook()
 		var/obj/item/output = null
-		var/quality = null
 		var/cook_amount = src.cooking_power()
 		var/datum/cookingrecipe/R = src.get_valid_recipe()
-		var/obj/item/food/snacks/F
+		var/obj/item/reagent_containers/food/snacks/F
 		if (R)
 			// this is null if it uses normal outputs (see below),
 			// otherwise it will be the created item from this
@@ -175,7 +175,6 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			if (isnull(output))
 				output = new R.output
 			if(R.cookbonus)
-				recipebonus = R.cookbonus
 				if (abs(cook_amount - R.cookbonus) <= 1)
 					// if -1, 0, or 1, you did ok
 					output.quality = 5
@@ -186,7 +185,6 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 				else// mediocre meals
 					output.quality = clamp(5 - abs(R.cookbonus - cook_amount), 0, 5)
 			if(R.useshumanmeat)
-				var/obj/item/reagent_containers/food/snacks/F = output
 				var/foodname = F.name
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 					F.name = "[M.subjectname] [foodname]"
@@ -213,7 +211,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		return output
 
 	proc/handle_leftovers() ///what to do with things that weren't part of the recipe
-		for(obj/item/I in src.contents)
+		for(var/obj/item/I in src.contents)
 			qdel(I)
 
 TYPEINFO(/obj/machinery/cookingmachine/oven)
@@ -256,7 +254,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	ui_data(mob/user)
 		src.get_recipes()
 		. = list(
-			"time" = src.time,
+			"time" = src.cooktime,
 			"heat" = src.heat,
 			"cooking" = src.working,
 			"content_icons" = src.get_content_icons(),
@@ -286,7 +284,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			if ("eject")
 				var/obj/item/thing_to_eject = src.contents[params["ejected_item"]]
 				if (thing_to_eject)
-					src.eject_item(I)
+					src.eject_item(thing_to_eject)
 			if ("open_recipe_book")
 				usr.Browse(recipe_html, "window=recipes;size=500x700")
 
@@ -351,7 +349,8 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 						contentsok = FALSE
 						break
 				// Pick a random recipe
-			var/datum/cookingrecipe/xrecipe = pick(src.recipes)
+			var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
+			var/datum/cookingrecipe/xrecipe = pick(RM.oven_recipes)
 			var/xrecipeok = TRUE
 			// Don't choose recipes with human meat since we don't have a name for them
 			if (xrecipe.useshumanmeat)
@@ -368,7 +367,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			return output
 		. = ..()
 
-	UpdateIcon(...)
+	update_icon()
 		if (!src || !istype(src))
 			return
 		if(src.working)
@@ -459,7 +458,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 			if ("eject")
 				var/index = params["index"]
 				var/obj/item/target = src.contents[index]
-				src.ejectItemFromMixer(target)
+				src.eject_item(target)
 
 				usr.show_text(SPAN_NOTICE("You eject the [target.name] from the [src]."))
 				. = TRUE
@@ -470,21 +469,22 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 
 			if ("ejectAll")
 				for (var/obj/item/target in src.contents)
-					src.ejectItemFromMixer(target)
+					src.eject_item(target)
 
 				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
 				. = TRUE
 
 	get_recipes_from_ingredient(obj/item/ingredient) //this is a gross hack
 		var/considered_type = ingredient.type
+		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
-			if(mixer_recipes_by_ingredient[considered_type])
-				var/output = mixer_recipes_by_ingredient[considered_type]
-				if(mixer_recipes_by_ingredient[considered_type.parent_type])
-					output += mixer_recipes_by_ingredient[considered_type.parent_type]
+			if(RM.mixer_recipes_by_ingredient[considered_type])
+				var/output = RM.mixer_recipes_by_ingredient[considered_type]
+				if(RM.mixer_recipes_by_ingredient[type2parent(considered_type)])
+					output += RM.mixer_recipes_by_ingredient[type2parent(considered_type)]
 				return output
 			else
-				considered_type = considered_type.parent_type
+				considered_type = type2parent(considered_type)
 		return
 
 	start_cook()

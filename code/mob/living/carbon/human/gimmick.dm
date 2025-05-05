@@ -485,7 +485,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						twitch_mob.mind.transfer_to(newbody)
 						if (locate(/obj/item/storage/toilet) in newbody.loc)
 							newbody.visible_message("<b>[newbody]</b> crawls out of the toilet!")
-						else if (locate(/obj/submachine/chef_oven) in newbody.loc)
+						else if (locate(/obj/machinery/cookingmachine/oven) in newbody.loc)
 							newbody.visible_message("<b>[newbody]</b> pops out of the oven!")
 #endif
 

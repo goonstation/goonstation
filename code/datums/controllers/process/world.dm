@@ -130,9 +130,9 @@ input:checked + div { display: block; }
 </style>
 </head><body><h2>Recipe Book</h2>
 "}
-
+	var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 	var/list/recipies = list()
-	for (var/datum/cookingrecipe/R in oven_recipes)
+	for (var/datum/cookingrecipe/R in RM.oven_recipes)
 		// do not show recipies set to a null category
 		if (!R.category)
 			continue
@@ -172,7 +172,7 @@ input:checked + div { display: block; }
 	#pragma push
 	#pragma ignore unused_var // http://www.byond.com/forum/post/2830902
 
-	var/obj/submachine/chef_oven/our_oven = /obj/submachine/chef_oven
+	var/obj/machinery/cookingmachine/oven/our_oven = /obj/machinery/cookingmachine/oven
 	our_oven.recipe_html = oven_recipe_html
 
 	#pragma pop
