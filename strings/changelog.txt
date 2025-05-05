@@ -1,4 +1,9 @@
 
+(t)sun may 04 25
+(u)JORJ949
+(p)23225
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Trainee roles now get job equipment matching that of the job they are training for.
 (t)sat may 03 25
 (u)TDHooligan
 (p)20352
