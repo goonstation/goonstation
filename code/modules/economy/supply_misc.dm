@@ -153,7 +153,7 @@ TYPEINFO(/obj/strip_door)
 	attackby(obj/item/I, mob/user)
 		if (ispryingtool(I))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 30, 1, -2)
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/src.change_direction, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/change_direction, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 		if(iswrenchingtool(I))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
 			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/toggle_anchored, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
@@ -167,6 +167,32 @@ TYPEINFO(/obj/strip_door)
 			else
 				boutput(user, SPAN_NOTICE("You don't have enough material!"))
 		..()
+
+	get_help_message(dist, mob/user)
+		. = "You can rotate it using a <b>crowbar</b>, and [src.anchored ? "unanchor" : "anchor"] it with a <b>wrench</b>."
+		if(src.flap_material)
+			. += " You can remove the flaps with a <b>wirecutter</b>."
+		else
+			. += " You can add flaps by using processed materials on the frame. Denser materials cause more slowdown when crossing the flaps."
+
+	proc/toggle_anchored(mob/user)
+		boutput(user, SPAN_NOTICE("You [src.anchored ? "unanchor" : "anchor"] the [src]."))
+		src.anchored = !src.anchored
+		src.update_neighbors()
+
+	proc/change_direction()
+		if(src.dir == EAST || src.dir == WEST) //We check west in case it was built in that direction
+			src.dir = NORTH
+		else
+			src.dir = EAST
+
+	proc/update_neighbors()
+		for (var/turf/simulated/wall/auto/T in orange(1,src))
+			T.UpdateIcon()
+		for (var/obj/window/auto/O in orange(1,src))
+			O.UpdateIcon()
+		for (var/obj/mesh/M in orange(1,src))
+			M.UpdateIcon()
 
 	proc/set_flaps()
 		src.name = "[src.flap_material.getName()] flaps"
@@ -185,26 +211,6 @@ TYPEINFO(/obj/strip_door)
 		src.icon_state = "strip_door_open"
 		src.underlays = null
 		src.UpdateIcon()
-
-	proc/toggle_anchored(mob/user)
-		boutput(user, SPAN_NOTICE("You [src.anchored ? "unanchor" : "anchor"] the [src]."))
-		src.anchored = !src.anchored
-		src.update_neighbors()
-
-	proc/change_direction()
-		if(src.dir == EAST)
-			src.dir = NORTH
-		else
-			src.dir = EAST
-		src.update_neighbors()
-
-	proc/update_neighbors()
-		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.UpdateIcon()
-		for (var/obj/window/auto/O in orange(1,src))
-			O.UpdateIcon()
-		for (var/obj/mesh/M in orange(1,src))
-			M.UpdateIcon()
 
 	proc/insert_flaps(obj/item/I)
 		playsound(src.loc, 'sound/items/sticker.ogg', 30, 1, -2)
