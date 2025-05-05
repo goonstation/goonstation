@@ -1,6 +1,6 @@
 /**
- *	Auxiliary listen module tree datums handle adding and removing their own input and modifier modules to a specified target
- *	listen module tree, and transferring modules when the target changes. These are used as input module trees for datums that
+ *	Auxiliary listen module tree datums handle adding and removing their own modules to a specified target listen module
+ *	tree, and transferring modules when the target changes. These are used as listen module trees for datums that
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/listen_module_tree/auxiliary

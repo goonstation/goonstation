@@ -1,6 +1,6 @@
 /**
- *	Auxiliary speech module tree datums handle adding and removing their own output and modifier modules to a specified target
- *	output module tree, and transferring modules when the target changes. These are used as output module trees for datums that
+ *	Auxiliary speech module tree datums handle adding and removing their own modules to a specified target speech module
+ *	tree, and transferring modules when the target changes. These are used as speech module trees for datums that
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/speech_module_tree/auxiliary
