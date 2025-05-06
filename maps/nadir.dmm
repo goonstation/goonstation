@@ -3476,6 +3476,9 @@
 /obj/machinery/power/data_terminal,
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_west)
 "byP" = (
@@ -3806,10 +3809,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bGm" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/item/storage/wall{
 	icon_state = "minipurple";
 	name = "VR goggles cabinet";
@@ -7818,7 +7818,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/machinery/door_control/bolter/new_walls/east{
 	id = "eastcc_room3"
 	},
@@ -10196,6 +10196,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -12801,7 +12804,7 @@
 	})
 "fGo" = (
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -17691,6 +17694,9 @@
 	tag = ""
 	},
 /obj/shrub,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -19052,6 +19058,9 @@
 	},
 /area/station/medical/medbay/surgery)
 "ibG" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -20172,7 +20181,7 @@
 /area/station/hallway/secondary/east)
 "iyr" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "iyv" = (
@@ -20745,7 +20754,6 @@
 	dir = 8;
 	icon_state = "commb";
 	name = "Pasiphae Announcement Computer";
-	req_access_txt = "19";
 	status = 1
 	},
 /obj/cable{
@@ -22424,10 +22432,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jwV" = (
@@ -24145,6 +24150,9 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -24838,7 +24846,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -26225,6 +26233,9 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -32126,6 +32137,14 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"nvl" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/hallway/primary/northeast)
 "nvD" = (
 /obj/disposalpipe/segment/mineral,
 /obj/landmark/gps_waypoint,
@@ -32488,6 +32507,9 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "nCU" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/cloner)
 "nCX" = (
@@ -33761,7 +33783,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "oeQ" = (
@@ -35770,6 +35792,7 @@
 	pixel_y = 8;
 	id = "treatment1"
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "oYT" = (
@@ -36422,6 +36445,13 @@
 "pnt" = (
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"pnu" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "pnP" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -36781,6 +36811,9 @@
 /obj/item/reagent_containers/hypospray{
 	pixel_x = 7;
 	pixel_y = 2
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/staff)
@@ -37601,6 +37634,13 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"pOy" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southwest)
 "pPs" = (
 /obj/table/auto,
 /obj/item/dye_bottle{
@@ -38194,6 +38234,9 @@
 	})
 "qcc" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "qce" = (
@@ -45105,6 +45148,9 @@
 /area/station/medical/medbay/pharmacy)
 "tja" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "tje" = (
@@ -46930,6 +46976,9 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -47304,10 +47353,7 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "uib" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -48555,7 +48601,7 @@
 /area/station/medical/morgue)
 "uKf" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 7
 	},
 /obj/item/remote/porter/port_a_nanomed,
@@ -48681,6 +48727,12 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"uNE" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/northeast)
 "uNI" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -49091,6 +49143,9 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/status_display{
+	pixel_y = 30
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
@@ -53988,7 +54043,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "xhg" = (
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/instrument/vuvuzela,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/industrial,
@@ -94249,7 +94304,7 @@ pJi
 rnZ
 ajp
 xFO
-hcm
+pOy
 nha
 eMS
 idy
@@ -107500,7 +107555,7 @@ huI
 wTD
 auw
 lRC
-sUv
+nvl
 rJy
 sUv
 snR
@@ -111129,7 +111184,7 @@ wHl
 wHl
 wHl
 qoL
-lsj
+uNE
 jdT
 njE
 tXW
@@ -112671,7 +112726,7 @@ sSm
 ePt
 ebu
 ocD
-vEo
+pnu
 fdg
 rZb
 nlG

@@ -1,6 +1,9 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
-ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
+TYPEINFO(/obj/machinery/bot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -22,22 +25,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	var/mob/emagger = null
 	/// The bot's net ID
 	var/botnet_id = null
-	/// What's it talk like?
-	var/list/speakverbs = list("beeps", "boops")
 	var/text2speech = 0 // dectalk!
 	/// Should the bot's speech pop up over them?
 	var/speech2text = 1
 	/// What color is the bot's speech?
 	var/bot_speech_color
-	/// What does our bot's popup speech look like?
-	var/bot_speech_style
-	/// What does our bot's chat text speech look like?
-	var/bot_chat_style
-	/// The noise that happens whenever the bot speaks
-	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
-	/// The bot's speech bubble
-	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
-	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
 	var/dynamic_processing = 1
@@ -70,6 +62,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 
 	p_class = 2
 
+	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
+	use_speech_bubble = TRUE
+
+	speech_verb_say = list("beeps", "boops")
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	power_change()
 		return
 
@@ -88,8 +86,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			src.cam.network = setup_camera_network
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
-		if(!src.chat_text)
-			src.chat_text = new(null, src)
+
+		if (!src.bot_speech_color)
+			var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
+			src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
@@ -99,11 +100,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
 		#endif
 
+	initialize()
+		. = ..()
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_DECTALK_BOT)
+
 	disposing()
 		STOP_TRACKING
 		botcard = null
-		qdel(chat_text)
-		chat_text = null
 		qdel(bot_mover)
 		bot_mover = null
 		if(cam)
@@ -161,47 +164,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 
 	proc/explode()
 		return
-
-	proc/admin_command_speak()
-		set name = "Speak"
-		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
-
-	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
-		if (!src.on || !message || src.muted)
-			return
-		var/image/chat_maptext/chatbot_text = null
-		if (src.speech2text && src.chat_text && !just_chat)
-			if(src.use_speech_bubble)
-				AddOverlays(bot_speech_bubble, "bot_speech_bubble")
-				SPAWN(1.5 SECONDS)
-					ClearSpecificOverlays("bot_speech_bubble")
-			if(!src.bot_speech_color)
-				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
-			var/singing_italics = sing ? " font-style: italic;" : ""
-			var/maptext_color
-			if (sing)
-				maptext_color ="#D8BFD8"
-			else
-				maptext_color = src.bot_speech_color
-			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];" + src.bot_speech_style + singing_italics)
-			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
-				chatbot_text.measure(src)
-				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chatbot_text)
-						I.bump_up(chatbot_text.measured_height)
-
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, src.bot_voice, 40, 1)
-		if (src.text2speech)
-			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
-				if (audio && audio["audio"])
-					for (var/mob/O in hearers(src, null))
-						if (!O.client)
-							continue
-						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
-							continue
-						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 
 /obj/machinery/bot/examine()
 	. = ..()

@@ -1,3 +1,6 @@
+TYPEINFO(/mob)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
+
 /mob/living/critter/space_phoenix
 	name = "space phoenix"
 	real_name = "space phoenix"
@@ -10,11 +13,11 @@
 
 	custom_hud_type = /datum/hud/critter/space_phoenix
 
-	speechverb_say = "screeches"
-	speechverb_gasp = "screeches"
-	speechverb_stammer = "screeches"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "screeches"
+	speech_verb_say = "screeches"
+	speech_verb_gasp = "screeches"
+	speech_verb_stammer = "screeches"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "screeches"
 
 	blood_id = "water"
 
@@ -215,11 +218,6 @@
 	is_spacefaring()
 		return TRUE
 
-	understands_language(langname)
-		if (langname == src.say_language || langname == "feather" || langname == "english") // understands but can't speak flock
-			return TRUE
-		return FALSE
-
 	proc/create_ice_tunnel(atom/A)
 		playsound(get_turf(A), 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
 		if (istype(A, /turf) || istype(A, /obj/window))
@@ -361,6 +359,14 @@
 		else
 			src.blocked_dirs = NORTH | SOUTH
 		..()
+
+	attackby(obj/item/W, mob/user)
+		if (!istype(W, /obj/item/sheet))
+			return ..()
+		var/obj/item/sheet/sheet_stack = W
+		if (!sheet_stack.amount_check(2, user))
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, sheet_stack, 2, null, null, sheet_stack.material, 'icons/obj/structures.dmi', "girder", name = "girder"), user)
 
 /obj/space_phoenix_statue
 	icon = 'icons/mob/critter/nonhuman/spacephoenix.dmi'

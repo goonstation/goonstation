@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	layer = FLUID_LAYER
 	flags = UNCRUSHABLE | OPENCONTAINER
 
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	var/finalcolor = "#ffffff"
 	color = "#ffffff"

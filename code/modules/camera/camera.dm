@@ -23,8 +23,6 @@
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
-	/// Cameras only the AI can see through
-	var/ai_only = FALSE
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
@@ -41,6 +39,8 @@
 	/// Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Should this camera have a light?
+	var/has_light = TRUE
 	/// Robust light
 	var/datum/light/point/light
 
@@ -61,7 +61,7 @@
 	All cameras are tallied regardless of this tag to apply a number to them.
 	*/
 
-/obj/machinery/camera/New()
+/obj/machinery/camera/New(loc)
 	..()
 	START_TRACKING
 	var/area/area = get_area(src)
@@ -72,8 +72,9 @@
 							/area/station/turret_protected/AIbasecore1,
 							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
-		src.ai_only = TRUE
 		src.prefix = "AI"
+		src.network = CAMERA_NETWORK_AI_ONLY
+		src.color = "#9999cc"
 
 	if (src.sticky)
 		autoposition(src.alternate_sprites)
@@ -82,11 +83,12 @@
 
 	LAZYLISTINIT(src.viewers)
 
-	src.light = new /datum/light/point
-	src.light.set_brightness(0.3)
-	src.light.set_color(209/255, 27/255, 6/255)
-	src.light.attach(src)
-	src.light.enable()
+	if (src.has_light)
+		src.light = new /datum/light/point
+		src.light.set_brightness(0.3)
+		src.light.set_color(209/255, 27/255, 6/255)
+		src.light.attach(src)
+		src.light.enable()
 
 	SPAWN(1 SECOND)
 		addToNetwork()
@@ -338,8 +340,9 @@
 /// AI only camera
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
+	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
-	ai_only = TRUE // TODO: Make this a separate network instead of a flag
+	color = "#9999cc"
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining

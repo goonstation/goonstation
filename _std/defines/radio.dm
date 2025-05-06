@@ -116,3 +116,15 @@ proc/default_frequency_color(freq)
 			return RADIOC_COMMAND
 		if(R_FREQ_INTERCOM_BRIDGE)
 			return RADIOC_COMMAND
+
+/// A list of radio frequencies and their associated channel names.
+var/list/headset_channel_lookup
+
+/// If TRUE, all radios will initialise as bricked.
+var/no_more_radios = FALSE
+
+/// Bricks all radios globally.
+/proc/no_more_radio()
+	global.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE

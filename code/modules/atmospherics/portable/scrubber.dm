@@ -65,6 +65,16 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	var/datum/gas_mixture/removed = environment.remove(TOTAL_MOLES(environment) * flow / 100)
 	environment.merge(src.scrub(removed))
 
+/obj/machinery/portable_atmospherics/scrubber/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/portable_atmospherics/scrubber/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/scrubber/process(mult)
 	..()
 	if (!loc) return
@@ -74,9 +84,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		return
 	if(!A.powered(ENVIRON))
 		if(src.on)
-			src.on = FALSE
-			src.updateDialog()
-			src.UpdateIcon()
+			src.turn_off()
 			src.visible_message(SPAN_ALERT("[src] shuts down due to lack of APC power."))
 		return
 
@@ -173,8 +181,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		return
 	switch(action)
 		if("toggle-power")
-			src.on = !src.on
-			src.UpdateIcon()
+			if (src.on)
+				src.turn_off()
+			else
+				src.turn_on()
 			. = TRUE
 		if("set-inlet-flow")
 			var/new_inlet_flow = params["inletFlow"]

@@ -1,9 +1,14 @@
+TYPEINFO(/obj/item/device/microphone)
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+	start_listen_languages = list(LANGUAGE_ALL)
 
 /obj/item/device/microphone
 	name = "microphone"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
+
 	var/max_font = 8
 	var/font_amp = 4
 	var/on = 0
@@ -30,40 +35,6 @@
 		else
 			return ..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		if (!src.on)
-			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		if (!src.on)
-			return
-		var/speakers = 0
-		var/turf/T = get_turf(src)
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			speakers ++
-		if (!speakers)
-			return
-		speakers += font_amp // 2 ain't huge so let's give ourselves a little boost
-		var/stuff = M.say_quote(messages[1])
-		var/stuff_b = M.say_quote(messages[2])
-		var/list/mobs_messaged = list()
-		for_by_tcl(S, /obj/loudspeaker)
-			if(!IN_RANGE(S, T, 7)) continue
-			for (var/mob/H in hearers(S, null))
-				if (H in mobs_messaged)
-					continue
-				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
-				mobs_messaged += H
-		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
-			for_by_tcl(S, /obj/loudspeaker)
-				if(!IN_RANGE(S, T, 7)) continue
-				S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
-				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
 TYPEINFO(/obj/mic_stand)
 	mats = 10
@@ -73,6 +44,7 @@ TYPEINFO(/obj/mic_stand)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
 	layer = FLY_LAYER
+	open_to_sound = TRUE
 	var/obj/item/device/microphone/myMic = null
 
 	New()
@@ -101,13 +73,6 @@ TYPEINFO(/obj/mic_stand)
 			src.UpdateIcon()
 		else
 			return ..()
-
-	hear_talk(mob/M as mob, msg, real_name)
-		if (!myMic || !myMic.on)
-			return
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			myMic.talk_into(M, msg)
 
 	update_icon()
 		if (myMic)

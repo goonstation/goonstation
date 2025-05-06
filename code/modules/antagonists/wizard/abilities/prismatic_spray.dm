@@ -46,7 +46,7 @@
 		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			. = ..()
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
+				holder.owner.say("PROJEHK TUL IHNFERNUS", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors)) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			// Put voice stuff here in the future
 			if(src.random == 0)

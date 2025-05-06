@@ -276,69 +276,13 @@
 	deserialize_postprocess()
 		return
 
-/obj/bedsheetbin
-	name = "linen bin"
-	desc = "A bin for containing bedsheets."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
-
-/obj/towelbin
-	name = "towel bin"
-	desc = "A bin for containing towels."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/under/towel))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/under/towel(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
-
 /obj/overlay
 	name = "overlay"
 	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 	density = 0
 
 	updateHealth()
@@ -385,7 +329,7 @@
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
 		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
-		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
+		var/obj/replica = new /obj/item/card/id/gold/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state
 		replica.name = O.name
@@ -456,31 +400,6 @@
 	replacer.disguise_as(src)
 	qdel(src)
 
-
-/obj/proc/admin_command_obj_speak()
-	set name = "Object Speak"
-	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
-	if (msg)
-		src.obj_speak(msg)
-
-/obj/proc/obj_speak(message)
-	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
-
-	var/list/mob/targets = null
-	var/mob/holder = src
-	while(holder && !istype(holder))
-		holder = holder.loc
-	ENSURE_TYPE(holder)
-	if(!holder)
-		targets = hearers(src, null)
-	else
-		targets = list(holder)
-		chat_text.plane = PLANE_HUD
-		chat_text.layer = 999
-
-	for(var/mob/O in targets)
-		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
-
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
 	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
 		var/mob/dead/observer/O = viewer
@@ -499,6 +418,8 @@
 	while(. in forensic_IDs)
 
 /obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
 	var/turf/target_loc = get_turf(src)
 	var/obj/item/electronics/frame/F = null
 	if (flatpack)

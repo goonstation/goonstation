@@ -11867,6 +11867,7 @@
 /obj/machinery/phone/wall{
 	pixel_x = 24
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -15276,9 +15277,7 @@
 /area/station/crew_quarters/cafeteria)
 "bma" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -16005,9 +16004,7 @@
 /area/station/crew_quarters/cafeteria)
 "boE" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -20499,7 +20496,7 @@
 /obj/item/sheet/steel{
 	amount = 10
 	},
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/instrument/vuvuzela,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
@@ -21198,7 +21195,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/computer3/generic/bank_data,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bKa" = (
@@ -32329,7 +32328,7 @@
 "eka" = (
 /obj/table/auto,
 /obj/machinery/firealarm/north,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
@@ -37996,7 +37995,7 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/machinery/light,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
@@ -38895,7 +38894,7 @@
 	pixel_x = 10
 	},
 /obj/table/round/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "iMu" = (
@@ -42329,7 +42328,7 @@
 /area/station/hallway/secondary/exit)
 "lfY" = (
 /obj/table/wood/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/crew_quarters/quarters_north)
 "lgl" = (
@@ -43093,7 +43092,7 @@
 /area/station/storage/emergency)
 "lEf" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "lEw" = (
@@ -45720,10 +45719,7 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
 "nFS" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -46834,10 +46830,7 @@
 	},
 /area/station/bridge)
 "orU" = (
-/obj/machinery/sim/vr_bed{
-	name = "VR simulation pod";
-	network = "arcadevr"
-	},
+/obj/machinery/sim/vr_bed,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -58275,11 +58268,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "wFB" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
+/obj/storage/cart/mechcart/breach,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

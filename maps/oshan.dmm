@@ -969,7 +969,7 @@
 /area/station/security/brig)
 "acY" = (
 /obj/table/glass/reinforced/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /obj/item/hand_labeler,
 /obj/item/storage/firstaid/brain,
 /obj/cable{
@@ -2336,7 +2336,7 @@
 "aiy" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/item/paper/book/from_file/the_trial,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/pen/crayon/lipstick,
@@ -4314,7 +4314,7 @@
 /area/station/hangar/science)
 "apm" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "apn" = (
@@ -8149,17 +8149,13 @@
 /area/station/storage/tools)
 "aBK" = (
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aBL" = (
 /obj/machinery/sim/vr_bed{
-	dir = 4;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
@@ -9042,7 +9038,7 @@
 	pixel_x = -2
 	},
 /obj/table/auto,
-/obj/towelbin{
+/obj/linen_bin/towel{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -9428,7 +9424,7 @@
 /area/station/crew_quarters/locker)
 "aFX" = (
 /obj/table/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 12
 	},
 /obj/item/storage/pill_bottle/salicylic_acid,
@@ -17725,9 +17721,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "bop" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -20326,7 +20320,7 @@
 /area/station/ai_monitored/storage/eva)
 "bxL" = (
 /obj/table/wood/round/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer/disk,
 /obj/item/hand_tele,
 /obj/machinery/camera{
@@ -23794,9 +23788,7 @@
 	tag = ""
 	},
 /obj/machinery/sim/vr_bed{
-	dir = 8;
-	name = "VR simulation pod";
-	network = "arcadevr"
+	dir = 8
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -30997,7 +30989,7 @@
 /area/station/crew_quarters/lounge/port)
 "clT" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/item/item_box/medical_patches/mini_styptic{
 	pixel_x = 3;
 	pixel_y = 2
@@ -34725,7 +34717,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/space/fluid,
 /area/space)
 "gDO" = (
 /obj/disposalpipe/segment,
@@ -40331,6 +40323,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "nYa" = (
@@ -47265,12 +47258,12 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;

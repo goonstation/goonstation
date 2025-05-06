@@ -14,8 +14,8 @@ var/global/list/mapNames = list(
 	// commented out ones were previously non existent.
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
-	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
-	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
+	"Event" =				list("id" = "EVENT",		"settings" = "clarion",			"playerPickable" = FALSE),
+	// "1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 
 #ifdef RP_MODE
@@ -24,29 +24,22 @@ var/global/list/mapNames = list(
 	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 #endif
 
-	"Cogmap 1 (Old)" =		list("id" = "COGMAP_OLD",	"settings" = "cogmap_old"),
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
-	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
-	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
-	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
+	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
+	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 
-	"Manta" =				list("id" = "MANTA",		"settings" = "manta",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
-	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
-	"Horizon" =				list("id" = "HORIZON",		"settings" = "horizon",			"playerPickable" = FALSE),
-	"Crash" = 				list("id" = "CRASH",		"settings" = "horizon/crash",	"playerPickable" = FALSE),
+	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
+	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
-	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
-	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
-	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
-	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
-	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
+	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69),
 )
 
 /obj/landmark/map
@@ -281,35 +274,6 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list()
 
-/datum/map_settings/pamgoc
-	name = "PAMGOC"
-	goonhub_map = "/maps/cogmap"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	airlock_style = "pyro"
-
-	escape_dir = SOUTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	job_limits_override = list(
-		/datum/job/civilian/clown = 2 // pamgoc can have a little clown, as a treat
-	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
@@ -403,18 +367,6 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 	)
-
-/datum/map_settings/cogmap_old
-	name = "COGMAP_OLD"
-	escape_dir = SOUTH
-	walls = /turf/simulated/wall
-	rwalls = /turf/simulated/wall/r_wall
-	auto_walls = FALSE
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
@@ -709,62 +661,19 @@ var/global/list/mapNames = list(
 		for_by_tcl(spawner, /obj/eva_suit_spawner)
 			spawner.spawn_gear()
 
-
-/datum/map_settings/destiny
-	name = "DESTINY"
-	display_name = "NSS Destiny"
+/datum/map_settings/clarion
+	name = "CLARION"
+	display_name = "NSS Clarion"
 	style = "ship"
-	default_gamemode = "extended"
-	goonhub_map = "/maps/destiny"
+	goonhub_map = "/maps/clarion"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
+	escape_dir = NORTH
 
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1/south,
 		/atom/movable/screen/parallax_render_source/space_2/south,
 		)
-
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	airlock_style = "pyro"
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/lobby),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		//"the refinery (arc smelter)" = list(/area/station/mining/refinery),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
-		"the bar" = list(/area/station/crew_quarters/bar),
-		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the robotics lab" = list(/area/station/medical/robotics),
-		"the escape shuttle dock" = list(/area/station/hallway/secondary/exit),
-		"the kitchen" = list(/area/station/crew_quarters/kitchen))
-
-/datum/map_settings/destiny/clarion
-	name = "CLARION"
-	display_name = "NSS Clarion"
-	goonhub_map = "/maps/clarion"
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -907,58 +816,10 @@ var/global/list/mapNames = list(
 
 	job_limits_from_landmarks = TRUE
 
-/datum/map_settings/manta
-	name = "MANTA"
-	display_name = "NSS Manta"
-	goonhub_map = "/maps/manta"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
+/datum/map_settings/crash
+	name = "CRASH"
+	display_name = "Free Fall"
 	style = "ship"
-	arrivals_type = MAP_SPAWN_CRYO
-
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	airlock_style = "pyro"
-	shuttle_map_turf = /turf/space/fluid/manta
-
-	default_shuttle = "manta"
-	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap/manta
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap/manta
-
-	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
-		"the cargo bay" = list(/area/station/quartermaster/cargobay),
-		"the bridge" = list(/area/station/bridge),
-		"the medbay lobby" = list(/area/station/medical/medbay/lobby),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the communications office" = list(/area/station/communications/office),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the chemistry lab" = list(/area/station/science/chemistry),
-		"the hydroponics bay" = list(/area/station/hydroponics/bay),
-		"the Rising Tide bar" = list(/area/station/crew_quarters/cafeteria/the_rising_tide_bar))
-
-/datum/map_settings/horizon
-	name = "HORIZON"
-	display_name = "NSS Horizon"
-	style = "ship"
-	goonhub_map = "/maps/horizon"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -976,48 +837,6 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the main security room" = list(/area/station/security/main),
-		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
-		"the Engineering control room" = list(/area/station/engine/power),
-		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
-		"the main medical bay room" = list(/area/station/medical/medbay),
-		"the research artifact lounge" = list(/area/station/science/artifact),
-		"the cloning lab" = list(/area/station/medical/medbay/cloner),
-		"the hot loop" = list(/area/station/engine/hotloop),
-		"the mechanics' lab" = list(/area/station/engine/elect),
-		"the mining staff room" = list(/area/station/mining/staff_room),
-		"the robotics lab" = list(/area/station/medical/robotics),
-		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
-
-	job_limits_override = list(
-		/datum/job/civilian/clown = 2,
-		/datum/job/security/security_officer = 6,
-		/datum/job/security/detective = 1,
-		/datum/job/medical/geneticist = 3,
-		/datum/job/medical/roboticist = 3,
-		/datum/job/research/scientist = 6,
-		/datum/job/medical/medical_doctor = 7,
-		/datum/job/engineering/miner = 4,
-		/datum/job/engineering/engineer = 6,
-		/datum/job/civilian/chef = 2,
-		/datum/job/civilian/bartender = 2,
-		/datum/job/civilian/janitor = 3,
-		/datum/job/civilian/chaplain = 2,
-		/datum/job/special/attorney = 1,
-		/datum/job/special/atmospheric_technician = 1
-	)
-
-/datum/map_settings/horizon/crash
-	name = "CRASH"
-	display_name = "Free Fall"
 
 /datum/map_settings/mushroom
 	name = "MUSHROOM"
@@ -1048,48 +867,7 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 	)
-/datum/map_settings/trunkmap
-	name = "TRUNKMAP"
-	goonhub_map = "/maps/trunkmap"
-	escape_dir = NORTH
-	walls = /turf/simulated/wall
-	rwalls = /turf/simulated/wall/r_wall
-	auto_walls = FALSE
 
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-/datum/map_settings/density // I just copied cog2 for now, ok????
-	name = "density"
-	goonhub_map = "/maps/density"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	airlock_style = "pyro"
-
-	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
-
-	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
 
 /datum/map_settings/density2 // I just copied cog2 for now, ok????
 	name = "density2"
@@ -1125,88 +903,6 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
-
-/datum/map_settings/ozymandias
-	name = "OZYMANDIAS"
-	goonhub_map = "/maps/ozymandias"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/special/atmospheric_technician = 1,
-		/datum/job/special/hairdresser = 1,
-		/datum/job/research/research_assistant = 2,
-		/datum/job/medical/medical_assistant = 2
-	)
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	airlock_style = "pyro"
-
-	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	valid_nuke_targets = list("the security equipment wing" = list(/area/station/security/equipment),
-		"the central research sector hub" = list(/area/station/science/lobby),
-		"the quartermasters' office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the basketball court" = list(/area/station/crew_quarters/fitness),
-		"the medbay's central loop" = list(/area/station/medical/medbay),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
-		"the data center" = list(/area/station/crew_quarters/info),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the chapel reception hall" = list(/area/station/crew_quarters/quarters))
-
-/datum/map_settings/fleet
-	name = "FLEET"
-	display_name = "Bellerophon Fleet"
-	style = "ship"
-	goonhub_map = "/maps/bellerophon fleet"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	arrivals_type = MAP_SPAWN_CRYO
-	dir_fore = NORTH
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	escape_dir = EAST
-
-	merchant_left_centcom = null
-	merchant_left_station = null
-	merchant_right_centcom = null
-	merchant_right_station = null
-
-	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/garden/aviary),
-		"the Tenebrae primary zone" = list(/area/station/science/lobby),
-		"the Asclepius primary zone" = list(/area/station/medical/medbay),
-		"the Meridian primary zone" = list(/area/station/crew_quarters/captain),
-		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
-		"the Maru primary zone" = list(/area/station/engine/engineering),
-		"the Hammer primary zone" = list(/area/station/security/main))
 
 /datum/map_settings/devtest
 	name = "DEVTEST"
@@ -1244,6 +940,54 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list("the developer zone" = list(/area/station/devzone),
 		"the test chamber or space" = list(/area/space))
+
+
+/datum/map_settings/neon
+	name = "NEON"
+	display_name = "Neon Deepwater Research Facility, Abzu"
+	goonhub_map = "/maps/neon"
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/foreground/caustics,
+	)
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = EAST
+	default_shuttle = "oshan"
+	shuttle_map_turf = /turf/space/fluid
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the bridge" = list(/area/station/bridge),
+		"the quartermaster's office" = list(/area/station/quartermaster/office),
+		"the warehouse" = list(/area/station/storage/warehouse),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the main engineering room" = list(/area/station/engine/engineering),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the toxins lab" = list(/area/station/science/lab))
 
 
 /area/shuttle/merchant_shuttle/left_centcom
