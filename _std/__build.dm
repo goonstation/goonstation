@@ -144,7 +144,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
