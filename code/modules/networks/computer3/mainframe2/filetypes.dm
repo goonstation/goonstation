@@ -35,6 +35,7 @@
 	var/user_id = null
 	var/full_user = 0
 	var/datum/computer/file/mainframe_program/current_prog = null
+	var/tmp/datum/computer/file/mainframe_program/shell/base_shell_instance = null
 
 	disposing()
 		current_prog = null

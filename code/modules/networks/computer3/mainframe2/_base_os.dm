@@ -702,11 +702,16 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			var/datum/computer/file/mainframe_program/quitparent = caller_prog.parent_task
 			caller_prog.handle_quit()
 
-			if (istype(quitparent) && (quitparent != src) && !istype(quitparent, /datum/computer/file/mainframe_program/driver/mountable/radio)) // Hello, this last istype() is a dirty hack.
+			if (istype(quitparent) && !QDELETED(quitparent) && (quitparent != src) && !istype(quitparent, /datum/computer/file/mainframe_program/driver/mountable/radio)) // Hello, this last istype() is a dirty hack.
 				if (user.current_prog == caller_prog)
 					user.current_prog = quitparent
 				quitparent.useracc = user
 				quitparent.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
+
+			else if (QDELETED(quitparent))
+				if (user.current_prog == caller_prog)
+					user.current_prog = user.base_shell_instance
+				user.base_shell_instance.useracc = user
 
 			else if (shellexit && user) // Outermost shell should only exit if things go really wrong or the user logs out.
 				var/user_id = user.user_id
