@@ -265,7 +265,10 @@
 					prog.process()
 				catch(var/exception/e)
 					if(findtext(e.name, "Maximum recursion level reached"))
+						src.os:message_all_users("|nA program encountered a critical error (maximum recursion). [prog?.useracc?.user_id ? "The error was triggered by activity associated with terminal address: [prog.useracc.user_id]." : ""] Rebooting the mainframe.|n")
 						src.unload_all()
+						src.posted = 0
+						src.post_system()
 					else
 						throw e
 /*
@@ -564,6 +567,8 @@
 			return 1
 
 		unload_all()
+			if (src.os && hascall(src.os, "message_all_users"))
+				src.os:logout_all_users(FALSE)
 			src.os = null
 			for(var/datum/computer/file/mainframe_program/M in src.processing)
 				src.unload_program(M)

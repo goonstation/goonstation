@@ -1184,6 +1184,17 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 	user.dispose()
 	return FALSE
 
+/// Log out all users, terminating any programs they are using, and removing all user record files
+/datum/computer/file/mainframe_program/os/kernel/proc/logout_all_users(disconnect = FALSE)
+	for (var/user_id in src.users)
+		var/datum/mainframe2_user_data/user = src.users[user_id]
+		if (!istype(user))
+			continue
+		if (!istype(user.user_file))
+			continue
+
+		logout_user(user, disconnect)
+
 /// Initialise all drivers, setting up driver data and initialising them individually.
 /datum/computer/file/mainframe_program/os/kernel/proc/initialize_drivers()
 	var/datum/computer/folder/prototype_folder = src.parse_directory(setup_filepath_drivers_proto, src.holder.root, TRUE)
