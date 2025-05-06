@@ -34,5 +34,7 @@
 #define SAYFLAG_PREFIX_PROCESSED (1 << 14)
 /// This message should not be passed to an output module.
 #define SAYFLAG_DO_NOT_OUTPUT (1 << 15)
+/// This message should not be passed to `EQUIPPED` speech output modules.
+#define SAYFLAG_DO_NOT_PASS_TO_EQUIPPED_MODULES (1 << 16)
 /// This message should not be passed to a tree's message importing trees.
-#define SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES (1 << 16)
+#define SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES (1 << 17)

@@ -1541,7 +1541,11 @@ TYPEINFO(/mob/living/silicon/robot)
 					user.put_in_hand_or_drop(src.part_head.ai_interface)
 					src.radio = src.default_radio
 					if (src.module && istype(src.module.radio))
+						src.default_radio.toggle_speaker(FALSE)
 						src.radio = src.module.radio
+					else
+						src.default_radio.toggle_speaker(TRUE)
+
 					src.ears = src.radio
 					src.apply_radio_upgrade()
 					src.radio.set_loc(src)
@@ -1993,6 +1997,7 @@ TYPEINFO(/mob/living/silicon/robot)
 					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
+				src.radio.toggle_speaker(FALSE)
 				src.radio = RM.radio
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
@@ -2017,6 +2022,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				src.radio.toggle_speaker(TRUE)
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
 				src.apply_radio_upgrade()
