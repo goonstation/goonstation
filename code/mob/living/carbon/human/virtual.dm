@@ -21,11 +21,15 @@ TYPEINFO(/mob/living/carbon/human/virtual)
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
 		src.sims = null
 		if (is_ghost)
-			src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
-			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SPOKEN)
-			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
-			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_BLOBCHAT)
-			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_FLOCK_GLOBAL)
+			src.ensure_speech_tree()
+			src.speech_tree.AddSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
+			src.speech_tree.RemoveSpeechOutput(SPEECH_OUTPUT_SPOKEN)
+
+			src.ensure_listen_tree()
+			src.listen_tree.AddListenInput(LISTEN_INPUT_DEADCHAT)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_BLOBCHAT)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_FLOCK_GLOBAL)
+
 			src.default_speech_output_channel = SAY_CHANNEL_DEAD
 
 		SPAWN(0)
