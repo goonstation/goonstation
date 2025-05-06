@@ -41,10 +41,10 @@ export const acw: AlertContentWindow = {
         toxins.
       </p>
       <p>
-        5. Start attacks by sneakily draining brain from crew members. When they
-        become aware of you, use your ranged attack to slow them down. Use
-        Project and Spatial Swap for evation as needed. Use Project, Spatial
-        Swap, Paralyze, and Cosmic Light to gain asa much Intellect as you can.
+        5. Start attacks by sneakily using Brain Drain on crew members. When
+        they become aware of you, use your ranged attack to slow them down. Use
+        Project and Spatial Swap for evasion as needed. Use Project, Spatial
+        Swap, Paralyze, and Cosmic Light to gain as much Intellect as you can.
         Finish off the attack with by using Pierce the Veil on the target.
       </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
