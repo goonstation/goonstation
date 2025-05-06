@@ -246,24 +246,6 @@
 
 		src.updateButtons()
 
-	proc/transmit_thrall_msg(var/message,var/mob/sender)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return
-
-		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
-		logTheThing(LOG_SAY, sender, "(GHOULSPEAK): [message]")
-
-		if (sender.client && sender.client.ismuted())
-			boutput(sender, "You are currently muted and may not speak.")
-			return
-
-		sender.say_thrall(message, src)
-
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 

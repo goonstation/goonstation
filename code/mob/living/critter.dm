@@ -1187,65 +1187,29 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
+
+	if (!message)
+		return
+
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					if(m_type & 1)
-						chat_text.plane = PLANE_NOSHADOW_ABOVE
-						chat_text.layer = 420
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-	else
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else if (m_type & 2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else if (!isturf(src.loc))
-				var/atom/A = src.loc
-				for (var/mob/O in A.contents)
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-
-
-/mob/living/critter/talk_into_equipment(var/mode, var/message, var/param)
-	switch (mode)
-		if ("left hand")
-			for (var/i = 1, i <= hands.len, i++)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		if ("right hand")
-			for (var/i = hands.len, i >= 1, i--)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		else
-			..()
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 /mob/living/critter/update_burning()
 	if (can_burn)
@@ -1541,21 +1505,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	if (mcolor)
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
-
-/mob/living/critter/say(var/message)
-	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (dd_hasprefix(message, "*") || isdead(src))
-		..(message)
-		return
-
-	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
-		if (length(message) >= 2)
-			if (copytext(lowertext(message), 1, 3) == ":s")
-				message = copytext(message, 3)
-				src.robot_talk(message)
-				return
-	..()
 
 /mob/living/critter/blob_act(var/power)
 	logTheThing(LOG_COMBAT, src, "is hit by a blob")

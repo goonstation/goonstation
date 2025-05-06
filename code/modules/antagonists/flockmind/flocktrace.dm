@@ -50,4 +50,4 @@
 		boutput(src.owner.current, SPAN_BOLD("In this form, you cannot be harmed, but you can't do anything to the world at large."))
 		boutput(src.owner.current, SPAN_ITALIC("Tip: Click-drag yourself onto unoccupied drones to take direct control of them."))
 		boutput(src.owner.current, SPAN_NOTICE("You are part of the [SPAN_BOLD("[flock.name]")] flock."))
-		flock_speak(null, "Trace partition [src.owner.current.real_name] has been instantiated.", src.flock)
+		src.flock.system_say_source.say("Trace partition [src.owner.current.real_name] has been instantiated.")

@@ -851,12 +851,12 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-listenOoc")
-				src.listen_ooc = !src.listen_ooc
+				usr.client.toggle_ooc(!src.listen_ooc)
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-listenLooc")
-				src.listen_looc = !src.listen_looc
+				usr.client.toggle_looc(!src.listen_looc)
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1019,7 +1019,7 @@ var/list/removed_jobs = list(
 				src.flying_chat_hidden = FALSE
 				src.local_deadchat = FALSE
 				src.auto_capitalization = FALSE
-				src.listen_ooc = TRUE
+				usr.client.toggle_ooc(TRUE)
 				src.view_changelog = TRUE
 				src.view_score = TRUE
 				src.view_tickets = TRUE

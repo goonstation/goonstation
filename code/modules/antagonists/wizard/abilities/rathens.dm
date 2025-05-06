@@ -15,7 +15,7 @@
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ARSE NATH", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("ARSE NATH", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		playsound(holder.owner, 'sound/voice/farts/superfart.ogg', 25, 1)
