@@ -3293,6 +3293,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "cBE" = (
+/obj/item/paper/current_turbines,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southeast)
 "cCe" = (
@@ -14585,6 +14586,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/paper/current_turbines,
 /turf/simulated/floor/black,
 /area/station/engine/substation/northwest)
 "jSa" = (
@@ -21654,6 +21656,7 @@
 /area/diner/kitchen)
 "oXX" = (
 /obj/machinery/light/small/sticky/frostedred,
+/obj/item/paper/current_turbines,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southwest)
 "oYi" = (
@@ -23171,6 +23174,11 @@
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/chapel/office)
+"pWx" = (
+/obj/turbine_shaft,
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "pWF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -89190,7 +89198,7 @@ qpn
 qpn
 qpn
 tXQ
-qgn
+pWx
 pRb
 qvw
 udR
