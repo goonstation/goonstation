@@ -44,15 +44,18 @@
 		return
 
 	var/text = lawbringer.sanitize_talk(message.content)
-	if (!lawbringer.fingerprints_can_shoot(H))
-		if (src.valid_modes[text])
+	var/list/words = splittext(text, " ")
+
+	for(var/word in words)
+		if(!src.valid_modes[word])
+			continue
+		if (!lawbringer.fingerprints_can_shoot(H))
 			global.random_burn_damage(H, 50)
 			H.changeStatus("knockdown", 4 SECONDS)
 			global.elecflash(lawbringer, power = 2)
 			H.visible_message(SPAN_ALERT("[H] tries to fire [lawbringer]! The gun initiates its failsafe mode."))
-
+			return
+		lawbringer.change_mode(H, word)
+		H.update_inhands()
+		lawbringer.UpdateIcon()
 		return
-
-	lawbringer.change_mode(H, text)
-	H.update_inhands()
-	lawbringer.UpdateIcon()
