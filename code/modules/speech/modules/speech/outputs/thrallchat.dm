@@ -1,6 +1,7 @@
 /datum/speech_module/output/bundled/thrallchat
 	id = SPEECH_OUTPUT_THRALLCHAT
 	channel = SAY_CHANNEL_THRALL
+	speech_prefix = SPEECH_PREFIX_THRALLCHAT
 	var/role = ""
 	var/css_class = ""
 
@@ -48,3 +49,4 @@
 /datum/speech_module/output/bundled/thrallchat/global_thrallchat
 	id = SPEECH_OUTPUT_THRALLCHAT_GLOBAL
 	channel = SAY_CHANNEL_GLOBAL_THRALL
+	speech_prefix = null

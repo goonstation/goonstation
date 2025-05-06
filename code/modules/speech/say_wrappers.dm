@@ -46,21 +46,22 @@
 
 	src.say_verb("; [message]")
 
-/mob/verb/say_radio()
-	set name = "say_radio"
-	set hidden = TRUE
-
-/mob/living/say_radio()
-	set name = "say_radio"
+/mob/verb/say_over_channel()
+	set name = "say_over_channel"
 	set hidden = TRUE
 
 	var/list/choices = list()
 	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		var/list/prefix_choice = prefix_module.get_prefix_choices()
-		if (!length(prefix_choice))
+		if (istype(prefix_module, /datum/speech_module/prefix/premodifier/channel))
+			var/datum/speech_module/prefix/premodifier/channel/channel_prefix = prefix_module
+			if (channel_prefix.channel_id == src.default_speech_output_channel)
+				continue
+
+		var/list/prefix_choices = prefix_module.get_prefix_choices()
+		if (!length(prefix_choices))
 			continue
 
-		choices += prefix_choice
+		choices += prefix_choices
 
 	if (!length(choices))
 		return
@@ -69,13 +70,13 @@
 	if (length(choices) == 1)
 		choice = choices[1]
 	else
-		choice = input("", "Select Radio Channel") as null | anything in choices
+		choice = input("", "Select Speech Channel") as null | anything in choices
 
 	if (!choice)
 		return
 
 	var/prefix = choices[choice]
-	var/message = input("", "Speaking to [choice] Frequency") as null | text
+	var/message = input("", "Speaking To [choice]") as null | text
 	if (!message)
 		return
 
@@ -100,7 +101,7 @@
 
 ADMIN_SAY_PROC(blobsay, SAY_CHANNEL_BLOB, null)
 ADMIN_SAY_PROC(dronesay, SAY_CHANNEL_GHOSTDRONE, null)
-ADMIN_SAY_PROC(dsay, SAY_CHANNEL_DEAD, SPEECH_OUTPUT_DEADCHAT)
+ADMIN_SAY_PROC(dsay, SAY_CHANNEL_DEAD, SPEECH_OUTPUT_DEADCHAT_ADMIN)
 ADMIN_SAY_PROC(flocksay, SAY_CHANNEL_GLOBAL_FLOCK, null)
 ADMIN_SAY_PROC(hivesay, SAY_CHANNEL_GLOBAL_HIVEMIND, null)
 ADMIN_SAY_PROC(kudzusay, SAY_CHANNEL_KUDZU, null)

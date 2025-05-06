@@ -47,7 +47,6 @@
 			src.ability_holder.master = src.master_ability_holder
 			src.master_ability_holder.thralls += H
 
-		src.ability_holder.addAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
 
 		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_THRALL, subchannel = "\ref[src.master_ability_holder]")
@@ -61,7 +60,6 @@
 		if (src.ability_holder.master)
 			src.ability_holder.master.thralls -= H
 
-		src.ability_holder.removeAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)
 		H.remove_ability_holder(/datum/abilityHolder/vampiric_thrall)
 

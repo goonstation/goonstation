@@ -14,6 +14,7 @@
 //------------ Speech Outputs ------------//
 #define SPEECH_OUTPUT_BLOBCHAT "blobchat"
 #define SPEECH_OUTPUT_DEADCHAT "deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_ADMIN "admin_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_ANNOUNCER "deadchat_announcer"
 #define SPEECH_OUTPUT_DEADCHAT_GHOST "ghost_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_POLTERGEIST "poltergeist_deadchat"
@@ -32,6 +33,7 @@
 #define SPEECH_OUTPUT_HIVECHAT_LEGWORM "legworm_hivechat"
 #define SPEECH_OUTPUT_HIVECHAT_MEMBER "member_hivechat"
 #define SPEECH_OUTPUT_KUDZUCHAT "kudzuchat"
+#define SPEECH_OUTPUT_KUDZUCHAT_ADMIN "admin_kudzuchat"
 #define SPEECH_OUTPUT_LOOC "looc"
 #define SPEECH_OUTPUT_MARTIAN "martian"
 #define SPEECH_OUTPUT_MARTIAN_LEADER "martian_leader"
@@ -147,7 +149,9 @@
 #define SPEECH_PREFIX_AI_RADIO_DEFAULT "ai_radio_default"
 #define SPEECH_PREFIX_AI_RADIO_GENERAL "ai_radio_default_general"
 #define SPEECH_PREFIX_DEADCHAT "deadchat"
+#define SPEECH_PREFIX_HIVECHAT "hivechat"
 #define SPEECH_PREFIX_INTERCOM "intercom"
+#define SPEECH_PREFIX_KUDZUCHAT "kudzuchat"
 #define SPEECH_PREFIX_LEFT_HAND "left_hand"
 #define SPEECH_PREFIX_LOOC "looc"
 #define SPEECH_PREFIX_OOC "ooc"
@@ -155,6 +159,7 @@
 #define SPEECH_PREFIX_RADIO_GENERAL "radio_general"
 #define SPEECH_PREFIX_RIGHT_HAND "right_hand"
 #define SPEECH_PREFIX_SILICON "silicon"
+#define SPEECH_PREFIX_THRALLCHAT "thrallchat"
 
 
 //------------ Listen Inputs ------------//

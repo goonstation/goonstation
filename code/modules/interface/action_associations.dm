@@ -37,7 +37,7 @@ var/list/action_names = list(
 	"look_e" = "Look East",
 
 	"say" = "Say",
-	"say_radio" = "Say Radio",
+	"say_over_channel" = "Say Over Channel",
 	"say_main_radio" = "Say Main Radio",
 	"dsay" = "Dead Say",
 	"asay" = "Admin Say",
@@ -92,7 +92,7 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say_radio" = "say_radio",
+	"say_over_channel" = "say_over_channel",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
 	"dab" = "me_hotkey dab",

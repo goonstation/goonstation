@@ -217,34 +217,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		return original_butt
 
 
-/datum/targetable/changeling/hivesay
-	name = "Speak Hivemind"
-	desc = "Speak to your own collected minds telepathically."
-	icon_state = "hivesay"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
-	human_only = 0
-	can_use_in_container = 1
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	incapacitationCheck()
-		return 0
-
-	cast(atom/target)
-		if (..())
-			return TRUE
-
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-
-		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_HIVEMIND))
-		return FALSE
-
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"
 	desc = "Remove a member of your hivemind at no penalty."
