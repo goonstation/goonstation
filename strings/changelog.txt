@@ -1,5 +1,9 @@
 
 (t)tue may 06 25
+(u)Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
+(p)19180
+(e)🔧🔎🔒🔄❗⚙|A-Tooling, C-Code-Quality, A-Secret, C-Rework, E-FUCK, A-Internal
+(*)The entire speech system has been reworked; anything that can say or hear something now uses an entirely different system to do so, including you. Please report any bugs.
 (u)TDHooligan
 (p)23257
 (e)⚖|C-Balance
