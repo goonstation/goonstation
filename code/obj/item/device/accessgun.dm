@@ -6,7 +6,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 /obj/item/device/accessgun
 	name = "Access Pro"
-	desc = "This device can reprogram electronic access requirements. Activate it in-hand while empty to configure."
+	desc = "This device can reprogram electronic access requirements. Activate it in-hand to configure."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
 	item_state = "accessgun"
