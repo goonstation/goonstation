@@ -94,8 +94,8 @@
 			return
 
 		if(!admin_override && (length(candidates) < src.minimum_count) )
-			message_admins("Couldn't set up Salvager; insufficient ghosts responded ([length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
-			logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; insufficient ghosts responded ([length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
+			message_admins("Couldn't set up Salvager; insufficient ghosts responded (had [length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Salvager; insufficient ghosts responded (had [length(candidates)], needed [src.minimum_count]). Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
