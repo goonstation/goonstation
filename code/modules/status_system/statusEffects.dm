@@ -3714,45 +3714,45 @@
 	icon_state = "mimicface"
 	visible = TRUE
 	movement_modifier = /datum/movement_modifier/mimic
-	var/last_speed = null
-	var/last_amount = null
+	var/pixels = null
 	var/speed_string = null
 
 	getTooltip()
 		var/mob/living/critter/mimic/mob_owner = src.owner
 		return "Health: [mob_owner.max_health], Speed: [speed_string]"
 
-	onUpdate()
-		..()
-		var/mob/living/critter/mimic/mob_owner = src.owner
-		var/new_amount = mob_owner.pixel_amount
-		if (new_amount != src.last_amount)
-			src.last_amount = new_amount
-			scale()
+	onAdd(optional)
+		. = ..()
+		src.pixels = optional
+		scale()
 
 	proc/scale()
 		var/health = null
 		var/mob/living/critter/mimic/mob_owner = src.owner
-		REMOVE_MOVEMENT_MODIFIER(mob_owner, src.movement_modifier, src)
-		if (src.last_amount <= 60)
+		REMOVE_MOVEMENT_MODIFIER(mob_owner, /datum/movement_modifier/mimic/, src)
+		if (src.pixels <= 70)
 			src.movement_modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
-		else if (src.last_amount <= 160)
+		else if (src.pixels <= 160)
 			src.movement_modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."
+		else if (src.pixels <= 800)
+			health = 50
 		else
-			health = src.last_amount / 12
+			health = src.pixels / 12
 			if (health > 120)
 				health = 120
 
-		if (health > 50 && health < 90)
+		if (health >= 50 && health <= 90)
 			src.movement_modifier = /datum/movement_modifier/mimic/mimic_slow
 			speed_string = "Slow."
 		else if (health >= 90)
 			src.movement_modifier = /datum/movement_modifier/mimic/mimic_superslow
 			speed_string = "Super slow..."
+		mob_owner.max_health = health
+		mob_owner.health = mob_owner.max_health
 		APPLY_MOVEMENT_MODIFIER(mob_owner, src.movement_modifier, src)
 		src.getTooltip()
 

@@ -6,7 +6,6 @@
 	targeted = TRUE
 	target_anything = TRUE
 	cooldown_after_action = TRUE
-	var/d_target = null
 
 	cast(atom/target)
 		if (..())
@@ -17,7 +16,6 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
 			return TRUE
-		d_target = target
 		var/mob/living/critter/mimic/parent = holder.owner
 		actions.start(new/datum/action/bar/private/mimic(src.holder.owner, target, holder), parent)
 		boutput(holder.owner, SPAN_ALERT("You begin to mimic [target]..."))
@@ -41,12 +39,11 @@
 		var/mob/living/critter/mimic/M = src.owner
 		var/datum/targetable/critter/mimic/abil = M.getAbility(/datum/targetable/critter/mimic)
 		abil.afterAction()
-		if (istype(src.owner, /mob/living/critter/mimic/antag_spawn))
-			M.setStatus("mimic_disguise", INFINITE_STATUS)
 		M.disguise_as(HH)
+		if (istype(src.owner, /mob/living/critter/mimic/antag_spawn))
+			M.setStatus("mimic_disguise", 10 SECONDS, M.pixel_amount)
 
 	onInterrupt()
 		..()
-		var/mob/living/critter/M = owner
-		boutput(M, SPAN_ALERT("Your transformation was interrupted!"))
+		boutput(owner, SPAN_ALERT("Your transformation was interrupted!"))
 
