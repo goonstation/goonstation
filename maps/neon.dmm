@@ -17062,6 +17062,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/item/ghostboard,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
