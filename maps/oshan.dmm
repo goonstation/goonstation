@@ -13107,9 +13107,17 @@
 "aTo" = (
 /obj/machinery/light/incandescent/cool/very,
 /obj/table/reinforced/auto,
-/obj/item/aiModule/removeCrew,
-/obj/item/aiModule/removeCrew,
-/obj/item/aiModule/emergency,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5;
+	pixel_x = -8
+	},
+/obj/item/aiModule/emergency{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/obj/item/aiModule/removeCrew{
+	pixel_x = 7
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aTp" = (

@@ -2185,9 +2185,14 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersB)
 "ahz" = (
-/obj/item/aiModule/makeCaptain,
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -9
+	},
 /obj/table/reinforced/auto,
 /obj/machinery/firealarm/west,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "ahA" = (
