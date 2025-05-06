@@ -20936,6 +20936,7 @@
 /obj/item/pen{
 	rand_pos = 0
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},

@@ -652,6 +652,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			B6.pixel_x = 6
 			return 1
 
+
 /obj/storage/secure/closet/medical/anesthetic
 	name = "anesthetic storage locker"
 	icon_closed = "medical_anesthetic"

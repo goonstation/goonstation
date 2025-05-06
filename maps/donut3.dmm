@@ -47905,6 +47905,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "oAr" = (
