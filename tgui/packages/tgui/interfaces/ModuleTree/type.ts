@@ -62,7 +62,7 @@ export interface VarReferenceProps {
   arguments?: string[];
 }
 
-// The interface for a list of reference variables
+// The interface for a list of reference variables.
 export interface VarReferenceListProps {
   variable_list: VarReferenceProps[];
 }

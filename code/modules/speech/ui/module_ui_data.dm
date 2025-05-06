@@ -1,3 +1,4 @@
+/// Returns a list of props for the different variables that this module should display in the module tree UI.
 /datum/speech_module/proc/get_ui_variables()
 	return list()
 
@@ -49,6 +50,7 @@
 	. += list(prefix_id_var)
 
 
+/// Returns a list of props for the different variables that this module should display in the module tree UI.
 /datum/listen_module/proc/get_ui_variables()
 	return list()
 
