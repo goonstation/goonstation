@@ -1,5 +1,9 @@
 
 (t)tue may 06 25
+(u)glowbold
+(p)23045
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Singularity Emitters have an emag interaction.
 (u)JORJ949
 (p)23314
 (e)🗺🎨|A-Mapping, C-Sprites
