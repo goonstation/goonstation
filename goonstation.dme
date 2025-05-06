@@ -1613,6 +1613,7 @@
 #include "code\modules\minimap\renderer\modifiers\_modifier_parent.dm"
 #include "code\modules\minimap\renderer\modifiers\doors.dm"
 #include "code\modules\minimap\renderer\modifiers\walls.dm"
+#include "code\modules\mining\mining_encounter_objects.dm"
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"
 #include "code\modules\mining\tile_events.dm"

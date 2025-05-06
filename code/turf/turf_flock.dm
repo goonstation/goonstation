@@ -390,3 +390,9 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/proc/off()
 	src.on = FALSE
 	src.UpdateIcon()
+
+/turf/simulated/wall/auto/feather/strong
+	name = "strong glowing wall"
+	desc = "You can feel it thrumming and pulsing. It looks very strong, you probably won't be able to tear it down."
+	health = INFINITY
+	max_health = INFINITY
