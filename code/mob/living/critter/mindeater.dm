@@ -36,6 +36,8 @@
 
 	/// can fire psi bolts when disguised
 	var/can_fire_when_disguised = TRUE
+	/// if the mindeater's typed messages will go to fellow invaders, otherwise are said out loud
+	var/shared_speaking = TRUE
 
 	New()
 		src.name = "???" // set here so that in respawn popups the name doesn't appear as "???"
@@ -196,6 +198,13 @@
 		..()
 		if (src.pulling)
 			src.reveal(FALSE)
+
+	say(message)
+		if (!src.shared_speaking)
+			return ..()
+		//for (var/datum/mind/mind in ticker.mode.traitors)
+		for (var/mob/living/critter/mindeater/mindeater in mobs)
+			boutput(mindeater, "<span style='color:#8600C8'>[capitalize(src.real_name)] says: [message]</span>")
 
 	//say_understands(var/other)
 	//	return 1
@@ -367,6 +376,7 @@
 			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
 			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
+	/// turns psi bolt firing on/off when disguised
 	proc/toggle_psi_bolt()
 		src.can_fire_when_disguised = !src.can_fire_when_disguised
 
@@ -374,6 +384,15 @@
 			boutput(src, SPAN_NOTICE("You can now fire psi bolts when disguised."))
 		else
 			boutput(src, SPAN_NOTICE("You will no longer fire psi bolts when disguised."))
+
+	/// toggles where the mindeater's message goes when speaking
+	proc/toggle_shared_speaking()
+		src.shared_speaking = !src.shared_speaking
+
+		if (src.shared_speaking)
+			boutput(src, SPAN_NOTICE("Messages you type will now be sent to Invaders."))
+		else
+			boutput(src, SPAN_NOTICE("Messages you type will now be said aloud."))
 
 /obj/dummy/fake_mindeater
 	name = "???"
