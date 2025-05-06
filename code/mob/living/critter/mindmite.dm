@@ -14,6 +14,8 @@
 	ai_type = /datum/aiHolder/mindmite
 	is_npc = TRUE
 
+	density = FALSE
+
 	faction = list(FACTION_INTRUDER)
 	use_stamina = FALSE
 	has_genes = FALSE
@@ -36,6 +38,8 @@
 		..()
 		if (QDELETED(src))
 			return
+		if (!length(get_path_to(src, src.target_mob, 0)))
+			step_towards(src, src.target_mob, 32)
 
 	death()
 		..()
