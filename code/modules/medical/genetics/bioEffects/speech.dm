@@ -16,11 +16,14 @@
 	icon_state = "speech"
 	var/mixingdesk_allowed = TRUE
 
-	proc/OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = stutter(message)
-		return message
+	OnAdd()
+		src.owner.ensure_speech_tree().AddSpeechModifier(src.id)
+		. = ..()
+
+	OnRemove()
+		src.owner.ensure_speech_tree().RemoveSpeechModifier(src.id)
+		. = ..()
+
 
 /datum/bioEffect/speech/smile
 	name = "Frontal Gyrus Alteration Type-S"
@@ -38,11 +41,6 @@
 	lockedTries = 3
 	icon_state = "speech_smile"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = smilify(message)
-		return message
 
 /datum/bioEffect/speech/elvis
 	name = "Frontal Gyrus Alteration Type-E"
@@ -59,11 +57,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = elvisfy(message)
-		return message
 
 /datum/bioEffect/speech/chav
 	name = "Frontal Gyrus Alteration Type-C"
@@ -80,11 +73,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = chavify(message)
-		return message
 
 /datum/bioEffect/speech/scots
 	name = "Frontal Gyrus Alteration Type-F"
@@ -102,11 +90,6 @@
 	lockedTries = 3
 	var/danny_index = 0
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scotify(message)
-		return message
 
 /datum/bioEffect/speech/swedish
 	name = "Frontal Gyrus Alteration Type-B"
@@ -123,11 +106,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = borkborkbork(message)
-		return message
 
 /datum/bioEffect/speech/finnish
 	name = "Frontal Gyrus Alteration Type-FI"
@@ -144,11 +122,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = finnishify(message)
-		return message
 
 /datum/bioEffect/speech/german
 	name = "Frontal Gyrus Alteration Type-DE"
@@ -165,13 +138,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = germify(message)
-		return message
-
-
 
 /datum/bioEffect/speech/tommy // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "Frontal Gyrus Alteration Type-T"
@@ -186,34 +152,6 @@
 	occur_in_genepools = FALSE // NO ALSO
 	can_make_injector = FALSE
 	can_copy = FALSE
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = tommify(message)
-		return message
-
-/*
-/datum/bioEffect/speech/wonk // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
-	name = "Frontal Gyrus Alteration Type-W"
-	desc = "unfunny"
-	id = "accent_wonk"
-	effectType = EFFECT_TYPE_DISABILITY
-	isBad = TRUE
-	msgGain = "Fuckable owwwwwwwls!"
-	msgLose = "More like honk."
-	reclaim_fail = 10
-	probability = FALSE // NO
-	occur_in_genepools = FALSE // NO ALSO
-	can_make_injector = FALSE
-	can_copy = FALSE
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = wonkify(message)
-		return message
-*/ //Actually, let's not have this appear fucking anywhere at all! ~warc
 
 
 /datum/bioEffect/speech/comic
@@ -232,25 +170,6 @@
 	lockedTries = 3
 	icon_state = "speech_clown"
 
-	OnAdd()
-		var/mob/living/L = owner
-		if (istype(L))
-			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
-		. = ..()
-
-	OnRemove()
-		. = ..()
-		if (!.)
-			return
-		var/mob/living/L = owner
-		if (istype(L))
-			L.speechpopupstyle = ""
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		return message
-		// just let this one handle itself for now
 
 /datum/bioEffect/speech/badmin
 	name = "Frontal Gyrus Alteration Type-Badmin"
@@ -265,38 +184,12 @@
 	can_make_injector = FALSE
 	can_copy = FALSE
 
-	OnAdd()
-		var/mob/living/L = owner
-		if (istype(L))
-			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: red !important; text-shadow: 0 0 3px black; -dm-text-outline: 2px black;"
-		. = ..()
-
-	OnRemove()
-		. = ..()
-		if (!.)
-			return
-		var/mob/living/L = owner
-		if (istype(L))
-			L.speechpopupstyle = ""
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		return message
-		// just let this one handle itself for now
-
 	goodmin
 		name = "Frontal Gyrus Alteration Type-Goodmin"
 		desc = "Wow!"
 		id = "accent_goodmin"
 		msgGain = "You now speak with white, glowing text."
 		msgLose = "Back to normal text."
-
-		OnAdd()
-			. = ..()
-			var/mob/living/L = owner
-			if (istype(L))
-				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
 
 	rainbow
 		name = "Frontal Gyrus Alteration Type-Radmin"
@@ -305,36 +198,12 @@
 		msgGain = "You now speak with color-cycling text."
 		msgLose = "Back to normal text."
 
-		OnAdd()
-			. = ..()
-			var/mob/living/L = owner
-			if (istype(L))
-				L.speechpopupstyle = "color: white !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px black;"
-				animate_rainbow_glow(L.chat_text)
-
-		OnRemove()
-			. = ..()
-			if (!.)
-				return
-			var/mob/living/L = owner
-			if (istype(L))
-				L.speechpopupstyle = ""
-				L.chat_text.color = null
-				animate(L.chat_text)
-
-		rainglow
-			name = "Frontal Gyrus Alteration Type-Fabmin"
-			desc = "Glowy colors!"
-			id = "accent_fabmin"
-			msgGain = "You now speak with glowing, color-cycling text."
-			msgLose = "Back to normal text."
-
-			OnAdd()
-				. = ..()
-				var/mob/living/L = owner
-				if (istype(L))
-					L.speechpopupstyle = "color: black !important; text-shadow: 0px 0px 3px white; -dm-text-outline: 1px white;"
-					animate_rainbow_glow(L.chat_text)
+	rainglow
+		name = "Frontal Gyrus Alteration Type-Fabmin"
+		desc = "Glowy colors!"
+		id = "accent_fabmin"
+		msgGain = "You now speak with glowing, color-cycling text."
+		msgLose = "Back to normal text."
 
 /datum/bioEffect/speech/slurring
 	name = "Frontal Gyrus Alteration Type-D"
@@ -352,11 +221,6 @@
 	lockedTries = 3
 	icon_state = "speech_bad"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = say_drunk(message)
-		return message
 
 /datum/bioEffect/speech/unintelligable
 	name = "Frontal Gyrus Alteration Type-X"
@@ -377,11 +241,6 @@
 	lockedTries = 3
 	icon_state = "speech_bad"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = say_superdrunk(message)
-		return message
 
 /datum/bioEffect/speech/vowelitis
 	name = "Frontal Gyrus Alteration Type-O"
@@ -397,48 +256,7 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech_bad"
-	var/vowel_lower = "a"
-	var/vowel_upper = "A"
 
-	New()
-		..()
-		var/picker = rand(1,5)
-		switch(picker)
-			if(1)
-				vowel_lower = "a"
-				vowel_upper = "A"
-			if(2)
-				vowel_lower = "e"
-				vowel_upper = "E"
-			if(3)
-				vowel_lower = "i"
-				vowel_upper = "I"
-			if(4)
-				vowel_lower = "o"
-				vowel_upper = "O"
-			if(5)
-				vowel_lower = "u"
-				vowel_upper = "U"
-			else
-				vowel_lower = ""
-				vowel_upper = ""
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		message = replacetextEx(message, "a", vowel_lower)
-		message = replacetextEx(message, "e", vowel_lower)
-		message = replacetextEx(message, "i", vowel_lower)
-		message = replacetextEx(message, "o", vowel_lower)
-		message = replacetextEx(message, "u", vowel_lower)
-		message = replacetextEx(message, "A", vowel_upper)
-		message = replacetextEx(message, "E", vowel_upper)
-		message = replacetextEx(message, "I", vowel_upper)
-		message = replacetextEx(message, "O", vowel_upper)
-		message = replacetextEx(message, "U", vowel_upper)
-
-		return message
 
 /datum/bioEffect/speech/loud_voice
 	name = "High-Pressure Larynx"
@@ -455,17 +273,6 @@
 	lockedTries = 3
 	icon_state = "speech_loud"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		message = replacetext(message, "!", "!!!")
-		message = replacetext(message, ".", "!!!")
-		message = replacetext(message, "?", "???")
-		message = uppertext(message)
-		message += "!!!"
-
-		return message
 
 /datum/bioEffect/speech/reversed_speech
 	name = "Frontal Gyrus Alteration Type-R"
@@ -481,13 +288,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		message = reverse_text(message)
-
-		return message
 
 /datum/bioEffect/speech/quiet_voice
 	name = "Constricted Larynx"
@@ -504,16 +304,6 @@
 	lockedTries = 3
 	icon_state = "speech_mime"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		message = replacetext(message, "!", "...")
-		message = replacetext(message, "?", "..?")
-		message = lowertext(message)
-		message += "..."
-
-		return message
 
 /datum/bioEffect/monkey_speak
 	name = "Monkey Speak"
@@ -522,6 +312,15 @@
 	probability = 0
 	msgGain = "You feel one with the jungle!"
 	msgLose = "You feel less primal."
+
+	OnAdd()
+		src.owner.listen_tree.AddKnownLanguage(LANGUAGE_MONKEY)
+		. = ..()
+
+	OnRemove()
+		src.owner.listen_tree.RemoveKnownLanguage(LANGUAGE_MONKEY)
+		. = ..()
+
 
 /datum/bioEffect/speech/zalgo
 	name = "Eldritch Speech"
@@ -544,12 +343,6 @@
 	New()
 		src.msgGain = zalgoify(src.msgGain, rand(0,8), rand(0, 2), rand(0, 8))
 		..()
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = zalgoify(message, rand(0,2), rand(0, 1), rand(0, 2))
-		return message
 
 
 /datum/bioEffect/speech/void
@@ -574,25 +367,6 @@
 		src.msgGain = voidSpeak(src.msgGain)
 		..()
 
-	OnAdd()
-		var/mob/living/L = owner
-		L.speech_void = TRUE
-		. = ..()
-
-	OnRemove()
-		. = ..()
-		var/mob/living/L = owner
-		L.speech_void = FALSE
-
-	OnSpeak(var/message)
-		SPAWN(0)
-			var/image/chat_maptext/line = src.owner.chat_text.lines[length(src.owner.chat_text.lines)]
-			for (var/i in 1 to 22)
-				if (QDELETED(line))
-					break
-				line.transform = matrix(rand()/5 + 0.9, MATRIX_SCALE)
-				sleep(2)
-		return message
 
 /datum/bioEffect/speech/yee // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "yee"
@@ -612,11 +386,6 @@
 	can_scramble = FALSE
 	curable_by_mutadone = FALSE
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = yee_text(message)
-		return message
 
 /proc/yee_text(var/string)
 	var/modded = ""
@@ -660,6 +429,7 @@
 	P.chars_used = used
 	return P
 
+
 /datum/bioEffect/speech/butt
 	name = "Frontal Gyrus Alteration Type-BT"
 	desc = "Causes the language center of the brain to be connected to the subject's butt."
@@ -674,24 +444,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech_bad"
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !length(speech_list))
-			return ""
-
-		var/num_butts = rand(1,4)
-		var/counter = 0
-		while(num_butts)
-			counter++
-			num_butts--
-			speech_list[rand(1,speech_list.len)] = "butt"
-			if(counter >= (speech_list.len / 2) )
-				num_butts = 0
-
-		return jointext(speech_list, " ")
 
 
 /datum/bioEffect/speech/uwuwhatsthis //God is Dead
@@ -715,11 +467,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = uwutalk(message)
-		return message
 
 /datum/bioEffect/speech/literalowotalk
 	name = "Frontal Gyrus Alteration Type-OWO"
@@ -740,29 +487,6 @@
 	curable_by_mutadone = FALSE
 	acceptable_in_mutini = FALSE
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-
-		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !length(speech_list))
-			return ""
-
-		var/o = TRUE
-
-		for (var/i = 1 to length(speech_list))
-			o = 1
-			var/text = speech_list[i]
-			var/newtext = ""
-			for (var/j = 1 to length(text))
-				if (o)
-					newtext += "o"
-				else
-					newtext += "w"
-				o = !o
-			speech_list[i] = newtext
-
-		return jointext(speech_list, " ")
 
 /datum/bioEffect/speech/french
 	name = "Frontal Gyrus Alteration Type-Q"
@@ -779,11 +503,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = tabarnak(message)
-		return message
 
 /datum/bioEffect/speech/tyke
 	name = "Frontal Gyrus Alteration Type-Y"
@@ -800,11 +519,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = yorkify(message)
-		return message
 
 /datum/bioEffect/speech/scoob
 	name = "Frontal Gyrus Alteration Type-SD"
@@ -821,11 +535,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scoobify(message)
-		return message
 
 /datum/bioEffect/speech/scoob/less_dog
 	name = "Frontal Gyrus Alteration Type-BD" // bad dog 3=
@@ -846,11 +555,6 @@
 	curable_by_mutadone = FALSE
 	acceptable_in_mutini = FALSE
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scoobify(message, 1)
-		return message
 
 /datum/bioEffect/speech/thrall
 	name = "Frontal Gyrus Alteration Type-V"
@@ -871,10 +575,6 @@
 	curable_by_mutadone = FALSE
 	acceptable_in_mutini = TRUE
 
-	OnSpeak(message)
-		if (!istext(message))
-			return ""
-		return thrall_parse(message)
 
 /datum/bioEffect/speech/emoji
 	name = "Frontal Gyrus Alteration Type-😃"
@@ -892,32 +592,6 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	mixingdesk_allowed = FALSE
-	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
-	var/static/list/word_to_emoji = null
-	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
-
-	OnSpeak(message)
-		if (!istext(message))
-			return ""
-		var/list/words = splittext_char(message, src.word_regex)
-		var/list/out_words = list()
-		if(isnull(src.word_to_emoji))
-			src.word_to_emoji = json_decode(file2text("strings/word_to_emoji.json"))
-
-		for(var/word in words)
-			var/found = FALSE
-			for(var/suffix in src.suffixes)
-				if(suffix == "" || (length(word) > 3 && endswith(word, suffix)))
-					var/modword = suffix == "" ? word : copytext(word, 1, length(word) - length(suffix))
-					var/list/emojis = src.word_to_emoji[lowertext(modword)]
-					if(length(emojis))
-						out_words += pick(emojis)
-						found = TRUE
-						break
-			if(!found)
-				out_words += word
-
-		return jointext(out_words, "")
 
 
 /datum/bioEffect/speech/emoji/only
@@ -928,16 +602,6 @@
 	msgGain = "🧑⬅🗨🤪"
 	msgLose = "You don't feel like talking only in pictograms anymore."
 
-	OnSpeak(message)
-		var/processed = ..(message)
-		var/list/output = list()
-		for(var/i in 1 to length(processed))
-			var/char = text2ascii_char(processed, i)
-			if(char == 0)
-				break
-			else if(char > 127)
-				output += ascii2text(char)
-		return jointext(output, "")
 
 /datum/bioEffect/speech/lol
 	name = "Frontal Gyrus Alteration Type-LOL"
@@ -949,11 +613,6 @@
 	occur_in_genepools = FALSE
 	probability = 0 // Should not be player accessible
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = lolcat(message)
-		return message
 
 /datum/bioEffect/speech/pirate
 	name = "Frontal Gyrus Alteration Type-AR"
@@ -963,12 +622,6 @@
 	isBad = TRUE
 	msgGain = "Ye feel like a swashbucklin' pirate!"
 	msgLose = "You stop feeling like sailing the Seven Seas."
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = pirateify(message)
-		return message
 
 
 /datum/bioEffect/speech/scrambled
@@ -980,12 +633,6 @@
 	msgGain = "Yuo feel lkie yuor vicoe is sramlcbing."
 	msgLose = "Yuo feel yuor vicoe is no lnoger sramlcbing."
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = accent_scramble(message)
-		return message
-
 
 /datum/bioEffect/speech/word_scrambled
 	name = "Alteration Type Frontal Gyrus-WSC"
@@ -995,12 +642,6 @@
 	isBad = TRUE
 	msgGain = "Words your scrambled out come."
 	msgLose = "Scrambled no longer are your words."
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = accent_shuffle_words(message)
-		return message
 
 
 /datum/bioEffect/speech/mocking
@@ -1014,12 +655,6 @@
 	msgGain = "YoU fEeL lIkE mOcKiNg pEoPlE."
 	msgLose = "YoU dOn'T fEeL lIkE mOcKiNg pEoPlE aNyMoRe."
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = accent_mocking(message)
-		return message
-
 
 /datum/bioEffect/speech/leetspeak
 	name = "Fr0nT4l Gyrus 4lt3r4t10n TYP3-1337"
@@ -1030,17 +665,7 @@
 	msgGain = "Y0u f33l l1k3 4 h4ck3r."
 	msgLose = "You don't feel like a hacker anymore."
 	probability = 15
-	var/leet_chance = 35
 
-	// TODO: maybe apply to PDA messages and robospeak too?
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		var/leet_chance = src.leet_chance
-		leet_chance *= (src.power - 1) * 2 + 1
-		message = accent_hacker(message, leet_chance)
-		return message
 
 /datum/bioEffect/speech/piglatin
 	name = "Frontal Gyrus Alteration Type-Igpay-Atinlay"
@@ -1052,12 +677,6 @@
 	msgLose = "You stop speaking in pig latin."
 	probability = 15
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = accent_piglatin(message)
-		return message
-
 /datum/bioEffect/speech/bingus
 	name = "Frontal Gyrus Alteration Type-bingus"
 	desc = "Reconstructs the language center of the subject's brain to love bingus."
@@ -1067,8 +686,3 @@
 	msgLose = "Bingus my beloved :("
 	occur_in_genepools = FALSE
 	probability = 0 // Should not be player accessible
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		return bingus_parse(message)

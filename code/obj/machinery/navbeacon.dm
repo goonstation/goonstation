@@ -1227,3 +1227,79 @@ TYPEINFO(/obj/machinery/wirenav)
 		name = "tour beacon - Finish"
 		location = "tour13"
 		codes_txt = "tour;"
+
+/obj/machinery/navbeacon/tour/neon
+	tour0
+		name = "tour beacon - 'Arrivals'"
+		location = "tour0"
+		codes_txt = "tour;next_tour=tour1;desc=Hello and welcome to Nanotrasen's New-ish-est Research Facility on the surface of the planet Abzu. Let's start, shall we? \nThis here is the arrival lounge and cryogenics area. New crewmembers who were placed into stasis on their journey to the planet Abzu will be awakened here."
+
+	tour1
+		name = "tour beacon - 'Crew Quarters'"
+		location = "tour1"
+		codes_txt = "tour;next_tour=tour2;desc=Our first stop on our tour is the luxurious Crew Quarters featuring a spacious restroom facility, quiet resting chamber, and in this main room the lounge space!"
+
+	tour2
+		name = "tour beacon - 'Chapel'"
+		location = "tour2"
+		codes_txt = "tour;next_tour=tour3;desc=Next here we have the Nanotrasen Approved Multifaith and Nondenominational Religious or Nonreligious Chapel! All are welcome here to use this facility for any religious or non-religious ceremony."
+
+	tour3
+		name = "tour beacon - 'Engineering'"
+		location = "tour3"
+		codes_txt = "tour;next_tour=tour4;desc=This stop takes us outside our busy Engineering Department. These busy bees are hard at work ensuring our station is provided with ample power for continued operations."
+
+	tour4
+		name = "tour beacon - 'Cargo'"
+		location = "tour4"
+		codes_txt = "tour;next_tour=tour5;desc=Ah, the Cargo department. What can we say that they aren't using to demand greater pay and independence? They supply our station with lots of supplies and equipment! To the right is also the Pod Bay, Trader Dock, and Escape Shuttle Dock, where you may go in the event of emergencies or crew transfers."
+
+	tour5
+		name = "tour beacon - 'Bar'"
+		location = "tour5"
+		codes_txt = "tour;next_tour=tour6;desc=Oh goodie, the bar and cafeteria. If you find yourself in need of a break or a fine quality meal, this is the place! The chef has only been fined for sanitation related issues twice in the last 24 hours!"
+
+	tour6
+		name = "tour beacon - 'Bridge'"
+		location = "tour6"
+		codes_txt = "tour;next_tour=tour7;desc=The bridge. If Engineering is the beating heart of the station, the bridge is the brain! Commands and operations are dictated here by our fine Command staff. Perhaps if we're lucky we'll see the Captain!"
+
+	tour7
+		name = "tour beacon - 'Security'"
+		location = "tour7"
+		codes_txt = "tour;next_tour=tour8;desc=Wee woo wee woo, here comes Security! The Security staff are hard at work keeping our station safe from all kinds of threats, inside or outside. Don't break the law if you don't want to end up in the Brig!"
+
+	tour8
+		name = "tour beacon - 'Hydroponics'"
+		location = "tour8"
+		codes_txt = "tour;next_tour=tour9;desc=Can you smell that? Smells like something is being grown here. And that something is your food! Our Hydroponics department should be hard at work providing provisions for the Chef to prepare for your meals. Hopefully they're not growing weed..."
+
+	tour9
+		name = "tour beacon - 'Research'"
+		location = "tour9"
+		codes_txt = "tour;next_tour=tour10;desc=Click click clack. Can you hear that? That's the sound of PRODUCTIVITY! Our research staff are working hard to research the future for humanity! Perhaps even going on daring adventures..."
+
+	tour10
+		name = "tour beacon - 'Medical'"
+		location = "tour10"
+		codes_txt = "tour;next_tour=tour11;desc=CLEAR! Medical! If you find yourself ill or otherwise impaired due to adverse conditions, the Medical staff can get you patched up pronto! Medical insurance covered by your Nanotrasen standard employee contract. And if they can't treat your issue..."
+
+	tour11
+		name = "tour beacon - 'Cloning'"
+		location = "tour11"
+		codes_txt = "tour;next_tour=tour12;desc=...You get taken here, to our bleeding edge Cloning facility! Return to life within a matter of minutes!"
+
+	tour12
+		name = "tour beacon - '???'"
+		location = "tour12"
+		codes_txt = "tour;next_tour=tour13;desc= What would you do with a drunken spacer? What would you do with a..."
+
+	tour13
+		name = "tour beacon - 'Oh'"
+		location = "tour13"
+		codes_txt = "tour;next_tour=tour14;desc=Oh. You're still following me? Uhhh. Tour is over. Thank you. Go away."
+
+	tour14
+		name = "tour beacon - 'Back2base'"
+		location = "tour14"
+		codes_txt = "tour;"

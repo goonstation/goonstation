@@ -2,9 +2,9 @@
 /mob/living/carbon/human/get_desc()
 
 	var/ignore_checks = isobserver(usr)
-	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
+	var/examine_stopper = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) || 0
 	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
-		return "<br>[SPAN_ALERT("You can't seem to make yourself look at [src.name] long enough to observe anything!")]"
+		return "<br>[SPAN_ALERT("You can't seem to make yourself look at [examine_stopper >= 3 ? "this person" : src.name] long enough to observe anything!")]"
 
 	if (src.simple_examine || isghostdrone(usr))
 		return
@@ -436,7 +436,14 @@
 	if (GET_DIST(usr, src) < 4)
 		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br>[SPAN_ALERT("You analyze [src]'s vitals.")]<br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
-			scan_health_overhead(src, usr)
+			DISPLAY_MAPTEXT(src, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, src)
 			update_medical_record(src)
 
 	return jointext(., "")
+
+/mob/living/carbon/human/special_desc(dist, mob/user)
+	var/ignore_checks = isobserver(usr)
+	var/examine_stopper = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) || 0
+	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
+		return "[SPAN_ALERT("You can't seem to make yourself look at [examine_stopper >= 3 ? "this person" : src.name] long enough to observe anything!")]"
+	. = ..()

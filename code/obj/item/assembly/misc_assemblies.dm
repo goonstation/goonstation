@@ -561,7 +561,7 @@ Contains:
 	src.UpdateIcon()
 	src.add_fingerprint(user)
 	to_combine_atom.add_fingerprint(user)
-	var/obj/item/canbomb_detonator/new_detonator = new /obj/item/canbomb_detonator(get_turf(user), src, to_combine_atom)
+	var/obj/item/canbomb_detonator/new_detonator = new /obj/item/canbomb_detonator(payload, src, to_combine_atom)
 	new_detonator.master = payload // i swear, i want to kill that master-variable sooooo bad
 	new_detonator.attachedTo = payload
 	new_detonator.builtBy = user
@@ -590,6 +590,26 @@ Contains:
 	var/obj/item/new_trigger = new /obj/item/device/timer(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	src.set_up_new(null, new_trigger, new_applier)
+
+/////////////////////////////////////// Timer/igniter/butt /////////////////////////
+
+/obj/item/assembly/time_ignite_butt
+	secured = TRUE
+
+/obj/item/assembly/time_ignite_butt/New()
+	..()
+	var/obj/item/new_trigger = new /obj/item/device/timer(src)
+	var/obj/item/new_applier = new /obj/item/device/igniter(src)
+	var/obj/item/new_target = new /obj/item/clothing/head/butt(src)
+	src.set_up_new(null, new_trigger, new_applier, new_target)
+
+/obj/item/assembly/time_ignite_butt/prearmed
+
+/obj/item/assembly/time_ignite_butt/prearmed/New()
+	..()
+	var/obj/item/device/timer/assembly_timer = src.trigger
+	assembly_timer.time = 2 SECONDS
+	SEND_SIGNAL(assembly_timer, COMSIG_ITEM_ASSEMBLY_ACTIVATION, src)
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
 
@@ -749,6 +769,7 @@ Contains:
 	bomb_strength = 32
 
 /obj/item/assembly/timer_ignite_pipebomb/mini_syndicate
+	icon_state = "Pipe_Wired_Syndicate"
 	pipebomb_path = /obj/item/pipebomb/bomb/miniature_syndicate
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////

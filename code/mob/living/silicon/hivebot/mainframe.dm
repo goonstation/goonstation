@@ -5,7 +5,6 @@
 	icon_state = "hive_main"
 	health = 200
 	var/health_max = 200
-	robot_talk_understand = 2
 
 	anchored = ANCHORED
 	var/online = 1
@@ -56,31 +55,6 @@
 	src.mind?.register_death()
 
 	return ..(gibbed)
-
-
-/mob/living/silicon/hive_mainframe/say_understands(var/other)
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace.exclusive_language)
-			return 1
-	if (isrobot(other))
-		return 1
-	if (ishivebot(other))
-		return 1
-	if (isAI(other))
-		return 1
-	return ..()
-
-/mob/living/silicon/hive_mainframe/say_quote(var/text)
-	var/ending = copytext(text, length(text))
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[copytext(text, 1, length(text))]\"";
-
-	return "states, \"[text]\"";
-
 
 /mob/living/silicon/hive_mainframe/proc/return_to(var/mob/user)
 	if(user.mind)

@@ -1439,6 +1439,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	name = "Inferno Trailblazer"
 	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
 	hud_state = "trailblazer"
+	icon_state = "trailblazer"
 	f_active = TRUE
 
 	Use()

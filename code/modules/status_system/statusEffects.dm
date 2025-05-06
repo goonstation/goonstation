@@ -2744,7 +2744,7 @@
 	onAdd(optional)
 		..()
 		var/mob/living/M = src.owner
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		RegisterSignal(M, COMSIG_ATOM_SAY, PROC_REF(remove_self))
 		if (!istype(M) || !M.bioHolder)
 			src.remove_self()
 			return
@@ -2761,7 +2761,7 @@
 		if (src.added_accent)
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
-		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
 	id = "graffiti_blind"
@@ -3683,3 +3683,26 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/broken
+	id = "broken_madness"
+	name = "Broken"
+	desc = "You have been driven to madness by the immense psychic pressure of the unknowable minds drifting far above."
+	visible = TRUE
+	icon_state = "madness"
+
+	onAdd(optional)
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.addOverlayComposition(/datum/overlayComposition/insanity/large)
+
+	onRemove()
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		var/datum/antagonist/antag_datum = mob_owner.mind?.get_antagonist(ROLE_BROKEN)
+		if (!antag_datum || antag_datum.removing)
+			return
+		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
+		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
+		mob_owner.mind.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)

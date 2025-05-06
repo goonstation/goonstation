@@ -5,6 +5,7 @@
 	density = 1
 	flags = USEDELAY
 	anchored = ANCHORED
+	open_to_sound = TRUE
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
@@ -1900,7 +1901,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 /obj/machinery/vehicle/tank/minisub
 	name = "minisub"
 	body_type = "minisub"
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_OCEAN_PUSH
 	acid_damage_multiplier = 0.5
 
 	New()

@@ -37,3 +37,5 @@
 #define CAMERA_NETWORK_STICKERS	"stickers"
 /// Cargo routing cameras
 #define CAMERA_NETWORK_CARGO	"cargo"
+/// AI-only cameras
+#define CAMERA_NETWORK_AI_ONLY	"ai"

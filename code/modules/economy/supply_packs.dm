@@ -1451,7 +1451,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/administrative_id
 	name = "Administrative ID card"
 	desc = "1x Captain level ID"
-	contains = list(/obj/item/card/id/captains_spare)
+	contains = list(/obj/item/card/id/gold/captains_spare)
 	cost = PAY_EXECUTIVE*2
 	hidden = 1
 	containertype = null
