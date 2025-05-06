@@ -3474,6 +3474,9 @@ TYPEINFO(/mob)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
 
+/mob/proc/update_movement_modifiers()
+	process_movespeed_update()
+
 /mob/proc/scald_temp()
 	return src.base_body_temp + (src.temp_tolerance * 4)
 

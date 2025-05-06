@@ -1,4 +1,23 @@
 
+(t)tue may 06 25
+(u)TDHooligan
+(p)23257
+(e)⚖|C-Balance
+(*)Slowing effects are now applied & removed instantly, instead of on your next move. Tasers will be more affected by this change.
+(t)mon may 05 25
+(u)Chasu
+(p)23272
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Podbay doors now use an even frequency to communicate, allowing them to be manually targeted via packets
+(u)Cheekybrdy
+(p)23284
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Mental health first aid kits can now be found around the station, mainly in psychiatry offices.
+(t)sun may 04 25
+(u)JORJ949
+(p)23225
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Trainee roles now get job equipment matching that of the job they are training for.
 (t)sat may 03 25
 (u)TDHooligan
 (p)20352
