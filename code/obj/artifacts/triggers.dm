@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	var/static/word_dict = null
 	var/static/list/vowels = list("a", "e", "i", "o", "u")
 
-	New()
+	New(obj/artifact)
 		..()
 		if (!src.word_dict)
 			// need to account for words with no vowels
@@ -124,10 +124,14 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 			else
 				src.positions += "c" // consonant
 
+		if (artifact)
+			artifact.ensure_listen_tree()
+			artifact.listen_tree.AddListenInput(LISTEN_INPUT_OUTLOUD_RANGE_2)
+			artifact.listen_tree.AddListenEffect(LISTEN_EFFECT_ARTIFACT_TRIGGER)
+
 	proc/speech_act(text)
 		if (!text)
 			return
-		text = ckey(text[1])
 		if (length(text) != 5)
 			return "hint"
 		if (!(text in src.word_dict))

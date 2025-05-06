@@ -1,11 +1,15 @@
+TYPEINFO(/mob/living/carbon/human/virtual)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/carbon/human/virtual
 	real_name = "Virtual Human"
+	default_speech_output_channel = SAY_CHANNEL_DEAD
 	var/mob/body = null
 	var/isghost = 0 //Should contain a string of the original ghosts real_name
 	var/escape_vr = 0
 
-
-	New()
+	New(newLoc, is_ghost)
 		..()
 		sound_burp = 'sound/voice/virtual_gassy.ogg'
 		//sound_malescream = 'sound/voice/virtual_scream.ogg'
@@ -16,6 +20,11 @@
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
 		src.sims = null
+		if (!is_ghost)
+			src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SPOKEN)
+			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
+			src.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
@@ -60,23 +69,6 @@
 			src.death()
 		return
 
-	say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
-		if(!isghost)
-			return ..()
-
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return src.emote(copytext(message, 2),1)
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
-
-		. = src.say_dead(message, 1)
-
 	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
@@ -86,12 +78,6 @@
 			if (txt == "custom" || txt == "customh" || txt == "customv" || txt == "me" || txt == "airquote" || txt == "airquotes")
 				boutput(usr, "You may not use that emote as a Virtual Spectre.")
 				return
-		..()
-
-	whisper(message as text, forced=FALSE)
-		if (isghost)
-			boutput(usr, "You may not use that emote as a Virtual Spectre.")
-			return
 		..()
 
 

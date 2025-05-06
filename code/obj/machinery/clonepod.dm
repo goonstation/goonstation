@@ -23,6 +23,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	open_to_sound = TRUE
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.

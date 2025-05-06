@@ -167,6 +167,16 @@
 /// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
 #define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"
 
+// ---- Speech System ----
+/// When a speech module tree's speaker origin is updated. (speech tree, old_speaker_origin, new_speaker_origin)
+#define COMSIG_SPEAKER_ORIGIN_UPDATED "speaker_origin_updated"
+/// When a listen module tree's listener origin is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_ORIGIN_UPDATED "listener_origin_updated"
+/// When a listen module tree's listener parent is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_PARENT_UPDATED "listener_parent_updated"
+/// Flush all message buffers associated with the target datum.
+#define COMSIG_FLUSH_MESSAGE_BUFFER "flush_message_buffer"
+
 // ---- Client Signals ----
 /// When a client logs into a mob. (client, mob)
 #define COMSIG_CLIENT_LOGIN "client_login"

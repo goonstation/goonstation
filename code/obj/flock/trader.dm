@@ -333,6 +333,10 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 ///////////////////////
 // FLOCKTRADER SCREEN
 ///////////////////////
+TYPEINFO(/obj/flock_screen)
+	start_speech_modifiers = list(SPEECH_MODIFIER_FLOCK_GRADIENT)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/flock_screen
 	icon = 'icons/misc/featherzone-64x32.dmi'
 	icon_state = "screen-off"
@@ -340,6 +344,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	desc = "Huh."
 	density = 1
 	anchored = ANCHORED
+	speech_verb_say = "beeps"
 	var/obj/npc/trader/flock/trader
 
 /obj/flock_screen/proc/show_icon(var/state)
@@ -350,11 +355,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	icon_state = "screen-[state]"
 	sleep(4 SECONDS)
 	icon_state = "screen-off"
-
-/obj/flock_screen/proc/say(var/message)
-	if(!message)
-		return
-	src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\""))
 
 ////////////////////////////////
 // FLOCKTRADER DONATE RECLAIMER

@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			object.streak_object(direction, src.streak_decal)
 
 		if(prob(60))
-			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(holder, TYPE_PROC_REF(/atom, emote), "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder

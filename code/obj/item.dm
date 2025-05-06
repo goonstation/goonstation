@@ -1023,9 +1023,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	return
 
-/obj/item/proc/talk_into(mob/M as mob, text, secure, real_name, lang_id)
-	return
-
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
 	return
 
