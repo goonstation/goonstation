@@ -33155,6 +33155,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "wBC" = (
