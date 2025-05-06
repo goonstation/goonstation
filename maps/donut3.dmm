@@ -10409,19 +10409,6 @@
 	},
 /turf/simulated/floor/yellowblack/corner,
 /area/station/engine/inner)
-"cXm" = (
-/obj/machinery/light/incandescent/cool,
-/obj/disposalpipe/segment/mail,
-/obj/table/glass/auto,
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = -11
-	},
-/obj/machinery/recharger/defibrillator,
-/obj/item/reagent_containers/syringe/haloperidol{
-	pixel_x = 8
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "cXs" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/purple/standard/edge{
@@ -29594,6 +29581,23 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/science/testchamber/bombchamber)
+"iXk" = (
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/clipboard{
+	pixel_x = -11;
+	pixel_y = -6
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_x = 7;
+	pixel_y = 23
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/carpet/blue,
+/area/station/medical/breakroom)
 "iXm" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/storage/crate,
@@ -35991,6 +35995,19 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"kRN" = (
+/obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment/mail,
+/obj/table/glass/auto,
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = -11
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/reagent_containers/syringe/haloperidol{
+	pixel_x = 8
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "kRW" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
@@ -36365,23 +36382,6 @@
 /obj/decal/poster/wallsign/stencil/right/one,
 /turf/simulated/wall/auto/jen,
 /area/station/library/reading1)
-"kYU" = (
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/obj/item/clipboard{
-	pixel_x = -11;
-	pixel_y = -6
-	},
-/obj/item/decoration/flower_vase/vase7{
-	pixel_x = 7;
-	pixel_y = 23
-	},
-/obj/machinery/recharger/defibrillator,
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/carpet/blue,
-/area/station/medical/breakroom)
 "kZa" = (
 /turf/simulated/floor/wood/six,
 /area/station/hallway/primary/west)
@@ -47906,13 +47906,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/construction)
-"oAp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/table/reinforced/auto,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "oAr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -79449,6 +79442,14 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"xQR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "xQS" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -119884,7 +119885,7 @@ qsX
 gBl
 ucb
 rlB
-kYU
+iXk
 uAY
 qiF
 xVt
@@ -124121,7 +124122,7 @@ jJT
 nDQ
 sWF
 kKJ
-cXm
+kRN
 vqc
 kLD
 nFD
@@ -155076,7 +155077,7 @@ xCR
 xCR
 xCR
 tGm
-oAp
+xQR
 fdq
 ntX
 qxJ

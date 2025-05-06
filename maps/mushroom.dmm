@@ -14502,6 +14502,20 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"dtB" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/camera{
+	c_tag = "Bridge Checkpoint";
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/card{
+	dir = 4
+	},
+/turf/simulated/floor/greenblack/corner,
+/area/station/bridge/customs)
 "dtM" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -15242,29 +15256,6 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
-"ecS" = (
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = -4
-	},
-/obj/item/stamp{
-	pixel_y = 1
-	},
-/obj/item/pen{
-	pixel_x = 4
-	},
-/obj/item/clipboard{
-	pixel_y = 3;
-	pixel_x = 10
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 7
-	},
-/obj/table/auto,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "ecT" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
@@ -22664,6 +22655,22 @@
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"kwg" = (
+/obj/table/auto,
+/obj/machinery/light/incandescent,
+/obj/item/robodefibrillator,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "kwr" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24951,22 +24958,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
-"mnZ" = (
-/obj/table/auto,
-/obj/machinery/light/incandescent,
-/obj/item/robodefibrillator,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical,
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 8
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay)
 "moy" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
@@ -27561,6 +27552,29 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
+"oqp" = (
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/stamp{
+	pixel_y = 1
+	},
+/obj/item/pen{
+	pixel_x = 4
+	},
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = 10
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/table/auto,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "oqD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32347,20 +32361,6 @@
 	dir = 1
 	},
 /area/station/science/hall)
-"rAz" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/camera{
-	c_tag = "Bridge Checkpoint";
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/computer3/generic/personnel_management{
-	dir = 4
-	},
-/turf/simulated/floor/greenblack/corner,
-/area/station/bridge/customs)
 "rAP" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -33379,6 +33379,18 @@
 /obj/item/reagent_containers/food/drinks/mug/HoS,
 /turf/simulated/floor/red,
 /area/station/security/hos)
+"sox" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
+	},
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/bridge/customs)
 "soA" = (
 /obj/lattice,
 /obj/machinery/atmospherics/trinary/mixer{
@@ -37414,18 +37426,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/south)
-"vjs" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/greenblack{
-	dir = 4
-	},
-/area/station/bridge/customs)
 "vjL" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
@@ -84678,8 +84678,8 @@ bno
 wrZ
 wrZ
 fts
-rAz
-vjs
+dtB
+sox
 xoy
 rGj
 rGj
@@ -96112,7 +96112,7 @@ cxV
 vGD
 txb
 esb
-ecS
+oqp
 odZ
 oGN
 olZ
@@ -97922,7 +97922,7 @@ vZE
 dxC
 jNn
 aPQ
-mnZ
+kwg
 kvV
 dgF
 spP

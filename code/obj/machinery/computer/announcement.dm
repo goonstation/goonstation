@@ -12,12 +12,10 @@
 	var/announce_status = "Insert Card"
 	var/max_length = 400
 	var/announces_arrivals = 0
-	var/say_language = "english"
+	var/atom/movable/abstract_say_source/radio/announcement_computer/computer_say_source
+	var/computer_say_source_name = "Announcement Computer"
 	var/arrivalalert = "$NAME has signed up as $JOB."
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
-	var/obj/item/device/radio/intercom/announcement_radio = null
-	var/voice_message = "broadcasts"
-	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	var/sound_volume = 100
 	var/override_font = null
@@ -30,10 +28,16 @@
 	light_g = 1
 	light_b = 0.1
 
+	/// This is solely used to reconcile refactoring announcement computers with `.dmm` files. Remove in a followup PR.
+	var/voice_name = null
+
 	New()
-		..()
-		if (src.announces_arrivals)
-			src.announcement_radio = new(src)
+		if (!isnull(src.voice_name))
+			src.computer_say_source_name = src.voice_name
+
+		. = ..()
+		src.computer_say_source = new()
+		src.computer_say_source.name = src.computer_say_source_name
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/card/id))
@@ -113,30 +117,23 @@
 			announce_status = ""
 
 	proc/send_message(var/mob/user, message)
-		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0) return
-		var/area/A = get_area(src)
+		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0)
+			return
 
-		if(user.bioHolder.HasEffect("mute"))
-			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
+		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		if (!message)
 			return
-		if(url_regex?.Find(message))
-			boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
-			boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
-			return
-		message = sanitize(adminscrub(message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		var/msg_sound = src.sound_to_play
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			message = process_accents(H, message) //Slurred announcements? YES!
+
 		if (isflockmob(user))
 			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
-
+		var/area/A = get_area(src)
 		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
 		if (override_font )
 			message = "<font face = '[override_font]'> [message] </font>"
@@ -164,58 +161,50 @@
 		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
 
-	proc/say_quote(var/text)
-		return "[src.voice_message], \"[text]\""
+	proc/announce_arrival(mob/living/person)
+		if (!src.announces_arrivals || !src.arrivalalert)
+			return TRUE
 
-	proc/process_language(var/message)
-		var/datum/language/L = languages.language_cache[src.say_language]
-		if (!L)
-			L = languages.language_cache["english"]
-		return L.get_messages(message)
-
-	proc/announce_arrival(var/mob/living/person)
-		var/background_trait = person.traitHolder.getTraitWithCategory("background")
-		if (!src.announces_arrivals)
-			return 1
-		if (!src.arrivalalert)
-			return 1
-		if (background_trait)
-			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
+		// People who have been on the ship the whole time, or who aren't on the ship, shouldn't be announced.
+		if (person.traitHolder.getTraitWithCategory("background"))
+			return TRUE
 
 		var/job = person.mind.assigned_role
-		if(!job || job == "MODE")
+		if (!job || (job == "MODE"))
+			job = "Staff Assistant"
+		if (issilicon(person) && !isAI(person))
+			job = "Cyborg"
+
+		var/message = src.arrivalalert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", job)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
+
+		src.computer_say_source.say(message)
+		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
+		return TRUE
+
+	proc/announce_departure(mob/living/person)
+		var/job = person.mind.assigned_role
+		if(!job || (job == "MODE"))
 			job = "Staff Assistant"
 		if(issilicon(person) && !isAI(person))
 			job = "Cyborg"
 
-		var/message = replacetext(replacetext(replacetext(src.arrivalalert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
+		var/message = src.departurealert
+		message = replacetext(message, "$NAME", person.real_name)
+		message = replacetext(message, "$JOB", job)
+		message = replacetext(message, "$STATION", "[station_name()]")
+		message = replacetext(message, "$THEY", "[he_or_she(person)]")
+		message = replacetext(message, "$THEM", "[him_or_her(person)]")
+		message = replacetext(message, "$THEIR", "[his_or_her(person)]")
 
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
+		src.computer_say_source.say(message)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
-
-	proc/announce_departure(var/mob/living/person)
-		if (!src.announcement_radio)
-			src.announcement_radio = new(src)
-
-		var/job = person.mind.assigned_role
-		if(!job || job == "MODE")
-			job = "Staff Assistant"
-		if(issilicon(person) && !isAI(person))
-			job = "Cyborg"
-
-		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
-		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
-
-
-		var/list/messages = process_language(message)
-		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
-		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
-		return 1
+		return TRUE
 
 /obj/machinery/computer/announcement/station
 	req_access = null
@@ -287,6 +276,7 @@
 
 /obj/machinery/computer/announcement/syndicate
 	name = "Syndicate Announcement computer"
+	computer_say_source_name = "Syndicate Announcement computer"
 	theme = "syndicate"
 	icon_state = "announcementsyndie"
 	area_name = "Syndicate"

@@ -30552,35 +30552,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
-"cjn" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 15;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/dropper{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 3
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay)
 "cjp" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -37768,25 +37739,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"dJb" = (
-/obj/table/auto,
-/obj/item/plate{
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/food/snacks/plant/apple{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 6
-	},
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "dJf" = (
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -40761,36 +40713,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"fKR" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/window/westright{
-	dir = 1;
-	name = "Pharmacy"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/item/pen{
-	pixel_x = 6;
-	pixel_y = 4
-	},
-/obj/item/stamp{
-	pixel_x = -1;
-	pixel_y = 3
-	},
-/obj/mapping_helper/access/medical,
-/obj/item/clipboard{
-	pixel_x = -7
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay)
 "fLo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/staff)
@@ -43512,6 +43434,35 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"hPd" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 3
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay)
 "hPO" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -45708,6 +45659,25 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jEa" = (
+/obj/table/auto,
+/obj/item/plate{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "jEu" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -48829,6 +48799,36 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"maO" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/window/westright{
+	dir = 1;
+	name = "Pharmacy"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/mapping_helper/access/medical,
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay)
 "mbq" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -64326,6 +64326,26 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"xqS" = (
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant_small";
+	layer = 3;
+	pixel_y = 14
+	},
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "xra" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -64444,25 +64464,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"xuy" = (
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 14
-	},
-/obj/decoration/clock{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/psychiatrist)
 "xuC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
@@ -99928,7 +99929,7 @@ mRI
 ipJ
 dqC
 ucm
-xuy
+xqS
 dvn
 xPS
 cPW
@@ -100511,7 +100512,7 @@ ntA
 cfC
 cgU
 chZ
-cjn
+hPd
 cmd
 cme
 cnk
@@ -100527,7 +100528,7 @@ dkF
 vgk
 qSm
 mwV
-dJb
+jEa
 ubz
 sfo
 sfo
@@ -100813,7 +100814,7 @@ cCl
 cfC
 cgU
 cia
-fKR
+maO
 mrY
 bVR
 cnl

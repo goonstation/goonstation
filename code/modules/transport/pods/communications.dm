@@ -1,13 +1,10 @@
+TYPEINFO(/obj/item/device/radio/intercom/ship)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
+
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
 	anchored = ANCHORED
-
-/obj/item/device/radio/intercom/ship/send_hear()
-	if (src.listening)
-		var/list/shiphears = list()
-		for(var/mob/M in src.loc)
-			shiphears += M
-		return shiphears
+	speaker_range = 0
 
 /obj/item/shipcomponent/communications
 	power_used = 10
@@ -89,8 +86,8 @@
 	deactivate()
 		..()
 		if(ship.intercom)
-			ship.intercom.broadcasting = 0
-			ship.intercom.listening = 0
+			ship.intercom.toggle_microphone(FALSE)
+			ship.intercom.toggle_speaker(FALSE)
 
 	New()
 		..()

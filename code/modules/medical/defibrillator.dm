@@ -10,6 +10,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	mats = list("metal" = 10,
 				"conductive" = 15,
 				"crystal" = 5,)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
@@ -20,6 +21,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	item_state = "defib"
 	pickup_sfx = 'sound/items/pickup_defib.ogg'
 	inventory_counter_enabled = TRUE
+	speech_verb_say = "beeps"
 	var/icon_base = "defib"
 	/// Cooldown after charging a defib before it's chargable again
 	var/charge_time = 10 SECONDS
@@ -135,9 +137,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 		FLICK("[src.icon_base]-shock", src)
 		return 1
 
-	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -178,12 +177,12 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if (patient.bioHolder.HasEffect("resist_electric"))
 			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"),\
 			SPAN_NOTICE("You resist the shock!"))
-			speak("ERROR: Unable to complete circuit for shock delivery!")
+			src.say("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
 			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"))
-			speak("ERROR: Patient is deceased.")
+			src.say("ERROR: Patient is deceased.")
 			patient.setStatus("defibbed", 1.5 SECONDS)
 			return 1
 
@@ -192,9 +191,9 @@ TYPEINFO(/obj/item/robodefibrillator)
 				if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
 					patient.cure_disease_by_path(/datum/ailment/malady/flatline)
 				if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
-					speak("Normal cardiac rhythm restored.")
+					src.say("Normal cardiac rhythm restored.")
 				else
-					speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
+					src.say("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
 
 			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
 			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
@@ -207,7 +206,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
-						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
+						src.say("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
 					if (prob(66))
 						patient.visible_message(SPAN_NOTICE("<b>[patient]</b> inhales deeply!"))
 						patient.take_oxygen_deprivation(-50)
@@ -252,7 +251,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			patient.changeStatus("knockdown", 0.1 SECONDS)
 			patient.force_laydown_standup()
 			patient.remove_stamina(45)
-			if (isdead(patient) && !patient.bioHolder.HasEffect("resist_electric"))
+			if (isdead(patient))
 				patient.setStatus("defibbed", 1.5 SECONDS)
 		return 0
 

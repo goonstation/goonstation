@@ -8420,25 +8420,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"aTY" = (
-/obj/table/auto,
-/obj/item/robodefibrillator{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/item/bandage{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 8
-	},
-/obj/item/bandage{
-	pixel_x = 16;
-	pixel_y = 3
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "aTZ" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/toy/plush/small/bee{
@@ -15531,17 +15512,6 @@
 /obj/mapping_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
-"caf" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/landmark/start/job/medical_doctor,
-/obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor/carpet/blue/fancy/edge,
-/area/station/medical/staff)
 "cay" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -20924,23 +20894,6 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/carpet/blue/fancy/narrow/west,
 /area/station/medical/medbay/treatment1)
-"fkj" = (
-/obj/table/auto,
-/obj/item/clipboard{
-	pixel_x = 3;
-	pixel_y = 1
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = -8;
-	pixel_y = 11
-	},
-/obj/item/pen{
-	rand_pos = 0
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge{
-	dir = 1
-	},
-/area/station/medical/medbay/psychiatrist)
 "fkD" = (
 /obj/xmastree/ephemeral,
 /turf/simulated/floor/carpet{
@@ -25902,6 +25855,25 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"iky" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -9;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_y = 3;
+	rand_pos = 0;
+	pixel_x = 9
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 17
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 1
+	},
+/area/station/medical/staff)
 "ikD" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/arrival{
@@ -26141,6 +26113,25 @@
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"iuN" = (
+/obj/table/auto,
+/obj/item/robodefibrillator{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/bandage{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
+/obj/item/bandage{
+	pixel_x = 16;
+	pixel_y = 3
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "iuU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -32246,6 +32237,17 @@
 /obj/item/clothing/suit/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"lXd" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/landmark/start/job/medical_doctor,
+/obj/machinery/recharger/wall/sticky,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/station/medical/staff)
 "lZI" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/baroffice)
@@ -34035,6 +34037,24 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"naU" = (
+/obj/table/auto,
+/obj/item/clipboard{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/pen{
+	rand_pos = 0
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 1
+	},
+/area/station/medical/medbay/psychiatrist)
 "naV" = (
 /obj/table/auto,
 /obj/item/reagent_containers/hypospray{
@@ -51664,25 +51684,6 @@
 	},
 /turf/simulated/floor/carpet/blue/decal/outercross,
 /area/station/chapel/sanctuary)
-"xjR" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -9;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/food/snacks/burger/heartburger{
-	pixel_y = 3;
-	rand_pos = 0;
-	pixel_x = 9
-	},
-/obj/machinery/recharger/defibrillator,
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 17
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge{
-	dir = 1
-	},
-/area/station/medical/staff)
 "xjV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -67677,7 +67678,7 @@ isN
 bbl
 pwc
 aUb
-aTY
+iuN
 gme
 vVR
 gcs
@@ -67692,7 +67693,7 @@ aWc
 owj
 jYW
 gja
-fkj
+naU
 aQI
 jRq
 nmB
@@ -67977,7 +67978,7 @@ aRM
 aRa
 kdc
 vfW
-caf
+lXd
 aUb
 gcf
 dyT
@@ -68277,7 +68278,7 @@ bau
 bhP
 aUG
 aRa
-xjR
+iky
 gnn
 aTn
 aUb

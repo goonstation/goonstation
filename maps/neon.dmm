@@ -3292,9 +3292,6 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"cBE" = (
-/turf/simulated/floor/plating,
-/area/station/engine/substation/southeast)
 "cCe" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5872,6 +5869,11 @@
 /obj/decal/poster/wallsign/poster_rand,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/derelict_diner)
+"egP" = (
+/obj/machinery/light/small/sticky/frostedred,
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/southwest)
 "ehf" = (
 /obj/stool/chair{
 	dir = 4
@@ -9135,6 +9137,45 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"gie" = (
+/obj/table/auto,
+/obj/item/storage/box/stma_kit{
+	pixel_x = -5
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 5
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/robodefibrillator,
+/obj/item_dispenser/latex_gloves{
+	pixel_x = 24;
+	pixel_y = -1
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "giq" = (
 /obj/machinery/computer/telescope{
 	dir = 8
@@ -11906,6 +11947,13 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
+"iib" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/black,
+/area/station/engine/substation/northwest)
 "iih" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12678,6 +12726,16 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"iHh" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/left/east,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "iHL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -14581,12 +14639,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/listeningpost)
-"jRN" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/substation/northwest)
 "jSa" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -16778,16 +16830,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"luH" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "lvz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17053,19 +17095,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"lDw" = (
-/obj/table/wood/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "lDT" = (
 /obj/fakeobject/flock/antenna/broken{
 	dir = 4;
@@ -17267,6 +17296,21 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"lLl" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "hosquarters"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "lLm" = (
 /obj/decal/stage_edge{
 	dir = 8
@@ -19201,20 +19245,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
-"nhj" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	id = "hosquarters"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "nhO" = (
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/floor/martian,
@@ -21650,10 +21680,6 @@
 "oXW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
-"oXX" = (
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/southwest)
 "oYi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23169,6 +23195,11 @@
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/chapel/office)
+"pWx" = (
+/obj/turbine_shaft,
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "pWF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -24495,6 +24526,20 @@
 	dir = 1
 	},
 /area/station/security/brig)
+"qSL" = (
+/obj/table/wood/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/item/ghostboard,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "qSP" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26899,45 +26944,6 @@
 "sCM" = (
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"sCN" = (
-/obj/table/auto,
-/obj/item/storage/box/stma_kit{
-	pixel_x = -5
-	},
-/obj/item/storage/box/patchbox{
-	pixel_x = 5
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/healthgoggles{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/robodefibrillator,
-/obj/item_dispenser/latex_gloves{
-	pixel_x = 24;
-	pixel_y = -1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 7
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "sCZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31890,6 +31896,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"vPv" = (
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/southeast)
 "vPB" = (
 /obj/machinery/light_switch/west,
 /obj/item/reagent_containers/food/fish/bass,
@@ -74180,7 +74190,7 @@ msK
 xJD
 msK
 msK
-oXX
+egP
 ahy
 aNP
 qpn
@@ -78670,7 +78680,7 @@ mEJ
 vfU
 wvN
 pOC
-sCN
+gie
 byr
 tRo
 nMd
@@ -79830,7 +79840,7 @@ qpn
 qpn
 oJw
 wPP
-jRN
+iib
 lGN
 lWn
 oCp
@@ -83164,7 +83174,7 @@ uoo
 dYa
 dMb
 ksy
-lDw
+qSL
 bZJ
 bZJ
 bZJ
@@ -83822,8 +83832,8 @@ gbY
 uQo
 sKa
 vOd
-luH
-nhj
+iHh
+lLl
 ucr
 jyg
 nRe
@@ -87771,7 +87781,7 @@ yfT
 rOA
 rOA
 iNa
-cBE
+vPv
 ccb
 qpn
 qpn
@@ -89191,7 +89201,7 @@ qpn
 qpn
 qpn
 tXQ
-qgn
+pWx
 pRb
 qvw
 udR
