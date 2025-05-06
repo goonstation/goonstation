@@ -1206,7 +1206,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 /area/owlery
 	name = "owl fuckery"
 	sound_group = "owl"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_environment = 12
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/owlery
 
@@ -1277,7 +1277,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
-	teleport_blocked = 0
+	teleport_blocked = AREA_TELEPORT_ALLOWED
 
 /area/owlery/Owlmait2
 	name = "River Loop Maintenance"

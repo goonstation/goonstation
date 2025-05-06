@@ -22,7 +22,7 @@
 	requires_power = 0
 	force_fullbright = 0
 	luminosity = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 
 //Area x y z = lowest x y z turf contained, don't need lower left marker.
 
