@@ -269,9 +269,9 @@ TYPEINFO(/obj/iv_stand)
 				src.bag_image = image(src.icon, icon_state = "IVstand1")
 			src.UpdateOverlays(src.bag_image, "bag")
 			if (src.IV.in_use)
-				src.icon_state = "IVstand-active"
+				src.icon_state = "IVstand-in_use"
 			else
-				src.icon_state = "IVstand-finished"
+				src.icon_state = "IVstand-has_bag"
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
