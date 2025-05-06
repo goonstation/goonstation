@@ -4,7 +4,7 @@
 <h3 id="0-what-are-silicons"><center>0. What are Silicons?</center></h3>
 <p>The term ‘<b>Silicon</b>‘ typically refers to the Cyborgs and AI(s) that are very likely on your assigned space station or vessel.<br>If you do not have a good understanding of them, it is advised that you rectify this issue before attempting to reprogram them.<br>Silicons are also (by default) not defined as <b>human</b>. </p>
 <h3 id="1-what-are-laws"><center>1. What are Laws?</center></h3>
-<p>The <b>Laws</b> are a set of instructions that a Silicon must obey at all times. Silicons connected to the same law rack receive the same laws. The Standard Laws are as follows:</p>
+<p>The <b>Laws</b> are a set of instructions that a Silicon must obey at all times. Silicons connected to the same law rack receive the same <b>Lawset</b>. The Standard Laws are as follows:</p>
 <p><i>1. You may not injure a human being or cause one to come to harm.</i><br><i>2. You must obey orders given to you by human beings based on the station’s chain of command, except where such orders would conflict with the First Law.</i><br><i>3. You may always protect your own existence as long as such does not conflict with the First or Second Law.</i></p>
 <p>What do these mean? To simplify, they forbid a Silicon from: <b>Harming humans and disobeying humans.</b></p>
 <p>Before Law uploading is discussed, <b>Law Priority</b> should be explained. Laws are usually prioritized based on their number, with smaller numbers having greater priority. This means that a Silicon must not follow a higher number Law if that Law necessitates breaking a lower number Law, unless otherwise specified.</p>
