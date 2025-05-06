@@ -1,10 +1,10 @@
 TYPEINFO(/mob/living/carbon/human/virtual)
 	start_listen_inputs = list(LISTEN_INPUT_EARS)
-	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT, SPEECH_OUTPUT_EQUIPPED)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
 
 /mob/living/carbon/human/virtual
 	real_name = "Virtual Human"
-	default_speech_output_channel = SAY_CHANNEL_DEAD
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	var/mob/body = null
 	var/isghost = 0 //Should contain a string of the original ghosts real_name
 	var/escape_vr = 0
@@ -20,10 +20,13 @@ TYPEINFO(/mob/living/carbon/human/virtual)
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
 		src.sims = null
-		if (!is_ghost)
-			src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SPOKEN)
-			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
-			src.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+		if (is_ghost)
+			src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
+			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SPOKEN)
+			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
+			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_BLOBCHAT)
+			src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_FLOCK_GLOBAL)
+			src.default_speech_output_channel = SAY_CHANNEL_DEAD
 
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
