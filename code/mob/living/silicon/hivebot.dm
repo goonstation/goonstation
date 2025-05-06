@@ -7,8 +7,6 @@
 	health = 60
 	max_health = 60
 	var/beebot = 0
-	robot_talk_understand = 2
-	var/glitchy_speak = 0
 
 	// 3 tools can be activated at any one time.
 	var/obj/item/robot_module/module = null
@@ -673,8 +671,8 @@
 		src.ears = src.radio
 	var/dat = {"
 <TT>
-Microphone: [src.radio.broadcasting ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
-Speaker: [src.radio.listening ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
+Microphone: [src.radio.microphone_enabled ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
+Speaker: [src.radio.speaker_enabled ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
 Frequency:
 <A href='byond://?src=\ref[src.radio];freq=-10'>-</A>
 <A href='byond://?src=\ref[src.radio];freq=-2'>-</A>
@@ -795,34 +793,6 @@ Frequency:
 	src.update_name_tag()
 
 	return
-
-/mob/living/silicon/hivebot/say_understands(var/other)
-	if (isAI(other))
-		return TRUE
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace.exclusive_language)
-			return TRUE
-		else
-			return ..()
-	if (isrobot(other) || isshell(other))
-		return TRUE
-	return ..()
-
-/mob/living/silicon/hivebot/say_quote(var/text)
-	if (src.mainframe && src.mainframe.glitchy_speak)
-		text = voidSpeak(text)
-	var/ending = copytext(text, length(text))
-
-	if (singing)
-		return singify_text(text)
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"[text]\"";
 
 /mob/living/silicon/hivebot/find_in_hand(var/obj/item/I, var/this_hand)
 	if (!I)

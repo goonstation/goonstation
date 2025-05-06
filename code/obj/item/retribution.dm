@@ -148,7 +148,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 				else
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("knockdown", 2 SECOND)
-				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/mob, emote), "scream")
+				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/atom, emote), "scream")
 				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE
