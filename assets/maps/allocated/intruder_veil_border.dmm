@@ -1,55 +1,69 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/unsimulated/floor/void,
-/area/veil_border)
+/turf/unsimulated/floor/void/dense,
+/area/veil_border/outer)
+"c" = (
+/turf/unsimulated/wall/void,
+/area/veil_border/outer)
 "f" = (
 /obj/map/light/purple,
 /turf/simulated/floor,
-/area/veil_border)
+/area/veil_border/inner)
 "j" = (
 /turf/simulated/wall/auto,
-/area/veil_border)
+/area/veil_border/inner)
+"k" = (
+/obj/map/light/purple,
+/turf/unsimulated/floor/void/dense,
+/area/veil_border/outer)
+"n" = (
+/obj/map/light/purple,
+/turf/unsimulated/floor/void/dense,
+/area/veil_border/inner)
+"q" = (
+/turf/unsimulated/floor/void,
+/area/veil_border/inner)
 "A" = (
 /turf/simulated/floor,
-/area/veil_border)
+/area/veil_border/inner)
 "H" = (
-/turf/unsimulated/wall/void,
-/area/veil_border)
+/turf/unsimulated/floor/void/dense,
+/area/veil_border/inner)
 "I" = (
 /obj/decal/floatingtiles/random,
 /turf/unsimulated/floor/void,
-/area/veil_border)
+/area/veil_border/inner)
 "L" = (
 /obj/decal/floatingtiles/random,
 /obj/map/light/purple,
 /turf/unsimulated/floor/void,
-/area/veil_border)
+/area/veil_border/inner)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 "}
 (2,1,1) = {"
-a
+c
 a
 a
 a
@@ -59,8 +73,8 @@ a
 a
 a
 H
+n
 H
-H
 a
 a
 a
@@ -69,15 +83,15 @@ a
 a
 a
 a
-a
+c
 "}
 (3,1,1) = {"
+c
 a
 a
 a
 a
-a
-a
+k
 a
 H
 H
@@ -87,18 +101,18 @@ H
 H
 H
 a
+k
 a
 a
 a
 a
-a
-a
+c
 "}
 (4,1,1) = {"
+c
 a
 a
-a
-a
+k
 a
 a
 H
@@ -112,13 +126,13 @@ H
 H
 a
 a
+k
 a
 a
-a
-a
+c
 "}
 (5,1,1) = {"
-a
+c
 a
 a
 a
@@ -138,12 +152,12 @@ a
 a
 a
 a
-a
+c
 "}
 (6,1,1) = {"
+c
 a
-a
-a
+k
 a
 H
 H
@@ -159,12 +173,12 @@ A
 H
 H
 a
+k
 a
-a
-a
+c
 "}
 (7,1,1) = {"
-a
+c
 a
 a
 H
@@ -172,9 +186,9 @@ H
 A
 f
 A
-a
+q
 A
-a
+q
 A
 A
 A
@@ -184,10 +198,10 @@ H
 H
 a
 a
-a
+c
 "}
 (8,1,1) = {"
-a
+c
 a
 H
 H
@@ -207,10 +221,10 @@ A
 H
 H
 a
-a
+c
 "}
 (9,1,1) = {"
-a
+c
 a
 H
 A
@@ -230,10 +244,10 @@ A
 A
 H
 a
-a
+c
 "}
 (10,1,1) = {"
-a
+c
 H
 H
 A
@@ -242,32 +256,32 @@ A
 A
 A
 A
-a
-a
+q
+q
 A
 A
 j
 A
-a
+q
 A
 A
 H
 H
-a
+c
 "}
 (11,1,1) = {"
-a
-H
+c
+n
 A
 A
 f
-a
+q
 A
 I
 A
-a
+q
 L
-a
+q
 A
 j
 j
@@ -275,21 +289,21 @@ I
 f
 A
 A
-H
-a
+n
+c
 "}
 (12,1,1) = {"
-a
+c
 H
 H
 A
 A
-a
+q
 A
 A
 A
 A
-a
+q
 A
 A
 A
@@ -299,10 +313,10 @@ A
 A
 H
 H
-a
+c
 "}
 (13,1,1) = {"
-a
+c
 a
 H
 A
@@ -322,21 +336,21 @@ A
 A
 H
 a
-a
+c
 "}
 (14,1,1) = {"
-a
+c
 a
 H
 H
 A
 A
-a
+q
 A
 A
 j
 A
-a
+q
 A
 A
 A
@@ -345,10 +359,10 @@ A
 H
 H
 a
-a
+c
 "}
 (15,1,1) = {"
-a
+c
 a
 a
 H
@@ -361,26 +375,26 @@ I
 A
 A
 A
-a
+q
 f
 A
 H
 H
 a
 a
-a
+c
 "}
 (16,1,1) = {"
+c
 a
-a
-a
+k
 a
 H
 H
 A
-a
-a
-a
+q
+q
+q
 A
 A
 A
@@ -389,12 +403,12 @@ A
 H
 H
 a
+k
 a
-a
-a
+c
 "}
 (17,1,1) = {"
-a
+c
 a
 a
 a
@@ -414,13 +428,13 @@ a
 a
 a
 a
-a
+c
 "}
 (18,1,1) = {"
+c
 a
 a
-a
-a
+k
 a
 a
 H
@@ -434,18 +448,18 @@ H
 H
 a
 a
+k
 a
 a
-a
-a
+c
 "}
 (19,1,1) = {"
+c
 a
 a
 a
 a
-a
-a
+k
 a
 H
 H
@@ -455,15 +469,15 @@ H
 H
 H
 a
+k
 a
 a
 a
 a
-a
-a
+c
 "}
 (20,1,1) = {"
-a
+c
 a
 a
 a
@@ -473,8 +487,8 @@ a
 a
 a
 H
+n
 H
-H
 a
 a
 a
@@ -483,28 +497,28 @@ a
 a
 a
 a
-a
+c
 "}
 (21,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 "}

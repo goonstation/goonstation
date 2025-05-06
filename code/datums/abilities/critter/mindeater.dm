@@ -261,12 +261,20 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		playsound(get_turf(mindeater), 'sound/misc/intruder/mindeater_abduct.ogg', 35, TRUE)
 		actions.start(new /datum/action/bar/mindeater_pierce_the_veil(target), mindeater)
 
+ABSTRACT_TYPE(/area/veil_border)
 /area/veil_border
 	name = "Veil border"
 	teleport_blocked = 2
 	allowed_restricted_z = TRUE
 	sound_loop = 'sound/misc/intruder/veil_border_ambience.ogg'
 	sound_group = "veil border"
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/veil_border
+
+	inner
+		occlude_foreground_parallax_layers = TRUE
+
+	outer
+		occlude_foreground_parallax_layers = FALSE
 
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"

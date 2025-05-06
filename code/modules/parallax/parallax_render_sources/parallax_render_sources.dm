@@ -303,6 +303,12 @@
 	scroll_speed = 500
 	scroll_angle = 0
 
+/atom/movable/screen/parallax_render_source/foreground/veil_border
+	parallax_icon_state = "veil_border"
+	parallax_value = 0.5
+	scroll_speed = 20
+	scroll_angle = 150
+
 // scrolling doesnt work if scroll_angle is changed after initialisation i think. So I made these.
 /atom/movable/screen/parallax_render_source/meteor_shower/north
 	scroll_angle = 180

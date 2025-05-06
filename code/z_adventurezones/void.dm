@@ -83,6 +83,8 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	can_burn = FALSE
 	can_break = FALSE
 
+	dense
+		density = TRUE
 
 TYPEINFO(/turf/unsimulated/floor/auto/void)
 	mat_appearances_to_ignore = list("steel")
