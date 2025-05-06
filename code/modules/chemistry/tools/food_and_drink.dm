@@ -455,6 +455,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		return ..()
 
 	get_desc(dist, mob/user)
+		. = ..()
 		if(!user.traitHolder?.hasTrait("training_chef"))
 			return
 

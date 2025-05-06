@@ -5,6 +5,7 @@
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
 	faction = list(FACTION_SYNDICATE)
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
 
 	var/static/commander_title
 	var/static/available_callsigns
@@ -48,8 +49,8 @@
 		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
 
 		if(src.id == ROLE_NUKEOP_COMMANDER)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), SLOT_HEAD)
-			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), SLOT_WEAR_SUIT)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap(H), SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat(H), SLOT_WEAR_SUIT)
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), SLOT_EARS)
 			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)

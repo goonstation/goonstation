@@ -13484,7 +13484,7 @@
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment,
 /obj/table/wood/auto,
-/obj/item/card/id/captains_spare,
+/obj/item/card/id/gold/captains_spare,
 /obj/item/pen/fancy,
 /obj/machinery/light/lamp/green{
 	pixel_x = -6;
@@ -17185,7 +17185,7 @@
 /area/station/engine/substation/west)
 "gaf" = (
 /obj/table/reinforced/auto,
-/obj/bedsheetbin{
+/obj/linen_bin/bedsheet{
 	pixel_y = 2
 	},
 /obj/item/clothing/suit/judgerobe,
@@ -25446,7 +25446,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/bank_data{
+/obj/machinery/computer3/generic/personnel_management{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
@@ -31810,6 +31810,7 @@
 	layer = 3;
 	pixel_y = 14
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
 "qDZ" = (
@@ -38464,7 +38465,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "vgE" = (
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)

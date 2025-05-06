@@ -160,10 +160,22 @@
 #define COMSIG_DOOR_OPENED "door_opened"
 
 // ---- Sniper Scope integration with other gun components ----
-/// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off
+/// Sent to an item when its sniper_scope components are enabled or disabled, TRUE if enabled and FALSE if disabled
+#define COMSIG_SCOPE_ENABLED "sniper_scope_enabled"
+/// Sent to an item when its sniper_scope components scope is toggled by sprinting, TRUE if on and FALSE if off
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"
 /// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
 #define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"
+
+// ---- Speech System ----
+/// When a speech module tree's speaker origin is updated. (speech tree, old_speaker_origin, new_speaker_origin)
+#define COMSIG_SPEAKER_ORIGIN_UPDATED "speaker_origin_updated"
+/// When a listen module tree's listener origin is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_ORIGIN_UPDATED "listener_origin_updated"
+/// When a listen module tree's listener parent is updated. (listen tree, old_listener_origin, new_listener_origin)
+#define COMSIG_LISTENER_PARENT_UPDATED "listener_parent_updated"
+/// Flush all message buffers associated with the target datum.
+#define COMSIG_FLUSH_MESSAGE_BUFFER "flush_message_buffer"
 
 // ---- Client Signals ----
 /// When a client logs into a mob. (client, mob)

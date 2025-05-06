@@ -2,11 +2,16 @@
 #define CONTROLMODE_BOLT 2
 #define CONTROLMODE_ACCESS 4
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
+TYPEINFO(/obj/machinery/door_control)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_DOOR_CONTROL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
+	speech_verb_say = "beeps"
 	/// Match to a door to have it be controlled.
 	var/id = null
 	var/timer = 0
@@ -19,8 +24,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	/// for the speak proc, relays the message to speak.
-	var/image/chat_maptext/welcome_text
 	///alpha value for speak proc
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
@@ -630,21 +633,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.visible_message(SPAN_ALERT("[src] emits a sad thunk.  That can't be good."))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
-		boutput(user, SPAN_ALERT("It's broken."))
-// Stolen from the vending module
-/// For a flying chat and message addition upon controller activation, not called outside of a child as things stand
-/obj/machinery/door_control/proc/speak(var/message)
-	var/image/chat_maptext/speak_text = welcome_text
-	if ((src.status & NOPOWER) || !message)
-		return
-	else
-		speak_text = make_chat_maptext(src, message, "color: [src.welcome_text_color];", alpha = src.welcome_text_alpha)
-		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), assoc_maptext = speak_text)
-		if (speak_text && src.chat_text && length(src.chat_text.lines))
-			speak_text.measure(src)
-			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != speak_text)
-					I.bump_up(speak_text.measured_height)
+		boutput(user, "<span class='alert'>It's broken.</span>")
 
 // for buttons sitting on tables
 /obj/machinery/door_control/table
@@ -668,7 +657,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	welcome_text = "Welcome, Agent. All facilities permanently unlocked."
 	controlmode = CONTROLMODE_OPEN | CONTROLMODE_ACCESS
 
 /obj/machinery/door_control/ex_act(severity)
@@ -678,13 +666,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR) || user.mind?.get_antagonist(ROLE_NUKEOP) || user.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER))
-		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
+	if (istrainedsyndie(user))
 		src.toggle()
 		if (src.entrance_scanner)
-			src.speak(src.welcome_text)
+			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else
-		boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
+		src.say("Invalid biometric profile. Access denied.")
 
 ////////////////////////////////////////////////////////
 //////////// Machine activation buttons	///////////////
