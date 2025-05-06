@@ -43,7 +43,7 @@
 		lawbringer.UpdateIcon()
 		return
 
-	var/text = lawbringer.sanitize_talk(message.content)
+	var/text = lawbringer.sanitize_talk(message.original_content)
 	if (!lawbringer.fingerprints_can_shoot(H))
 		if (src.valid_modes[text])
 			global.random_burn_damage(H, 50)
