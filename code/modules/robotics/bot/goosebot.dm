@@ -49,12 +49,13 @@
 	dat += "BUMP THE SHOT WILL TURN A CORNER<BR>"
 	dat += "INSTALL THE EGG<BR>"
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "THE GOOSE",
-			"content" = dat,
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "THE GOOSE",
+			content = dat,
+		)
 
 	return
 

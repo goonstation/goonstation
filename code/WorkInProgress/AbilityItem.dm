@@ -906,16 +906,15 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = (src.desc ? src.desc : null)
-			))
+		usr.client?.tooltips?.show(
+			TOOLTIP_HOVER, src,
+			mouse = params,
+			title = src.name,
+			content = (src.desc ? src.desc : null)
+		)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		usr.client?.tooltips?.hide(TOOLTIP_HOVER)
 
 	disposing() //probably best to do this?
 		if (src.the_item)
