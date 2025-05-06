@@ -3713,7 +3713,6 @@
 	desc = "Your speed and health are matching with your disguise."
 	icon_state = "mimicface"
 	visible = TRUE
-	movement_modifier = /datum/movement_modifier/mimic
 	var/pixels = null
 	var/speed_string = null
 
@@ -3728,14 +3727,15 @@
 
 	proc/scale()
 		var/health = null
-		var/mob/living/critter/mimic/mob_owner = src.owner
-		REMOVE_MOVEMENT_MODIFIER(mob_owner, /datum/movement_modifier/mimic/, src)
+		var/mob/living/critter/mimic/antag_spawn/mob_owner = src.owner
+		if (mob_owner.modifier)
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src)
 		if (src.pixels <= 70)
-			src.movement_modifier = /datum/movement_modifier/mimic/mimic_fast
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
 		else if (src.pixels <= 160)
-			src.movement_modifier = /datum/movement_modifier/mimic
+			mob_owner.modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."
 		else if (src.pixels <= 800)
@@ -3746,14 +3746,14 @@
 				health = 120
 
 		if (health >= 50 && health <= 90)
-			src.movement_modifier = /datum/movement_modifier/mimic/mimic_slow
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_slow
 			speed_string = "Slow."
 		else if (health >= 90)
-			src.movement_modifier = /datum/movement_modifier/mimic/mimic_superslow
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_superslow
 			speed_string = "Super slow..."
 		mob_owner.max_health = health
 		mob_owner.health = mob_owner.max_health
-		APPLY_MOVEMENT_MODIFIER(mob_owner, src.movement_modifier, src)
+		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src)
 		src.getTooltip()
 
 

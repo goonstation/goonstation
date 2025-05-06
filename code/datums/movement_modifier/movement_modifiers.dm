@@ -331,7 +331,7 @@
 	additive_slowdown = 0
 
 /datum/movement_modifier/mimic/mimic_fast
-	additive_slowdown = -0.2
+	additive_slowdown = -0.4
 
 /datum/movement_modifier/mimic/mimic_slow
 	additive_slowdown = 2

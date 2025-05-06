@@ -16,34 +16,16 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, SPAN_ALERT("You must be adjacent to [target] to mimic it."))
 			return TRUE
-		var/mob/living/critter/mimic/parent = holder.owner
-		actions.start(new/datum/action/bar/private/mimic(src.holder.owner, target, holder), parent)
+		var/mob/living/critter/mimic/user = holder.owner
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, target, 2 SECONDS, /datum/targetable/critter/mimic/proc/mimic, user, null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
 		boutput(holder.owner, SPAN_ALERT("You begin to mimic [target]..."))
 		return FALSE
 
-/datum/action/bar/private/mimic
-	duration = 2 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	var/datum/targetable/critter/mimic/mimic
-	var/obj/HH
-	var/mob/living/critter/mimic/M
-
-	New(user,target,Mimic)
-		HH = target
-		mimic = Mimic
-		M = user
-		..()
-
-	onEnd()
-		..()
-		var/mob/living/critter/mimic/M = src.owner
-		var/datum/targetable/critter/mimic/abil = M.getAbility(/datum/targetable/critter/mimic)
+	proc/mimic(mob/user)
+		var/mob/living/critter/mimic/parent = user
+		var/datum/targetable/critter/mimic/abil = parent.getAbility(/datum/targetable/critter/mimic)
 		abil.afterAction()
-		M.disguise_as(HH)
-		if (istype(src.owner, /mob/living/critter/mimic/antag_spawn))
-			M.setStatus("mimic_disguise", 10 SECONDS, M.pixel_amount)
-
-	onInterrupt()
-		..()
-		boutput(owner, SPAN_ALERT("Your transformation was interrupted!"))
+		parent.disguise_as(src)
+		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
+			parent.setStatus("mimic_disguise", 10 SECONDS, parent.pixel_amount)
 
