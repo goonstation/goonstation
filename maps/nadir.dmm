@@ -35792,6 +35792,7 @@
 	pixel_y = 8;
 	id = "treatment1"
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "oYT" = (
