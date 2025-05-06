@@ -20936,6 +20936,7 @@
 /obj/item/pen{
 	rand_pos = 0
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},
@@ -42866,7 +42867,14 @@
 /area/station/security/processing)
 "rWZ" = (
 /obj/table/auto,
-/obj/item/aiModule/freeform,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/aiModule/freeform{
+	pixel_x = 3;
+	pixel_y = 1
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "rXi" = (

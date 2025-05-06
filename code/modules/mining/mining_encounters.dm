@@ -605,8 +605,8 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/simulated/wall/auto/asteroid/A
-	A = new base_rock(locate(center.x, center.y, center.z),0)
+	var/turf/simulated/wall/auto/asteroid/A = locate(center.x, center.y, center.z)
+	A.ReplaceWith(base_rock)
 	generated_turfs += A
 	var/turf/simulated/wall/auto/asteroid/B
 
@@ -623,7 +623,8 @@
 					continue
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
-				B = new base_rock(locate(S.x, S.y, S.z),0)
+				B = locate(S.x, S.y, S.z)
+				B.ReplaceWith(base_rock)
 				generated_turfs += B
 
 	return generated_turfs

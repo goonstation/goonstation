@@ -1145,6 +1145,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/shot_number = 0
 	var/state = UNWRENCHED
 	var/locked = 1
+	var/emagged = FALSE
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -1211,6 +1212,9 @@ TYPEINFO(/obj/machinery/emitter)
 	..()
 
 /obj/machinery/emitter/attack_ai(mob/user as mob)
+	if (src.emagged)
+		boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
+		return
 	if(state == WELDED)
 		if(src.active==1)
 			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
@@ -1359,7 +1363,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-	if(!src.link || !target_id)
+	if(!src.link || src.emagged || !target_id)
 		return
 
 	var/datum/signal/signal = get_free_signal()
@@ -1378,7 +1382,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //What do we do with an incoming command?
 /obj/machinery/emitter/receive_signal(datum/signal/signal)
-	if(!src.link)
+	if(!src.link || src.emagged)
 		return
 	if(!signal || !src.net_id || signal.encryption)
 		return
@@ -1414,6 +1418,16 @@ TYPEINFO(/obj/machinery/emitter)
 		icon_state = "Emitter"
 
 	return
+
+/obj/machinery/emitter/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		boutput(user, SPAN_ALERT("\The [src] shorts out its remote connectivity controls!"))
+		src.emagged = TRUE
+
+/obj/machinery/emitter/demag(mob/user)
+	. = ..()
+	if (src.emagged)
+		src.emagged = FALSE
 
 /obj/machinery/emitter/assault
 	name = "prototype assault emitter"

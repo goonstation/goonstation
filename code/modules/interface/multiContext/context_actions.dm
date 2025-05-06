@@ -2361,8 +2361,9 @@
 		if (!istype(sp, /obj/item/device/speech_pro))
 			return
 		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
-			sp.speak(src.speech_text, user)
+			sp.say(src.speech_text)
 			playsound(sp, src.speech_sound, 50, 1)
+			logTheThing(LOG_DEBUG, sp, "[user] said [src.speech_text] using [sp].")
 		else
 			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
 

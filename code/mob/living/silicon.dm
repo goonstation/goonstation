@@ -1,4 +1,11 @@
 ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
+TYPEINFO(/mob/living/silicon)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/silicon
 	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
@@ -6,7 +13,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	var/syndicate_possible = FALSE //  Can we become a Syndie robot?
 	var/emagged = FALSE // Are we emagged, removing all laws?
 	var/emaggable = FALSE // Can we be emagged?
-	robot_talk_understand = TRUE
 	see_infrared = TRUE
 	var/list/req_access = list()
 
@@ -26,7 +32,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/obj/item/cell/cell = null
 
-	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
 
 	var/obj/minimap_controller/alertmap_controller = null
 	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
@@ -236,34 +248,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 			src.set_cursor('icons/cursors/shock.dmi')
 			return
 	return ..()
-/mob/living/silicon/say(var/message)
-	if (!message)
-		return
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-
-	if (isdead(src))
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		return src.say_dead(message)
-
-	// wtf?
-	if (src.stat)
-		return
-
-	if (length(message) >= 2)
-		if (copytext(lowertext(message), 1, 3) == ":s")
-			message = copytext(message, 3)
-			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-			src.robot_talk(message)
-		else
-			return ..(message)
-	else
-		return ..(message)
-
-/mob/living/silicon/say_decorate(message)
-	. = monospace_say_regex.Replace(message, SPAN_MONOSPACE("$1"))
 
 /mob/living/silicon/weapon_attack(atom/target, obj/item/W, reach, params)
 	. = ..()
@@ -275,67 +259,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 /mob/living/proc/process_locks()
 	return
-
-/mob/living/proc/robot_talk(var/message)
-
-	logTheThing(LOG_DIARY, src, ": [message]", "say")
-
-	message = trimtext(html_encode(message))
-	message = src.check_singing_prefix(message)
-
-	if (!message)
-		return
-
-	var/message_a = src.say_quote(message)
-	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
-	for (var/mob/living/S in mobs)
-		if(!S.stat)
-			if(S.robot_talk_understand)
-				if(S.robot_talk_understand == src.robot_talk_understand)
-					var/thisR = rendered
-					if (S.client && S.client.holder && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-					S.show_message(thisR, 2)
-			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
-				var/flockrendered = SPAN_ROBOTICSAY("[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]")
-				S.show_message(flockrendered, 2)
-
-	var/list/listening = hearers(1, src)
-	listening |= src
-
-	var/list/heard = list()
-	for (var/mob/M in listening)
-		if(!issilicon(M) && !M.robot_talk_understand)
-			heard += M
-
-
-	if (length(heard))
-		var/message_b
-
-		message_b = "beep beep beep"
-		message_b = src.say_quote(message_b)
-		message_b = "<i>[message_b]</i>"
-
-		rendered = SPAN_ROBOTICSAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_b]")]")
-
-		for (var/mob/M in heard)
-			var/thisR = rendered
-			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			M.show_message(thisR, 2)
-
-	message = src.say_quote(message)
-
-	rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
-
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue
-		if (isdead(M) && !istype(M, /mob/dead/target_observer))
-			var/thisR = rendered
-			if (M.client && M.client.holder && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
-			M.show_message(thisR, 2)
 
 /mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
@@ -484,20 +407,6 @@ var/global/list/module_editors = list()
 		editor = module_editors[ckey]
 	editor.show_interface(src, M.module)
 
-/mob/living/silicon/understands_language(var/langname)
-	if (langname == "english" || !langname)
-		return 1
-	if (langname == "silicon" || langname == "binary")
-		return 1
-	if (langname == "monkey" && monkeysspeakhuman)
-		return 1
-	return 0
-
-/mob/living/silicon/get_special_language(var/secure_mode)
-	if (secure_mode == "s")
-		return "silicon"
-	return null
-
 /mob/living/silicon/isBlindImmune()
 	return 1
 
@@ -618,14 +527,6 @@ var/global/list/module_editors = list()
 	if(. || not_worn)
 		return
 	return src.botcard
-
-/mob/living/silicon/proc/singify_text(var/text)
-	var/adverb = pick("robotically", "synthetically", "electronically")
-	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
-	var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/noterobot.png")]'>"
-	if (src.singing & LOUD_SINGING)
-		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span class='robotsing'><i>[text]</i></span>[note_img]"
 
 /mob/living/silicon/Exited(Obj, newloc)
 	. = ..()

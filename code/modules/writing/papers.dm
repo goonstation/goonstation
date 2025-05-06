@@ -1523,3 +1523,22 @@ proc/spawn_kitchen_note()
 	about is the Signal. the Homeworld. the Intruder<br><br>
 	day 13<br>
 	the signal  it calls to me  it will set me free"}
+
+/obj/item/paper/current_turbines
+	name = "NT40 current turbine operating manual"
+	icon_state = "turbine_book"
+	New()
+		. = ..()
+		info = {"
+			<h2>Standard startup procedure</h2>
+			<b>Step 1:</b> Operate the turbine base to extend the turbine into the current. Do NOT over-extend the shaft. If you do, see "I fucked up" section 1.
+			<br>
+			<b>Step 2:</b> If necessary, add more shaft segments onto the reverse side of the turbine base and carefully secure them with a wrench.
+			<h2><s>"I fucked up"</s> Troubleshooting</h2>
+			<h3>Section 1: Overextension (AKA: it's whirring angrily and I'm scared)</h3>
+			If the turbine base emits an angry, pathetic or judgemental whirring sound then you have over-extended the turbine shaft. In this event, simply slide another shaft into the reverse side of the turbine base and anchor it in place with a wrench. The wrench can be used on either the shaft or the turbine base to secure it.
+			<h3>Section 2: Lost in the current</h3>
+			If at any time you manage to lose your state of the art NT40 turbine by unsecuring it inside the current, the standard procedure is to run after it like an idiot. If that fails and it falls in the trench then you will need to fabricate another one at your nearest Nanotrasen™ Engineering Specialist Manufacturer. All attempts to winch the heavy turbine out of the trench are now prohibited following safety incident NDR-23b.
+			<h3>Section 3: Safety</h3>
+			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
+		"}
