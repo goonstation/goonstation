@@ -1,4 +1,9 @@
 
+(t)tue may 06 25
+(u)TDHooligan
+(p)23257
+(e)⚖|C-Balance
+(*)Slowing effects are now applied & removed instantly, instead of on your next move. Tasers will be more affected by this change.
 (t)mon may 05 25
 (u)Chasu
 (p)23272
