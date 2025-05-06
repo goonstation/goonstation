@@ -1494,6 +1494,20 @@ var/global/noir = 0
 					logTheThing(LOG_DIARY, usr, "killed [constructTarget(M,"diary")]", "admin")
 				return
 
+		if ("accessspeechtree")
+			if (src.level < LEVEL_PA)
+				return
+
+			var/mob/M = locate(href_list["target"])
+			M.ensure_speech_tree().ui_interact(usr)
+
+		if ("accesslistentree")
+			if (src.level < LEVEL_PA)
+				return
+
+			var/atom/A = locate(href_list["target"])
+			A.ensure_listen_tree().ui_interact(usr)
+
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])

@@ -5,26 +5,26 @@ var/global/datum/speech_manager/SpeechManager = new()
  */
 /datum/speech_manager
 	/// An associative list of cached speech output module types, indexed by their ID.
-	VAR_PRIVATE/list/speech_output_cache
+	var/list/speech_output_cache
 	/// An associative list of cached speech modifier module types, indexed by their ID.
-	VAR_PRIVATE/list/speech_modifier_cache
+	var/list/speech_modifier_cache
 	/// An associative list of cached speech prefix module types, indexed by their ID.
-	VAR_PRIVATE/list/speech_prefix_cache
+	var/list/speech_prefix_cache
 	/// An associative list of cached listen input module types, indexed by their ID.
-	VAR_PRIVATE/list/listen_input_cache
+	var/list/listen_input_cache
 	/// An associative list of cached listen modifier module types, indexed by their ID.
-	VAR_PRIVATE/list/listen_modifier_cache
+	var/list/listen_modifier_cache
 	/// An associative list of cached listen effect module types, indexed by their ID.
-	VAR_PRIVATE/list/listen_effect_cache
+	var/list/listen_effect_cache
 	/// An associative list of cached listen control module types, indexed by their ID.
-	VAR_PRIVATE/list/listen_control_cache
+	var/list/listen_control_cache
+	/// An associative list of cached language datum singletons, indexed by their ID.
+	var/list/datum/language/language_cache
 
 	/// An associative list of cached shared input format module datum singletons, indexed by their ID.
 	VAR_PRIVATE/list/datum/shared_input_format_module/shared_input_format_cache
 	/// An associative list of cached say channel datum singletons, indexed by their channel.
-	VAR_PRIVATE/list/datum/say_channel/say_channel_cache
-	/// An associative list of cached language datum singletons, indexed by their ID.
-	VAR_PRIVATE/list/datum/language/language_cache
+	var/list/datum/say_channel/say_channel_cache
 	/// An associative list of cached speech prefix module IDs, indexed by their prefix ID or IDs.
 	VAR_PRIVATE/list/prefix_id_cache
 
@@ -93,6 +93,12 @@ var/global/datum/speech_manager/SpeechManager = new()
 			CRASH("Non unique listen control found: [module_id]. These MUST be unique.")
 		src.listen_control_cache[module_id] = T
 
+	// Populate the language cache.
+	src.language_cache = list()
+	for (var/T in concrete_typesof(/datum/language))
+		var/datum/language/language = new T()
+		src.language_cache[language.id] = language
+
 	// Populate the shared input format module cache.
 	src.shared_input_format_cache = list()
 	for (var/T in concrete_typesof(/datum/shared_input_format_module))
@@ -104,12 +110,6 @@ var/global/datum/speech_manager/SpeechManager = new()
 	for (var/T in concrete_typesof(/datum/say_channel))
 		var/datum/say_channel/channel = new T()
 		src.say_channel_cache[channel.channel_id] = channel
-
-	// Populate the language cache.
-	src.language_cache = list()
-	for (var/T in concrete_typesof(/datum/language))
-		var/datum/language/language = new T()
-		src.language_cache[language.id] = language
 
 	// Populate the preprocessing message modifier cache.
 	src.preprocessing_message_modifier_cache = list()

@@ -221,6 +221,8 @@
 
 	if (A)
 		html += " &middot; <a href='byond://?src=\ref[src];JumpToThing=\ref[D]'>Jump To</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accessspeechtree;target=\ref[D]'>Speech Tree</a>"
+		html += " &middot; <a href='byond://?src=\ref[src.holder];action=accesslistentree;target=\ref[D]'>Listen Tree</a>"
 		if (ismob(D) || isobj(D))
 			html += " &middot; <a href='byond://?src=\ref[src];GetThing=\ref[D]'>Get (turf)</a> &middot; <a href='byond://?src=\ref[src];GetThing_Insert=\ref[D]'>Get (loc)</a>"
 			if (ismob(D))

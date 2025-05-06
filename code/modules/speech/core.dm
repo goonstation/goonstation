@@ -34,7 +34,7 @@ TYPEINFO(/atom)
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
 	var/default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	/// The default output language for say messages to be sent in.
+	/// The default language for say messages to be sent in.
 	var/say_language = LANGUAGE_ENGLISH
 
 	// Speech Verb Variables:
@@ -172,7 +172,7 @@ TYPEINFO(/atom)
 	if (src.listen_tree)
 		return src.listen_tree
 
-	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree)
+	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree, src.key)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc
 	src.toggle_ooc(!src.preferences.listen_ooc)
@@ -192,7 +192,7 @@ TYPEINFO(/atom)
 	if (src.speech_tree)
 		return src.speech_tree
 
-	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
+	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree, src.key)
 	if (src.holder && !src.player_mode)
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 

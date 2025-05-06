@@ -1,0 +1,27 @@
+/**
+ * Copyright (c) 2025 Mr. Moriarty
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+@use '../../colors';
+
+.ModuleSection {
+  background: repeating-linear-gradient(
+    -45deg,
+    color.change(colors.bg(colors.$primary), $alpha: 0.15),
+    color.change(colors.bg(colors.$primary), $alpha: 0.15) 10px,
+    color.change(colors.bg(colors.$primary), $alpha: 0.3) 10px,
+    color.change(colors.bg(colors.$primary), $alpha: 0.3) 20px
+  );
+}
+
+.ModuleSection__Disabled {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}

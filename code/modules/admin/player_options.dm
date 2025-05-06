@@ -201,6 +201,11 @@
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
+					<div class='l'>Speech</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "accessspeechtree")]'>Speech Tree</a> &bull;
+						<a href='[playeropt_link(M, "accesslistentree")]'>Listen Tree</a>
+					</div>
 					<div class='l'>Reagents<a href='byond://?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkreagent")]'>Check</a> &bull;

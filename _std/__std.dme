@@ -117,6 +117,7 @@
 #include "defines\speech_defines\relays.dm"
 #include "defines\speech_defines\sayflags.dm"
 #include "defines\speech_defines\speech.dm"
+#include "defines\speech_defines\ui.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
 #include "defines\status_display.dm"

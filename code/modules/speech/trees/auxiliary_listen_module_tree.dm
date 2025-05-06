@@ -4,11 +4,14 @@
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/listen_module_tree/auxiliary
+	/// The name that this auxiliary listen module tree should display on the admin UI.
+	var/display_name = "Aux"
 	/// The listen module tree that this auxiliary listen module tree should add and remove its modules to and from.
 	var/datum/listen_module_tree/target_listen_tree
 
-/datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree)
+/datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/effects = list(), list/controls = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree, display_name)
 	src.request_enable()
+	src.display_name = display_name
 
 	. = ..()
 	src.update_target_listen_tree(target_listen_tree)
@@ -36,6 +39,9 @@
 		return FALSE
 
 	src.listen_input_ids_with_subcount[module_id] -= count
+	if (!src.listen_input_ids_with_subcount[module_id])
+		src.listen_input_ids_with_subcount -= module_id
+
 	src.target_listen_tree?.RemoveListenInput(input_id, subchannel, count)
 	return TRUE
 
@@ -55,6 +61,9 @@
 		return FALSE
 
 	src.listen_modifier_ids_with_subcount[modifier_id] -= count
+	if (!src.listen_modifier_ids_with_subcount[modifier_id])
+		src.listen_modifier_ids_with_subcount -= modifier_id
+
 	src.target_listen_tree?.RemoveListenModifier(modifier_id, count)
 	return TRUE
 
@@ -71,6 +80,9 @@
 		return FALSE
 
 	src.listen_effect_ids_with_subcount[effect_id] -= count
+	if (!src.listen_effect_ids_with_subcount[effect_id])
+		src.listen_effect_ids_with_subcount -= effect_id
+
 	src.target_listen_tree?.RemoveListenEffect(effect_id, count)
 	return TRUE
 
@@ -87,6 +99,9 @@
 		return FALSE
 
 	src.listen_control_ids_with_subcount[control_id] -= count
+	if (!src.listen_control_ids_with_subcount[control_id])
+		src.listen_control_ids_with_subcount -= control_id
+
 	src.target_listen_tree?.RemoveListenControl(control_id, count)
 	return TRUE
 
