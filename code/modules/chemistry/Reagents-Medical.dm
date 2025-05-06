@@ -1468,7 +1468,7 @@ datum
 					M.take_toxin_damage(1 * mult)
 					flush(holder, 20 * mult, flushed_reagents)
 				if (M.get_brain_damage() > BRAIN_DAMAGE_SEVERE)
-						M.take_brain_damage(-5 * mult)
+					M.take_brain_damage(-5 * mult)
 				..()
 				return
 
