@@ -3729,7 +3729,7 @@
 		var/health = null
 		var/mob/living/critter/mimic/antag_spawn/mob_owner = src.owner
 		if (mob_owner.modifier)
-			REMOVE_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src)
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
 		if (src.pixels <= 70)
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
@@ -3751,9 +3751,10 @@
 		else if (health >= 90)
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_superslow
 			speed_string = "Super slow..."
+
 		mob_owner.max_health = health
 		mob_owner.health = mob_owner.max_health
-		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src)
+		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
 		src.getTooltip()
 
 
