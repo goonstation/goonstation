@@ -1086,8 +1086,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "vaughnguy"
 		ckey = "tamedevil"
 	laticauda
-		name = "\improper Tommy Guilaume"
-		icon_state = "tommyguilaume"
+		name = "\improper Tommy Guillaume"
+		icon_state = "tommyguillaume"
 		ckey = "laticauda"
 
 /obj/item/item_box/figure_capsule

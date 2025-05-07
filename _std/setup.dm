@@ -44,8 +44,6 @@
 
 //#define RESTART_WHEN_ALL_DEAD 1
 
-#define LOOC_RANGE 8
-
 // holiday toggles!
 
 #if (BUILD_TIME_MONTH == 10)

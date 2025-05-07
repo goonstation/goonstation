@@ -10,6 +10,9 @@
 	var/painted = 0
 	var/paint = null
 
+TYPEINFO(/mob/living/silicon/robot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	voice_name = "synthesized voice"
@@ -20,7 +23,7 @@
 	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
-
+	say_language = LANGUAGE_ENGLISH
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
@@ -68,7 +71,6 @@
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
-	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -670,39 +672,29 @@
 				return
 		if (!isalive(src))
 			return
-		if (maptext_out)
-			var/image/chat_maptext/chat_text = null
-			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-				if (speechpopups && src.chat_text)
-					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-					if(chat_text)
-						chat_text.measure(src.client)
-						for(var/image/chat_maptext/I in src.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-				if (message)
-					logTheThing(LOG_SAY, src, "EMOTE: [message]")
-					act = lowertext(act)
-					if (m_type & 1)
-						for (var/mob/O in viewers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (m_type & 2)
-						for (var/mob/O in hearers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (!isturf(src.loc))
-						var/atom/A = src.loc
-						for (var/mob/O in A.contents)
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-				else
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-		return
+
+		if (!message)
+			return
+
+		var/list/mob/recipients = list()
+		if (m_type & 1)
+			recipients = viewers(src, null)
+
+		else if (m_type & 2)
+			recipients = hearers(src, null)
+
+		else if (!isturf(src.loc))
+			var/atom/A = src.loc
+			for (var/mob/M in A.contents)
+				recipients += M
+
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		act = lowertext(act)
+		for (var/mob/M as anything in recipients)
+			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+		if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+			DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	examine(mob/user)
 		. = list()
@@ -1548,7 +1540,11 @@
 					user.put_in_hand_or_drop(src.part_head.ai_interface)
 					src.radio = src.default_radio
 					if (src.module && istype(src.module.radio))
+						src.default_radio.toggle_speaker(FALSE)
 						src.radio = src.module.radio
+					else
+						src.default_radio.toggle_speaker(TRUE)
+
 					src.ears = src.radio
 					src.apply_radio_upgrade()
 					src.radio.set_loc(src)
@@ -1869,28 +1865,6 @@
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
 
-	say_understands(var/other)
-		if (isAI(other)) return 1
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace.exclusive_language)
-				return 1
-		if (ishivebot(other)) return 1
-		return ..()
-
-	say_quote(var/text)
-		if (src.glitchy_speak || (src.dependent && isAI(src.mainframe) && src.mainframe.glitchy_speak))
-			text = voidSpeak(text)
-		var/ending = copytext(text, length(text))
-
-		if (singing)
-			return singify_text(text)
-
-		if (ending == "?") return "queries, \"[text]\"";
-		else if (ending == "!") return "declares, \"[text]\"";
-
-		return "states, \"[text]\"";
-
 	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
@@ -2025,6 +1999,7 @@
 					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
+				src.radio.toggle_speaker(FALSE)
 				src.radio = RM.radio
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
@@ -2049,6 +2024,7 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				src.radio.toggle_speaker(TRUE)
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
 				src.apply_radio_upgrade()

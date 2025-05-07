@@ -65,8 +65,9 @@
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 			src.is_npc = FALSE
 		else
-			emote("beep")
-			say(pick_string("flockmind.txt", "flockdrone_created"), TRUE)
+			SPAWN(1)
+				emote("beep")
+				src.say(pick_string("flockmind.txt", "flockdrone_created"))
 		if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
 			src.flock.stats.drones_made++
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
@@ -84,7 +85,7 @@
 			if (F.flock == src.flock)
 				return
 		playsound(src, 'sound/effects/electric_shock.ogg', 40, TRUE, -3)
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b>"))
+		src.flock.system_say_source.say("Anti-grapple countermeasures deployed.", atom_listeners_override = list(src))
 		var/mob/living/L = grab.assailant
 		L.shock(src, 5000)
 		qdel(grab) //in case they don't fall over from our shock
@@ -97,7 +98,7 @@
 	if (src.flock)
 		if (controller)
 			src.release_control_abrupt()
-		flock_speak(null, "Connection to drone [src.real_name] lost.", src.flock)
+		src.flock.system_say_source.say("Connection to drone [src.real_name] lost.")
 	if (src.selected_by)
 		var/mob/living/intangible/flock/selector = src.selected_by
 		var/datum/abilityHolder/flockmind/AH = selector.abilityHolder
@@ -160,6 +161,7 @@
 	src.dormant = FALSE
 	src.anchored = UNANCHORED
 	pilot.atom_hovered_over = null
+	pilot.ensure_listen_tree().migrate_listen_tree(src, src, TRUE)
 
 	var/datum/mind/mind = pilot.mind
 	if (mind)
@@ -175,7 +177,6 @@
 			ticker.minds += src.mind
 
 	pilot.set_loc(src)
-	pilot.boutput_relay_mob = src
 	controller = pilot
 	src.flock_name_tag.set_info_tag(src.controller.real_name)
 	src.client?.set_color()
@@ -198,14 +199,14 @@
 		if (relay)
 			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 	if (give_alert)
-		boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Control of drone [src.real_name] established.\]</b>"))
+		src.flock.system_say_source.say("Control of drone [src.real_name] established.", atom_listeners_override = list(pilot))
 
 /mob/living/critter/flock/drone/proc/release_control(give_alerts = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
 	if (give_alerts && src.flock.z_level_check(src))
 		emote("beep")
-		say(pick_string("flockmind.txt", "flockdrone_player_kicked"), TRUE)
+		src.say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
 		if(src.flock)
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -220,6 +221,8 @@
 		else
 			src.move_controller_to_station()
 
+		controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
+
 		var/datum/mind/mind = src.mind
 		if (mind)
 			mind.transfer_to(controller)
@@ -232,7 +235,6 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
-		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
 		var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
@@ -246,7 +248,7 @@
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.flock.z_level_check(src))
-			flock_speak(null, "Control of drone [src.real_name] surrendered.", src.flock)
+			src.flock.system_say_source.say("Control of drone [src.real_name] surrendered.", atom_listeners_override = list(src.controller))
 
 		controller = null
 		src.update_health_icon()
@@ -272,6 +274,9 @@
 		controller.set_loc(get_turf(src))
 	else
 		src.move_controller_to_station()
+
+	controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
+
 	var/datum/mind/mind = src.mind
 	if (mind)
 		mind.transfer_to(controller)
@@ -283,9 +288,8 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
-	controller.boutput_relay_mob = null
 	if (give_alert)
-		boutput(controller, SPAN_FLOCKSAY("<b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b>"))
+		src.flock.system_say_source.say("Control of drone [src.real_name] ended abruptly.", atom_listeners_override = list(src.controller))
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	composite.removeHolder(/datum/abilityHolder/flockmind)
 	var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
@@ -317,6 +321,7 @@
 
 	if (src.controller)
 		src.move_controller_to_station()
+		controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
 
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -330,12 +335,11 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
-		controller.boutput_relay_mob = null
-		boutput(controller, SPAN_FLOCKSAY("<b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b>"))
+		src.flock.system_say_source.say("Connection to drone [src.real_name] lost.", atom_listeners_override = list(controller))
 		controller = null
-	src.is_npc = TRUE // to ensure right flock_speak message
-	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
-	src.is_npc = FALSE // turns off ai
+	src.is_npc = TRUE // To ensure right message formatting.
+	src.say("Error: Out of signal range. Disconnecting.")
+	src.is_npc = FALSE // Turns off AI.
 	..()
 
 /mob/living/critter/flock/drone/proc/move_controller_to_station()
@@ -373,7 +377,7 @@
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
 	src.flock_name_tag.set_info_tag("Hibernating")
-	flock_speak(src, "No tasks in queue. Allocating higher functions to compute generation.", src.flock)
+	src.say("No tasks in queue. Allocating higher functions to compute generation.")
 	src.is_npc = FALSE
 	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
 	src.flock.total_compute += src.compute - FLOCK_DRONE_COMPUTE
@@ -403,7 +407,7 @@
 	else if (!src.controller)
 		src.is_npc = TRUE
 		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
-		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
+		src.say("Awoken. Resuming task queue.")
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -755,10 +759,10 @@
 	if (!isdead(src) && src.flock)
 		if (!src.flock.isEnemy(M))
 			if (src.flock.isIgnored(M))
-				say("[pick_string("flockmind.txt", "flockdrone_betrayal")] [M]", TRUE)
+				src.say("[pick_string("flockmind.txt", "flockdrone_betrayal")] [M]")
 			else
 				emote("scream")
-				say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
+				src.say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]")
 		src.flock.updateEnemy(M)
 	. = ..()
 
@@ -779,7 +783,7 @@
 	if(!isdead(src) && src.is_npc)
 		if(prev_damaged != src.damaged && src.damaged > 0) // damaged to a new state
 			src.emote("scream")
-			say("[pick_string("flockmind.txt", "flockdrone_hurt")]", TRUE)
+			src.say("[pick_string("flockmind.txt", "flockdrone_hurt")]")
 			src.ai.interrupt()
 
 /mob/living/critter/flock/drone/proc/check_health()
@@ -826,11 +830,11 @@
 	if(!src.dormant)
 		if(src.is_npc)
 			emote("scream")
-			say(pick_string("flockmind.txt", "flockdrone_death"), TRUE)
+			src.say(pick_string("flockmind.txt", "flockdrone_death"))
 			src.is_npc = FALSE // stop ticking the AI for this mob
 		else
 			emote("scream")
-			say("\[System notification: drone lost.\]", TRUE)
+			src.say("\[System notification: drone lost.\]")
 	var/obj/item/organ/heart/flock/core = src.organHolder.get_organ("heart")
 	if(core)
 		core.resources = src.resources
@@ -880,7 +884,7 @@
 		src.end_floorrunning()
 	src.ai?.die()
 	emote("scream")
-	say("\[System notification: drone diffracting.\]", TRUE)
+	src.say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
 	var/datum/flock/F = src.flock

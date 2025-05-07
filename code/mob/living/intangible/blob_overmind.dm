@@ -1,3 +1,10 @@
+TYPEINFO(/mob/living/intangible/blob_overmind)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_BLOBCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_BLOBCHAT)
+
 /mob/living/intangible/blob_overmind
 	name = "blob overmind"
 	real_name = "blob overmind"
@@ -10,8 +17,8 @@
 	blinded = 0
 	anchored = ANCHORED
 	use_stamina = 0
-	mob_flags = SPEECH_BLOB
-	voice_type = null
+	speech_verb_say = list("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
+	default_speech_output_channel = SAY_CHANNEL_BLOB
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
@@ -321,15 +328,7 @@
 							return
 					src.Move(T)
 
-	say_understands() return 1
 	can_use_hands()	return 0
-
-	say(var/message)
-		return ..(message)
-
-	say_quote(var/text)
-		var/speechverb = pick("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
-		return "[speechverb], \"[text]\""
 
 	//reset the blob to starting state
 	proc/reset()

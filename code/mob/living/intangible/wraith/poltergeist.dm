@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible/wraith/poltergeist)
+	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_POLTERGEIST)
+
 /mob/living/intangible/wraith/poltergeist
 	name = "Poltergeist"
 	real_name = "Poltergeist"

@@ -1501,3 +1501,45 @@ proc/spawn_kitchen_note()
 	disposing()
 		. = ..()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+
+/obj/item/paper/zombie_mining_magnet
+	name = "blood stained note"
+	info = {"i was used as bait. whatever you do don't trust N"}
+
+/obj/item/paper/flock_mining_magnet
+	name = "gnesis covered note"
+	info = {"day 1<br>
+	they trapped me here... my memory is foggy and it's so hard to think, all i hear is radio chatter and weird noises... something about a signal.
+	and- and an overwhelming feeling of homesickness, longing for a world ive never seen and can't remember.<br>
+	it's in my head. it's so loud. the geneticists let me hear radios. GOD i wish they hadn't...<br><br>
+	day 3<br>
+	i'm starving now. i'm going to die here aren't i? some memories came drifting back through the pain though. i'm a researcher. i thought i could study them
+	but somehow they- they looked back, saw me through the twisted lens of a radio antenna. then the Signal was in my head, screaming and tearing through my thoughts<br>
+	most of my tools are.. are liquid now but i was left with my backup RCD. unfortunately it doesn't work on these walls. i don't know what to do<br><br>
+	day 4<br>
+	in a brief moment of madness or lucidity i tried introducing some of the teal goo to my rcd out of desperation. the rcd is clearly
+	altered, but in a way i do not understand. it still won't work on the walls but it thrums with power and a purpose i can almost grasp. fuck.<br><br>
+	day 7? 10?<br>
+	i have no food. i've had no choice but to drink the teal goo for hydration. it tastes of paint and static. the radio chatter is louder now, drowning out my vision... all i can think
+	about is the Signal. the Homeworld. the Intruder. i can feel their fear.<br><br>
+	day 13<br>
+	the signal  it calls to me  it will set me free"}
+
+/obj/item/paper/current_turbines
+	name = "NT40 current turbine operating manual"
+	icon_state = "turbine_book"
+	New()
+		. = ..()
+		info = {"
+			<h2>Standard startup procedure</h2>
+			<b>Step 1:</b> Operate the turbine base to extend the turbine into the current. Do NOT over-extend the shaft. If you do, see "I fucked up" section 1.
+			<br>
+			<b>Step 2:</b> If necessary, add more shaft segments onto the reverse side of the turbine base and carefully secure them with a wrench.
+			<h2><s>"I fucked up"</s> Troubleshooting</h2>
+			<h3>Section 1: Overextension (AKA: it's whirring angrily and I'm scared)</h3>
+			If the turbine base emits an angry, pathetic or judgemental whirring sound then you have over-extended the turbine shaft. In this event, simply slide another shaft into the reverse side of the turbine base and anchor it in place with a wrench. The wrench can be used on either the shaft or the turbine base to secure it.
+			<h3>Section 2: Lost in the current</h3>
+			If at any time you manage to lose your state of the art NT40 turbine by unsecuring it inside the current, the standard procedure is to run after it like an idiot. If that fails and it falls in the trench then you will need to fabricate another one at your nearest Nanotrasen™ Engineering Specialist Manufacturer. All attempts to winch the heavy turbine out of the trench are now prohibited following safety incident NDR-23b.
+			<h3>Section 3: Safety</h3>
+			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
+		"}

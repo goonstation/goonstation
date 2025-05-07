@@ -13,11 +13,11 @@
 	can_disarm = FALSE
 	can_help = FALSE
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	faction = list(FACTION_DERELICT)
 
 	setup_healths()
@@ -514,11 +514,11 @@
 	base_move_delay = 5
 	base_walk_delay = 5
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	bound_height = 32
 	bound_width = 32
 	var/icon/northsouth = null

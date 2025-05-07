@@ -3600,7 +3600,7 @@
 /area/hospital/samostrel)
 "arA" = (
 /obj/machinery/vending/cola/red,
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/moon/museum/west)
@@ -3784,7 +3784,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},
 /area/moon/museum/west)
@@ -6775,7 +6775,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetNW"
 	},
 /area/marsoutpost)
@@ -6877,12 +6877,12 @@
 /obj/machinery/light/worn{
 	dir = 8
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetSW"
 	},
 /area/marsoutpost)
 "aIW" = (
-/turf/unsimulated/floor{
+/turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
 /area/marsoutpost)
@@ -9106,6 +9106,7 @@
 	pixel_y = 24;
 	start_charge = 10
 	},
+/obj/landmark/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQj" = (
@@ -9298,6 +9299,7 @@
 "aQU" = (
 /obj/table/auto,
 /obj/item/gun/kinetic/flaregun,
+/obj/item/disk/data/floppy/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQV" = (

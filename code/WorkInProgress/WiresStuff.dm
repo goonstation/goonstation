@@ -174,9 +174,9 @@ var/global/deathConfettiActive = 0
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	speechverb_say = "booms"
-	speechverb_exclaim = "flares"
-	speechverb_ask = "spots"
+	speech_verb_say = "booms"
+	speech_verb_exclaim = "flares"
+	speech_verb_ask = "spots"
 	blood_id = "phlogiston"
 	metabolizes = 0
 	var/datum/light/glow

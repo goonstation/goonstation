@@ -17748,7 +17748,9 @@
 /area/station/storage/tools)
 "gsy" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/removeCrew,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "gsL" = (
@@ -31810,6 +31812,7 @@
 	layer = 3;
 	pixel_y = 14
 	},
+/obj/item/storage/firstaid/mental,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
 "qDZ" = (
@@ -41764,6 +41767,9 @@
 "xNR" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/freeform,
+/obj/item/aiModule/removeCrew{
+	pixel_y = 11
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "xNT" = (
