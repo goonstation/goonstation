@@ -779,6 +779,7 @@ MATERIAL
 	icon_state = "head_spike"
 	anchored = UNANCHORED
 	density = 1
+	open_to_sound = TRUE
 	var/list/heads = list()
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed
 	var/bloodiness = 0 //

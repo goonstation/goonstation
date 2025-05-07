@@ -1,3 +1,10 @@
+TYPEINFO(/mob)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /mob
 	density = 1
 	layer = MOB_LAYER
@@ -8,8 +15,15 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	speech_verb_say = "says"
+	speech_verb_ask = "asks"
+	speech_verb_exclaim = "exclaims"
+	speech_verb_stammer = "stammers"
+	speech_verb_gasp = "gasps"
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/tmp/datum/mind/mind
-	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -23,8 +37,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-
-	var/robot_talk_understand = 0
 
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = null
@@ -77,7 +89,6 @@
 	var/incrit = 0
 	var/timeofdeath = 0
 	var/fakeloss = 0
-	var/fakedead = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -108,7 +119,6 @@
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
-	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
 	var/list/movement_modifiers = list()
@@ -140,7 +150,6 @@
 	var/spellshield = 0
 
 	var/voice_name = "unidentifiable voice"
-	var/voice_message = null
 	var/oldname = null
 	var/mob/oldmob = null
 	var/datum/mind/oldmind = null
@@ -148,15 +157,8 @@
 	var/attack_alert = 0 // should we message admins when attacking another player?
 	var/suicide_alert = 0 // should we message admins when dying/dead?
 
-	var/speechverb_say = "says"
-	var/speechverb_ask = "asks"
-	var/speechverb_exclaim = "exclaims"
-	var/speechverb_stammer = "stammers"
-	var/speechverb_gasp = "gasps"
-	var/speech_void = 0
 	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
-	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
@@ -234,7 +236,6 @@
 	var/being_controlled = FALSE
 	///Lazy inited list of custom vomit behaviours from reagents, organs etc.
 	var/list/datum/vomit_behavior/vomit_behaviors = null
-
 	/// if this mob can interface with pod context menu by left clicking
 	var/can_interface_with_pods = TRUE
 
@@ -272,7 +273,6 @@
 
 	src.lastattacked = get_weakref(src) //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -340,9 +340,6 @@
 		skipped_mobs_list = 0
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
-
-	qdel(chat_text)
-	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -2800,6 +2797,8 @@
 	return mobs
 
 /mob/get_examine_tag(mob/examiner)
+	if (GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3)
+		return null
 	return src.name_tag
 
 /mob/proc/protected_from_space()
@@ -3474,6 +3473,9 @@
 	if (src.bioHolder?.mobAppearance)
 		return src.bioHolder.mobAppearance.s_tone
 	return "#042069"
+
+/mob/proc/update_movement_modifiers()
+	process_movespeed_update()
 
 /mob/proc/scald_temp()
 	return src.base_body_temp + (src.temp_tolerance * 4)

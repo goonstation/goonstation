@@ -2744,7 +2744,7 @@
 	onAdd(optional)
 		..()
 		var/mob/living/M = src.owner
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		RegisterSignal(M, COMSIG_ATOM_SAY, PROC_REF(remove_self))
 		if (!istype(M) || !M.bioHolder)
 			src.remove_self()
 			return
@@ -2761,7 +2761,7 @@
 		if (src.added_accent)
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
-		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
 	id = "graffiti_blind"

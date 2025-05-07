@@ -485,6 +485,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	var/locked = 0
 	var/mob/occupant = null
 	anchored = ANCHORED
+	open_to_sound = TRUE
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null

@@ -564,3 +564,91 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			boutput(W, SPAN_NOTICE("The egg you planted at [marker.loc] has hatched into a new spider!"))
 		W.spawn_marker = null
 		qdel(marker)
+
+ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
+/obj/item/gun/kinetic/breakaction
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+	var/can_spin_closed = FALSE
+
+	update_icon()
+		. = ..()
+		src.icon_state = initial(src.icon_state) + (!src.broke_open ? "" : "-empty" )
+
+	canshoot(mob/user)
+		if (!src.broke_open)
+			return TRUE
+		..()
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.broke_open)
+			src.toggle_action(user)
+			if (src.ammo.amount_left > 0)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> slams shut [src] and fires in one fluid motion. Wow!"))
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
+		..()
+
+	attack_self(mob/user)
+		src.toggle_action(user)
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, SPAN_ALERT("You can't load shells into the chambers! You'll have to open [src] first!"))
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, SPAN_ALERT("[src] is still closed, you need to open the action to take the shells out!"))
+			return
+		..()
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open && src.can_spin_closed) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+
+/obj/item/gun/kinetic/breakaction/singleshotrifle
+	name = "\improper single shot rifle"
+	desc = "A break-barrel style single shot .308 rifle. Nasty."
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	item_state = "mts255"
+	icon_state = "singleshot"
+	force = MELEE_DMG_RIFLE
+	contraband = 7
+	ammo_cats = list(AMMO_TRANQ_ALL, AMMO_RIFLE_308)
+	max_ammo_capacity = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	add_residue = TRUE
+	gildable = FALSE
+	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
+	recoil_strength = 14
+	recoil_max = 14
+	default_magazine = /obj/item/ammo/bullets/rifle_3006/single
+
+	New()
+		if (prob(10))
+			name = pick ("elephant rifle", "brullbar rifle", "comically oversized clown stopper", "lion tamer", "drone hunter")
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
+		AddComponent(/datum/component/holdertargeting/windup, 0.5 SECONDS)
+		..()
