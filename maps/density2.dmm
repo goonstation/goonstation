@@ -2060,6 +2060,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"lZ" = (
+/obj/machinery/door_timer/solitary{
+	name = "Brig Timer";
+	pixel_x = 26
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "ma" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2382,18 +2394,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"nU" = (
-/obj/machinery/door_timer/solitary{
-	name = "Brig Timer";
-	pixel_x = 26
-	},
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/item/clothing/glasses/vr/arcade,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "nY" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr/arcade,
@@ -3187,6 +3187,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"tS" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "tT" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/heater,
@@ -3892,15 +3896,6 @@
 /obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
-"yH" = (
-/obj/decal/stage_edge,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer3/generic/communications,
-/turf/simulated/floor/wood/two,
-/area/station/bridge)
 "yI" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle/small{
@@ -4338,6 +4333,14 @@
 /obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Cf" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "Ch" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5445,6 +5448,15 @@
 "Jf" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge)
+"Jg" = (
+/obj/decal/stage_edge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor/wood/two,
+/area/station/bridge)
 "Jh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -6431,10 +6443,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"Px" = (
-/obj/machinery/computer/security/wooden_tv,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "Py" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -6760,14 +6768,6 @@
 	icon_state = "1-4"
 	},
 /obj/storage/secure/closet/command/hos,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
-"Sy" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "SF" = (
@@ -21295,7 +21295,7 @@ Hj
 Hj
 io
 TP
-Px
+tS
 Jh
 Hj
 Hj
@@ -49173,7 +49173,7 @@ rs
 sJ
 uC
 wM
-yH
+Jg
 Be
 Dn
 FA
@@ -50675,7 +50675,7 @@ kz
 lR
 fL
 iz
-nU
+lZ
 sN
 iz
 Qs
@@ -50700,7 +50700,7 @@ Oc
 QF
 kD
 oF
-Sy
+Cf
 aG
 Rf
 Rf
