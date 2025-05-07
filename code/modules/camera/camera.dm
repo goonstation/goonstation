@@ -41,6 +41,8 @@
 	/// Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Should this camera have a light?
+	var/has_light = TRUE
 	/// Robust light
 	var/datum/light/point/light
 
@@ -61,7 +63,7 @@
 	All cameras are tallied regardless of this tag to apply a number to them.
 	*/
 
-/obj/machinery/camera/New()
+/obj/machinery/camera/New(loc)
 	..()
 	START_TRACKING
 	var/area/area = get_area(src)
@@ -83,11 +85,12 @@
 
 	LAZYLISTINIT(src.viewers)
 
-	src.light = new /datum/light/point
-	src.light.set_brightness(0.3)
-	src.light.set_color(209/255, 27/255, 6/255)
-	src.light.attach(src)
-	src.light.enable()
+	if (src.has_light)
+		src.light = new /datum/light/point
+		src.light.set_brightness(0.3)
+		src.light.set_color(209/255, 27/255, 6/255)
+		src.light.attach(src)
+		src.light.enable()
 
 	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
 		src.minimap_types |= MAP_CAMERA_STATION

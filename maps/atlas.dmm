@@ -1707,10 +1707,6 @@
 "ahV" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"aie" = (
-/obj/machinery/launcher_loader/east,
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "aii" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -2711,6 +2707,18 @@
 /obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
+"aoS" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/wood/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/sticker/ribbon/first_place,
+/obj/item/stamp/cap,
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "aoT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3539,6 +3547,18 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/customs)
+"aup" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fblue2"
+	},
+/area/station/bridge/customs)
 "auq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3731,13 +3751,6 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai)
-"avN" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "avP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
@@ -5451,6 +5464,15 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"aES" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/lounge)
 "aET" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet{
@@ -10534,20 +10556,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"dzn" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "chapel";
-	req_access_txt = "1"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "dzV" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple{
@@ -10722,15 +10730,6 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/engine/combustion_chamber)
-"dOL" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "dOP" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -12359,15 +12358,6 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
-"gfb" = (
-/obj/machinery/sim/vr_bed{
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/lounge)
 "ggb" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -12522,27 +12512,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"gsT" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/door_control{
-	id = "chapel";
-	name = "Chapel Airlock Control";
-	pixel_y = 28
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "gtu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -12775,6 +12744,18 @@
 	dir = 10
 	},
 /area/station/engine/ptl)
+"gTj" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "gUu" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -14864,18 +14845,6 @@
 	dir = 9
 	},
 /area/station/security/main)
-"jHe" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/personnel_management{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fblue2"
-	},
-/area/station/bridge/customs)
 "jIB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14941,6 +14910,12 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
+"jLt" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/obj/machinery/firealarm/north,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge)
 "jMI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20659,18 +20634,6 @@
 "sok" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core)
-"som" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/table/wood/auto,
-/obj/item/card/id/gold/captains_spare,
-/obj/item/sticker/ribbon/first_place,
-/obj/item/stamp/cap,
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "sqo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
@@ -22873,6 +22836,17 @@
 "vgX" = (
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"vhm" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "chapel";
+	req_access_txt = "1"
+	},
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "vjI" = (
 /obj/airbridge_controller{
 	id = "sciship"
@@ -23638,6 +23612,13 @@
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
+"wkA" = (
+/obj/machinery/activation_button/driver_button{
+	id = "chapelgun";
+	name = "Funerary Driver Button"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/chapel/sanctuary)
 "wlm" = (
 /obj/displaycase/captain,
 /turf/simulated/floor/blue,
@@ -24865,12 +24846,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"yky" = (
-/obj/table/auto,
-/obj/linen_bin/bedsheet,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge)
 "ykT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -80284,7 +80259,7 @@ aUv
 aCN
 dEY
 aVx
-gfb
+aES
 aRF
 aGz
 aEV
@@ -80883,7 +80858,7 @@ iZt
 hgR
 lzN
 apT
-yky
+jLt
 aDs
 aCm
 bof
@@ -82069,7 +82044,7 @@ gxQ
 aen
 afO
 ahi
-gsT
+gTj
 aiz
 ajJ
 aku
@@ -82084,7 +82059,7 @@ amr
 iga
 asO
 aub
-jHe
+aup
 avg
 azf
 aSW
@@ -82371,7 +82346,7 @@ aey
 chL
 afO
 ahi
-dOL
+akI
 ajR
 aiG
 ajN
@@ -82672,8 +82647,8 @@ acz
 acz
 acz
 ach
-ahf
-dzn
+wkA
+akG
 ahf
 aiJ
 aiJ
@@ -82975,7 +82950,7 @@ aaa
 aaa
 aaa
 ahf
-avN
+vhm
 ahf
 aaa
 aaa
@@ -82984,7 +82959,7 @@ aVi
 aSl
 rOr
 aoc
-som
+aoS
 ybr
 amu
 asq
@@ -83277,7 +83252,7 @@ aaa
 aaa
 aaa
 ahf
-aie
+ahb
 ahf
 aaa
 aaa
@@ -83579,7 +83554,7 @@ aaa
 aaa
 aaa
 ahf
-ahb
+ahc
 ahf
 aaa
 aaa
@@ -83880,9 +83855,9 @@ aaa
 aaa
 aaa
 aaa
-ahf
-ahc
-ahf
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa

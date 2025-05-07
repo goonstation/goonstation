@@ -10305,12 +10305,6 @@
 "bAT" = (
 /turf/simulated/floor,
 /area/station/engine/substation/west)
-"bBg" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "bBB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
@@ -13467,6 +13461,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"dlc" = (
+/obj/machinery/firealarm/east,
+/obj/disposalpipe/segment,
+/obj/table/wood/auto,
+/obj/item/card/id/gold/captains_spare,
+/obj/item/pen/fancy,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "dlm" = (
 /obj/machinery/light_switch/east,
 /obj/machinery/disposal/small{
@@ -17171,6 +17178,23 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/west)
+"gaf" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/bedsheet{
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/judgerobe,
+/obj/item/clothing/head/powdered_wig,
+/obj/item/device/radio/headset/civilian,
+/obj/item/device/radio/headset/civilian,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/bridge/customs)
 "gah" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -17725,11 +17749,6 @@
 	dir = 4
 	},
 /area/station/storage/tools)
-"gsy" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/removeCrew,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "gsL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -22073,23 +22092,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/southwest)
-"jxc" = (
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Lockdown Control";
-	pixel_x = -23;
-	dir = 8;
-	pixel_y = 1
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/personnel_management{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/bridge/customs)
 "jxi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23249,6 +23251,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"ksT" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "ktn" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -25427,6 +25436,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"lOq" = (
+/obj/machinery/door_control{
+	id = "lockdown";
+	name = "Bridge Lockdown Control";
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personnel_management{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/bridge/customs)
 "lOC" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -29802,23 +29828,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"pcw" = (
-/obj/table/reinforced/auto,
-/obj/linen_bin/bedsheet{
-	pixel_y = 2
-	},
-/obj/item/clothing/suit/judgerobe,
-/obj/item/clothing/head/powdered_wig,
-/obj/item/device/radio/headset/civilian,
-/obj/item/device/radio/headset/civilian,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/bridge/customs)
 "pdl" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -29846,20 +29855,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/psychiatrist)
-"pee" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/sim/vr_bed{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "pel" = (
 /obj/machinery/floorflusher/minibrig,
 /obj/disposalpipe/trunk/west,
@@ -30750,13 +30745,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
-"pOE" = (
-/obj/machinery/sim/vr_bed{
-	dir = 8
-	},
-/obj/machinery/firealarm/east,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "pPg" = (
 /obj/storage/closet/office,
 /obj/machinery/disposal/small{
@@ -31792,20 +31780,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
-"qDz" = (
-/obj/table/wood/round/auto,
-/obj/machinery/phone{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 14
-	},
-/turf/simulated/floor/wood,
-/area/station/medical/medbay/psychiatrist)
 "qDZ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -33935,6 +33909,13 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"shk" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/machinery/firealarm/east,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "sht" = (
 /obj/storage/closet/welding_supply,
 /obj/item/storage/wall/fire{
@@ -34225,6 +34206,21 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"sqa" = (
+/obj/table/wood/round/auto,
+/obj/machinery/phone{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant_small";
+	layer = 3;
+	pixel_y = 14
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/wood,
+/area/station/medical/medbay/psychiatrist)
 "sqF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34304,11 +34300,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
-"ssZ" = (
-/obj/linen_bin/towel,
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "stg" = (
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -34608,6 +34599,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"sGL" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/removeCrew{
+	pixel_y = 11
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "sGR" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -36604,6 +36603,20 @@
 	dir = 4
 	},
 /area/station/hallway/primary/southeast)
+"tZC" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "uai" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -38451,6 +38464,11 @@
 /obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
+"vgE" = (
+/obj/linen_bin/towel,
+/obj/table/glass/reinforced/auto,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "vgO" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
@@ -39024,19 +39042,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
-"vGD" = (
-/obj/machinery/firealarm/east,
-/obj/disposalpipe/segment,
-/obj/table/wood/auto,
-/obj/item/card/id/gold/captains_spare,
-/obj/item/pen/fancy,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "vHe" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -40818,6 +40823,12 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"xcV" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "xdq" = (
 /obj/machinery/turretid/armory_perimeter{
 	pixel_x = -24
@@ -41763,11 +41774,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"xNR" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "xNT" = (
 /obj/table/auto,
 /obj/disposalpipe/segment{
@@ -75163,7 +75169,7 @@ gqn
 bsm
 wcv
 brk
-qDz
+sqa
 xbG
 gfx
 eLa
@@ -75720,7 +75726,7 @@ yie
 yie
 yie
 abJ
-bBg
+xcV
 xkb
 xkb
 abJ
@@ -78753,8 +78759,8 @@ akz
 fZz
 uly
 bmh
-pee
-pOE
+tZC
+shk
 bmh
 arj
 ybI
@@ -78765,7 +78771,7 @@ tQO
 jHU
 pui
 rJP
-ssZ
+vgE
 jHU
 tCh
 azu
@@ -81504,7 +81510,7 @@ aOE
 aPQ
 vgr
 hXx
-jxc
+lOq
 pYy
 wYg
 dIa
@@ -82072,7 +82078,7 @@ bft
 bhB
 bhD
 bhB
-xNR
+sGL
 aqp
 uUA
 jQK
@@ -82676,7 +82682,7 @@ tOd
 bhB
 bhD
 bhB
-gsy
+ksT
 aqp
 smK
 jQK
@@ -83014,7 +83020,7 @@ aOE
 aPQ
 kVr
 nFM
-pcw
+gaf
 eVv
 wYg
 wYg
@@ -85134,7 +85140,7 @@ aWW
 mlo
 aWW
 baJ
-vGD
+dlc
 roJ
 bep
 vgO

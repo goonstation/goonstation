@@ -3,6 +3,7 @@
 	display_name = ROLE_SALVAGER
 	antagonist_icon = "salvager"
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Salvager"
 
 	var/static/starting_freq = null
 	var/salvager_points

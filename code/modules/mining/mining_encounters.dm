@@ -316,6 +316,18 @@
 		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
 		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
 
+
+/datum/mining_encounter/flock
+	name = "Flock Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
+
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium
@@ -593,8 +605,8 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/simulated/wall/auto/asteroid/A
-	A = new base_rock(locate(center.x, center.y, center.z),0)
+	var/turf/simulated/wall/auto/asteroid/A = locate(center.x, center.y, center.z)
+	A.ReplaceWith(base_rock)
 	generated_turfs += A
 	var/turf/simulated/wall/auto/asteroid/B
 
@@ -611,7 +623,8 @@
 					continue
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
-				B = new base_rock(locate(S.x, S.y, S.z),0)
+				B = locate(S.x, S.y, S.z)
+				B.ReplaceWith(base_rock)
 				generated_turfs += B
 
 	return generated_turfs

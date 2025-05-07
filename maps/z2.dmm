@@ -3618,6 +3618,12 @@
 	},
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
+"arA" = (
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetW"
+	},
+/area/moon/museum/west)
 "arB" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -3785,6 +3791,21 @@
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 8
+	},
+/area/moon/museum/west)
+"ass" = (
+/obj/fakeobject/lightbulb_broken{
+	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
+	dir = 4;
+	icon_state = "bulb0";
+	name = "inactive light bulb";
+	tag = ""
+	},
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "carpetW"
 	},
 /area/moon/museum/west)
 "asu" = (
@@ -6762,6 +6783,22 @@
 	icon_state = "plating_dusty3"
 	},
 /area/marsoutpost)
+"aIz" = (
+/obj/table/wood/auto,
+/obj/machinery/door_control{
+	desc = "What does this even do?";
+	id = "mars_vault_entrance";
+	layer = 3;
+	name = "button"
+	},
+/obj/item/instrument/harmonica,
+/obj/item/pen{
+	desc = "It's a normal black ink pen. Looks like it has been chewed on."
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNW"
+	},
+/area/marsoutpost)
 "aIA" = (
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -6856,6 +6893,19 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/black,
 /area/marsoutpost/vault)
+"aIV" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSW"
+	},
+/area/marsoutpost)
+"aIW" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpetS"
+	},
+/area/marsoutpost)
 "aIX" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -9065,19 +9115,6 @@
 /obj/item/paper/printout/slide2,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
-"aQh" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 10
-	},
-/turf/unsimulated/floor/arctic/plating,
-/area/upper_arctic/comms)
 "aQj" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -9263,11 +9300,6 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aQT" = (
-/turf/unsimulated/floor/arctic/plating,
-/area/upper_arctic/comms)
-"aQU" = (
-/obj/table/auto,
-/obj/item/gun/kinetic/flaregun,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQV" = (
@@ -54744,21 +54776,6 @@
 	dir = 10
 	},
 /area/centcom/offices/walpvrgis)
-"eez" = (
-/obj/fakeobject/lightbulb_broken{
-	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
-	dir = 4;
-	icon_state = "bulb0";
-	name = "inactive light bulb";
-	tag = ""
-	},
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetW"
-	},
-/area/moon/museum/west)
 "eeF" = (
 /obj/decal/poster/wallsign/cdnp,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -61938,12 +61955,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
-"jNr" = (
-/obj/machinery/vending/cola/red,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetW"
-	},
-/area/moon/museum/west)
 "jNs" = (
 /obj/lattice,
 /obj/stool/chair,
@@ -67568,22 +67579,6 @@
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
-"ogM" = (
-/obj/table/wood/auto,
-/obj/machinery/door_control{
-	desc = "What does this even do?";
-	id = "mars_vault_entrance";
-	layer = 3;
-	name = "button"
-	},
-/obj/item/instrument/harmonica,
-/obj/item/pen{
-	desc = "It's a normal black ink pen. Looks like it has been chewed on."
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetNW"
-	},
-/area/marsoutpost)
 "ohd" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -71718,11 +71713,6 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
-"rqi" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetS"
-	},
-/area/marsoutpost)
 "rqo" = (
 /obj/mesh/catwalk{
 	dir = 9
@@ -74627,14 +74617,6 @@
 	icon_state = "logo_x4"
 	},
 /area/iomoon/base)
-"tMq" = (
-/obj/machinery/light/worn{
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "carpetSW"
-	},
-/area/marsoutpost)
 "tMB" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/sim/racing_entry)
@@ -77793,6 +77775,12 @@
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"wfw" = (
+/obj/table/auto,
+/obj/item/gun/kinetic/flaregun,
+/obj/item/disk/data/floppy/lrt/icemoon2,
+/turf/unsimulated/floor/arctic/plating,
+/area/upper_arctic/comms)
 "wfy" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -78537,6 +78525,20 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"wFq" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 10
+	},
+/obj/landmark/lrt/icemoon2,
+/turf/unsimulated/floor/arctic/plating,
+/area/upper_arctic/comms)
 "wFK" = (
 /obj/lattice/directional_icons,
 /turf/space,
@@ -93672,7 +93674,7 @@ aNo
 aNo
 aNo
 qJS
-aQh
+wFq
 aQT
 aRM
 aSO
@@ -94277,7 +94279,7 @@ aNo
 aNo
 qJS
 aQj
-aQU
+wfw
 qJS
 aSP
 aTI
@@ -105097,8 +105099,8 @@ anX
 aoN
 apE
 enf
-jNr
-eez
+arA
+ass
 enf
 enf
 enf
@@ -137445,8 +137447,8 @@ aES
 dFc
 aaa
 aTs
-ogM
-tMq
+aIz
+aIV
 aTs
 aJZ
 aJX
@@ -137748,7 +137750,7 @@ dFc
 aaa
 aTs
 aIA
-rqi
+aIW
 aJx
 aKa
 aKw

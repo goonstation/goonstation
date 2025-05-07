@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
+			src.our_sleeper.say("Alert! No life signs detected from occupant.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -236,6 +236,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 
 TYPEINFO(/obj/machinery/sleeper)
 	mats = 25
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -246,6 +248,10 @@ TYPEINFO(/obj/machinery/sleeper)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
+	open_to_sound = TRUE
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null

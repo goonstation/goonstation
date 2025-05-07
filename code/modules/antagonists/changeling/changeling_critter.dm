@@ -3,8 +3,9 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	antagonist_icon = "changeling"
-	wiki_link = "https://wiki.ss13.co/Changeling"
+	wiki_link = "https://wiki.ss13.co/Changeling#The_Hivemind"
 	var/critter_type = null
+	var/speech_output = SPEECH_OUTPUT_HIVECHAT
 	var/datum/abilityHolder/changeling/master_ability_holder
 
 	give_equipment()
@@ -28,8 +29,16 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 		src.owner.transfer_to(critter)
 		qdel(old_mob)
 
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(src.speech_output, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
+
 	remove_equipment()
 		src.master_ability_holder.hivemind -= src.owner.current
+
+		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(src.speech_output, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.default_speech_output_channel = null
 
 	add_to_image_groups()
 		. = ..()
@@ -58,6 +67,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	id = ROLE_HANDSPIDER
 	display_name = "handspider"
 	critter_type = /mob/living/critter/changeling/handspider
+	speech_output = SPEECH_OUTPUT_HIVECHAT_HANDSPIDER
 
 	announce()
 		..()
@@ -67,6 +77,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	id = ROLE_EYESPIDER
 	display_name = "eyespider"
 	critter_type = /mob/living/critter/changeling/eyespider
+	speech_output = SPEECH_OUTPUT_HIVECHAT_EYESPIDER
 
 	announce()
 		..()
@@ -76,6 +87,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	id = ROLE_LEGWORM
 	display_name = "legworm"
 	critter_type = /mob/living/critter/changeling/legworm
+	speech_output = SPEECH_OUTPUT_HIVECHAT_LEGWORM
 
 	announce()
 		..()
@@ -85,6 +97,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 	id = ROLE_BUTTCRAB
 	display_name = "buttcrab"
 	critter_type = /mob/living/critter/changeling/buttcrab
+	speech_output = SPEECH_OUTPUT_HIVECHAT_BUTTCRAB
 
 	announce()
 		..()
