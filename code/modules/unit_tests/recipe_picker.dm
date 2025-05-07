@@ -2,7 +2,8 @@
 TEST_FOCUS(/datum/unit_test/recipe_picker)
 /datum/unit_test/recipe_picker/Run()
 	var/obj/machinery/cookingmachine/oven/test_oven = new /obj/machinery/cookingmachine/oven
-	for(var/datum/cookingrecipe/R in concrete_typesof(/datum/cookingrecipe/oven))
+	var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
+	for(var/datum/cookingrecipe/R in RM.oven_recipes)
 		for(var/obj/item/ingredient in R.ingredients)
 			for(var/i = 0; i<R.ingredients[ingredient]; i++)
 				test_oven.load_item(new ingredient)
@@ -11,9 +12,8 @@ TEST_FOCUS(/datum/unit_test/recipe_picker)
 			Fail("Cooking recipe [R] not reachable, made [test_output] instead (expecting [R.output])")
 		test_oven.contents = list()
 		test_oven.possible_recipes = list()
-
 	var/obj/machinery/cookingmachine/mixer/test_mixer = new /obj/machinery/cookingmachine/mixer
-	for(var/datum/cookingrecipe/R in concrete_typesof(/datum/cookingrecipe/mixer))
+	for(var/datum/cookingrecipe/R in RM.mixer_recipes)
 		for(var/obj/item/ingredient in R.ingredients)
 			for(var/i = 0; i<R.ingredients[ingredient]; i++)
 				test_mixer.load_item(new ingredient)
