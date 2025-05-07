@@ -222,8 +222,9 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
 	icon_state = "oven_off"
 	object_flags = NO_GHOSTCRITTER
+	max_contents = 8
 	cooktime = 5 SECONDS
-	var/emagged = TRUE
+	var/emagged = FALSE
 	var/heat = OVEN_LOW
 	var/static/tmp/recipe_html = null // see: create_oven_recipe_html()
 	var/icon_idle = "oven_off"
@@ -254,7 +255,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 	ui_data(mob/user)
 		src.get_recipes()
 		. = list(
-			"time" = src.cooktime,
+			"time" = src.cooktime/10,//it's in SECONDS now
 			"heat" = src.heat,
 			"cooking" = src.working,
 			"content_icons" = src.get_content_icons(),
@@ -371,9 +372,9 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		if (!src || !istype(src))
 			return
 		if(src.working)
-			src.icon = src.icon_active
+			src.icon_state = src.icon_active
 		else
-			src.icon = src.icon_idle
+			src.icon_state = src.icon_idle
 
 
 	custom_suicide = TRUE
