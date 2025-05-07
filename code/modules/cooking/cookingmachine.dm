@@ -339,7 +339,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 		if (emagged)
 			var/obj/item/output
 			// Enforce GIGO and prevent infinite reuse
-			var/contentsok = FALSE
+			var/contentsok = TRUE
 			for(var/obj/item/I in src.contents)
 				if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
 					contentsok = FALSE
