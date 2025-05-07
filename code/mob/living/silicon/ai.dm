@@ -1677,13 +1677,15 @@ or don't if it uses a custom topopen overlay
 		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
-	var/list/say_targets = list("Local")
+	var/list/say_targets = list()
 
 	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
 		var/prefix_choice = prefix_module.get_prefix_choices()
 		if(!length(prefix_choice))
 			continue
 		say_targets += prefix_choice
+
+	say_targets += "Local"
 
 	var/choice
 	if (length(say_targets) == 1)
@@ -1736,13 +1738,15 @@ or don't if it uses a custom topopen overlay
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
-	var/list/say_targets = list("Local")
+	var/list/say_targets = list()
 
 	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
 		var/prefix_choice = prefix_module.get_prefix_choices()
 		if(!length(prefix_choice))
 			continue
 		say_targets += prefix_choice
+
+	say_targets += "Local"
 
 	var/choice
 	if (length(say_targets) == 1)
