@@ -1858,7 +1858,6 @@
 #include "code\modules\tutorials\tutorial_base.dm"
 #include "code\modules\unit_tests\_map_correctness.dm"
 #include "code\modules\unit_tests\_unit_tests.dm"
-#include "code\modules\unit_tests\recipe_cookable.dm"
 #include "code\modules\vending\jobclothing.dm"
 #include "code\modules\vending\vending.dm"
 #include "code\modules\vpn_bonk\vpn_bonk.dm"
