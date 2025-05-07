@@ -78205,8 +78205,9 @@
 	})
 "wuv" = (
 /obj/fakeobject/skeleton/unanchored,
-/obj/item/clothing/head/wizard,
 /obj/item/reagent_containers/glass/water_pipe/filled,
+/obj/item/clothing/suit/wizrobe/traveller,
+/obj/item/clothing/head/wizard/traveller,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"

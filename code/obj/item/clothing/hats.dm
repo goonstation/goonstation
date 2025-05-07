@@ -744,6 +744,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
+/obj/item/clothing/head/wizard/traveller
+	name = "traveller's hat"
+	desc = "Oh, how much the stars have to show! Look up, and you'll see them, just right there!"
+	icon_state = "wizardstars"
+	item_state = "wizardnec"
+
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
 	desc = "A pink wizard hat. Must've been a reject from the assembly line."
