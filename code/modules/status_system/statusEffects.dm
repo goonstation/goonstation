@@ -3717,7 +3717,7 @@
 	onAdd()
 		..()
 		var/mob/M = src.owner
-		
+
 		src.shield_overlay = image('icons/effects/effects.dmi', M, "enshield", MOB_LAYER+1)
 		M.underlays += shield_overlay
 		boutput(M, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
@@ -3725,6 +3725,7 @@
 		playsound(M, 'sound/effects/MagShieldUp.ogg', 50, TRUE)
 
 	onRemove()
+		..()
 		var/mob/M = src.owner
 
 		M.underlays -= src.shield_overlay
