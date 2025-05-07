@@ -276,36 +276,46 @@ ABSTRACT_TYPE(/area/veil_border)
 	outer
 		occlude_foreground_parallax_layers = FALSE
 
+/datum/targetable/critter/mindeater/set_disguise
+	name = "Set Disguise"
+	desc = "Set what you will disguise as."
+	icon_state = "set_disguise"
+	pointCost = 0
+
+	cast()
+		. = ..()
+		var/mob/living/critter/mindeater/mindeater = src.holder.owner
+		var/option = tgui_input_list(src.holder.owner, "What would you like to disguise as?", "Set Disguise", list(MINDEATER_DISGUISE_MOUSE, MINDEATER_DISGUISE_COCKROACH, MINDEATER_DISGUISE_HUMAN))
+
+		if (!option)
+			return
+		mindeater.set_disguise = option
+
 /datum/targetable/critter/mindeater/disguise
 	name = "Disguise"
 	desc = "Disguise yourself as a creature."
 	icon_state = "disguise"
 	pointCost = 0
 	reveals_on_use = TRUE
-	var/chosen_option
-
-	tryCast(atom/target)
-		src.chosen_option = null
-		var/option = tgui_input_list(src.holder.owner, "What would you like to disguise as?", "Set Disguise", list("Mouse", "Cockroach", "Human"))
-		if (!option)
-			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		src.chosen_option = option
-		return ..()
 
 	cast(atom/target)
 		. = ..()
 		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		mindeater.disguise(src.chosen_option)
 
-/datum/targetable/critter/mindeater/clear_disguise
-	name = "Clear Disguise"
-	desc = "Clear your disguise."
-	icon_state = "clear_disguise"
+		if (!mindeater.disguised)
+			mindeater.disguise()
 
-	cast(atom/target)
-		. = ..()
-		var/mob/living/critter/mindeater/mindeater = src.holder.owner
-		mindeater.undisguise()
+			src.name = "Clear Disguise"
+			src.desc = "Clear your disguise."
+			src.icon_state = "clear_disguise"
+			src.updateObject()
+		else
+			mindeater.undisguise()
+
+			src.name = initial(src.name)
+			src.desc = initial(src.desc)
+			src.icon_state = initial(src.icon_state)
+			src.updateObject()
 
 /datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT

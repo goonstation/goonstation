@@ -29,6 +29,8 @@
 	var/image/mindeater_health_indicator/hp_indicator
 	/// currently casting paralyze ability
 	var/casting_paralyze = FALSE
+	/// what this mindeater's disguise is set to
+	var/set_disguise = MINDEATER_DISGUISE_HUMAN
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
 
@@ -269,6 +271,7 @@
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 	/// move from tangible to intangible state
@@ -286,6 +289,7 @@
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/paralyze)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/cosmic_light)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/pierce_the_veil)
+		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/set_disguise)
 		src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
 		src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/manifest)
 
@@ -310,33 +314,34 @@
 			abil_holder.addPoints(points)
 
 	/// disguise as an entity
-	proc/disguise(option)
+	proc/disguise()
 		var/mob/living/temp
-		if (option == "Mouse")
-			temp = new /mob/living/critter/small_animal/mouse
-			src.icon = temp.icon
-			src.icon_state = temp.icon_state
-			src.flags |= (TABLEPASS | DOORPASS)
-		else if (option == "Cockroach")
-			temp = new /mob/living/critter/small_animal/cockroach
-			src.icon = temp.icon
-			src.icon_state = temp.icon_state
-			src.flags |= (TABLEPASS | DOORPASS)
-		else if (option == "Human")
-			temp = new /mob/living/carbon/human/normal/assistant
-			randomize_look(temp, change_name = FALSE)
+		switch (src.set_disguise)
+			if (MINDEATER_DISGUISE_MOUSE)
+				temp = new /mob/living/critter/small_animal/mouse
+				src.icon = temp.icon
+				src.icon_state = temp.icon_state
+				src.flags |= (TABLEPASS | DOORPASS)
+			if (MINDEATER_DISGUISE_COCKROACH)
+				temp = new /mob/living/critter/small_animal/cockroach
+				src.icon = temp.icon
+				src.icon_state = temp.icon_state
+				src.flags |= (TABLEPASS | DOORPASS)
+			if (MINDEATER_DISGUISE_HUMAN)
+				temp = new /mob/living/carbon/human/normal/assistant
+				randomize_look(temp, change_name = FALSE)
 
-			var/icon/front = getFlatIcon(temp, SOUTH)
-			var/icon/back = getFlatIcon(temp, NORTH)
-			var/icon/left = getFlatIcon(temp, WEST)
-			var/icon/right = getFlatIcon(temp, EAST)
-			var/icon/guise = new
-			guise.Insert(front, dir = SOUTH)
-			guise.Insert(back, dir = NORTH)
-			guise.Insert(left, dir = WEST)
-			guise.Insert(right, dir = EAST)
+				var/icon/front = getFlatIcon(temp, SOUTH)
+				var/icon/back = getFlatIcon(temp, NORTH)
+				var/icon/left = getFlatIcon(temp, WEST)
+				var/icon/right = getFlatIcon(temp, EAST)
+				var/icon/guise = new
+				guise.Insert(front, dir = SOUTH)
+				guise.Insert(back, dir = NORTH)
+				guise.Insert(left, dir = WEST)
+				guise.Insert(right, dir = EAST)
 
-			src.icon = guise
+				src.icon = guise
 
 		src.name = temp.real_name
 		if (ishuman(temp))
@@ -350,10 +355,6 @@
 		src.disguised = TRUE
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
-
-		if (src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise))
-			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/disguise)
-			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/clear_disguise)
 
 	/// undisguise as disguised entity
 	proc/undisguise()
@@ -369,10 +370,6 @@
 		src.disguised = FALSE
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
-
-		if (src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/clear_disguise))
-			src.abilityHolder.removeAbility(/datum/targetable/critter/mindeater/clear_disguise)
-			src.abilityHolder.addAbility(/datum/targetable/critter/mindeater/disguise)
 
 	/// turns psi bolt firing on/off when disguised
 	proc/toggle_psi_bolt()
