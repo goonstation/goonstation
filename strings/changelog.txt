@@ -1,5 +1,10 @@
 
 (t)wed may 07 25
+(u)CalliopeSoups
+(p)23276
+(e)🎨⏰🐁|C-Sprites, A-Status-Effects, A-Critters
+(*)Mimics will now scale their health and speed with the size of their disguise. Report any unfitting values.
+(+)Mimic is now an action bar and has a slightly longer cooldown.
 (u)FlameArrow57 & Mr. Moriarty
 (p)23138
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
