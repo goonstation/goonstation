@@ -41,7 +41,7 @@
 		current_prog = null
 		user_file = null
 		user_file_folder = null
-
+		base_shell_instance = null
 		..()
 
 	proc/reload_user_file()
