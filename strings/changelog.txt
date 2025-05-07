@@ -1,5 +1,9 @@
 
 (t)wed may 07 25
+(u)glowbold
+(p)23217
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI units see their killswitch timer when deployed to cyborg or eyebot shells
 (u)Garash & glowbold
 (p)23071
 (e)🗺🎨🔄📄💡|A-Mapping, C-Sprites, C-Rework, A-UI, A-Station-Systems
