@@ -25,7 +25,7 @@
 			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 0, 1)
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower", 5)
-		src.holder.owner.delStatus("knockdown")
+		src.holder.owner.remove_stuns()
 		var/SPtime = 9 SECONDS
 		if (holder.owner.wizard_spellpower(src))
 			SPtime = 15 SECONDS
