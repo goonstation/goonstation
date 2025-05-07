@@ -3,7 +3,7 @@
 	desc = "Temporarily superpowers your body and grants a burst of strength."
 	icon_state = "mutate"
 	targeted = 0
-	cooldown = 35 SECONDS
+	cooldown = 30 SECONDS
 	requires_robes = 1
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/MutateGrim.ogg'
@@ -26,9 +26,9 @@
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower", 5)
 		src.holder.owner.delStatus("knockdown")
-		var/SPtime = 10 SECONDS
+		var/SPtime = 9 SECONDS
 		if (holder.owner.wizard_spellpower(src))
-			SPtime = 20 SECONDS
+			SPtime = 15 SECONDS
 		else
 			boutput(holder.owner, SPAN_ALERT("Your spell doesn't last as long without a staff to focus it!"))
 		SPAWN(SPtime)
