@@ -3872,6 +3872,17 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"cUA" = (
+/obj/machinery/computer/television,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "cUL" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -4089,6 +4100,12 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
+"day" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/bridge)
 "dba" = (
 /obj/machinery/manufacturer/robotics,
 /obj/machinery/light/incandescent/cool,
@@ -4561,17 +4578,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"doJ" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/security/beepsky)
 "dpi" = (
 /obj/storage/secure/closet/engineering/engineer,
 /obj/machinery/power/apc/autoname_west,
@@ -4974,31 +4980,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
-"dBN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/storage/secure/crate/weapon/confiscated_items{
-	name = "riot equipment crate"
-	},
-/obj/item/gun/kinetic/riot40mm{
-	pixel_y = 8
-	},
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/ammo/bullets/smoke{
-	pixel_x = 2;
-	pixel_y = -3
-	},
-/obj/item/ammo/bullets/smoke{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/turf/simulated/floor,
-/area/station/security/equipment)
 "dCp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -6076,12 +6057,6 @@
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
-"eno" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/bridge)
 "eoh" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -7770,6 +7745,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"fng" = (
+/obj/table/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/grime,
+/area/tech_outpost)
 "fnv" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/secure/closet/fridge{
@@ -10261,13 +10243,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"gVT" = (
-/obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/grime,
-/area/tech_outpost)
 "gVW" = (
 /obj/warp_beacon{
 	name = "Secure Dock"
@@ -11959,14 +11934,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"ijo" = (
-/obj/decal/tile_edge/line/red{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/machinery/computer/security/wooden_tv,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "ijy" = (
 /turf/simulated/floor/yellow/corner{
 	dir = 8
@@ -12703,6 +12670,14 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
+"iII" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/computer/television,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "iIL" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/device/radio/intercom/security{
@@ -18377,6 +18352,16 @@
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
+"myN" = (
+/obj/machinery/computer/camera_viewer,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "myW" = (
 /obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/white/grime,
@@ -22606,6 +22591,13 @@
 /obj/mapping_helper/access/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
+"pHu" = (
+/obj/machinery/computer/camera_viewer,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/radiostation/bridge)
 "pHw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24273,13 +24265,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
-"qLp" = (
-/obj/machinery/computer/security,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/radiostation/bridge)
 "qLv" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -25688,12 +25673,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
-"rLP" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/machinery/disposal/small/east,
-/obj/disposalpipe/trunk/north,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "rLX" = (
 /obj/machinery/shower{
 	dir = 1;
@@ -26764,6 +26743,12 @@
 /obj/fakeobject/oldcanister/plasma,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
+"swQ" = (
+/obj/machinery/computer/television,
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "sxa" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -27355,16 +27340,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"sRC" = (
-/obj/machinery/computer/security,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/main)
 "sSB" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29416,6 +29391,29 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"ujV" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/storage/secure/crate/weapon/sec_weapons,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 8
+	},
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/turf/simulated/floor,
+/area/station/security/equipment)
 "ukA" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/old/tourguide/neon,
@@ -80510,7 +80508,7 @@ jvG
 fkH
 xNC
 jvG
-doJ
+cUA
 oJb
 jVc
 vMH
@@ -81722,7 +81720,7 @@ fjk
 ttm
 bgd
 fND
-dBN
+ujV
 bAO
 ttm
 klJ
@@ -83526,7 +83524,7 @@ jXT
 tiY
 jym
 kPG
-sRC
+myN
 saU
 nlX
 dMp
@@ -92565,7 +92563,7 @@ dtp
 hJr
 vJG
 ofl
-rLP
+swQ
 uCR
 dtp
 qpn
@@ -92577,7 +92575,7 @@ wLl
 plQ
 cAG
 dRv
-eno
+day
 bOC
 gjt
 jED
@@ -98208,7 +98206,7 @@ qpn
 qpn
 qpn
 vCj
-qLp
+pHu
 vpN
 pOp
 jqD
@@ -103811,7 +103809,7 @@ oAF
 dqB
 dDl
 lwk
-gVT
+fng
 tlc
 dDl
 dDl
@@ -121115,7 +121113,7 @@ rXs
 eJp
 gyA
 ljX
-ijo
+iII
 sod
 rXs
 eJp

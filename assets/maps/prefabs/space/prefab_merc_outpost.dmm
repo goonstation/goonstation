@@ -54,7 +54,7 @@
 /turf/simulated/floor/black,
 /area/prefab/merc_outpost)
 "dH" = (
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /turf/simulated/floor/airless/carpet/grime,
 /area/prefab/merc_outpost)
 "ej" = (

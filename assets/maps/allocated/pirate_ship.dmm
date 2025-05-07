@@ -239,6 +239,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pirate_ship)
+"eJ" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/camera_viewer/console_upper{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/pirate_ship)
 "fh" = (
 /obj/submachine/record_player,
 /turf/simulated/floor/orange/side{
@@ -557,6 +567,11 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
+/area/pirate_ship)
+"mX" = (
+/obj/table/auto,
+/obj/linen_bin/bedsheet,
+/turf/simulated/floor/orange,
 /area/pirate_ship)
 "nu" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -1703,16 +1718,6 @@
 	dir = 4
 	},
 /area/pirate_ship)
-"Kn" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/security/console_upper{
-	dir = 4
-	},
-/turf/simulated/floor/orange,
-/area/pirate_ship)
 "KF" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 9;
@@ -2134,11 +2139,6 @@
 /obj/item/mop,
 /obj/item/chem_grenade/cleaner,
 /obj/item/sponge,
-/turf/simulated/floor/orange,
-/area/pirate_ship)
-"UL" = (
-/obj/table/auto,
-/obj/linen_bin/bedsheet,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "UX" = (
@@ -2703,7 +2703,7 @@ yM
 zp
 ED
 nu
-UL
+mX
 zp
 aJ
 nu
@@ -2808,7 +2808,7 @@ bJ
 Vj
 Vj
 nu
-Kn
+eJ
 VJ
 Vm
 cP

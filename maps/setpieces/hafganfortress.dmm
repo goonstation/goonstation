@@ -5405,20 +5405,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"za" = (
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 4
-	},
-/obj/table/reinforced/bar/auto{
-	name = "office counter"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "zg" = (
 /obj/shrub/random,
 /turf/simulated/floor/auto/grass/leafy,
@@ -7279,6 +7265,18 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"Jt" = (
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/black,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "Jv" = (
 /obj/stool/bench,
 /obj/item/paper/businesscard/banjo,
@@ -7631,18 +7629,6 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
-"KQ" = (
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 4
-	},
-/turf/unsimulated/floor/black,
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
 "KY" = (
 /obj/stool/chair/purple{
 	dir = 8
@@ -7727,18 +7713,6 @@
 /turf/unsimulated/wall/auto/adventure/cave{
 	name = "dark rock"
 	},
-/area/adventure{
-	name = "Caer Vedwyd";
-	icon_state = "red";
-	requires_power = 0;
-	teleport_blocked = 1
-	})
-"Lm" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 4
-	},
-/turf/simulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -9802,6 +9776,20 @@
 	requires_power = 0;
 	teleport_blocked = 1
 	})
+"TW" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/obj/table/reinforced/bar/auto{
+	name = "office counter"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
 "Ud" = (
 /obj/mapping_helper/access/syndie_shuttle,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -10493,6 +10481,18 @@
 	},
 /obj/railway_vehicle/flatbed/container/red,
 /turf/simulated/floor/engine/caution/northsouth,
+/area/adventure{
+	name = "Caer Vedwyd";
+	icon_state = "red";
+	requires_power = 0;
+	teleport_blocked = 1
+	})
+"XP" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/turf/simulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
 	icon_state = "red";
@@ -11525,7 +11525,7 @@ Zj
 zA
 Zj
 Zj
-Lm
+XP
 DR
 RP
 ZJ
@@ -12502,7 +12502,7 @@ Qd
 Qd
 fa
 zU
-za
+TW
 Ux
 lu
 Xy
@@ -14291,7 +14291,7 @@ Xy
 Xy
 zh
 Xy
-KQ
+Jt
 fa
 Qd
 "}

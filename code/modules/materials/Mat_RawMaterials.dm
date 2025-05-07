@@ -14,6 +14,8 @@
 	New()
 		..()
 		setup_material()
+		if (material)
+			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	proc/setup_material()
 		.=0

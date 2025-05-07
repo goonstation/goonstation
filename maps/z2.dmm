@@ -2145,6 +2145,19 @@
 	icon_state = "red4"
 	},
 /area/void_diner)
+"alq" = (
+/obj/table/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1";
+	tag = "icon-fred1 (WEST)"
+	},
+/area/sim/tdome/tdomea{
+	name = "Thunderdome Lounge"
+	})
 "alv" = (
 /obj/decal/cleanable/greenpuke,
 /turf/unsimulated/floor/white/grime,
@@ -2263,6 +2276,13 @@
 /obj/railing/orange/reinforced,
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"alX" = (
+/obj/table/virtual{
+	icon_state = "tabledir"
+	},
+/obj/machinery/computer/television/small/virtual,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/gauntlet/viewing)
 "amb" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -16536,13 +16556,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bnM" = (
-/obj/machinery/computer/security/wooden_tv/public,
-/obj/map/light/screen,
-/turf/unsimulated/floor/yellowblack/corner{
-	dir = 4
-	},
-/area/owlery/gangzone)
 "bnO" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm8"
@@ -23148,16 +23161,6 @@
 	icon_state = "fred2"
 	},
 /area/crypt/sigma/crew)
-"bOe" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/carpet{
-	icon_state = "fred2"
-	},
-/area/crypt/sigma/crew)
 "bOf" = (
 /obj/item/boomerang,
 /obj/decal/cleanable/dirt,
@@ -24758,13 +24761,6 @@
 	dir = 10;
 	icon_state = "tabledir"
 	},
-/turf/unsimulated/floor/setpieces/gauntlet,
-/area/gauntlet/viewing)
-"bTE" = (
-/obj/table/virtual{
-	icon_state = "tabledir"
-	},
-/obj/machinery/computer/security/wooden_tv/small/virtual,
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/gauntlet/viewing)
 "bTF" = (
@@ -28282,19 +28278,6 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
-"chE" = (
-/obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1";
-	tag = "icon-fred1 (WEST)"
-	},
-/area/sim/tdome/tdomea{
-	name = "Thunderdome Lounge"
-	})
 "chF" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -28913,16 +28896,6 @@
 	name = "sand"
 	},
 /area/sim/area2)
-"cjJ" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "The VR representation of a camera monitoring program."
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/misc/beach.dmi';
-	icon_state = "sand";
-	name = "sand"
-	},
-/area/sim/area2)
 "cjK" = (
 /obj/machinery/vending/cigarette{
 	name = "virtual cigarette machine"
@@ -29010,13 +28983,6 @@
 "cka" = (
 /obj/stool/chair/comfy{
 	dir = 1
-	},
-/turf/unsimulated/floor/wood,
-/area/sim/racing_entry)
-"ckb" = (
-/obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
 	},
 /turf/unsimulated/floor/wood,
 /area/sim/racing_entry)
@@ -29303,26 +29269,6 @@
 "ckJ" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
-	icon_state = "fred2"
-	},
-/area/sim/area2)
-"ckK" = (
-/obj/table/wood/auto,
-/obj/item/pen,
-/obj/item/pen{
-	desc = "It's a normal black ink pen. Looks like it has been chewed on."
-	},
-/obj/item/device/audio_log/wall_mounted{
-	desc = "A data logging utility represented as an audio logger.";
-	name = "Audiolog";
-	pixel_x = 13;
-	pixel_y = 4
-	},
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/carpet{
 	icon_state = "fred2"
 	},
 /area/sim/area2)
@@ -32163,17 +32109,6 @@
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
-"cuR" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/obj/map/light/dimred,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
 "cuT" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -36214,20 +36149,6 @@
 	dir = 5
 	},
 /area/owlery/Owlopen)
-"cHi" = (
-/obj/machinery/computer/security/wooden_tv{
-	layer = 4
-	},
-/obj/table/reinforced/bar/auto,
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "camerax";
-	name = "security camera"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/owlery/office)
 "cHj" = (
 /obj/item/scissors,
 /obj/table/wood/auto/desk,
@@ -36474,17 +36395,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
-"cIa" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/obj/map/light/dimred,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cIc" = (
 /obj/table/reinforced/bar/auto{
@@ -46049,15 +45959,6 @@
 	},
 /turf/unsimulated/floor/carpet/wizard/standard/edge/se,
 /area/wizard_station)
-"dkF" = (
-/obj/machinery/computer/security/wooden_tv,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/wizard_station)
 "dkL" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -48744,11 +48645,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
-"dzx" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/decal/cleanable/dirt/dirt4,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/bubs)
 "dzy" = (
 /obj/decal/cleanable/generic{
 	name = "rubbish"
@@ -48919,23 +48815,6 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
-"dAN" = (
-/obj/item/swords/sord,
-/obj/item/ammo/bullets/abg{
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/item/ammo/bullets/abg{
-	pixel_x = -10;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "dAW" = (
 /obj/rack,
 /obj/item/clothing/head/frog_hat{
@@ -48985,48 +48864,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dBg" = (
-/obj/storage/cart/hotdog,
-/obj/item/clothing/suit/gimmick/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fakeobject/skeleton,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"dBi" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor";
-	opaque_atom_count = 1
-	},
-/area/centcom/offices/sord)
 "dBk" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = -10;
@@ -49218,22 +49055,6 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
-"dBq" = (
-/obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/tasersmg,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 4
-	},
-/obj/death_button/hotdog{
-	pixel_x = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "dBu" = (
 /obj/rack,
 /obj/item/clothing/under/gimmick/princess,
@@ -49264,13 +49085,6 @@
 "dBx" = (
 /obj/stool/chair/comfy{
 	dir = 4
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/centcom/offices/flaborized)
-"dBy" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television"
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
@@ -50408,14 +50222,6 @@
 	dir = 1
 	},
 /area/crypt/sigma/morgue)
-"dGG" = (
-/obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small,
-/turf/unsimulated/floor/carpet{
-	icon_state = "fpurple1";
-	tag = "icon-fpurple1"
-	},
-/area/centcom/lounge)
 "dGH" = (
 /obj/table/wood/round/auto,
 /obj/shrub{
@@ -54600,14 +54406,6 @@
 /obj/machinery/computer3/generic/hjam,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"dUk" = (
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/map/light/screen,
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor/carpet/grime,
-/area/crypt/sigma/rd)
 "dUl" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -54655,6 +54453,16 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon/caves)
+"dVs" = (
+/obj/table/wood/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/crypt/sigma/crew)
 "dWx" = (
 /obj/fakeobject/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -54876,6 +54684,20 @@
 	dir = 4
 	},
 /area/owlery/Owlopen)
+"edr" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor";
+	opaque_atom_count = 1
+	},
+/area/centcom/offices/sord)
 "edL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-44"
@@ -55585,6 +55407,14 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod2)
+"eJj" = (
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/map/light/screen,
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/carpet/grime,
+/area/crypt/sigma/rd)
 "eJo" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -55772,6 +55602,16 @@
 "eQS" = (
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/observatory)
+"eRC" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	camera_networks = list("Owlery")
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "blue1";
+	tag = "icon-blue1"
+	},
+/area/owlery/staffhall)
 "eRK" = (
 /obj/syndi_putt_spawner,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -56898,6 +56738,17 @@
 /mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
+"fNy" = (
+/obj/fakeobject/lightbulb_broken{
+	dir = 8
+	},
+/obj/machinery/computer/television/small{
+	camera_networks = list("Owlery");
+	pixel_y = 3
+	},
+/obj/table/auto,
+/turf/unsimulated/floor/yellowblack/corner,
+/area/owlery/gangzone)
 "fNL" = (
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -57852,6 +57703,17 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/observatory)
+"gzH" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/map/light/dimred,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "gzJ" = (
 /obj/lattice{
 	dir = 4;
@@ -60308,6 +60170,13 @@
 	dir = 9
 	},
 /area/centcom)
+"iwD" = (
+/obj/machinery/computer/television/public,
+/obj/map/light/screen,
+/turf/unsimulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/owlery/gangzone)
 "iwP" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/transit_shuttle/johnbus{
@@ -60466,16 +60335,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"iEn" = (
-/obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor/plating,
-/area/sim/tdome/tdomea{
-	name = "Thunderdome Lounge"
-	})
 "iEo" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -60614,26 +60473,6 @@
 	dir = 6
 	},
 /area/centcom/gallery)
-"iJX" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	camera_networks = list("Minerva5");
-	pixel_x = -3
-	},
-/obj/machinery/camera{
-	c_tag = "NT/SCI #41903";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "iKm" = (
 /obj/lattice{
 	dir = 4;
@@ -63811,13 +63650,6 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
-"leS" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	camera_networks = ("Owlery")
-	},
-/turf/unsimulated/floor/white,
-/area/owlery/staffhall)
 "lfc" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -64665,17 +64497,6 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
-"lQP" = (
-/obj/item/gun/energy/dazzler,
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/computer3/generic/personal,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "lRf" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -64766,13 +64587,6 @@
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
-"lUJ" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "It's a television.";
-	camera_networks = list("spooky")
-	},
-/turf/unsimulated/floor/carpet/arcade,
-/area/hospital)
 "lUK" = (
 /obj/fakeobject/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -65145,6 +64959,34 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"mmI" = (
+/obj/storage/cart/hotdog,
+/obj/item/clothing/suit/gimmick/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/machinery/light{
+	dir = 1;
+	on = 1
+	},
+/obj/fakeobject/skeleton/unanchored,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "mnF" = (
 /obj/overlay{
 	density = 1;
@@ -65554,6 +65396,17 @@
 	dir = 10
 	},
 /area/void_diner)
+"mDy" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/obj/map/light/dimred,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/unsimulated/floor/red,
+/area/syndicate_station/battlecruiser)
 "mEy" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -65970,16 +65823,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
-"mWf" = (
-/obj/machinery/computer/security/wooden_tv{
-	layer = 4;
-	camera_networks = list("Owlery")
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 5
-	},
-/area/owlery/office)
 "mWs" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -66923,27 +66766,6 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
-"nJa" = (
-/obj/table/wood/round/auto{
-	desc = "This table is also pretty dang old.";
-	name = "old wooden table"
-	},
-/obj/machinery/computer/security/telescreen{
-	camera_networks = list("Minerva5");
-	pixel_y = 6
-	},
-/obj/machinery/camera{
-	c_tag = "NT/ADMIN/SCI #51352";
-	desc = "";
-	invisibility = 100;
-	network = "Minerva5"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/carpet{
-	dir = 4;
-	tag = "icon-blue1"
-	},
-/area/syndicate/minerva5/command)
 "nJg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
@@ -67419,6 +67241,11 @@
 	icon_state = "shore-3"
 	},
 /area/titlescreen)
+"nUL" = (
+/obj/machinery/computer/television,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/bubs)
 "nUN" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -67502,6 +67329,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"nXd" = (
+/obj/table/wood/round/auto,
+/obj/machinery/computer/television/small,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fpurple1";
+	tag = "icon-fpurple1"
+	},
+/area/centcom/lounge)
 "nXl" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Restroom"
@@ -67814,6 +67649,15 @@
 "okJ" = (
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
+"olr" = (
+/obj/machinery/computer/television,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/wizard_station)
 "olG" = (
 /obj/decal/exhibit/premium{
 	exhibit_id = "ex_centcom_premium";
@@ -68441,6 +68285,13 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
+"oOA" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/void_diner)
 "oPY" = (
 /obj/item/mechanics/trigger/button{
 	anchored = 1;
@@ -70906,17 +70757,6 @@
 	icon_state = "track_2"
 	},
 /area/drone/office)
-"qDK" = (
-/obj/fakeobject/lightbulb_broken{
-	dir = 8
-	},
-/obj/machinery/computer/security/wooden_tv/small{
-	camera_networks = list("Owlery");
-	pixel_y = 3
-	},
-/obj/table/auto,
-/turf/unsimulated/floor/yellowblack/corner,
-/area/owlery/gangzone)
 "qDO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 8
@@ -71301,6 +71141,26 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"qQj" = (
+/obj/table/wood/auto,
+/obj/item/pen,
+/obj/item/pen{
+	desc = "It's a normal black ink pen. Looks like it has been chewed on."
+	},
+/obj/item/device/audio_log/wall_mounted{
+	desc = "A data logging utility represented as an audio logger.";
+	name = "Audiolog";
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/obj/machinery/computer/television/small{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/sim/area2)
 "qQK" = (
 /obj/table/neon/auto,
 /obj/decal/cleanable/sakura,
@@ -71506,19 +71366,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"rbe" = (
-/obj/item/gun/kinetic/pumpweapon/riotgun{
-	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
-	pixel_x = -6;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
@@ -72292,6 +72139,13 @@
 	dir = 10
 	},
 /area/crunch/wtc)
+"rFt" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	camera_networks = ("Owlery")
+	},
+/turf/unsimulated/floor/white,
+/area/owlery/staffhall)
 "rFu" = (
 /obj/machinery/door/airlock/pyro/glass{
 	locked = 1;
@@ -72620,6 +72474,26 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
+"rSU" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/computer/television{
+	camera_networks = list("Minerva5");
+	pixel_x = -3
+	},
+/obj/machinery/camera{
+	c_tag = "NT/SCI #41903";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "rTv" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -72721,6 +72595,16 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/owl,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
+"rXE" = (
+/obj/machinery/computer/television{
+	layer = 4;
+	camera_networks = list("Owlery")
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 5
+	},
+/area/owlery/office)
 "rXO" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -72790,6 +72674,20 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon/caves)
+"rZR" = (
+/obj/machinery/computer/television{
+	layer = 4
+	},
+/obj/table/reinforced/bar/auto,
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A security camera that is not on but, instead, off.";
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camerax";
+	name = "security camera"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/owlery/office)
 "sad" = (
 /obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -72929,6 +72827,13 @@
 	name = "blast door"
 	},
 /area/owlery/owllock)
+"seu" = (
+/obj/table/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/wood,
+/area/sim/racing_entry)
 "seK" = (
 /obj/machinery/vending/kitchen,
 /turf/unsimulated/outdoors/grass,
@@ -74004,6 +73909,25 @@
 	dir = 4
 	},
 /area/crunch/wtc)
+"tcv" = (
+/obj/item/gun/energy/stasis{
+	pixel_y = -28;
+	pixel_x = 12
+	},
+/obj/spiderweb,
+/obj/item/toy/plush/small{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "med_spide";
+	name = "spider plush toy";
+	desc = "Jesus fucking christ. How terrifyingly realistic."
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "tcP" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75040,6 +74964,13 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"ubC" = (
+/obj/machinery/computer/television{
+	desc = "It's a television.";
+	camera_networks = list("spooky")
+	},
+/turf/unsimulated/floor/carpet/arcade,
+/area/hospital)
 "uca" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75330,6 +75261,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"uoX" = (
+/obj/item/gun/kinetic/breakaction/singleshotrifle{
+	pixel_y = 32;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "upc" = (
 /obj/decal/poster/wallsign/teleport_sign{
 	dir = 8
@@ -75555,11 +75498,6 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
-"uyN" = (
-/obj/machinery/computer/security/wooden_tv/public,
-/obj/map/light/screen,
-/turf/unsimulated/floor/yellowblack/corner,
-/area/owlery/gangzone)
 "uzz" = (
 /obj/table/nanotrasen/auto,
 /obj/item/gimmickbomb/grenyanda/inert{
@@ -76796,6 +76734,11 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"vrH" = (
+/obj/machinery/computer/television/public,
+/obj/map/light/screen,
+/turf/unsimulated/floor/yellowblack/corner,
+/area/owlery/gangzone)
 "vrO" = (
 /obj/machinery/light{
 	dir = 1
@@ -77184,6 +77127,21 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
+"vJI" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 4
+	},
+/obj/death_button/hotdog{
+	pixel_x = 24
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "vKc" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4;
@@ -77280,6 +77238,16 @@
 	},
 /area/centcom/offices{
 	icon_state = "blue"
+	})
+"vMb" = (
+/obj/table/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/plating,
+/area/sim/tdome/tdomea{
+	name = "Thunderdome Lounge"
 	})
 "vMW" = (
 /obj/cable{
@@ -77446,6 +77414,27 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"vSe" = (
+/obj/table/wood/round/auto{
+	desc = "This table is also pretty dang old.";
+	name = "old wooden table"
+	},
+/obj/machinery/computer/television{
+	camera_networks = list("Minerva5");
+	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "NT/ADMIN/SCI #51352";
+	desc = "";
+	invisibility = 100;
+	network = "Minerva5"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/carpet{
+	dir = 4;
+	tag = "icon-blue1"
+	},
+/area/syndicate/minerva5/command)
 "vSm" = (
 /mob/living/critter/small_animal/cat{
 	desc = "This is Eloisa. She looks old, but sweet.";
@@ -78246,6 +78235,13 @@
 /mob/living/critter/martian/warrior,
 /turf/unsimulated/floor,
 /area/crunch)
+"wvZ" = (
+/obj/machinery/computer/television{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television"
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/centcom/offices/flaborized)
 "wwq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -78270,6 +78266,30 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"wwD" = (
+/obj/item/gun/energy/dazzler,
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/item/gun/energy/tasersmg{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
+"wwY" = (
+/obj/machinery/computer/television{
+	desc = "The VR representation of a camera monitoring program."
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/sim/area2)
 "wxy" = (
 /obj/crevice{
 	pixel_x = -28
@@ -79901,13 +79921,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"xCw" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/unsimulated/outdoors/grass,
-/area/void_diner)
 "xDp" = (
 /obj/pool/perspective,
 /obj/decal/tile_edge/line/blue{
@@ -80250,6 +80263,28 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"xQL" = (
+/obj/item/swords/sord,
+/obj/item/ammo/bullets/abg{
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = -10;
+	pixel_y = 24
+	},
+/obj/item/gun/kinetic/pumpweapon/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
+	pixel_x = -6;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "xQX" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -80275,16 +80310,6 @@
 /obj/item/material_piece/uqill,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/crater/cave/lower)
-"xSH" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	camera_networks = list("Owlery")
-	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "blue1";
-	tag = "icon-blue1"
-	},
-/area/owlery/staffhall)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -82743,7 +82768,7 @@ cYb
 cYD
 cWJ
 cWV
-nJa
+vSe
 cXg
 cWJ
 cXl
@@ -89648,7 +89673,7 @@ bxW
 fVa
 czy
 czW
-xSH
+eRC
 cGu
 aBY
 cDj
@@ -92979,7 +93004,7 @@ cYA
 cNM
 cYF
 cYI
-cHi
+rZR
 cGf
 cHN
 cIc
@@ -96903,7 +96928,7 @@ cDJ
 cAB
 cAB
 cFf
-iJX
+rSU
 cHo
 cAB
 cLQ
@@ -97497,7 +97522,7 @@ bBm
 aBY
 cyE
 cEm
-leS
+rFt
 cAu
 aBY
 cAF
@@ -98768,7 +98793,7 @@ uVv
 lPH
 tKt
 kfH
-xCw
+oOA
 xSW
 tKt
 tKt
@@ -99027,7 +99052,7 @@ cID
 aBU
 xWw
 xWw
-uyN
+vrH
 cLF
 cMg
 cMI
@@ -99323,7 +99348,7 @@ cCM
 cCM
 cGo
 kDP
-mWf
+rXE
 ffY
 cIE
 xWw
@@ -99345,7 +99370,7 @@ cQE
 cRk
 cRH
 uTF
-qDK
+fNy
 wzE
 cMK
 cTI
@@ -101745,7 +101770,7 @@ cnw
 cnw
 xWw
 xWw
-bnM
+iwD
 cLK
 cMp
 cKc
@@ -108372,7 +108397,7 @@ qPk
 lzl
 bvE
 bMZ
-cuR
+mDy
 cIO
 cMu
 cNb
@@ -110788,7 +110813,7 @@ qPk
 lzl
 byE
 cas
-cIa
+gzH
 cKQ
 cMV
 cSU
@@ -116829,7 +116854,7 @@ bPg
 bPg
 bPf
 bUU
-bTE
+alX
 bOn
 bOn
 bOn
@@ -118601,7 +118626,7 @@ cfL
 cgr
 cgV
 chm
-chE
+alq
 eeF
 cbt
 cgu
@@ -118913,7 +118938,7 @@ bOB
 bOB
 ckl
 tMB
-ckb
+seu
 ckr
 ckr
 civ
@@ -119504,7 +119529,7 @@ cbV
 cbV
 cbV
 cfL
-iEn
+vMb
 cgX
 chm
 sxC
@@ -120423,7 +120448,7 @@ bOB
 bOB
 bPy
 tMB
-ckb
+seu
 ckr
 ckU
 civ
@@ -120453,7 +120478,7 @@ bPg
 bSy
 bPf
 bUU
-bTE
+alX
 bOn
 bOn
 bOn
@@ -120691,7 +120716,7 @@ bWd
 oum
 oum
 oum
-dUk
+eJj
 bXm
 bXm
 dkR
@@ -120715,7 +120740,7 @@ cfL
 cgo
 cgY
 cgW
-chE
+alq
 pkE
 chp
 cgu
@@ -123379,7 +123404,7 @@ bMn
 bMM
 bNn
 bNm
-bOe
+dVs
 aDY
 aDY
 uiu
@@ -126462,7 +126487,7 @@ cjh
 cjH
 cjh
 ckx
-ckK
+qQj
 cjh
 cjh
 cjh
@@ -126498,7 +126523,7 @@ abp
 aeX
 aiy
 ajj
-lUJ
+ubC
 aeX
 abp
 abp
@@ -127063,7 +127088,7 @@ cbw
 kEJ
 sQB
 cjh
-cjJ
+wwY
 cjh
 ckz
 rfM
@@ -149473,7 +149498,7 @@ dnY
 dGi
 dGq
 dGz
-dGG
+nXd
 dGH
 dGo
 dGz
@@ -149776,7 +149801,7 @@ dGi
 dGq
 dGo
 dGH
-dGG
+nXd
 dGW
 dGo
 nRX
@@ -162103,7 +162128,7 @@ djO
 jmi
 dkr
 dkz
-dkF
+olr
 lRx
 oUi
 nWV
@@ -162245,7 +162270,7 @@ iBW
 wel
 wel
 wel
-dBi
+edr
 wel
 wel
 aES
@@ -162546,7 +162571,7 @@ dBk
 mAM
 dBn
 wel
-dAN
+xQL
 dBo
 dZy
 wel
@@ -162840,7 +162865,7 @@ dxZ
 dxZ
 dxZ
 wel
-dzx
+nUL
 dAe
 ciY
 wel
@@ -162848,9 +162873,9 @@ dBl
 mAM
 dCl
 wel
-rbe
+uoX
 dBo
-dBo
+tcv
 wel
 aES
 aES
@@ -163128,7 +163153,7 @@ dxh
 wel
 fGD
 sNn
-dBy
+wvZ
 wel
 dye
 dyt
@@ -163150,7 +163175,7 @@ dBm
 mAM
 pmV
 wel
-dBg
+mmI
 dBp
 dBo
 wel
@@ -163452,8 +163477,8 @@ siD
 dBS
 dCm
 wel
-lQP
-dBq
+wwD
+vJI
 dBu
 wel
 aES

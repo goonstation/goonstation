@@ -240,16 +240,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
-"abo" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/item/clothing/head/fedora{
-	pixel_y = 11
-	},
-/obj/machinery/light/small/sticky/warm/very{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "abp" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -990,10 +980,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"adP" = (
-/obj/machinery/computer/security/wooden_tv,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
 "adQ" = (
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
@@ -1165,23 +1151,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/barber_shop)
-"aeH" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Hydroponics";
-	req_access_txt = "35"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/hydro,
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4;
-	level = -1
-	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/bay)
 "aeI" = (
 /obj/machinery/light{
 	dir = 8;
@@ -8924,25 +8893,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
-"bey" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	name = "Burn Chamber";
-	req_access_txt = "40"
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "bfR" = (
 /obj/machinery/clonegrinder,
 /obj/cable{
@@ -9889,6 +9839,25 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"cGi" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	name = "Burn Chamber"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
 "cHs" = (
 /obj/machinery/abcu,
 /turf/simulated/floor/yellowblack{
@@ -10362,6 +10331,10 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/storage/primary)
+"dhC" = (
+/obj/machinery/computer/television,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "djg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -10573,17 +10546,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"dzn" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "chapel";
-	req_access_txt = "1"
-	},
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "dzV" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple{
@@ -11957,23 +11919,6 @@
 	icon_state = "nt_logo"
 	},
 /area/station/hallway/primary/north)
-"fCU" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "fCZ" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/makeCaptain{
@@ -13142,31 +13087,6 @@
 	dir = 8
 	},
 /area/station/medical/head)
-"hyA" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Kitchen";
-	req_access_txt = "35"
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/mapping_helper/access/bar,
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "kitchen_shutter";
-	layer = 4;
-	name = "Kitchen Shutter";
-	icon_state = "pdoor0";
-	panel_open = 1;
-	density = 0;
-	opacity = 0
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "hzc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15193,6 +15113,16 @@
 	},
 /turf/simulated/floor/yellow/corner,
 /area/station/mining/staff_room)
+"kbf" = (
+/obj/machinery/computer/television,
+/obj/item/clothing/head/fedora{
+	pixel_y = 11
+	},
+/obj/machinery/light/small/sticky/warm/very{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "kbp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15244,22 +15174,6 @@
 	},
 /turf/space,
 /area/space)
-"keS" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "kfc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15799,6 +15713,24 @@
 "kTx" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/science/research_director)
+"kTR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	name = "Burn Chamber"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
 "kUi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16077,6 +16009,26 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"lxx" = (
+/obj/item/device/camera_viewer/telesci{
+	pixel_y = 16;
+	pixel_x = -5
+	},
+/obj/machinery/computer/television/small{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/obj/item/clothing/head/helmet/camera/telesci{
+	pixel_x = -5
+	},
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "lxS" = (
 /obj/rack,
 /obj/item/device/radio,
@@ -16819,6 +16771,16 @@
 	dir = 1
 	},
 /area/station/engine/ptl)
+"mvZ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	id = "chapel"
+	},
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "mwl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17486,6 +17448,18 @@
 /obj/submachine/cargopad/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"npx" = (
+/obj/table/wood/round/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 14;
+	pixel_x = -5
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/twotone/black,
+/area/station/crew_quarters/cafeteria)
 "nqV" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -17956,6 +17930,20 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"nTj" = (
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Kitchen";
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/crew_quarters/bar)
 "nTr" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
@@ -18110,26 +18098,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
-"ocb" = (
-/obj/item/device/camera_viewer/telesci{
-	pixel_y = 16;
-	pixel_x = -5
-	},
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8;
-	pixel_x = 4
-	},
-/obj/item/clothing/head/helmet/camera/telesci{
-	pixel_x = -5
-	},
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/science/teleporter)
 "ocl" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor/yellow,
@@ -18856,18 +18824,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/hop)
-"piv" = (
-/obj/machinery/door/airlock/pyro/alt{
-	req_access_txt = "25|28"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/kitchen,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "pjh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -19563,18 +19519,6 @@
 "qxl" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
-"qxs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Crematorium";
-	req_access_txt = "33"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/crematorium,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/sanctuary)
 "qzU" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
@@ -19771,21 +19715,6 @@
 /area/station/science/testchamber/bombchamber{
 	requires_power = 0
 	})
-"qPO" = (
-/obj/mapping_helper/access/bar,
-/obj/mapping_helper/access/kitchen,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Kitchen";
-	req_access_txt = "35";
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/crew_quarters/bar)
 "qQl" = (
 /obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/plating/random,
@@ -20191,6 +20120,23 @@
 	wet = 2
 	},
 /area/station/crew_quarters/clown)
+"rBn" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "rCf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21009,6 +20955,17 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"sQR" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Crematorium"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/crematorium,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/sanctuary)
 "sRh" = (
 /obj/rack,
 /obj/machinery/alarm{
@@ -21194,6 +21151,30 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"tbR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Kitchen"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "kitchen_shutter";
+	layer = 4;
+	name = "Kitchen Shutter";
+	icon_state = "pdoor0";
+	panel_open = 1;
+	density = 0;
+	opacity = 0
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
 "tce" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -21305,26 +21286,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"tgC" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	name = "Burn Chamber";
-	req_access_txt = "40"
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 5
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/engine/combustion_chamber)
 "tht" = (
 /turf/simulated/floor/green/side{
 	dir = 9
@@ -21977,6 +21938,21 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"tYQ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "tYS" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -22122,6 +22098,22 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"uiA" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Hydroponics"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/hydro,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
 "uiU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22190,6 +22182,22 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"upU" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "uqg" = (
 /obj/machinery/activation_button/flusher_button{
 	id = "artsci_ejection";
@@ -22985,6 +22993,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"vtR" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "vuq" = (
 /obj/machinery/computer/power_monitor/smes{
 	dir = 8;
@@ -23797,18 +23816,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
-"wHt" = (
-/obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 14;
-	pixel_x = -5
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/twotone/black,
-/area/station/crew_quarters/cafeteria)
 "wIF" = (
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -58787,11 +58794,11 @@ aaa
 wNg
 pyb
 cOW
-tgC
+cGi
 iBC
 jUf
 knC
-bey
+kTR
 uti
 lVZ
 vPa
@@ -66351,7 +66358,7 @@ aRZ
 wBL
 wIF
 aDb
-ocb
+lxx
 sFU
 eQw
 fTa
@@ -71473,7 +71480,7 @@ aqK
 aqK
 aqK
 avP
-aeH
+uiA
 avP
 aqK
 aqK
@@ -72371,7 +72378,7 @@ gvK
 adF
 bMn
 pQS
-qPO
+nTj
 pQS
 hjc
 amn
@@ -72959,7 +72966,7 @@ aaa
 aaa
 aaa
 aaL
-abo
+kbf
 abI
 acb
 acA
@@ -73884,7 +73891,7 @@ dMO
 uth
 dMO
 uth
-wHt
+npx
 pRK
 jsH
 akW
@@ -74474,7 +74481,7 @@ abq
 tce
 acA
 bcW
-piv
+vtR
 vEm
 iqM
 ofD
@@ -75388,7 +75395,7 @@ jcY
 fps
 vyf
 nxa
-hyA
+tbR
 wKr
 tix
 uve
@@ -78400,7 +78407,7 @@ afa
 kQf
 adI
 afa
-adP
+dhC
 mSH
 yci
 yfR
@@ -78713,7 +78720,7 @@ kwQ
 lFr
 jGQ
 nrU
-fCU
+rBn
 tue
 ahl
 ahl
@@ -80518,7 +80525,7 @@ acG
 aew
 aeC
 afK
-qxs
+sQR
 rKX
 jZc
 aiU
@@ -82935,7 +82942,7 @@ aaa
 aaa
 aaa
 ahf
-dzn
+mvZ
 ahf
 aaa
 aaa
@@ -85062,7 +85069,7 @@ alu
 amu
 amu
 aAT
-keS
+upU
 qgH
 vvA
 aSK
@@ -98783,7 +98790,7 @@ aaa
 aaa
 agK
 aNe
-aNH
+tYQ
 aNR
 aUH
 aOw

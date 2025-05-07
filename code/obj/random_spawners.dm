@@ -1865,14 +1865,11 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188,
 	/obj/item/gun/kinetic/clock_188/boomerang,
 	/obj/item/gun/kinetic/derringer,
-	/obj/item/gun/kinetic/derringer/empty,
 	/obj/item/gun/kinetic/detectiverevolver,
-	/obj/item/gun/kinetic/flaregun,
-	/obj/item/gun/kinetic/foamdartgun,
 	/obj/item/gun/kinetic/pistol,
-	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
@@ -1892,11 +1889,16 @@
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
 	/obj/item/gun/kinetic/lopoint,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/greasegun,
-	/obj/item/gun/kinetic/greasegun
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/breakaction/singleshotrifle,
+	/obj/item/gun/kinetic/draco,
+	/obj/item/gun/kinetic/revolver
 	)
 
 	one

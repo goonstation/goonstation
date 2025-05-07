@@ -11,6 +11,20 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"al" = (
+/obj/table/sleek/auto,
+/obj/linen_bin/towel{
+	pixel_y = 5
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "am" = (
 /turf/unsimulated/floor/pool/blue,
 /area/syndicate_station{
@@ -1541,20 +1555,6 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
-"kH" = (
-/obj/table/sleek/auto,
-/obj/linen_bin/towel{
-	pixel_y = 5
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
 "kO" = (
 /obj/machinery/floorflusher/minibrig{
 	id = "aqua_prison";
@@ -2660,6 +2660,17 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"rD" = (
+/obj/table/monodesk/auto,
+/obj/machinery/computer/television/public{
+	pixel_y = 9;
+	pixel_x = -1
+	},
+/turf/unsimulated/floor/engine/glow/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "rF" = (
 /obj/machinery/floorflusher/industrial,
 /turf/unsimulated/floor/industrial,
@@ -3448,6 +3459,16 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"yg" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer/television/small{
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet/office/other,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "yr" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -3645,16 +3666,6 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/simulated/floor/airless/engine/vacuum,
 /area/space)
-"zB" = (
-/obj/table/sleek/auto,
-/obj/linen_bin/towel{
-	pixel_y = 5
-	},
-/turf/unsimulated/floor/pool/blue,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
 "zF" = (
 /obj/storage/crate/freezer/milk,
 /turf/simulated/floor/black,
@@ -4896,17 +4907,6 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
-"Hy" = (
-/obj/table/monodesk/auto,
-/obj/machinery/computer/security/wooden_tv/public{
-	pixel_y = 9;
-	pixel_x = -1
-	},
-/turf/unsimulated/floor/engine/glow/blue,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
 "HB" = (
 /turf/simulated/floor/stairs/dark,
 /area/syndicate_station{
@@ -6045,6 +6045,16 @@
 	name = "Decirprevo Tanker";
 	color = "aqua"
 	})
+"PA" = (
+/obj/table/sleek/auto,
+/obj/linen_bin/towel{
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/pool/blue,
+/area/syndicate_station{
+	name = "Decirprevo Tanker";
+	color = "aqua"
+	})
 "PF" = (
 /obj/mesh/catwalk/jen{
 	icon_state = "M12-0"
@@ -6418,16 +6428,6 @@
 	icon_state = "R3"
 	},
 /turf/simulated/floor/airless/twotone/red,
-/area/syndicate_station{
-	name = "Decirprevo Tanker";
-	color = "aqua"
-	})
-"SR" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 5
-	},
-/turf/unsimulated/floor/carpet/office/other,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
 	color = "aqua"
@@ -7873,7 +7873,7 @@ GR
 Yt
 Gk
 Ro
-zB
+PA
 am
 IZ
 YT
@@ -7970,7 +7970,7 @@ AM
 Gk
 hd
 dX
-SR
+yg
 Gk
 SG
 Yd
@@ -8238,7 +8238,7 @@ HQ
 bZ
 tB
 qJ
-kH
+al
 Xu
 Xu
 hE
@@ -12122,7 +12122,7 @@ JR
 KJ
 Pp
 er
-Hy
+rD
 Fz
 hu
 Nu
