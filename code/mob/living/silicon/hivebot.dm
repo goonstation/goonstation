@@ -13,7 +13,7 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/datum/hud/shell/hud
+	var/datum/hud/silicon/shell/hud
 
 	var/obj/item/device/radio/radio = null
 

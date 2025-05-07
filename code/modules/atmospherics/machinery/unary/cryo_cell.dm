@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
+	open_to_sound = TRUE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	power_usage = 50 WATTS
 	var/on = FALSE //! Whether the cell is turned on or not

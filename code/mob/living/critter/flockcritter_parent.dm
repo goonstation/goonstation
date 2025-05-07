@@ -278,29 +278,7 @@ TYPEINFO(/mob/living/critter/flock)
 			return
 
 		boutput(F, SPAN_NOTICE("You begin spraying nanite strands onto the structure. You need to stay still for this."))
-		playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, TRUE, extrarange = -10)
-
-		var/flick_anim = "spawn-floor"
-		if(istype(target, /turf/space))
-			var/make_floor = FALSE
-			for (var/obj/O in target)
-				if (istype(O, /obj/lattice) || istype(O, /obj/mesh/catwalk))
-					make_floor = TRUE
-					src.decal = new /obj/decal/flock_build_floor
-					flick_anim = "spawn-floor"
-					break
-			if (!make_floor)
-				src.decal = new /obj/decal/flock_build_fibrenet
-				flick_anim = "spawn-fibrenet"
-		else if(istype(target, /turf/simulated/floor))
-			src.decal = new /obj/decal/flock_build_floor
-			flick_anim = "spawn-floor"
-		else if(istype(target, /turf/simulated/wall))
-			src.decal = new /obj/decal/flock_build_wall
-			flick_anim = "spawn-wall"
-		if(src.decal)
-			src.decal.set_loc(target)
-			FLICK(flick_anim, src.decal)
+		src.decal = start_flock_conversion(src.target)
 
 		F.flock?.reserveTurf(target, F.real_name)
 
@@ -326,6 +304,33 @@ TYPEINFO(/mob/living/critter/flock)
 		else
 			flock_convert_turf(target)
 		F.pay_resources(FLOCK_CONVERT_COST)
+
+proc/start_flock_conversion(turf/target)
+	var/obj/decal/decal
+	playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, TRUE, extrarange = -10)
+	var/flick_anim = "spawn-floor"
+	if(istype(target, /turf/space))
+		var/make_floor = FALSE
+		for (var/obj/O in target)
+			if (istype(O, /obj/lattice) || istype(O, /obj/mesh/catwalk))
+				make_floor = TRUE
+				decal = new /obj/decal/flock_build_floor
+				flick_anim = "spawn-floor"
+				break
+		if (!make_floor)
+			decal = new /obj/decal/flock_build_fibrenet
+			flick_anim = "spawn-fibrenet"
+	else if(istype(target, /turf/simulated/floor))
+		decal = new /obj/decal/flock_build_floor
+		flick_anim = "spawn-floor"
+	else if(istype(target, /turf/simulated/wall))
+		decal = new /obj/decal/flock_build_wall
+		flick_anim = "spawn-wall"
+	if(decal)
+		decal.set_loc(target)
+		FLICK(flick_anim, decal)
+
+	return decal
 
 /////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCT ACTION

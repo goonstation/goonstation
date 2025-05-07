@@ -248,6 +248,7 @@ TYPEINFO(/obj/machinery/sleeper)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
+	open_to_sound = TRUE
 	speech_verb_say = "beeps"
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
