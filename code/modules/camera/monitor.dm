@@ -71,8 +71,8 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 /obj/item/device/camera_viewer/security
 	name = "security monitor"
-	desc = "A portable video monitor, connected to the security camera network."
-	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_MINING)
+	desc = "A portable video monitor, connected to the station's security cameras."
+	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_CARGO, CAMERA_NETWORK_RANCH)
 	color = "#e49191"
 
 /obj/item/device/camera_viewer/ranch

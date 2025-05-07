@@ -41,6 +41,7 @@ export interface MinimapMarkerData {
   marker: string;
   index: number;
   icon_state: string;
+  target_ref: string;
 }
 
 export const MinimapController = () => {

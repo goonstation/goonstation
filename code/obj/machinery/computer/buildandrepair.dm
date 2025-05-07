@@ -49,27 +49,23 @@ TYPEINFO(/obj/item/circuitboard)
 
 /obj/item/circuitboard/security
 	name = "circuit board (security camera viewer)"
-	computertype = /obj/machinery/computer/security
+	computertype = /obj/machinery/computer/camera_viewer
 	icon_state = "circuit_security"
-/obj/item/circuitboard/security_research
-	name = "circuit board (research outpost camera viewer)"
-	computertype = /obj/machinery/computer/security/research
-	icon_state = "circuit_research"
 /obj/item/circuitboard/security_tv
 	name = "circuit board (security television)"
-	computertype = /obj/machinery/computer/security/wooden_tv
+	computertype = /obj/machinery/computer/television
 	icon_state = "circuit_security"
 /obj/item/circuitboard/public_tv
 	name = "circuit board (television)"
-	computertype = /obj/machinery/computer/security/wooden_tv/public
+	computertype = /obj/machinery/computer/television/public
 	icon_state = "circuit_civilian"
 /obj/item/circuitboard/cargo_tv
 	name = "circuit board (routing depot monitor)"
-	computertype = /obj/machinery/computer/security/wooden_tv/cargo
+	computertype = /obj/machinery/computer/television/cargo
 	icon_state = "circuit_engineering"
 /obj/item/circuitboard/small_tv
 	name = "circuit board (small television)"
-	computertype = /obj/machinery/computer/security/wooden_tv/small
+	computertype = /obj/machinery/computer/television/small
 	icon_state = "circuit_civilian"
 
 // ID Card computers
