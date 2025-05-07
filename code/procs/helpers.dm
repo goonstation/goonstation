@@ -1902,7 +1902,7 @@ proc/countJob(rank)
 				if (L.nodamage)
 					. = TRUE
 			else
-				if (L.nodamage || L.spellshield)
+				if (L.nodamage || L.hasStatus("spellshield"))
 					. = TRUE
 		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target

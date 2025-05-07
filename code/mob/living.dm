@@ -1283,7 +1283,7 @@ TYPEINFO(/mob/living)
 			M.mind.violated_hippocratic_oath = 1
 
 	if (src.nodamage) return 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		src.visible_message(SPAN_ALERT("[src]'s shield deflects the shot!"))
 		return 0
 
