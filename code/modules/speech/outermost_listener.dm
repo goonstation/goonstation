@@ -52,7 +52,7 @@
 
 /// Determines whether the loc of the outermost listener is open to sound.
 /datum/outermost_listener_tracker/proc/loc_open_to_sound()
-	if (!src.outermost_listener.loc)
+	if (!ismovable(src.outermost_listener.loc))
 		return FALSE
 
 	if (src.outermost_listener.loc.open_to_sound)

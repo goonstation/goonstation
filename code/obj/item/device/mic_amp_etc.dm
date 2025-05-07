@@ -44,7 +44,6 @@ TYPEINFO(/obj/mic_stand)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
 	layer = FLY_LAYER
-	open_to_sound = TRUE
 	var/obj/item/device/microphone/myMic = null
 
 	New()
