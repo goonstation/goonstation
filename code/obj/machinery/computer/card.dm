@@ -295,11 +295,23 @@
 				.["target_card_look"] = src.modify.icon_state
 
 				.["target_accesses"] = src.modify.access
+				.["target_has_disallowed_accesses"] = src.check_disallowed_accesses(src.modify)
 				if(!isobserver(user))
 					user.unlock_medal("Identity Theft", 1)
 
 			else
 				.["mode"] = "unauthenticated"
+
+	proc/check_disallowed_accesses(var/obj/item/card/id/ID)
+		var/special_access_whitelist = list(access_maxsec, access_armory) //List of accesses not in all access that still trigger the popup
+		if(!istype(ID))
+			ID = get_card_from(ID)
+		for(var/access in ID.access)
+			if(!(access in get_all_accesses()) && !(access in special_access_whitelist))
+				continue
+			if(!(access in src.allowed_access_list))
+				return TRUE
+		return FALSE
 
 	proc/access_data(var/A)
 		. = list(list(
@@ -535,6 +547,9 @@
 			if (access in access_list)
 				continue
 			if (!(access in get_all_accesses())) // preserve accesses which are otherwise unobtainable
+				access_list += access
+				continue
+			if (!(access in src.allowed_access_list)) // Add accesses this computer cannot remove
 				access_list += access
 				continue
 		src.modify.access = access_list
