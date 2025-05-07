@@ -1176,7 +1176,7 @@
 	icon_state = "2-8"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -2402,7 +2402,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 1
 	},
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/the_cage)
 "baJ" = (
@@ -5829,7 +5829,7 @@
 /area/station/maintenance/northeast)
 "czP" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/remote/porter/port_a_nanomed{
 	pixel_x = -7;
 	pixel_y = -1
@@ -17176,7 +17176,7 @@
 	})
 "hBT" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -19443,7 +19443,7 @@
 /area/station/science/lobby)
 "iDi" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/chapel/sanctuary)
 "iDl" = (
@@ -29259,7 +29259,7 @@
 /area/station/security/hos)
 "mNE" = (
 /obj/landmark/start/job/AI,
-/obj/item/wrestlingbell{
+/obj/machinery/wrestlingbell{
 	layer = 29;
 	pixel_y = 25
 	},
@@ -33725,7 +33725,7 @@
 /area/station/crewquarters/cryotron)
 "oJb" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/clothing/glasses/blindfold{
 	pixel_y = -4
 	},
@@ -33955,7 +33955,7 @@
 /turf/simulated/floor/black/side,
 /area/station/engine/storage)
 "oOq" = (
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/table/wood/auto,
 /obj/item/sticker/ribbon/first_place{
 	pixel_x = -10;
