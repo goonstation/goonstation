@@ -1228,6 +1228,8 @@ var/list/fun_images = list()
 			send_to_arrival_shuttle = TRUE
 		if (mind.remove_antagonist(ROLE_FLOCKTRACE))
 			send_to_arrival_shuttle = TRUE
+		if (mind.remove_antagonist(ROLE_MINDEATER))
+			send_to_arrival_shuttle = TRUE
 	M = mind.current
 	if (isAI(M))
 		send_to_arrival_shuttle = 1
