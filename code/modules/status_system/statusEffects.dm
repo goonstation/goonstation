@@ -3720,7 +3720,7 @@
 		var/mob/living/critter/mimic/mob_owner = src.owner
 		return "Health: [mob_owner.max_health], Speed: [speed_string]"
 
-	onAdd(optional)
+	onChange(optional)
 		. = ..()
 		src.pixels = optional
 		scale()
@@ -3734,7 +3734,7 @@
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
-		else if (src.pixels <= 160)
+		else if (src.pixels <= 230)
 			mob_owner.modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."
