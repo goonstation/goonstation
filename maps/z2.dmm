@@ -9115,6 +9115,20 @@
 /obj/item/paper/printout/slide2,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
+"aQh" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	noalerts = 1;
+	pixel_y = 24;
+	start_charge = 10
+	},
+/obj/landmark/lrt/icemoon2,
+/turf/unsimulated/floor/arctic/plating,
+/area/upper_arctic/comms)
 "aQj" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -9300,6 +9314,12 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aQT" = (
+/turf/unsimulated/floor/arctic/plating,
+/area/upper_arctic/comms)
+"aQU" = (
+/obj/table/auto,
+/obj/item/gun/kinetic/flaregun,
+/obj/item/disk/data/floppy/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQV" = (
@@ -48795,23 +48815,6 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
-"dAN" = (
-/obj/item/swords/sord,
-/obj/item/ammo/bullets/abg{
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/item/ammo/bullets/abg{
-	pixel_x = -10;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "dAW" = (
 /obj/rack,
 /obj/item/clothing/head/frog_hat{
@@ -48861,48 +48864,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dBg" = (
-/obj/storage/cart/hotdog,
-/obj/item/clothing/suit/gimmick/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fakeobject/skeleton,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"dBi" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor";
-	opaque_atom_count = 1
-	},
-/area/centcom/offices/sord)
 "dBk" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = -10;
@@ -49086,22 +49047,6 @@
 "dBp" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
-"dBq" = (
-/obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/tasersmg,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 4
-	},
-/obj/death_button/hotdog{
-	pixel_x = 24
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -54739,6 +54684,20 @@
 	dir = 4
 	},
 /area/owlery/Owlopen)
+"edr" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor";
+	opaque_atom_count = 1
+	},
+/area/centcom/offices/sord)
 "edL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-44"
@@ -64538,17 +64497,6 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
-"lQP" = (
-/obj/item/gun/energy/dazzler,
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/computer3/generic/personal,
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "lRf" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -65011,6 +64959,34 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"mmI" = (
+/obj/storage/cart/hotdog,
+/obj/item/clothing/suit/gimmick/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/machinery/light{
+	dir = 1;
+	on = 1
+	},
+/obj/fakeobject/skeleton/unanchored,
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "mnF" = (
 /obj/overlay{
 	density = 1;
@@ -71390,19 +71366,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"rbe" = (
-/obj/item/gun/kinetic/pumpweapon/riotgun{
-	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
-	pixel_x = -6;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/centcom/offices/sord)
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
@@ -73946,6 +73909,25 @@
 	dir = 4
 	},
 /area/crunch/wtc)
+"tcv" = (
+/obj/item/gun/energy/stasis{
+	pixel_y = -28;
+	pixel_x = 12
+	},
+/obj/spiderweb,
+/obj/item/toy/plush/small{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "med_spide";
+	name = "spider plush toy";
+	desc = "Jesus fucking christ. How terrifyingly realistic."
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "tcP" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75279,6 +75261,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"uoX" = (
+/obj/item/gun/kinetic/breakaction/singleshotrifle{
+	pixel_y = 32;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "upc" = (
 /obj/decal/poster/wallsign/teleport_sign{
 	dir = 8
@@ -77133,6 +77127,21 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
+"vJI" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 4
+	},
+/obj/death_button/hotdog{
+	pixel_x = 24
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "vKc" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4;
@@ -77775,12 +77784,6 @@
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
-"wfw" = (
-/obj/table/auto,
-/obj/item/gun/kinetic/flaregun,
-/obj/item/disk/data/floppy/lrt/icemoon2,
-/turf/unsimulated/floor/arctic/plating,
-/area/upper_arctic/comms)
 "wfy" = (
 /obj/mesh/catwalk,
 /obj/cable/yellow{
@@ -78263,6 +78266,20 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"wwD" = (
+/obj/item/gun/energy/dazzler,
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/item/gun/energy/tasersmg{
+	pixel_y = 28
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "wwY" = (
 /obj/machinery/computer/television{
 	desc = "The VR representation of a camera monitoring program."
@@ -78525,20 +78542,6 @@
 	},
 /turf/space,
 /area/watchful_eye_sensor)
-"wFq" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 10
-	},
-/obj/landmark/lrt/icemoon2,
-/turf/unsimulated/floor/arctic/plating,
-/area/upper_arctic/comms)
 "wFK" = (
 /obj/lattice/directional_icons,
 /turf/space,
@@ -80260,6 +80263,28 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"xQL" = (
+/obj/item/swords/sord,
+/obj/item/ammo/bullets/abg{
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/obj/item/ammo/bullets/abg{
+	pixel_x = -10;
+	pixel_y = 24
+	},
+/obj/item/gun/kinetic/pumpweapon/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
+	pixel_x = -6;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "xQX" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -93674,7 +93699,7 @@ aNo
 aNo
 aNo
 qJS
-wFq
+aQh
 aQT
 aRM
 aSO
@@ -94279,7 +94304,7 @@ aNo
 aNo
 qJS
 aQj
-wfw
+aQU
 qJS
 aSP
 aTI
@@ -162245,7 +162270,7 @@ iBW
 wel
 wel
 wel
-dBi
+edr
 wel
 wel
 aES
@@ -162546,7 +162571,7 @@ dBk
 mAM
 dBn
 wel
-dAN
+xQL
 dBo
 dZy
 wel
@@ -162848,9 +162873,9 @@ dBl
 mAM
 dCl
 wel
-rbe
+uoX
 dBo
-dBo
+tcv
 wel
 aES
 aES
@@ -163150,7 +163175,7 @@ dBm
 mAM
 pmV
 wel
-dBg
+mmI
 dBp
 dBo
 wel
@@ -163452,8 +163477,8 @@ siD
 dBS
 dCm
 wel
-lQP
-dBq
+wwD
+vJI
 dBu
 wel
 aES

@@ -1,4 +1,13 @@
 
+(t)wed may 07 25
+(u)JORJ949
+(p)23103
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Wizards now have their own radio channel on :w
+(u)JORJ949
+(p)23335
+(e)💅🔨🤖|C-QoL, A-Player-Actions, A-Silicons
+(+)Silicons can now select the default lawset as the base when setting their fake laws.
 (t)tue may 06 25
 (u)glowbold
 (p)23045

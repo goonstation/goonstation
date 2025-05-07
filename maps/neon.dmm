@@ -3292,6 +3292,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"cBE" = (
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/southeast)
 "cCe" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4976,31 +4980,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
-"dBN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/storage/secure/crate/weapon/confiscated_items{
-	name = "riot equipment crate"
-	},
-/obj/item/gun/kinetic/riot40mm{
-	pixel_y = 8
-	},
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/ammo/bullets/smoke{
-	pixel_x = 2;
-	pixel_y = -3
-	},
-/obj/item/ammo/bullets/smoke{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/turf/simulated/floor,
-/area/station/security/equipment)
 "dCp" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -5326,11 +5305,6 @@
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"dMv" = (
-/obj/machinery/light/small/sticky/frostedred,
-/obj/item/paper/current_turbines,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/southwest)
 "dNz" = (
 /obj/machinery/door/unpowered/martian,
 /obj/lattice,
@@ -9001,20 +8975,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"gdI" = (
-/obj/table/wood/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/item/ghostboard,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "gdQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -11785,16 +11745,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"idK" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/junction/left/east,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "idP" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -14607,6 +14557,13 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/listeningpost)
+"jRN" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/black,
+/area/station/engine/substation/northwest)
 "jSa" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -16798,6 +16755,16 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"luH" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/left/east,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "lvz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17063,6 +17030,20 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"lDw" = (
+/obj/table/wood/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/item/ghostboard,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "lDT" = (
 /obj/fakeobject/flock/antenna/broken{
 	dir = 4;
@@ -19208,6 +19189,21 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"nhj" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	id = "hosquarters"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "nhO" = (
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/floor/martian,
@@ -20069,13 +20065,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"nQu" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/item/paper/current_turbines,
-/turf/simulated/floor/black,
-/area/station/engine/substation/northwest)
 "nRe" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
@@ -21650,6 +21639,11 @@
 "oXW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
+"oXX" = (
+/obj/machinery/light/small/sticky/frostedred,
+/obj/item/paper/current_turbines,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/southwest)
 "oYi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23304,21 +23298,6 @@
 "qbf" = (
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/diner/dining)
-"qbl" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	id = "hosquarters"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "qbr" = (
 /obj/machinery/door_control{
 	id = "test_chamber";
@@ -29412,6 +29391,29 @@
 /obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"ujV" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/storage/secure/crate/weapon/sec_weapons,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 8
+	},
+/obj/item/gun/kinetic/riot40mm,
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/turf/simulated/floor,
+/area/station/security/equipment)
 "ukA" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/old/tourguide/neon,
@@ -33138,6 +33140,24 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"wBh" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "wBC" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -33436,10 +33456,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"wJU" = (
-/obj/item/paper/current_turbines,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/southeast)
 "wLd" = (
 /obj/lattice{
 	dir = 8;
@@ -35004,24 +35020,6 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
-"xRv" = (
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/item/paper/book/from_file/ai_programming_101{
-	pixel_y = 5
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "xRz" = (
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4
@@ -74190,7 +74188,7 @@ msK
 xJD
 msK
 msK
-dMv
+oXX
 ahy
 aNP
 qpn
@@ -79840,7 +79838,7 @@ qpn
 qpn
 oJw
 wPP
-nQu
+jRN
 lGN
 lWn
 oCp
@@ -81722,7 +81720,7 @@ fjk
 ttm
 bgd
 fND
-dBN
+ujV
 bAO
 ttm
 klJ
@@ -83174,7 +83172,7 @@ uoo
 dYa
 dMb
 ksy
-gdI
+lDw
 bZJ
 bZJ
 bZJ
@@ -83832,8 +83830,8 @@ gbY
 uQo
 sKa
 vOd
-idK
-qbl
+luH
+nhj
 ucr
 jyg
 nRe
@@ -87781,7 +87779,7 @@ yfT
 rOA
 rOA
 iNa
-wJU
+cBE
 ccb
 qpn
 qpn
@@ -89237,7 +89235,7 @@ cVy
 cVy
 jyQ
 aAZ
-xRv
+wBh
 pEA
 bQs
 bbo
