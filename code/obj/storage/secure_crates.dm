@@ -33,14 +33,27 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
+	sec_weapons
+	name = "Security Weapons Crate"
+	req_access = list(access_securitylockers)
+	icon_state = "sec_weapons"
+	icon_opened = "sec_weaponsopen"
+	icon_closed = "sec_weapons"
+
 	confiscated_items
 		name = "confiscated items crate"
 		desc = "Secure storage for confiscated contraband."
 		req_access = list(access_brig)
+		icon_opened = "sec_contrabandopen"
+		icon_closed = "sec_contraband"
+		icon_state = "sec_contraband"
 
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
+		icon_opened = "sec_armoryopen"
+		icon_closed = "sec_armory"
+		icon_state = "sec_armory"
 
 		tranquilizer
 			name = "tranquilizer crate"

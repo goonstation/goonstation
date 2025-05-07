@@ -48929,6 +48929,11 @@
 	pixel_x = -10;
 	pixel_y = 24
 	},
+/obj/item/gun/kinetic/pumpweapon/riotgun{
+	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
+	pixel_x = -6;
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -49005,7 +49010,7 @@
 	dir = 1;
 	on = 1
 	},
-/obj/fakeobject/skeleton,
+/obj/fakeobject/skeleton/unanchored,
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -49017,7 +49022,7 @@
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
+	lock_dir = 4
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -49220,7 +49225,6 @@
 /area/centcom/offices/sord)
 "dBq" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/tasersmg,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 4
 	},
@@ -64669,6 +64673,9 @@
 /obj/item/gun/energy/dazzler,
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/item/gun/energy/tasersmg{
+	pixel_y = 28
+	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
 	explosion_protection = 1;
@@ -71507,10 +71514,9 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "rbe" = (
-/obj/item/gun/kinetic/pumpweapon/riotgun{
-	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
-	pixel_x = -6;
-	pixel_y = 24
+/obj/item/gun/kinetic/breakaction/singleshotrifle{
+	pixel_y = 32;
+	pixel_x = 12
 	},
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -74004,6 +74010,25 @@
 	dir = 4
 	},
 /area/crunch/wtc)
+"tcv" = (
+/obj/item/gun/energy/stasis{
+	pixel_y = -28;
+	pixel_x = 12
+	},
+/obj/spiderweb,
+/obj/item/toy/plush/small{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "med_spide";
+	name = "spider plush toy";
+	desc = "Jesus fucking christ. How terrifyingly realistic."
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "tcP" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -162850,7 +162875,7 @@ dCl
 wel
 rbe
 dBo
-dBo
+tcv
 wel
 aES
 aES
