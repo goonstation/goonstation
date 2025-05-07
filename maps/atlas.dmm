@@ -1168,8 +1168,7 @@
 "aeH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Hydroponics";
-	req_access_txt = "35"
+	name = "Hydroponics"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -8929,8 +8928,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	name = "Burn Chamber";
-	req_access_txt = "40"
+	name = "Burn Chamber"
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -10576,8 +10574,7 @@
 "dzn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "chapel";
-	req_access_txt = "1"
+	id = "chapel"
 	},
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/chapel{
@@ -13147,8 +13144,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Kitchen";
-	req_access_txt = "35"
+	name = "Kitchen"
 	},
 /obj/mapping_helper/access/kitchen,
 /obj/mapping_helper/access/bar,
@@ -18857,15 +18853,14 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/hop)
 "piv" = (
-/obj/machinery/door/airlock/pyro/alt{
-	req_access_txt = "25|28"
-	},
+/obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "pjh" = (
@@ -19565,8 +19560,7 @@
 /area/station/maintenance/southeast)
 "qxs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Crematorium";
-	req_access_txt = "33"
+	name = "Crematorium"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -19780,7 +19774,6 @@
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Kitchen";
-	req_access_txt = "35";
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -21310,8 +21303,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	name = "Burn Chamber";
-	req_access_txt = "40"
+	name = "Burn Chamber"
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/forcefield/energyshield/perma/doorlink{
