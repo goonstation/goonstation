@@ -3719,7 +3719,9 @@
 	getTooltip()
 		var/mob/living/critter/mimic/mob_owner = src.owner
 		return "Health: [mob_owner.max_health], Speed: [speed_string]"
-
+	onAdd(optional)
+		. = ..()
+		src.onChange(optional)
 	onChange(optional)
 		. = ..()
 		src.pixels = optional
