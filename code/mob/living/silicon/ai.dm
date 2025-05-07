@@ -1765,6 +1765,7 @@ or don't if it uses a custom topopen overlay
 	target_shell.dependent = 1
 	src.deployed_shell = target_shell
 	src.mind.transfer_to(target_shell)
+	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -1821,6 +1822,9 @@ or don't if it uses a custom topopen overlay
 		if (src.deployed_to_eyecam)
 			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
 			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+
+		else if (src.deployed_shell)
+			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
 
 		user.mind.transfer_to(src)
 		src.deployed_shell = null
