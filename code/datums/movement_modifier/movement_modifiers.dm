@@ -139,6 +139,9 @@
 /datum/movement_modifier/robot_mag_upgrade
 	additive_slowdown = 0.5
 
+/datum/movement_modifier/robot_no_power
+	multiplicative_slowdown = 1.5
+
 // robot heads
 /datum/movement_modifier/robot_part/light_head
 	additive_slowdown = -0.1

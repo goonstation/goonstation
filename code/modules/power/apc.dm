@@ -1599,9 +1599,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	return
 
 /obj/machinery/power/apc/receive_silicon_hotkey(var/mob/user)
-	..()
-
-	if (!isAI(user) && !issilicon(user))
+	if(..())
 		return
 
 	if (user.client.check_key(KEY_OPEN))
