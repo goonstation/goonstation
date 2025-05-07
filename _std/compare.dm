@@ -60,4 +60,4 @@
 	return cmp_numeric_dsc(a.score_total, b.score_total)
 
 /proc/cmp_recipe_priority(datum/cookingrecipe/a, datum/cookingrecipe/b)
-	return cmp_numeric_asc(a.ingredients.len + a.priority, b.ingredients.len + b.priority)
+	return cmp_numeric_dsc(a.ingredients.len + a.priority, b.ingredients.len + b.priority)
