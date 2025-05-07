@@ -6,7 +6,7 @@ var split_bans = raw_bans == null ? new Array() : raw_bans.split(";");
 if (split_bans.length>1)
 {
 	var i;
-	for (i in split_bans) document.write("<tr><td><A href='byond://?src="+ref_src+";action=removejobban;target="+split_bans[i]+"'>"+split_bans[i]+"</A></td></tr>");
+	for (i in split_bans) document.write("<tr><td><A href='?src="+ref_src+";action=removejobban;target="+split_bans[i]+"'>"+split_bans[i]+"</A></td></tr>");	
 }
 else
 	document.write("Error, no ban data or the data was corrupt.");
