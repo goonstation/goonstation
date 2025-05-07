@@ -1,4 +1,21 @@
 
+(t)tue may 06 25
+(u)glowbold
+(p)23045
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Singularity Emitters have an emag interaction.
+(u)JORJ949
+(p)23314
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)All AI Uploads now come with AI Programming 101. Corporate has had enough with law-based accidents.
+(u)Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
+(p)19180
+(e)🔧🔎🔒🔄❗⚙|A-Tooling, C-Code-Quality, A-Secret, C-Rework, E-FUCK, A-Internal
+(*)The entire speech system has been reworked; anything that can say or hear something now uses an entirely different system to do so, including you. Please report any bugs.
+(u)TDHooligan
+(p)23257
+(e)⚖|C-Balance
+(*)Slowing effects are now applied & removed instantly, instead of on your next move. Tasers will be more affected by this change.
 (t)mon may 05 25
 (u)Chasu
 (p)23272

@@ -12509,13 +12509,8 @@
 "aYz" = (
 /obj/machinery/ai_status_display,
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = 1;
-	pixel_y = -7
-	},
-/obj/item/device/infra_sensor{
-	pixel_x = 1;
-	pixel_y = 3
+/obj/item/paper/book/from_file/ai_programming_101{
+	pixel_y = 5
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)

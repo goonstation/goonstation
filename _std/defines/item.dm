@@ -22,32 +22,30 @@
 #define ON_BORDER					(1<<9)
 /// can pass through a closed door
 #define DOORPASS					(1<<10)
-/// automagically talk into this object when a human is holding it (Phone handset!)
-#define TALK_INTO_HAND				(1<<11)
 /// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
-#define OPENCONTAINER				(1<<12)
+#define OPENCONTAINER				(1<<11)
 /// No beaker etc. splashing. For Chem machines etc.
-#define NOSPLASH					(1<<13)
+#define NOSPLASH					(1<<12)
 /// No attack when hitting stuff with this item.
-#define SUPPRESSATTACK				(1<<14)
+#define SUPPRESSATTACK				(1<<13)
 /// gets an overlay when submerged in fluid
-#define FLUID_SUBMERGE				(1<<15)
+#define FLUID_SUBMERGE				(1<<14)
 /// gets a perspective overlay from adjacent fluids
-#define IS_PERSPECTIVE_FLUID		(1<<16)
+#define IS_PERSPECTIVE_FLUID		(1<<15)
 /// this object is solid to fluids as long as it is also dense (think doors)
-#define FLUID_DENSE					(1<<17)
+#define FLUID_DENSE					(1<<16)
 /// Calls equipment_click from hand_range_attack on items worn with this flag set.
-#define HAS_EQUIP_CLICK				(1<<18)
+#define HAS_EQUIP_CLICK				(1<<17)
 /// Has the possibility for a TGUI interface
-#define TGUI_INTERACTIVE			(1<<19)
+#define TGUI_INTERACTIVE			(1<<18)
 /// Has a click delay for attack_self()
-#define ATTACK_SELF_DELAY			(1<<20)
+#define ATTACK_SELF_DELAY			(1<<19)
 /// This object is solid to fluids regardless of density (think fluid forcefields)
-#define FLUID_DENSE_ALWAYS			(1<<21)
+#define FLUID_DENSE_ALWAYS			(1<<20)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
-#define CLICK_DELAY_IN_CONTENTS		(1<<22)
+#define CLICK_DELAY_IN_CONTENTS		(1<<21)
 /// If an item cannot be crushed by the crusher
-#define UNCRUSHABLE					(1<<23)
+#define UNCRUSHABLE					(1<<22)
 
 //Item function flags
 

@@ -31,20 +31,15 @@
 	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
 		var/msg = input("Please enter your whispers to the mouse:") as null|text
-		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
-		if (!msg)
-			return
-		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
-		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
-		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")
-		for (var/client/C)
-			if (C.holder)
-				if (C.player_mode || C == client || C == mmouse.client)
-					continue
-				else
-					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[msg]")]</span>"
-					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
-		logTheThing(LOG_DIARY, client.mob, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
+		// provide temp access to speak on this channel if, somehow, we didn't have it before
+		var/channel_access = length(client.mob.ensure_speech_tree().GetOutputsByChannel(SAY_CHANNEL_MENTOR_MOUSE)) > 0
+		if (!channel_access)
+			client.mob.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_MENTOR_MOUSE)
+			client.mob.ensure_listen_tree().AddListenInput(LISTEN_INPUT_MENTOR_MOUSE)
+		client.mob.say(msg, message_params = list("output_module_channel" = SAY_CHANNEL_MENTOR_MOUSE), atom_listeners_override = list(client.mob, mmouse))
+		if (!channel_access)
+			client.mob.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_MENTOR_MOUSE)
+			client.mob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		return
 
 	if (client.player.cloudSaves.getData("mentorhelp_banner"))
