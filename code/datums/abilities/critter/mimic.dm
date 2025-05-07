@@ -27,5 +27,5 @@
 		abil.afterAction()
 		parent.disguise_as(src)
 		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
-			parent.setStatus("mimic_disguise", 10 SECONDS, parent.pixel_amount)
+			parent.setStatus("mimic_disguise", 30 SECONDS, parent.pixel_amount)
 
