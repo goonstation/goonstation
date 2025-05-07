@@ -13,3 +13,5 @@
 #define ROBOT_MISSING_LEG_ARM_OFFSET -1
 /// Amount a missing arm will speed you up (as long as you have legs)
 #define ROBOT_MISSING_ARM_MOVEMENT_ADJUST -0.1
+
+#define STATE_LAW_COOLDOWN 20 SECONDS

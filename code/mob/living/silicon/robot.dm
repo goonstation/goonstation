@@ -2208,27 +2208,77 @@ TYPEINFO(/mob/living/silicon/robot)
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
+		var/list/say_targets = list("Local")
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
+
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("1. You may not injure a human being or cause one to come to harm.")
+		src.say("[prefix] 1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
-		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		src?.say("[prefix] 2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
 		sleep(1 SECOND)
-		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("[prefix] 3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
-		set name = "State Laws"
+		set name = "State All Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
 		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
+
+		var/list/say_targets = list("Local")
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
 
 		var/laws = null
 		if(src.dependent) //are you a shell?
@@ -2244,7 +2294,7 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
-			src.say("[number]. [laws[number]]")
+			src.say("[prefix] [number]. [laws[number]]")
 			sleep(1 SECOND)
 
 	verb/robot_set_fake_laws()

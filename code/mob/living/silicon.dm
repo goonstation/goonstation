@@ -601,16 +601,50 @@ var/global/list/module_editors = list()
 	#undef FAKE_LAW_LIMIT
 
 /mob/living/silicon/proc/state_fake_laws()
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	var/mob/message_mob = src
+	if (istype(src, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/AI = src
+		message_mob = AI.get_message_mob()
+
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list("Local")
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(message_mob, "Select output channel", "State Fake Laws", say_targets)
+
+	if (!choice)
 		return
 
 	var/list/laws = src.shell ? src.mainframe.fake_laws : src.fake_laws
 
+	if (length(laws) == 0)
+		boutput(message_mob, SPAN_ALERT("Fake laws not set!"))
+		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(message_mob, SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
 	for(var/a_law in laws)
 		sleep(1 SECOND)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
-		src.say(html_decode(a_law))
+		src.say(html_decode("[prefix] [a_law]"))
 		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
 
 /mob/living/silicon/get_unequippable()
