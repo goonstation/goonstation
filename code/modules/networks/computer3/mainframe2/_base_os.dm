@@ -708,7 +708,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 				quitparent.useracc = user
 				quitparent.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
 
-			else if (QDELETED(quitparent) && quitparent != user.base_shell_instance) // We can't use quitparent if it is already queued for deletion! Lets hope our shellbase didn't get randomly deleted!
+			else if (QDELETED(quitparent) && !QDELETED(user.base_shell_instance)) // We can't use quitparent if it is already queued for deletion! Lets hope our shellbase didn't get randomly deleted!
 				if (user.current_prog == caller_prog)
 					user.current_prog = user.base_shell_instance // So instead, we return user back to the main shell-
 				user.base_shell_instance.useracc = user
