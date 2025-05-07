@@ -12559,7 +12559,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
 /area/station/hallway/secondary/north)
 "fyx" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /obj/landmark/bill_spawn,
@@ -19846,7 +19846,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "iJE" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /obj/landmark/bill_spawn,
@@ -21994,7 +21994,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "jAR" = (

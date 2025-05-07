@@ -1814,8 +1814,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "1x Fridge, Frames: 1x Oven, 1x Mixer, 1x Sink, 1x Deep Fryer, 1x Food Processor, 1x ValuChimp, 1x FoodTech, 1x Meat Spike, 1x Gibber"
 	category = "Civilian Department"
 	contains = list(/obj/storage/secure/closet/fridge)
-	frames = list(/obj/submachine/chef_oven,
-					/obj/machinery/mixer,
+	frames = list(/obj/machinery/cookingmachine/oven,
+					/obj/machinery/cookingmachine/mixer,
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,

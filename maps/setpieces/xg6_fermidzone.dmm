@@ -7302,7 +7302,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "DL" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	pixel_y = 16
 	},
 /obj/machinery/light/small{
