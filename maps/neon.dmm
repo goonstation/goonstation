@@ -4982,9 +4982,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/storage/secure/crate/weapon/confiscated_items{
-	name = "riot equipment crate"
-	},
+/obj/storage/secure/crate/weapon/sec_weapons,
 /obj/item/gun/kinetic/riot40mm{
 	pixel_y = 8
 	},
