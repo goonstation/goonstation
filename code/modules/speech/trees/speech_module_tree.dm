@@ -269,6 +269,7 @@
 		src.speech_outputs_by_channel[src.speech_outputs_by_id[module_id].channel] -= src.speech_outputs_by_id[module_id]
 		qdel(src.speech_outputs_by_id[module_id])
 		src.speech_outputs_by_id -= module_id
+		src.speech_output_ids_with_subcount -= module_id
 
 	return TRUE
 
@@ -276,6 +277,11 @@
 /datum/speech_module_tree/proc/GetOutputByID(output_id, subchannel)
 	RETURN_TYPE(/datum/speech_module/output)
 	return src.speech_outputs_by_id["[output_id][subchannel]"]
+
+/// Returns the number of subscriptions to this speech output module.
+/datum/speech_module_tree/proc/GetOutputSubcount(output_id, subchannel, combined_id)
+	var/module_id = combined_id || "[output_id][subchannel]"
+	return src.speech_output_ids_with_subcount[module_id]
 
 /// Returns a list of speech output modules that output to the specified channel.
 /datum/speech_module_tree/proc/GetOutputsByChannel(channel_id)
@@ -314,6 +320,7 @@
 		qdel(src.speech_modifiers_by_id[modifier_id])
 		src.speech_modifiers_by_id -= modifier_id
 		src.persistent_speech_modifiers_by_id -= modifier_id
+		src.speech_modifier_ids_with_subcount -= modifier_id
 
 	return TRUE
 
@@ -321,6 +328,10 @@
 /datum/speech_module_tree/proc/GetModifierByID(modifier_id)
 	RETURN_TYPE(/datum/speech_module/modifier)
 	return src.speech_modifiers_by_id[modifier_id]
+
+/// Returns the number of subscriptions to this speech modifier module.
+/datum/speech_module_tree/proc/GetModifierSubcount(modifier_id)
+	return src.speech_modifier_ids_with_subcount[modifier_id]
 
 /// Adds a new speech prefix module to the tree. Returns a reference to the new prefix module on success.
 /datum/speech_module_tree/proc/_AddSpeechPrefix(prefix_id, list/arguments = list(), count = 1)
@@ -360,6 +371,7 @@
 
 		qdel(prefix_module)
 		src.speech_prefixes_by_id -= prefix_id
+		src.speech_prefix_ids_with_subcount -= prefix_id
 
 	return TRUE
 
@@ -367,6 +379,10 @@
 /datum/speech_module_tree/proc/GetPrefixByID(prefix_id)
 	RETURN_TYPE(/datum/speech_module/prefix)
 	return src.speech_prefixes_by_id[prefix_id]
+
+/// Returns the number of subscriptions to this speech prefix module.
+/datum/speech_module_tree/proc/GetPrefixSubcount(prefix_id)
+	return src.speech_prefix_ids_with_subcount[prefix_id]
 
 /// Returns all speech prefix modules on this speech tree.
 /datum/speech_module_tree/proc/GetAllPrefixes()

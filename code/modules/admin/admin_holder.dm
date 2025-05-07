@@ -108,8 +108,8 @@
 		. = ..()
 
 		src.owner = C
-		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES, src.owner.ensure_speech_tree())
-		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_LISTEN_CONTROLS, ADMIN_UNDERSTOOD_LANGUAGES, src.owner.ensure_listen_tree())
+		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES, src.owner.ensure_speech_tree(), "Admin")
+		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_LISTEN_CONTROLS, ADMIN_UNDERSTOOD_LANGUAGES, src.owner.ensure_listen_tree(), "Admin")
 
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)

@@ -4,10 +4,14 @@
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/speech_module_tree/auxiliary
+	/// The name that this auxiliary speech module tree should display on the admin UI.
+	var/display_name = "Aux"
 	/// The speech module tree that this auxiliary speech module tree should add and remove its modules to and from.
 	var/datum/speech_module_tree/target_speech_tree
 
-/datum/speech_module_tree/auxiliary/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list(), datum/speech_module_tree/target_speech_tree)
+/datum/speech_module_tree/auxiliary/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list(), datum/speech_module_tree/target_speech_tree, display_name)
+	src.display_name = display_name
+
 	. = ..()
 	src.update_target_speech_tree(target_speech_tree)
 
@@ -31,6 +35,9 @@
 		return FALSE
 
 	src.speech_output_ids_with_subcount[module_id] -= count
+	if (!src.speech_output_ids_with_subcount[module_id])
+		src.speech_output_ids_with_subcount -= module_id
+
 	src.target_speech_tree?.RemoveSpeechOutput(output_id, subchannel, count)
 	return TRUE
 
@@ -50,6 +57,9 @@
 		return FALSE
 
 	src.speech_modifier_ids_with_subcount[modifier_id] -= count
+	if (!src.speech_modifier_ids_with_subcount[modifier_id])
+		src.speech_modifier_ids_with_subcount -= modifier_id
+
 	src.target_speech_tree?.RemoveSpeechModifier(modifier_id, count)
 	return TRUE
 
@@ -66,6 +76,9 @@
 		return FALSE
 
 	src.speech_prefix_ids_with_subcount[prefix_id] -= count
+	if (!src.speech_prefix_ids_with_subcount[prefix_id])
+		src.speech_prefix_ids_with_subcount -= prefix_id
+
 	src.target_speech_tree?.RemoveSpeechPrefix(prefix_id, count)
 	return TRUE
 
