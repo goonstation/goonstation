@@ -14,7 +14,6 @@
 	flags = TGUI_INTERACTIVE
 	anchored = ANCHORED
 	density = 1
-	open_to_sound = TRUE
 
 	/// Clothing booth emits an ambient light when powered.
 	var/datum/light/ambient_light

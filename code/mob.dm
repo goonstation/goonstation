@@ -15,6 +15,8 @@ TYPEINFO(/mob)
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
 	speech_verb_say = "says"
 	speech_verb_ask = "asks"
 	speech_verb_exclaim = "exclaims"
