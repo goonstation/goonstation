@@ -1,6 +1,10 @@
 
 (t)wed may 07 25
 (u)JORJ949
+(p)23354
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)"Fired" is now a valid word for the lawbringer's hotshot mode. Go terminate those contracts!
+(u)JORJ949
 (p)23319
 (e)🆕📦|C-Feature, A-Game-Objects
 (+)Lawbringers now check every word in a message for mode selection rather than the entire message.
