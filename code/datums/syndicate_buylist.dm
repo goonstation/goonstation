@@ -1130,7 +1130,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "An aerodynamic, extra-sharp hand razor designed to be thrown, knocking down and shearing the hair off of anyone it hits. The razor will then return, allowing for stolen hair to be easily retrieved. Notice: hitting a bald target will disrupt the razor's aerodynamic properties and void the warranty."
 	job = list("Barber")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-	br_allowed = TRUE
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
