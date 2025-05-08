@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/pinpointer)
 				if(ismob(src.loc))
 					boutput(src.loc, SPAN_ALERT("Pinpointer target out of range."))
 				return
-			src.set_dir(get_dir(src,target))
+			src.set_dir(get_dir_accurate(src,target))
 			var/dist = GET_DIST(src,target)
 			switch(dist)
 				if(0)

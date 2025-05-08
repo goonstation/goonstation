@@ -241,7 +241,7 @@
 
 		if(0)
 			for(var/obj/item/electronics/P in src.contents)
-				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
+				dat += "[P.name]: <A href='byond://?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
 				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")

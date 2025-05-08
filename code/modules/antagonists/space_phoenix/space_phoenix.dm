@@ -4,8 +4,8 @@
 	mob_path = /mob/living/critter/space_phoenix
 	mutually_exclusive = TRUE
 	assigned_by = ANTAGONIST_SOURCE_RANDOM_EVENT
-	objectives = list(/datum/objective/specialist/phoenix_collect_humans, /datum/objective/specialist/phoenix_collect_critters, /datum/objective/specialist/phoenix_permafrost_areas)
 	success_medal = "Territorial Defender"
+	wiki_link = "https://wiki.ss13.co/Space_Phoenix"
 	/// How far from the map edge does our nest need to be
 	var/map_edge_margin = 35
 	/// The ability holder of this space phoenix
@@ -72,5 +72,5 @@
 		src.owner.current.set_loc(T)
 
 	assign_objectives()
-		for (var/datum/objective/specialist/objective as anything in src.objectives)
-			new objective(null, src.owner, src)
+		for (var/objective_type as anything in list(/datum/objective/specialist/phoenix_collect_humans, /datum/objective/specialist/phoenix_collect_critters, /datum/objective/specialist/phoenix_permafrost_areas))
+			new objective_type(null, src.owner, src)

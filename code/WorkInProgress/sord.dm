@@ -452,7 +452,6 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	health_burn = 50
 	health_burn_vuln = 0.3
 	reagent_capacity = 0
-	var/obj/spookMarker/spawn_marker = null
 
 /mob/living/critter/spider/weblaying/baby
 	name = "li'l weblaying spider"
@@ -515,7 +514,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/turf/T = get_turf(src.holder.owner)
 		if (!isturf(T) || istype(T, /turf/space))
-			boutput(src.holder.owner, SPAN_ALERT("You can't lay an egg!"))
+			boutput(src.holder.owner, SPAN_ALERT("You can't lay an egg there!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(holder.owner, SPAN_NOTICE("You lay a teeny tiny egg."))
 		src.doCooldown()
@@ -529,8 +528,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
-		var/obj/spookMarker/marker = new /obj/spookMarker(T)
-		W.spawn_marker = marker
+		var/spawnturf = T
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a weblaying spider? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a weblaying spider. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -545,13 +543,11 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			logTheThing(LOG_ADMIN, null, "Couldn't set up weblaying spider; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, SPAN_ALERT("None of the eggs hatch. The egg withers and dies."))
-				qdel(marker)
 				return
 			else
 				boutput(W, SPAN_ALERT("None of the eggs hatch. Trying again in three minutes..."))
-				qdel(marker)
-				SPAWN(3 MINUTES)
-					make_weblaying_spider(W, T, tries++)
+				SPAWN(15 SECONDS)
+					make_weblaying_spider(W, spawnturf, tries++)
 			return
 		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.add_antagonist(ROLE_ANTAGONIST_CRITTER, source = ANTAGONIST_SOURCE_SUMMONED))
@@ -559,8 +555,94 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			message_admins("[lucky_dude.key] respawned as a weblaying_spider for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
-			B.make_critter(/mob/living/critter/spider/weblaying/baby, marker.loc)
+			B.make_critter(/mob/living/critter/spider/weblaying/baby, spawnturf)
 			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
-			boutput(W, SPAN_NOTICE("The egg you planted at [marker.loc] has hatched into a new spider!"))
-		W.spawn_marker = null
-		qdel(marker)
+			boutput(W, SPAN_NOTICE("The egg you planted at [spawnturf] has hatched into a new spider!"))
+
+ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
+/obj/item/gun/kinetic/breakaction
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+	var/can_spin_closed = FALSE
+
+	update_icon()
+		. = ..()
+		src.icon_state = initial(src.icon_state) + (!src.broke_open ? "" : "-empty" )
+
+	canshoot(mob/user)
+		if (!src.broke_open)
+			return TRUE
+		..()
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.broke_open)
+			src.toggle_action(user)
+			if (src.ammo.amount_left > 0)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> slams shut [src] and fires in one fluid motion. Wow!"))
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
+		..()
+
+	attack_self(mob/user)
+		src.toggle_action(user)
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, SPAN_ALERT("You can't load shells into the chambers! You'll have to open [src] first!"))
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, SPAN_ALERT("[src] is still closed, you need to open the action to take the shells out!"))
+			return
+		..()
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open && src.can_spin_closed) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+
+/obj/item/gun/kinetic/breakaction/singleshotrifle
+	name = "\improper single shot rifle"
+	desc = "A break-barrel style single shot .308 rifle. Nasty."
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	item_state = "mts255"
+	icon_state = "singleshot"
+	force = MELEE_DMG_RIFLE
+	contraband = 7
+	ammo_cats = list(AMMO_TRANQ_ALL, AMMO_RIFLE_308)
+	max_ammo_capacity = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	add_residue = TRUE
+	gildable = FALSE
+	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
+	recoil_strength = 14
+	recoil_max = 14
+	default_magazine = /obj/item/ammo/bullets/rifle_3006/single
+
+	New()
+		if (prob(10))
+			name = pick ("elephant rifle", "brullbar rifle", "comically oversized clown stopper", "lion tamer", "drone hunter")
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
+		AddComponent(/datum/component/holdertargeting/windup, 0.5 SECONDS)
+		..()

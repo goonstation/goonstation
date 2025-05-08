@@ -32,8 +32,8 @@
 	var/can_be_anchored = UNANCHORED
 	var/default_hat_y = 0
 	var/default_hat_x = 0
+	var/amount_of_prevent_move_comps = 0
 	custom_suicide = TRUE
-	open_to_sound = TRUE
 
 	New()
 		processing_items |= src //this thing is a dang storage
@@ -194,6 +194,21 @@
 					SEND_SIGNAL(M, _COMSIG_MECHCOMP_RM_OUTGOING, comp)
 					discons++
 			return discons
+		unanchor_movement_comps()
+			// called when a cabinet_prevent_move comp is first added
+			var/removed_comp_amount = 0
+			for (var/atom/comp in src.contents)
+				var/obj/item/mechanics/movement/mov_comp = comp
+				if (!istype(mov_comp))
+					continue
+				if (mov_comp.level == UNDERFLOOR)
+					mov_comp.level = OVERFLOOR
+					mov_comp.anchored = UNANCHORED
+					mov_comp.clear_owner()
+					mov_comp.loosen()
+					removed_comp_amount++
+			return removed_comp_amount
+
 	disposing()
 		..()
 		processing_items.Remove(src)
@@ -351,6 +366,9 @@
 	secured = 2
 	icon_state = "dbox"
 
+TYPEINFO(/obj/item/mechanics)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_DEVICE)
+
 /obj/item/mechanics
 	name = "testhing"
 	icon = 'icons/misc/mechanicsExpansion.dmi'
@@ -361,10 +379,16 @@
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
+
+	speech_verb_say = list("squawks", "beeps", "boops", "says", "screeches")
+	voice_sound_override = 'sound/machines/reprog.ogg'
+
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
 	/// whether or not this component can only be used in cabinets
 	var/cabinet_only = FALSE
+	/// whether or not this component prevents the Movement Component from being anchored in cabinets
+	var/cabinet_prevent_move = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
 	var/one_per_tile = FALSE
 	// override disconnect all on unanchor/anchor. this is mostly for the bomb :|
@@ -459,12 +483,20 @@
 					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = OVERFLOOR
 					anchored = UNANCHORED
+					if (src.cabinet_prevent_move && IN_CABINET)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps--
 					clear_owner()
 					loosen()
 				if(OVERFLOOR) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
 						boutput(user, SPAN_ALERT("[src] needs to be on the ground  [src.cabinet_banned ? "" : "or in a component housing"] for that to work."))
 						return 0
+					if (IN_CABINET && istype(src, /obj/item/mechanics/movement))
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						if (cabinet.amount_of_prevent_move_comps > 0)
+							boutput(user, SPAN_ALERT("[src] is not allowed since an anchored component is preventing cabinet movement."))
+							return
 					if(IN_CABINET && src.cabinet_banned)
 						boutput(user,SPAN_ALERT("[src] is not allowed in component housings."))
 						return
@@ -479,6 +511,11 @@
 					if(anchored)
 						boutput(user,SPAN_ALERT("[src] is already attached to something somehow."))
 						return
+					if (IN_CABINET && src.cabinet_prevent_move)
+						var/obj/item/storage/mechanics/cabinet = src.stored?.linked_item
+						cabinet.amount_of_prevent_move_comps++
+						if (cabinet.amount_of_prevent_move_comps == 1 && cabinet.unanchor_movement_comps() > 0)
+							boutput(user, SPAN_ALERT("The cabinet unanchored all movement components!"))
 					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = UNDERFLOOR
@@ -524,26 +561,6 @@
 
 		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT, over_object, usr)
 		return
-
-	proc/componentSay(var/string)
-		string = trimtext(sanitize(html_encode(string)))
-		var/maptext = null
-		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
-
-		if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld) && !src.storage) //Handles all text for the Device Frame
-			var/list/atom/movable/loc_chain = obj_loc_chain(src)
-			maptext_loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
-
-		else
-			maptext_loc = src.loc
-
-		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
-
-		for(var/mob/O in all_hearers(7, maptext_loc))
-			O.show_message("<span class='radio' style='color: #FFBF00;'>[SPAN_NAME("[src]")]<b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> [SPAN_MESSAGE("\"[string]\"")]</span>",1, //Places text in the radio
-				assoc_maptext = maptext) //Places text in world
-		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==UNDERFLOOR)
@@ -640,7 +657,7 @@
 			if (W.amount >= price)
 				user.drop_item()
 				if (length(thank_string))
-					componentSay("[thank_string]")
+					src.say("[thank_string]")
 
 				if (W.amount > price)
 					// Dispense change if they overpaid
@@ -657,7 +674,7 @@
 				FLICK("comp_money1", src)
 				return 1
 			else
-				componentSay("Insufficient funds. Price: [src.price].")
+				src.say("Insufficient funds. Price: [src.price].")
 				return 0
 
 		if (istype(W, /obj/item/card/id) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
@@ -675,7 +692,7 @@
 					account["current_money"] -= src.price
 
 					if (length(thank_string))
-						componentSay("[thank_string]")
+						src.say("[thank_string]")
 					collected += price
 					tooltip_rebuild = 1
 
@@ -684,9 +701,9 @@
 					FLICK("comp_money1", src)
 					return 1
 				else
-					componentSay("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
+					src.say("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
 			else
-				componentSay("No bank account found for [perp_id.registered] found.")
+				src.say("No bank account found for [perp_id.registered] found.")
 
 		return 0
 
@@ -2375,7 +2392,7 @@
 			tooltip_rebuild = 1
 
 		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
+			src.say("Current Selection : [signals[current_index]]")
 		return 1
 
 	proc/selitemplus(var/datum/mechanicsMessage/input)
@@ -2394,7 +2411,7 @@
 				current_index = length(signals) ? length(signals) : 1 // Don't let current_index be 0
 			tooltip_rebuild = 1
 			if(announce)
-				componentSay("Removed : [input.signal]")
+				src.say("Removed : [input.signal]")
 		return
 
 	proc/popitem(var/datum/mechanicsMessage/input)
@@ -2409,7 +2426,7 @@
 		current_index = 1
 		tooltip_rebuild = 1
 		if(announce)
-			componentSay("Removed all signals.")
+			src.say("Removed all signals.")
 		return
 
 	proc/additem(var/datum/mechanicsMessage/input)
@@ -2420,7 +2437,7 @@
 			signals[input.signal] = 1
 			tooltip_rebuild = 1
 			if(announce)
-				componentSay("Added: [input.signal]")
+				src.say("Added: [input.signal]")
 
 		else
 			if(!signals[input.signal])
@@ -2428,9 +2445,9 @@
 				signals[input.signal] = 1
 				tooltip_rebuild = 1
 				if(announce)
-					componentSay("Added: [input.signal]")
+					src.say("Added: [input.signal]")
 			else if(announce)
-				componentSay("Duplicate entry - rejected: [input.signal]")
+				src.say("Duplicate entry - rejected: [input.signal]")
 
 	proc/sendRand(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || !input) return
@@ -2462,7 +2479,7 @@
 			current_index = 1
 		tooltip_rebuild = 1
 		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
+			src.say("Current Selection : [signals[current_index]]")
 		return 1
 
 	proc/nextplus(var/datum/mechanicsMessage/input)
@@ -2484,7 +2501,7 @@
 			current_index = length(signals)
 		tooltip_rebuild = 1
 		if(announce)
-			componentSay("Current Selection : [signals[current_index]]")
+			src.say("Current Selection : [signals[current_index]]")
 		return 1
 
 	proc/previousplus(var/datum/mechanicsMessage/input)
@@ -2654,7 +2671,7 @@
 			LIGHT_UP_HOUSING
 			teleID = input.signal
 			tooltip_rebuild = 1
-			componentSay("ID Changed to : [input.signal]")
+			src.say("ID Changed to : [input.signal]")
 		return
 
 	proc/activateDirect(var/datum/mechanicsMessage/input)
@@ -2814,11 +2831,16 @@
 		icon_state = "[under_floor ? "u":""]comp_led"
 		return
 
+TYPEINFO(/obj/item/mechanics/miccomp)
+	start_listen_effects = list(LISTEN_EFFECT_MICROPHONE_COMPONENT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /obj/item/mechanics/miccomp
 	name = "Microphone Component"
 	desc = ""
 	icon_state = "comp_mic"
-	var/add_sender = 0
+	var/add_sender = FALSE
 
 	New()
 		..()
@@ -2828,25 +2850,6 @@
 		add_sender = !add_sender
 		boutput(user, "Show-Source now [add_sender ? "on":"off"]")
 		return 1
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		if(level == OVERFLOOR) return
-		LIGHT_UP_HOUSING
-		var/message = msg[2]
-		if(lang_id in list("english", ""))
-			message = msg[1]
-		// previously used "no_fucking_autoparse = TRUE", but not sure why
-		// this ended up stripping even "normal" characters like comma, quotes
-		// and other stuff said in common messages; the radio scanner component
-		// doesn't do it either, so .. ????
-		message = strip_html(html_decode(message))
-		var/heardname = M.name
-		if(real_name)
-			heardname = real_name
-		// changed to be in typical signal format to match the radio one
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,add_sender ? "name=[heardname]&message=[message]":"[message]")
-		animate_flash_color_fill(src,"#00FF00",2, 2)
-		return
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_mic"
@@ -2868,6 +2871,13 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqMan))
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "main", frequency)
 
+	receive_signal(datum/signal/signal)
+		if (!signal.data || !istype(signal.data["message"], /datum/say_message))
+			return TRUE
+
+		var/datum/say_message/message = signal.data["message"]
+		src.hear_radio(message)
+
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
 		if(!in_interact_range(src, user) || user.stat)
@@ -2888,36 +2898,18 @@
 	proc/set_frequency(new_frequency)
 		if (!radio_controller) return
 		new_frequency = sanitize_frequency(new_frequency)
-		componentSay("New frequency: [new_frequency]")
+		src.say("New frequency: [new_frequency]")
 		frequency = new_frequency
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 		tooltip_rebuild = 1
-	proc/hear_radio(atom/movable/AM, msg, lang_id)
-		if (level == OVERFLOOR) return
-		LIGHT_UP_HOUSING
-		var/message = msg[2]
-		if (lang_id in list("english", ""))
-			message = msg[1]
-		message = strip_html_tags(html_decode(message))
-		var/heardname = null
-		if (isobj(AM))
-			heardname = AM.name
-		else if (ismob(AM))
-			heardname = AM:real_name
-			if (ishuman(AM))
-				var/mob/living/carbon/human/H = AM
-				if (H.wear_mask && H.wear_mask.vchange)
-					if (istype(H.wear_id, /obj/item/card/id))
-						var/obj/item/card/id/ID = H.wear_id
-						heardname = ID.registered || "Unknown"
-					else
-						heardname = "Unknown"
-				else if (H.vdisfigured)
-					heardname = "Unknown"
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
-		animate_flash_color_fill(src,"#00FF00",2, 2)
-		return
+	proc/hear_radio(datum/say_message/message)
+		if (src.level == OVERFLOOR)
+			return
+
+		LIGHT_UP_HOUSING
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "name=[message.speaker_to_display]&message=[message.content]")
+		animate_flash_color_fill(src, "#00FF00", 2, 2)
 
 	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
@@ -2937,7 +2929,8 @@
 		if(level == OVERFLOOR || !input) return
 		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
-		componentSay("[input.signal]")
+		// To prevent feedback loops, messages spoken by sound synthesisers are forbidden from being relayed.
+		src.say("[input.signal]", flags = 0, message_params = list("can_relay" = FALSE))
 		return
 
 	update_icon()
@@ -3286,10 +3279,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				if(target)
 					Gun.Shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
-				src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\""))
+				src.say("The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No gun installed.\""))
+			src.say("No gun installed.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
@@ -3334,7 +3327,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"This gun cannot be recharged manually.\""))
+			src.say("This gun cannot be recharged manually.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
@@ -3559,7 +3552,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A - B
 			if("div")
 				if (B == 0)
-					src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Attempted division by zero!\""))
+					src.say("Attempted division by zero!")
 					return
 				. = A / B
 			if("mul")
@@ -4801,7 +4794,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			src.letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",\
 			                   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 			var/output_puzzle_text = src.filter_puzzle(input)
-			// src.obj_speak("new puzzle set: [src.puzzle] -- filtered: [src.puzzle_filtered] -- current: [src.puzzle_current]")
 			SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "solved=[src.solved]&guesses=[src.guesses]&bad_guesses=[src.bad_guesses]&puzzle=[output_puzzle_text]")
 
 
@@ -4855,7 +4847,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			var/tmp_puz = replacetext(src.puzzle_current, filter_letter, "")
 			var/letter_count = length(tmp_puz)
 
-			// src.obj_speak("guess: [letter] - output: [output_puzzle_text] - state: [src.puzzle_current]")
 			if (src.solved)
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 				SPAWN(0.5 SECONDS)
@@ -4881,8 +4872,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				src.letters = list()
 				var/output_puzzle_text = src.update_puzzle()
 				playsound(src.loc, 'sound/voice/yayyy.ogg', 50, 0)
-
-				// src.obj_speak("solved!")
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "solved=[src.solved]&guesses=[src.guesses]&bad_guesses=[src.bad_guesses]&puzzle=[output_puzzle_text]")
 
 		return
@@ -4893,7 +4882,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// but that just means it won't match, so it's fine.
 		var/regex/non_alpha = new(@"[^a-z]", "ig")
 		possible_solution = lowertext(replacetext(possible_solution, non_alpha, ""))
-		// src.obj_speak("puzzle: [src.puzzle_filtered] - possible solution: [possible_solution]")
 		if (possible_solution == src.puzzle_filtered)
 			return TRUE
 		return FALSE

@@ -52,8 +52,10 @@
 
 TYPEINFO(/obj/machinery/vending)
 	mats = 20
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_VENDING_MACHINE)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
-ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command_speak)
+ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -64,6 +66,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	speech_verb_say = "beeps"
+
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -76,7 +80,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	//Keep track of lists
 	var/list/slogan_list = list()//new() //List of strings
 	var/list/product_list = new() //List of datum/data/vending_product
-	var/glitchy_slogans = 0 // do they come out aLL FunKY lIKe THIs?
 	/// For player vending machines
 	var/player_list
 	//Replies when buying
@@ -161,8 +164,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		light.set_color(light_r, light_g, light_b)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 	var/lastvend = 0
 
 	disposing()
@@ -350,6 +351,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		user.show_text("You repair the product lock on [src].")
 	src.emagged = 0
 	return 1
+
+/obj/machinery/vending/overload_act()
+	return !src.set_broken()
 
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
@@ -823,7 +827,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 			if (((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 				SPAWN(0)
-					src.speak(src.vend_reply)
+					src.say(src.vend_reply)
 					src.last_reply = world.time
 
 			use_power(10)
@@ -940,50 +944,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	if (src.seconds_electrified > 0)
 		src.seconds_electrified--
 
+#ifndef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 	//Pitch to the people!  Really sell it!
 	if (prob(src.slogan_chance) && ((src.last_slogan + src.slogan_delay) <= world.time) && (length(src.slogan_list) > 0))
 		var/slogan = pick(src.slogan_list)
-		src.speak(slogan)
+		src.say(slogan)
 		src.last_slogan = world.time
+#endif
 
 	if ((prob(shoot_inventory_chance)) && (src.shoot_inventory))
 		src.throw_item()
-
-	return
-
-/obj/machinery/vending/proc/admin_command_speak()
-		set name = "Speak"
-		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
-
-/obj/machinery/vending/proc/speak(var/message)
-	if (status & NOPOWER)
-		return
-
-	if (!message)
-		return
-
-	var/image/chat_maptext/slogan_text
-	var/text_out
-
-	if (istype(src.loc, /turf))
-		if (src.glitchy_slogans)
-			text_out = voidSpeak(message)
-		else
-			text_out = message
-		slogan_text = make_chat_maptext(src, text_out, "color: [src.slogan_text_color];", alpha = src.slogan_text_alpha)
-		if (slogan_text && src.chat_text && length(src.chat_text.lines))
-			slogan_text.measure(src)
-			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != slogan_text)
-					I.bump_up(slogan_text.measured_height)
-
-	if (!text_out)
-		return
-
-	if (src.glitchy_slogans)
-		src.audible_message("[SPAN_SAY("[SPAN_NAME("[src]")] beeps,")] \"[text_out]\"", assoc_maptext = slogan_text)
-	else
-		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[text_out]\"")), assoc_maptext = slogan_text)
 
 	return
 
@@ -1027,6 +997,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
 	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
+	if(!req_access) // so it's not a valid strategy for getting things with access locks to vend free shit i guess
+		src.throw_item()
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
 		src.visible_message("<b>[SPAN_ALERT("[src.name] tips over onto [victim]!")]</b>")
@@ -1500,11 +1472,11 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 2, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 2, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=PAY_TRADESMAN/5)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 2, cost=PAY_TRADESMAN/4)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/bandage, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 5, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 5, cost=PAY_TRADESMAN/10)
-		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(0, 2), hidden=1, cost=PAY_TRADESMAN/4)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, rand(1, 3), hidden=1, cost=PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/synthflesh, rand(0, 5), hidden=1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vape/medical, 1, hidden=1, cost=PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/bath_bomb, rand(2, 5), hidden=1, cost=PAY_TRADESMAN)
@@ -1700,6 +1672,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/mechanicbook, 30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/text_to_music_com, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
@@ -1738,6 +1711,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/textmanip, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/text_to_music, 5)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)
@@ -2785,7 +2759,8 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/thermal/fortune, 25, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/zolscroll, 100, cost=PAY_UNTRAINED, hidden=1) //weird burrito
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fortune_cookie, 10, cost=PAY_UNTRAINED/5, hidden=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/ghostboard, 2, cost=PAY_UNTRAINED*2, hidden=TRUE)
 
 	prevend_effect()
 		if(src.seconds_electrified || src.extended_inventory)
@@ -2795,7 +2770,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			playsound(src.loc, sound_greeting_broken, 65, 1)
 			if (src.icon_vend)
 				FLICK(src.icon_vend,src)
-			speak("F*!@$*(9HZZZZ9**###!")
+			src.say("F*!@$*(9HZZZZ9**###!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] spasms violently!"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
@@ -2808,7 +2783,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh_broken, 65, 1)
-			speak("AHHH#######!")
+			src.say("AHHH#######!")
 
 		else
 			src.visible_message(SPAN_NOTICE("[src] wakes up!"))
@@ -2817,7 +2792,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			playsound(src.loc, sound_greeting, 65, 1)
 			if (src.icon_vend)
 				FLICK(src.icon_vend,src)
-			speak("The great wizard Zoldorf is here!")
+			src.say("The great wizard Zoldorf is here!")
 			sleep(2.5 SECONDS)
 			src.visible_message(SPAN_NOTICE("[src] rocks back and forth!"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
@@ -2830,7 +2805,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 				FLICK(src.icon_vend,src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, sound_laugh, 65, 1)
-			speak("Ha ha ha ha ha!")
+			src.say("Ha ha ha ha ha!")
 
 		return
 
@@ -2840,7 +2815,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 	fall(mob/living/carbon/victim)
 		playsound(src.loc, sound_laugh, 65, 1)
-		speak("Ha ha ha ha ha!")
+		src.say("Ha ha ha ha ha!")
 		..()
 		return
 
@@ -2854,36 +2829,8 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		..()
 		if(!ON_COOLDOWN(src, "zoldorf_laugh", 5 SECONDS))
 			playsound(src.loc, sound_laugh, 65, 1)
-			speak("Ha ha ha ha ha!")
+			src.say("Ha ha ha ha ha!")
 		return
-
-	attackby(obj/item/weapon, mob/user) //pretty much just player zoldorf stuffs :)
-		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
-			var/obj/item/zolscroll/scroll = weapon
-			var/mob/living/carbon/human/h = user
-			if(h.unkillable)
-				boutput(user,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
-				return
-			if(scroll.icon_state != "signed")
-				boutput(h, SPAN_ALERT("It doesn't seem to be signed yet."))
-				return
-			if(scroll.signer == h.real_name)
-				var/obj/machinery/playerzoldorf/pz = new /obj/machinery/playerzoldorf
-				pz.credits = src.credit
-				if(the_zoldorf.len)
-					if(the_zoldorf[1].homebooth)
-						//var/obj/booth = the_zoldorf[1].homebooth
-						boutput(h, SPAN_ALERT("<b>There can only be one!</b>")) // Maybe add a way to point where the booth is if people are being jerks
-					else
-						pz.booth(h,src.loc,scroll)
-						qdel(src)
-				else
-					pz.booth(h,src.loc,scroll)
-					qdel(src)
-			else
-				user.visible_message(SPAN_ALERT("<b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b>"),SPAN_ALERT("<b>You can only sell your own soul!</b>"))
-		else
-			..()
 
 /obj/machinery/vending/fortune/necromancer
 	name = "Necromancer Zoldorf"
@@ -2937,6 +2884,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 TYPEINFO(/obj/machinery/vending/chem)
 	mats = null
+	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 
 /obj/machinery/vending/chem
 	name = "ChemDepot"
@@ -2947,7 +2895,6 @@ TYPEINFO(/obj/machinery/vending/chem)
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
 	icon_fallen_broken =  "standard-fallen-broken"
-	glitchy_slogans = 1
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Hello!",
@@ -3373,7 +3320,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		src.UpdateIcon()
 		src.linked.static_data_invalid = TRUE
 		if (!ON_COOLDOWN(src, "announce", 2 SECONDS))
-			src.speak(pick("New product received: [target.name]!",
+			src.say(pick("New product received: [target.name]!",
 				"Supplies received: [target.name]!",
 				"Now available for pickup: [target.name]!")
 			)

@@ -68,7 +68,7 @@
 		. = "<br>Configuration Switches:<br><table border='1' style='background-color:#7A7A7A'><tr>"
 		for (var/i = 8, i >= 1, i >>= 1)
 			var/styleColor = (net_number & i) ? "#60B54A" : "#CD1818"
-			. += "<td style='background-color:[styleColor]'><a href='?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
+			. += "<td style='background-color:[styleColor]'><a href='byond://?src=\ref[src];dipsw=[i]' style='color:[styleColor]'>##</a></td>"
 
 		. += "</tr></table>"
 
@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		var/dat = "<html><head><title>Databank - \[[bank_id]]</title></head><body>"
 
-		dat += "<b>[capitalize(src.setup_tape_tag)]:</b> <a href='?src=\ref[src];tape=1'>[src.tape ? "Eject" : "--------"]</a><hr>"
+		dat += "<b>[capitalize(src.setup_tape_tag)]:</b> <a href='byond://?src=\ref[src];tape=1'>[src.tape ? "Eject" : "--------"]</a><hr>"
 
 		if (status & NOPOWER)
 			user.Browse(dat,"window=databank;size=245x302")
@@ -255,13 +255,13 @@ TYPEINFO(/obj/machinery/networked/storage)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		dat += "<br>Read Only: "
 		if(!src.read_only)
-			dat += "<a href='?src=\ref[src];read=1'>YES</a> <b>NO</b><br>"
+			dat += "<a href='byond://?src=\ref[src];read=1'>YES</a> <b>NO</b><br>"
 		else
-			dat += "<b>YES</b> <a href='?src=\ref[src];read=1'>NO</a><br>"
+			dat += "<b>YES</b> <a href='byond://?src=\ref[src];read=1'>NO</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1084,7 +1084,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1445,7 +1445,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 		dat += "<hr>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -1816,7 +1816,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "<hr><tt>[temp_msg]</tt><hr>"
 
 		if(jam)
-			dat += "<b>Printing:</b> <a href='?src=\ref[src];unjam=1'>JAMMED</a><br>"
+			dat += "<b>Printing:</b> <a href='byond://?src=\ref[src];unjam=1'>JAMMED</a><br>"
 		else
 			dat += "<b>Printing:</b> [printing ? "YES" : "NO"]<br>"
 
@@ -1832,7 +1832,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -2212,7 +2212,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		var/dat = "<html><head><title>Scanner - \[[copytext(bank_id,4)]]</title></head><body>"
 
-		dat += "<b>Document:</b> <a href='?src=\ref[src];document=1'>[src.scanned_thing ? src.scanned_thing.name : "-----"]</a><br>"
+		dat += "<b>Document:</b> <a href='byond://?src=\ref[src];document=1'>[src.scanned_thing ? src.scanned_thing.name : "-----"]</a><br>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -2226,7 +2226,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -2524,7 +2524,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "<br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -2984,9 +2984,9 @@ TYPEINFO(/obj/machinery/networked/printer)
 					dat += "<td style='background-color:#33FF00'><font color=white>+++++</font></td>"
 			else
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a></font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white><a href='byond://?src=\ref[src];insert=[i]'>-----</a></font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white><a href='byond://?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -3000,7 +3000,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		dat += "</tr></table></center><hr><br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()
@@ -3316,7 +3316,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		dat += "<br>Host Connection: "
 		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
 
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+		dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 		if (src.panel_open)
 			dat += net_switch_html()

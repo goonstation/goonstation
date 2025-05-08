@@ -1168,6 +1168,14 @@ TYPEINFO(/obj/machinery/door/airlock)
 	. = ..()
 	src.deconstruct_flags &= ~DECON_NO_ACCESS //well, ya got it fixed, somehow
 
+/obj/machinery/door/airlock/overload_act(mob/user)
+	if (src.hardened)
+		return FALSE
+	if (src.secondsMainPowerLost > 0)
+		return FALSE
+	src.loseMainPower()
+	return TRUE
+
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()
 

@@ -76,6 +76,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"turn yourself",
 			"murder",
 			"sus",
+			"woody",
 			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
