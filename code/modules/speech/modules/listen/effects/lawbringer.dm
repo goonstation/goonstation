@@ -11,6 +11,7 @@
 		"sleepshot" = TRUE,
 		"hotshot" = TRUE,
 		"incendiary" = TRUE,
+		"fired" = TRUE,
 		"assault" = TRUE,
 		"highpower" = TRUE,
 		"bigshot" = TRUE,
