@@ -809,7 +809,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				R.traitorradio = src
 				if (src.lock_code_autogenerate == 1)
 					R.traitor_frequency = src.generate_code()
-				R.protected_radio = 1
+				R.protected_radio = TRUE
 				src.name = R.name
 				src.icon = R.icon
 				src.icon_state = R.icon_state
@@ -1612,7 +1612,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/empower
 	name = "Empower"
 	eqtype = "Utility"
-	desc = "This spell causes you to turn into a hulk, and gain passive wrestling powers for a short while."
+	desc = "This spell removes stuns on use, causes you to turn into a hulk, and gain passive wrestling powers for a short while."
 	assoc_spell = /datum/targetable/spell/mutate
 
 /datum/SWFuplinkspell/summongolem

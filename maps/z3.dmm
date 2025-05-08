@@ -362,14 +362,6 @@
 	},
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
-"abr" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/radiostation/bridge)
 "abs" = (
 /obj/structure/girder,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -5805,11 +5797,6 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aGu" = (
-/turf/simulated/floor/carpet{
-	icon_state = "carpetNE"
-	},
-/area/radiostation/bedroom)
 "aGv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -14199,13 +14186,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
-"biZ" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetSE"
-	},
-/area/radiostation/bedroom)
 "bja" = (
 /obj/item/storage/toilet{
 	dir = 8
@@ -15783,6 +15763,10 @@
 "ctc" = (
 /turf/unsimulated/floor/black,
 /area/space_hive)
+"cto" = (
+/obj/machinery/computer/television/small,
+/turf/simulated/floor/carpet/grime,
+/area/abandonedship)
 "cty" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -16456,10 +16440,6 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
-"dZQ" = (
-/obj/machinery/computer/security/wooden_tv/small,
-/turf/simulated/floor/carpet/grime,
-/area/abandonedship)
 "dZX" = (
 /obj/decal/cleanable/oil,
 /obj/machinery/light/small,
@@ -17798,14 +17778,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"hwS" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/diner/dining)
 "hzu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18834,14 +18806,6 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/radiostation/tv_set)
-"jWl" = (
-/obj/storage/secure/closet/personal,
-/obj/item/device/microphone,
-/obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetNW"
-	},
-/area/radiostation/bedroom)
 "jYd" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/diner/hallway)
@@ -19022,6 +18986,12 @@
 	name = "broken door"
 	},
 /area/space_hive)
+"kqW" = (
+/obj/machinery/computer/television{
+	camera_networks = list("Pathopost")
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "kse" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
@@ -19084,6 +19054,14 @@
 "kyb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/jucer_trader)
+"kyc" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/radiostation/bridge)
 "kAu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19268,6 +19246,11 @@
 "lab" = (
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"lae" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNE"
+	},
+/area/radiostation/bedroom)
 "laI" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -20385,6 +20368,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"nxy" = (
+/obj/machinery/computer/television/public,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "nxO" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20728,6 +20715,14 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"ouf" = (
+/obj/storage/secure/closet/personal,
+/obj/item/device/microphone,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNW"
+	},
+/area/radiostation/bedroom)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -20889,10 +20884,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
-"oUf" = (
-/obj/machinery/computer/security/wooden_tv/public,
-/turf/unsimulated/floor/honeyblocks,
-/area/space_hive)
 "oVD" = (
 /obj/machinery/light{
 	dir = 4;
@@ -20937,6 +20928,13 @@
 	icon_state = "red4"
 	},
 /area/diner/dining)
+"oXL" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/television/public,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "oXO" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -21624,6 +21622,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/salvage_trader)
+"qvF" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSW"
+	},
+/area/radiostation/bedroom)
 "qyc" = (
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -22722,6 +22726,14 @@
 /mob/living/critter/zombie/security,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
+"tdV" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "teK" = (
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
@@ -24523,12 +24535,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"xzt" = (
-/obj/table/wood/auto/desk,
-/turf/simulated/floor/carpet{
-	icon_state = "carpetSW"
-	},
-/area/radiostation/bedroom)
 "xCP" = (
 /obj/warp_beacon/diner,
 /obj/lattice,
@@ -24642,6 +24648,13 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/hallway)
+"xTQ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSE"
+	},
+/area/radiostation/bedroom)
 "xVr" = (
 /mob/living/critter/zombie/scientist,
 /obj/machinery/telejam/active,
@@ -24746,13 +24759,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor,
 /area/radiostation/press)
-"yfP" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv/public,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/bee_trader)
 "ygK" = (
 /turf/space,
 /area/diner/tug)
@@ -24782,12 +24788,6 @@
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"ylC" = (
-/obj/machinery/computer/security{
-	camera_networks = list("Pathopost")
-	},
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 
 (1,1,1) = {"
 aaa
@@ -38590,7 +38590,7 @@ aaa
 aaa
 axl
 iYn
-dZQ
+cto
 aQE
 aRm
 iYn
@@ -44147,7 +44147,7 @@ aaq
 gaf
 aaY
 hFn
-oUf
+nxy
 aaf
 aaf
 acd
@@ -73180,7 +73180,7 @@ iDu
 vpl
 azq
 asW
-hwS
+tdV
 iZr
 wli
 tkr
@@ -73468,7 +73468,7 @@ aaa
 aaa
 wvT
 alp
-yfP
+oXL
 sFI
 hGO
 dYj
@@ -106729,7 +106729,7 @@ aac
 aab
 aab
 aDy
-ylC
+kqW
 aFy
 aFg
 aGc
@@ -107863,7 +107863,7 @@ aaa
 aaa
 uiy
 aaD
-abr
+kyc
 abU
 acm
 ptd
@@ -109399,9 +109399,9 @@ adg
 adg
 agJ
 fzx
-jWl
+ouf
 foM
-xzt
+qvF
 hKk
 boO
 bjC
@@ -109701,9 +109701,9 @@ wbC
 uqk
 agU
 dzN
-aGu
+lae
 aIR
-biZ
+xTQ
 agJ
 bjl
 bjB

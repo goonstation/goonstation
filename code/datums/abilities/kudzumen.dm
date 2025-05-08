@@ -336,17 +336,17 @@
 	interrupt_action_bars = 0
 	lock_holder = FALSE
 	can_cast_anytime = 1
+
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
+		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
 		if (!message)
 			return
-		logTheThing(LOG_SAY, holder.owner, "[message]")
-		.= holder.owner.say_kudzu(message, holder)
 
-		return 0
+		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_KUDZU))
+		return FALSE
 
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"

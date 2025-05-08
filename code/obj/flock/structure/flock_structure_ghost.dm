@@ -32,7 +32,7 @@
 		src.bound_x = initial(b.bound_x)
 		src.bound_y = initial(b.bound_y)
 	else
-		flock_speak(null, "ERROR: No Structure Tealprint Assigned, Deleting", flock)
+		src.flock.system_say_source.say("ERROR: No Structure Tealprint Assigned, Deleting")
 		qdel(src)
 		return
 
@@ -44,8 +44,8 @@
 			T.AddComponent(/datum/component/flock_ping/obstruction)
 
 	if(blocked)
+		src.flock.system_say_source.say("ERROR: Build area is blocked by an obstruction.")
 		qdel(src)
-		flock_speak(null, "ERROR: Build area is blocked by an obstruction.", flock)
 
 	if (src.flock)
 		if(building == /obj/flock_structure/relay)
@@ -84,7 +84,7 @@
 
 	if(currentmats > goal)
 		var/obj/item/flockcache/c = new(get_turf(src))
-		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
+		src.say("ALERT: Material excess detected, ejecting excess.")
 		c.resources = (currentmats - goal)
 		src.completebuild()
 		return
@@ -110,6 +110,6 @@
 	if (currentmats > 0)
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
-	flock_speak(src, "Tealprint derealizing", flock)
+	src.say("Tealprint derealizing")
 	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, TRUE, extrarange = -10)
 	qdel(src)

@@ -1399,6 +1399,11 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	mats = list("metal" = 15,
 				"conductive_high" = 5,
 				"energy_high" = 5)
+	start_listen_effects = list(LISTEN_EFFECT_LAWBRINGER)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	item_state = "lawg-detain"
@@ -1471,52 +1476,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
-	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, real_name, lang_id)
-
-	//can only handle one name at a time, if it's more it doesn't do anything
-	talk_into(mob/M as mob, msg, real_name, lang_id)
-		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
-		if (!islist(msg))
-			return
-		if (lang_id != "english")
-			return
-		//only work if the voice is the same as the voice of your owner fingerprints.
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (owner_prints && (H.bioHolder.Uid != owner_prints))
-				are_you_the_law(M, msg[1])
-				return
-		else
-			are_you_the_law(M, msg[1])
-			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
-
-		if(!src.projectiles && !length(src.projectiles) > 1)
-			boutput(M, SPAN_NOTICE("Gun broke. Call 1-800-CODER."))
-			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-			item_state = "lawg-detain"
-			M.update_inhands()
-			UpdateIcon()
-
-		var/text = msg[1]
-		text = sanitize_talk(text)
-		if (fingerprints_can_shoot(M))
-			src.change_mode(M, text)
-		else		//if you're not the owner and try to change it, then fuck you
-			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","bigshot","assault","highpower","clownshot","clown", "pulse", "punch")
-					random_burn_damage(M, 50)
-					M.changeStatus("knockdown", 4 SECONDS)
-					elecflash(src,power=2)
-					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
-					return
-
-		M.update_inhands()
-		UpdateIcon()
-
 	proc/change_mode(var/mob/M, var/text, var/sound = TRUE)
 		switch(text)
 			if ("detain")
@@ -1546,7 +1505,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/sleep.ogg', 50)
 				src.toggle_recoil(FALSE)
-			if ("hotshot","incendiary")
+			if ("hotshot","incendiary","fired")
 				set_current_projectile(projectiles["hotshot"])
 				current_projectile.cost = 60
 				item_state = "lawg-hotshot"
@@ -1578,7 +1537,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	//Are you really the law? takes the mob as speaker, and the text spoken, sanitizes it. If you say "i am the law" and you in fact are NOT the law, it's gonna blow. Moved out of the switch statement because it that switch is only gonna run if the owner speaks
 	proc/are_you_the_law(mob/M as mob, text)
 		text = sanitize_talk(text)
-		if (findtext(text, "iamthelaw"))
+		if (findtext(text, "i am the law"))
 			//you must be holding/wearing the weapon
 			//this check makes it so that someone can't stun you, stand on top of you and say "I am the law" to kill you
 			if (src in M.contents)
@@ -1650,10 +1609,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				indicator_display.color = "#000000"				//default, should never reach. make it black
 			src.overlays += indicator_display
 
-	//just remove all capitalization and non-letter characters
+	//just remove all capitalization and non-letter, non-space characters
 	proc/sanitize_talk(var/msg)
-		//find all characters that are not letters and remove em
-		var/regex/r = regex("\[^a-z\]+", "g")
+		//find all characters that are not letters or whitespace and remove em
+		var/regex/r = regex("\[^a-z\\s\]+", "g")
 		msg = lowertext(msg)
 		msg = r.Replace(msg, "")
 		return msg
