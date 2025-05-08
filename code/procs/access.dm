@@ -69,7 +69,7 @@
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
 	// easy out for if no access is required
-	if (src.has_access_requirements())
+	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
 		// check for admin access override
