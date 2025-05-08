@@ -630,9 +630,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)
-			if (src.overlay_images)
-				for (var/img_key in src.overlay_images)
-					src.ClearSpecificOverlays(img_key)
+			src.ClearAllOverlays()
 		else if(key && src.overlay_images && src.overlay_images[key])
 			src.ClearSpecificOverlays(key)
 
