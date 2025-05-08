@@ -462,7 +462,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
 					if (prob(25))
 						var/obj/utility = pick(utility_supplies)
-						new utility
+						new utility(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
