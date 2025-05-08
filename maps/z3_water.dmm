@@ -37,6 +37,10 @@
 /obj/kitchenspike,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/initate)
+"aF" = (
+/obj/item/device/key/skull,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "aG" = (
 /obj/cable/green{
 	icon_state = "4-8"
@@ -3025,6 +3029,12 @@
 "iR" = (
 /obj/potted_plant/potted_plant5,
 /obj/table/wood/auto,
+/obj/machinery/light/small/floor/greenish,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
+"iV" = (
+/obj/table/wood/auto,
+/obj/item/paper/cultbase_boardroom,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "iY" = (
@@ -3051,11 +3061,11 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "ju" = (
-/obj/table,
 /obj/machinery/recharger,
 /obj/machinery/light/small/sticky/greenish{
 	dir = 8
 	},
+/obj/table/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "jF" = (
@@ -3074,6 +3084,16 @@
 	},
 /turf/unsimulated/floor,
 /area/cult_base/leader)
+"kc" = (
+/mob/living/critter/human/cultist/acolyte,
+/turf/unsimulated/floor,
+/area/cult_base/acolyte)
+"kd" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/mob/living/critter/human/cultist/acolyte/knife,
+/turf/unsimulated/floor,
+/area/cult_base/acolyte/bedrooms)
 "kw" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib1"
@@ -3105,11 +3125,11 @@
 /area/cult_base/leader)
 "li" = (
 /obj/machinery/light/small/floor/greenish,
-/obj/storage/closet/dresser,
-/obj/item/clothing/suit/green_robes,
-/obj/item/clothing/mask/greencultmask,
 /obj/cable/green{
 	icon_state = "4-8"
+	},
+/obj/machinery/light/small/sticky/greenish{
+	dir = 1
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
@@ -3165,6 +3185,13 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"mj" = (
+/obj/table/wood/auto,
+/obj/item/gun/kinetic/silenced_22,
+/obj/item/ammo/bullets/bullet_22,
+/obj/machinery/light/small/floor/greenish,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "mk" = (
 /obj/storage/secure/closet/fridge,
 /obj/loot_spawner/random/short/whiteweed,
@@ -3209,8 +3236,8 @@
 /obj/machinery/light/small/sticky/greenish{
 	dir = 4
 	},
-/obj/table,
 /obj/machinery/coffeemaker,
+/obj/table/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "mH" = (
@@ -3247,6 +3274,7 @@
 /obj/item/clothing/head/emerg,
 /obj/item/emergencysuitfolded,
 /obj/machinery/light/small/sticky/greenish,
+/obj/machinery/light/small/floor/greenish,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "nm" = (
@@ -3265,6 +3293,10 @@
 /obj/creepy_sound_trigger,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
+"nv" = (
+/mob/living/critter/human/cultist/leader,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "nE" = (
 /obj/storage/crate,
 /obj/item/clothing/head/genki,
@@ -3326,6 +3358,11 @@
 /obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte,
 /turf/space/fluid/noexplosion,
 /area/cult_base/acolyte/outdoors)
+"ox" = (
+/obj/item/ammo/bullets/g11/void,
+/obj/item/ammo/bullets/g11/void,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
 "oF" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable/green{
@@ -3342,10 +3379,13 @@
 /obj/cable/green{
 	icon_state = "4-8"
 	},
+/obj/machinery/printing_press,
+/obj/item/scripture/greenhb,
+/obj/item/scripture/greenhb,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "oU" = (
-/obj/machinery/light/incandescent/greenish{
+/obj/machinery/light/small/sticky/greenish{
 	dir = 1
 	},
 /turf/unsimulated/floor/grime,
@@ -3363,6 +3403,7 @@
 	pixel_y = 11
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal,
+/obj/machinery/light/small/floor/greenish,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "pk" = (
@@ -3372,17 +3413,10 @@
 /obj/machinery/light/small/sticky/greenish{
 	dir = 8
 	},
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
 	},
 /area/cult_base/leader)
-"pu" = (
-/obj/decal/cleanable/ritualSigil{
-	icon_state = "hominem";
-	color = "#880808"
-	},
-/turf/space/fluid/noexplosion,
-/area/cult_base/acolyte/outdoors)
 "pv" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
@@ -3414,9 +3448,9 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "qc" = (
-/obj/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
+/obj/table/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "qd" = (
@@ -3439,7 +3473,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "qk" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
 	},
 /area/cult_base/leader)
@@ -3463,6 +3497,10 @@
 /obj/table/wood/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
+"rb" = (
+/obj/map/light/void,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "rd" = (
 /obj/decoration/bookcase{
 	pixel_y = 28
@@ -3490,7 +3528,7 @@
 /area/cult_base)
 "rE" = (
 /obj/map/light/void,
-/turf/unsimulated/floor/auto/void,
+/turf/unsimulated/floor/void,
 /area/cult_base/initate)
 "rL" = (
 /obj/decal/cleanable/potatosplat,
@@ -3515,7 +3553,7 @@
 /area/evilreaver/security)
 "sa" = (
 /obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte,
-/turf/simulated/floor/airless/carpet/darkcarpet/border,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
 /area/cult_base/leader)
 "sJ" = (
 /obj/machinery/door/unpowered/wood{
@@ -3531,6 +3569,7 @@
 /area/cult_base/initate)
 "sK" = (
 /obj/decal/cleanable/blood/splatter,
+/mob/living/critter/human/cultist/initiate,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "sM" = (
@@ -3553,6 +3592,10 @@
 /obj/storage/crate/furnacefuel,
 /turf/unsimulated/floor/plating,
 /area/cult_base/acolyte)
+"tw" = (
+/obj/machinery/light/small/sticky/greenish,
+/turf/space/fluid/noexplosion,
+/area/cult_base)
 "ty" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -3560,6 +3603,11 @@
 	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
+"tB" = (
+/obj/decal/cleanable/dirt/jen,
+/mob/living/critter/human/cultist/initiate,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "tD" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/mapping_helper/algae,
@@ -3585,7 +3633,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "tR" = (
-/obj/mapping_helper/mob_spawn/corpse/human/cultist/leader,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/leader/key3,
 /turf/space/fluid/noexplosion,
 /area/cult_base/acolyte/outdoors)
 "ui" = (
@@ -3596,6 +3644,10 @@
 /obj/machinery/light/small/sticky/greenish,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"ul" = (
+/mob/living/critter/human/cultist/leader/pistol,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "uq" = (
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed,
@@ -3605,7 +3657,7 @@
 /turf/unsimulated/wall/trench,
 /area/cult_base/acolyte/outdoors)
 "uu" = (
-/turf/simulated/floor/airless/carpet/darkcarpet,
+/turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "uz" = (
 /obj/machinery/light_switch/auto{
@@ -3694,6 +3746,15 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"wP" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 1;
+	name = "Echocontainment Emitter";
+	desc = "Powerful speakers utilising powerful sonar technology and eldritch sigils to contain anomalous creatures in a semicorporal state."
+	},
+/obj/map/light/void,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "xd" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -3710,7 +3771,7 @@
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "xx" = (
-/obj/table,
+/obj/table/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "xz" = (
@@ -3756,6 +3817,12 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"yg" = (
+/mob/living/critter/human/cultist/leader/knife,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/cult_base/leader)
 "yp" = (
 /obj/machinery/light/small/sticky/greenish{
 	dir = 4
@@ -3771,7 +3838,7 @@
 /area/cult_base/acolyte/bedrooms)
 "yB" = (
 /obj/decoration/bustedmantapc/bustedmantapc2,
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
 	},
 /area/cult_base/leader)
@@ -3819,16 +3886,13 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "zm" = (
-/obj/table,
 /obj/item/kitchen/utensil/spoon,
+/obj/table/auto,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
-"zp" = (
-/obj/item/device/key/skull,
-/turf/space/fluid/noexplosion,
-/area/cult_base/acolyte/outdoors)
 "zv" = (
 /obj/table/auto,
+/obj/item/paper/cultbase_backscratcher,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/leader)
 "zB" = (
@@ -3853,6 +3917,13 @@
 "Aa" = (
 /obj/stool/chair/dining/wood,
 /turf/unsimulated/floor,
+/area/cult_base/acolyte)
+"Av" = (
+/obj/storage/crate/furnacefuel,
+/obj/machinery/light/small/sticky/greenish{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
 /area/cult_base/acolyte)
 "Ax" = (
 /obj/machinery/drainage,
@@ -3888,7 +3959,13 @@
 /obj/cable/green{
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/false_wall,
+/obj/storage/closet/dresser{
+	pixel_y = 21;
+	anchored = 1
+	},
+/obj/item/clothing/mask/greencultmask,
+/obj/item/clothing/suit/green_robes,
+/turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "AP" = (
 /obj/machinery/drainage,
@@ -3906,6 +3983,14 @@
 /obj/vaultdoor,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
+"AW" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 1;
+	name = "Echocontainment Emitter"
+	},
+/obj/map/light/void,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "Bg" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/mantavault)
@@ -3914,7 +3999,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Bu" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
 /area/cult_base/leader)
 "Bv" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -3945,6 +4030,10 @@
 /obj/machinery/drainage/big,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
+"Cl" = (
+/mob/living/critter/human/cultist/initiate,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
@@ -3955,6 +4044,10 @@
 /obj/machinery/light/small/floor/greenish,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"Cr" = (
+/obj/map/light/purple,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "Cz" = (
 /mob/living/critter/martian/mutant,
 /turf/unsimulated/floor/martian,
@@ -3997,6 +4090,12 @@
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"DO" = (
+/obj/table/wood/auto,
+/obj/decal/cleanable/blood/drip,
+/obj/candle_light,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "DQ" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -4037,9 +4136,6 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Er" = (
-/obj/decal/cleanable/ritualSigil{
-	color = "#880808"
-	},
 /obj/item/clothing/mask/greencultmask{
 	pixel_y = 13
 	},
@@ -4101,6 +4197,7 @@
 	color = "#880808"
 	},
 /obj/item/reagent_containers/food/snacks/goldfish_cracker,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/initiate,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "FT" = (
@@ -4120,6 +4217,7 @@
 /area/cult_base/initate)
 "Ga" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/light/small/floor/greenish,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Gb" = (
@@ -4129,6 +4227,11 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"Gg" = (
+/obj/table/wood/auto,
+/obj/item/bandage/medicated,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "Gh" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/space/fluid/noexplosion,
@@ -4154,7 +4257,7 @@
 /obj/decoration/bustedmantapc/bustedmantapc2{
 	dir = 8
 	},
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
 	},
 /area/cult_base/leader)
@@ -4164,7 +4267,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "GZ" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 10
 	},
 /area/cult_base/leader)
@@ -4192,6 +4295,10 @@
 /obj/item/clothing/head/XComHair,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"Hw" = (
+/mob/living/critter/human/cultist/initiate/knife,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "Hy" = (
 /obj/table,
 /obj/item/reagent_containers/glass/bottle/bubblebath,
@@ -4208,6 +4315,7 @@
 	icon_state = "gib7"
 	},
 /obj/creepy_sound_trigger,
+/obj/dialogueobj/cultistbarricade,
 /turf/unsimulated/floor/plating,
 /area/cult_base/acolyte/bedrooms)
 "HW" = (
@@ -4272,9 +4380,17 @@
 	},
 /turf/space/fluid/noexplosion,
 /area/cult_base)
+"Jl" = (
+/obj/fakeobject/catalytic_doodad{
+	dir = 1;
+	name = "Echocontainment Emitter"
+	},
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "Jz" = (
 /obj/table/wood/round,
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/obj/candle_light,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 6
 	},
 /area/cult_base/leader)
@@ -4283,7 +4399,7 @@
 /area/cult_base/acolyte/outdoors)
 "JC" = (
 /obj/table/wood/auto,
-/obj/item/device/light/candle,
+/obj/candle_light,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "Ks" = (
@@ -4296,6 +4412,12 @@
 /mob/living/critter/small_animal/large_jellyfish,
 /turf/space/fluid/noexplosion,
 /area/cult_base)
+"Kx" = (
+/obj/table/wood/auto,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/leader,
+/obj/decal/cleanable/blood/gibs/core,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "KE" = (
 /obj/decal/cleanable/writing{
 	name = "improvised ritual";
@@ -4320,9 +4442,15 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Le" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 1
 	},
+/area/cult_base/leader)
+"Lk" = (
+/obj/table/wood/auto,
+/obj/item/control_key,
+/obj/item/paper/cultbase_leader_ramblings,
+/turf/unsimulated/floor,
 /area/cult_base/leader)
 "Lr" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -4344,13 +4472,6 @@
 	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
-"Ly" = (
-/obj/decal/cleanable/ritualSigil{
-	icon_state = "corruptus";
-	color = "#880808"
-	},
-/turf/space/fluid/noexplosion,
-/area/cult_base/acolyte/outdoors)
 "LA" = (
 /obj/cable/green{
 	icon_state = "1-2"
@@ -4374,8 +4495,8 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "LW" = (
-/obj/table,
 /obj/item/matchbook,
+/obj/table/auto,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Mg" = (
@@ -4397,15 +4518,34 @@
 /obj/plasma_coral/bulbous,
 /turf/space/fluid/noexplosion,
 /area/cult_base)
+"MY" = (
+/obj/stool/chair/material/mauxite{
+	dir = 8
+	},
+/mob/living/critter/human/cultist/leader/knife/key1,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "Na" = (
 /obj/item/paper/courtroom{
 	name = "paper- 'A Crash Course in Legal SOP"
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"Ng" = (
+/obj/item/kitchen/utensil/spoon,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/initiate,
+/obj/table/auto,
+/turf/unsimulated/floor/grime,
+/area/cult_base/initate)
 "Ns" = (
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"NA" = (
+/obj/machinery/manufacturer/general{
+	hacked = 1
+	},
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "NC" = (
 /obj/machinery/door/poddoor/blast/single{
 	id = "acolyte2leader"
@@ -4448,16 +4588,16 @@
 /area/cult_base/leader)
 "Ot" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/table,
 /obj/drink_rack/mug{
 	pixel_y = 6;
 	pixel_x = 26
 	},
 /obj/item/reagent_containers/food/drinks/creamer,
+/obj/table/auto,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "OA" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 9
 	},
 /area/cult_base/leader)
@@ -4486,15 +4626,9 @@
 /obj/table/glass/auto,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/initate)
-"Pf" = (
-/obj/machinery/printing_press,
-/obj/item/scripture/greenhb,
-/obj/item/scripture/greenhb,
-/turf/unsimulated/floor,
-/area/cult_base/leader)
 "Pj" = (
-/obj/table,
 /obj/item/kitchen/utensil/fork/chopsticks,
+/obj/table/auto,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Pt" = (
@@ -4505,6 +4639,16 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"Pv" = (
+/obj/table/wood/auto,
+/obj/item/kitchen/utensil/knife{
+	force = 5;
+	icon = 'icons/obj/items/weapons.dmi';
+	icon_state = "dagger";
+	name = "rusty blade"
+	},
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "PB" = (
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/rice,
@@ -4545,9 +4689,18 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"QI" = (
+/obj/item/clothing/suit/cultist,
+/obj/item/clothing/mask/greencultmask,
+/obj/storage/crate,
+/obj/item/scripture/greenhb,
+/obj/machinery/light/small/sticky/greenish,
+/obj/item/paper/cultbase_acolyte_notes,
+/turf/unsimulated/floor,
+/area/cult_base/acolyte/bedrooms)
 "QL" = (
 /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader,
-/turf/simulated/floor/airless/carpet/darkcarpet,
+/turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "Ra" = (
 /obj/stool/chair{
@@ -4616,9 +4769,9 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Th" = (
-/obj/table,
 /obj/item/kitchen/utensil/fork/chopsticks,
-/obj/item/device/light/candle,
+/obj/table/auto,
+/obj/candle_light,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Ti" = (
@@ -4660,6 +4813,7 @@
 /area/evilreaver/security)
 "TS" = (
 /obj/item/storage/toilet,
+/mob/living/carbon/human/normal/cultist/acolyte/key2,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/acolyte/bedrooms)
 "TX" = (
@@ -4669,9 +4823,14 @@
 /mob/living/critter/robotic/gunbot/syndicate/polaris/ketchup,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
+"Ud" = (
+/obj/map/light/purple,
+/turf/space/fluid/noexplosion,
+/area/cult_base/acolyte/outdoors)
 "Uv" = (
 /obj/table/wood/round,
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/obj/item/paper/cultbase_creature_notes,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 5
 	},
 /area/cult_base/leader)
@@ -4685,12 +4844,14 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"UH" = (
+/obj/machinery/light/small/sticky/greenish{
+	dir = 8
+	},
+/turf/space/fluid/noexplosion,
+/area/cult_base/acolyte/outdoors)
 "UJ" = (
 /mob/living/critter/aquatic/fish/jellyfish,
-/obj/decal/cleanable/ritualSigil{
-	icon_state = "sacrificum";
-	color = "#880808"
-	},
 /obj/item/organ/heart,
 /turf/space/fluid/noexplosion,
 /area/cult_base/acolyte/outdoors)
@@ -4723,6 +4884,7 @@
 /obj/item/emergencysuitfolded,
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
+/obj/item/device/light/flashlight,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "VC" = (
@@ -4782,13 +4944,18 @@
 /area/cult_base)
 "Xh" = (
 /obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Xo" = (
 /turf/unsimulated/floor/plating,
 /area/cult_base/initate)
 "Xp" = (
-/turf/simulated/floor/airless/carpet/darkcarpet/border{
+/obj/dialogueobj/controlpc{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/greenish,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
 	},
 /area/cult_base/leader)
@@ -4826,6 +4993,14 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"XY" = (
+/obj/machinery/door_control/oneshot{
+	pixel_y = 24;
+	id = "creature_containment";
+	name = "Containment Exposure Cover"
+	},
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "Yb" = (
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/martian,
@@ -4896,6 +5071,10 @@
 	},
 /turf/space/fluid/noexplosion,
 /area/cult_base)
+"ZJ" = (
+/obj/decal/cleanable/blood/drip,
+/turf/unsimulated/floor,
+/area/cult_base/leader)
 "ZK" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/cable/green{
@@ -15496,7 +15675,7 @@ ax
 gz
 gz
 gz
-ax
+ox
 Ip
 gy
 gP
@@ -22757,7 +22936,7 @@ ui
 EA
 pv
 EA
-EA
+Hw
 WQ
 BO
 ab
@@ -23657,12 +23836,12 @@ EA
 Bv
 EA
 uC
-pv
+tB
 WQ
 Sn
 qU
 Pj
-zm
+Ng
 wH
 WQ
 BO
@@ -23952,7 +24131,7 @@ ws
 Jf
 ws
 ws
-ws
+tw
 WQ
 Je
 Vx
@@ -25164,7 +25343,7 @@ mR
 ws
 tD
 uG
-EA
+Cl
 EA
 EA
 EA
@@ -25172,7 +25351,7 @@ WQ
 Yl
 EA
 zB
-uG
+MY
 mT
 WQ
 BO
@@ -26670,7 +26849,7 @@ ws
 ws
 iY
 WQ
-EA
+Hw
 CA
 WQ
 wp
@@ -26978,7 +27157,7 @@ xo
 EA
 EA
 kE
-EA
+Cl
 kE
 WQ
 wF
@@ -28774,7 +28953,7 @@ ur
 Vd
 HY
 av
-tq
+Av
 Vd
 qc
 ju
@@ -28789,7 +28968,7 @@ pb
 YD
 yA
 pb
-YD
+kd
 yA
 pb
 YD
@@ -29094,7 +29273,7 @@ pb
 qd
 yA
 pb
-xz
+QI
 yA
 uF
 yA
@@ -30590,7 +30769,7 @@ qZ
 CZ
 CZ
 aG
-CZ
+kc
 Xu
 CZ
 CZ
@@ -30600,7 +30779,7 @@ Vd
 GD
 HW
 HW
-BA
+mj
 uO
 qL
 HW
@@ -30890,7 +31069,7 @@ Aa
 JC
 LV
 CZ
-CZ
+kc
 CT
 oF
 Wu
@@ -30902,7 +31081,7 @@ NC
 xW
 HW
 HW
-BA
+Gg
 uO
 lR
 HW
@@ -31204,12 +31383,12 @@ Vd
 oR
 HW
 HW
-BA
+Pv
 uO
 pi
 HW
 uO
-Le
+yg
 uu
 uu
 uu
@@ -31506,7 +31685,7 @@ uO
 NX
 zC
 HW
-BA
+NA
 uO
 HW
 HW
@@ -32100,7 +32279,7 @@ JB
 JB
 JB
 JB
-JB
+UH
 JB
 JB
 JB
@@ -32115,12 +32294,12 @@ HW
 HW
 HW
 uO
-yW
-yW
-yW
-yW
-yW
-yW
+wP
+rb
+rb
+rb
+rb
+AW
 ED
 ab
 gW
@@ -32703,7 +32882,7 @@ JB
 jj
 JB
 JB
-Ly
+JB
 JB
 JB
 JB
@@ -33307,7 +33486,7 @@ JB
 Ve
 GF
 JB
-pu
+JB
 JB
 JB
 JB
@@ -33618,7 +33797,7 @@ JB
 ur
 uO
 at
-BA
+iV
 iR
 jW
 HW
@@ -33920,7 +34099,7 @@ JB
 ur
 uO
 at
-BA
+DO
 xt
 jW
 HW
@@ -34223,7 +34402,7 @@ ur
 uO
 at
 TL
-BA
+Kx
 jW
 HW
 OO
@@ -34524,19 +34703,19 @@ JB
 ur
 uO
 jK
+ZJ
 HW
-HW
-HW
+ZJ
 zC
 OO
 yW
 yW
-yW
+Jl
 yW
 yW
 Yj
 yW
-yW
+Jl
 ED
 ab
 gW
@@ -35128,7 +35307,7 @@ JB
 ur
 uO
 BY
-BA
+Lk
 HW
 HW
 mk
@@ -35431,7 +35610,7 @@ ur
 uO
 On
 kY
-HW
+nv
 ZZ
 ZZ
 uO
@@ -36033,7 +36212,7 @@ JB
 JB
 ur
 uO
-Pf
+HW
 HW
 qW
 Dh
@@ -36335,8 +36514,8 @@ JB
 JB
 ur
 uO
-HW
-HW
+XY
+ul
 qW
 lD
 VC
@@ -36628,7 +36807,7 @@ JB
 JB
 yG
 JB
-JB
+Ud
 JB
 Oj
 Oj
@@ -37553,10 +37732,10 @@ yW
 yW
 yW
 yW
+Cr
 yW
 yW
-yW
-yW
+aF
 ED
 ab
 gW
@@ -37832,7 +38011,7 @@ gW
 ab
 ur
 pU
-zp
+JB
 JB
 JB
 JB

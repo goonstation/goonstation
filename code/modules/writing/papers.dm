@@ -473,6 +473,37 @@ Only trained personnel should operate station systems. Follow all procedures car
 	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep a eye on that one. <br>
 	Operations in the back are going well though, although I think that one is catching on."}
 
+/obj/item/paper/cultbase_acolyte_notes
+	name = "The state of the Deep."
+	icon_state = "paper"
+	info = {"The leaders have been misguided, they rave and rant about their new calling, like a rabid dog on a straining chain.<br>
+	One of them went crazy and ran out into the sea in the ritual site for our section, the rest of them went into lockdown in their private wing.<br>
+	We're going to break in after this through the wall in the bathroom quarters, should go right in."}
+
+/obj/item/paper/cultbase_boardroom
+	name = "Board Room Notes"
+	icon_state = "paper"
+	info = {"The meeting with REDACTED was more complicated then usual, they put their stuff in the coolers, I gave them the blood samples of the members.<br>
+	Its absurb, they have more interest on their drug then the divine being literally outside, well if they keep supplies coming in I guess I'll manage."}
+
+/obj/item/paper/cultbase_leader_ramblings
+	name = "Truth."
+	icon_state = "paper"
+	info = {"It calls, it is our divine avatar of the waking dream. I can't grasp its meaning, it yearns... it desires. We must gather its power to uproot this corporate war. <br>
+	We must create a condition, a ultimatium, the weak of our people must be culled, tested. <i> I'm going to enjoy this! <i>"}
+
+/obj/item/paper/cultbase_creature_notes
+	name = "Observations and topics of investigation."
+	icon_state = "paper"
+	info = {"Subject appears to be held effectively within this particular frequency of sonar waves. Form appears to be semi-corporal, and appears to be otherwise entirely invisible to all kinds of vision or sensors. <br>
+	Strongest concentration of manifestions appear to be related to the concentration of plasma reactions near the liquid containing the subject. From this information I hypothesise that these creatures are only <br>
+	visible here due to the presence of plasmacoral in the region granting the conditions for their seen presence."}
+
+/obj/item/paper/cultbase_backscratcher
+	name = "We can't use it so I am."
+	icon_state = "paper"
+	info = {"This thing is too good as a backscratcher, I'm keeping it until you get the power source for its main use. -M"}
+
 /obj/item/paper/telecrystal_update
 	name = "email printout"
 	info = {"

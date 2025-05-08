@@ -2,12 +2,16 @@
 "a" = (
 /turf/unsimulated/floor/polarispit/cult/pitwall,
 /area/noGenerate)
+"b" = (
+/obj/plasma_coral/bulbous,
+/turf/variableTurf/clear,
+/area/noGenerate)
 "c" = (
 /obj/bubble_vent/oxygen,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "f" = (
-/obj/map/light/cyan,
+/obj/map/light/void,
 /turf/unsimulated/floor/polarispit/cult,
 /area/noGenerate)
 "g" = (
@@ -32,7 +36,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "E" = (
-/obj/map/light/cyan,
+/obj/map/light/void,
 /turf/unsimulated/floor/polarispit/cult/pitwall,
 /area/noGenerate)
 "G" = (
@@ -40,6 +44,14 @@
 	distress = 1;
 	identifier = "D#3P_S0S"
 	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"H" = (
+/obj/plasma_coral/branching,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"O" = (
+/obj/plasma_coral/coralfingers,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "V" = (
@@ -67,7 +79,7 @@ V
 V
 V
 V
-V
+H
 V
 "}
 (3,1,1) = {"
@@ -83,7 +95,7 @@ V
 V
 "}
 (4,1,1) = {"
-V
+O
 V
 a
 g
@@ -144,7 +156,7 @@ V
 "}
 (9,1,1) = {"
 V
-V
+b
 V
 V
 V

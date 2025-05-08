@@ -139,3 +139,176 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
 		HH.object_for_inhand = /obj/item/gun/kinetic/assault_rifle
+
+ABSTRACT_TYPE(/mob/living/critter/human/cultist)
+/mob/living/critter/human/cultist
+	name = "\improper Broken Cultist"
+	real_name = "\improper Broken Cultist"
+	desc = "What little you can see of their eyes has the midnight shine of oil, they look ready to jump at anything that moves."
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist
+	human_to_copy = /mob/living/carbon/human/normal/cultist
+	ai_type = /datum/aiHolder/aggressive
+	hand_count = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD // Insane fuckers, could be too difficult though
+
+/mob/living/critter/human/cultist/initiate
+	health_brute = 25
+	health_burn = 25
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/initiate
+	human_to_copy = /mob/living/carbon/human/normal/cultist/initiate
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "kitchen knife"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+/mob/living/critter/human/cultist/acolyte
+	health_brute = 50
+	health_burn = 50
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte
+	human_to_copy = /mob/living/carbon/human/normal/cultist/acolyte
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "kitchen knife"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+		key2
+			human_to_copy = /mob/living/carbon/human/normal/cultist/acolyte/key2
+			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte/key2
+
+/mob/living/critter/human/cultist/leader
+	health_brute = 150
+	health_burn = 150
+	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader
+	human_to_copy = /mob/living/carbon/human/normal/cultist/leader
+
+	knife
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/sword
+			HH.name = "left hand"
+			HH.suffix = "-L"
+			HH.icon_state = "blade"
+			HH.limb_name = "kitchen knife"
+			HH.can_hold_items = FALSE
+			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
+
+		key1
+			human_to_copy = /mob/living/carbon/human/normal/cultist/leader/key1
+			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader/key1
+
+
+	pistol
+		ai_type = /datum/aiHolder/ranged
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.name = "silenced pistol"
+			HH.suffix = "-L"
+			HH.icon_state = "silenced"
+			HH.limb_name = "\improper Orion silenced pistol"
+			HH.can_hold_items = FALSE
+			HH.can_attack = TRUE
+			HH.can_range_attack = TRUE
+			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+
+			HH = hands[2]
+			HH.icon = 'icons/mob/hud_human.dmi'
+			HH.limb = new /datum/limb
+			HH.name = "right hand"
+			HH.suffix = "-R"
+			HH.icon_state = "handr"
+			HH.limb_name = "right arm"
