@@ -1,5 +1,9 @@
 
 (t)thu may 08 25
+(u)Mr. Moriarty
+(p)23304
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Whispers now display maptext.
 (u)Cheekybrdy
 (p)23182
 (e)🆕🧛|C-Feature, A-Gamemodes
