@@ -151,9 +151,9 @@ TYPEINFO(/obj/strip_door)
 					qdel(src)
 
 	attackby(obj/item/I, mob/user)
-		if (ispryingtool(I))
+		if (!anchored && ispryingtool(I))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 30, 1, -2)
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/change_direction, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+			src.change_direction()
 		if(iswrenchingtool(I))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
 			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/toggle_anchored, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
@@ -169,7 +169,8 @@ TYPEINFO(/obj/strip_door)
 		..()
 
 	get_help_message(dist, mob/user)
-		. = "You can rotate it using a <b>crowbar</b>, and [src.anchored ? "unanchor" : "anchor"] it with a <b>wrench</b>."
+		. = "You can [src.anchored ? "unanchor" : "anchor"] it with a <b>wrench</b> [src.anchored ? "to be able to" : "and"]	\
+				 rotate it with a <b>crowbar</b>."
 		if(src.flap_material)
 			. += " You can remove the flaps with a <b>wirecutter</b>."
 		else
