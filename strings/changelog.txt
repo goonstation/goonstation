@@ -1,5 +1,9 @@
 
 (t)wed may 07 25
+(u)JORJ949
+(p)23319
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawbringers now check every word in a message for mode selection rather than the entire message.
 (u)CalliopeSoups
 (p)23276
 (e)🎨⏰🐁|C-Sprites, A-Status-Effects, A-Critters
