@@ -21,8 +21,6 @@
 		if(prob(20))
 			src.bright = TRUE
 
-		src.chat_text = new(null, src)
-
 		src.icon_state = "rock[pick(1,3)]"
 		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
 		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
@@ -44,8 +42,6 @@
 
 	disposing()
 		processing_items -= src
-		qdel(chat_text)
-		chat_text = null
 		STOP_TRACKING_CAT(TR_CAT_PETS)
 		..()
 
@@ -86,35 +82,28 @@
 			if(4)
 				emote("<B>[src]</B> rants about job site safety.", "<I>Goes on about job safety</I>")
 			if(5)
-				speak("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].")
+				if (!src.holder)
+					return
+				src.say("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].", atom_listeners_override = list(src.holder))
 
-	proc/speak(message)
-		var/list/targets
-		var/image/chat_maptext/chat_text = null
+	emote(message, maptext_out)
+		. = ..()
 
-		if(!src.holder)
-			targets = hearers(src, null)
-			chat_text = make_chat_maptext(src, message, "color: ["#bfd6d8"];", alpha = 200)
-		else
-			targets = list(src.holder)
-
-		for(var/mob/O in targets)
-			if(src.can_mob_observe(O))
-				O.show_message("<span class='say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
-
-	proc/emote(message, maptext_out)
-		var/list/targets
-		var/image/chat_maptext/chat_text = null
-
+		var/list/mob/targets
 		if(!src.holder)
 			targets = viewers(src, null)
-			chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;", alpha = 120)
 		else
 			targets = list(src.holder)
 
-		for (var/mob/O in targets)
-			if(src.can_mob_observe(O))
-				O.show_message(SPAN_EMOTE("[message]"), assoc_maptext = chat_text)
+		var/list/mob/recipients = list()
+		for (var/mob/M as anything in targets)
+			if(!src.can_mob_observe(M))
+				continue
+
+			recipients += M
+			M.show_message(SPAN_EMOTE("[message]"))
+
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")

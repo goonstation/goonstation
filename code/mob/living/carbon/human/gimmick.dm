@@ -567,7 +567,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
-							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
+							murray.say("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else
 					var/mob/M = pick(alive_mobs)

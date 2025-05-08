@@ -650,6 +650,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_jump = list(/obj/item/clothing/under/color/purple)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_belt = list(/obj/item/device/pda2/toxins)
+	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
@@ -740,6 +741,8 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/red)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
@@ -798,12 +801,18 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
 	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_belt = list(/obj/item/device/pda2/technical_assistant)
-	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
+	slot_glov = list(/obj/item/clothing/gloves/yellow)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared)
+	slot_poc1 = list(/obj/item/device/pda2/engine)
+	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+#ifdef HOTSPOTS_ENABLED
+	items_in_backpack = list(/obj/item/clothing/shoes/stomp_boots)
+#endif
+
 	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
 
 /datum/job/engineering/quartermaster
@@ -1738,7 +1747,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
-	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp)
+	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 
 /datum/job/special/random/artist

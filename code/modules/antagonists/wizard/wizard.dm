@@ -5,6 +5,7 @@
 	success_medal = "You're no Elminster!"
 	faction = list(FACTION_WIZARD)
 	uses_pref_name = FALSE
+	wiki_link = "https://wiki.ss13.co/Wizard"
 	var/list/datum/SWFuplinkspell/purchased_spells = list()
 
 	/// The ability holder of this wizard, containing their respective abilities.
@@ -46,7 +47,8 @@
 		H.unequip_all(TRUE)
 		H.equip_if_possible(new /obj/item/clothing/under/shorts/black(H), SLOT_W_UNIFORM)
 		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
-		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
+		if (!src.vr)
+			H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), SLOT_EARS)
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), SLOT_WEAR_SUIT)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), SLOT_SHOES)

@@ -2,6 +2,7 @@
 	id = ROLE_CHANGELING
 	display_name = "changeling"
 	antagonist_icon = "changeling"
+	wiki_link = "https://wiki.ss13.co/Changeling"
 
 	/// The ability holder of this changeling, containing their respective abilities. This is also used for tracking absorbtions, at the moment.
 	var/datum/abilityHolder/changeling/ability_holder
@@ -40,6 +41,9 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
 
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.ability_holder]")
+
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current
 			L.blood_id = "bloodc"
@@ -69,6 +73,9 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)
+
+		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.ability_holder]")
 
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current
