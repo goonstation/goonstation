@@ -72,7 +72,7 @@
 /area/bee_trader)
 "h" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_x = 0;
 	pixel_y = 4
 	},

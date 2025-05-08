@@ -43,11 +43,6 @@
 	else // it is a single object
 		src.devices_by_address[device.address] = list((device) = 1, (src.devices_by_address[device.address]) = 1)
 
-	if(is_analog(device?.parent))
-		if(isnull(src.analog_devices))
-			src.analog_devices = list()
-		src.analog_devices[device.parent] = 1
-
 /datum/packet_network/proc/unregister(datum/component/packet_connected/device)
 	src.count_current_devices--
 	if(src.in_disposing)
@@ -69,9 +64,6 @@
 			src.devices_by_address[device.address] = src.devices_by_address[device.address][1]
 	else
 		src.devices_by_address -= device.address
-
-	if(is_analog(device?.parent))
-		src.analog_devices -= device.parent
 
 /datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal,\
 	params, datum/client_image_group/img_group)
@@ -113,13 +105,13 @@
 		for(var/t_address in src.devices_by_address) { \
 			if(islist(src.devices_by_address[t_address])) \
 				for(var/datum/component/packet_connected/target as anything in src.devices_by_address[t_address]) { \
-					if(target == source) \
+					if((target == source) && !source.receives_own_packets) \
 						continue; \
 					RECEIVE_PACKET \
 				} \
 			else { \
 				var/datum/component/packet_connected/target = src.devices_by_address[t_address]; \
-				if(target == source) \
+				if((target == source) && !source.receives_own_packets) \
 					continue; \
 				RECEIVE_PACKET \
 			} \
@@ -128,9 +120,12 @@
 	else { \
 		var/list/datum/component/packet_connected/targets = src.all_hearing ? src.all_hearing.Copy() : list(); \
 		var/list/datum/component/packet_connected/sharing_tag = src.devices_by_tag?[target_tag]; \
-		if(sharing_tag) targets |= sharing_tag; \
+		if(sharing_tag) \
+			targets |= sharing_tag; \
 		if(src.devices_by_address?[target_address]) \
 			targets |= src.devices_by_address?[target_address]; \
+		if (source?.receives_own_packets) \
+			targets |= source; \
 		count_receive += length(targets); \
 		for(var/datum/component/packet_connected/target as anything in targets) { \
 			RECEIVE_PACKET \
@@ -138,9 +133,11 @@
 	}
 
 /datum/packet_network/proc/post_packet(datum/component/packet_connected/source, datum/signal/signal, params=null)
+	. = TRUE
+
 	count_post++
 	if(!src.can_send(source, signal, params))
-		return
+		return FALSE
 	signal.transmission_method = transmission_method
 	LAZYLISTADD(signal.channels_passed, src.channel_name)
 	var/target_tag = signal.data["address_tag"]
@@ -187,14 +184,6 @@
 				img_group.remove_image(img)
 				qdel(img)
 	qdel(signal)
-
-
-// temporary handling of headset-like radios until that gets refactored into a better system
-
-/datum/packet_network/var/list/obj/analog_devices = null
-
-/datum/packet_network/proc/is_analog(obj/device)
-	return istype(device, /obj/item/device/radio) || istype(device, /obj/item/mechanics/radioscanner)
 
 
 // debugging / profiling / inspection tools
