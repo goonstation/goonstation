@@ -17,9 +17,9 @@
 	hand_count = 2
 	icon_state = "jackalope"
 	icon_state_dead = "jackalope_dead"
-	speechverb_say = "squeals"
-	speechverb_exclaim = "squeaks"
-	speechverb_ask = "squeals"
+	speech_verb_say = "squeals"
+	speech_verb_exclaim = "squeaks"
+	speech_verb_ask = "squeals"
 	health_brute = 8
 	health_burn = 8
 	ai_type = /datum/aiHolder/wanderer

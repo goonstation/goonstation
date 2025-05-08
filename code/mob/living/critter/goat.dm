@@ -17,9 +17,9 @@
 	hand_count = 2
 	icon_state = "goat"
 	icon_state_dead = "goat_dead"
-	speechverb_say = "baas"
-	speechverb_exclaim = "bleats"
-	speechverb_ask = "baas"
+	speech_verb_say = "baas"
+	speech_verb_exclaim = "bleats"
+	speech_verb_ask = "baas"
 	health_brute = 35
 	health_burn = 35
 	ai_type = /datum/aiHolder/goat

@@ -146,8 +146,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 	desc = "A fluffy, innocent, adorable creature usually remaining close to it's parents. And to think those are hunted for blubber and fur..."
 	icon_state = "seal"
 	icon_state_dead = "seal-dead"
-	speechverb_say = "trills"
-	speechverb_exclaim = "barks"
+	speech_verb_say = "trills"
+	speech_verb_exclaim = "barks"
 	sealnoise = "sealegg"
 	death_text = "%src% lets out a final weak coo and keels over."
 	health_brute = 15
@@ -169,8 +169,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 	icon_state = "sealadult"
 	icon_state_dead = "sealadult-dead"
 	max_skins = 4
-	speechverb_say = "harrumphs"
-	speechverb_exclaim = "roars"
+	speech_verb_say = "harrumphs"
+	speech_verb_exclaim = "roars"
 	ai_type = /datum/aiHolder/seal_adult
 
 /mob/living/critter/small_animal/seal_arctic/adult/matriarch
