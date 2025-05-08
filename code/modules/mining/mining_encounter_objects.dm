@@ -72,6 +72,9 @@
 				var/obj/flock_encounter_pedestal/pedestal = src.pedestals[i]
 				pedestal.toggle(null, TRUE)
 
+	take_damage(amount, mob/user)
+		return // stop showing as broken
+
 	disposing()
 		..()
 		src.pedestals = null
