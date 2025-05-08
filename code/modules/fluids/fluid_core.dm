@@ -572,6 +572,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
+		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
 			if (dir == SOUTH) //No south perspective
