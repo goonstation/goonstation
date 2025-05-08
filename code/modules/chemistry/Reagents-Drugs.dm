@@ -683,17 +683,13 @@ datum
 				M.stuttering += rand(0,2)
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
-						var/chat_text = null
 						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
 							"M"="[M]",
 							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
 							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
 							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
-							))
-						if(!M.client.preferences.flying_chat_hidden)
-							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
-							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
-						M.show_message("[bee] buzzes \"[text]\"",2, assoc_maptext = chat_text)
+						))
+						bee.say(text, atom_listeners_override = list(M))
 						break
 
 				if(probmult(5))

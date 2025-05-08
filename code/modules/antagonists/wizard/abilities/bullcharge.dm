@@ -16,7 +16,7 @@
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("RAMI TIN", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("RAMI TIN", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/list/path = list()
