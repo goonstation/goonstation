@@ -237,7 +237,7 @@
 		icon_state = "stam-"
 		duration = INFINITE_STATUS
 		maxDuration = null
-		change = -5
+		change = -2.5
 
 	staminaregen/cursed
 		id = "weakcurse"
