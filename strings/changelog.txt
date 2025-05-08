@@ -1,6 +1,10 @@
 
 (t)thu may 08 25
 (u)FlameArrow57
+(p)23344
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard Prismatic Spray spell can be used without a staff
+(u)FlameArrow57
 (p)23345
 (e)⚖🧛|C-Balance, A-Gamemodes
 (+)Wizard empower spell duration and CD reduced to 15s/30s from 30s/45s. It now also removes stun status effects on use.
