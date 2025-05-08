@@ -27,6 +27,13 @@
 	dir = 4
 	},
 /area/mining/magnet)
+"d" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/syndicate_mining_magnet_1,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/mining/magnet)
 "e" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -136,9 +143,6 @@
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/hundred,
-/obj/item/currency/spacecash/hundred,
 /obj/item/storage/secure/ssafe/syndicate_mining_encounter{
 	pixel_y = 25
 	},
@@ -189,7 +193,6 @@
 /obj/storage/crate/classcrate{
 	name = "money crate"
 	},
-/obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
@@ -308,6 +311,10 @@
 /area/mining/magnet)
 "X" = (
 /obj/table/syndicate/auto,
+/obj/item/paper/syndicate_mining_magnet_2{
+	pixel_y = 5;
+	pixel_x = 8
+	},
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -422,7 +429,7 @@ R
 (8,1,1) = {"
 R
 g
-D
+d
 j
 q
 N
