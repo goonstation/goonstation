@@ -25,6 +25,8 @@
 	var/obj/item/gun/energy/lawbringer/lawbringer = src.parent_tree.listener_parent
 	if (!istype(lawbringer) || !ismob(message.original_speaker))
 		return
+	if (lawbringer.loc != message.original_speaker)
+		return
 
 	if (!ishuman(message.original_speaker))
 		lawbringer.are_you_the_law(message.original_speaker, message.content)
