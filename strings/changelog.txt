@@ -1,5 +1,13 @@
 
 (t)thu may 08 25
+(u)Chasu
+(p)23278
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Strip door frames can now be (un-)anchored with wrenching tools and have help messages
+(u)TDHooligan
+(p)23212
+(e)⚖🎭|C-Balance, A-RP
+(+)Thirst's stamina penalty has been halved.
 (u)Mr. Moriarty
 (p)23304
 (e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
