@@ -1,4 +1,9 @@
 
+(t)thu may 08 25
+(u)FlameArrow57
+(p)23353
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard forcewall duration changed from 30 -> 20 seconds
 (t)wed may 07 25
 (u)JORJ949
 (p)23354
