@@ -31,7 +31,7 @@
 		return
 
 	var/mob/living/carbon/human/H = message.original_speaker
-	if (lawbringer.fingerprints_can_shoot(H))
+	if (!lawbringer.fingerprints_can_shoot(H))
 		lawbringer.are_you_the_law(H, message.content)
 		return
 
