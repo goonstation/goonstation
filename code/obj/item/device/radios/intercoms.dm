@@ -18,6 +18,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
 	use_speech_bubble = TRUE
+	forced_maptext = TRUE
 
 	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
 
