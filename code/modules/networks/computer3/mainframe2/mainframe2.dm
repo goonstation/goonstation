@@ -268,9 +268,7 @@
 						if (istype(src.os, /datum/computer/file/mainframe_program/os/kernel))
 							var/datum/computer/file/mainframe_program/os/kernel/os_kernel = src.os
 							os_kernel.message_all_users("|nA program encountered a critical error (maximum recursion). Rebooting the mainframe.|n", "System", TRUE) // Lets warn all connected users that the mainframe has crashed!
-						src.unload_all()
-						src.posted = 0
-						src.post_system() // Time to reboot!
+						src.reboot_mainframe()
 					else
 						throw e
 /*
@@ -567,6 +565,12 @@
 				program.dispose()
 
 			return 1
+
+		reboot_mainframe()
+			src.unload_all() // Unload all running programs, log out all users
+			src.posted = 0 // Waiting for startup!
+			src.post_system() // Time to start back!
+			src.reconnect_all_devices() // Should probably reconnect all devices as well
 
 		unload_all()
 			if (istype(src.os, /datum/computer/file/mainframe_program/os/kernel))
