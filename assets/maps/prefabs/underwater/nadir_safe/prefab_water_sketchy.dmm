@@ -112,16 +112,6 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/prefab/sea_sketch)
-"az" = (
-/obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta";
-	pixel_y = 4
-	},
-/turf/simulated/floor/grime,
-/area/prefab/sea_sketch)
 "aA" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/simulated/floor/scorched2,
@@ -417,13 +407,6 @@
 /obj/item/card_group/plain,
 /turf/simulated/floor/damaged2,
 /area/prefab/sea_sketch)
-"bQ" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
-	},
-/turf/simulated/floor/plating,
-/area/prefab/sea_sketch)
 "bR" = (
 /obj/item/reagent_containers/syringe/krokodil,
 /obj/item/reagent_containers/iv_drip/blood,
@@ -440,6 +423,20 @@
 "vF" = (
 /turf/variableTurf/clear,
 /area/noGenerate)
+"Gz" = (
+/obj/table/wood/round/auto,
+/obj/machinery/computer/television/public{
+	pixel_y = 4
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"IF" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/mapping_helper/access/maint,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
 
 (1,1,1) = {"
 ab
@@ -600,7 +597,7 @@ ab
 vF
 ap
 au
-az
+Gz
 aC
 aq
 aF
@@ -722,7 +719,7 @@ aa
 aa
 aa
 aa
-bQ
+IF
 aa
 aa
 aa

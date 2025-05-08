@@ -504,6 +504,11 @@ datum/commodity/drugs/sell/poppies
 	comtype = /obj/item/plant/herb/cannabis/white/spawnable
 	price = PAY_UNTRAINED
 
+/datum/commodity/drugs/sell/CBD
+	comname = "CBD Pills"
+	comtype = /obj/item/reagent_containers/pill/CBD
+	price = PAY_DOCTORATE
+
 /datum/commodity/drugs/sell/methamphetamine
 	comname = "Methamphetamine (5x pills)"
 	comtype = /obj/item/storage/pill_bottle/methamphetamine
@@ -630,7 +635,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/contraband/captainid
 	comname = "NT Captain Gold ID"
-	comtype = /obj/item/card/id/captains_spare
+	comtype = /obj/item/card/id/gold/captains_spare
 	desc = "NT gold-level registered captain ID."
 	price = PAY_EMBEZZLED
 

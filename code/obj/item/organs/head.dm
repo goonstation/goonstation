@@ -75,8 +75,6 @@
 				src.donor.set_eye(null)
 		else
 			src.UpdateIcon(/*makeshitup*/ 1)
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -87,10 +85,7 @@
 		if (src.linked_human)
 			if (isskeleton(src.linked_human))
 				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
-				S.head_tracker = null
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+				S.set_head(null)
 		if (holder)
 			holder.head = null
 		if (donor_original?.eye == src)
@@ -106,7 +101,6 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
-		chat_text = null
 
 		..()
 
@@ -357,18 +351,9 @@
 		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
 		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
 		src.donor_appearance = src.donor.bioHolder.mobAppearance
-	on_removal()
-		src.transplanted = 1
-		if (src.linked_human && (src.donor == src.linked_human))
-		 	// if we're typing, attempt to seamlessly transfer it
-			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
-				src.linked_human.remove_typing_indicator()
-				src.linked_human.has_typing_indicator = TRUE // proc above removes it
-				src.create_typing_indicator()
 
-			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
+	on_removal()
+		src.transplanted = TRUE
 		. = ..()
 
 	///Taking items off a head
@@ -533,10 +518,10 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 
-		if (src.linked_human && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+		if (isskeleton(src.linked_human) && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
+			var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
+			S.set_head(null)
+
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0

@@ -1168,14 +1168,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
-"NE" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/storage/secure/closet/fridge{
-	req_access_txt = "29"
-	},
-/obj/random_item_spawner/organs/bloody/one_to_three,
-/turf/simulated/floor/black,
-/area/prefab/von_ricken)
 "NF" = (
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -1287,10 +1279,6 @@
 	},
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
-"Rr" = (
-/obj/machinery/computer/security/wooden_tv,
-/turf/simulated/floor/wood,
-/area/prefab/von_ricken)
 "Rw" = (
 /obj/table/round/auto,
 /turf/simulated/floor/specialroom/medbay,
@@ -1347,6 +1335,12 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Si" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/secure/closet/fridge,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "SC" = (
 /obj/item/storage/secure/ssafe/vonricken,
@@ -1455,6 +1449,10 @@
 	pixel_x = 11;
 	pixel_y = 3
 	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Vb" = (
+/obj/machinery/computer/television,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "VA" = (
@@ -1978,7 +1976,7 @@ zm
 zm
 iC
 KA
-NE
+Si
 Ee
 Bf
 VD
@@ -2498,7 +2496,7 @@ YI
 CP
 AX
 gX
-Rr
+Vb
 Dk
 wN
 gX

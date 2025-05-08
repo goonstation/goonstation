@@ -294,8 +294,13 @@
 		src.active = 1
 		playsound(src, "rustle", 75, 1)
 		A.invisibility = INVIS_ALWAYS_ISH
-		FLICK("bbasket1", src)
-		SPAWN(1.5 SECONDS)
+		if (istype(A, /obj/item/organ/head))
+			var/obj/item/organ/head/head = A
+			if (head.organ_name == "bony head")
+				FLICK("bbasket2", src)
+		else
+			FLICK("bbasket1", src)
+		SPAWN(2.3 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
 

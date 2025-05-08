@@ -145,7 +145,7 @@
 
 		if(status & NOPOWER)
 
-			dat += "<b>Memory Core:</b> <a href='?src=\ref[src];core=1'>[src.hd ? "LOADED" : "---------"]</a><br>"
+			dat += "<b>Memory Core:</b> <a href='byond://?src=\ref[src];core=1'>[src.hd ? "LOADED" : "---------"]</a><br>"
 			dat += "Core Shield Maglock is <b>OFF</b><hr>[net_switch_html()]<hr>"
 		else
 

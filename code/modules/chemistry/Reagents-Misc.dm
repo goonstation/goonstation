@@ -887,7 +887,7 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, volume * 20 SECONDS, 5 SECONDS)
+				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
@@ -958,19 +958,11 @@ datum
 				..()
 				return
 
-			proc/unglue_attached_to(atom/A)
-				var/atom/Aloc = isturf(A) ? A : A.loc
-				for(var/atom/movable/AM in Aloc)
-					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
-					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
-						qdel(glued_comp)
-
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
 					remove_stickers(M, raw_volume)
-				unglue_attached_to(M)
+				M.unglue_attached_to()
 
 			reaction_obj(var/obj/O, var/volume)
 				remove_stickers(O, volume)
@@ -980,11 +972,11 @@ datum
 				var/datum/component/glue_ready/glue_ready_comp = O.GetComponent(/datum/component/glue_ready)
 				if(glue_ready_comp)
 					qdel(glue_ready_comp)
-				unglue_attached_to(O)
+				O.unglue_attached_to()
 
 			reaction_turf(var/turf/T, var/volume)
 				remove_stickers(T, volume)
-				unglue_attached_to(T)
+				T.unglue_attached_to()
 
 			proc/remove_stickers(var/atom/target, var/volume)
 				var/can_remove_amt = volume / 10
@@ -1697,6 +1689,8 @@ datum
 				. = ..()
 				if(volume < 1)
 					return
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
@@ -1708,6 +1702,8 @@ datum
 				random_brute_damage(M, 4)
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(isghostcritter(M) || issmallanimal(M))
+					return
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()

@@ -129,8 +129,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 		if(prob(70))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/lgloves,rand(3,8))
+		else if (prob(70))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/stethoscope,rand (2,5))
+		else if (prob(70))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/penlight, rand(2,5))
 		else
-			src.rc_entries += rc_buildentry(/datum/rc_entry/item/med_analyzer,rand(2,5))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/med_analyzer,rand(1,3))
 		..()
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
@@ -191,7 +195,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 	feemod = PAY_DOCTORATE*2
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
+/datum/rc_entry/item/penlight
+	name = "pen light"
+	feemod = PAY_DOCTORATE
+	typepath = /obj/item/device/light/flashlight/penlight
 
+/datum/rc_entry/item/stethoscope
+	name = "stethoscope"
+	feemod = PAY_DOCTORATE
+	typepath = /obj/item/medicaldiagnosis/stethoscope
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"

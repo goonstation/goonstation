@@ -108,7 +108,7 @@
 			tmp_flags |= MAPGEN_IGNORE_BUILDABLE
 		selected_biome.generate_turf(gen_turf, tmp_flags)
 
-		src.lag_check()
+		src.lag_check(flags)
 
 
 ///for the mapgen mountains, temp until we get something better

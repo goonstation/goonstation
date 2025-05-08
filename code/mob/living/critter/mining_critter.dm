@@ -30,11 +30,11 @@
 	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
 	icon_state = "fermid"
 	icon_state_dead = "fermid-dead"
-	speechverb_say = "clicks"
-	speechverb_exclaim = "clacks"
-	speechverb_ask = "chitters"
-	speechverb_gasp = "rattles"
-	speechverb_stammer = "click-clacks"
+	speech_verb_say = "clicks"
+	speech_verb_exclaim = "clacks"
+	speech_verb_ask = "chitters"
+	speech_verb_gasp = "rattles"
+	speech_verb_stammer = "click-clacks"
 	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
@@ -379,6 +379,12 @@
 	butcherable = BUTCHER_ALLOWED
 	var/tamed = FALSE
 	var/seek_ore = TRUE
+	var/food_blacklist = list(\
+	/obj/item/raw_material/shard,
+	/obj/item/raw_material/scrap_metal,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/uqill,
+	/obj/item/raw_material/fibrilith)
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
@@ -408,7 +414,7 @@
 
 	attackby(obj/item/I, mob/M)
 		if(istype(I, /obj/item/raw_material) && !isdead(src))
-			if((istype(I, /obj/item/raw_material/shard)) || (istype(I, /obj/item/raw_material/scrap_metal)))
+			if((istypes(I, food_blacklist)))
 				src.visible_message("[M] tries to feed [src] but they won't take it!")
 				return
 			if (src.tamed)
@@ -427,8 +433,7 @@
 	seek_food_target(var/range = 5)
 		. = list()
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
-			if (istype(ore, /obj/item/raw_material/shard)) continue
-			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
+			if (istypes(ore, food_blacklist)) continue
 			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 

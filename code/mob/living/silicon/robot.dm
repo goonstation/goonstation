@@ -12,6 +12,9 @@
 	var/painted = 0
 	var/paint = null
 
+TYPEINFO(/mob/living/silicon/robot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	voice_name = "synthesized voice"
@@ -22,7 +25,7 @@
 	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
-
+	say_language = LANGUAGE_ENGLISH
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
@@ -72,7 +75,6 @@
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
-	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -235,7 +237,7 @@
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
-			src.camera.network = "Robots"
+			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
 			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
@@ -674,39 +676,29 @@
 				return
 		if (!isalive(src))
 			return
-		if (maptext_out)
-			var/image/chat_maptext/chat_text = null
-			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-				if (speechpopups && src.chat_text)
-					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-					if(chat_text)
-						chat_text.measure(src.client)
-						for(var/image/chat_maptext/I in src.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-				if (message)
-					logTheThing(LOG_SAY, src, "EMOTE: [message]")
-					act = lowertext(act)
-					if (m_type & 1)
-						for (var/mob/O in viewers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (m_type & 2)
-						for (var/mob/O in hearers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (!isturf(src.loc))
-						var/atom/A = src.loc
-						for (var/mob/O in A.contents)
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-				else
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-		return
+
+		if (!message)
+			return
+
+		var/list/mob/recipients = list()
+		if (m_type & 1)
+			recipients = viewers(src, null)
+
+		else if (m_type & 2)
+			recipients = hearers(src, null)
+
+		else if (!isturf(src.loc))
+			var/atom/A = src.loc
+			for (var/mob/M in A.contents)
+				recipients += M
+
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		act = lowertext(act)
+		for (var/mob/M as anything in recipients)
+			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+		if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+			DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	examine(mob/user)
 		. = list()
@@ -1087,7 +1079,12 @@
 					src.cell = null
 					src.part_chest?.cell = null
 
-	attackby(obj/item/W, mob/user)
+	attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
+		if (istype(W, /obj/item/card/emag))
+			return
+		if (user.a_intent == INTENT_HARM || is_special)
+			..()
+			return
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1230,8 +1227,6 @@
 				else
 					boutput(user, SPAN_ALERT("Access denied."))
 
-		else if (istype(W, /obj/item/card/emag))
-			return
 		else if (istype(W, /obj/item/instrument) && opened)
 			user.drop_item(W)
 			W.set_loc(src)
@@ -1546,7 +1541,11 @@
 					user.put_in_hand_or_drop(src.part_head.ai_interface)
 					src.radio = src.default_radio
 					if (src.module && istype(src.module.radio))
+						src.default_radio.toggle_speaker(FALSE)
 						src.radio = src.module.radio
+					else
+						src.default_radio.toggle_speaker(TRUE)
+
 					src.ears = src.radio
 					src.apply_radio_upgrade()
 					src.radio.set_loc(src)
@@ -1867,28 +1866,6 @@
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
 
-	say_understands(var/other)
-		if (isAI(other)) return 1
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace.exclusive_language)
-				return 1
-		if (ishivebot(other)) return 1
-		return ..()
-
-	say_quote(var/text)
-		if (src.glitchy_speak || (src.dependent && isAI(src.mainframe) && src.mainframe.glitchy_speak))
-			text = voidSpeak(text)
-		var/ending = copytext(text, length(text))
-
-		if (singing)
-			return singify_text(text)
-
-		if (ending == "?") return "queries, \"[text]\"";
-		else if (ending == "!") return "declares, \"[text]\"";
-
-		return "states, \"[text]\"";
-
 	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
@@ -2020,6 +1997,7 @@
 					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
+				src.radio.toggle_speaker(FALSE)
 				src.radio = RM.radio
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
@@ -2044,6 +2022,7 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				src.radio.toggle_speaker(TRUE)
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
 				src.apply_radio_upgrade()
@@ -2094,7 +2073,7 @@
 				return
 
 		var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY><br>"
-		dat += "<A HREF='?action=mach_close&window=robotmod'>Close</A> <A HREF='?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
+		dat += "<A HREF='byond://?action=mach_close&window=robotmod'>Close</A> <A HREF='byond://?src=\ref[src];refresh=1'>Refresh</A><BR><HR>"
 
 		dat += "<B><U>Status Report</U></B><BR>"
 
@@ -2169,17 +2148,17 @@
 
 			dat += "<B>Active Equipment:</B><BR>"
 
-			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[1]]'>[module_states[1]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Left Arm Unavailable</b><br>"
-			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]</A>" : "Nothing"]<BR>"
-			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]</A>" : "Nothing"]<BR>"
+			dat += "<b>Center:</b> [module_states[2] ? "<A HREF='byond:?src=\ref[src];mod=\ref[module_states[2]]'>[module_states[2]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF='byond://?src=\ref[src];mod=\ref[module_states[3]]'>[module_states[3]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Right Arm Unavailable</b><br>"
 
 			dat += "<BR><B>Available Equipment</B><BR>"
 
 			for (var/obj in src.module.tools)
 				if(src.activated(obj)) dat += text("[obj]: <B>Equipped</B><BR>")
-				else dat += text("[obj]: <A HREF=?src=\ref[src];act=\ref[obj]>Equip</A><BR>")
+				else dat += text("[obj]: <A HREF='byond://?src=\ref[src];act=\ref[obj]'>Equip</A><BR>")
 		else dat += "<B>No Module Installed</B><BR>"
 
 		dat += "<HR>"
@@ -2189,10 +2168,10 @@
 		dat += "<BR><B>Installed Upgrades</B> ([upgradecount]/[src.max_upgrades])<BR>"
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (R.passive) dat += text("[R] (Always On)<BR>")
-			else if (R.active) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Use</B></A> (Drain: [R.drainrate])<BR>")
+			else if (R.active) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Use</B></A> (Drain: [R.drainrate])<BR>")
 			else
-				if(!R.activated) dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
-				else dat += text("[R]: <A HREF=?src=\ref[src];upact=\ref[R]><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				if(!R.activated) dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Activate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
+				else dat += text("[R]: <A HREF='byond://?src=\ref[src];upact=\ref[R]'><B>Deactivate</B></A> (Drain Rate: [R.drainrate]/second)<BR>")
 
 		src.Browse(dat, "window=robotmod;size=400x600")
 

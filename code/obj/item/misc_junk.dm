@@ -321,7 +321,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
-	desc = "The pinacle of human technology. An electronic cigarette!"
+	desc = "The pinnacle of human technology. An electronic cigarette!"
 	icon = 'icons/obj/items/cigarettes.dmi'
 	inhand_image_icon = 'icons/obj/items/cigarettes.dmi'
 	initial_volume = 50

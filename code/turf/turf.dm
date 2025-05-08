@@ -1111,12 +1111,12 @@ TYPEINFO(/turf/simulated)
 
 /turf/simulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/grass
@@ -1186,7 +1186,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/wall/bombvr
@@ -1247,7 +1247,7 @@ TYPEINFO(/turf/simulated)
 		var/area/A = get_area (user)
 		var/obj/item/rods/R = C
 		if (istype(R))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
@@ -1262,7 +1262,7 @@ TYPEINFO(/turf/simulated)
 			return
 
 		if (istype(C, /obj/item/tile))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			var/obj/item/tile/T = C

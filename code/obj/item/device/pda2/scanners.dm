@@ -37,7 +37,7 @@
 				var/obj/machinery/clonepod/P = A
 				if(P.occupant)
 					scan_health(P.occupant, 0, 1)
-					scan_health_overhead(P.occupant, usr)
+					DISPLAY_MAPTEXT(P.occupant, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, P.occupant)
 					update_medical_record(P.occupant)
 
 			if (!iscarbon(A))
@@ -45,7 +45,7 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_health(C, 0, 1, visible = 1)
-			scan_health_overhead(C, usr)
+			DISPLAY_MAPTEXT(C, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, C)
 			update_medical_record(C)
 
 

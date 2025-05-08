@@ -293,6 +293,40 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
+/datum/mining_encounter/zombie
+	name = "Hollow Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
+
+/datum/mining_encounter/artifact
+	name = "Fluctuating Asteroid"
+	rarity_tier = 2
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs = src.create_round_asteroid(target)
+
+		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
+		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
+
+/datum/mining_encounter/flock
+	name = "Flock Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
+
 /datum/mining_encounter/syndicate
 	name = "Blocked Signal"
 	rarity_tier = 3
@@ -581,8 +615,8 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/simulated/wall/auto/asteroid/A
-	A = new base_rock(locate(center.x, center.y, center.z),0)
+	var/turf/simulated/wall/auto/asteroid/A = locate(center.x, center.y, center.z)
+	A.ReplaceWith(base_rock)
 	generated_turfs += A
 	var/turf/simulated/wall/auto/asteroid/B
 
@@ -599,7 +633,8 @@
 					continue
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
-				B = new base_rock(locate(S.x, S.y, S.z),0)
+				B = locate(S.x, S.y, S.z)
+				B.ReplaceWith(base_rock)
 				generated_turfs += B
 
 	return generated_turfs
@@ -886,7 +921,7 @@
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
 			if (prob(O.event_chance) && length(O.events) > 0)
-				var/new_event = pick(O.events)
+				var/new_event = weighted_pick(O.events)
 				var/datum/ore/event/E = new new_event
 				E.set_up(O)
 				AST.set_event(E)
@@ -914,5 +949,14 @@
 			amount++
 			continue
 		AST.set_event(E)
+
+/proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs, num_artifacts)
+	var/turf/simulated/wall/auto/asteroid/AST
+
+	shuffle_list(turfs)
+
+	for (var/i in 1 to min(length(turfs), num_artifacts))
+		AST = turfs[i]
+		AST.set_event(/datum/ore/event/artifact)
 
 #undef TURF_SPAWN_EDGE_LIMIT
