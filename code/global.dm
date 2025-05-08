@@ -90,7 +90,6 @@ var/global
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/spacePushList = list()
 	/// All the accessible areas on the station in one convenient place
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
@@ -274,8 +273,6 @@ var/global
 	game_start_delayed = 0
 	game_end_delayed = 0
 	game_end_delayer = null
-	ooc_allowed = 1
-	looc_allowed = 0
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
@@ -283,7 +280,6 @@ var/global
 	/// specifies if pcap kick messages show display to admins in chat
 	pcap_kick_messages = TRUE
 	traitor_scaling = 1
-	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
 	debug_mixed_forced_flock = 0
@@ -536,7 +532,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

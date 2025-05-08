@@ -46,6 +46,8 @@
 		if (!src.is_nudged)
 			var/image/glasses_flash_overlay = image('icons/mob/clothing/eyes.dmi', icon_state=flash_state, layer=src.wear_layer+0.1)
 			glasses_flash_overlay.alpha = 100
+			glasses_flash_overlay.pixel_y = H.mutantrace.head_offset
+			glasses_flash_overlay.appearance_flags = KEEP_TOGETHER
 			H.AddOverlays(glasses_flash_overlay, "glasses_flash")
 			playsound(H, 'sound/effects/glare.ogg', 60, pitch=2)
 			particleMaster.SpawnSystem(new /datum/particleSystem/glasses_sparkle(src.loc, src.color))

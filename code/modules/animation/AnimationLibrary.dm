@@ -1,5 +1,21 @@
 //Collection of animations we can reuse for stuff.
 //Try to isolate animations you create an put them in here.
+/proc/animate_stop(atom/A)
+	animate(A)
+
+/proc/animate_reset(atom/A)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(COLOR_MATRIX_IDENTITY)
+	A.color = COLOR_MATRIX_IDENTITY
+	A.transform = null
+	A.clear_filters()
+	A.alpha = 255
+	A.pixel_x = 0
+	A.pixel_y = 0
+	A.pixel_z = 0
+	animate(A)
+
 /proc/animate_buff_in(var/atom/A)
 	var/matrix/M = matrix(A.transform)
 	A.transform = A.transform.Scale(0.001)
@@ -1000,7 +1016,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A, min_time = 5, max_time = 10)
-	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
+	if (!istype(A) && !isclient(A) && !istype(A, /image/maptext))
 		return
 	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(color = "#FFFF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
@@ -1011,7 +1027,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
-	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
+	if (!istype(A) && !isclient(A) && !istype(A, /image/maptext))
 		return
 	for(var/the_color in colors_to_swap)
 		if(the_color == colors_to_swap[1])

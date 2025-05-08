@@ -256,6 +256,19 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	else
 		return ..()
 
+/obj/submachine/laundry_machine/hitby(atom/movable/MO, datum/thrown_thing/thr)
+	if (istype(MO, /mob/living))
+		if (src.open)
+			var/mob/living/M = MO
+			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
+			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
+			M.set_loc(src)
+			src.open = 0
+			UpdateIcon()
+	else
+		return ..()
+
+
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return

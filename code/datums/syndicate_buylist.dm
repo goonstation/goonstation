@@ -349,10 +349,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
-	items = list(/obj/item/pipebomb/bomb/miniature_syndicate)
+	items = list(/obj/item/assembly/timer_ignite_pipebomb/mini_syndicate)
 	cost = 3
 	vr_allowed = FALSE
-	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
+	desc = "A rather volatile pipe bomb packed with miniature syndicate troops. Assembled and ready for use"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -1092,6 +1092,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
 	job = list("Rancher", "Angler")
 	can_buy = UPLINK_TRAITOR
+	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/ai_laser
 	name = "AI Camera Laser Module"

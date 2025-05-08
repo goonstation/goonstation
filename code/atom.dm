@@ -39,13 +39,8 @@ TYPEINFO(/atom)
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
 
-	/// If hear_talk is triggered on this object, make my contents hear_talk as well
-	var/open_to_sound = 0
-
 	var/interesting = ""
 	var/stops_space_move = 0
-	/// Anything can speak... if it can speak
-	var/obj/chat_maptext_holder/chat_text
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
@@ -202,10 +197,6 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
-
-		if (!isnull(chat_text))
-			qdel(chat_text)
-			chat_text = null
 
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
@@ -549,10 +540,6 @@ TYPEINFO(/atom/movable)
 
 
 /atom/movable/disposing()
-	if (temp_flags & MANTA_PUSHING)
-		mantaPushList.Remove(src)
-		temp_flags &= ~MANTA_PUSHING
-
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
@@ -1418,3 +1405,12 @@ TYPEINFO(/atom/movable)
 ///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
 /atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
 	return TRUE
+
+///Removes anything that is glued to this atom
+/atom/proc/unglue_attached_to()
+	var/atom/Aloc = isturf(src) ? src : src.loc
+	for(var/atom/movable/AM in Aloc)
+		var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+		// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+		if(glued_comp?.glued_to == src && !isnull(glued_comp.glue_removal_time))
+			qdel(glued_comp)

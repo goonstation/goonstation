@@ -529,7 +529,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie/large,
-		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
+		/obj/item/clothing/suit/space/syndicate/specialist/heavy,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
 	assault
@@ -650,7 +650,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/heavy_power_sword,
 		/obj/item/clothing/shoes/swat/knight,
 		/obj/item/clothing/gloves/swat/syndicate/knight,
-		/obj/item/clothing/suit/space/syndicate/knight,
+		/obj/item/clothing/suit/space/syndicate/specialist/knight,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
@@ -819,7 +819,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
-		/obj/item/pipebomb/bomb/engineering = 2)
+		/obj/item/assembly/timer_ignite_pipebomb/engineering = 2)
 
 // evil nasty biohazard crate
 /obj/storage/crate/stxcrate

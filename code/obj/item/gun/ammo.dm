@@ -17,6 +17,8 @@
 	stamina_cost = 0
 	stamina_crit_chance = 5
 	inventory_counter_enabled = 1
+	///Can this ammo be cooked off by heating?
+	var/cookable = TRUE
 
 	proc
 		swap(var/obj/item/ammo/A)
@@ -299,6 +301,8 @@
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		. = ..()
+		if (!src.cookable)
+			return
 		if (temperature > (T0C + 400) && prob(60) && src.use(1)) //google told me this is roughly when ammo starts cooking off
 			SPAWN(rand(0,5)) //randomize a bit so piles of ammo don't shoot in waves
 				//shoot in a truly random direction
@@ -462,6 +466,19 @@
 	ammo_type = new/datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip-4"
 	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
+
+/obj/item/ammo/bullets/rifle_3006/single
+	sname = ".308 AP"
+	name = ".308 rifle magazine"
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
+	ammo_type = new/datum/projectile/bullet/rifle_3006
+	icon_state = "rifle_clip-1"
+	amount_left = 1
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
 	icon_dynamic = 1
@@ -725,6 +742,7 @@
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
 	throwforce = 0
+	cookable = FALSE
 
 //0.40
 /obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
@@ -846,6 +864,9 @@
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	weak //for nuke ops engineer
+		sname = "12ga Muckshot"
+		name = "12ga muckshot ammo box"
+		desc = "A box of weak buckshot shells, capable of tearing through soft tissue."
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
 

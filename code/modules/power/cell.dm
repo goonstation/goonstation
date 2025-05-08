@@ -259,15 +259,15 @@
 		src.explode()
 	else ..()
 
-/obj/item/cell/is_detonator_attachment()
-	return 1
-
-/obj/item/cell/detonator_act(event, var/obj/item/assembly/detonator/det)
+/obj/item/cell/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)
+		if ("attach")
+			det.initial_wire_functions += src
 		if ("pulse")
-			if (det.part_fs.time > 10)
-				det.part_fs.time = 10 //Oh no!
-				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously and decreases to [det.part_fs.time] seconds.</span>")
+			var/obj/item/device/timer/checked_timer = det.part_assembly.trigger
+			if (checked_timer.time > 10)
+				checked_timer.time = 10 //Oh no!
+				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously and decreases to [checked_timer.time] seconds.</span>")
 			else
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously.</span>")
 		if ("cut")

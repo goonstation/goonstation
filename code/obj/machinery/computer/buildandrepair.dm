@@ -48,20 +48,25 @@ TYPEINFO(/obj/item/circuitboard)
 		. = ..()
 
 /obj/item/circuitboard/security
-	name = "circuit board (security cameras)"
-	computertype = /obj/machinery/computer/security
+	name = "circuit board (security camera viewer)"
+	computertype = /obj/machinery/computer/camera_viewer
 	icon_state = "circuit_security"
 /obj/item/circuitboard/security_tv
 	name = "circuit board (security television)"
-	computertype = /obj/machinery/computer/security/wooden_tv
+	computertype = /obj/machinery/computer/television
 	icon_state = "circuit_security"
-/obj/item/circuitboard/small_tv
+/obj/item/circuitboard/public_tv
 	name = "circuit board (television)"
-	computertype = /obj/machinery/computer/security/wooden_tv/small
+	computertype = /obj/machinery/computer/television/public
 	icon_state = "circuit_civilian"
-/obj/item/circuitboard/communications
-	name = "circuit board (communications)"
-	computertype = /obj/machinery/computer/communications
+/obj/item/circuitboard/cargo_tv
+	name = "circuit board (routing depot monitor)"
+	computertype = /obj/machinery/computer/television/cargo
+	icon_state = "circuit_engineering"
+/obj/item/circuitboard/small_tv
+	name = "circuit board (small television)"
+	computertype = /obj/machinery/computer/television/small
+	icon_state = "circuit_civilian"
 
 // ID Card computers
 /obj/item/circuitboard/card
@@ -99,14 +104,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
-	icon_state = "circuit_engineering"
-/obj/item/circuitboard/air_management
-	name = "circuit board (atmospheric monitor)"
-	computertype = /obj/machinery/computer/general_air_control
-	icon_state = "circuit_engineering"
-/obj/item/circuitboard/injector_control
-	name = "circuit board (injector control)"
-	computertype = /obj/machinery/computer/general_air_control/fuel_injection
 	icon_state = "circuit_engineering"
 /obj/item/circuitboard/general_alert
 	name = "circuit board (general alert)"

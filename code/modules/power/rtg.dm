@@ -68,10 +68,10 @@
 		var/t = "<B>Radioisotope Thermoelectric Generator</B><br>"
 		t += "Output: [src.lastgen]W<br>"
 		if (fuel_pellet)
-			t += "Fuel pellet: [round(fuel_pellet.material.getProperty("radioactive"), 0.1)] rads <a href='?src=\ref[src];eject=1'>Eject</a><br>"
+			t += "Fuel pellet: [round(fuel_pellet.material.getProperty("radioactive"), 0.1)] rads <a href='byond://?src=\ref[src];eject=1'>Eject</a><br>"
 		else
 			t += "No fuel pellet inserted.<br>"
-		t += "<a href='?src=\ref[src];close=1'>Close</a>"
+		t += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 		user.Browse(t, "window=rtg")
 		onclose(user, "rtg")
 
