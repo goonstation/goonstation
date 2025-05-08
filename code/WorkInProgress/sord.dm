@@ -452,7 +452,6 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	health_burn = 50
 	health_burn_vuln = 0.3
 	reagent_capacity = 0
-	var/obj/spookMarker/spawn_marker = null
 
 /mob/living/critter/spider/weblaying/baby
 	name = "li'l weblaying spider"
@@ -515,7 +514,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/turf/T = get_turf(src.holder.owner)
 		if (!isturf(T) || istype(T, /turf/space))
-			boutput(src.holder.owner, SPAN_ALERT("You can't lay an egg!"))
+			boutput(src.holder.owner, SPAN_ALERT("You can't lay an egg there!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(holder.owner, SPAN_NOTICE("You lay a teeny tiny egg."))
 		src.doCooldown()
@@ -529,8 +528,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
-		var/obj/spookMarker/marker = new /obj/spookMarker(T)
-		W.spawn_marker = marker
+		var/spawnturf = T
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a weblaying spider? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a weblaying spider. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -545,13 +543,11 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			logTheThing(LOG_ADMIN, null, "Couldn't set up weblaying spider; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, SPAN_ALERT("None of the eggs hatch. The egg withers and dies."))
-				qdel(marker)
 				return
 			else
 				boutput(W, SPAN_ALERT("None of the eggs hatch. Trying again in three minutes..."))
-				qdel(marker)
-				SPAWN(3 MINUTES)
-					make_weblaying_spider(W, T, tries++)
+				SPAWN(15 SECONDS)
+					make_weblaying_spider(W, spawnturf, tries++)
 			return
 		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.add_antagonist(ROLE_ANTAGONIST_CRITTER, source = ANTAGONIST_SOURCE_SUMMONED))
@@ -559,11 +555,9 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			message_admins("[lucky_dude.key] respawned as a weblaying_spider for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
-			B.make_critter(/mob/living/critter/spider/weblaying/baby, marker.loc)
+			B.make_critter(/mob/living/critter/spider/weblaying/baby, spawnturf)
 			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
-			boutput(W, SPAN_NOTICE("The egg you planted at [marker.loc] has hatched into a new spider!"))
-		W.spawn_marker = null
-		qdel(marker)
+			boutput(W, SPAN_NOTICE("The egg you planted at [spawnturf] has hatched into a new spider!"))
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 /obj/item/gun/kinetic/breakaction
