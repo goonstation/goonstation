@@ -451,6 +451,28 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postit-writing"
 	info ={"Congaline"}
 
+/obj/item/paper/cultbase_skeptic
+	name = "hastily scrawn note"
+	icon_state = "paper"
+	info = {"I've finally gotten a pen and paper together, they don't want us initiates documenting anything.<br>
+	The leader in charge of us initiates has told us simply to "experiment with the doctrine", and seems to be hiding something behind his dresser. I hear odd noises at night,<br>
+	screams going straight into my head. With everyone getting acting stranger everyday hopefully this air will get me far enough to create<br>
+	a distress call. If you see this note and aren't one of them, <i>GO THE OTHER WAY<i>."}
+
+/obj/item/paper/cultbase_observations
+	name = "ritual progress notes"
+	icon_state = "paper"
+	info = {"The initiates have tried textbook methods to commune with the deep using the plasmacoral as a amplifier. <br>
+	Limited success in operations of this scale, although there has been slight reactions from subject D-01 during initiate <br>
+	sermons, more data needed."}
+
+/obj/item/paper/cultbase_initiate_leader
+	name = "Update: Initiate Training"
+	icon_state = "paper"
+	info = {"The initiates are getting rowdy, the only successful ritual that they've improvised is from the one that's now <br>
+	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep a eye on that one. <br>
+	Operations in the back are going well though, although I think that one is catching on."}
+
 /obj/item/paper/telecrystal_update
 	name = "email printout"
 	info = {"

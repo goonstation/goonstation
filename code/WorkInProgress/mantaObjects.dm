@@ -1624,6 +1624,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		pitwall
 			icon_state = "pit_wall"
 
+	cult
+		name = "ominious abyss"
+		desc = "The water below vibrates with a tension, as though it was raging."
+		falltarget = LANDMARK_FALL_CULTIST
+
+		pitwall
+			icon_state = "pit_wall"
+
 //-------------------------------------------- NSS MANTA SECRET VAULT --------------------------------------------
 
 /obj/vaultdoor
