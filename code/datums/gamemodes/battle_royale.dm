@@ -401,12 +401,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
-	#ifdef SECRETS_ENABLED
-		utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
-		utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
-		utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
-		utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
-	#endif
+#ifdef SECRETS_ENABLED
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+#endif
 
 
 	var/total_storage
