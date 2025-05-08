@@ -1,5 +1,22 @@
 
 (t)wed may 07 25
+(u)JORJ949
+(p)23354
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)"Fired" is now a valid word for the lawbringer's hotshot mode. Go terminate those contracts!
+(u)JORJ949
+(p)23319
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawbringers now check every word in a message for mode selection rather than the entire message.
+(u)CalliopeSoups
+(p)23276
+(e)🎨⏰🐁|C-Sprites, A-Status-Effects, A-Critters
+(*)Mimics will now scale their health and speed with the size of their disguise. Report any unfitting values.
+(+)Mimic is now an action bar and has a slightly longer cooldown.
+(u)FlameArrow57 & Mr. Moriarty
+(p)23138
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added manufacturable lanterns to fabs! They light up your immediate vicinity rather than directionally like flashlights
 (u)glowbold
 (p)23217
 (e)💅🤖|C-QoL, A-Silicons

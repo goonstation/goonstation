@@ -18,7 +18,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
-	open_to_sound = TRUE
 	throwforce = 10
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	p_class = 2.5
