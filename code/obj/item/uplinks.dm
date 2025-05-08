@@ -1448,6 +1448,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 		book.antag_datum.purchased_spells.Add(src) // Remember spell for crew credits
 
 //------------ ENCHANTMENT SPELLS ------------//
+/*
 /datum/SWFuplinkspell/soulguard
 	name = "Soulguard"
 	eqtype = "Enchantment"
@@ -1462,6 +1463,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
 		user.spell_soulguard = SOULGUARD_SPELL
+*/
 
 //------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu

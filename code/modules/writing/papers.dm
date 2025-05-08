@@ -39,14 +39,14 @@
 	<li>Wizard's robe</li><dd><i>- Required for spellcasting, comfy. Don't let others remove it from you!</i></dd>
 	<li>Magic sandals</li><dd><i>- Keeps you from slipping on ice and from falling down after being hit by a runaway segway. They also double as galoshes.</i></dd>
 	<li>Wizard's staff</li><dd><i>- Your spells will be greatly weakened, not last as long and take longer to recharge if you cast them without one of these. The staff can be easily lost if you are knocked down!</i></dd>
-	<li>Teleportation scroll</li><dd><i>- Allows instant teleportation to an area of your choice. The scroll has four charges. Don't lose it though, or you can't get back to the shuttle without knowing the <b><i>teleport</b></i> spell, or dying while <b><i>soulguard</b></i> is active!</i></dd>
 	<li>Spellbook</li><dd><i>- This is your personal spellbook that gives you access to the Wizarding Archives, allowing you to choose 4 spells with which to complete your objectives. The spellbook only works for you, and can be discarded after its uses are expended.</i></dd>
 	<br><br><br><hr>Spells every wizard starts with:<br><br>
 	<li>Magic missile (25 seconds)</li><dd><i>- This spell fires several slow-moving projectiles at nearby targets. If they hit a target, it is stunned and takes minor damage.</i></dd>
 	<li>Phase shift (30 seconds)</li><dd><i>- This spell briefly turns your form ethereal, allowing you to pass invisibly through anything.</i></dd>
 	<li>Clairvoyance (60 seconds)</li><dd><i>- This spell will tell you the location of those you target with it. It will also inform you if they are hiding inside something, or are dead.</i></dd>
+	<li>Flee (60 seconds)</li><dd><i>- This spell will recite a remembered, limited use incantation, automatically taking you back to the wizard den. It only has 3 uses, so use them wisely!</i></dd>
 	<br><br><br>Click the question mark in your <b>spellbook</b> to learn more about certain spells.<br>Recommended loadout for beginners: <b><i>ice burst, blink, shocking touch, blind</i></b>
-	<br><br><br><center>Remember, the wizard shuttle is your home base.<br>There is a vendor and wardrobe here to dispense backup wizardly apparel and staves, a <b>Magix System IV</b> computer to teleport you into the station, and this is your safe point of return if you are killed while the <b><i>soulguard enchantment</b></i> is active.
+	<br><br><br><center>Remember, the wizard shuttle is your home base.<br>There is a vendor and wardrobe here to dispense backup wizardly apparel and staves, and a <b>Magix System IV</b> computer to teleport you into the station.
 	<br><br><br>A good wizard fights cautiously and defensively. Keep your distance from able-bodied enemies whenever possible, and you will survive much longer. Sometimes misdirection is more useful than outright destruction, but don't be afraid to fling a fireball if you're sure it won't explode right in your face!</center><br>"}
 
 /obj/item/paper/Internal

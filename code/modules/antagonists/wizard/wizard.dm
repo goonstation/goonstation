@@ -33,6 +33,7 @@
 			src.ability_holder.addAbility(/datum/targetable/spell/phaseshift)
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 			src.ability_holder.addAbility(/datum/targetable/spell/clairvoyance)
+			src.ability_holder.addAbility(/datum/targetable/spell/flee)
 		else
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 
@@ -56,12 +57,9 @@
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), SLOT_R_STORE)
 		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
-		if (!src.vr)
-			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
-
 		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
-		H.equip_if_possible(SB, SLOT_BELT)
+		H.equip_if_possible(SB, SLOT_L_HAND)
 
 		H.equip_sensory_items()
 		H.equip_body_traits(extended_tank=TRUE)
