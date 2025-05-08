@@ -1,5 +1,9 @@
 
 (t)thu may 08 25
+(u)TDHooligan
+(p)23212
+(e)⚖🎭|C-Balance, A-RP
+(+)Thirst's stamina penalty has been halved.
 (u)Mr. Moriarty
 (p)23304
 (e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
