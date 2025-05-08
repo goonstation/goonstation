@@ -50,6 +50,9 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when an atom say()s anything
+	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
+	#define COMSIG_ATOM_SAY "atom_say"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 	/// sent to the parent object when its handset retracts, see /datum/component/cord
@@ -269,8 +272,6 @@
 	#define COMSIG_MOB_POINT "mob_point"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
-	/// Sent when the mob says something (message)
-	#define COMSIG_MOB_SAY "mob_say"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
 	#define COMSIG_MOB_TRIGGER_THREAT "mob_threat"
 	/// Sent when a mob changes its lying state (lying)
@@ -280,15 +281,6 @@
 
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
-
-	// ---- typing indicator signals ----
-
-	/// Create typing indicator
-	#define COMSIG_CREATE_TYPING "create_typing"
-	/// Remove typing indicator
-	#define COMSIG_REMOVE_TYPING "remove_typing"
-	/// Speech bubble
-	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
 
 	// ---- disguiser device signal ----
 
