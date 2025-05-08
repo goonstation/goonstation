@@ -517,6 +517,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	C.mind.assigned_role = "Animal"
 	C.say_language = LANGUAGE_ANIMAL
+	C.ensure_listen_tree().AddKnownLanguage(LANGUAGE_ANIMAL)
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE

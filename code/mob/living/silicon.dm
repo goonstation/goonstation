@@ -562,19 +562,25 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/proc/set_fake_laws()
 	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
+	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Default Laws")
+	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", fake_lawset_choices)
 	if (!law_base_choice)
 		return
 	var/law_base = ""
-	if(law_base_choice == "Real Laws")
-		if(src.law_rack_connection)
-			law_base = src.law_rack_connection.format_for_logs("\n")
-		else
-			law_base = ""
-	else if(law_base_choice == "Fake Laws")
-		for(var/fake_law in src.fake_laws)
-			// this is just the default input for the user, so it should be fine
-			law_base += "[html_decode(fake_law)]\n"
+	switch(law_base_choice)
+		if("Real Laws")
+			if(src.law_rack_connection)
+				law_base = src.law_rack_connection.format_for_logs("\n")
+			else
+				law_base = ""
+		if("Fake Laws")
+			for(var/fake_law in src.fake_laws)
+				// this is just the default input for the user, so it should be fine
+				law_base += "[html_decode(fake_law)]\n"
+		if("Default Laws")
+			law_base += "1: [/obj/item/aiModule/asimov1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/asimov2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/asimov3::lawText]\n"
 
 	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
