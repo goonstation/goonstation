@@ -1003,7 +1003,6 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	sounds_instrument = null
 	randomized_pitch = 0
 	use_new_interface = TRUE
-	volume = 20
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
