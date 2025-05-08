@@ -443,13 +443,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					// Syndicate gear lockers
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)
 					var/obj/weapon = pick(murder_supplies)
-					var/obj/utilty = pick(utility_supplies)
 					new weapon(locker)
 					if (prob(25))
 						weapon = pick(weapon_supplies)
 						new weapon(locker)
 					if (prob(15))
-						utility = pick(utility_supplies)
+						var/obj/utility = pick(utility_supplies)
 						new utility(locker)
 				else
 					// Misc weapon and armor chests
@@ -463,7 +462,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
 					if (prob(25))
 						var/obj/utility = pick(utility_supplies)
-						new /obj/utility = pick(utility_supplies)
+						new utility
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
