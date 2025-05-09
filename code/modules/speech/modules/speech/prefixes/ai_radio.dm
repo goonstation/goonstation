@@ -27,6 +27,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
+	message.relay_flags |= SAY_RELAY_RADIO
 
 /datum/speech_module/prefix/postmodifier/ai_radio/get_prefix_choices()
 	var/obj/item/device/radio/radio = src.get_radio(src.parent_tree.speaker_origin)

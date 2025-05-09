@@ -864,7 +864,8 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod)
+		/obj/item/fishing_rod,
+		/obj/item/syndie_fishing_rod)
 	check_wclass = 1
 
 	prepared

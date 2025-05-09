@@ -29,7 +29,7 @@ TYPEINFO(/atom)
 
 	// Listen Variables:
 	/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.
-	var/open_to_sound = FALSE
+	var/open_to_sound = TRUE
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
