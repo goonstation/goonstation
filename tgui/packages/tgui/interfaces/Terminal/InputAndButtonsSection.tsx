@@ -18,36 +18,24 @@ export const InputAndButtonsSection = () => {
 
   const [localInputValue, setLocalInputValue] = useState(inputValue);
 
-  const setDOMInputValue = (value) => {
-    // In theory, only calling setLocalInputValue(...) should work, but it doesn't, and requires the below hack to work.
-    // I think the cause of this is the useEffect() in tgui's Input.tsx. I couldn't find a workaround.
-    const domInput = document.querySelector(
-      ".terminalInput input[class^='_inner']",
-    );
-    if (domInput) {
-      (domInput as HTMLInputElement).value = value;
-    }
-  };
-
   const handleInputEnter = useCallback(
-    (_e, value) => act('text', { value: value, ckey: ckey }),
+    (value: string) => act('text', { value, ckey }),
     [act, ckey],
   );
   const handleEnterClick = useCallback(() => {
-    act('text', { value: localInputValue, ckey: ckey });
+    act('text', { value: localInputValue, ckey });
     setLocalInputValue('');
-    setDOMInputValue('');
   }, [act, ckey, localInputValue]);
   const handleHistoryPrevious = useCallback(
-    () => act('history', { direction: 'prev', ckey: ckey }),
+    () => act('history', { direction: 'prev', ckey }),
     [act, ckey],
   );
   const handleHistoryNext = useCallback(
-    () => act('history', { direction: 'next', ckey: ckey }),
+    () => act('history', { direction: 'next', ckey }),
     [act, ckey],
   );
   const handleInputChange = useCallback(
-    (_e, value) => setLocalInputValue(value),
+    (value: string) => setLocalInputValue(value),
     [],
   );
   const handleRestartClick = useCallback(() => act('restart'), [act]);
@@ -55,7 +43,6 @@ export const InputAndButtonsSection = () => {
   // When inputValue changes, it means a history event happened, so only then should we erase local input value with what was received from the server.
   useEffect(() => {
     setLocalInputValue(inputValue);
-    setDOMInputValue(inputValue);
   }, [inputValue]);
 
   return (
@@ -70,8 +57,8 @@ export const InputAndButtonsSection = () => {
             selfClear
             fluid
             mr="0.5rem"
-            onKeyUp={handleHistoryPrevious}
-            onKeyDown={handleHistoryNext}
+            onUpPressed={handleHistoryPrevious}
+            onDownPressed={handleHistoryNext}
             onEnter={handleInputEnter}
             onBlur={handleInputChange}
           />

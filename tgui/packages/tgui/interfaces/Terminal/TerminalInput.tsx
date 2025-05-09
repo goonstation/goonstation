@@ -6,24 +6,28 @@
  */
 
 import { KEY } from 'common/keys';
-import { KeyboardEventHandler, useCallback } from 'react';
+import { ComponentProps, KeyboardEventHandler, useCallback } from 'react';
 import { Input } from 'tgui-core/components';
 
-export const TerminalInput = (props) => {
-  const { onKeyUp, onKeyDown, onKey, ...rest } = props;
+interface TerminalInputProps extends ComponentProps<typeof Input> {
+  onUpPressed: (e: React.KeyboardEvent, value: KEY) => void;
+  onDownPressed: (e: React.KeyboardEvent, value: KEY) => void;
+}
 
-  const checkArrows: KeyboardEventHandler = useCallback(
+export const TerminalInput = (props: TerminalInputProps) => {
+  const { onUpPressed, onDownPressed, onKeyDown, ...rest } = props;
+
+  const checkArrows: KeyboardEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       const e_value = e.key;
       if (e_value === KEY.Up) {
-        onKeyUp?.(e, e_value);
+        onUpPressed?.(e, e_value);
       } else if (e_value === KEY.Down) {
-        onKeyDown?.(e, e_value);
-      } else {
-        onKey?.(e, e_value);
+        onDownPressed?.(e, e_value);
       }
+      onKeyDown?.(e);
     },
-    [onKey, onKeyDown, onKeyUp],
+    [onDownPressed, onUpPressed],
   );
 
   return <Input onKeyDown={checkArrows} {...rest} />;

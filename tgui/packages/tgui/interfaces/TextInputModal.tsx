@@ -120,7 +120,7 @@ const InputArea = (props: {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown={(event) => {
         if (!(event.key === KEY.Enter) || (visualMultiline && event.shiftKey)) {
           return;
         }
