@@ -1,8 +1,8 @@
 /obj/item/raw_material/
 	name = "construction materials"
 	desc = "placeholder item!"
-	icon = 'icons/obj/materials.dmi'
-	icon_state = "ore"
+	icon = 'icons/obj/items/ores.dmi'
+	icon_state = "ore1_"
 	force = 4
 	throwforce = 6
 	var/material_name = "Ore" //text to display for this ore in manufacturers
@@ -14,7 +14,7 @@
 	var/powersource = 0
 	var/scoopable = 1
 	burn_remains = BURN_REMAINS_MELT
-	var/wiggle = 6 // how much we want the sprite to be deviated fron center
+	var/wiggle = 6 // how much we want the sprite to be deviated from center
 	max_stack = 50
 	event_handler_flags = USE_FLUID_ENTER
 	/// Does the raw material item get its name set?
@@ -29,6 +29,7 @@
 		setup_material()
 		if(src.material?.getName())
 			initial_material_name = src.material.getName()
+		_update_stack_appearance()
 
 	proc/setup_material() // Overwrite for ore specific setup
 		return
@@ -36,8 +37,26 @@
 	_update_stack_appearance()
 		if(material)
 			UpdateName(src) // get the name in order so it has whatever it needs
-			name = "[amount] [src.name][amount > 1 ? "s":""]"
-		return
+			if(src.amount == 1)
+				name = "[src.name]"
+			else
+				name = "[amount] [src.name]s"
+		update_icon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "ore1_$$[src.material.getName()]"
+			if(2 to 4)
+				src.icon_state = "ore2_$$[src.material.getName()]"
+			if(5 to 11)
+				src.icon_state = "ore3_$$[src.material.getName()]"
+			if(12 to 31)
+				src.icon_state = "ore4_$$[src.material.getName()]"
+			if(32 to 49)
+				src.icon_state = "ore5_$$[src.material.getName()]"
+			else
+				src.icon_state = "ore6_$$[src.material.getName()]"
 
 	attackby(obj/item/W, mob/user)
 		if(check_valid_stack(W))
@@ -132,7 +151,7 @@
 					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
-			return
+		return
 
 	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
@@ -212,16 +231,27 @@
 /obj/item/raw_material/rock
 	name = "stone"
 	desc = "It's plain old space rock. Pretty worthless!"
-	icon_state = "rock1"
+	icon_state = "rock_1"
 	force = 8
 	throwforce = 10
 	scoopable = 0
 	material_name = "Stone"
 	default_material = "rock"
 
-	setup_material()
-		..()
-		src.icon_state = pick("rock1","rock2","rock3")
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = pick("ore1_", "ore1b_", "ore1c_") + "$$[src.material.getName()]"
+			if(2 to 4)
+				src.icon_state = "ore2_$$[src.material.getName()]"
+			if(5 to 11)
+				src.icon_state = "ore3_$$[src.material.getName()]"
+			if(12 to 31)
+				src.icon_state = "ore4_$$[src.material.getName()]"
+			if(32 to 49)
+				src.icon_state = "ore5_$$[src.material.getName()]"
+			else
+				src.icon_state = "ore6_$$[src.material.getName()]"
 
 /obj/item/raw_material/mauxite
 	name = "mauxite ore"
@@ -281,6 +311,15 @@
 	material_name = "Claretine"
 	default_material = "claretine"
 	conductor = 2
+
+	_update_stack_appearance()
+		if(material)
+			UpdateName(src)
+			if(src.amount == 1)
+				name = "[src.name]"
+			else
+				name = "[amount] scoops of [src.name]"
+		UpdateIcon()
 
 /obj/item/raw_material/bohrum
 	name = "bohrum ore"
@@ -373,10 +412,10 @@
 	powersource = 1
 	crystal = 1
 
-
 /obj/item/raw_material/gemstone
 	name = "gem"
 	desc = "A gemstone. It's probably pretty valuable!"
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "gem1"
 	material_name = "Gem"
 	default_material = null
@@ -407,6 +446,7 @@
 	desc = "A nugget of Uqill, a rare and very dense stone."
 	material_name = "Uqill"
 	default_material = "uqill"
+	w_class = W_CLASS_POCKET_SIZED // Should fit in your pocket, since it is so dense.
 	dense = 2
 
 /obj/item/raw_material/fibrilith
@@ -449,8 +489,23 @@
 /obj/item/raw_material/miracle
 	name = "miracle matter"
 	desc = "Miracle Matter is a bizarre substance known to metamorphosise into other minerals when processed."
+	icon = 'icons/obj/items/ores_miracle.dmi'
 	material_name = "Miracle"
 	default_material = "miracle"
+	var/static/shape = pick("ore","sphere","torus") // Shift's randomized miracle matter shape
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "[src.shape]1_$$miracle"
+			if(2 to 4)
+				src.icon_state = "[src.shape]2_$$miracle"
+			if(5 to 11)
+				src.icon_state = "[src.shape]3_$$miracle"
+			if(12 to 35)
+				src.icon_state = "[src.shape]4_$$miracle"
+			else
+				src.icon_state = "[src.shape]5_$$miracle"
 
 /obj/item/raw_material/starstone
 	name = "starstone"
@@ -489,6 +544,7 @@
 /obj/item/raw_material/neutronium
 	name = "neutronium ore"
 	desc = "An ore containing deadly neutronium metal."
+	icon = 'icons/obj/materials.dmi'
 	material_name = "Neutronium"
 	default_material = "neutronium"
 
@@ -498,6 +554,7 @@
 /obj/item/raw_material/fabric
 	name = "fabric sheet"
 	desc = "Some spun cloth. Useful if you want to make clothing."
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "fabric"
 	material_name = "Fabric"
 	scoopable = 0
@@ -505,6 +562,7 @@
 /obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "cotton"
 	material_name = "Cotton"
 	default_material = "cotton"
@@ -521,6 +579,7 @@
 	// this should only be spawned by the game, spawning it otherwise would just be dumb
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "scrap"
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = FALSE
@@ -536,6 +595,7 @@
 	// same deal here
 	name = "shard"
 	desc = "A jagged piece of broken crystal or glass. It could probably be smelted down into something more useful."
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "shard"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
@@ -620,8 +680,8 @@
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
 
 /obj/item/raw_material/chitin
-	name = "chitin chunk"
-	desc = "A chunk of chitin."
+	name = "chitin sample"
+	desc = "Hard exoskeletal remains left behind by a hopefully-extinct species."
 	material_name = "Chitin"
 	default_material = "chitin"
 	metal = 3
