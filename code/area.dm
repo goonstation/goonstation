@@ -3778,11 +3778,11 @@ proc/unlock_listening_post(mob/user)
 		name ="Syndicate Assault Vessel"
 
 /area/listeningpost/vestibule
-	name = "Listening Post"
+	name = "Listening Post Vestibule"
 	icon_state = "purple"
 
 /area/listeningpost/general
-	name = "Listening Post"
+	name = "Listening Post Lobby"
 	icon_state = "red"
 
 /area/listeningpost/barracks
