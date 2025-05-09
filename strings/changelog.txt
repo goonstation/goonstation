@@ -1,4 +1,9 @@
 
+(t)fri may 09 25
+(u)EmeraldCrow
+(p)23389
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Adds two new donator figurines to the game.
 (t)thu may 08 25
 (u)Chasu
 (p)23278
