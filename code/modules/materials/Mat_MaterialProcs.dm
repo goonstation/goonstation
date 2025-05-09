@@ -553,6 +553,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
+			// I.temperature_expose(temperature = C.bodytemperature)
 			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
@@ -562,16 +563,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It would melt when exposed to heat."
 
 	execute(var/atom/owner, var/temp)
-		if(temp < T0C) return // less than reaction temp
-
-		var/turf/T = get_turf(owner)
-
-		// Make a water puddle and chunks
-		if (istype(T))
-			if (!istype(owner, /obj/item/raw_material))
-				var/obj/item/raw_material/ice/cube = new /obj/item/raw_material/ice(T)
-				cube.set_loc(T)
-			make_cleanable(/obj/decal/cleanable/water, T)
+		if(temp <= T0C)
+			owner.delStatus("melting")
+		else
+			owner.setStatusMin("melting", (temp - T0C) * 0.2)
+		if(!istype(owner, /obj/item/raw_material/ice))
+			var/turf/T = get_turf(owner)
+			if (!istype(T))
+				return
+			var/obj/item/raw_material/ice/cube = new /obj/item/raw_material/ice(T)
+			cube.set_loc(T)
 			owner.visible_message(SPAN_NOTICE("[owner] melts, dissolving into water."))
 			playsound(owner, 'sound/misc/drain_glug.ogg', 50, TRUE, 5)
 			qdel(owner)

@@ -3683,3 +3683,50 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/melting
+	id = "melting"
+	name = "Melting"
+	desc = "I'm melting! Melting! Oh, what a world!"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/obj/item/raw_material/ice/ice_chunk = null
+	var/total_time = 0
+
+	onAdd()
+		..()
+		if(istype(src.owner, /obj/item/raw_material/ice))
+			src.ice_chunk = src.owner
+			src.ice_chunk.melting = TRUE
+			src.ice_chunk.UpdateIcon()
+
+	onUpdate(var/timePassed)
+		..()
+		total_time += timePassed
+		if(src.ice_chunk)
+			if(src.ice_chunk.amount == 1)
+				melt_obj()
+			else
+				src.ice_chunk.amount--
+		else if(total_time > 5 SECONDS)
+			melt_obj()
+
+	onRemove()
+		..()
+		if(src.ice_chunk)
+			src.ice_chunk.melting = FALSE
+			src.ice_chunk.UpdateIcon()
+
+	proc/melt_obj()
+		if(src.ice_chunk)
+			return
+		var/turf/T = get_turf(src.owner)
+		if (!istype(T))
+			return
+		var/obj/item/raw_material/ice/cube = new /obj/item/raw_material/ice(T)
+		cube.set_loc(T)
+		src.owner.visible_message(SPAN_NOTICE("[src.owner] melts, dissolving into water."))
+		playsound(src.owner, 'sound/misc/drain_glug.ogg', 50, TRUE, 5)
+		qdel(src.owner)
+
+
+

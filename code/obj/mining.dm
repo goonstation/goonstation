@@ -375,8 +375,8 @@
 	req_access = list(access_mining, access_mining_outpost)
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
-	var/attract_time = 300
-	var/cooldown_time = 1200
+	var/attract_time = 100
+	var/cooldown_time = 10
 	var/active = 0
 	var/last_used = 0
 	var/last_use_attempt = 0
@@ -1365,9 +1365,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if (O)
 				ore_to_create = O.output
 				O.onExcavate(src)
-			var/makeores
-			for(makeores = src.amount, makeores > 0, makeores--)
-				new ore_to_create(src)
+			var/combine_prob = 20 * src.amount // Larger ore drops should be more likely to stack
+			var/list/obj/item/new_ores = new()
+			for(var/makeores = src.amount, makeores > 0, makeores--)
+				if(prob(combine_prob) && length(new_ores) > 0)
+					var/obj/item/ore_rand = pick(new_ores)
+					ore_rand.stack_item(new ore_to_create(src))
+				else
+					new_ores += new ore_to_create(src)
 		if(!icon_old)
 			icon_old = icon_state
 
