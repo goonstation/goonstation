@@ -1001,7 +1001,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
-	randomized_pitch = 0
+	randomized_pitch = FALSE
 	use_new_interface = TRUE
 
 /obj/storage/crate/wooden/instruments
