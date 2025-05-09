@@ -679,7 +679,7 @@
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
 			SPAWN(0)
-				emote("deathgasp")
+				emote("deathgasp", dead_check = FALSE)
 				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
@@ -735,7 +735,7 @@
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		emote("deathgasp", dead_check = FALSE) //let the world KNOW WE ARE DEAD
 
 	if (!inafterlife(src) && !istestdummy(src) && !isvirtual(src) && !src.hasStatus("in_afterlife") && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)

@@ -7,6 +7,7 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
+	soundproofing = 20
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
