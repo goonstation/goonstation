@@ -322,10 +322,7 @@ TYPEINFO(/obj/item/device/pda_module)
 
 		if(isliving(user))
 			playsound(src, 'sound/items/security_alert.ogg', 60)
-			var/map_text = null
-			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "color: #D30000; font-size: 6px;", alpha = 215)
-			for (var/mob/O in hearers(user))
-				O.show_message(assoc_maptext = map_text, just_maptext = TRUE)
+			DISPLAY_MAPTEXT(usr, hearers(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/alert, "Emergency alert sent. Please assist this officer.", "#D30000")
 			user.visible_message(SPAN_ALERT("[user] presses a red button on the side of their [src.host]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.host]."),
 			SPAN_ALERT("You see [user] press a button on the side of their [src.host]."))
