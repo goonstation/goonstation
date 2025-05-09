@@ -2454,14 +2454,13 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_back = null //flamethrower given in special setup
 	slot_rhan = null //napalm tank is a jetpack
 	items_in_belt = list(/obj/item/fireaxe,
-		/obj/item/storage/grenade_pouch/incendiary,
-		/obj/item/paper/nast_manual)
+		/obj/item/storage/grenade_pouch/incendiary)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		var/obj/item/gun/flamethrower/backtank/flamethrower = new /obj/item/gun/flamethrower/backtank/napalm(M)
 		var/obj/item/tank/jetpack/backtank/our_tank = flamethrower.fueltank
-		our_tank.Attackby(flamethrower, M)
+		our_tank.insert_flamer(flamethrower, M)
 		M.equip_if_possible(our_tank, SLOT_BACK)
 
 /datum/job/special/syndicate/specialist/marksman
