@@ -144,7 +144,7 @@
 		if(one && two) return 1
 		else return 0
 
-/datum/material_recipe/osmiridium
+/datum/material_recipe/voltite
 	name = "voltite"
 	result_id = "voltite"
 
