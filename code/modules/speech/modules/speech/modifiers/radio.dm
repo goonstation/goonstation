@@ -21,6 +21,8 @@
 	id = SPEECH_MODIFIER_INTERCOM
 
 /datum/speech_module/modifier/radio/intercom/process(datum/say_message/message)
+	. = message
+
 	var/obj/item/device/radio/intercom/intercom = message.speaker
 	if (!istype(intercom))
 		return
@@ -28,8 +30,6 @@
 	var/AI_speaker = isAI(message.original_speaker)
 	if ((!intercom.forced_maptext && !AI_speaker) || (intercom.frequency == R_FREQ_DEFAULT))
 		return ..()
-
-	. = message
 
 	message.flags &= ~SAYFLAG_NO_MAPTEXT
 

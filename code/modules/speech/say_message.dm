@@ -356,6 +356,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		[src.format_content_style_suffix]\
 		[src.format_content_suffix]\
 	"}
+
 /// Returns the heard name of the speaker, taking into account masks, voice changers, and IDs.
 /datum/say_message/proc/get_speaker_name(heard_name_only = FALSE)
 	if (!ismob(src.speaker))
