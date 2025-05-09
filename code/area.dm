@@ -3763,6 +3763,7 @@ proc/unlock_listening_post(mob/user)
 	minimaps_to_render_on = MAP_SYNDICATE
 	station_map_colour = MAPC_SYNDICATE
 	occlude_foreground_parallax_layers = TRUE
+	expandable = FALSE
 	var/unlocks_post = TRUE
 
 	Entered(atom/movable/A, atom/oldloc)
@@ -3803,20 +3804,21 @@ proc/unlock_listening_post(mob/user)
 /area/listeningpost/solars
 	name = "Listening Post Solar Array"
 	icon_state = "yellow"
-	requires_power = 0
 	luminosity = 1
+	requires_power = FALSE
 	unlocks_post = FALSE
 
 /area/listeningpost/comm_dish
 	name = "Listening Post Comms Dish"
 	icon_state = "blue"
 	luminosity = 1
+	requires_power = FALSE
 	unlocks_post = FALSE
 
 /area/listeningpost/landing_bay
 	name = "Listening Post Landing Bay"
 	icon_state = "hangar"
-	requires_power = 0
+	requires_power = FALSE
 	lightswitch = TRUE
 	unlocks_post = FALSE
 

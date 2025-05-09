@@ -486,6 +486,8 @@
 /area/listeningpost/tech_room)
 "ts" = (
 /obj/machinery/light/incandescent/warm,
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_north,
 /area/listeningpost/barracks)
 "tv" = (
@@ -517,16 +519,6 @@
 	icon_state = "leadjunction_gray"
 	},
 /area/listeningpost/barracks)
-"ur" = (
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
-/obj/item/tank/pocket/extended/oxygen,
-/turf/simulated/floor/black,
-/area/listeningpost/general)
 "uw" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray,
 /area/listeningpost/power)
@@ -625,10 +617,8 @@
 /obj/item/paper/pipebombs{
 	pixel_y = 5
 	},
-/obj/item/clothing/shoes/swat{
-	pixel_y = -5
-	},
 /obj/machinery/light_switch/west,
+/obj/item/tank/pocket/extended/oxygen,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
 "yw" = (
@@ -1189,8 +1179,15 @@
 /area/listeningpost/general)
 "RG" = (
 /obj/machinery/light/incandescent/warm,
-/obj/item/pinpointer/disk,
 /obj/table/reinforced/auto,
+/obj/item/disk/data/cartridge/captain{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/cartridge/captain{
+	pixel_y = 10
+	},
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "RH" = (
@@ -1259,8 +1256,6 @@
 /area/listeningpost/break_room)
 "VO" = (
 /obj/table/auto,
-/obj/item/disk/data/cartridge/captain,
-/obj/item/disk/data/cartridge/captain,
 /obj/item/currency/spacecash/thousand,
 /obj/item/aiModule/hologram_expansion/syndicate{
 	pixel_x = -2;
@@ -1927,7 +1922,7 @@ QZ
 nj
 lN
 RH
-ur
+zV
 TM
 wR
 wR
