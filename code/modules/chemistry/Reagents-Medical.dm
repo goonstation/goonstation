@@ -1558,6 +1558,8 @@ datum
 				if(!M) M = holder.my_atom
 				if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 					M.take_brain_damage(-3 * mult)
+				else
+					M.take_brain_damage(-0.25 * mult)
 				..()
 				return
 
