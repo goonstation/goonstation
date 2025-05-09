@@ -794,21 +794,39 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		else
 			I.material.removeProperty("n_radioactive")
 
-/datum/materialProc/veranium_life
-	execute(mob/living/L, obj/item/I, mult)
-		if (ON_COOLDOWN(I, "veranium_shock", rand(40, 60)))
-			return
-		if (istype(L))
-			L.shock(I, 100, "All", 1, FALSE)
+/datum/materialProc/shock_life
+	var/cd_min
+	var/cd_max
+	var/wattage
 
-/datum/materialProc/voltite_life
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
 	execute(mob/living/L, obj/item/I, mult)
-		if (ON_COOLDOWN(I, "voltite_shock", rand(60, 80)))
+		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
 			return
 		if (istype(L))
-			L.shock(I, 100, "All", 1, TRUE)
+			L.shock(I, src.wattage, "All", 1, FALSE)
+
+/datum/materialProc/arcflash_life
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
+			return
 
 		if (prob(10) && istype(L))
-			arcFlash(I, L, 500, 1.5)
+			arcFlash(I, L, src.wattage, 1.5)
 		else
-			arcFlashTurf(I, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), 500, 100)
+			arcFlashTurf(I, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)

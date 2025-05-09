@@ -586,7 +586,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 4)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/veranium_life())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
 
 /datum/material/metal/voltite
 	mat_id = "voltite"
@@ -600,7 +600,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("thermal", 1)
 		setProperty("hard", 1)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/voltite_life())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
 /datum/material/metal/steel
 	mat_id = "steel"
