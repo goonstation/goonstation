@@ -3727,21 +3727,77 @@ ABSTRACT_TYPE(/area/station/catwalk)
 // end station areas //
 
 /// Nukeops listening post
+
+var/global/listening_post_unlocked = FALSE
+
+proc/unlock_listening_post(mob/user)
+	global.listening_post_unlocked = TRUE
+	logTheThing(LOG_STATION, user, "unlocked the Listening Post at [log_loc(user)].")
+
+	// unlock sleeper doors
+	for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+		if (M.id == "Sleeper_Access")
+			M.req_access = null
+			M.req_access_txt = null
+
+	playsound(user.loc, 'sound/machines/shieldgen_startup.ogg', 70, pitch=0.6)
+
+	var/delay = 0
+	for (var/area/listeningpost/post_area in world)
+		if (!post_area.unlocks_post)
+			continue
+		// lights turn on in random sequence with noticable delay; clonk.. clonk.. clonk..
+		delay += 1 SECONDS + randfloat(0.4, 0.6) SECONDS
+		var/turf/sfx_turf = pick(get_area_turfs(post_area, floors_only=TRUE))
+		SPAWN(delay)
+			post_area.lightswitch = TRUE
+			post_area.power_change()
+			playsound(sfx_turf, 'sound/misc/lightswitch.ogg', 70, pitch=0.2) // chonky switches
+
 /area/listeningpost
 	name = "Listening Post"
 	icon_state = "brig"
 	teleport_blocked = 1
 	do_not_irradiate = TRUE
+	lightswitch = FALSE
 	minimaps_to_render_on = MAP_SYNDICATE
 	station_map_colour = MAPC_SYNDICATE
 	occlude_foreground_parallax_layers = TRUE
+	var/unlocks_post = TRUE
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (global.listening_post_unlocked || !src.unlocks_post)
+			return
+		if (!ismob(A) || !isliving(A))
+			return
+		unlock_listening_post(A)
 
 /area/listeningpost/syndicateassaultvessel
 		name ="Syndicate Assault Vessel"
 
+/area/listeningpost/vestibule
+	name = "Listening Post"
+	icon_state = "purple"
+
+/area/listeningpost/general
+	name = "Listening Post"
+	icon_state = "red"
+
+/area/listeningpost/barracks
+	name = "Listening Post Barracks"
+	icon_state = "pink"
+
+/area/listeningpost/break_room
+	name = "Listening Post Break Room"
+	icon_state = "green"
+
+/area/listeningpost/tech_room
+	name = "Listening Post Tech Room"
+	icon_state = "orange"
 
 /area/listeningpost/power
-	name = "Listening Post Control Room"
+	name = "Listening Post Power Room"
 	icon_state = "engineering"
 
 /area/listeningpost/solars
@@ -3749,6 +3805,21 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
+	unlocks_post = FALSE
+
+/area/listeningpost/comm_dish
+	name = "Listening Post Comms Dish"
+	icon_state = "blue"
+	luminosity = 1
+	unlocks_post = FALSE
+
+/area/listeningpost/landing_bay
+	name = "Listening Post Landing Bay"
+	icon_state = "hangar"
+	requires_power = 0
+	lightswitch = TRUE
+	unlocks_post = FALSE
+
 
 /area/listeningpost/syndicate_teleporter
 	name = "Syndicate Teleporter"

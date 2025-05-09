@@ -154,6 +154,10 @@
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Loading crime")
+	Z_LOG_DEBUG("World/Init", "Loading listening post...")
+	load_listening_post()
+
 	if (derelict_mode)
 		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
 		creepify_station()
