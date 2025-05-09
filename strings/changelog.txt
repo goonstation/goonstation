@@ -1,4 +1,117 @@
 
+(t)thu may 08 25
+(u)Chasu
+(p)23278
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Strip door frames can now be (un-)anchored with wrenching tools and have help messages
+(u)TDHooligan
+(p)23212
+(e)⚖🎭|C-Balance, A-RP
+(+)Thirst's stamina penalty has been halved.
+(u)Mr. Moriarty
+(p)23304
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Whispers now display maptext.
+(u)Cheekybrdy
+(p)23182
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Ranch eggs can now spawn in BR lockers.
+(u)FlameArrow57
+(p)23344
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard Prismatic Spray spell can be used without a staff
+(u)FlameArrow57
+(p)23345
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard empower spell duration and CD reduced to 15s/30s from 30s/45s. It now also removes stun status effects on use.
+(u)FlameArrow57
+(p)23353
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard forcewall duration changed from 30 -> 20 seconds
+(t)wed may 07 25
+(u)JORJ949
+(p)23354
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)"Fired" is now a valid word for the lawbringer's hotshot mode. Go terminate those contracts!
+(u)JORJ949
+(p)23319
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawbringers now check every word in a message for mode selection rather than the entire message.
+(u)CalliopeSoups
+(p)23276
+(e)🎨⏰🐁|C-Sprites, A-Status-Effects, A-Critters
+(*)Mimics will now scale their health and speed with the size of their disguise. Report any unfitting values.
+(+)Mimic is now an action bar and has a slightly longer cooldown.
+(u)FlameArrow57 & Mr. Moriarty
+(p)23138
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added manufacturable lanterns to fabs! They light up your immediate vicinity rather than directionally like flashlights
+(u)glowbold
+(p)23217
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI units see their killswitch timer when deployed to cyborg or eyebot shells
+(u)Garash & glowbold
+(p)23071
+(e)🗺🎨🔄📄💡|A-Mapping, C-Sprites, C-Rework, A-UI, A-Station-Systems
+(*)Security camera computers use a minimap to display camera locations
+(+)Televisions show a list of available cameras.
+(u)JORJ949
+(p)23103
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Wizards now have their own radio channel on :w
+(u)JORJ949
+(p)23335
+(e)💅🔨🤖|C-QoL, A-Player-Actions, A-Silicons
+(+)Silicons can now select the default lawset as the base when setting their fake laws.
+(t)tue may 06 25
+(u)glowbold
+(p)23045
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Singularity Emitters have an emag interaction.
+(u)JORJ949
+(p)23314
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)All AI Uploads now come with AI Programming 101. Corporate has had enough with law-based accidents.
+(u)Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
+(p)19180
+(e)🔧🔎🔒🔄❗⚙|A-Tooling, C-Code-Quality, A-Secret, C-Rework, E-FUCK, A-Internal
+(*)The entire speech system has been reworked; anything that can say or hear something now uses an entirely different system to do so, including you. Please report any bugs.
+(u)TDHooligan
+(p)23257
+(e)⚖|C-Balance
+(*)Slowing effects are now applied & removed instantly, instead of on your next move. Tasers will be more affected by this change.
+(t)mon may 05 25
+(u)Chasu
+(p)23272
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Podbay doors now use an even frequency to communicate, allowing them to be manually targeted via packets
+(u)Cheekybrdy
+(p)23284
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Mental health first aid kits can now be found around the station, mainly in psychiatry offices.
+(t)sun may 04 25
+(u)JORJ949
+(p)23225
+(e)⚖🐣|C-Balance, A-Respawning
+(*)Trainee roles now get job equipment matching that of the job they are training for.
+(t)sat may 03 25
+(u)TDHooligan
+(p)20352
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Sniper rifles now have an item ability to toggle their scope. You can now sprint with sniper rifles equipped.
+(u)glowbold
+(p)22932
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Vampires gain the starting ability Illusory Shroud. While in darkness, it shrouds you in mist and completely hides your identity.
+(t)fri may 02 25
+(u)glowbold
+(p)23199
+(e)⚖💊|C-Balance, A-Medical
+(*)Common first aid kits do not contain health analyzers, but have more apt supplies for the damage type they're associated with.
+(u)JORJ949
+(p)23203
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Security pinpointers and disks now come labelled with the owner's name, this label can be removed with a hand labeler.
 (t)thu may 01 25
 (u)EmeraldCrow
 (p)23232

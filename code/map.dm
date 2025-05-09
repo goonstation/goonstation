@@ -14,7 +14,7 @@ var/global/list/mapNames = list(
 	// commented out ones were previously non existent.
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
-	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
+	"Event" =				list("id" = "EVENT",		"settings" = "clarion",			"playerPickable" = FALSE),
 	// "1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 
@@ -28,18 +28,18 @@ var/global/list/mapNames = list(
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
-	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
-	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
-	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
+	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
+	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
+	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
 
-	"Crash" = 				list("id" = "CRASH",		"settings" = "horizon/crash",	"playerPickable" = FALSE),
+	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
+	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
 	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69),
-	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30)
 )
 
 /obj/landmark/map
@@ -661,10 +661,19 @@ var/global/list/mapNames = list(
 		for_by_tcl(spawner, /obj/eva_suit_spawner)
 			spawner.spawn_gear()
 
-/datum/map_settings/destiny/clarion
+/datum/map_settings/clarion
 	name = "CLARION"
 	display_name = "NSS Clarion"
+	style = "ship"
 	goonhub_map = "/maps/clarion"
+	arrivals_type = MAP_SPAWN_CRYO
+	dir_fore = NORTH
+	escape_dir = NORTH
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1/south,
+		/atom/movable/screen/parallax_render_source/space_2/south,
+		)
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -807,11 +816,10 @@ var/global/list/mapNames = list(
 
 	job_limits_from_landmarks = TRUE
 
-/datum/map_settings/horizon
-	name = "HORIZON"
-	display_name = "NSS Horizon"
+/datum/map_settings/crash
+	name = "CRASH"
+	display_name = "Free Fall"
 	style = "ship"
-	goonhub_map = "/maps/horizon"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -829,48 +837,6 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 
 	escape_dir = EAST
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the main security room" = list(/area/station/security/main),
-		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
-		"the Engineering control room" = list(/area/station/engine/power),
-		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
-		"the main medical bay room" = list(/area/station/medical/medbay),
-		"the research artifact lounge" = list(/area/station/science/artifact),
-		"the cloning lab" = list(/area/station/medical/medbay/cloner),
-		"the hot loop" = list(/area/station/engine/hotloop),
-		"the mechanics' lab" = list(/area/station/engine/elect),
-		"the mining staff room" = list(/area/station/mining/staff_room),
-		"the robotics lab" = list(/area/station/medical/robotics),
-		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
-
-	job_limits_override = list(
-		/datum/job/civilian/clown = 2,
-		/datum/job/security/security_officer = 6,
-		/datum/job/security/detective = 1,
-		/datum/job/medical/geneticist = 3,
-		/datum/job/medical/roboticist = 3,
-		/datum/job/research/scientist = 6,
-		/datum/job/medical/medical_doctor = 7,
-		/datum/job/engineering/miner = 4,
-		/datum/job/engineering/engineer = 6,
-		/datum/job/civilian/chef = 2,
-		/datum/job/civilian/bartender = 2,
-		/datum/job/civilian/janitor = 3,
-		/datum/job/civilian/chaplain = 2,
-		/datum/job/special/attorney = 1,
-		/datum/job/special/atmospheric_technician = 1
-	)
-
-/datum/map_settings/horizon/crash
-	name = "CRASH"
-	display_name = "Free Fall"
 
 /datum/map_settings/mushroom
 	name = "MUSHROOM"
