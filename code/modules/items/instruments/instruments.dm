@@ -995,7 +995,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "keytar"
 	item_state = "keytar"
-	two_handed = 1
+	two_handed = TRUE
 	force = 10
 	note_range = list("c2", "c7")
 	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
