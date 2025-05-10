@@ -1198,7 +1198,7 @@
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
 		var/reduction = 0
-		if (src.spellshield)
+		if (src.hasStatus("spellshield"))
 			reduction = 30
 			boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
