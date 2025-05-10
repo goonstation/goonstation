@@ -7,7 +7,7 @@
 	throwforce = 6
 	var/material_name = "Ore" //text to display for this ore in manufacturers
 	var/initial_material_name = null // used to store what the ore is
-	var/icon_stack_value = 0 // Number used by icon_state for stack size.
+	var/icon_stack_value = 0 // Number used for updating icon_state as stack size changes
 	var/metal = 0  // what grade of metal is it?
 	var/conductor = 0
 	var/dense = 0
@@ -47,23 +47,23 @@
 	update_icon()
 		src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
 
-	proc/update_stack_name() // How material should be named at different stack sizes
+	proc/update_stack_name() // How the material should be named at different stack sizes
 		UpdateName(src) // get the name in order so it has whatever it needs
 		if(src.amount == 1)
 			name = "[src.name]"
 		else
 			name = "[amount] [src.name]s"
 
-	proc/get_stack_value() // Different stack amounts have different icon_states. Used to update icon_stack_value for this reason.
+	proc/get_stack_value() // Determines at what stack sizes the icon_state changes
 		// example: src.icon_state = "ore[x]_$$gold"
 		switch(src.amount)
 			if(1)
 				return 1
-			if(2 to 4)
+			if(2 to 9)
 				return 2
-			if(5 to 11)
+			if(10 to 19)
 				return 3
-			if(12 to 31)
+			if(20 to 31)
 				return 4
 			if(32 to 49)
 				return 5
@@ -722,7 +722,7 @@
 
 /obj/item/raw_material/chitin
 	name = "chitin sample"
-	desc = "Hard exoskeletal remains left behind by a hopefully-extinct species."
+	desc = "Hard exoskeletal remains."
 	material_name = "Chitin"
 	default_material = "chitin"
 	metal = 3
