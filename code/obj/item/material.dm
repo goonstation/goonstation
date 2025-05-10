@@ -7,6 +7,7 @@
 	throwforce = 6
 	var/material_name = "Ore" //text to display for this ore in manufacturers
 	var/initial_material_name = null // used to store what the ore is
+	var/icon_stack_value = 0 // Number used by icon_state for stack size.
 	var/metal = 0  // what grade of metal is it?
 	var/conductor = 0
 	var/dense = 0
@@ -35,28 +36,39 @@
 		return
 
 	_update_stack_appearance()
-		if(material)
-			UpdateName(src) // get the name in order so it has whatever it needs
-			if(src.amount == 1)
-				name = "[src.name]"
-			else
-				name = "[amount] [src.name]s"
-		update_icon()
+		if(!material)
+			return
+		update_stack_name()
+		var/icon_stack_new = get_stack_value()
+		if(icon_stack_new && icon_stack_new != src.icon_stack_value) // Only update icon_state if it needs updating (0 to ignore)
+			src.icon_stack_value = icon_stack_new
+			UpdateIcon()
 
 	update_icon()
+		src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+
+	proc/update_stack_name() // How material should be named at different stack sizes
+		UpdateName(src) // get the name in order so it has whatever it needs
+		if(src.amount == 1)
+			name = "[src.name]"
+		else
+			name = "[amount] [src.name]s"
+
+	proc/get_stack_value() // Different stack amounts have different icon_states. Used to update icon_stack_value for this reason.
+		// example: src.icon_state = "ore[x]_$$gold"
 		switch(src.amount)
 			if(1)
-				src.icon_state = "ore1_$$[src.material.getName()]"
+				return 1
 			if(2 to 4)
-				src.icon_state = "ore2_$$[src.material.getName()]"
+				return 2
 			if(5 to 11)
-				src.icon_state = "ore3_$$[src.material.getName()]"
+				return 3
 			if(12 to 31)
-				src.icon_state = "ore4_$$[src.material.getName()]"
+				return 4
 			if(32 to 49)
-				src.icon_state = "ore5_$$[src.material.getName()]"
+				return 5
 			else
-				src.icon_state = "ore6_$$[src.material.getName()]"
+				return 6
 
 	attackby(obj/item/W, mob/user)
 		if(check_valid_stack(W))
@@ -149,9 +161,6 @@
 				if (length(SCOOP.contents) >= SCOOP.capacity)
 					boutput(V.pilot, SPAN_ALERT("Your pod's ore scoop hold is full!"))
 					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
-			return
-		else
-		return
 
 	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
@@ -231,7 +240,7 @@
 /obj/item/raw_material/rock
 	name = "stone"
 	desc = "It's plain old space rock. Pretty worthless!"
-	icon_state = "rock_1"
+	icon_state = "rock1"
 	force = 8
 	throwforce = 10
 	scoopable = 0
@@ -239,19 +248,10 @@
 	default_material = "rock"
 
 	update_icon()
-		switch(src.amount)
-			if(1)
-				src.icon_state = pick("ore1_", "ore1b_", "ore1c_") + "$$[src.material.getName()]"
-			if(2 to 4)
-				src.icon_state = "ore2_$$[src.material.getName()]"
-			if(5 to 11)
-				src.icon_state = "ore3_$$[src.material.getName()]"
-			if(12 to 31)
-				src.icon_state = "ore4_$$[src.material.getName()]"
-			if(32 to 49)
-				src.icon_state = "ore5_$$[src.material.getName()]"
-			else
-				src.icon_state = "ore6_$$[src.material.getName()]"
+		if(src.icon_stack_value == 1)
+			src.icon_state = "[pick("rock1", "rock1b", "rock1c", "rock1d")]"
+		else
+			src.icon_state = "rock[src.icon_stack_value]"
 
 /obj/item/raw_material/mauxite
 	name = "mauxite ore"
@@ -267,6 +267,13 @@
 	default_material = "molitz"
 	crystal = 1
 
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
@@ -278,6 +285,13 @@
 	setup_material()
 		. = ..()
 		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
+
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
@@ -312,14 +326,12 @@
 	default_material = "claretine"
 	conductor = 2
 
-	_update_stack_appearance()
-		if(material)
-			UpdateName(src)
-			if(src.amount == 1)
-				name = "[src.name]"
-			else
-				name = "[amount] scoops of [src.name]"
-		UpdateIcon()
+	update_stack_name()
+		UpdateName(src)
+		if(src.amount == 1)
+			name = "[src.name]"
+		else
+			name = "[amount] scoops of [src.name]"
 
 /obj/item/raw_material/bohrum
 	name = "bohrum ore"
@@ -420,6 +432,7 @@
 	material_name = "Gem"
 	default_material = null
 	mat_changename = TRUE
+	w_class = W_CLASS_POCKET_SIZED
 	force = 1
 	throwforce = 3
 	crystal = 1
@@ -440,6 +453,9 @@
 		var/datum/material/M = getMaterial(pick(picklist))
 		src.setMaterial(M)
 		src.icon_state = pick("gem1","gem2","gem3")
+
+	get_stack_value()
+		return 0
 
 /obj/item/raw_material/uqill // relate this to ancients
 	name = "uqill nugget"
@@ -495,17 +511,20 @@
 	var/static/shape = pick("ore","sphere","torus") // Shift's randomized miracle matter shape
 
 	update_icon()
+		src.icon_state = "[src.shape][src.icon_stack_value]_$$[src.material.getName()]"
+
+	get_stack_value()
 		switch(src.amount)
 			if(1)
-				src.icon_state = "[src.shape]1_$$miracle"
-			if(2 to 4)
-				src.icon_state = "[src.shape]2_$$miracle"
-			if(5 to 11)
-				src.icon_state = "[src.shape]3_$$miracle"
-			if(12 to 35)
-				src.icon_state = "[src.shape]4_$$miracle"
+				return 1
+			if(2 to 9)
+				return 2
+			if(10 to 29)
+				return 3
+			if(30 to 49)
+				return 4
 			else
-				src.icon_state = "[src.shape]5_$$miracle"
+				return 5
 
 /obj/item/raw_material/starstone
 	name = "starstone"
@@ -534,6 +553,13 @@
 		src.reagents.add_reagent("synthflesh", 25)
 		return ..()
 
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+
 /obj/item/raw_material/gold
 	name = "gold nugget"
 	desc = "A chunk of pure gold. Damn son."
@@ -548,6 +574,9 @@
 	material_name = "Neutronium"
 	default_material = "neutronium"
 
+	get_stack_value()
+		return 0
+
 // Misc building material
 
 /// This has no material, why does it exist???? Someone replace it
@@ -559,6 +588,9 @@
 	material_name = "Fabric"
 	scoopable = 0
 
+	get_stack_value()
+		return 0
+
 /obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
@@ -566,6 +598,9 @@
 	icon_state = "cotton"
 	material_name = "Cotton"
 	default_material = "cotton"
+
+	get_stack_value()
+		return 0
 
 /obj/item/raw_material/ice
 	name = "ice chunk"
@@ -590,6 +625,9 @@
 	New()
 		..()
 		icon_state += "[rand(1,5)]"
+
+	get_stack_value()
+		return 0
 
 /obj/item/raw_material/shard
 	// same deal here
@@ -645,6 +683,9 @@
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	get_stack_value()
+		return 0
 
 	glass
 		material_name = "Glass"
