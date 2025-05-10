@@ -2044,7 +2044,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		/datum/targetable/kudzu/seed,
 		/datum/targetable/kudzu/heal_other,
 		/datum/targetable/kudzu/stealth,
-		/datum/targetable/kudzu/kudzusay,
 		/datum/targetable/kudzu/vine_appendage
 	)
 

@@ -1,6 +1,7 @@
 /datum/speech_module/output/bundled/hivemind
 	id = SPEECH_OUTPUT_HIVECHAT
 	channel = SAY_CHANNEL_HIVEMIND
+	speech_prefix = SPEECH_PREFIX_HIVECHAT
 	var/role = ""
 
 /datum/speech_module/output/bundled/hivemind/process(datum/say_message/message)

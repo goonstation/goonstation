@@ -37,34 +37,6 @@
 		actions.start(new/datum/action/bar/private/icon/vampire_enthrall_thrall(target, src, pointCost), M)
 		return 1 //not 0, we dont awnna deduct points until cast finishes
 
-/datum/targetable/vampire/speak_thrall
-	name = "Speak to Thralls"
-	desc = "Telepathically speak to all of your undead thralls."
-	icon_state = "thrallspeak"
-	targeted = 0
-	target_nodamage_check = 1
-	max_range = 1
-	cooldown = 1
-	pointCost = 0
-	not_when_in_an_object = FALSE
-	when_stunned = 1
-	not_when_handcuffed = 0
-	unlock_message = "You have gained 'Speak to Thralls'. It allows you to telepathically speak to all of your undead thralls."
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	cast(mob/target)
-		if (!holder)
-			return 1
-
-		. = ..()
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-
-		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_THRALL))
-		return FALSE
-
 /datum/action/bar/private/icon/vampire_enthrall_thrall
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION

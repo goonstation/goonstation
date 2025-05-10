@@ -541,7 +541,7 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_y <= 16)
 					if (icon_x < 16)
-						master.say_radio()
+						master.say_over_channel()
 					else
 						master.client << link("https://wiki.ss13.co/Construction")
 

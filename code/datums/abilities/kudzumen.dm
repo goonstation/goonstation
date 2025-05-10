@@ -325,29 +325,6 @@
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
 
-/datum/targetable/kudzu/kudzusay
-	name = "Speak Kudzu"
-	desc = "Speak to your collective consciousness."
-	icon_state = "kudzu-say"
-	cooldown = 0
-	pointCost = 0
-	targeted = 0
-	target_anything = 0
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	can_cast_anytime = 1
-
-	cast(atom/target)
-		if (..())
-			return TRUE
-
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-
-		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_KUDZU))
-		return FALSE
-
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"
 	desc = "Create or manipulate a plant seed by using the resources available to the kudzu!"
