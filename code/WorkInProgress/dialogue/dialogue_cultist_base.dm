@@ -337,7 +337,7 @@
 	proc/lever_hv(mob/user)
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 			new /mob/living/critter/void_scale(R.loc)
-		for(var/atom/moveable/mysterious_beast/B in (range(7)))
+		for(var/atom/movable/mysterious_beast/B in (range(7)))
 			qdel(B)
 		shake_camera(user, 5, 16)
 		random_brute_damage(user, 3)
@@ -349,7 +349,7 @@
 	proc/lever_lv(mob/user)
 		for(var/obj/decoration/ritual/R in(range(7)))
 			new /obj/item/siren_orb(R.loc)
-		for(var/atom/moveable/mysterious_beast/B in (range(7)))
+		for(var/atom/movable/mysterious_beast/B in (range(7)))
 			qdel(B)
 		shake_camera(user, 4, 4)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
