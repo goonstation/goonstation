@@ -562,7 +562,7 @@ var/global/list/module_editors = list()
 
 /mob/living/silicon/proc/set_fake_laws()
 	#define FAKE_LAW_LIMIT 12
-	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Default Laws")
+	var/fake_lawset_choices = list ("Real Laws", "Fake Laws", "Asimov Laws (Default)", "Robocop Laws", "Corporate Laws", "Syndicate Laws")
 	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", fake_lawset_choices)
 	if (!law_base_choice)
 		return
@@ -577,10 +577,24 @@ var/global/list/module_editors = list()
 			for(var/fake_law in src.fake_laws)
 				// this is just the default input for the user, so it should be fine
 				law_base += "[html_decode(fake_law)]\n"
-		if("Default Laws")
+		if("Asimov Laws (Default)")
 			law_base += "1: [/obj/item/aiModule/asimov1::lawText]\n"
 			law_base += "2: [/obj/item/aiModule/asimov2::lawText]\n"
 			law_base += "3: [/obj/item/aiModule/asimov3::lawText]\n"
+		if("Robocop Laws")
+			law_base += "1: [/obj/item/aiModule/robocop1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/robocop2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/robocop3::lawText]\n"
+			law_base += "4: [/obj/item/aiModule/robocop4::lawText]\n"
+		if("Corporate Laws")
+			law_base += "1: [/obj/item/aiModule/nanotrasen1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/nanotrasen2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/nanotrasen3::lawText]\n"
+		if("Syndicate Laws")
+			law_base += "1: [/obj/item/aiModule/syndicate/law1::lawText]\n"
+			law_base += "2: [/obj/item/aiModule/syndicate/law2::lawText]\n"
+			law_base += "3: [/obj/item/aiModule/syndicate/law3::lawText]\n"
+			law_base += "4: [/obj/item/aiModule/syndicate/law4::lawText]\n"
 
 	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
