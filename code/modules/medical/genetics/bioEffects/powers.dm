@@ -2361,6 +2361,39 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+
+/datum/bioEffect/power/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Allows the subject to become a ghost, leaving their body to return."
+	id = "ghost_walk"
+	occur_in_genepools = 0 // Only from the genes of a boss mob.
+	probability = 0
+	msgGain = "You feel like your soul is more flexible."
+	msgLose = "Your soul feels anchored again."
+	stability_loss = 20
+	blockCount = 4
+	blockGaps = 5
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	ability_path = /datum/targetable/geneticsAbility/ghost_walk
+
+/datum/targetable/geneticsAbility/ghost_walk
+	name = "Spectral Ascent"
+	desc = "Become a ghost to survey your surrondings."
+	icon_state = "shoot_limb"
+	needs_hands = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		if (ishuman(owner)) // Straight outta the devilish fiddle
+			boutput(src, "Click on your body to return to it!")
+			owner.ghostize()
+
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"

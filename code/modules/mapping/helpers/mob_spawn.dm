@@ -378,6 +378,7 @@
 		src.corpse.equip_new_if_possible(/obj/item/clothing/mask/greencultmask, SLOT_WEAR_MASK)
 		src.corpse.equip_new_if_possible(/obj/item/clothing/under/color/green, SLOT_W_UNIFORM)
 		src.corpse.equip_if_possible(new /obj/item/clothing/shoes/brown, SLOT_SHOES)
+
 	initiate
 
 		setup()
@@ -393,12 +394,13 @@
 		key2
 			setup()
 				..()
-				src.corpse.equip_new_if_possible(/obj/item/cult_sigil_pt2, SLOT_L_STORE)
+				src.corpse.equip_new_if_possible(/obj/item/cult_sigil, SLOT_L_STORE)
 
 	leader
 		setup()
 			..()
 			src.corpse.equip_new_if_possible(/obj/item/clothing/suit/green_robes, SLOT_WEAR_SUIT)
+			src.corpse.bioHolder.AddEffect("ithillid")
 
 		key1
 			setup()
@@ -409,6 +411,7 @@
 			setup()
 				..()
 				src.corpse.equip_new_if_possible(/obj/item/cult_sigil_pt3, SLOT_L_STORE)
+
 //////////////////////// Critter corpses ////////////////////////
 
 /obj/mapping_helper/mob_spawn/corpse/critter/owl

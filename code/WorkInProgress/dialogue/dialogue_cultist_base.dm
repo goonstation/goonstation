@@ -1,10 +1,84 @@
+// Fake decal objects cause for some reason the writing defaults
+/obj/fakeobject/pentagram
+	name = "scrawled pentagram"
+	icon = 'icons/obj/decals/writing.dmi'
+	icon_state = "cPentacle"
+	color = "#880808"
+
+/obj/fakeobject/ritual_symbol
+	name = "ritualistic engraving"
+	icon = 'icons/obj/ritual_writing.dmi'
+	icon_state = "" // should go to anchor
+	color = "#880808"
+
+/atom/movable/mysterious_beast
+	name = "???"
+	desc = "Whatever that is, its alive."
+	icon = 'icons/misc/192x192.dmi'
+	icon_state = "little_seamonster"
+	plane = PLANE_ABOVE_FOREGROUND_PARALLAX
+	anchored = TRUE
+	mouse_opacity = FALSE
+
+	New()
+		..()
+		src.Scale(2,2)
+		src.alpha = 0
+		animate(src, 10 SECONDS, alpha = 255)
+
+	// OnTick()
+	// 	for(var/mob/living/M in oview(300))
+	// 		M.addOverlayComposition(/datum/overlayComposition/insanity)
+	// 		M.updateOverlaysClient(M.client)
+	// 		boutput(M, pick("<font color=purple><b>The reality around you fades out..</b></font>","<font color=purple><b>Suddenly your mind feels extremely frail and vulnerable..</b></font>","<font color=purple><b>Your sanity starts to fail you...</b></font>"))
+	// 		playsound(M, 'sound/ambience/spooky/Void_Song.ogg', 50, TRUE)
+	// 		SPAWN(62 SECONDS)
+	// 			M.removeOverlayComposition(/datum/overlayComposition/insanity)
+	// 			M.updateOverlaysClient(M.client)
+
 // Cult base dialogue or items only used in dialogue
 /obj/item/cult_sigil
-	name = "improvised talisman"
+	name = "green seal"
 	icon = 'icons/obj/decoration.dmi'
-	icon_state = "sigil_key"
+	icon_state = "sigil_pt2"
 	w_class = W_CLASS_SMALL
-	desc = "A rag-tag sigil stitched together, it might fit in that seal now."
+	desc = "A green wax mold, it appears to already have a indent inside it."
+	var/pt1 = FALSE
+
+	complete // Nothingburger used for the dialogue box
+
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/cult_sigil_pt1))
+			var/obj/item/cult_sigil_pt1/C = W
+			boutput(user, "The talisman settles onto the seal.")
+			pt1 = TRUE
+			icon_state = "sigil_pt1-2"
+			if (C.pt3)
+				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
+				qdel(C)
+				var/obj/item/cult_sigil/complete/sigil = new /obj/item/cult_sigil/complete
+				sigil.name = "improvised talisman"
+				sigil.icon = 'icons/obj/decoration.dmi'
+				sigil.icon_state = "sigil_key"
+				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
+				user.put_in_hand_or_drop(sigil)
+				qdel(src)
+
+		if (istype(W, /obj/item/cult_sigil_pt3))
+			var/obj/item/cult_sigil_pt3/C = W
+			if (!pt1)
+				boutput(user, "The eye seems drawn to the seal, but lacks a physical way to keep it on.")
+			else
+				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
+				qdel(C)
+				var/obj/item/cult_sigil/complete/sigil = new /obj/item/cult_sigil/complete
+				sigil.name = "improvised talisman"
+				sigil.icon = 'icons/obj/decoration.dmi'
+				sigil.icon_state = "sigil_key"
+				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
+				user.put_in_hand_or_drop(sigil)
+				qdel(src)
 
 /obj/item/cult_sigil_pt1
 	name = "golden pattern"
@@ -12,13 +86,57 @@
 	icon_state = "sigil_pt1"
 	w_class = W_CLASS_SMALL
 	desc = "A golden handheld construct with the sigil of the deep, similar to a cross in conventional religions."
+	var/pt3 = FALSE
 
-/obj/item/cult_sigil_pt2
-	name = "green seal"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "sigil_pt2"
-	w_class = W_CLASS_SMALL
-	desc = "A green wax mold, it appears to already have a indent inside it."
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/cult_sigil))
+			var/obj/item/cult_sigil/C = W
+			boutput(user, "The talisman settles onto the seal.")
+			C.pt1 = TRUE
+			C.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt1"), "sigil_pt2")
+			qdel()
+
+		if (istype(W, /obj/item/cult_sigil_pt3))
+			boutput(user, "The eye fits in the slot on the talisman.")
+			src.pt3 = TRUE
+			src.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt3-o"), "sigil_pt1")
+			qdel(W)
+
+// /obj/item/cult_sigil_pt2
+// 	name = "green seal"
+// 	icon = 'icons/obj/decoration.dmi'
+// 	icon_state = "sigil_pt2"
+// 	w_class = W_CLASS_SMALL
+// 	desc = "A green wax mold, it appears to already have a indent inside it."
+// 	var/pt1 = FALSE
+// 	var/pt3 = FALSE
+
+// 	attackby(obj/item/W, mob/user, params)
+// 		. = ..()
+// 		if (istype(W, /obj/item/cult_sigil_pt1))
+// 			var/obj/item/cult_sigil_pt1/C = W
+// 			boutput(user, "The talisman settles onto the seal.")
+// 			pt1 = TRUE
+// 			icon_state = "sigil_pt1-2"
+// 			if (C.pt3)
+// 				boutput(user, "With the eye in the talisman, the sigil is complete!")
+// 				/var/obj/item/cult_sigil/sigil = new /obj/item/cult_sigil
+// 				user.put_in_hand_or_drop(sigil)
+// 				qdel()
+// 			qdel(W)
+
+// 		if (istype(W, /obj/item/cult_sigil_pt3))
+// 			var/obj/item/cult_sigil_pt3/C = W
+// 			if (!pt1)
+// 				boutput(user, "The eye seems drawn to the seal, but lacks a physical way to keep it on.")
+// 			else
+// 				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
+// 				src.pt3 = TRUE
+// 				qdel(C)
+// 				/var/obj/item/cult_sigil/L = new /obj/item/cult_sigil
+// 				user.put_in_hand_or_drop(sigil)
+// 				qdel()
 
 /obj/item/cult_sigil_pt3
 	name = "odd crystal"
@@ -27,6 +145,30 @@
 	w_class = W_CLASS_SMALL
 	desc = "A purple crystal, it appears to gaze at you like a eye."
 
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/cult_sigil_pt1))
+			var/obj/item/cult_sigil_pt1/C = W
+			boutput(user, "The eye fits in the slot on the talisman.")
+			C.pt3 = TRUE
+			C.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt3-o"), "sigil_pt1")
+			qdel(W)
+			qdel(src)
+		if (istype(W, /obj/item/cult_sigil))
+			var/obj/item/cult_sigil/C = W
+			if (!C.pt1)
+				boutput(user, "The eye seems drawn to the seal, but lacks a physical way to keep it on.")
+			else
+				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
+				qdel(C)
+				var/obj/item/cult_sigil/complete/sigil = new /obj/item/cult_sigil/complete
+				sigil.name = "improvised talisman"
+				sigil.icon = 'icons/obj/decoration.dmi'
+				sigil.icon_state = "sigil_key"
+				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
+				user.put_in_hand_or_drop(sigil)
+				qdel(src)
+
 /obj/item/control_key
 	name = "voltage control safety key"
 	icon = 'icons/obj/artifacts/keys.dmi'
@@ -34,10 +176,33 @@
 	w_class = W_CLASS_SMALL
 	desc = "It has Voltage Control written on the handle."
 
+/obj/item/totally_just_a_backscratcher
+	name = "overqualified backscratcher"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "backscratcher"
+	desc = "A something... It could sure scratch a itch on someone's back though."
+	force = 10
+
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if (istype(W, /obj/item/siren_orb))
+			var/obj/item/siren_orb/C = W
+			var/obj/item/gun/energy/resonator/G = new /obj/item/gun/energy/resonator
+			boutput(user, "The orb begins to hover in place in the prongs of the device, before the whole item crackles to life with energy.")
+			user.put_in_hand_or_drop(G)
+			qdel(C)
+			qdel(src)
+
+/obj/item/siren_orb
+	name = "soothing orb"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "siren_orb"
+	desc = "An orb which is the byproduct of released pain, it could probably power the right technology."
+
 /obj/dialogueobj/cultistcorpse_1
 	name = "fanatical corpse"
 	icon = 'icons/obj/decoration.dmi'
-	icon_state = "seccorpse7"
+	icon_state = "cultistcorpse"
 	density = 0
 	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
@@ -112,14 +277,14 @@
 	dialogueName = "Ominious Barricade"
 	start = /datum/dialogueNode/cultistbarricade_start
 	visibleDialogue = 0
-	maxDistance = 1
+	maxDistance = -1 // Cause they have to delete themselves, doubt it'll be a problem... right?
 
 
 /datum/dialogueNode
 
 	cultistbarricade_start
 		linkText = "..."
-		links = list(/datum/dialogueNode/cultistbarricade_break)
+		links = list(/datum/dialogueNode/cultistbarricade_break, /datum/dialogueNode/cultistbarricade_revelation)
 
 		getNodeText(var/client/C)
 			return "This appears to be a rapidly hacked together barricade with some sort of religious sigil attached to it, it feels easily breakable but doesn't budge."
@@ -130,12 +295,24 @@
 		links = list()
 
 		canShow(var/client/C)
-			if(istype(C.mob.equipped(), /obj/item/cult_sigil)) return 1
+			if(istype(C.mob.equipped(), /obj/item/cult_sigil/complete)) return 1
 			else return 0
 
 		onActivate(var/client/C)
-			C.mob.drop_item()
-			qdel()
+			if(istype(C.mob.equipped(), /obj/item/cult_sigil/complete))
+				qdel(C.mob.equipped())
+			qdel(src) // pretty sure all of these are needed for cleanup
+			qdel(src.master)
+			qdel(src.master.master)
+
+	cultistbarricade_revelation
+		linkText = "(Use your faith to examine the seal.)"
+		nodeText = "This jury rigged seal appears to have been made of three seperate pieces. Estimating their significance, you'd assume these would be held on someone's person."
+		links = list()
+
+		canShow(var/client/C)
+			if(C.mob.traitHolder.hasTrait("training_chaplain")) return 1
+			else return 0
 
 /obj/dialogueobj/controlpc
 	name = "barely intact lever"
@@ -157,17 +334,35 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
+	proc/lever_hv(mob/user)
+		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
+			new /mob/living/critter/void_scale(R.loc)
+		shake_camera(user, 5, 16)
+		random_brute_damage(user, 3)
+		user.changeStatus("knockdown", 1 SECOND)
+		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
+		D.dir = 4
+		qdel(src)
+
+	proc/lever_lv(mob/user)
+		for(var/obj/decoration/ritual/R in(range(7)))
+			new /obj/item/siren_orb(R.loc)
+		shake_camera(user, 4, 4)
+		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
+		D.dir = 4
+		qdel(src)
+
 /datum/dialogueMaster/controlpc
 	dialogueName = "Voltage Control Terminal"
 	start = /datum/dialogueNode/controlpc_start
 	visibleDialogue = 0
-	maxDistance = 1
+	maxDistance = -1 // Cause they have to delete themselves, doubt it'll be a problem... right?
 
 /datum/dialogueNode
 
 	controlpc_start
 		linkText = "..."
-		links = list(/datum/dialogueNode/controlpc_lv, /datum/dialogueNode/controlpc_hv)
+		links = list(/datum/dialogueNode/controlpc_lv, /datum/dialogueNode/controlpc_hv, /datum/dialogueNode/controlpc_diagnose)
 
 		getNodeText(var/client/C)
 			return {"A barely visible creature, swimming mist and void looms above, your mind aches even attempting to gaze at it. The emitters within the sand appear to suspend it in place with soundwaves almost piercing the glass. <br>
@@ -196,3 +391,13 @@
 			else return 0
 
 		onActivate(var/client/C)
+
+	controlpc_diagnose
+		linkText = "(Expertly examine the damage.)"
+		nodeText = {"This lever system appears to have been hit with gunfire, and while the wiring is heavily damaged to the lever, the overall containment system its connected to is fine. <br>
+		You'd guess you'd have only one shot with the lever if you get the key for it."}
+		links = list()
+
+		canShow(var/client/C)
+			if(C.mob.traitHolder.hasTrait("training_engineer")) return 1
+			else return 0

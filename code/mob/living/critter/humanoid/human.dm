@@ -151,6 +151,22 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 	hand_count = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD // Insane fuckers, could be too difficult though
 
+	faction = list(FACTION_DEEP_CULT) // I'm going to take this off a few so they fight
+
+	var/list/chant_list = list("Do you hear it?", "I see now...", "IT WANTS BLOOD", "IT SCREAMS", "The dream walks...", "GET OUT OF MY HEAD", "What beautiful lights...", "The Deep promises.", "BELIEVE DAMN YOU.",
+	"The water stirs...", "Its all crashing down...", "Would you like to hear about our lords and saviours the old ones?", "What... is that melody?")
+
+	New()
+		..()
+		src.bioHolder.AddEffect("accent_badmin")
+
+	Life(datum/controller/process/mobs/parent) // shamelessly stolen from the crunched cause adding this as a AI task was a nightmare
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && prob(10))
+			src.say(pick(chant_list))
+
 /mob/living/critter/human/cultist/initiate
 	health_brute = 25
 	health_burn = 25
@@ -184,7 +200,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			..()
 			var/datum/handHolder/HH = hands[1]
 			HH.icon = 'icons/mob/critter_ui.dmi'
-			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
 			HH.icon_state = "silenced"
@@ -192,7 +208,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'
@@ -217,7 +233,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.name = "left hand"
 			HH.suffix = "-L"
 			HH.icon_state = "blade"
-			HH.limb_name = "kitchen knife"
+			HH.limb_name = "rusted blade"
 			HH.can_hold_items = FALSE
 			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
 
@@ -235,7 +251,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			..()
 			var/datum/handHolder/HH = hands[1]
 			HH.icon = 'icons/mob/critter_ui.dmi'
-			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
 			HH.icon_state = "silenced"
@@ -243,7 +259,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'
@@ -262,6 +278,10 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 	health_burn = 150
 	corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader
 	human_to_copy = /mob/living/carbon/human/normal/cultist/leader
+	New()
+		..()
+		src.bioHolder.AddEffect("ithillid")
+		src.bioHolder.AddEffect("hulk") // I was GONNA be nice but humans are so easy to stamcrit
 
 	knife
 		setup_hands()
@@ -272,7 +292,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.name = "left hand"
 			HH.suffix = "-L"
 			HH.icon_state = "blade"
-			HH.limb_name = "kitchen knife"
+			HH.limb_name = "rusted blade"
 			HH.can_hold_items = FALSE
 			HH.object_for_inhand = /obj/item/kitchen/utensil/knife
 
@@ -295,7 +315,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			..()
 			var/datum/handHolder/HH = hands[1]
 			HH.icon = 'icons/mob/critter_ui.dmi'
-			HH.limb = new /datum/limb/gun/kinetic/makarov
+			HH.limb = new /datum/limb/gun/kinetic/silenced_22
 			HH.name = "silenced pistol"
 			HH.suffix = "-L"
 			HH.icon_state = "silenced"
@@ -303,7 +323,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/makarov
+			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'

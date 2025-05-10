@@ -54,7 +54,10 @@
 /turf/unsimulated/wall/trench,
 /area/space)
 "aT" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/reagent_dispensers/watertank/fountain/drugged{
+	color = null;
+	name = "water fountain"
+	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "aW" = (
@@ -126,9 +129,6 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bp" = (
-/obj/decoration/bustedmantapc{
-	dir = 1
-	},
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bq" = (
@@ -3052,6 +3052,7 @@
 "jq" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/device/t_scanner,
+/obj/item/crowbar/green,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "js" = (
@@ -3128,9 +3129,6 @@
 /obj/cable/green{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/small/sticky/greenish{
-	dir = 1
-	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "lj" = (
@@ -3188,16 +3186,11 @@
 "mj" = (
 /obj/table/wood/auto,
 /obj/item/gun/kinetic/silenced_22,
-/obj/item/ammo/bullets/bullet_22,
 /obj/machinery/light/small/floor/greenish,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "mk" = (
 /obj/storage/secure/closet/fridge,
-/obj/loot_spawner/random/short/whiteweed,
-/obj/loot_spawner/random/short/whiteweed,
-/obj/loot_spawner/random/short/whiteweed,
-/obj/loot_spawner/random/short/whiteweed,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,
@@ -3206,6 +3199,8 @@
 /obj/machinery/light/small/sticky/greenish{
 	dir = 8
 	},
+/obj/item/plant/herb/cannabis/white/spawnable,
+/obj/item/plant/herb/cannabis/white/spawnable,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "mr" = (
@@ -3292,7 +3287,7 @@
 	},
 /obj/creepy_sound_trigger,
 /turf/unsimulated/floor,
-/area/cult_base/acolyte)
+/area/cult_base/acolyte/outdoors)
 "nv" = (
 /mob/living/critter/human/cultist/leader,
 /turf/unsimulated/floor,
@@ -3306,9 +3301,6 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "nU" = (
-/obj/cable/green{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_north/nopoweralert{
 	environ = 2;
 	equipment = 2;
@@ -3318,6 +3310,9 @@
 	start_charge = 23
 	},
 /obj/machinery/power/furnace,
+/obj/cable/green{
+	icon_state = "0-2"
+	},
 /obj/cable/green{
 	icon_state = "2-8"
 	},
@@ -3417,6 +3412,12 @@
 	dir = 8
 	},
 /area/cult_base/leader)
+"pn" = (
+/obj/fakeobject/ritual_symbol{
+	icon_state = "aqua"
+	},
+/turf/space/fluid/noexplosion,
+/area/cult_base/acolyte/outdoors)
 "pv" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/grime,
@@ -3772,6 +3773,7 @@
 /area/cult_base/leader)
 "xx" = (
 /obj/table/auto,
+/obj/candle_light,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "xz" = (
@@ -3893,6 +3895,7 @@
 "zv" = (
 /obj/table/auto,
 /obj/item/paper/cultbase_backscratcher,
+/obj/item/totally_just_a_backscratcher,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/leader)
 "zB" = (
@@ -4090,6 +4093,12 @@
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
+"DK" = (
+/obj/fakeobject/ritual_symbol{
+	icon_state = "corruptus"
+	},
+/turf/space/fluid/noexplosion,
+/area/cult_base/acolyte/outdoors)
 "DO" = (
 /obj/table/wood/auto,
 /obj/decal/cleanable/blood/drip,
@@ -4136,27 +4145,27 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Er" = (
-/obj/item/clothing/mask/greencultmask{
-	pixel_y = 13
-	},
 /obj/item/storage/backpack/turtlegreen,
+/obj/item/parts/human_parts/arm/left/synth{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/parts/human_parts/arm/left/synth{
 	pixel_x = 5;
 	pixel_y = -9
 	},
 /obj/item/parts/human_parts/arm/right/synth{
 	pixel_x = -3;
-	pixel_y = -9
-	},
-/obj/item/parts/human_parts/arm/left/synth{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_y = 1
 	},
 /obj/item/parts/human_parts/arm/right/synth{
 	pixel_x = -3;
-	pixel_y = 1
+	pixel_y = -9
 	},
-/turf/space/fluid/noexplosion,
+/obj/item/clothing/mask/greencultmask{
+	pixel_y = 13
+	},
+/turf/space/fluid,
 /area/cult_base/acolyte/outdoors)
 "EA" = (
 /turf/unsimulated/floor/grime,
@@ -4190,14 +4199,9 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "FL" = (
-/obj/decal/cleanable/writing{
-	name = "improvised ritual";
-	icon_state = "cPentacle";
-	font_color = "#00FF00";
-	color = "#880808"
-	},
 /obj/item/reagent_containers/food/snacks/goldfish_cracker,
 /obj/mapping_helper/mob_spawn/corpse/human/cultist/initiate,
+/obj/fakeobject/pentagram,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "FT" = (
@@ -4241,6 +4245,12 @@
 /obj/mapping_helper/algae,
 /turf/unsimulated/floor/plating,
 /area/cult_base/initate)
+"Gj" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/green,
+/mob/living/critter/human/cultist/acolyte,
+/turf/unsimulated/floor,
+/area/cult_base/acolyte/bedrooms)
 "GD" = (
 /obj/machinery/door_control/oneshot{
 	pixel_y = 22;
@@ -4337,10 +4347,14 @@
 	},
 /obj/machinery/power/furnace,
 /obj/cable/green{
-	icon_state = "0-8"
+	icon_state = "0-4"
 	},
 /turf/unsimulated/floor/plating,
 /area/cult_base/acolyte)
+"Il" = (
+/obj/decoration/ritual,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "In" = (
 /obj/crevice{
 	pixel_y = 30
@@ -4372,12 +4386,7 @@
 /area/cult_base/initate)
 "Jf" = (
 /obj/item/organ/heart,
-/obj/decal/cleanable/writing{
-	name = "improvised ritual";
-	icon_state = "cPentacle";
-	font_color = "#00FF00";
-	color = "#880808"
-	},
+/obj/fakeobject/pentagram,
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "Jl" = (
@@ -4419,13 +4428,8 @@
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "KE" = (
-/obj/decal/cleanable/writing{
-	name = "improvised ritual";
-	icon_state = "cPentacle";
-	font_color = "#00FF00";
-	color = "#880808"
-	},
 /mob/living/critter/small_animal/mouse/dead,
+/obj/fakeobject/pentagram,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "KP" = (
@@ -4450,8 +4454,13 @@
 /obj/table/wood/auto,
 /obj/item/control_key,
 /obj/item/paper/cultbase_leader_ramblings,
+/obj/item/ritualChalk/randomColor,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
+"Lq" = (
+/obj/spawner/little_monster,
+/turf/space/fluid/noexplosion,
+/area/cult_base/leader/outdoors)
 "Lr" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -4541,9 +4550,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "NA" = (
-/obj/machinery/manufacturer/general{
-	hacked = 1
-	},
+/obj/machinery/manufacturer/general,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "NC" = (
@@ -4560,10 +4567,10 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "NX" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable/green{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_north/nopoweralert,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Oj" = (
@@ -4585,7 +4592,7 @@
 	id = "creature_containment"
 	},
 /turf/unsimulated/floor,
-/area/cult_base/leader)
+/area/cult_base/leader/outdoors)
 "Ot" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/drink_rack/mug{
@@ -4699,7 +4706,7 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "QL" = (
-/obj/mapping_helper/mob_spawn/corpse/human/cultist/leader,
+/obj/mapping_helper/mob_spawn/corpse/human/cultist/acolyte,
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "Ra" = (
@@ -4756,7 +4763,10 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "SV" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/reagent_dispensers/watertank/fountain/drugged{
+	color = null;
+	name = "water fountain"
+	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "SX" = (
@@ -4813,7 +4823,7 @@
 /area/evilreaver/security)
 "TS" = (
 /obj/item/storage/toilet,
-/mob/living/carbon/human/normal/cultist/acolyte/key2,
+/mob/living/critter/human/cultist/acolyte/pistol/key2,
 /turf/unsimulated/floor/specialroom/freezer/blue,
 /area/cult_base/acolyte/bedrooms)
 "TX" = (
@@ -4853,6 +4863,9 @@
 "UJ" = (
 /mob/living/critter/aquatic/fish/jellyfish,
 /obj/item/organ/heart,
+/obj/fakeobject/ritual_symbol{
+	icon_state = "sacrificum"
+	},
 /turf/space/fluid/noexplosion,
 /area/cult_base/acolyte/outdoors)
 "Vd" = (
@@ -5023,6 +5036,12 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"Yn" = (
+/obj/fakeobject/ritual_symbol{
+	icon_state = "hominem"
+	},
+/turf/space/fluid/noexplosion,
+/area/cult_base/acolyte/outdoors)
 "YD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/green,
@@ -5047,9 +5066,6 @@
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "Zg" = (
-/obj/cable/green{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_north/nopoweralert{
 	environ = 2;
 	equipment = 2;
@@ -5059,6 +5075,9 @@
 	start_charge = 23
 	},
 /obj/stool,
+/obj/cable/green{
+	icon_state = "0-8"
+	},
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "Zq" = (
@@ -28962,7 +28981,7 @@ pb
 CX
 yA
 pb
-YD
+Gj
 yA
 pb
 YD
@@ -32882,7 +32901,7 @@ JB
 jj
 JB
 JB
-JB
+DK
 JB
 JB
 JB
@@ -32903,7 +32922,7 @@ yW
 yW
 yW
 yW
-yW
+Lq
 ED
 ab
 gW
@@ -33185,7 +33204,7 @@ JB
 JB
 UJ
 Er
-JB
+pn
 JB
 Ve
 JB
@@ -33486,7 +33505,7 @@ JB
 Ve
 GF
 JB
-JB
+Yn
 JB
 JB
 JB
@@ -33504,7 +33523,7 @@ yW
 yW
 yW
 yW
-yW
+Il
 yW
 yW
 yW
@@ -35610,7 +35629,7 @@ ur
 uO
 On
 kY
-nv
+HW
 ZZ
 ZZ
 uO
@@ -36212,7 +36231,7 @@ JB
 JB
 ur
 uO
-HW
+nv
 HW
 qW
 Dh

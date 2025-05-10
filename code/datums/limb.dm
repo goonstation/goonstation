@@ -477,6 +477,13 @@
 		reload_time = 3 SECONDS
 		spread_angle = 3
 
+	resonator
+		proj = new/datum/projectile/special/piercing/resonator
+		shots = 4
+		current_shots = 4
+		cooldown = 1 SECONDS
+		reload_time = 15 SECONDS
+
 
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner

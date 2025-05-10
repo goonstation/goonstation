@@ -57,7 +57,7 @@
 		key2
 			New()
 				..()
-				src.equip_if_possible(new /obj/item/cult_sigil_pt2, SLOT_L_STORE)
+				src.equip_if_possible(new /obj/item/cult_sigil, SLOT_L_STORE)
 	leader
 		New()
 			..()
