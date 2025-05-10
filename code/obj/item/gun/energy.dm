@@ -2493,6 +2493,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	icon_state = "resonator"
 	desc = "The combination of the creature's excess energy and the cultist's artifact has created a proficient weapon utilising the creature's innate vibration energy."
 	item_state = "resonator"
+	charge_icon_state = "resonator"
 	can_swap_cell = 0
 	force = 10
 	two_handed = TRUE
