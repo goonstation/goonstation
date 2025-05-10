@@ -383,6 +383,7 @@
 			else return 0
 
 		onActivate(var/client/C)
+			src.master.master.lever_lv
 
 	controlpc_hv
 		linkText = "(Move the lever up to increase the voltage.)"
@@ -395,6 +396,7 @@
 			else return 0
 
 		onActivate(var/client/C)
+			src.master.master.lever_hv
 
 	controlpc_diagnose
 		linkText = "(Expertly examine the damage.)"
