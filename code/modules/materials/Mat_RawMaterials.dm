@@ -471,11 +471,11 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 				src.icon_state = "scrap1_$$plutonium"
 			if(2 to 4)
 				src.icon_state = "scrap2_$$plutonium"
-			if(5 to 11)
+			if(5 to 9)
 				src.icon_state = "scrap3_$$plutonium"
-			if(12 to 31)
+			if(10 to 14)
 				src.icon_state = "scrap4_$$plutonium"
-			if(32 to 49)
+			if(15 to 19)
 				src.icon_state = "scrap5_$$plutonium"
 			else
 				src.icon_state = "scrap6_$$plutonium"
