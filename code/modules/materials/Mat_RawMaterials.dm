@@ -14,6 +14,8 @@
 	New()
 		..()
 		setup_material()
+		if (material)
+			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	proc/setup_material()
 		.=0
@@ -404,11 +406,6 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"
 	default_material = "soulsteel"
-
-/obj/item/material_piece/metal/censorium
-	desc = "A bar of censorium. Nice try."
-	icon_state = "bar"
-	default_material = "censorium"
 
 /obj/item/material_piece/bone
 	name = "bits of bone"

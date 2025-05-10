@@ -4,6 +4,7 @@
 	antagonist_icon = "vampthrall"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	wiki_link = "https://wiki.ss13.co/Vampire#Thralls"
 
 	/// The ability holder of the master of this vampire thrall, which is to be used alongside `src.master`, due to vampire TEGs.
 	var/datum/abilityHolder/vampire/master_ability_holder
@@ -49,6 +50,9 @@
 		src.ability_holder.addAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
 
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_THRALL, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = "\ref[src.master_ability_holder]")
+
 	remove_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
 		var/datum/component/C = H.GetComponent(/datum/component/tracker_hud/vampthrall)
@@ -60,6 +64,9 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)
 		H.remove_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_THRALL, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = "\ref[src.master_ability_holder]")
 
 	add_to_image_groups()
 		. = ..()

@@ -26,9 +26,9 @@ All other chickens in this file are non-secret. Please be respectful.
 	icon = 'icons/mob/ranch/chickens.dmi'
 	//icon_state = "chick"
 	icon_state_dead = "chick-dead"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "cheeps"
-	speechverb_ask = "boks"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "cheeps"
+	speech_verb_ask = "boks"
 	health_brute = 10
 	health_burn = 10
 	flags = TABLEPASS | DOORPASS
@@ -42,7 +42,7 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	is_npc = 0
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	butcher_time = 0.2 SECONDS
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 
@@ -1695,12 +1695,15 @@ All other chickens in this file are non-secret. Please be respectful.
 	happiness = 0
 	favorite_flag = "peas"
 	open_to_sound = TRUE
+	var/obj/machinery/camera/ranch/pigeon/camera = null
 
 	New()
 		. = ..()
-		var/obj/item/device/radio/pigeon/P = new/obj/item/device/radio/pigeon(src)
-		P.broadcasting = FALSE
+		camera = new(src, prob(0.1) ? "NTSO Security Van" : "Camera [\ref(src)]")
 
+	death(gibbed, do_drop_equipment)
+		QDEL_NULL(camera)
+		. = ..()
 
 	grow_up()
 		..()
@@ -1713,9 +1716,6 @@ All other chickens in this file are non-secret. Please be respectful.
 			real_name = "Messenger Pigeon Hen"
 			desc = "It hatched from a chicken egg, but that's no hen!"
 		return
-
-	change_happiness(var/amt)
-		..()
 
 	rooster
 		is_masc = 1

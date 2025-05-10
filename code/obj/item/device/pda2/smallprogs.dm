@@ -880,10 +880,7 @@ Code:
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
-			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "color: [alert_color]; font-size: 6px;", alpha = 215)
-			for (var/mob/O in hearers(usr))
-				O.show_message(assoc_maptext = map_text)
+			DISPLAY_MAPTEXT(usr, hearers(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/alert, "[alert_title] Emergency alert sent.", alert_color)
 			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.master]."),
 			SPAN_ALERT("You see [usr] press a button on the side of their [src.master]."))
