@@ -43482,14 +43482,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"ilE" = (
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	dir = 8
-	},
-/turf/space,
-/area/space)
 "imv" = (
 /obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
@@ -69183,7 +69175,7 @@ adC
 adC
 adC
 adC
-ilE
+adC
 adC
 adC
 adC
