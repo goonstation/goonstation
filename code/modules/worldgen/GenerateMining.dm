@@ -44,6 +44,7 @@ TYPEINFO(/turf/variableTurf/floor)
 		if(gen && gen.floor_turf_type)
 			source.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 		else if (map_currently_underwater)
+			if (source.z == Z_LEVEL_STATION)
 				#ifdef MAP_OVERRIDE_NADIR
 				source.ReplaceWith(/turf/space/fluid/acid)
 				#elif defined(MOVING_SUB_MAP)
