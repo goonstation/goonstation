@@ -20,12 +20,21 @@ TYPEINFO(/turf/variableTurf)
 		if(source.z == planetZLevel)
 			return // noop
 		if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#elif defined(MOVING_SUB_MAP)
+				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
+/turf/variableTurf/floor //Replaced with map appropriate floor tile for current z-level (fluid on underwater, asteroid floor on others)
 	name = "variable floor"
 	icon_state = "floor"
 
@@ -35,12 +44,21 @@ TYPEINFO(/turf/variableTurf/floor)
 		if(gen && gen.floor_turf_type)
 			source.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
 		else if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#elif defined(MOVING_SUB_MAP)
+				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
+/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps)
 	name = "variable wall"
 	icon_state = "wall"
 
@@ -53,7 +71,7 @@ TYPEINFO(/turf/variableTurf/wall)
 			source.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 
-/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
+/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (fluid floor on underwater maps, space on other maps)
 	name = "variable clear"
 	icon_state = "clear"
 
@@ -64,7 +82,16 @@ TYPEINFO(/turf/variableTurf/clear)
 		if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
 			source.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
 		else if (map_currently_underwater)
-			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			if (source.z == Z_LEVEL_STATION)
+				#ifdef MAP_OVERRIDE_NADIR
+				source.ReplaceWith(/turf/space/fluid/acid)
+				#elif defined(MOVING_SUB_MAP)
+				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
+				#else
+				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+				#endif
+			else
+				source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
 			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
