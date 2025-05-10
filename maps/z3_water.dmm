@@ -3992,6 +3992,7 @@
 	name = "Echocontainment Emitter"
 	},
 /obj/map/light/void,
+/obj/spawner/little_monster,
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "Bg" = (
@@ -4457,10 +4458,6 @@
 /obj/item/ritualChalk/randomColor,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
-"Lq" = (
-/obj/spawner/little_monster,
-/turf/space/fluid/noexplosion,
-/area/cult_base/leader/outdoors)
 "Lr" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -32922,7 +32919,7 @@ yW
 yW
 yW
 yW
-Lq
+yW
 ED
 ab
 gW
