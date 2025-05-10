@@ -495,3 +495,9 @@
 	desc = "The entertaining guise of an oversized abominable creature of entertainment."
 	spawn_contents = list(/obj/item/clothing/head/blorbohat,
 	/obj/item/clothing/suit/blorbosuit)
+
+/obj/item/storage/box/costume/chompskysuit
+	name = "Gnome Chompsky costume set"
+	desc = "Be desired by Staff Assistants, and thrown in the trash by everyone else."
+	spawn_contents = list(/obj/item/clothing/head/chompskyhat,
+	/obj/item/clothing/suit/chompskysuit)
