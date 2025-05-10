@@ -907,6 +907,7 @@
 #include "code\modules\antagonists\wizard\abilities\cluwne.dm"
 #include "code\modules\antagonists\wizard\abilities\doppelganger.dm"
 #include "code\modules\antagonists\wizard\abilities\fireball.dm"
+#include "code\modules\antagonists\wizard\abilities\flee.dm"
 #include "code\modules\antagonists\wizard\abilities\forcewall.dm"
 #include "code\modules\antagonists\wizard\abilities\golem.dm"
 #include "code\modules\antagonists\wizard\abilities\iceburst.dm"
