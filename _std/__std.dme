@@ -29,6 +29,7 @@
 #include "defines\ailments.dm"
 #include "defines\antagonists.dm"
 #include "defines\announcement_origins.dm"
+#include "defines\area.dm"
 #include "defines\artifacts.dm"
 #include "defines\artemis.dm"
 #include "defines\atom.dm"

@@ -192,7 +192,7 @@
 		T = src.maze.get_center()
 		var/area/A = get_area(T)
 		A.name = "unknown pocket dimension"
-		A.teleport_blocked = 2
+		A.teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 		A.allowed_restricted_z = TRUE
 
 		logTheThing(LOG_STATION, src.holder, "Maze created for Curser artifact [src.holder] with center point [log_loc(T)]")
