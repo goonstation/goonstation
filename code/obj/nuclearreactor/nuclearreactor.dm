@@ -795,7 +795,7 @@
 	sname = "neutron"
 //file location for the sound you want it to play
 	shot_sound = null
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_TOXIC //would use D_SPECIAL but a few things don't use it properly.
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50

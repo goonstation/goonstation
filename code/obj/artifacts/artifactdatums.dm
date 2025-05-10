@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	dissipation_delay = 50
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_ground_chance = 90
@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		if (prob(20))
 			src.window_pass = 1
 		// Rare chance of the gun firing several shots in a burst
-		shot_number = pick(1, prob(25); 2, prob(5); 3, prob(1); 4)
+		firemode.shot_number = pick(1, prob(25); 2, prob(5); 3, prob(1); 4)
 
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile

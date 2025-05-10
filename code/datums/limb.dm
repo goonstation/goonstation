@@ -249,7 +249,7 @@
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 
 	proc/shoot_pointblank(atom/target, var/mob/user)
-		for (var/i = 0; i < proj.shot_number; i++)
+		for (var/i = 0; i < proj.firemode.shot_number; i++)
 			var/obj/projectile/P = initialize_projectile_pixel_spread(user, proj, target, 0, 0, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 			if (!P)
 				return FALSE
@@ -362,7 +362,7 @@
 		New()
 			. = ..()
 			var/datum/projectile/bullet/B = proj
-			B.shot_number = 10
+			B.firemode.shot_number = 10
 
 
 	mrl

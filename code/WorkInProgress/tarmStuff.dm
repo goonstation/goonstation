@@ -10,7 +10,7 @@
 	impact_image_state = "bullethole-large"
 	damage = 15
 	icon_state = "mininuke"
-	shot_delay = 1 SECONDS
+	default_firemode = /datum/firemode/cluster_rocket
 	min_speed = 24
 	max_speed = 36
 	start_speed = 24
@@ -320,13 +320,11 @@
 
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
-	cost = 3
 	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	shot_number = 3
-	shot_delay = 0.04 SECONDS
+	default_firemode = /datum/firemode/g11
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
 	dissipation_delay = 10
@@ -404,7 +402,7 @@
 		src.fueltank.reagents.add_reagent("ff-foam", 1000)
 		src.amt_chem = 20
 		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
-		src.current_projectile.shot_number = 3
+		src.current_projectile.firemode.shot_number = 3
 		src.chem_divisor = 3
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
@@ -1001,7 +999,8 @@ TYPEINFO(/obj/item/device/geiger)
 
 	New()
 		set_current_projectile(new/datum/projectile/special/timegun/theBulletThatShootsTheFuture)
-		projectiles = list(current_projectile, new/datum/projectile/special/timegun/theBulletThatShootsThePast)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new/datum/projectile/special/timegun/theBulletThatShootsThePast)
 		..()
 
 	set_current_projectile(datum/projectile/newProj)
@@ -1011,10 +1010,10 @@ TYPEINFO(/obj/item/device/geiger)
 		else
 			RemoveComponentsOfType(/datum/component/holdertargeting/windup/timegun)
 
-	proc/set_followup_proj(datum/projectile/proj_data)
+	/*proc/set_followup_proj(datum/projectile/proj_data)
 		for(var/datum/projectile/special/timegun/ts in src.projectiles)
 			ts.followup = proj_data
-
+*/
 /*todo to clean up atom prop define readability (linter does not handle the ##update correctly, and there's no way to sanely unlint this mess afaik)
 #define DEFINE #define
 #define DEFINE_PROP(name, method, update...) DEFINE PROP_##name(x) x(#name, APPLY_ATOM_PROPERTY_##method, REMOVE_ATOM_PROPERTY_##method, ##update)

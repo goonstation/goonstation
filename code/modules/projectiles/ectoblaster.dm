@@ -8,7 +8,7 @@
 	dissipation_delay = 4
 	sname = "dewraithize"
 	shot_sound = 'sound/weapons/Taser.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 	damage_type = 0
 	hit_ground_chance = 0
