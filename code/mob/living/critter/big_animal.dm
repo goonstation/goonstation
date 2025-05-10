@@ -96,7 +96,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/aggressive/ranged
+	ai_type = /datum/aiHolder/ranged
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/slam)
 	has_genes = TRUE
@@ -121,7 +121,7 @@
 
 	setup_hands()
 		..()
-		HH = hands[1]
+		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/energy/resonator			// if not null, the special limb to use when attack_handing
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
