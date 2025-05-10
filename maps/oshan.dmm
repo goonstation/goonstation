@@ -1695,29 +1695,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
-"afK" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
-	pixel_x = -11;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/food/drinks/tea{
-	pixel_x = 11;
-	pixel_y = 12
-	},
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/sandwich/pbh{
-	pixel_y = 4
-	},
-/obj/decal/poster/wallsign/poster_eyetest{
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/food/snacks/candy/peach_ring{
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/turf/simulated/floor/blue/side,
-/area/station/medical/medbay/surgery/storage)
 "afM" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
@@ -4483,18 +4460,6 @@
 /area/station/medical/medbay)
 "apP" = (
 /obj/disposalpipe/segment,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
-"apQ" = (
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/medicine,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/robodefibrillator,
-/obj/machinery/light/incandescent/cool,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "apR" = (
@@ -31762,17 +31727,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"deR" = (
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/firstaid/mental,
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/psychiatrist)
 "dfo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -33114,6 +33068,32 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/toilets)
+"eHY" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
+	pixel_x = -11;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/sandwich/pbh{
+	pixel_y = 4
+	},
+/obj/decal/poster/wallsign/poster_eyetest{
+	pixel_y = 32
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/turf/simulated/floor/blue/side,
+/area/station/medical/medbay/surgery/storage)
 "eIe" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -34690,6 +34670,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
+"gDr" = (
+/obj/machinery/atmospherics/unary/vent,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space/fluid,
+/area/space)
 "gDO" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm/west,
@@ -38089,6 +38076,21 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"lps" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/medicine,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/item/robodefibrillator,
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 9
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "lpD" = (
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass,
@@ -40309,6 +40311,17 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
+"nXQ" = (
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "nYa" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -45095,13 +45108,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"uDI" = (
-/obj/machinery/atmospherics/unary/vent,
-/obj/lattice{
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/fluid,
-/area/space)
 "uEl" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -90557,7 +90563,7 @@ afU
 agB
 agK
 ahc
-deR
+nXQ
 pBF
 qqc
 ajE
@@ -94795,7 +94801,7 @@ amv
 anp
 aoD
 ajJ
-apQ
+lps
 arg
 asq
 xfa
@@ -98408,7 +98414,7 @@ afq
 afq
 afq
 ajQ
-afK
+eHY
 lok
 uEW
 gdI
@@ -131302,7 +131308,7 @@ aqn
 aqn
 aqn
 aqn
-uDI
+gDr
 aem
 aem
 aeM

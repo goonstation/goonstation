@@ -3896,6 +3896,15 @@
 /obj/machinery/computer3/generic/personnel_management,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"yH" = (
+/obj/decal/stage_edge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor/wood/two,
+/area/station/bridge)
 "yI" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle/small{
@@ -4333,14 +4342,6 @@
 /obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"Cf" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "Ch" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -5447,15 +5448,6 @@
 /area/station/bridge)
 "Jf" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/bridge)
-"Jg" = (
-/obj/decal/stage_edge,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer3/generic/communications,
-/turf/simulated/floor/wood/two,
 /area/station/bridge)
 "Jh" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -6770,6 +6762,14 @@
 /obj/storage/secure/closet/command/hos,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
+"Sy" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "SF" = (
 /obj/machinery/genetics_scanner,
 /turf/simulated/floor/plating,
@@ -6984,13 +6984,6 @@
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"Ua" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/hemostat,
-/obj/item/suture,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "Ub" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/under/scrub/teal,
@@ -7936,6 +7929,21 @@
 "ZJ" = (
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"ZM" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_x = 11
+	},
+/obj/item/hemostat{
+	pixel_y = 3;
+	pixel_x = 9
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/suture{
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "ZN" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -49173,7 +49181,7 @@ rs
 sJ
 uC
 wM
-Jg
+yH
 Be
 Dn
 FA
@@ -50700,7 +50708,7 @@ Oc
 QF
 kD
 oF
-Cf
+Sy
 aG
 Rf
 Rf
@@ -58250,7 +58258,7 @@ LQ
 Qa
 Rn
 Sn
-Ua
+ZM
 Kc
 Rf
 Rf

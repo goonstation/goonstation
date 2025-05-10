@@ -47664,11 +47664,6 @@
 	dir = 4
 	},
 /area/station/medical/research)
-"cQW" = (
-/obj/table/wood/auto,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/staff)
 "cQX" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -48515,15 +48510,6 @@
 	pixel_x = 3;
 	pixel_y = 1
 	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
-"cTQ" = (
-/obj/random_item_spawner/medicine/two,
-/obj/item/bandage{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "cTR" = (
@@ -64803,6 +64789,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"ngT" = (
+/obj/table/wood/auto,
+/obj/machinery/light/incandescent,
+/obj/machinery/recharger/defibrillator,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/staff)
 "nhq" = (
 /obj/mesh/grille/steel,
 /obj/cable{
@@ -67824,6 +67816,18 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"pWS" = (
+/obj/random_item_spawner/medicine/two,
+/obj/item/bandage{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 9
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "pXP" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -72616,6 +72620,23 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
+"uFy" = (
+/obj/table/wood/auto,
+/obj/item/clipboard{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/pen{
+	rand_pos = 0
+	},
+/obj/machinery/light/incandescent,
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
+/area/station/medical/medbay/psychiatrist)
 "uFD" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -75990,23 +76011,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
-"ykB" = (
-/obj/table/wood/auto,
-/obj/item/clipboard{
-	pixel_x = 3;
-	pixel_y = 1
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = -8;
-	pixel_y = 11
-	},
-/obj/item/pen{
-	rand_pos = 0
-	},
-/obj/machinery/light/incandescent,
-/obj/item/storage/firstaid/mental,
-/turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
-/area/station/medical/medbay/psychiatrist)
 "ylU" = (
 /obj/machinery/door/airlock/pyro,
 /obj/cable{
@@ -111285,7 +111289,7 @@ jMb
 jMb
 jMb
 ozR
-cTQ
+pWS
 cVs
 cWq
 cXR
@@ -111296,7 +111300,7 @@ siZ
 dcP
 ddK
 fcs
-ykB
+uFy
 nBB
 vIi
 yby
@@ -115813,7 +115817,7 @@ aaa
 cMK
 cOb
 cPA
-cQW
+ngT
 rsw
 gLn
 cVD

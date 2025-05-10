@@ -11809,6 +11809,21 @@
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"aWi" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black,
+/obj/machinery/phone/wall{
+	pixel_x = 24
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/blueblack{
+	dir = 5
+	},
+/area/station/medical/medbay/psychiatrist)
 "aWj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16834,22 +16849,6 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
-"bsI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/table/round/auto,
-/obj/item/paper/book/from_file/dealing_with_clonelieness{
-	pixel_y = 5
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "bsJ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/transport,
@@ -32629,6 +32628,20 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"exd" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/table/round/auto,
+/obj/machinery/recharger/defibrillator,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "exj" = (
 /obj/machinery/computer/camera_viewer{
 	dir = 4
@@ -33790,21 +33803,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
-"flv" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/black,
-/obj/machinery/phone/wall{
-	pixel_x = 24
-	},
-/obj/item/storage/firstaid/mental,
-/turf/simulated/floor/blueblack{
-	dir = 5
-	},
-/area/station/medical/medbay/psychiatrist)
 "flG" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Research";
@@ -35566,6 +35564,23 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gyF" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/item/paper/book/from_file/dealing_with_clonelieness{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "gzl" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -37420,24 +37435,6 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
-"hLJ" = (
-/obj/table/auto,
-/obj/item/kitchen/food_box/donut_box,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/item/robodefibrillator{
-	pixel_x = 5;
-	pixel_y = 15
-	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 6
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "hMb" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -44035,6 +44032,29 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/security/main)
+"mqe" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/item/robodefibrillator{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = -3
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 19
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "mqi" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -95138,8 +95158,8 @@ bcS
 efc
 bkY
 bmh
-cgi
-bsI
+gyF
+exd
 caj
 aZl
 baB
@@ -96337,7 +96357,7 @@ aBE
 cUo
 aLr
 mOM
-flv
+aWi
 aXx
 uNE
 aQq
@@ -96353,7 +96373,7 @@ jJT
 baF
 boU
 jlI
-hLJ
+mqe
 ceI
 bfZ
 bnG

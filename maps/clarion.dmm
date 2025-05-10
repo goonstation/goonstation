@@ -15558,12 +15558,6 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/head)
-"eTn" = (
-/obj/table/auto,
-/obj/item/device/light/flashlight/penlight,
-/obj/item/medicaldiagnosis/stethoscope,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "eTy" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -24632,6 +24626,20 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"lmu" = (
+/obj/table/auto,
+/obj/item/device/light/flashlight/penlight{
+	pixel_x = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 6
+	},
+/obj/item/medicaldiagnosis/stethoscope{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "lmG" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/power/data_terminal,
@@ -31775,6 +31783,21 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
+"qDz" = (
+/obj/table/wood/round/auto,
+/obj/machinery/phone{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant_small";
+	layer = 3;
+	pixel_y = 14
+	},
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/wood,
+/area/station/medical/medbay/psychiatrist)
 "qDZ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34201,21 +34224,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"sqa" = (
-/obj/table/wood/round/auto,
-/obj/machinery/phone{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant_small";
-	layer = 3;
-	pixel_y = 14
-	},
-/obj/item/storage/firstaid/mental,
-/turf/simulated/floor/wood,
-/area/station/medical/medbay/psychiatrist)
 "sqF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36068,6 +36076,26 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
+"tEv" = (
+/obj/table/auto,
+/obj/item/cigpacket/propuffs{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/decoration/ashtray,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/item/matchbook{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "tEG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -38050,23 +38078,6 @@
 "uRw" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/destiny)
-"uRF" = (
-/obj/table/auto,
-/obj/item/cigpacket/propuffs{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/item/decoration/ashtray,
-/obj/item/reagent_containers/food/drinks/tea{
-	pixel_x = 4;
-	pixel_y = 12
-	},
-/obj/item/matchbook{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "uRH" = (
 /turf/simulated/floor/engine/caution/north,
 /area/station/hangar/main)
@@ -69738,7 +69749,7 @@ vwd
 cSx
 mVU
 meW
-uRF
+tEv
 aSd
 xBu
 aPm
@@ -70632,7 +70643,7 @@ rZW
 hrB
 cFO
 uPG
-eTn
+lmu
 bKW
 nbU
 gWw
@@ -75155,7 +75166,7 @@ gqn
 bsm
 wcv
 brk
-sqa
+qDz
 xbG
 gfx
 eLa

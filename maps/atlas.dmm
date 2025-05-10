@@ -1690,13 +1690,6 @@
 "ahV" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"aie" = (
-/obj/machinery/activation_button/driver_button{
-	id = "chapelgun";
-	name = "Funerary Driver Button"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/chapel/sanctuary)
 "aii" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -4365,16 +4358,6 @@
 	dir = 9
 	},
 /area/station/hallway/primary/north)
-"azi" = (
-/obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line2"
-	},
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/surgery)
 "azj" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
@@ -9061,6 +9044,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"bqL" = (
+/obj/machinery/activation_button/driver_button{
+	id = "chapelgun";
+	name = "Funerary Driver Button"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/chapel/sanctuary)
 "bsU" = (
 /obj/machinery/power/apc{
 	areastring = "Solitary Confinement";
@@ -9348,6 +9338,19 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"bIn" = (
+/obj/machinery/light/incandescent,
+/obj/table/auto,
+/obj/random_item_spawner/medicine,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 4
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 1;
+	pixel_y = 6
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "bJy" = (
 /obj/machinery/alarm{
 	pixel_y = 25
@@ -9902,6 +9905,18 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
+"cLR" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "cLT" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -12502,18 +12517,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"gsT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
 "gtu" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -21267,16 +21270,6 @@
 "tet" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
-"tfi" = (
-/obj/machinery/light/incandescent,
-/obj/table/auto,
-/obj/random_item_spawner/medicine,
-/obj/item/device/radio/intercom/medical{
-	dir = 1;
-	pixel_y = 6
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "tfr" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -23637,6 +23630,14 @@
 /obj/item/electronics/soldering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"wnV" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line2"
+	},
+/obj/machinery/computer/operating/small,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/surgery)
 "woh" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -73002,7 +73003,7 @@ ayF
 ayF
 woh
 guq
-tfi
+bIn
 aBx
 aBx
 aHA
@@ -74505,7 +74506,7 @@ ick
 avY
 amK
 ayD
-azi
+wnV
 acK
 avY
 aBA
@@ -82036,7 +82037,7 @@ gxQ
 aen
 afO
 ahi
-gsT
+cLR
 aiz
 ajJ
 aku
@@ -82639,7 +82640,7 @@ acz
 acz
 acz
 ach
-aie
+bqL
 akG
 ahf
 aiJ
