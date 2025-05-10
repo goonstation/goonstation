@@ -1796,7 +1796,7 @@
 	else
 		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
-/obj/machinery/vehicle/proc/toggle_hangar(var/pass)
+/obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	if(is_incapacitated(usr))
 		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
@@ -1804,7 +1804,7 @@
 		var/obj/machinery/vehicle/ship = usr.loc
 		if(ship.com_system)
 			if(ship.com_system.active)
-				ship.com_system.rc_ship.toggle_hangar(usr, pass)
+				ship.com_system.rc_ship.toggle_hangar_door(usr, pass)
 			else
 				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
 		else
