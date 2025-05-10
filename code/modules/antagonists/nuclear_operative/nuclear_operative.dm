@@ -71,7 +71,7 @@
 
 		new /obj/item/implant/revenge/microbomb(H)
 
-		boutput(H, SPAN_ALERT("Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\")."))
+		boutput(H, SPAN_ALERT("Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :z, as (say \":z Agent reporting in!\")."))
 		src.assign_name()
 
 	add_to_image_groups()
