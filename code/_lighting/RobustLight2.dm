@@ -593,7 +593,7 @@ proc/get_moving_lights_stats()
 	#undef APPLY
 
 /obj/overlay/tile_effect
-	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /*

@@ -1,0 +1,8 @@
+/obj/item/tank/emergency_oxygen : /obj/item/tank/pocket/oxygen{@OLD}
+/obj/item/tank/emergency_oxygen/extended : /obj/item/tank/pocket/extended/oxygen{@OLD}
+/obj/item/tank/emergency_oxygen/extended/empty : /obj/item/tank/pocket/extended/empty{@OLD}
+/obj/item/tank/emergency_oxygen/extended/plasma : /obj/item/tank/pocket/extended/plasma{@OLD}
+/obj/item/tank/mini_oxygen : /obj/item/tank/mini/oxygen{@OLD}
+/obj/item/tank/mini_oxygen/empty : /obj/item/tank/mini/oxygen/empty{@OLD}
+/obj/item/tank/mini_plasma : /obj/item/tank/mini/plasma{@OLD}
+/obj/item/tank/mini_plasma/empty : /obj/iteam/tank/mini/plasma/empty{@OLD}

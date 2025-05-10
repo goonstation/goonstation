@@ -237,7 +237,7 @@
 		icon_state = "stam-"
 		duration = INFINITE_STATUS
 		maxDuration = null
-		change = -5
+		change = -2.5
 
 	staminaregen/cursed
 		id = "weakcurse"
@@ -2744,7 +2744,7 @@
 	onAdd(optional)
 		..()
 		var/mob/living/M = src.owner
-		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(remove_self))
+		RegisterSignal(M, COMSIG_ATOM_SAY, PROC_REF(remove_self))
 		if (!istype(M) || !M.bioHolder)
 			src.remove_self()
 			return
@@ -2761,7 +2761,7 @@
 		if (src.added_accent)
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
-		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+		UnregisterSignal(src.owner, COMSIG_ATOM_SAY)
 
 /datum/statusEffect/graffiti
 	id = "graffiti_blind"
@@ -3347,6 +3347,8 @@
 		. = ..()
 		RegisterSignal(src.owner, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(standup))
 		RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_valid))
+		var/mob/mob_owner = src.owner
+		src.standup(null, mob_owner.lying)
 
 	proc/check_valid()
 		var/obj/table/table = locate() in src.owner.loc
@@ -3681,3 +3683,102 @@
 	icon_state = "phoenix_revive_ready"
 	desc = "You will be resurrected upon death with full health."
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/broken
+	id = "broken_madness"
+	name = "Broken"
+	desc = "You have been driven to madness by the immense psychic pressure of the unknowable minds drifting far above."
+	visible = TRUE
+	icon_state = "madness"
+
+	onAdd(optional)
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.addOverlayComposition(/datum/overlayComposition/insanity/large)
+
+	onRemove()
+		. = ..()
+		var/mob/mob_owner = src.owner
+		mob_owner.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+		var/datum/antagonist/antag_datum = mob_owner.mind?.get_antagonist(ROLE_BROKEN)
+		if (!antag_datum || antag_datum.removing)
+			return
+		message_admins("[key_name(src.owner)] regained their sanity and is no longer broken.")
+		logTheThing(LOG_ADMIN, src.owner, "regained their sanity and is no longer broken.")
+		mob_owner.mind.remove_antagonist(ROLE_BROKEN, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
+
+/datum/statusEffect/mimicDisguise
+	id = "mimic_disguise"
+	name = "Disguised"
+	desc = "Your speed and health are matching with your disguise."
+	icon_state = "mimicface"
+	visible = TRUE
+	var/pixels = null
+	var/speed_string = null
+
+	getTooltip()
+		var/mob/living/critter/mimic/mob_owner = src.owner
+		return "Health: [mob_owner.max_health], Speed: [speed_string]"
+	onAdd(optional)
+		. = ..()
+		src.onChange(optional)
+	onChange(optional)
+		. = ..()
+		src.pixels = optional
+		scale()
+
+	proc/scale()
+		var/health = null
+		var/mob/living/critter/mimic/antag_spawn/mob_owner = src.owner
+		if (mob_owner.modifier)
+			REMOVE_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
+		if (src.pixels <= 70)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
+			health = 10
+			speed_string = "Fast!"
+		else if (src.pixels <= 230)
+			mob_owner.modifier = /datum/movement_modifier/mimic
+			health = 25
+			speed_string = "Normal."
+		else if (src.pixels <= 800)
+			health = 50
+		else
+			health = src.pixels / 12
+			if (health > 120)
+				health = 120
+
+		if (health >= 50 && health <= 90)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_slow
+			speed_string = "Slow."
+		else if (health >= 90)
+			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_superslow
+			speed_string = "Super slow..."
+
+		mob_owner.max_health = health
+		mob_owner.health = mob_owner.max_health
+		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
+		src.getTooltip()
+
+/datum/statusEffect/spellshield
+	id = "spellshield"
+	name = "Spell shield"
+	desc = "You have an active spellshield, protecting you from various damage sources."
+	icon_state = "nradiation1"
+
+	onAdd()
+		..()
+		var/mob/M = src.owner
+
+		M.AddOverlays(image('icons/effects/effects.dmi', M, "enshield", MOB_LAYER + 1), "spellshield_overlay")
+		boutput(M, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
+		M.visible_message(SPAN_ALERT("[M] is encased in a protective shield."))
+		playsound(M, 'sound/effects/MagShieldUp.ogg', 50, TRUE)
+
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		M.ClearSpecificOverlays("spellshield_overlay")
+
+		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
+		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
+		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)

@@ -5,6 +5,7 @@
 	mutually_exclusive = TRUE
 	assigned_by = ANTAGONIST_SOURCE_RANDOM_EVENT
 	success_medal = "Territorial Defender"
+	wiki_link = "https://wiki.ss13.co/Space_Phoenix"
 	/// How far from the map edge does our nest need to be
 	var/map_edge_margin = 35
 	/// The ability holder of this space phoenix

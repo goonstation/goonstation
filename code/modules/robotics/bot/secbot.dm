@@ -77,7 +77,9 @@
 	var/last_target_cooldown = 10 SECONDS
 	emagged = 0 //Emagged Secbots view everyone as a criminal
 	health = 25
-	bot_voice = 'sound/misc/talk/bottalk_2.ogg'
+
+	voice_sound_override = 'sound/misc/talk/bottalk_2.ogg'
+
 	var/idcheck = 1 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
@@ -241,6 +243,9 @@
 	var/hat = null
 
 
+TYPEINFO(/obj/machinery/bot/secbot)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SECURITY)
+
 /obj/machinery/bot/secbot
 	New()
 		..()
@@ -266,11 +271,6 @@
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
 		#endif
 
-	speak(var/message, var/sing, var/just_float)
-		if (src.emagged >= 2)
-			message = capitalize(ckeyEx(message))
-		. = ..()
-
 	pull(mob/user)
 		if (src.on)
 			boutput(user,SPAN_ALERT("<b>[src] resists being pulled around! Maybe deactivate it first.</b>"))
@@ -291,20 +291,20 @@
 
 		dat += {"
 		<TT><B>Automatic Security Unit v2.0</B></TT><BR><BR>
-		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
+		Status: <A href='byond://?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
 		Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
 		if(!src.locked)
 			dat += {"<hr>
-			Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
-			Check Security Records: <A href='?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
-			Operating Mode: <A href='?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
-			Issue Warnings: <A href='?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
-			Warning Threshold: [src.cuff_threat_threshold] | <A href='?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
-			Auto Patrol: <A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
-			Report Arrests: <A href='?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
-			Guard Lockdown: <A href='?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
-			<A href='?src=\ref[src];operation=guardhere'>Guard Here</A>"}
+			Check for Unauthorised Equipment: <A href='byond://?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
+			Check Security Records: <A href='byond://?src=\ref[src];operation=ignorerec'>[src.check_records ? "Yes" : "No"]</A><BR>
+			Operating Mode: <A href='byond://?src=\ref[src];operation=switchmode'>[src.arrest_type ? "Detain" : "Arrest"]</A><BR>
+			Issue Warnings: <A href='byond://?src=\ref[src];operation=warning'>[src.warn_minor_crime ? "Yes" : "No"]</A><BR>
+			Warning Threshold: [src.cuff_threat_threshold] | <A href='byond://?src=\ref[src];operation=adjwarn;go=[1]'>\[+]</A> <A href='byond://?src=\ref[src];operation=adjwarn;go=[0]'>\[-]</A><BR>
+			Auto Patrol: <A href='byond://?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A><BR>
+			Report Arrests: <A href='byond://?src=\ref[src];operation=report'>[report_arrests ? "On" : "Off"]</A><BR>
+			Guard Lockdown: <A href='byond://?src=\ref[src];operation=lockdown'>[src.guard_area_lockdown ? "On" : "Off"]</A><BR>
+			<A href='byond://?src=\ref[src];operation=guardhere'>Guard Here</A>"}
 
 		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
@@ -335,52 +335,52 @@
 		switch(href_list["operation"])
 			if ("idcheck")
 				src.idcheck = !src.idcheck
-				src.speak("Ten-Four. ID Scanner: [src.idcheck ? "ENGAGED" : "DISENGAGED"].")
+				src.say("Ten-Four. ID Scanner: [src.idcheck ? "ENGAGED" : "DISENGAGED"].")
 				src.updateUsrDialog()
 			if ("ignorerec")
 				src.check_records = !src.check_records
-				src.speak("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
+				src.say("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
 				src.updateUsrDialog()
 			if ("switchmode")
 				src.arrest_type = !src.arrest_type
-				src.speak("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
+				src.say("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
 				src.updateUsrDialog()
 			if("patrol")
 				src.auto_patrol = !src.auto_patrol
-				src.speak("Ten-Four. Auto-Patrol: [src.auto_patrol ? "ENGAGED" : "DISENGAGED"].")
+				src.say("Ten-Four. Auto-Patrol: [src.auto_patrol ? "ENGAGED" : "DISENGAGED"].")
 				src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 				updateUsrDialog()
 			if("report")
 				src.report_arrests = !src.report_arrests
-				src.speak("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
+				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
 				updateUsrDialog()
 			if("lockdown")
 				src.guard_area_lockdown = !src.guard_area_lockdown
-				src.speak("Ten-Four. [src.guard_area_lockdown ? "Arresting non-security, non-head personnel in guarded area" : "Standard guard-arrest protocol initiated"].")
+				src.say("Ten-Four. [src.guard_area_lockdown ? "Arresting non-security, non-head personnel in guarded area" : "Standard guard-arrest protocol initiated"].")
 				updateUsrDialog()
 			if("warning")
 				src.warn_minor_crime = !src.warn_minor_crime
-				src.speak("Ten-Four. [src.guard_area_lockdown ? "Will not restrain minor offenders" : "Treating all crimes equally"].")
+				src.say("Ten-Four. [src.guard_area_lockdown ? "Will not restrain minor offenders" : "Treating all crimes equally"].")
 				updateUsrDialog()
 			if("adjwarn")
 				if(href_list["go"] == "1")
 					src.cuff_threat_threshold++
-					src.speak("!", just_float = 1)
+					src.say("!")
 				else
 					src.cuff_threat_threshold--
-					src.speak("...", just_float = 1)
+					src.say("...")
 				src.cuff_threat_threshold = clamp(src.cuff_threat_threshold, 1, 15)
 				updateUsrDialog()
 			if("guardhere")
 				src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 				if(src.mode == SECBOT_GUARD_START || src.mode == SECBOT_GUARD)
-					src.speak("Ten-Four. Guard orders deleted.")
+					src.say("Ten-Four. Guard orders deleted.")
 				else if(isarea(get_area(src)))
 					src.guard_area = get_area(src)
 					src.mode = SECBOT_GUARD_START
-					src.speak("Ten-Four. Guarding curent area.")
+					src.say("Ten-Four. Guarding curent area.")
 				else
-					src.speak("ERROR 99-21: CURRENT AREA IS INVALID.")
+					src.say("ERROR 99-21: CURRENT AREA IS INVALID.")
 				updateUsrDialog()
 
 	attack_ai(mob/user as mob)
@@ -650,7 +650,7 @@
 				src.doing_something = 0
 				if(patrol_target)
 					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolstart", src.chatspam_cooldown)) // have a valid path, so go there
-						src.speak("Patrol Mode: ENGAGED.")
+						src.say("Patrol Mode: ENGAGED.")
 					src.mode = SECBOT_PATROL
 				else // no patrol target, so need a new one
 					find_patrol_target()
@@ -665,8 +665,8 @@
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				src.doing_something = 1
-				if (!src.path) //null path means we couldn't find the target
-					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
+				if(!src.path)
+					src.say("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
 			/// On guard duty, returning from distraction
@@ -698,25 +698,25 @@
 			return
 
 		if(!isarea(src.guard_area)) // Area isnt? Back to patrol, I guess
-			src.speak("ERROR 99-24: INVALID AREA [src.guard_area]")
+			src.say("ERROR 99-24: INVALID AREA [src.guard_area]")
 			src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			return
 
 		if(src.guard_area?.name == "Space" || src.guard_area?.name == "Ocean") // Podsky we aint
-			src.speak("ERROR 99-29: SPECIFIED AREA '[src.guard_area]' OUT OF BOUNDS.")
+			src.say("ERROR 99-29: SPECIFIED AREA '[src.guard_area]' OUT OF BOUNDS.")
 			src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			return
 
 		if(get_area(get_turf(src)) == src.guard_area) // oh good we're here
 			if(src.mode == SECBOT_GUARD_START)
 				if(!src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardarrived", src.chatspam_cooldown))
-					src.speak("Destination reached. Patrolling area.", just_float = 1)
+					src.say("Destination reached. Patrolling area.")
 				src.mode = SECBOT_GUARD
 
 		if(!moving && !ON_COOLDOWN(src, SECBOT_GUARDMOVE_COOLDOWN, src.guard_mill_cooldown))
 			var/list/T = get_area_turfs(src.guard_area, 1)
 			if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
-				src.speak("Calculating path to [src.guard_area]...", just_float = 1)
+				src.say("Calculating path to [src.guard_area]...")
 			if(length(T) >= 1)
 				SPAWN(0)
 					for(var/i in 1 to 10) // Not every turf is accessible to the bot. But some might!
@@ -724,16 +724,16 @@
 						src.navigate_to(T, src.bot_move_delay)
 						if(length(src.path) >= 1)
 							if(src.mode == SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardpathOK", src.chatspam_cooldown))
-								src.speak("Path calculated. Moving out.", just_float = 1)
+								src.say("Path calculated. Moving out.")
 							break
 						sleep(1 SECOND)
 					if(!src.path) // Can't get there? Eh just go back to patrolling
-						src.speak("ERROR 99-02: COULD NOT FIND PATH TO GUARD AREA.")
-						src.speak("Guard Mode: DISENGAGED.")
+						src.say("ERROR 99-02: COULD NOT FIND PATH TO GUARD AREA.")
+						src.say("Guard Mode: DISENGAGED.")
 						src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 			else
-				src.speak("ERROR 99-81: AREA CONTAINS NO VALID TURFS.")
-				src.speak("Guard Mode: DISENGAGED.")
+				src.say("ERROR 99-81: AREA CONTAINS NO VALID TURFS.")
+				src.say("Guard Mode: DISENGAGED.")
 				src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
 
 	/// Makes the bot chase perps, hit them, and cuff them
@@ -748,25 +748,25 @@
 
 		/// Tango never up to begin with? Or some kind of not-human? Eh whatever give up
 		if(!istype(src.target, /mob/living/carbon/human))
-			speak("???", just_float = 1)
+			src.say("???")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
 		if((src.target.invisibility > INVIS_NONE)  && (!src.is_beepsky))
-			speak("?!", just_float = 1)
+			src.say("?!")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
 		if(src.target?.loc && !isturf(src.target.loc))
-			speak("?", just_float = 1)
+			src.say("?")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
 		/// Tango down or tango hecked off or tango behind a bunch of stuff, give up and get back to work
 		if (src.target.hasStatus("handcuffed") || src.frustration >= 8)
-			speak("...", just_float = 1)
+			src.say("...")
 			src.KillPathAndGiveUp(kpagu)
 			return
 
@@ -815,7 +815,7 @@
 				/// Charge em!
 				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 30) // but they can go anywhere in that 13 tiles
 				if(!src.path || length(src.path) < 1)
-					speak("...?", just_float = 1)
+					src.say("...?")
 					src.KillPathAndGiveUp(kpagu)
 				else
 					weeoo()
@@ -823,7 +823,7 @@
 			/// Tango outside of charging distance?
 			else
 				src.frustration += 2
-				speak("...", just_float = 1)
+				src.say("...")
 
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
@@ -864,7 +864,7 @@
 					continue
 				if(IN_RANGE(src, S, 7))
 					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-drawaggro", src.chatspam_cooldown))
-						S.speak("ALLIED UNIT UNDER ATTACK. MOVING TO ASSIST.")
+						S.say("ALLIED UNIT UNDER ATTACK. MOVING TO ASSIST.")
 					S.EngageTarget(C, 0, 0, 0)
 
 		if(pda_help && !ON_COOLDOWN(src, SECBOT_HELPME_COOLDOWN, src.helpme_cooldown))
@@ -900,14 +900,14 @@
 	proc/YellAtPerp()
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		src.point(src.target, 1)
-		src.speak("Level [src.threatlevel] infraction alert!")
+		src.say("Level [src.threatlevel] infraction alert!")
 		switch(saything)
 			if('sound/voice/bcriminal.ogg')
-				src.speak("CRIMINAL DETECTED.")
+				src.say("CRIMINAL DETECTED.")
 			if('sound/voice/bjustice.ogg')
-				src.speak("PREPARE FOR JUSTICE.")
+				src.say("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
-				src.speak("FREEZE. SCUMBAG.")
+				src.say("FREEZE. SCUMBAG.")
 		playsound(src, saything, 50, FALSE)
 
 	proc/weeoo()
@@ -1050,7 +1050,7 @@
 				auto_patrol = 0
 				src.KillPathAndGiveUp(2)
 				if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolend", src.chatspam_cooldown))
-					src.speak("Patrol Mode: DISENGAGED.")
+					src.say("Patrol Mode: DISENGAGED.")
 				send_status()
 
 	proc/at_patrol_target()
@@ -1097,13 +1097,13 @@
 
 				if("proc")
 					if (src.proc_available)
-						src.speak("!", just_float = 1)
+						src.say("!")
 						src.proc_available = 0
 						src.process()
 						SPAWN(3 SECONDS)
 							src.proc_available = 1
 					else
-						src.speak("...", just_float = 1)
+						src.say("...")
 					return
 
 				if("guard")
@@ -1151,7 +1151,7 @@
 			src.guard_area = A
 		src.mode = SECBOT_GUARD_START
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardstart", src.chatspam_cooldown))
-			src.speak("Ten-Four. Guard orders confirmed.")
+			src.say("Ten-Four. Guard orders confirmed.")
 
 	proc/summon_bot(var/turf/target)
 		src.KillPathAndGiveUp(1)
@@ -1164,7 +1164,7 @@
 		src.awaiting_beacon = 0
 		src.mode = SECBOT_SUMMON
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-summonstart", src.chatspam_cooldown))
-			src.speak("Responding to summon.")
+			src.say("Responding to summon.")
 		src.move_the_bot(move_summon_step_delay)
 
 	// send a radio signal with a single data key/value pair
@@ -1204,15 +1204,15 @@
 			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
-				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
+				src.say("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
 			if('sound/voice/biamthelaw.ogg')
-				src.speak("I-AM-THE-LAW.")
+				src.say("I-AM-THE-LAW.")
 			if('sound/voice/bsecureday.ogg')
-				src.speak("HAVE A SECURE DAY.")
+				src.say("HAVE A SECURE DAY.")
 			if('sound/voice/bradio.ogg')
-				src.speak("YOU CANT OUTRUN A RADIO.")
+				src.say("YOU CANT OUTRUN A RADIO.")
 			if('sound/voice/bcreep.ogg')
-				src.speak("YOUR MOVE. CREEP.")
+				src.say("YOUR MOVE. CREEP.")
 			if('sound/voice/binsultbeep.ogg')
 				var/qbert = ""
 				for(var/i in 1 to rand(5,20))
@@ -1221,7 +1221,7 @@
 						qbert += " "
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
-				src.speak("[qbert]")
+				src.say("[qbert]")
 		playsound(src, say_thing, 50, FALSE, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 

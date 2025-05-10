@@ -453,14 +453,6 @@
 		hud.update_charge()
 		hud.update_tools()
 
-/mob/living/intangible/seanceghost/Life(parent)
-	if (..(parent))
-		return 1
-	if (!src.abilityHolder)
-		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-	else if (src.health < src.max_health)
-		src.health++
-
 /mob/living/object/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
