@@ -40,6 +40,9 @@
 		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,
 	// botany
 		/obj/item/reagent_containers/glass/happyplant = 20,\
+	// ranch
+		/obj/item/reagent_containers/food/snacks/ranch_feed_bag/loot_age = 20,\
+		/obj/item/reagent_containers/food/snacks/ranch_feed_bag/loot_antiage = 20,\
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
