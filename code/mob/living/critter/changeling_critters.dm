@@ -1,6 +1,13 @@
 // a shared parent for changeling critters that need common functionality, like a master, DNA point store, hivemind, ability to wear hats, y'know, the real important stuff
 //mbc : the indentation of this file got all fucked up somehow. That's why we work on different indentation levels depending on the proc. Have fun!
 
+TYPEINFO(/mob/living/critter/changeling)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/critter/changeling
 	name = "fire me into the sun"
 	real_name = "for this should not be seen"
@@ -14,6 +21,7 @@
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
 	butcherable = BUTCHER_ALLOWED
+	default_speech_output_channel = null
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -40,26 +48,6 @@
 			var/obj/item/parts/human_parts/hpart = original_bodypart
 			hpart.original_DNA = src.bioHolder?.Uid
 			hpart.blood_DNA = hpart.original_DNA
-
-	say(message, involuntary = 0)
-		if (hivemind_owner)
-			message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
-
-			if (!message)
-				return
-
-			if (dd_hasprefix(message, "*"))
-				return src.emote(copytext(message, 2),1)
-
-			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_hive(message, hivemind_owner)
-		else
-			..()
 
 	canRideMailchutes()
 		return 1

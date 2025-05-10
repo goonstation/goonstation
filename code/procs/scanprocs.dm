@@ -421,22 +421,6 @@
 
 	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 
-
-// output a health pop-up overhead thing to the client
-/proc/scan_health_overhead(var/mob/M as mob, var/mob/C as mob) // M is who we're scanning, C is who to give the overhead to
-	if (C.client && !C.client.preferences?.flying_chat_hidden)
-
-		var/image/chat_maptext/chat_text = null
-		var/popup_text = scan_health_generate_text(M)
-
-		chat_text = make_chat_maptext(M, popup_text, force = 1)
-		if(chat_text)
-			chat_text.measure(C.client)
-			for(var/image/chat_maptext/I in C.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
-			chat_text.show_to(C.client)
-
 /proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
 		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")

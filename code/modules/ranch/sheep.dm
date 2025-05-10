@@ -5,9 +5,9 @@
 	real_name = "lamb"
 	desc = "On the lamb."
 	icon = 'icons/mob/ranch/sheep.dmi'
-	speechverb_say = "baas"
-	speechverb_exclaim = "screams"
-	speechverb_ask = "bleats"
+	speech_verb_say = "baas"
+	speech_verb_exclaim = "screams"
+	speech_verb_ask = "bleats"
 	health_brute = 30
 	health_burn = 30
 	hand_count = 2

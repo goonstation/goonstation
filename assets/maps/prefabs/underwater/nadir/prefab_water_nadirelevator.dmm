@@ -624,7 +624,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /turf/simulated/floor/black/grime,
 /area/tech_outpost{
 	name = "The Recluse"
