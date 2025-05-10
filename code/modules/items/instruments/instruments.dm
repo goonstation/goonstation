@@ -1007,6 +1007,22 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	attack_self(mob/user)
 		return //no imitating borg screams
 
+/obj/item/instrument/keytar
+	name = "keytar"
+	desc = "All the cool factor of being a rock star guitarist with none of the Wonderwall. \
+			Is the iconic 80's synth worth the back pain you'll feel after your shift ends?"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "keytar"
+	item_state = "keytar"
+	two_handed = TRUE
+	force = 10
+	note_range = list("c2", "c7")
+	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = FALSE
+	use_new_interface = TRUE
+
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
 	desc = "A wooden crate labeled to contain instruments."
