@@ -7,6 +7,9 @@ var/datum/magpie_manager/magpie_man = new
 		src.magpie = locate("M4GP13")
 
 
+TYPEINFO(/obj/npc/trader/salvager)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
@@ -16,12 +19,14 @@ var/datum/magpie_manager/magpie_man = new
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
 	currency = "Salvage Points"
+	speech_verb_say = "beeps"
+	use_speech_bubble = TRUE
+	voice_sound_override = 'sound/misc/talk/bottalk_1.ogg'
+
 	var/distribute_earnings = FALSE
 
 	New()
 		..()
-
-		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
@@ -53,37 +58,6 @@ var/datum/magpie_manager/magpie_man = new
 
 		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
 
-	var/list/speakverbs = list("beeps", "boops")
-	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
-	var/bot_speech_color
-
-	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
-		if (!message)
-			return
-		var/image/chat_maptext/chatbot_text = null
-		if (src.chat_text && !just_chat)
-			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
-			SPAWN(1.5 SECONDS)
-				UpdateOverlays(null, "bot_speech_bubble")
-			if(!src.bot_speech_color)
-				src.bot_speech_color = living_maptext_color("[src.name][TIME]")
-			var/maptext_color
-			if (sing)
-				maptext_color ="#D8BFD8"
-			else
-				maptext_color = src.bot_speech_color
-			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];")
-			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
-				chatbot_text.measure(src)
-				//hack until measure is unfucked
-				chatbot_text.measured_height = 20
-				for(var/image/chat_maptext/I in src.chat_text.lines)
-					if(I != chatbot_text)
-						I.bump_up(chatbot_text.measured_height)
-
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
-
 	sold_item(datum/commodity/C, obj/S, amount, mob/user as mob)
 		. = ..()
 		if(istype(C, /datum/commodity/magpie/buy))
@@ -113,7 +87,7 @@ var/datum/magpie_manager/magpie_man = new
 
 		animate_scanning(user, . ? "#FFFF00" : "#ff4400", scan_time)
 		sleep(scan_time)
-		src.speak(.)
+		src.say(.)
 
 	proc/appraise(obj/item/I)
 		if(I.deconstruct_flags || isitem(I))

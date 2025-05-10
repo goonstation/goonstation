@@ -436,7 +436,7 @@
 	if (GET_DIST(usr, src) < 4)
 		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br>[SPAN_ALERT("You analyze [src]'s vitals.")]<br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
-			scan_health_overhead(src, usr)
+			DISPLAY_MAPTEXT(src, list(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, src)
 			update_medical_record(src)
 
 	return jointext(., "")

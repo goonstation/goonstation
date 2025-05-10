@@ -23,21 +23,16 @@
 
 
 
+TYPEINFO(/obj/item/device/speechtotext)
+	start_listen_effects = list(LISTEN_EFFECT_PROTOTYPE_MAPTEXT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_1)
+
 /obj/item/device/speechtotext
 	name = "prototype flying chat device"
 	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		new /obj/maptext_junk/speech(M, msg = messages[1])
-
 
 /obj/maptext_junk
 	mouse_opacity = 0

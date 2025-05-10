@@ -143,22 +143,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	return
 
 // Grandma, no! you picked the wrong one!
+TYPEINFO(/obj/machinery/bot/guardbot/bootleg)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_BOOTLEG)
+
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
 	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
 
-	speak(var/message)
-		var/fontmode = rand(1,4)
-		switch(fontmode)
-			if(1) return ..("<font face='Comic Sans MS' size=3>[uppertext(message)]!!</font>")
-			if(2) return ..("<font face='Curlz MT'size=3>[uppertext(message)]!!</font>")
-			if(3) return ..("<font face='System'size=3>[uppertext(message)]!!</font>")
-			else
-				var/honk = pick("WACKA", "QUACK","QUACKY","GAGGLE")
-				if(!ON_COOLDOWN(src, "bootleg_sound", 15 SECONDS))
-					playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 0)
-				return ..("<font face='Comic Sans MS' size=3>[honk]!!</font>")
 	Move()
 		if(..())
 			pixel_x = rand(-6, 6)
@@ -169,21 +161,20 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
+TYPEINFO(/obj/machinery/bot/guardbot/xmas)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_XMAS)
+
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
 	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
-	speak(var/message)
-		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
-		. = ..()
-
 	explode()
 		if(src.exploding) return
 		src.exploding = 1
 		var/death_message = pick("I'll be back again some day!", "And to all a good night!", "A buddy is never truly happy until it is loved by a child. ", "I guess Spacemas isn't coming this year.", "Ho ho hFATAL ERROR")
-		speak(death_message)
+		src.say(death_message)
 		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
@@ -811,7 +802,6 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "hunter"
 	human_compatible = 0
 	uses_human_clothes = 0
-	voice_message = "bellows"
 	jerk = 1
 
 	sight_modifier()
