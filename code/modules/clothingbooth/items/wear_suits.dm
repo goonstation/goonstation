@@ -277,3 +277,38 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
 		name = "Black"
 		swatch_background_color = "#343442"
 		item_path = /obj/item/clothing/suit/sweater_vest/black
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/denim_dress)
+/datum/clothingbooth_item/wear_suit/denim_dress
+	cost = PAY_UNTRAINED/3
+	name = "Denim Dress"
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#3c6dc3"
+		item_path = /obj/item/clothing/suit/dress/denim/blue
+
+	turquoise
+		name = "Turquoise"
+		swatch_background_color = "#053a4e"
+		item_path = /obj/item/clothing/suit/dress/denim/turquoise
+
+	white
+		name = "White"
+		swatch_background_color = "#ffffff"
+		item_path = /obj/item/clothing/suit/dress/denim/white
+
+	black
+		name = "Black"
+		swatch_background_color = "#1c1c1c"
+		item_path = /obj/item/clothing/suit/dress/denim/black
+
+	grey
+		name = "Grey"
+		swatch_background_color = "#9fa6a9"
+		item_path = /obj/item/clothing/suit/dress/denim/grey
+
+	khaki
+		name = "Khaki"
+		swatch_background_color = "#c9a46e"
+		item_path = /obj/item/clothing/suit/dress/denim/khaki

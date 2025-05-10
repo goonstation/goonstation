@@ -116,8 +116,8 @@
 
 	var/static/list/team_to_job_datum = list(
 		"Stationwide" = list(),
-		"Genetics" = list(/datum/job/research/geneticist),
-		"Robotics" = list(/datum/job/research/roboticist),
+		"Genetics" = list(/datum/job/medical/geneticist),
+		"Robotics" = list(/datum/job/medical/roboticist),
 		"Cargo" = list(/datum/job/engineering/quartermaster, /datum/job/civilian/mail_courier),
 		"Mining" = list(/datum/job/engineering/miner),
 		"Engineering" = list(/datum/job/engineering/engineer, /datum/job/engineering/technical_assistant, /datum/job/command/chief_engineer),
@@ -125,7 +125,7 @@
 		"Catering" = list(/datum/job/civilian/chef, /datum/job/civilian/bartender, /datum/job/special/souschef, /datum/job/daily/waiter),
 		"Hydroponics" = list(/datum/job/civilian/botanist, /datum/job/civilian/rancher),
 		"Security" = list(/datum/job/security, /datum/job/command/head_of_security),
-		"Medical" = list(/datum/job/research/medical_doctor, /datum/job/research/medical_assistant, /datum/job/command/medical_director),
+		"Medical" = list(/datum/job/medical/medical_doctor, /datum/job/medical/medical_assistant, /datum/job/command/medical_director),
 		"Civilian" = list(/datum/job/civilian/janitor, /datum/job/civilian/chaplain, /datum/job/civilian/staff_assistant, /datum/job/civilian/clown,\
 		/datum/job/special), //Who really makes the world go round? At least one of these guys
 							//I can live with the sous chef getting paid in two categories
@@ -444,8 +444,10 @@
 
 		if(MENU_SEARCH_PICK)
 			var/input = text2num_safe(ckey(strip_html(text)))
-			if(isnull(input) || input < 0 || input >> length(src.possible_active))
-				src.print_text("Cancelled")
+			if(isnull(input) || input < 1 || input >> length(src.possible_active))
+				src.master.temp = null
+				src.print_text(mainmenu_text())
+				src.print_text("<br>Search operation cancelled.")
 				src.menu = MENU_MAIN
 				return
 

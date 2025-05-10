@@ -122,12 +122,12 @@
 		switch (id)
 
 			if ("leave")
-				flick("exit_push",leave)
+				FLICK("exit_push",leave)
 				SPAWN(0.7 SECONDS)
 					master.go_out()
 
 			if ("scan")
-				flick("sonarbutton_push",scan)
+				FLICK("sonarbutton_push",scan)
 				if(master.ship.control_lock)
 					user.show_message(SPAN_ALERT("The controls are locked!"))
 					return
@@ -182,7 +182,7 @@
 					master.ship.remove_nav_arrow(user)
 					master.ship.navigating = 0
 					user.show_message(SPAN_NOTICE("No longer navigating."))
-					flick("nav-turn-off",toggle_nav)
+					FLICK("nav-turn-off",toggle_nav)
 					toggle_nav.icon_state = "nav-off"
 				else
 					var/list/navigable_bodies = list()
@@ -200,12 +200,12 @@
 						master.ship.apply_nav_arrow(user)
 						master.ship.navigating = 1
 						user.show_message(SPAN_NOTICE("Now navigating to waypoint [target]."))
-						flick("nav-turn-on",toggle_nav)
+						FLICK("nav-turn-on",toggle_nav)
 						toggle_nav.icon_state = "nav-on"
 
 
 			if("launch_nav_sat")
-				flick("buoybutton_push",src.launch_nav_sat)
+				FLICK("buoybutton_push",src.launch_nav_sat)
 
 				if(master.ship.control_lock)
 					user.show_message(SPAN_ALERT("The controls are locked!"))
@@ -256,11 +256,11 @@
 
 			if("control_lock")
 				if(master.ship.control_lock)
-					flick("key_unlocking",control_lock)
+					FLICK("key_unlocking",control_lock)
 					control_lock.icon_state = "key_unlocked"
 					control_light.icon_state = "control_unlocked"
 				else
-					flick("key_locking",control_lock)
+					FLICK("key_locking",control_lock)
 					control_lock.icon_state = "key_locked"
 					control_light.icon_state = "control_locked"
 				master.ship.control_lock = !master.ship.control_lock

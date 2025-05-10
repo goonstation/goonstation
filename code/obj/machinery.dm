@@ -357,59 +357,11 @@
 /obj/machinery/proc/on_add_contents(obj/item/I)
 	return
 
-/obj/machinery/sec_lock
-	name = "Security Pad"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "sec_lock"
-	var/obj/item/card/id/scan = null
-	var/a_type = 0
-	var/obj/machinery/door/d1 = null
-	var/obj/machinery/door/d2 = null
-	anchored = ANCHORED
-	req_access = list(access_armory)
-
-/obj/machinery/noise_switch
-	name = "Speaker Toggle"
-	desc = "Makes things make noise."
-	icon = 'icons/obj/noise_makers.dmi'
-	icon_state = "switch"
-	anchored = ANCHORED
-	density = 0
-	var/ID = 0
-	var/noise = 0
-	var/broken = 0
-	var/sound = 0
-	var/rep = 0
-
-/obj/machinery/noise_maker
-	name = "Alert Horn"
-	desc = "Makes noise when something really bad is happening."
-	icon = 'icons/obj/noise_makers.dmi'
-	icon_state = "nm n +o"
-	anchored = ANCHORED
-	density = 0
-	machine_registry_idx = MACHINES_MISC
-	var/ID = 0
-	var/sound = 0
-	var/broken = 0
-	var/containment_fail = 0
-	var/last_shot = 0
-	var/fire_delay = 4
-
-/obj/machinery/wire
-	name = "wire"
-	icon = 'icons/obj/power_cond.dmi'
-
-/obj/machinery/transmitter
-	name = "transmitter"
-	desc = "a big radio transmitter"
-	icon = null
-	icon_state = null
-	anchored = ANCHORED
-	density = 1
-
-	var/list/signals = list()
-	var/list/transmitters = list()
+/// Called when machines are overloaded with power.
+///
+/// Returns TRUE if it did something, or FALSE if it did not.
+/obj/machinery/proc/overload_act()
+	return FALSE
 
 /obj/machinery/bug_reporter
 	name = "bug reporter"

@@ -32,6 +32,7 @@
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set power level", PROC_REF(set_power_level_mechcomp))
 
 	get_desc(dist, mob/user)
 		..()
@@ -90,6 +91,15 @@
 					the_level = clamp(the_level, min_power, max_power)
 					src.power_level = the_level
 					boutput(user, SPAN_NOTICE("You set the power level to [src.power_level]."))
+
+	proc/set_power_level_mechcomp(datum/mechanicsMessage/msg)
+		var/level = text2num_safe(msg.signal)
+		if (!level)
+			return
+		level = clamp(level, src.min_power, src.max_power)
+		src.power_level = level
+		if (src.active)
+			src.reboot()
 
 	//Code for placing the shields and adding them to the generator's shield list
 	proc/generate_shield()

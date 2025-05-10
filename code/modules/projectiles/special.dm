@@ -283,6 +283,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle = 180
 	pellets_to_fire = 20
 
+/datum/projectile/special/spreader/uniform_burst/circle/airburst
+		name = "cluster munition"
+		sname = "cluster munition"
+		icon_state = "400mm"
+		pellets_to_fire = 12
+		spread_projectile_type = /datum/projectile/bullet/cluster
+		split_type = 1
+
+
 /datum/projectile/special/spreader/uniform_burst/spikes
 	name = "spike wave"
 	sname = "spike wave"
@@ -312,6 +321,59 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = /obj/item/casing/shotgun/gray
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 
+
+/datum/projectile/special/spreader/buckshot_burst/antiair
+	name = ".50 BMG frag"
+	brightness = 2
+	window_pass = 0
+	icon_state = "20mm" // close enough
+	damage_type = D_PIERCING // very, very fast.
+	armor_ignored = 0.5
+	hit_type = DAMAGE_STAB
+	damage = 100
+	dissipation_delay = 100
+	dissipation_rate = 2
+	cost = 1
+	shot_sound = 'sound/effects/thunder.ogg'
+	shot_volume = 80
+	hit_object_sound = 'sound/effects/exlow.ogg'
+	hit_mob_sound = 'sound/effects/exlow.ogg'
+	implanted = null
+	projectile_speed = 128
+	spread_projectile_type = /datum/projectile/bullet/flak_chunk/splinters
+	pellets_to_fire = 12
+	split_type = 1
+	speed_max = 128
+	speed_min = 96
+	spread_angle_variance = 35
+	dissipation_variance = 5
+
+	impact_image_state = "bullethole-large"
+	casing = /obj/item/casing/rifle_loud
+	shot_sound_extrarange = 1
+	has_impact_particles = TRUE
+
+	on_launch(obj/projectile/proj)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		var/turf/T = get_turf(hit)
+		var/turf/T2 = get_step(T, dirflag)
+		for(var/mob/M in range(T, 3))
+			shake_camera(M, 3, 5)
+		..()
+		new /obj/effects/explosion/smoky(T)
+		new /obj/effects/rendersparks (T2)
+
+		if(hit && isturf(hit))
+			T.throw_shrapnel(T, 1, 1)
+		explosion_new(null, T, 1, 1)
+
+
+
+
+		// no meteor hit on mobs, already brutal enough
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
@@ -730,6 +792,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		. = ..()
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
+		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.anchored = ANCHORED_ALWAYS
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider
@@ -1336,3 +1400,28 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		src.on_hit(target, O = O)
+
+/datum/projectile/special/firework
+	name = "firework"
+	damage = 3
+	damage_type = D_BURNING
+	hit_type = DAMAGE_BURN
+	icon_state = "4gauge-slug-blood"
+	shot_sound = 'sound/effects/firework_shoot.ogg'
+	projectile_speed = 7
+	impact_image_state = "burn1"
+	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+
+	proc/die(turf/where)
+		particleMaster.SpawnSystem(new /datum/particleSystem/fireworks_pop(where))
+		playsound(where, 'sound/effects/firework_pop.ogg', 50, 1)
+
+	on_hit(atom/hit, direction, projectile)
+		src.die(get_turf(hit))
+		..()
+
+	on_max_range_die(obj/projectile/O)
+		src.die(get_turf(O))
+		..()
+

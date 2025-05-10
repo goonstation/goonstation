@@ -23,4 +23,4 @@
 #define isgenplanet(x) (istype(get_area(x), /area/map_gen/planet))
 
 /// areas where we will skip searching for shit like APCs and that do not have innate power
-#define area_space_nopower(x) (x.type == /area/space || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench)
+#define area_space_nopower(x) (x.type == /area/space || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench || x.type == /area/space/plasma_reef)

@@ -336,7 +336,7 @@
 				OCD.amount--
 
 		if(transmit)
-			flick("ore_storage_unit-transmit",src)
+			FLICK("ore_storage_unit-transmit",src)
 			showswirl(eject_location)
 			leaveresidual(eject_location)
 

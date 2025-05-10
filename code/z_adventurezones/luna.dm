@@ -657,10 +657,10 @@ Contents:
 			if (!has_been_underground)
 				has_been_underground = TRUE
 				src.distracted = TRUE
-				master.speak("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
+				master.say("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
 				SPAWN(5 SECOND)
 					if (master)
-						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
+						master.say("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
 					src.distracted = FALSE
 
 			if (!(neat_things_underground & NT_HEMERA) && istype(ourArea, /area/moon/underground/hemera))
@@ -684,10 +684,10 @@ Contents:
 				src.distracted = TRUE
 				neat_things_underground |= NT_RISING_SUN
 
-				master.speak("There is a house on Luna that they call the Rising Sun.")
+				master.say("There is a house on Luna that they call the Rising Sun.")
 				SPAWN(5 SECOND)
 					if (master)
-						master.speak("It's been the ruin of many a poor bud and God, I know I'm one.")
+						master.say("It's been the ruin of many a poor bud and God, I know I'm one.")
 					src.distracted = FALSE
 			//todo
 
@@ -695,7 +695,7 @@ Contents:
 
 		if (istype(ourArea, /area/solarium) && !(src.neat_things & NT_SOLARIUM))
 			FOUND_NEAT(NT_SOLARIUM)
-				master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
+				master.say("Huh, this place is weird!  This is some ship and that's our sun, right?")
 				if (prob(25))
 					if (master)
 						speak_with_maptext("I, um, am going to need to go back to work.  My shift isn't over yet.")
@@ -757,11 +757,11 @@ Contents:
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
 							if (istype(masterArea, /area/russian) || istype(masterArea, /area/salyut) || istype(masterArea, /area/hospital/samostrel))
-								src.master.speak("I hope they don't ask for a travel visa...")
+								src.master.say("I hope they don't ask for a travel visa...")
 							else if (istype(masterArea, /area/moon))
-								src.master.speak("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
+								src.master.say("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
 							else
-								src.master.speak("Is this one of those \"Khrushchev in a supermarket\" things?")
+								src.master.say("Is this one of those \"Khrushchev in a supermarket\" things?")
 						END_NEAT
 					return
 
@@ -807,12 +807,12 @@ Contents:
 			src.awaiting_beacon = 10
 
 			SPAWN(1 SECOND)
-				src.master.speak("Uh.  That isn't supposed to happen.")
+				src.master.say("Uh.  That isn't supposed to happen.")
 				src.state = 0	//Yeah, let's find that route.
 
 				sleep(5.5 SECOND)
 				if (src.master)
-					src.master.speak("I guess we need to take another route.  Please follow me.")
+					src.master.say("I guess we need to take another route.  Please follow me.")
 					src.state = 0
 					src.awaiting_beacon = 3
 					next_beacon_id = current_beacon_id
@@ -840,7 +840,7 @@ Contents:
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
 	autoclose = FALSE
-	req_access_txt = ""
+	req_access = null
 	object_flags = BOTS_DIRBLOCK
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -863,7 +863,7 @@ Contents:
 
 		if(!src.operating) //in case of emag
 			src.operating = 1
-		flick("bdoor[doordir]c0", src)
+		FLICK("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
@@ -892,7 +892,7 @@ Contents:
 			SPAWN(0)
 				tourDoor.close(src)
 
-		flick("bdoor[doordir]c1", src)
+		FLICK("bdoor[doordir]c1", src)
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
@@ -918,7 +918,7 @@ Contents:
 	opacity = 1
 	autoclose = FALSE
 	cant_emag = TRUE
-	req_access_txt = "999"
+	req_access = list(access_impossible)
 
 	var/broken = 0
 
@@ -941,7 +941,7 @@ Contents:
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN(0)
-			flick("breakairlock1", src)
+			FLICK("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
 			src.set_opacity(0)
@@ -2164,7 +2164,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 				chastised = 1
 				panic = 0
 
-				master.speak( pick("Um...oh.  Sorry about that.","I was just afraid it was more of those armed NT men...sorry...","You're....you're right.  I'm sorry.") )
+				master.say(pick("Um...oh.  Sorry about that.","I was just afraid it was more of those armed NT men...sorry...","You're....you're right.  I'm sorry."))
 				master.visible_message("<b>[src.master]</b> looks ashamed!")
 				drop_arrest_target()
 

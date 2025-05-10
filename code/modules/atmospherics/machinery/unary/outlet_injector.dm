@@ -65,7 +65,7 @@
 
 		network?.update = TRUE
 
-	flick("inject", src)
+	FLICK("inject", src)
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
 	var/datum/signal/signal = get_free_signal()
@@ -133,7 +133,7 @@
 
 	if(.)
 		src.UpdateIcon()
-		flick("alert", src)
+		FLICK("alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.

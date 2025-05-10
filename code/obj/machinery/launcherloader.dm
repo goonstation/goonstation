@@ -44,7 +44,7 @@
 	proc/activate()
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
-		flick("launcher_loader_1",src)
+		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
@@ -148,7 +148,7 @@
 
 		operating = 1
 
-		flick("amdl_1",src)
+		FLICK("amdl_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)
@@ -457,6 +457,90 @@
 	desc = "Used to print barcode stickers for the off-station merchants."
 	destinations = list("Shipping Market")
 
+/// Silicon-friendly portable barcoder. Does not allow for ID scanning.
+/obj/item/portable_barcoder
+	name = "portable barcoder"
+	desc = "Used to print and attach barcode stickers for shipping."
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "handheld_barcoder" // TODO: better sprite
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "labeler"
+	/// key-value store of destinations
+	var/list/destinations = list()
+	/// Currently selected destination target
+	var/current_destination_target
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to set the target destination. Click on an object or mob to apply the barcode.")
+
+/obj/item/portable_barcoder/New()
+	. = ..()
+	START_TRACKING
+	src.update_destinations()
+
+/obj/item/portable_barcoder/disposing()
+	. = ..()
+	STOP_TRACKING
+
+/obj/item/portable_barcoder/proc/update_destinations()
+	src.destinations = list()
+	for (var/destination in global.map_settings.shipping_destinations)
+		src.destinations[destination] = destination
+
+	for (var/datum/trader/T in shippingmarket.active_traders)
+		if (T.hidden)
+			continue
+		src.destinations[T.name] = T.crate_tag
+
+	src.destinations["Third Party"] = "REQ-THIRDPARTY"
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.destinations[RC.name] = RC.req_code
+
+/obj/item/portable_barcoder/attack_self(mob/user)
+	src.select_destination(user)
+
+/obj/item/portable_barcoder/attack(mob/target, mob/user, def_zone, is_special, params)
+	return
+
+/obj/item/portable_barcoder/afterattack(atom/target, mob/user, reach, params)
+	if (!istype(target) || isturf(target)) return
+	if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) return
+	if (BOUNDS_DIST(get_turf(target), get_turf(src)) > 0) return
+	if (target == src.loc && target != user) return
+
+	if (!src.current_destination_target)
+		src.select_destination()
+		if (!src.current_destination_target)
+			boutput(user, SPAN_ALERT("You must select a destination before attaching a barcode!"))
+			return
+	if (ON_COOLDOWN(src, "barcode_print", 1.75 SECONDS))
+		boutput(user, SPAN_NOTICE("\The [src] is spooling a new barcode!"))
+		return
+
+	var/obj/item/sticker/barcode/barcode = new /obj/item/sticker/barcode
+	barcode.name = "Barcode Sticker ([src.current_destination_target])"
+	barcode.destination = src.current_destination_target
+	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
+
+	target:delivery_destination = src.current_destination_target
+	user.visible_message(SPAN_NOTICE("[user] sticks a [barcode.name] on [target]."))
+
+	if(istype(target, /obj/storage/crate))
+		var/obj/storage/crate/C = target
+		C.UpdateIcon()
+	else
+		var/pox = src.pixel_x
+		var/poy = src.pixel_y
+		if (params)
+			if (islist(params) && params["icon-y"] && params["icon-x"])
+				pox = text2num(params["icon-x"]) - 16
+				poy = text2num(params["icon-y"]) - 16
+		barcode.stick_to(target, pox, poy, user)
+
+/obj/item/portable_barcoder/proc/select_destination(mob/user)
+	var/choice = tgui_input_list(user, "Choose a routing destination", "Select Destination", src.destinations)
+	if (!choice) return
+	src.current_destination_target = src.destinations[choice]
+
 /obj/item/sticker/barcode
 	name = "barcode sticker"
 	desc = "A barcode sticker used in the cargo routing system."
@@ -515,15 +599,3 @@
 						art.examine_hint = "[target] belongs to [scan.registered]."
 
 		return
-
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if(!istype(usr, /mob/living) || !isturf(src.loc) || \
-				BOUNDS_DIST(get_turf(over_object), get_turf(src)) > 0 || \
-				BOUNDS_DIST(usr, get_turf(over_object)) > 0 ||  \
-				BOUNDS_DIST(usr, src) > 0 || \
-				over_object == usr || !istype(over_object, /atom/movable))
-			return ..()
-		var/atom/movable/target = over_object
-		usr.visible_message(SPAN_NOTICE("[usr] sticks a [src.name] on [target]."))
-		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y, usr)

@@ -16,7 +16,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	pass_unstable = FALSE
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 
 	meteorhit()
 		return

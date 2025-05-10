@@ -290,7 +290,7 @@
 
 			playsound(usr, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 120, 0)
 			icon_state = "lootb2"
-			flick("lootb1", src)
+			FLICK("lootb1", src)
 
 			SPAWN(2 SECONDS)
 				var/mob/living/carbon/human/H = usr

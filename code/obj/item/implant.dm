@@ -825,16 +825,27 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-b"
 	var/active = 0
 
-	implanted(var/mob/M, mob/I)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 1
+	implanted(mob/M, mob/I)
+		. = ..()
 
-	on_remove(var/mob/M)
-		..()
-		if (istype(M))
-			M.robot_talk_understand = 0
-		return
+		if (!istype(M))
+			return
+
+		M.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().AddListenInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.AddKnownLanguage(LANGUAGE_BINARY)
+
+	on_remove(mob/M)
+		. = ..()
+
+		if (!istype(M))
+			return
+
+		M.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_SILICONCHAT)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_SILICON)
+		M.listen_tree.RemoveKnownLanguage(LANGUAGE_BINARY)
 
 /obj/item/implant/bloodmonitor
 	name = "blood monitor implant"
@@ -1471,6 +1482,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		New()
 			..()
 			implant_overlay = null
+
+	ice_feather
+		name = "ice feather"
+		desc = "A feather made of ice, sharp on all edges."
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "ice_feather"
+		burn_possible = FALSE
+		default_material = "ice"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		mat_changeappearance = FALSE
 
 	body_visible
 		bleed_time = 0

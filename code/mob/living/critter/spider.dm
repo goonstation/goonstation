@@ -6,7 +6,8 @@
 	icon_state = "big_spide"
 	density = 1
 	hand_count = 8 // spiders!!!
-	add_abilities = list(/datum/targetable/critter/spider_bite,
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
 						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
 	var/flailing = 0
@@ -182,7 +183,7 @@
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && drain && (!drain.disabled && drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)

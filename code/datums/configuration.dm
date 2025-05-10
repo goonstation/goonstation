@@ -41,7 +41,6 @@
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
-	var/list/play_antag_rates = list()  // % of rounds players should get to play as X antag
 	var/allow_ai = 1					// allow ai job
 	var/respawn = 1
 
@@ -253,18 +252,6 @@
 						logDiary("Unknown game mode probability configuration definition: [prob_name].")
 				else
 					logDiary("Incorrect probability configuration definition: [prob_name]  [prob_value].")
-
-			if ("play_antag")
-				var/rate_pos = findtext(value, " ")
-				var/antag_name = null
-				var/antag_rate = null
-
-				if (rate_pos)
-					antag_name = lowertext(copytext(value, 1, rate_pos))
-					antag_rate = copytext(value, rate_pos + 1)
-					config.play_antag_rates[antag_name] = text2num(antag_rate)
-				else
-					logDiary("Incorrect antag rate configuration definition: [antag_name]  [antag_rate].")
 
 			if ("use_mysql")
 				config.sql_enabled = 1

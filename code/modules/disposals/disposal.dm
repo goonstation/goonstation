@@ -992,7 +992,7 @@
 		if(flipdir != dir)	// came from secondary or tertiary
 			var/senddir = dir	//Do we send this out the primary or secondary?
 			if(use_secondary && flipdir != switch_dir) //Oh, we're set to sort this out our side secondary
-				flick("[base_icon_state]-on", src)
+				FLICK("[base_icon_state]-on", src)
 				senddir = switch_dir
 			return senddir
 		else				// came from primary
@@ -1617,7 +1617,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				break
 
 		if (allowDump)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1688,7 +1688,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 				things_to_dump += A
 
 		if (things_to_dump.len)
-			flick("unblockoutlet-open", src)
+			FLICK("unblockoutlet-open", src)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
@@ -1790,12 +1790,12 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-				flick("pipe-mechsense-detect", src)
+				FLICK("pipe-mechsense-detect", src)
 
 		else
 			for (var/atom/aThing in H)
@@ -1807,7 +1807,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 								continue
 
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-						flick("pipe-mechsense-detect", src)
+						FLICK("pipe-mechsense-detect", src)
 						break
 
 		return ..()
@@ -2139,7 +2139,7 @@ TYPEINFO(/obj/disposaloutlet)
 				if(M.mail_id == src.flusher_id)
 					M.mail_tag = H.mail_tag
 
-		flick("outlet-open", src)
+		FLICK("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame

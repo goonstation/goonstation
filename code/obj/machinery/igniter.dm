@@ -97,7 +97,7 @@
 		return
 
 
-	flick("[base_state]-spark", src)
+	FLICK("[base_state]-spark", src)
 	elecflash(src)
 	use_power(1000)
 	var/turf/location = src.loc

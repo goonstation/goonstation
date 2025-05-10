@@ -292,41 +292,41 @@ TYPEINFO(/turf/simulated/floor/void)
 			if(!used)
 				T = {"<span style="display: block">
 					<h3>System Status: <font color=green>[operating ? "Operating" : "Active"]</font></h3>
-					<A HREF='?src=\ref[src];shutdown=1'>Shut down</A>
+					<A HREF='byond://?src=\ref[src];shutdown=1'>Shut down</A>
 					<h3>Device Interfaces</h3>
 					<table border=1><tr>
 						<th>Interface #1<td><B>[chair1 ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 						<th>Interface #2<td><B>[chair2 ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 					</table>
-					<A HREF='?src=\ref[src];refresh_chair_connection=1'>Re-establish</A>
+					<A HREF='byond://?src=\ref[src];refresh_chair_connection=1'>Re-establish</A>
 					<h3>Mental Interfaces</h3>
 					<table border=1><tr>
 						<th>Interface #1<td><B>[chair1?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 						<th>Interface #2<td><B>[chair2?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 					</table>
-					<A HREF='?src=\ref[src];refresh_mind_connection=1'>Re-establish</A><BR><BR>
-					<A HREF='?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>Activate</font></B></A></span>"}
+					<A HREF='byond://?src=\ref[src];refresh_mind_connection=1'>Re-establish</A><BR><BR>
+					<A HREF='byond://?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>Activate</font></B></A></span>"}
 
 			else
 				T = {"<span style="display: block">
 					<body bgcolor=#000000>
 					<font color=#FFFFFF>
 					<h3>System Status: <font color=red>ERROR</font></h3>
-					<A HREF='?src=\ref[src];shutdown=1'>Shut down</A>
+					<A HREF='byond://?src=\ref[src];shutdown=1'>Shut down</A>
 					<h3>Device Interfaces</h3>
 					<table border=1><tr>
 						<th><font color=#FFFFFF>Interface #1</font><td><B><font color=red>ERROR!</font></B><tr>
 						<th><font color=#FFFFFF>Interface #2</font><td><B><font color=red>ERROR!</font></B><tr>
 					</table>
-					<A HREF='?src=\ref[src];refresh_chair_connection=1'>ERROR</A>
+					<A HREF='byond://?src=\ref[src];refresh_chair_connection=1'>ERROR</A>
 					<h3>Mental Interfaces</h3>
 					<table border=1><tr>
 						<th><font color=#FFFFFF>Interface #1</font><td><B><font color=red>ERROR!</font></B><tr>
 						<th><font color=#FFFFFF>Interface #2</font><td><B><font color=red>ERROR!</font></B><tr>
 					</table>
-					<A HREF='?src=\ref[src];refresh_mind_connection=1'>ERROR</A><BR><BR>
+					<A HREF='byond://?src=\ref[src];refresh_mind_connection=1'>ERROR</A><BR><BR>
 
-					<A HREF='?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>ERROR</font></B></A>
+					<A HREF='byond://?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>ERROR</font></B></A>
 					</font>
 					</body>
 					</span>
@@ -334,7 +334,7 @@ TYPEINFO(/turf/simulated/floor/void)
 		else
 			T = {"<span style="display: block">
 				<h3>System Status: <font color=red>[activating ? "BOOTING" : "OFFLINE"]</font></h3>
-				<A HREF='?src=\ref[src];bootup=1'>Boot</A>
+				<A HREF='byond://?src=\ref[src];bootup=1'>Boot</A>
 				<h3>Device Interfaces</h3>
 				<table border=1><tr>
 					<th>Interface #1<td><B>OFFLINE</B><tr>

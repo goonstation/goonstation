@@ -119,7 +119,18 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		var/mob/target = source
 		if (target.next_move > world.time && IN_RANGE(target.prev_loc, user, 1))
 			return TRUE
+	var/has_telekinesis = FALSE
+	var/is_carbon = FALSE
+	if (iscarbon(user))
+		is_carbon = TRUE
+		var/mob/living/carbon/C = user
+		if (C.bioHolder?.HasEffect("telekinesis"))
+			has_telekinesis = TRUE
+
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
+		if(!has_telekinesis && mobuser && !istype(mobuser.loc, /turf)) // if we're not on a turf, we can only interact with stuff inside the same object or in ourselves
+			if(!((source == mobuser.loc) || (source in mobuser.loc) || (source in mobuser)))
+				return FALSE
 		return TRUE
 	else if (source in bible_contents)
 		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
@@ -129,36 +140,32 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		for_by_tcl(TR, /obj/item/terminus_drive)
 			if(IN_RANGE(user,TR,1))
 				return TRUE
-	else
-		if (iscarbon(user))
-			var/mob/living/carbon/C = user
-			if (C.bioHolder?.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
-					return 0
-				SPAWN(0)
-					//I really shouldnt put this here but i dont have a better idea
-					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
-					O.name = "sparkles"
-					O.anchored = ANCHORED
-					O.set_density(0)
-					O.layer = FLY_LAYER
-					O.set_dir(pick(cardinal))
-					O.icon = 'icons/effects/effects.dmi'
-					O.icon_state = "nothing"
-					flick("empdisable",O)
-					sleep(0.5 SECONDS)
-					qdel(O)
+	else if (has_telekinesis && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
+		var/X = source:x
+		var/Y = source:y
+		var/Z = source:z
+		if (isrestrictedz(Z) || isrestrictedz(user:z))
+			boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
+			return FALSE
+		SPAWN(0)
+			//I really shouldnt put this here but i dont have a better idea
+			var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
+			O.name = "sparkles"
+			O.anchored = ANCHORED
+			O.set_density(0)
+			O.layer = FLY_LAYER
+			O.set_dir(pick(cardinal))
+			O.icon = 'icons/effects/effects.dmi'
+			O.icon_state = "nothing"
+			FLICK("empdisable",O)
+			sleep(0.5 SECONDS)
+			qdel(O)
 
-				return TRUE
-
-		else if (isobj(source))
-			var/obj/SO = source
-			if(SO.can_access_remotely(user))
-				return TRUE
+		return TRUE
+	else if (!is_carbon && isobj(source))
+		var/obj/SO = source
+		if(SO.can_access_remotely(user))
+			return TRUE
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)
@@ -329,113 +336,6 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 /proc/generate_net_id(var/atom/the_atom)
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
-
-#define CLUWNE_NOISE_DELAY 5 SECONDS
-
-/proc/process_accents(var/mob/living/carbon/human/H, var/message)
-	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
-	var/prefixAndMessage = separate_radio_prefix_and_message(message)
-	var/prefix = prefixAndMessage[1]
-	message = prefixAndMessage[2]
-	//Stores a human readable list of effects on the speech for admin logging. Please append to this list if you add more stuff here.
-	var/messageEffects = list()
-	var/wasUncool = phrase_log.is_uncool(message)
-
-	if (!H || !istext(message))
-		return
-
-	if (H.bioHolder)
-		var/datum/bioEffect/speech/S = null
-		for(var/X in H.bioHolder.effects)
-			S = H.bioHolder.GetEffect(X)
-			if (istype(S,/datum/bioEffect/speech/) && !(H.speech_void && !istype(S,/datum/bioEffect/speech/void)))
-				message = S.OnSpeak(message)
-				messageEffects += S
-
-	if (H.grabbed_by && length(H.grabbed_by))
-		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
-			if (RM.state > 0)
-				message = mufflespeech(message)
-				messageEffects += "Muffled by [H.grabbed_by]"
-				break
-
-	var/do_laugh = FALSE
-	if (iscluwne(H))
-		message = honk(message)
-		messageEffects += "Cluwne Honk"
-		do_laugh = TRUE
-
-	if (ishorse(H))
-		message = neigh(message)
-		messageEffects += "Horse"
-		do_laugh = TRUE
-
-	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
-		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
-
-	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
-		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
-			message = say_superdrunk(message)
-			messageEffects += "Superdrunk"
-		else
-			message = say_drunk(message)
-			messageEffects += "Drunk"
-
-	var/datum/ailment_data/disease/berserker = H.find_ailment_by_type(/datum/ailment/disease/berserker/)
-	if (istype(berserker,/datum/ailment_data/disease/) && berserker.stage > 1)
-		if (prob(10))
-			message = say_furious(message)
-			messageEffects += "Furious"
-		message = replacetext(message, ".", "!")
-		message = replacetext(message, ",", "!")
-		message = replacetext(message, "?", "!")
-		message = uppertext(message)
-		messageEffects += "Berserk"
-		var/addexc = rand(2,6)
-		while (addexc > 0)
-			message += "!"
-			--addexc
-
-	if(H.bioHolder && H.bioHolder.genetic_stability < 50)
-		if (prob(40))
-			message = say_gurgle(message)
-			messageEffects += "Gurgle"
-
-	if(!isdead(H))
-		message = H.mutantrace.say_filter(message)
-		messageEffects += "[H.mutantrace] say_filter()"
-
-	if(HasturPresent == 1)
-		message = replacetext(message, "Hastur", "????")
-		message = replacetext(message, "H.a.s.t.u.r", "????")
-		message = replacetext(message, "H.astur", "????")
-		message = replacetext(message, "H.a.stur", "????")
-		message = replacetext(message, "H.a.s.tur", "????")
-		message = replacetext(message, "H.a.s.t.ur", "????")
-		message = replacetext(message, "H-a-s-t-u-r", "????")
-		message = replacetext(message, "H-astur", "????")
-		message = replacetext(message, "H-a-stur", "????")
-		message = replacetext(message, "H-a-s-tur", "????")
-		message = replacetext(message, "H-a-s-t-ur", "????")
-		message = replacetext(message, "H a s t u r", "????")
-		message = replacetext(message, "H astur", "????")
-		message = replacetext(message, "H a s tur", "????")
-		message = replacetext(message, "H a s t ur", "????")
-		messageEffects += "Hastur"
-
-#ifdef CANADADAY
-	if (prob(30))
-		message = replacetext(message, "?", " Eh?")
-		messageEffects += "Canada Day eh?"
-#endif
-
-	if(phrase_log.is_uncool(message) && !wasUncool)
-		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
-		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
-	return prefix + message
-
-#undef CLUWNE_NOISE_DELAY
-
 
 /mob/proc/get_equipped_items()
 	. = list()

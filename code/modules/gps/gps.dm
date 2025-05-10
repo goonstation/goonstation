@@ -74,7 +74,7 @@
 		if(doText)
 			boutput(usr, "You are on a different z-level!")
 		return
-	var/obj/item/card/id/id = all_access ? get_singleton(/obj/item/card/id/captains_spare) : src.get_id()
+	var/obj/item/card/id/id = all_access ? get_singleton(/obj/item/card/id/gold/captains_spare) : src.get_id()
 	client.GPS_Path = get_path_to(src, dest, max_distance = 120, id=id, skip_first=FALSE, cardinal_only=cardinal_only)
 	if(length(client.GPS_Path))
 		if(doText && !timeout)

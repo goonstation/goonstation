@@ -90,11 +90,11 @@ TYPEINFO(/obj/machinery/networked/logreader)
 		dat += "<div class='conn-box [readout_class]'></div>"
 		if (!refreshing)
 			if (machine_screen == 1)
-				dat += "<b>Connection</b> | <a href='?src=\ref[src];screen=2'>Data</a>"
+				dat += "<b>Connection</b> | <a href='byond://?src=\ref[src];screen=2'>Data</a>"
 			else if (machine_screen == 2)
-				dat += "<a href='?src=\ref[src];screen=1'>Connection</a> | <b>Data</b>"
+				dat += "<a href='byond://?src=\ref[src];screen=1'>Connection</a> | <b>Data</b>"
 			else if (!refreshing)
-				dat += "<a href='?src=\ref[src];screen=1'>Connection</a> | <a href='?src=\ref[src];screen=2'>Data</a>"
+				dat += "<a href='byond://?src=\ref[src];screen=1'>Connection</a> | <a href='byond://?src=\ref[src];screen=2'>Data</a>"
 
 
 			dat += "<hr><br>"
@@ -103,7 +103,7 @@ TYPEINFO(/obj/machinery/networked/logreader)
 			if (machine_screen == 1)
 				dat += "<b>Host Connection:</b>"
 				dat += "<table border='1' class='[readout_class]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
-				dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
+				dat += "<a href='byond://?src=\ref[src];reset=1'>Reset Connection</a><br>"
 
 				if (src.panel_open)
 					dat += net_switch_html()
@@ -117,20 +117,20 @@ TYPEINFO(/obj/machinery/networked/logreader)
 				if (spoofed || timed_out)
 					dat += "<br>"
 				dat += "<b>Filters</b><br>"
-				dat += "<b>Card name (partial):</b> <a href='?src=\ref[src];card_name=1'>[filter_name ? filter_name : "&lt;not set&gt;"]</a>[filter_name ? " <a href='?src=\ref[src];card_name_clear=1'>\[X\]</a>" : null]<br>"
+				dat += "<b>Card name (partial):</b> <a href='byond://?src=\ref[src];card_name=1'>[filter_name ? filter_name : "&lt;not set&gt;"]</a>[filter_name ? " <a href='byond://?src=\ref[src];card_name_clear=1'>\[X\]</a>" : null]<br>"
 				dat += "<b>Time interval:</b> "
 				if (ftb_min != null && ftb_sec != null && fte_min != null && fte_sec != null)
-					dat += "<a href='?src=\ref[src];time_begin_min=1'>[ftb_min]</a>:"
-					dat += "<a href='?src=\ref[src];time_begin_sec=1'>[ftb_sec]</a> - "
-					dat += "<a href='?src=\ref[src];time_end_min=1'>[fte_min]</a>:"
-					dat += "<a href='?src=\ref[src];time_end_sec=1'>[fte_sec]</a> "
-					dat += "<a href='?src=\ref[src];time_clear=1'>\[X\]</a>"
+					dat += "<a href='byond://?src=\ref[src];time_begin_min=1'>[ftb_min]</a>:"
+					dat += "<a href='byond://?src=\ref[src];time_begin_sec=1'>[ftb_sec]</a> - "
+					dat += "<a href='byond://?src=\ref[src];time_end_min=1'>[fte_min]</a>:"
+					dat += "<a href='byond://?src=\ref[src];time_end_sec=1'>[fte_sec]</a> "
+					dat += "<a href='byond://?src=\ref[src];time_clear=1'>\[X\]</a>"
 				else
-					dat += "<a href='?src=\ref[src];time=1'>&lt;not set&gt;</a>"
+					dat += "<a href='byond://?src=\ref[src];time=1'>&lt;not set&gt;</a>"
 				dat += "<br>"
-				dat += "<b>Action:</b> <a href='?src=\ref[src];action=1'>[filter_action ? filter_action : "&lt;not set&gt;"]</a>[filter_action ? " <a href='?src=\ref[src];action_clear=1'>\[X\]</a>" : null]<br>"
-				dat += "<b>Door net ID:</b> <a href='?src=\ref[src];door_id=1'>[filter_door_id ? filter_door_id : "&lt;not set&gt;"]</a>[filter_door_id ? " <a href='?src=\ref[src];door_id_clear=1'>\[X\]</a>" : null]<br>"
-				dat += "<a href='?src=\ref[src];refresh=1'>Refresh records</a><br><br>"
+				dat += "<b>Action:</b> <a href='byond://?src=\ref[src];action=1'>[filter_action ? filter_action : "&lt;not set&gt;"]</a>[filter_action ? " <a href='byond://?src=\ref[src];action_clear=1'>\[X\]</a>" : null]<br>"
+				dat += "<b>Door net ID:</b> <a href='byond://?src=\ref[src];door_id=1'>[filter_door_id ? filter_door_id : "&lt;not set&gt;"]</a>[filter_door_id ? " <a href='byond://?src=\ref[src];door_id_clear=1'>\[X\]</a>" : null]<br>"
+				dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh records</a><br><br>"
 
 				dat += "<b>Record listing: </b><br>"
 				if (!records.len)

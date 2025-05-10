@@ -21,54 +21,6 @@ LOG_GAME
 # log gamemode actions (relay, nuke etc.)
 LOG_GAMEMODE
 
-# probabilities for game modes chosen in "secret" and "random" modes
-#
-# default probability is 1, increase to make that mode more likely to be picked
-# set to 0 to disable that mode
-PROBABILITY BLOB 4
-PROBABILITY CHANGELING 5
-PROBABILITY DISASTER 0
-PROBABILITY EXTENDED 0
-PROBABILITY MIXED 8
-PROBABILITY MIXED_RP 5
-PROBABILITY NUCLEAR 6
-PROBABILITY REVOLUTION 5
-PROBABILITY SANDBOX 0
-PROBABILITY TRAITOR 20
-PROBABILITY VAMPIRE 5
-PROBABILITY WALDO 0
-PROBABILITY WIZARD 1
-PROBABILITY GANG 5
-PROBABILITY SPY 0
-PROBABILITY CONSTRUCTION 0
-PROBABILITY CONSPIRACY 0
-PROBABILITY SPY_THEFT 5
-PROBABILITY ARCFIEND 3
-PROBABILITY SALVAGER 0
-
-# these represent what % of total rounds a player should play as antag x
-# so for example, TRAITOR 10 means "players should be chosen for traitor in 10% of their traitor-eligible rounds played"
-# note that the antag name maps directly to special_role in code, uppercased
-# please keep this alphabetically sorted
-PLAY_ANTAG BLOB 10
-PLAY_ANTAG CHANGELING 10
-PLAY_ANTAG CONSPIRATOR 10
-PLAY_ANTAG GANG_LEADER 10
-PLAY_ANTAG TRAITOR 10
-PLAY_ANTAG GRINCH 10
-PLAY_ANTAG HEAD_REV 10
-PLAY_ANTAG NUKEOP 10
-PLAY_ANTAG PREDATOR 10
-PLAY_ANTAG SPY_THIEF 10
-PLAY_ANTAG VAMPIRE 10
-PLAY_ANTAG WALDO 10
-PLAY_ANTAG WEREWOLF 10
-PLAY_ANTAG WIZARD 10
-PLAY_ANTAG WRAITH 10
-PLAY_ANTAG WRESTLER 10
-PLAY_ANTAG ARCFIEND 10
-PLAY_ANTAG SALVAGER 10
-
 # The minimum amount of "ready" players required for a specific round type
 BLOB_MIN_PLAYERS 15
 REV_MIN_PLAYERS 15

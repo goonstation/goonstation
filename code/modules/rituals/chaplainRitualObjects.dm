@@ -218,7 +218,7 @@
 	proc/show(var/loc, var/istate = "magic", var/duration = 50, var/rPlane = 0)
 		src.plane = rPlane
 		src.set_loc(loc)
-		flick(istate, src)
+		FLICK(istate, src)
 		SPAWN(duration)
 			src.set_loc(null)
 			qdel(src)
@@ -236,7 +236,7 @@
 	proc/show(var/loc, var/istate = "ritualeffect", var/duration = 200, var/rPlane = 0)
 		src.plane = rPlane
 		src.set_loc(loc)
-		flick(istate, src)
+		FLICK(istate, src)
 		SPAWN(duration)
 			src.set_loc(null)
 			qdel(src)
@@ -956,7 +956,7 @@ obj/eldritch_altar
 			// SPAWN(2 SECONDS)
 			// 	active = 0
 			return
-		flick("altar-awake", src)
+		FLICK("altar-awake", src)
 		//here we loop through all the offerings and tally them.
 		var/tally_strength = 0
 		var/tally_spacebux = 0

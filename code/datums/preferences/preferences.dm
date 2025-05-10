@@ -850,12 +850,12 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-listenOoc")
-				src.listen_ooc = !src.listen_ooc
+				usr.client.toggle_ooc(!src.listen_ooc)
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-listenLooc")
-				src.listen_looc = !src.listen_looc
+				usr.client.toggle_looc(!src.listen_looc)
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1018,7 +1018,7 @@ var/list/removed_jobs = list(
 				src.flying_chat_hidden = FALSE
 				src.local_deadchat = FALSE
 				src.auto_capitalization = FALSE
-				src.listen_ooc = TRUE
+				usr.client.toggle_ooc(TRUE)
 				src.view_changelog = TRUE
 				src.view_score = TRUE
 				src.view_tickets = TRUE
@@ -1477,7 +1477,7 @@ var/list/removed_jobs = list(
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];[istype(JD, /datum/job/civilian/clown) ? "font-family: Comic Sans MS;" : ""]" title="[hover_text]">
 					[JD.name]</a>
 				</div>
 				"}

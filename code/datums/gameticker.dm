@@ -1,5 +1,6 @@
 var/global/datum/controller/gameticker/ticker
 var/global/current_state = GAME_STATE_INVALID
+var/global/game_force_started = FALSE
 
 #define LATEJOIN_FULL_WAGE_GRACE_PERIOD 9 MINUTES
 /datum/controller/gameticker
@@ -127,15 +128,13 @@ var/global/current_state = GAME_STATE_INVALID
 	// try to roll a gamemode 10 times before giving up
 	var/attempts_left = 10
 	var/list/failed_modes = list()
-	var/readied_count = src.roundstart_player_count(FALSE)
 	while(attempts_left > 0)
 		switch(master_mode)
 			if("random","secret") src.mode = config.pick_random_mode(failed_modes)
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-			if("intrigue")
-				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(readied_count > 20 ? 50 : 0);"extended", prob(50);"gang"))
-			if("pod_wars") src.mode = config.pick_mode("pod_wars")
+			if("pod_wars")
+				src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
 		#if defined(MAP_OVERRIDE_POD_WARS)
@@ -183,16 +182,16 @@ var/global/current_state = GAME_STATE_INVALID
 	participationRecorder.setHold()
 
 #ifdef RP_MODE
-	looc_allowed = 1
+	global.toggle_looc_allowed(TRUE)
 	boutput(world, "<B>LOOC has been automatically enabled.</B>")
-	ooc_allowed = 0
+	global.toggle_ooc_allowed(FALSE)
 	boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #else
 	if (istype(src.mode, /datum/game_mode/construction))
-		looc_allowed = 1
+		global.toggle_looc_allowed(TRUE)
 		boutput(world, "<B>LOOC has been automatically enabled.</B>")
 	else
-		ooc_allowed = 0
+		global.toggle_ooc_allowed(FALSE)
 		boutput(world, "<B>OOC has been automatically disabled until the round ends.</B>")
 #endif
 #ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
@@ -300,6 +299,9 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(10 MINUTES) // standard engine warning
 		for_by_tcl(E, /obj/machinery/computer/power_monitor/smes)
 			LAGCHECK(LAG_LOW)
+			var/area/A = get_area(E) // only check the main (engine) pnet
+			if (!istype(A, /area/station) || istype(A, /area/station/engine/substation) || istype(A, /area/station/solar) || istype(A, /area/station/maintenance/solar))
+				continue
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
@@ -530,10 +532,8 @@ var/global/current_state = GAME_STATE_INVALID
 				for(var/client/client in global.clients)
 					image_group.add_client(client)
 
-			// i feel like this should probably be a proc call somewhere instead but w/e
-			if (!ooc_allowed)
-				ooc_allowed = 1
-				boutput(world, "<B>OOC is now enabled.</B>")
+			global.toggle_ooc_allowed(TRUE)
+			boutput(world, "<B>OOC is now enabled.</B>")
 
 			SPAWN(5 SECONDS)
 				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] game-ending spawn happening")

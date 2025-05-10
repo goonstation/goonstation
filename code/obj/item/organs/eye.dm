@@ -109,6 +109,15 @@
 
 		return 1
 
+	// dead eyes stop working
+	breakme()
+		. = ..()
+		src.provides_sight = FALSE
+
+	unbreakme()
+		. = ..()
+		src.provides_sight = TRUE
+
 /obj/item/organ/eye/left
 	name = "left eye"
 	body_side = L_ORGAN
@@ -370,7 +379,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	icon_state = "eye-camera"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
-	var/camera_network = "public"
+	var/camera_network = CAMERA_NETWORK_PUBLIC
 	default_material = "pharosium"
 	iris_color = "#0d0558"
 
@@ -491,7 +500,15 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 			if(user)
 				boutput(user, SPAN_ALERT("The internal monitor's network limiter shorts, fusing to \the [src] and making the lens opaque!"))
 			src.visible_message(SPAN_ALERT("<B>[src] sparks and shudders oddly!</B>"))
-			src.viewer.network = list("public", "telesci", "SS13", "ranch", "Zeta", "Mining")
+			src.viewer.camera_networks = list(
+				CAMERA_NETWORK_STATION,
+				CAMERA_NETWORK_PUBLIC,
+				CAMERA_NETWORK_RANCH,
+				CAMERA_NETWORK_MINING,
+				CAMERA_NETWORK_SCIENCE,
+				CAMERA_NETWORK_TELESCI,
+				CAMERA_NETWORK_CARGO,
+			)
 			src.emagged = TRUE
 			src.provides_sight = FALSE
 
@@ -543,3 +560,16 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/glass
+	name = "glass eye"
+	organ_name = "glass eye"
+	desc = "Straight out of the sixteenth century. Surprisingly lifelike!"
+	icon_state = "eye-glass"
+	edible = FALSE
+	iris_state_override = "eye"
+	show_on_examine = TRUE
+	provides_sight = FALSE
+	created_decal = null
+	default_material = "glass"
+	blood_reagent = null

@@ -30,7 +30,7 @@
 				var/oldStat = owner.stat
 				if (statusList["stunned"])
 					setStat = STAT_ALIVE
-				if (statusList["knockdown"] || statusList["pinned"] && !owner.fakedead)
+				if (statusList["knockdown"] || statusList["pinned"])
 					if (!cant_lie)
 						owner.lying = TRUE
 					setStat = STAT_ALIVE

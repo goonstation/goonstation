@@ -28,7 +28,7 @@
 						frame.Attackby(cell_to_add, src)
 						if (frame.stage > 1)
 							src.visible_message("[src] inserts [cell_to_add] into [frame].")
-							flick("factory_arm_active",src)
+							FLICK("factory_arm_active",src)
 
 				if (2)
 					var/obj/item/device/guardbot_tool/tool_to_add = locate() in range(src, 1)
@@ -36,20 +36,20 @@
 						frame.Attackby(tool_to_add, src)
 						if (frame.created_module)
 							src.visible_message("[src] attaches [tool_to_add] into [frame].")
-							flick("factory_arm_active",src)
+							FLICK("factory_arm_active",src)
 					else
 						var/obj/item/guardbot_core/core = locate() in range(src, 1)
 						if (istype(core))
 							frame.Attackby(core, src)
 							if (frame.stage == 3)
 								src.visible_message("[src] attaches [core] into [frame].")
-								flick("factory_arm_active",src)
+								FLICK("factory_arm_active",src)
 
 				if (3)
 					var/obj/item/parts/robot_parts/arm/arm = locate() in range(src,1)
 					if (istype(arm))
 						frame.Attackby(arm,src)
-						flick("factory_arm_active",src)
+						FLICK("factory_arm_active",src)
 			//todo
 			return
 

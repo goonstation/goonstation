@@ -201,9 +201,9 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.reset_all() // reset the scan data in case an ID was scanned
 		playsound(src, 'sound/effects/sparks6.ogg', 30)
 		if(use_state == 0)
-			flick("emag_closed",src)
+			FLICK("emag_closed",src)
 		else
-			flick("emag_open",src)
+			FLICK("emag_open",src)
 		if (user)
 			boutput(user, SPAN_NOTICE("You reset the security settings on the [src]."))
 		return 1
@@ -299,7 +299,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		if(get_chaplain_faith(user) < 2000 + faith_cost)
 			boutput(user, "\The [src] does nothing. You need more faith!")
 			return
-		flick("print_light", src)
+		FLICK("print_light", src)
 		modify_chaplain_faith(user, faith_cost * -1)
 		var/prev_amount = src.print_amount
 		src.print_amount = 1
@@ -555,15 +555,15 @@ TYPEINFO(/obj/machinery/photocopier)
 		sleep(0.25 SECONDS)
 		playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
 		sleep(0.25 SECONDS)
-		flick(print_icon, src)
+		FLICK(print_icon, src)
 		sleep(2.5 SECONDS)
 
 	proc/effect_fail()
 		// Just displays a red light to give the user additional feedback when needed
 		if(src.use_state == 1)
-			flick("fail_open", src)
+			FLICK("fail_open", src)
 		else
-			flick("fail_closed", src)
+			FLICK("fail_closed", src)
 
 	// --------------- Scanning Items ----------------
 
@@ -869,7 +869,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/effects_scanning(var/obj/item/w)
 		sleep(0.3 SECONDS)
 		src.icon_state = "close_sesame"
-		flick("scan", src)
+		FLICK("scan", src)
 		playsound(src.loc, 'sound/machines/scan.ogg', 50, 1)
 		sleep(1.8 SECONDS)
 		src.icon_state = "open_sesame"
@@ -944,6 +944,6 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/effect_radio()
 		// A flashing blue light to visually display packet commands
 		if(src.use_state == 1)
-			flick("net_open", src)
+			FLICK("net_open", src)
 		else
-			flick("net_closed", src)
+			FLICK("net_closed", src)

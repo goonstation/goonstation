@@ -38,6 +38,28 @@
 				return NORTHEAST
 	return NORTH
 
+/proc/get_dir_accurate(var/atom/source, var/atom/target) // Get the closest direction rather than prioritizing a certain axis
+	if(!source || !target)
+		CRASH("Invalid Params for get_dir_accurate: Source:[identify_object(source)] Target:[identify_object(target)]")
+	var/dir_angle = get_angle(source, target)
+	switch(dir_angle)
+		if(22.5 to 67.5)
+			return NORTHEAST
+		if(67.5 to 112.5)
+			return EAST
+		if(112.5 to 157.5)
+			return SOUTHEAST
+		if(157.5 to 181, -181 to -157.5)
+			return SOUTH
+		if(-67.5 to -22.5)
+			return NORTHWEST
+		if(-112.5 to -67.5)
+			return WEST
+		if(-157.5 to -112.5)
+			return SOUTHWEST
+		else
+			return NORTH
+
 /proc/get_dir_pixel(var/atom/source, var/atom/target, params) //Get_dir using pixel coordinates of mouse
 	var/dx = (target.x - source.x) * 32
 	var/dy = (target.y - source.y) * 32
@@ -1413,10 +1435,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			if (flame_succ)
 				S.setup(turf)
-				flick("flame",S)
+				FLICK("flame",S)
 			else
 				S.setup(turf)
-				flick("spark",S)
+				FLICK("spark",S)
 
 
 			if (flame_succ)
@@ -1629,36 +1651,36 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 			K.start.loc = T1
 			K.start.set_dir(direction)
-			flick(K.start.icon_state, K.start)
+			FLICK(K.start.icon_state, K.start)
 			apply_dash_reagent(user, T1)
 			sleep(0.1 SECONDS)
 			if (T4)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
-				flick(K.mid1.icon_state, K.mid1)
+				FLICK(K.mid1.icon_state, K.mid1)
 				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.mid2.loc = T3
 				K.mid2.set_dir(direction)
-				flick(K.mid2.icon_state, K.mid2)
+				FLICK(K.mid2.icon_state, K.mid2)
 				apply_dash_reagent(user, T3)
 				sleep(0.1 SECONDS)
 				K.end.loc = T4
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 			else if (T3)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
-				flick(K.mid1.icon_state, K.mid1)
+				FLICK(K.mid1.icon_state, K.mid1)
 				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.end.loc = T3
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 			else if (T2)
 				K.end.loc = T2
 				K.end.set_dir(direction)
-				flick(K.end.icon_state, K.end)
+				FLICK(K.end.icon_state, K.end)
 
 			//Reset the effects after they're drawn and put back into master for re-use later
 			SPAWN(0.8 SECONDS)
@@ -2043,7 +2065,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		src.set_loc(location)
 		//src.loc = location
 		if (do_flick)
-			flick(icon_state,src)
+			FLICK(icon_state,src)
 		create_time = world.time //mbc : kind of janky lightweight way of making us not clash with ourselves. compare spawn time.
 		if (del_self)
 			SPAWN(del_time)
