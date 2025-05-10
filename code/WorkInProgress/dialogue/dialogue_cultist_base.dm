@@ -14,7 +14,7 @@
 /atom/movable/mysterious_beast
 	name = "???"
 	desc = "Whatever that is, its alive."
-	icon = 'icons/misc/192x192.dmi'
+	icon = 'icons/misc/384x384.dmi'
 	icon_state = "little_seamonster"
 	plane = PLANE_ABOVE_FOREGROUND_PARALLAX
 	anchored = TRUE
@@ -22,7 +22,6 @@
 
 	New()
 		..()
-		src.Scale(2,2)
 		src.alpha = 0
 		animate(src, 10 SECONDS, alpha = 255)
 
