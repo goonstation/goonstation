@@ -128,8 +128,3 @@
 		HH.name = "retinal beam"						// designation of the hand - purely for show
 		HH.limb_name = "eye"					// name for the dummy holder
 		HH.can_hold_items = FALSE
-
-	critter_basic_attack(mob/target)
-		if(prob(20))
-			src.swap_hand()
-		return ..()
