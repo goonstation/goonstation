@@ -149,12 +149,18 @@
 			var/mob/living/carbon/human/H = M
 
 			if (H.get_organ("brain"))
-				if (H.get_brain_damage() >= 100)
+				if (H.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 					brain_data = SPAN_ALERT("Subject is braindead.")
-				else if (H.get_brain_damage() >= 60)
-					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-				else if (H.get_brain_damage() >= 10)
-					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
+					brain_data = SPAN_ALERT("Major brain damage detected. Impared functioning present.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
+					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
+				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Minor brain damage detected.")
+				else if (H.get_brain_damage() < BRAIN_DAMAGE_MINOR)
+					brain_data = SPAN_ALERT("Synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
 
