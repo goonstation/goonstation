@@ -4008,7 +4008,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/welder,
 /obj/creepy_sound_trigger,
-/turf/space,
+/turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "BA" = (
 /obj/table/wood/auto,
