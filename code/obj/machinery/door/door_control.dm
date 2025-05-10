@@ -1191,7 +1191,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		if(GET_DIST(usr, src) < 16)
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
-				V.open_hangar(pass)
+				V.toggle_hangar(pass)
 			return ..()
 
 	attack_ai(mob/user as mob)
