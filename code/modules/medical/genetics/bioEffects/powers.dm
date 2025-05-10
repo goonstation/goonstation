@@ -2384,8 +2384,9 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 /datum/targetable/geneticsAbility/ghost_walk
 	name = "Spectral Ascent"
 	desc = "Become a ghost to survey your surrondings."
-	icon_state = "shoot_limb"
+	icon_state = "ghost_ascend"
 	needs_hands = FALSE
+	targetable = FALSE
 
 	cast()
 		if (..())
