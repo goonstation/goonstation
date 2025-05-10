@@ -1206,7 +1206,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
-	proc/toggle_door()
+	proc/toggle_hangar()
 		if(src.status & (NOPOWER|BROKEN))
 			return
 		src.use_power(5)
@@ -1224,7 +1224,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		if(..())
 			return
 		//////Open Door
-		if(signal.data["command"] =="toggle_door")
+		if(signal.data["command"] =="toggle_hangar")
 			if(!signal.data["doorpass"])
 				return
 			if(!signal.data["access_type"])
@@ -1236,7 +1236,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				toggle_door()
+				toggle_hangar()
 			return
 		////////reset pass
 		if(signal.data["command"] =="reset door pass")
