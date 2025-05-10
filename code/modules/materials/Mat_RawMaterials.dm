@@ -457,6 +457,29 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	default_material = "plutonium"
 
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$plutonium"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$plutonium"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$plutonium"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$plutonium"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$plutonium"
+			else
+				src.icon_state = "scrap6_$$plutonium"
+
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
