@@ -87,7 +87,7 @@
 	real_name = "void_scale"
 	icon_state = "void_scale"
 	icon_state_dead = "void_scale-dead"
-	desc = "The sentient and very, very angry scale off a semi-eldritch leviathian. This would be invaluable to a genetisist"
+	desc = "The sentient and very, very angry scale off a semi-eldritch leviathian. This would be invaluable to a geneticist."
 	health_brute = 300
 	health_brute_vuln = 0.6
 	health_burn = 300
