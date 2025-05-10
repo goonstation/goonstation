@@ -1206,7 +1206,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
-	proc/open_door()
+	proc/toggle_door()
 		if(src.status & (NOPOWER|BROKEN))
 			return
 		src.use_power(5)
@@ -1236,16 +1236,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(src.status & (NOPOWER|BROKEN))
-					return
-				src.use_power(5)
-
-				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-						else
-							M.close()
+				toggle_door()
 			return
 		////////reset pass
 		if(signal.data["command"] =="reset door pass")
