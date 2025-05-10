@@ -149,8 +149,6 @@ TYPEINFO(/mob)
 
 	var/nodamage = 0
 
-	var/spellshield = 0
-
 	var/voice_name = "unidentifiable voice"
 	var/oldname = null
 	var/mob/oldmob = null
