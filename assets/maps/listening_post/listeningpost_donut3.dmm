@@ -9,10 +9,6 @@
 /area/listeningpost/tech_room)
 "ak" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/power/apc/autoname_north/hardened,
-/obj/cable/black{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/grey/corner,
 /area/listeningpost/general)
 "aq" = (
@@ -1041,9 +1037,6 @@
 	},
 /area/listeningpost/general)
 "Vx" = (
-/obj/cable/black{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 6
 	},
@@ -1679,7 +1672,7 @@ VW
 me
 ak
 Vx
-Kl
+CJ
 Jr
 Mv
 qR
