@@ -110,6 +110,10 @@
 		src.bioHolder.AddNewPoolEffect("breathless", scramble=FALSE)
 		src.bioHolder.AddNewPoolEffect("ghost_walk", scramble=FALSE)
 
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
+
 	critter_basic_attack(mob/target)
 		if(prob(20))
 			src.swap_hand()
