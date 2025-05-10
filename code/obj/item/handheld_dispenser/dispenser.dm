@@ -15,6 +15,7 @@
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
 		/obj/machinery/atmospherics/binary/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
+	var/const/silicon_cost_multiplier = 100
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
 	var/direction = EAST
@@ -105,7 +106,12 @@
 			if(selection.exclusionary && device.exclusionary)
 				boutput(user, SPAN_ALERT("Something is occupying that space!"))
 				return
-		if(src.resources < selection.cost)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (!(S.cell && (S.cell.charge >= selection.cost * silicon_cost_multiplier)))
+				boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
+				return
+		else if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
 			return
 		var/icon/rotated_icon = icon(selection.icon, selection.icon_state, src.direction)
@@ -119,7 +125,12 @@
 	if(!(user && can_reach(user, target)))
 		boutput(user, SPAN_ALERT("Can't reach there!"))
 		return
-	if(src.resources < selection.cost)
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (!(S.cell && (S.cell.charge >= recipe.cost * silicon_cost_multiplier)))
+			boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
+			return
+	else if(src.resources < recipe.cost)
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
 		return
 	var/directs = recipe.get_directions(direction)
@@ -127,10 +138,15 @@
 		if((device.initialize_directions & directs))
 			boutput(user, SPAN_ALERT("Something is occupying that direction!"))
 			return
-		if(selection.exclusionary && device.exclusionary)
+		if(recipe.exclusionary && device.exclusionary)
 			boutput(user, SPAN_ALERT("Something is occupying that space!"))
 			return
-	src.resources -= recipe.cost
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.use(recipe.cost * silicon_cost_multiplier)
+	else
+		src.resources -= recipe.cost
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
@@ -142,7 +158,12 @@
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
-	if(!src.resources)
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
+			boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
+			return
+	else if(!src.resources)
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 		return
 	boutput(user, SPAN_NOTICE("The [src] destroys the [target]!"))
@@ -151,7 +172,12 @@
 		var/obj/machinery/atmospherics/binary/valve/O = target
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
-	resources -= 1
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.use(silicon_cost_multiplier)
+	else
+		resources -= 1
 	src.tooltip_rebuild = 1
 	src.inventory_counter.update_number(src.resources)
 	qdel(target)
