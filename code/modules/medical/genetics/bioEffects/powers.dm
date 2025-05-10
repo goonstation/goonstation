@@ -2386,7 +2386,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	desc = "Become a ghost to survey your surrondings."
 	icon_state = "ghost_ascend"
 	needs_hands = FALSE
-	targetable = FALSE
+	targeted = FALSE
 
 	cast()
 		if (..())
