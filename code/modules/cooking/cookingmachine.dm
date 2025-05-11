@@ -122,7 +122,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 	proc/load_item(obj/item/ingredient, mob/user)
 		if(!locate(ingredient.type) in src.contents)
 			src.possible_recipes += src.get_recipes_from_ingredient(ingredient)
-		user.u_equip(ingredient)
+			sortList(src.possible_recipes, /proc/cmp_recipe_priority)
+		user?.u_equip(ingredient)
 		ingredient.set_loc(src)
 		ingredient.dropped(user)
 
@@ -141,8 +142,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
 			if(RM.oven_recipes_by_ingredient[considered_type])
 				var/output = RM.oven_recipes_by_ingredient[considered_type] //bit of a hack, remember to change when cooking flags are added
-				if(RM.oven_recipes_by_ingredient[type2parent(considered_type)])
-					output += RM.oven_recipes_by_ingredient[type2parent(considered_type)] //this ensures the more specific recipes are checked first
+	//			if(RM.oven_recipes_by_ingredient[type2parent(considered_type)])
+	//				output += RM.oven_recipes_by_ingredient[type2parent(considered_type)] //this ensures the more specific recipes are checked first
 				return output
 			else
 				considered_type = type2parent(considered_type)
@@ -167,7 +168,6 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 		var/obj/item/output = null
 		var/cook_amount = src.cooking_power()
 		var/datum/cookingrecipe/R = src.get_valid_recipe()
-		var/obj/item/reagent_containers/food/snacks/F
 		if (R)
 			// this is null if it uses normal outputs (see below),
 			// otherwise it will be the created item from this
@@ -185,6 +185,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 				else// mediocre meals
 					output.quality = clamp(5 - abs(R.cookbonus - cook_amount), 0, 5)
 			if(R.useshumanmeat)
+				var/obj/item/reagent_containers/food/snacks/F = output
 				var/foodname = F.name
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
 					F.name = "[M.subjectname] [foodname]"
@@ -207,7 +208,7 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			qdel(I)
 		to_remove.len = 0
 		handle_leftovers()
-		possible_recipes.len = 0
+		possible_recipes = list()
 		return output
 
 	proc/handle_leftovers() ///what to do with things that weren't part of the recipe
