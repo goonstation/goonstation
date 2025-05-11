@@ -19,7 +19,7 @@
 		if(ON_COOLDOWN(src, "panic button", 15 SECONDS))
 			boutput(user, SPAN_NOTICE("\The [src] buzzes faintly. It must be cooling down."))
 			return
-		if(isliving(user) && is_dead_or_ghost_role(user))
+		if(isliving(user) && !is_dead_or_ghost_role(user))
 			playsound(src, 'sound/items/security_alert.ogg', 30)
 			usr.visible_message(SPAN_ALERT("[usr] presses the red button on [src]."),
 			SPAN_NOTICE("You press the button on [src]."),
