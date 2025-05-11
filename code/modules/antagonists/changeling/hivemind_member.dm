@@ -30,6 +30,9 @@
 
 		hivemind_observer.set_owner(master_ability_holder)
 
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[master_ability_holder]")
+		src.owner.current.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
+
 	remove_equipment()
 		var/mob/dead/target_observer/hivemind_observer/hivemind_observer = src.owner.current
 		var/mob/dead/observer/ghost_mob = src.owner.current.ghostize()

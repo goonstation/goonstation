@@ -2,17 +2,20 @@
  * Playable bots
  */
 ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
+TYPEINFO(/mob/living/critter/robotic/bot)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/critter/robotic/bot
 	name = "base bot mob (you should never see me)"
 	icon = 'icons/obj/bots/aibots.dmi'
 	blood_id = "oil"
-	speechverb_say = "beeps"
-	speechverb_gasp = "warbles"
-	speechverb_stammer = "bleeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "bloops"
+	speech_verb_say = "beeps"
+	speech_verb_gasp = "warbles"
+	speech_verb_stammer = "bleeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "bloops"
 	stepsound = "step_plating"
-	robot_talk_understand = TRUE
 	hand_count = 1
 	can_burn = FALSE
 	dna_to_absorb = 0

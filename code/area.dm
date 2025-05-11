@@ -3911,11 +3911,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 			var/obj/O = A
 			if (istype(O))
 				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !O.has_access(access_security))
+					if(src.armory_auth && !(access_security in O.req_access))
 						O.req_access += access_security
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && O.has_access(access_security))
+					else if (!src.armory_auth && (access_security in O.req_access))
 						O.req_access = list(access_armory)
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
@@ -6045,6 +6045,7 @@ area/station/security/visitation
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN
+	requires_power = FALSE
 
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
@@ -6116,6 +6117,7 @@ area/station/security/visitation
 
 /area/pod_wars/team2
 	station_map_colour = MAPC_SYNDICATE
+	requires_power = FALSE
 
 /area/pod_wars/team2/bridge
 	name = "Lodbrok Bridge"
@@ -6376,3 +6378,11 @@ MAJOR_AST(29)
 MAJOR_AST(30)
 
 #undef MAJOR_AST
+
+/area/tutorial
+	name = "Tutorial Zone"
+	requires_power = FALSE
+	icon_state = "yellow"
+/area/tutorial/depowered
+	requires_power = TRUE
+	icon_state = "red"
