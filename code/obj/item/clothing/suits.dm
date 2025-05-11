@@ -1832,6 +1832,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 
+/obj/item/clothing/suit/wizrobe/traveller
+	name = "traveller's robe"
+	desc = "An ornate robe adorned with stars, for the traveller in the heart of all wizards."
+	icon_state = "wizardstars"
+	item_state = "wizardnec"
+
 /obj/item/clothing/suit/bathrobe
 	name = "bathrobe"
 	desc = "A snazzy bathrobe for after you get out of the shower."

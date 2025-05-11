@@ -269,6 +269,7 @@
 		src.speech_outputs_by_channel[src.speech_outputs_by_id[module_id].channel] -= src.speech_outputs_by_id[module_id]
 		qdel(src.speech_outputs_by_id[module_id])
 		src.speech_outputs_by_id -= module_id
+		src.speech_output_ids_with_subcount -= module_id
 
 	return TRUE
 
@@ -314,6 +315,7 @@
 		qdel(src.speech_modifiers_by_id[modifier_id])
 		src.speech_modifiers_by_id -= modifier_id
 		src.persistent_speech_modifiers_by_id -= modifier_id
+		src.speech_modifier_ids_with_subcount -= modifier_id
 
 	return TRUE
 
@@ -360,6 +362,7 @@
 
 		qdel(prefix_module)
 		src.speech_prefixes_by_id -= prefix_id
+		src.speech_prefix_ids_with_subcount -= prefix_id
 
 	return TRUE
 

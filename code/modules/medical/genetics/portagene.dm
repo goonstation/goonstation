@@ -4,7 +4,6 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = UNANCHORED
-	open_to_sound = TRUE
 	req_access = null //will revisit later
 	var/mob/occupant = null
 	var/datum/movable_preview/character/multiclient/occupant_preview = null

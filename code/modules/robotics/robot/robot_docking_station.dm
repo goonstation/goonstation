@@ -11,7 +11,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 	icon_state = "station"
 	density = 1
 	anchored = ANCHORED
-	open_to_sound = TRUE
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = TRUE
