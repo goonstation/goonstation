@@ -21,21 +21,10 @@
 		if (!holder)
 			return 1
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampiric_thrall/H = holder
-
-		if (!M)
-			return 1
-
 		. = ..()
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
+		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
 		if (!message)
 			return
 
-		if (!H.master)
-			boutput(M, SPAN_ALERT("Your link to your master has been severed!"))
-			return 1
-
-		.= H.msg_to_master(message)
-
-		return 0
+		src.holder.owner.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_THRALL))
+		return FALSE
