@@ -374,7 +374,7 @@
 	controlpc_lv
 		linkText = "(Move the lever down to lower the voltage.)"
 		nodeText = {"The creature, while not even directly visible clearly loosens its composure. A echo... a sound which could be graditude or unleashed wrath. Its simply too alien to determine. <br>
-		a bead of some kind is knocked off it during its departure."}
+		A bead of some kind is knocked off it during its departure."}
 		links = list()
 
 		canShow(var/client/C)
@@ -382,7 +382,8 @@
 			else return 0
 
 		onActivate(var/client/C)
-			// src.master.master.lever_lv(C.mob) commenting these out while I test some other shit
+			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
+			M.lever_lv()
 
 	controlpc_hv
 		linkText = "(Move the lever up to increase the voltage.)"
@@ -395,7 +396,8 @@
 			else return 0
 
 		onActivate(var/client/C)
-			// src.master.master.lever_hv(C.mob)
+			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
+			M.lever_hv()
 
 	controlpc_diagnose
 		linkText = "(Expertly examine the damage.)"
