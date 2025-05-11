@@ -2006,7 +2006,13 @@
 			src.pixel_x_offset = -src.pixel_x_offset
 			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
 
-		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
+		var/icon/flatIcon = getFlatIcon(src.item)
+
+		var/image/overlay = new /image
+		overlay.icon = flatIcon
+		overlay.pixel_x = src.pixel_x_offset
+		overlay.pixel_y = src.pixel_y_offset
+
 		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
 
 		src.user.UpdateOverlays(overlay, "showoff_overlay")
