@@ -468,6 +468,9 @@
 
 
 
+TYPEINFO(/obj/item/heat_dowsing)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 /obj/item/heat_dowsing
 	name = "dowsing rod"
 	icon = 'icons/obj/sealab_power.dmi'
@@ -484,9 +487,19 @@
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 1
+
+	speech_verb_say = "beeps"
+
+	use_speech_bubble = TRUE
+	speech_bubble_icon_say = "20"
+	speech_bubble_icon_ask = null
+	speech_bubble_icon_exclaim = null
+	speech_bubble_icon_sing = null
+	speech_bubble_icon_sing_bad = null
+
 	event_handler_flags = IMMUNE_OCEAN_PUSH
 	//two_handed = 1
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+//	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/dowse_dist_fuzz = 3
 	var/static/speak_interval = 8 // speak every [x] process ticks (machine loop targets about 1 tick per 2 seconds)
 	var/speak_count = 8
@@ -571,25 +584,15 @@
 				if (placed)
 					placed = 0
 
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"")), 2)
-
+					src.speech_bubble_icon_say = "[val]"
+					src.say("Estimated distance to centre: [val]", flags = SAYFLAG_NO_MAPTEXT)
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
-							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"")), 2)
-
+							src.say("[true_center] centres have been located!", flags = SAYFLAG_NO_MAPTEXT)
 						else
-							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"True center has been located!\"")), 2)
-
-
-				speech_bubble.icon_state = "[val]"
-				AddOverlays(speech_bubble, "speech_bubble")
-				SPAWN(1.5 SECONDS)
-					ClearSpecificOverlays("speech_bubble")
+							src.say("True centre has been located!", flags = SAYFLAG_NO_MAPTEXT)
 
 	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
@@ -856,6 +859,8 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 
 TYPEINFO(/obj/machinery/power/stomper)
 	mats = 8
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/power/stomper
 	name = "stomper unit"
@@ -866,6 +871,9 @@ TYPEINFO(/obj/machinery/power/stomper)
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
 	event_handler_flags = IMMUNE_OCEAN_PUSH
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_verb_say = "beeps"
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -902,8 +910,8 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
+
+		src.say("Safety restrictions disabled.")
 		return TRUE
 
 	update_icon()
@@ -948,8 +956,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		mode_toggle = !mode_toggle
 
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
+		src.say("Stomp mode : [mode_toggle ? "automatic" : "single"].")
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -1002,8 +1009,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+				src.say("Hotspot pinned.")
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1011,7 +1017,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (isliving(M) && !isintangible(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("knockdown", 1 SECOND)
-				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
@@ -1102,8 +1108,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					for (var/mob/O in hearers(jumper, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+					src.say("Hotspot pinned.")
 
 			for (var/mob/M in get_turf(src))
 				if (isliving(M) && !isintangible(M) && M != jumper)
