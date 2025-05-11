@@ -4359,6 +4359,7 @@
 /area/cult_base/acolyte)
 "Il" = (
 /obj/decoration/ritual,
+/obj/map/light/secretpink,
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "In" = (
