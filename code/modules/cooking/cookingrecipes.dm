@@ -1,4 +1,5 @@
 #define PRIORITY_NORMAL 0
+#define PRIORITY_HIGHER 0.1
 ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
 	var/list/ingredients
@@ -6,7 +7,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
 	var/category = "Unsorted" /// category for sorting, use null to hide
-	var/priority = PRIORITY_NORMAL
+	var/priority = PRIORITY_NORMAL /// use this if the recipe should be checked before others with the same number of ingredients
 
 
 	proc/specialOutput(var/obj/submachine/ourCooker)
@@ -299,6 +300,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/bigburger
 	category = "Burgers"
+	priority = PRIORITY_HIGHER //so it doesn't conflict with normal cheeseburgers
 
 /datum/cookingrecipe/oven/burger/butterburger
 	ingredients = list(\
@@ -577,37 +579,37 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	category = "Bread"
 
 /datum/cookingrecipe/oven/toast
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice
 	category = "Toast"
 
 /datum/cookingrecipe/oven/toast_banana
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/banana)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/banana = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/banana
 	category = "Toast"
 
 /datum/cookingrecipe/oven/toast_brain
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/brain)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/brain = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/brain
 	category = "Toast"
 
 /datum/cookingrecipe/oven/toast_elvis
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/elvis)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/elvis = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/elvis
 	category = "Toast"
 
 /datum/cookingrecipe/oven/toast_spooky
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/spooky)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/spooky = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
 	category = "Toast"
 
 /datum/cookingrecipe/oven/toasted_french
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/french)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/french = 1)
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
 	category = "Toast"
@@ -855,6 +857,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich
 	category = "Sandwich"
+	priority = PRIORITY_HIGHER //prevents conflict with toast
 
 	specialOutput(obj/submachine/ourCooker)
 		if (!ourCooker)
