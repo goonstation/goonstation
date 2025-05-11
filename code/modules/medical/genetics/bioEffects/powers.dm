@@ -2393,7 +2393,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return 1
 
 		if (ishuman(owner)) // Straight outta the devilish fiddle
-			boutput(src, "Click on your body to return to it!")
+			boutput(owner, "Use the 'Return to corpse' ability to come back when your ready!")
 			owner.ghostize()
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
