@@ -909,11 +909,20 @@ Contents:
 
 
 /obj/machinery/door/airlock/pyro/reinforced/lunar_breakdoor
+	icon = 'icons/misc/lunar.dmi'
+	icon_state = "breakairlock0"
 	anchored = ANCHORED_ALWAYS
 	autoclose = FALSE
 	req_access = list(access_lunar_breakdoor)
 
 	var/broken = 0
+
+	update_icon()
+		if(src.broken)
+			src.icon_state = "breakairlock2"
+		else
+			src.icon_state = "breakairlock0"
+
 
 	New()
 		..()
@@ -934,8 +943,8 @@ Contents:
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN(0)
-			FLICK("breakairlock1", src)
 			src.icon_state = "breakairlock2"
+			FLICK("breakairlock1", src)
 			sleep (2)
 			src.set_opacity(0)
 			sleep(0.6 SECONDS)
