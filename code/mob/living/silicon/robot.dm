@@ -3565,8 +3565,6 @@ TYPEINFO(/mob/living/silicon/robot)
 		. = ..()
 		src.robot = src.owner
 		src.robot.radio?.bricked = TRUE
-		src.robot.default_radio?.bricked = TRUE
-		src.robot.ai_radio?.bricked = TRUE
 		APPLY_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
 
 	onUpdate(timePassed)
@@ -3574,8 +3572,6 @@ TYPEINFO(/mob/living/silicon/robot)
 		src.robot.module_active = null
 		src.robot.uneq_all()
 		src.robot.radio?.bricked = TRUE
-		src.robot.default_radio?.bricked = TRUE
-		src.robot.ai_radio?.bricked = TRUE
 		for (var/obj/item/roboupgrade/R in robot.contents)
 			if (R.activated)
 				R.upgrade_deactivate(robot)
@@ -3592,8 +3588,6 @@ TYPEINFO(/mob/living/silicon/robot)
 	onRemove()
 		. = ..()
 		src.robot.radio?.bricked = FALSE
-		src.robot.default_radio?.bricked = FALSE
-		src.robot.ai_radio?.bricked = FALSE
 		REMOVE_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
 
 /datum/statusEffect/no_power/robot/no_cell
