@@ -839,22 +839,20 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		var/randm = rand(1, 100)
 		if (randm > 50)
 			quant = 2
-			if (prob(30))
-				src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		else if (randm > 5)
 			quant = 1
 		else
 			quant = 3
 			src.payout += 8000
-			src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 
 		for (var/i = 1; i <= quant; i++)
 			src.rc_entries += GetFruitOrVegEntry()
 		src.item_rewarders += new /datum/rc_itemreward/large_satchel
 		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
-		else
+		else if (prob(60))
 			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
+
 		..()
 
 	proc/GetFruitOrVegEntry()

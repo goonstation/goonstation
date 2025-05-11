@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.item_rewarders += new /datum/rc_itemreward/large_satchel
 		if(prob(probability))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
-		else
+		else if (prob(probability))
 			src.item_rewarders += new /datum/rc_itemreward/tumbleweed
 
 /datum/rc_entry/item/mutated_produce
