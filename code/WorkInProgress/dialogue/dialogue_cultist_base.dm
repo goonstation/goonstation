@@ -385,6 +385,9 @@
 		onActivate(var/client/C)
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
 			M.lever_lv(C.mob)
+			qdel(src) // pretty sure all of these are needed for cleanup
+			qdel(src.master)
+			qdel(src.master.master)
 
 	controlpc_hv
 		linkText = "(Move the lever up to increase the voltage.)"
@@ -399,6 +402,9 @@
 		onActivate(var/client/C)
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
 			M.lever_hv(C.mob)
+			qdel(src) // pretty sure all of these are needed for cleanup
+			qdel(src.master)
+			qdel(src.master.master)
 
 	controlpc_diagnose
 		linkText = "(Expertly examine the damage.)"

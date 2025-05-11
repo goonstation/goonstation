@@ -4970,6 +4970,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/greenish,
+/obj/decal/cleanable/machine_debris,
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
 	},
