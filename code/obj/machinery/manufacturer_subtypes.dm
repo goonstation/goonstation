@@ -14,6 +14,7 @@
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/metal,
 		/datum/manufacture/metal/bulk,
@@ -263,6 +264,7 @@
 		/obj/item/material_piece/cobryl = 2)
 	available = list(
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/gps,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
@@ -347,6 +349,7 @@
 		/datum/manufacture/geigercounter,
 		/datum/manufacture/eyes_meson,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/ore_accumulator,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
@@ -600,6 +603,7 @@
 		/datum/manufacture/suture,
 		/datum/manufacture/scalpel,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/lantern,
 		/datum/manufacture/armor_vest,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/harmonica,
