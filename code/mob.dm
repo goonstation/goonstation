@@ -922,7 +922,7 @@ TYPEINFO(/mob)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	return FALSE
+	return src.mind.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
