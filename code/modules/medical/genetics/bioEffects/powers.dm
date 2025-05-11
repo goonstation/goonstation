@@ -2364,7 +2364,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/bioEffect/power/ghost_walk
 	name = "Spectral Ascent"
-	desc = "Allows the subject to become a ghost, leaving their body to return."
+	desc = "Allows the subject to become a ghost for a short duration, leaving their body to return."
 	id = "ghost_walk"
 	icon = "ghost_ascend"
 	occur_in_genepools = 0 // Only from the genes of a boss mob.
@@ -2383,7 +2383,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 /datum/targetable/geneticsAbility/ghost_walk
 	name = "Spectral Ascent"
-	desc = "Become a ghost to survey your surrondings."
+	desc = "Temporarily become a ghost to survey your surrondings."
 	icon_state = "ghost_ascend"
 	needs_hands = FALSE
 	targeted = FALSE
@@ -2393,7 +2393,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return 1
 
 		if (ishuman(owner)) // Straight outta the devilish fiddle
-			boutput(owner, "Use the 'Return to corpse' ability to come back when your ready!")
+			boutput(owner, "Use the 'Return to corpse' ability to come back when your ready! 20 Seconds till automatic recall.")
 			owner.ghostize()
 
 ABSTRACT_TYPE(/datum/bioEffect/power/critter)
