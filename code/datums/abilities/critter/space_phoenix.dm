@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/space_phoenix)
 				if (isrobot(L) || isintangible(L))
 					continue
 				L.changeStatus("shivering", 10 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
-				L.bodytemperature -= 10
+				L.changeBodyTemp(-10 KELVIN)
 				if (L.bodytemperature <= 255.372) // 0 degrees fahrenheit
 					var/obj/icecube/block = new /obj/icecube(L.loc, L)
 					block.anchored = TRUE
@@ -313,7 +313,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/space_phoenix)
 			return
 
 		src.target.changeStatus("shivering", 2 SECONDS * (1 - 0.75 * target.get_cold_protection() / 100), TRUE)
-		src.target.bodytemperature -= 15
+		src.target.changeBodyTemp(-15 KELVIN)
 		if (src.target.bodytemperature <= 227.59) // -50 degrees fahrenheit
 			src.target.TakeDamage("All", burn = 10)
 		playsound(get_turf(target), "sound/misc/phoenix/phoenix_tod_[rand(1, 4)].ogg", 50, TRUE)

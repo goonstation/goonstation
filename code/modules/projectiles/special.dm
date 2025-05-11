@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(projectile.power / 10)
 		if (ishuman(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= projectile.power
+			L.changeBodyTemp(-projectile.power)
 
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
@@ -987,7 +987,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(temp_reduc / 10)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= temp_reduc
+			L.changeBodyTemp(-temp_reduc)
 			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
 			var/atom/targetTurf = 0
