@@ -1359,7 +1359,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/storage/backpack/security = 1,
 	/obj/item/storage/backpack/engineering = 1,
 	/obj/item/storage/backpack/research = 1,
-	/obj/item/storage/backpack/salvager = 1) //hehe
+	/obj/item/storage/backpack/salvager = 1,
+	/obj/item/storage/backpack/syndie/tactical = 0.2) //hehe
 
 	slot_belt = list(\
 	/obj/item/crowbar = 6,
