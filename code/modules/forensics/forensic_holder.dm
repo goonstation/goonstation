@@ -1,13 +1,9 @@
 
-// The forensic holder stores all the forensic evidence associated with whatever it is attached to
+// A forensic_holder stores all forensic evidence associated with whatever it is attached to
 // The holder contains forensic groups, which are responsible for managing a specific type of evidence that may exist
 datum/forensic_holder
 	var/list/datum/forensic_group/group_list = new/list()
-	var/list/datum/forensic_group/admin_list = new/list() // Evidence list for admins
-	var/accuracy_mult = 1.0 // Multiplier for this item's timestamp accuracy. Lower the better.
-
-	var/ignore_flags = 0 // Do not add evidence with these flags
-	var/ignore_flags_removal = 0 // These ways of removing evidence have no power here
+	var/list/datum/forensic_group/admin_list = new/list() // A seperate evidence list for admins
 
 	disposing()
 		if(src.group_list)
@@ -22,7 +18,7 @@ datum/forensic_holder
 			src.admin_list = null
 		..()
 
-	// Add forensic evidence such as an indiviual fingerprint or DNA sample
+	/// Add forensic data to the holder, such as an indiviual fingerprint or DNA sample
 	proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTE, var/admin_only = FALSE)
 		if(!HAS_FLAG(data.flags, FORENSIC_FAKE))
 			var/datum/forensic_group/h_group = get_group(category, TRUE)
@@ -37,7 +33,7 @@ datum/forensic_holder
 				src.group_list += group
 			group.apply_evidence(data)
 
-	// Obtain a specific type of forensic group if it exists
+	/// Obtain a specific type of forensic group if it exists
 	proc/get_group(var/category = FORENSIC_GROUP_NOTE, var/admin = FALSE)
 		var/list/datum/forensic_group/E_list
 		if(admin)

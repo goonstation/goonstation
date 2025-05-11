@@ -6,17 +6,16 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 // Only one of each type of forensics_group should exist per forensic_holder
 // If you want to store multiple groups of the same type, use multiple forensic_holders
 /datum/forensic_group
-	// An identifier for the group type. Must be unique for each group.
+	/// An identifier for the group type. Must be unique for each group.
 	var/category = FORENSIC_GROUP_NONE
-	var/group_flags = 0 // Flags associated with the whole group. Actual usage may vary by group.
-	var/group_accuracy = 1
+	var/group_flags = 0 //! Flags associated with the whole group. Actual usage may vary by group.
 
 	proc/apply_evidence(var/datum/forensic_data/data)
 		return
 
 /datum/forensic_group/basic_list
 	var/list/datum/forensic_data/basic/evidence_list = new/list()
-	var/value_usage = FORENSIC_VALUE_IGNORE
+	var/value_usage = FORENSIC_VALUE_IGNORE //! Basic data has a value that can optionally be affected by duplicate evidence
 	group_flags = 0
 
 	disposing()
@@ -42,6 +41,7 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		else
 			src.evidence_list[oldest] = new_ev
 
+	/// If duplicate evidence is added, you can have that affect the value of the existing evidence
 	proc/update_value(var/datum/forensic_data/basic/data_old, var/datum/forensic_data/basic/data_new)
 		switch(value_usage)
 			if(FORENSIC_VALUE_IGNORE)
@@ -59,19 +59,19 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 	category = FORENSIC_GROUP_SLEUTH
 	group_flags = 0
 
-	// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner
-	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE, var/accuracy = -1)
+	/// Text proc is seperate for now since sleuthing is obtained via an emote rather than the forensics scanner
+	proc/get_sleuth_text(var/atom/A, var/sleuth_all = FALSE)
 		if(length(src.evidence_list) == 0)
 			return null
 		if(!sleuth_all)
-			return sleuth_data(A, src.evidence_list[rand(1, length(src.evidence_list))], accuracy, TRUE)
+			return sleuth_data(A, src.evidence_list[rand(1, length(src.evidence_list))], TRUE)
 
 		var/data_text = ""
 		for(var/i in 1 to length(src.evidence_list))
-			data_text += sleuth_data(A, src.evidence_list[i], accuracy, i == 1)
+			data_text += sleuth_data(A, src.evidence_list[i], i == 1)
 		return data_text
 
-	proc/sleuth_data(var/atom/A, var/datum/forensic_data/basic/slueth_data, var/accuracy, var/is_first)
+	proc/sleuth_data(var/atom/A, var/datum/forensic_data/basic/slueth_data, var/is_first)
 		var/color = slueth_data.evidence.id
 		var/time_since = TIME - slueth_data.time_end
 		var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))

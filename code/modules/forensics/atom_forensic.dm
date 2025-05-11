@@ -10,8 +10,9 @@
 	var/list/forensic_trace = null // list(fprint, bDNA, btype) - can't get rid of this so easy!
 
 	// -------------------- New Stuff -----------
-	var/datum/forensic_holder/forensic_holder = new()
+	var/datum/forensic_holder/forensic_holder = new() //! A place to store forensic information related to this atom
 
+/// Add forensic evidence to this atom's forensic_holder
 /atom/proc/add_evidence(var/datum/forensic_data/data, var/category = FORENSIC_GROUP_NOTE)
 	if(src.forensic_holder)
 		src.forensic_holder.add_evidence(data, category)

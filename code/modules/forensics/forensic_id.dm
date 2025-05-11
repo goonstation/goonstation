@@ -2,7 +2,7 @@
 // Store forensic_ids into a dictionary to prevent duplicates
 var/global/list/datum/forensic_id/registered_id_list = new()
 
-// Check if the ID already exists and return it. Else create a new ID.
+/// Check if the ID already exists and return it. Else create a new ID.
 /proc/register_id(var/id_text, var/list/reg_list = registered_id_list)
 	if(!id_text)
 		return null
