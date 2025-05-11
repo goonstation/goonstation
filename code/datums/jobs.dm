@@ -650,6 +650,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_jump = list(/obj/item/clothing/under/color/purple)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_belt = list(/obj/item/device/pda2/toxins)
+	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
@@ -740,6 +741,8 @@ ABSTRACT_TYPE(/datum/job/medical)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/red)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
@@ -798,12 +801,18 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
 	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_belt = list(/obj/item/device/pda2/technical_assistant)
-	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
+	slot_glov = list(/obj/item/clothing/gloves/yellow)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared)
+	slot_poc1 = list(/obj/item/device/pda2/engine)
+	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+#ifdef HOTSPOTS_ENABLED
+	items_in_backpack = list(/obj/item/clothing/shoes/stomp_boots)
+#endif
+
 	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
 
 /datum/job/engineering/quartermaster
@@ -1738,7 +1747,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/tea)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/bottle/gin)
-	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp)
+	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp, /obj/item/storage/firstaid/mental)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 
 /datum/job/special/random/artist
@@ -2310,7 +2319,6 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	allow_spy_theft = FALSE
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
-	special_spawn_location = LANDMARK_SYNDICATE
 
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2319,9 +2327,9 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_mask = list(/obj/item/clothing/mask/gas/swat/syndicate)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate) //needs their own secret channel
+	slot_belt = null //No PDA
 	slot_card = /obj/item/card/id/syndicate //Job setup registers an owner, so custom agent ID setup won't be available.
-	slot_lhan = list(/obj/item/remote/syndicate_teleporter) //To get off the cairngorm with
-	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
+	slot_poc2 = list(/obj/item/tank/pocket/extended/oxygen)
 	faction = list(FACTION_SYNDICATE)
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2334,12 +2342,10 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"
-	special_spawn_location = null //No Cairngorm
 	slot_belt = list(/obj/item/gun/kinetic/pistol)
 	slot_ears = list() //No Headset
 	slot_card = null //No Access
-	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
-	slot_lhan = list() //Still No Cairngorm
+	slot_poc1 = list(/obj/item/storage/pouch/bullet_9mm)
 	items_in_backpack = list(
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
@@ -2348,17 +2354,149 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list() //And also no ammo.
 
+//Specialist operatives using nukie class gear
+ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 /datum/job/special/syndicate/specialist
-	name = "Syndicate Special Operative"
+	name = "Syndicate Specialist"
+	special_spawn_location = LANDMARK_SYNDICATE
 	receives_implants = list(/obj/item/implant/revenge/microbomb)
-	slot_belt = list(/obj/item/storage/belt/gun/pistol)
-	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
+	slot_back = list(/obj/item/storage/backpack/syndie/tactical)
+	slot_lhan = list(/obj/item/remote/syndicate_teleporter) //To get off the cairngorm with
+	slot_rhan = list(/obj/item/tank/jetpack/syndicate) //To get off the listening post with
+
+/datum/job/special/syndicate/specialist/demo
+	name = "Syndicate Grenadier"
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
-	slot_poc2 = list(/obj/item/storage/pouch/assault_rifle)
-	slot_rhan = list(/obj/item/tank/jetpack/syndicate)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/grenadier)
+	slot_poc1 = list(/obj/item/storage/pouch/grenade_round)
+	items_in_backpack = list(/obj/item/gun/kinetic/grenade_launcher,
+		/obj/item/storage/grenade_pouch/mixed_explosive)
+
+/datum/job/special/syndicate/specialist/heavy
+	name = "Syndicate Heavy Weapons Specialist"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/heavy)
+	slot_poc1 = list(/obj/item/storage/pouch/lmg)
+	slot_back = list(/obj/item/gun/kinetic/light_machine_gun)
+	slot_belt = list(/obj/item/storage/fanny/syndie/large)
+	items_in_belt = list(/obj/item/storage/grenade_pouch/high_explosive)
+
+/datum/job/special/syndicate/specialist/assault
+	name = "Syndicate Assault Trooper"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
+	slot_poc1 = list(/obj/item/storage/pouch/assault_rifle/mixed)
 	items_in_backpack = list(/obj/item/gun/kinetic/assault_rifle,
-							/obj/item/old_grenade/stinger/frag,
-							/obj/item/breaching_charge)
+		/obj/item/storage/grenade_pouch/mixed_standard,
+		/obj/item/breaching_charge,
+		/obj/item/breaching_charge)
+
+//Incredibly bloated :/
+/datum/job/special/syndicate/specialist/infiltrator
+	name = "Syndicate Infiltrator"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
+	slot_poc1 = list(/obj/item/storage/pouch/tranq_pistol_dart)
+	slot_lhan = list(/obj/item/storage/backpack/chameleon)
+	items_in_backpack = list(/obj/item/gun/kinetic/tranq_pistol,
+		/obj/item/dna_scrambler,
+		/obj/item/voice_changer,
+		/obj/item/card/emag,
+		/obj/item/device/chameleon,
+		/obj/item/remote/syndicate_teleporter) //Because their hands are filled with their chameleon gear
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		var/obj/item/remote/chameleon/remote = locate(/obj/item/remote/chameleon) in M
+		M.stow_in_available(remote)
+
+/datum/job/special/syndicate/specialist/scout
+	name = "Syndicate Scout"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/infiltrator)
+	slot_eyes = list(/obj/item/clothing/glasses/nightvision)
+	slot_poc1 = list(/obj/item/storage/pouch/bullet_9mm/smg)
+	items_in_backpack = list(/obj/item/gun/kinetic/smg,
+		/obj/item/card/emag,
+		/obj/item/cloaking_device,
+		/obj/item/lightbreaker)
+
+/datum/job/special/syndicate/specialist/medic
+	name = "Syndicate Field Medic"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/medic)
+	slot_poc1 = list(/obj/item/storage/pouch/veritate)
+	slot_belt = list(/obj/item/storage/belt/syndicate_medic_belt)
+	items_in_backpack = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/medical_pouch,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/robodefibrillator,
+		/obj/item/extinguisher/large)
+
+/datum/job/special/syndicate/specialist/engineer
+	name = "Syndicate Combat Engineer"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/engineer)
+	slot_poc1 = list(/obj/item/storage/pouch/shotgun/weak)
+	slot_belt = list(/obj/item/storage/belt/utility/prepared)
+	items_in_backpack = list(/obj/item/gun/kinetic/spes/engineer,
+		/obj/item/turret_deployer/syndicate,
+		/obj/item/paper/nast_manual,
+		/obj/item/wrench/battle,
+		/obj/item/weldingtool/high_cap)
+
+/datum/job/special/syndicate/specialist/firebrand
+	name = "Syndicate Firebrand"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/firebrand)
+	slot_poc1 = list(/obj/item/storage/grenade_pouch/napalm)
+	slot_belt = list(/obj/item/storage/fanny/syndie/large)
+	slot_back = null //flamethrower given in special setup
+	slot_rhan = null //napalm tank is a jetpack
+	items_in_belt = list(/obj/item/fireaxe,
+		/obj/item/storage/grenade_pouch/incendiary)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		var/obj/item/gun/flamethrower/backtank/flamethrower = new /obj/item/gun/flamethrower/backtank/napalm(M)
+		var/obj/item/tank/jetpack/backtank/our_tank = flamethrower.fueltank
+		our_tank.insert_flamer(flamethrower, M)
+		M.equip_if_possible(our_tank, SLOT_BACK)
+
+/datum/job/special/syndicate/specialist/marksman
+	name = "Syndicate Marksman"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/sniper)
+	slot_poc1 = list(/obj/item/storage/pouch/sniper)
+	slot_eyes = list(/obj/item/clothing/glasses/thermal/traitor)
+	slot_back = list(/obj/item/gun/kinetic/sniper)
+	slot_belt = list(/obj/item/storage/fanny/syndie/large)
+	items_in_belt = list(/obj/item/storage/grenade_pouch/smoke)
+
+/datum/job/special/syndicate/specialist/knight
+	name = "Syndicate Knight"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/knight)
+	slot_foot = list(/obj/item/clothing/shoes/swat/knight)
+	slot_glov = list(/obj/item/clothing/gloves/swat/syndicate/knight)
+	slot_back = list(/obj/item/heavy_power_sword)
+	slot_belt = list(/obj/item/storage/fanny/syndie/large)
+
+/datum/job/special/syndicate/specialist/bard
+	name = "Syndicate Bard"
+	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
+	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/bard)
+	slot_ears = list(/obj/item/device/radio/headset/syndicate/bard)
+	slot_back = null //Special setup will put a speaker here
+	slot_belt = list(/obj/item/storage/fanny/syndie/large)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		var/obj/item/breaching_hammer/rock_sledge/guitar = new /obj/item/breaching_hammer/rock_sledge(M)
+		for(var/obj/item/device/radio/nukie_studio_monitor/speaker in guitar.speakers)
+			if(!M.equip_if_possible(speaker, SLOT_BACK))
+				M.stow_in_available(speaker)
+		M.stow_in_available(guitar)
 
 //TEAM RED END. TEAM BLU START.
 

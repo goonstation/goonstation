@@ -190,7 +190,7 @@
 	powergenerated = 50
 	currentgen = 50
 	warprecharge = 5 SECONDS
-	engine_speed = 1.4
+	engine_speed = 1.3
 	icon_state = "engine-0"
 
 /obj/item/shipcomponent/engine/helios
@@ -199,7 +199,7 @@
 	powergenerated = 300 //how much power for components the engine generates
 	currentgen = 300 //handles engine power debuffs
 	warprecharge = 150 //Interval it takes for warp to be ready again
-	engine_speed = 1.25
+	engine_speed = 1.15
 	icon_state = "engine-2"
 
 /obj/item/shipcomponent/engine/hermes
@@ -208,7 +208,7 @@
 	powergenerated = 500
 	currentgen = 500
 	warprecharge = 300
-	engine_speed = 0.5
+	engine_speed = 0.7
 	icon_state = "engine-3"
 
 /obj/item/shipcomponent/engine/zero

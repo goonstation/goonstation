@@ -118,6 +118,19 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer)
 
+/obj/item/storage/firstaid/mental
+	name = "mental health first aid"
+	icon_state = "mental1"
+	item_state = "mental1"
+	desc = "A medical kit dedicated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, a hot chocolate to dip them, a stress ball, some haloperidol for the extreme cases and a lollipop."
+	kit_styles = list("mental1", "mental2", "mental3")
+	can_hold = list(/obj/item/toy/plush/small/stress_ball)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut = 3,\
+	/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,\
+	/obj/item/toy/plush/small/stress_ball,\
+	/obj/item/reagent_containers/syringe/haloperidol,\
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical)
+
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"

@@ -300,6 +300,10 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = TRUE
 
+TYPEINFO(/obj/critter/marsrobot)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/marsrobot
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
@@ -316,6 +320,9 @@
 	atksilicon = 1
 	firevuln = 1
 	brutevuln = 1
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/active = 0
 	var/startup = 1
 
@@ -342,13 +349,13 @@
 					if(startup)
 						src.visible_message(SPAN_COMBAT("The <b>[src]</b> suddenly turns on!"))
 						name = "malfunctioning robot"
-						src.speak("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
+						src.say("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
 						src.visible_message("The <b>[src]</b> points at [C.name]!")
 						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						startup = 0
 						wanderer = 1
 					src.visible_message(SPAN_ALERT("The <b>[src]</b> charges at [C:name]!"))
-					src.speak(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&£%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
+					src.say(pick("DooN'T Wor##y I'M hERE!!!","LawwSS UpdAA&$.A.!!.!","CANIHELPYO&£%SIR","REsREACH!!!!!","NATAS&$%LIAHLLA ERROR CODE #736"))
 					playsound(src.loc, 'sound/machines/glitch3.ogg', 50, 1)
 					icon_state = "mars_bot"
 					src.task = "chasing"
@@ -373,12 +380,6 @@
 		. = ..()
 		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 30, 10, -2)
 
-
-	proc/speak(var/message)
-		for(var/mob/O in hearers(src, null))
-			boutput(O, SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
-		return
-
 	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
@@ -389,7 +390,7 @@
 		if (!src.alive) return
 		..()
 		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
+		src.say("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
 /obj/mars_roverpuzzle
 	name = "rover frame"
@@ -643,12 +644,19 @@ TYPEINFO(/obj/vehicle/marsrover)
 	name = "Abandoned Vault"
 	icon_state = "red"
 
+TYPEINFO(/obj/critter/gunbot/heavy)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/gunbot/heavy
 	name = "security robot"
 	desc = "A 2030's-era security robot. Uh oh."
 	icon_state = "gunbot"
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
+	speech_verb_say = "blares"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/overheat = 0
 	var/datum/projectile/my_bullet = new/datum/projectile/bullet/revolver_38
 
@@ -657,40 +665,10 @@ TYPEINFO(/obj/vehicle/marsrover)
 			overheat ++
 			..()
 
-	proc/speak(var/message)
-		if((!alive) || (!message))
-			return
-
-		var/fontSize = 2
-		var/fontIncreasing = 1
-		var/fontSizeMax = 2
-		var/fontSizeMin = -2
-		var/messageLen = length(message)
-		var/processedMessage = ""
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-			if(prob(10))
-				processedMessage += pick("%","##A","-","- - -","ERROR")
-
-		for(var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""), 2)
-
-		return
-
-
 	seek_target()
 		src.anchored = UNANCHORED
 		if(overheat == 10)
-			speak("WARNING : OVERHEATING")
+			src.say("WARNING : OVERHEATING")
 			sleep(5 SECONDS)
 			overheat = 0
 		else
@@ -715,7 +693,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 						src.pixel_x += rand(-3,3)
 						src.pixel_y += rand(-3,3)
 					if(prob(55))
-						speak(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
+						src.say(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
 						var/glitchsound = pick('sound/machines/romhack1.ogg', 'sound/machines/romhack2.ogg', 'sound/machines/romhack3.ogg','sound/machines/glitch1.ogg','sound/machines/glitch2.ogg','sound/machines/glitch3.ogg','sound/machines/glitch4.ogg','sound/machines/glitch5.ogg')
 						playsound(src.loc, glitchsound, 50, 1)
 					if(prob(75))

@@ -31,6 +31,7 @@
 				first_cam_by_tag[tag_we_use].c_tag = "[tag_we_use] 1"
 			counts_by_tag[tag_we_use]++
 			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
+		C.add_to_minimap()
 
 /proc/build_camera_network()
 	var/list/obj/machinery/camera/cameras = by_type[/obj/machinery/camera]

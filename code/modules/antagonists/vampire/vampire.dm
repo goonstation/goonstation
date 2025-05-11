@@ -24,6 +24,10 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/cancel_stuns)
 		src.ability_holder.addAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.addAbility(/datum/targetable/vampire/hypnotize)
+		src.ability_holder.addAbility(/datum/targetable/vampire/vamp_cloak)
+
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = "\ref[src.ability_holder]")
 
 		src.owner.current.assign_gimmick_skull()
 
@@ -34,8 +38,12 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampire/cancel_stuns)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/hypnotize)
+		src.ability_holder.removeAbility(/datum/targetable/vampire/vamp_cloak)
 		src.ability_holder.remove_unlocks()
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/vampire)
+
+		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = "\ref[src.ability_holder]")
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()
