@@ -321,6 +321,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
 	category = "Burgers"
+	specialOutput(obj/submachine/ourCooker) //was runtiming when it tried to access the second, nonexistent ingredient
+		return null
+
 
 /datum/cookingrecipe/oven/swede_mball
 	ingredients = list(\
