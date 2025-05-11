@@ -3333,6 +3333,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/cult_base/acolyte)
+"oh" = (
+/obj/spawner/little_monster{
+	pixel_y = -26
+	},
+/turf/unsimulated/wall/trench,
+/area/cult_base/leader/outdoors)
 "oi" = (
 /obj/machinery/door/unpowered/wood{
 	desc = "This heavy door has a more ornate lock than the rest.";
@@ -4912,10 +4918,6 @@
 /obj/item/paper/cultbase_skeptic,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
-"Wa" = (
-/obj/spawner/little_monster,
-/turf/cordon,
-/area/cordon)
 "Wd" = (
 /obj/item/organ/liver,
 /turf/space/fluid/noexplosion,
@@ -32319,8 +32321,8 @@ rb
 rb
 rb
 AW
-ED
-Wa
+oh
+ab
 gW
 gW
 gW

@@ -52,7 +52,7 @@
 			var/obj/item/cult_sigil_pt1/C = W
 			boutput(user, "The talisman settles onto the seal.")
 			pt1 = TRUE
-			icon_state = "sigil_pt1-2"
+			C.UpdateOverlays(image('icons/obj/decoration.dmi', "sigil_pt2"), "sigil_pt1")
 			if (C.pt3)
 				boutput(user, "The eye fits in the slot on the talisman, completing the sigil!")
 				qdel(C)
@@ -63,6 +63,7 @@
 				sigil.desc = "A rag-tag sigil stitched together, it might fit in that seal now."
 				user.put_in_hand_or_drop(sigil)
 				qdel(src)
+			qdel(C)
 
 		if (istype(W, /obj/item/cult_sigil_pt3))
 			var/obj/item/cult_sigil_pt3/C = W
@@ -333,7 +334,7 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	proc/lever_hv(mob/user)
+	proc/lever_hv(mob/user) // TODO: Sounds?
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 			new /mob/living/critter/void_scale(R.loc)
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
