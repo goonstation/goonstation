@@ -395,6 +395,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		..()
 
 	proc/AddReward(var/probability)
+		src.item_rewarders += new /datum/rc_itemreward/large_satchel
 		if(prob(probability))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
@@ -533,6 +534,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		for (var/i in 1 to src.count)
 			seed_list += new /obj/item/seed/alien
 		return seed_list
+
+/datum/rc_itemreward/large_satchel
+	name = "large produce satchel"
+
+	build_reward()
+		var satchel = new /obj/item/satchel/hydro/large
+		return satchel
 
 /datum/rc_itemreward/tumbleweed
 	name = "aggressive plant specimen"

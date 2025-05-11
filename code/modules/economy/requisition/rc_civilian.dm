@@ -850,6 +850,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 		for (var/i = 1; i <= quant; i++)
 			src.rc_entries += GetFruitOrVegEntry()
+		src.item_rewarders += new /datum/rc_itemreward/large_satchel
 		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
