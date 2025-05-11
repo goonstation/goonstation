@@ -411,7 +411,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
 "bA" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/camera_viewer{
 	dir = 8;
 	icon_state = "security"
 	},

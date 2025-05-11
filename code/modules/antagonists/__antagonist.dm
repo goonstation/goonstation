@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/popup_name_override
 	/// Set when the antagonist is in the process of being removed, to prevent double removals.
 	var/removing = FALSE
+	/// Link to this antagonist's wiki page
+	var/wiki_link = null
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()

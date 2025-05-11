@@ -2,6 +2,7 @@
 	id = ROLE_HUNTER
 	display_name = "hunter"
 	antagonist_icon = "predator"
+	wiki_link = "https://wiki.ss13.co/Hunter"
 
 	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/hunter/ability_holder

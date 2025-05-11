@@ -4,6 +4,12 @@
 #define BUTT_PLANT "Botanical"
 #define BUTT_BROKE "Buggy" // Fallback in case it gets a weird-ass butt
 #define BUTTBOT_MOVE_SPEED 10
+
+TYPEINFO(/obj/machinery/bot/buttbot)
+	start_listen_effects = list(LISTEN_EFFECT_BUTTBOT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_BUTT)
+
 /obj/machinery/bot/buttbot
 	name = "buttbot"
 	desc = "Well I... uh... huh."
@@ -20,8 +26,9 @@
 	dynamic_processing = 0
 	/// A really obnoxious one at that
 	PT_idle = PROCESSING_SIXTEENTH
-	speakverbs = list("ferts", "toots", "honks", "parps")
-	bot_voice = 'sound/misc/talk/bottalk_2.ogg'
+
+	voice_sound_override = 'sound/misc/talk/bottalk_2.ogg'
+	speech_verb_say = list("farts", "toots", "honks", "parps")
 
 	/// Can this wretched thing *move*?
 	var/buttmobile = TRUE
@@ -123,9 +130,9 @@
 	if(src.on == 1)
 		if(src.buttranslate && prob(60*mult) && !ON_COOLDOWN(global, "butt_talker", src.butt_cooldown))
 			if(length(src.butt_memory) >= 1)
-				speak(src.buttify())
+				src.say(src.buttify())
 			else
-				speak(pick("butts", "butt"))
+				src.say(pick("butts", "butt"))
 		if(src.buttfart && prob(25) && !ON_COOLDOWN(global, "butt_farter", src.fart_cooldown))
 			var/fartmessage = src.fart()
 			if(fartmessage)
@@ -137,7 +144,7 @@
 		var/message = src.buttifricky()
 		if(prob(2))
 			playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
-		speak(message)
+		src.say(message)
 		var/fartmessage = src.fart()
 		if(fartmessage)
 			src.audible_message("[fartmessage]")
@@ -189,31 +196,14 @@
 			. += l
 
 /obj/machinery/bot/buttbot/proc/buttify()
-	if(length(src.butt_memory) < 1) return "butt..."
-	var/butt_index = rand(1,length(src.butt_memory))
-	var/list/speech_list = splittext(src.butt_memory[butt_index], " ")
-	if(prob(50))
+	if (length(src.butt_memory) < 1)
+		return "butt..."
+
+	var/butt_index = rand(1, length(src.butt_memory))
+	. = src.butt_memory[butt_index]
+
+	if (prob(50))
 		src.butt_memory -= src.butt_memory[butt_index]
-
-	var/num_butts = rand(1,4)
-	var/counter = 0
-	while(num_butts)
-		counter++
-		num_butts--
-		speech_list[rand(1,speech_list.len)] = "butt"
-		if(counter >= (speech_list.len / 2) )
-			num_butts = 0
-
-	return jointext(speech_list, " ")
-
-/obj/machinery/bot/buttbot/hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-	if(!messages || !src.on)
-		return
-	var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
-	if(message && !(message in src.butt_memory))
-		src.butt_memory += message
-	return
-
 
 /obj/machinery/bot/buttbot/Topic(href, href_list)
 	if(!(BOUNDS_DIST(usr, src) == 0))

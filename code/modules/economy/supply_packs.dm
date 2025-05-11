@@ -579,7 +579,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_gun = 2)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -589,7 +589,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_small = 4)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -599,7 +599,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
 	cost = PAY_EXECUTIVE*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
 
@@ -609,7 +609,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_smg = 2)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
