@@ -88,9 +88,11 @@ TYPEINFO(/obj/item/card/emag)
 	var/assignment = null
 	var/title = null
 	var/emagged = 0
+	/// The departmental stripe that lays over the ID
+	var/band_type = null
+	/// Prevent departmental stripe from ever showing (clown ID)
+	var/no_stripe = FALSE
 	var/datum/reagent_group_account/reagent_account = null
-	/// this determines if the icon_state of the ID changes if it is given a new job
-	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -111,44 +113,56 @@ TYPEINFO(/obj/item/card/emag)
 	registered_owner()
 		.= registered
 
+	proc/UpdateStripe()
+		var/overlay_icon_state = null
+		if (src.band_type)
+			overlay_icon_state = "band_[src.band_type]"
+		else
+			overlay_icon_state = null
+		var/image/stripeoverlay = null
+		if (overlay_icon_state && !src.no_stripe)
+			stripeoverlay = image(src.icon, overlay_icon_state)
+		src.UpdateOverlays(stripeoverlay, "id_stripe_overlay")
+
 /obj/item/card/id/New()
 	..()
 	src.pin = rand(PIN_MIN, PIN_MAX)
 	START_TRACKING
+	src.UpdateStripe()
 
 /obj/item/card/id/disposing()
 	STOP_TRACKING
 	. = ..()
 
 /obj/item/card/id/command
-	icon_state = "id_com"
+	band_type = "command"
 
 /obj/item/card/id/security
-	icon_state = "id_sec"
+	band_type = "security"
 
 /obj/item/card/id/research
-	icon_state = "id_res"
+	band_type = "research"
 
 /obj/item/card/id/medical
-	icon_state = "id_med"
+	band_type = "medical"
 
 /obj/item/card/id/engineering
-	icon_state = "id_eng"
+	band_type = "engineering"
 
 /obj/item/card/id/civilian
-	icon_state = "id_civ"
+	band_type = "civilian"
 
 /obj/item/card/id/clown
 	icon_state = "id_clown"
 	desc = "Wait, this isn't even an ID Card. It's a piece of a Chips Ahoy wrapper with crayon scribbles on it. What the fuck?"
-	keep_icon = TRUE
+	no_stripe = TRUE
 
 /obj/item/card/id/gold
 	name = "gold identification card"
 	icon_state = "id_gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
-	keep_icon = TRUE
+	no_stripe = TRUE
 
 /obj/item/card/id/gold/captains_spare
 	name = "Captain's spare ID"
@@ -163,7 +177,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/nanotrasen
 	name = "Nanotrasen identification card"
 	icon_state = "id_nanotrasen"
-	keep_icon = TRUE
+	no_stripe = TRUE
 
 /obj/item/card/id/pirate
 	access = list(access_maint_tunnels, access_pirate)
@@ -175,7 +189,7 @@ TYPEINFO(/obj/item/card/emag)
 		assignment = "Space Pirate Captain"
 
 /obj/item/card/id/salvager
-	keep_icon = TRUE
+	no_stripe = TRUE
 
 	New()
 		..()
@@ -235,7 +249,7 @@ TYPEINFO(/obj/item/card/emag)
 	registered = "Dabber"
 	assignment = "Dabber"
 	desc = "This card authorizes the person wearing it to perform sick dabs."
-	keep_icon = TRUE
+	no_stripe = TRUE
 	var/dab_count = 0
 	var/dabbed_on_count = 0
 	var/arm_count = 0
@@ -325,28 +339,25 @@ TYPEINFO(/obj/item/card/emag)
 		switch (color)
 			if ("clown")
 				src.icon_state = "id_clown"
+				src.no_stripe = TRUE
 			if ("golden")
 				src.icon_state = "id_gold"
-			if ("No band")
-				src.icon_state = "id_basic"
-			if ("civilian")
-				src.icon_state = "id_civ"
-			if ("security")
-				src.icon_state = "id_sec"
-			if ("command")
-				src.icon_state = "id_com"
-			if ("research")
-				src.icon_state = "id_res"
-			if ("medical")
-				src.icon_state = "id_med"
-			if ("engineering")
-				src.icon_state = "id_eng"
+				src.no_stripe = TRUE
 			if ("nanotrasen")
 				src.icon_state = "id_nanotrasen"
+				src.no_stripe = TRUE
 			if ("syndicate")
 				src.icon_state = "id_syndie"
+				src.no_stripe = TRUE
+			if ("No band")
+				src.icon_state = "id_basic"
+				src.band_type = "basic"
+			if ("civilian", "security", "command", "research", "medical", "engineering")
+				src.icon_state = "id_basic"
+				src.band_type = color
 			else
 				return // Abort process.
+		src.UpdateStripe()
 		src.registered = reg
 		src.assignment = ass
 		src.name = "[src.registered]'s ID Card ([src.assignment])"
@@ -442,19 +453,24 @@ TYPEINFO(/obj/item/card/emag)
 				icon_state = "id_clown"
 				assignment = "Gauntlet Newbie ([matches] rounds played)"
 			if (1 to 10)
-				icon_state = "id_civ"
+				icon_state = "id_basic"
+				band_type = "civilian"
 				assignment = "Rookie Gladiator ([matches] rounds played)"
 			if (11 to 20)
-				icon_state = "id_res"
+				icon_state = "id_basic"
+				band_type = "research"
 				assignment = "Beginner Gladiator ([matches] rounds played)"
 			if (21 to 35)
-				icon_state = "id_eng"
+				icon_state = "id_basic"
+				band_type = "engineering"
 				assignment = "Skilled Gladiator ([matches] rounds played)"
 			if (36 to 55)
-				icon_state = "id_sec"
+				icon_state = "id_basic"
+				band_type = "security"
 				assignment = "Advanced Gladiator ([matches] rounds played)"
 			if (56 to 75)
-				icon_state = "id_com"
+				icon_state = "id_basic"
+				band_type = "command"
 				assignment = "Expert Gladiator ([matches] rounds played)"
 			if (76 to INFINITY)
 				icon_state = "id_gold"

@@ -34,21 +34,25 @@ TYPEINFO(/obj/item/device/accessgun)
 			user.u_equip(ID)
 		ID.set_loc(src)
 
-		switch(ID.icon_state)
-			if ("id", "id_civ")
+
+		switch(ID.band_type)
+			if (null, "basic", "civilian")
 				icon_state = "accessgun-civ"
-			if ("id_sec")
+			if ("security")
 				icon_state = "accessgun-sec"
-			if ("id_com")
+			if ("command")
 				icon_state = "accessgun-com"
-			if ("id_res")
+			if ("research", "medical")
 				icon_state = "accessgun-res"
-			if ("id_eng")
+			if ("engineering")
 				icon_state = "accessgun-eng"
-			if ("id_clown")
-				icon_state = "accessgun-clown"
 			else
 				icon_state = "accessgun-?"
+
+		if (ID.icon_state == "id_clown")
+			icon_state = "accessgun-clown"
+		if (ID.icon_state == "id_gold")
+			icon_state = "accessgun-com"
 
 		if (!ID.access)
 			icon_state = "accessgun-null"

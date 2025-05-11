@@ -241,13 +241,13 @@
 		)
 
 		.["icons"] = list(
-			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id_basic")),
-			list(style = "civilian", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
-			list(style = "engineering", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
-			list(style = "research", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
-			list(style = "medical", name = "Medical", card_look = "id_med", icon = getCardBase64Img("id_med")),
-			list(style = "security", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
-			list(style = "command", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
+			list(style = "none", name = "Plain", card_look = "none", icon = getCardBase64Img("none")),
+			list(style = "civilian", name = "Civilian", card_look = "civilian", icon = getCardBase64Img("civilian")),
+			list(style = "engineering", name = "Engineering", card_look = "engineering", icon = getCardBase64Img("engineering")),
+			list(style = "research", name = "Research", card_look = "research", icon = getCardBase64Img("research")),
+			list(style = "medical", name = "Medical", card_look = "medical", icon = getCardBase64Img("medical")),
+			list(style = "security", name = "Security", card_look = "security", icon = getCardBase64Img("security")),
+			list(style = "command", name = "Command", card_look = "command", icon = getCardBase64Img("command")),
 		)
 
 	ui_data(mob/user)
@@ -292,7 +292,7 @@
 
 				.["custom_names"] = custom_names
 
-				.["target_card_look"] = src.modify.icon_state
+				.["target_card_look"] = src.modify.band_type
 
 				.["target_accesses"] = src.modify.access
 				if(!isobserver(user))
@@ -308,18 +308,21 @@
 		))
 
 
-	proc/getCardBase64Img(var/icon_state)
+	proc/getCardBase64Img(var/band_type)
 		var/static/base64_preview_cache = list() // Base64 preview images for item types, for use in ui interfaces.
 
-		. = base64_preview_cache[icon_state]
+		. = base64_preview_cache["id_band_[band_type]"]
 		if(isnull(.))
-			var/icon/result_icon = icon('icons/obj/items/card.dmi', icon_state)
+			var/icon/result_icon = icon('icons/obj/items/card.dmi', "id_basic")
+			if(band_type && band_type != "none")
+				var/icon/stripeoverlay = icon('icons/obj/items/card.dmi', "band_[band_type]")
+				result_icon.Blend(stripeoverlay, ICON_OVERLAY)
 
 			if(result_icon)
 				. = icon2base64(result_icon)
 			else
 				. = "" // Empty but not null
-			base64_preview_cache[icon_state] = .
+			base64_preview_cache["id_band_[band_type]"] = .
 
 	ui_act(action, params)
 		. = ..()
@@ -510,21 +513,12 @@
 		. = TRUE
 
 	proc/update_card_style(band_color)
-		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
+		if(!src.modify.no_stripe) // ids that are FALSE will update their icon if the job changes
 			if (band_color == "none")
-				src.modify.icon_state = "id_basic"
-			if (band_color == "civilian")
-				src.modify.icon_state = "id_civ"
-			if (band_color == "engineering")
-				src.modify.icon_state = "id_eng"
-			if (band_color == "research")
-				src.modify.icon_state = "id_res"
-			if (band_color == "medical")
-				src.modify.icon_state = "id_med"
-			if (band_color == "security")
-				src.modify.icon_state = "id_sec"
-			if (band_color == "command")
-				src.modify.icon_state = "id_com"
+				src.modify.band_type = "basic"
+			else
+				src.modify.band_type = band_color
+			src.modify.UpdateStripe()
 
 	proc/update_card_accesses(var/list/access_list)
 		for(var/access in access_list) //Remove accesses this computer cannot give
