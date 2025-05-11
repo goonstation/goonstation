@@ -2010,6 +2010,7 @@
 
 		var/image/overlay = new /image
 		overlay.icon = flatIcon
+		overlay.layer = MOB_LAYER + 0.1
 		overlay.pixel_x = src.pixel_x_offset
 		overlay.pixel_y = src.pixel_y_offset
 
