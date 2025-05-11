@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/priority = PRIORITY_NORMAL /// use this if the recipe should be checked before others with the same number of ingredients
 
 
-	proc/specialOutput(var/obj/submachine/ourCooker)
+	proc/specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
 	proc/render()
@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
 		var/obj/item/possibly_meat = locate(ingredients[2]) in ourCooker
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
 	category = "Burgers"
-	specialOutput(obj/submachine/ourCooker) //was runtiming when it tried to access the second, nonexistent ingredient
+	specialOutput(obj/machinery/cookingmachine/ourCooker) //was runtiming when it tried to access the second, nonexistent ingredient
 		return null
 
 
@@ -859,7 +859,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	category = "Sandwich"
 	priority = PRIORITY_HIGHER //prevents conflict with toast
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1018,7 +1018,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1565,7 +1565,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	category = "Pies"
 	var/base_pie_name = "pie"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 		if (length(ourCooker.contents) <= 2)
@@ -1852,7 +1852,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1869,7 +1869,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if(!ourCooker)
 			return null
 
@@ -1910,7 +1910,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/cake_item
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1925,9 +1925,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 
 /datum/cookingrecipe/mixer/mix_cake_custom
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -2085,7 +2085,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!length(ourCooker.contents))
 			return new src.output()
 		for (var/obj/item/item in ourCooker.contents)
@@ -2349,7 +2349,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 22
 	output = /obj/item/reagent_containers/food/snacks/b_cupcake
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -2377,7 +2377,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 10
 	output = /obj/item/pen/crayon/lipstick
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
