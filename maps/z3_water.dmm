@@ -3992,7 +3992,6 @@
 	name = "Echocontainment Emitter"
 	},
 /obj/map/light/void,
-/obj/spawner/little_monster,
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "Bg" = (
@@ -4913,6 +4912,10 @@
 /obj/item/paper/cultbase_skeptic,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
+"Wa" = (
+/obj/spawner/little_monster,
+/turf/cordon,
+/area/cordon)
 "Wd" = (
 /obj/item/organ/liver,
 /turf/space/fluid/noexplosion,
@@ -32317,7 +32320,7 @@ rb
 rb
 AW
 ED
-ab
+Wa
 gW
 gW
 gW

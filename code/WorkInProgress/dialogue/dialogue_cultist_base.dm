@@ -383,7 +383,7 @@
 
 		onActivate(var/client/C)
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
-			M.lever_lv()
+			M.lever_lv(C.mob)
 
 	controlpc_hv
 		linkText = "(Move the lever up to increase the voltage.)"
@@ -397,7 +397,7 @@
 
 		onActivate(var/client/C)
 			var/obj/dialogueobj/controlpc/M = new /obj/dialogueobj/controlpc
-			M.lever_hv()
+			M.lever_hv(C.mob)
 
 	controlpc_diagnose
 		linkText = "(Expertly examine the damage.)"

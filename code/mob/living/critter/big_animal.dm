@@ -88,6 +88,11 @@
 	icon_state = "void_scale"
 	icon_state_dead = "void_scale-dead"
 	desc = "The sentient and very, very angry scale off a semi-eldritch leviathian. This would be invaluable to a geneticist."
+	speech_verb_say = "echos"
+	speech_verb_exclaim = "whirls"
+	speech_verb_ask = "pings"
+	death_text = "%src%, unable to suspend itself with eldritch energy falls to the floor!"
+	hand_count = 1
 	health_brute = 300
 	health_brute_vuln = 0.6
 	health_burn = 300
@@ -114,11 +119,6 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
-	critter_basic_attack(mob/target)
-		if(prob(20))
-			src.swap_hand()
-		return ..()
-
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -128,3 +128,9 @@
 		HH.name = "retinal beam"						// designation of the hand - purely for show
 		HH.limb_name = "eye"					// name for the dummy holder
 		HH.can_hold_items = FALSE
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam)
+		if (!slam.disabled && slam.cooldowncheck() && prob(40))
+			slam.handleCast(target)
+			return TRUE
