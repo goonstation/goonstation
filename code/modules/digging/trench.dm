@@ -90,6 +90,7 @@
 
 	dig_trench()
 		src.ReplaceWith(global.map_settings.space_turf_replacement || src.old_type)
+		src.reset_terrainify_effects()
 
 	edge_overlays()
 		for (var/turf/T in orange(src, 1))
@@ -220,6 +221,7 @@
 
 	dig_trench()
 		src.ReplaceWith(global.map_settings.space_turf_replacement || src.old_type)
+		src.reset_terrainify_effects()
 
 	edge_overlays()
 		for (var/turf/T in orange(src, 1))
@@ -289,3 +291,23 @@
 		else if (istype(src, /turf/unsimulated))
 			var/turf/unsimulated/floor/auto/trench/T = src.ReplaceWith(/turf/unsimulated/floor/auto/trench)
 			T.old_type = type
+		src.reset_terrainify_effects()
+
+	proc/reset_terrainify_effects()
+		if (src.z != Z_LEVEL_STATION)
+			return // only apply station repair effects to station z turfs
+		if ((istype(get_area(src), /area/station)))
+			return // station areas do not get ambient effects
+		if(global.station_repair.ambient_light)
+			src.AddOverlays(global.station_repair.ambient_light, "ambient")
+		if(global.station_repair.ambient_obj)
+			src.vis_contents |= global.station_repair.ambient_obj
+		if(global.station_repair.weather_img)
+			if(islist(global.station_repair.weather_img))
+				src.AddOverlays(pick(global.station_repair.weather_img), "weather")
+			else
+				src.AddOverlays(global.station_repair.weather_img, "weather")
+		if(global.station_repair.weather_effect)
+			var/obj/effects/E = locate(global.station_repair.weather_effect) in src
+			if(!E)
+				new global.station_repair.weather_effect(src)
