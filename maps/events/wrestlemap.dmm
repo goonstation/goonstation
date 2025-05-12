@@ -1290,10 +1290,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
+/obj/item/device/radio/intercom/engineering{
 	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom";
 	pixel_x = -21
 	},
 /turf/simulated/floor/orange/side{
@@ -22030,10 +22028,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/device/radio/intercom{
+/obj/item/device/radio/intercom/engineering{
 	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom";
 	pixel_x = 21
 	},
 /turf/simulated/floor/orange/side{
@@ -35142,9 +35138,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/radio/intercom{
-	frequency = 1489;
-	name = "Brig Intercom";
+/obj/item/device/radio/intercom/brig{
 	pixel_x = 26
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -39678,9 +39672,7 @@
 /area/station/maintenance/northeast)
 "rvQ" = (
 /obj/storage/crate/furnacefuel,
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Security Intercom";
+/obj/item/device/radio/intercom/security{
 	pixel_x = 26
 	},
 /turf/simulated/floor/black,
@@ -45050,9 +45042,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/obj/item/device/radio/intercom{
-	frequency = 1489;
-	name = "Brig Intercom";
+/obj/item/device/radio/intercom/brig{
 	pixel_x = 26
 	},
 /turf/simulated/floor/caution/north,
