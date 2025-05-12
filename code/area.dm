@@ -3911,11 +3911,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 			var/obj/O = A
 			if (istype(O))
 				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !O.has_access(access_security))
+					if(src.armory_auth && !(access_security in O.req_access))
 						O.req_access += access_security
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && O.has_access(access_security))
+					else if (!src.armory_auth && (access_security in O.req_access))
 						O.req_access = list(access_armory)
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)

@@ -1,4 +1,48 @@
 
+(t)sat may 10 25
+(u)CrimsonNode
+(p)23334
+(e)🪲💅📦💡|C-Bug, C-QoL, A-Game-Objects, A-Station-Systems
+(+)Computer terminals should hopefully crash less when scripting.
+(+)The mainframe can now recover from errors caused by recursive scripts by performing a self-reboot, instead of requiring a manual-reboot.
+(u)JORJ949
+(p)23405
+(e)💅🤖|C-QoL, A-Silicons
+(+)AIs and Cyborgs can now select the Robocop, Corporate or Syndicate lawset when setting their fake laws.
+(t)fri may 09 25
+(u)EmeraldCrow
+(p)23389
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Adds two new donator figurines to the game.
+(t)thu may 08 25
+(u)Chasu
+(p)23278
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Strip door frames can now be (un-)anchored with wrenching tools and have help messages
+(u)TDHooligan
+(p)23212
+(e)⚖🎭|C-Balance, A-RP
+(+)Thirst's stamina penalty has been halved.
+(u)Mr. Moriarty
+(p)23304
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Whispers now display maptext.
+(u)Cheekybrdy
+(p)23182
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Ranch eggs can now spawn in BR lockers.
+(u)FlameArrow57
+(p)23344
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard Prismatic Spray spell can be used without a staff
+(u)FlameArrow57
+(p)23345
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard empower spell duration and CD reduced to 15s/30s from 30s/45s. It now also removes stun status effects on use.
+(u)FlameArrow57
+(p)23353
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard forcewall duration changed from 30 -> 20 seconds
 (t)wed may 07 25
 (u)JORJ949
 (p)23354

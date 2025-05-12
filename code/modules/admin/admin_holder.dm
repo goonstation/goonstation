@@ -111,6 +111,12 @@
 		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_PREFIXES, src.owner.ensure_speech_tree())
 		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_LISTEN_EFFECTS, ADMIN_LISTEN_CONTROLS, ADMIN_UNDERSTOOD_LANGUAGES, src.owner.ensure_listen_tree())
 
+		if (src.owner.preferences.listen_ooc)
+			src.admin_listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
+
+		if (src.owner.preferences.listen_looc)
+			src.admin_listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
+
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
 			src.owner.chatOutput.getContextFlag()

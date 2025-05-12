@@ -237,7 +237,7 @@
 		icon_state = "stam-"
 		duration = INFINITE_STATUS
 		maxDuration = null
-		change = -5
+		change = -2.5
 
 	staminaregen/cursed
 		id = "weakcurse"
@@ -3759,9 +3759,26 @@
 		APPLY_MOVEMENT_MODIFIER(mob_owner, mob_owner.modifier, src.type)
 		src.getTooltip()
 
+/datum/statusEffect/spellshield
+	id = "spellshield"
+	name = "Spell shield"
+	desc = "You have an active spellshield, protecting you from various damage sources."
+	icon_state = "nradiation1"
 
+	onAdd()
+		..()
+		var/mob/M = src.owner
 
+		M.AddOverlays(image('icons/effects/effects.dmi', M, "enshield", MOB_LAYER + 1), "spellshield_overlay")
+		boutput(M, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
+		M.visible_message(SPAN_ALERT("[M] is encased in a protective shield."))
+		playsound(M, 'sound/effects/MagShieldUp.ogg', 50, TRUE)
 
+	onRemove()
+		..()
+		var/mob/M = src.owner
+		M.ClearSpecificOverlays("spellshield_overlay")
 
-
-
+		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
+		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
+		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
