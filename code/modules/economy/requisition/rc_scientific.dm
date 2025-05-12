@@ -513,15 +513,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		..()*/
 
 
-
-
-/datum/rc_itemreward/plant_cartridge
-	name = "Hydroponics restock cartridge"
-
-	build_reward()
-		var/cart = new /obj/item/vending/restock_cartridge/hydroponics
-		return cart
-
 /datum/rc_itemreward/strange_seed
 	name = "strange seed"
 
