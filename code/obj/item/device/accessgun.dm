@@ -15,10 +15,6 @@ TYPEINFO(/obj/item/device/accessgun)
 	c_flags = ONBELT
 	req_access = list(access_change_ids,access_engineering_chief)
 
-	///Can only target doors?
-	var/doors_only = FALSE
-	///Can target objects that already have an access
-	var/allow_replace_access = TRUE
 	///Will target door need ALL accesses selected, or ANY of them.
 	var/mode = ACCESSGUN_MODE_ANY
 	///Currently stored list of accesses that will be set on the target
@@ -134,11 +130,6 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 
-		if (O.has_access_requirements() && !src.allow_replace_access)
-			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
-			boutput(user, SPAN_NOTICE("[src] can only program objects with no access."))
-			return
-
 		if ((access_maxsec in O.req_access) || (access_armory in O.req_access))
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 			boutput(user, SPAN_NOTICE("[src] can't reprogram this."))
@@ -153,8 +144,6 @@ TYPEINFO(/obj/item/device/accessgun)
 
 	proc/is_restricted(obj/O)
 		. = FALSE
-		if(src.doors_only && !(istype(O, /obj/machinery/door)))
-			return TRUE
 		if (!(O.object_flags & CAN_REPROGRAM_ACCESS))
 			. = TRUE
 			return
@@ -216,17 +205,38 @@ TYPEINFO(/obj/item/device/accessgun)
 
 /obj/item/device/accessgun/lite
 	name = "Access Lite"
-	desc = "A device that sets the access requirements of newly built airlocks. Has less available accesses than an Access PRO"
+	desc = "A device that sets the access requirements of newly constructed airlocks to ones scanned from an existing airlock."
 	req_access = null
-	doors_only = TRUE
-	allow_replace_access = FALSE
-	// stock civilian_access_list
-	// stock engineering_access_list
-	supply_access_list = list(access_cargo, access_mining)
-	research_access_list = list(access_tox, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-	medical_access_list = list(access_medical, access_medlab, access_robotics)
-	security_access_list = list(access_security, access_brig)
-	command_access_list = list(access_heads)
 
+	afterattack(obj/target, mob/user, reach, params)
+		var/obj/machinery/door/airlock/door_reqs = target
+		if (!istype(door_reqs))
+			. = ..()
+			return
+		if(target.deconstruct_flags & DECON_BUILT)
+			if (length(door_reqs.req_access))
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+				boutput(user, SPAN_NOTICE("[src] cannot reprogram [door_reqs.name], access requirements already set."))
+				return
+			. = ..()
+			return
+		if(is_restricted(door_reqs))
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+			boutput(user, SPAN_NOTICE("[src] can't scan [door_reqs.name]"))
+			return
+		selected_accesses = door_reqs.req_access
+		icon_state = "accessgun-x"
+		boutput(user, SPAN_NOTICE("[src] scans the access requirements of [door_reqs.name]."))
+
+
+	attackby(obj/item/C, mob/user)
+		if (istype(C, /obj/item/card/id))
+			return
+		. = ..()
+
+	attack_self(mob/user as mob)
+		boutput(user, SPAN_NOTICE("You clear the access requirements loaded in the [src]"))
+		selected_accesses = null
+		icon_state = initial(icon_state)
 #undef ACCESSGUN_MODE_ALL
 #undef ACCESSGUN_MODE_ANY
