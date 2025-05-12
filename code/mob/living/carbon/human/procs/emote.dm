@@ -226,7 +226,7 @@
 								if (31) message = "<B>[used_name]</B> farts egregiously."
 								if (32) message = "<B>[used_name]</B> farts voraciously."
 								if (33) message = "<B>[used_name]</B> farts cantankerously."
-								if (34) message = "<B>[used_name]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
+								if (34) message = "<B>[used_name]</B> fart in [he_or_she(src)] own mouth. A shameful [used_name]."
 								if (35)
 									message = "<B>[used_name]</B> farts out pure plasma! [SPAN_ALERT("<B>FUCK!</B>")]"
 									oxyplasmafart = 1
@@ -1127,7 +1127,7 @@
 								drop_item()
 								O.set_loc(src)
 								if(equip_if_possible(O, drophand))
-									src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
+									src.visible_message(SPAN_ALERT("<B>[used_name] pulls a set of tools out of \the [C]!</B>"))
 									playsound(src.loc, "rustle", 60, 1)
 								else
 									O.set_loc(original_tool_loc)
@@ -1384,7 +1384,7 @@
 								return
 					if (M)
 						if (can_act(M))
-							if (tgui_alert(M, "[src] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
+							if (tgui_alert(M, "[used_name] offers you a handshake. Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 								if (M in view(1,null))
 									message = "<b>[used_name]</b> shakes hands with [M]."
 									maptext_out = "<I>shakes hands with [M].</I>"
@@ -1482,7 +1482,7 @@
 
 						if (M)
 							if (can_act(M))
-								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
+								if (tgui_alert(M, "[used_name] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<b>[used_name]</b> and [M] highfive!"
 										maptext_out = "<I>highfives [M]!</I>"
@@ -1529,7 +1529,7 @@
 								drop_item()
 								blade.set_loc(get_turf(src))
 								equip_if_possible(blade, drophand)
-								src.visible_message("<span class='alert'><B>[src] pulls a [blade] out of \the [container]!</B></span>")
+								src.visible_message("<span class='alert'><B>[used_name] pulls a [blade] out of \the [container]!</B></span>")
 								playsound(src.loc, "rustle", 60, TRUE)
 								hasSwitch = TRUE
 								break
@@ -1624,7 +1624,7 @@
 						if(nearby.len)
 							M = pick(nearby)
 					if(M)
-						message = "<b>[used_name]</b> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows [his_or_her(src)] name out in smoke."
+						message = "<b>[used_name]</b> says, \"[M], please. He had a family.\" [used_name] takes a drag from a cigarette and blows [his_or_her(src)] name out in smoke."
 						particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(src.loc, src.dir))
 						m_type = 2
 
@@ -1669,7 +1669,7 @@
 							drop_item()
 							D.set_loc(src.loc)
 							equip_if_possible(D, drophand)
-							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
+							src.visible_message(SPAN_ALERT("<B>[used_name] pulls a derringer out of \the [C]!</B>"))
 							playsound(src.loc, "rustle", 60, 1)
 							break
 
@@ -1692,7 +1692,7 @@
 						message = "<b>[used_name]</b> twitches feebly in time to music only [he_or_she(src)] can hear."
 					else
 						if (iswizard(src) && prob(10))
-							message = pick(SPAN_ALERT("<b>[used_name]</b> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[src]'s</B> dance move borders on the goddamn diabolical!"))
+							message = pick(SPAN_ALERT("<b>[used_name]</b> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[used_name]'s</B> dance move borders on the goddamn diabolical!"))
 							var/message_params = list(
 								"maptext_css_values" = list(
 									"color" = "white !important",
@@ -2414,7 +2414,7 @@
 	G.affecting.was_harmed(src)
 
 	src.emote("scream")
-	. = SPAN_ALERT("<B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B>")
+	. = SPAN_ALERT("<B>[used_name] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B>")
 	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = get_weakref(src)
 	G.affecting.lastattackertime = world.time
