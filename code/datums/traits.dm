@@ -1160,6 +1160,33 @@ TYPEINFO(/datum/trait/partyanimal)
 	disability_name = "Clone Instability"
 	disability_desc = "Genetic structure incompatible with cloning"
 
+/datum/trait/cyber_incompatible
+	name = "Cyber-Incompatible"
+	desc = "All cybernetic limbs and organs will fail, including cyborgification."
+	id = "cyber_incompatible"
+	icon_state = "cyber_incompatible"
+	points = 0
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Cybernetics Incompatable"
+	disability_desc = "Patient is incompatible with all forms of cybernetic augmentation, including cyborgification."
+
+	onLife(mob/owner, mult)
+		. = ..()
+		var/mob/living/carbon/human/H = owner
+		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
+			if (P.kind_of_limb & LIMB_ROBOT)
+				H.visible_message(SPAN_ALERT("[H]'s body contorts for a moment as it tries to integrate with [P]!"))
+				H.force_laydown_standup()
+				elecflash(H, exclude_center=FALSE)
+				P.sever()
+		for (var/organ_slot in H.organHolder.organ_list)
+			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
+			if (istype(O) && O.robotic)
+				H.visible_message(SPAN_ALERT("[H]'s body convulses as [O] is rejected!"))
+				H.organHolder.drop_and_throw_organ(O)
+				elecflash(H, exclude_center=FALSE)
+				H.force_laydown_standup()
+
 /datum/trait/survivalist
 	name = "Survivalist"
 	desc = "Food will heal you even if you are badly injured."
