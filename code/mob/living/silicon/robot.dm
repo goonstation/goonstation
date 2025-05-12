@@ -2220,11 +2220,11 @@ TYPEINFO(/mob/living/silicon/robot)
 			prefix = say_targets[choice]
 
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("1. [/obj/item/aiModule/asimov1::lawText]")
+		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 		sleep(1 SECOND)
-		src?.say("2. [/obj/item/aiModule/asimov2::lawText]")
+		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 		sleep(1 SECOND)
-		src?.say("3. [/obj/item/aiModule/asimov3::lawText]")
+		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"

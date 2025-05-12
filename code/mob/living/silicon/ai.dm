@@ -1706,11 +1706,11 @@ or don't if it uses a custom topopen overlay
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("1. [/obj/item/aiModule/asimov1::lawText]")
+	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("2. [/obj/item/aiModule/asimov2::lawText]")
+	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("3. [/obj/item/aiModule/asimov3::lawText]")
+	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
