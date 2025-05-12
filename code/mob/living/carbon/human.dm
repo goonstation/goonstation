@@ -403,6 +403,13 @@
 				. = l_leg
 			if("r_leg")
 				. = r_leg
+	proc/get_limb_list()
+		RETURN_TYPE(/list/obj/item/parts)
+		. = list()
+		if(src.r_arm) . += src.r_arm
+		if(src.l_arm) . += src.l_arm
+		if(src.r_leg) . += src.r_leg
+		if(src.l_leg) . += src.l_leg
 
 	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
