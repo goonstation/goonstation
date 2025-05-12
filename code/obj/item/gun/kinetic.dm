@@ -566,7 +566,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile.power)
-			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
+			failure_chance = clamp(round(current_projectile.power/2 - 9), 4, 33)
 		if(canshoot(user) && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
