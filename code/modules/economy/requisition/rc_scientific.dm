@@ -539,8 +539,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "large produce satchel"
 
 	build_reward()
-		var satchel = new /obj/item/satchel/hydro/large
-		return satchel
+		return new /obj/item/satchel/hydro/large
 
 /datum/rc_itemreward/tumbleweed
 	name = "aggressive plant specimen"
