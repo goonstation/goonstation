@@ -2403,6 +2403,7 @@
 
 	var/obj/table/tabl = locate() in src.loc.contents
 	var/turf/newloc = src.loc
+	var/used_name = GET_ATOM_PROPERTY(src, PROP_MOB_NOEXAMINE) >= 3 ? "Someone" : src
 	G.affecting.set_loc(newloc)
 	if (!G.affecting.reagents?.has_reagent("fliptonium"))
 		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
