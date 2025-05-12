@@ -2468,7 +2468,7 @@
 				targets += AM
 		if("mob")
 			for(var/mob/M in view(range, get_turf(src)))
-				if(M == src || isintangible(M) || isobserver(M))
+				if(M == src || isintangible(M) || isobserver(M) || GET_ATOM_PROPERTY(M, PROP_MOB_NOEXAMINE) >= 3)
 					continue
 				targets += M
 		if("obj")
