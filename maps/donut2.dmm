@@ -24722,10 +24722,8 @@
 "hEU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
+/obj/item/device/radio/intercom/security{
+	dir = 4
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "quarters_hop";
@@ -25227,10 +25225,8 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "hSO" = (
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
