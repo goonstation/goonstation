@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 6
 	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE, AMMO_STAPLE)
 	max_ammo_capacity = 2
-	var/failure_chance = 6
+	var/failure_chance = 4 // Set on shoot(), but 4 is the minimum for all projectiles
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/staples
 	icon_recoil_cap = 30
