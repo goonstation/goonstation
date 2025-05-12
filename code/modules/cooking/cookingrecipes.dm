@@ -1420,6 +1420,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_m
 
+/datum/cookingrecipe/oven/steak_sheep
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep = 1)
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/steak_sheep
+
 /datum/cookingrecipe/oven/steak_s
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 1)
 	cookbonus = 10
