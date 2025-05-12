@@ -4,7 +4,13 @@ TEST_FOCUS(/datum/unit_test/recipe_picker)
 	var/obj/machinery/cookingmachine/oven/test_oven = new /obj/machinery/cookingmachine/oven
 	var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 	for(var/datum/cookingrecipe/R in RM.oven_recipes)
+		if(!R.ingredients)
+			Fail("Cooking recipe [R] has no ingredients")
+			break
 		for(var/ingredient in R.ingredients)
+			if(!R.ingredients[ingredient])
+				Fail("Cooking recipe [R] has ingredients with undefined quantities")
+				break
 			for(var/i = 0; i<R.ingredients[ingredient]; i++)
 				var/obj/item/I = new ingredient
 				test_oven.load_item(I)
@@ -15,7 +21,13 @@ TEST_FOCUS(/datum/unit_test/recipe_picker)
 		test_oven.possible_recipes = list()
 	var/obj/machinery/cookingmachine/mixer/test_mixer = new /obj/machinery/cookingmachine/mixer
 	for(var/datum/cookingrecipe/R in RM.mixer_recipes)
+		if(!R.ingredients)
+			Fail("Cooking recipe [R] has no ingredients")
+			break
 		for(var/ingredient in R.ingredients)
+			if(!R.ingredients[ingredient])
+				Fail("Cooking recipe [R] has ingredients with undefined quantities")
+				break
 			for(var/i = 0; i<R.ingredients[ingredient]; i++)
 				var/obj/item/I = new ingredient
 				test_mixer.load_item(I)
