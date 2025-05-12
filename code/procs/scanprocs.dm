@@ -154,7 +154,7 @@
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_SEVERE)
 					brain_data = SPAN_ALERT("Severe brain damage detected. Subject unable to function.")
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
-					brain_data = SPAN_ALERT("Major brain damage detected. Impared functioning present.")
+					brain_data = SPAN_ALERT("Major brain damage detected. Impaired functioning present.")
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MODERATE)
 					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
