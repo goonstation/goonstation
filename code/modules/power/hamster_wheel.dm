@@ -14,7 +14,6 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	icon_state = ""
 	anchored = 0
 	density = 1
-	open_to_sound = TRUE
 	p_class = 3
 	soundproofing = 0
 	maptext_y = -32

@@ -5,3 +5,4 @@
 
 /datum/listen_module/input/ooc/admin
 	id = LISTEN_INPUT_OOC_ADMIN
+	priority = LISTEN_INPUT_PRIORITY_HIGH

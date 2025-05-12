@@ -413,7 +413,6 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = TRUE
 
 	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null

@@ -35,7 +35,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		T.aiImage.appearance = ma
 		T.aiImage.dir = pick(alldirs)
 		T.aiImage.loc = T
-
+		T.aiImage.override = TRUE
 
 		if(istype(T, /turf/space))
 			aiImagesLowPriority += T.aiImage

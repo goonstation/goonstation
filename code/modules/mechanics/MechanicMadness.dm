@@ -34,7 +34,6 @@
 	var/default_hat_x = 0
 	var/amount_of_prevent_move_comps = 0
 	custom_suicide = TRUE
-	open_to_sound = TRUE
 
 	New()
 		processing_items |= src //this thing is a dang storage
