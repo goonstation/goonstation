@@ -50713,9 +50713,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/device/radio/intercom/AI{
-	
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "nyI" = (

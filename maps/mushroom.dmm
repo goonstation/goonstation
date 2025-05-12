@@ -9392,8 +9392,7 @@
 /area/station/engine/power)
 "bdQ" = (
 /obj/item/device/radio/intercom/engineering{
-	dir = 8;
-	
+	dir = 8
 	},
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
@@ -41183,8 +41182,7 @@
 /area/station/hallway/secondary/exit)
 "yll" = (
 /obj/item/device/radio/intercom/medical{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/greenwhite,
 /area/station/medical/research)

@@ -30617,8 +30617,7 @@
 /obj/storage/secure/closet/command/hop,
 /obj/machinery/firealarm/south,
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	
+	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/hop)
