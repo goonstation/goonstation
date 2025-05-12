@@ -854,7 +854,6 @@
 /area/station/security/checkpoint/arrivals)
 "afe" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	name = "Station Intercom (Engineering)"
 	},
 /turf/simulated/floor,
@@ -2214,11 +2213,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Station Intercom (Engineering)"
-	},
+/obj/item/device/radio/intercom/engineering,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -3306,11 +3301,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ate" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Station Intercom (Engineering)"
-	},
+/obj/item/device/radio/intercom/engineering,
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -6297,11 +6288,7 @@
 /obj/item/peripheral/network/powernet_card,
 /obj/item/peripheral/printer,
 /obj/item/peripheral/sound_card,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1441;
-	name = "Station Intercom (Engineering)"
-	},
+/obj/item/device/radio/intercom/engineering,
 /obj/machinery/firealarm/north,
 /obj/machinery/light/small{
 	dir = 4
@@ -9404,11 +9391,9 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bdQ" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
+/obj/item/device/radio/intercom/engineering{
 	dir = 8;
-	frequency = 1441;
-	name = "Station Intercom (Engineering)"
+	
 	},
 /obj/cable/reinforced{
 	icon_state = "2-8-thick"
@@ -10541,11 +10526,9 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "blX" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
+/obj/item/device/radio/intercom/security{
 	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
+	
 	},
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
@@ -10566,11 +10549,8 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "bmh" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	frequency = 1489;
-	name = "Brig Intercom"
+/obj/item/device/radio/intercom/brig{
+	dir = 8
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -14215,7 +14195,6 @@
 /area/station/turret_protected/armory_outside)
 "dkU" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8
 	},
 /obj/submachine/ice_cream_dispenser,
@@ -17299,11 +17278,8 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "fIl" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 8;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge East";
@@ -18702,11 +18678,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "gTl" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /obj/machinery/computer/operating/small,
 /turf/simulated/floor/redwhite{
@@ -22534,11 +22507,8 @@
 "koJ" = (
 /obj/machinery/defib_mount,
 /obj/table/auto,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 4
 	},
 /turf/simulated/floor/redwhite{
 	dir = 9
@@ -24023,11 +23993,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "lEk" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 4
 	},
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -25098,11 +25065,8 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -29698,11 +29662,7 @@
 "pIu" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
-	},
+/obj/item/device/radio/intercom/medical,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30530,11 +30490,7 @@
 	},
 /area/station/security/processing)
 "qsg" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
-	},
+/obj/item/device/radio/intercom/medical,
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/purple/corner{
 	dir = 1
@@ -31129,11 +31085,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "qNU" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "2-4";
@@ -35476,11 +35429,8 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "tKl" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+/obj/item/device/radio/intercom/medical{
+	dir = 1
 	},
 /turf/simulated/floor/purple,
 /area/station/science/hall)
@@ -39700,11 +39650,8 @@
 	},
 /area/station/quartermaster/office)
 "xfV" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 4;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
+/obj/item/device/radio/intercom/security{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen3"
@@ -40642,11 +40589,8 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "xJk" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	dir = 1;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
+/obj/item/device/radio/intercom/security{
+	dir = 1
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
@@ -41238,11 +41182,9 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "yll" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
+/obj/item/device/radio/intercom/medical{
 	dir = 1;
-	frequency = 1445;
-	name = "Station Intercom (Medical)"
+	
 	},
 /turf/simulated/floor/greenwhite,
 /area/station/medical/research)

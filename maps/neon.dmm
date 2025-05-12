@@ -9256,7 +9256,6 @@
 /obj/machinery/disposal/mail/small/autoname/bridge/south,
 /obj/disposalpipe/trunk/mail/north,
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -10951,8 +10950,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	dir = 4
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/ce)
@@ -12684,8 +12682,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/security/hos)
@@ -17706,8 +17703,7 @@
 "mdK" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/item/device/radio/intercom/bridge{
-	dir = 1;
-	broadcasting = 0
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
@@ -19513,9 +19509,7 @@
 /obj/item/clothing/under/towel,
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/suit/bathrobe,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/ce)
 "nsO" = (
@@ -19958,8 +19952,7 @@
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom/medical,
 /obj/item/device/radio/intercom/bridge{
-	dir = 8;
-	broadcasting = 0
+	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
@@ -20579,7 +20572,6 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 1
 	},
 /turf/simulated/floor/blueblack{
@@ -20698,8 +20690,7 @@
 /area/listeningpost)
 "okV" = (
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	dir = 4
 	},
 /obj/cable/black,
 /obj/machinery/power/data_terminal,
@@ -24095,8 +24086,7 @@
 	pixel_y = 8
 	},
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -26983,9 +26973,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/station/science/research_director)
 "sEK" = (
@@ -29759,9 +29747,7 @@
 	tag = ""
 	},
 /obj/machinery/firealarm/east,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/teleporter)
 "uty" = (
@@ -30632,7 +30618,7 @@
 /obj/machinery/firealarm/south,
 /obj/item/device/radio/intercom/bridge{
 	dir = 8;
-	broadcasting = 0
+	
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/hop)
@@ -31261,7 +31247,6 @@
 	pixel_y = -6
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
@@ -33431,9 +33416,7 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
 	},

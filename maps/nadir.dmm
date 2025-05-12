@@ -6508,7 +6508,6 @@
 /obj/landmark/start/job/AI,
 /obj/cable,
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 8;
 	layer = 5
 	},
@@ -8348,7 +8347,6 @@
 "dII" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	pixel_y = -1
 	},
 /obj/decal/stage_edge{
@@ -15075,7 +15073,6 @@
 	pixel_y = 9
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 8;
 	layer = 5
 	},
@@ -30003,7 +30000,6 @@
 	})
 "mxa" = (
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 4
 	},
 /obj/machinery/computer/stockexchange{
@@ -31761,9 +31757,7 @@
 	},
 /area/pasiphae)
 "nlA" = (
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/bridge/captain)
 "nlC" = (
@@ -38628,7 +38622,6 @@
 "qlz" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
@@ -40563,9 +40556,7 @@
 /area/station/medical/medbay)
 "rhk" = (
 /obj/stool/chair/office/blue,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge)
 "rhn" = (
@@ -43887,7 +43878,6 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 8;
 	layer = 5
 	},
@@ -50207,7 +50197,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 4
 	},
 /turf/simulated/floor/engine,

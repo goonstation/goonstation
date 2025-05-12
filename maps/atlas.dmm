@@ -2289,7 +2289,6 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -7618,9 +7617,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aRs" = (
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aRv" = (
@@ -23346,9 +23343,7 @@
 	pixel_y = 0
 	},
 /obj/landmark/start/job/AI,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /obj/cable{
 	icon_state = "0-8"
 	},

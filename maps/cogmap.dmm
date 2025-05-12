@@ -12933,7 +12933,6 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -40423,7 +40422,6 @@
 /area/space)
 "fBI" = (
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 1
 	},
 /obj/machinery/ai_status_display{
@@ -50716,7 +50714,7 @@
 	tag = ""
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0
+	
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
@@ -51754,9 +51752,7 @@
 	mail_tag = "bridge";
 	name = "bridge mail router"
 	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /turf/simulated/floor,
 /area/station/bridge)
 "okN" = (

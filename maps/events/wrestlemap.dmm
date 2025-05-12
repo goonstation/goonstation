@@ -35143,7 +35143,6 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	frequency = 1489;
 	name = "Brig Intercom";
 	pixel_x = 26
@@ -45052,7 +45051,6 @@
 	name = "old mainframe"
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	frequency = 1489;
 	name = "Brig Intercom";
 	pixel_x = 26

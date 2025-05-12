@@ -1045,7 +1045,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 4
 	},
 /obj/machinery/computer/announcement/station/engineering{
@@ -7725,9 +7724,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bja" = (
@@ -20712,7 +20709,6 @@
 	},
 /obj/item/paper/book/from_file/space_law,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 4;
 	layer = 6.02
 	},
@@ -23705,9 +23701,7 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/recharger,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/science/research_director)
 "kHT" = (
@@ -28370,9 +28364,7 @@
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1
-	},
+/obj/item/device/radio/intercom/medical,
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
@@ -31509,7 +31501,6 @@
 	pixel_x = 10
 	},
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/black,

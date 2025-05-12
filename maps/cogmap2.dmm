@@ -26136,9 +26136,7 @@
 /area/station/crew_quarters/ce)
 "bCF" = (
 /obj/storage/secure/closet/command/chief_engineer,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/AI,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29384,7 +29382,6 @@
 /area/station/hallway/primary/east)
 "bLc" = (
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -29942,7 +29939,6 @@
 /area/station/ai_monitored/armory)
 "bMw" = (
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /obj/disposalpipe/segment/transport{
@@ -32267,9 +32263,7 @@
 /area/station/crew_quarters/captain)
 "bTj" = (
 /obj/storage/secure/closet/command/captain,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -47274,7 +47268,6 @@
 "cPp" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -55456,9 +55449,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/auto,
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
+/obj/item/device/radio/intercom/brig,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -59284,7 +59275,6 @@
 /area/station/security/brig)
 "inj" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /obj/storage/cart/medcart/crash,
@@ -63035,9 +63025,7 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "lCS" = (
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /obj/storage/secure/closet/command/hop,
 /obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_x = 32;
@@ -66273,7 +66261,6 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -66403,7 +66390,6 @@
 /area/station/security/checkpoint/arrivals)
 "oFy" = (
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/blueblack,
@@ -71119,9 +71105,7 @@
 	butts = 5;
 	name = "grubby old ashtray"
 	},
-/obj/item/device/radio/intercom/brig{
-	broadcasting = 1
-	},
+/obj/item/device/radio/intercom/brig,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/brig)

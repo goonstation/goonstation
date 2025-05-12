@@ -4520,7 +4520,6 @@
 	},
 /obj/machinery/light/incandescent/cool,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
@@ -7292,7 +7291,6 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	pixel_y = -1
 	},
 /obj/disposalpipe/segment/brig,
@@ -13533,7 +13531,6 @@
 /area/station/crew_quarters/captain)
 "dVg" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
@@ -14224,7 +14221,6 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -24015,7 +24011,6 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/green,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -31010,7 +31005,6 @@
 /area/station/bridge/customs)
 "jtX" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /obj/decoration/decorativeplant/plant4,
@@ -33315,7 +33309,6 @@
 	pixel_y = 24
 	},
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	pixel_x = 4;
 	pixel_y = 28
 	},
@@ -37566,7 +37559,6 @@
 /area/station/hallway/primary/west)
 "luA" = (
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/wood/eight,
@@ -49793,7 +49785,6 @@
 "pfV" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
@@ -55390,7 +55381,6 @@
 	pixel_y = 9
 	},
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -58838,7 +58828,6 @@
 /area/station/hangar/main)
 "rSi" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 1;
 	pixel_y = -1
 	},
 /obj/table/reinforced/bar/auto{
@@ -69213,7 +69202,6 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	pixel_y = 25
 	},
 /turf/simulated/floor/blue,
@@ -78225,7 +78213,6 @@
 	pixel_y = -9
 	},
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	pixel_y = 25
 	},
 /obj/machinery/light/incandescent/greenish{

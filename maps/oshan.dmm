@@ -2451,7 +2451,6 @@
 /area/station/maintenance/north)
 "aiW" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /obj/monkeyplant,
@@ -3515,7 +3514,6 @@
 /area/station/medical/dome)
 "amp" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /obj/decal/tile_edge/line/red{
@@ -5005,7 +5003,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -5016,7 +5013,6 @@
 "aru" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -5340,7 +5336,6 @@
 /area/station/medical/medbay)
 "asw" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 8
 	},
 /turf/simulated/floor/redwhite{
@@ -5670,7 +5665,6 @@
 /area/station/medical/medbay/cloner)
 "atB" = (
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -7101,7 +7095,6 @@
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk/west,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
@@ -19400,9 +19393,7 @@
 /area/station/bridge)
 "buo" = (
 /obj/table/wood/round/auto,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -40070,7 +40061,6 @@
 "nGh" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
 	dir = 4
 	},
 /obj/item/decoration/flower_vase{

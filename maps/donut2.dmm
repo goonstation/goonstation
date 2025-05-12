@@ -309,11 +309,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abr" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	frequency = 1489;
-	name = "Brig Intercom"
+/obj/item/device/radio/intercom/brig{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)

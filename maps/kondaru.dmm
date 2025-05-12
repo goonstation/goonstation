@@ -9146,7 +9146,6 @@
 /obj/landmark/start/job/AI,
 /obj/cable,
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	dir = 8;
 	layer = 5
 	},
@@ -30075,7 +30074,6 @@
 	pixel_y = 20
 	},
 /obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
 	pixel_x = 2;
 	pixel_y = 24
 	},
@@ -57526,9 +57524,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
+/obj/item/device/radio/intercom/bridge,
 /obj/machinery/light/small/blueish{
 	dir = 4;
 	pixel_x = 8
@@ -58369,7 +58365,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
 	dir = 4;
 	pixel_x = -21;
 	pixel_y = 3
