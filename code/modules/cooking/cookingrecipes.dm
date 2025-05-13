@@ -1154,14 +1154,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/raspberry = 1)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/raspberry
-	category = "Pies"
-
-/datum/cookingrecipe/oven/pie_blackberry
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
-	/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry = 1)
-	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/pie/blackberry
+	variants = list(\
+	/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry = /obj/item/reagent_containers/food/snacks/pie/blackberry)
 	category = "Pies"
 
 /datum/cookingrecipe/oven/pie_apple
