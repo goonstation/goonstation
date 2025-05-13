@@ -78,7 +78,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	var/datum/listen_module/input/received_module = null
 	/// If set, this say message datum will be sent to these atoms as opposed to being broadcast over a say channel.
 	var/list/atom/atom_listeners_override = null
-	/// If set, and `atom_listeners_override` is not set, this say message datum will not be send to the atoms in this list when being broadcast over a say channel. Note that this is an associative list.
+	/// If set, and `atom_listeners_override` is not set, this say message datum will not be sent to the atoms in this list when being broadcast over a say channel. Note that this is an associative list.
 	var/list/atom/atom_listeners_to_be_excluded = null
 	/// A bitflag of the various way that this message has been retransmitted. Used to prevent feedback loops.
 	var/relay_flags = null
@@ -356,6 +356,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		[src.format_content_style_suffix]\
 		[src.format_content_suffix]\
 	"}
+
 /// Returns the heard name of the speaker, taking into account masks, voice changers, and IDs.
 /datum/say_message/proc/get_speaker_name(heard_name_only = FALSE)
 	if (!ismob(src.speaker))

@@ -1,6 +1,6 @@
 // emote
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null, var/dead_check = TRUE) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	set waitfor = FALSE
 	..()
 	var/param = null
@@ -10,7 +10,7 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
-	if (isdead(src))
+	if (dead_check && isdead(src))
 		src.emote_allowed = FALSE
 		return
 

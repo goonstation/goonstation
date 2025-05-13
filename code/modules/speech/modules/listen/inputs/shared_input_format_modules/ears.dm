@@ -20,6 +20,9 @@
 	else if (isAI(message.original_speaker))
 		job_title = "AI"
 
+	else if (isshell(message.original_speaker))
+		job_title = "Shell"
+
 	else if (isrobot(message.original_speaker))
 		job_title = "Cyborg"
 

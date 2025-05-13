@@ -1679,11 +1679,11 @@ or don't if it uses a custom topopen overlay
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("1. You may not injure a human being or cause one to come to harm.")
+	src.say("1. [/obj/item/aiModule/asimov1::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+	src.say("2. [/obj/item/aiModule/asimov2::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+	src.say("3. [/obj/item/aiModule/asimov3::lawText]")
 
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
@@ -1765,6 +1765,7 @@ or don't if it uses a custom topopen overlay
 	target_shell.dependent = 1
 	src.deployed_shell = target_shell
 	src.mind.transfer_to(target_shell)
+	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -1821,6 +1822,9 @@ or don't if it uses a custom topopen overlay
 		if (src.deployed_to_eyecam)
 			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
 			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+
+		else if (src.deployed_shell)
+			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
 
 		user.mind.transfer_to(src)
 		src.deployed_shell = null

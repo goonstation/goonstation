@@ -23,13 +23,13 @@ TYPEINFO(/atom)
 /atom
 	// Module Trees:
 	/// This atom's listen module tree. May be null if no input modules are registered.
-	var/datum/listen_module_tree/listen_tree = null
+	var/tmp/datum/listen_module_tree/listen_tree = null
 	/// This atom's speech module tree. Lazy loaded on the first `say()` call.
-	var/datum/speech_module_tree/speech_tree = null
+	var/tmp/datum/speech_module_tree/speech_tree = null
 
 	// Listen Variables:
 	/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.
-	var/open_to_sound = FALSE
+	var/open_to_sound = TRUE
 
 	// Speech Output Variables:
 	/// The default channel that this atom will attempt to send unprefixed say messages to.
@@ -174,11 +174,11 @@ TYPEINFO(/atom)
 
 	src.listen_tree = new(null, null, null, list(LISTEN_EFFECT_DISPLAY_TO_CLIENT), null, null, src.mob.listen_tree)
 
-	src.preferences.listen_ooc = !src.preferences.listen_ooc
-	src.toggle_ooc(!src.preferences.listen_ooc)
+	if (src.preferences.listen_ooc)
+		src.toggle_ooc(TRUE, TRUE)
 
-	src.preferences.listen_looc = !src.preferences.listen_looc
-	src.toggle_looc(!src.preferences.listen_looc)
+	if (src.preferences.listen_looc)
+		src.toggle_looc(TRUE, TRUE)
 
 	if (src.holder && !src.player_mode)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
@@ -199,42 +199,34 @@ TYPEINFO(/atom)
 	return src.speech_tree
 
 /// Toggle hearing OOC for this client.
-/client/proc/toggle_ooc(ooc_enabled)
-	if (src.preferences.listen_ooc == ooc_enabled)
+/client/proc/toggle_ooc(ooc_enabled, force = FALSE)
+	if (!force && (src.preferences.listen_ooc == ooc_enabled))
 		return
 
 	src.preferences.listen_ooc = ooc_enabled
 
 	if (src.preferences.listen_ooc)
-		if (src.holder && !src.player_mode)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
-		else
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
+		src.holder?.admin_listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
 
 	else
-		if (src.holder && !src.player_mode)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
-		else
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
+		src.holder?.admin_listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
 
 /// Toggle hearing LOOC for this client.
-/client/proc/toggle_looc(looc_enabled)
-	if (src.preferences.listen_looc == looc_enabled)
+/client/proc/toggle_looc(looc_enabled, force = FALSE)
+	if (!force && (src.preferences.listen_looc == looc_enabled))
 		return
 
 	src.preferences.listen_looc = looc_enabled
 
 	if (src.preferences.listen_looc)
-		if (src.holder && !src.player_mode)
-			src.listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
-		else
-			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
+		src.holder?.admin_listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 	else
-		if (src.holder && !src.player_mode)
-			src.listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
-		else
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
+		src.holder?.admin_listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 /mob/Login()
 	. = ..()

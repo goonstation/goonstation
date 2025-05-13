@@ -2,7 +2,7 @@
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
-	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_prefixes = null
 	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
@@ -60,8 +60,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		if (rand(1, 1000) == 69 && ticker?.mode) //heh
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
-				var/datum/game_mode/nuclear/mode = ticker.mode
-				name = "Drone [mode.agent_radiofreq]"
+				name = "Drone [R_FREQ_SYNDICATE]"
 			else if (length(flocks))
 				name = "Flockdrone"
 			else

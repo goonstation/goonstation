@@ -60,6 +60,7 @@
 
 /datum/listen_module/input/outloud/ears/ai
 	id = LISTEN_INPUT_EARS_AI
+	priority = LISTEN_INPUT_PRIORITY_HIGH
 
 
 SET_UP_LISTEN_CONTROL(/datum/listen_module/input/outloud/ears/ghost, LISTEN_CONTROL_TOGGLE_GLOBAL_HEARING_GHOST)

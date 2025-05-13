@@ -15,6 +15,8 @@ TYPEINFO(/mob)
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
 	speech_verb_say = "says"
 	speech_verb_ask = "asks"
 	speech_verb_exclaim = "exclaims"
@@ -146,8 +148,6 @@ TYPEINFO(/mob)
 	var/faction = list()
 
 	var/nodamage = 0
-
-	var/spellshield = 0
 
 	var/voice_name = "unidentifiable voice"
 	var/oldname = null

@@ -520,6 +520,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 		src.set_loc(get_turf(src))
 		src.observing = null
 
+	examine_verb(atom/A as mob|obj|turf in view(,usr))
+		var/turf/T = get_turf(A)
+		if (!length(T.camera_coverage_emitters))
+			return
+		. = ..()
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/obj/machinery/camera/cameras
