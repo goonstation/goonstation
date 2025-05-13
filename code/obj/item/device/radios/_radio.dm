@@ -64,6 +64,8 @@ TYPEINFO(/obj/item/device/radio)
 	var/initial_microphone_enabled = FALSE
 
 	// Speaker Variables:
+	/// Whether this radio should display a speaker component in its UI.
+	var/has_speaker = TRUE
 	/// The range in which radio messages received by this radio should be spoken to listeners.
 	var/speaker_range = 2
 	/// Whether this radio's speaker is enabled. If not, received radio messages will not be spoken.
@@ -207,14 +209,15 @@ TYPEINFO(/obj/item/device/radio)
 
 	. = list(
 		"name" = src.name,
-		"broadcasting" = src.microphone_enabled,
-		"listening" = src.speaker_enabled,
+		"hasMicrophone" = src.has_microphone,
+		"microphoneEnabled" = src.microphone_enabled,
+		"hasSpeaker" = src.has_speaker,
+		"speakerEnabled" = src.speaker_enabled,
 		"frequency" = src.frequency,
 		"lockedFrequency" = src.locked_frequency,
 		"secureFrequencies" = frequencies,
 		"wires" = src.wires,
 		"modifiable" = src.b_stat,
-		"hasMicrophone" = src.has_microphone,
 	)
 
 /obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -249,11 +252,11 @@ TYPEINFO(/obj/item/device/radio)
 
 			return TRUE
 
-		if ("toggle-broadcasting")
+		if ("toggle-microphone")
 			src.toggle_microphone(!src.microphone_enabled)
 			return TRUE
 
-		if ("toggle-listening")
+		if ("toggle-speaker")
 			src.toggle_speaker(!src.speaker_enabled)
 			return TRUE
 
