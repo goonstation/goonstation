@@ -1513,7 +1513,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return
 
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -1529,7 +1529,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	if (damage > 4.9)

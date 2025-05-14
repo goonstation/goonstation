@@ -67,6 +67,7 @@
 			if(!read_user_field("name"))
 				write_user_field("name", useracc.user_name)
 			useracc.user_file.fields["curpath"] = "/home/usr[read_user_field("name")]"
+			useracc.base_shell_instance = src
 
 		if (!script_iteration)
 			message_user("[read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
