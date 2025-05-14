@@ -1887,6 +1887,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_hp_up", "food_brute")
 	meal_time_flags = MEAL_TIME_DINNER
 
+/obj/item/reagent_containers/food/snacks/steak_sheep
+	name = "sheep steak"
+	desc = "Delicious mutton!"
+	icon_state = "meat-grilled"
+	fill_amt = 2
+	bites_left = 2
+	heal_amt = 3
+	food_color = "#999966"
+	initial_volume = 50
+	initial_reagents = list("cholesterol"=3)
+	food_effects = list("food_hp_up", "food_brute")
+
 /obj/item/reagent_containers/food/snacks/steak_ling
 	name = "mutagenic steak"
 	desc  = "It stopped moving. Thank god."
