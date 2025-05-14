@@ -1,5 +1,9 @@
 
 (t)wed may 14 25
+(u)Egregorious
+(p)23434
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Botany requisitions now reward large produce satchels.
 (u)glowbold
 (p)23385
 (e)🆕🗺🎨⚖|C-Feature, A-Mapping, C-Sprites, C-Balance
