@@ -80,7 +80,8 @@ TYPEINFO(/turf/simulated/floor/feather)
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
-	src.flock.all_owned_tiles -= src
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()

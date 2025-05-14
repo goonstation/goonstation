@@ -465,8 +465,8 @@ TYPEINFO(/mob/living)
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-		if ("say_radio")
-			src.say_radio()
+		if ("say_over_channel")
+			src.say_over_channel()
 		else
 			. = ..()
 
@@ -1283,7 +1283,7 @@ TYPEINFO(/mob/living)
 			M.mind.violated_hippocratic_oath = 1
 
 	if (src.nodamage) return 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		src.visible_message(SPAN_ALERT("[src]'s shield deflects the shot!"))
 		return 0
 

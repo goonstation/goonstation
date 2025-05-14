@@ -7,5 +7,6 @@
 		return
 
 	message.flags |= SAYFLAG_NO_MAPTEXT
+	message.say_sound = null
 
 	. = ..()
