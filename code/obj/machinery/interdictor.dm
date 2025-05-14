@@ -10,7 +10,8 @@
 	density = 1
 	var/resisted = FALSE //Changes if someone is being protected from a radstorm
 	anchored = UNANCHORED
-	req_access = list(access_engineering)
+	req_access = null
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
 	var/obj/item/cell/intcap = null
@@ -108,7 +109,7 @@
 
 	attack_hand(mob/user)
 		if(!emagged && !src.allowed(user))
-			boutput(user, SPAN_ALERT("Engineering clearance is required to operate the interdictor's locks."))
+			boutput(user, SPAN_ALERT("You are not authorised to operate the interdictor's locks."))
 			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
 			if(anchored)
@@ -188,10 +189,10 @@
 
 	// Typed variants for manual spawning or map placement
 
-	unlocked
-		req_access = null
-		name = "unlocked spatial interdictor"
-		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. A small tag indicates its access requirement has been removed."
+	ranch
+		req_access = list(access_ranch)
+		name = "ranch spatial interdictor"
+		desc = "A device that lessens or nullifies the effects of assorted stellar phenomena. Great for protecting chickens!"
 
 	nimbus
 		interdict_class = ITDR_NIMBUS

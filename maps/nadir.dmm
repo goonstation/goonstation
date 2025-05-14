@@ -9655,7 +9655,7 @@
 /area/station/hallway/primary/northeast)
 "eub" = (
 /obj/machinery/light,
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "euf" = (

@@ -18080,7 +18080,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "haE" = (
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "hdq" = (
