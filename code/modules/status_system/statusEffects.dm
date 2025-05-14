@@ -3077,6 +3077,7 @@
 				H.disfigured = TRUE
 				H.UpdateName()
 				H.bioHolder?.AddEffect("husk")
+				H.bioHolder?.mobAppearance.flavor_text = "A desiccated husk."
 				H.set_clothing_icon_dirty()
 				src.linked_curser?.lift_curse_specific(FALSE, H)
 				src.remove_self()
