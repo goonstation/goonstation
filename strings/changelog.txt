@@ -1,5 +1,9 @@
 
 (t)wed may 14 25
+(u)GeneralJay
+(p)23451
+(e)💅🍝|C-QoL, A-Catering
+(+)Meat gained from butchering sheep can now be cooked into steaks properly. Ranchers and chefs rejoice!
 (u)Egregorious
 (p)23434
 (e)⚖🌱|C-Balance, A-Hydroponics
