@@ -723,9 +723,7 @@
 /area/station/garden/aviary)
 "aea" = (
 /obj/machinery/door/airlock/pyro/medical{
-	name = "Morgue";
-	req_access = null;
-	req_access_txt = null
+	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
@@ -2938,9 +2936,9 @@
 "azm" = (
 /obj/machinery/door/window/northright{
 	dir = 4;
-	req_access_txt = "22";
 	tag = "icon-right (EAST)"
 	},
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "azn" = (
@@ -12496,9 +12494,7 @@
 "cst" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Morgue";
-	req_access = null;
-	req_access_txt = null
+	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
@@ -13557,9 +13553,7 @@
 "doj" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	name = "Robotics Storage";
-	req_access = null;
-	req_access_txt = null
+	name = "Robotics Storage"
 	},
 /obj/mapping_helper/access/robotics,
 /obj/mapping_helper/firedoor_spawn,
@@ -15685,8 +15679,7 @@
 "eXz" = (
 /obj/machinery/door/window{
 	dir = 4;
-	name = "bunk";
-	req_access_txt = "0"
+	name = "bunk"
 	},
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/listeningpost)
@@ -21128,6 +21121,10 @@
 "iIv" = (
 /obj/table/wood/auto,
 /obj/item/decoration/flower_vase,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/chapel/funeral_parlor)
 "iIJ" = (
@@ -23558,9 +23555,7 @@
 "kAI" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Morgue";
-	req_access = null;
-	req_access_txt = null
+	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/robotics,
@@ -34929,9 +34924,7 @@
 "sQH" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Morgue";
-	req_access = null;
-	req_access_txt = null
+	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
@@ -38334,13 +38327,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "vaQ" = (
-/obj/machinery/door/window/northright{
-	req_access_txt = "22"
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/machinery/door/window/northright,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/chapel/funeral_parlor)
 "vaW" = (
@@ -39055,9 +39043,7 @@
 "vJq" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
-	name = "Morgue";
-	req_access = null;
-	req_access_txt = null
+	name = "Morgue"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/morgue,
