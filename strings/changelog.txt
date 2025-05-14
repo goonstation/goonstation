@@ -1,4 +1,14 @@
 
+(t)wed may 14 25
+(u)glowbold
+(p)23385
+(e)🆕🗺🎨⚖|C-Feature, A-Mapping, C-Sprites, C-Balance
+(+)The listening post on some maps have received a new look.
+(+)The listening post will fully unlock once someone is inside or uses the hand scanner.
+(u)Mr. Moriarty
+(p)23313
+(e)🆕💅📄🔨|C-Feature, C-QoL, A-UI, A-Player-Actions
+(+)Hivechat, Thrallchat, and Kudzuchat are now accessed through the Y menu instead of through abilities.
 (t)sat may 10 25
 (u)CrimsonNode
 (p)23334
