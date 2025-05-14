@@ -7057,7 +7057,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_out";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
@@ -14107,7 +14108,8 @@
 "biN" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
-	color = "gray"
+	color = "gray";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -18680,6 +18682,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"jHP" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "research_open";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "jIB" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -19383,7 +19398,8 @@
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
-	color = "gray"
+	color = "gray";
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -20664,7 +20680,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_in";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 8
 	},
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
@@ -61785,7 +61802,7 @@ aaa
 hme
 iYn
 iYn
-aAo
+jHP
 iYn
 fqY
 aGD
