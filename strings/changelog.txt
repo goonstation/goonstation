@@ -1,4 +1,9 @@
 
+(t)wed may 14 25
+(u)Mr. Moriarty
+(p)23313
+(e)🆕💅📄🔨|C-Feature, C-QoL, A-UI, A-Player-Actions
+(+)Hivechat, Thrallchat, and Kudzuchat are now accessed through the Y menu instead of through abilities.
 (t)sat may 10 25
 (u)CrimsonNode
 (p)23334
