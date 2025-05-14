@@ -527,6 +527,7 @@
 #include "code\mob\living\critter\snake.dm"
 #include "code\mob\living\critter\space_phoenix.dm"
 #include "code\mob\living\critter\spider.dm"
+#include "code\mob\living\critter\turtle.dm"
 #include "code\mob\living\critter\vending.dm"
 #include "code\mob\living\critter\ai\aquatic.dm"
 #include "code\mob\living\critter\ai\art_curser_nightmare.dm"
