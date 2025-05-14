@@ -164,27 +164,6 @@
 			boutput(user, SPAN_NOTICE("You add the [E.name] to the [src]."))
 			needed_parts[E.type] -= 1
 			return
-		else if(istype(E,/obj/item/electronics/soldering))
-			if(!secured)
-				secured = 1
-				viewstat = 1
-				boutput(user, SPAN_NOTICE("You secure the [src]."))
-			else if(secured == 1)
-				secured = 0
-				viewstat = 0
-				boutput(user, SPAN_NOTICE("You unsecure the [src]."))
-			else if(secured == 2)
-				if(!isturf(user.loc))
-					boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
-					return
-
-				boutput(user, SPAN_ALERT("You deploy the [src]!"))
-				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
-					qdel(user.loc)
-
-				actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
-				//deploy()
-			return
 		else if(istype(E,/obj/item/electronics/scanner) && !secured)
 			if(!parts_check())
 				boutput(user, SPAN_NOTICE("Missing components:"))
@@ -196,7 +175,26 @@
 				boutput(user, SPAN_NOTICE("All components present"))
 			return
 
-	if (ispryingtool(W))
+	if(issolderingtool(W))
+		if(!secured)
+			secured = 1
+			viewstat = 1
+			boutput(user, SPAN_NOTICE("You secure the [src]."))
+		else if(secured == 1)
+			secured = 0
+			viewstat = 0
+			boutput(user, SPAN_NOTICE("You unsecure the [src]."))
+		else if(secured == 2)
+			if(!isturf(user.loc))
+				boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
+				return
+			boutput(user, SPAN_ALERT("You deploy the [src]!"))
+			if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
+				qdel(user.loc)
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
+			//deploy()
+		return
+	else if(ispryingtool(W))
 		if (!anchored)
 			src.set_dir(turn(src.dir, 90))
 			return
@@ -411,15 +409,13 @@
 	pressure_resistance = 40
 	tool_flags = TOOL_SOLDERING
 
+	New()
+		..()
+		src.AddComponent(/datum/component/soldering)
+
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!isobj(target))
-			return
-		var/obj/O = target
-		var/decon_len = O.decon_contexts ? O.decon_contexts.len : 0
-		O.decon_contexts = null
-		if (O.build_deconstruction_buttons() != decon_len)
-			boutput(user, SPAN_ALERT("You repair [target]'s deconstructed state."))
-			return
+		var/datum/component/soldering/solder_comp = src.GetComponent(/datum/component/soldering)
+		solder_comp.repair_deconstruction_buttons(target, user)
 		..()
 
 ////////////////////////////////////////////////////////////////no
@@ -924,74 +920,24 @@
 
 	New()
 		. = ..()
+		src.AddComponent(/datum/component/deconstructing, 1)
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
 		. = ..()
 
-
-	proc/finish_decon(atom/target,mob/user) // deconstructing work
-		if (!isobj(target))
-			return
-		var/obj/O = target
-		if(!O.can_deconstruct(user))
-			return
-		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
-		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<B>[user.name]</B> deconstructs [target].")
-
-		O.become_frame(user)
-
-		elecflash(src,power=2)
+	dropped(var/mob/user)
+		. = ..()
+		user.closeContextActions()
 
 	MouseDrop_T(atom/target, mob/user)
 		src.pre_attackby(src, target, user)
 		..()
 
 	proc/pre_attackby(source, atom/target, mob/user)
-		if (user.a_intent == INTENT_HARM)
-			return
-		if (!isobj(target))
-			return
-		var/obj/O = target
-
-		if (O.deconstruct_flags == DECON_NONE)
-			return
-
-		var/decon_complexity = O.build_deconstruction_buttons()
-		if (!decon_complexity || !O.can_deconstruct(user))
-			boutput(user, SPAN_ALERT("[target] cannot be deconstructed."))
-			if (O.deconstruct_flags & DECON_NULL_ACCESS)
-				boutput(user, SPAN_ALERT("[target] is under an access lock and must have its access requirements removed first."))
-			return ATTACK_PRE_DONT_ATTACK
-		if (istext(decon_complexity))
-			boutput(user, SPAN_ALERT("[decon_complexity]"))
-			return ATTACK_PRE_DONT_ATTACK
-		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
-			boutput(user, SPAN_ALERT("Cyborgs cannot deconstruct this [target]."))
-			return ATTACK_PRE_DONT_ATTACK
-		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
-			boutput(user, SPAN_ALERT("You cannot deconstruct [target] without sufficient access to operate it."))
-			return ATTACK_PRE_DONT_ATTACK
-
-		if(length(get_all_mobs_in(O)))
-			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
-			return ATTACK_PRE_DONT_ATTACK
-
-		if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
-			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
-			return ATTACK_PRE_DONT_ATTACK
-
-		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
-			boutput(user, "Deconstructing [O], please remain still...")
-			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
-			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
-			return ATTACK_PRE_DONT_ATTACK
-		else
-			user.showContextActions(O.decon_contexts, O)
-			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
-			return ATTACK_PRE_DONT_ATTACK
+		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+		return decon_comp.pre_attackby_decon(target, user, src)
 
  // here be extra surgery penalties
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -1087,44 +1033,48 @@
 
 
 /datum/action/bar/icon/deconstruct_obj
-	duration = 20
+	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
-	var/obj/O
-	var/obj/item/deconstructor/D
-	New(Obj, Decon, ExtraTime)
-		O = Obj
-		D = Decon
-		duration += ExtraTime
+	var/obj/target
+	var/obj/item/decon_tool
+	New(Obj, Decon, extra_time)
+		src.target = Obj
+		src.decon_tool = Decon
+		src.duration += extra_time
 		..()
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
+		if(!can_decon_target())
 			interrupt(INTERRUPT_ALWAYS)
-			return
+		return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
+		if(!can_decon_target())
 			interrupt(INTERRUPT_ALWAYS)
-			return
+		return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
+		if(!can_decon_target())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
 			var/mob/M = owner
-			if (!(D in M.equipped_list()))
+			if (!(decon_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		D.finish_decon(O,owner)
+		var/datum/component/deconstructing/decon_comp = decon_tool.GetComponent(/datum/component/deconstructing)
+		decon_comp.finish_decon(target, owner, decon_tool)
 
 	onInterrupt()
-		if (O && owner)
-			boutput(owner, SPAN_ALERT("Deconstruction of [O] interrupted!"))
+		if (target && owner)
+			boutput(owner, SPAN_ALERT("Deconstruction of [target] interrupted!"))
 		..()
+
+	proc/can_decon_target()
+		return BOUNDS_DIST(owner, target) == 0 || target != null || owner != null || issawingtool(decon_tool) || !(locate(/mob/living) in target) || target.can_deconstruct(owner)
 

@@ -4,23 +4,31 @@
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	HELP_MESSAGE_OVERRIDE(null)
-	var/prefix = "omnitool"
+	var/prefix = "omnitool" //! Prefix for the tool's icon_state
 	var/welding = FALSE
-	var/animated_changes = FALSE
+	var/animated_changes = FALSE //! Play an animation after mode is switched
+	var/animated_delay = FALSE //! Play an animation with the action bar (if there is a delay)
+	var/switch_delay = 0 SECONDS //! Time to manually switch between modes, or 0 for instant switching.
+	var/decon_multiplier = 1 //! Multiply decon time, if available. Only affects the "extra" decon time added.
 
 	custom_suicide = 1
 
 	///List of tool settings
 	var/list/modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING)
-	///The current setting
-	var/mode = OMNI_MODE_PRYING
+	var/mode = OMNI_MODE_PRYING //!The current tool setting
 
 	var/list/datum/contextAction/contexts = list()
 
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.change_mode(mode, null, /obj/item/crowbar)
+		src.AddComponent(/datum/component/soldering)
+		src.AddComponent(/datum/component/deconstructing, src.decon_multiplier)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
+		if(OMNI_MODE_PRYING in src.modes)
+			src.change_mode(src.mode, null, /obj/item/crowbar)
+		else
+			src.change_mode(src.mode, null, /obj/item/deconstructor)
 		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
 			var/datum/contextAction/omnitool/action = new actionType()
 			if (action.mode in src.modes)
@@ -48,8 +56,16 @@
 
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
-		if(mode == OMNI_MODE_PULSING)
+		if(src.mode == OMNI_MODE_PULSING)
 			get_and_return_netid(target,user)
+		else if(src.mode == OMNI_MODE_SOLDERING)
+			var/datum/component/soldering/solder_comp = src.GetComponent(/datum/component/soldering)
+			solder_comp.repair_deconstruction_buttons(target, user)
+
+	MouseDrop_T(atom/target, mob/user)
+		if(src.mode == OMNI_MODE_DECON)
+			src.pre_attackby(src, target, user)
+		..()
 
 	get_desc()
 		. += "It is currently set to "
@@ -68,6 +84,10 @@
 				. += "cutting"
 			if(OMNI_MODE_WELDING)
 				. += "welding"
+			if(OMNI_MODE_DECON)
+				. += "deconstruction"
+			if(OMNI_MODE_SOLDERING)
+				. += "soldering"
 		. += " mode."
 
 	suicide(var/mob/user)
@@ -82,7 +102,21 @@
 		. = ..()
 		user.closeContextActions()
 
+	/// Switch modes with a delay, if it exists
+	proc/change_mode_delayed(var/mode, var/mob/holder, var/obj/item/typepath, var/i_state)
+		if(switch_delay)
+			if(animated_delay)
+				flick("[src.prefix]-delay-[mode_to_text(mode)]", src)
+				playsound(src, 'sound/machines/click.ogg', 10, TRUE, pitch = 0.75)
+			actions.start(new/datum/action/bar/icon/omnitool_switch(src, mode, typepath, "[prefix]-[mode_to_text(mode)]", switch_delay), holder)
+		else
+			src.change_mode(mode, holder, typepath)
+
+	/// Switch modes now
 	proc/change_mode(var/mode, var/mob/holder, var/obj/item/typepath)
+		if(src.mode == OMNI_MODE_DECON)
+			if(holder)
+				holder.closeContextActions() // Close deconstruction context actions
 		tooltip_rebuild = 1
 		var/obj/item/currtype = typepath
 		src.mode = mode
@@ -96,52 +130,27 @@
 		src.stamina_crit_chance = initial(currtype.stamina_crit_chance)
 		src.hit_type = initial(currtype.hit_type)
 		src.hitsound = initial(currtype.hitsound)
+		if(mode != OMNI_MODE_WELDING)
+			set_icon_state("[prefix]-[mode_to_text(mode)]")
+			if(src.animated_changes)
+				FLICK(("[prefix]-swap-[mode_to_text(mode)]"), src)
+		if(holder)
+			holder.update_inhands()
 		switch (mode)
 			if (OMNI_MODE_PRYING)
-				set_icon_state("[prefix]-prying")
 				src.setItemSpecial(/datum/item_special/tile_fling)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-prying"), src)
-
 			if (OMNI_MODE_PULSING)
-				set_icon_state("[prefix]-pulsing")
 				src.setItemSpecial(/datum/item_special/elecflash)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-pulsing"), src)
-
 			if (OMNI_MODE_SCREWING)
-				set_icon_state("[prefix]-screwing")
 				src.setItemSpecial(/datum/item_special/jab)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-screwing"), src)
-
 			if (OMNI_MODE_SNIPPING)
-				set_icon_state("[prefix]-snipping")
 				src.setItemSpecial(/datum/item_special/simple)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-snipping"), src)
-
 			if (OMNI_MODE_WRENCHING)
-				set_icon_state("[prefix]-wrenching")
 				src.setItemSpecial(/datum/item_special/simple)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-wrenching"), src)
-
 			if (OMNI_MODE_CUTTING)
-				set_icon_state("[prefix]-cutting")
 				src.setItemSpecial(/datum/item_special/double)
-
-				if(src.animated_changes)
-					FLICK(("[prefix]-swap-cutting"), src)
-
 			if(OMNI_MODE_WELDING)
 				src.setItemSpecial(/datum/item_special/flame)
-
 				if(get_fuel())
 					set_icon_state("[prefix]-weldingtool-on")
 					src.force = 15
@@ -150,11 +159,54 @@
 				else
 					set_icon_state("[prefix]-weldingtool-off")
 					welding = FALSE
-		if (holder)
-			holder.update_inhands()
+			if(OMNI_MODE_DECON)
+				src.setItemSpecial(/datum/item_special/simple)
+			if(OMNI_MODE_SOLDERING)
+				src.setItemSpecial(/datum/item_special/simple)
 
-	////WELDER STUFF
+	proc/pre_attackby(source, atom/target, mob/user)
+		if(src.mode == OMNI_MODE_DECON)
+			var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+			return decon_comp.pre_attackby_decon(target, user, src)
 
+	get_help_message(dist, mob/user)
+		if (istype(src, /obj/item/tool/omnitool/syndicate))
+			var/keybind = "Default: CTRL + X"
+			var/datum/keymap/current_keymap = user.client.keymap
+			for (var/key in current_keymap.keys)
+				if (current_keymap.keys[key] == "flex")
+					keybind = current_keymap.unparse_keybind(key)
+					break
+			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
+		else
+			return null
+
+	proc/mode_to_text(var/omni_mode) //! Example: OMNI_MODE_PRYING returns "prying"
+		switch(omni_mode)
+			if(OMNI_MODE_PRYING)
+				return "prying"
+			if(OMNI_MODE_SNIPPING)
+				return "snipping"
+			if(OMNI_MODE_WRENCHING)
+				return "wrenching"
+			if(OMNI_MODE_SCREWING)
+				return "screwing"
+			if(OMNI_MODE_PULSING)
+				return "pulsing"
+			if(OMNI_MODE_CUTTING)
+				return "cutting"
+			if(OMNI_MODE_WELDING)
+				return "welding"
+			if(OMNI_MODE_DECON)
+				return "decon"
+			if(OMNI_MODE_SOLDERING)
+				return "soldering"
+			else
+				return null
+
+	//
+	// ========== Welder stuff ==========
+	//
 	proc/get_fuel()
 		if (reagents)
 			return reagents.get_reagent_amount("fuel")
@@ -221,26 +273,12 @@
 			return 1 //welding, has fuel
 		return 0 //not welding
 
-	get_help_message(dist, mob/user)
-		if (istype(src, /obj/item/tool/omnitool/syndicate))
-			var/keybind = "Default: CTRL + X"
-			var/datum/keymap/current_keymap = user.client.keymap
-			for (var/key in current_keymap.keys)
-				if (current_keymap.keys[key] == "flex")
-					keybind = current_keymap.unparse_keybind(key)
-					break
-			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
-		else
-			return null
-
-
 /obj/item/tool/omnitool/syndicate
 	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
 	afterattack(obj/O, mob/user)
-
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
@@ -273,12 +311,29 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-
-
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
+
+/obj/item/tool/omnitool/duelconstruction_device
+	name = "duelconstruction device"
+	prefix = "salvager-duel"
+	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
+	animated_delay = TRUE
+	modes = list(OMNI_MODE_DECON, OMNI_MODE_SOLDERING)
+	mode = OMNI_MODE_DECON
+	decon_multiplier = 0.6
+	switch_delay = 1.4 SECONDS
+
+	attack_self(mob/user)
+		// Don't bother with the context menu. There are only two options to choose from!
+		if(!can_act(user) || !in_interact_range(src, user))
+			return FALSE
+		if(src.mode == OMNI_MODE_DECON)
+			src.change_mode_delayed(OMNI_MODE_SOLDERING, user, /obj/item/electronics/soldering, "soldering")
+		else if(src.mode == OMNI_MODE_SOLDERING)
+			src.change_mode_delayed(OMNI_MODE_DECON, user, /obj/item/deconstructor, "decon")
 
 /// Omnitool context action
 /datum/contextAction/omnitool
@@ -293,7 +348,7 @@
 	execute(var/obj/item/tool/omnitool/omnitool, var/mob/user)
 		if (!istype(omnitool))
 			return
-		omnitool.change_mode(src.mode, user, src.typepath)
+		omnitool.change_mode_delayed(src.mode, user, src.typepath, "")
 
 	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
 		if(!can_act(user) || !in_interact_range(omnitool, user))
@@ -335,3 +390,49 @@
 		icon_state = "weld"
 		mode = OMNI_MODE_WELDING
 		typepath = /obj/item/weldingtool
+
+/// Action bar delay for omnitool switching
+/datum/action/bar/icon/omnitool_switch
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/tools/omnitool.dmi'
+	icon_state = "omnitool-prying"
+	var/mob/user = null
+	var/obj/item/tool/omnitool/omni = null
+	var/mode
+	var/typepath
+
+	New(var/obj/item/tool/omnitool/tool, var/new_mode, var/item_path, var/icon_state, var/duration)
+		src.mode = new_mode
+		src.typepath = item_path
+		src.omni = tool
+		src.icon_state = icon_state
+		src.duration = duration
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, omni) > 0 || omni == null || user == null || (user.r_hand != omni && user.l_hand != omni))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.user = owner
+		if(BOUNDS_DIST(owner, omni) > 0 || omni == null || (user.r_hand != omni && user.l_hand != omni))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, omni) > 0 || omni == null || user == null || (user.r_hand != omni && user.l_hand != omni))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		omni.change_mode(src.mode, user, src.typepath)
+
+	onInterrupt()
+		if (owner)
+			boutput(owner, SPAN_ALERT("Tool switching interrupted!"))
+		..()

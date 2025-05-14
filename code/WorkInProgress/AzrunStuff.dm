@@ -1,23 +1,3 @@
-/obj/item/deconstructor/admin_crimes
-	// do not put this anywhere anyone can get it. it is for crime.
-	name = "(de/re)-construction device"
-	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
-	default_material = "miracle"
-
-	New()
-		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
-
-	pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
-			return
-		if (istype(target, /obj/item/electronics/frame))
-			var/obj/item/electronics/frame/F = target
-			F.deploy(user)
-			return ATTACK_PRE_DONT_ATTACK
-
-		finish_decon(target, user)
-		return ATTACK_PRE_DONT_ATTACK
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
