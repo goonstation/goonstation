@@ -3074,6 +3074,7 @@
 			else if (H.blood_volume <= 0 || isdead(H))
 				H.visible_message(SPAN_ALERT("[H] spontaneously dessicates, drained of all fluids! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
 				playsound(H, 'sound/impact_sounds/Flesh_Crush_1.ogg', 70, TRUE)
+				H.death(FALSE)
 				H.disfigured = TRUE
 				H.UpdateName()
 				H.bioHolder?.AddEffect("husk")
