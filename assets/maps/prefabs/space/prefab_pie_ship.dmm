@@ -40,7 +40,7 @@
 	},
 /area/noGenerate)
 "h" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/unsimulated/floor/white,
@@ -49,7 +49,7 @@
 /turf/unsimulated/floor/white,
 /area/noGenerate)
 "j" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /turf/unsimulated/floor/white,
@@ -60,7 +60,7 @@
 	},
 /area/noGenerate)
 "l" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /obj/adventurepuzzle/triggerable/light{
@@ -101,7 +101,7 @@
 /turf/unsimulated/floor/white,
 /area/noGenerate)
 "p" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 8
 	},
 /obj/adventurepuzzle/triggerable/light{
