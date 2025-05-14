@@ -8817,19 +8817,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aQy" = (
-/obj/mesh/grille/steel,
-/obj/window/crystal/reinforced,
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/plating,
-/area/abandonedship)
-"aQz" = (
-/obj/mesh/grille/steel,
-/obj/window/crystal/reinforced,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/abandonedship)
 "aQA" = (
@@ -9285,8 +9273,9 @@
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_locked";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
 /turf/simulated/floor/airless/scorched,
@@ -38304,7 +38293,7 @@ aaa
 aaa
 aaa
 aaa
-aQz
+aQy
 aQF
 nsI
 aQE
@@ -38316,7 +38305,7 @@ iYn
 aTk
 aTx
 aTF
-aQz
+aQy
 aaa
 aaa
 aaa
