@@ -2901,7 +2901,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "aze" = (
-/obj/storage/closet/biohazard,
+/obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "azj" = (
@@ -30947,8 +30947,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "pVs" = (
-/obj/machinery/vending/janitor,
 /obj/machinery/firealarm/west,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "pWc" = (
