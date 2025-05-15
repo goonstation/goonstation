@@ -39,7 +39,7 @@ THROWING DARTS
 	var/death_triggered = 0
 	var/online = 0
 	var/instant = 1
-	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", or "not_shown"
+	var/scan_category = IMPLANT_SCAN_CATEGORY_OTHER
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
@@ -80,7 +80,7 @@ THROWING DARTS
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.implant?.Add(src)
-			if (src.scan_category == "other" || src.scan_category == "unknown")
+			if (src.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || src.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 				var/image/img = H.prodoc_icons["other"]
 				img.icon_state = "implant-other"
 		else if (ismobcritter(M))
@@ -100,7 +100,7 @@ THROWING DARTS
 			H.implant -= src
 			var/has_other_imp = FALSE
 			for (var/obj/item/implant/I as anything in H.implant)
-				if (I.scan_category == "other" || I.scan_category == "unknown")
+				if (I.scan_category == IMPLANT_SCAN_CATEGORY_OTHER || I.scan_category == IMPLANT_SCAN_CATEGORY_UNKNOWN)
 					has_other_imp = TRUE
 					break
 			if (!has_other_imp)
@@ -252,7 +252,7 @@ THROWING DARTS
 	name = "cloner record implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	scan_category = "cloner"
+	scan_category = IMPLANT_SCAN_CATEGORY_CLONER
 	var/area/scanned_here
 
 	New()
@@ -310,7 +310,7 @@ THROWING DARTS
 	name = "health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	scan_category = "health"
+	scan_category = IMPLANT_SCAN_CATEGORY_HEALTH
 	var/healthstring = ""
 	uses_radio = 1
 	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
@@ -440,7 +440,7 @@ THROWING DARTS
 	icon_state = "implant-r"
 	var/uses = 1
 	impcolor = "r"
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	activation_emote = "shrug"
 	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 
@@ -480,7 +480,7 @@ THROWING DARTS
 	name = "signaler implant"
 	icon_state = "implant-r"
 	impcolor = "r"
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	activation_emote = "wink"
 	compatible_emotes = list("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
 	var/obj/item/device/radio/signaler/signaler = null
@@ -671,7 +671,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-r"
 	impcolor = "r"
 	instant = TRUE
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/active = FALSE
 	var/power = 1 //! Means different things for different implants, but in a general sense how Powerful the effect is. Scales additively with implant number.
 	var/big_message = " fucks up really bad why did you do this"
@@ -857,7 +857,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-mh"
 	impcolor = "r"
 	instant = 1
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/uses = 1
 	var/expire = TRUE
 	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
@@ -932,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	desc = "This thing looks really complicated."
 	icon_state = "implant-mh"
 	impcolor = "r"
-	scan_category = "syndicate"
+	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	pda_alert_frequency = FREQ_MARIONETTE_IMPLANT
 
 	/// A network address that this implant is linked to. Can be null.
@@ -1357,7 +1357,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "bullet"
 	desc = "A spent bullet."
-	scan_category = "not_shown"
+	scan_category = IMPLANT_SCAN_CATEGORY_NOT_SHOWN
 	var/bleed_time = 60
 	var/bleed_timer = 0
 	var/leaves_wound = TRUE
@@ -1758,7 +1758,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /* ============================================================ */
 
 /obj/item/implant/artifact
-	scan_category = "unknown"
+	scan_category = IMPLANT_SCAN_CATEGORY_UNKNOWN
 	var/cant_take_out = FALSE
 	var/artifact_implant_type = null
 	var/active = FALSE
