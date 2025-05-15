@@ -75,7 +75,6 @@
 			src.dir_locked = FALSE
 			src.base_form = TRUE
 			src.appearance = /mob/living/critter/mimic/
-			src.pixel_amount = 100
 			src.stop_hiding()
 		else
 			var/icon/I = getFlatIcon(target)
