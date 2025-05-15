@@ -70,12 +70,19 @@
 		. = ..()
 		src.stop_hiding()
 
-	proc/disguise_as(var/obj/target)
+	proc/disguise_as(var/obj/target, var/base_return=FALSE)
 		var/icon/I = getFlatIcon(target)
 		var/pixels = null
-		src.dir_locked = TRUE
-		src.base_form = FALSE
-		src.appearance = target
+		if (base_return)
+			src.dir_locked = FALSE
+			src.base_form = TRUE
+			src.appearance = /mob/living/critter/mimic/
+			src.pixel_amount = 100
+			src.stop_hiding()
+		else
+			src.dir_locked = TRUE
+			src.base_form = FALSE
+			src.appearance = target
 		src.dir = target.dir
 		src.invisibility = initial(src.invisibility)
 		src.alpha = max(src.alpha, 200)
@@ -139,7 +146,10 @@
 	//same health as a firebot
 	health_brute = 25
 	health_burn = 25
-	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle, /datum/targetable/critter/sting/mimic/antag_spawn)
+	add_abilities = list(/datum/targetable/critter/mimic,
+						/datum/targetable/critter/tackle,
+						/datum/targetable/critter/sting/mimic/antag_spawn,
+						/datum/targetable/critter/drop_disguise)
 	hand_count = 2
 	var/modifier = null
 	//give them an actual hand so they can open doors etc.
