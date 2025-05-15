@@ -515,12 +515,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
 			var/mob/living/critter/robotic/scuttlebot/mail/S = target
 			if (connected_pigeon != S)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
+				boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
 			boutput(user, "You stuff the goggles back into the P1ge0n. It powers down with a low whirr.")
 			S.drop_item()
+			new /obj/item/clothing/suit/pigeon(S.loc)
 			qdel(S)
 			qdel(src)
 		else
