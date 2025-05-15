@@ -71,8 +71,6 @@
 		src.stop_hiding()
 
 	proc/disguise_as(var/obj/target, var/base_return=FALSE)
-		var/icon/I = getFlatIcon(target)
-		var/pixels = null
 		if (base_return)
 			src.dir_locked = FALSE
 			src.base_form = TRUE
@@ -80,23 +78,28 @@
 			src.pixel_amount = 100
 			src.stop_hiding()
 		else
+			var/icon/I = getFlatIcon(target)
+			var/pixels = null
 			src.dir_locked = TRUE
 			src.base_form = FALSE
 			src.appearance = target
+			for(var/y = 1, y <= I.Height(), y++)
+				for(var/x = 1, x <= I.Width(), x++)
+					var/nullcheck = I.GetPixel(x, y)
+					if(nullcheck != null)
+						pixels++
+			src.pixel_amount = pixels
+
 		src.dir = target.dir
 		src.invisibility = initial(src.invisibility)
 		src.alpha = max(src.alpha, 200)
 		src.plane = initial(src.plane)
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
-		for(var/y = 1, y <= I.Height(), y++)
-			for(var/x = 1, x <= I.Width(), x++)
-				var/nullcheck = I.GetPixel(x, y)
-				if(nullcheck != null)
-					pixels++
-		src.pixel_amount = pixels
 
 	proc/start_hiding()
+		if (src.base_form)
+			return
 		if (src.is_hiding)
 			return
 		src.is_hiding = TRUE
@@ -105,6 +108,8 @@
 		src.UpdateIcon()
 
 	proc/stop_hiding()
+		if (src.base_form)
+			return
 		src.last_disturbed = TIME
 		if(!src.is_hiding)
 			return

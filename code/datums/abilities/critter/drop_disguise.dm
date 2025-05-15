@@ -9,7 +9,7 @@
 		if (..())
 			return TRUE
 		var/mob/living/critter/mimic/user = holder.owner
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, target, 2 SECONDS, /datum/targetable/critter/mimic/proc/drop, user, null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, null, 2 SECONDS, /datum/targetable/critter/drop_disguise/proc/drop, user, null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
 		boutput(holder.owner, SPAN_ALERT("You begin to shed your skin..."))
 		return FALSE
 
