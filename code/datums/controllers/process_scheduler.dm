@@ -109,9 +109,11 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/checkRunningProcesses()
 	for(var/datum/controller/process/p in running)
+		#ifndef UNIT_TESTS // unit tests are run in world/New
 		// only update processes needed in this game state
 		if (p.minimum_game_state < global.current_state)
 			continue
+		#endif
 
 		p.update()
 
@@ -136,9 +138,11 @@ var/global/datum/controller/processScheduler/processScheduler
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
 
+		#ifndef UNIT_TESTS // unit tests are run in world/New
 		// only queue processes needed in this game state
 		if (p.minimum_game_state < global.current_state)
 			continue
+		#endif
 
 		// If world.timeofday has rolled over, then we need to adjust.
 		if (TimeOfHour < last_start[p])
