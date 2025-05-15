@@ -88,6 +88,11 @@ THROWING DARTS
 			C.implants?.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
+
+		// signals
+		RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(on_life))
+		RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(on_death))
+
 		activate()
 
 	// called when an implant is removed from M
@@ -115,10 +120,10 @@ THROWING DARTS
 		src.implanted = 0
 
 	proc/activate()
-		online = 1
+		online = TRUE
 
 	proc/deactivate()
-		online = 0
+		online = FALSE
 
 	proc/on_life(var/mult = 1)
 		if(ishuman(src.owner))
@@ -145,11 +150,12 @@ THROWING DARTS
 		return
 
 	proc/on_crit()
-		crit_triggered = 1
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		crit_triggered = TRUE
 
 	proc/on_death()
-		death_triggered = 1
+		SHOULD_CALL_PARENT(TRUE)
+		death_triggered = TRUE
 		deactivate()
 
 	proc/get_coords()
