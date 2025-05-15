@@ -156,4 +156,6 @@
 		L.max_wclass = W_CLASS_SMALL
 
 /mob/living/critter/mimic/virtual
-		add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
+		add_abilities = list(/datum/targetable/critter/mimic,
+							/datum/targetable/critter/tackle,
+							/datum/targetable/vent_move)
