@@ -311,6 +311,9 @@ var/global/game_force_started = FALSE
 		for(var/turf/T in job_start_locations["AI"])
 			new /mob/living/silicon/ai/latejoin(T)
 
+	if(!processScheduler.isRunning)
+		processScheduler.start()
+
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
 	else if (total_clients() >= SEMIOVERLOAD_PLAYERCOUNT)
