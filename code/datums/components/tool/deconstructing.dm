@@ -1,14 +1,18 @@
 TYPEINFO(/datum/component/deconstructing)
 	initialization_args = list(
-		ARG_INFO("deconMult", DATA_INPUT_NUM, "Multiplier for extra deconstruction time due to complexity.", 1),
+		ARG_INFO("baseDuration", DATA_INPUT_NUM, "Minimum deconstruction time.", 2 SECONDS),
+		ARG_INFO("complexityMult", DATA_INPUT_NUM, "Multiplier for extra deconstruction time due to complexity.", 1),
 	)
 
+// Component used for tools that deconstruct things
 /datum/component/deconstructing
-	var/decon_mult = 1
+	var/base_duration = 2 SECONDS
+	var/complexity_mult = 1 //! How much complexity affects deconstruction time
 
-	Initialize(deconMult=1)
+	Initialize(baseDuration=2 SECONDS, complexityMult=1)
 		..()
-		src.decon_mult = deconMult
+		src.base_duration = baseDuration
+		src.complexity_mult = complexityMult
 
 	///
 	proc/finish_decon(atom/target, mob/user, atom/deconstructor)
@@ -50,9 +54,55 @@ TYPEINFO(/datum/component/deconstructing)
 		else if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
-			var/decon_time_extra = decon_complexity * 2.5 SECONDS * src.decon_mult
-			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,decon_tool,decon_time_extra), user)
+			var/decon_time = (decon_complexity * 2.5 SECONDS * src.complexity_mult) + src.base_duration
+			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,decon_tool,decon_time), user)
 		else
 			user.showContextActions(O.decon_contexts, O)
 			boutput(user, SPAN_ALERT("You need to use some tools on [target] before it can be deconstructed."))
 		return ATTACK_PRE_DONT_ATTACK
+
+/datum/action/bar/icon/deconstruct_obj
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "decon"
+	var/obj/target
+	var/obj/item/decon_tool
+	New(Obj, Decon, decon_time)
+		src.target = Obj
+		src.decon_tool = Decon
+		src.duration = decon_time
+		..()
+
+	onUpdate()
+		..()
+		if(!can_decon_target())
+			interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onStart()
+		..()
+		if(!can_decon_target())
+			interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onEnd()
+		..()
+		if(!can_decon_target())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (ismob(owner))
+			var/mob/M = owner
+			if (!(decon_tool in M.equipped_list()))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		var/datum/component/deconstructing/decon_comp = decon_tool.GetComponent(/datum/component/deconstructing)
+		decon_comp.finish_decon(target, owner, decon_tool)
+
+	onInterrupt()
+		if (target && owner)
+			boutput(owner, SPAN_ALERT("Deconstruction of [target] interrupted!"))
+		..()
+
+	proc/can_decon_target()
+		return BOUNDS_DIST(owner, target) == 0 || target != null || owner != null || issawingtool(decon_tool) || !(locate(/mob/living) in target) || target.can_deconstruct(owner)

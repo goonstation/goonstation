@@ -38,7 +38,6 @@
 
 		src.setItemSpecial(/datum/item_special/flame)
 
-		src.AddComponent(/datum/component/welding, src, WELDER_TYPE_FUEL)
 		src.AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 		// Welder + rods  -> Welder/Rods Assembly

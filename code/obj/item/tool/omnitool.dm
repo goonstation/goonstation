@@ -9,7 +9,6 @@
 	var/animated_changes = FALSE //! Play an animation after mode is switched
 	var/animated_delay = FALSE //! Play an animation with the action bar (if there is a delay)
 	var/switch_delay = 0 SECONDS //! Time to manually switch between modes, or 0 for instant switching.
-	var/decon_multiplier = 1 //! Multiply decon time, if available. Only affects the "extra" decon time added.
 
 	custom_suicide = 1
 
@@ -22,13 +21,9 @@
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
-		src.AddComponent(/datum/component/soldering)
-		src.AddComponent(/datum/component/deconstructing, src.decon_multiplier)
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 		if(OMNI_MODE_PRYING in src.modes)
 			src.change_mode(src.mode, null, /obj/item/crowbar)
-		else
-			src.change_mode(src.mode, null, /obj/item/deconstructor)
 		for(var/actionType in childrentypesof(/datum/contextAction/omnitool))
 			var/datum/contextAction/omnitool/action = new actionType()
 			if (action.mode in src.modes)
@@ -100,15 +95,17 @@
 
 	dropped(var/mob/user)
 		. = ..()
-		user.closeContextActions()
+		// Don't close context actions while deconstructing things
+		if((OMNI_MODE_DECON in src.modes) || user.isContextActionTarget(src))
+			user.closeContextActions()
 
 	/// Switch modes with a delay, if it exists
 	proc/change_mode_delayed(var/mode, var/mob/holder, var/obj/item/typepath, var/i_state)
 		if(switch_delay)
 			if(animated_delay)
 				flick("[src.prefix]-delay-[mode_to_text(mode)]", src)
-				playsound(src, 'sound/machines/click.ogg', 10, TRUE, pitch = 0.75)
-			actions.start(new/datum/action/bar/icon/omnitool_switch(src, mode, typepath, "[prefix]-[mode_to_text(mode)]", switch_delay), holder)
+				playsound(src, 'sound/machines/click.ogg', 10, TRUE, pitch = 1.25)
+			actions.start(new/datum/action/bar/icon/omnitool_switch(src, mode, typepath, "[prefix]-[mode_to_text(mode)]", switch_delay, src.animated_delay), holder)
 		else
 			src.change_mode(mode, holder, typepath)
 
@@ -320,11 +317,17 @@
 	name = "duelconstruction device"
 	prefix = "salvager-duel"
 	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
+	w_class = W_CLASS_NORMAL
 	animated_delay = TRUE
 	modes = list(OMNI_MODE_DECON, OMNI_MODE_SOLDERING)
 	mode = OMNI_MODE_DECON
-	decon_multiplier = 0.6
-	switch_delay = 1.4 SECONDS
+	switch_delay = 1.5 SECONDS
+
+	New()
+		..()
+		src.AddComponent(/datum/component/soldering, 1.5 SECONDS)
+		src.AddComponent(/datum/component/deconstructing, 0.5 SECONDS, 1)
+		src.change_mode(src.mode, null, /obj/item/deconstructor)
 
 	attack_self(mob/user)
 		// Don't bother with the context menu. There are only two options to choose from!
@@ -396,16 +399,19 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	icon_state = "omnitool-prying"
+	var/prev_icon_state = null // Save the previous state in case animation is interrupted
+	var/is_animated = FALSE // Change the icon_state if action is animated, in case animation flick ends early
 	var/mob/user = null
 	var/obj/item/tool/omnitool/omni = null
 	var/mode
 	var/typepath
 
-	New(var/obj/item/tool/omnitool/tool, var/new_mode, var/item_path, var/icon_state, var/duration)
+	New(var/obj/item/tool/omnitool/tool, var/new_mode, var/item_path, var/new_icon_state, var/duration, var/is_animated = FALSE)
 		src.mode = new_mode
 		src.typepath = item_path
 		src.omni = tool
-		src.icon_state = icon_state
+		src.icon_state = new_icon_state
+		src.is_animated = is_animated
 		src.duration = duration
 		..()
 
@@ -424,6 +430,9 @@
 		if(BOUNDS_DIST(owner, omni) > 0 || omni == null || (user.r_hand != omni && user.l_hand != omni))
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(src.is_animated)
+			src.prev_icon_state = src.omni.icon_state
+			src.omni.icon_state = src.icon_state
 
 	onEnd()
 		..()
@@ -435,4 +444,6 @@
 	onInterrupt()
 		if (owner)
 			boutput(owner, SPAN_ALERT("Tool switching interrupted!"))
+		if(src.is_animated)
+			src.omni.icon_state = src.prev_icon_state
 		..()

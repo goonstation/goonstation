@@ -134,7 +134,7 @@
 		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
 		attack_self(mob/user)
-			actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src, 1 SECOND), user)
 
 	disposing()
 		if(deconstructed_thing)
@@ -191,7 +191,9 @@
 			boutput(user, SPAN_ALERT("You deploy the [src]!"))
 			if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 				qdel(user.loc)
-			actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
+			var/datum/component/soldering/solder_comp = W.GetComponent(/datum/component/soldering)
+			var/solder_time = solder_comp ? solder_comp.solder_time : 1 SECOND
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src, solder_time), user)
 			//deploy()
 		return
 	else if(ispryingtool(W))
@@ -331,63 +333,6 @@
 	qdel(src)
 
 	return
-
-/datum/action/bar/icon/build_electronics_frame
-	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/ui/actions.dmi'
-	icon_state = "working"
-	var/obj/item/electronics/frame/F
-	var/density_check = FALSE
-
-	New(Frame)
-		F = Frame
-
-		if(F.deconstructed_thing)
-			density_check = F.deconstructed_thing.density
-		else
-			var/atom/A = F.store_type
-			density_check = initial(A.density)
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/turf/T = get_turf(F)
-		if(T.density || density_check && !T.can_crossed_by(F))
-			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
-			src.resumable = FALSE
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		if(owner && F)
-			F.deploy(owner)
 
 
 /obj/item/electronics/frame/proc/parts_check()
@@ -920,7 +865,7 @@
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/deconstructing, 1)
+		src.AddComponent(/datum/component/deconstructing)
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	disposing()
@@ -1030,51 +975,4 @@
 			decon_contexts += newcon
 
 		.+= length(decon_contexts)
-
-
-/datum/action/bar/icon/deconstruct_obj
-	duration = 2 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	icon = 'icons/ui/actions.dmi'
-	icon_state = "decon"
-	var/obj/target
-	var/obj/item/decon_tool
-	New(Obj, Decon, extra_time)
-		src.target = Obj
-		src.decon_tool = Decon
-		src.duration += extra_time
-		..()
-
-	onUpdate()
-		..()
-		if(!can_decon_target())
-			interrupt(INTERRUPT_ALWAYS)
-		return
-
-	onStart()
-		..()
-		if(!can_decon_target())
-			interrupt(INTERRUPT_ALWAYS)
-		return
-
-	onEnd()
-		..()
-		if(!can_decon_target())
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		if (ismob(owner))
-			var/mob/M = owner
-			if (!(decon_tool in M.equipped_list()))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-		var/datum/component/deconstructing/decon_comp = decon_tool.GetComponent(/datum/component/deconstructing)
-		decon_comp.finish_decon(target, owner, decon_tool)
-
-	onInterrupt()
-		if (target && owner)
-			boutput(owner, SPAN_ALERT("Deconstruction of [target] interrupted!"))
-		..()
-
-	proc/can_decon_target()
-		return BOUNDS_DIST(owner, target) == 0 || target != null || owner != null || issawingtool(decon_tool) || !(locate(/mob/living) in target) || target.can_deconstruct(owner)
 
