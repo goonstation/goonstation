@@ -228,7 +228,7 @@
 	#define COMSIG_MOB_LOGOUT "mob_logout"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-	/// When a mob dies
+	/// When a mob dies (gibbed bool)
 	#define COMSIG_MOB_DEATH "mob_death"
 	/// When a mob fakes death
 	#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
@@ -288,7 +288,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks (mult)
+		/// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
