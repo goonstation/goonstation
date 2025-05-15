@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient/meat/sheep
 	name = "sheep meat"
 	desc = "A slab of meat from a sheep."
-	heats_into = /obj/item/reagent_containers/food/snacks/steak_sheep
+	heats_into = /obj/item/reagent_containers/food/snacks/steak/sheep
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
