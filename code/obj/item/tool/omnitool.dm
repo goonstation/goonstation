@@ -299,13 +299,13 @@
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
 
-TYPEINFO(/obj/item/tool/omnitool/duelconstruction_device)
+TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 	mats = list("dense_property_ultra" = 10,
 				"heat_dense" = 10)
-/obj/item/tool/omnitool/duelconstruction_device
-	name = "duelconstruction device"
-	icon_state = "salvager-duel-deconstruction"
-	prefix = "salvager-duel"
+/obj/item/tool/omnitool/dualconstruction_device
+	name = "dualconstruction device"
+	icon_state = "salvager-dual-deconstruction"
+	prefix = "salvager-dual"
 	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
 	w_class = W_CLASS_NORMAL
 	animated_delay = TRUE

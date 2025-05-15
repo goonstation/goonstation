@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	decon
 		comname = "Duelconstructor"
 		desc = "Replacement duelconstructor.  Sometimes you lose things and sometimes people yeet them into space..."
-		comtype = /obj/item/tool/omnitool/duelconstruction_device
+		comtype = /obj/item/tool/omnitool/dualconstruction_device
 		price = 10
 
 	omnitool
