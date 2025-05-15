@@ -267,8 +267,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_radio()
-		src.mainframe.say_radio()
+	say_over_channel()
+		src.mainframe.say_over_channel()
 
 	say_main_radio(msg as text)
 		src.mainframe.say_main_radio(msg)
