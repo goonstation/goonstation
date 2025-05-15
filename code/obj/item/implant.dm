@@ -538,9 +538,6 @@ THROWING DARTS
 		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
 		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
-	on_death()
-		src.deactivate()
-
 /obj/item/implant/pod_wars/nanotrasen
 
 	activate()
@@ -659,6 +656,7 @@ THROWING DARTS
 	impcolor = "r"
 
 	on_death()
+		. = ..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			H.reagents.add_reagent("formaldehyde", 5)
