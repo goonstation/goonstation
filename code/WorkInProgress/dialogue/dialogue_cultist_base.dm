@@ -344,7 +344,7 @@
 		user.changeStatus("knockdown", 1 SECOND)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4
-		user.mob.unlock_medal("Waking Dream", TRUE)
+		user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
 	proc/lever_lv(mob/user)
@@ -355,7 +355,7 @@
 		shake_camera(user, 4, 4)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4
-		user.mob.unlock_medal("Waking Dream", TRUE)
+		user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
 /datum/dialogueMaster/controlpc
