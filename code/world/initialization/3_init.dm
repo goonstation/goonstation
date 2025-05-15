@@ -248,6 +248,9 @@
 			C.restart_dreamseeker_js()
 #endif
 
+	if(!processScheduler.isRunning)
+		processScheduler.start()
+
 	Z_LOG_DEBUG("World/Init", "Init() complete")
 	TgsInitializationComplete()
 	//sleep_offline = 1

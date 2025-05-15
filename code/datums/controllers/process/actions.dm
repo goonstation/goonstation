@@ -1,6 +1,7 @@
 
 /// handles timed player actions
 /datum/controller/process/actions
+	minimum_game_state = GAME_STATE_PREGAME
 	var/datum/controller/process/actions/action_controller
 
 	setup()

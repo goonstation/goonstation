@@ -38,6 +38,9 @@
 	/// Process name
 	var/name
 
+	/// What game state should this controller start running in
+	var/minimum_game_state = GAME_STATE_PLAYING
+
 	/// This controls how often the process would run under ideal conditions.
 	/// If the process scheduler sees that the process has finished, it will wait until
 	/// this amount of time has elapsed from the start of the previous run to start the

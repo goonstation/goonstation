@@ -132,6 +132,10 @@ var/global/datum/controller/processScheduler/processScheduler
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
 
+		// only queue processes needed in this game state
+		if (p.minimum_game_state < global.current_state)
+			continue
+
 		// If world.timeofday has rolled over, then we need to adjust.
 		if (TimeOfHour < last_start[p])
 			last_start[p] -= 36000
