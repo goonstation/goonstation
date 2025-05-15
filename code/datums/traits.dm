@@ -1250,6 +1250,31 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 2
 	afterlife_blacklisted = TRUE
 
+/datum/trait/butterfingers
+	name = "Butterfingers"
+	desc = "You have difficulty keeping hold of things."
+	id = "butterfingers"
+	icon_state = "placeholder"
+	points = 2
+	afterlife_blacklisted = TRUE
+
+	onLife(var/mob/owner, var/mult)
+		if(owner.stat && !owner.lying && can_act(owner))
+			return
+		if(!probmult(10))
+			return
+		var/mob/living/carbon/human/H = owner
+		if(!istype(H))
+			return
+
+		var/obj/item/target_item = H.equipped()
+		if(!target_item)
+			return
+		if(target_item.cant_drop)
+			return
+		H.drop_item(target_item)
+		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> accidentally drops [target_item]!"))
+
 /datum/trait/leftfeet
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
