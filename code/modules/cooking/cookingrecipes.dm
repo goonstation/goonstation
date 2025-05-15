@@ -1107,8 +1107,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/steak/synth,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/steak/monkey,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep = /obj/item/reagent_containers/food/snacks/steak/sheep,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers,
-	/obj/item/reagent_containers/food/snacks/ingredient/turkey = /obj/item/reagent_containers/food/snacks/turkey)
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet = /obj/item/reagent_containers/food/snacks/fish_fingers)
 
 /datum/cookingrecipe/oven/steak_ling
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
@@ -1123,7 +1122,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 /datum/cookingrecipe/oven/bacon
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1)
 	cookbonus = 8
-	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/
+
+/datum/cookingrecipe/oven/turkey
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/turkey = 1)
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/turkey
 
 /datum/cookingrecipe/oven/pie_strawberry
 	ingredients = list(\
