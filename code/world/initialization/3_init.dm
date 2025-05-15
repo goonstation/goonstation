@@ -265,7 +265,8 @@
 	lincolnshire = new
 
 #ifdef UNIT_TESTS
-	unit_tests.run_tests()
+	SPAWN (1)
+		unit_tests.run_tests()
 #endif
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
