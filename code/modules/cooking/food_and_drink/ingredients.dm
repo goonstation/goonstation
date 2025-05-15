@@ -64,6 +64,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "A slab of meat from a monkey."
 	heats_into = /obj/item/reagent_containers/food/snacks/steak/monkey
 
+/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep
+	name = "sheep meat"
+	desc = "A slab of meat from a sheep."
+	heats_into = /obj/item/reagent_containers/food/snacks/steak_sheep
+
 /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	name = "lesser slug"
 	desc = "Chopped up slug meat that's grown its own head, how talented."

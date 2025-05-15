@@ -1878,6 +1878,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		initial_reagents = list("cholesterol"=2)
 		meal_time_flags = MEAL_TIME_DINNER
 
+	sheep
+		name = "sheep steak"
+		desc = "Delicious mutton!"
+
 	ling
 		name = "mutagenic steak"
 		desc  = "It stopped moving. Thank god."
