@@ -615,8 +615,6 @@
 	src.dizziness = 0
 	src.jitteriness = 0
 
-	src.drop_juggle()
-
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
 #endif
@@ -2644,12 +2642,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 /mob/living/carbon/human/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/drop_juggle()
-	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
-
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
@@ -2709,15 +2705,16 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		var/items = ""
 		var/count = 0
 		for (var/atom/movable/juggled in src.juggling)
-			count ++
+			count++
 			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [juggled]"
-				continue
-			items += ", [juggled]"
+			else
+				items += ", [juggled]"
 		items = copytext(items, 3)
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
+		src.RegisterSignal(src, COMSIG_MOB_DEATH, PROC_REF(drop_juggle)) // if something more important needs this signal PLEASE take it
 	src.juggling += thing
 	if(isnull(src.juggle_dummy))
 		src.juggle_dummy = new(null)
