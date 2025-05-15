@@ -109,6 +109,10 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/checkRunningProcesses()
 	for(var/datum/controller/process/p in running)
+		// only update processes needed in this game state
+		if (p.minimum_game_state < global.current_state)
+			continue
+
 		p.update()
 
 		if (isnull(p)) // Process was killed
