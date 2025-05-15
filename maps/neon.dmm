@@ -30243,12 +30243,9 @@
 /turf/simulated/floor/plating/airless,
 /area/radiostation/hallway)
 "vAM" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	frequency = 1229;
-	id = "Chamber One Heat Exchange Pump Out";
-	on = 1;
-	target_pressure = 250
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
@@ -31862,16 +31859,6 @@
 /obj/decal/tile_edge/floorguide/arrow_s,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"wyU" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8;
-	frequency = 1229;
-	id = "Chamber One Heat Exchange Pump In";
-	on = 1;
-	target_pressure = 250
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
 "wza" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
@@ -76794,7 +76781,7 @@ fIi
 dGY
 wWe
 xkU
-wyU
+vAM
 vAM
 xkU
 xkU
