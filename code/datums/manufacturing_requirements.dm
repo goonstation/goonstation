@@ -284,10 +284,10 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	)
 
 /datum/manufacturing_requirement/mixed/dense_thermal
-	name = "High Density Thermal Conductor"
+	name = "Very High Density Thermal Conductor"
 	id = "heat_dense"
 	requirement_ids = list(
-		"dense",
+		"dense_super",
 		"heat",
 	)
 
