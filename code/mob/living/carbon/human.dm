@@ -622,7 +622,6 @@
 		var/datum/player/P = find_player(src.mind.key)
 		P.last_death_time = world.timeofday
 
-
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
 		if (src.unkillable && src.mind.get_player()?.dnr) //Unless they have dnr set in which case rip for good
@@ -649,85 +648,7 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
 		R.RevenantDeath()
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			CHANGELING BUSINESS
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-	if (C)
-		if (gibbed || C.points < 10)
-			if (C.points < 10)
-				boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
-			for (var/mob/living/critter/changeling/spider in C.hivemind)
-				boutput(spider, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
-				spider.hivemind_owner = 0
-			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-				boutput(obs, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
-				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (length(C.hivemind) > 0)
-				boutput(src, "Contact with the hivemind has been lost.")
-			C.hivemind = list()
-			if(C.master != C.temp_controller)
-				C.return_control_to_master()
 
-		else
-		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
-			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
-			SPAWN(0)
-				emote("deathgasp", dead_check = FALSE)
-				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
-				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
-				mind?.transfer_to(HS) //ok we're a headspider now
-				HS.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[C]")
-				HS.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[C]")
-				HS.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
-				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				HS.changeling = C
-				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
-				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
-				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
-				// but we do NOT tell the headspider it has access to the abilities.
-				src.detach_hud(C.hud)
-				C.owner = HS
-				C.reassign_hivemind_target_mob()
-				sleep(20 SECONDS)
-				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
-					return
-				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
-				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
-				HS.set_loc(get_turf(src)) //be free!!!
-				src.visible_message(SPAN_ALERT("<B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!"))
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				remove_ability_holder(/datum/abilityHolder/changeling/)
-
-				if(src.client)
-					src.ghostize()
-					boutput(src, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
-
-				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
-
-				if(src.wear_mask)
-					var/obj/item/dropped_mask = src.wear_mask
-					src.u_equip(dropped_mask)
-					dropped_mask.set_loc(src.loc)
-				if(src.glasses)
-					var/obj/item/dropped_glasses = src.glasses
-					src.u_equip(dropped_glasses)
-					dropped_glasses.set_loc(src.loc)
-				if(src.head)
-					var/obj/item/dropped_headwear = src.head
-					src.u_equip(dropped_headwear)
-					dropped_headwear.set_loc(src.loc)
-				if(src.ears)
-					var/obj/item/dropped_earwear = src.ears
-					src.u_equip(dropped_earwear)
-					dropped_earwear.set_loc(src.loc)
-				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
-				qdel(organ_head)
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			NORMAL BUSINESS
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp", dead_check = FALSE) //let the world KNOW WE ARE DEAD
 

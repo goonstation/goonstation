@@ -228,7 +228,7 @@
 	#define COMSIG_MOB_LOGOUT "mob_logout"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-	/// When a mob dies
+	/// When a mob dies (gibbed bool)
 	#define COMSIG_MOB_DEATH "mob_death"
 	/// When a mob fakes death
 	#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
