@@ -607,8 +607,7 @@
 	if (isdead(src))
 		return
 
-	if (health_mon)
-		health_mon.icon_state = "-1"
+	src.update_health_monitor_icon()
 
 	src.need_update_item_abilities = 1
 	setdead(src)
@@ -739,8 +738,8 @@
 	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
 		src.equipped():AttackSelf(src)
 
-	src.canmove = 0
-	src.lying = 1
+	src.canmove = FALSE
+	src.lying = TRUE
 	src.last_sleep = 0
 	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
@@ -771,7 +770,6 @@
 		src.mind.register_death()
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
-	//src.icon_state = "dead"
 
 	if (!src.suiciding)
 		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
