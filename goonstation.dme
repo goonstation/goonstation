@@ -2043,6 +2043,7 @@
 #include "code\modules\transport\shuttle\shuttle_turfobjs.dm"
 #include "code\modules\tutorials\blob_tutorial.dm"
 #include "code\modules\tutorials\flock_tutorial.dm"
+#include "code\modules\tutorials\newbee_tutorial.dm"
 #include "code\modules\tutorials\tutorial_base.dm"
 #include "code\modules\unit_tests\_map_correctness.dm"
 #include "code\modules\unit_tests\_unit_tests.dm"

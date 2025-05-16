@@ -1,0 +1,1591 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"am" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"az" = (
+/obj/maptext_spawner{
+	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
+	},
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"aJ" = (
+/turf/unsimulated/floor/greenblack,
+/area/tutorial/newbee)
+"aP" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/mask/breath,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"bj" = (
+/turf/unsimulated/floor/black/corner{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"bn" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Kill the clown to finish.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"br" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Space ahead! Space kills the spaceman!</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"cB" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Control + click on it to pull it and move it.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"cH" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Click the backpack with an empty hand to open it</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"di" = (
+/obj/table/reinforced/auto,
+/obj/item/crowbar,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orange/side,
+/area/tutorial/newbee)
+"dR" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"ea" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Then get a wrench and use it on the remaining girder</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"fs" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/greenblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"fK" = (
+/turf/unsimulated/floor/purplewhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"fY" = (
+/turf/unsimulated/floor/redblack,
+/area/tutorial/newbee)
+"gS" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Activate the welder, and use it on the wall. Your space helmet</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"ho" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Congrats! You can now do some things!</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"iw" = (
+/turf/simulated/wall/auto/supernorn,
+/area/tutorial/newbee)
+"iC" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>The door to your right has no power. </span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"iM" = (
+/obj/table/reinforced/auto,
+/obj/item/tank/oxygen{
+	pixel_x = -18
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_x = 8
+	},
+/obj/item/tank/pocket/oxygen{
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"iV" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Control + click far away to stop pulling</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"jH" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"kq" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>A wall is in your way. Grab a welding tool from the toolbox</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"kW" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"ld" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"ne" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"nE" = (
+/turf/unsimulated/floor/purplewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"or" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Inside the blue toolbox is a wrench.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"oB" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"oJ" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Walk through the space area to continue.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"pd" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"pe" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"po" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/red,
+/area/tutorial/newbee)
+"pG" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"pS" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Equip the space suit, helmet, and breath mask with V</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"pU" = (
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"qa" = (
+/turf/unsimulated/floor/red,
+/area/tutorial/newbee)
+"qf" = (
+/turf/unsimulated/floor/arrival,
+/area/tutorial/newbee)
+"qj" = (
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"rj" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/purplewhite,
+/area/tutorial/newbee)
+"so" = (
+/turf/unsimulated/floor/purplewhite,
+/area/tutorial/newbee)
+"sU" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Use the wrench on the girder to deconstruct it.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"sZ" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Welcome to the brief SS13 tutorial.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"tm" = (
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"tv" = (
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"tL" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Uh oh, attack of the angry mice!</span>"
+	},
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"uk" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/welding,
+/turf/unsimulated/floor/bluewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"ux" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"uH" = (
+/obj/machinery/light/incandescent,
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/brute,
+/turf/unsimulated/floor/redwhite,
+/area/tutorial/newbee)
+"uL" = (
+/obj/maptext_spawner{
+	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"uT" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/brute,
+/turf/unsimulated/floor/redwhite,
+/area/tutorial/newbee)
+"vb" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"wn" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"wp" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>or welding helmet protects your eyes from welding damage</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"wr" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"wt" = (
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"wD" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/tutorial/newbee)
+"wM" = (
+/obj/table/reinforced/auto,
+/obj/item/device/light/flashlight{
+	pixel_y = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orangeblack,
+/area/tutorial/newbee)
+"wY" = (
+/obj/table/reinforced/auto,
+/obj/item/crowbar,
+/turf/unsimulated/floor/orange/side,
+/area/tutorial/newbee)
+"xX" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"zE" = (
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"zV" = (
+/obj/machinery/light/incandescent,
+/mob/living/critter/small_animal/mouse/mad,
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"zY" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>The water tank is in your way.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"AS" = (
+/obj/maptext_spawner{
+	loc_maptext = "<span class='c pixel sh'>E to switch hands</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Bv" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Bw" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/turf/unsimulated/floor/orange,
+/area/tutorial/depowered)
+"BA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/maptext_spawner{
+	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"BD" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Click the backpack with an item in hand to store it</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"BP" = (
+/turf/unsimulated/floor/black/corner{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"Ck" = (
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Cy" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"CF" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 128;
+	loc_maptext = "<span class='c pixel sh'>Take off your space suit and helmet by clicking on them with an empty hand.</span>";
+	loc_maptext_x = 16
+	},
+/turf/unsimulated/floor/greenblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Da" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 128;
+	loc_maptext = "<span class='c pixel sh'>Press the 4 hotkey to switch to Harm intent and click the mouse to kill it!</span>";
+	loc_maptext_x = 16
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"DI" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"DQ" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Ef" = (
+/obj/item/swords/pirate,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Ff" = (
+/obj/structure/girder,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Fw" = (
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"FM" = (
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Gf" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orangeblack,
+/area/tutorial/newbee)
+"Go" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Click on yourself with a patch to use it</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"GT" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Click+drag the toolbox onto you to open it and grab the wrench.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"HV" = (
+/turf/space,
+/area/space)
+"If" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Pick up a crowbar and use it on the door to open it.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Ir" = (
+/obj/machinery/door/airlock/pyro/alt,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"IY" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Jd" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Kk" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"Kz" = (
+/obj/fakeobject/teleport_pad,
+/obj/landmark/tutorial_start,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Lr" = (
+/obj/item/scrapweapons/weapons/dagger,
+/turf/unsimulated/floor/redblack,
+/area/tutorial/newbee)
+"LD" = (
+/obj/landmark/tutorial_clown,
+/turf/unsimulated/floor/red,
+/area/tutorial/newbee)
+"LQ" = (
+/obj/machinery/power/apc{
+	cell_type = 0
+	},
+/turf/unsimulated/floor,
+/area/space,
+/area/tutorial/depowered)
+"Ni" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orange/side,
+/area/tutorial/newbee)
+"Nu" = (
+/turf/unsimulated/floor/orangeblack,
+/area/tutorial/newbee)
+"NL" = (
+/turf/unsimulated/floor/orange/side,
+/area/tutorial/newbee)
+"NN" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"NO" = (
+/turf/cordon,
+/area/space)
+"NP" = (
+/turf/unsimulated/floor/purplewhite{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"OP" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Pi" = (
+/obj/item/bat,
+/turf/unsimulated/floor/redblack,
+/area/tutorial/newbee)
+"Qb" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"QI" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>The next area is dark. Grab a flashlight to help you navigate</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"QT" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>To move around, use WASD. Walk into the door to the right.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Rd" = (
+/turf/unsimulated/floor/bluewhite,
+/area/tutorial/newbee)
+"Rz" = (
+/obj/machinery/light/small/floor/warm,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Tp" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"TD" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>There is a girder blocking your way.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"TN" = (
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Ud" = (
+/obj/reagent_dispensers/watertank,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Ui" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"UE" = (
+/turf/unsimulated/floor/purplewhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"UX" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Ve" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Vh" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Vy" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Grab an oxygen tank and click the button on the top left to turn it on.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"VV" = (
+/turf/unsimulated/floor/redwhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Wh" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"WM" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Yy" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>You can store items in your backpack.</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Zf" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ZE" = (
+/obj/maptext_spawner{
+	loc_maptext_width = 96;
+	loc_maptext = "<span class='c pixel sh'>Use C when the flashlight is in your hand to activate it</span>"
+	},
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+
+(1,1,1) = {"
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(2,1,1) = {"
+NO
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+NO
+NO
+NO
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+"}
+(3,1,1) = {"
+NO
+wD
+oB
+Wh
+pU
+Tp
+WM
+wt
+wD
+NO
+NO
+NO
+NO
+wD
+Wh
+oB
+oB
+qa
+po
+wD
+NO
+"}
+(4,1,1) = {"
+NO
+wD
+sZ
+QT
+dR
+oB
+oB
+qf
+wD
+wD
+wD
+wD
+wD
+wD
+oB
+ho
+bn
+Lr
+qa
+wD
+NO
+"}
+(5,1,1) = {"
+NO
+wD
+tv
+tv
+dR
+oB
+Kz
+qf
+wD
+wD
+Wh
+oB
+oB
+Ir
+oB
+tv
+Ef
+fY
+LD
+wD
+NO
+"}
+(6,1,1) = {"
+NO
+wD
+tv
+tv
+dR
+oB
+oB
+qf
+wD
+wD
+Ud
+wD
+wD
+wD
+oB
+tv
+tv
+Pi
+qa
+wD
+NO
+"}
+(7,1,1) = {"
+NO
+wD
+oB
+Wh
+Fw
+DI
+Zf
+FM
+wD
+wD
+oB
+wD
+LQ
+wD
+Wh
+oB
+oB
+qa
+po
+wD
+NO
+"}
+(8,1,1) = {"
+NO
+wD
+wD
+wD
+Qb
+wD
+wD
+wD
+wD
+wD
+oB
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+"}
+(9,1,1) = {"
+NO
+wD
+oB
+oB
+kW
+ne
+uL
+wD
+UE
+UE
+UE
+UE
+nE
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(10,1,1) = {"
+NO
+wD
+iC
+If
+wr
+oB
+wY
+wD
+zY
+cB
+zE
+iV
+so
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(11,1,1) = {"
+NO
+wD
+am
+tv
+wr
+oB
+di
+wD
+am
+tv
+zE
+tv
+rj
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(12,1,1) = {"
+NO
+wD
+tv
+tv
+wr
+oB
+wY
+wD
+tv
+tv
+zE
+tv
+so
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(13,1,1) = {"
+NO
+wD
+oB
+oB
+vb
+DQ
+AS
+wD
+fK
+fK
+fK
+fK
+NP
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(14,1,1) = {"
+NO
+wD
+wD
+wD
+Bw
+wD
+wD
+wD
+wD
+wD
+iw
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+"}
+(15,1,1) = {"
+NO
+wD
+ne
+ne
+ne
+ne
+uL
+wD
+ux
+ux
+ux
+ux
+uk
+wD
+NN
+NN
+CF
+fs
+OP
+wD
+NO
+"}
+(16,1,1) = {"
+NO
+wD
+TD
+or
+GT
+sU
+NL
+wD
+kq
+gS
+wp
+ea
+Rd
+Ir
+Yy
+BD
+tv
+cH
+aJ
+wD
+NO
+"}
+(17,1,1) = {"
+NO
+wD
+am
+tv
+tv
+tv
+Ni
+wD
+am
+tv
+tv
+tv
+az
+wD
+am
+tv
+tv
+tv
+uL
+wD
+NO
+"}
+(18,1,1) = {"
+NO
+wD
+tv
+tv
+tv
+tv
+NL
+wD
+tv
+tv
+tv
+tv
+Rd
+wD
+tv
+tv
+tv
+tv
+aJ
+wD
+NO
+"}
+(19,1,1) = {"
+NO
+wD
+DQ
+DQ
+DQ
+DQ
+AS
+wD
+Jd
+Jd
+Jd
+Jd
+AS
+wD
+wn
+wn
+wn
+wn
+UX
+wD
+NO
+"}
+(20,1,1) = {"
+NO
+wD
+wD
+wD
+Ff
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+pe
+pe
+xX
+pe
+pe
+wD
+NO
+"}
+(21,1,1) = {"
+NO
+wD
+IY
+VV
+Da
+VV
+Ve
+wD
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+wD
+NO
+"}
+(22,1,1) = {"
+NO
+wD
+tL
+tv
+tv
+Go
+uT
+wD
+HV
+HV
+TN
+HV
+HV
+TN
+HV
+HV
+HV
+HV
+HV
+wD
+NO
+"}
+(23,1,1) = {"
+NO
+wD
+zV
+tv
+tv
+tv
+uH
+wD
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+TN
+HV
+TN
+wD
+NO
+"}
+(24,1,1) = {"
+NO
+wD
+Cy
+tv
+tv
+tv
+uT
+wD
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+HV
+wD
+NO
+"}
+(25,1,1) = {"
+NO
+wD
+Kk
+pG
+tm
+pG
+Vh
+wD
+HV
+HV
+HV
+HV
+HV
+TN
+HV
+HV
+HV
+HV
+TN
+wD
+NO
+"}
+(26,1,1) = {"
+NO
+wD
+wD
+wD
+Ff
+wD
+wD
+wD
+BA
+pe
+xX
+pe
+pe
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+"}
+(27,1,1) = {"
+NO
+wD
+Nu
+Nu
+Nu
+Nu
+Nu
+wD
+Ck
+Ck
+Ck
+Ck
+bj
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(28,1,1) = {"
+NO
+wD
+Nu
+QI
+Nu
+ZE
+Nu
+wD
+br
+pS
+Vy
+oJ
+Ui
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(29,1,1) = {"
+NO
+wD
+Gf
+tv
+Nu
+tv
+wM
+wD
+am
+tv
+tv
+tv
+aP
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(30,1,1) = {"
+NO
+wD
+Nu
+tv
+Nu
+tv
+Nu
+wD
+tv
+tv
+tv
+tv
+iM
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(31,1,1) = {"
+NO
+wD
+Nu
+Nu
+Nu
+Nu
+Nu
+wD
+qj
+qj
+qj
+qj
+BP
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(32,1,1) = {"
+NO
+wD
+wD
+wD
+Qb
+wD
+wD
+wD
+wD
+wD
+Qb
+wD
+wD
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(33,1,1) = {"
+NO
+wD
+TN
+ld
+TN
+wD
+Bv
+TN
+TN
+TN
+TN
+wD
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(34,1,1) = {"
+NO
+wD
+jH
+Rz
+TN
+wD
+TN
+TN
+wD
+wD
+wD
+wD
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(35,1,1) = {"
+NO
+wD
+TN
+pd
+wD
+wD
+TN
+TN
+TN
+TN
+Bv
+wD
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(36,1,1) = {"
+NO
+wD
+TN
+TN
+wD
+wD
+wD
+wD
+wD
+wD
+TN
+wD
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(37,1,1) = {"
+NO
+wD
+TN
+jH
+TN
+TN
+Bv
+TN
+pd
+TN
+TN
+ld
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(38,1,1) = {"
+NO
+wD
+ld
+TN
+TN
+TN
+ld
+TN
+TN
+Bv
+TN
+TN
+TN
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(39,1,1) = {"
+NO
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(40,1,1) = {"
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
