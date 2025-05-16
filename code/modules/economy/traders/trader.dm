@@ -99,10 +99,10 @@
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		src.set_up_goods()
 
-	proc/set_up_goods()
+	proc/set_up_goods(var/should_reset_buylist = TRUE)
 		// This is called in New and also when the trader comes back from being away for a while
 		// It basically clears out and rejumbles their commodity lists to keep things fresh
-		src.goods_buy = new/list()
+		if (should_reset_buylist) src.goods_buy = new/list()
 		src.goods_sell = new/list()
 		src.wipe_cart()
 
@@ -119,7 +119,7 @@
 		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
 		for (var/rarity in src.rarities)
 			for (var/i in 1 to src.amount_of_items_per_rarity[rarity])
-				if(length(goods_buy_temp[rarity]) >= i)
+				if(should_reset_buylist && length(goods_buy_temp[rarity]) >= i)
 					var/buy_com = pick(goods_buy_temp[rarity])
 					var/datum/commodity/new_buy_com = new buy_com(src)
 					src.goods_buy += new_buy_com
