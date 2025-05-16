@@ -2223,6 +2223,25 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
 
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (!ishuman(pilot) || !pilot.statusEffects)
+			return ..(lifeform_inside_me, breath_request, mult)
+
+		for (var/effect in pilot.statusEffects)
+			if (istype(effect, /datum/statusEffect/drunk))
+				var perpname = pilot.name
+				if (pilot:wear_id && pilot:wear_id:registered)
+					perpname = pilot:wear_id:registered
+
+				var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+				if (sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
+					sec_record["criminal"] = ARREST_STATE_ARREST
+					sec_record["mi_crim"] = "DUI."
+					var/mob/living/carbon/human/H = pilot
+					H.update_arrest_icon()
+
+		return ..(lifeform_inside_me, breath_request, mult)
+
 	//Colours
 	black
 		body_type = "car"
