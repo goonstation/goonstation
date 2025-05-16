@@ -507,10 +507,6 @@
 /obj/item/scrapweapons/weapons/dagger,
 /turf/unsimulated/floor/redblack,
 /area/tutorial/newbee)
-"LD" = (
-/obj/landmark/tutorial_clown,
-/turf/unsimulated/floor/red,
-/area/tutorial/newbee)
 "LQ" = (
 /obj/machinery/power/apc{
 	cell_type = 0
@@ -780,7 +776,7 @@ oB
 tv
 Ef
 fY
-LD
+qa
 wD
 NO
 "}

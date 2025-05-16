@@ -443,6 +443,7 @@
 #include "code\datums\hud\shell.dm"
 #include "code\datums\hud\silicon.dm"
 #include "code\datums\hud\storage.dm"
+#include "code\datums\hud\tutorial.dm"
 #include "code\datums\hud\vision.dm"
 #include "code\datums\hud\vision_impair.dm"
 #include "code\datums\hud\wraith.dm"

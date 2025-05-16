@@ -3,11 +3,6 @@
 	icon_state = "green"
 	sound_group = "newbee"
 
-/obj/landmark/tutorial_clown
-	name = "The Clown You Kill To End The Tutorial"
-	icon = 'icons/map-editing/job_start.dmi'
-	icon_state = "clown"
-
 /mob/new_player/verb/play_tutorial()
 	set name = "Play Tutorial"
 	set desc = "Launch the in-game tutorial!"
@@ -23,6 +18,7 @@
 	name = "Newbee tutorial"
 	var/mob/living/carbon/human/tutorial/newbee = null
 	var/mob/new_player/origin_mob
+	var/datum/hud/tutorial/tutorial_hud
 	region_type = /datum/mapPrefab/allocated/newbee_tutorial
 
 	New(mob/M)
@@ -32,12 +28,20 @@
 		src.origin_mob = M
 		src.newbee = new(src.initial_turf, M.client.preferences.AH, M.client.preferences, TRUE)
 		src.owner = src.newbee
+		src.tutorial_hud = new()
+		src.tutorial_hud.add_client(M.client)
 
 	Start()
 		if (..())
 			src.origin_mob.close_spawn_windows()
 			src.origin_mob.mind.transfer_to(src.newbee)
 			src.newbee.addAbility(/datum/targetable/newbee_tutorial_exit)
+
+	ShowStep()
+		. = ..()
+		var/datum/tutorialStep/T = src.steps[src.current_step]
+		src.tutorial_hud.update_step(T.name)
+		src.tutorial_hud.update_text(T.instructions)
 
 	Finish()
 		if(..())
@@ -46,6 +50,29 @@
 			qdel(src)
 
 /datum/tutorial_base/regional/newbee/proc/AddNewbeeSteps()
+	src.AddStep(/datum/tutorialStep/newbee/welcome)
+	src.AddStep(/datum/tutorialStep/newbee/movement)
+	src.AddStep(/datum/tutorialStep/newbee/powered_doors)
+	src.AddStep(/datum/tutorialStep/newbee/items)
+	src.AddStep(/datum/tutorialStep/newbee/unpowered_doors)
+	src.AddStep(/datum/tutorialStep/newbee/hand_swap)
+	src.AddStep(/datum/tutorialStep/newbee/storage_inhand)
+	src.AddStep(/datum/tutorialStep/newbee/storage_clickdrag)
+	src.AddStep(/datum/tutorialStep/newbee/examining)
+	src.AddStep(/datum/tutorialStep/newbee/deconstructing_girder)
+	src.AddStep(/datum/tutorialStep/newbee/basic_combat)
+	src.AddStep(/datum/tutorialStep/newbee/drop_item)
+	src.AddStep(/datum/tutorialStep/newbee/healing)
+	src.AddStep(/datum/tutorialStep/newbee/activating_items)
+	src.AddStep(/datum/tutorialStep/newbee/traversing_maints)
+	src.AddStep(/datum/tutorialStep/newbee/equipping_spacesuit)
+	src.AddStep(/datum/tutorialStep/newbee/oxygen)
+	src.AddStep(/datum/tutorialStep/newbee/traversing_space)
+	src.AddStep(/datum/tutorialStep/newbee/unequipping_worn_items)
+	src.AddStep(/datum/tutorialStep/newbee/backpack_storage)
+	src.AddStep(/datum/tutorialStep/newbee/welding)
+	src.AddStep(/datum/tutorialStep/newbee/pull)
+	src.AddStep(/datum/tutorialStep/newbee/intents)
 	src.AddStep(/datum/tutorialStep/newbee/murder)
 	src.AddStep(/datum/tutorialStep/newbee/finished)
 
@@ -60,43 +87,67 @@
 
 /datum/tutorialStep/newbee/welcome
 	name = "Welcome to Space Station 13!"
-	instructions = "This tutorial will get you familiar with the basics of the game. If at any point you get stuck or want to restart the tutorial, use the 'emergency tutorial stop' verb in the <b>Commands</b> tab, top right."
+	instructions = "This tutorial covers the basics of the game.<br>You can leave the tutorial at any time by clicking the 'Exit Tutorial' button top-left."
+
+	New()
+		. = ..()
+
+	SetUp()
+		. = ..()
+
+	TearDown()
+		. = ..()
+
+	PerformAction(action, context)
+		. = ..()
+
+	MayAdvance()
+		. = ..()
+
 
 /datum/tutorialStep/newbee/movement
 	name = "Movement"
-	instructions = "Use 'W'/'A'/'S'/'D' to move around. Move north to the marker to continue."
+	instructions = "Use 'W'/'A'/'S'/'D' to move around.<br>Move north to the marker to continue."
 
 /datum/tutorialStep/newbee/powered_doors
 	name = "Doors"
-	instructions = "Powered doors will open when you walk into them. Bump into the door to open it, and head into the next room."
+	instructions = "Powered doors will open when you walk into them.<br>Head into the next room."
 
 /datum/tutorialStep/newbee/items
 	name = "Items"
-	instructions = "You can pick up items by left-clicking on them with an open hand. Pick up the crowbar to continue."
+	instructions = "Pick up items by clicking them.<br>Pick up the crowbar to continue."
 
 /datum/tutorialStep/newbee/unpowered_doors
 	name = "Unpowered Doors"
-	instructions = "This door is unpowered. Click on the door with a crowbar to open it and head into the next room."
+	instructions = "Unpowered doors can be opened with crowbars.<br>Open this unpowered door to head into the next room."
 
 /datum/tutorialStep/newbee/hand_swap
 	name = "Swapping Hands"
-	instructions = "You can swap whether your left or right hand is active with 'E'. You can only pick up items with an empty hand."
+	instructions = "Swap which hand is active with by pressing 'E'.<br>You can only pick up items with an empty hand."
 
-/datum/tutorialStep/newbee/storge_clickdrag
-	name = "Toolboxes"
-	instructions = "You can look through storage items by standing next to them and <b>click-dragging</b> it to your character. Retreieve the <b>wrench</b> from the toolbox below."
+/datum/tutorialStep/newbee/drop_item
+	name = "Drop Item"
+	instructions = "Drop the item in your active hand by pressing 'Q'."
+
+/datum/tutorialStep/newbee/storage_inhands
+	name = "Opening Storage In-hand"
+	instructions = "With a toolbox in-hand, press 'C' to open it."
+
+/datum/tutorialStep/newbee/storage_clickdrag
+	name = "Opening Nearby Storage"
+	instructions = "Click-drag a storage item to your character to look through it.<br>Retreieve the wrench from the toolbox below."
 
 /datum/tutorialStep/newbee/examining
 	name = "Examining Things"
-	instructions = "You can hold 'ALT' and left-click something to <b>examine</b> it. Text in blue boxes are <i>Hints</i> that let you know special interactions or uses."
+	instructions = "Hold 'ALT' and click something to examine it.<br>Text in blue boxes are usage hints."
 
 /datum/tutorialStep/newbee/deconstructing_girder
 	name = "Deconstructing a Girder"
-	instructions = "Examining the <b>Girder</b> reveals we need the <b>wrench</b> to deconstruct it. Use the wrench on the girder."
+	instructions = "Examining the <b>Girder</b> reveals we need the <b>wrench</b> to deconstruct it.<br>Use the wrench on the girder."
 
 /datum/tutorialStep/newbee/basic_combat
 	name = "Basic Combat"
-	instructions = "Uh oh, attack of the angry mice! Defend yourself by clicking on the mouse with your crowbar or wrench!"
+	instructions = "Uh oh, attack of the angry mice!<br>Switch to harm intent by pressing '4' and click on the mouse!"
 
 /datum/tutorialStep/newbee/drop_item
 	name = "Dropping Items"
@@ -104,7 +155,7 @@
 
 /datum/tutorialStep/newbee/healing
 	name = "Healing Up"
-	instructions = "Keep an eye on your health in the top-right corner. Get a <b>patch</b> from the first aid kits, then click on yourself to apply it."
+	instructions = "Your health is in the top-right corner.<br>Get a <b>patch</b> from the first aid kits, then click on yourself to apply it."
 
 /datum/tutorialStep/newbee/activating_items
 	name = "Using Items"
@@ -116,19 +167,19 @@
 
 /datum/tutorialStep/newbee/equipping_spacesuit
 	name = "Equipping Gear"
-	instructions = "You need EVA gear to survive in the cold depths of space. You can equip clothing items by pressing 'V'. Equip the space suit, helmet, and breath mask."
+	instructions = "You can equip clothing items by pressing 'V'.<br>Equip the space suit, helmet, and breath mask."
 
 /datum/tutorialStep/newbee/oxygen
 	name = "Keep Breathing"
-	instructions = "Pick up an oxygen tank and left-click the button on the top left to turn on internals."
+	instructions = "Pick up an oxygen tank, then click the 'internals' button on the top left to turn on internals."
 
 /datum/tutorialStep/newbee/traversing_space
 	name = "Traversing Space"
-	instructions = "While in space, you will slowly drift between solid footing. Get through this space area to the other side by heading south-west."
+	instructions = "You slowly drift in open space.<br>Get through this space area to the other side by heading south-west."
 
 /datum/tutorialStep/newbee/unequipping_worn_items
 	name = "Unequipping Items"
-	instructions = "EVA suits are safe, but they make you move considerably slower on foot! Take off your space suit and helmet by clicking on them with an empty hand."
+	instructions = "Space suits slow you down on solid ground.<br>Take off your space suit and helmet by clicking on them with an empty hand."
 
 /datum/tutorialStep/newbee/backpack_storage
 	name = "Backpack Storage"
@@ -153,13 +204,10 @@
 
 	SetUp()
 		. = ..()
-		var/datum/tutorial_base/regional/blob/MT = tutorial
-		var/tx = MT.initial_turf.x
-		var/ty = MT.initial_turf.y - 12
-		var/tz = MT.initial_turf.z
-		// var/turf/T = locate(tx, ty, tz)
-		// target = locate() in T
-		// target.UpdateOverlays(marker,"marker")
+		var/datum/tutorial_base/regional/newbee/my_tutorial = tutorial
+		var/tx = my_tutorial.initial_turf.x
+		var/ty = my_tutorial.initial_turf.y - 12
+		var/tz = my_tutorial.initial_turf.z
 		src.tutorial_clown = new(locate(tx, ty, tz))
 
 	TearDown()
@@ -173,7 +221,6 @@
 		if (isdead(src.tutorial_clown))
 			return TRUE
 
-
 /datum/tutorialStep/newbee/finished
 	name = "Finish up"
 	instructions = "Congratulations! You have completed the basic tutorial. You will now be returned to the main menu."
@@ -183,15 +230,17 @@
 		sleep(5 SECONDS)
 		tutorial.Advance()
 
-
-// TODO: Leave button
 /datum/targetable/newbee_tutorial_exit
 	name = "Exit Tutorial"
 	desc = "Exit the tutorial and go to the main menu."
 	icon = 'icons/mob/blob_ui.dmi'
 	icon_state = "blob-exit"
 	targeted = 0
-	special_screen_loc = "SOUTH,EAST-1"
+	do_logs = FALSE
+
+	cast(atom/target)
+		. = ..()
+		src.holder.owner.client?.tutorial.Finish()
 
 /// Newbee Tutorial mob; no headset or PDA, does not spawn via jobs
 /mob/living/carbon/human/tutorial
