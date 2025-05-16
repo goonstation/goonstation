@@ -139,7 +139,7 @@
 	health_burn = 25
 	add_abilities = list(/datum/targetable/critter/mimic,
 						/datum/targetable/critter/tackle,
-						/datum/targetable/critter/sting/mimic/antag_spawn
+						/datum/targetable/critter/sting/mimic/antag_spawn,
 						/datum/targetable/critter/vent_move)
 	hand_count = 2
 	var/modifier = null
