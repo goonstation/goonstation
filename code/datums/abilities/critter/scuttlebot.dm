@@ -7,6 +7,7 @@
 	targeted = 1
 	target_anything = 1
 	icon_state = "hatpicture"
+	var/store_pics = TRUE
 	cast(atom/target)
 		if (..())
 			return 1
@@ -98,8 +99,14 @@
 		photo.icon = photo_icon
 
 		var/obj/item/photo/P
-		P = new/obj/item/photo(get_turf(holder.owner), photo, photo_icon, finished_title, finished_detail)
+		var/atom/where = holder.owner
+		if (length(holder.owner?.contents) >= 15 || !src.store_pics)
+			where = get_turf(where)
+		P = new/obj/item/photo(where, photo, photo_icon, finished_title, finished_detail)
 		return isnull(P)
+
+/datum/targetable/critter/takepicture/nostorage
+	store_pics = FALSE
 
 /datum/targetable/critter/flash
 	name = "Blinding flash"
@@ -123,6 +130,7 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	needs_turf = FALSE
 	cast(atom/target)
 		if (..())
 			return 1

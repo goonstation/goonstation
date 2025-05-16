@@ -2,16 +2,22 @@
 
 #define GHOST_HAIR_ALPHA 192
 
+TYPEINFO(/mob/dead/observer)
+	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_EARS_GHOST, LISTEN_INPUT_GLOBAL_HEARING_GHOST, LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART_GHOST, LISTEN_INPUT_RADIO_GLOBAL_GHOST, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/dead/observer
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE_NOWARP
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -24,7 +30,6 @@
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
 	var/last_words = null //! Last words of the mob before they died
-	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
 	corpse = null
@@ -441,17 +446,25 @@
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.AH_we_spawned_with.customizations["hair_bottom"].style.icon, src.AH_we_spawned_with.customizations["hair_bottom"].style.id)
+		var/datum/appearanceHolder/temp_holder = null
+		if (QDELETED(src.AH_we_spawned_with))
+			if (QDELETED(src.bioHolder.mobAppearance))
+				CRASH("Ghostize called on a mob [src] with bioHolder but no non-null appearance holders")
+			else
+				temp_holder = src.bioHolder.mobAppearance
+		else
+			temp_holder = src.AH_we_spawned_with
+		var/image/hair = image(temp_holder.customizations["hair_bottom"].style.icon, temp_holder.customizations["hair_bottom"].style.id)
 		hair.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
-		var/image/beard = image(src.AH_we_spawned_with.customizations["hair_middle"].style.icon, src.AH_we_spawned_with.customizations["hair_middle"].style.id)
+		var/image/beard = image(temp_holder.customizations["hair_middle"].style.icon, temp_holder.customizations["hair_middle"].style.id)
 		beard.color = src.bioHolder.mobAppearance.customizations["hair_middle"].color
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.AH_we_spawned_with.customizations["hair_top"].style.icon, src.AH_we_spawned_with.customizations["hair_top"].style.id)
+		var/image/detail = image(temp_holder.customizations["hair_top"].style.icon, temp_holder.customizations["hair_top"].style.id)
 		detail.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
@@ -647,9 +660,6 @@
 		OnMove()
 	else
 		boutput(usr, "Couldn't find anywhere in that area to go to!")
-
-/mob/dead/observer/say_understands(var/other)
-	return 1
 
 /* //dont need this anymores
 /mob/dead/observer/verb/toggle_wide()

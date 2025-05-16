@@ -46,6 +46,7 @@
 		F["[profileNum]_name_first"] << src.name_first
 		F["[profileNum]_name_middle"] << src.name_middle
 		F["[profileNum]_name_last"] << src.name_last
+		F["[profileNum]_hyphenate_name"] << src.hyphenate_name
 		F["[profileNum]_robot_name"] << src.robot_name
 		F["[profileNum]_gender"] << src.gender
 		F["[profileNum]_age"] << src.age
@@ -216,6 +217,7 @@
 		F["[profileNum]_name_first"] >> src.name_first
 		F["[profileNum]_name_middle"] >> src.name_middle
 		F["[profileNum]_name_last"] >> src.name_last
+		F["[profileNum]_hyphenate_name"] >> src.hyphenate_name
 		F["[profileNum]_robot_name"] >> src.robot_name
 		F["[profileNum]_gender"] >> src.gender
 		F["[profileNum]_age"] >> src.age
@@ -349,6 +351,19 @@
 			// Welp, you get a random name then.
 			src.randomize_name()
 
+		//macros save me from infinite var hell
+#define FIX_NAME(name_var) var/fixed_##name_var = remove_bad_name_characters(src.##name_var);\
+		if (fixed_##name_var != src.##name_var){\
+			src.##name_var = fixed_##name_var;\
+			src.profile_modified = TRUE;\
+		}
+
+		FIX_NAME(name_first)
+		FIX_NAME(name_last)
+		FIX_NAME(name_middle)
+		FIX_NAME(real_name)
+
+#undef FIX_NAME
 		// Clean up invalid / default preferences
 		if (isnull(AH.fartsound))
 			AH.fartsound = "default"
@@ -374,7 +389,18 @@
 			src.custom_parts = list(
 				"l_arm" = "arm_default_left",
 				"r_arm" = "arm_default_right",
+				"l_leg" = "leg_default_left",
+				"r_leg" = "leg_default_right",
+				"left_eye" = "eye_default_left",
+				"right_eye" = "eye_default_right",
 			)
+		if (length(src.custom_parts) < 6) // aa a aaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+			src.custom_parts["l_arm"] = src.custom_parts["l_arm"] || "arm_default_left"
+			src.custom_parts["r_arm"] = src.custom_parts["r_arm"] || "arm_default_right"
+			src.custom_parts["l_leg"] = src.custom_parts["l_leg"] || "leg_default_left"
+			src.custom_parts["r_leg"] = src.custom_parts["r_leg"] || "leg_default_right"
+			src.custom_parts["left_eye"] = src.custom_parts["left_eye"] || "eye_default_left"
+			src.custom_parts["right_eye"] = src.custom_parts["right_eye"] || "eye_default_right"
 
 		// Validate trait choices
 		if (src.traitPreferences.traits_selected == null)

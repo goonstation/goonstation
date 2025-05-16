@@ -1471,7 +1471,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
 	anchored = ANCHORED
-	deconstruct_flags = 0
+	deconstruct_flags = DECON_NONE
 	icon_state = null
 	power_usage = 0
 	growth_rate = 1

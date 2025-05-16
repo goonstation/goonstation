@@ -6,9 +6,8 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
-  Box,
   Button,
   Collapsible,
   Dimmer,
@@ -25,132 +24,194 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
+import { useHashedMemo } from '../common/hooks';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
 import { ManufacturerSettings } from './components/ManufacturerSettings';
 import { PowerAlertModal } from './components/PowerAlertModal';
 import { ProductionCard } from './components/ProductionCard';
+import { Rockbox } from './components/Rockbox';
 import {
   AccessLevels,
   MANUDRIVE_UNLIMITED,
-  RockboxStyle,
   SETTINGS_WINDOW_WIDTH,
 } from './constant';
 import {
   ManufacturableData,
   ManufacturerData,
-  OreData,
-  QueueBlueprint,
   ResourceData,
   RockboxData,
 } from './type';
 
 export const Manufacturer = () => {
   const { act, data } = useBackend<ManufacturerData>();
+  const {
+    all_categories,
+    available_blueprints,
+    banking_info,
+    delete_allowed,
+    downloaded_blueprints,
+    error,
+    fabricator_name,
+    hacked,
+    hidden_blueprints,
+    indicators,
+    manudrive,
+    manudrive_uses_left,
+    max_speed_hacked,
+    max_speed_normal,
+    mode,
+    panel_open,
+    progress_pct,
+    queue,
+    recipe_blueprints,
+    repeat,
+    resource_data,
+    producibility_data,
+    rockboxes,
+    speed,
+    wire_bitflags,
+    wires,
+  } = data;
   const [search, setSearchData] = useState('');
   const [swappingMaterialRef, setSwappingMaterialRef] = useState<string | null>(
     null,
   );
-  // Define some actions for the interface and its children
-  const actionCardLogout = () => act('card', { remove: true });
-  const actionCardLogin = () => act('card', { scan: true });
-  const actionQueueClear = () => act('clear');
-  const actionQueueRemove = (index: number) =>
-    act('remove', { index: index + 1 });
-  const actionQueueTogglePause = (mode: string) =>
-    act('pause_toggle', { action: mode === 'working' ? 'pause' : 'continue' });
-  const actionWirePulse = (index: number) =>
-    act('wire', { action: 'pulse', wire: index + 1 });
-  const actionWireCutOrMend = (index: number) =>
-    act('wire', {
-      action: is_set(data.wire_bitflags, data.wires[index] - 1)
-        ? 'cut'
-        : 'mend',
-      wire: index + 1,
-    });
-  const actionVendProduct = (byondRef: string) =>
-    act('request_product', { blueprint_ref: byondRef });
-  const actionRemoveBlueprint = (byondRef: string) =>
-    act('delete', { blueprint_ref: byondRef });
-  const actionSetSpeed = (new_speed: number) =>
-    act('speed', { value: new_speed });
-  const actionRepeat = () => act('repeat');
+  const staticActions = useMemo(
+    () => ({
+      handleBlueprintRemove: (byondRef: string) =>
+        act('delete', { blueprint_ref: byondRef }),
+      handleCardLogout: () => act('card', { remove: true }),
+      handleCardLogin: () => act('card', { scan: true }),
+      handleOrePurchase: (rockboxRef: string, oreName: string) =>
+        act('ore_purchase', {
+          ore: oreName,
+          storage_ref: rockboxRef,
+        }),
+      handleProductVend: (byondRef: string) =>
+        act('request_product', { blueprint_ref: byondRef }),
+      handleQueueClear: () => act('clear'),
+      handleQueueRemove: (index: number) => act('remove', { index: index + 1 }),
+      handleQueueTogglePause: (mode: string) =>
+        act('pause_toggle', {
+          action: mode === 'working' ? 'pause' : 'continue',
+        }),
+      handleRepeatToggle: () => act('repeat'),
+      handleSpeedSet: (newSpeed: number) => act('speed', { value: newSpeed }),
+
+      handleWirePulse: (index: number) =>
+        act('wire', { action: 'pulse', wire: index + 1 }),
+    }),
+    [act],
+  );
+  const handleWireCutOrMend = useCallback(
+    (index: number) =>
+      act('wire', {
+        action: is_set(wire_bitflags, wires[index] - 1) ? 'cut' : 'mend',
+        wire: index + 1,
+      }),
+    [act, wire_bitflags, wires],
+  );
   // Local states for pleasant UX while selecting one button (highlight green) and then second button (perform action)
-  let swapPriority = (materialRef: string) => {
-    if (swappingMaterialRef === null) {
-      setSwappingMaterialRef(materialRef);
-    } else if (swappingMaterialRef === materialRef) {
-      setSwappingMaterialRef(null);
-    } else {
-      act('material_swap', {
-        resource_1: swappingMaterialRef,
-        resource_2: materialRef,
-      });
-      setSwappingMaterialRef(null);
-    }
-  };
-  const hasPower = !!data.indicators?.hasPower;
-  const manudriveName = data.manudrive?.name ?? '';
-  const manudriveLimit = data.manudrive?.limit;
-  const all_blueprints = {
-    available: data.available_blueprints,
-    download: data.downloaded_blueprints,
-    drive_recipes: data.recipe_blueprints,
-    hidden: data.hidden_blueprints,
-  };
-  const blueprint_types = Object.keys(all_blueprints);
-  /*
-    Converts the blueprints we get into one larger list sorted by category.
-    This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
-  */
-  let blueprints_by_category: Record<string, ManufacturableData[]> = {};
-  for (
-    let category_index = 0;
-    category_index < (data.all_categories?.length ?? 0);
-    category_index++
-  ) {
-    let category = data.all_categories[category_index];
-    blueprints_by_category[category] = [];
+  const handleSwapPriority = useCallback(
+    (materialRef: string) => {
+      if (swappingMaterialRef === null) {
+        setSwappingMaterialRef(materialRef);
+      } else if (swappingMaterialRef === materialRef) {
+        setSwappingMaterialRef(null);
+      } else {
+        act('material_swap', {
+          resource_1: swappingMaterialRef,
+          resource_2: materialRef,
+        });
+        setSwappingMaterialRef(null);
+      }
+    },
+    [act, swappingMaterialRef],
+  );
+  const hasPower = !!indicators?.hasPower;
+  const manudriveName = manudrive?.name ?? '';
+  const manudriveLimit = manudrive?.limit;
+
+  // Only change producibility_data if it actually changes. Not doing this will cause issues for performance with blueprint buttons.
+  const diffedProducibilityData = useHashedMemo(producibility_data);
+
+  // Converts the blueprints we get into one larger list sorted by category.
+  // This is done here instead of sending one big list to reduce the amount of times we need to refresh static data.
+  const blueprints_by_category = useMemo(() => {
+    const all_blueprints = {
+      available: available_blueprints,
+      download: downloaded_blueprints,
+      drive_recipes: recipe_blueprints,
+      hidden: hidden_blueprints,
+    };
+    const blueprint_types = Object.keys(all_blueprints);
+    const blueprints_by_category: Record<string, ManufacturableData[]> = {};
     for (
-      let blueprint_index = 0;
-      blueprint_index < blueprint_types.length;
-      blueprint_index++
+      let category_index = 0;
+      category_index < (all_categories?.length ?? 0);
+      category_index++
     ) {
-      const category_name = blueprint_types[blueprint_index];
-      if (!data.hacked && category_name === 'hidden') {
-        continue;
-      }
-      let blueprint_list = all_blueprints[category_name];
-      if (blueprint_list[category] === undefined) {
-        continue;
-      }
-      for (let blueprint of blueprint_list[category]) {
-        if (blueprint.name?.toLowerCase().includes(search)) {
-          blueprints_by_category[blueprint.category].push(blueprint);
+      let category = all_categories[category_index];
+      blueprints_by_category[category] = [];
+      for (
+        let blueprint_index = 0;
+        blueprint_index < blueprint_types.length;
+        blueprint_index++
+      ) {
+        const category_name = blueprint_types[blueprint_index];
+        if (!hacked && category_name === 'hidden') {
+          continue;
+        }
+        let blueprint_list = all_blueprints[category_name];
+        if (blueprint_list[category] === undefined) {
+          continue;
+        }
+        for (let blueprint of blueprint_list[category]) {
+          if (blueprint.name?.toLowerCase().includes(search)) {
+            blueprints_by_category[blueprint.category].push(blueprint);
+          }
         }
       }
     }
-  }
+    return blueprints_by_category;
+  }, [
+    all_categories,
+    available_blueprints,
+    downloaded_blueprints,
+    hacked,
+    hidden_blueprints,
+    recipe_blueprints,
+    search,
+  ]);
 
   // Get a ManufacturableData from a QueueBlueprint using its type, category, and name.
-  const queueBlueprintRefs = (data.queue ?? []).map((queued: QueueBlueprint) =>
-    blueprints_by_category?.[queued.category]?.find(
-      (blueprint) => blueprint.name === queued.name,
-    ),
+  const queueBlueprintRefs = useMemo(
+    () =>
+      (queue ?? []).reduce((acc, cur) => {
+        const manufacturableData = blueprints_by_category[cur.category]?.find(
+          (blueprint) => blueprint.name === cur.name,
+        );
+        if (manufacturableData) {
+          acc.push(manufacturableData);
+        }
+        return acc;
+      }, [] as ManufacturableData[]),
+    [blueprints_by_category, queue],
   );
 
   return (
-    <Window width={1200} height={600} title={data.fabricator_name}>
+    <Window width={1200} height={600} title={fabricator_name}>
       {!hasPower && (
-        <PowerAlertModal width={100 - SETTINGS_WINDOW_WIDTH} height={'100%'} />
+        <PowerAlertModal width={100 - SETTINGS_WINDOW_WIDTH} height="100%" />
       )}
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
             <Section>
               {!hasPower && <Dimmer />}
-              {data.all_categories?.map(
+              {all_categories?.map(
                 (category: string) =>
                   blueprints_by_category[category].length > 0 && (
                     <Collapsible
@@ -162,15 +223,19 @@ export const Manufacturer = () => {
                         (blueprint, index) => (
                           <BlueprintButton
                             key={index}
-                            actionRemoveBlueprint={actionRemoveBlueprint}
-                            actionVendProduct={actionVendProduct}
-                            blueprintData={blueprint}
-                            manufacturerSpeed={data.speed}
-                            materialData={data.resource_data}
-                            deleteAllowed={
-                              data.delete_allowed !== AccessLevels.DENIED
+                            onBlueprintRemove={
+                              staticActions.handleBlueprintRemove
                             }
-                            hasPower={!!data.indicators?.hasPower}
+                            onVendProduct={staticActions.handleProductVend}
+                            blueprintData={blueprint}
+                            manufacturerSpeed={speed}
+                            blueprintProducibilityData={
+                              diffedProducibilityData[blueprint.byondRef]
+                            }
+                            deleteAllowed={
+                              delete_allowed !== AccessLevels.DENIED
+                            }
+                            hasPower={!!indicators?.hasPower}
                           />
                         ),
                       )}
@@ -191,7 +256,7 @@ export const Manufacturer = () => {
               <Stack.Item>
                 <Section title="Loaded Materials" textAlign="center">
                   <LabeledList>
-                    {data.resource_data?.map((resourceData: ResourceData) => (
+                    {resource_data?.map((resourceData: ResourceData) => (
                       <LabeledList.Item
                         key={resourceData.byondRef}
                         buttons={
@@ -212,7 +277,7 @@ export const Manufacturer = () => {
                                   : 'green'
                               }
                               onClick={() =>
-                                swapPriority(resourceData.byondRef)
+                                handleSwapPriority(resourceData.byondRef)
                               }
                             />
                           </>
@@ -227,14 +292,14 @@ export const Manufacturer = () => {
                 </Section>
               </Stack.Item>
               <ManufacturerSettings
-                repeat={data.repeat}
-                hacked={data.hacked}
-                speed={data.speed}
-                max_speed_normal={data.max_speed_normal}
-                max_speed_hacked={data.max_speed_hacked}
-                mode={data.mode}
-                actionSetSpeed={actionSetSpeed}
-                actionRepeat={actionRepeat}
+                repeat={repeat}
+                hacked={hacked}
+                speed={speed}
+                max_speed_normal={max_speed_normal}
+                max_speed_hacked={max_speed_hacked}
+                mode={mode}
+                onSpeedSet={staticActions.handleSpeedSet}
+                onRepeatToggle={staticActions.handleRepeatToggle}
               />
               {manudriveLimit !== null && (
                 <Stack.Item>
@@ -243,7 +308,7 @@ export const Manufacturer = () => {
                     buttons={
                       <Button
                         icon="eject"
-                        disabled={data.mode !== 'ready'}
+                        disabled={mode !== 'ready'}
                         onClick={() => act('manudrive', { action: 'eject' })}
                       >
                         Eject
@@ -260,119 +325,87 @@ export const Manufacturer = () => {
                       </LabeledList.Item>
                       {manudriveLimit !== MANUDRIVE_UNLIMITED && (
                         <LabeledList.Item label="Remaining Uses">
-                          {data.manudrive_uses_left}
+                          {manudrive_uses_left}
                         </LabeledList.Item>
                       )}
                     </LabeledList>
                   </Section>
                 </Stack.Item>
               )}
-              {!!data.panel_open && (
+              {!!panel_open && (
                 <Stack.Item>
                   <CollapsibleWireMenu
-                    actionWirePulse={actionWirePulse}
-                    actionWireCutOrMend={actionWireCutOrMend}
-                    indicators={data.indicators}
-                    wires={data.wires}
-                    wire_bitflags={data.wire_bitflags}
+                    onWirePulse={staticActions.handleWirePulse}
+                    onWireCutOrMend={handleWireCutOrMend}
+                    indicators={indicators}
+                    wires={wires}
+                    wire_bitflags={wire_bitflags}
                   />
                 </Stack.Item>
               )}
               <Stack.Item>
                 <CardInfo
-                  actionCardLogin={actionCardLogin}
-                  actionCardLogout={actionCardLogout}
-                  banking_info={data.banking_info}
+                  onCardLogin={staticActions.handleCardLogin}
+                  onCardLogout={staticActions.handleCardLogout}
+                  banking_info={banking_info}
                 />
               </Stack.Item>
               <Stack.Item>
                 <Section title="Rockbox™ Containers" textAlign="center">
-                  {data.rockboxes?.map((rockbox: RockboxData) => (
-                    <Box key={rockbox.byondRef}>
-                      <Box mt={RockboxStyle.MarginTop} textAlign="left" bold>
-                        {rockbox.area_name}
-                        <Divider />
-                      </Box>
-
-                      <LabeledList>
-                        {rockbox?.ores?.length
-                          ? rockbox.ores.map((ore: OreData) => (
-                              <LabeledList.Item
-                                key={ore.name}
-                                label={ore.name}
-                                textAlign="center"
-                                buttons={
-                                  <Button
-                                    key={ore.name}
-                                    textAlign="center"
-                                    onClick={() =>
-                                      act('ore_purchase', {
-                                        ore: ore.name,
-                                        storage_ref: rockbox.byondRef,
-                                      })
-                                    }
-                                  >
-                                    {ore.cost}⪽
-                                  </Button>
-                                }
-                              >
-                                {ore.amount.toString().padStart(5, '\u2007')}
-                              </LabeledList.Item>
-                            ))
-                          : 'No Ores Loaded.'}
-                      </LabeledList>
-                    </Box>
+                  {rockboxes?.map((rockbox: RockboxData) => (
+                    <Rockbox
+                      key={rockbox.byondRef}
+                      data={rockbox}
+                      onPurchase={staticActions.handleOrePurchase}
+                    />
                   ))}
                 </Section>
               </Stack.Item>
               <Stack.Item>
                 <Stack vertical>
-                  {data.error !== null && (
-                    <Section title="ERROR">{data.error}</Section>
-                  )}
+                  {error !== null && <Section title="ERROR">{error}</Section>}
                   <Stack textAlign="center">
                     <Stack.Item width="50%">
                       <Button
-                        icon={data.mode !== 'working' ? 'play' : 'pause'}
-                        onClick={() => actionQueueTogglePause(data.mode)}
+                        icon={mode !== 'working' ? 'play' : 'pause'}
+                        onClick={() =>
+                          staticActions.handleQueueTogglePause(mode)
+                        }
                         width="100%"
                       >
-                        {data.mode !== 'working' ? 'Resume' : 'Pause'}
+                        {mode !== 'working' ? 'Resume' : 'Pause'}
                       </Button>
                     </Stack.Item>
                     <Stack.Item grow>
                       <Button
                         icon="trash"
-                        onClick={() => actionQueueClear()}
+                        onClick={staticActions.handleQueueClear}
                         width="100%"
                       >
                         Clear Queue
                       </Button>
                     </Stack.Item>
                   </Stack>
-                  {data?.queue?.length > 0 && (
+                  {queue?.length > 0 && (
                     <Stack.Item>
                       <ProgressBar
-                        value={clamp(data.progress_pct, 0, 1)}
+                        value={clamp(progress_pct, 0, 1)}
                         minValue={0}
                         maxValue={1}
                         position="relative"
                       />
                     </Stack.Item>
                   )}
-                  {queueBlueprintRefs.map(
-                    (queued: ManufacturableData, index: number) =>
-                      queued && (
-                        <ProductionCard
-                          key={index}
-                          index={index}
-                          actionQueueRemove={actionQueueRemove}
-                          mode={data.mode}
-                          img={queued.img}
-                          name={queued.name}
-                        />
-                      ),
-                  )}
+                  {queueBlueprintRefs.map((queued, index) => (
+                    <ProductionCard
+                      key={index}
+                      index={index}
+                      onQueueRemove={staticActions.handleQueueRemove}
+                      mode={mode}
+                      img={queued.img}
+                      name={queued.name}
+                    />
+                  ))}
                 </Stack>
               </Stack.Item>
             </Stack>

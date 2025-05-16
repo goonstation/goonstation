@@ -78,7 +78,7 @@
 		I.ability = src
 		var/wait = 5
 		if (fade_out_icon_state)
-			flick(fade_out_icon_state, holder.owner)
+			FLICK(fade_out_icon_state, holder.owner)
 			wait = fade_anim_length
 		else
 			animate(holder.owner, alpha=64, time=5)
@@ -97,7 +97,7 @@
 			SPAWN(linger_time)
 				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_INVISIBILITY, src)
 				if (fade_in_icon_state)
-					flick(fade_in_icon_state, holder.owner)
+					FLICK(fade_in_icon_state, holder.owner)
 					holder.owner.alpha = 255
 				else
 					holder.owner.alpha = 64

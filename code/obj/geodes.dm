@@ -84,7 +84,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
 		var/obj/item/crystal = new spawn_type(src.loc)
 		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]."))
-		user.lastattacked = src //is this how this works?
+		user.lastattacked = get_weakref(src) //is this how this works?
 
 	claretine
 		amount = 6
@@ -130,12 +130,13 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 ABSTRACT_TYPE(/obj/geode/fluid)
 /obj/geode/fluid
 	var/reagent_id = null
+	var/temperature = 20 + T0C
 	New()
 		..()
 		var/amt = rand(100, 300)
 		src.create_reagents(amt)
 		if (src.reagent_id)
-			src.reagents.add_reagent(src.reagent_id, amt)
+			src.reagents.add_reagent(src.reagent_id, amt, temp_new = temperature)
 		src.AddComponent(/datum/component/reagent_overlay, 'icons/obj/geodes.dmi', "trickles", 1)
 
 	break_open()
@@ -157,6 +158,7 @@ ABSTRACT_TYPE(/obj/geode/fluid)
 	//hehehehe
 	cyanide
 		reagent_id = "cyanide"
+		temperature = 50 + T0C
 	ants
 		reagent_id = "ants"
 		weight = 20

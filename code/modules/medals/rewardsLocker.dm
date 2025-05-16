@@ -341,7 +341,7 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
+			if (!istype(H.head, /obj/item/clothing/head/helmet) && !istype(H.head, /obj/item/clothing/head/headband && istype(H.head, /obj/item/clothing/head))) // ha...
 				var/obj/item/clothing/head/M = H.head
 				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
@@ -1222,32 +1222,6 @@
 		else
 			boutput(activator, SPAN_ALERT("You need to be a cyborg to use this, you goof!"))
 
-/*
-/datum/achievementReward/secbelt
-	title = "(Skin) Security Toolbelt"
-	desc = "Turns your worn Utility Belt into a Security Toolbelt."
-	required_medal = "Suitable? How about the Oubliette?!"
-
-	rewardActivate(var/mob/living/carbon/human/activator)
-
-	rewardActivate(var/mob/activator)
-		if (!ishuman(activator))
-			return
-
-		var/mob/living/carbon/human/H = activator
-
-		if (H.belt && istype(H.belt, /obj/item/storage/belt/utility))
-			var/obj/item/storage/belt/utility/M = H.belt
-			var/prev = M.name
-			M.icon_state = "secbelt"
-			M.item_state = "secbelt"
-			M.name = "security toolbelt"
-			M.real_name = "security toolbelt"
-			M.desc = "For the trend-setting Security Officer on the go. (Base Item: [prev])"
-			H.set_clothing_icon_dirty()
-		return
-*/
-
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
 	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."
@@ -1355,7 +1329,7 @@
 			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
 			return
 		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
-		O.say_language = "animal"
+		O.say_language = LANGUAGE_ANIMAL
 		O.literate = 0
 		return 1
 

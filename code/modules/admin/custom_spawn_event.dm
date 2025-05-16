@@ -111,14 +111,15 @@
 					var/obj/item/device/pda2/pda = locate() in new_mob
 					global.data_core.addManifest(new_mob, "", "", pda?.net_id, "")
 
-			if (src.antag_role == "generic_antagonist")
-				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
-			else if (src.antag_role)
-				if (mind.get_antagonist(src.antag_role))
-					mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
-			else
-				mind.wipe_antagonists()
+			SPAWN(1) //job equip procs have to be SPAWN(0) so this has to be SPAWN(1) for them to get an uplink, yes I know but mob init order is cursed and evil
+				if (src.antag_role == "generic_antagonist")
+					mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+				else if (src.antag_role)
+					if (mind.get_antagonist(src.antag_role))
+						mind.remove_antagonist(src.antag_role, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+					mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
+				else
+					mind.wipe_antagonists()
 
 			if (length(src.objective_text))
 				if (src.antag_role)

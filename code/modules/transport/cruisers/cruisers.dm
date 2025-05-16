@@ -709,7 +709,7 @@
 		var/base_speed = 5
 
 		if(engine)
-			base_speed = (1.5 * engine.speedmod)
+			base_speed = 1.5 // speed modification by equipped engine not implemented - feel free to change
 
 		var/adjustment = (1 - (power_movement / 100)) * base_speed
 		base_speed += adjustment

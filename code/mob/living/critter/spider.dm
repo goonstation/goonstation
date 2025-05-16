@@ -6,7 +6,8 @@
 	icon_state = "big_spide"
 	density = 1
 	hand_count = 8 // spiders!!!
-	add_abilities = list(/datum/targetable/critter/spider_bite,
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
 						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
 	var/flailing = 0
@@ -54,6 +55,9 @@
 			src.icon_state = "big_spide[pick("", "-red", "-green", "-blue")]"
 			src.icon_state_alive = src.icon_state
 			src.icon_state_dead = "[src.icon_state]-dead"
+
+		src.changeStatus("webwalk", INFINITE_STATUS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
 	setup_hands()
 		..()
@@ -179,7 +183,7 @@
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && drain && (!drain.disabled && drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
@@ -343,7 +347,7 @@
 	adultpath = /mob/living/critter/spider/clownqueen
 	add_abilities = list(/datum/targetable/critter/clownspider_kick,
 						/datum/targetable/critter/spider_bite,
-						/datum/targetable/critter/spider_drain)
+						/datum/targetable/critter/spider_drain/clown)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 

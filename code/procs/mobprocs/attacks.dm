@@ -12,7 +12,7 @@
 			W.attach(src,user)
 			return
 
-	user.lastattacked = src
+	user.lastattacked = get_weakref(src)
 
 	SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
@@ -22,7 +22,7 @@
 		return
 
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 		boutput(user, SPAN_ALERT("<b>[src]'s Spell Shield prevents your attack!</b>"))
 

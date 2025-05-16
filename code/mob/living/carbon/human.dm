@@ -56,6 +56,8 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 
+	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
+
 	///Has our chest cavity been clamped by hemostats?
 	var/chest_cavity_clamped = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
@@ -677,12 +679,15 @@
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
 			SPAWN(0)
-				emote("deathgasp")
+				emote("deathgasp", dead_check = FALSE)
 				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
 				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				mind?.transfer_to(HS) //ok we're a headspider now
+				HS.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[C]")
+				HS.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[C]")
+				HS.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
 				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
@@ -730,10 +735,14 @@
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		emote("deathgasp", dead_check = FALSE) //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
+	if (!inafterlife(src) && !istestdummy(src) && !isvirtual(src) && !src.hasStatus("in_afterlife") && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
+
+
+	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
+		src.equipped():AttackSelf(src)
 
 	src.canmove = 0
 	src.lying = 1
@@ -747,9 +756,8 @@
 	src.set_clothing_icon_dirty()
 	src.hand = h
 
-	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
-		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
+	for (var/obj/item/checked_item in src.contents)
+		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 	add_lifeprocess(/datum/lifeprocess/decomposition)
@@ -881,6 +889,7 @@
 		newbody.traitHolder.owner = newbody
 		if (src.spell_soulguard)
 			newbody.equip_sensory_items()
+			newbody.equip_body_traits(extended_tank=(src.spell_soulguard==SOULGUARD_SPELL))
 
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
@@ -1085,7 +1094,7 @@
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
 			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
@@ -1189,7 +1198,7 @@
 	if (src.health > 0)
 		var/dam_zone = pick("chest", "head")
 		var/reduction = 0
-		if (src.spellshield)
+		if (src.hasStatus("spellshield"))
 			reduction = 30
 			boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
@@ -1386,313 +1395,6 @@
 	..()
 	if (!ai_active && is_npc)
 		ai_set_active(1)
-
-/mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
-	var/alt_name = ""
-	if (src.name != src.real_name)
-		if (src.wear_id && src.wear_id:registered && src.wear_id:registered != src.real_name)
-			alt_name = " (as [src.wear_id:registered])"
-		else if (!src.wear_id)
-			alt_name = " (as Unknown)"
-
-	if (src.is_npc)
-		. = "<span class='name'>"
-	else
-		. = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id && length(src.wear_id:registered))
-			if (just_name_itself)
-				return src.wear_id:registered
-			. += "[src.wear_id:registered]</span>"
-		else
-			if (just_name_itself)
-				return "Unknown"
-			. += "Unknown</span>"
-	else if (src.vdisfigured)
-		if (just_name_itself)
-			return "Unknown"
-		. += "Unknown</span>"
-	else
-		if (just_name_itself)
-			return src.real_name
-		. += "[src.real_name]</span>[alt_name]"
-
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
-	var/original_language = src.say_language
-	if (mutantrace?.override_language)
-		say_language = mutantrace.override_language
-
-	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
-		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
-		say_language = mask.new_language
-
-	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (src.fakedead)
-		var/the_verb = pick("wails","moans","laments")
-		boutput(src, SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]"))
-		src.say_language = original_language
-		return
-
-	if (dd_hasprefix(message, "*") || isdead(src))
-		..(message)
-		src.say_language = original_language
-		return
-
-	if (src.bioHolder.HasEffect("revenant"))
-		src.visible_message(SPAN_ALERT("[src] makes some [pick("eldritch", "eerie", "otherworldly", "netherly", "spooky", "demonic", "haunting")] noises!"))
-		src.say_language = original_language
-		return
-
-	if (src.bioHolder.HasEffect("food_bad_breath"))
-		for (var/mob/living/L in oview(2,src))
-			if (prob(20))
-				boutput(L, SPAN_ALERT("Good lord, [src]'s breath smells bad!"))
-				L.vomit()
-
-
-	if (src.stamina < STAMINA_WINDED_SPEAK_MIN && !ignore_stamina_winded)
-		//src.emote(pick("gasp", "choke", "cough"))
-		//boutput(src, SPAN_ALERT("You are too exhausted to speak."))
-		whisper(message, forced=TRUE)
-		src.say_language = original_language
-		return
-
-	if (src.robot_talk_understand && !src.stat)
-		if (length(message) >= 2)
-			if (copytext(lowertext(message), 1, 3) == ":s")
-				message = copytext(message, 3)
-				src.robot_talk(message)
-				src.say_language = original_language
-				return
-
-	message = process_accents(src,message)
-
-	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
-
-	src.say_language = original_language
-
-/*/mob/living/carbon/human/say_understands(var/other)
-	if (src.mutantrace)
-		return src.mutantrace.say_understands(other)
-	if (isAI(other))
-		return 1
-	if (isrobot(other))
-		return 1
-	if (ishivebot(other))
-		return 1
-	if (ismainframe(other))
-		return 1
-	if (ishuman(other) && (!other:mutantrace || !other:mutantrace.exclusive_language))
-		return 1*/
-
-/mob/living/carbon/human/say_quote(var/text)
-	if (src.mutantrace.voice_message)
-		src.voice_name = src.mutantrace.voice_name
-		src.voice_message = src.mutantrace.voice_message
-	var/sayverb = src.mutantrace.say_verb()
-	var/special = 0
-	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
-		special = "gasp_whisper"
-	if (src.oxyloss > 10)
-		special = "gasp_whisper"
-
-	return ..(text, special, sayverb)
-
-//Lallander was here
-/mob/living/carbon/human/whisper(message as text, forced=FALSE)
-	if (src.bioHolder.HasEffect("revenant"))
-		return src.say(message)
-	var/message_mode = null
-	var/secure_headset_mode = null
-	if (src.get_brain_damage() >= 60 && prob(50))
-		message_mode = "headset"
-	// Special message handling
-	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
-		message = copytext(message, 2)
-
-	if (src.stamina < STAMINA_WINDED_SPEAK_MIN || src.oxyloss > 10)
-		message = lowertext(message)
-
-	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
-		switch (lowertext( copytext(message,2,4) ))
-			if ("rh")
-				message_mode = "right hand"
-				message = copytext(message, 4)
-
-			if ("lh")
-				message_mode = "left hand"
-				message = copytext(message, 4)
-
-			if ("in")
-				message_mode = "intercom"
-				message = copytext(message, 4)
-
-			else
-				if (ishuman(src))
-					message_mode = "secure headset"
-					secure_headset_mode = lowertext(copytext(message,2,3))
-				message = copytext(message, 3)
-
-	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
-
-	if (!message)
-		return
-
-	logTheThing(LOG_DIARY, src, "(WHISPER): [message]", "whisper")
-	logTheThing(LOG_WHISPER, src, "SAY: [message] (WHISPER) [log_loc(src)]")
-
-	if (src.client && !src.client.holder && url_regex?.Find(message))
-		boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
-		boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
-		return
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-
-	if (isdead(src))
-		return src.say_dead(message)
-
-	if (src.stat)
-		return
-
-	var/alt_name = ""
-	if (ishuman(src) && src.name != src.real_name)
-		if (src:wear_id && src:wear_id:registered && src:wear_id:registered != src.real_name)
-			alt_name = " (as [src:wear_id:registered])"
-		else if (!src:wear_id)
-			alt_name = " (as Unknown)"
-
-	// Mute disability
-	if (src.bioHolder.HasEffect("mute"))
-		boutput(src, SPAN_ALERT("You seem to be unable to speak."))
-		return
-
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-		boutput(src, SPAN_ALERT("Your muzzle prevents you from speaking."))
-		return
-
-	var/italics = 1
-	var/message_range = 1
-	var/forced_language = null
-	forced_language = get_special_language(secure_headset_mode)
-
-	message = process_accents(src,message)
-
-	if (src.stuttering)
-		message = stutter(message)
-
-	var/list/messages = process_language(message, forced_language)
-	var/lang_id = get_language_id(forced_language)
-
-	switch (message_mode)
-		//MBC : now that you can whisper while dying or suffocating, let's not allow you to whisper into a radio.
-		/*
-		if ("headset", "secure headset", "right hand", "left hand")
-			talk_into_equipment(message_mode, messages, secure_headset_mode, lang_id)
-			message_range = 0
-			italics = 1
-		*/
-		if ("intercom")
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, messages, null, src.real_name, lang_id)
-
-			message_range = 0
-			italics = 1
-
-	var/list/eavesdropping = hearers(2, src)
-	eavesdropping -= src
-	var/list/watching  = viewers(5, src)
-	watching -= src
-	watching -= eavesdropping
-
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
-
-	var/rendered = null
-
-	if (message_range)
-		var/heardname = src.real_name
-		src.send_hear_talks(message_range, messages, heardname, lang_id)
-
-		var/list/listening = all_hearers(message_range, src)
-		eavesdropping -= listening
-
-		for (var/mob/M in listening)
-			if (M.say_understands(src))
-				heard_a += M
-			else
-				heard_b += M
-
-	for (var/mob/M in watching)
-		if (M.say_understands(src))
-			rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers something.")
-		else
-			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
-		M.show_message(rendered, 2)
-
-	var/list/olocs = list()
-	var/thickness = 0
-	if (!isturf(loc))
-		olocs = obj_loc_chain(src)
-		for (var/atom/movable/AM in olocs)
-			thickness += AM.soundproofing
-	var/list/processed = list()
-
-	if (length(heard_a))
-		processed = saylist(messages[1], heard_a, olocs, thickness, italics, processed)
-
-	if (length(heard_b))
-		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
-
-	message = messages[1]
-	if(src.client)
-		phrase_log.log_phrase(forced ? "say" : "whisper", message)
-	last_words = message
-	for (var/mob/M in eavesdropping)
-		if (M.say_understands(src, lang_id))
-			var/message_c = stars(message)
-
-			if (!ishuman(src))
-				rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
-			else
-				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-					if (src.wear_id && src.wear_id:registered)
-						rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
-					else
-						rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
-				else
-					rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
-
-		else
-			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
-
-		M.show_message(rendered, 2)
-
-	if (italics)
-		message = "<i>[message]</i>"
-
-	if (!ishuman(src))
-		rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]")
-	else
-		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
-			if (src.wear_id && length(src.wear_id:registered))
-				rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]")
-			else
-				rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]")
-		else
-			rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("[message]")]")
-
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue
-		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
-			M.show_message(rendered, 2)
-
-	speech_bubble.icon_state = "speech"
-	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/u_equip(obj/item/W)
 	if (!W)
@@ -1945,6 +1647,23 @@
 				else
 					return 0
 
+/**
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+
+ * @param I The item to put in the hand.
+
+ * @param hand The hand to put the item in.
+
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+
+ * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
+**/
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+	if (!src.put_in_hand(I, hand))
+		if(!src.stow_in_available(I, delete_item))
+			return FALSE
+	return TRUE
+
 /mob/living/carbon/human/proc/get_slot(slot)
 	switch(slot)
 		if (SLOT_BACK)
@@ -2090,7 +1809,7 @@
 					src.back.storage.add_contents(I, src, FALSE)
 					equipped = TRUE
 				else
-					src.back.storage.add_contents_safe(I, src)
+					src.back.storage.add_contents_safe(I, src, FALSE)
 					equipped = (I in src.back.storage.get_contents())
 		if (SLOT_IN_BELT)
 			if (src.belt?.storage)
@@ -2098,7 +1817,7 @@
 					src.belt.storage.add_contents(I, src, FALSE)
 					equipped = TRUE
 				else
-					src.belt.storage.add_contents_safe(I, src)
+					src.belt.storage.add_contents_safe(I, src, FALSE)
 					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
@@ -2223,6 +1942,8 @@
 				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return FALSE
+				else if (src.wear_suit?.hooded)
+					return FALSE
 				else
 					return TRUE
 		if (SLOT_SHOES)
@@ -2289,21 +2010,34 @@
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
 	return TRUE
-///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+
+/**
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+
+ * @param I The item to stow.
+
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+
+ * @return TRUE if the item was stowed, FALSE if it was not.
+**/
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_L_STORE))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_R_STORE))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_L_HAND))
-		return
+		return TRUE
 	if (src.autoequip_slot(I, SLOT_R_HAND))
-		return
-	qdel(I)
+		return TRUE
+	if (delete_item)
+		qdel(I)
+	else
+		I.set_loc(get_turf(src))
+	return FALSE
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
@@ -2389,12 +2123,10 @@
 		src.limbs = new /datum/human_limbs(src)
 	else
 		src.limbs.mend()
-	//Unbreak organs. There really should be no way to do this so there's no proc, but I'm explicitly making to work for this. - kyle
-	for (var/organ_slot in src.organHolder.organ_list)
-		var/obj/item/organ/O = src.organHolder.organ_list[organ_slot]
-		if(istype(O))
-			O.unbreakme()
-	if (!src.organHolder)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+	else
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","spleen", "left_lung", "right_lung","appendix", "pancreas", "heart", "brain", "left_eye", "right_eye", "tail"))
 
@@ -2427,7 +2159,44 @@
 				I.set_loc(get_turf(src))
 				continue
 
-	update_body()
+	update_face()
+	return
+
+/mob/living/carbon/human/stabilize()
+	src.blinded = 0
+	src.bleeding = min(src.bleeding, 1)
+	src.blood_volume = clamp(src.blood_volume, 450, 550)
+
+	var/desired_damage = src.max_health * (1-0.05) // should have ~5% health left
+	var/current_damage = src.max_health - src.health
+	var/type_multi = 0
+	if (current_damage > 0)
+		type_multi = max(0,1-(desired_damage/current_damage)) //what to multiply all damage by to get to desired HP
+	src.HealDamage("All", src.get_brute_damage()*type_multi, src.get_burn_damage()*type_multi, src.get_toxin_damage()*type_multi)
+
+	if (src.organHolder)
+		src.organHolder.unbreak_all_organs()
+
+	if (!src.organHolder)
+		src.organHolder = new(src)
+	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, src.organHolder.organ_list)
+
+	src.organHolder.create_organs()
+
+	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
+		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())
+
+	..()
+
+	if (implant)
+		for (var/obj/item/implant/I in implant)
+			if (istype(I, /obj/item/implant/projectile))
+				boutput(src, "[I] falls out of you!")
+				I.on_remove(src)
+				implant.Remove(I)
+				I.set_loc(get_turf(src))
+				continue
+
 	update_face()
 	return
 
@@ -2473,7 +2242,7 @@
 			src.u_equip(SH)
 			SH.set_loc(get_turf(src))
 			src.update_clothing()
-			src.show_text("You briefly shrink your legs to remove the shackles.", "blue")
+			src.show_text("We briefly shrink our legs to remove the shackles.", "blue")
 		else if (src.is_hulk() || ishunter(src) || iswerewolf(src))
 			src.visible_message(SPAN_ALERT("[src] rips apart the shackles with pure brute strength!</b>"), SPAN_NOTICE("You rip apart the shackles."))
 			var/obj/item/clothing/shoes/NEW = new SH.type
@@ -2504,7 +2273,7 @@
 	if (src.hasStatus("handcuffed"))
 		if (ishuman(src))
 			if (ischangeling(src))
-				boutput(src, SPAN_NOTICE("You briefly shrink your hands to remove your handcuffs."))
+				boutput(src, SPAN_NOTICE("We briefly shrink our hands to remove the handcuffs."))
 				src.handcuffs.drop_handcuffs(src)
 				return
 			if (ishunter(src))
@@ -2573,7 +2342,7 @@
 		animation.icon_state = "blank"
 		animation.icon = 'icons/mob/mob.dmi'
 		animation.master = src
-		flick("spidergib", animation)
+		FLICK("spidergib", animation)
 		src.visible_message(SPAN_ALERT("<font size=4><B>A swarm of spiders erupts from [src]'s mouth and devours them! OH GOD!</B></font>"), SPAN_ALERT("<font size=4><B>A swarm of spiders erupts from your mouth! OH GOD!</B></font>"), SPAN_ALERT("You hear a vile chittering sound."))
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 100, 1)
 		SPAWN(1 SECOND)
@@ -2650,13 +2419,13 @@
 			processed += organHolder.brain
 		if (organHolder.head)
 			processed += organHolder.head
-		if (prob(40))
+		if (prob(40) || HAS_ATOM_PROPERTY(src, PROP_HUMAN_DROP_BRAIN_ON_GIB))
 			if (prob(15) && organHolder.head && organHolder.head.loc == src)
 				ret += organHolder.drop_organ("head", src)
 			else
 				if (organHolder.skull && organHolder.skull.loc == src)
 					ret += organHolder.skull
-				if (prob(15) && organHolder.brain && organHolder.brain.loc == src)
+				if ((prob(15) || HAS_ATOM_PROPERTY(src, PROP_HUMAN_DROP_BRAIN_ON_GIB)) && organHolder.brain && organHolder.brain.loc == src)
 					ret += organHolder.brain
 		if (organHolder.left_eye)
 			processed += organHolder.left_eye
@@ -2731,9 +2500,9 @@
 
 /mob/living/carbon/human/proc/is_bald()
 	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
-	return istype(AH.customizations["hair_bottom"], /datum/customization_style/none) \
-	&& istype(AH.customizations["hair_middle"], /datum/customization_style/none) \
-	&& istype(AH.customizations["hair_top"], /datum/customization_style/none)
+	return istype(AH.customizations["hair_bottom"].style, /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_middle"].style, /datum/customization_style/none) \
+	&& istype(AH.customizations["hair_top"].style, /datum/customization_style/none)
 
 /mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
@@ -2758,16 +2527,13 @@
 		src.update_colorful_parts()
 	return W
 
-
-/mob/living/carbon/human/set_eye()
-	..()
+/mob/living/carbon/human/set_eye(atom/new_eye, new_pixel_x = 0, new_pixel_y = 0)
+	if (new_eye == null && isskeleton(src))
+		var/datum/mutantrace/skeleton/skeleton = src.mutantrace
+		if (skeleton.head_tracker)
+			new_eye = skeleton.head_tracker
+	..(new_eye, new_pixel_x, new_pixel_y)
 	src.update_sight()
-
-/mob/living/carbon/human/heard_say(var/mob/other, var/message)
-	if (!sims)
-		return
-	if (other != src)
-		sims.affectMotive("social", 5)
 
 /mob/living/carbon/human/proc/lose_limb(var/limb)
 	if (!src.limbs)
@@ -2782,14 +2548,18 @@
 
 /mob/living/carbon/human/proc/sever_limb(var/limb)
 	if (!src.limbs)
-		return
-	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
+		return FALSE
+	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return FALSE
 
 	//not exactly elegant, but fuck it, src.vars[limb].sever() didn't want to work :effort:
 	if(limb == "l_arm" && src.limbs.l_arm) src.limbs.l_arm.sever()
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
+	else
+		return FALSE
+
+	return TRUE
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
@@ -2870,38 +2640,10 @@
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
 
-/mob/living/carbon/human/understands_language(var/langname)
-	if (mutantrace)
-		if ((langname == "" || langname == "english") && !mutantrace.override_language)
-			. = 1
-		else if (mutantrace.override_language == langname)
-			. = 1
-		else if (langname in mutantrace.understood_languages)
-			. = 1
-		else if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
-			var/obj/item/clothing/mask/monkey_translator/translator = src.wear_mask
-			if (langname == translator.new_language)
-				. = 1
-		else
-			. = 0
-	else
-		. = ..()
-	if ((langname == "silicon" || langname == "binary") && ((locate(/obj/item/implant/robotalk) in implant) || src.traitHolder.hasTrait("roboears")))
-		return 1
-	return .
-
 /mob/living/carbon/human/bump(atom/movable/AM as mob|obj)
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
-
-/mob/living/carbon/human/get_special_language(var/secure_mode)
-	if (secure_mode == "s" && ((locate(/obj/item/implant/robotalk) in implant) || src.traitHolder.hasTrait("roboears")))
-		return "silicon"
-	return null
-
-/mob/living/carbon/human/HealBleeding(var/amt)
-	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
@@ -2923,7 +2665,7 @@
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade) || istype(A, /obj/item/pipebomb/bomb))
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
 				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
 			else if (istype(A, /obj/item/device/transfer_valve))
@@ -2931,6 +2673,15 @@
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+			else if (istype(A, /obj/item/assembly))
+				var/obj/item/assembly/dropped_assembly = A
+				if(!dropped_assembly.secured)
+					// You're not evading death that easily, clown
+					dropped_assembly.secured = TRUE
+					dropped_assembly.add_fingerprint(src)
+					dropped_assembly.UpdateIcon()
+					dropped_assembly.last_armer = src
+				dropped_assembly.AttackSelf(src)
 		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
@@ -3361,7 +3112,7 @@
 	var/turf/T = get_turf(src)
 
 	if (T)
-		if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+		if (istype(T, /turf/space))
 			. -= space_movement
 
 		if (!(src.mutantrace && src.mutantrace.aquatic) && !src.hasStatus("aquabreath"))
@@ -3392,7 +3143,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
-			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM][AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
@@ -3473,16 +3224,6 @@
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()
-
-/mob/living/carbon/human/hear_talk(mob/M, text, real_name, lang_id) //Allows stuff in your hands/pockets/belt to pickup voice from other people
-	var/mob/self = src
-	if(M != self)	//So we dont hear ourselves twice
-		src.l_store?.hear_talk(M, text, real_name, lang_id)
-		src.r_store?.hear_talk(M, text, real_name, lang_id)
-		src.belt?.hear_talk(M, text, real_name, lang_id)
-		src.r_hand?.hear_talk(M, text, real_name, lang_id)
-		src.l_hand?.hear_talk(M, text, real_name, lang_id)
-	. = ..()
 
 ///Returns the number of clown items someone is wearing
 /mob/living/carbon/human/proc/clown_tally()
@@ -3664,3 +3405,11 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/mob/living/carbon/human/proc/fake_say(text)
+	set waitfor = FALSE
+	var/spaces = length(splittext(text, " "))
+	src.create_typing_indicator()
+	sleep(1.2 SECONDS * spaces)
+	src.remove_typing_indicator()
+	src.say(text)

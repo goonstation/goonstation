@@ -136,6 +136,11 @@
 		R.errored = TRUE
 		R.error = _raw_response
 
+		// Temp patch for rustg returning limited data on non-200 status responses
+		var/static/regex/status_regex = regex(@"status code (\d+)$", "i")
+		if (status_regex.Find(_raw_response))
+			R.status_code = text2num(status_regex.group[1])
+
 	return R
 
 /**
@@ -170,7 +175,7 @@
  */
 /datum/cobalt_tools
 	/// The base API url to use.
-	var/base_url = "https://cobalt-api.kwiatekmiki.com" // api.cobalt.tools
+	var/base_url = "https://api.cobalt.tools" // api.cobalt.tools
 
 /**
  * Sends a request to the cobalt.tools API to fetch a tunnel for the audio file we want.

@@ -198,6 +198,8 @@ TYPEINFO_NEW(/obj/table)
 		var/turf/OL = get_turf(src)
 		if (!OL)
 			return
+		for(var/atom/movable/AM as anything in src.storage?.get_contents())
+			AM.set_loc(OL)
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)
@@ -1113,14 +1115,15 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
+				var/datum/material/mat = S.material //hold a ref to this in case the sheet stack gets disposed by using the last sheet
 				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, SPAN_ALERT("You have to use glass or another crystalline material to repair [src]!"))
-				else if (S.change_stack_amount(-1))
+				else if (S.change_stack_amount(-2))
 					boutput(user, SPAN_NOTICE("You add glass to [src]!"))
 					if (S.reinforcement)
 						src.reinforced = 1
-					if (S.material)
-						src.setMaterial(S.material)
+					if (mat)
+						src.setMaterial(mat)
 					src.repair()
 				return
 			else

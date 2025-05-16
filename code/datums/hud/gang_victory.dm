@@ -3,7 +3,7 @@
 	click_check = 0
 	var/atom/movable/screen/text
 
-	New(datum/gang/winning_gang)
+	proc/set_winner(datum/gang/winning_gang)
 		//big gang name victory text
 		src.text = create_screen("gangvictory", "Gang Victory Display", null, "", "NORTH,CENTER", HUD_LAYER_3)
 		text.maptext = "<span class='c ol vga vt' style='background: #00000080;font-size: 5;'>[winning_gang.gang_name] won the round!</span>"
@@ -54,4 +54,3 @@
 			nametag.maptext_width = 100
 
 			member_count++
-		..()

@@ -259,8 +259,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 
 	init()
 		src.data = list("new_mutantrace_type" = null)
-		while (!data["new_mutantrace_type"] || initial(data["new_mutantrace_type"]:dna_mutagen_banned))
-			data["new_mutantrace_type"] = pick(concrete_typesof(/datum/mutantrace))
+		data["new_mutantrace_type"] = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/safe_mutantrace_filter))
 
 	on_add()
 		. = ..()

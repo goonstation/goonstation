@@ -11,6 +11,12 @@
 # Aloe
 /code/mob/dead/ @frawhst
 
+# Emily
+/code/modules/ranch/ @UrsulaMejor
+/icons/obj/ranch/ @UrsulaMejor
+/icons/mob/ranch/ @UrsulaMejor
+/icons/misc/ranch/ @UrsulaMejor
+
 # Flourish
 /code/obj/item/toys.dm @flrsh
 /maps/oshan.dmm @flrsh
@@ -29,6 +35,7 @@
 
 # Sord
 /maps/donut2.dmm @Sord213
+/maps/neon.dmm @Sord213
 
 # Sovexe
 /code/modules/antagonists/arcfiend/ @Sovexe

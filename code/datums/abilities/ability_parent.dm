@@ -264,7 +264,8 @@
 		if (!ispath(abilityType))
 			return
 		if (locate(abilityType) in src.abilities)
-			return
+			var/datum/targetable/A = locate(abilityType) in src.abilities
+			return A
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
 		src.abilities += A
@@ -428,6 +429,7 @@
 
 	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
 	proc/get_controlling_mob()
+		RETURN_TYPE(/mob)
 		return src.composite_owner?.owner || src.owner
 
 /atom/movable/screen/ability
@@ -925,8 +927,8 @@
 		/// Returns for this proc can be found in defines/abilities.dm.
 		cast(atom/target)
 			SHOULD_CALL_PARENT(TRUE)
-			if(do_logs)
-				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src] on [constructTarget(target, "combat")] at [log_loc(target)]")
+			if (do_logs)
+				logCast(target)
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 
@@ -991,6 +993,13 @@
 				localholder.locked = FALSE
 				if (!.)
 					localholder.deductPoints(pointCost)
+
+		logCast(atom/target)
+			if (src.targeted)
+				if (!isnull(target))
+					logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] on [constructTarget(target, "combat")] at [log_loc(target)]")
+			else
+				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] at [log_loc(src.holder?.owner)]")
 
 		updateObject()
 			return

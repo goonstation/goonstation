@@ -55,7 +55,7 @@
 		var/dat = "<B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
 			dat += build_html_gps_form(src, FALSE, src.tracking_target)
-			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
+			dat += {"<HR><BR><A href='byond://?src=\ref[src];scan=1'>Scan Area</A>"}
 			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
 			if(beaconlist.len)
 				for(var/obj/B in beaconlist)

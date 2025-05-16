@@ -48,6 +48,7 @@ TYPEINFO(/obj/item/baton)
 	var/flipped = FALSE
 
 	var/item_special_path = /datum/item_special/spark/baton
+	var/harm_sound = "swing_hit"
 
 	New()
 		..()
@@ -154,7 +155,7 @@ TYPEINFO(/obj/item/baton)
 						src.is_active = FALSE
 						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
 							var/obj/item/baton/ntso/B = src
-							B.state = EXTENDO_BATON_OPEN_AND_OFF
+							B.set_state(EXTENDO_BATON_OPEN_AND_OFF, user)
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
@@ -175,7 +176,7 @@ TYPEINFO(/obj/item/baton)
 			if ("failed")
 				logTheThing(LOG_COMBAT, user, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!"))
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
 
 			if ("failed_stun")
@@ -197,7 +198,7 @@ TYPEINFO(/obj/item/baton)
 				user.visible_message(SPAN_ALERT("<B>[victim] has been stunned with the [src.name] by [user]!</B>"))
 				logTheThing(LOG_COMBAT, user, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
-				flick(flick_baton_active, src)
+				FLICK(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
 
 			else
@@ -223,8 +224,8 @@ TYPEINFO(/obj/item/baton)
 
 		// Some after attack stuff.
 		if (user && ismob(user))
-			user.lastattacked = dude_to_stun
-			dude_to_stun.lastattacker = user
+			user.lastattacked = get_weakref(dude_to_stun)
+			dude_to_stun.lastattacker = get_weakref(user)
 			dude_to_stun.lastattackertime = world.time
 
 		return TRUE
@@ -270,7 +271,7 @@ TYPEINFO(/obj/item/baton)
 		switch (user.a_intent)
 			if ("harm")
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
-					playsound(src, "swing_hit", 50, 1, -1)
+					playsound(src, src.harm_sound, 50, 1, -1)
 					..()
 				else
 					src.do_stun(user, target, "failed_harm", 1)
@@ -432,12 +433,6 @@ TYPEINFO(/obj/item/baton/ntso)
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = EXTENDO_BATON_OPEN_AND_ON
 
-	//change for later for more interestings whatsits
-	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
-	// 	..(requires_electricity, amount, user)
-	// 	if (state == EXTENDO_BATON_CLOSED_AND_OFF || state == EXTENDO_BATON_OPEN_AND_OFF)
-	// 		return 0
-
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		//never should happen but w/e
@@ -449,45 +444,7 @@ TYPEINFO(/obj/item/baton/ntso)
 			return
 
 		//move to next state
-		switch (src.state)
-			if (EXTENDO_BATON_CLOSED_AND_OFF)		//move to open/on state
-				if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE)) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
-					boutput(user, SPAN_ALERT("The [src.name] doesn't have enough power to be turned on."))
-					src.state = EXTENDO_BATON_OPEN_AND_OFF
-					src.is_active = FALSE
-					src.w_class = W_CLASS_NORMAL
-					src.force = 7
-					playsound(src, 'sound/misc/lightswitch.ogg', 75, TRUE, -1)
-					boutput(user, SPAN_NOTICE("The [src.name] is now open and unpowered."))
-					src.UpdateIcon()
-					user.update_inhands()
-					return
-
-				//this is the stuff that normally happens
-				src.state = EXTENDO_BATON_OPEN_AND_ON
-				src.is_active = TRUE
-				boutput(user, SPAN_NOTICE("The [src.name] is now open and on."))
-				src.w_class = W_CLASS_NORMAL
-				src.force = 7
-				playsound(src, "sparks", 75, 1, -1)
-			if (EXTENDO_BATON_OPEN_AND_ON)		//move to open/off state
-				src.state = EXTENDO_BATON_OPEN_AND_OFF
-				src.is_active = FALSE
-				src.w_class = W_CLASS_NORMAL
-				src.force = 7
-				playsound(src, 'sound/misc/lightswitch.ogg', 75, TRUE, -1)
-				boutput(user, SPAN_NOTICE("The [src.name] is now open and unpowered."))
-				// playsound(src, "sparks", 75, 1, -1)
-			if (EXTENDO_BATON_OPEN_AND_OFF)		//move to closed/off state
-				src.state = EXTENDO_BATON_CLOSED_AND_OFF
-				src.is_active = FALSE
-				src.w_class = W_CLASS_SMALL
-				src.force = 1
-				boutput(user, SPAN_NOTICE("The [src.name] is now closed."))
-				playsound(src, "sparks", 75, 1, -1)
-
-		src.UpdateIcon()
-		user.update_inhands()
+		src.cycle_state(user)
 
 	do_stun(mob/user, mob/victim, type, stun_who)
 		. = ..()
@@ -516,10 +473,123 @@ TYPEINFO(/obj/item/baton/ntso)
 				return
 		..()
 
-	emp_act()
-		if (state == EXTENDO_BATON_OPEN_AND_ON)
-			state = EXTENDO_BATON_OPEN_AND_OFF
-		src.is_active = FALSE
-		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
-		src.process_charges(-INFINITY)
+	proc/cycle_state(mob/user)
+		switch (src.state)
+			if (EXTENDO_BATON_CLOSED_AND_OFF)
+				src.set_state(EXTENDO_BATON_OPEN_AND_ON, user)
+			if (EXTENDO_BATON_OPEN_AND_ON)		//move to open/off state
+				src.set_state(EXTENDO_BATON_OPEN_AND_OFF, user)
+			if (EXTENDO_BATON_OPEN_AND_OFF)		//move to closed/off state
+				src.set_state(EXTENDO_BATON_CLOSED_AND_OFF, user)
 
+	proc/set_state(var/state, var/mob/user)
+		if (src.state == state)
+			return
+		switch(state)
+			if(EXTENDO_BATON_OPEN_AND_ON)		//move to open/on state
+				if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE)) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
+					src.set_state(EXTENDO_BATON_OPEN_AND_OFF)
+					boutput(user, SPAN_NOTICE("The [src.name] doesn't have enough power to turn on!"))
+					return
+				src.is_active = TRUE
+				src.state = EXTENDO_BATON_OPEN_AND_ON
+				src.w_class = W_CLASS_NORMAL
+				src.force = 7
+				boutput(user, SPAN_NOTICE("The [src.name] is now open and on."))
+				playsound(src, "sparks", 75, 1, -1)
+			if(EXTENDO_BATON_OPEN_AND_OFF)
+				src.is_active = FALSE
+				src.state = EXTENDO_BATON_OPEN_AND_OFF
+				src.w_class = W_CLASS_NORMAL
+				src.force = 7
+				boutput(user, SPAN_NOTICE("The [src.name] is now open and unpowered."))
+				playsound(src, 'sound/misc/lightswitch.ogg', 75, TRUE, -1)
+			if(EXTENDO_BATON_CLOSED_AND_OFF)
+				src.is_active = FALSE
+				src.state = EXTENDO_BATON_CLOSED_AND_OFF
+				src.w_class = W_CLASS_SMALL
+				src.force = 1
+				boutput(user, SPAN_NOTICE("The [src.name] is now closed."))
+			else
+				logTheThing(LOG_DEBUG, user, "Extendable stun baton ([src.type]) set_state() was called with an invalid argument ([state]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+
+		SPAWN(0)
+		src.UpdateIcon()
+		user.update_inhands()
+
+
+
+
+TYPEINFO(/obj/item/baton/windup)
+	mats = null
+/obj/item/baton/windup
+	name = "Mod. 41 'Izar' baton"
+	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."
+	is_active = FALSE
+	pickup_sfx = 'sound/items/pickup_2.ogg'
+	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	icon_state = "windup_baton"
+	item_state = "windup_baton-off"
+	icon_on = "windup_baton-A"
+	icon_off = "windup_baton"
+	item_on = "windup_baton-A"
+	item_off = "windup_baton-D"
+	force = 10
+	throwforce = 7
+	contraband = 4
+	can_swap_cell = FALSE
+
+	var/recharge_time = 5 SECONDS
+
+	attack_self(var/mob/user)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
+		if (GET_COOLDOWN(src, "baton_cooldown"))
+			user.show_text("[src] is [src.hasStatus("baton_charged") ? "already primed" : "still recharging"]!", "red")
+			return
+
+		if (!GET_COOLDOWN(src, "baton_charged"))
+			user.visible_message("<span class='alert'>[user] begins to prime the [src].</span>",\
+			"<span class='notice'>You begin to prime the [src].</span>",\
+			"<span class='alert'>You hear an electrical whine.</span>")
+			playsound(user, 'sound/effects/chargeupbaton.ogg', 90, 0)
+			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
+
+	proc/charge(var/mob/user)
+		ON_COOLDOWN(src, "baton_charged", src.recharge_time)
+		src.is_active = TRUE
+		src.UpdateIcon()
+		user.update_inhands()
+		SPAWN(src.recharge_time)
+			if (!QDELETED(src) && src.is_active)
+				src.deactivate(user)
+
+	proc/deactivate(mob/user)
+		src.is_active = FALSE
+		src.UpdateIcon()
+		user?.update_inhands()
+
+	do_stun(mob/user, mob/target, type)
+		if (type != "stun")
+			. = ..()
+			if (type == "failed" || type == "failed_harm") //you stunned yourself, turn off
+				src.deactivate(user)
+			return .
+		if (!GET_COOLDOWN(src, "baton_charged"))
+			return ..(user, target, "failed_stun") //not charged, prod them
+
+		ON_COOLDOWN(src, "baton_cooldown", src.recharge_time)
+
+		target.do_disorient(src.disorient_stamina_damage, disorient = 80)
+		target.changeStatus("knockdown", src.recharge_time)
+		target.TakeDamage("All", burn = 6) //owchie
+
+		user.visible_message(SPAN_ALERT("<B>[target] has been stunned with the [src.name] by [user]!</B>"))
+		logTheThing(LOG_COMBAT, user, "stuns [constructTarget(target,"combat")] with the [src.name] at [log_loc(target)].")
+		playsound(target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, TRUE, -10)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
+		OVERRIDE_COOLDOWN(src, "baton_charged", 0)
+		target.force_laydown_standup()
+		src.deactivate(user)

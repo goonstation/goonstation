@@ -165,9 +165,8 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 			holder.RemoveEffect(id)
 
 		if (outOfPod)
-			if (probmult(6))
-				var/vomit_message = SPAN_ALERT("[owner.name] suddenly and violently vomits!")
-				owner.vomit(0, null, vomit_message)
+			if (probmult(20))
+				owner.nauseate(1)
 
 			else if (probmult(2) && !HAS_ATOM_PROPERTY(owner, PROP_MOB_CANNOT_VOMIT))
 				owner.visible_message(SPAN_ALERT("[owner.name] vomits blood!"))

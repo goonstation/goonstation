@@ -406,7 +406,7 @@ const ParallaxTypeView = (props: ParallaxTypeProps) => {
 };
 
 export const ParallaxViewer = () => {
-  const { act, data } = useBackend<ParallaxViewerData>();
+  const { data } = useBackend<ParallaxViewerData>();
 
   return (
     <Window title="Parallax Viewer" width={1600} height={800}>

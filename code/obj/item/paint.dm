@@ -23,7 +23,6 @@
 	desc = "Dispenses paint. Derp."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
-	icon_fallen = "paint-fallen"
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
@@ -226,7 +225,7 @@
 						src.name = "Irreparably Destroyed Paint Dispenser"
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
 
-						flick("vendbreak", src)
+						FLICK("vendbreak", src)
 						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)

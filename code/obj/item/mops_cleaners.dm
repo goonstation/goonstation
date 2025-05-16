@@ -609,6 +609,7 @@ TRASH BAG
 		. = ..()
 
 /obj/item/caution/traitor
+	item_function_flags = IMMUNE_TO_ACID
 	var/obj/item/reagent_containers/payload
 
 	New()

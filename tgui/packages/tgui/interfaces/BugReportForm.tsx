@@ -157,7 +157,7 @@ export const BugReportForm = () => {
     [],
   );
   return (
-    <Window title="Bug Report Form" width={600} height={700}>
+    <Window title="Bug Report Form" width={600} height={750}>
       <Window.Content>
         <Section fill scrollable>
           <Flex direction="column" height="100%">
@@ -210,7 +210,9 @@ export const BugReportForm = () => {
               <BugReportFormTextArea
                 onChange={handleStepsChange}
                 value={formState.steps}
-                placeholder="1.\n2.\n3."
+                placeholder={`1.
+2.
+3.`}
               />
             </Flex.Item>
             <Flex.Item my={2}>

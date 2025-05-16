@@ -209,11 +209,11 @@
 
 	gaymasc
 		name = "MLM pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of vincian pride flag, but can be flipped inside-out to change it to the achillean one."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the vincian pride flag, but can be flipped inside-out to change it to the achillean one."
 		icon_state ="mlm"
 		item_state = "mlm"
 		var/isachily = FALSE
-		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of achillean pride flag, but can be flipped inside-out to change it to the vincian one."
+		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of the achillean pride flag, but can be flipped inside-out to change it to the vincian one."
 		cutting_product = /obj/item/flag/mlmvinc
 
 		attack_self(mob/user as mob)
@@ -269,7 +269,7 @@
 
 		New()
 			..()
-			options = icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
+			options = get_icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
 
 		attack_self(mob/user as mob)
 			if (src.options)
@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 
 /obj/item/clothing/under/misc/chaplain/rasta
 	name = "rastafarian's shirt"
-	desc = "It's red, yellow and green. The colors of the Ethiopean national flag."
+	desc = "It's red, yellow and green. The colors of the Ethiopian national flag."
 	icon_state = "rasta"
 	item_state = "rasta"
 
@@ -1183,6 +1183,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 	item_state = "suitG"
 
 /obj/item/clothing/under/suit/captain/blue
+	desc = "A blue suit and yellow necktie. Exemplifies authority."
 	icon_state = "suit-capB"
 	item_state = "suit-capB"
 
@@ -1543,7 +1544,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
 /obj/item/clothing/under/gimmick/jester
     name = "jester's outfit"
-    desc = "Outfit of a not-so-funny-clown."
+    desc = "Outfit of a not-so-funny clown."
     icon_state = "jester"
     item_state = "jester"
 
@@ -1707,7 +1708,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 
 /obj/item/clothing/under/misc/tricolor
     name = "Tricolor Jumpsuit"
-    desc = "A jumpsuit that shows your serious about pizza."
+    desc = "A jumpsuit that shows you're serious about pizza."
     icon_state = "tricolor"
     item_state = "tricolor"
 

@@ -138,10 +138,12 @@
 	var/list/obj/murder_supplies = list()
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
-		if(D.item)
-			if(!D.br_allowed)
-				continue
-			murder_supplies.Add(D.item)
+		if(length(D.items) == 0)
+			continue
+		if(!D.br_allowed)
+			continue
+		for (var/item in D.items)
+			murder_supplies.Add(item)
 
 	var/datum/syndicate_buylist/S = pick(murder_supplies)
 	var/pickedPath = pick(pickedClothingPath, S) //50-50 of either clothes or traitor item.
@@ -288,7 +290,7 @@
 
 			playsound(usr, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 120, 0)
 			icon_state = "lootb2"
-			flick("lootb1", src)
+			FLICK("lootb1", src)
 
 			SPAWN(2 SECONDS)
 				var/mob/living/carbon/human/H = usr

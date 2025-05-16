@@ -1,6 +1,6 @@
 // emote
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null, var/dead_check = TRUE) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	set waitfor = FALSE
 	..()
 	var/param = null
@@ -8,6 +8,16 @@
 	if (!bioHolder) bioHolder = new/datum/bioHolder( src )
 
 	if(voluntary && !src.emote_allowed)
+		return
+
+	if (dead_check && isdead(src))
+		src.emote_allowed = FALSE
+		return
+
+	if (src.hasStatus("paralysis"))
+		return //pls stop emoting :((
+
+	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
 		return
 
 	if (src.bioHolder.HasEffect("revenant"))
@@ -65,15 +75,6 @@
 						#ifdef HALLOWEEN
 						spooktober_GH.change_points(src.ckey, 30)
 						#endif
-						var/possumMax = 15
-						for_by_tcl(responsePossum, /obj/critter/opossum)
-							if (!responsePossum.alive)
-								continue
-							if(!IN_RANGE(responsePossum, src, 4))
-								continue
-							if (possumMax-- < 0)
-								break
-							responsePossum.CritterDeath() // startled into playing dead!
 						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
 								continue
@@ -83,7 +84,7 @@
 					else
 						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
+					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless") && !ON_COOLDOWN(src, "scaredshitless", 1 SECOND))
 						src.emote("fart") //We can still fart if we're muzzled.
 
 			if ("monsterscream")
@@ -147,7 +148,7 @@
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
-							if (A.event_handler_flags & IS_FARTABLE)
+							if (A.event_handler_flags & IS_FARTABLE && !ON_COOLDOWN(A, "\ref[src]fart", 0.1 SECONDS))
 								if (istype(A,/mob/living))
 									var/mob/living/M = A
 									if (M == src || !M.lying)
@@ -264,7 +265,7 @@
 
 						var/turf/T = get_turf(src)
 						if (T && T == src.loc)
-							if (T.turf_flags & CAN_BE_SPACE_SAMPLE)
+							if (istype(T, /turf/space))
 								if (src.getStatusDuration("food_space_farts"))
 									src.inertia_dir = src.dir
 									step(src, inertia_dir)
@@ -544,7 +545,7 @@
 				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
-				burp, fart, monologue, contemplate, custom")
+				burp, fart, monologue, contemplate, nudge, adjust, custom")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
@@ -699,6 +700,22 @@
 							src.add_karma(-10)
 							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
+
+			if ("nudge", "adjust")
+				if (!src.restrained() && src.glasses?.nudge_compatible)
+					var/obj/item/clothing/glasses/eyewear = src.glasses
+					if (eyewear.flash_compatible)
+						eyewear.nudge_flash()
+					if (!eyewear.is_nudged)
+						var/flavor_one = pick("adjusts", "pushes up")
+						var/flavor_two = pick("intelligently.", "with a smirk.", "very seriously.")
+						message = "<B>[src]</B> [flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]"
+						maptext_out = "<I>[flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]</I>"
+						eyewear.is_nudged = TRUE
+					else
+						message = "<B>[src]</B> nudges [his_or_her(src)] [eyewear.name] back down [his_or_her(src)] nose."
+						maptext_out = "<I>nudges [his_or_her(src)] [eyewear.name] back down [his_or_her(src)] nose.</I>"
+						eyewear.is_nudged = FALSE
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
@@ -867,8 +884,11 @@
 
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
-						if (src.health <= 0)
-							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
+						if (src.find_ailment_by_type(/datum/ailment/malady/flatline))
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,3)].ogg"
+							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
+						else if (src.health <= 0)
+							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(4,5)].ogg"
 							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
@@ -1096,7 +1116,7 @@
 					else
 						message = "<B>[src]</B> flexes [his_or_her(src)] muscles."
 						maptext_out = "<I>flexes [his_or_her(src)] muscles</I>"
-					if(src.emote_check(voluntary))
+					if(voluntary)
 						for (var/obj/item/C as anything in src.get_equipped_items())
 							if ((locate(/obj/item/tool/omnitool/syndicate) in C) != null)
 								var/obj/item/tool/omnitool/syndicate/O = (locate(/obj/item/tool/omnitool/syndicate) in C)
@@ -1639,7 +1659,7 @@
 				m_type = 1
 
 			if ("wink")
-				if (!src.restrained() && src.emote_check(voluntary))
+				if (!src.restrained() && voluntary)
 					for (var/obj/item/C as anything in src.get_equipped_items())
 						if ((locate(/obj/item/gun/kinetic/derringer) in C) != null)
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
@@ -1671,7 +1691,22 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick(SPAN_ALERT("<B>[src]</B> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[src]'s</B> dance move borders on the goddamn diabolical!"))
-							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
+							var/message_params = list(
+								"maptext_css_values" = list(
+									"color" = "white !important",
+									"text-shadow" = "1px 1px 3px white",
+									"-dm-text-outline" = "1px black",
+								),
+								"maptext_animation_colours" = list(
+									"#FF0000",
+									"#FFFF00",
+									"#00FF00",
+									"#00FFFF",
+									"#0000FF",
+									"#FF00FF",
+								),
+							)
+							src.say("GHEIT DAUN!", message_params = message_params)
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -1861,7 +1896,7 @@
 					//		animate(transform = turn(GetPooledMatrix(), -180), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -270), time = 1, loop = -1)
 					//		animate(transform = turn(GetPooledMatrix(), -360), time = 1, loop = -1)
-					if (isobj(src.loc))
+					if (isobj(src.loc) && !is_incapacitated(src))
 						var/obj/container = src.loc
 						container.mob_flip_inside(src)
 
@@ -1871,9 +1906,6 @@
 							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
 							src.changeStatus("knockdown", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
-							src.emote_allowed = 0
-							SPAWN(1 SECOND)
-								src.emote_allowed = 1
 							goto showmessage
 
 
@@ -2173,7 +2205,8 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
+					var/datum/job/job = find_job_in_controller_by_string(src.mind.assigned_role)
+					if (src.mind && job.receives_miranda)
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2269,52 +2302,28 @@
 
 	showmessage:
 
-	//copy paste lol
+	if (!message)
+		return
+
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					if(m_type & 1)
-						chat_text.plane = PLANE_NOSHADOW_ABOVE
-						chat_text.layer = 420
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-
-
-	else
-
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			act = lowertext(act)
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (m_type & 2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (!isturf(src.loc))
-				var/atom/A = src.loc
-				for (var/mob/O in A.contents)
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
@@ -2331,7 +2340,7 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
-	if(src.bioHolder.HasEffect("radioactive_farts"))
+	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -2405,7 +2414,7 @@
 	src.emote("scream")
 	. = SPAN_ALERT("<B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B>")
 	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
-	G.affecting.lastattacker = src
+	G.affecting.lastattacker = get_weakref(src)
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
 		G.affecting.changeStatus("knockdown", max(G.affecting.getStatusDuration("knockdown"), 4.4 SECONDS))

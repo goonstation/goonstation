@@ -11,26 +11,30 @@ import { Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { InputAndButtonsSection } from './InputAndButtonsSection';
-import { PheripheralsSection } from './PheripheralsSection';
+import { PeripheralsSection } from './PeripheralsSection';
 import { TerminalOutputSection } from './TerminalOutputSection';
-import { TerminalData } from './types';
+import type { TerminalData } from './types';
 
 export const Terminal = () => {
   const { data } = useBackend<TerminalData>();
-  const { windowName, displayHTML } = data;
+  const { bgColor, displayHTML, fontColor, peripherals, windowName } = data;
 
   return (
     <Window theme="retro-dark" title={windowName} width={380} height={350}>
       <Window.Content fontFamily="Consolas">
         <Stack vertical fill>
           <Stack.Item grow>
-            <TerminalOutputSection displayHTML={displayHTML} />
+            <TerminalOutputSection
+              bgColor={bgColor}
+              displayHTML={displayHTML}
+              fontColor={fontColor}
+            />
           </Stack.Item>
           <Stack.Item>
             <InputAndButtonsSection />
           </Stack.Item>
           <Stack.Item>
-            <PheripheralsSection />
+            <PeripheralsSection peripherals={peripherals} />
           </Stack.Item>
         </Stack>
       </Window.Content>

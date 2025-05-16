@@ -159,9 +159,8 @@
 	OnLife(mult)
 		if (..())
 			return
-		if (probmult(5))
-			var/vomit_message = SPAN_ALERT("[owner] suddenly vomits on the floor!")
-			owner.vomit(rand(3,5), null, vomit_message)
+		if (probmult(20))
+			owner.nauseate(1)
 		if (probmult(3))
 			owner.emote(pick("cough", "sneeze"))
 

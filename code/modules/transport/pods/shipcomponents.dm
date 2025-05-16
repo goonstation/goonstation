@@ -18,6 +18,8 @@
 	var/system = "part"
 	/// The part is disrupted by an attack and is forced to be off
 	var/disrupted = FALSE
+	/// Can this part be used by 2x2 pods
+	var/large_pod_compatible = TRUE
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
@@ -38,12 +40,12 @@
 
 ///What the component does when activated
 ///Returns 1 if successful
-/obj/item/shipcomponent/proc/activate()
+/obj/item/shipcomponent/proc/activate(give_online_message = TRUE)
 	if(src.active == 1 || !ship)//NYI find out why ship is null
 		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
-			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
+			boutput(M, "[ship.ship_message("Not enough power to activate [src]! ([ship.powercurrent + power_used]/[ship.powercapacity])")]")
 			return FALSE
 	else
 		ship.powercurrent += power_used
@@ -54,25 +56,27 @@
 			return FALSE
 
 	src.active = 1
-	for(var/mob/M in src.ship)
-		boutput(M, "[ship.ship_message("[src] is coming online...")]")
-		mob_activate(M)
+	if (give_online_message)
+		for(var/mob/M in src.ship)
+			boutput(M, "[ship.ship_message("[src] is coming online...")]")
+			mob_activate(M)
 	if (src.ship.myhud)
 		src.ship.myhud.update_states()
 	return TRUE
 
 ///Component does this constantly
-/obj/item/shipcomponent/proc/run_component()
+/obj/item/shipcomponent/proc/run_component(mult)
 	return
 
 ///What the component does when deactived
-/obj/item/shipcomponent/proc/deactivate()
+/obj/item/shipcomponent/proc/deactivate(give_message = TRUE)
 	if(src.active == 0)
 		return
 	src.active = 0
 	ship.powercurrent -= power_used
 	for(var/mob/M in src.ship)
-		boutput(M, "[ship.ship_message("[src] is shutting down...")]")
+		if (give_message)
+			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
 		mob_deactivate(M)
 	src.ship.myhud.update_states()
 	return

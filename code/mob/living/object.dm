@@ -44,6 +44,7 @@
 			src.possessed_item.cant_drop = TRUE
 			src.max_health = 25 * src.possessed_item.w_class
 			src.health = 25 * src.possessed_item.w_class
+			src.combat_click_delay = max(possessed_item.click_delay, possessed_item.combat_click_delay)
 		else
 			if (isobj(possessed_thing))
 				src.dummy = new /obj/item/attackdummy(src)
@@ -406,7 +407,8 @@
 	if (BOUNDS_DIST(holder.target, holder.owner))
 		holder.move_to(holder.target)
 	else
-		holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
+		if(!ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay))
+			holder.owner.weapon_attack(holder.target, holder.owner.equipped(), TRUE)
 
 /datum/aiTask/timed/targeted/living_object/frustration_check()
 	. = 0

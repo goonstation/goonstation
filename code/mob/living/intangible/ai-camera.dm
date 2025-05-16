@@ -11,6 +11,13 @@
 //Observables /obj/observable  X
 //Cyborgs /mob/living/silicon/robot  X
 
+TYPEINFO(/mob/living/intangible/aieye)
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/living/intangible/aieye
 	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
@@ -26,6 +33,13 @@
 	metabolizes = FALSE
 	blood_id = null
 	use_stamina = FALSE // floating ghostly eyes dont get tired
+
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -51,7 +65,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_OBSERVER, "ai_eye")
 
 	Login()
 		.=..()
@@ -253,28 +267,8 @@
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_understands(var/other)
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-		if (isrobot(other))
-			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
-			return 1
-		return ..()
-
-	say(var/message)
-		if (src.mainframe)
-			src.mainframe.say(message)
-		else
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
-
-	say_radio()
-		src.mainframe.say_radio()
+	say_over_channel()
+		src.mainframe.say_over_channel()
 
 	say_main_radio(msg as text)
 		src.mainframe.say_main_radio(msg)
@@ -283,9 +277,6 @@
 		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
-
-	hearing_check(var/consciousness_check = 0) //can't hear SHIT - everything is passed from the AI mob through send_message and whatever
-		return 0
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
@@ -398,12 +389,16 @@
 		if (mainframe)
 			mainframe.unbolt_all_airlocks()
 
+	verb/show_alerts()
+		set category = "AI Commands"
+		set name = "Show Alert Minimap"
+		mainframe?.open_alert_minimap(src)
+
 	verb/toggle_alerts_verb()
 		set category = "AI Commands"
 		set name = "Toggle Alerts"
-		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alerts'."
-		if (mainframe)
-			mainframe.toggle_alerts_verb()
+		set desc = "Toggle alert messages in the game window. You can always check them with 'Show Alert Minimap'."
+		mainframe?.toggle_alerts_verb()
 
 	verb/access_area_apc()
 		set category = "AI Commands"
@@ -524,6 +519,12 @@
 	stopObserving()
 		src.set_loc(get_turf(src))
 		src.observing = null
+
+	examine_verb(atom/A as mob|obj|turf in view(,usr))
+		var/turf/T = get_turf(A)
+		if (!length(T.camera_coverage_emitters))
+			return
+		. = ..()
 
 //---TURF---//
 /turf/var/image/aiImage

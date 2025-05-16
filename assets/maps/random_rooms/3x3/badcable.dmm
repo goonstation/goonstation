@@ -21,7 +21,7 @@
 	density = 0
 	},
 /obj/map/light/dimreddish,
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_y = -2;
 	pixel_x = 2
 	},
@@ -97,7 +97,7 @@
 	dir = 10;
 	density = 0
 	},
-/obj/grille/steel/broken{
+/obj/mesh/grille/steel/broken{
 	pixel_y = 17;
 	pixel_x = -1
 	},

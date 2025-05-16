@@ -172,5 +172,5 @@
 		src.overlay_refresh()
 
 		playsound(src.loc, 'sound/effects/leakagentb.ogg', 20, 1)
-		flick("medimulcher-munch",src)
+		FLICK("medimulcher-munch",src)
 		..()

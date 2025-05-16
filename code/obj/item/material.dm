@@ -210,13 +210,13 @@
 			..()
 
 /obj/item/raw_material/rock
-	name = "rock"
+	name = "stone"
 	desc = "It's plain old space rock. Pretty worthless!"
 	icon_state = "rock1"
 	force = 8
 	throwforce = 10
 	scoopable = 0
-	material_name = "Rock"
+	material_name = "Stone"
 	default_material = "rock"
 
 	setup_material()
@@ -486,6 +486,12 @@
 	default_material = "gold"
 	dense = 2
 
+/obj/item/raw_material/neutronium
+	name = "neutronium ore"
+	desc = "An ore containing deadly neutronium metal."
+	material_name = "Neutronium"
+	default_material = "neutronium"
+
 // Misc building material
 
 /// This has no material, why does it exist???? Someone replace it
@@ -560,7 +566,7 @@
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(!scalpel_surgery(target,user)) return ..()
+		if(is_special || !scalpel_surgery(target, user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)

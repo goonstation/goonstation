@@ -439,7 +439,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
-			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
+			newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 			if(inafterlifebar(src))
 				qdel(src)
 			return
@@ -567,7 +567,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					say("[BILL_PICK("greetings")] Murray! How's it [BILL_PICK("verbs")]?")
 					SPAWN(rand(20,40))
 						if (murray?.on && !murray.idle)
-							murray.speak("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
+							murray.say("Hi, Bill! It's [BILL_PICK("murraycompliment")] to see you again!")
 
 				else
 					var/mob/M = pick(alive_mobs)

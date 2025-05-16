@@ -26,7 +26,7 @@ TYPEINFO(/datum/component/send_to_target_mob)
 
 	I.set_loc(get_turf(M))
 	if (teleport_effect)
-		flick("[initial(I.icon_state)]-tele", I)
+		FLICK("[initial(I.icon_state)]-tele", I)
 	if (!M.put_in_hand(I))
 		M.show_text("[I.name] summoned successfully. You can find it on the floor at your current location.", "blue")
 	else

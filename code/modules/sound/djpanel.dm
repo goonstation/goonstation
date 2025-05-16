@@ -6,7 +6,6 @@ client/proc/open_dj_panel()
 	set name = "DJ Panel"
 	set desc = "Get your groove on!" //"funny function names???? first you use the WRONG INDENT STYLE and now this????" --that fuckhead on the forums
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	ADMIN_ONLY
 	SHOW_VERB_DESC
 	if (!isadmin(src) && !src.non_admin_dj)
 		boutput(src, "Only administrators or those with access may use this command.")

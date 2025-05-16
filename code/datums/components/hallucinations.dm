@@ -584,11 +584,12 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		my_target.show_message(SPAN_COMBAT("<b>[src] narrowly dodges [my_target]'s attack!"))
 
 /obj/fake_attacker/proc/mirage_fadeout(time=2 SECONDS)
-	//gotta do it like this because /image is not /atom and so filter management no work
-	var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
-	src.client_image.filters += filter(arglist(filter_params))
-	animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
-	animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
+	if(src.client_image)
+		//gotta do it like this because /image is not /atom and so filter management no work
+		var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
+		src.client_image.filters += filter(arglist(filter_params))
+		animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
+		animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
 
 /obj/fake_attacker/Crossed(atom/movable/M)
 	..()

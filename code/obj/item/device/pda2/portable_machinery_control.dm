@@ -235,7 +235,7 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
-						flick("[P4.icon_state]-tele", P4)
+						FLICK("[P4.icon_state]-tele", P4)
 						elecflash(P4)
 						logTheThing(LOG_STATION, usr, "teleports [P4] to [log_loc(our_loc)].")
 
@@ -283,7 +283,7 @@
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
-						flick("[P5.icon_state]-tele", P5)
+						FLICK("[P5.icon_state]-tele", P5)
 						elecflash(P5)
 						logTheThing(LOG_STATION, usr, "teleports [P5] to its home turf [log_loc(dest_loc)].")
 
@@ -300,7 +300,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)
+		for (var/obj/machinery/port_a_brig/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -318,7 +318,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -336,7 +336,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
+		for (var/obj/machinery/vending/port_a_nanomed/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -355,7 +355,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
+		for (var/obj/storage/closet/port_a_sci/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/

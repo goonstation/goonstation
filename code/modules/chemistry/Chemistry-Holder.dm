@@ -199,10 +199,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return R
 
 	proc/remove_any_except(var/amount=1, var/exception)
-		if(amount > total_volume) amount = total_volume
+		if (!(exception in src.reagent_list))
+			src.remove_any(amount)
+			return
+
+		var/datum/reagent/exception_reagent = reagent_list[exception]
+		var/effective_total_volume = total_volume - exception_reagent.volume
+		if(amount > effective_total_volume) amount = effective_total_volume
 		if(amount <= 0) return
 
-		var/remove_ratio = amount/total_volume
+		var/remove_ratio = amount/effective_total_volume
 
 		for(var/reagent_id in reagent_list)
 			if (reagent_id == exception)
@@ -332,11 +338,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				/*if(istype(current_reagent, /datum/reagent/disease))
 					target_reagents.add_reagent_disease(current_reagent, (transfer_amt * multiplier), current_reagent.data, current_reagent.temperature)
 				else*/
-				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+				target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 
 				current_reagent.on_transfer(src, target_reagents, receive_amt)
 
-				src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
+				src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
 		else //Only transfer one reagent
 			var/CI = 1
 			for(var/reagent_id in reagent_list)
@@ -345,26 +351,29 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if ( CI++ == index )
 					var/datum/reagent/current_reagent = reagent_list[reagent_id]
 					if (isnull(current_reagent) || current_reagent.volume == 0)
-						return 0
+						break
 					var/transfer_amt = min(current_reagent.volume,amount)
 					var/receive_amt = transfer_amt * multiplier
-					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, !update_target_reagents)
+					target_reagents.add_reagent(reagent_id, receive_amt, current_reagent.data, src.total_temperature, TRUE, TRUE)
 					current_reagent.on_transfer(src, target_reagents, receive_amt)
-					src.remove_reagent(reagent_id, transfer_amt, update_self_reagents, update_self_reagents)
-					return 0
+					src.remove_reagent(reagent_id, transfer_amt, FALSE, FALSE)
+					break
 
 		if (update_self_reagents)
 			src.update_total()
+			src.temperature_react()
 			src.handle_reactions()
 			// this was missing. why was this missing? i might be breaking the shit out of something here
-			reagents_changed()
+			src.reagents_changed()
 
 		if (!target_reagents) // on_transfer may murder the target, see: nitroglycerin
 			return amount
 
 		if (update_target_reagents)
 			target_reagents.update_total()
+			target_reagents.temperature_react()
 			target_reagents.handle_reactions()
+			target_reagents.reagents_changed(TRUE)
 
 		reagents_transferred()
 		return amount
@@ -742,11 +751,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								dmg_multiplier = paramslist["dmg_multiplier"]
 
 						if(C.bioHolder)
-							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
+							if(temp_to_burn_with > C.scald_temp() && !C.is_heat_resistant())
 								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
-							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
+							else if(temp_to_burn_with < C.frostburn_temp() && !C.is_cold_resistant())
 								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
@@ -764,7 +773,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist, current_reagent.volume*volume_fraction))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -951,7 +960,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if (rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0 || !user.sight_check(1))	// Report nothing about the reagents in this case
 			return null
 
 		if (length(reagent_list))
@@ -1056,7 +1065,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-			var/weight = current_reagent.volume * current_reagent.transparency / 255
+			var/weight = min(current_reagent.volume * current_reagent.transparency / 255, 1e24) //infinity breaks things real badly here
 			total_weight += weight
 
 			average.r += weight * current_reagent.fluid_r

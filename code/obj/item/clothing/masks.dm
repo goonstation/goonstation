@@ -10,7 +10,7 @@
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
-	var/is_muzzle = 0
+	var/is_muzzle = FALSE
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	unremovable
 		name = "slasher's gas mask"
-		desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
+		desc = "A close-fitting sealed gas mask, this one seems to be producing some kind of dark aura."
 		cant_self_remove = 1
 		cant_other_remove = 1
 		icon_state = "slasher_mask"
@@ -273,7 +273,7 @@ TYPEINFO(/obj/item/voice_changer)
 
 /obj/item/voice_changer
 	name = "voice changer"
-	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
+	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discreetly fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
 	var/permanent = FALSE
@@ -294,7 +294,21 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
-	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+	var/new_language = LANGUAGE_ENGLISH	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
+	equipped(mob/user, slot)
+		. = ..()
+
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TRANSLATOR, language_id = src.new_language)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_TRANSLATOR)
+
+		. = ..()
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
@@ -393,7 +407,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 	autumn
 		name = "autumn clown wig and mask"
-		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
+		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it?!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
 		base_icon_state = "clown_autumn"
@@ -494,7 +508,22 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	c_flags = COVERSMOUTH
 	w_class = W_CLASS_SMALL
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
-	is_muzzle = 1
+	is_muzzle = TRUE
+
+	equipped(mob/user, slot)
+		. = ..()
+
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+		. = ..()
+
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
@@ -649,14 +678,16 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = FALSE
 	allow_staple = 0
 	var/low_visibility = TRUE
+	material_amt = 0.5
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
 		if (isweldingtool(W) && low_visibility)
 			if(!W:try_weld(user, 1))
 				return
 			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
-			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
-			user.updateOverlaysClient(user.client)
+			if(src in user.get_equipped_items())
+				user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+				user.updateOverlaysClient(user.client)
 			setProperty("meleeprot_head", 3)
 			delProperty("disorient_resist_eye")
 			src.low_visibility = FALSE
@@ -841,7 +872,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 
 /obj/item/clothing/mask/greencultmask
 	name = "lost horror veil"
-	desc = "A dark green shroud with loose fabric tendrils at the end of the face You feel dizzy and lost just gazing into the visage."
+	desc = "A dark green shroud with loose fabric tendrils at the end of the face. You feel dizzy and lost just gazing into the visage."
 	item_state = "greencultmask"
 	icon_state = "greencultmask"
 	wear_layer = MOB_OVER_TOP_LAYER

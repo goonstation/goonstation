@@ -12,21 +12,24 @@
 
 	New()
 		..()
-
-		if (!islist(portable_machinery))
-			portable_machinery = list()
-		portable_machinery.Add(src)
+		START_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 
 		src.homeloc = src.loc
 		return
 
 	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
 		if(occupant)
 			occupant.set_loc(get_turf(src.loc))
 			occupant = null
 		..()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(src.status & BROKEN)
+			return "Use <b>2 glass sheets</b> to repair [src]."
+		else
+			return ""
 
 	examine()
 		. = ..()
@@ -125,15 +128,10 @@
 		.= 1
 
 	set_broken()
-		if (status & BROKEN)
-			return
-		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-		smoke.set_up(5, 0, src)
-		smoke.start()
+		. = ..()
+		if (.) return
 		src.go_out()
 		icon_state = "PAG_broken"
-		light.disable()
-		status |= BROKEN
 
 	attack_hand(mob/user)
 		if (src.status & BROKEN)

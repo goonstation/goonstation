@@ -205,7 +205,7 @@
 			SPAWN(0)
 				action.execute(target, user)
 			if (action.flick_on_click)
-				flick(action.flick_on_click, src)
+				FLICK(action.flick_on_click, src)
 			if (action.close_clicked)
 				user.closeContextActions()
 

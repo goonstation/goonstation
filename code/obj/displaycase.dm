@@ -148,7 +148,7 @@
 		overlays += displayed
 		boutput(user, SPAN_NOTICE("You place the [W.name] in the display case."))
 	else // When punched
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user, src)
 		src.health -= W.force
 		src.healthcheck()
@@ -158,7 +158,7 @@
 /obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		user.visible_message(SPAN_ALERT("[user] kicks the display case."))
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		attack_particle(user, src)
 		src.health -= 2
 		src.healthcheck()

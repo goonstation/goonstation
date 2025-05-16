@@ -236,7 +236,7 @@
 				return
 		else
 			if (W.force > 8)
-				user.lastattacked = src
+				user.lastattacked = get_weakref(src)
 				src.barricade_damage(W.force / 8)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 			..()

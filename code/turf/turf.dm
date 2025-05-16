@@ -64,7 +64,6 @@
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER
 
-
 	New()
 		..()
 		src.path_old = src.type
@@ -209,7 +208,7 @@
 		if (rods)
 			rods.change_stack_amount(-1)
 
-		var/obj/grille/catwalk/catwalk = new
+		var/obj/mesh/catwalk/catwalk = new
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
@@ -242,16 +241,6 @@
 	alpha = 255
 	layer = TILE_EFFECT_OVERLAY_LAYER
 	animate_movement = NO_STEPS // fix for things gliding around all weird
-
-	Move()
-		SHOULD_CALL_PARENT(FALSE)
-		return FALSE
-
-/obj/overlay/tile_gas_effect
-	name = ""
-	anchored = ANCHORED
-	density = 0
-	mouse_opacity = 0
 
 	Move()
 		SHOULD_CALL_PARENT(FALSE)
@@ -293,7 +282,6 @@
 	var/static/image/starlight
 
 	flags = FLUID_DENSE
-	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	can_build = TRUE
 	dense
@@ -319,7 +307,7 @@
 		toxins = ONE_ATMOSPHERE/3
 		New()
 			..()
-			var/obj/overlay/tile_gas_effect/gas_icon_overlay = new
+			var/atom/movable/tile_gas_effect/gas_icon_overlay = new
 			gas_icon_overlay.icon = 'icons/effects/tile_effects.dmi'
 			gas_icon_overlay.icon_state = "plasma-alpha"
 			gas_icon_overlay.dir = pick(cardinal)
@@ -429,11 +417,15 @@ proc/generate_space_color()
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
-			starlight.color = starlight_color_override ? starlight_color_override : src.color
-			if(!isnull(starlight_alpha))
-				starlight.alpha = starlight_alpha
 
-		src.underlays += starlight
+		if(!isnull(starlight_alpha))
+			starlight.alpha = starlight_alpha
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
+
+		if(length(src.underlays))
+			src.underlays = list(starlight)
+		else
+			src.underlays += starlight
 	else
 		src.underlays = list()
 	#endif
@@ -456,7 +448,7 @@ proc/generate_space_color()
 
 /turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
-		air_master.tiles_to_space |= src
+		air_master.tiles_to_space[src] = null
 		return TRUE
 
 /turf/cordon
@@ -658,7 +650,7 @@ var/global/in_replace_with = 0
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
-	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
+	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -886,18 +878,16 @@ var/global/in_replace_with = 0
 				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.tiles_to_update |= N
+				air_master.tiles_to_update[N] = null
 		else if (air_master)
-			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons -= src
-			if (length(air_master.tiles_to_update))
-				air_master.tiles_to_update -= src
+			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons.Remove(src)
+			air_master.tiles_to_update.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
 			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
 			oldparent.borders?.Remove(src)
-
 
 	new_turf.update_nearby_tiles(1)
 
@@ -1061,8 +1051,6 @@ TYPEINFO(/turf/simulated)
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 
-	turf_flags = IS_TYPE_SIMULATED
-
 	attackby(var/obj/item/W, var/mob/user, params)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
@@ -1123,12 +1111,12 @@ TYPEINFO(/turf/simulated)
 
 /turf/simulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/grass
@@ -1198,7 +1186,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/wall/bombvr
@@ -1259,7 +1247,7 @@ TYPEINFO(/turf/simulated)
 		var/area/A = get_area (user)
 		var/obj/item/rods/R = C
 		if (istype(R))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
@@ -1274,7 +1262,7 @@ TYPEINFO(/turf/simulated)
 			return
 
 		if (istype(C, /obj/item/tile))
-			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
 			var/obj/item/tile/T = C
@@ -1311,6 +1299,10 @@ TYPEINFO(/turf/simulated)
 			if(target_turf)
 				zlevel = target_turf.z
 			V.going_home = 0
+	else if (istype(A, /mob/living/critter/space_phoenix))
+		var/mob/living/critter/space_phoenix/phoenix = A
+		if (phoenix.travel_back_to_station)
+			zlevel = Z_LEVEL_STATION
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
 		return

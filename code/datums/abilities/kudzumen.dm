@@ -251,7 +251,7 @@
 		src.health -= dmg
 		if (src.health < 1)
 			qdel (src)
-		user.lastattacked  = src
+		user.lastattacked = get_weakref(src)
 		..()
 
 
@@ -324,29 +324,6 @@
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
-
-/datum/targetable/kudzu/kudzusay
-	name = "Speak Kudzu"
-	desc = "Speak to your collective consciousness."
-	icon_state = "kudzu-say"
-	cooldown = 0
-	pointCost = 0
-	targeted = 0
-	target_anything = 0
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	can_cast_anytime = 1
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "[message]")
-		.= holder.owner.say_kudzu(message, holder)
-
-		return 0
 
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"

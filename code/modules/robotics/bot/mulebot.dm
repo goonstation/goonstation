@@ -117,7 +117,7 @@
 		if(user)
 			boutput(user, SPAN_NOTICE("You [locked ? "lock" : "unlock"] the mulebot's controls!"))
 
-		flick("mulebot-emagged", src)
+		FLICK("mulebot-emagged", src)
 		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 		return 1
 

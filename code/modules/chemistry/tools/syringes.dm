@@ -204,6 +204,10 @@
 				logTheThing(LOG_COMBAT, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 
 			if(S_INJECT)
+				// Why would you do this
+				var/mob/living/critter/small_animal/turtle/turtle = target
+				if(istype(turtle) && !turtle?.rigged && src.reagents.has_reagent("plasma", 1))
+					turtle.rig_to_explode(user)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 				user.visible_message(SPAN_ALERT("[user.name] injects [target == user ? himself_or_herself(user) : target.name] with [src]!"),\

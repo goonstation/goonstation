@@ -22,12 +22,14 @@
 #define ROLE_SALVAGER "salvager"
 #define ROLE_ANTAGONIST_CRITTER "antagonist_critter"
 #define ROLE_MISC "misc"
+#define ROLE_BASKETBALL_WIZARD "bball_wizard"
 
 // special antagonist roles
 #define ROLE_MACHO_MAN "macho_man"
 #define ROLE_GANG_MEMBER "gang_member"
 #define ROLE_HUNTER "hunter"
 #define ROLE_WRESTLER "wrestler"
+#define ROLE_PHOENIX "space_phoenix"
 #define ROLE_EMAGGED_ROBOT "emagged_robot"
 #define ROLE_SYNDICATE_ROBOT "syndicate_robot"
 #define ROLE_CHANGELING_HIVEMIND_MEMBER "changeling_hivemind_member"
@@ -41,6 +43,7 @@
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
 #define ROLE_ZOMBIE "zombie"
+#define ROLE_BROKEN "broken"
 
 // gimmicks
 #define ROLE_BATTLER "battler"

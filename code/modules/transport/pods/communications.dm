@@ -1,13 +1,10 @@
+TYPEINFO(/obj/item/device/radio/intercom/ship)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
+
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
 	anchored = ANCHORED
-
-/obj/item/device/radio/intercom/ship/send_hear()
-	if (src.listening)
-		var/list/shiphears = list()
-		for(var/mob/M in src.loc)
-			shiphears += M
-		return shiphears
+	speaker_range = 0
 
 /obj/item/shipcomponent/communications
 	power_used = 10
@@ -56,6 +53,9 @@
 		External()
 			for(var/obj/machinery/mining_magnet/MM in range(7,src.ship))
 				linked_magnet = MM
+				if (!linked_magnet.allowed(usr))
+					boutput(usr, SPAN_ALERT("Access Denied."))
+					return
 				ui_interact(usr)
 				return null
 			boutput(usr, SPAN_ALERT("No magnet found in range of seven meters."))
@@ -86,8 +86,8 @@
 	deactivate()
 		..()
 		if(ship.intercom)
-			ship.intercom.broadcasting = 0
-			ship.intercom.listening = 0
+			ship.intercom.toggle_microphone(FALSE)
+			ship.intercom.toggle_speaker(FALSE)
 
 	New()
 		..()

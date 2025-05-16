@@ -167,7 +167,7 @@
 	if(length(bumped_queue) >= 9)
 		bumped_queue.Cut(1,2)
 
-	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
+	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/mesh/grille))
 		if(sickness < 100 || z == 2 || z == 4)
 			src.messageNearby(SPAN_ALERT("<B>You crash into the [AM]!</B>"), SPAN_ALERT("<B>[rider] crashes into the [AM] with the [src]!</B>"))
 			playsound(src, pick(sb_fails), 55, 1)
@@ -250,8 +250,8 @@
 	actions.stop(runningAction, src)
 	runningAction = null
 
+	src.vis_contents -= rider
 	rider = null
-	overlays = null
 
 	adjustSickness(-sickness)
 	update()
@@ -263,6 +263,7 @@
 	if(rider)
 		if(istype(src.loc, /turf/space))
 			return
+		src.dir = user.dir
 		walk(src, dir, speed_delay)
 	else
 		for(var/mob/M in src.contents)
@@ -284,7 +285,7 @@
 	rider.pixel_x = 0
 	rider.pixel_y = 4
 
-	overlays += rider
+	src.vis_contents += rider
 
 	adjustSickness(-sickness)
 	update()

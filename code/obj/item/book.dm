@@ -69,7 +69,8 @@ Custom Books
 	desc = "A condensed guide of job responsibilities and tips for new crewmembers."
 
 	medical
-		name = "Medbay Pocket Guide"
+		name = "Medbay Pocket Guide, Second Edition"
+		desc = "A condensed guide of job responsibilities and tips for new crewmembers."
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
 
@@ -131,6 +132,11 @@ Custom Books
 	icon_state = "mechcompguide"
 	desc = "A Book on how to use the wireless Components of the Mechanic's lab"
 	file_path = "strings/books/mechanicbook.txt"
+
+/obj/item/paper/book/from_file/text_to_music_com // based off the revised Player Piano book
+	name = "Text to Music Component Manual"
+	desc = "Details the use of the Text to Music Component."
+	file_path = "strings/books/text_to_music_com.txt"
 
 /obj/item/paper/book/from_file/teg_guide //By Azrun, part of the February 2021 Contest
 	name = "Thermo-electric Power Generation"
@@ -351,6 +357,8 @@ Custom Books
 			var/mob/living/carbon/human/jerk = user
 			if (!istype(jerk))
 				return
+
+			jerk.traitHolder?.addTrait("wasitsomethingisaid")
 
 			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
 			S?["criminal"] = ARREST_STATE_ARREST

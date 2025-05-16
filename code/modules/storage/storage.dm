@@ -20,6 +20,10 @@
 	qdel(src.storage)
 	src.storage = null
 
+/// override as necessary, used to affect an atom stored in any nested level of storage when any higher parent storage changes location
+/atom/proc/parent_storage_loc_changed()
+	return
+
 /// a datum for atoms that allows holdable storage of items in a hud
 /datum/storage
 	/// Types that can be held
@@ -131,7 +135,8 @@
 		logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [log_object(src.linked_item)] has more than [slots] items in it!")
 
 /// when clicking the storage item with an object
-/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user)
+/// `visible` is for when the click is fake and we're actually calling it from a safe store chain
+/datum/storage/proc/storage_item_attack_by(obj/item/W, mob/user, visible = TRUE)
 	. = TRUE
 	// check if item is the storage item
 	if (W == src.linked_item)
@@ -182,7 +187,7 @@
 		checkloc = checkloc.loc
 
 	// add item to storage
-	src.add_contents(W, user)
+	src.add_contents(W, user, visible)
 
 /// when clicking the storage item with an empty hand
 /datum/storage/proc/storage_item_attack_hand(mob/user)
@@ -249,16 +254,8 @@
 		for (var/obj/item/I as anything in src.get_contents())
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
-			if (istype(I, /obj/item/mousetrap))
-				var/obj/item/mousetrap/MT = I
-				if (MT.armed)
-					MT.visible_message(SPAN_ALERT("[MT] triggers as it falls on the ground!"))
-					MT.triggered(user, null)
-			else if (istype(I, /obj/item/mine))
-				var/obj/item/mine/M = I
-				if (M.armed && M.used_up != TRUE)
-					M.visible_message(SPAN_ALERT("[M] triggers as it falls on the ground!"))
-					M.triggered(user)
+			if(SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
+				I.visible_message(SPAN_ALERT("[I] triggers as it falls on the ground!"))
 
 /// using storage item in hand
 /datum/storage/proc/storage_item_attack_self(mob/user)
@@ -302,17 +299,10 @@
 /datum/storage/proc/mousetrap_check(mob/user)
 	if (!ishuman(user) || is_incapacitated(user))
 		return FALSE
-	for (var/obj/item/mousetrap/MT in src.get_contents())
-		if (MT.armed)
-			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a mousetrap!</B>"),\
-				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live mousetrap in there!</B>"))
-			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
-			return TRUE
-	for (var/obj/item/mine/M in src.get_contents())
-		if (M.armed && M.used_up != TRUE)
-			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a [M.name]!</B>"),\
-				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B>"))
-			M.triggered(user)
+	for (var/obj/item/checked_item in src.get_contents())
+		if (SEND_SIGNAL(checked_item, COMSIG_ITEM_STORAGE_INTERACTION, user))
+			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a [checked_item.name]!</B>"),\
+				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live [checked_item.name] in there!</B>"))
 			return TRUE
 
 // ----------------- PUBLIC PROCS ----------------------
@@ -419,7 +409,7 @@
 
 /// use this versus add_contents() if you also want extra safety checks
 /datum/storage/proc/add_contents_safe(obj/item/I, mob/user = null, visible = TRUE)
-	src.storage_item_attack_by(I, user)
+	src.storage_item_attack_by(I, user, visible)
 
 /// when transfering something in the storage out
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
@@ -491,6 +481,14 @@
 	for (var/atom/A as anything in our_contents)
 		if (A.storage)
 			. += A.storage.get_all_contents()
+
+/// increase storage slots of the storage
+/datum/storage/proc/increase_slots(mod)
+	src.slots += mod
+	var/list/viewing_mobs = src.hud?.mobs
+	src.hide_all_huds()
+	for (var/mob/M as anything in viewing_mobs)
+		src.show_hud(M)
 
 /// show storage contents
 /datum/storage/proc/show_hud(mob/user)

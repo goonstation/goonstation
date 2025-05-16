@@ -26,7 +26,7 @@ const setup = async () => {
   assets += `Byond.loadCss('tgui-bench.bundle.css');\n`;
   assets += `</script>\n`;
 
-  const publicDir = path.resolve(__dirname, '../../../browserassets/tgui');
+  const publicDir = path.resolve(__dirname, '../../../browserassets/src/tgui');
   const page = fs
     .readFileSync(path.join(publicDir, 'tgui.html'), 'utf-8')
     .replace('<!-- tgui:assets -->\n', assets);

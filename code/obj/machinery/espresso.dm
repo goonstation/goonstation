@@ -18,7 +18,6 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	var/cupsinside = 0
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
-	var/image/image_top = null
 	var/image/image_cup = null
 	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
@@ -173,13 +172,6 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		else
 			src.image_cup = null
 		src.UpdateOverlays(src.image_cup, "cup")
-
-		if (src.top_on == 1)
-			if (!src.image_top)
-				src.image_top = image(src.icon, icon_state = "coffeetopoverlay")
-			src.UpdateOverlays(src.image_top, "top")
-		else
-			src.UpdateOverlays(null, "top")
 		return
 
 /* ===================================================== */

@@ -8,6 +8,13 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
+	Z_LOG_DEBUG("World/Init", "Loading admins...")
+	load_admins()//UGH
+	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
+	load_whitelist() //WHY ARE WE UGH-ING
+	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	load_playercap_bypass()
+
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
 #ifdef LIVE_SERVER
@@ -23,15 +30,9 @@
 			message_admins("Roundstart API query succeeded after [counter] failed attempts.")
 			logTheThing(LOG_DEBUG, src, "Roundstart API query succeeded after [counter] failed attempts.")
 #endif
-
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
-	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	load_admins()//UGH
-	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	load_whitelist() //WHY ARE WE UGH-ING
-	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	load_playercap_bypass()
+
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -80,6 +81,7 @@
 		"[R_FREQ_RESEARCH]" = "Research",
 		"[R_FREQ_MEDICAL]" = "Medical",
 		"[R_FREQ_ENGINEERING]" = "Engineering",
+		"[R_FREQ_NANOTRASEN]" = "NanoTrasen",
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
@@ -140,6 +142,8 @@
 	APCWireColorToFlag = RandomAPCWires()
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
+	Z_LOG_DEBUG("World/Init", "Calculating shipping throw distance...")
+	global.shippingmarket.init()
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
@@ -149,6 +153,11 @@
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	UPDATE_TITLE_STATUS("Loading crime")
+	Z_LOG_DEBUG("World/Init", "Loading listening post...")
+	load_listening_post()
+	makepowernets()
 
 	if (derelict_mode)
 		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")

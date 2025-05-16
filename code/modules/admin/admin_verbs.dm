@@ -23,15 +23,15 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_whodead,
 
 		/client/proc/cmd_admin_pm,
-		/client/proc/dsay,
 		/client/proc/blobsay,
 		/client/proc/dronesay,
-		/client/proc/hivesay,
-		/client/proc/marsay,
+		/client/proc/dsay,
 		/client/proc/flocksay,
+		/client/proc/hivesay,
+		/client/proc/kudzusay,
+		/client/proc/marsay,
 		/client/proc/silisay,
-		/client/proc/toggle_hearing_all_looc,
-		/client/proc/toggle_hearing_all,
+		/client/proc/thrallsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
@@ -319,6 +319,7 @@ var/list/admin_verbs = list(
 		// moved down from coder. shows artists, atmos etc
 		/client/proc/SetInfoOverlay,
 		/client/proc/SetInfoOverlayAlias,
+		/client/proc/show_mining_map,
 
 		),
 
@@ -379,6 +380,7 @@ var/list/admin_verbs = list(
 		/client/proc/implant_all,
 		/client/proc/cmd_crusher_walls,
 		/client/proc/cmd_disco_lights,
+		/client/proc/cmd_nukie_colour,
 		/client/proc/cmd_event_controller,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
@@ -432,13 +434,14 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
 		/client/proc/test_spacebee_command,
+		/client/proc/delete_landmarks,
+		/client/proc/admin_minimap,
 		),
 
 	7 = list(
 		// LEVEL_CODER, coder
 		/client/proc/cmd_job_controls,
 		/client/proc/cmd_modify_market_variables,
-		/client/proc/debug_pools,
 		/client/proc/debug_global_variable,
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
@@ -521,7 +524,6 @@ var/list/admin_verbs = list(
 var/list/special_admin_observing_verbs = list(
 	/datum/admins/proc/toggle_respawns,
 	/datum/admins/proc/toggledeadchat,
-	/client/proc/togglepersonaldeadchat,
 	/client/proc/Getmob,
 	)
 
@@ -1427,181 +1429,6 @@ var/list/fun_images = list()
 
 	view_client_compid_list(usr, C)
 
-/client/proc/blobsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "blobsay"
-	set hidden = 1
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "BLOBSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "BLOBSAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	var/show_other_key = 0
-	if (src.stealth || src.alt_key)
-		show_other_key = 1
-	var/rendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
-	var/adminrendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
-
-	for (var/mob/M in mobs)
-		if(istype(M, /mob/new_player))
-			continue
-
-		if (M.client && (isblob(M) || M.client.holder && !M.client.player_mode))
-			var/thisR = rendered
-			if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
-			M.show_message(thisR, 2)
-
-//say to all changelings hiveminds
-/client/proc/hivesay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "hivesay"
-	set hidden = 1
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "HIVESAY: [msg]")
-	logTheThing(LOG_DIARY, src, "HIVESAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	var/show_other_key = 0
-	if (src.stealth || src.alt_key)
-		show_other_key = 1
-	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
-	var/adminrendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
-
-	for (var/client/C in clients)
-		var/mob/M = C.mob
-		if(istype(M, /mob/new_player))
-			continue
-
-		var/is_in_hivemind = 0
-		if (istype(M,/mob/living/critter/changeling) || istype(M,/mob/dead/target_observer/hivemind_observer))
-			is_in_hivemind = 1
-
-		else if (ischangeling(M))
-			is_in_hivemind = 1
-
-		if (is_in_hivemind || C.holder && !C.player_mode)
-			var/thisR = rendered
-			if (C.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
-			M.show_message(thisR, 2)
-
-/client/proc/silisay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "silisay"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "SILISAY: [msg]")
-	logTheThing(LOG_DIARY, src, "SILISAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	var/show_other_key = 0
-	if (src.stealth || src.alt_key)
-		show_other_key = 1
-
-	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
-	var/adminrendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
-
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
-			var/thisR = rendered
-			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
-			M.show_message(thisR, 2)
-
-/client/proc/dronesay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "dronesay"
-	set hidden = 1
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "DRONESAY: [msg]")
-	logTheThing(LOG_DIARY, src, "DRONESAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	var/show_other_key = 0
-	if (src.stealth || src.alt_key)
-		show_other_key = 1
-	var/rendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
-	var/adminrendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
-
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue
-
-		if (M.client && (isghostdrone(M) || M.client.holder && !M.client.player_mode))
-			var/thisR = rendered
-			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
-			M.show_message(thisR, 2)
-
-
-// let's keep xeroxing until all that remains is a faded butt - cirr
-/client/proc/marsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "marsay"
-	set hidden = 1
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "MARSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "MARSAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	martian_speak(src.mob, msg, 1)
-
-/client/proc/flocksay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "flocksay"
-	set hidden = 1
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	if (!src.mob || src.player_mode)
-		return
-
-	if (src.holder.level < LEVEL_ADMIN)
-		msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing(LOG_ADMIN, src, "FLOCKSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "FLOCKSAY: [msg]", "admin")
-
-	if (!msg)
-		return
-	flock_speak(src.mob, msg, null, speak_as_admin = TRUE)
-
-
 /client/proc/cmd_dectalk()
 	set name = "Dectalk"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1721,8 +1548,14 @@ var/list/fun_images = list()
 	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
-		var/changelogHtml = grabResource("html/changelog.html")
-		var/data = admin_changelog:html
+		var/changelogHtml
+		var/data
+		if (src.byond_version >= 516)
+			changelogHtml = grabResource("html/changelog.html")
+			data = admin_changelog.html
+		else
+			changelogHtml = grabResource("html/legacy_changelog.html")
+			data = legacy_admin_changelog.html
 		var/fontcssdata = {"
 				<style type="text/css">
 				@font-face {
@@ -1736,7 +1569,10 @@ var/list/fun_images = list()
 		"}
 		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
+		if (src.byond_version >= 516)
+			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
+		else
+			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
 
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -2300,6 +2136,8 @@ var/list/fun_images = list()
 			C.cmd_admin_check_health(A)
 		if("Heal")
 			C.cmd_admin_rejuvenate(A)
+		if("Stabilize")
+			C.cmd_admin_stabilize(A)
 		if("Gib")
 			C.cmd_admin_gib(A)
 		if("Polymorph")
@@ -2355,6 +2193,8 @@ var/list/fun_images = list()
 		if ("Activate Artifact")
 			var/obj/object = A
 			object.ArtifactActivated()
+		if ("Say")
+			C.cmd_say(A)
 
 	src.update_cursor()
 
@@ -2569,6 +2409,9 @@ var/list/fun_images = list()
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
 	SHOW_VERB_DESC
+
+	if(tgui_alert(src.mob, "Distribute tokens to all roundstart antagonists?", "Token Distribution", list("Yes", "No")) != "Yes")
+		return
 	var/list/players = list()
 	for (var/mob/M as anything in mobs)
 		for (var/datum/antagonist/antag in M?.mind?.antagonists)
@@ -2692,3 +2535,17 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 
 	spacebee_extension_system.process_raw_command(command, usr.key)
+
+/client/proc/delete_landmarks()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Delete landmarks"
+	set desc = "Delete all landmarks of a specific type."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/choice = tgui_input_list(src, "Choose landmark category", "Choose landmark", global.landmarks)
+	if (!choice)
+		return
+	for (var/turf/landmark in global.landmarks[choice])
+		boutput(src, "Deleting landmark at [log_loc(landmark)]")
+	global.landmarks[choice] = list()

@@ -18,6 +18,18 @@ proc/check_for_radio_jammers(atom/source)
 		FALSE \
 	))
 
+#define MAKE_DEVICE_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
+		/datum/component/packet_connected/radio, \
+		conn_id, \
+		freq, \
+		net_id, \
+		hascall(src, "receive_signal") ? "receive_signal" : null, \
+		FALSE, \
+		null, /*("id_tag" in src.vars) ? "[src.vars["id_tag"]]" : null, */\
+		FALSE, \
+		TRUE \
+	))
+
 #define MAKE_SENDER_RADIO_PACKET_COMPONENT(net_id, conn_id, freq) src._AddComponent(list( \
 		/datum/component/packet_connected/radio, \
 		conn_id, \
@@ -71,13 +83,13 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_SECBUDDY 1089
 #define FREQ_TOUR_NAVBEACON 1443
 #define FREQ_SIGNALER 1457
-#define FREQ_DOOR_CONTROL 1142 /// pods open podbay doors with this frequency but in theory more general
+#define FREQ_DOOR_CONTROL 1143 /// pods open podbay doors with this frequency but in theory more general
 #define FREQ_MAIL_CHUTE 1475
 #define FREQ_COMM_DISH 0000 // unused for now, supposed to be for communication across comm dishes
 #define FREQ_AIR_ALARM_CONTROL 1439
 #define FREQ_TRACKING_IMPLANT 1451
 #define FREQ_MARIONETTE_IMPLANT 1153
 #define FREQ_POWER_SYSTEMS 1473 // for services that interface with power machinery
-
+#define FREQ_ARMORY 1461
 // Address Tags
 #define ADDRESS_TAG_POWER "POWER_CONTROL" // for syncing variables and data with power_checker

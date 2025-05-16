@@ -175,6 +175,14 @@ TYPEINFO(/obj/gravity_well_generator)
 
 /obj/gravity_well_generator
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_SINGULO_MAGNETS)
+		. = ..()
+
 	meteorhit(obj/O as obj)
 		if(prob(75))
 			qdel(src)

@@ -18,9 +18,16 @@
 		src.icon_state = initial(src.icon_state) //stop the material resetting the icon state
 
 	on_life(var/mult = 1)
-		if (probmult(7))
-			src.donor.visible_message(SPAN_ALERT("[src.donor] vomits up a viscous teal liquid!"), SPAN_ALERT("You vomit up a viscous teal liquid!"))
-			src.donor.vomit(0, /obj/decal/cleanable/flockdrone_debris/fluid)
+		if (probmult(15))
+			src.donor.nauseate(1)
+
+	on_transplant(mob/M)
+		. = ..()
+		M.add_vomit_behavior(/datum/vomit_behavior/flock)
+
+	on_removal()
+		src.donor.remove_vomit_behavior(/datum/vomit_behavior/flock)
+		. = ..()
 
 	get_damage()
 		return 500

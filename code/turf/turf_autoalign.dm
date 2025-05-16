@@ -78,7 +78,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 /turf/simulated/wall/auto/the_tuff_stuff
@@ -749,7 +749,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 

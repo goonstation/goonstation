@@ -741,9 +741,9 @@
 						W.set_loc(myHead)
 						myHead.wear_mask = W
 					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
-						src.donor.set_eye(myHead)
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						S.set_head(myHead)
+						S.head_moved(TRUE) // update tracking
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -1104,7 +1104,7 @@
 						var/datum/mutantrace/skeleton/S = H.mutantrace
 						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
 							S.set_head(newHead)
-							H.set_eye(null)
+							S.head_moved() // update tracking
 					else
 						H.set_eye(null)
 
@@ -1161,11 +1161,7 @@
 					var/mob/living/carbon/human/H = src.head.linked_human
 					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						S.head_tracker = null
-						H.set_eye(null)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
-						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+						S.set_head(null)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
@@ -1421,9 +1417,11 @@
 				newtail.holder = src
 				organ_list["tail"] = newtail
 				src.donor.update_body()
+				src.donor.bioHolder.RemoveEffect(newtail.failure_ability)
 				success = 1
 
 		if (success)
+			logTheThing(LOG_COMBAT, src.donor, "received a surgical transplant of \the [I] ([I.type]) by [constructTarget(usr,"combat")]")
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
@@ -1490,6 +1488,13 @@
 					REMOVE_ATOM_PROPERTY(donor, PROP_MOB_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
+
+	/// Unbreak all organs. Use sparingly.
+	proc/unbreak_all_organs()
+		for (var/organ_slot in src.organ_list)
+			var/obj/item/organ/O = src.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
 
 /*=================================*/
 /*---------- Human Procs ----------*/
@@ -1872,3 +1877,27 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/view_camera
+	name = "View Monitor"
+	desc = "Look through a camera via your monitor eye."
+	icon_state = "eye-monitor"
+	targeted = FALSE
+	toggled = TRUE
+	is_on = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/obj/item/organ/eye/cyber/monitor/linked_eye = linked_organ
+		if(src.is_on)
+			src.is_on = FALSE
+			linked_eye.viewer.disconnect_user(holder.owner)
+			if(linked_eye.emagged)
+				linked_eye.provides_sight = FALSE
+			return
+		else //TODO: give them a non-janky viewport instead, once they exist
+			if(linked_eye.viewer.AttackSelf(holder.owner))
+				src.is_on = TRUE
+				if(linked_eye.emagged)
+					linked_eye.provides_sight = TRUE

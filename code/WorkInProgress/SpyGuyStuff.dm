@@ -93,7 +93,7 @@ Fibre wire
 				else //How the fuck did we even get here??
 					H.ghostize()
 
-			flick("skull_ominous_explode", src)
+			FLICK("skull_ominous_explode", src)
 			sleep(1.5 SECONDS)
 			playsound(src.loc, 'sound/effects/ghostlaugh.ogg', 70, 1)
 			sleep(1.5 SECONDS)
@@ -598,7 +598,7 @@ proc/Create_Tommyname()
 
 	//Create the initial padding
 	DEBUG_MESSAGE("Creating stationside padding.")
-	var/list/catwalk = list(/turf/simulated/floor/airless/plating/catwalk, /obj/grille/catwalk)
+	var/list/catwalk = list(/turf/simulated/floor/airless/plating/catwalk, /obj/mesh/catwalk)
 	for(var/i = 0; i < station_padding;i++)
 		move_create_obj(catwalk, walker, extension_dir, extension_dir) //Then we walk outwards, creating stuff as we go along
 		walker = get_step(walker,extension_dir)

@@ -3,7 +3,7 @@
   "name": "tgui-polyfill",
   "version": "5.0.1",
   "scripts": {
-    "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../../browserassets/tgui/tgui-polyfill.min.js",
+    "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../../browserassets/src/tgui/tgui-polyfill.min.js",
     "tgui-polyfill:static-css": "node static-css.js"
   },
   "dependencies": {

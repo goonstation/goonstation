@@ -5,12 +5,12 @@
  * @license ISC
  */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, Flex, Section, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { TerminalInput } from './TerminalInput';
-import { TerminalData } from './types';
+import type { TerminalData } from './types';
 
 export const InputAndButtonsSection = () => {
   const { act, data } = useBackend<TerminalData>();
@@ -29,19 +29,28 @@ export const InputAndButtonsSection = () => {
     }
   };
 
-  const handleInputEnter = (_e, value) =>
-    act('text', { value: value, ckey: ckey });
-  const handleEnterClick = () => {
+  const handleInputEnter = useCallback(
+    (_e, value) => act('text', { value: value, ckey: ckey }),
+    [act, ckey],
+  );
+  const handleEnterClick = useCallback(() => {
     act('text', { value: localInputValue, ckey: ckey });
     setLocalInputValue('');
     setDOMInputValue('');
-  };
-  const handleHistoryPrevious = () =>
-    act('history', { direction: 'prev', ckey: ckey });
-  const handleHistoryNext = () =>
-    act('history', { direction: 'next', ckey: ckey });
-  const handleInputChange = (_e, value) => setLocalInputValue(value);
-  const handleRestartClick = () => act('restart');
+  }, [act, ckey, localInputValue]);
+  const handleHistoryPrevious = useCallback(
+    () => act('history', { direction: 'prev', ckey: ckey }),
+    [act, ckey],
+  );
+  const handleHistoryNext = useCallback(
+    () => act('history', { direction: 'next', ckey: ckey }),
+    [act, ckey],
+  );
+  const handleInputChange = useCallback(
+    (_e, value) => setLocalInputValue(value),
+    [],
+  );
+  const handleRestartClick = useCallback(() => act('restart'), [act]);
 
   // When inputValue changes, it means a history event happened, so only then should we erase local input value with what was received from the server.
   useEffect(() => {
@@ -71,7 +80,7 @@ export const InputAndButtonsSection = () => {
           <Tooltip content="Enter">
             <Button
               icon="share"
-              color={TermActive ? 'green' : 'red'}
+              color={TermActive ? 'positive' : 'negative'}
               onClick={handleEnterClick}
               mr="0.5rem"
               my={0.25}
@@ -82,7 +91,7 @@ export const InputAndButtonsSection = () => {
           <Tooltip content="Restart">
             <Button
               icon="repeat"
-              color={TermActive ? 'green' : 'red'}
+              color={TermActive ? 'positive' : 'negative'}
               onClick={handleRestartClick}
               my={0.25}
             />

@@ -18,6 +18,8 @@
 	icon_closed = "lootcrimegang"
 	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
+	always_slow_pull = TRUE
+	p_class = 2 //lighten it up a teensy bit
 	grab_stuff_on_spawn = FALSE
 	anchored = ANCHORED
 	var/image/light = null
@@ -137,6 +139,10 @@
 	emag_act()
 		return
 
+	pull(mob/user)
+		. = ..()
+		logTheThing(LOG_GAMEMODE, user, "starts pulling [src] at [log_loc(src)].")
+
 	proc/attempt_open(mob/user)
 		for (var/obj/ganglocker/locker in range(1,src))
 			if (locker.gang == user.get_gang() && locked)
@@ -145,7 +151,7 @@
 				locker.gang.add_points(GANG_CRATE_SCORE, user, get_turf(locker), showText = TRUE)
 				locker.gang.score_event += GANG_CRATE_SCORE
 				var/datum/gang/userGang = user.get_gang()
-				userGang.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
+				userGang.announcer_say_source.say("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.")
 				logTheThing(LOG_GAMEMODE, src, "[src] is unlocked by [user.mind.ckey]/[user.name] at the [locker], for [locker.gang.gang_name].")
 				return TRUE
 		return FALSE
@@ -272,7 +278,7 @@
 			var/area/area = get_area(src)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
-			src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
+			src.owning_gang.announcer_say_source.say("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
 			ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
 			idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 			H.emote("scream")
@@ -302,7 +308,7 @@
 			UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
 
 	proc/alert_gang(datum/component/component, area/old_area, area/new_area)
-		src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
+		src.owning_gang.announcer_say_source.say("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
 		toggle_tracking(FALSE)
 
 	proc/unhook()
@@ -804,9 +810,9 @@ ABSTRACT_TYPE(/obj/loot_spawner/short)
 	xSize = 4
 	ySize = 2
 
-	ks23_empty
+	ks23
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 
 // The random loot master checks all definitions of loot_spawner/random when it's first created.
 // To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
@@ -1435,7 +1441,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
 	ks23
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23/empty,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 

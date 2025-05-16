@@ -318,6 +318,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		src.user.visible_message(SPAN_ALERT("[src.user] starts to shove [src.victim] into the furnace!"))
 		logTheThing(LOG_COMBAT, src.user, "attempted to force [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
 		message_admins("[key_name(src.user)] is trying to force [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
+		message_ghosts("<b>[src.victim]</b> is being shoved in a furnace at [log_loc(src.furnace, ghostjump = TRUE)]!")
 
 	onUpdate()
 		..()

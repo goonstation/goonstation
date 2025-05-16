@@ -155,7 +155,7 @@ interface FlockDronesProps {
   sortBy;
 }
 
-const FlockDrones = (props) => {
+const FlockDrones = (props: FlockDronesProps) => {
   const { act } = useBackend();
   const { drones, sortBy } = props;
   return (

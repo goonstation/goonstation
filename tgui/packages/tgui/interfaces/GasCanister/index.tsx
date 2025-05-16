@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Section } from 'tgui-core/components';
+import { Box, Flex, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -102,7 +102,6 @@ export const GasCanister = () => {
               pressure={pressure}
               maxPressure={maxPressure}
             >
-              <Divider />
               {hasValve ? (
                 <ReleaseValve
                   valveIsOpen={valveIsOpen}

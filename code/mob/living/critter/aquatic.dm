@@ -40,6 +40,9 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		src.is_pet = 0
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
+	#ifdef MAP_OVERRIDE_NEON // plasma coral, neon uniqueness, strange wildlife happenings
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+	#endif
 	..()
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
 
@@ -183,8 +186,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	desc = "Goes well with chips."
 	icon_state = "clownfish"
 	base_move_delay = 3
-	speechverb_say = "blubs"
-	speechverb_exclaim = "glubs"
+	speech_verb_say = "blubs"
+	speech_verb_exclaim = "glubs"
 	death_text = "%src% flops belly up!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small
 	// todo: skinresult of scales, custom_brain_type of fish egg item (caviar?)
@@ -396,8 +399,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	can_throw = 1
 	can_choke = 1
 	pet_text = "pokes"
-	speechverb_say = "demands"
-	speechverb_exclaim = "bellows"
+	speech_verb_say = "demands"
+	speech_verb_exclaim = "bellows"
 	death_text = "%src% collapses in on itself!"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	// todo: meat_type of something cool, skinresult of especially hard crustacean plates?
@@ -461,8 +464,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			var/obj/window/W = AM
 			W.health = 0
 			W.smash()
-		else if(istype(AM, /obj/grille))
-			var/obj/grille/G = AM
+		else if(istype(AM, /obj/mesh/grille))
+			var/obj/mesh/grille/G = AM
 			G.damage_blunt(30)
 		else if(istype(AM, /obj/machinery/vehicle/tank) || istype(AM, /obj/table))
 			AM.meteorhit()
@@ -528,8 +531,9 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	base_move_delay = 2
 	hand_count = 2
 	pet_text = "pokes"
-	speechverb_say = "quibbles"
-	speechverb_exclaim = "shudders"
+	speech_verb_say = "quibbles"
+	speech_verb_exclaim = "shudders"
+	blood_id = "hemolymph"
 	death_text = "%src% collapses in a heap on the ground!"
 	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
 	add_abilities = list(/datum/targetable/critter/sting)
@@ -603,7 +607,8 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		. = ..()
 
 		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+			if (!ON_COOLDOWN(src, "jaws_sound", 50 SECONDS))
+				playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0, 0, 1)
 
 	critter_scavenge(var/mob/target)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> gibs [target] in one bite!"))

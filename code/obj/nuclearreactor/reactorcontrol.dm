@@ -77,6 +77,7 @@
 			"load" = turbine_handle?.stator_load,
 			"power" = turbine_handle?.lastgen,
 			"volume" = turbine_handle?.flow_rate,
+			"volume_max" = turbine_handle?.flow_rate_max,
 			"history" = src.history,
 			"overspeed" = turbine_handle?.overspeed,
 			"overtemp" = turbine_handle?.overtemp,
@@ -98,7 +99,7 @@
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.turbine_handle.flow_rate = min(max(x,1),10e5)
+				src.turbine_handle.flow_rate = min(max(x,1),src.turbine_handle.flow_rate_max)
 				logTheThing(LOG_STATION, src, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

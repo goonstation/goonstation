@@ -197,10 +197,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 			H.set_body_icon_dirty()
 			H.UpdateDamageIcon()
 			if (src.slot == "l_arm")
-				H.drop_from_slot(H.l_hand)
+				H.drop_from_slot(H.l_hand, force_drop=TRUE)
 				H.hud.update_hands()
 			else if (src.slot == "r_arm")
-				H.drop_from_slot(H.r_hand)
+				H.drop_from_slot(H.r_hand, force_drop=TRUE)
 				H.hud.update_hands()
 
 		else if(remove_object)
@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			object.streak_object(direction, src.streak_decal)
 
 		if(prob(60))
-			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(holder, TYPE_PROC_REF(/atom, emote), "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder

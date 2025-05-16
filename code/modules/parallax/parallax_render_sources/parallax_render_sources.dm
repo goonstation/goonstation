@@ -81,6 +81,25 @@
 	parallax_value = 0.03
 	tessellate = FALSE
 
+/atom/movable/screen/parallax_render_source/planet/gimmick1
+/atom/movable/screen/parallax_render_source/planet/gimmick2
+/atom/movable/screen/parallax_render_source/planet/gimmick3
+/atom/movable/screen/parallax_render_source/planet/gimmick4
+/atom/movable/screen/parallax_render_source/planet/gimmick5
+
+/// welcome to earf
+
+/atom/movable/screen/parallax_render_source/planet/earth
+	parallax_icon = 'icons/obj/large/160x160.dmi'
+	parallax_icon_state = "earth"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 0
+	parallax_value = 0.03
+	visible_to_gps = TRUE
+	name = "Earth"
+	desc = "SILICATE PLANET<br>\
+		NT Headquarters: Central Command at Seneca Spaceport, New York<br>\
+		The human homeworld is noted for an overabundance of space owls."
 
 /// inner system - Diner debris belt
 

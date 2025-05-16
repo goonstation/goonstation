@@ -8,7 +8,7 @@
 import './styles/main.scss';
 import './styles/themes/genetek.scss';
 import './styles/themes/genetek-disabled.scss';
-// import './styles/themes/hackerman.scss';
+import './styles/themes/hackerman.scss';
 // import './styles/themes/malfunction.scss';
 // import './styles/themes/neutral.scss';
 import './styles/themes/ntos.scss';

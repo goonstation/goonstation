@@ -226,6 +226,9 @@
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE
 
+	clamp_act(mob/clamper, obj/item/clamp)
+		return src.shatter_chemically()
+
 	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
 		return 7 //default is up a bit since most objects are centered
 
@@ -273,69 +276,13 @@
 	deserialize_postprocess()
 		return
 
-/obj/bedsheetbin
-	name = "linen bin"
-	desc = "A bin for containing bedsheets."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
-
-/obj/towelbin
-	name = "towel bin"
-	desc = "A bin for containing towels."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23
-	anchored = ANCHORED
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/under/towel))
-			qdel(W)
-			src.amount++
-		return
-
-	attack_hand(mob/user)
-		add_fingerprint(user)
-		if (src.amount >= 1)
-			src.amount--
-			new /obj/item/clothing/under/towel(src.loc)
-			if (src.amount <= 0)
-				src.icon_state = "bedbin0"
-		else
-			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
-
-	get_desc()
-		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
-
 /obj/overlay
 	name = "overlay"
 	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 	density = 0
 
 	updateHealth()
@@ -382,7 +329,7 @@
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
 		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
 		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
-		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
+		var/obj/replica = new /obj/item/card/id/gold/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state
 		replica.name = O.name
@@ -453,32 +400,6 @@
 	replacer.disguise_as(src)
 	qdel(src)
 
-
-ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
-/obj/proc/admin_command_obj_speak()
-	set name = "Object Speak"
-	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
-	if (msg)
-		src.obj_speak(msg)
-
-/obj/proc/obj_speak(message)
-	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
-
-	var/list/mob/targets = null
-	var/mob/holder = src
-	while(holder && !istype(holder))
-		holder = holder.loc
-	ENSURE_TYPE(holder)
-	if(!holder)
-		targets = hearers(src, null)
-	else
-		targets = list(holder)
-		chat_text.plane = PLANE_HUD
-		chat_text.layer = 999
-
-	for(var/mob/O in targets)
-		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
-
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
 	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
 		var/mob/dead/observer/O = viewer
@@ -495,3 +416,35 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
 			. += "[pick(numbersAndLetters)]"
 	while(. in forensic_IDs)
+
+/obj/proc/become_frame(mob/user, flatpack = FALSE)
+	// Prevent glue based frame exploits
+	src.unglue_attached_to()
+	var/turf/target_loc = get_turf(src)
+	var/obj/item/electronics/frame/F = null
+	if (flatpack)
+		F = new /obj/item/electronics/frame/flatpack(target_loc)
+	else
+		F = new(target_loc)
+	F.name = "[src.name] frame"
+	if(src.deconstruct_flags & DECON_DESTRUCT)
+		F.store_type = src.type
+		qdel(src)
+	else
+		F.deconstructed_thing = src
+		if(ismob(src.loc))
+			var/mob/M = src.loc
+			M.u_equip(src)
+		src.set_loc(F)
+	// move frame to the location after object is gone, so crushers do not crusher themselves
+	F.viewstat = 2
+	F.secured = 2
+	if (flatpack)
+		F.icon_state = "dbox_alt"
+	else
+		F.icon_state = "dbox_big"
+	F.w_class = W_CLASS_BULKY
+	if(!QDELETED(src))
+		src.was_deconstructed_to_frame(user)
+		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+	return F

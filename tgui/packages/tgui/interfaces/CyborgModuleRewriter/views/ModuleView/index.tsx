@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { useCallback } from 'react';
 import { Button, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { useBackend } from '../../../../backend';
@@ -20,24 +21,38 @@ const SIDEBAR_WIDTH = 20;
 export const ModuleView = () => {
   const { act, data } = useBackend<CyborgModuleRewriterData>();
   const { modules: { available = [], selected } = {} } = data;
-  const handleEjectModule = (itemRef: string) =>
-    actions.ejectModule(act, { itemRef });
-  const handleMoveToolDown = (itemRef: string) =>
-    actions.moveTool(act, {
-      dir: Direction.Down,
-      itemRef,
-    });
-  const handleMoveToolUp = (itemRef: string) =>
-    actions.moveTool(act, {
-      dir: Direction.Up,
-      itemRef,
-    });
-  const handleRemoveTool = (itemRef: string) =>
-    actions.removeTool(act, { itemRef });
-  const handleResetModule = (moduleId: string) =>
-    actions.resetModule(act, { moduleId });
-  const handleSelectModule = (itemRef: string) =>
-    actions.selectModule(act, { itemRef });
+  const handleEjectModule = useCallback(
+    (itemRef: string) => actions.ejectModule(act, { itemRef }),
+    [act],
+  );
+  const handleMoveToolDown = useCallback(
+    (itemRef: string) =>
+      actions.moveTool(act, {
+        dir: Direction.Down,
+        itemRef,
+      }),
+    [act],
+  );
+  const handleMoveToolUp = useCallback(
+    (itemRef: string) =>
+      actions.moveTool(act, {
+        dir: Direction.Up,
+        itemRef,
+      }),
+    [act],
+  );
+  const handleRemoveTool = useCallback(
+    (itemRef: string) => actions.removeTool(act, { itemRef }),
+    [act],
+  );
+  const handleResetModule = useCallback(
+    (moduleId: string) => actions.resetModule(act, { moduleId }),
+    [act],
+  );
+  const handleSelectModule = useCallback(
+    (itemRef: string) => actions.selectModule(act, { itemRef }),
+    [act],
+  );
   const { item_ref: selectedModuleRef, tools = [] } = selected || {};
 
   if (available.length === 0) {

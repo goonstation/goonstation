@@ -9,6 +9,7 @@
 import { classes } from 'common/react';
 import { memo, useCallback } from 'react';
 import { Stack } from 'tgui-core/components';
+import { shallowDiffers } from 'tgui-core/react';
 
 import { Image } from '../../components';
 import { GroupingTags } from './GroupingTags';
@@ -41,6 +42,8 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
   const cn = classes([
     'clothingbooth__boothitem',
     selected && 'clothingbooth__boothitem--selected',
+    // conditionally candystripe, as we want to show selected style if selected
+    !selected && 'candystripe',
   ]);
   const handleClick = useCallback(
     () => onSelectGrouping(name),
@@ -57,7 +60,7 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
   );
 
   return (
-    <Stack align="center" className={cn} onClick={handleClick} py={0.5}>
+    <Stack align="center" className={cn} onClick={handleClick} px={0.5} py={1}>
       <Stack.Item>
         <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
@@ -90,28 +93,21 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
 };
 
 export const BoothGrouping = memo(BoothGroupingView, (prevProps, nextProps) => {
-  // shallow comparison for most props
-  if (
-    prevProps.cost_max !== nextProps.cost_max ||
-    prevProps.cost_min !== nextProps.cost_min ||
-    prevProps.everythingIsFree !== nextProps.everythingIsFree ||
-    prevProps.itemsCount !== nextProps.itemsCount ||
-    prevProps.list_icon !== nextProps.list_icon ||
-    prevProps.name !== nextProps.name ||
-    prevProps.onSelectGrouping !== nextProps.onSelectGrouping ||
-    prevProps.selected !== nextProps.selected ||
-    prevProps.slot !== nextProps.slot
-  ) {
+  const { grouping_tags: prevGroupingTags, ...prevRest } = prevProps;
+  const { grouping_tags: nextGroupingTags, ...nextRest } = nextProps;
+  if (shallowDiffers(prevRest, nextRest)) {
     return false;
   }
   // contents equality comparison for grouping_tags
-  if (prevProps.grouping_tags.length !== nextProps.grouping_tags.length) {
+  if (prevGroupingTags.length !== nextGroupingTags.length) {
     return false;
   }
-  for (let i = 0; i < prevProps.grouping_tags.length; i++) {
-    if (prevProps.grouping_tags[i] !== nextProps.grouping_tags[i]) {
-      return false;
-    }
+  if (
+    prevGroupingTags.some(
+      (prevGroupingTag, i) => prevGroupingTag !== nextGroupingTags[i],
+    )
+  ) {
+    return false;
   }
   return true;
 });

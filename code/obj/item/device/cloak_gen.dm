@@ -69,7 +69,7 @@ TYPEINFO(/obj/item/cloak_gen)
 		O.dir = T.dir
 
 		// List of types we want to copy to the overlay, other than the turf
-		var/static/mimicked_types = list(/obj/window, /obj/machinery/door, /obj/grille)
+		var/static/mimicked_types = list(/obj/window, /obj/machinery/door, /obj/mesh/grille)
 		for (var/atom/movable/AM as anything in T)
 			for (var/checktype in mimicked_types)
 				if (ispath(AM.type, checktype))

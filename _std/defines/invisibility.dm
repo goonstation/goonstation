@@ -1,6 +1,7 @@
 #define INVIS_NONE 0
 #define INVIS_INFRA 1
-#define INVIS_CLOAK 2
+#define INVIS_MESON 2
+#define INVIS_CLOAK 3
 #define INVIS_CONSTRUCTION 8
 #define INVIS_AI_EYE 9
 #define INVIS_FLOCK 10

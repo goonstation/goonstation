@@ -132,7 +132,8 @@
 					owner_human.update_face()
 					owner_human.update_body()
 			else
-				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
+				if (ishuman(owner))
+					changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
@@ -144,7 +145,7 @@
 			if (src.last_victim != victim)
 				src.last_victim = victim
 				var/datum/targetable/vampire/blood_tracking/tracker = src.getAbility(/datum/targetable/vampire/blood_tracking)
-				tracker.update_target(victim)
+				tracker?.update_target(victim)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -163,7 +164,7 @@
 			if (set_null)
 				src.points = 0
 			else
-				src.points = max(src.points + change, 0)
+				src.points = clamp(src.points + change, 0, src.vamp_blood)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
@@ -190,7 +191,6 @@
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
 			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
 				src.addAbility(/datum/targetable/vampire/enthrall)
-			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
@@ -237,31 +237,12 @@
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
-		src.removeAbility(/datum/targetable/vampire/speak_thrall)
 		src.removeAbility(/datum/targetable/vampire/call_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
 		src.removeAbility(/datum/targetable/vampire/plague_touch)
 
 		src.updateButtons()
-
-	proc/transmit_thrall_msg(var/message,var/mob/sender)
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-		if (!message)
-			return
-
-		if (dd_hasprefix(message, "*"))
-			return
-
-		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
-		logTheThing(LOG_SAY, sender, "(GHOULSPEAK): [message]")
-
-		if (sender.client && sender.client.ismuted())
-			boutput(sender, "You are currently muted and may not speak.")
-			return
-
-		sender.say_thrall(message, src)
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))

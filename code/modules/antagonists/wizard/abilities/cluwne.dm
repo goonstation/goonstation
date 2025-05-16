@@ -70,7 +70,7 @@
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("NWOLC EGNEVER", FALSE, spell.maptext_style, spell.maptext_colors)
+			M.say("NWOLC EGNEVER", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
@@ -84,7 +84,7 @@
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, M, "successfully casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, SPAN_ALERT("<B>You HONK painfully!</B>"))
 			target.take_brain_damage(50)

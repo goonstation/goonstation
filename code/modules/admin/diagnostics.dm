@@ -101,7 +101,7 @@ proc/debug_map_apc_count(delim,zlim)
 				active_tiles += length(group.members)
 
 		var/hotspots = 0
-		for(var/obj/hotspot/hotspot in world)
+		for(var/atom/movable/hotspot/hotspot in world)
 			hotspots++
 			LAGCHECK(LAG_LOW)
 
@@ -566,6 +566,26 @@ proc/debug_map_apc_count(delim,zlim)
 			else if(length(artists) == 1)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
+
+	turbine_shafts
+		name = "turbine shafts"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/turbine_shaft/shaft = locate() in theTurf
+			if (!shaft)
+				img.app.alpha = 0
+				return
+			img.app.color = debug_color_of(shaft.network)
+
+	currents
+		name = "currents"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/obj/effects/current/current = locate() in theTurf
+			if (!current)
+				img.app.alpha = 0
+				return
+			img.app.icon = 'icons/effects/effects.dmi'
+			img.app.icon_state = "arrow"
+			img.app.dir = current.dir
 
 	powernet
 		name = "power networks"
@@ -1067,7 +1087,7 @@ proc/debug_map_apc_count(delim,zlim)
 				var/next_id = beacon.codes["next_patrol"] || beacon.codes["next_tour"]
 				var/datum/packet_network/net = get_radio_connection_by_id(beacon, "navbeacon").network
 				var/datum/component/packet_connected/next_device = net.devices_by_tag[next_id][1]
-				var/datum/lineResult/R1 = drawLine(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+				var/datum/lineResult/R1 = drawLineImg(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
 				R1.lineImage.color = debug_color_of(beacon.freq)
 				img.app.overlays += R1.lineImage
 				R1.lineImage.loc = null

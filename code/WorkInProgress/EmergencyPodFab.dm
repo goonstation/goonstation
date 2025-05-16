@@ -6,7 +6,7 @@
 	health = 60
 	maxhealth = 60
 	weapon_class = 1
-	speed = 2.8
+	speedmod = 0.36
 	var/launched = 0
 	var/steps_moved = 0
 	var/failing = 0
@@ -203,3 +203,8 @@
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+
+/obj/machinery/macrofab/portable_oxygen
+	name = "Portable Oxygen Tank Fabricator"
+	desc = "A sophisticated machine that fabricates and pressurizes oxygen tanks."
+	createdObject = /obj/item/tank/pocket/oxygen

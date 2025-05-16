@@ -165,7 +165,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual and switch state updates for the group, via the toggle proc below
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
-		for_by_tcl(S, /obj/critter/turtle)
+		for_by_tcl(S, /mob/living/critter/small_animal/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 

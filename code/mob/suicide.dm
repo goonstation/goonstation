@@ -19,7 +19,7 @@
 
 /mob/verb/suicide()
 
-	if ((!isliving(src) || isdead(src)) && !isAIeye(src) && !istype(src, /mob/zoldorf))
+	if ((!isliving(src) || isdead(src)) && !isAIeye(src))
 		boutput(src, SPAN_ALERT("You're already dead!"))
 		return
 
@@ -54,6 +54,10 @@
 	var/area/area = get_area(src)
 	if (area?.sanctuary)
 		boutput(src, SPAN_ALERT("You can't hurt yourself here."))
+		return
+
+	if (locate(/datum/ailment/parasite/headspider) in src.ailments)
+		boutput(src, SPAN_ALERT("You feel a deep alien hunger for survival crush your attempt to escape your fate."))
 		return
 
 	if(ishuman(src))

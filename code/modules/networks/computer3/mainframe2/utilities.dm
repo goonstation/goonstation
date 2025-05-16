@@ -791,6 +791,7 @@
 /datum/computer/file/mainframe_program/utility/grep
 	name = "grep"
 	size = 1
+	var/max_recursion = 100 //hopefully enough? Idk I'm not a linux maintainer
 
 	initialize(var/initparams)
 		if (..())
@@ -821,7 +822,7 @@
 					plain = 1
 				initlist.Cut(1,2)
 				if (length(initlist) < 2)
-					. += "No pattern or target file. Try 'help grep'"
+					message_user("No pattern or target file. Try 'help grep'")
 					mainframe_prog_exit
 					return
 
@@ -831,9 +832,11 @@
 
 			var/regex/R = new (pattern)
 			if (!istype(R))
-				. += "No regular expression found."
+				message_user("No regular expression found.")
 				mainframe_prog_exit
 				return
+
+			var/recursion_levels = 0
 
 			var/current = read_user_field("curpath")
 
@@ -851,6 +854,11 @@
 					continue
 
 				if (recursive && istype(to_check, /datum/computer/folder))
+					recursion_levels += 1
+					if (recursion_levels > src.max_recursion)
+						message_user("Maximum recursion depth reached, aborting.")
+						mainframe_prog_exit
+						return
 					var/datum/computer/folder/listfolder = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[i]))
 					if (istype(listfolder))
 						for(var/datum/computer/P in listfolder.contents)

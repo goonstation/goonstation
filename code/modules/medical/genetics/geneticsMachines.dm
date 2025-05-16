@@ -608,7 +608,7 @@
 				return
 			genResearch.researchMaterial -= price
 			var/booth_effect_cost = text2num_safe(params["price"])
-			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
+			booth_effect_cost = ceil(clamp(booth_effect_cost, 0, 999999))
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
@@ -682,7 +682,7 @@
 			qdel(E)
 			scanner_alert(ui.user, "Mutation deleted.")
 			on_ui_interacted(ui.user)
-		if("reclaim")
+		if("reclaimOccupant")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
 			if (bioEffect_sanity_check(E))
@@ -691,6 +691,8 @@
 				return
 			var/mob/living/subject = get_scan_subject()
 			if (!subject)
+				return
+			if(!subject.bioHolder?.HasEffect(E.id))
 				return
 			var/reclamation_cap = genResearch.max_material * 1.5
 			on_ui_interacted(ui.user)
@@ -706,6 +708,29 @@
 				subject.bioHolder.RemoveEffect(E.id)
 				E.owner = null
 				E.holder = null
+				qdel(E)
+			playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
+			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
+		if("reclaimStored")
+			. = TRUE
+			var/datum/bioEffect/E = locate(params["ref"])
+			if (bioEffect_sanity_check(E))
+				return
+			if (!src.equipment_available("reclaimer", E))
+				return
+			if (!(E in saved_mutations))
+				return
+			var/reclamation_cap = genResearch.max_material * 1.5
+			on_ui_interacted(ui.user)
+			if (prob(E.reclaim_fail))
+				scanner_alert(ui.user, "Reclamation failed.", error = TRUE)
+			else
+				var/waste = min(E.reclaim_mats, (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap)
+				genResearch.researchMaterial = max(genResearch.researchMaterial, min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap))
+				if (waste > 0)
+					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
+				else
+					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
 				saved_mutations -= E
 				qdel(E)
 			playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)

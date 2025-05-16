@@ -105,10 +105,11 @@
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
-		if (user.zone_sel.selecting == "head")
-			target.emote("sneeze")
-		else
-			target.emote(pick("giggle", "laugh"))
+		if (isalive(target))
+			if (user.zone_sel.selecting == "head")
+				target.emote("sneeze")
+			else
+				target.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,

@@ -7,7 +7,7 @@
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/prefab/mauxite_hideout)
 "dx" = (
-/obj/grille/catwalk/dubious,
+/obj/mesh/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/mauxite_hideout)
 "dW" = (
@@ -180,7 +180,7 @@
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "Gc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/mauxite_hideout)
 "Gj" = (

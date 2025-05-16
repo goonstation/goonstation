@@ -3,6 +3,7 @@
 	display_name = "traitor"
 	antagonist_icon = "traitor"
 	popup_name_override = "traitorhard" //Will be set to ROLE_TRAITOR once given an uplink
+	wiki_link = "https://wiki.ss13.co/Traitor"
 
 	/// Our initial uplink. This is only used to determine the popup shown to the player, so it isn't too important to track.
 	var/obj/item/uplink/uplink
@@ -101,13 +102,14 @@
 	get_statistics()
 		var/list/purchased_items = list()
 		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
-			var/obj/item_type = initial(purchased_item.item)
-			purchased_items += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+			if(length(purchased_item.items) > 0)
+				var/obj/item_type = initial(purchased_item.items[1])
+				purchased_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+					)
 				)
-			)
 
 		. = list(
 			list(
@@ -120,13 +122,14 @@
 		var/list/crate_items = list()
 		if (length(src.surplus_crate_items))
 			for (var/datum/syndicate_buylist/crate_item as anything in src.surplus_crate_items)
-				var/obj/item_type = initial(crate_item.item)
-				crate_items += list(
-					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-						"name" = "[crate_item.name]",
+				if(length(crate_item.items) > 0)
+					var/obj/item_type = initial(crate_item.items[1])
+					crate_items += list(
+						list(
+							"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+							"name" = "[crate_item.name]",
+						)
 					)
-				)
 
 			. += list(
 				list(

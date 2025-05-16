@@ -117,30 +117,43 @@ var/reboot_file_path = "data/restarting"
 #endif
 
 	sleep(5 SECONDS) // wait for sound to play
-	if(config.update_check_enabled)
-		world.installUpdate()
 
-	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
-	//this is to avoid memory leaks from leaving the server running for long periods
-	if (fexists("data/hard-reboot"))
-		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "hardrestart")
+	var/doShutdown = FALSE
 
-		logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
-		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
+	if (world.installUpdate())
+		ehjax.sendAll(clients, "browseroutput", "updaterestart")
+		#ifdef LIVE_SERVER
+		logTheThing(LOG_DIARY, null, "Updates found, triggering shutdown", "debug")
+		doShutdown = TRUE
+		#endif
 
-		fdel("data/hard-reboot")
+	if (!doShutdown)
+		//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
+		//this is to avoid memory leaks from leaving the server running for long periods
+		if (fexists(global.hardRebootFilePath))
+			//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
+			ehjax.sendAll(clients, "browseroutput", "hardrestart")
+			logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
+			message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
+			doShutdown = TRUE
+		else
+			//Tell client browserOutput that a restart is happening RIGHT NOW
+			ehjax.sendAll(clients, "browseroutput", "roundrestart")
+
+	if (doShutdown)
 		Shutdown_server()
 	else
-		//Tell client browserOutput that a restart is happening RIGHT NOW
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "roundrestart")
-
 		world.Reboot()
 
 
 /world/proc/installUpdate()
+	if (!config.update_check_enabled) return FALSE
+	#ifdef LIVE_SERVER
+	// On live servers, supervisor process will install updates on game boot
+	if (length(flist("update/")))
+		return TRUE
+	#else
+
 	// Simple check to see if a new dmb exists in the update folder
 	logTheThing(LOG_DIARY, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
 	if(fexists("update/[config.dmb_filename].dmb"))
@@ -161,8 +174,12 @@ var/reboot_file_path = "data/restarting"
 			shell("find ./tools -type f -name '*.sh' -o -name 'dc' -exec chmod +x {} \\;")
 
 		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
+		return TRUE
 	else
 		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
+
+	#endif
+	return FALSE
 
 
 /// EXPERIMENTAL STUFF

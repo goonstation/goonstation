@@ -20,7 +20,7 @@
 #define access_medical_lockers 10
 #define access_research_director 11
 #define access_maint_tunnels 12
-#define access_external_airlocks 13 // Unused
+#define access_ticket 13 // issuing tickets
 #define access_emergency_storage 14 // Unused
 #define access_change_ids 15
 #define access_ai_upload 16

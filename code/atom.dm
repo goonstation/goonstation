@@ -39,13 +39,8 @@ TYPEINFO(/atom)
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
 
-	/// If hear_talk is triggered on this object, make my contents hear_talk as well
-	var/open_to_sound = 0
-
 	var/interesting = ""
 	var/stops_space_move = 0
-	/// Anything can speak... if it can speak
-	var/obj/chat_maptext_holder/chat_text
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
@@ -86,6 +81,11 @@ TYPEINFO(/atom)
 
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
+
+	/// What icon to use if we want to create specific particles when hit by a projectile
+	var/impact_icon = null
+	/// What icon state to use if we want to create specific particles when hit by a projectile
+	var/impact_icon_state = null
 
 	New(turf/newLoc)
 		. = ..()
@@ -197,10 +197,6 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
-
-		if (!isnull(chat_text))
-			qdel(chat_text)
-			chat_text = null
 
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
@@ -345,6 +341,7 @@ TYPEINFO(/atom)
 /atom/Cross(atom/movable/mover)
 	return (!density)
 
+/// called when atom AM crosses onto where this atom is
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM // idk a tiny optimization to omit the parent call here, I don't think it actually breaks anything in byond internals
@@ -352,6 +349,7 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
+/// called when atom AM enters the contents of this atom
 /atom/Entered(atom/movable/AM, atom/OldLoc)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im cargo culter
@@ -359,6 +357,7 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
+/// called when atom AM uncrosses where this atom is
 /atom/Uncrossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im also cargo culter
@@ -521,6 +520,8 @@ TYPEINFO(/atom/movable)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
+	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
+		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if(src.opacity)
@@ -539,10 +540,6 @@ TYPEINFO(/atom/movable)
 
 
 /atom/movable/disposing()
-	if (temp_flags & MANTA_PUSHING)
-		mantaPushList.Remove(src)
-		temp_flags &= ~MANTA_PUSHING
-
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
 
@@ -1011,15 +1008,17 @@ TYPEINFO(/atom/movable)
 /atom/proc/on_reagent_transfer()
 	return
 
+/// called when this atom is bumped by the argument
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-/// override this instead of Bump
+/// override this instead of Bump. called when this atom bumps the argument.
 /atom/movable/proc/bump(atom/A)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
+/// -- do not override, override /atom/movable/bump instead --. called when this atom bumps the argument
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!(A.flags & ON_BORDER))
@@ -1251,7 +1250,7 @@ TYPEINFO(/atom/movable)
 
 	// slow 😩
 	if(!turf_only)
-		for (var/atom/movable/AM in T)
+		for (var/atom/movable/AM as anything in T)
 			if (!AM.anchored)
 				continue
 			if (connect_to[AM.type] && !exceptions[AM.type])
@@ -1402,3 +1401,16 @@ TYPEINFO(/atom/movable)
 ///Returns the y component of the surface normal of the atom relative to an incident direction
 /atom/proc/normal_y(incident_dir)
 	return incident_dir == SOUTH ? -1 : (incident_dir == NORTH ?  1 : 0)
+
+///Should this atom emit particles when hit by a projectile, when the projectile is of the given type
+/atom/proc/does_impact_particles(var/kinetic_impact = TRUE)
+	return TRUE
+
+///Removes anything that is glued to this atom
+/atom/proc/unglue_attached_to()
+	var/atom/Aloc = isturf(src) ? src : src.loc
+	for(var/atom/movable/AM in Aloc)
+		var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
+		// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+		if(glued_comp?.glued_to == src && !isnull(glued_comp.glue_removal_time))
+			qdel(glued_comp)

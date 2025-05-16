@@ -48,9 +48,11 @@
 		report_name = "the " + source.vars["flock_id"]
 
 	if (snitch.flock.isIgnored(attacker))
-		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]", snitch.flock)
+		snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]")
+
 	else if (!snitch.flock.isEnemy(attacker))
-		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
+		snitch.say("Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]")
+
 	snitch.flock.updateEnemy(attacker)
 
 /// Raise COMSIG_FLOCK_ATTACK on common sources of damage (projectiles, items, fists, etc.)

@@ -15,11 +15,13 @@
 		if (!message)
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
+
 		var/hearers = 0
-		for (var/mob/living/carbon/human/H in range(8, src.holder.owner))
+		for (var/mob/H in range(8, src.holder.owner))
 			if (isdead(H))
 				continue
 			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
+			DISPLAY_MAPTEXT(H, list(H), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/wraith_whisper, message, src.holder.owner)
 			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> \"[message]\"")
 			H.playsound_local(H, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
 			hearers++

@@ -10,9 +10,9 @@
 	can_grab = FALSE
 	can_disarm = TRUE
 	fits_under_table = TRUE
-	speechverb_say = "beeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "beeps curiously"
+	speech_verb_say = "beeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "beeps curiously"
 	add_abilities = list(/datum/targetable/critter/takepicture,
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,
@@ -30,7 +30,10 @@
 		..()
 		//Comes with the goggles
 		if (!mail_glasses) //I tried to make this a variable injected into the query but cause var declare this'll work
-			var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
+			src.spawn_goggles()
+
+	proc/spawn_goggles()
+		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 			R.connected_scuttlebot = src
 		else
 			var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
@@ -86,6 +89,9 @@
 				src.mind.transfer_to(controller)
 			else
 				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
+
+		for(var/obj/item/photo/P in src.contents)
+			P.set_loc(get_turf(src))
 
 		..(gibbed, 0)
 
@@ -147,8 +153,9 @@
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
-	add_abilities = list(/datum/targetable/critter/takepicture)
+	add_abilities = list(/datum/targetable/critter/takepicture/nostorage)
 
 
 	setup_hands()
 
+	spawn_goggles()

@@ -114,9 +114,6 @@
 #define CONTAINER_CHOICE_DUMP  "Dump its contents inside"
 
 /datum/component/transfer_input/proc/handle_attackby(comsig_target, atom/movable/incoming, mob/attacker)
-	if (istype(incoming, /obj/item/deconstructor))
-		return
-
 	if(cant_do_shit(attacker))
 		return
 

@@ -411,18 +411,28 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	var/infectious = 0
 
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
-	..()
+	. = ..()
 	var/mob/living/carbon/human/Victim = user
-	if(istype(Victim) && slot == SLOT_WEAR_MASK)
-		boutput(user, SPAN_ALERT("<B> The mask grips your face!</B>"))
-		src.desc = "This is never coming off... oh god..."
-		// Mostly for spawning a cluwne car and clothes manually.
-		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
-		src.cant_self_remove = 1
-		src.cant_other_remove = 1
-		if(src.infectious && user.reagents)
-			user.reagents.add_reagent("painbow fluid",10)
-	return
+	if(!istype(Victim) || (slot != SLOT_WEAR_MASK))
+		return
+
+	boutput(user, SPAN_ALERT("<b>The mask grips your face!</b>"))
+	src.desc = "This is never coming off... oh god..."
+	// Mostly for spawning a cluwne car and clothes manually.
+	// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
+	src.cant_self_remove = TRUE
+	src.cant_other_remove = TRUE
+	user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
+
+	if(src.infectious && user.reagents)
+		user.reagents.add_reagent("painbow fluid", 10)
+
+
+/obj/item/clothing/mask/cursedclown_hat/unequipped(mob/user)
+	if (src.equipped_in_slot == SLOT_WEAR_MASK)
+		user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
+
+	. = ..()
 
 /obj/item/clothing/mask/cursedclown_hat/custom_suicide = 1
 /obj/item/clothing/mask/cursedclown_hat/suicide_in_hand = 0
@@ -735,6 +745,20 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		cant_drop = 1
 		cant_other_remove = 1
 		cant_self_remove = 1
+
+		equipped(mob/user, slot)
+			. = ..()
+
+			if (slot != SLOT_WEAR_MASK)
+				return
+
+			user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
+
+		unequipped(mob/user)
+			if (src.equipped_in_slot == SLOT_WEAR_MASK)
+				user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
+
+			. = ..()
 
 	cursed/monkey
 		name = "horse mask?"
@@ -2083,3 +2107,16 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
 	icon_state = "goku"
 	item_state = "goku"
+
+// Mx Blorbo, a ersatz Mr Blobby costume.
+
+/obj/item/clothing/suit/blorbosuit
+	name = "Mx. Blorbo costume suit"
+	desc = "A padded, uncomfortably sweaty-looking polka-dot costume."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "blorbosuit"
+	item_state = "blorbosuit"
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES

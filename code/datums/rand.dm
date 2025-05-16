@@ -16,12 +16,12 @@
 	/// Random float from (L,H)
 	proc/xor_randf(L, H)
 		if(!src.mangled_rand)
-			mangled_rand = seed
-		mangled_rand ^= mangled_rand << 13
-		mangled_rand ^= mangled_rand >> 7
-		mangled_rand ^= mangled_rand << 17
+			src.mangled_rand = src.seed
+		src.mangled_rand ^= src.mangled_rand << 13
+		src.mangled_rand ^= src.mangled_rand >> 7
+		src.mangled_rand ^= src.mangled_rand << 17
 
-		. = mangled_rand / 0xFFFFFF
+		. = src.mangled_rand / 0xFFFFFF
 		if(!isnull(L) && !isnull(H))
 			. = L + ( (H-L) * (.) )
 

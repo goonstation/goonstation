@@ -22,3 +22,5 @@
 #define CLIENT_IMAGE_GROUP_GANG_OBJECTIVES "client_image_group_gang_objective" // covers crate spawns
 #define CLIENT_IMAGE_GROUP_MECHCOMP "mechcomp"
 #define CLIENT_IMAGE_GROUP_SALVAGER_VALUES "salvage_value_icons"
+#define CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE "art_curser_hidden_nightmares"
+#define CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS "phoenix_temperature_overlays"

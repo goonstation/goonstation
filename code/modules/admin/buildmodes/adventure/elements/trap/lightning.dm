@@ -82,7 +82,7 @@
 					var/attack_amt = 0
 					if (target)
 						attack_amt = 1
-						var/list/affected = DrawLine(target, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+						var/list/affected = drawLineObj(target, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 						for(var/obj/OB in affected)
 							SPAWN(0.6 SECONDS)
 								qdel(OB)
@@ -98,7 +98,7 @@
 					else
 						for (var/mob/living/M in view(src, range))
 							attack_amt = 1
-							var/list/affected = DrawLine(M, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+							var/list/affected = drawLineObj(M, src, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 							for(var/obj/OB in affected)
 								SPAWN(0.6 SECONDS)
 									qdel(OB)

@@ -342,7 +342,7 @@
 
 		if (findtext(addr, ":")) // remove port if present
 			addr = splittext(addr, ":")[1]
-		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip)
+		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub_ci_ip)
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
@@ -380,17 +380,17 @@
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
 						if(B.on)
-							B.speak(msg)
+							B.say(msg)
 					return 1
 
 				//This is important.
 				else if (nick == "HeadSurgeon")
 					for (var/obj/machinery/bot/medbot/head_surgeon/HS in machine_registry[MACHINES_BOTS])
 						if (HS.on)
-							HS.speak(msg)
+							HS.say(msg)
 					for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/HS in world)
 						LAGCHECK(LAG_LOW)
-						HS.speak(msg)
+						HS.say(msg)
 					return 1
 
 				return 0
@@ -530,7 +530,7 @@
 
 				if (M?.client)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: [SPAN_MESSAGE("[game_msg]")]"))
-					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 
@@ -541,7 +541,7 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
 								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
@@ -640,7 +640,7 @@
 				var/address = plist["address"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "<a href='[address]'>Click here to join it</a><br>"
+				msg += "<a href='[address]'>Click here to join the next one!</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)
 					if (isdead(C.mob))
@@ -867,7 +867,7 @@
 				)
 
 				var/datum/player/player = make_player(plist["ckey"])
-				if(isnull(player.last_seen))
+				if(!player.cached_round_stats)
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen

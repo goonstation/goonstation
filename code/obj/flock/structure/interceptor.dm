@@ -85,7 +85,7 @@
 		ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
 		src.icon_state = "interceptor-generating"
 		src.power_projectile_checkers(FALSE)
-		var/list/gnesis_bolt_objs = DrawLine(src, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
+		var/list/gnesis_bolt_objs = drawLineObj(src, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
 		SPAWN(0.25 SECONDS)
 			for (var/obj/line_obj/gnesis_bolt/gnesis_bolt_obj as anything in gnesis_bolt_objs)
 				qdel(gnesis_bolt_obj)

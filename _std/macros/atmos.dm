@@ -82,6 +82,9 @@
 		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID])
 #endif
 
+#define GAS_MIXTURE_COLOR(COLOR, MOLES, GAS_COLOR) \
+	if (MOLES > MOLES_GAS_VISIBLE) COLOR = GAS_COLOR
+
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
 /// Amount of air to take a from a tile
@@ -267,6 +270,7 @@ What can break when adding new gases:
 	* Returns the color of a given gas ID.
 	*
 	* This is used only in the gas mixer computer as of now.
+	* Garash - 2024: Hi, this is the tgui gas mixer computer speaking, we still use it!
 	*/
 proc/gas_text_color(gas_id)
 	switch(gas_id)

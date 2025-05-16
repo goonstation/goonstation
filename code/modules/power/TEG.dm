@@ -1148,7 +1148,7 @@ datum/pump_ui/circulator_ui
 
 			if(target == null) break
 
-			var/list/affected = DrawLine(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
+			var/list/affected = drawLineObj(last, target, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
 				SPAWN(0.6 SECONDS) qdel(O)
@@ -1603,7 +1603,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 /// Signals which claim the device to be of identifier "AGP" are exclusively pumps or pump wannabes (fine)
 #define DEVICE_IS_PUMP(signal) (signal.data["device"] == "AGP")
 /// Do we have all the information we should Really Really Have?
-#define HAS_REQUIRED_DATA(signal) ((signal.data["netid"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
+#define HAS_REQUIRED_DATA(signal) ((signal.data["sender"] != null) && (signal.data["tag"] != null) && (signal.data["power"] != null) && (signal.data["target_output"] != null) && (signal.data["min_output"] != null) && (signal.data["max_output"] != null))
 
 /obj/machinery/computer/atmosphere/pumpcontrol
 	icon = 'icons/obj/computer.dmi'
@@ -1651,11 +1651,13 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"area_name" - Name of the area the pump is in
 	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
 	*/
-	var/list/pump_data_ref = src.getPump(signal.data["netid"])
+	var/list/pump_data_ref = src.getPump(signal.data["sender"])
 	if (pump_data_ref)
 		// We exist in the list already, update information instead
 		for (var/key in signal.data)
 			pump_data_ref[key] = signal.data[key]
+			if (key == "sender")
+				pump_data_ref["netid"] = signal.data[key]
 		pump_data_ref["processing"] = FALSE
 		pump_data_ref["alive"] = PUMP_ALIVE
 		return
@@ -1663,6 +1665,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	var/list/infoset = new()
 	for (var/key in signal.data)
 		infoset[key] = signal.data[key]
+		if (key == "sender")
+			infoset["netid"] = signal.data[key]
 	var/area/A = get_area(signal.source)
 	if (!A)
 		return

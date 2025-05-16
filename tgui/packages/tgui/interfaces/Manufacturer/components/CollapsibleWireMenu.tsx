@@ -19,21 +19,16 @@ const ManufacturerWireData = [
 ];
 
 export type MaintenanceProps = {
-  actionWirePulse: (index: number) => void;
-  actionWireCutOrMend: (index: number) => void;
+  onWirePulse: (index: number) => void;
+  onWireCutOrMend: (index: number) => void;
   indicators: WireIndicatorsData;
   wires: number[];
   wire_bitflags: number;
 };
 
 export const CollapsibleWireMenu = (props: MaintenanceProps) => {
-  const {
-    actionWirePulse,
-    actionWireCutOrMend,
-    indicators,
-    wires,
-    wire_bitflags,
-  } = props;
+  const { onWirePulse, onWireCutOrMend, indicators, wires, wire_bitflags } =
+    props;
 
   return (
     <Section textAlign="center" title="Maintenance Panel">
@@ -49,7 +44,7 @@ export const CollapsibleWireMenu = (props: MaintenanceProps) => {
                   width={WIRE_PANEL_BUTTONS_WIDTH}
                   textAlign="center"
                   key={i}
-                  onClick={() => actionWirePulse(i)}
+                  onClick={() => onWirePulse(i)}
                 >
                   Pulse
                 </Button>
@@ -57,7 +52,7 @@ export const CollapsibleWireMenu = (props: MaintenanceProps) => {
                   width={WIRE_PANEL_BUTTONS_WIDTH}
                   textAlign="center"
                   key={i}
-                  onClick={() => actionWireCutOrMend(i)}
+                  onClick={() => onWireCutOrMend(i)}
                 >
                   {is_set(wire_bitflags, wires[i] - 1) ? 'Cut' : 'Mend'}
                 </Button>

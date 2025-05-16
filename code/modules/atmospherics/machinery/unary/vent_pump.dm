@@ -33,9 +33,21 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
+	if (src.on)
+		src.turn_on()
 	if(src.frequency)
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_on()
+	src.on = TRUE
+	src.AddComponent(/datum/component/bubble_absorb, src.air_contents)
+	src.UpdateIcon()
+
+/obj/machinery/atmospherics/unary/vent_pump/proc/turn_off()
+	src.on = FALSE
+	src.RemoveComponentsOfType(/datum/component/bubble_absorb)
+	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	var/turf/T = get_turf(src)
@@ -88,15 +100,12 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
-	if(!src.id)
-		return FALSE
-
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data["tag"] = src.id
-	signal.data["netid"] = src.net_id
+	signal.data["sender"] = src.net_id
 	signal.data["device"] = "AVP"
 	signal.data["power"] = src.on ? "on": "off"
 	signal.data["direction"] = src.pump_direction ? "release" : "siphon"
@@ -113,17 +122,19 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
-			src.on = TRUE
+			if (!src.on)
+				src.turn_on()
 			. = TRUE
 
 		if("power_off")
-			src.on = FALSE
+			if (src.on)
+				src.turn_off()
 			. = TRUE
 
 		if("power_toggle")
@@ -195,7 +206,7 @@
 		var/turf/intact = get_turf(src)
 		intact = intact.intact
 		var/hide_pipe = CHECKHIDEPIPE(src)
-		flick("[hide_pipe ? "h" : "" ]alert", src)
+		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 
@@ -208,7 +219,8 @@
 			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
 		icon_state = "[hide_pipe ? "h" : "" ]off"
-		on = FALSE
+		if (src.on)
+			src.turn_off()
 
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 

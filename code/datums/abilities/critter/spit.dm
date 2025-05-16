@@ -61,7 +61,7 @@
 					for(var/mob/O in AIviewers(MT, null))
 						O.show_message(SPAN_ALERT("<B>[MT.name] is hit by the [substance_name] spit!</B>"), 1)
 					A.reagents.reaction(MT)
-					MT.lastattacker = src
+					MT.lastattacker = get_weakref(src)
 					MT.lastattackertime = world.time
 					qdel(A)
 					qdel(B)

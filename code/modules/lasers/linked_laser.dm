@@ -109,7 +109,7 @@
 
 ///Does something block the laser?
 /obj/linked_laser/proc/is_blocking(atom/movable/A)
-	if(!istypes(A, list(/obj/window, /obj/grille, /obj/machinery/containment_field)) && !ismob(A) && A.density)
+	if(!istypes(A, list(/obj/window, /obj/mesh/grille, /obj/machinery/containment_field)) && !ismob(A) && A.density)
 		return TRUE
 
 ///Does anything on a turf block the laser?

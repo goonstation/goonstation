@@ -53,16 +53,22 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node1 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node2 = target
 			break
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
 		if(target.initialize_directions & get_dir(target,src))
+			if(src.cant_connect(target, get_dir(target,src)) || target.cant_connect(src, get_dir(src,target)))
+				continue
 			src.node3 = target
 			break
 	if(player_caused_init)

@@ -7,6 +7,7 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
+	soundproofing = 20
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -64,6 +65,12 @@
 		icon_state = "backpackg"
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+
+	NT
+		name = "\improper NT backpack"
+		desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+		icon_state = "NTbackpack"
+		item_state = "NTbackpack"
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -269,6 +276,8 @@
 	var/cell_port_open = FALSE
 	///Disallows recharging of weaponry
 	var/safety_regulator = TRUE
+	HELP_MESSAGE_OVERRIDE("Use the portable recharge bay in-hand to open and close the cell compartment.\
+	<br>While open, use a large cell in-hand to place it inside, or an open hand to remove an existing cell.")
 
 	New()
 		..()
@@ -330,7 +339,7 @@
 								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
 								do_flash = TRUE
 		if(do_flash)
-			flick("bp_recharger_activate", src)
+			FLICK("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -797,7 +806,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/pocket/oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -856,7 +865,8 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod/basic)
+		/obj/item/fishing_rod,
+		/obj/item/syndie_fishing_rod)
 	check_wclass = 1
 
 	prepared
@@ -882,6 +892,17 @@
 	item_state = "hunter"
 	max_wclass = W_CLASS_NORMAL
 	item_function_flags = IMMUNE_TO_ACID
+
+/obj/item/storage/belt/crossbow
+	name = "old hunting belt"
+	desc = "Holds all the things you need for a proper werewolf hunt."
+	icon_state = "hunterbelt"
+	item_state = "hunter"
+	check_wclass = TRUE
+	can_hold = list(
+		/obj/item/gun/bow/crossbow,
+		/obj/item/plant/herb/aconite,
+	)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
@@ -961,7 +982,7 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/emergency_oxygen/extended,
+		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
@@ -1084,7 +1105,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 TYPEINFO(/obj/item/storage/belt/wrestling)
 	mats = list("metal_dense" = 5,
 				"dense_super" = 10,
-				"fabric" = 5)
+				"hauntium" = 20)
 /obj/item/storage/belt/wrestling
 	name = "championship wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1106,6 +1127,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
+TYPEINFO(/obj/item/storage/belt/wrestling/fake)
+	mats = list("metal_dense" = 5,
+				"dense_super" = 10,
+				"fabric" = 5
+	)
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past."
@@ -1148,3 +1174,55 @@ TYPEINFO(/obj/item/inner_tube)
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
+
+
+// Pod Wars belts and holsters
+/obj/item/storage/belt/podwars // Didn't use gun belt because the belt can hold any pod wars weapons
+	name = "small holster"
+	desc = "A small sidearm holster with a clip for your standard issue melee weapon and a small pouch that attaches to your jumpsuit's belt loops."
+	icon_state = "inspector_holster"
+	item_state = "inspector_holster"
+	can_hold = list(/obj/item/gun/energy/blaster_pod_wars,
+	/obj/item/survival_machete,
+	/obj/item/survival_axe) // how it holds an axe doesn't make sense, but we're doing it anyways. shut up
+	check_wclass = 1
+	slots = 3
+
+/obj/item/storage/belt/podwars/pistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars)
+
+/obj/item/storage/belt/podwars/NTpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
+
+/obj/item/storage/belt/podwars/SYpistol
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
+
+/obj/item/storage/belt/podwars/smg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg)
+
+/obj/item/storage/belt/podwars/NTsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen)
+
+/obj/item/storage/belt/podwars/SYsmg
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate)
+
+/obj/item/storage/belt/podwars/shotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun)
+
+/obj/item/storage/belt/podwars/NTshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen)
+
+/obj/item/storage/belt/podwars/SYshotgun
+	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate)
+
+/obj/item/storage/belt/podwars/advanced
+	name = "tactical belt"
+	desc = "A heavy duty tactical belt capable of holding a large number of objects"
+	icon_state = "secbelt"
+	item_state = "secbelt"
+	check_wclass = 0
+	slots = 6
+	max_wclass = W_CLASS_BULKY
+	can_hold = null
+
+// End of pod wars belts and holsters

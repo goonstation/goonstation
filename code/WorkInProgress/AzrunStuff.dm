@@ -4,14 +4,20 @@
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
 	default_material = "miracle"
 
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	New()
+		. = ..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	pre_attackby(source, atom/target, mob/user)
 		if (!isobj(target))
 			return
-		if(istype(target, /obj/item/electronics/frame))
+		if (istype(target, /obj/item/electronics/frame))
 			var/obj/item/electronics/frame/F = target
 			F.deploy(user)
+			return ATTACK_PRE_DONT_ATTACK
 
 		finish_decon(target, user)
+		return ATTACK_PRE_DONT_ATTACK
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
@@ -1166,6 +1172,164 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			if(istype(M) && target?.client?.holder)
 				target.client.jumptoturf(get_turf(M))
 #endif
+
+
+
+/obj/effect/status_area
+	name = "status area"
+	layer = EFFECTS_LAYER_BASE
+	var/status_effect = "time_slowed"
+	var/mob/source
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(target)
+			src.source = target
+
+	proc/check_movable(atom/movable/AM, crossed=TRUE)
+		. = TRUE
+
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, TRUE))
+			AM.changeStatus(status_effect, 20 SECONDS, src)
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(check_movable(AM, FALSE))
+			AM.delStatus(status_effect)
+
+/obj/effect/status_area/slow_globe
+	name = "temporal sphere"
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "shockwave"
+	pixel_x = -96
+	pixel_y = -96
+	bound_x = -64
+	bound_y = -64
+	bound_width = 160
+	bound_height = 160
+	status_effect = "time_slowed"
+	var/hue_shift = 0
+	var/sound = 'sound/effects/mag_forcewall.ogg'
+	var/pitch
+
+	New(turf/loc, mob/target)
+		. = ..()
+		if(hue_shift)
+			color = hsv_transform_color_matrix(hue_shift)
+		SafeScale(0.1,0.1)
+		SafeScaleAnim((10/1.4), (10/1.4), anim_time=2 SECONDS, anim_easing=ELASTIC_EASING)
+		SPAWN(2 SECONDS)
+			animate_wave(src, waves=5)
+		playsound(get_turf(src), sound, 25, 1, -1, pitch)
+
+	check_movable(atom/movable/AM, crossed)
+		if(crossed)
+			if(AM != src.source)
+				if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+					. = TRUE
+		else
+			if(ismob(AM) || AM.throwing || istype(AM, /obj/projectile))
+				if(!locate(/obj/effect/status_area/slow_globe) in obounds(AM,0))
+					. = TRUE
+
+
+	strong
+		status_effect = "time_slowed_plus"
+		hue_shift = 60
+
+	reversed
+		status_effect = "time_hasted"
+		hue_shift = 90
+		pitch = -1
+
+
+/datum/statusEffect/time_slowed
+	id = "time_slowed"
+	name = "Slowed"
+	desc = "You are slowed by a temporal anomoly.<br>Movement speed and action speed is reduced."
+	icon_state = "slowed"
+	unique = 1
+	var/howMuch = 10
+	exclusiveGroup = "temporal"
+	movement_modifier = new /datum/movement_modifier/status_slowed
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	move_triggered = TRUE
+	var/atom/status_source
+
+	onAdd(source)
+		. = ..()
+		if(source)
+			status_source = source
+
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + (0.5 SECONDS)
+			movement_modifier.additive_slowdown = howMuch
+
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			B.internal_speed = B.proj_data.projectile_speed / scale_factor
+			B.special_data["slowed"] = TRUE
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed /= scale_factor
+			AM.throw_speed /= scale_factor
+
+	onRemove()
+		. = ..()
+		var/atom/movable/AM = owner
+		var/scale_factor = (howMuch/2)
+		if(howMuch<0)
+			scale_factor = -1/scale_factor
+
+		if (ismob(owner))
+			var/mob/M = owner
+			var/atom/source = locate(/obj/effect/status_area/slow_globe) in obounds(M,0)
+			if(source)
+				M.changeStatus("time_slowed", 10 SECONDS, source)
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/B = AM
+			if(B?.special_data && B.special_data["slowed"])
+				B.internal_speed *= scale_factor
+
+		if(istype(AM) && AM.throwing)
+			var/list/datum/thrown_thing/existing_throws = global.throwing_controller.throws_of_atom(AM)
+			for(var/datum/thrown_thing/T in existing_throws)
+				T.speed *= scale_factor
+			AM.throw_speed *= scale_factor
+
+	onUpdate(timePassed)
+		. = ..()
+		if(status_source && QDELETED(status_source))
+			owner.delStatus(id)
+
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	move_trigger(mob/user, ev)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.next_click = world.time + ((howMuch/20) SECONDS)
+
+	extra
+		name = "Sloooowwwwed"
+		id = "time_slowed_plus"
+		howMuch = 20
+
+	reversed
+		name = "Hastened"
+		id = "time_hasted"
+		howMuch = -5
 
 
 

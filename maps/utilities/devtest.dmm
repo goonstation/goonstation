@@ -129,7 +129,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "dr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "tox_mix";
 	layer = 8;
@@ -1097,8 +1097,9 @@
 	},
 /area/station/devzone)
 "wg" = (
+/obj/landmark/supply_delivery,
 /turf/simulated/floor,
-/area/supply/delivery_point)
+/area/station/devzone)
 "wj" = (
 /mob/living/critter/small_animal/ranch_base/chicken,
 /turf/simulated/floor/grass/leafy,

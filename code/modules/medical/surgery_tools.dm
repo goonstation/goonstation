@@ -54,7 +54,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!scalpel_surgery(target, user))
+		if (is_special || !scalpel_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -122,7 +122,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!saw_surgery(target, user))
+		if (is_special || !saw_surgery(target,user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -189,7 +189,7 @@ CONTAINS:
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
 			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!spoon_surgery(target, user))
+		if (is_special || !spoon_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
@@ -308,6 +308,19 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
+	attackby(obj/item/I, mob/user, params)
+		if (istype(I, /obj/item/implant/projectile/staple))
+			if (src.ammo + 1 > initial(src.ammo))
+				boutput(user, SPAN_NOTICE("\The [src] is already filled with staples!"))
+				return
+			boutput(user, SPAN_NOTICE("You load \the [I] into \the [src]."))
+			src.ammo += 1
+			qdel(I)
+			return
+		if (istype(I, /obj/item/gun/kinetic/zipgun))
+			I.Attackby(src, user)
+			return
+		. = ..()
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -323,6 +336,7 @@ CONTAINS:
 
 TYPEINFO(/obj/item/robodefibrillator)
 	mats = 10
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
@@ -333,6 +347,8 @@ TYPEINFO(/obj/item/robodefibrillator)
 	icon_state = "defib-off"
 	item_state = "defib"
 	pickup_sfx = 'sound/items/pickup_defib.ogg'
+	speech_verb_say = "beeps"
+
 	var/icon_base = "defib"
 	var/charge_time = 100
 	var/emagged = 0
@@ -375,7 +391,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			flick("[src.icon_base]-shock", src)
+			FLICK("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
 		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
@@ -400,11 +416,8 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		flick("[src.icon_base]-shock", src)
+		FLICK("[src.icon_base]-shock", src)
 		return 1
-
-	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 
 	disposing()
 		..()
@@ -469,12 +482,12 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if (patient.bioHolder.HasEffect("resist_electric"))
 			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"),\
 			SPAN_NOTICE("You resist the shock!"))
-			speak("ERROR: Unable to complete circuit for shock delivery!")
+			src.say("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
 			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"))
-			speak("ERROR: Patient is deceased.")
+			src.say("ERROR: Patient is deceased.")
 			patient.setStatus("defibbed", 1.5 SECONDS)
 			return 1
 
@@ -483,9 +496,9 @@ TYPEINFO(/obj/item/robodefibrillator)
 			if ((patient.hasStatus("defibbed") && prob(90)) || prob(75)) // it was a 100% chance before... probably
 				patient.cure_disease_by_path(/datum/ailment/malady/flatline)
 			if (!patient.find_ailment_by_type(/datum/ailment/malady/flatline))
-				speak("Normal cardiac rhythm restored.")
+				src.say("Normal cardiac rhythm restored.")
 			else
-				speak("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
+				src.say("Lethal dysrhythmia detected. Patient is still in cardiac arrest!")
 			patient.Virus_ShockCure(35)	// so it doesnt have a 100% chance to cure roboTF
 			patient.setStatus("defibbed", user == patient ? 6 SECONDS : 12 SECONDS)
 
@@ -497,7 +510,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
-						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
+						src.say("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
 					if (prob(66))
 						patient.visible_message(SPAN_NOTICE("<b>[patient]</b> inhales deeply!"))
 						patient.take_oxygen_deprivation(-50)
@@ -649,7 +662,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	attack_hand(mob/living/user)
 		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		..()
 		if(!defib || QDELETED(defib))
 			defib = null // ditch the ref, just in case we're QDEL'd but defib is still holding on
@@ -663,7 +676,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
-		user.lastattacked = src
+		user.lastattacked = get_weakref(src)
 		if (W == src.defib)
 			src.put_back_defib()
 
@@ -705,6 +718,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (is_special)
+			return ..()
 		if (!suture_surgery(target,user))
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -1070,9 +1085,15 @@ TYPEINFO(/obj/machinery/defib_mount)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
+			if (istype(O, /obj/storage)) // don't eat closets/crates
+				continue
+			if (istype(O, /obj/item/body_bag)) // don't eat other deployed bodybags
+				var/obj/item/body_bag/other_bag = O
+				if (other_bag.w_class == W_CLASS_BULKY)
+					continue
 			O.set_loc(src)
 		for (var/mob/M in get_turf(src))
-			if (!M.lying || M.anchored || M.buckled)
+			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
 		src.open = 0

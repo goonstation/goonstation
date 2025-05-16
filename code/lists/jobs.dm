@@ -74,7 +74,8 @@ var/list/page_departments = list(
 	all_jobs += command_jobs
 	all_jobs += security_jobs
 	all_jobs += engineering_jobs
-	all_jobs += medsci_jobs
+	all_jobs += science_jobs
+	all_jobs += medical_jobs
 	all_jobs += service_jobs
 	all_jobs += "Staff Assistant"
 	return all_jobs
@@ -116,7 +117,6 @@ var/list/science_jobs = list(
 	"Scientist",
 	"Research Trainee",
 )
-var/list/medsci_jobs = medical_jobs + science_jobs
 var/list/service_jobs = list(
 	"Head of Personnel",
 	"Bartender",
@@ -136,8 +136,7 @@ var/list/command_gimmicks = list(
 )
 var/list/security_gimmicks = list(
 	"Vice Officer",
-	"Forensic Technician",
-	"Hall Monitor"
+	"Forensic Technician"
 )
 var/list/engineering_gimmicks = list(
 	"Head of Mining",
@@ -176,7 +175,6 @@ var/list/science_gimmicks = list(
 	"Chemist",
 	"Test Subject",
 )
-var/list/medsci_gimmicks = medical_gimmicks + science_gimmicks
 var/list/service_gimmicks = list(
 	"Lawyer",
 	"Barber",
@@ -191,5 +189,6 @@ var/list/service_gimmicks = list(
 	"Waiter",
 	"Life Coach",
 	"Stowaway",
+	"Hall Monitor",
 )
 

@@ -22,13 +22,13 @@
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid1"
 	item_state = "firstaid1"
-	desc = "A general medical kit that contains medical patches for both brute damage and burn damage. Also contains an epinephrine syringe for emergency use and a health analyzer."
+	desc = "A general medical kit that contains medical patches for both brute damage and burn damage. Also contains an epinephrine syringe and bandages for emergency use."
 	kit_styles = list("firstaid1", "firstaid2", "firstaid3")
 	spawn_contents = list(/obj/item/reagent_containers/patch/bruise = 2,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/reagent_containers/patch/burn = 2,\
-	/obj/item/device/analyzer/healthanalyzer,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine)
+	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/bandage)
 
 	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
@@ -48,67 +48,67 @@
 	name = "brute first aid"
 	icon_state = "brute1"
 	item_state = "brute1"
-	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
+	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use."
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(\
 	/obj/item/reagent_containers/patch/bruise = 3,\
-	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/reagent_containers/emergency_injector/saline,\
 	/obj/item/bandage/medicated)
 
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
 	icon_state = "burn1"
 	item_state = "burn1"
-	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
+	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use."
 	kit_styles = list("burn1", "burn2", "burn3", "burn4")
 	spawn_contents = list(\
 	/obj/item/reagent_containers/patch/burn = 3,\
-	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/pill/menthol,\
 	/obj/item/reagent_containers/pill/salicylic_acid,\
-	/obj/item/reagent_containers/emergency_injector/epinephrine)
+	/obj/item/reagent_containers/emergency_injector/epinephrine,\
+	/obj/item/bandage/medicated)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
 	icon_state = "toxin1"
 	item_state = "toxin1"
-	desc = "A medical kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine, a syringe of a powerful purgative, and a health analyzer to determine the health of the patient."
+	desc = "A first aid kit designed to counter radiation and poisoning by common toxins. Contains two pills each of anti-toxin and anti-radiation medicine and syringes for emergency use."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/reagent_containers/emergency_injector/charcoal = 1,\
+	/obj/item/reagent_containers/emergency_injector/calomel = 1,\
 	/obj/item/reagent_containers/pill/antirad = 2,\
-	/obj/item/reagent_containers/pill/antitox = 2,\
-	/obj/item/device/analyzer/healthanalyzer)
+	/obj/item/reagent_containers/pill/antitox = 2)
 
 /obj/item/storage/firstaid/oxygen
 	name = "oxygen deprivation first aid"
 	icon_state = "O21"
 	item_state = "O21"
-	desc = "A first aid kit that contains three pills and two auto-injectors of salbutamol, which is able to counter injuries caused by suffocation. Also contains a health analyzer to determine the health of the patient."
+	desc = "A medical kit that contains three pills and two auto-injectors of salbutamol, which is able to counter injuries caused by suffocation. Contains one epinephrine syringe for emergency use, and a stethscope for diagonsis."
 	kit_styles = list("O21", "O22", "O23", "O24")
 	spawn_contents = list(/obj/item/reagent_containers/pill/salbutamol = 3,\
 	/obj/item/reagent_containers/emergency_injector/salbutamol = 2,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/device/analyzer/healthanalyzer)
+	/obj/item/medicaldiagnosis/stethoscope)
 
 /obj/item/storage/firstaid/brain
 	name = "neurological damage first aid"
 	icon_state = "brain1"
 	item_state = "brain1"
-	desc = "A medical kit that contains three pills and two auto-injectors of mannitol, which can heal brain damage. Also contains a health analyzer to determine the health of the patient."
+	desc = "A medical kit that contains three pills and two auto-injectors of mannitol, which can heal brain damage. Also contains a pen light to determine the patient's brain injuries."
 	kit_styles = list("brain1", "brain2", "brain3")
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 3,\
 	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
-	/obj/item/device/analyzer/healthanalyzer)
+	/obj/item/device/light/flashlight/penlight)
 
 /obj/item/storage/firstaid/crit
 	name = "emergency critical-condition first aid"
 	icon_state = "berserk1"
 	item_state = "berserk1"
-	desc = "An all-in-one emergency crash-kit designed to bring a critically wounded patient back from the brink of death. Contains cardiac stimulants, cerebral anti-edemics, and blood-oxygenation agents, all in convenient auto-injector form. Also contains an upgraded health analyzer to determine the health of the patient."
+	desc = "An all-in-one emergency crash-kit designed to bring a critically wounded patient back from the brink of death. Contains cardiac stimulants, cerebral anti-edemics, and blood-oxygenation agents, all in convenient auto-injector form. Also contains a health analyzer to determine the health of the patient."
 	kit_styles = list("berserk1", "berserk2", "berserk3")
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/mannitol = 1,\
 	/obj/item/reagent_containers/emergency_injector/perf = 1,\
@@ -117,6 +117,19 @@
 	/obj/item/reagent_containers/emergency_injector/synaptizine = 1,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 1,\
 	/obj/item/device/analyzer/healthanalyzer)
+
+/obj/item/storage/firstaid/mental
+	name = "mental health first aid"
+	icon_state = "mental1"
+	item_state = "mental1"
+	desc = "A medical kit dedicated for emergency wellbeing and mental exhaustion. Contains several donuts for emergency carbs, a hot chocolate to dip them, a stress ball, some haloperidol for the extreme cases and a lollipop."
+	kit_styles = list("mental1", "mental2", "mental3")
+	can_hold = list(/obj/item/toy/plush/small/stress_ball)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut = 3,\
+	/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,\
+	/obj/item/toy/plush/small/stress_ball,\
+	/obj/item/reagent_containers/syringe/haloperidol,\
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical)
 
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
@@ -443,6 +456,10 @@
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 7)
 
 /* -------------------- Pill Bottles - Drugs -------------------- */
+/obj/item/storage/pill_bottle/CBD
+	name = "pill bottle (CBD)"
+	desc = "CBD is the non-psychoactive phytocannabinoid extracted from cannabis, good for relaxing."
+	spawn_contents = list(/obj/item/reagent_containers/pill/CBD = 5)
 
 /obj/item/storage/pill_bottle/methamphetamine
 	name = "pill bottle (methamphetamine)"

@@ -27,7 +27,7 @@
 			var/turf/pickedstart = locate(startx, starty, sharktarget.z)
 			var/obj/banshark/Q = new /obj/banshark(pickedstart)
 			Q.sharktarget2 = sharktarget
-			Q.caller = usr
+			Q.caller_mob = usr
 			Q.data = data
 			Q.timelimit = time
 			Q.sharkspeed = speed
@@ -56,7 +56,7 @@
 	var/turf/pickedstart = locate(startx, starty, sharktarget.z)
 	var/obj/gibshark/Q = new /obj/gibshark(pickedstart)
 	Q.sharktarget2 = sharktarget
-	Q.caller = usr
+	Q.caller_mob = usr
 	Q.sharkspeed = speed
 
 /obj/banshark
@@ -69,7 +69,7 @@
 	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/data = null
-	var/caller = null
+	var/caller_mob = null
 	var/sharkcantreach = 0
 	var/timelimit = 6
 	var/sharkspeed = 1
@@ -120,11 +120,11 @@
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			sharktarget2.gib()
 			boutput(sharktarget2, SPAN_ALERT("<BIG><B>You have been eaten by the banshark!</B></BIG>"))
-			logTheThing(LOG_ADMIN, caller:client, "has been eaten by the banshark!")
+			logTheThing(LOG_ADMIN, sharktarget2, "has been eaten by the banshark!")
 			message_admins(SPAN_INTERNAL("[sharktarget2.ckey] has been eaten by the banshark!"))
 		else
 			boutput(sharktarget2, SPAN_ALERT("<BIG><B>You can escape the banshark, but not the ban!</B></BIG>"))
-			logTheThing(LOG_ADMIN, caller:client, "has evaded the shark by ceasing to exist!  Banning them anyway.")
+			logTheThing(LOG_ADMIN, sharktarget2, "has evaded the shark by ceasing to exist!  Banning them anyway.")
 			message_admins(SPAN_INTERNAL("[data["ckey"]] has evaded the shark by ceasing to exist!  Banning them anyway."))
 		bansHandler.add(
 			data["akey"],
@@ -148,7 +148,7 @@
 	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/sharkspeed = 1
-	var/mob/caller = null
+	var/mob/caller_mob = null
 
 	New()
 		SPAWN(0) process()
@@ -186,9 +186,9 @@
 				O.show_message(SPAN_ALERT("<B>[src]</B> gibs [sharktarget2] in one bite!"), 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			if(sharktarget2?.client)
-				logTheThing(LOG_ADMIN, caller:client, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
-				logTheThing(LOG_DIARY, caller:client, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
-				message_admins(SPAN_INTERNAL("[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey]."))
+				logTheThing(LOG_ADMIN, caller_mob, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
+				logTheThing(LOG_DIARY, caller_mob, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
+				message_admins(SPAN_INTERNAL("[key_name(caller_mob)] has sharkgibbed [key_name(sharktarget2)]."))
 				sharktarget2.gib()
 			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)

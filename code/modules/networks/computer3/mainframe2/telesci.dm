@@ -89,61 +89,44 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (!src.host_id)
 			. += SPAN_ALERT("The [src.name]'s \"disconnected from host\" light is flashing.")
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Telepad")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"host_connection" = !!src.host_id
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("reset_connection")
+				if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
+					return
+
+				if(!host_id && !old_host_id)
+					return
+
+				src.last_reset = world.time
+				var/rem_host = src.host_id ? host_id : old_host_id
+				src.host_id = null
+				//src.old_host_id = null
+				src.post_status(rem_host, "command","term_disconnect")
+				SPAWN(1 SECOND)
+					src.post_status(rem_host, "command","term_connect","device",src.device_tag)
+
+				src.updateUsrDialog()
+				return
+
 	attack_hand(mob/user)
 		if(..())
 			return
-
-		src.add_dialog(user)
-
-		var/dat = "<html><head><title>Telepad</title></head><body>"
-
-		var/readout_color = "#000000"
-		var/readout = "ERROR"
-		if(src.host_id)
-			readout_color = "#33FF00"
-			readout = "OK CONNECTION"
-		else
-			readout_color = "#F80000"
-			readout = "NO CONNECTION"
-
-		dat += "Host Connection: "
-		dat += "<table border='1' style='background-color:[readout_color]'><tr><td><font color=white>[readout]</font></td></tr></table><br>"
-
-		dat += "<a href='?src=\ref[src];reset=1'>Reset Connection</a><br>"
-
-		if (src.panel_open)
-			dat += net_switch_html()
-
-		user.Browse(dat,"window=telepad;size=245x302")
-		onclose(user,"telepad")
-		return
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		src.add_dialog(usr)
-		if (href_list["reset"])
-			if(last_reset && (last_reset + NETWORK_MACHINE_RESET_DELAY >= world.time))
-				return
-
-			if(!host_id && !old_host_id)
-				return
-
-			src.last_reset = world.time
-			var/rem_host = src.host_id ? host_id : old_host_id
-			src.host_id = null
-			//src.old_host_id = null
-			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN(0.5 SECONDS)
-				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
-
-			src.updateUsrDialog()
-			return
-
-
-		src.add_fingerprint(usr)
-		return
+		src.ui_interact(user)
 
 	updateUsrDialog()
 		..()

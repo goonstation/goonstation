@@ -118,9 +118,9 @@ dmm_suite
 						for(var/posX = 1 to length(yLine)/key_len)
 							var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
 							for(var/x in T)
-								if(istype(x, /obj) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
+								if(isobj(x) && flags & DMM_OVERWRITE_OBJS && !istype(x, /obj/overlay))
 									qdel(x)
-								else if(istype(x, /mob) && flags & DMM_OVERWRITE_MOBS)
+								else if(ismob(x) && flags & DMM_OVERWRITE_MOBS)
 									qdel(x)
 								LAGCHECK(LAG_MED)
 

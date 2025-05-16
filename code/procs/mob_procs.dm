@@ -235,6 +235,11 @@
 		if (G.allow_blind_sight)
 			return 1
 
+	if (isskeleton(src))
+		var/datum/mutantrace/skeleton/skele = src.mutantrace
+		if (skele.head_tracker?.glasses?.allow_blind_sight)
+			return 1
+
 	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
 
@@ -367,10 +372,10 @@
 		return 0
 	return 1
 
-/mob/proc/hearing_check(var/consciousness_check = 0)
+/mob/proc/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	return 1
 
-/mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
+/mob/living/carbon/human/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.stat || src.getStatusDuration("unconscious") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
@@ -386,7 +391,7 @@
 		if (src.ear_disability || src.get_ear_damage(1))
 			.= 0
 
-/mob/living/silicon/hearing_check(var/consciousness_check = 0)
+/mob/living/silicon/hearing_check(var/consciousness_check = 0, for_audio = FALSE)
 	if (consciousness_check && (src.getStatusDuration("unconscious") || src.sleeping || src.stat))
 		return 0
 
@@ -800,8 +805,8 @@
 			W.smash()
 			return TRUE
 
-		if (S == "grille" && istype(target, /obj/grille))
-			var/obj/grille/G = target
+		if (S == "grille" && istype(target, /obj/mesh/grille))
+			var/obj/mesh/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))
@@ -829,67 +834,6 @@
 			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 			return TRUE
 	return FALSE
-
-/mob/proc/saylist(var/message, var/list/heard, var/list/olocs, var/thickness, var/italics, var/list/processed, var/use_voice_name = 0, var/image/chat_maptext/assoc_maptext = null)
-	var/message_a
-
-	message_a = src.say_quote(message)
-
-	if (italics)
-		message_a = "<i>[message_a]</i>"
-
-	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
-	if (!use_voice_name)
-		my_name = src.get_heard_name()
-	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
-
-	var/rendered_outside = null
-	if (length(olocs))
-		/// outermost movable atom in the chain our mob is in, used to determine how text will look
-		var/atom/movable/outermost = olocs[length(olocs)]
-
-		/// determines if we're located on a spike for special handling
-		var/obj/head_on_spike/spike = locate() in olocs
-		if (spike)
-			outermost = spike
-			thickness = -1 // dont muffle at all for heads on spikes
-		else
-			/// determine if we're atleast in an item held by a mob, such as a backpack
-			for (var/obj/item/I in olocs)
-				if (ismob(I.loc))
-					outermost = I // set it so it appears as what we're in when talking
-
-		if (thickness < 0)
-			rendered_outside = rendered
-		else if (thickness == 0)
-			rendered_outside = SPAN_SAY("[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-		else if (thickness < 10)
-			rendered_outside = SPAN_SAY("[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-		else if (thickness < 20)
-			rendered_outside = SPAN_SAY("muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
-
-	for (var/mob/M in heard)
-		if (M in processed)
-			continue
-		processed += M
-		var/thisR = rendered
-
-		if (olocs.len && !(M.loc in olocs))
-			if (rendered_outside)
-				thisR = rendered_outside
-			else
-				continue
-		else
-			if (isghostdrone(M) && !isghostdrone(src) && !istype(M, /mob/living/silicon/ghostdrone/deluxe))
-				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
-
-		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
-		M.heard_say(src, message)
-		M.show_message(thisR, 2, assoc_maptext = assoc_maptext)
-
-	return processed
-
 
 /mob/proc/clothing_protects_from_chems()
 	.=0

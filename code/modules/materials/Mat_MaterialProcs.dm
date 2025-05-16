@@ -302,8 +302,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message(SPAN_ALERT("[entering] is warped away!"))
-			playsound(owner.loc, "warp", 50)
-			boutput(entering, SPAN_ALERT("You suddenly teleport..."))
+			playsound(T, "warp", 50)
+			if(ismob(entering))
+				boutput(entering, SPAN_ALERT("You suddenly teleport..."))
 			entering.set_loc(.)
 		return
 
@@ -373,10 +374,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
 
-/datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
-		owner.material.triggerTemp(locate(owner))
-
 /datum/materialProc/molitz_temp
 	max_generations = 1
 
@@ -433,7 +430,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
-		molitz.setProperty("molitz_bubbles", iterations-1)
+		owner.material.setProperty("molitz_bubbles", iterations-1)
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -594,7 +591,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
-				OB.canspeak = 0
+				OB.can_use_say = FALSE
 				OB.show_antag_popup("soulsteel")
 
 /datum/materialProc/reflective_onbullet

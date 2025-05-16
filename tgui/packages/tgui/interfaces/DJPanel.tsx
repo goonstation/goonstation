@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { memo, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -17,23 +18,31 @@ import {
   Section,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { truncate } from '../format';
 import { Window } from '../layouts';
 
-interface DJPanelProps {
+interface DJPanelData {
+  announceMode: BooleanLike;
   adminChannel: number;
   loadedSound: string;
-  volume: number;
   frequency: number;
-  announceMode: boolean;
   preloadedSounds: string[];
+  volume: number;
 }
 
 export const DJPanel = () => {
-  const { act, data } = useBackend<DJPanelProps>();
-  const { loadedSound, adminChannel, preloadedSounds } = data;
+  const { act, data } = useBackend<DJPanelData>();
+  const {
+    adminChannel,
+    announceMode,
+    loadedSound,
+    frequency,
+    preloadedSounds,
+    volume,
+  } = data;
   return (
     <Window width={430} height={306} title="DJ Panel">
       <Window.Content>
@@ -50,7 +59,7 @@ export const DJPanel = () => {
             </Button>
           </Box>
           <Divider />
-          <KnobZone />
+          <KnobZone frequency={frequency} volume={volume} />
         </Section>
         <Section>
           <Box>
@@ -125,40 +134,59 @@ export const DJPanel = () => {
             </Button>
           </Box>
         </Section>
-        <AnnounceActive />
+        <AnnounceActive announceMode={announceMode} />
       </Window.Content>
     </Window>
   );
 };
 
 interface AnnounceActiveProps {
-  announceMode: boolean;
+  announceMode: BooleanLike;
 }
-const AnnounceActive = () => {
-  const { data } = useBackend<AnnounceActiveProps>();
-  const { announceMode } = data;
 
+const AnnounceActive = (props: AnnounceActiveProps) => {
+  const { announceMode } = props;
   if (announceMode) {
     return <NoticeBox info>Announce Mode Enabled</NoticeBox>;
   }
 };
 
-const formatDoublePercent = (value) => toFixed(value * 2) + '%';
-const formatHundredPercent = (value) => toFixed(value * 100) + '%';
+const formatDoublePercent = (value: number) => toFixed(value * 2) + '%';
+const formatHundredPercent = (value: number) => toFixed(value * 100) + '%';
 
 interface KnobZoneProps {
-  loadedSound: string;
   volume: number;
   frequency: number;
 }
-const KnobZone = () => {
-  const { act, data } = useBackend<KnobZoneProps>();
-  const { loadedSound, volume, frequency } = data;
 
-  const setVolume = (value) => act('set-volume', { volume: value });
-  const resetVolume = (value) => act('set-volume', { volume: 'reset' });
-  const setFreq = (value) => act('set-freq', { frequency: value });
-  const resetFreq = (value) => act('set-freq', { frequency: 'reset' });
+const KnobZone = memo((props: KnobZoneProps) => {
+  const { volume, frequency } = props;
+  const { act } = useBackend<KnobZoneProps>();
+
+  const handleSetVolume = useCallback(
+    (value: number) => act('set-volume', { volume: value }),
+    [act],
+  );
+  const handleSetVolumeByKnob = useCallback(
+    (_e: unknown, value: number) => handleSetVolume(value),
+    [handleSetVolume],
+  );
+  const handleResetVolume = useCallback(
+    () => act('set-volume', { volume: 'reset' }),
+    [act],
+  );
+  const handleSetFrequency = useCallback(
+    (value: number) => act('set-freq', { frequency: value }),
+    [act],
+  );
+  const handleSetFrequencyByKnob = useCallback(
+    (_e: unknown, value: number) => handleSetFrequency(value),
+    [handleSetFrequency],
+  );
+  const handleResetFrequency = useCallback(
+    () => act('set-freq', { frequency: 'reset' }),
+    [act],
+  );
 
   return (
     <Box>
@@ -170,7 +198,7 @@ const KnobZone = () => {
             minValue={0}
             maxValue={100}
             format={formatDoublePercent}
-            onDrag={setVolume}
+            onDrag={handleSetVolume}
             step={1}
           />
         </LabeledControls.Item>
@@ -185,9 +213,9 @@ const KnobZone = () => {
             }}
             value={volume}
             format={formatDoublePercent}
-            onDrag={setVolume}
+            onDrag={handleSetVolumeByKnob}
           />
-          <Button icon="sync-alt" top="0.3em" onClick={resetVolume}>
+          <Button icon="sync-alt" top="0.3em" onClick={handleResetVolume}>
             Reset
           </Button>
         </LabeledControls.Item>
@@ -199,7 +227,7 @@ const KnobZone = () => {
             minValue={-100}
             maxValue={100}
             format={formatHundredPercent}
-            onDrag={setFreq}
+            onDrag={handleSetFrequency}
           />
         </LabeledControls.Item>
         <LabeledControls.Item label="">
@@ -215,13 +243,13 @@ const KnobZone = () => {
             }}
             value={frequency}
             format={formatHundredPercent}
-            onDrag={setFreq}
+            onDrag={handleSetFrequencyByKnob}
           />
-          <Button icon="sync-alt" top="0.3em" onClick={resetFreq}>
+          <Button icon="sync-alt" top="0.3em" onClick={handleResetFrequency}>
             Reset
           </Button>
         </LabeledControls.Item>
       </LabeledControls>
     </Box>
   );
-};
+});
