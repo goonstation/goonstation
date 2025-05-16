@@ -2,7 +2,10 @@
 #define PHOTOCOPIER_RADIO_RANGE 16
 
 TYPEINFO(/obj/machinery/photocopier)
-	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+	//just to make photocopiers mech copyable, how could this possibly go wrong?
+	mats = list("metal" = 10,
+				"conductive" = 5,
+				"reflective" = 2)
 
 /obj/machinery/photocopier
 	name = "photocopier"
@@ -14,17 +17,17 @@ TYPEINFO(/obj/machinery/photocopier)
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
 	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/use_state = 0 // 0 is closed, 1 is open, 2 is busy, closed by default
-	var/paper_amount = 15 // amount of paper currently in the photocopier
-	var/print_amount = 1 // from 1 to PHOTOCOPIER_MAX_SHEETS, amount of copies the photocopier will copy, copy?
+	var/use_state = 0 //! 0 is closed, 1 is open, 2 is busy, closed by default
+	var/paper_amount = 15 //! amount of paper currently in the photocopier
+	var/print_amount = 1 //! from 1 to PHOTOCOPIER_MAX_SHEETS, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
-	var/ignore_paper = FALSE // Ignore all paper costs
-	var/obj/item/scan_peek = null // A copy of the scanned item for silicons to look at
+	var/ignore_paper = FALSE //! Ignore all paper costs
+	var/obj/item/scan_peek = null //! A copy of the scanned item for silicons to look at
 
-	var/list/print_info = list() // Data of the item to print
-	var/print_type = "" // The type of item to print
-	var/sheets_per_item = 1 // how many sheets each item costs. Each sheet uses its own printing cycle
-	var/sheets_left = 1 // how many sheets have been printed for this item
+	var/list/print_info = list() //! Data of the item to print
+	var/print_type = "" //! The type of item to print
+	var/sheets_per_item = 1 //! how many sheets each item costs. Each sheet uses its own printing cycle
+	var/sheets_left = 1 //! how many sheets have been printed for this item
 
 	var/net_id = ""
 	var/frequency = FREQ_FREE
@@ -208,7 +211,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			boutput(user, SPAN_NOTICE("You reset the security settings on the [src]."))
 		return 1
 
-	proc/interact_settings(var/mob/user) // Aditional settings in a seperate menu
+	// --------------- Player Interaction ----------------
+
+	proc/interact_settings(var/mob/user) //! Some additional misc settings in a seperate menu
 		var/isUserSilicon = issilicon(user) || isAI(user)
 		var/list/sel_list = list("Reset Memory", "Print Network Data")
 		if(isUserSilicon) // Additional option for AI & Cyborgs
@@ -219,6 +224,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				return
 			switch(mode_sel)
 				if ("Reset Memory")
+					// Clear the scanned data
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
@@ -243,7 +249,7 @@ TYPEINFO(/obj/machinery/photocopier)
 					if(issilicon(user) || isAI(user))
 						ai_peek(user)
 
-	proc/ai_peek(var/mob/user) // Allow silicons to see what was scanned without printing anything
+	proc/ai_peek(var/mob/user) //! Allow silicons to see what was scanned without printing anything
 		switch(src.print_type)
 			if ("paper")
 				if(src.scan_peek == null)
@@ -258,6 +264,8 @@ TYPEINFO(/obj/machinery/photocopier)
 					src.scan_peek = create_paper_photo(src.print_info)
 				var/obj/item/paper/printout/P = src.scan_peek
 				P.ui_interact(user)
+			if("blueprint")
+				boutput(user, "These are scanned blueprint schematics labeled \"[src.print_info["name"]]\".")
 			if("butt")
 				boutput(user, "The scanned data is just an image of someone's bottom pressed against the scanner. Very mature.")
 			if ("poster_wanted")
@@ -289,7 +297,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
 			else
 				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
-	proc/faith_print(var/mob/user) // Bible can print using faith instead of paper
+	proc/faith_print(var/mob/user) //! Bible can print using faith instead of paper
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -311,7 +319,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	// --------------- Printing & Loading ----------------
 
-	proc/print_action(var/mob/user) // The printing loop
+	proc/print_action(var/mob/user) //! The printing loop
 		if (src.paper_amount <= 0 && !src.ignore_paper)
 			src.visible_message("No more paper in the tray!")
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
@@ -352,7 +360,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				playsound(src.loc, 'sound/machines/ping.ogg', 5, 1)
 		src.icon_state = "close_sesame"
 
-	proc/print_stuff(var/mob/user) // Creates the actual items being printed
+	proc/print_stuff(var/mob/user) //! Creates the actual items being printed
 		// Check what type of item it is that is being printed
 		switch(src.print_type)
 			if ("paper")
@@ -370,6 +378,11 @@ TYPEINFO(/obj/machinery/photocopier)
 				var/obj/item/paper/printout/P = create_paper_photo(src.print_info)
 				P.set_loc(get_turf(src))
 				try_put_in_folder(P)
+			if ("blueprint")
+				effect_printing("print_blueprint")
+				var/obj/item/paper/manufacturer_blueprint/bp = create_paper_blueprint(src.print_info)
+				bp.set_loc(get_turf(src))
+				try_put_in_folder(bp)
 			if ("butt")
 				effect_printing("print")
 				var/obj/item/paper/P = new(get_turf(src))
@@ -391,9 +404,12 @@ TYPEINFO(/obj/machinery/photocopier)
 					var/obj/item/paper_booklet/B = create_booklet()
 					B.set_loc(get_turf(src))
 			if("folder")
-				effect_printing("print")
 				var/sheet_index = sheets_per_item - sheets_left
 				var/list/sheet_info = src.print_info["page_[sheet_index]"]
+				if(sheet_info["print_type"] == "blueprint")
+					effect_printing("print_blueprint")
+				else
+					effect_printing("print")
 				var/obj/item/P = create_subitem(sheet_info)
 				P.set_loc(get_turf(src))
 				try_put_in_folder(P)
@@ -420,7 +436,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				effect_printing("print")
 				new/obj/item/paper(get_turf(src))
 
-	proc/create_subitem(var/sub_info) // For items that contain other items (folders, booklets)
+	proc/create_subitem(var/sub_info) //! For items that contain other items (folders, booklets)
 		switch(sub_info["print_type"])
 			if("paper")
 				return create_paper(sub_info)
@@ -430,19 +446,22 @@ TYPEINFO(/obj/machinery/photocopier)
 				return create_wanted_poster(sub_info)
 			if("photo")
 				return create_photo(sub_info)
+			if("blueprint")
+				return create_paper_blueprint(sub_info)
 			else
 				return null
 
 	proc/create_paper(var/list/paper_info)
 		var/obj/item/paper/P = new/obj/item/paper(src)
 		P.name = paper_info["name"]
+		P.icon = paper_info["icon"]
+		P.icon_state = paper_info["icon_state"]
 		P.desc = paper_info["desc"]
 		P.info = paper_info["info"]
 		var/list/new_stamps = paper_info["stamps"]
 		P.stamps = new_stamps?.Copy()
 		P.form_fields = paper_info["form_fields"]
 		P.field_counter = paper_info["field_counter"]
-		P.icon_state = paper_info["icon_state"]
 		P.sizex = paper_info["sizex"]
 		P.sizey = paper_info["sizey"]
 		P.scrollbar = paper_info["scrollbar"]
@@ -455,6 +474,20 @@ TYPEINFO(/obj/machinery/photocopier)
 		P.print_icon = paper_info["print_icon"]
 		P.print_icon_state = paper_info["print_icon_state"]
 		return P
+
+	proc/create_paper_blueprint(var/list/bp_info)
+		RETURN_TYPE(/obj/item/paper/manufacturer_blueprint)
+		var/datum/manufacture/M = bp_info["blueprint"]
+		var/obj/item/paper/manufacturer_blueprint/bp = new/obj/item/paper/manufacturer_blueprint(src, M)
+		bp.name = bp_info["name"]
+		bp.desc = bp_info["desc"]
+		bp.icon = bp_info["icon"]
+		bp.icon_state = bp_info["icon_state"]
+		bp.item_state = bp_info["item_state"]
+		bp.info = bp_info["info"]
+		bp.override_name_desc = bp_info["override"]
+		return bp
+
 	proc/create_photo(var/list/photo_info)
 		var/obj/item/photo/P = new/obj/item/photo(src)
 		P.name = photo_info["name"]
@@ -501,7 +534,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.set_loc(B)
 			B.pages += P
 		return B
-	proc/create_folder() // Create a folder with the scanned items (for ai_peek() while a folder is scanned)
+	proc/create_folder() //! Create a folder with the scanned items (for ai_peek() while a folder is scanned)
 		var/obj/item/folder/F = new/obj/item/folder(src)
 		F.name = src.print_info["name"]
 		F.desc = src.print_info["desc"]
@@ -516,7 +549,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		F.is_virtual = TRUE
 		F.tooltip_rebuild = 1
 		return F
-	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
+	proc/load_stuff(var/obj/item/w, var/mob/user) //! Load paper into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
 				return;
@@ -558,8 +591,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		FLICK(print_icon, src)
 		sleep(2.5 SECONDS)
 
-	proc/effect_fail()
-		// Just displays a red light to give the user additional feedback when needed
+	proc/effect_fail() //! Displays a red light to give the user additional feedback when needed
 		if(src.use_state == 1)
 			FLICK("fail_open", src)
 		else
@@ -599,12 +631,12 @@ TYPEINFO(/obj/machinery/photocopier)
 				F.set_loc(get_turf(src))
 			else
 				scan_folder(F, user)
-	proc/scan_setup(var/obj/item/w, var/mob/user) // Run this before scanning items using an animation
+	proc/scan_setup(var/obj/item/w, var/mob/user) //! Run this before scanning items using an animation
 		src.reset_all()
 		src.use_state = 2
 		user.drop_item()
 		w.set_loc(src)
-	proc/scan_subitem(var/obj/item/w) // For items with multiple pages.
+	proc/scan_subitem(var/obj/item/w) //! For items with multiple pages.
 		var/list/sheet_info = new/list()
 		if (istype(w, /obj/item/paper))
 			var/obj/item/paper/P = w
@@ -627,6 +659,9 @@ TYPEINFO(/obj/machinery/photocopier)
 		else if (istype(P, /obj/item/paper/newspaper))
 			boutput(user, "You put the newspaper onto the scan bed, close the lid, and press start...")
 			src.icon_state = "scan_news"
+		else if (istype(P, /obj/item/paper/manufacturer_blueprint))
+			boutput(user, "You put the [P] on the scan bed, close the lid, and press start...")
+			src.icon_state = "scan_blueprint"
 		else
 			boutput(user, "You put the paper on the scan bed, close the lid, and press start...")
 		effects_scanning(P)
@@ -634,7 +669,10 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_type = src.print_info["print_type"]
 	proc/scan_paper_data(var/obj/item/paper/P)
 		var/list/scan_info = new/list()
-		if (istype(P, /obj/item/paper/printout))
+		if (istype(P, /obj/item/paper/manufacturer_blueprint))
+			var/obj/item/paper/manufacturer_blueprint/bp = P
+			return scan_paper_blueprint(bp)
+		else if (istype(P, /obj/item/paper/printout))
 			var/obj/item/paper/printout/Pout = P
 			scan_info["desc"] = Pout.desc
 			scan_info["print_icon"] = Pout.print_icon
@@ -669,17 +707,30 @@ TYPEINFO(/obj/machinery/photocopier)
 			scan_info["print_type"] = "paper"
 		else
 			scan_info["name"] = P.name
+			scan_info["icon"] = P.icon
+			scan_info["icon_state"] = P.icon_state
 			scan_info["desc"] = P.desc
 			scan_info["info"] = P.info
 			scan_info["stamps"] = P.stamps?.Copy()
 			scan_info["form_fields"] = P.form_fields
 			scan_info["field_counter"] = P.field_counter
-			scan_info["icon_state"] = P.icon_state
 			scan_info["sizex"] = P.sizex
 			scan_info["sizey"] = P.sizey
 			scan_info["scrollbar"] = P.scrollbar
 			scan_info["overlays"] = P.overlays
 			scan_info["print_type"] = "paper"
+		return scan_info
+	proc/scan_paper_blueprint(var/obj/item/paper/manufacturer_blueprint/bp)
+		var/list/scan_info = new/list()
+		scan_info["name"] = bp.name
+		scan_info["desc"] = bp.desc
+		scan_info["icon"] = bp.icon
+		scan_info["icon_state"] = bp.icon_state
+		scan_info["item_state"] = bp.item_state
+		scan_info["info"] = bp.info
+		scan_info["blueprint"] = bp.blueprint
+		scan_info["override"] = bp.override_name_desc
+		scan_info["print_type"] = "blueprint"
 		return scan_info
 	proc/scan_photo(var/obj/item/photo/P, var/mob/user)
 		// Photo: index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
@@ -711,7 +762,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		boutput(user, "You put the cash on the scan bed, close the lid, and press start...")
 		effects_scanning(C)
 		if(emagged)
-			src.print_info += min(C.amount, 10) // index 1 is the amount of cash to print per sheet of paper
+			src.print_info += min(C.amount, 25) // index 1 is the amount of cash to print per sheet of paper
 			src.print_type = "cash"
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
@@ -837,7 +888,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["overlays"] = list()
 		src.print_type = "paper"
 
-	proc/scan_network_info() // Used to print data on how to interact with this photocopier via packets
+	proc/scan_network_info() //! Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
 		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
 			<body><hr> \
@@ -941,9 +992,11 @@ TYPEINFO(/obj/machinery/photocopier)
 				src.reset_all()
 				playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
 
-	proc/effect_radio()
-		// A flashing blue light to visually display packet commands
+	proc/effect_radio() //! A flashing blue light to visually display packet commands
 		if(src.use_state == 1)
 			FLICK("net_open", src)
 		else
 			FLICK("net_closed", src)
+
+#undef PHOTOCOPIER_MAX_SHEETS
+#undef PHOTOCOPIER_RADIO_RANGE
