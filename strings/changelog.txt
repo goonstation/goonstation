@@ -1,6 +1,7 @@
 
 (t)fri may 16 25
 (u)LeahTheTech
+(+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
 (p)23374
 (e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
 (*)Intercoms now use maptext.
