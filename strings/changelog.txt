@@ -1,4 +1,9 @@
 
+(t)fri may 16 25
+(u)Egregorious
+(p)23449
+(e)🆕⚖|C-Feature, C-Balance
+(+)Cargo's traders will now buy the same items throughout the entire shift.
 (t)wed may 14 25
 (u)GeneralJay
 (p)23451
