@@ -1,5 +1,9 @@
 
 (t)fri may 16 25
+(u)LeahTheTech
+(p)23374
+(e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
+(*)Intercoms now use maptext.
 (u)Egregorious
 (p)23449
 (e)🆕⚖|C-Feature, C-Balance
