@@ -15,16 +15,16 @@ TYPEINFO(/obj/machinery/photocopier)
 	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //! 0 is closed, 1 is open, 2 is busy, closed by default
-	var/paper_amount = 15 //! amount of paper currently in the photocopier
-	var/print_amount = 1 //! from 1 to PHOTOCOPIER_MAX_SHEETS, amount of copies the photocopier will copy, copy?
+	var/paper_amount = 15 // amount of paper currently in the photocopier
+	var/print_amount = 1 // from 1 to PHOTOCOPIER_MAX_SHEETS, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
-	var/ignore_paper = FALSE //! Ignore all paper costs
-	var/obj/item/scan_peek = null //! A copy of the scanned item for silicons to look at
+	var/ignore_paper = FALSE // Ignore all paper costs
+	var/obj/item/scan_peek = null // A copy of the scanned item for silicons to look at
 
-	var/list/print_info = list() //! Data of the item to print
-	var/print_type = "" //! The type of item to print
-	var/sheets_per_item = 1 //! how many sheets each item costs. Each sheet uses its own printing cycle
-	var/sheets_left = 1 //! how many sheets have been printed for this item
+	var/list/print_info = list() // Data of the item to print
+	var/print_type = "" // The type of item to print
+	var/sheets_per_item = 1 // how many sheets each item costs. Each sheet uses its own printing cycle
+	var/sheets_left = 1 // how many sheets have been printed for this item
 
 	var/net_id = ""
 	var/frequency = FREQ_FREE
@@ -210,7 +210,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	// --------------- Player Interaction ----------------
 
-	proc/interact_settings(var/mob/user) //! Some additional misc settings in a seperate menu
+	proc/interact_settings(var/mob/user) // Some additional misc settings in a seperate menu
 		var/isUserSilicon = issilicon(user) || isAI(user)
 		var/list/sel_list = list("Reset Memory", "Print Network Data")
 		if(isUserSilicon) // Additional option for AI & Cyborgs
@@ -246,7 +246,7 @@ TYPEINFO(/obj/machinery/photocopier)
 					if(issilicon(user) || isAI(user))
 						ai_peek(user)
 
-	proc/ai_peek(var/mob/user) //! Allow silicons to see what was scanned without printing anything
+	proc/ai_peek(var/mob/user) // Allow silicons to see what was scanned without printing anything
 		switch(src.print_type)
 			if ("paper")
 				if(src.scan_peek == null)
@@ -294,7 +294,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
 			else
 				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
-	proc/faith_print(var/mob/user) //! Bible can print using faith instead of paper
+	proc/faith_print(var/mob/user) // Bible can print using faith instead of paper
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -316,7 +316,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	// --------------- Printing & Loading ----------------
 
-	proc/print_action(var/mob/user) //! The printing loop
+	proc/print_action(var/mob/user) // The printing loop
 		if (src.paper_amount <= 0 && !src.ignore_paper)
 			src.visible_message("No more paper in the tray!")
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
@@ -357,7 +357,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				playsound(src.loc, 'sound/machines/ping.ogg', 5, 1)
 		src.icon_state = "close_sesame"
 
-	proc/print_stuff(var/mob/user) //! Creates the actual items being printed
+	proc/print_stuff(var/mob/user) // Creates the actual items being printed
 		// Check what type of item it is that is being printed
 		switch(src.print_type)
 			if ("paper")
@@ -433,7 +433,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				effect_printing("print")
 				new/obj/item/paper(get_turf(src))
 
-	proc/create_subitem(var/sub_info) //! For items that contain other items (folders, booklets)
+	proc/create_subitem(var/sub_info) // For items that contain other items (folders, booklets)
 		switch(sub_info["print_type"])
 			if("paper")
 				return create_paper(sub_info)
@@ -531,7 +531,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.set_loc(B)
 			B.pages += P
 		return B
-	proc/create_folder() //! Create a folder with the scanned items (for ai_peek() while a folder is scanned)
+	proc/create_folder() // Create a folder with the scanned items (for ai_peek() while a folder is scanned)
 		var/obj/item/folder/F = new/obj/item/folder(src)
 		F.name = src.print_info["name"]
 		F.desc = src.print_info["desc"]
@@ -546,7 +546,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		F.is_virtual = TRUE
 		F.tooltip_rebuild = 1
 		return F
-	proc/load_stuff(var/obj/item/w, var/mob/user) //! Load paper into the copier here
+	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
 				return;
@@ -633,7 +633,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.use_state = 2
 		user.drop_item()
 		w.set_loc(src)
-	proc/scan_subitem(var/obj/item/w) //! For items with multiple pages.
+	proc/scan_subitem(var/obj/item/w) // For items with multiple pages.
 		var/list/sheet_info = new/list()
 		if (istype(w, /obj/item/paper))
 			var/obj/item/paper/P = w
@@ -885,7 +885,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["overlays"] = list()
 		src.print_type = "paper"
 
-	proc/scan_network_info() //! Used to print data on how to interact with this photocopier via packets
+	proc/scan_network_info() // Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
 		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
 			<body><hr> \
