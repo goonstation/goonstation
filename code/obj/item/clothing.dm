@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 				for (var/datum/hud/hud in H.huds)
 					if (src in hud.objects)
 						hud.remove_object(src)
-				H.hud.remove_object(src)
+				H.hud?.remove_object(src)
 		//fucky way of doing this but whatever
 		..()
 

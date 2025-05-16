@@ -59,3 +59,6 @@
 	SPAWN(0)
 		init()
 
+#ifdef UNIT_TESTS
+	unit_tests.run_tests()
+#endif

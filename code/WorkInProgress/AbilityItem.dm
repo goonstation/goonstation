@@ -796,6 +796,8 @@
 			if (AB.requires_equip && !(AB.the_item in the_mob.get_equipped_items())) continue
 			abilities_toadd += AB
 		if (!length(abilities_toadd)) return
+		if (!islist(the_mob.item_abilities))
+			the_mob.item_abilities = list()
 		the_mob.item_abilities |= abilities_toadd
 		the_mob.need_update_item_abilities = 1
 		the_mob.update_item_abilities()

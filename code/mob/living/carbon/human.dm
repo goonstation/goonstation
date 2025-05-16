@@ -1844,7 +1844,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (istype(I, /obj/item/clothing/glasses))
 				return TRUE
 		if (SLOT_GLOVES)
-			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
+			if ((!src.limbs?.l_arm) && (!src.limbs?.r_arm))
 				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
 				return TRUE
@@ -1861,7 +1861,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 				else
 					return TRUE
 		if (SLOT_SHOES)
-			if ((!src.limbs.l_leg) && (!src.limbs.r_leg))
+			if ((!src.limbs?.l_leg) && (!src.limbs?.r_leg))
 				return FALSE
 			if (istype(I, /obj/item/clothing/shoes))
 				var/obj/item/clothing/SH = I
