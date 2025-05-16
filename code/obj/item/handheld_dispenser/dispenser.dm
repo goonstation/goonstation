@@ -64,6 +64,8 @@
 	. = ..()
 
 /obj/item/places_pipes/proc/load_ammo(mob/user, obj/item/rcd_ammo/ammo)
+	if(issilicon(user))
+		return
 	if (!ammo.matter)
 		return
 	if (src.resources == src.max_resources)
@@ -122,11 +124,12 @@
 		actions.start(actionbar, user)
 
 /obj/item/places_pipes/proc/create_item(turf/target, mob/user, datum/pipe_recipe/recipe, direction)
+	var/mob/living/silicon/S
 	if(!(user && can_reach(user, target)))
 		boutput(user, SPAN_ALERT("Can't reach there!"))
 		return
 	if (issilicon(user))
-		var/mob/living/silicon/S = user
+		S = user
 		if (!(S.cell && (S.cell.charge >= recipe.cost * silicon_cost_multiplier)))
 			boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
 			return
@@ -141,14 +144,13 @@
 		if(recipe.exclusionary && device.exclusionary)
 			boutput(user, SPAN_ALERT("Something is occupying that space!"))
 			return
-	if (issilicon(user))
-		var/mob/living/silicon/S = user
-		if (S.cell)
-			S.cell.use(recipe.cost * silicon_cost_multiplier)
+	if (S?.cell)
+		S.cell.use(recipe.cost * silicon_cost_multiplier)
+		src.inventory_counter.update_number(S.cell.charge)
 	else
 		src.resources -= recipe.cost
+		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
@@ -158,8 +160,9 @@
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/places_pipes/proc/destroy_item(mob/user, obj/machinery/atmospherics/target)
+	var/mob/living/silicon/S
 	if (issilicon(user))
-		var/mob/living/silicon/S = user
+		S = user
 		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
 			boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
 			return
@@ -172,14 +175,13 @@
 		var/obj/machinery/atmospherics/binary/valve/O = target
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
-	if (issilicon(user))
-		var/mob/living/silicon/S = user
-		if (S.cell)
-			S.cell.use(silicon_cost_multiplier)
+	if (S?.cell)
+		S.cell.use(silicon_cost_multiplier)
+		src.inventory_counter.update_number(S.cell.charge)
 	else
 		resources -= 1
+		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
 	qdel(target)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -191,10 +193,13 @@
 		ui.open()
 
 /obj/item/places_pipes/ui_data(mob/user)
+	var/mob/living/silicon/S
+	if (issilicon(user))
+		S = user
 	. = list(
 		"selectedimage" = (src.selectedimage || getBase64Img(selection, src.direction)),
-		"selectedcost" = src.selection.cost,
-		"resources" = src.resources,
+		"selectedcost" = src.selection.cost * (issilicon(user)*silicon_cost_multiplier),
+		"resources" = S ? (S.cell ? S.cell.charge : 0) : src.resources,
 		"destroying" = src.destroying,
 		"selecteddesc" = src.selection.desc,
 	)
@@ -207,15 +212,16 @@
 		.["atmospipes"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
 			))
 	for (var/name in src.atmosmachinesforcreation)
 		var/datum/pipe_recipe/machine/recipe = src.atmosmachinesforcreation[name]
 		.["atmosmachines"] += list(list(
 			"name" = name,
 			"image" = getBase64Img(recipe),
-			"cost" = recipe.cost,
+			"cost" = recipe.cost * (issilicon(user) ? silicon_cost_multiplier : 1),
 			))
+	.["issilicon"] = issilicon(user)
 
 /obj/item/places_pipes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
