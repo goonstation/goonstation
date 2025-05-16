@@ -95,8 +95,7 @@
 	post_setup()
 		..()
 		var/obj/item/cell/artifact/O = src.holder
-		O.chargeCap = rand(15,1000)
-		O.chargeCap *= 100
+		O.chargeCap = rand(15,1000) * 100
 		src.react_elec[2] = O.chargeCap
 
 		// effects
@@ -109,18 +108,22 @@
 			if ("wizard")
 				O.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
 			if ("precursor") // what does precursor stuff even sound like???
-				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
+				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg','sound/effects/gust.ogg')
+			if("eldrich")
+				O.noise = pick('sound/effects/bones_break.ogg','sound/impact_sounds/Flesh_Crush_1.ogg','sound/voice/wraith/wraithwhisper1.ogg')
 
-		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
+		if(prob(O.chargeCap/1000) || src.artitype.name == "eldrich") // the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
 				if ("martian")
-					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
+					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders","slime")
 				if ("ancient")
 					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 				if ("wizard")
 					O.leakChem = pick("glitter","sakuride","grassgro","sparkles","mirabilis", "mugwort", "carpet")
 				if ("precursor")
 					O.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
+				if("eldrich")
+					O.leakChem = pick("blood","vomit","spiders","miasma","neurotoxin","itching","sewage","slime")
 			if(prob(10))
 				O.smoky = TRUE
 			O.create_reagents(rand(5,20))
