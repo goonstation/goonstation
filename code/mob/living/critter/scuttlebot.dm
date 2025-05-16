@@ -135,9 +135,9 @@
 	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
 	icon_state = "pigeon"
 	mail_glasses = TRUE
-	speechverb_say = "tweets"
-	speechverb_exclaim = "twoots"
-	speechverb_ask = "tweets curiously"
+	speech_verb_say = "tweets"
+	speech_verb_exclaim = "twoots"
+	speech_verb_ask = "tweets curiously"
 	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
 
 	add_abilities = list(/datum/targetable/critter/control_owner/mail)
