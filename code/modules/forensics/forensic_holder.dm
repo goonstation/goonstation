@@ -34,9 +34,9 @@ datum/forensic_holder
 			holder_group.apply_evidence(data)
 
 	/// Obtain a specific type of forensic group if it exists
-	proc/get_group(var/category = FORENSIC_GROUP_NOTE, var/admin = FALSE)
+	proc/get_group(var/category = FORENSIC_GROUP_NOTE, var/check_admin = FALSE)
 		var/list/datum/forensic_group/target_groups
-		if(admin)
+		if(check_admin)
 			target_groups = src.admin_list
 		else
 			target_groups = src.group_list
