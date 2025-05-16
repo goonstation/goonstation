@@ -23,23 +23,23 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		src.evidence_list = null
 		..()
 
-	apply_evidence(var/datum/forensic_data/data)
-		if(!istype(data))
+	apply_evidence(var/datum/forensic_data/new_data)
+		if(!istype(new_data))
 			return
-		var/datum/forensic_data/basic/new_ev = data
+		var/datum/forensic_data/basic/data = new_data
 
 		var/oldest = 1
 		for(var/i in 1 to length(src.evidence_list))
-			if(new_ev.evidence == src.evidence_list[i].evidence)
-				evidence_list[i].time_end = max(evidence_list[i].time_end, new_ev.time_end)
-				update_value(evidence_list[i], new_ev)
+			if(data.evidence == src.evidence_list[i].evidence)
+				evidence_list[i].time_end = max(evidence_list[i].time_end, data.time_end)
+				update_value(evidence_list[i], data)
 				return
 			if(evidence_list[i].time_end < evidence_list[oldest].time_end)
 				oldest = i
 		if(length(src.evidence_list) < FORENSIC_EVIDENCE_MAX)
-			src.evidence_list.Insert(rand(length(evidence_list) + 1), new_ev) // Randomize the order
+			src.evidence_list.Insert(rand(length(evidence_list) + 1), data) // Randomize the order
 		else
-			src.evidence_list[oldest] = new_ev
+			src.evidence_list[oldest] = data
 
 	/// If duplicate evidence is added, you can have that affect the value of the existing evidence
 	proc/update_value(var/datum/forensic_data/basic/data_old, var/datum/forensic_data/basic/data_new)
@@ -75,18 +75,18 @@ ABSTRACT_TYPE(/datum/forensic_group/basic_list)
 		var/color = slueth_data.evidence.id
 		var/time_since = TIME - slueth_data.time_end
 		var/list/time_since_list = list(0, rand(4,6), rand(8,12), rand(27,33), rand(41,49), rand(55,65))
-		var/c_text
+		var/color_text
 		if(is_first)
 			var/list/intensity_list = list("faintly","acutely","strongly","mildly","kind","trace")
 			var/intensity = get_intensity(intensity_list, time_since_list, time_since)
-			c_text = "\The [A] smells [intensity] of \a [color]."
+			color_text = "\The [A] smells [intensity] of \a [color]."
 		else
 			var/list/intensity_list = list("a faint","an acute","a strong","a mild","kind of a","a trace")
 			var/scent = pick("scent", "hint", "taste", "aroma", "fragrance")
 			var/detect = pick("detect","notice","note","find","pick up","smell","locate","track","discover","acertain","inhale","sense")
 			var/intensity = get_intensity(intensity_list, time_since_list, time_since)
-			c_text = "You also [detect] [intensity] [scent] of [color]."
-		return "<li>[SPAN_NOTICE(c_text)]</li>"
+			color_text = "You also [detect] [intensity] [scent] of [color]."
+		return "<li>[SPAN_NOTICE(color_text)]</li>"
 
 	proc/get_intensity(var/list/intensity_list, var/list/time_since_list, var/time_since)
 		for(var/i in 2 to length(intensity_list))

@@ -35,7 +35,7 @@
 		src.value = value
 
 	get_copy()
-		var/datum/forensic_data/basic/c_data = new(src.evidence, src.display, src.flags, src.value)
-		c_data.time_start = src.time_start
-		c_data.time_end = src.time_end
-		return c_data
+		var/datum/forensic_data/basic/data_copy = new(src.evidence, src.display, src.flags, src.value)
+		data_copy.time_start = src.time_start
+		data_copy.time_end = src.time_end
+		return data_copy

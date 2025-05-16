@@ -6,12 +6,12 @@
 // Each group has a unique variable. Use that to create a new group.
 // Placed here together with the FORENSIC_GROUP variable defines
 /datum/forensic_holder/proc/forensic_group_create(category)
-	var/datum/forensic_group/G
+	var/datum/forensic_group/group
 	switch(category)
-		if(FORENSIC_GROUP_SLEUTH) G = new/datum/forensic_group/basic_list/sleuth
-	if(!G)
+		if(FORENSIC_GROUP_SLEUTH) group = new/datum/forensic_group/basic_list/sleuth
+	if(!group)
 		CRASH("Forensic group category [category] not found.")
-	return G
+	return group
 
 #define FORENSIC_FAKE (1 << 0) // This evidence is fake / planted (and should be ignored by admins)
 #define FORENSIC_TRACE (1 << 1) // Use to mark evidence as difficult to detect
