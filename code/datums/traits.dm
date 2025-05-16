@@ -1165,7 +1165,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "All cybernetic limbs and organs will fail, including cyborgification."
 	id = "cyber_incompatible"
 	icon_state = "cyber_incompatible"
-	points = 0
+	points = 1
 	disability_type = TRAIT_DISABILITY_MAJOR
 	disability_name = "Cybernetics Incompatable"
 	disability_desc = "Patient is incompatible with all forms of cybernetic augmentation, including cyborgification."
@@ -1173,19 +1173,24 @@ TYPEINFO(/datum/trait/partyanimal)
 	onLife(mob/owner, mult)
 		. = ..()
 		var/mob/living/carbon/human/H = owner
+		var/cyber_rejected = FALSE
 		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
 			if (P.kind_of_limb & LIMB_ROBOT)
-				H.visible_message(SPAN_ALERT("[H]'s body contorts for a moment as it tries to integrate with [P]!"))
-				H.force_laydown_standup()
-				elecflash(H, exclude_center=FALSE)
+				boutput(H, SPAN_ALERT("Your body is incompatible with [P] and rejects it!"))
 				P.sever()
+				cyber_rejected = TRUE
 		for (var/organ_slot in H.organHolder.organ_list)
 			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
 			if (istype(O) && O.robotic)
-				H.visible_message(SPAN_ALERT("[H]'s body convulses as [O] is rejected!"))
+				boutput(H, SPAN_ALERT("Your body is incompatible with [O] and rejects it!"))
 				H.organHolder.drop_and_throw_organ(O)
-				elecflash(H, exclude_center=FALSE)
-				H.force_laydown_standup()
+				cyber_rejected = TRUE
+		if (cyber_rejected)
+			H.visible_message(SPAN_ALERT("[H]'s body convulses for a moment as it rejects the cybernetic augments!"))
+			elecflash(H, exclude_center=FALSE)
+			H.force_laydown_standup()
+			violent_standup_twitch(H) // duping vamp fx on purpose to increase vampire ambiguity
+			playsound(H.loc, 'sound/effects/bones_break.ogg', 60, 1)
 
 /datum/trait/survivalist
 	name = "Survivalist"
