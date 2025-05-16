@@ -47657,11 +47657,6 @@
 	dir = 4
 	},
 /area/station/medical/research)
-"cQW" = (
-/obj/table/wood/auto,
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/staff)
 "cQX" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -48508,15 +48503,6 @@
 	pixel_x = 3;
 	pixel_y = 1
 	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
-"cTQ" = (
-/obj/random_item_spawner/medicine/two,
-/obj/item/bandage{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "cTR" = (
@@ -64132,6 +64118,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"ngT" = (
+/obj/table/wood/auto,
+/obj/machinery/light/incandescent,
+/obj/machinery/recharger/defibrillator,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/staff)
 "nhq" = (
 /obj/mesh/grille/steel,
 /obj/cable{
@@ -67107,6 +67099,18 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"pWS" = (
+/obj/random_item_spawner/medicine/two,
+/obj/item/bandage{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 9
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "pXP" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -110502,7 +110506,7 @@ jMb
 jMb
 jMb
 ozR
-cTQ
+pWS
 cVs
 cWq
 cXR
@@ -115030,7 +115034,7 @@ aaa
 cMK
 cOb
 cPA
-cQW
+ngT
 rsw
 gLn
 cVD
