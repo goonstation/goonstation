@@ -619,6 +619,7 @@ var/global/mail_types_by_job = list(
 
 	/datum/job/civilian/mail_courier = list(
 		/obj/item/clothing/suit/pigeon = 3,
+		/obj/item/satchel/mail/large = 5,
 		),
 
 	/datum/job/civilian/staff_assistant = list(
