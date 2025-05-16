@@ -2,10 +2,7 @@
 #define PHOTOCOPIER_RADIO_RANGE 16
 
 TYPEINFO(/obj/machinery/photocopier)
-	//just to make photocopiers mech copyable, how could this possibly go wrong?
-	mats = list("metal" = 10,
-				"conductive" = 5,
-				"reflective" = 2)
+	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
 
 /obj/machinery/photocopier
 	name = "photocopier"
