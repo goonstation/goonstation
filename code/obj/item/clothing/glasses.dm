@@ -588,8 +588,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			connected_scuttlebot.return_to_owner()
 
 /obj/item/clothing/glasses/scuttlebot_vr/mail
-	name = "P1ge0n remote controller"
-	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
+	name = "P1G30N remote controller"
+	desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
 	icon_state = "vr_dungeon_exit"
 	item_state = "vr_dungeon_exit"
 	var/mob/living/critter/robotic/scuttlebot/mail/connected_pigeon = null
@@ -601,13 +601,13 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_pigeon.mind)
 				boutput(user, SPAN_ALERT("The P1geon is already active somehow!"))
 			else if(!connected_pigeon.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1geon couldnt be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
 			else
 				H.network_device = src.connected_pigeon
 				connected_pigeon.controller = H
 				user.mind.transfer_to(connected_pigeon)
 		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
@@ -617,7 +617,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
-			boutput(user, "You stuff the goggles back into the P1ge0n. It powers down with a low whirr.")
+			boutput(user, "You stuff the goggles back into the P1G30N. It powers down with a low whirr.")
 			S.drop_item()
 			new /obj/item/clothing/suit/pigeon(S.loc)
 			qdel(S)
