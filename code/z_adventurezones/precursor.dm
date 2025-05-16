@@ -460,7 +460,7 @@
 			active = (opened != default_state)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides open.</b>")
-			flick("bluedoor_opening",src)
+			FLICK("bluedoor_opening",src)
 			src.icon_state = "bluedoor_0"
 			set_density(0)
 			set_opacity(0)
@@ -481,7 +481,7 @@
 			set_opacity(1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides shut.</b>")
-			flick("bluedoor_closing",src)
+			FLICK("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
 			SPAWN(1.3 SECONDS)
 				changing_state = 0

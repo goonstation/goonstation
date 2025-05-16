@@ -69,7 +69,7 @@
 	if(M?.client?.holder?.ghost_interaction)
 		return 2
 	// easy out for if no access is required
-	if (src.check_access(null))
+	if (!src.has_access_requirements())
 		return 1
 	if (M && ismob(M))
 		// check for admin access override
@@ -119,14 +119,7 @@
  */
 /obj/proc/check_access(obj/item/I)
 	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
+	if (!src.has_access_requirements())
 		return 1
 
 	var/obj/item/card/id/ID = get_id_card(I)
@@ -155,31 +148,6 @@
 			return 1
 	return 0
 
-//put in access num, check if i have that
-/obj/proc/has_access(var/acc)
-	// no requirements
-	if (!src.req_access)
-		return 1
-	// something's very wrong
-	if (!istype(src.req_access, /list))
-		return 1
-	// no requirements (also clean up src.req_access)
-	if (length(src.req_access) == 0)
-		src.req_access = null
-		return 1
-
-	for (var/req_access_group in src.req_access)
-		// access group is a list
-		if (islist(req_access_group))
-			var/list/req_access_group_list = req_access_group
-			if (acc in req_access_group_list)
-				return 1
-		// access group is a single number
-		else if (req_access_group == acc)
-			return 1
-
-	return 0
-
 /**
  * @param {mob} M Mob of which to check the implanted credentials
  *
@@ -200,6 +168,8 @@
 	switch(job)
 		if("Nanotrasen Responder")
 			return get_all_accesses() + list(access_centcom)
+		if("Syndicate Operative")
+			return get_all_accesses() + list(access_syndicate_shuttle)
 		// --------------------------- Heads of staff
 		if("Captain")
 			return get_all_accesses()
@@ -368,21 +338,6 @@
 				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director, access_special_club,
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
 #endif
-
-/proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
-	return list(access_security, access_brig, access_forensics_lockers,
-				access_medical, access_medlab, access_morgue, access_securitylockers,
-				access_tox, access_tox_storage, access_chemistry, access_carrypermit,
-				access_change_ids, access_ai_upload,
-				access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_head_of_personnel,
-				access_chapel_office, access_kitchen, access_medical_lockers, access_pathology,
-				access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_supply_console, access_hydro, access_ranch, access_mail,
-				access_engineering, access_maint_tunnels,
-				access_tech_storage, access_engineering_storage, access_engineering_eva,
-				access_engineering_power, access_engineering_engine,
-				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director, access_special_club, access_syndicate_shuttle,
-				access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 
 // Generated at round start.
 var/list/access_name_lookup = null

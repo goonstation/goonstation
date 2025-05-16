@@ -107,7 +107,7 @@
 /area/mining/miningoutpost)
 "au" = (
 /obj/table/auto,
-/obj/bedsheetbin,
+/obj/linen_bin/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/mining/miningoutpost)
 "av" = (

@@ -1257,6 +1257,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if(prob(P.power * P.proj_data?.ks_ratio))
 				src.set_broken()
 
+	overload_act()
+		return !src.set_broken()
+
 	is_open_container()
 		return -1
 

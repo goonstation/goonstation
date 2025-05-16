@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 
 
 	fire()
-		flick(src.icon_firing, src)
+		FLICK(src.icon_firing, src)
 		src.visible_message(SPAN_ALERT("[src] is charging up!"))
 		playsound(src.loc, sound_firing, 70, 1)
 		sleep(1.3 SECONDS)
@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	var/current_projectile = new/datum/projectile/bullet/howitzer
 
 	fire()
-		flick(src.icon_firing, src)
+		FLICK(src.icon_firing, src)
 		src.visible_message(SPAN_ALERT("<b>[src] fires!</b>"))
 		sleep(0.25 SECONDS)
 		shoot_projectile_DIR((get_step(get_turf(src), SOUTH)), current_projectile, dir)

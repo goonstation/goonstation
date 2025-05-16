@@ -6,7 +6,7 @@ TYPEINFO(/obj/item/device/timer)
 	icon_state = "timer0"
 	item_state = "electronic"
 	var/timing = 0
-	var/time = null
+	var/time = 5 SECONDS
 	var/last_tick = 0
 	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0
@@ -15,6 +15,55 @@ TYPEINFO(/obj/item/device/timer)
 	w_class = W_CLASS_SMALL
 	m_amt = 100
 	desc = "A device that emits a signal when the time reaches 0."
+
+/obj/item/device/timer/New()
+	..()
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION, PROC_REF(assembly_manipulation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION, PROC_REF(assembly_activation))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE, PROC_REF(assembly_get_state))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT, PROC_REF(assembly_get_time_left))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME, PROC_REF(assembly_set_time))
+	// Timer + assembly-applier -> timer/Applier-Assembly
+	src.AddComponent(/datum/component/assembly/trigger_applier_assembly)
+
+/obj/item/device/timer/disposing()
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_MANIPULATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ACTIVATION)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_STATE)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_GET_TRIGGER_TIME_LEFT)
+	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_SET_TRIGGER_TIME)
+	STOP_TRACKING_CAT(TR_CAT_TIMING_TIMERS) //just to be safe
+	..()
+
+
+/// ----------- Assembly-Related Procs -----------
+
+/obj/item/device/timer/proc/assembly_manipulation(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/mob/user)
+	src.AttackSelf(user)
+
+/obj/item/device/timer/proc/assembly_activation(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/mob/user)
+	//Activating a secured assembly sets it off -without- the UI. Good luck
+	if(!src.timing)
+		parent_assembly.last_armer = user
+		src.timing = TRUE
+		src.c_state(1)
+		START_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
+		logTheThing(LOG_BOMBING, usr, "initiated a timer on a [src.master.name] at [log_loc(src.master)].")
+		//missing log about contents of beakers
+		return TRUE
+
+/obj/item/device/timer/proc/assembly_get_state(var/manipulated_timer, var/obj/item/assembly/parent_assembly)
+	return src.timing
+
+/obj/item/device/timer/proc/assembly_get_time_left(var/manipulated_timer, var/datum/assembly_signal_helper/send_helper)
+	send_helper.time_left_on_trigger = src.time
+	return TRUE
+
+/obj/item/device/timer/proc/assembly_set_time(var/manipulated_timer, var/obj/item/assembly/parent_assembly, var/time_to_set)
+	src.time = max(src.min_time, time_to_set)
+	return TRUE
+
+/// ----------------------------------------------
 
 /obj/item/device/timer/proc/time()
 	src.c_state(0)
@@ -34,9 +83,14 @@ TYPEINFO(/obj/item/device/timer)
 
 /obj/item/device/timer/proc/c_state(n)
 	//src.icon_state = text("timer[]", n)
-
 	if(src.master)
-		src.master:c_state(n)
+		if(istype(src.master,/obj/item/assembly))
+			var/obj/item/assembly/checked_assembly = src.master
+			if(checked_assembly.trigger == src) //in case a timer is used for something else than a trigger
+				checked_assembly.trigger_icon_prefix = "timer[n]"
+				checked_assembly.UpdateIcon()
+		else
+			src.master:c_state(n)
 
 	return
 
@@ -66,31 +120,10 @@ TYPEINFO(/obj/item/device/timer)
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
 		src.c_state(0)
-		processing_items.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
 		src.last_tick = 0
 	src.time = max(src.time, 0)
 
-/obj/item/device/timer/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/device/radio/signaler) )
-		var/obj/item/device/radio/signaler/S = W
-		if(!S.b_stat)
-			return
-
-		var/obj/item/assembly/rad_time/R = new /obj/item/assembly/rad_time( user )
-		S.set_loc(R)
-		R.part1 = S
-		S.layer = initial(S.layer)
-		user.u_equip(S)
-		user.put_in_hand_or_drop(R)
-		S.master = R
-		src.master = R
-		src.layer = initial(src.layer)
-		user.u_equip(src)
-		src.set_loc(R)
-		R.part2 = src
-		R.set_dir(src.dir)
-		src.add_fingerprint(user)
-		return
 
 /obj/item/device/timer/attack_self(mob/user as mob)
 	src.ui_interact(user)
@@ -124,19 +157,11 @@ TYPEINFO(/obj/item/device/timer)
 			src.timing = !src.timing
 			if(src.timing)
 				src.c_state(1)
-				processing_items |= src
+				START_TRACKING_CAT(TR_CAT_TIMING_TIMERS)
 
 			if (istype(master, /obj/item/device/transfer_valve))
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
-			else if (istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
-				var/obj/item/assembly/rad_ignite/RI = src.master
-				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
-				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
-			else if(istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
-				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
-				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (istype(src.master, /obj/item/mine)) // Land mine.
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
@@ -145,7 +170,7 @@ TYPEINFO(/obj/item/device/timer)
 
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
-		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
+		if (istype(src.master, /obj/item/canbomb_detonator/) && src.master.master)
 			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				return TRUE
 

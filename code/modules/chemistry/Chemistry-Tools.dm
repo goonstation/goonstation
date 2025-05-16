@@ -79,11 +79,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		return
 
 	get_desc(dist, mob/user)
+		. = ..()
 		if (dist > 2)
 			return
 		if (!reagents)
 			return
-		. = "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
+		. += "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))
@@ -1010,12 +1011,12 @@ proc/ui_describe_reagents(atom/A)
 		if (!desired_state && open)
 			processing_items -= src
 			open = FALSE
-			flick("dropper_funnel_swoff",src)
+			FLICK("dropper_funnel_swoff",src)
 			icon_state = "dropper_funnel_off"
 		else if(desired_state && !open)
 			processing_items |= src
 			open = TRUE
-			flick("dropper_funnel_swon",src)
+			FLICK("dropper_funnel_swon",src)
 			icon_state = "dropper_funnel_on"
 
 
@@ -1169,7 +1170,7 @@ proc/ui_describe_reagents(atom/A)
 		START_TRACKING
 		processing_items.Add(src)
 		original_icon_state = icon_state
-		flick("[icon_state]-plop", src)
+		FLICK("[icon_state]-plop", src)
 		..()
 
 	disposing()

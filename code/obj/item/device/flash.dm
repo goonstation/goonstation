@@ -146,12 +146,12 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
 
@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/flash)
 
 	// Play animations.
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick(src.animation_type, src)
+	FLICK(src.animation_type, src)
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -250,7 +250,7 @@ TYPEINFO(/obj/item/device/flash)
 			animation.icon_state = "blank"
 			animation.icon = 'icons/mob/mob.dmi'
 			animation.master = user
-			flick("blspell", animation)
+			FLICK("blspell", animation)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
@@ -350,11 +350,11 @@ TYPEINFO(/obj/item/device/flash)
 	else
 		return ..()
 
-/obj/item/device/flash/is_detonator_attachment()
-	return 1
 
-/obj/item/device/flash/detonator_act(event, var/obj/item/assembly/detonator/det)
+/obj/item/device/flash/detonator_act(event, var/obj/item/canbomb_detonator/det)
 	switch (event)
+		if ("attach")
+			det.initial_wire_functions += src
 		if ("pulse")
 			det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>\The [src] discharges.</span>")
 			for (var/mob/living/M in viewers(4, det.attachedTo))

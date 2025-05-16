@@ -1651,11 +1651,13 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	"area_name" - Name of the area the pump is in
 	"alive" - Whether or not the pump has broadcasted back. Used while checking for if pumps are unreachable or not
 	*/
-	var/list/pump_data_ref = src.getPump(signal.data["netid"])
+	var/list/pump_data_ref = src.getPump(signal.data["sender"])
 	if (pump_data_ref)
 		// We exist in the list already, update information instead
 		for (var/key in signal.data)
 			pump_data_ref[key] = signal.data[key]
+			if (key == "sender")
+				pump_data_ref["netid"] = signal.data[key]
 		pump_data_ref["processing"] = FALSE
 		pump_data_ref["alive"] = PUMP_ALIVE
 		return
@@ -1663,6 +1665,8 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	var/list/infoset = new()
 	for (var/key in signal.data)
 		infoset[key] = signal.data[key]
+		if (key == "sender")
+			infoset["netid"] = signal.data[key]
 	var/area/A = get_area(signal.source)
 	if (!A)
 		return

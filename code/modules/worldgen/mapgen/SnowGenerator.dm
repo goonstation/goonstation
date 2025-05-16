@@ -83,7 +83,7 @@
 
 		gen_turf.temperature = 235 // -38C and lowest breathable temperature with standard atmos
 
-		src.lag_check()
+		src.lag_check(flags)
 
 
 /turf/simulated/wall/auto/asteroid/mountain/snow

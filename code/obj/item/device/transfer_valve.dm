@@ -195,7 +195,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 	ui_act(action, params)
 		..()
-		if (isghostdrone(usr) || usr.stat || usr.restrained())
+		if (isghostdrone(usr) || !can_act(usr))
 			return
 		switch(action)
 			if ("add_item")

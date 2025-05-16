@@ -78,7 +78,7 @@ TYPEINFO(/obj/item/barrier)
 				stamina_damage = stamina_damage_active
 				stamina_cost = stamina_cost_active
 				setProperty("deflection", 20)
-				flick("barrier_a",src)
+				FLICK("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
 				src.setItemSpecial(/datum/item_special/barrier)
 			else

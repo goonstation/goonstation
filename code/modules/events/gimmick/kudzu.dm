@@ -434,14 +434,14 @@
 				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
 					src.visible_message(SPAN_ALERT("The [src] opens, having drained all the nutrients from [M]!"))
 					M.gib()
-					flick("bulb-open-animation", src)
+					FLICK("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN(1 SECOND)
 						qdel(src)
 
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					flick("bulb-open-animation", src)
+					FLICK("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 					if(H in src)
 						H.full_heal()

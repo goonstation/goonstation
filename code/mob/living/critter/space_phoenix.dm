@@ -1,3 +1,6 @@
+TYPEINFO(/mob)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
+
 /mob/living/critter/space_phoenix
 	name = "space phoenix"
 	real_name = "space phoenix"
@@ -10,11 +13,11 @@
 
 	custom_hud_type = /datum/hud/critter/space_phoenix
 
-	speechverb_say = "screeches"
-	speechverb_gasp = "screeches"
-	speechverb_stammer = "screeches"
-	speechverb_exclaim = "screeches"
-	speechverb_ask = "screeches"
+	speech_verb_say = "screeches"
+	speech_verb_gasp = "screeches"
+	speech_verb_stammer = "screeches"
+	speech_verb_exclaim = "screeches"
+	speech_verb_ask = "screeches"
 
 	blood_id = "water"
 
@@ -51,23 +54,10 @@
 
 		QDEL_NULL(src.organHolder)
 
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/sail)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/thermal_shock)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/ice_barrier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/glacier)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/wind_chill)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/touch_of_death)
-		src.abilityHolder.addAbility(/datum/targetable/critter/space_phoenix/permafrost)
-
 		src.setStatus("phoenix_empowered_feather", INFINITE_STATUS)
-		src.setStatus("phoenix_mobs_collected", INFINITE_STATUS)
-
-		get_image_group(CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS).add_mob(src)
 
 	Life()
 		. = ..()
-		var/area/A = get_area(src)
-
 		if (istype(get_turf(src), /turf/space))
 			src.delStatus("burning")
 
@@ -76,7 +66,7 @@
 				src.HealDamage("All", (2 + src.extra_life_regen) * mult, (2 + src.extra_life_regen) * mult)
 				src.HealBleeding(0.1)
 
-		if (src.check_area_dangerous(A) && !A.permafrosted)
+		if (src.in_dangerous_place())
 			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
@@ -144,6 +134,10 @@
 		if (act == "flex" || act == "flexmuscles")
 			if (src.emote_check(voluntary, 1 SECOND))
 				return SPAN_ALERT("[src] proudly shows off its wings")
+		else if (act == "scream" && voluntary && src.emote_check(voluntary, 5 SECONDS))
+			if (src.emote_check(voluntary, 5 SECONDS))
+				playsound(src.loc, 'sound/voice/screams/phoenix_scream.ogg', 80, TRUE)
+				return SPAN_ALERT("[src] makes a mysterious sound!")
 
 		return ..()
 
@@ -191,7 +185,7 @@
 			if (src.hasStatus("phoenix_revive_ready"))
 				I.color = "#ea00ff"
 			I.set_dir(src.dir)
-			flick("ion_fade", I)
+			FLICK("ion_fade", I)
 			I.icon_state = "blank"
 			I.pixel_x = src.pixel_x
 			I.pixel_y = src.pixel_y
@@ -200,8 +194,8 @@
 		..()
 		if (istype(NewLoc, /turf/space))
 			EndSpacePush(src)
-		var/area/A = get_area(src)
-		if (src.check_area_dangerous(A) && !A.permafrosted)
+
+		if (src.in_dangerous_place())
 			src.changeStatus("phoenix_vulnerable", 5 SECONDS)
 
 			if (!src.hasStatus("phoenix_warmth_counter"))
@@ -223,11 +217,6 @@
 
 	is_spacefaring()
 		return TRUE
-
-	understands_language(langname)
-		if (langname == src.say_language || langname == "feather" || langname == "english") // understands but can't speak flock
-			return TRUE
-		return FALSE
 
 	proc/create_ice_tunnel(atom/A)
 		playsound(get_turf(A), 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, TRUE)
@@ -280,9 +269,15 @@
 				floor.icon_state = icon_s
 				floor.set_dir(direct)
 
-	proc/check_area_dangerous(area/A)
-		return A && !A.permafrosted && istype(A, /area/station) && !istype(A, /area/station/solar) && !istype(A, /area/station/shield_zone) && \
-			!istype(A, /area/station/turret_protected) && !istype(A, /area/station/com_dish)
+	///Check our current location to see if we're in a dangerous(ly warm) place
+	proc/in_dangerous_place()
+		. = TRUE
+		var/area/A = get_area(src)
+		if (A.permafrosted || !istype(A, /area/station))
+			return FALSE
+		var/turf/T = get_turf(src)
+		if (istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless) || istype(T, /turf/simulated/space_phoenix_ice_tunnel))
+			return FALSE
 
 /image/phoenix_temperature_indicator
 	plane = PLANE_HUD
@@ -364,6 +359,14 @@
 		else
 			src.blocked_dirs = NORTH | SOUTH
 		..()
+
+	attackby(obj/item/W, mob/user)
+		if (!istype(W, /obj/item/sheet))
+			return ..()
+		var/obj/item/sheet/sheet_stack = W
+		if (!sheet_stack.amount_check(2, user))
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, sheet_stack, 2, null, null, sheet_stack.material, 'icons/obj/structures.dmi', "girder", name = "girder"), user)
 
 /obj/space_phoenix_statue
 	icon = 'icons/mob/critter/nonhuman/spacephoenix.dmi'
@@ -478,6 +481,7 @@
 	proc/atom_entered(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
@@ -489,9 +493,7 @@
 						src.owning_phoenix.setStatus("phoenix_revive_ready", INFINITE_STATUS)
 				if (!(H in src.entered_humans))
 					src.entered_humans += H
-					var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-					counter.humans_collected++
-					counter.onUpdate()
+					ability_holder.stored_human_count++
 					src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_humans |= "[H.real_name]-\ref[H]"
 				H.setStatus("cold_snap", INFINITE_STATUS)
@@ -501,16 +503,16 @@
 				C.setStatus("in_phoenix_nest", INFINITE_STATUS)
 			else if (!(C in src.entered_critters) && !C.last_ckey)
 				src.entered_critters += C
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.critters_collected++
-				counter.onUpdate()
+				ability_holder.stored_critter_count++
 				src.owning_phoenix.extra_life_regen += 0.3
 				src.owning_phoenix.collected_critters |= "[C.real_name]-\ref[C]"
 				C.setStatus("cold_snap", INFINITE_STATUS)
+		ability_holder.updateText(FALSE)
 
 	proc/atom_exited(atom/movable/AM)
 		if (!src.owning_phoenix)
 			return
+		var/datum/abilityHolder/space_phoenix/ability_holder = src.owning_phoenix.get_ability_holder(/datum/abilityHolder/space_phoenix)
 		if (istype(AM, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = AM
 			if (!isdead(H))
@@ -518,9 +520,7 @@
 			if (H in src.entered_humans)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_humans -= H
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.humans_collected--
-				counter.onUpdate()
+				ability_holder.stored_human_count--
 				H.delStatus("cold_snap")
 		else if (istype(AM, /mob/living/critter))
 			var/mob/living/critter/C = AM
@@ -529,7 +529,7 @@
 			if (C in src.entered_critters)
 				src.owning_phoenix.extra_life_regen -= 0.3
 				src.entered_critters -= C
-				var/datum/statusEffect/phoenix_nest_counter/counter = src.owning_phoenix.hasStatus("phoenix_mobs_collected")
-				counter.critters_collected--
-				counter.onUpdate()
+				ability_holder.stored_critter_count--
 				C.delStatus("cold_snap")
+
+		ability_holder.updateText(FALSE)

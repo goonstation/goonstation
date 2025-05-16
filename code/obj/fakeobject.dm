@@ -77,7 +77,7 @@
 
 		summon
 			New()
-				flick("skeleton_summon", src)
+				FLICK("skeleton_summon", src)
 				..()
 
 

@@ -23,8 +23,7 @@
 /turf/unsimulated/floor/black,
 /area/space)
 "fg" = (
-/obj/machinery/computer/security/telescreen{
-	network = "SS13";
+/obj/machinery/computer/camera_viewer/telescreen{
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/black,
@@ -121,8 +120,7 @@
 	dir = 4;
 	icon_state = "line-broken1"
 	},
-/obj/machinery/computer/security/telescreen{
-	network = "SS13";
+/obj/machinery/computer/camera_viewer/telescreen{
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit/red,
@@ -296,8 +294,7 @@
 	dir = 8;
 	icon_state = "line-broken1"
 	},
-/obj/machinery/computer/security/telescreen{
-	network = "SS13";
+/obj/machinery/computer/camera_viewer/telescreen{
 	pixel_y = 27
 	},
 /turf/unsimulated/floor/circuit/red,

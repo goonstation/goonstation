@@ -236,6 +236,9 @@ datum/teg_transformation/vampire
 		vampify(src.teg.circ2)
 		vampify(src.teg)
 
+		teg.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
+		teg.default_speech_output_channel = SAY_CHANNEL_THRALL
+
 	proc/vampify(obj/O)
 		animate_levitate(O, -1, 50, random_side = FALSE)
 		O.color = "#bd1335"
@@ -269,6 +272,10 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
 			M.mind?.remove_antagonist(ROLE_VAMPTHRALL)
+
+		teg.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
+		teg.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 		. = ..()
 
 	on_grump(mult)
@@ -305,7 +312,7 @@ datum/teg_transformation/vampire
 
 		if(probmult(10))
 			var/list/responses = list("I hunger! Bring us food so we may eat!", "Blood... I needs it.", "I HUNGER!", "Summon them here so we may feast!")
-			say_thrall(pick(responses))
+			src.teg.say(pick(responses))
 
 		if(probmult(20) && abilityHolder.points > 100)
 			var/datum/reagents/reagents = pick(src.teg.circ1.reagents, src.teg.circ2.reagents)
@@ -380,18 +387,6 @@ datum/teg_transformation/vampire
 					damage /= 10
 
 			health -= round(damage, 1.0)
-
-	// Talk like a vampire
-	proc/say_thrall(var/message)
-		var/name = src.teg.name
-		var/alt_name = " (VAMPIRE)"
-
-		if (!message || !length(src.abilityHolder.thralls) )
-			return
-
-		var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
-		for (var/mob/M in src.abilityHolder.thralls)
-			boutput(M, rendered)
 
 /datum/targetable/vampire/enthrall/teg
 	max_range = 10

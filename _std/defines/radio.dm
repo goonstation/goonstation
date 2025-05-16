@@ -41,7 +41,7 @@
 #define R_FREQ_RESEARCH 1354
 #define R_FREQ_MEDICAL 1356
 #define R_FREQ_CIVILIAN 1355
-#define R_FREQ_SYNDICATE 1352 // Randomized for nuke rounds.
+#define R_FREQ_SYNDICATE 1352
 #define R_FREQ_PIRATE 1353
 #define R_FREQ_GANG 1400 // Placeholder, it's actually randomized in gang rounds.
 #define R_FREQ_MULTI 1451
@@ -70,7 +70,7 @@
 #define R_FREQ_BLACKLIST list(R_FREQ_DEFAULT, R_FREQ_NANOTRASEN, R_FREQ_COMMAND, R_FREQ_SECURITY, R_FREQ_DETECTIVE, R_FREQ_ENGINEERING, R_FREQ_RESEARCH, R_FREQ_MEDICAL,\
 R_FREQ_CIVILIAN, R_FREQ_SYNDICATE, R_FREQ_PIRATE, R_FREQ_GANG, R_FREQ_MULTI, R_FREQ_INTERCOM_MEDICAL, R_FREQ_INTERCOM_SECURITY, R_FREQ_INTERCOM_BRIG,\
 R_FREQ_INTERCOM_RESEARCH, R_FREQ_INTERCOM_ENGINEERING, R_FREQ_INTERCOM_CARGO, R_FREQ_INTERCOM_CATERING, R_FREQ_INTERCOM_AI, R_FREQ_INTERCOM_BRIDGE,\
-R_FREQ_INTERCOM_MINING)
+R_FREQ_INTERCOM_MINING, R_FREQ_WIZARD)
 
 proc/default_frequency_color(freq)
 	switch(freq)
@@ -96,6 +96,8 @@ proc/default_frequency_color(freq)
 			return RADIOC_SYNDICATE
 		if(R_FREQ_PIRATE)
 			return RADIOC_SYNDICATE
+		if(R_FREQ_WIZARD)
+			return RADIOC_CIVILIAN
 		if(R_FREQ_GANG)
 			return RADIOC_SYNDICATE
 		if(R_FREQ_INTERCOM_MEDICAL)
@@ -116,3 +118,15 @@ proc/default_frequency_color(freq)
 			return RADIOC_COMMAND
 		if(R_FREQ_INTERCOM_BRIDGE)
 			return RADIOC_COMMAND
+
+/// A list of radio frequencies and their associated channel names.
+var/list/headset_channel_lookup
+
+/// If TRUE, all radios will initialise as bricked.
+var/no_more_radios = FALSE
+
+/// Bricks all radios globally.
+/proc/no_more_radio()
+	global.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE

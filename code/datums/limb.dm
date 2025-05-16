@@ -9,6 +9,8 @@
 	var/obj/item/parts/holder = null
 	/// used for ON_COOLDOWN stuff
 	var/cooldowns
+	/// this limb's click usage is limited by lastattacked. set to false for custom cooldowns.
+	var/use_lastattacked_click_delay = TRUE
 	var/special_next = 0
 	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/disarm_special = null
@@ -343,7 +345,7 @@
 		spread_angle = 15
 
 	artillery
-		proj = new/datum/projectile/bullet/autocannon
+		proj = new/datum/projectile/special/spreader/uniform_burst/circle/airburst
 		shots = 1
 		current_shots = 1
 		cooldown = 5 SECONDS
@@ -1474,7 +1476,7 @@
 
 			msgs.played_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 			msgs.damage = rand(8, 17)
-			flick("hastur-attack", user)
+			FLICK("hastur-attack", user)
 			msgs.damage_type = DAMAGE_CUT // Nasty tentacles with sharp spikes!
 
 		else

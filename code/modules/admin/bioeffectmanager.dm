@@ -41,7 +41,9 @@
 	switch(action)
 		if ("addBioEffect")
 			var/input = tgui_input_text(ui.user, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null, allowEmpty = TRUE)
-			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, use_concrete_types=TRUE, cmp_proc=/proc/cmp_text_asc)
+			if (!type_to_add)
+				return
 			target_mob.bioHolder.AddEffect(initial(type_to_add.id))
 			target_mob.onProcCalled("addBioEffect", list(initial(type_to_add.id)))
 			logTheThing(LOG_ADMIN, ui.user, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")

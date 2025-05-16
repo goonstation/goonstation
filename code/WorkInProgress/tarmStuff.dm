@@ -752,11 +752,11 @@ TYPEINFO(/obj/item/device/geiger)
 	proc/change_icon_state(source, stage)
 		switch(stage)
 			if(1 to 2)
-				flick("geiger-1", src)
+				FLICK("geiger-1", src)
 			if(3 to 4)
-				flick("geiger-2", src)
+				FLICK("geiger-2", src)
 			if(5)
-				flick("geiger-3", src)
+				FLICK("geiger-3", src)
 
 
 /obj/decal/fireplace  //for Jan's chrismas event

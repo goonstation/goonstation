@@ -129,6 +129,12 @@
 	var/list/needed_parts = new/list()
 	var/obj/deconstructed_thing = null
 
+	flatpack
+		icon_state = "dbox_alt"
+		HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
+
+		attack_self(mob/user)
+			actions.start(new/datum/action/bar/icon/build_electronics_frame(src), user)
 
 	disposing()
 		if(deconstructed_thing)
@@ -173,7 +179,6 @@
 					return
 
 				boutput(user, SPAN_ALERT("You deploy the [src]!"))
-				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -236,7 +241,7 @@
 
 		if(0)
 			for(var/obj/item/electronics/P in src.contents)
-				dat += "[P.name]: <A href='?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
+				dat += "[P.name]: <A href='byond://?src=\ref[src];op=\ref[P];tp=move'>Remove</A><BR>"
 
 				src.add_dialog(user)
 				user.Browse("<HEAD><TITLE>Frame</TITLE></HEAD><TT>[dat]</TT>", "window=fkit")
@@ -299,6 +304,7 @@
 		qdel(src)
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
+	logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 	var/turf/T = get_turf(src)
 	var/atom/movable/AM = null
 	src.stored?.transfer_stored_item(src, T, user = user)

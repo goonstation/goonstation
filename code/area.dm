@@ -322,15 +322,6 @@ TYPEINFO(/area)
 				return null
 		return R
 
-	/**
-	 * returns a list of objects matching type in an area
-	 */
-	proc/get_type(var/type)
-		. = list()
-		for (var/A in src)
-			if(istype(A, type))
-				. += A
-
 	proc/build_sims_score()
 		if (name == "Space" || src.name == "Ocean" || area_space_nopower(src) || skip_sims)
 			return
@@ -1268,6 +1259,8 @@ ABSTRACT_TYPE(/area/adventure)
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
 	requires_power = FALSE
+#elif defined(MAP_OVERRIDE_NEON)
+	requires_power = FALSE
 #endif
 
 /area/abandonedmedicalship
@@ -1470,6 +1463,12 @@ TYPEINFO(/area/diner)
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
+
+/area/heated_pool
+	name = "Heated Pool"
+	requires_power = FALSE
+	icon_state = "red"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/watchful_eye_sensor
 	name = "Watchful Eye Sensor Satellite"
@@ -2413,27 +2412,22 @@ ABSTRACT_TYPE(/area/station/mining)
 	icon_state = "CAPN"
 	station_map_colour = MAPC_COMMAND
 
-/area/station/hos
-	name = "Head of Personnel's Office"
-	icon_state = "HOP"
-	station_map_colour = MAPC_COMMAND
-
-/area/station/hos/quarter
-	name = "Head of Personnel's Personal Quarter"
-	icon_state = "HOP"
-
 /area/station/bridge/captain
 	name = "Captain's Office"
 	icon_state = "CAPN"
 	spy_secure_area = TRUE
 
-/area/station/bridge/hos
-	name = "Head of Personnel's Office"
-	icon_state = "HOP"
-
 /area/station/bridge/customs
 	name = "Customs"
 	icon_state = "yellow"
+
+/area/station/bridge/execrestroom
+	name = "Executive Restroom"
+	icon_state = "blue"
+
+/area/station/bridge/reception
+	name = "Bridge Reception"
+	icon_state = "blue"
 
 ABSTRACT_TYPE(/area/station/crew_quarters)
 /area/station/crew_quarters
@@ -2580,7 +2574,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 
 /area/station/crew_quarters/hop
 	name = "Head of Personnel's Quarters"
-	icon_state = "green"
+	icon_state = "HOP"
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
 
@@ -2650,9 +2644,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	sound_environment = 2
 	station_map_colour = MAPC_BAR
 
-/area/station/crew_quarters/heads
-	name = "Head of Personnel's Office"
-	icon_state = "HOP"
+/area/station/crew_quarters/diplomat
+	name = "Diplomatic Quarters"
+	icon_state = "blue"
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
 
@@ -2911,6 +2905,18 @@ TYPEINFO(/area/station/engine/substation)
 	name = "North Electrical Substation"
 	do_not_irradiate = TRUE
 
+/area/station/engine/substation/northwest
+	name = "Northwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southwest
+	name = "Southwest Electrical Substation"
+	do_not_irradiate = TRUE
+
+/area/station/engine/substation/southeast
+	name = "Southeast Electrical Substation"
+	do_not_irradiate = TRUE
+
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"
@@ -3151,6 +3157,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "Customs Security Checkpoint"
 /area/station/security/checkpoint/sec_foyer
 		name = "Security Foyer Checkpoint"
+/area/station/security/checkpoint/sec_foyer/no_teleblock
+	teleport_blocked = 0
 /area/station/security/checkpoint/podbay
 		name = "Pod Bay Security Checkpoint"
 /area/station/security/checkpoint/chapel
@@ -3576,6 +3584,11 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING
+
+/area/station/hangar/eng_mining_shared
+		name = "Submarine Bay (Engineering/Mining)"
+		station_map_colour = MAPC_MINING
+
 /area/station/hangar/security
 		name = "Submarine Bay (Security)"
 		station_map_colour = MAPC_SECURITY
@@ -3712,35 +3725,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		icon_state = "pink"
 
 // end station areas //
-
-/// Nukeops listening post
-/area/listeningpost
-	name = "Listening Post"
-	icon_state = "brig"
-	teleport_blocked = 1
-	do_not_irradiate = TRUE
-	minimaps_to_render_on = MAP_SYNDICATE
-	station_map_colour = MAPC_SYNDICATE
-	occlude_foreground_parallax_layers = TRUE
-
-/area/listeningpost/syndicateassaultvessel
-		name ="Syndicate Assault Vessel"
-
-
-/area/listeningpost/power
-	name = "Listening Post Control Room"
-	icon_state = "engineering"
-
-/area/listeningpost/solars
-	name = "Listening Post Solar Array"
-	icon_state = "yellow"
-	requires_power = 0
-	luminosity = 1
-
-/area/listeningpost/syndicate_teleporter
-	name = "Syndicate Teleporter"
-	icon_state = "teleporter"
-	requires_power = 0
 
 // Salvager Spawn
 /area/salvager
@@ -3898,11 +3882,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 			var/obj/O = A
 			if (istype(O))
 				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !O.has_access(access_security))
+					if(src.armory_auth && !(access_security in O.req_access))
 						O.req_access += access_security
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && O.has_access(access_security))
+					else if (!src.armory_auth && (access_security in O.req_access))
 						O.req_access = list(access_armory)
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
@@ -4148,6 +4132,12 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "yellow"
 	permarads = 1
 	irradiated = 1
+
+/area/space/plasma_reef
+	name = "Plasma Reef"
+	icon_state = "purple"
+	ambient_light = OCEAN_LIGHT
+	requires_power = FALSE // find out where the fuck the check is later and change this so plasma reef doesn't have free power
 
 // // // // // // // // // // // //
 
@@ -6026,6 +6016,7 @@ area/station/security/visitation
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN
+	requires_power = FALSE
 
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
@@ -6097,6 +6088,7 @@ area/station/security/visitation
 
 /area/pod_wars/team2
 	station_map_colour = MAPC_SYNDICATE
+	requires_power = FALSE
 
 /area/pod_wars/team2/bridge
 	name = "Lodbrok Bridge"
@@ -6357,3 +6349,11 @@ MAJOR_AST(29)
 MAJOR_AST(30)
 
 #undef MAJOR_AST
+
+/area/tutorial
+	name = "Tutorial Zone"
+	requires_power = FALSE
+	icon_state = "yellow"
+/area/tutorial/depowered
+	requires_power = TRUE
+	icon_state = "red"
