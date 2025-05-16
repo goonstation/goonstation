@@ -1785,7 +1785,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (SLOT_L_HAND)
-			if (src.limbs.l_arm)
+			if (src.limbs?.l_arm)
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
@@ -1798,7 +1798,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 						return FALSE
 				return TRUE
 		if (SLOT_R_HAND)
-			if (src.limbs.r_arm)
+			if (src.limbs?.r_arm)
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
@@ -1824,7 +1824,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (I.c_flags & ONBACK)
 				return TRUE
 		if (SLOT_WEAR_MASK) // It's not pretty, but the mutantrace check will do for the time being (Convair880).
-			if (!src.organHolder.head)
+			if (!src.organHolder?.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/mask))
 				var/obj/item/clothing/M = I
@@ -1834,12 +1834,12 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 				else
 					return TRUE
 		if (SLOT_EARS)
-			if (!src.organHolder.head)
+			if (!src.organHolder?.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/ears) || istype(I,/obj/item/device/radio/headset))
 				return TRUE
 		if (SLOT_GLASSES)
-			if (!src.organHolder.head)
+			if (!src.organHolder?.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/glasses))
 				return TRUE
@@ -1849,7 +1849,7 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if (istype(I, /obj/item/clothing/gloves))
 				return TRUE
 		if (SLOT_HEAD)
-			if (!src.organHolder.head)
+			if (!src.organHolder?.head)
 				return FALSE
 			if (istype(I, /obj/item/clothing/head))
 				var/obj/item/clothing/H = I
