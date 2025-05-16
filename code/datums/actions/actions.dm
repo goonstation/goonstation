@@ -2018,6 +2018,6 @@
 
 	onDelete()
 		. = ..()
-		src.item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 		src.user.vis_contents -= src.item
+		src.item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")
