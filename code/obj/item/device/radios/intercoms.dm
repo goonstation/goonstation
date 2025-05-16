@@ -132,8 +132,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/medical
 	name = "Medical Intercom"
 	frequency = R_FREQ_INTERCOM_MEDICAL
-	initial_microphone_enabled = FALSE
 	device_color = "#0093FF"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -141,8 +141,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/security
 	name = "Security Intercom"
 	frequency = R_FREQ_INTERCOM_SECURITY
-	initial_microphone_enabled = FALSE
 	device_color = "#FF2000"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -150,8 +150,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/brig
 	name = "Brig Intercom"
 	frequency = R_FREQ_INTERCOM_BRIG
-	initial_microphone_enabled = FALSE
 	device_color = "#FF5000"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -159,8 +159,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/science
 	name = "Research Intercom"
 	frequency = R_FREQ_INTERCOM_RESEARCH
-	initial_microphone_enabled = FALSE
 	device_color = "#C652CE"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -170,6 +170,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	frequency = R_FREQ_INTERCOM_ENGINEERING
 	initial_microphone_enabled = FALSE
 	device_color = "#BBBB00"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -177,8 +178,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/cargo
 	name = "Cargo Intercom"
 	frequency = R_FREQ_INTERCOM_CARGO
-	initial_microphone_enabled = FALSE
 	device_color = "#9A8B0D"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -186,8 +187,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/mining
 	name = "Mining Intercom"
 	frequency = R_FREQ_INTERCOM_MINING
-	initial_microphone_enabled = FALSE
 	device_color = "#6b4e0b"
+	initial_speaker_enabled = TRUE
 
 	initialize(player_caused_init)
 		. = ..()
@@ -196,8 +197,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/catering
 	name = "Catering Intercom"
 	frequency = R_FREQ_INTERCOM_CATERING
-	initial_microphone_enabled = FALSE
 	device_color = "#C16082"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -205,8 +206,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/botany
 	name = "Botany Intercom"
 	frequency = R_FREQ_INTERCOM_BOTANY
-	initial_microphone_enabled = FALSE
 	device_color = "#78ee48"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -214,8 +215,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/AI
 	name = "AI Intercom"
 	frequency = R_FREQ_INTERCOM_AI
-	initial_microphone_enabled = TRUE
 	device_color = "#7F7FE2"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -223,8 +224,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 /obj/item/device/radio/intercom/bridge
 	name = "Bridge Intercom"
 	frequency = R_FREQ_INTERCOM_BRIDGE
-	initial_microphone_enabled = TRUE
 	device_color = "#339933"
+	initial_speaker_enabled = TRUE
 
 	initialize()
 		set_frequency(frequency)
@@ -256,6 +257,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	secure_classes = list("g" = R_FREQ_SECURITY)
 	device_color = RADIOC_SECURITY
+	initial_speaker_enabled = TRUE
 	layer = 3.1
 
 	initialize()
@@ -267,6 +269,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	frequency = R_FREQ_DETECTIVE
 	secure_frequencies = list("t" = R_FREQ_DETECTIVE)
 	secure_classes = list("t" = R_FREQ_DETECTIVE)
+	initial_speaker_enabled = TRUE
 	device_color = RADIOC_DETECTIVE
 	layer = 3
 
