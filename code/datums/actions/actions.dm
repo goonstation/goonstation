@@ -2005,7 +2005,7 @@
 			hand_icon_state = "[hand_icon]_hold_r"
 			src.pixel_x_offset = -src.pixel_x_offset
 			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
-
+/*
 		var/icon/flatIcon = getFlatIcon(src.item)
 
 		var/image/overlay = new /image
@@ -2013,15 +2013,22 @@
 		overlay.layer = MOB_LAYER + 0.1
 		overlay.pixel_x = src.pixel_x_offset
 		overlay.pixel_y = src.pixel_y_offset
+*/
+		src.item.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.item.pixel_x = src.pixel_x_offset
+		src.item.pixel_y = src.pixel_y_offset
+		src.user.vis_contents += src.item
 
 		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
 
-		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		//src.user.UpdateOverlays(overlay, "showoff_overlay")
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
 
 		src.user.set_dir(SOUTH)
 
 	onDelete()
 		. = ..()
-		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.user.vis_contents -= src.item
+		//src.user.UpdateOverlays(null, "showoff_overlay")
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")
