@@ -29,8 +29,7 @@
 	New()
 		..()
 		//Comes with the goggles
-		if (!mail_glasses) //I tried to make this a variable injected into the query but cause var declare this'll work
-			src.spawn_goggles()
+		src.spawn_goggles()
 
 	proc/spawn_goggles()
 		if(!mail_glasses)
