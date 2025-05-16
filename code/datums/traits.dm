@@ -1254,7 +1254,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	name = "Butterfingers"
 	desc = "You have difficulty keeping hold of things."
 	id = "butterfingers"
-	icon_state = "placeholder"
+	icon_state = "butterfingers"
 	points = 2
 	afterlife_blacklisted = TRUE
 
