@@ -85,15 +85,7 @@ var/datum/job_controller/job_controls
 			return
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
-			if ((!job.allow_traitors && player.mind.special_role))
-				return
-			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
-				return
-			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
-				return
-			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+			if (!job.can_be_antag(player.mind.special_role))
 				return
 		// job ban check
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
@@ -159,13 +151,8 @@ var/datum/job_controller/job_controls
 			var/datum/job/job = find_job_in_controller_by_string(player_preferences.job_favorite)
 			if (job)
 				// antag fall through flag set check
-				if ((!job.allow_traitors && player.mind.special_role))
+				if (!job.can_be_antag(player.mind.special_role))
 					player.antag_fallthrough = TRUE
-				else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-					player.antag_fallthrough = TRUE
-				else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
-					player.antag_fallthrough = TRUE
-
 				// try to assign fav job
 				if (check_job_eligibility(player, job, STAPLE_JOBS))
 					player.mind.assigned_role = job.name
