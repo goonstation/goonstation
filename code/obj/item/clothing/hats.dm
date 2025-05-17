@@ -1082,13 +1082,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = ARREST_STATE_ARREST
-		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/reason = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		var/details = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 		var/mob/living/carbon/human/H = user
-		if (istype(H))
-			H.update_arrest_icon()
+		if(istype(H))
+			H.apply_automated_arrest(reason,details,TRUE,FALSE,FALSE)
 
 	custom_suicide = 1
 	suicide_in_hand = 0

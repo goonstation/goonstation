@@ -312,11 +312,10 @@
 				src.visible_message("<b>[src] is obliterated! Was it worth it?</b>")
 				user.shock(user, 2501, stun_multiplier = 1,  ignore_gloves = 1)
 
-				var/mob/living/carbon/clown = user
+				var/mob/living/carbon/human/clown = user
 				if(istype(clown))
-					var/datum/db_record/S = data_core.security.find_record("id", clown.datacore_id)
-					S?["criminal"] = "*Arrest*"
-					S?["mi_crim"] = "Making a very irritating announcement."
+					//Computer is normally offcams and the clown normally has mask on + ID in computer so visible name will be Unknown
+					clown.apply_automated_arrest("Making a very irritating announcement.", requires_camera_seen = FALSE, use_visible_name = FALSE)
 
 					clown.update_burning(15) // placed here since update_burning is only for mob/living
 				if(src.ID)
