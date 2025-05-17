@@ -270,8 +270,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 	say_over_channel()
 		src.mainframe.say_over_channel()
 
-	say_main_radio(msg as text)
-		src.mainframe.say_main_radio(msg)
+	say_over_main_radio(msg as text)
+		src.mainframe.say_over_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		..()
