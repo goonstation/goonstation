@@ -1,5 +1,9 @@
 
 (t)fri may 16 25
+(u)RubberRats
+(p)22904
+(e)🗺🔧🔎🍝|A-Mapping, A-Tooling, C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed, again. Please report any issues.
 (u)LeahTheTech
 (+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
 (p)23374
