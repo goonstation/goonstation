@@ -50,7 +50,7 @@
 					boutput(M, SPAN_ALERT("You summon a new staff to your hands."))
 					var/obj/item/staff/cthulhu/C = new /obj/item/staff/cthulhu(get_turf(M))
 					if(!isvirtual(M))
-						C.wizard_key = M.mind?.key
+						C.wizard_key = M.mind?.get_key()
 					M.put_in_hand_or_drop(C)
 					return 0
 
@@ -87,7 +87,7 @@
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("knockdown") || M.getStatusDuration("unconscious") > 0 || !isalive(M) || M.restrained())
 					boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 					return 0
-				if (M.mind.key != S3.wizard_key)
+				if (M.mind.get_key() != S3.wizard_key)
 					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
 					return 0
 
@@ -137,7 +137,7 @@
 					boutput(M, "<span class='alert'You summon a new staff to your hands.")
 					var/obj/item/staff/thunder/C = new /obj/item/staff/thunder(get_turf(M))
 					if(!isvirtual(M))
-						C.wizard_key = M.mind?.key
+						C.wizard_key = M.mind?.get_key()
 					M.put_in_hand_or_drop(C)
 					return 0
 
@@ -171,7 +171,7 @@
 				if (!can_act(M))
 					boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
 					return 0
-				if (M.mind.key != staff.wizard_key)
+				if (M.mind.get_key() != staff.wizard_key)
 					boutput(M, "<span class='alert'You were unable to summon your staff.")
 					return 0
 

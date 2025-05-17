@@ -110,13 +110,13 @@
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
 			if(M.loc == src) continue //Don't add the jerk trapped souls.
-			if(M.key) //Okay cool, we have a player to transfer.
+			if(M.get_key()) //Okay cool, we have a player to transfer.
 				var/mob/living/holder = new
 				holder.set_loc(src)
 				if(M.mind)
 					M.mind.transfer_to(holder)
 				else
-					holder.key = M.key
+					holder.key = M.get_key()
 
 				holder.name = "Trapped Soul"
 				holder.real_name = holder.name
@@ -147,7 +147,7 @@
 				return
 
 			var/mob/living/new_body = pick(transfer_targets)
-			if(!new_body || new_body.key || new_body.stat) //Oh no, it's been claimed/killed!
+			if(!new_body || new_body.get_key() || new_body.stat) //Oh no, it's been claimed/killed!
 				continue
 
 			if(M.client)
@@ -159,7 +159,7 @@
 			if(M.mind)
 				M.mind.transfer_to(new_body)
 			else
-				new_body.key = M.key
+				new_body.key = M.get_key()
 
 			transfer_targets.Remove(new_body)
 			blink(new_body)
@@ -266,19 +266,19 @@
 
 	disposing()
 		for(var/mob/living/M in src)
-			if(M.mind && M.key)
-				if(old_bodies[M.key] && !(old_bodies[M.key].disposed) && !(old_bodies[M.key].key))
-					M.mind.transfer_to(old_bodies[M.key])
+			if(M.mind && M.get_key())
+				if(old_bodies[M.get_key()] && !(old_bodies[M.get_key()].disposed) && !(old_bodies[M.get_key()].get_key()))
+					M.mind.transfer_to(old_bodies[M.get_key()])
 				else
 					M.ghostize()
 			qdel(M)
 		. = ..()
 
 	proc/add_soul(var/mob/victim)
-		if(!(victim.mind) || !(victim.key))
+		if(!(victim.mind) || !(victim.get_key()))
 			return
 
-		old_bodies[victim.key] = victim
+		old_bodies[victim.get_key()] = victim
 		var/mob/living/holder = new
 		holder.set_loc(src)
 		victim.mind.transfer_to(holder)
@@ -308,7 +308,7 @@
 			if(M.mind)
 				M.mind.transfer_to(holder)
 			else
-				holder.key = M.key
+				holder.key = M.get_key()
 
 			holder.name = "Trapped Soul"
 			holder.real_name = holder.name

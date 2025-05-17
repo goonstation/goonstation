@@ -29,8 +29,8 @@
 
 	var/key_string = "no ckey"
 	var/html_key_string = "<i>no ckey</i>"
-	if (M.key)
-		key_string = M.key
+	if (M.get_key())
+		key_string = M.get_key()
 		html_key_string = key_string
 	else if(M.last_ckey)
 		if (find_player(M.last_ckey)?.client)
@@ -143,12 +143,12 @@
 
 	//General info
 	//  Logs link:
-	//  <a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key];origin=adminplayeropts'>LOGS</a>
+	//  <a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.get_key()];origin=adminplayeropts'>LOGS</a>
 	dat += {"
 <div id="topBar">
 	<div id="topOpts">
-		[M.key ? "<a href='byond://?src=\ref[src];action=notes;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
-		<a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
+		[M.get_key() ? "<a href='byond://?src=\ref[src];action=notes;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
+		<a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.get_key() ? M.get_key() : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='byond://?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
 	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""][is_admin ? " <b class='admin'>(Admin)</b>" : ""]

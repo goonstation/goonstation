@@ -2415,7 +2415,7 @@
 
 		setalive(H)
 
-		var/mob/G = find_ghost_by_key((H.mind?.key || H.ghost?.mind?.key))
+		var/mob/G = find_ghost_by_key((H.mind?.get_key() || H.ghost?.mind?.get_key()))
 		logTheThing(LOG_COMBAT, H, "is resuscitated with a JankTank at [log_loc(H)].")
 
 		if (G)

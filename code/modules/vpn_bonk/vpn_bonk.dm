@@ -95,7 +95,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		logTheThing(LOG_ADMIN, src, msg_txt)
 		logTheThing(LOG_DIARY, src, msg_txt, "admin")
 		message_admins("[key_name(src)] [msg_txt]")
-		ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg=msg_txt))
+		ircbot.export_async("admin", list(key="VPN Blocker", name="[src.get_key()]", msg=msg_txt))
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
 		check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations

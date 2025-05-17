@@ -181,7 +181,7 @@ TYPEINFO(/area)
 				if( !M.client )
 					return 0
 				if( !blockedTimers ) blockedTimers = list()
-				if( !blockedTimers[ M.client.key ] || blockedTimers[ M.client.key ] < world.time )
+				if( !blockedTimers[ M.client.get_key() ] || blockedTimers[ M.client.get_key() ] < world.time )
 					return 0
 			else
 				return 0
@@ -267,7 +267,7 @@ TYPEINFO(/area)
 						if( sanctuary && !blocked && !(the_area.sanctuary) )
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
 						if( blocked && !exitingM.client.holder )
-							blockedTimers[ exitingM.client.key ] = world.time + 300
+							blockedTimers[ exitingM.client.get_key() ] = world.time + 300
 							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")

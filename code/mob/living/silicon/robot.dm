@@ -230,16 +230,16 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.camera.network = CAMERA_NETWORK_ROBOTS
 
 		SPAWN(1.5 SECONDS)
-			if (!src.part_head.brain && src.key && !(src.dependent || src.shell || src.part_head.ai_interface))
+			if (!src.part_head.brain && src.get_key() && !(src.dependent || src.shell || src.part_head.ai_interface))
 				var/obj/item/organ/brain/B = new /obj/item/organ/brain(src)
 				B.owner = src.mind
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
-					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
-					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
+					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.get_key() ? src.get_key() : "INVALID KEY"]]")
+					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.get_key() ? src.get_key() : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
-					newmind.key = src.key
+					newmind.key = src.get_key()
 					newmind.current = src
 					B.owner = newmind
 					src.mind = newmind
@@ -1244,7 +1244,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.part_head.brain = B
 				B.set_loc(src.part_head)
 				if (B.owner)
-					var/mob/M = find_ghost_by_key(B.owner.key)
+					var/mob/M = find_ghost_by_key(B.owner.get_key())
 					if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 						src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive."))
 						return

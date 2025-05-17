@@ -135,7 +135,7 @@
 	for(var/X in xpRewards)
 		var/datum/jobXpReward/R = xpRewards[X]
 		if(R)
-			if(R.qualifies(src.key))
+			if(R.qualifies(src.get_key()))
 				qualifiedXpRewards.Add(X)
 				qualifiedXpRewards[X] = R
 
@@ -156,7 +156,7 @@
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
-		ircbot.event("logout", src.key)
+		ircbot.event("logout", src.get_key())
 	*/
 	logTheThing(LOG_ADMIN, src, " has disconnected.")
 
@@ -208,7 +208,7 @@
 
 	login_success = 0
 
-	if(findtext(src.key, "Telnet @"))
+	if(findtext(src.get_key(), "Telnet @"))
 		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
 		preferences = new
 		sleep(5 SECONDS)
@@ -257,7 +257,7 @@
 		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
 		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
 
-	if (IsGuestKey(src.key))
+	if (IsGuestKey(src.get_key()))
 		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
@@ -515,7 +515,7 @@
 		if (winget(src, null, "hwmode") != "true")
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
-		ircbot.event("login", src.key)
+		ircbot.event("login", src.get_key())
 		//Cloud data
 		if (!src.player.cloudSaves.loaded)
 			src.player.cloudSaves.fetch()
@@ -1046,7 +1046,7 @@ var/global/curr_day = null
 			logTheThing(LOG_DIARY, src, "PM'd [target]: [t]", "ahelp")
 
 			var/ircmsg[] = new()
-			ircmsg["key"] = src.mob && src ? src.key : ""
+			ircmsg["key"] = src.mob && src ? src.get_key() : ""
 			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
@@ -1062,7 +1062,7 @@ var/global/curr_day = null
 			for (var/client/C)
 				if (!C.mob) continue
 				var/mob/K = C.mob
-				if(C.holder && C.key != usr.key)
+				if(C.holder && C.get_key() != usr.get_key())
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
@@ -1085,7 +1085,7 @@ var/global/curr_day = null
 			logTheThing(LOG_DIARY, src, "Mentor PM'd [target]: [t]", "admin")
 
 			var/ircmsg[] = new()
-			ircmsg["key"] = src.mob && src ? src.key : ""
+			ircmsg["key"] = src.mob && src ? src.get_key() : ""
 			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
@@ -1100,7 +1100,7 @@ var/global/curr_day = null
 			//we don't use message_admins here because the sender/receiver might get it too
 			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
 			for (var/client/C)
-				if (C.can_see_mentor_pms() && C.key != usr.key)
+				if (C.can_see_mentor_pms() && C.get_key() != usr.get_key())
 					if (C.holder)
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
@@ -1127,9 +1127,9 @@ var/global/curr_day = null
 					return
 
 				var/ircmsg[] = new()
-				ircmsg["key"] = src.mob && src ? src.key : ""
+				ircmsg["key"] = src.mob && src ? src.get_key() : ""
 				ircmsg["name"] = stripTextMacros(src.mob.real_name)
-				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
+				ircmsg["key2"] = (M != null && M.client != null && M.client.get_key() != null) ? M.client.get_key() : ""
 				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
 				ircmsg["previous_msgid"] = href_list["msgid"]
@@ -1158,7 +1158,7 @@ var/global/curr_day = null
 
 				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
 				for (var/client/C)
-					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
+					if (C.can_see_mentor_pms() && C.get_key() != usr.get_key() && (M && C.get_key() != M.get_key()))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue

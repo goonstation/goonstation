@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/datum/game)
 				if (score > highscore)
 					msg = "New high score by [usr] -- [score] points!!"
 					highscore = score
-					highscorekey = usr.key
+					highscorekey = usr.get_key()
 					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
 					src.end_game()
 

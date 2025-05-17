@@ -1093,7 +1093,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		T.issuer_job = issuer_job
 		T.text = ticket_text
 		T.target_byond_key = get_byond_key(T.target)
-		T.issuer_byond_key = user.key
+		T.issuer_byond_key = user.get_key()
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")

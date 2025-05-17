@@ -358,8 +358,8 @@ var/global/list/nuke_op_camo_matrix = null
 
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
-		if(M.current) syndtext += "<B>[M.key] played [M.current.real_name].</B> "
-		else syndtext += "<B>[M.key] played an operative.</B> "
+		if(M.current) syndtext += "<B>[M.get_key()] played [M.current.real_name].</B> "
+		else syndtext += "<B>[M.get_key()] played an operative.</B> "
 		if (!M.current) syndtext += "(Destroyed)"
 		else if (isdead(M.current)) syndtext += "(Killed)"
 		else if (get_z(M.current) != Z_LEVEL_STATION) syndtext += "(Missing)"

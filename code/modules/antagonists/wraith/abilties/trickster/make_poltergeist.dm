@@ -61,7 +61,7 @@
 		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.add_subordinate_antagonist(ROLE_POLTERGEIST, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
-			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
+			message_admins("[lucky_dude.get_key()] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.marker = marker

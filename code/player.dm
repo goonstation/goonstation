@@ -63,14 +63,14 @@
 		..()
 		START_TRACKING
 		src.key = key
-		src.displayed_key = src.key
+		src.displayed_key = src.get_key()
 		src.tag = "player-[src.get_ckey()]"
 		src.cloudSaves = new /datum/cloudSaves(src)
 
-		if (ckey(src.key) in mentors)
+		if (ckey(src.get_key()) in mentors)
 			src.mentor = 1
 
-		if (src.key) //just a safety check!
+		if (src.get_key()) //just a safety check!
 			src.cache_round_stats()
 		src.last_death_time = world.timeofday
 
@@ -78,7 +78,7 @@
 #ifdef GOON_AUTH
 		return src.gkey
 #else
-		return src.key
+		return src.get_key()
 #endif
 
 	proc/get_ckey()
@@ -100,7 +100,7 @@
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(
 				src.client.ckey,
-				src.client.key,
+				src.client.get_key(),
 				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
 				src.client.computer_id,
 				src.client.byond_version,
@@ -258,7 +258,7 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
-		var/displayed_key = src.displayed_key || src.key
+		var/displayed_key = src.displayed_key || src.get_key()
 
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new

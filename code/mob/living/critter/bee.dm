@@ -848,7 +848,7 @@
 			if (25)
 				src.visible_message("<b>[src]</b> burps!  It smells...coppery.  What'd that bee eat?")
 			if (100)
-				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
+				src.visible_message("<b>[src]</b> regurgitates a...get_key()? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
 					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)

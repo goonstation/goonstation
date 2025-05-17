@@ -64,7 +64,7 @@ TYPEINFO(/mob/new_player)
 
 		if(!mind)
 			mind = new(src)
-			keyd = mind.key
+			keyd = mind.get_key()
 
 		if (src.client?.player) //playtime logging stuff
 			var/datum/player/P = src.client.player
@@ -137,8 +137,8 @@ TYPEINFO(/mob/new_player)
 			qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
-		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
-		if (isnull(src.key) && pregameHTML && isclient(src.last_client))
+		// explanation for isnull(src.get_key()) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
+		if (isnull(src.get_key()) && pregameHTML && isclient(src.last_client))
 			// Removed dupe "if (src.last_client)" check since it was still runtiming anyway
 			SPAWN(0)
 				if(isclient(src.last_client))
@@ -196,11 +196,11 @@ TYPEINFO(/mob/new_player)
 
 					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
-							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
+							stat("[player.get_key()] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
 						else // are we not an admin?
 							stat("[player.client.fakekey]", (player.ready)?("(Playing)"):(null)) // only show the fake key
 					else // are they a normal player or not in stealth mode/using a fake key?
-						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
+						stat("[player.get_key()]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
 		if(href_list["SelectedJob"])
@@ -819,7 +819,7 @@ a.latejoin-card:hover {
 								continue
 
 							livingtraitor = TRUE
-							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
+							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.get_key()].")
 							break
 
 					var/bad_type = null

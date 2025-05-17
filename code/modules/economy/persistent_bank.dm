@@ -25,7 +25,7 @@
 		var/list/purchasables = list()
 
 		for(var/datum/bank_purchaseable/p in persistent_bank_purchaseables)
-			if(!p.hasJobXP(user.client.key)) continue
+			if(!p.hasJobXP(user.client.get_key())) continue
 			purchasables += list(
 				list(
 					"pname" = p.name,

@@ -125,7 +125,7 @@
 			return
 		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable(src.default_cleanable, T)
-		G.artist = user.key
+		G.artist = user.get_key()
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
@@ -715,7 +715,7 @@
 			G = make_cleanable(/obj/decal/cleanable/writing/maptext_dummy, T)
 		else
 			G = make_cleanable(src.default_cleanable, T)
-		G.artist = user.key
+		G.artist = user.get_key()
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
 			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")

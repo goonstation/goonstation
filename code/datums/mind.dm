@@ -63,7 +63,7 @@ datum/mind
 		..()
 		if (M)
 			src.current = M
-			src.player = make_player(M.key)
+			src.player = make_player(M.get_key())
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
@@ -160,7 +160,7 @@ datum/mind
 			other_mind.transfer_to(my_old_mob)		//And they go into my old one
 			qdel(temp)								//Not needed any more
 
-		else if (!target.client && !target.key) 	//They didn't have a mind and didn't have an associated player, AKA up for grabs
+		else if (!target.client && !target.get_key()) 	//They didn't have a mind and didn't have an associated player, AKA up for grabs
 			src.transfer_to(target)
 
 		else	//The Ugly Way
@@ -170,9 +170,9 @@ datum/mind
 				target:delete_on_logout = 0
 
 			var/mob/temp = new/mob(src.current.loc) //We need to put whoever we're swapping with somewhere
-			temp.key = target.key					//So now we put them there
+			temp.key = target.get_key()					//So now we put them there
 			src.transfer_to(target)					//Then I go into their head
-			my_old_mob.key = temp.key
+			my_old_mob.key = temp.get_key()
 			qdel(temp)								//Not needed any more
 
 		if (isobserver(current))
@@ -368,8 +368,8 @@ datum/mind
 		return length(src.antagonists) <= 0
 
 	disposing()
-		logTheThing(LOG_DEBUG, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
-		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
+		logTheThing(LOG_DEBUG, null, "<b>Mind</b> Mind for \[[src.get_key() ? src.get_key() : "NO KEY"]] deleted!")
+		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.get_key() ? "([src.get_key()])" : ""] deleted")
 		src.brain?.owner = null
 		if(src.current)
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)

@@ -209,7 +209,7 @@ TYPEINFO(/mob/living)
 	if (src.ai) src.ai.disable()
 	if (src.isFlying)
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-	if (src.key && VALID_MOB(src))
+	if (src.get_key() && VALID_MOB(src))
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
 	#ifndef NO_SHUTTLE_CALLS

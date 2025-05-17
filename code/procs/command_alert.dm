@@ -50,7 +50,7 @@
 
 				if(title != "")
 					title = replacetext(title, "%name%", M.real_name)
-					title = replacetext(title, "%key%", M.key)
+					title = replacetext(title, "%key%", M.get_key())
 					title = replacetext(title, "%job%", M.job ? M.job : "space hobo")
 					title = replacetext(title, "%area_name%", A ? A.name : "some unknown place")
 					title = replacetext(title, "%srand_name%", rand_mob_single.name)
@@ -59,7 +59,7 @@
 					title = replacetext(title, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
 				text = replacetext(text, "%name%", M.real_name)
-				text = replacetext(text, "%key%", M.key)
+				text = replacetext(text, "%key%", M.get_key())
 				text = replacetext(text, "%job%", M.job ? M.job : "space hobo")
 				text = replacetext(text, "%area_name%", A ? A.name : "some unknown place")
 				text = replacetext(text, "%srand_name%", rand_mob_single.name)

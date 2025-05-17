@@ -26,7 +26,7 @@
 		var/list/result = list()
 		var/role = getRole(M, 1)
 		if (M.name) result += M.name
-		if (M.key) result += M.key
+		if (M.get_key()) result += M.get_key()
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
 		if (M.mind?.is_antagonist()) result += "\[T\]"
@@ -615,7 +615,7 @@
 		var/mob/new_player/newM = new()
 		newM.adminspawned = 1
 
-		newM.key = target.key
+		newM.key = target.get_key()
 		if (target.mind)
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
@@ -665,9 +665,9 @@
 			if(!C.holder)
 				continue
 			if (C.stealth || C.alt_key)
-				admins += "[C.key] (as [C.fakekey])"
+				admins += "[C.get_key()] (as [C.fakekey])"
 			else
-				admins += C.key
+				admins += C.get_key()
 		if(length(admins))
 			system.reply(admins.Join(", "), user)
 

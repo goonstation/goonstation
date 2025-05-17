@@ -489,7 +489,7 @@
 	if (C.alt_key)
 		return C.fakekey
 	else
-		return C.key
+		return C.get_key()
 
 /client/proc/hide_verb_category(cat)
 	if(!src.hidden_verbs)

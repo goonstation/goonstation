@@ -115,7 +115,7 @@ Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<b
 					returnval = call(proc2call)()
 			boutput(usr, "[SPAN_NOTICE("Proc returned:")] [!isnull(returnval) ? returnval : "null"]")
 		catch(var/exception/e)
-			world.log << "[usr.key] called a bad proc in buildmode and this can probably be ignored! ([e] on [e.file]:[e.line])"
+			world.log << "[usr.get_key()] called a bad proc in buildmode and this can probably be ignored! ([e] on [e.file]:[e.line])"
 			boutput(usr, SPAN_ALERT("Proc returned: [e] ([e.file]:[e.line])"))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)

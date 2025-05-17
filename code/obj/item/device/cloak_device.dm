@@ -132,7 +132,7 @@ TYPEINFO(/obj/item/cloaking_device)
 				var/mob/M = src.loc
 				src.AddComponent(/datum/component/self_destruct, M)
 				src.AddComponent(/datum/component/send_to_target_mob, src)
-				src.hunter_key = M.mind.key
+				src.hunter_key = M.mind.get_key()
 				START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 				FLICK("[src.base_icon_state]-tele", src)
 

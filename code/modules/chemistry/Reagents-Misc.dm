@@ -538,7 +538,7 @@ datum
 					if (ishuman(M)) // if they're human, let's get whoever owns the brain
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
-						G = find_ghost_by_key(B?.owner?.key)
+						G = find_ghost_by_key(B?.owner?.get_key())
 						var/is_puritan = 0
 						if(ismob(G))
 							for (var/trait as anything in G?.client.preferences.traitPreferences.traits_selected)
@@ -556,7 +556,7 @@ datum
 								H.gib()
 							return
 					else // else just get whoever's the mind
-						G = find_ghost_by_key(M.mind?.key)
+						G = find_ghost_by_key(M.mind?.get_key())
 					logTheThing(LOG_COMBAT, M, "is resuscitated with strange reagent at [log_loc(M)].")
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter

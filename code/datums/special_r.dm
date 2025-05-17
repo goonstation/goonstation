@@ -165,10 +165,10 @@ datum/special_respawn
 
 		/*
 		mob.mind = new
-		mob.mind.key = player.key
+		mob.mind.key = player.get_key()
 		mob.mind.current = player
 
-		//mob.key = player.key
+		//mob.key = player.get_key()
 		^*/
 		mob.mind.special_role = equip
 		SPAWN(0.5 SECONDS)

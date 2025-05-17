@@ -427,7 +427,7 @@
 /datum/targetable/bball/summon/cast(atom/target)
 	. = ..()
 	for_by_tcl(bball, /obj/item/basketball/lethal/summonable)
-		if (bball.owner_ckey == holder.owner.mind.key)
+		if (bball.owner_ckey == holder.owner.mind.get_key())
 			if (bball in holder.owner)
 				boutput(holder.owner, SPAN_ALERT("You are already balling!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
@@ -436,7 +436,7 @@
 			return CAST_ATTEMPT_SUCCESS
 
 	var/obj/item/basketball/lethal/summonable/new_bball = new()
-	new_bball.owner_ckey = holder.owner.mind.key
+	new_bball.owner_ckey = holder.owner.mind.get_key()
 	holder.owner.put_in_hand_or_drop(new_bball)
 	boutput(holder.owner, SPAN_NOTICE("You flick your wrist and pull a basketball out of nowhere."))
 	return CAST_ATTEMPT_SUCCESS

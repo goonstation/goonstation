@@ -148,7 +148,7 @@
 					thename = copytext(M.real_name, 9)
 			moblist_names += thename
 			if (M.client)
-				moblist_names += " ([M.client.key])"
+				moblist_names += " ([M.client.get_key()])"
 			for (var/obj/item/I in M)
 				if (!istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/shoes) && !istype(I, /obj/item/parts) && !istype(I, /obj/item/organ) && !istype(I, /obj/item/skull))
 					qdel(I)
@@ -221,7 +221,7 @@
 						thename = copytext(M.real_name, 9)
 				moblist_names += thename
 				if (M.client)
-					moblist_names += " ([M.client.key])"
+					moblist_names += " ([M.client.get_key()])"
 			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Critter Gauntlet</b>: Starting arena game with players: [moblist_names]")
 		announceAll("The Critter Gauntlet Arena game is now in progress. The first level will begin soon.")
 		next_level_at = ticker.round_elapsed_ticks + 300

@@ -553,7 +553,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		var/datum/mind/lucky_dude = candidates[1]
 		if (lucky_dude.add_antagonist(ROLE_ANTAGONIST_CRITTER, source = ANTAGONIST_SOURCE_SUMMONED))
 			log_respawn_event(lucky_dude, "weblaying_spider", src.holder.owner)
-			message_admins("[lucky_dude.key] respawned as a weblaying_spider for [src.holder.owner].")
+			message_admins("[lucky_dude.get_key()] respawned as a weblaying_spider for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/misc/splash_1.ogg', 50)
 			var/mob/living/critter/spider/weblaying/baby/B = lucky_dude.current
 			B.make_critter(/mob/living/critter/spider/weblaying/baby, spawnturf)

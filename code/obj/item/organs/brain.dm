@@ -54,8 +54,8 @@
 
 	get_desc()
 		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))
-			if (src.owner?.key)
-				if (!find_ghost_by_key(src.owner?.key))
+			if (src.owner?.get_key())
+				if (!find_ghost_by_key(src.owner?.get_key()))
 					. += "<br>[SPAN_NOTICE("This brain is slimy.")]"
 				else
 					. += "<br>[SPAN_NOTICE("This brain is still warm.")]"
@@ -128,8 +128,8 @@
 	get_desc()
 		if (usr?.traitHolder?.hasTrait("training_medical"))
 			if (activated)
-				if (src.owner?.key)
-					if (!find_ghost_by_key(src.owner?.key))
+				if (src.owner?.get_key())
+					if (!find_ghost_by_key(src.owner?.get_key()))
 						. += "<br>[SPAN_NOTICE("[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.")]"
 					else
 						. += "<br>[SPAN_NOTICE("[src]'s indicators show that it is still operational, and can be installed into a new body immediately.")]"

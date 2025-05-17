@@ -432,8 +432,8 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "literal meat shield (no client)"
 			else
 				assignment = "loading arena matches..."
-				tag = "gauntlet-id-[user.client.key]"
-				queryGauntletMatches(user.client.key)
+				tag = "gauntlet-id-[user.client.get_key()]"
+				queryGauntletMatches(user.client.get_key())
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

@@ -219,7 +219,7 @@ TYPEINFO(/obj/machinery/crusher/instant)
 		target.changeStatus("stunned", 5 SECONDS)
 		var/mob/M = target
 		if(ismob(M))
-			if(M.key || M.client) // so it doesn't message for npcs (hopefully)
+			if(M.get_key() || M.client) // so it doesn't message for npcs (hopefully)
 				message_ghosts("<b>[M]</b> is being crushed at [log_loc(M, ghostjump=TRUE)].")
 
 	onUpdate()

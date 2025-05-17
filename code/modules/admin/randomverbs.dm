@@ -104,7 +104,7 @@
 
 	var/client/Mclient = M.client
 
-	var/msg = input("Message:", text("Subtle PM to [Mclient.key]")) as null|text
+	var/msg = input("Message:", text("Subtle PM to [Mclient.get_key()]")) as null|text
 
 	if (!msg)
 		return
@@ -133,7 +133,7 @@
 
 	var/client/Mclient = M.client
 
-	var/msg = input("Message:", "Plain message to [Mclient.key]") as null|message
+	var/msg = input("Message:", "Plain message to [Mclient.get_key()]") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -193,7 +193,7 @@
 
 	var/client/Mclient = M.client
 
-	var/t = input("Message:", text("Messagebox to [Mclient.key]")) as null|text
+	var/t = input("Message:", text("Messagebox to [Mclient.get_key()]")) as null|text
 
 	if(!t) return
 
@@ -1228,7 +1228,7 @@
 	M.oldmind = M.mind
 	boutput(M, SPAN_ALERT("Your soul is forced out of your body!"))
 	M.ghostize()
-	var/ckey = usr.key
+	var/ckey = usr.get_key()
 	M.mind = usr.mind
 	usr.mind.current = M
 	M.ckey = ckey
@@ -1247,7 +1247,7 @@
 	if (M.oldmind) // If mob was an admin spawned human or npc, no need to set oldmind as there is none
 		M.oldmind.current = M
 	if(M.mind)
-		M.ckey = M.mind.key
+		M.ckey = M.mind.get_key()
 	boutput(M, SPAN_ALERT("Your soul is sucked back into your body!"))
 
 /client/proc/cmd_whois(target as text)
@@ -1826,7 +1826,7 @@
 		logTheThing(LOG_ADMIN, usr, "swapped bodies with [constructTarget(M,"admin")]")
 		logTheThing(LOG_DIARY, usr, "swapped bodies with [constructTarget(M,"diary")]", "admin")
 		var/mob/oldmob //This needs to be here
-		if(M.key || M.client) //Nobody gives a shit if you wanna be an npc.
+		if(M.get_key() || M.client) //Nobody gives a shit if you wanna be an npc.
 			message_admins("[key_name(src)] swapped bodies with [key_name(M)]")
 			M.show_text("You are punted out of your body!", "red")
 		else //You can only get rid of the ghost if you wanna swap with an NPC, because a player is getting YOUR ghost.
@@ -2289,7 +2289,7 @@ var/global/night_mode_enabled = 0
 	SHOW_VERB_DESC
 
 	if (!msg)
-		msg = input("Enter message", "Message", "[src.key] earned the Banned medal.") as null|text
+		msg = input("Enter message", "Message", "[src.get_key()] earned the Banned medal.") as null|text
 		if (!msg)
 			return
 

@@ -476,7 +476,7 @@
 			t = src.c_char_to_symbol[t]
 
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
-		G.artist = user.key
+		G.artist = user.get_key()
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [t]")
 		G.icon_state = t

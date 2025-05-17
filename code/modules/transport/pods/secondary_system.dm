@@ -887,7 +887,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 <head>
 <title>Pod Locking Mechanism</title>
 <style type="text/css">
-	table.keypad, td.key
+	table.keypad, td.get_key()
 	{
 		text-align:center;
 		color:#1F1F1F;

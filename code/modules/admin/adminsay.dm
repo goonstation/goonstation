@@ -26,7 +26,7 @@
 		message_admins("[key_name(src)]: <span class='adminMsgWrap [special]'>[msg]</span>", 1)
 
 	var/ircmsg[] = new()
-	ircmsg["key"] = src.key
+	ircmsg["key"] = src.get_key()
 	ircmsg["name"] = stripTextMacros(src.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export_async("asay", ircmsg)

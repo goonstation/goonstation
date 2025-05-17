@@ -14,7 +14,7 @@
 	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this. Thus, to check for cancellation, check for a null output_type.
 
 	if (!src.holder)
-		message_admins("Non-admin client [src.key] somehow tried to input some data. Huh?")
+		message_admins("Non-admin client [src.get_key()] somehow tried to input some data. Huh?")
 		logTheThing(LOG_DEBUG, src.mob, "somehow attempted to input data via the input_data proc.")
 		return
 

@@ -6,7 +6,7 @@
 
 	var/client/client = src.client
 
-	if (IsGuestKey(client.key))
+	if (IsGuestKey(client.get_key()))
 		boutput(client.mob, "You are not authorized to communicate over these channels.")
 		gib(client.mob)
 		return
@@ -33,7 +33,7 @@
 	for (var/datum/antagonist/antag in client.mob.mind.antagonists)
 		antag_text += "[antag.display_name] " // we want a trailing space (until we don't. but default to yes)
 	var/ircmsg[] = new()
-	ircmsg["key"] = client.key
+	ircmsg["key"] = client.get_key()
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text][client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][trimtext(antag_text)]]")
 	ircmsg["msg"] = html_decode(msg)
 	ircmsg["log_link"] = "[goonhub_href("/admin/logs/[roundId]")]"
@@ -93,7 +93,7 @@
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
-	if (IsGuestKey(client.key))
+	if (IsGuestKey(client.get_key()))
 		boutput(client.mob, "You are not authorized to communicate over these channels.")
 		gib(client.mob)
 		return
@@ -143,7 +143,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='byond://?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='byond://?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.get_key()]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -179,9 +179,9 @@
 			return
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = user?.client ? user.client.key : ""
+		ircmsg["key"] = user?.client ? user.client.get_key() : ""
 		ircmsg["name"] = stripTextMacros(user.real_name)
-		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
+		ircmsg["key2"] = (M != null && M.client != null && M.client.get_key() != null) ? M.client.get_key() : ""
 		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
 		ircmsg["previous_msgid"] = previous_msgid
@@ -228,7 +228,7 @@
 		for (var/client/CC)
 			if (!CC.mob) continue
 			var/mob/K = CC.mob
-			if(K.client.holder && K.key != user.key && (M && K.key != M.key))
+			if(K.client.holder && K.get_key() != user.get_key() && (M && K.get_key() != M.get_key()))
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else

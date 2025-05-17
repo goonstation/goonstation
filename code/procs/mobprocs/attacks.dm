@@ -57,7 +57,7 @@
 
 /mob/proc/message_admin_on_attack(var/mob/attacker, var/attack_type = "attacks")
 	//Due to how attacking is set up we will need
-	if(!attacker.attack_alert || !src.key || attacker == src || isdead(src)) return //Only send the alert if we're hitting an actual, living person who isn't ourselves
+	if(!attacker.attack_alert || !src.get_key() || attacker == src || isdead(src)) return //Only send the alert if we're hitting an actual, living person who isn't ourselves
 	if(master_mode != "battle_royale")
 		message_attack("[key_name(attacker)] [attack_type] [key_name(src)] shortly after spawning!")
 

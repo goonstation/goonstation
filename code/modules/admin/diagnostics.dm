@@ -214,7 +214,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		SHOW_VERB_DESC
-		world.SetConfig( "APP/admin", src.key, "role=admin" )
+		world.SetConfig( "APP/admin", src.get_key(), "role=admin" )
 		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")

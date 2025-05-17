@@ -39,7 +39,7 @@
 
 /// Add a mob's fingerprint to something. If `hidden_only` is TRUE, only add to admin-visible prints.
 /atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
-	if (!ismob(M) || isnull(M.key))
+	if (!ismob(M) || isnull(M.get_key()))
 		return
 	if (src.flags & NOFPRINT)
 		return
@@ -59,12 +59,12 @@
 			add_fingerprint_direct(seen_print)
 
 	LAZYLISTINIT(src.fingerprints_full)
-	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
-		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
+	if (src.fingerprintslast != M.get_key()) // don't really care about someone spam touching
+		src.fingerprints_full[time] = list("key" = M.get_key(), "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			src.fingerprints_full[time]["color"] = H.mind.color
-		src.fingerprintslast = M.key
+		src.fingerprintslast = M.get_key()
 
 /// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
 /atom/proc/add_fingerprint_direct(print)

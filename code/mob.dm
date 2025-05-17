@@ -508,8 +508,8 @@ TYPEINFO(/mob)
 	if (src.mind)
 		if (!src.mind.ckey)
 			src.mind.ckey = src.ckey
-		if (!src.mind.key)
-			src.mind.key = src.key
+		if (!src.mind.get_key())
+			src.mind.key = src.get_key()
 
 	if (isobj(src.loc))
 		var/obj/O = src.loc
@@ -539,7 +539,7 @@ TYPEINFO(/mob)
 
 	tgui_process?.on_logout(src)
 
-	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
+	if (src.last_client && !src.get_key()) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
@@ -928,7 +928,7 @@ TYPEINFO(/mob)
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
+	if (IsGuestKey(src.get_key()))
 		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
 		return
 
@@ -1515,7 +1515,7 @@ TYPEINFO(/mob)
 
 	var/mob/new_player/M = new()
 
-	M.key = usr.client.key
+	M.key = usr.client.get_key()
 	return
 
 /mob/verb/show_preferences()
@@ -3097,7 +3097,7 @@ TYPEINFO(/mob)
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.key
+		newbody.key = src.get_key()
 	qdel(src)
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 

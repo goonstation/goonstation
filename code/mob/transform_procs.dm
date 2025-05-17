@@ -40,7 +40,7 @@
 	else
 		if (!src.client) // NPC fallback, mostly.
 			character = new /mob/living/carbon/human
-			character.key = src.key
+			character.key = src.get_key()
 			if (src.mind)
 				src.mind.transfer_to(character)
 
@@ -53,7 +53,7 @@
 			return character
 
 		var/mob/new_player/respawned = new() // C&P from respawn_target(), which couldn't be adapted easily.
-		respawned.key = src.key
+		respawned.key = src.get_key()
 		if (src.mind)
 			src.mind.transfer_to(respawned)
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
@@ -200,7 +200,7 @@
 			src.client.mob = newmob
 			newmob.mind = new /datum/mind()
 			ticker.minds += newmob.mind
-			newmob.mind.key = src.client.key
+			newmob.mind.key = src.client.get_key()
 			newmob.mind.current = newmob
 
 	if (issmallanimal(newmob))
@@ -237,7 +237,7 @@
 				src.client.mob = cyborg
 			else
 				//if they're logged out or whatever
-				cyborg.key = src.key
+				cyborg.key = src.get_key()
 	else
 		if(src.mind)
 			src.mind.transfer_to(cyborg)
@@ -247,7 +247,7 @@
 				src.client.mob = cyborg
 			else
 				//if they're logged out or whatever
-				cyborg.key = src.key
+				cyborg.key = src.get_key()
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
 		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
@@ -355,7 +355,7 @@
 		src.mind.transfer_to(W)
 	else
 		if (src.client)
-			var/key = src.client.key
+			var/key = src.client.get_key()
 			src.client.mob = W
 			W.mind = new /datum/mind()
 			ticker.minds += W.mind
@@ -428,7 +428,7 @@
 		boutput(usr, "Sorry, respawn options aren't availbale during football mode.")
 		return
 	if (usr && istype(usr, /mob/dead/observer))
-		announce_ghost_afterlife(usr.key, "<b>[usr.name]</b> is logging into Ghost VR.")
+		announce_ghost_afterlife(usr.get_key(), "<b>[usr.name]</b> is logging into Ghost VR.")
 		var/obj/machinery/sim/vr_bed/vr_bed = locate(/obj/machinery/sim/vr_bed)
 		vr_bed.log_in(usr)
 
@@ -452,7 +452,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// get the mind
 	var/datum/mind/mind = src.mind
 	// get the player datum
-	var/datum/player/P = find_player(src.key)
+	var/datum/player/P = find_player(src.get_key())
 	if(isnull(src.mind))
 		// uh oh
 		CRASH("Checking if [identify_object(src)] can respawn as a ghost critter, but they don't have a mind!")
@@ -693,13 +693,13 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	newbody.setStatus("in_afterlife", INFINITE_STATUS, newbody)
 	newbody.set_clothing_icon_dirty()
 
-	announce_ghost_afterlife(src.key, "<b>[src.name]</b> is visiting the Afterlife Bar.")
+	announce_ghost_afterlife(src.get_key(), "<b>[src.name]</b> is visiting the Afterlife Bar.")
 	boutput(src, "<h2>You are visiting the Afterlife Bar!</h2>You can still talk to ghosts! Start a message with \"<tt>:d</tt>\" (like \"<tt>:dhello ghosts</tt>\") to talk in deadchat.")
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.key
+		newbody.key = src.get_key()
 
 	// copy the respawn timer to the new body.
 	// since afterlife bodies get trashed when you die it isnt too big of a deal
@@ -736,7 +736,7 @@ var/respawn_arena_enabled = 0
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.key
+		newbody.key = src.get_key()
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))

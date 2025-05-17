@@ -168,7 +168,7 @@
 		mind.transfer_to(src)
 	else
 		if (pilot.client)
-			var/key = pilot.client.key
+			var/key = pilot.client.get_key()
 			pilot.client.mob = src
 			src.mind = new /datum/mind()
 			src.mind.ckey = ckey
@@ -228,7 +228,7 @@
 			mind.transfer_to(controller)
 		else
 			if (src.client)
-				var/key = src.client.key
+				var/key = src.client.get_key()
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
 				controller.mind.ckey = ckey
@@ -281,7 +281,7 @@
 	if (mind)
 		mind.transfer_to(controller)
 	else if (src.client)
-		var/key = src.client.key
+		var/key = src.client.get_key()
 		src.client.mob = controller
 		controller.mind = new /datum/mind()
 		controller.mind.ckey = ckey
@@ -328,7 +328,7 @@
 			mind.transfer_to(controller)
 		else
 			if (src.client)
-				var/key = src.client.key
+				var/key = src.client.get_key()
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
 				controller.mind.ckey = ckey

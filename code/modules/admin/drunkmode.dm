@@ -206,7 +206,7 @@ var/list/dangerousVerbs = list(\
 				"is here to ruin everyone's round",\
 				"\"I'm drunk it doesn't have to make sense\""\
 			)
-			command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
+			command_alert("[C.get_key()] [pick(announce)].", "Drunkmin detected")
 
 		else
 			//Make centcom announcement
@@ -217,6 +217,6 @@ var/list/dangerousVerbs = list(\
 				"is here to ruin everyone's round",\
 				"\"I'm high it doesn't have to make sense\""\
 			)
-			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
+			command_alert("[C.get_key()] [pick(announce)].", "Weedmin detected")
 
 		boutput(C, SPAN_ALERT("<b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this."))

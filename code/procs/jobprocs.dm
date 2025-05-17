@@ -583,7 +583,7 @@ Equip items from body traits.
 					D = new /obj/item/disk/data/floppy(src)
 				src.equip_if_possible(D, SLOT_IN_BACKPACK)
 				var/datum/computer/file/clone/R = new
-				R.fields["ckey"] = ckey(src.key)
+				R.fields["ckey"] = ckey(src.get_key())
 				R.fields["name"] = src.real_name
 				R.fields["id"] = copytext("\ref[src.mind]", 4, 12)
 

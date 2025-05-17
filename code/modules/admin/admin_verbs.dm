@@ -841,7 +841,7 @@ var/list/special_pa_observing_verbs = list(
 	else
 		src.owner:fakekey = null
 		src.owner:stealth_hide_fakekey = 0
-		src.owner.player.displayed_key = src.owner.key
+		src.owner.player.displayed_key = src.owner.get_key()
 		if (src.auto_alt_key)
 			src.set_alt_key(src.auto_alt_key_name)
 
@@ -1457,9 +1457,9 @@ var/list/fun_images = list()
 		for (var/client/C in clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 				continue
-			var/trigger = src.key
+			var/trigger = src.get_key()
 			if (src.holder && (src.stealth || src.alt_key))
-				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
+				trigger = (C.holder ? "[src.get_key()] (as [src.fakekey])" : src.fakekey)
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 			if (vol)
 				C.chatOutput.playDectalk(audio["audio"], trigger, vol * 0.75)
@@ -2216,7 +2216,7 @@ var/list/fun_images = list()
 		return FALSE
 
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
-	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
+	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.get_key()].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
 	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
 	return TRUE
@@ -2237,7 +2237,7 @@ var/list/fun_images = list()
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [error.message]")
 		return FALSE
 
-	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.get_key()].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return TRUE
 
@@ -2425,7 +2425,7 @@ var/list/fun_images = list()
 		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
-		key_list += player.key
+		key_list += player.get_key()
 	boutput(src, "Roundstart antags given tokens: [total]")
 	var/key_text = english_list(key_list)
 	logTheThing(LOG_ADMIN, src, "[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
@@ -2534,7 +2534,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	spacebee_extension_system.process_raw_command(command, usr.key)
+	spacebee_extension_system.process_raw_command(command, usr.get_key())
 
 /client/proc/delete_landmarks()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

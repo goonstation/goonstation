@@ -170,7 +170,7 @@ TYPEINFO(/mob/dead/target_observer/slasher_ghost)
 
 	proc/slasher_ghostize()
 		RETURN_TYPE(/mob/dead/observer)
-		if(src.key || src.client)
+		if(src.get_key() || src.client)
 			var/mob/dead/observer/O = new/mob/dead/observer(src)
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 			if (client) client.set_color()

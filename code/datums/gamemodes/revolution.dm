@@ -313,7 +313,7 @@
 			else
 				text += " (Survived!)"
 		else
-			text += "[rev_mind.key] (character destroyed)"
+			text += "[rev_mind.get_key()] (character destroyed)"
 
 		boutput(world, text)
 
@@ -332,7 +332,7 @@
 			else
 				text += " (Survived!)"
 		else
-			text += "[rev_nh_mind.key] (character destroyed)"
+			text += "[rev_nh_mind.get_key()] (character destroyed)"
 		text += ", "
 
 	boutput(world, text)
@@ -353,7 +353,7 @@
 				else
 					text += " (Survived!)"
 		else
-			text += "[head_mind.key] (character destroyed)"
+			text += "[head_mind.get_key()] (character destroyed)"
 
 		boutput(world, text)
 

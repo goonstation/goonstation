@@ -393,7 +393,7 @@ or don't if it uses a custom topopen overlay
 		src.radio3.toggle_microphone(FALSE)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
-		if (src.brain && src.key)
+		if (src.brain && src.get_key())
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
 
@@ -719,7 +719,7 @@ or don't if it uses a custom topopen overlay
 	if (src.health >= 50 && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
-			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
+			if (!find_ghost_by_key(src.brain.owner.current.get_key())) // we don't actually need a ref to the mob (since we already have that via current)
 																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current

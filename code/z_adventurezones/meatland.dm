@@ -846,7 +846,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 <head>
 <title>LOCK PANEL</title>
 <style type="text/css">
-	table.keypad, td.key
+	table.keypad, td.get_key()
 	{
 		text-align:center;
 		color:#1F1F1F;

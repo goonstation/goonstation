@@ -667,7 +667,7 @@ TRASH BAG
 	anchored = UNANCHORED
 
 	attack_hand(mob/user)
-		if(user.key != ownerKey && ownerKey != null)
+		if(user.get_key() != ownerKey && ownerKey != null)
 			boutput(user, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
 			return
 		..()
@@ -675,7 +675,7 @@ TRASH BAG
 	pull(mob/user)
 		if (!istype(user))
 			return
-		if(user.key != ownerKey && ownerKey != null)
+		if(user.get_key() != ownerKey && ownerKey != null)
 			boutput(user, "<span style='color: red; font-weight: bold'>The [src.name] makes a grumpy buzzing sound and delivers a small electric shock! You drop it.</span>")
 			return
 		return ..()

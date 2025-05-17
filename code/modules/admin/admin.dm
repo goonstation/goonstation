@@ -125,7 +125,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("adminhelp_banner", usr.client.get_key())
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
@@ -137,7 +137,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.get_key())
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
@@ -149,7 +149,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
+					C.player.cloudSaves.putData("prayer_banner", usr.client.get_key())
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
@@ -268,7 +268,7 @@ var/global/noir = 0
 					if (!usr.client.stealth && !isnull(src.auto_stealth_name))
 						src.set_stealth_mode(src.auto_stealth_name)
 					else if (isnull(src.auto_stealth_name))
-						var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.key) as null|text
+						var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.get_key()) as null|text
 						if (!new_key)
 							src.auto_stealth_name = null
 							boutput(usr, SPAN_NOTICE("Auto Stealth name removed."))
@@ -283,7 +283,7 @@ var/global/noir = 0
 				src.show_pref_window(usr)
 		if ("set_auto_stealth_name")
 			if (src.level >= LEVEL_SA)
-				var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.key) as null|text
+				var/new_key = input("Enter your desired display name.", "Fake Key", usr.client.get_key()) as null|text
 				if (!new_key)
 					src.auto_stealth_name = null
 					boutput(usr, SPAN_NOTICE("Auto Stealth name removed."))
@@ -307,7 +307,7 @@ var/global/noir = 0
 					if (!usr.client.alt_key && !isnull(src.auto_alt_key_name))
 						src.set_alt_key(src.auto_alt_key_name)
 					else if (isnull(src.auto_alt_key_name))
-						var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.key) as null|text
+						var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.get_key()) as null|text
 						if (!new_key)
 							src.auto_alt_key_name = null
 							boutput(usr, SPAN_HINT("Auto Alt Key removed."))
@@ -322,7 +322,7 @@ var/global/noir = 0
 				src.show_pref_window(usr)
 		if ("set_auto_alt_key_name")
 			if (src.level >= LEVEL_SA)
-				var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.key) as null|text
+				var/new_key = input("Enter your desired display name.", "Alt Key", usr.client.get_key()) as null|text
 				if (!new_key)
 					src.auto_alt_key_name = null
 					boutput(usr, SPAN_NOTICE("Auto Alt Key removed."))
@@ -521,7 +521,7 @@ var/global/noir = 0
 			var/mob/target = locate(href_list["target"])
 			if (isnull(centcomviewer))
 				centcomviewer = new
-			centcomviewer.target_key = target.key
+			centcomviewer.target_key = target.get_key()
 			centcomviewer.force_static_data_update = TRUE
 			centcomviewer.ui_interact(usr.client.mob)
 
@@ -2111,7 +2111,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] has removed [C]'s adminship")
 
 					var/ircmsg[] = new()
-					ircmsg["key"] = usr.client.key
+					ircmsg["key"] = usr.client.get_key()
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export_async("admin", ircmsg)
@@ -2126,7 +2126,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] has made [C] a [rank]")
 
 					var/ircmsg[] = new()
-					ircmsg["key"] = usr.client.key
+					ircmsg["key"] = usr.client.get_key()
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export_async("admin", ircmsg)
@@ -2528,7 +2528,7 @@ var/global/noir = 0
 								escape_objective = null
 
 							for (var/mob/living/carbon/human/H in mobs)
-								if (isdead(H) || !H.mind || !H.key)
+								if (isdead(H) || !H.mind || !H.get_key())
 									continue
 
 								H.mind.add_antagonist(antagonist_role_id, do_equip = equip_traitor, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
@@ -3340,7 +3340,7 @@ var/global/noir = 0
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || (issilicon(L) && silicons_too)))
+									if(L?.get_key() && L.mind && !isdead(L) && (ishuman(L) || (issilicon(L) && silicons_too)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
@@ -3523,7 +3523,7 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsadmin"]]")
 					logTheThing(LOG_DIARY, usr, "used secret [href_list["secretsadmin"]]", "admin")
 					if (ok)
-						boutput(world, text("<B>A secret has been activated by []!</B>", usr.key))
+						boutput(world, text("<B>A secret has been activated by []!</B>", usr.get_key()))
 				return
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
@@ -4046,7 +4046,7 @@ var/global/noir = 0
 		logTheThing(LOG_DIARY, usr, "initiated a reboot.", "admin")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = usr.client.key
+		ircmsg["key"] = usr.client.get_key()
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export_async("admin", ircmsg)
@@ -4084,7 +4084,7 @@ var/global/noir = 0
 		current_state = GAME_STATE_SETTING_UP
 		logTheThing(LOG_ADMIN, usr, "has started the game.")
 		logTheThing(LOG_DIARY, usr, "has started the game.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] has started the game."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] has started the game."))
 		return 1
 	else
 		//tgui_alert(usr,"Game has already started you fucking jerk, stop spamming up the chat :ARGH:") //no, FUCK YOU coder, for making this annoying popup
@@ -4105,12 +4105,12 @@ var/global/noir = 0
 		boutput(world, "<b>The game start has been delayed.</b>")
 		logTheThing(LOG_ADMIN, usr, "delayed the game start.")
 		logTheThing(LOG_DIARY, usr, "delayed the game start.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] has delayed the game start."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] has delayed the game start."))
 	else
 		boutput(world, "<b>The game will start soon.</b>")
 		logTheThing(LOG_ADMIN, usr, "removed the game start delay.")
 		logTheThing(LOG_DIARY, usr, "removed the game start delay.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] has removed the game start delay."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] has removed the game start delay."))
 
 /datum/admins/proc/delay_end()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -4127,19 +4127,19 @@ var/global/noir = 0
 	if (game_end_delayed == 2)
 		logTheThing(LOG_ADMIN, usr, "removed the restart delay and triggered an immediate restart.")
 		logTheThing(LOG_DIARY, usr, "removed the restart delay and triggered an immediate restart.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] removed the restart delay and triggered an immediate restart."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] removed the restart delay and triggered an immediate restart."))
 		ircbot.event("roundend")
 		Reboot_server()
 
 	else if (game_end_delayed == 0)
 		game_end_delayed = 1
-		game_end_delayer = usr.key
+		game_end_delayer = usr.get_key()
 		logTheThing(LOG_ADMIN, usr, "delayed the server restart.")
 		logTheThing(LOG_DIARY, usr, "delayed the server restart.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] delayed the server restart."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] delayed the server restart."))
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.get_key() : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has delayed the server restart."
 		ircbot.export_async("admin", ircmsg)
@@ -4149,10 +4149,10 @@ var/global/noir = 0
 		game_end_delayer = null
 		logTheThing(LOG_ADMIN, usr, "removed the restart delay.")
 		logTheThing(LOG_DIARY, usr, "removed the restart delay.", "admin")
-		message_admins(SPAN_INTERNAL("[usr.key] removed the restart delay."))
+		message_admins(SPAN_INTERNAL("[usr.get_key()] removed the restart delay."))
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
+		ircmsg["key"] = (usr?.client) ? usr.client.get_key() : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 		ircmsg["msg"] = "has removed the server restart delay."
 		ircbot.export_async("admin", ircmsg)
@@ -4612,7 +4612,7 @@ var/global/noir = 0
 		M.mind.damned = 0
 		M.mind.transfer_to(newM)
 	else
-		newM.key = M.key
+		newM.key = M.get_key()
 	M.mind = null
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 	qdel(M)
@@ -4632,7 +4632,7 @@ var/global/noir = 0
 
 	var/mob/new_player/M = new()
 
-	M.key = usr.client.key
+	M.key = usr.client.get_key()
 
 	usr.remove()
 

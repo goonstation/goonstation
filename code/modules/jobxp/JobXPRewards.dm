@@ -28,7 +28,7 @@ mob/verb/checkrewards()
 			for(var/S in valid)
 				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
 				M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
-			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.key, job)]\"")
+			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.get_key(), job)]\"")
 		else
 			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
 			winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
@@ -45,22 +45,22 @@ mob/verb/checkrewards()
 	Click(location,control,params)
 		if(control && rewardDatum)
 			if(control == "winjobrewards_[usr.ckey].grdJobRewards")
-				if(rewardDatum.claimable && (usr.job in rewardDatum.required_levels) && rewardDatum.qualifies(usr.key)) //Check for number of claims.
+				if(rewardDatum.claimable && (usr.job in rewardDatum.required_levels) && rewardDatum.qualifies(usr.get_key())) //Check for number of claims.
 					var/claimsLeft = 1
 					if(rewardDatum.claimPerRound > 0)
-						if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
+						if(rewardDatum.claimedNumbers.Find(usr.get_key()) && rewardDatum.claimedNumbers[usr.get_key()] >= rewardDatum.claimPerRound)
 							claimsLeft = 0
 					if(claimsLeft)
 						if(tgui_alert(usr, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) == "Yes")
 							if(rewardDatum.claimPerRound > 0)
-								if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
+								if(rewardDatum.claimedNumbers.Find(usr.get_key()) && rewardDatum.claimedNumbers[usr.get_key()] >= rewardDatum.claimPerRound)
 									return
-							if(rewardDatum.qualifies(usr.key))
+							if(rewardDatum.qualifies(usr.get_key()))
 								rewardDatum.activate(usr.client)
-								if(usr.key in rewardDatum.claimedNumbers)
-									rewardDatum.claimedNumbers[usr.key] = (rewardDatum.claimedNumbers[usr.key] + 1)
+								if(usr.get_key() in rewardDatum.claimedNumbers)
+									rewardDatum.claimedNumbers[usr.get_key()] = (rewardDatum.claimedNumbers[usr.get_key()] + 1)
 								else
-									rewardDatum.claimedNumbers[usr.key] = 1
+									rewardDatum.claimedNumbers[usr.get_key()] = 1
 							else
 								boutput(usr, SPAN_ALERT("Looks like you haven't earned this yet, sorry!"))
 					else
@@ -137,7 +137,7 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		var/obj/item/holoemitter/T = new/obj/item/holoemitter(get_turf(C.mob))
-		T.ownerKey = C.key
+		T.ownerKey = C.get_key()
 		T.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(T)
 		return
@@ -314,14 +314,14 @@ mob/verb/checkrewards()
 		if (!found)
 			boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
 			//Remove used from list of claimed. I'll make this more elegant once I understand it all. No time for it now. -Kyle
-			src.claimedNumbers[usr.key] --
+			src.claimedNumbers[usr.get_key()] --
 			return
 
 		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
 		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
-			src.claimedNumbers[usr.key] --
+			src.claimedNumbers[usr.get_key()] --
 			return
 		//Don't let em get get a charged power cell for a spent one. Spend the difference
 		SEND_SIGNAL(LG, COMSIG_CELL_USE, max_charge - charge)
@@ -354,22 +354,22 @@ mob/verb/checkrewards()
 			var/obj/item/gun/energy/egun/K = O
 			if (K.nojobreward) // Checks to see if it was scanned by a device analyzer
 				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
-				src.claimedNumbers[usr.key] --
+				src.claimedNumbers[usr.get_key()] --
 				return
 			if (K.deconstruct_flags & DECON_BUILT) //Checks to see if it was built from a frame
 				boutput(C.mob, "This [sacrifice_name] is a replica and cannot be turned into a sword legally! Only an original, unscanned energy gun will work for this!")
-				src.claimedNumbers[usr.key] --
+				src.claimedNumbers[usr.get_key()] --
 				return
 			var/list/ret = list()
 			if(SEND_SIGNAL(K, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				if (ratio < 0.9)
 					boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
-					src.claimedNumbers[usr.key]--
+					src.claimedNumbers[usr.get_key()]--
 					return
 			else
 				boutput(C.mob, "The [sacrifice_name] has no cell, you'll need to provide one first!")
-				src.claimedNumbers[usr.key]--
+				src.claimedNumbers[usr.get_key()]--
 				return
 
 			C.mob.remove_item(K)
@@ -383,7 +383,7 @@ mob/verb/checkrewards()
 
 		if (!found)
 			boutput(C.mob, "You need to be holding an [sacrifice_name] in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
+			src.claimedNumbers[usr.get_key()] --
 			return
 
 //Detective
@@ -416,13 +416,13 @@ mob/verb/checkrewards()
 		if (!found)
 			boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
 			//Remove used from list of claimed. I'll make this more elegant once I understand it all. No time for it now. -Kyle
-			src.claimedNumbers[usr.key] --
+			src.claimedNumbers[usr.get_key()] --
 			return
 
 		var/obj/item/gun/kinetic/single_action/colt_saa/colt = new reward_path()
 		if (!istype(colt))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're a detective! You don't need no stinkin' guns anyway!")
-			src.claimedNumbers[usr.key] --
+			src.claimedNumbers[usr.get_key()] --
 			return
 
 		if (tmp_ammo && tmp_current_projectile)

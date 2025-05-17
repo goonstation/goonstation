@@ -120,7 +120,7 @@ proc/Create_Tommyname()
 	if(src.mind)
 		src.mind.transfer_to(T)
 	else
-		T.key = src.key
+		T.key = src.get_key()
 
 	SPAWN(1 SECOND)
 		qdel(src)
@@ -1082,7 +1082,7 @@ proc/Create_Tommyname()
 		if(external_alert)
 			//IRCbot alert, for fun
 			var/ircmsg[] = new()
-			ircmsg["key"] =  M.key
+			ircmsg["key"] =  M.get_key()
 			ircmsg["name"] = stripTextMacros(M.real_name)
 			ircmsg["msg"] = "[message] and got themselves got by the anti-cheat cluwne."
 			ircbot.export_async("admin", ircmsg)

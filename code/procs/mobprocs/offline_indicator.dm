@@ -56,7 +56,7 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 
 		// if your mob has a key, you're offline for real.
 		// you get an indicator for your offline-ness.
-		if (src.key)
+		if (src.get_key())
 			// check if you're an ai, since you deploy to shells and eyes.
 			// those will need to update too.
 			var/mob/living/silicon/ai/AI

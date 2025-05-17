@@ -8,7 +8,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has gibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has gibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has gibbed [key_name(M)]")
@@ -39,7 +39,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has partygibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has partygibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
@@ -56,7 +56,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has owlgibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has owlgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
@@ -73,7 +73,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has firegibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has firegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
@@ -90,7 +90,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has elecgibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has elecgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
@@ -111,7 +111,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has icegibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
@@ -132,7 +132,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has goldgibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
@@ -155,7 +155,7 @@
 	var/mob/living/carbon/human/spiderman = M
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has spidergibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
@@ -176,7 +176,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has imploded [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has imploded [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
@@ -193,7 +193,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has buttgibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has buttgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
@@ -210,7 +210,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has anvilgibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has anvilgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has anvilgibbed [key_name(M)]")
@@ -230,7 +230,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has flockbit gibbed [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has flockbit gibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has flockbit gibbed [key_name(M)]")
@@ -250,7 +250,7 @@
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		var/duration = input("Input duration in 1/10ths of seconds (10 - 100)", "The Honkening", 30) as num
 		if(!duration) return
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has set a floor cluwne upon [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
@@ -268,7 +268,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to damn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has damned [constructTarget(M,"admin")] to hell")
 			logTheThing(LOG_DIARY, usr, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
@@ -286,7 +286,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to undamn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has undamned [constructTarget(M,"admin")] from hell")
 			logTheThing(LOG_DIARY, usr, "has undamned [constructTarget(M,"diary")] from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
@@ -303,7 +303,7 @@
 		return
 
 	if (tgui_alert(src.mob, "Are you sure you want to smite [M]?", "Confirmation", list("Yes", "No")) == "Yes")
-		if(usr.key != M.key && M.client)
+		if(usr.get_key() != M.get_key() && M.client)
 			logTheThing(LOG_ADMIN, usr, "has smited [constructTarget(M,"admin")]")
 			logTheThing(LOG_DIARY, usr, "has smited [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has smited [key_name(M)]")

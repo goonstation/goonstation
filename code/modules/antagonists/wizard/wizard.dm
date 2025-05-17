@@ -60,7 +60,7 @@
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
 
 		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
-		SB.wizard_key = src.owner.key
+		SB.wizard_key = src.owner.get_key()
 		H.equip_if_possible(SB, SLOT_BELT)
 
 		H.equip_sensory_items()

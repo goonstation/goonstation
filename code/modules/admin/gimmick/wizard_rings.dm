@@ -87,9 +87,9 @@
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
+			if (created_staff?.wizard_key != user?.mind.get_key() && !isvirtual(user))
 				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
-				created_staff.wizard_key = user?.mind.key
+				created_staff.wizard_key = user?.mind.get_key()
 
 		disposing()
 			created_staff = null
@@ -109,9 +109,9 @@
 				var/obj/item/staff/thunder/staff = new /obj/item/staff/thunder(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
+			if (created_staff?.wizard_key != user?.mind.get_key() && !isvirtual(user))
 				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
-				created_staff.wizard_key = user?.mind.key
+				created_staff.wizard_key = user?.mind.get_key()
 
 		disposing()
 			created_staff = null

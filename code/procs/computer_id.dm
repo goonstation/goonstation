@@ -45,8 +45,8 @@ proc/check_compid_list(var/client/C)
 			append_CID = 0
 			/* This will never happen what the fuck is wrong with me?
 			if (CI.last_ckey != C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
-				message_admins("[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
-				logTheThing(LOG_ADMIN, C, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
+				message_admins("[C.get_key()] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
+				logTheThing(LOG_ADMIN, C, "[C.get_key()] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				CI.last_ckey = C.ckey
 			*/
 			CI.last_seen = world.realtime
@@ -77,7 +77,7 @@ proc/check_compid_list(var/client/C)
 						hits++
 			if(hits)
 				var/ircmsg[] = new()
-				ircmsg["key"] =  C.key
+				ircmsg["key"] =  C.get_key()
 				ircmsg["name"] = stripTextMacros(C.mob.real_name)
 				var/msg = "'s compID changed [hits] time[hits>1 ? "s" : null] within the last 180 minutes - [C.compid_info_list.len + 1] IDs on file."
 				if(hits >= 2) //This person used 3 computers within as many hours
@@ -125,7 +125,7 @@ proc/do_computerid_test(var/client/C)
 	var/msg = " [is_fucker ? "failed" : "passed"] the automatic cid dll test."
 
 	var/ircmsg[] = new()
-	ircmsg["key"] =  C.key
+	ircmsg["key"] =  C.get_key()
 	ircmsg["name"] = stripTextMacros(C.mob.real_name)
 	ircmsg["msg"] = " [msg]"
 	ircbot.export_async("admin", ircmsg)

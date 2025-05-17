@@ -138,7 +138,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
 		krampus_spawned = 1
 
-	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.key] at [log_loc(L)].")
+	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.get_key()] at [log_loc(L)].")
 	xmas_respawn_lock = 0
 	return
 
@@ -1141,12 +1141,12 @@ proc/compare_ornament_score(list/a, list/b)
 		if (!islist(src.questionable_gift_paths) || !length(src.questionable_gift_paths))
 			src.questionable_gift_paths = questionable_generic_gift_paths + questionable_xmas_gift_paths
 
-		if (user.key in giftees)
+		if (user.get_key() in giftees)
 			boutput(user, SPAN_COMBAT("You've already gotten something from here, don't be greedy!"))
 			boutput(user, SPAN_COMBAT("<font size=1>Note: If this message is in error, please call 1-555-BAD-GIFT.</font>"))
 			return
 
-		giftees += user.key
+		giftees += user.get_key()
 
 		if (src.booby_trapped)
 			boutput(user, SPAN_ALERT("There is a pissed off snake in the stocking! It bites you! What the hell?!"))

@@ -48,7 +48,7 @@
 		for(var/client/C in clients)
 			if (C.stealth && !C.fakekey) // stealthed admins don't count
 				continue
-			s["player[n]"] = "[ckey((C.stealth || C.alt_key) ? C.fakekey : C.key)]"
+			s["player[n]"] = "[ckey((C.stealth || C.alt_key) ? C.fakekey : C.get_key())]"
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
@@ -352,7 +352,7 @@
 			var/n = 0
 			for(var/client/C)
 				if(C.holder)
-					s["admin[n]"] = (C.stealth ? "~" : "") + C.key
+					s["admin[n]"] = (C.stealth ? "~" : "") + C.get_key()
 					n++
 			s["admins"] = n
 			return list2params(s)
@@ -361,7 +361,7 @@
 			var/n = 0
 			for(var/client/C)
 				if(!C.holder && C.is_mentor())
-					s["mentor[n]"] = C.key
+					s["mentor[n]"] = C.get_key()
 					n++
 			s["mentors"] = n
 			return list2params(s)
@@ -501,7 +501,7 @@
 					logTheThing(LOG_DIARY, null, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
 					M.client.make_sure_chat_is_open()
 					for (var/client/C)
-						if (C.holder && C.key != M.key)
+						if (C.holder && C.get_key() != M.get_key())
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
@@ -510,7 +510,7 @@
 				if (M)
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
-					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
+					ircmsg["key2"] = (M.client != null && M.client.get_key() != null) ? M.client.get_key() : "*no client*"
 					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
@@ -536,7 +536,7 @@
 
 					var/M_keyname = key_name(M, 0, 0, 1, additional_url_data="&msgid=[msgid]")
 					for (var/client/C)
-						if (C.can_see_mentor_pms() && C.key != M.key)
+						if (C.can_see_mentor_pms() && C.get_key() != M.get_key())
 							if(C.holder)
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
@@ -548,7 +548,7 @@
 				if (M)
 					var/ircmsg[] = new()
 					ircmsg["key"] = nick
-					ircmsg["key2"] = (M.client != null && M.client.key != null) ? M.client.key : "*no client*"
+					ircmsg["key2"] = (M.client != null && M.client.get_key() != null) ? M.client.get_key() : "*no client*"
 					ircmsg["name2"] = (M.real_name != null) ? stripTextMacros(M.real_name) : ""
 					ircmsg["msg"] = html_decode(msg)
 					return ircbot.response(ircmsg)
@@ -570,7 +570,7 @@
 								count++
 								var/role = getRole(M, 1)
 								if (M.name) parsedWhois["name[count]"] = M.name
-								if (M.key) parsedWhois["ckey[count]"] = M.key
+								if (M.get_key()) parsedWhois["ckey[count]"] = M.get_key()
 								if (isdead(M)) parsedWhois["dead[count]"] = 1
 								if (role) parsedWhois["role[count]"] = role
 								if (M.mind?.is_antagonist()) parsedWhois["t[count]"] = 1
@@ -590,7 +590,7 @@
 							count++
 							var/role = getRole(M, 1)
 							if (M.name) badGuys["name[count]"] = M.name
-							if (M.key) badGuys["ckey[count]"] = M.key
+							if (M.get_key()) badGuys["ckey[count]"] = M.get_key()
 							if (isdead(M)) badGuys["dead[count]"] = 1
 							if (role) badGuys["role[count]"] = role
 							if (M.mind?.is_antagonist()) badGuys["t[count]"] = 1

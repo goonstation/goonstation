@@ -618,8 +618,8 @@
 	game_stats.Increment("deaths")
 #endif
 
-	if (src.mind?.key)
-		var/datum/player/P = find_player(src.mind.key)
+	if (src.mind?.get_key())
+		var/datum/player/P = find_player(src.mind.get_key())
 		P.last_death_time = world.timeofday
 
 	//The unkillable man just respawns nearby! Oh no!
@@ -820,7 +820,7 @@
 		else
 			src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.key
+		newbody.key = src.get_key()
 
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 

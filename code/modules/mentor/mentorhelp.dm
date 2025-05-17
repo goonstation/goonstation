@@ -23,7 +23,7 @@
 
 	var/client/client = src.client
 
-	if (IsGuestKey(client.key))
+	if (IsGuestKey(client.get_key()))
 		boutput(client.mob, "You are not authorized to communicate over these channels.")
 		gib(client.mob)
 		return
@@ -64,7 +64,7 @@
 
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
-	ircmsg["key"] = client.key
+	ircmsg["key"] = client.get_key()
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
 	var/unique_message_id = md5("mhelp" + json_encode(ircmsg))

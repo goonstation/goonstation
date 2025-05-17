@@ -155,7 +155,7 @@
 			if (!isclient(user))
 				CRASH("[user] isnt a client. please give me a client. please. i beg you.")
 
-			if (IsGuestKey(user.key))
+			if (IsGuestKey(user.get_key()))
 				return 0
 
 		var/savefile/F
@@ -456,7 +456,7 @@
 
 	//This might be a bad way of doing it IDK
 	savefile_get_profile_name(client/user, var/profileNum = 1)
-		if (IsGuestKey(user.key))
+		if (IsGuestKey(user.get_key()))
 			return 0
 
 		LAGCHECK(LAG_REALTIME)
@@ -485,7 +485,7 @@
 	/// Load a character profile from the cloud.
 	cloudsave_load(client/user, name)
 		if (user)
-			if (IsGuestKey(user.key))
+			if (IsGuestKey(user.get_key()))
 				return FALSE
 
 		var/cloudSaveData = user.player.cloudSaves.getSave(name)
@@ -497,7 +497,7 @@
 	/// Save a character profile to the cloud.
 	cloudsave_save(client/user, name)
 		if (user)
-			if (IsGuestKey( user.key ))
+			if (IsGuestKey( user.get_key() ))
 				return FALSE
 
 		var/savefile/save = src.savefile_save(user.ckey, 1, 1)

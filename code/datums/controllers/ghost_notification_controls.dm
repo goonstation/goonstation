@@ -48,7 +48,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 					continue // no notification for this guy
 			to_notify |= O
 	N.dispatch(to_notify)
-	active_notifications[N.key] = N
+	active_notifications[N.get_key()] = N
 
 /datum/ghost_notification_controller/proc/add_notification_to_blacklist(var/mob/M, var/datum/ghost_notification/N)
 	if(!M || !M.ckey || !N)
@@ -80,7 +80,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 			N.time_displayed += time_elapsed
 			if(N.time_displayed >= N.time_to_display || N.invalid)
 				// cancel the notification from being viewed
-				expired_notifications |= N.key
+				expired_notifications |= N.get_key()
 				N.expire()
 
 	// remove expired notifications
@@ -298,14 +298,14 @@ var/datum/ghost_notification_controller/ghost_notifier
 		ret += "<p style=\"font-size:110%;\"><h3>Active Notifications</h3></p><br/>"
 		ret += "<table id='notes-table'><thead><tr><th>Key</th><th>Category</th><th>Notice</th><th>Target</th><th>Responders</th><th>Actions</th></tr></thead><tbody>"
 		for(var/datum/ghost_notification/N in src.associated.active_notifications)
-			ret += "<tr id='[N.key]-row'>"
-			ret += "<td>[N.key]</td>"
+			ret += "<tr id='[N.get_key()]-row'>"
+			ret += "<td>[N.get_key()]</td>"
 			ret += "<td>[N.category]</td>"
 			ret += "<td>[N.get_notice_body()]</td>"
 			ret += "<td>[N.subject]</td>"
 			var/responder_list = ""
 			ret += "<td>[responder_list]</td>"
-			ret += "<td>[theme.generateButton("invalidate-[N.key]", "Invalidate")]</td>"
+			ret += "<td>[theme.generateButton("invalidate-[N.get_key()]", "Invalidate")]</td>"
 			ret += "</tr>"
 		ret += "</tbody></table>"
 		return ret

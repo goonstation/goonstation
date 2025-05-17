@@ -153,7 +153,7 @@ var/global/the_automaton = null
 					M.flash(3 SECONDS)
 				random_events.force_event("Solar Flare","Solarium Event (6 keys)")
 				var/ircmsg[] = new()
-				ircmsg["key"] = user.key
+				ircmsg["key"] = user.get_key()
 				ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 				ircmsg["msg"] = "inserted the 6th key into the Automaton and began the Solar Flare event at [round(ticker.round_elapsed_ticks / 600)] minutes into the round."
 				ircbot.export("admin", ircmsg)

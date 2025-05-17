@@ -25,7 +25,7 @@
 			nw.mind = new /datum/mind()
 			ticker.minds += nw.mind
 			nw.mind.ckey = cli.ckey
-			nw.mind.key = cli.key
+			nw.mind.key = cli.get_key()
 			nw.mind.current = nw
 		boutput(nw, SPAN_NOTICE("You grow into <b>[nw]</b>!"))
 		qdel(ow)

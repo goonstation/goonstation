@@ -552,7 +552,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return
 
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
-		G.artist = user.key
+		G.artist = user.get_key()
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [string]")
 		G.icon_state = string

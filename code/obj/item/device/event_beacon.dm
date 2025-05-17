@@ -11,7 +11,7 @@
 		if (!isadmin(usr)) //how did this happen? no idea, but it's bad
 			qdel(src)
 			CRASH("Beacon deployer spawned by non-admin user [usr], what")
-		src.spawner_key = usr.key
+		src.spawner_key = usr.get_key()
 
 	attack_self(mob/user)
 		. = ..()

@@ -667,17 +667,17 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	else if (isclient(whom))
 		the_client = whom
 		the_mob = the_client.mob
-		the_key = html_encode(the_client.key)
+		the_key = html_encode(the_client.get_key())
 	else if (ismob(whom))
 		the_mob = whom
 		the_client = the_mob.client
-		the_key = html_encode(the_mob.key)
+		the_key = html_encode(the_mob.get_key())
 		last_ckey = the_mob.last_ckey
 	else if (istype(whom, /datum))
 		if (ismind(whom))
 			var/datum/mind/the_mind = whom
 			the_mob = the_mind.current
-			the_key = html_encode(the_mind.key)
+			the_key = html_encode(the_mind.get_key())
 			the_client = the_mind.current ? the_mind.current.client : null
 			if (!the_client && the_key)
 				for (var/client/C in clients)
@@ -691,13 +691,13 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		for (var/client/C in clients)
 			if (C.key == whom || C.ckey == whom)
 				the_client = C
-				the_key = html_encode(C.key)
+				the_key = html_encode(C.get_key())
 				if (C.mob)
 					the_mob = C.mob
 				break
 			if (C.mob && C.mob.real_name == whom)
 				the_client = C
-				the_key = html_encode(C.key)
+				the_key = html_encode(C.get_key())
 				the_mob = C.mob
 				break
 
@@ -1925,7 +1925,7 @@ proc/countJob(rank)
 				. += M
 			else if (findtext(M.ckey, target))
 				. += M
-			else if (findtext(M.key, target))
+			else if (findtext(M.get_key(), target))
 				. += M
 			else if (M.mind)
 				if (findtext(M.mind.assigned_role, target))

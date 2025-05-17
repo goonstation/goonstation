@@ -244,10 +244,10 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		boutput(user, SPAN_ALERT("[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"]."))
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 		if (!src.locked)
-			logTheThing(LOG_STATION, src, "at [log_loc(src)] has been unlocked by [key_name(user)] after [src.number_of_guesses[user.key] || "0"] incorrect guesses. Contents: [src.contents.Join(", ")]")
+			logTheThing(LOG_STATION, src, "at [log_loc(src)] has been unlocked by [key_name(user)] after [src.number_of_guesses[user.get_key()] || "0"] incorrect guesses. Contents: [src.contents.Join(", ")]")
 		src.number_of_guesses = list()
 	else
-		src.number_of_guesses[user.key]++
+		src.number_of_guesses[user.get_key()]++
 		if (length(guess) == src.code_len && src.crackable)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)

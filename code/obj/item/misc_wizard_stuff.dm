@@ -166,7 +166,7 @@
 	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
-				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+				if (user.mind.get_key() != src.wizard_key && !check_target_immunity(user))
 					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it."))
 				..()
 				return
@@ -259,7 +259,7 @@
 	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
-				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+				if (user.mind.get_key() != src.wizard_key && !check_target_immunity(user))
 					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
 				..()
 				return

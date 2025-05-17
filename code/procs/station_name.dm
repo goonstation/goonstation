@@ -204,7 +204,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()
-			ircmsg["key"] = ismob(user) ? user.client.key : user
+			ircmsg["key"] = ismob(user) ? user.client.get_key() : user
 			ircmsg["name"] = ismob(user) ? ((user?.real_name) ? stripTextMacros(user.real_name) : "NULL") : null
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export_async("admin", ircmsg)

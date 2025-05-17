@@ -1101,7 +1101,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			T.issuer_job = PDAownerjob
 			T.text = ticket_text
 			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = usr.key
+			T.issuer_byond_key = usr.get_key()
 			data_core.tickets += T
 
 			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
@@ -1148,7 +1148,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.issuer = PDAowner
 			F.issuer_job = PDAownerjob
 			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = usr.key
+			F.issuer_byond_key = usr.get_key()
 			data_core.fines += F
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
@@ -1209,8 +1209,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 //made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)
 	for(var/mob/M in mobs)
-		if(M.real_name == name && M.key)
-			return M.key
+		if(M.real_name == name && M.get_key())
+			return M.get_key()
 	return "N/A"
 
 #define SPAM_DELAY 20

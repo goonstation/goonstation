@@ -27,7 +27,7 @@
 			return
 		if (!isliving(user))
 			return
-		if (user.key in wish_granted)
+		if (user.get_key() in wish_granted)
 			boutput(user, "<b>[O]</b> is silent.")
 			return
 		boutput(user, "<b>[O]</b> resonates, \"<big>I SHALL GRANT YOU ONE WISH...</big>\"")
@@ -35,7 +35,7 @@
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
 		var/wish = input(user, "Make a wish?","[O]") as null|anything in wishes
-		if (user.key in wish_granted)
+		if (user.get_key() in wish_granted)
 			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
 			return
 		if (!wish)
@@ -43,7 +43,7 @@
 			boutput(user, "<b>[O]</b> resonates, \"<big>YOU MAY RETURN LATER...</big>\"")
 			return
 
-		wish_granted += user.key
+		wish_granted += user.get_key()
 		user.say(wish)
 		sleep(0.5 SECONDS)
 		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")

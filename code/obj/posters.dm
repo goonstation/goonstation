@@ -531,7 +531,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		src.papers --
 		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, TRUE)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
-		P.author = user.key
+		P.author = user.get_key()
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"
 		P.poster_image = src.plist["image"]

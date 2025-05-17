@@ -16,14 +16,14 @@
 				var/thisW = "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
 				if (C.stealth)
 					if (C.fakekey)
-						thisW += "<i>[C.key] (stealthed as [C.fakekey])</i>"
+						thisW += "<i>[C.get_key()] (stealthed as [C.fakekey])</i>"
 					else
-						thisW += "<i>[C.key] (hidden)</i>"
+						thisW += "<i>[C.get_key()] (hidden)</i>"
 
 				else if (C.alt_key)
-					thisW += "[C.key] (as [C.fakekey])"
+					thisW += "[C.get_key()] (as [C.fakekey])"
 				else
-					thisW += C.key
+					thisW += C.get_key()
 
 				whoAdmins += thisW + "</a>"
 
@@ -37,7 +37,7 @@
 						// Only show them if they have a key to show. Shhhh.
 						whoNormies += "<span class='ooc text-normal'>[C.fakekey]</span>"
 				else
-					thisW += "[C.key]</span>"
+					thisW += "[C.get_key()]</span>"
 					whoAdmins += thisW
 
 		//Mentors
@@ -48,7 +48,7 @@
 			else
 				thisW += "<span class='mentorooc text-normal'>"
 
-			thisW += C.key + (usr.client.holder ? "</a>" : "</span>")
+			thisW += C.get_key() + (usr.client.holder ? "</a>" : "</span>")
 			whoMentors += thisW
 
 		//Normies
@@ -59,7 +59,7 @@
 			else
 				thisW += "<span class='ooc text-normal'>"
 
-			thisW += C.key + (usr.client.holder ? "</a>" : "</span>")
+			thisW += C.get_key() + (usr.client.holder ? "</a>" : "</span>")
 			whoNormies += thisW
 
 	if (length(whoAdmins))
@@ -101,7 +101,7 @@
 	for (var/client/C in clients)
 		if (C?.mob && C.holder && !C.player_mode)
 			if (usr.client.holder)
-				rendered += "[C.key] is "
+				rendered += "[C.get_key()] is "
 
 				if (C.holder.rank == "Administrator")
 					rendered += "an"

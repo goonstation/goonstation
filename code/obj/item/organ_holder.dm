@@ -774,21 +774,21 @@
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.get_key()]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
-						else if (src.donor.ghost.key)
-							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+						else if (src.donor.ghost.get_key())
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.get_key()]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
-							newmind.key = src.donor.ghost.key
+							newmind.key = src.donor.ghost.get_key()
 							newmind.current = src.donor.ghost
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
-					else if (src.donor.key)
-						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+					else if (src.donor.get_key())
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.get_key()]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
-						newmind.key = src.donor.key
+						newmind.key = src.donor.get_key()
 						newmind.current = src.donor
 						src.donor.mind = newmind
 						myBrain.setOwner(newmind)
@@ -1144,7 +1144,7 @@
 				src.donor.ghostize()
 				if (newBrain.owner)
 					var/mob/G
-					G = find_ghost_by_key(newBrain?.owner?.key)
+					G = find_ghost_by_key(newBrain?.owner?.get_key())
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))

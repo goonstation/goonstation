@@ -268,7 +268,7 @@
 			dat += {"
 			<br><br><br>
 			<div style="color:#666; border: 1px solid #555; padding:5px; margin: 3px; background-color:#efefef;">
-			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
+			<strong>&mdash; [user.client.get_key()] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
 			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='byond://?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
@@ -548,7 +548,7 @@
 			"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 			"accountName" = src.scan?.registered,
 			"cardname" = src.scan?.name,
-			"clientKey" = user.client?.key,
+			"clientKey" = user.client?.get_key(),
 			"loggedIn" = src.state,
 			"message" = src.current_status_message,
 			"name" = src.name,

@@ -238,7 +238,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 				return
 
 			var/obj/item/organ/brain/B = W
-			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
+			if ( !(B.owner && B.owner.get_key()) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
 				return
 			user.drop_item()
@@ -1255,13 +1255,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			qdel(src)
 			return
 
-		if(borg.part_head.brain?.owner?.key)
+		if(borg.part_head.brain?.owner?.get_key())
 			var/obj/item/organ/brain/brain = borg.part_head.brain
 			if(brain.owner.current)
 				borg.gender = brain.owner.current.gender
 				if(brain.owner.current.client)
 					borg.lastKnownIP = brain.owner.current.client.address
-			var/mob/M = find_ghost_by_key(brain.owner.key)
+			var/mob/M = find_ghost_by_key(brain.owner.get_key())
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
 				src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached."))
 				borg.death()

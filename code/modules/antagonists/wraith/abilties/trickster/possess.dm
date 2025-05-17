@@ -143,7 +143,7 @@
 
 	proc/setup(mob/living/W, mob/living/T)
 		src.wraith_mob = W
-		src.wraith_key = W.key
+		src.wraith_key = W.get_key()
 		src.wraith_mind = W.mind
 		var/datum/player/target_player = T.mind?.get_player()
 		if (target_player != null)

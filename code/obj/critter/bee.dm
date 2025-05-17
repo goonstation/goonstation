@@ -1231,7 +1231,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 						src.visible_message("<b>[src]</b> burps!  It smells...coppery.  What'd that bee eat?")
 
 					if (100)
-						src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
+						src.visible_message("<b>[src]</b> regurgitates a...get_key()? Huh!")
 						playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 						// Something is fishy about this bee.

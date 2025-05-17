@@ -130,16 +130,16 @@
 			position: absolute;
 			background: rgba(255, 120, 120, 0.6);
 		}
-		.key {
+		.get_key() {
 			text-align: center;
 			margin-top: 0.5em;
 		}
-		.key > span {
+		.get_key() > span {
 			white-space: nowrap;
 			display: inline-block;
 			margin: 0 0.5em;
 		}
-		.key > span > span {
+		.get_key() > span > span {
 			display: inline-block;
 			height: 1em;
 			width: 1em;

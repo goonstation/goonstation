@@ -59,7 +59,7 @@ var/global/datum/ehjax/ehjax = new /datum/ehjax()
 					fullPath += "/proc/[theProc]"
 
 					if (!(fullPath in src.allowedProcs))
-						CRASH("EHJAX: Attempt to call disallowed proc: [strip_html(fullPath)] by user: [C?.key ? C.key : usr]")
+						CRASH("EHJAX: Attempt to call disallowed proc: [strip_html(fullPath)] by user: [C?.get_key() ? C.get_key() : usr]")
 
 					var/params[] = new()
 					for (var/key in href_list)

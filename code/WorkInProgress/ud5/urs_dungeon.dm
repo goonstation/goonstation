@@ -205,7 +205,7 @@
 			if (!H.mind)
 				H.mind = new /datum/mind()
 				H.mind.ckey = H.ckey
-				H.mind.key = H.key
+				H.mind.key = H.get_key()
 				H.mind.current = H
 				ticker.minds += H.mind
 

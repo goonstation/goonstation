@@ -203,7 +203,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	if (!discordCode || !src.ckey) return 0
 
 	var/ircmsg[] = new()
-	ircmsg["key"] = src.key
+	ircmsg["key"] = src.get_key()
 	ircmsg["ckey"] = src.ckey
 	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)

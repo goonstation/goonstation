@@ -1241,7 +1241,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
-			src.hunter_key = M.mind.key
+			src.hunter_key = M.mind.get_key()
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 			FLICK("[src.base_item_state]-tele", src)
 
@@ -1330,7 +1330,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 
 		var/datum/projectile/pickpocket/shot = current_projectile
 		shot.linkedGun = src
-		shot.firer = user.key
+		shot.firer = user.get_key()
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
 		if(isrestrictedz(us.z) && !in_shuttle_transit(us))
@@ -1356,7 +1356,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		var/datum/projectile/pickpocket/shot = current_projectile
 		shot.linkedGun = src
 		shot.targetZone = user.zone_sel.selecting
-		shot.firer = user.key
+		shot.firer = user.get_key()
 		return ..(target, start, user)
 
 /obj/item/gun/energy/pickpocket/testing // has a beefier cell in it

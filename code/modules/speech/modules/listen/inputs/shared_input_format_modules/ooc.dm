@@ -13,7 +13,7 @@
 		return
 
 	// Determine the displayed key of the speaker.
-	message.speaker_to_display = mob_speaker.key
+	message.speaker_to_display = mob_speaker.get_key()
 	if (mob_speaker.client.stealth || mob_speaker.client.alt_key)
 		if (src.is_admin)
 			message.speaker_to_display += " (as [mob_speaker.client.fakekey])"

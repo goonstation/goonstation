@@ -200,8 +200,8 @@ var/global/logLength = 0
 			else if(ai.deployed_shell?.client)
 				mobRef = ai.deployed_shell
 				mobType = "(mainframe/shell)"
-		if (mobRef.key)
-			key = mobRef.key
+		if (mobRef.get_key())
+			key = mobRef.get_key()
 		if (mobRef.ckey)
 			ckey = mobRef.ckey
 		if (mobRef.client)
@@ -227,8 +227,8 @@ var/global/logLength = 0
 					name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
-		if (clientRef.key)
-			key = clientRef.key
+		if (clientRef.get_key())
+			key = clientRef.get_key()
 		if (clientRef.ckey)
 			ckey = clientRef.ckey
 	else if (istype(ref,/obj/machinery/lawrack))
@@ -244,8 +244,8 @@ var/global/logLength = 0
 			return(constructName(mindRef.current, type))
 		else
 			name = "[mindRef.player.displayed_key] (character destroyed)"
-			if (mindRef.key)
-				key = mindRef.key
+			if (mindRef.get_key())
+				key = mindRef.get_key()
 			if (mindRef.ckey)
 				ckey = mindRef.ckey
 	else

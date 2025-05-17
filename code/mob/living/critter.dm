@@ -1547,7 +1547,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/Logout()
 	..()
 	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
-	if (src.ai && !src.ai.enabled && src.is_npc && !src.key && !QDELETED(src))
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.get_key() && !QDELETED(src))
 		ai.enable()
 
 /mob/living/critter/Login()

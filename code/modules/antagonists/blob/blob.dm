@@ -52,11 +52,11 @@
 		var/list/absorbed_lifeforms = list()
 		var/list/upgrades = list()
 		for (var/mob/living/carbon/human/H in src.absorbed_victims)
-			if(!H.last_client?.key)
+			if(!H.last_client?.get_key())
 				absorbed_lifeforms += "[H.real_name] (NPC)"
 
 			else
-				absorbed_lifeforms += "[H.real_name] (played by [H.last_client?.key])"
+				absorbed_lifeforms += "[H.real_name] (played by [H.last_client?.get_key()])"
 
 		for (var/datum/blob_upgrade/upgrade in bovermind.upgrades)
 			var/repeater = ""

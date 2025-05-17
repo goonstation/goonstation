@@ -917,7 +917,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
 			src.AddComponent(/datum/component/send_to_target_mob, src)
-			src.hunter_key = M.mind.key
+			src.hunter_key = M.mind.get_key()
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 			FLICK("[src.icon_state]-tele", src)
 
@@ -1973,7 +1973,7 @@ obj/item/whetstone
 	attack_hand(var/mob/user)
 		if (user.mind)
 			if (isslasher(user) || check_target_immunity(user))
-				if (user.mind.key != src.slasher_key && !check_target_immunity(user))
+				if (user.mind.get_key() != src.slasher_key && !check_target_immunity(user))
 					boutput(user, SPAN_ALERT("The [src.name] is attuned to another Slasher! You may use it, but it may get recalled at any time!"))
 				..()
 				return

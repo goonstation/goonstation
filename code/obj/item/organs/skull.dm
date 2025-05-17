@@ -100,7 +100,7 @@
 			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
-			var/obj/item/reagent_containers/food/drinks/skull_chalice/C 
+			var/obj/item/reagent_containers/food/drinks/skull_chalice/C
 
 			if (src.icon_state == "skull_crystal" || istype(src, /obj/item/skull/crystal))
 				C = new /obj/item/reagent_containers/food/drinks/skull_chalice/crystal(src.loc)
@@ -135,8 +135,8 @@
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
-			if (src.key)
-				var/obj/item/device/key/skull/SK = src.key
+			if (src.get_key())
+				var/obj/item/device/key/skull/SK = src.get_key()
 				SK.set_loc(get_turf(user))
 				SK.visible_message(SPAN_ALERT("<B>A key clatters out of \the [src]!</B>"))
 				src.key = null

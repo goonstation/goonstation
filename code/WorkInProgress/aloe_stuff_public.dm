@@ -120,7 +120,7 @@
 		for (var/i in 1 to num_events)
 			var/event_type = pick(eventbank)
 			var/datum/random_event/picked_event = new event_type
-			picked_event.event_effect("that stupid fucking button in Bill's office. [user] ([user.key]) pressed it.")
+			picked_event.event_effect("that stupid fucking button in Bill's office. [user] ([user.get_key()]) pressed it.")
 
 
 /// Stamina monitor for target dummies.

@@ -129,7 +129,7 @@
 					else
 						boutput(M, SPAN_ALERT("You summon a new machete to your hands."))
 						var/obj/item/slasher_machete/N = new /obj/item/slasher_machete(get_turf(M))
-						N.slasher_key = M.mind?.key
+						N.slasher_key = M.mind?.get_key()
 						M.put_in_hand_or_drop(N)
 						return FALSE
 
@@ -158,7 +158,7 @@
 					if (M.hasStatus("stunned") || M.hasStatus("knockdown") || M.hasStatus("unconscious") || !isalive(M) || M.restrained())
 						boutput(M, SPAN_ALERT("Not when you're incapacitated, restrained, or incorporeal."))
 						return TRUE
-					if (M.mind.key != K2.slasher_key)
+					if (M.mind.get_key() != K2.slasher_key)
 						boutput(M, SPAN_ALERT("You are unable to summon your machete."))
 						return TRUE
 

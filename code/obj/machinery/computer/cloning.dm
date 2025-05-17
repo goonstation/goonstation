@@ -252,7 +252,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		return
 
 	var/datum/mind/subjMind = subject.mind
-	if ((!subjMind) || (!subjMind.key))
+	if ((!subjMind) || (!subjMind.get_key()))
 		if(subject.ghost?.mind)
 			subjMind = subject.ghost.mind
 		else if(subject.oldmind)
@@ -270,7 +270,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		return R
 
 	R = new
-	R["ckey"] = ckey(subjMind.key)
+	R["ckey"] = ckey(subjMind.get_key())
 	R["name"] = subject.real_name
 	R["id"] = copytext("\ref[subjMind]", 4, 12)
 

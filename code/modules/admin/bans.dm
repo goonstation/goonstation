@@ -64,7 +64,7 @@
 		var/client/targetClient = find_client(ckey)
 
 		var/durationHuman = duration ? src.getDurationHuman(duration) : "permanent"
-		var/adminKey = adminClient ? adminClient.key : admin_ckey
+		var/adminKey = adminClient ? adminClient.get_key() : admin_ckey
 		var/serverLogSnippet = server_id ? "from [server_id]" : "from all servers"
 		var/replacementText = "[ckey] (IP: [ip], CompID: [comp_id])"
 
@@ -198,7 +198,7 @@
 
 		// Tell Discord
 		var/ircmsg[] = new()
-		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["key"] = adminClient ? adminClient.get_key() : admin_ckey
 		ircmsg["name"] = (adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A")
 		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet].\n\n\[View Ban\](<[goonhub_href("/admin/bans/[ban.id]")]>)"
 		ircbot.export_async("admin", ircmsg)
@@ -224,7 +224,7 @@
 
 		// Tell discord
 		var/ircmsg[] = new()
-		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["key"] = adminClient ? adminClient.get_key() : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
 		ircmsg["msg"] = "deleted [ckey]'s ban."
 		ircbot.export_async("admin", ircmsg)
@@ -255,7 +255,7 @@
 		// Tell discord
 		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[banId]\](<[goonhub_href("/admin/bans/[banId]")]>), Original Ckey: [original_ckey]"
 		var/ircmsg[] = new()
-		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["key"] = adminClient ? adminClient.get_key() : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
 		ircmsg["msg"] = msg
 		ircbot.export_async("admin", ircmsg)
@@ -280,7 +280,7 @@
 
 		// Tell discord
 		var/ircmsg[] = new()
-		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["key"] = adminClient ? adminClient.get_key() : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
 		ircmsg["msg"] = msg
 		ircbot.export_async("admin", ircmsg)

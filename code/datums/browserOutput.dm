@@ -170,7 +170,7 @@ var/global
 
 				//Irc message too
 				var/ircmsg[] = new()
-				ircmsg["key"] = owner.key
+				ircmsg["key"] = owner.get_key()
 				ircmsg["name"] = stripTextMacros(owner.mob.name)
 				ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
 				ircbot.export_async("admin", ircmsg)
@@ -199,7 +199,7 @@ var/global
 				//Irc message too
 				if(owner)
 					var/ircmsg[] = new()
-					ircmsg["key"] = owner.key
+					ircmsg["key"] = owner.get_key()
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
 					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compid"]])"
 					ircbot.export_async("admin", ircmsg)

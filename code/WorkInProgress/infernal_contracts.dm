@@ -148,7 +148,7 @@ proc/is_weak_rollable_contract(type)
 	if(src.mind)
 		src.mind.transfer_to(C)
 	else
-		C.key = src.key
+		C.key = src.get_key()
 
 	var/acount = 0 //borrowing this from his grace
 	var/amax = rand(10,15)

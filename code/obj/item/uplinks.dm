@@ -1385,7 +1385,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		)
 
 	attack_self(mob/user)
-		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
+		if(!user.mind || (user.mind && user.mind.get_key() != src.wizard_key))
 			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
 			return
 		// update regardless, in case the wizard read their spellbook before setting their name
@@ -1443,7 +1443,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 			var/obj/item/I = new src.assoc_item(user.loc)
 			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
-				S.wizard_key = user.mind.key
+				S.wizard_key = user.mind.get_key()
 		book.uses -= src.cost
 		book.antag_datum.purchased_spells.Add(src) // Remember spell for crew credits
 

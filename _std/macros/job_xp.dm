@@ -26,7 +26,7 @@
 	*
 	* `USR_JOB_XP("Clown", 5)` would give usr 5xp if they are a clown.
 	*/
-#define USR_JOB_XP(JOB, XP) if(usr.job == JOB && usr.key) award_xp(usr.key, JOB, XP)
+#define USR_JOB_XP(JOB, XP) if(usr.job == JOB && usr.get_key()) award_xp(usr.get_key(), JOB, XP)
 
 /**
 	* Gives TRG, XP amount if they have the appropriate job.

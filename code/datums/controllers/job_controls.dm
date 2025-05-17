@@ -100,7 +100,7 @@ var/datum/job_controller/job_controls
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
 		// trusted only job check
-		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.key))))
+		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.get_key()))))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
 			return
 		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
@@ -114,7 +114,7 @@ var/datum/job_controller/job_controls
 			return
 		if (job.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			return
-		if (job.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+		if (job.requires_whitelist && !NT.Find(ckey(player.mind.get_key())))
 			return
 		if (job.requires_supervisor_job && countJob(job.requires_supervisor_job) <= 0)
 			return

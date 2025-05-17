@@ -286,7 +286,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)
 						else //Oh welp, still need to move that key!
-							newbody.key = player.key
+							newbody.key = player.get_key()
 						src.init_player(newbody, team)
 					else if (!dead_only && ishuman(player.current))
 						player.current.full_heal()
@@ -307,7 +307,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		if (src.mind) //Mind transfer also handles key transfer.
 			src.mind.transfer_to(newbody)
 		else //Oh welp, still need to move that key!
-			newbody.key = src.key
+			newbody.key = src.get_key()
 		equip_battler(newbody)
 		newbody.set_clothing_icon_dirty()
 		newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
