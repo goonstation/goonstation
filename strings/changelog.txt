@@ -1,4 +1,51 @@
 
+(t)fri may 16 25
+(u)RubberRats
+(p)22904
+(e)🗺🔧🔎🍝|A-Mapping, A-Tooling, C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed, again. Please report any issues.
+(u)LeahTheTech
+(+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
+(p)23374
+(e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
+(*)Intercoms now use maptext.
+(u)Egregorious
+(p)23449
+(e)🆕⚖|C-Feature, C-Balance
+(+)Cargo's traders will now buy the same items throughout the entire shift.
+(t)wed may 14 25
+(u)GeneralJay
+(p)23451
+(e)💅🍝|C-QoL, A-Catering
+(+)Meat gained from butchering sheep can now be cooked into steaks properly. Ranchers and chefs rejoice!
+(u)Egregorious
+(p)23434
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Botany requisitions now reward large produce satchels.
+(u)glowbold
+(p)23385
+(e)🆕🗺🎨⚖|C-Feature, A-Mapping, C-Sprites, C-Balance
+(+)The listening post on some maps have received a new look.
+(+)The listening post will fully unlock once someone is inside or uses the hand scanner.
+(u)Mr. Moriarty
+(p)23313
+(e)🆕💅📄🔨|C-Feature, C-QoL, A-UI, A-Player-Actions
+(+)Hivechat, Thrallchat, and Kudzuchat are now accessed through the Y menu instead of through abilities.
+(t)sat may 10 25
+(u)CrimsonNode
+(p)23334
+(e)🪲💅📦💡|C-Bug, C-QoL, A-Game-Objects, A-Station-Systems
+(+)Computer terminals should hopefully crash less when scripting.
+(+)The mainframe can now recover from errors caused by recursive scripts by performing a self-reboot, instead of requiring a manual-reboot.
+(u)JORJ949
+(p)23405
+(e)💅🤖|C-QoL, A-Silicons
+(+)AIs and Cyborgs can now select the Robocop, Corporate or Syndicate lawset when setting their fake laws.
+(t)fri may 09 25
+(u)EmeraldCrow
+(p)23389
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Adds two new donator figurines to the game.
 (t)thu may 08 25
 (u)Chasu
 (p)23278
