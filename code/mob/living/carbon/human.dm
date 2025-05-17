@@ -3251,6 +3251,33 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
 
+/mob/living/carbon/human/proc/apply_automated_arrest(var/reason, var/details, var/major_crime = FALSE, var/requires_camera_seen = TRUE, var/use_visible_name = TRUE)
+	if(!seen_by_camera(src) && requires_camera_seen)
+		return
+	var/target_name = src.name
+	if(!use_visible_name)
+		target_name = src.real_name
+	else if(src.face_visible())
+		target_name = src.real_name
+	var/crime_field = "mi_crim"
+	if(major_crime)
+		crime_field = "ma_crim"
+
+	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
+	if(!sec_record)
+		return
+	if(sec_record["criminal"] == ARREST_STATE_ARREST)
+		return
+	sec_record["criminal"] = ARREST_STATE_ARREST
+	sec_record[crime_field] = reason
+	if(details)
+		sec_record["[crime_field]_d"] = details
+
+	for (var/mob/living/carbon/human/H in mobs) //Anyone could be pretending to be the target, all of them need updating
+		if (H.real_name == target_name || H.name == target_name)
+			H.update_arrest_icon()
+	return
+
 /mob/living/carbon/human/proc/update_arrest_icon()
 	if (!src.arrestIcon)
 		return
