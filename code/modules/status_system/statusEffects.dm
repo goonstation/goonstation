@@ -3736,7 +3736,7 @@
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
-		else if (src.pixels <= 230)
+		else if (src.pixels <= 230 || mob_owner.base_form)
 			mob_owner.modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."
