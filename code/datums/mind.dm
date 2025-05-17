@@ -118,7 +118,7 @@ datum/mind
 		new_character.mind = src
 		current = new_character
 
-		new_character.key = key
+		new_character.key = src.player.get_true_key()
 
 		if(current.client)
 			current.addOverlaysClient(current.client)

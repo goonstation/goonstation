@@ -114,7 +114,7 @@
 				return TRUE
 
 			for_by_tcl(K, /obj/item/slasher_machete)
-				if (M.mind && M.mind.key == K.slasher_key)
+				if (M.mind && M.mind.get_key() == K.slasher_key)
 					if (K == M.find_in_hand(K))
 						we_hold_it = TRUE
 						continue
@@ -357,7 +357,7 @@
 				M.mind?.soul = 0
 			M.setStatus("soulstolen", INFINITE_STATUS)
 			for_by_tcl(K, /obj/item/slasher_machete)
-				if (W.mind && W.mind.key == K.slasher_key)
+				if (W.mind && W.mind.get_key() == K.slasher_key)
 					K.force = K.force + 2.5
 					K.throwforce = K.throwforce + 2.5
 					K.tooltip_rebuild = TRUE

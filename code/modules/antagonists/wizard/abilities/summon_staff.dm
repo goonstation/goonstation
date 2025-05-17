@@ -29,7 +29,7 @@
 		var/list/staves = list()
 		var/we_hold_it = FALSE
 		for_by_tcl(S, /obj/item/staff/cthulhu)
-			if (M.mind && M.mind.key == S.wizard_key)
+			if (M.mind && M.mind.get_key() == S.wizard_key)
 				if (S == M.find_in_hand(S))
 					we_hold_it = TRUE
 					continue
@@ -119,7 +119,7 @@
 		var/list/staves = list()
 		var/we_hold_it = FALSE
 		for_by_tcl(S, /obj/item/staff/thunder)
-			if (M.mind?.key == S.wizard_key)
+			if (M.mind?.get_key() == S.wizard_key)
 				if (S == M.find_in_hand(S))
 					we_hold_it = TRUE
 					continue

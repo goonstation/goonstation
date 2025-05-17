@@ -506,10 +506,8 @@ TYPEINFO(/mob)
 		src.mind = new (src)
 
 	if (src.mind)
-		if (!src.mind.get_ckey())
-			src.mind.ckey = src.get_ckey()
-		if (!src.mind.get_key())
-			src.mind.key = src.get_key()
+		if (!src.mind.player)
+			src.mind.player = make_player(src.key)
 
 	if (isobj(src.loc))
 		var/obj/O = src.loc

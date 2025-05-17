@@ -128,12 +128,12 @@
 		for (var/ckey in player_stats)
 			var/datum/pw_player_stats/stat = player_stats[ckey]
 			//first update longest life
-			inc_longest_life(stat.get_ckey())
+			inc_longest_life(stat.ckey)
 			// p_stat_text += stat.build_text()
 			p_stat_text += {"
 <tr>
  <td>[stat.team_num == 1? "NT" : stat.team_num == 2 ? "SY" : ""]</td>
- <td>[stat.initial_name] ([stat.get_ckey()])</td>
+ <td>[stat.initial_name] ([stat.ckey])</td>
  <td>[stat.death_count]</td>
  <td>[stat.friendly_fire_count]</td>
  <td>[stat.longest_life] (min)</td>

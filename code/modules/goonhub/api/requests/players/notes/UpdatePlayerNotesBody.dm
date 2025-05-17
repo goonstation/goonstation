@@ -21,7 +21,7 @@
 	if (
 		isnull(src.game_admin_ckey) \
 		|| isnull(src.server_id) \
-		|| isnull(src.get_ckey()) \
+		|| isnull(src.ckey) \
 		|| isnull(src.note) \
 	)
 		return FALSE
@@ -30,6 +30,6 @@
 	return json_encode(list(
 		"game_admin_ckey"	= src.game_admin_ckey,
 		"server_id"			= src.server_id,
-		"ckey"				= src.get_ckey(),
+		"ckey"				= src.ckey,
 		"note"				= src.note,
 	))

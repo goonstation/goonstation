@@ -135,8 +135,8 @@
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
-			if (src.get_key())
-				var/obj/item/device/key/skull/SK = src.get_key()
+			if (src.key)
+				var/obj/item/device/key/skull/SK = src.key
 				SK.set_loc(get_turf(user))
 				SK.visible_message(SPAN_ALERT("<B>A key clatters out of \the [src]!</B>"))
 				src.key = null

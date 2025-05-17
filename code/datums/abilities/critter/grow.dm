@@ -22,11 +22,8 @@
 		else if (ow.client)
 			var/client/cli = ow.client
 			cli.mob = nw
-			nw.mind = new /datum/mind()
+			nw.mind = new /datum/mind(nw)
 			ticker.minds += nw.mind
-			nw.mind.ckey = cli.get_ckey()
-			nw.mind.key = cli.get_key()
-			nw.mind.current = nw
 		boutput(nw, SPAN_NOTICE("You grow into <b>[nw]</b>!"))
 		qdel(ow)
 

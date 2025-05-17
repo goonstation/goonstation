@@ -17,7 +17,7 @@
 /datum/apiModel/Tracked/GameAdmin/VerifyIntegrity()
 	if (
 		isnull(src.id) \
-		|| isnull(src.get_ckey()) \
+		|| isnull(src.ckey) \
 		|| isnull(src.name) \
 		|| isnull(src.discord_id) \
 		|| isnull(src.rank_id) \
@@ -27,7 +27,7 @@
 /datum/apiModel/Tracked/GameAdmin/ToList()
 	. = ..()
 	.["id"] = src.id
-	.["ckey"] = src.get_ckey()
+	.["ckey"] = src.ckey
 	.["name"] = src.name
 	.["discord_id"] = src.discord_id
 	.["rank_id"] = src.rank_id

@@ -1080,10 +1080,7 @@ var/list/fun_images = list()
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH, cli.preferences, TRUE)
 	if (!mymob.mind)
-		mymob.mind = new /datum/mind()
-		mymob.mind.ckey = ckey
-		mymob.mind.key = key
-		mymob.mind.current = mymob
+		mymob.mind = new /datum/mind(mymob)
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	qdel(mymob)
@@ -1162,10 +1159,7 @@ var/list/fun_images = list()
 			H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
 		new_mob = TRUE
 	if (!mymob.mind)
-		mymob.mind = new /datum/mind()
-		mymob.mind.ckey = ckey
-		mymob.mind.key = key
-		mymob.mind.current = mymob
+		mymob.mind = new /datum/mind(mymob)
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)

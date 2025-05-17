@@ -168,12 +168,8 @@
 		mind.transfer_to(src)
 	else
 		if (pilot.client)
-			var/key = pilot.client.get_key()
 			pilot.client.mob = src
-			src.mind = new /datum/mind()
-			src.mind.ckey = ckey
-			src.mind.key = key
-			src.mind.current = src
+			src.mind = new /datum/mind(src)
 			ticker.minds += src.mind
 
 	pilot.set_loc(src)
@@ -228,12 +224,8 @@
 			mind.transfer_to(controller)
 		else
 			if (src.client)
-				var/key = src.client.get_key()
 				src.client.mob = controller
-				controller.mind = new /datum/mind()
-				controller.mind.ckey = ckey
-				controller.mind.key = key
-				controller.mind.current = controller
+				controller.mind = new /datum/mind(controller)
 				ticker.minds += controller.mind
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
@@ -281,12 +273,8 @@
 	if (mind)
 		mind.transfer_to(controller)
 	else if (src.client)
-		var/key = src.client.get_key()
 		src.client.mob = controller
-		controller.mind = new /datum/mind()
-		controller.mind.ckey = ckey
-		controller.mind.key = key
-		controller.mind.current = controller
+		controller.mind = new /datum/mind(controller)
 		ticker.minds += controller.mind
 	if (give_alert)
 		src.flock.system_say_source.say("Control of drone [src.real_name] ended abruptly.", atom_listeners_override = list(src.controller))
@@ -328,12 +316,8 @@
 			mind.transfer_to(controller)
 		else
 			if (src.client)
-				var/key = src.client.get_key()
 				src.client.mob = controller
-				controller.mind = new /datum/mind()
-				controller.mind.ckey = ckey
-				controller.mind.key = key
-				controller.mind.current = controller
+				controller.mind = new /datum/mind(controller)
 				ticker.minds += controller.mind
 		src.flock.system_say_source.say("Connection to drone [src.real_name] lost.", atom_listeners_override = list(controller))
 		controller = null

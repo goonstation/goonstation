@@ -198,10 +198,9 @@
 	else
 		if (src.client)
 			src.client.mob = newmob
-			newmob.mind = new /datum/mind()
-			ticker.minds += newmob.mind
-			newmob.mind.key = src.client.get_key()
+			newmob.mind = new /datum/mind(src)
 			newmob.mind.current = newmob
+			ticker.minds += newmob.mind
 
 	if (issmallanimal(newmob))
 		var/mob/living/critter/small_animal/small = newmob
@@ -355,13 +354,9 @@
 		src.mind.transfer_to(W)
 	else
 		if (src.client)
-			var/key = src.client.get_key()
 			src.client.mob = W
-			W.mind = new /datum/mind()
+			W.mind = new /datum/mind(W)
 			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
 	SPAWN(1 DECI SECOND)
 		qdel(src)
 	return W

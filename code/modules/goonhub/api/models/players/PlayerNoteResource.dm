@@ -40,7 +40,7 @@
 	.["player_id"] = src.player_id
 	if (src.player)
 		.["player"] = src.player.ToList()
-	.["ckey"] = src.get_ckey()
+	.["ckey"] = src.ckey
 	.["game_admin_id"] = src.game_admin_id
 	if (src.game_admin)
 		.["game_admin"] = src.game_admin.ToList()

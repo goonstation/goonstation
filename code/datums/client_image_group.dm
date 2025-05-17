@@ -145,7 +145,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		remove_client(M.last_client, last_ckey=M.last_ckey)
 
 	disposing()
-		if(src.get_key())
+		if(src.key)
 			client_image_groups -= key
 		src.key = null
 		for(var/datum/mind/iterated_mind as anything in subscribed_minds_with_subcount)

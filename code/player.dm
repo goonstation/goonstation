@@ -84,6 +84,10 @@
 	proc/get_ckey()
 		return ckey(src.get_key())
 
+	/// the true real actual key to actually assign to change someone's mob
+	proc/get_true_key()
+		return src.key
+
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
 		STOP_TRACKING
@@ -149,7 +153,7 @@
 			return
 
 		var/ATtoken
-		AT[ckey] >> ATtoken
+		AT[src.get_ckey()] >> ATtoken
 		if (!ATtoken)
 			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
 			antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
@@ -158,7 +162,7 @@
 			antag_tokens = ATtoken
 		antag_tokens += text2num( src.cloudSaves.getData( "antag_tokens" ) || "0" )
 		if (src.cloudSaves.putData( "antag_tokens", antag_tokens ))
-			AT[ckey] << null
+			AT[src.get_ckey()] << null
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)

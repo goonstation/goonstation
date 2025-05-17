@@ -60,7 +60,7 @@
 		for(var/HG in by_cat[TR_CAT_HUNTER_GEAR])
 			if (istype(HG, /obj/item/gun/energy/plasma_gun/hunter))
 				var/obj/item/gun/energy/plasma_gun/hunter/PG = HG
-				if (M.mind?.key == PG.hunter_key)
+				if (M.mind?.get_key() == PG.hunter_key)
 					if (get_turf(M.loc) == get_turf(PG.loc))
 						gun_found = TRUE
 					else
@@ -68,7 +68,7 @@
 						gun_found = TRUE
 			else if (istype(HG, /obj/item/knife/butcher/hunterspear))
 				var/obj/item/knife/butcher/hunterspear/HS = HG
-				if (M.mind?.key == HS.hunter_key)
+				if (M.mind?.get_key() == HS.hunter_key)
 					if (get_turf(M.loc) == get_turf(HS.loc))
 						spear_found = TRUE
 					else
@@ -76,7 +76,7 @@
 						spear_found = TRUE
 			else if (istype(HG, /obj/item/cloaking_device/hunter))
 				var/obj/item/cloaking_device/hunter/HC = HG
-				if (M.mind?.key == HC.hunter_key)
+				if (M.mind?.get_key() == HC.hunter_key)
 					if (get_turf(M.loc) == get_turf(HC.loc))
 						cloak_found = TRUE
 					else

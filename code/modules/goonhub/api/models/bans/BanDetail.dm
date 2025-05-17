@@ -31,7 +31,7 @@
 	. = ..()
 	.["id"] = src.id
 	.["ban_id"] = src.ban_id
-	.["ckey"] = src.get_ckey()
+	.["ckey"] = src.ckey
 	.["comp_id"] = src.comp_id
 	.["ip"] = src.ip
 	.["created_at"] = src.created_at

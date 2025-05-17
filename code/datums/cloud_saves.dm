@@ -87,7 +87,7 @@
 				var/datum/apiModel/GetPlayerSaves/savesAndData = apiHandler.queryAPI(getSavesAndData)
 				var/list/newData = list()
 				for (var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data in savesAndData.data)
-					newData[data.get_key()] = data.value
+					newData[data.key] = data.value
 				var/list/newSaves = list()
 				for (var/datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/save in savesAndData.saves)
 					newSaves[save.name] = save.data

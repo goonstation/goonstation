@@ -31,10 +31,7 @@
 	if(src.force_mind)
 		if(!src.mind)
 			if(src.client)
-				src.mind = new
-				src.mind.ckey = ckey
-				src.mind.key = src.get_key()
-				src.mind.current = src
+				src.mind = new(src)
 				ticker.minds += src.mind
 		src.force_mind = 0
 

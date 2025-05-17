@@ -778,18 +778,12 @@
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.get_key())
 							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.get_key()]] from ghost.")
-							var/datum/mind/newmind = new
-							newmind.ckey = src.donor.ghost.get_ckey()
-							newmind.key = src.donor.ghost.get_key()
-							newmind.current = src.donor.ghost
+							var/datum/mind/newmind = new(src.donor.ghost)
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.get_key())
 						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.get_key()]]")
-						var/datum/mind/newmind = new
-						newmind.ckey = src.donor.get_ckey()
-						newmind.key = src.donor.get_key()
-						newmind.current = src.donor
+						var/datum/mind/newmind = new(src.donor)
 						src.donor.mind = newmind
 						myBrain.setOwner(newmind)
 				myBrain.set_loc(location)

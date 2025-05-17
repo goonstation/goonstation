@@ -78,7 +78,7 @@
 				"mind_ref" = "\ref[antagonist_datum.owner]",
 				"antagonist_datum" = "\ref[antagonist_datum]",
 				"real_name" = antagonist_datum.owner.current.real_name,
-				"ckey" = antagonist_datum.owner.layer.displayed_key,
+				"ckey" = antagonist_datum.owner.player.displayed_key,
 				"job" = get_job(antagonist_datum.owner),
 				"dead" = is_dead_or_ghost_role(antagonist_datum.owner.current),
 				"has_subordinate_antagonists" = !!length(antagonist_datum.owner.subordinate_antagonists),

@@ -18,7 +18,7 @@
 
 /datum/apiBody/gameadmins/post/VerifyIntegrity()
 	if (
-		isnull(src.get_ckey()) \
+		isnull(src.ckey) \
 		|| isnull(src.name) \
 		|| isnull(src.discord_id) \
 		|| isnull(src.rank)
@@ -27,7 +27,7 @@
 
 /datum/apiBody/gameadmins/post/toJson()
 	return json_encode(list(
-		"ckey"				= src.get_ckey(),
+		"ckey"				= src.ckey,
 		"name"				= src.name,
 		"discord_id"		= src.discord_id,
 		"rank"				= src.rank,

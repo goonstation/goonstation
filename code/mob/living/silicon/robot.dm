@@ -237,10 +237,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.get_key() ? src.get_key() : "INVALID KEY"]]")
 					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.get_key() ? src.get_key() : "INVALID KEY"]]. That's bad.")
-					var/datum/mind/newmind = new
-					newmind.ckey = ckey
-					newmind.key = src.get_key()
-					newmind.current = src
+					var/datum/mind/newmind = new(src)
 					B.owner = newmind
 					src.mind = newmind
 				if (src.part_head)

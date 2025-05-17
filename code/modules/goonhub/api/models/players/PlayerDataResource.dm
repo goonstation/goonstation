@@ -12,7 +12,7 @@
 /datum/apiModel/Tracked/PlayerRes/PlayerDataResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.get_key())
+		isnull(src.key)
 	)
 		return FALSE
 
@@ -20,7 +20,7 @@
 	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
-	.["key"] = src.get_key()
+	.["key"] = src.key
 	.["value"] = src.value
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
