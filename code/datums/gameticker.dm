@@ -273,11 +273,12 @@ var/global/game_force_started = FALSE
 		for(var/mob/new_player/lobby_player in mobs)
 			if(lobby_player.client)
 				if(lobby_player.client.antag_tokens > 0)
-					winset(lobby_player, "joinmenu", "size=240x200")
 					winset(lobby_player, "joinmenu.observe", "pos=18,136")
 					winset(lobby_player, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
+				winset(lobby_player, "joinmenu", "size=240x256")
 				winset(lobby_player, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
 				winset(lobby_player, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
+				winset(lobby_player, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
