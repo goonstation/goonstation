@@ -95,6 +95,7 @@ TYPEINFO(/mob/living/silicon/ai)
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
+	voice_type = "cyborg"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	anchored = ANCHORED

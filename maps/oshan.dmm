@@ -2420,14 +2420,6 @@
 /obj/item/sea_ladder,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"aiW" = (
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
-/obj/monkeyplant,
-/turf/simulated/floor/green,
-/area/station/medical/research)
 "aiX" = (
 /obj/rack,
 /obj/item/gun/kinetic/riot40mm{
@@ -3484,17 +3476,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"amp" = (
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
-/obj/decal/tile_edge/line/red{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/surgery)
 "amr" = (
 /obj/machinery/drainage/big,
 /obj/item/paper/book/from_file/medical_surgery_guide{
@@ -4958,31 +4939,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/medical/head)
-"art" = (
-/obj/machinery/computer3/generic/med_data{
-	dir = 8
-	},
-/obj/machinery/power/data_terminal,
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
-"aru" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
-	dir = 8
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "arv" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -5297,15 +5253,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"asw" = (
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 8
-	},
-/turf/simulated/floor/redwhite{
-	dir = 5
-	},
-/area/station/medical/medbay/surgery/storage)
 "asx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -5627,13 +5574,6 @@
 /obj/machinery/clone_scanner,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"atB" = (
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "atE" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/glass/beaker/large/brute,
@@ -7048,15 +6988,6 @@
 "ayw" = (
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
-"ayx" = (
-/obj/machinery/disposal/small/east,
-/obj/disposalpipe/trunk/west,
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/science/chemistry)
 "ayy" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/morgue{
@@ -18818,17 +18749,6 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/bridge)
-"buo" = (
-/obj/table/wood/round/auto,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "blue2"
-	},
 /area/station/bridge)
 "bup" = (
 /obj/table/wood/round/auto,
@@ -33254,6 +33174,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)
+"fxl" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/west,
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/science/chemistry)
 "fxu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -35793,6 +35721,25 @@
 "jao" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"jaG" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/obj/item/decoration/flower_vase{
+	pixel_y = 5;
+	pixel_x = -8
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/decal/tile_edge/line/blue{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbooth)
 "jbR" = (
 /obj/machinery/conveyor/WE/carousel,
 /turf/simulated/floor/shuttlebay,
@@ -36538,6 +36485,12 @@
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"kao" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "kbd" = (
 /obj/rack,
 /obj/item/storage/box/lightbox/bulbs,
@@ -39467,26 +39420,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"nGh" = (
-/obj/table/reinforced/auto,
-/obj/item/device/radio/intercom/medical{
-	broadcasting = 1;
-	dir = 4
-	},
-/obj/item/decoration/flower_vase{
-	pixel_y = 5;
-	pixel_x = -8
-	},
-/obj/item/kitchen/food_box/lollipop{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/white/checker,
-/area/station/medical/medbooth)
 "nGv" = (
 /obj/machinery/light_switch/north{
 	pixel_x = -4
@@ -42282,11 +42215,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"roD" = (
-/obj/table/wood,
-/obj/item/reagent_containers/food/snacks/steak_h,
-/turf/simulated/floor/damaged2,
-/area/derelict_diner)
 "roP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -42588,6 +42516,13 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"rOl" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/obj/monkeyplant,
+/turf/simulated/floor/green,
+/area/station/medical/research)
 "rOw" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
@@ -42710,6 +42645,11 @@
 /obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/floor/martian,
 /area/evilreaver)
+"saU" = (
+/obj/table/wood,
+/obj/item/reagent_containers/food/snacks/steak,
+/turf/simulated/floor/damaged2,
+/area/derelict_diner)
 "sdf" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -42968,6 +42908,16 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
+"stJ" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "sul" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/firealarm/east,
@@ -43759,6 +43709,19 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"twM" = (
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "txf" = (
 /obj/machinery/recharge_station,
 /obj/decal/tile_edge/stripe{
@@ -44851,6 +44814,16 @@
 	dir = 6
 	},
 /area/space)
+"vjI" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/radio/intercom/bridge{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "vkp" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -44956,6 +44929,15 @@
 "vwh" = (
 /turf/simulated/floor/circuit/red,
 /area/sunken_asteroid)
+"vwk" = (
+/obj/table/wood/round/auto,
+/obj/item/device/radio/intercom/bridge,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "vwG" = (
 /obj/item/reagent_containers/food/snacks/burrito,
 /turf/simulated/floor/grass,
@@ -46485,6 +46467,14 @@
 	dir = 4
 	},
 /area/station/storage/warehouse)
+"xmQ" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/turf/simulated/floor/redwhite{
+	dir = 5
+	},
+/area/station/medical/medbay/surgery/storage)
 "xnu" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -91139,7 +91129,7 @@ acy
 kFN
 wVw
 ahB
-aiW
+rOl
 iDs
 uay
 alm
@@ -92351,7 +92341,7 @@ ajG
 ahS
 akG
 alp
-amp
+stJ
 anj
 ajJ
 aoN
@@ -92660,7 +92650,7 @@ aoN
 wGR
 arb
 asl
-atB
+kao
 auU
 awg
 ovG
@@ -93318,7 +93308,7 @@ cjV
 gKO
 bts
 rTT
-buo
+vwk
 buY
 bvF
 lvP
@@ -98086,7 +98076,7 @@ ori
 lok
 uEW
 fQL
-asw
+xmQ
 ajb
 fbA
 lYt
@@ -98395,8 +98385,8 @@ ajQ
 ajQ
 aog
 aqg
-aru
-art
+vjI
+twM
 axB
 aoi
 avl
@@ -99376,7 +99366,7 @@ byS
 bIm
 bJj
 aRr
-nGh
+jaG
 jHz
 bMz
 tjS
@@ -108081,7 +108071,7 @@ aFS
 yiu
 aIy
 aAH
-ayx
+fxl
 aFl
 aKb
 aKy
@@ -110421,7 +110411,7 @@ gUu
 gmD
 gmD
 tFb
-roD
+saU
 gmD
 aqn
 aqn

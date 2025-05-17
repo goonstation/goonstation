@@ -1276,20 +1276,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/north)
-"azM" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	frequency = 1441;
-	name = "Engineering Intercom";
-	pixel_x = -21
-	},
-/turf/simulated/floor/orange/side{
-	dir = 8
-	},
-/area/station/engine/inner)
 "aAb" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/mail,
@@ -18773,6 +18759,18 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
+"ivb" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4;
+	pixel_x = -21
+	},
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/station/engine/inner)
 "ivd" = (
 /obj/machinery/manufacturer/general,
 /obj/machinery/atmospherics/pipe/simple,
@@ -21685,33 +21683,6 @@
 	},
 /turf/simulated/floor/orange,
 /area/station/engine/engineering)
-"jDS" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1441;
-	name = "Engineering Intercom";
-	pixel_x = 21
-	},
-/turf/simulated/floor/orange/side{
-	dir = 4
-	},
-/area/station/engine/inner)
 "jEF" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
@@ -33827,6 +33798,31 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"oUP" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8;
+	pixel_x = 21
+	},
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/station/engine/inner)
 "oVd" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -34676,24 +34672,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"ptk" = (
-/obj/decal/boxingropeenter{
-	dir = 4
-	},
-/obj/machinery/light/small/harsh/very{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1489;
-	name = "Brig Intercom";
-	pixel_x = 26
-	},
-/turf/simulated/floor/specialroom/gym/alt,
-/area/station/security/brig{
-	name = "The Cage Arena"
-	})
 "ptp" = (
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
@@ -51002,6 +50980,21 @@
 /turf/simulated/floor/purple,
 /area/station/science/gen_storage{
 	name = "Research Computer Lab"
+	})
+"wIj" = (
+/obj/decal/boxingropeenter{
+	dir = 4
+	},
+/obj/machinery/light/small/harsh/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/item/device/radio/intercom/brig{
+	pixel_x = 26
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/security/brig{
+	name = "The Cage Arena"
 	})
 "wIG" = (
 /turf/simulated/wall/auto/supernorn,
@@ -88403,7 +88396,7 @@ iVa
 oPc
 ncU
 rxs
-azM
+ivb
 eMo
 ncU
 jIp
@@ -93839,7 +93832,7 @@ wtp
 uIv
 poS
 rIY
-jDS
+oUP
 lFj
 tfh
 vOV
@@ -97417,7 +97410,7 @@ raZ
 uMC
 nqk
 mlf
-ptk
+wIj
 bli
 kco
 jjQ

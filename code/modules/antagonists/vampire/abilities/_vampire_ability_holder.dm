@@ -320,8 +320,8 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
-		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
+		if (src.unlock_message && src.holder && src.holder.owner && (ismob(src.holder.owner) || ismobcritter(src.holder.owner)))
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>")) // vamp teg is not a mob but uses this
 		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)

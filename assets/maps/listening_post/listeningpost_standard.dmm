@@ -259,7 +259,10 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/recharger/wall/sticky,
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 20
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "nm" = (
