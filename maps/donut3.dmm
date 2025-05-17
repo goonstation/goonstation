@@ -61800,7 +61800,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},
