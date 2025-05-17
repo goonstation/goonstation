@@ -66,13 +66,11 @@
 	rechargeable = FALSE // yeah this is weird alien technology good fucking luck charging it
 	can_swap_cell = FALSE // No
 	cell_type = /obj/item/ammo/power_cell/self_charging/flockdrone
-	projectiles = null
 	is_syndicate = TRUE // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100
 
 /obj/item/gun/energy/flock/New()
 	set_current_projectile(new/datum/projectile/energy_bolt/flockdrone)
-	projectiles = list(current_projectile)
 	..()
 
 /obj/item/gun/energy/flock/special_desc(dist, mob/user)

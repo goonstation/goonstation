@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/gun/reagent)
 		src.UpdateIcon()
 
 	get_desc()
-		. = "[src.projectiles ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.reagents.total_volume]/[src.reagents.maximum_volume] units left!"
+		. = "[(length(src.firemodes) > 1) ? "It is set to [src.current_projectile.sname]. " : ""]There are [src.reagents.total_volume]/[src.reagents.maximum_volume] units left!"
 		if(src.current_projectile)
 			. += " Each shot will currently use [src.current_projectile.cost] units!"
 		else
@@ -215,7 +215,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 
 	New()
 		set_current_projectile(new/datum/projectile/ectoblaster)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 	update_icon()

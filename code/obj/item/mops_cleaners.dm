@@ -1182,7 +1182,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	New()
 		. = ..()
 		src.set_current_projectile(new /datum/projectile/special/shotchem/wave)
-		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
+		add_firemode(null, current_projectile)
+		add_firemode(null, new /datum/projectile/special/shotchem/wave/wide)
+		add_firemode(null, new /datum/projectile/special/shotchem/wave/single)
 		src.UpdateIcon()
 
 	get_help_message(dist, mob/user)
@@ -1215,7 +1217,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		return null
 
 	update_icon(...)
-		switch(src.current_projectile_num)
+		switch(src.current_firemode_num)
 			if (1)
 				src.icon_state = "[initial(src.icon_state)]-normal"
 			if (2)
@@ -1267,11 +1269,11 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if (!src.projectiles) //we're already emagged
+		if (!src.firemodes) //we're already emagged
 			return
 		boutput(user, SPAN_ALERT("You short out the pressure lock on [src]!"))
 		src.set_current_projectile(new /datum/projectile/special/shotchem/wave/wide/emagged)
-		src.projectiles = null
+		src.firemodes = null
 
 //Why are all the sane reagent container behaviour on /glass?!!!?
 /obj/item/reagent_containers/glass/backtank

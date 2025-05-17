@@ -19,7 +19,7 @@
 //volume the shot is played at, large pods double the gun and thus the shot sound!
 	shot_volume = 30
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	ie_type = "E"
 //What is our damage type
 /*
@@ -49,7 +49,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/rocket.ogg'
 	shot_volume = 30
 	cost = 60
-	shot_number = 3
+	default_firemode = /datum/firemode/three_burst
 	damage_type = D_ENERGY
 	sname = "burst stun"
 
@@ -59,7 +59,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laserultra.ogg'
 	shot_volume = 30
 	icon_state = "disrupt_lethal"
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	cost = 30
 	damage_type = D_ENERGY
 	sname = "disruptor"

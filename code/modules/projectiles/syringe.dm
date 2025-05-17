@@ -10,7 +10,7 @@
 	hit_ground_chance = 10
 	implanted = /obj/item/implant/projectile/body_visible/syringe
 	shot_sound = 'sound/effects/syringeproj.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_TOXIC //needed for reagent shit
 
 	syringe_barbed

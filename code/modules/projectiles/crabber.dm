@@ -10,7 +10,7 @@
 	dissipation_delay = 20
 	sname = "claw"
 	shot_sound = 'sound/items/wirecutter.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	hit_ground_chance = 20
 	window_pass = 0
 	damage_type = D_ENERGY
