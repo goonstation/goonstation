@@ -78,7 +78,7 @@
 #ifdef GOON_AUTH
 		return src.gkey
 #else
-		return src.get_key()
+		return src.key
 #endif
 
 	proc/get_ckey()
