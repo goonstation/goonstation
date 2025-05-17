@@ -36,9 +36,10 @@
 		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr) || isobserver(usr)))
-			. += SPAN_ARTHINT(A.examine_hint)
+		if ((usr && (usr.traitHolder?.hasTrait("training_scientist")) || isobserver(usr)))
+			for (var/obj/O as anything in (list(src) + src.combined_artifacts || list()))
+				if (istext(O.artifact.examine_hint) && !findtext(., O.artifact.examine_hint))
+					. += SPAN_ARTHINT(O.artifact.examine_hint)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -106,6 +107,8 @@
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/list/datum/projectile/artifact/bullets = list()
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
+	shard_reward = ARTIFACT_SHARD_POWER
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
 		..()
