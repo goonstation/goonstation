@@ -328,13 +328,13 @@
 			allowed = list(/obj/item/random_mail)
 
 		large
-			name = "large produce satchel"
+			name = "large mail satchel"
 			desc = "A leather satchel for carrying around mail. This one happens to be <em>really</em> big."
 			icon_state = "mailsatchel-large"
 			maxitems = 100
 
 		compressed
-			name = "spatially-compressed produce satchel"
+			name = "spatially-compressed mail satchel"
 			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding mail."
 			icon_state = "mailsatchel-compressed"
 			maxitems = 250
