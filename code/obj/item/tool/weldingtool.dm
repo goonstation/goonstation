@@ -31,13 +31,14 @@
 
 	New()
 		..()
-		src.create_reagents(src.fuel_capacity)
-		src.reagents.add_reagent("fuel", src.fuel_capacity)
-		src.inventory_counter.update_number(src.get_fuel())
+		if(src.fuel_capacity)
+			src.create_reagents(src.fuel_capacity)
+			src.reagents.add_reagent("fuel", src.fuel_capacity)
+			src.inventory_counter.update_number(src.get_fuel())
 
 		src.setItemSpecial(/datum/item_special/flame)
 
-		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
+		src.AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 125, src.welding)
 
 		// Welder + rods  -> Welder/Rods Assembly
 		src.AddComponent(/datum/component/assembly, /obj/item/rods, PROC_REF(welder_rod_construction), TRUE)

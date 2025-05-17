@@ -50,6 +50,13 @@
 
 	contextButtons = buttons
 
+/// Check if an atom is the target of a context action on this mob
+/mob/proc/isContextActionTarget(var/atom/subject)
+	for(var/atom/movable/screen/contextButton/button in src.contextButtons)
+		if(button.target == subject)
+			return TRUE
+	return FALSE
+
 /mob/proc/contextActionsOnMove()
 	src.closeContextActions(TRUE)
 

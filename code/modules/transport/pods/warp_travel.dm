@@ -286,7 +286,7 @@
 				if (istype(I, /obj/item/cable_coil))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(3)
-				if (istype(I, /obj/item/electronics/soldering))
+				if (issolderingtool(I))
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
 /datum/action/bar/icon/warp_beacon_assembly
