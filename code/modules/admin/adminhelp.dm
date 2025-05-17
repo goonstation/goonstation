@@ -47,7 +47,7 @@
 			if (C.player_mode && !C.player_mode_ahelp)
 				continue
 			else
-				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font>"))
+				boutput(C, SPAN_AHELP("<font size='3'><b>[SPAN_ALERT("HELP: ")][keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font>"))
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
 						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
@@ -55,7 +55,7 @@
 						var/audio = dectalk(msg)
 						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 						if(vol)
-							C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
+							C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.get_ckey()]) to [C.mob.get_ckey()]", vol)
 
 #ifdef DATALOGGER
 	game_stats.Increment("adminhelps")
@@ -143,7 +143,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='byond://?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.get_key()]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='byond://?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.get_ckey()]'>[client.get_key()]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.get_ckey()]' class='popt'><i class='icon-info-sign' />: <I>[SPAN_NOTICE(msg)]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -151,7 +151,7 @@
 						audio = dectalk(msg)
 					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
 					if(vol)
-						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.get_ckey()]) to [M.get_ckey()]", vol)
 	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user, previous_msgid=null) //C is a passed ckey
@@ -203,18 +203,18 @@
 					[t]
 					</div>
 					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						<a href=\"byond://?action=priv_msg&target=[user.ckey]&msgid=[unique_message_id]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+						<a href=\"byond://?action=priv_msg&target=[user.get_ckey()]&msgid=[unique_message_id]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 					</div>
 				</div>
 				"}, forceScroll=TRUE)
 			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+			boutput(user, "<span class='ahelp bigPM'>Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 			M.client.make_sure_chat_is_open()
 		else
 			// Sender is not admin
 			if (M.client && M.client.holder)
 				// But recipient is
-				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				boutput(M, "<span class='ahelp bigPM'>Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			else
 				boutput(M, "<span class='alert bigPM'>Reply PM from-<b>[user_keyname]</b>: [t]</span>")
@@ -232,4 +232,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]"))
+					boutput(K, SPAN_AHELP("<b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]"))

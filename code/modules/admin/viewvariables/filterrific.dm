@@ -108,8 +108,8 @@
 				target.filters = filters_to_copy
 				target.filter_data = filter_data_to_copy
 				count += 1
-			//message_admins("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
-			//log_admin("LOCAL CLOWN [usr.ckey] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
+			//message_admins("LOCAL CLOWN [usr.get_ckey()] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
+			//log_admin("LOCAL CLOWN [usr.get_ckey()] JUST MASS FILTER EDITED [count] WITH PATH OF [params["path"]]!")
 
 #define ICON_NOT_SET "Not Set"
 

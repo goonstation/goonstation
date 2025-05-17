@@ -16,11 +16,11 @@
 /datum/player_panel/ui_data(mob/user)
 	var/list/players = list()
 	for (var/mob/M in mobs)
-		if (M.ckey)
+		if (M.get_ckey())
 			var/area/A = get_area(M)
-			players[M.ckey] = list(
+			players[M.get_ckey()] = list(
 				"mobRef" = "\ref[M]",
-				"ckey" = M.ckey,
+				"ckey" = M.get_ckey(),
 				"name" = M.name ? M.name : "N/A",
 				"realName" = M.real_name ? M.real_name : "N/A",
 				"assignedRole" = M.mind?.assigned_role ? M.mind.assigned_role : "N/A",
@@ -59,11 +59,11 @@
 			var/mobRef = params["mobRef"]
 			var/mob/M = locate(mobRef)
 			if(ismob(M) && M.ckey == params["ckey"])
-				do_admin_pm(M.ckey, usr)
+				do_admin_pm(M.get_ckey(), usr)
 			else
 				for(M in mobs)
 					if(M.ckey == params["ckey"])
-						do_admin_pm(M.ckey, usr)
+						do_admin_pm(M.get_ckey(), usr)
 						break
 
 		if("jump-to-player-loc")

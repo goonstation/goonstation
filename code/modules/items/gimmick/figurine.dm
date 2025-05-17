@@ -30,14 +30,14 @@
 		..()
 		if (!length(donator_ckeys)) //creates a list of existing donator Ckeys if one does not already exist
 			for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
-				donator_ckeys += initial(fig.ckey)
+				donator_ckeys += initial(fig.get_ckey())
 
 		if (istype(newInfo))
 			src.info = newInfo
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind?.ckey
+			var/potential_donator_ckey = usr?.mind?.get_ckey()
 			var/donator_fig_ckey = null
 			var/list/online_donator_ckeys_nouser = online_donator_ckeys.Copy()
 
@@ -61,7 +61,7 @@
 
 				//Now that we've picked the ckey to look for, find its randomInfo
 				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
-					if (initial(fig.ckey) == fig_ckey)
+					if (initial(fig.get_ckey()) == fig_ckey)
 						randomInfo = fig
 						break
 

@@ -204,7 +204,7 @@
 			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
 			if (!H.mind)
 				H.mind = new /datum/mind()
-				H.mind.ckey = H.ckey
+				H.mind.ckey = H.get_ckey()
 				H.mind.key = H.get_key()
 				H.mind.current = H
 				ticker.minds += H.mind

@@ -99,7 +99,7 @@
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(
-				src.client.ckey,
+				src.client.get_ckey(),
 				src.client.get_key(),
 				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
 				src.client.computer_id,
@@ -110,8 +110,8 @@
 			playerResponse = apiHandler.queryAPI(playerLogin)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
-			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.get_ckey()] because: [error.message]")
+			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.get_ckey()] because: [error.message]", "admin")
 			return
 
 		src.id = playerResponse.id
@@ -126,7 +126,7 @@
 		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
 			var/datum/apiRoute/players/stats/get/getPlayerStats = new
-			getPlayerStats.queryParams = list("ckey" = src.ckey)
+			getPlayerStats.queryParams = list("ckey" = src.get_ckey())
 			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
 			return FALSE
@@ -262,7 +262,7 @@
 
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new
-			addMedal.buildBody(src.id || null, src.ckey, medal_name, roundId)
+			addMedal.buildBody(src.id || null, src.get_ckey(), medal_name, roundId)
 			apiHandler.queryAPI(addMedal)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
@@ -293,7 +293,7 @@
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)
 		var/datum/apiRoute/players/medals/delete/deleteMedal = new
-		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
+		deleteMedal.buildBody(src.id ? src.id : null, src.get_ckey(), medal_name)
 
 		try
 			apiHandler.queryAPI(deleteMedal)
@@ -309,7 +309,7 @@
 	proc/has_medal(medal_name)
 		if (!medal_name) return FALSE
 		var/datum/apiRoute/players/medals/has/hasMedals = new
-		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
+		hasMedals.routeParams = list(src.id ? src.id : src.get_ckey())
 		hasMedals.queryParams = list("medal" = medal_name)
 		var/datum/apiModel/HasMedalResource/hasMedal
 
@@ -330,7 +330,7 @@
 		var/datum/apiRoute/players/medals/get/getMedals = new
 		var/list/filters = list()
 		if (src.id) filters["player_id"] = src.id
-		else filters["ckey"] = src.ckey
+		else filters["ckey"] = src.get_ckey()
 		getMedals.queryParams = list(
 			"filters" = filters,
 			"sort_by" = "medal_title",
@@ -343,8 +343,8 @@
 			medals = apiHandler.queryAPI(getMedals)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>get_all_medals</b> for <b>[src.ckey] ([src.id])</b>: [error.message]")
-			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>get_all_medals</b> for <b>[src.get_ckey()] ([src.id])</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.get_ckey()] ([src.id]): [error.message]", "debug")
 			return null
 
 		return medals.ToList()

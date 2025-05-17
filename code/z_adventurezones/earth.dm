@@ -37,9 +37,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 					return
 				if(M.client.holder)
 					return
-				if(M.client.ckey in entered_ckeys)
+				if(M.client.get_ckey() in entered_ckeys)
 					return
-				entered_ckeys += M.client.ckey
+				entered_ckeys += M.client.get_ckey()
 				logTheThing(LOG_DEBUG, M, "entered Centcom before round end [log_loc(M)].")
 
 /area/centcom/outside
@@ -578,7 +578,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 
 	proc/down_under_verification(var/mob/living/L)
-		return L.ckey in list("enakai", "rodneydick", "walpvrgis", "chrisb340")
+		return L.get_ckey() in list("enakai", "rodneydick", "walpvrgis", "chrisb340")
 
 
 

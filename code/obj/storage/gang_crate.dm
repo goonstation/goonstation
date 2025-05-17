@@ -152,7 +152,7 @@
 				locker.gang.score_event += GANG_CRATE_SCORE
 				var/datum/gang/userGang = user.get_gang()
 				userGang.announcer_say_source.say("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.")
-				logTheThing(LOG_GAMEMODE, src, "[src] is unlocked by [user.mind.ckey]/[user.name] at the [locker], for [locker.gang.gang_name].")
+				logTheThing(LOG_GAMEMODE, src, "[src] is unlocked by [user.mind.get_ckey()]/[user.name] at the [locker], for [locker.gang.gang_name].")
 				return TRUE
 		return FALSE
 

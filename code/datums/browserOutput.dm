@@ -146,12 +146,12 @@ var/global
 
 /// Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
-	//Fix for Cannot read null.ckey (how!?)
+	//Fix for Cannot read null.get_ckey() (how!?)
 	if (!src.owner) return
 
 	//Get dem deets
 	var/list/deets = list("clientData" = list())
-	deets["clientData"]["ckey"] = src.owner.ckey
+	deets["clientData"]["ckey"] = src.owner.get_ckey()
 	deets["clientData"]["ip"] = src.owner.address
 	deets["clientData"]["compid"] = src.owner.computer_id
 	var/data = json_encode(deets)
@@ -191,7 +191,7 @@ var/global
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (length(found) && found["ckey"] != src.owner.ckey)
+			if (length(found) && found["ckey"] != src.owner.get_ckey())
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
@@ -210,7 +210,7 @@ var/global
 					ban.id,
 					TRUE,
 					"bot",
-					src.owner.ckey,
+					src.owner.get_ckey(),
 					isnull(found["compid"]) ? null : src.owner.computer_id,
 					isnull(found["ip"]) ? null : src.owner.address
 				)

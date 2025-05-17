@@ -198,13 +198,13 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		usr << link("https://discord.gg/zd8t6pY")
 
 	if (ircbot.debugging)
-		ircbot.logDebug("linkDiscord verb called. <b>src.ckey:</b> [src.ckey]. <b>discordCode:</b> [discordCode]")
+		ircbot.logDebug("linkDiscord verb called. <b>src.get_ckey():</b> [src.get_ckey()]. <b>discordCode:</b> [discordCode]")
 
-	if (!discordCode || !src.ckey) return 0
+	if (!discordCode || !src.get_ckey()) return 0
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.get_key()
-	ircmsg["ckey"] = src.ckey
+	ircmsg["ckey"] = src.get_ckey()
 	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 

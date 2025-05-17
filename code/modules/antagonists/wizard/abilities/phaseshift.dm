@@ -49,7 +49,7 @@
 	if (check_for_watchers == 1)
 		if (H.client)
 			for (var/mob/living/L in view(H.client.view, H))
-				if (isalive(L) && L.sight_check(1) && L.ckey != H.ckey)
+				if (isalive(L) && L.sight_check(1) && L.get_ckey() != H.get_ckey())
 					H.show_text("You can only use that when nobody can see you!", "red")
 					return
 

@@ -84,8 +84,8 @@ TYPEINFO(/mob/new_player)
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
 
 
-		if (src.ckey && !adminspawned)
-			if ("[src.ckey]" in spawned_in_keys)
+		if (src.get_ckey() && !adminspawned)
+			if ("[src.get_ckey()]" in spawned_in_keys)
 				if (!(client && client.holder) && !abandon_allowed)
 					 //They have already been alive this round!!
 					var/mob/dead/observer/observer = new()
@@ -111,7 +111,7 @@ TYPEINFO(/mob/new_player)
 					qdel(src)
 
 			else
-				spawned_in_keys += "[src.ckey]"
+				spawned_in_keys += "[src.get_ckey()]"
 				for (var/sound in global.dj_panel.preloaded_sounds)
 					src.client << load_resource(sound, -1)
 
@@ -126,8 +126,8 @@ TYPEINFO(/mob/new_player)
 
 	Logout()
 		ready = 0
-		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
-			spawned_in_keys -= "[src.ckey]"
+		if (src.get_ckey()) //Null if the client changed to another mob, but not null if they disconnected.
+			spawned_in_keys -= "[src.get_ckey()]"
 		else if (isclient(src.last_client)) //playtime logging stuff
 			src.last_client.player.log_join_time()
 
@@ -463,7 +463,7 @@ TYPEINFO(/mob/new_player)
 					ticker.minds += character.mind
 				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
-				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
+				if (character.mind.get_ckey() && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					var/datum/player/P = character.mind.get_player()
 					participationRecorder.record(P)
 
@@ -819,7 +819,7 @@ a.latejoin-card:hover {
 								continue
 
 							livingtraitor = TRUE
-							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.get_key()].")
+							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.get_ckey()], found livingtraitor [brain.get_key()].")
 							break
 
 					var/bad_type = null
@@ -1020,7 +1020,7 @@ a.latejoin-card:hover {
 			if(observer?.client)
 				observer.client.loadResources()
 
-			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
+			respawn_controller.subscribeNewRespawnee(observer?.client?.get_ckey())
 
 			qdel(src)
 

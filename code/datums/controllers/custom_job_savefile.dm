@@ -9,7 +9,7 @@
 			user.player.cloudSaves.deleteSave("custom_job_[i]")
 
 	//convert old savefiles to cloudsave
-	var/path = "data/admin_custom_job_saves/[user.ckey].sav"
+	var/path = "data/admin_custom_job_saves/[user.get_ckey()].sav"
 	if (!fexists(path))
 		return FALSE
 
@@ -100,7 +100,7 @@
 	var/savefile/message = src.savefile_save(src.job_creator)
 	var/fname
 	message["name"] >> fname
-	fname = "[user.ckey]_[fname].sav"
+	fname = "[user.get_ckey()]_[fname].sav"
 	if(fexists(fname))
 		fdel(fname)
 	var/F = file(fname)

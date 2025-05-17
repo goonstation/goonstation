@@ -44,7 +44,7 @@
 					if (saving)
 						boutput(user, SPAN_ALERT("Already saving."))
 						return
-					var/fname = "adventure/ADV_SAVE_[user.client.ckey]_[world.time]"
+					var/fname = "adventure/ADV_SAVE_[user.client.get_ckey()]_[world.time]"
 					if (fexists(fname))
 						fdel(fname)
 					saving = 1
@@ -97,9 +97,9 @@
 								workgroup_curr = 0
 								sleep(0.1 SECONDS)
 						if (user?.client)
-							if (fexists("adventure/adventure_save_[user.client.ckey].dat"))
-								fdel("adventure/adventure_save_[user.client.ckey].dat")
-							var/target = file("adventure/adventure_save_[user.client.ckey].dat")
+							if (fexists("adventure/adventure_save_[user.client.get_ckey()].dat"))
+								fdel("adventure/adventure_save_[user.client.get_ckey()].dat")
+							var/target = file("adventure/adventure_save_[user.client.get_ckey()].dat")
 							F.ExportText("/", target)
 							boutput(user, SPAN_NOTICE("Saving finished."))
 							user << ftp(target)

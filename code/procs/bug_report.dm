@@ -38,7 +38,7 @@
 
 [form.data["additional"]]
 
-Reported by: [user_client.ckey]
+Reported by: [user_client.get_ckey()]
 Client version: [user_client.byond_version].[user_client.byond_build]
 On server: [global.config.server_name]
 Active test merges: [english_list(testmerges)]

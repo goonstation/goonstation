@@ -189,7 +189,7 @@
 
 		take_control(mob/living/carbon/human/M)
 			var/mob/living/carbon/human/slasher/W = src
-			slasher_key = src.ckey
+			slasher_key = src.get_ckey()
 			if(!istype(M))
 				return
 			SPAWN(0)

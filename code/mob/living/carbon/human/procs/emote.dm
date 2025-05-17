@@ -73,7 +73,7 @@
 							//else
 							playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						#ifdef HALLOWEEN
-						spooktober_GH.change_points(src.ckey, 30)
+						spooktober_GH.change_points(src.get_ckey(), 30)
 						#endif
 						for_by_tcl(P, /mob/living/critter/small_animal/opossum) // is this more or less intensive than a range(4)?
 							if (P.playing_dead) // already out
@@ -107,7 +107,7 @@
 						playsound(src, 'sound/effects/elec_bzzz.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 						screamed = TRUE
 					#ifdef HALLOWEEN
-					spooktober_GH.change_points(src.ckey, 100)
+					spooktober_GH.change_points(src.get_ckey(), 100)
 					#endif
 
 					if (!screamed)

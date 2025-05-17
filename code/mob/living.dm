@@ -331,7 +331,7 @@ TYPEINFO(/mob/living)
 		&& !isghostdrone(src) \
 		&& !islivingobject(src) \
 	)
-		respawn_controller.unsubscribeRespawnee(src.ckey)
+		respawn_controller.unsubscribeRespawnee(src.get_ckey())
 
 /mob/living/Life(datum/controller/process/mobs/parent)
 //#ifdef MAP_OVERRIDE_DESTINY
@@ -843,9 +843,9 @@ TYPEINFO(/mob/living)
 				message = "<B>[src]</B> hands [thing] to [M]."
 				if(istype(thing,/obj/item/toy/diploma))
 					var/obj/item/toy/diploma/D = thing
-					if(!D.receiver && D.redeemer == src.ckey)
+					if(!D.receiver && D.redeemer == src.get_ckey())
 						M.unlock_medal( "Unlike the director, I went to college", 1 )
-						D.receiver = M.ckey
+						D.receiver = M.get_ckey()
 						D.desc += " Awarded by the esteemed clown professor [src.name] to [M.name] at [o_clock_time()]."
 			else
 				src.put_in_hand_or_drop(thing)

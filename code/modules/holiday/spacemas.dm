@@ -471,12 +471,12 @@ proc/compare_ornament_score(list/a, list/b)
 		if(src.on_fire)
 			extinguish()
 		else if(uses_custom_ornaments)
-			if(user?.client?.ckey in src.got_ornament_kit)
+			if(user?.client?.get_ckey() in src.got_ornament_kit)
 				boutput(user, SPAN_ALERT("You've already gotten an ornament kit this round!"))
 				return
 			var/obj/item/storage/box/ornament_kit/kit = new(user)
 			user.put_in_hand_or_drop(kit)
-			LAZYLISTADD(src.got_ornament_kit, user.client?.ckey)
+			LAZYLISTADD(src.got_ornament_kit, user.client?.get_ckey())
 			boutput(user, SPAN_NOTICE("You take an ornament kit from under the tree."))
 		..()
 
@@ -544,7 +544,7 @@ proc/compare_ornament_score(list/a, list/b)
 			if(global.christmas_cheer < 20)
 				boutput(user, SPAN_ALERT("The atmosphere just isn't festive enough. Try increasing the Spacemas cheer!"))
 				return
-			if(user.ckey in src.ckeys_placed_this_round)
+			if(user.get_ckey() in src.ckeys_placed_this_round)
 				boutput(user, SPAN_ALERT("You've already hung an ornament this round!"))
 				return
 			var/obj/item/canvas/tree_ornament/ornament = W
@@ -557,7 +557,7 @@ proc/compare_ornament_score(list/a, list/b)
 				var/maybe_name = tgui_input_text(user, "What would you like to name your ornament?", "Name your ornament", ornament.name)
 				if(!maybe_name)
 					return
-				if(user.ckey in src.ckeys_placed_this_round)
+				if(user.get_ckey() in src.ckeys_placed_this_round)
 					boutput(user, SPAN_ALERT("You've already hung an ornament this round!"))
 					return
 				if(ornament.on_tree)
@@ -565,8 +565,8 @@ proc/compare_ornament_score(list/a, list/b)
 					return
 				user.drop_item(ornament)
 				ornament.name = maybe_name
-				ornament.main_artist = user.ckey
-				ornament.desc = "A Spacemas ornament by [user.ckey]."
+				ornament.main_artist = user.get_ckey()
+				ornament.desc = "A Spacemas ornament by [user.get_ckey()]."
 				ornament.finish(user)
 				var/empty_index = 0
 				for(var/i = 1 to length(src.placed_ornaments))
@@ -576,7 +576,7 @@ proc/compare_ornament_score(list/a, list/b)
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
 				logTheThing(LOG_STATION, user, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
 				boutput(user, SPAN_NOTICE("You hang \the [ornament.name] on the tree."))
-				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
+				LAZYLISTADD(src.ckeys_placed_this_round, user.get_ckey())
 		else
 			. = ..()
 
@@ -1237,9 +1237,9 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 		. = "A cool Spacemas ornament drawn by [src.main_artist].<br>"
 		var/highlight_up = ""
 		var/highlight_down = ""
-		if(user.ckey in src.upvoted)
+		if(user.get_ckey() in src.upvoted)
 			highlight_up = "font-weight: 900;"
-		if(user.ckey in src.downvoted)
+		if(user.get_ckey() in src.downvoted)
 			highlight_down = "font-weight: 900;"
 		. += {"<br>
 		<a href='byond://?src=\ref[src];upvote=1' style='color:#88ff88;[highlight_up]'>👍 (like)</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1269,15 +1269,15 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(usr.client?.player?.get_rounds_participated() <= 10)
 					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
-				if(usr.ckey in src.downvoted)
-					src.downvoted.Remove(usr.ckey)
-					src.upvoted += usr.ckey
+				if(usr.get_ckey() in src.downvoted)
+					src.downvoted.Remove(usr.get_ckey())
+					src.upvoted += usr.get_ckey()
 					boutput(usr, SPAN_ALERT("You changed your vote to upvote \the [src]."))
-				else if(usr.ckey in src.upvoted)
-					src.upvoted.Remove(usr.ckey)
+				else if(usr.get_ckey() in src.upvoted)
+					src.upvoted.Remove(usr.get_ckey())
 					boutput(usr, SPAN_ALERT("You removed your upvote from \the [src]."))
 				else
-					src.upvoted += usr.ckey
+					src.upvoted += usr.get_ckey()
 					boutput(usr, SPAN_ALERT("You upvoted \the [src]."))
 				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
 				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
@@ -1295,15 +1295,15 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(usr.client?.player?.get_rounds_participated() <= 10)
 					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
-				if(usr.ckey in src.upvoted)
-					src.upvoted.Remove(usr.ckey)
-					src.downvoted += usr.ckey
+				if(usr.get_ckey() in src.upvoted)
+					src.upvoted.Remove(usr.get_ckey())
+					src.downvoted += usr.get_ckey()
 					boutput(usr, SPAN_ALERT("You changed your vote to downvote \the [src]."))
-				else if(usr.ckey in src.downvoted)
-					src.downvoted.Remove(usr.ckey)
+				else if(usr.get_ckey() in src.downvoted)
+					src.downvoted.Remove(usr.get_ckey())
 					boutput(usr, SPAN_ALERT("You removed your downvote from \the [src]."))
 				else
-					src.downvoted += usr.ckey
+					src.downvoted += usr.get_ckey()
 					boutput(usr, SPAN_ALERT("You downvoted \the [src]."))
 				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
 				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
@@ -1340,7 +1340,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 			i++
 		get_spacemas_ornaments()[name] = list(
 			"art" = src.art,
-			"artist" = artist.ckey,
+			"artist" = artist.get_ckey(),
 			"upvoted" = list(),
 			"downvoted" = list(),
 		)

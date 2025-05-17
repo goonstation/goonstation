@@ -351,13 +351,13 @@
 		if (M.client.holder.level < LEVEL_PA)
 			boutput(M, SPAN_ALERT("You must be at least PA to use this."))
 			return 0*/
-		var/key = M.ckey
+		var/key = M.get_ckey()
 		if (!(key in critterCreators))
 			critterCreators += key
 		critterCreators[key] = new /datum/critterCreator
 
 	proc/getCreator(var/mob/M)
-		var/key = M.ckey
+		var/key = M.get_ckey()
 		if (!(key in critterCreators))
 			if (!blank(M))
 				return null
@@ -1884,7 +1884,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			template.is_template = 1
 			abilid = 0
 		else if (href_list["filesave"])
-			var/fname = "adventure/CRIT_SAVE_[usr.client.ckey]_[world.time]"
+			var/fname = "adventure/CRIT_SAVE_[usr.client.get_ckey()]_[world.time]"
 			if (fexists(fname))
 				fdel(fname)
 			usr.client.Export()
@@ -1894,15 +1894,15 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			F << null
 			var/datum/sandbox/S = new()
 			template.serialize(F, "critter", S)
-			if (fexists("adventure/critter_save_[usr.client.ckey].dat"))
-				fdel("adventure/critter_save_[usr.client.ckey].dat")
-			var/target = file("adventure/critter_save_[usr.client.ckey].dat")
+			if (fexists("adventure/critter_save_[usr.client.get_ckey()].dat"))
+				fdel("adventure/critter_save_[usr.client.get_ckey()].dat")
+			var/target = file("adventure/critter_save_[usr.client.get_ckey()].dat")
 			F.ExportText("/", target)
 			usr << ftp(target)
 			if (fexists(fname))
 				fdel(fname)
 		else if (href_list["fileload"])
-			var/fname = "adventure/CRIT_LOAD_[usr.client.ckey]"
+			var/fname = "adventure/CRIT_LOAD_[usr.client.get_ckey()]"
 			if (fexists(fname))
 				fdel(fname)
 			var/target = input("Select the saved critter to load.", "Saved critter upload", null) as file

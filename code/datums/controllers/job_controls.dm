@@ -68,7 +68,7 @@ var/datum/job_controller/job_controls
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.last_ckey] has no client.")
 			return
 		if (!job)
-			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested check with invalid job datum arg.")
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.get_ckey()] requested check with invalid job datum arg.")
 			return
 		if ((job.limit >= 0) && (job.assigned >= job.limit))
 			return
@@ -81,7 +81,7 @@ var/datum/job_controller/job_controls
 		if (HAS_FLAG(valid_categories, HIDDEN_JOBS))
 			valid_jobs.Add(src.hidden_jobs)
 		if (!valid_jobs.Find(job))
-			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.get_ckey()] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
@@ -97,11 +97,11 @@ var/datum/job_controller/job_controls
 				return
 		// job ban check
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
-			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.get_ckey()] requested [job.name], but is job banned.")
 			return
 		// trusted only job check
-		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.get_key()))))
-			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
+		if (job.trusted_only && (!(player.get_ckey() in mentors) && !NT.Find(ckey(player.mind.get_key()))))
+			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.get_ckey()] requested [job.name], a mentor only job.")
 			return
 		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
 		if (!job.allow_antag_fallthrough && player.antag_fallthrough)

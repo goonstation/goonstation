@@ -89,7 +89,7 @@
 
 			// tracks how many things someone's drawn on it.
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
-			artists[ckey(user.ckey)]++
+			artists[ckey(user.get_ckey())]++
 
 			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
@@ -161,9 +161,9 @@
 
 		// tracks how many things someone's drawn on it.
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
-		artists[ckey(usr.ckey)]++
+		artists[ckey(usr.get_ckey())]++
 		if(dot_color != "#00000000")
-			pixel_artists[pixel_id] = usr.ckey
+			pixel_artists[pixel_id] = usr.get_ckey()
 		logTheThing(LOG_STATION, usr, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
@@ -423,11 +423,11 @@
 	get_dot_color(mob/user)
 		if(text2num(user?.client.player.cloudSaves.getData("persistent_canvas_banned")))
 			return null
-		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
+		if((user.get_ckey() in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			boutput(user, SPAN_ALERT("The first brush stroke exhausted you too much. You will need to wait until the next shift for another."))
 			return null
 		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
-		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
+		if((user.get_ckey() in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			return null
 
 	attackby(obj/item/W, mob/user)
@@ -465,8 +465,8 @@
 	proc/redeem(mob/user, obj/item/canvas/canvas)
 		if (!user?.client || !canvas) return
 
-		if (user.ckey in canvas.artists)
-			canvas.artists -= user.ckey
+		if (user.get_ckey() in canvas.artists)
+			canvas.artists -= user.get_ckey()
 			user.show_text("[src] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
 			if (user.client.persistent_bank_item == "Pixel Pass")
 				user.client.persistent_bank_item = "none"

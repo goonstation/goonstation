@@ -463,15 +463,15 @@
 				qdel(src)
 				return
 			bansHandler.add(
-				caller_mob.ckey,
+				caller_mob.get_ckey(),
 				null,
-				tysontarget2.ckey,
+				tysontarget2.get_ckey(),
 				tysontarget2.computer_id,
 				tysontarget2.client.address,
 				tysonreason,
 				tysonmins2 * 60 * 10
 			)
-			boutput(tysontarget2, SPAN_ALERT("<BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG>"))
+			boutput(tysontarget2, SPAN_ALERT("<BIG><B>You have been tysoned by [usr.client.get_ckey()].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG>"))
 			boutput(tysontarget2, SPAN_ALERT("This is a temporary tysonban, it will be removed in [tysonmins2] minutes."))
 			logTheThing(LOG_ADMIN, caller_mob, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
 			logTheThing(LOG_DIARY, caller_mob, "has tysonbanned [constructTarget(tysontarget2,"diary")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")

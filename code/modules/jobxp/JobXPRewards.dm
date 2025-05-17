@@ -13,8 +13,8 @@ mob/verb/checkrewards()
 
 	SPAWN(0)
 		var/mob/M = usr
-		if(!winexists(M, "winjobrewards_[M.ckey]"))
-			winclone(M, "winJobRewards", "winjobrewards_[M.ckey]")
+		if(!winexists(M, "winjobrewards_[M.get_ckey()]"))
+			winclone(M, "winJobRewards", "winjobrewards_[M.get_ckey()]")
 
 		var/list/valid = list()
 		for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
@@ -23,17 +23,17 @@ mob/verb/checkrewards()
 				valid[J] = xpRewardButtons[J]
 
 		if(valid.len)
-			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x[valid.len]\"")
+			winset(M, "winjobrewards_[M.get_ckey()].grdJobRewards", "cells=\"1x[valid.len]\"")
 			var/count = 0
 			for(var/S in valid)
-				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
-				M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
-			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.get_key(), job)]\"")
+				winset(M, "winjobrewards_[M.get_ckey()].grdJobRewards", "current-cell=1,[++count]")
+				M << output(valid[S], "winjobrewards_[M.get_ckey()].grdJobRewards")
+			winset(M, "winjobrewards_[M.get_ckey()].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.get_key(), job)]\"")
 		else
-			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
-			winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
-			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
-		winshow(M, "winjobrewards_[M.ckey]")
+			winset(M, "winjobrewards_[M.get_ckey()].grdJobRewards", "cells=\"1x0\"")
+			winset(M, "winjobrewards_[M.get_ckey()].lblrewarddesc", "text=\"Sorry nothing.\"")
+			winset(M, "winjobrewards_[M.get_ckey()].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
+		winshow(M, "winjobrewards_[M.get_ckey()]")
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
@@ -44,7 +44,7 @@ mob/verb/checkrewards()
 
 	Click(location,control,params)
 		if(control && rewardDatum)
-			if(control == "winjobrewards_[usr.ckey].grdJobRewards")
+			if(control == "winjobrewards_[usr.get_ckey()].grdJobRewards")
 				if(rewardDatum.claimable && (usr.job in rewardDatum.required_levels) && rewardDatum.qualifies(usr.get_key())) //Check for number of claims.
 					var/claimsLeft = 1
 					if(rewardDatum.claimPerRound > 0)
@@ -68,12 +68,12 @@ mob/verb/checkrewards()
 		return
 
 	MouseEntered(location,control,params)
-		if(winexists(usr, "winjobrewards_[usr.ckey]"))
+		if(winexists(usr, "winjobrewards_[usr.get_ckey()]"))
 			var/str = ""
 			for(var/X in rewardDatum.required_levels)
 				str += "[X] [rewardDatum.required_levels[X]],"
 			str = copytext(str,1,length(str))
-			winset(usr, "winjobrewards_[usr.ckey].lblrewarddesc", "text=\"[rewardDatum.desc] | Required levels: [str]\"")
+			winset(usr, "winjobrewards_[usr.get_ckey()].lblrewarddesc", "text=\"[rewardDatum.desc] | Required levels: [str]\"")
 		return
 
 /proc/qualifiesXpByName(var/key, var/name)

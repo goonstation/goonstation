@@ -241,7 +241,7 @@ var/global/area/current_battle_spawn = null
 		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(length(living_battlers) == 1)
-		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
+		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.get_ckey()]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")

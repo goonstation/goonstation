@@ -5,7 +5,7 @@
 /// Unless dont_serialize_icon is set, also serializes the icon in the file, otherwise only saves the particle properties.
 /particles/proc/particleset_serialize_dialog(var/dont_serialize_icon = 0)
 	var/datum/sandbox/sandbox = new /datum/sandbox()
-	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.ckey].sav"
+	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.get_ckey()].sav"
 	var/savefile/saveFile = new /savefile()
 
 	saveFile["DM_VERSION"] << DM_VERSION
@@ -32,7 +32,7 @@
 /particles/proc/particleset_deserialize_file(var/target)
 	if (!target)
 		return
-	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.ckey].sav"
+	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.get_ckey()].sav"
 	if (fexists(fname))
 		fdel(fname)
 	var/savefile/saveFile = new /savefile(fname)

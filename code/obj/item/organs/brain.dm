@@ -19,7 +19,7 @@
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
-		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""] [log_loc(src)]. Brain last touched by [src.fingerprintslast].")
+		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.get_ckey()]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""] [log_loc(src)]. Brain last touched by [src.fingerprintslast].")
 
 		if (owner && owner.brain == src)
 			owner.brain = null
@@ -42,13 +42,13 @@
 			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
 				if (!(src in user.equipped_list())) //stop remotely eating people's brains please
 					return TRUE
-				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
+				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.get_ckey() : null]).")
 				return ..()
 		else
 			if(tgui_alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", list("Yes", "No")) == "Yes")
 				if (!(src in user.equipped_list()))
 					return TRUE
-				logTheThing(LOG_COMBAT, user, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [constructName(M)].")
+				logTheThing(LOG_COMBAT, user, "tries to feed [src] (owner's ckey [owner ? owner.get_ckey() : null]) to [constructName(M)].")
 				return ..()
 		return FALSE
 

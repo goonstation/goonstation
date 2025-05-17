@@ -678,7 +678,7 @@
 	add_lifeprocess(/datum/lifeprocess/decomposition)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-		if (src.mind.ckey && !inafterlife(src))
+		if (src.mind.get_ckey() && !inafterlife(src))
 			var/turf/where = get_turf(src)
 			var/where_text = "Unknown (?, ?, ?)"
 			if (where)
@@ -686,7 +686,7 @@
 
 			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
 #ifdef DATALOGGER
-			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
+			game_stats.AddDeath(src.name, src.get_ckey(), src.loc, log_health(src))
 #endif
 		src.mind.register_death()
 

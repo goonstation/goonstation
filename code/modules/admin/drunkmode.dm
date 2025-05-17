@@ -168,7 +168,7 @@ var/list/dangerousVerbs = list(\
 		//turn it off
 		C.clear_admin_verbs()
 		C.update_admins(C.holder.priorRank)
-		admins[C.ckey] = C.holder.priorRank
+		admins[C.get_ckey()] = C.holder.priorRank
 		C.holder.drunk = 0
 
 		if (forced)
@@ -185,7 +185,7 @@ var/list/dangerousVerbs = list(\
 		C.holder.priorRank = C.holder.rank
 		C.holder.rank = "Drunkmin"
 		C.verbs -= dangerousVerbs
-		admins[C.ckey] = "Drunkmin"
+		admins[C.get_ckey()] = "Drunkmin"
 		C.holder.drunk = 1
 
 		if (forced)

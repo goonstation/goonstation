@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
-		if (!C.ckey || !C.mind)
+		if (!C.get_ckey() || !C.mind)
 			return 1
 		if (C.mind?.special_role != "Syndicate")
 			return 1
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
-		if (!C.ckey || !C.mind)
+		if (!C.get_ckey() || !C.mind)
 			return 1
 		if (C.mind.special_role != "NanoTrasen")
 			return 1

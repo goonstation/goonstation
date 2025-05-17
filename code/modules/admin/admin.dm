@@ -112,7 +112,7 @@ var/global/noir = 0
 		href_list["target"] = href_list["targetmob"]
 
 	var/originWindow
-	// var/adminCkey = usr.client.ckey
+	// var/adminCkey = usr.client.get_ckey()
 	var/client/adminClient = usr.client
 	if (href_list["origin"])
 		originWindow = href_list["origin"]
@@ -432,7 +432,7 @@ var/global/noir = 0
 			var/player = null
 			var/mob/M = locate(href_list["target"])
 			if(M)
-				player = M.ckey
+				player = M.get_ckey()
 			else
 				player = href_list["target"]
 			if(!player)
@@ -478,7 +478,7 @@ var/global/noir = 0
 					if (isnull(the_note) || !length(the_note))
 						return
 
-					addPlayerNote(player, usr.ckey, the_note)
+					addPlayerNote(player, usr.get_ckey(), the_note)
 					SPAWN(2 SECONDS) src.viewPlayerNotes(player)
 
 					logTheThing(LOG_ADMIN, usr, "added a note for [player]: [the_note]")
@@ -495,7 +495,7 @@ var/global/noir = 0
 			var/player = null
 			var/mob/M = locate(href_list["target"])
 			if(M)
-				player = M.ckey
+				player = M.get_ckey()
 			else
 				player = href_list["target"]
 			if(!player)
@@ -628,7 +628,7 @@ var/global/noir = 0
 				if ((M.client && M.client.holder && (M.client.holder.level > src.level)))
 					tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 					return
-				var/datum/player/player = make_player(M.ckey) //Get the player so we can use their bancache.
+				var/datum/player/player = make_player(M.get_ckey()) //Get the player so we can use their bancache.
 				if (jobban_isbanned(M, job))
 					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
@@ -648,37 +648,37 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "unbanned [constructTarget(M,"admin")] from [job]")
 					logTheThing(LOG_DIARY, usr, "unbanned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins(SPAN_INTERNAL("[key_name(usr)] unbanned [key_name(M)] from [job]"))
-					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
-					jobban_unban(M, job, usr.ckey)
+					addPlayerNote(M.get_ckey(), usr.get_ckey(), "[usr.get_ckey()] unbanned [M.get_ckey()] from [job]")
+					jobban_unban(M, job, usr.get_ckey())
 					if (announce_jobbans) boutput(M, SPAN_ALERT("<b>[key_name(usr)] has lifted your [job] job-ban.</b>"))
 				else
 					logTheThing(LOG_ADMIN, usr, "banned [constructTarget(M,"admin")] from [job]")
 					logTheThing(LOG_DIARY, usr, "banned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins(SPAN_INTERNAL("[key_name(usr)] banned [key_name(M)] from [job]"))
-					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
+					addPlayerNote(M.get_ckey(), usr.get_ckey(), "[usr.get_ckey()] banned [M.get_ckey()] from [job]")
 					if(job == "Everything Except Assistant")
 						if(player.cached_jobbans.Find("Engineering Department"))
-							jobban_unban(M,"Engineering Department", usr.ckey)
+							jobban_unban(M,"Engineering Department", usr.get_ckey())
 						if(player.cached_jobbans.Find("Security Department"))
-							jobban_unban(M,"Security Department", usr.ckey)
+							jobban_unban(M,"Security Department", usr.get_ckey())
 						if(player.cached_jobbans.Find("Heads of Staff"))
-							jobban_unban(M,"Heads of Staff", usr.ckey)
+							jobban_unban(M,"Heads of Staff", usr.get_ckey())
 						for(var/Trank1 in uniquelist(occupations))
 							if(player.cached_jobbans.Find("[Trank1]"))
-								jobban_unban(M,Trank1, usr.ckey)
+								jobban_unban(M,Trank1, usr.get_ckey())
 					else if(job == "Engineering Department")
 						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(player.cached_jobbans.Find("[Trank2]"))
-								jobban_unban(M,Trank2, usr.ckey)
+								jobban_unban(M,Trank2, usr.get_ckey())
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 							if(player.cached_jobbans.Find("[Trank3]"))
-								jobban_unban(M,Trank3, usr.ckey)
+								jobban_unban(M,Trank3, usr.get_ckey())
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 							if(player.cached_jobbans.Find("[Trank4]"))
-								jobban_unban(M,Trank4, usr.ckey)
-					jobban_fullban(M, job, usr.ckey)
+								jobban_unban(M,Trank4, usr.get_ckey())
+					jobban_fullban(M, job, usr.get_ckey())
 					if (announce_jobbans) boutput(M, SPAN_ALERT("<b>[key_name(usr)] has job-banned you from [job].</b>"))
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to work with job bans.")
@@ -708,36 +708,36 @@ var/global/noir = 0
 					logTheThing(LOG_ADMIN, usr, "unbanned [constructName(M)](Offline) from [job]")
 					logTheThing(LOG_DIARY, usr, "unbanned [constructName(M)](Offline) from [job]", "admin")
 					message_admins(SPAN_INTERNAL("[key_name(usr)] unbanned [M](Offline) from [job]"))
-					addPlayerNote(M, usr.ckey, "[usr.ckey] unbanned [M](Offline) from [job]")
-					jobban_unban(M, job, usr.ckey)
+					addPlayerNote(M, usr.get_ckey(), "[usr.get_ckey()] unbanned [M](Offline) from [job]")
+					jobban_unban(M, job, usr.get_ckey())
 				else
 					logTheThing(LOG_ADMIN, usr, "banned [constructName(M)](Offline) from [job]")
 					logTheThing(LOG_DIARY, usr, "banned [constructName(M)](Offline) from [job]", "admin")
 					message_admins(SPAN_INTERNAL("[key_name(usr)] banned [M](Offline) from [job]"))
-					addPlayerNote(M, usr.ckey, "[usr.ckey] banned [M](Offline) from [job]")
+					addPlayerNote(M, usr.get_ckey(), "[usr.get_ckey()] banned [M](Offline) from [job]")
 					if(job == "Everything Except Assistant")
 						if(cache.Find("Engineering Department"))
-							jobban_unban(M,"Engineering Department", usr.ckey)
+							jobban_unban(M,"Engineering Department", usr.get_ckey())
 						if(cache.Find("Security Department"))
-							jobban_unban(M,"Security Department", usr.ckey)
+							jobban_unban(M,"Security Department", usr.get_ckey())
 						if(cache.Find("Heads of Staff"))
-							jobban_unban(M,"Heads of Staff", usr.ckey)
+							jobban_unban(M,"Heads of Staff", usr.get_ckey())
 						for(var/Trank1 in uniquelist(occupations))
 							if(cache.Find("[Trank1]"))
-								jobban_unban(M,Trank1, usr.ckey)
+								jobban_unban(M,Trank1, usr.get_ckey())
 					else if(job == "Engineering Department")
 						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(cache.Find("[Trank2]"))
-								jobban_unban(M,Trank2, usr.ckey, usr.ckey)
+								jobban_unban(M,Trank2, usr.get_ckey(), usr.get_ckey())
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Detective"))
 							if(cache.Find("[Trank3]"))
-								jobban_unban(M,Trank3, usr.ckey, usr.ckey)
+								jobban_unban(M,Trank3, usr.get_ckey(), usr.get_ckey())
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 							if(cache.Find("[Trank4]"))
-								jobban_unban(M,Trank4, usr.ckey, usr.ckey)
-					jobban_fullban(M, job, usr.ckey)
+								jobban_unban(M,Trank4, usr.get_ckey(), usr.get_ckey())
+					jobban_fullban(M, job, usr.get_ckey())
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to work with job bans.")
 
@@ -1916,7 +1916,7 @@ var/global/noir = 0
 			for (var/V as anything in M.mind.antagonists)
 				var/datum/antagonist/A = V
 				if (A.mutually_exclusive)
-					if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
+					if (tgui_alert(usr, "[M.real_name] (ckey [M.get_ckey()]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
 						return
 				break
 			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Antagonist", antag_options)
@@ -1939,13 +1939,13 @@ var/global/noir = 0
 					do_objectives_text = "Objectives will be generated automatically"
 				if ("Custom")
 					do_objectives_text = "A custom objective will be added"
-			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. [do_objectives_text]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.get_ckey()]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. [do_objectives_text]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
-			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
+			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.get_ckey()])..."))
 			M.onProcCalled("add_antagonist", list(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
-				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.get_ckey()]) is now \a [selected_keyvalue]."))
 				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
 				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
@@ -1972,7 +1972,7 @@ var/global/noir = 0
 			for (var/V as anything in M.mind.antagonists)
 				var/datum/antagonist/A = V
 				if (A.mutually_exclusive)
-					if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
+					if (tgui_alert(usr, "[M.real_name] (ckey [M.get_ckey()]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
 						return
 				break
 			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Subordinate Antagonist", antag_options)
@@ -1992,14 +1992,14 @@ var/global/noir = 0
 			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Subordinate Antagonist", list("Yes", "No", "Cancel"))
 			if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
 				return
-			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.get_ckey()]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
-			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
+			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.get_ckey()])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
 				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
 				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
-				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.get_ckey()]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
 
@@ -2011,14 +2011,14 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["targetmob"])
 			if (!antag || !M?.mind)
 				return
-			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
+			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.get_ckey()])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
-			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
+			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.get_ckey()])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
 				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
 				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
-				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
+				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.get_ckey()])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
 
@@ -2029,14 +2029,14 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["targetmob"])
 			if (!M?.mind)
 				return
-			if (tgui_alert(usr, "Really remove all antagonists from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
+			if (tgui_alert(usr, "Really remove all antagonists from [M.real_name] (ckey [M.get_ckey()])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
-			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
+			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.get_ckey()])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
 				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
 				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
-				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
+				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.get_ckey()]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
 
@@ -2116,7 +2116,7 @@ var/global/noir = 0
 					ircmsg["msg"] = "has removed [C]'s adminship"
 					ircbot.export_async("admin", ircmsg)
 
-					admins.Remove(C.ckey)
+					admins.Remove(C.get_ckey())
 					onlineAdmins.Remove(C)
 				else
 					C.clear_admin_verbs()
@@ -2131,7 +2131,7 @@ var/global/noir = 0
 					ircmsg["msg"] = "has made [C] a [rank]"
 					ircbot.export_async("admin", ircmsg)
 
-					admins[C.ckey] = rank
+					admins[C.get_ckey()] = rank
 					onlineAdmins.Add(C)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Adminstrator to promote or demote.")
@@ -2260,7 +2260,7 @@ var/global/noir = 0
 				if (!M)
 					return
 				//frick u im literally an admin
-				// if (M.ckey && M.ckey == usr.ckey)
+				// if (M.get_ckey() && M.ckey == usr.get_ckey())
 				// 	tgui_alert(usr, "You cannot modify your own antag tokens.")
 				// 	return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
@@ -3475,7 +3475,7 @@ var/global/noir = 0
 						var/dat = "<B>Showing Crew Manifest.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Original Position</th><th>Position</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
-							if(H.ckey)
+							if(H.get_ckey())
 								var/obj/item/card/id/id_card = get_id_card(H.wear_id)
 								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(id_card)) ? "[id_card.assignment]" : "Unknown Position"]</td></tr>"
 							LAGCHECK(LAG_LOW)
@@ -3498,7 +3498,7 @@ var/global/noir = 0
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
-							if(H.ckey)
+							if(H.get_ckey())
 								dat += "<tr><td>[H]</td><td>[H.bioHolder.Uid]</td><td>[H.bioHolder.bloodType]</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
@@ -3507,7 +3507,7 @@ var/global/noir = 0
 						var/dat = "<B>Showing Fingerprints.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
-							if(H.ckey)
+							if(H.get_ckey())
 								if(H.bioHolder.Uid)
 									dat += "<tr><td>[H]</td><td>[H.bioHolder.fingerprints]</td></tr>"
 								else if(!H.bioHolder.Uid)

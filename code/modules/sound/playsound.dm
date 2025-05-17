@@ -276,8 +276,8 @@ proc/is_music_playing()
 			message_admins(SPAN_ALERT("Error returned from cobalt tools remote music thing: [url]."))
 			return
 		var/mock_data = list()
-		mock_data["admin_ckey"] = M.ckey
-		mock_data["key"] = M.ckey
+		mock_data["admin_ckey"] = M.get_ckey()
+		mock_data["key"] = M.get_ckey()
 		mock_data["file"] = url
 		mock_data["title"] = filename
 		mock_data["filesize"] = "?"
@@ -291,7 +291,7 @@ proc/is_music_playing()
 /* rip yt-dlg
 	try
 		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
-		playRemoteMusic.buildBody(video_url, roundId, M.ckey)
+		playRemoteMusic.buildBody(video_url, roundId, M.get_ckey())
 		apiHandler.queryAPI(playRemoteMusic)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name

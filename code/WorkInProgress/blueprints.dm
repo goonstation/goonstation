@@ -457,7 +457,7 @@
 		src.name += ": [src.room_name]"
 
 	attack_self(mob/user)
-		if (!user?.client?.ckey)
+		if (!user?.client?.get_ckey())
 			. = ..()
 			return
 		if (!src.blueprint_path || !fexists(src.blueprint_path))
@@ -467,15 +467,15 @@
 		var/input = ckeyEx(tgui_input_text(user, "You are copying '[src.room_name]' to your own collection. \
 			Choose a file name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", ckeyEx(src.room_name), 54))
 		var/timeout = 0
-		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
-			if (!user?.client?.ckey || timeout > 5)
+		while (input && fexists("data/blueprints/[user.client.get_ckey()]/[input].dat"))
+			if (!user?.client?.get_ckey() || timeout > 5)
 				boutput(user, SPAN_ALERT("Copy operation timed out. Please try again."))
 				return
 			input = ckeyEx(tgui_input_text(user, "A blueprint named '[input]' already exists. Please input another, or cancel.",
 				"Copy Homework", input, 54)) // handy dandy prompt autofilled with the last used input
 			timeout++
 		if (!input) return
-		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.get_ckey()]/[input].dat")
 		boutput(user, SPAN_NOTICE("Copied this blueprint! Its filename is: '[input]'."))
 
 	afterattack(atom/target, mob/user)
@@ -574,7 +574,7 @@
 	var/list/roominfo = list()
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
-	if (!user.client.ckey) return
+	if (!user.client.get_ckey()) return
 	if (!length(turf_list))
 		boutput(user, SPAN_ALERT("There are no selected tiles to save."))
 		return
@@ -586,7 +586,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!input) return
 	// raw input goes into savefile's roomname, sanitized goes into filename
 	var/input_sanitized = ckeyEx(input)
-	var/savepath = "data/blueprints/[user.client.ckey]/[input_sanitized].dat"
+	var/savepath = "data/blueprints/[user.client.get_ckey()]/[input_sanitized].dat"
 
 	var/savefile/save = new/savefile("[savepath]") // creates a save, or loads an existing one
 	save.cd = "/"
@@ -618,7 +618,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save["sizex"] << sizex
 	save["sizey"] << sizey
 	save["roomname"] << input
-	save["author"] << user.client.ckey
+	save["author"] << user.client.get_ckey()
 	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
@@ -749,7 +749,7 @@ proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/descr
 		if(!inputuser) return
 		picked_ckey = splittext(inputuser, "/")[1]
 	else
-		picked_ckey = user.client.ckey
+		picked_ckey = user.client.get_ckey()
 	if (!picked_ckey) return
 
 	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
@@ -1029,10 +1029,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 
 	var/savefile/save = new/savefile("data/blueprints.dat")
 	save.cd = "/"
-	if (!save.dir.Find("[user.client.ckey]"))
+	if (!save.dir.Find("[user.client.get_ckey()]"))
 		boutput(user, SPAN_ALERT("Your user wasn't found in the blueprints file. Stopping."))
 		return
-	save.cd = "/[user.client.ckey]"
+	save.cd = "/[user.client.get_ckey()]"
 	var/list/bplist = save.dir
 
 	if (!length(bplist))
@@ -1040,7 +1040,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		return
 	var/input = tgui_input_list(user, "Select a blueprint to migrate.", "Blueprints", bplist)
 	if (!input) return
-	var/old_save_path = "/[user.client.ckey]/[input]"
+	var/old_save_path = "/[user.client.get_ckey()]/[input]"
 	save.cd = old_save_path
 
 	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
@@ -1050,7 +1050,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	if (!new_save_name) return
 	// raw input goes into savefile's roomname, sanitized goes into filename
 	var/new_save_name_sanitized = ckeyEx(new_save_name)
-	var/savepath = "data/blueprints/[user.client.ckey]/[new_save_name_sanitized].dat"
+	var/savepath = "data/blueprints/[user.client.get_ckey()]/[new_save_name_sanitized].dat"
 
 	var/savefile/new_save = new/savefile(savepath) // creates a save, or loads an existing one
 	new_save.cd = "/"
@@ -1065,7 +1065,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	new_save["sizex"] << save["sizex"]
 	new_save["sizey"] << save["sizey"]
 	new_save["roomname"] << new_save_name
-	new_save["author"] << user.client.ckey
+	new_save["author"] << user.client.get_ckey()
 	var/turf_count = 0
 	var/obj_count = 0
 

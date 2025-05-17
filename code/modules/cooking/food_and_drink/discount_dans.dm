@@ -301,7 +301,7 @@
 	heal(var/mob/M)
 		..()
 		if (prob(5))
-			if (M.mind && M.mind.ckey)
+			if (M.mind && M.mind.get_ckey())
 				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else
@@ -362,7 +362,7 @@
 
 	/*heal(var/mob/M)
 		if (prob(5))
-			if (M.mind && M.mind.ckey)
+			if (M.mind && M.mind.get_ckey())
 				boutput(M, SPAN_NOTICE("You find a shiny platinum ticket in this bite!"))
 				new /obj/item/ticket/platinum(get_turf(M))
 			else
@@ -565,7 +565,7 @@
 	heal(var/mob/M)
 		..()
 		if (prob(8))
-			if (M.mind && M.mind.ckey)
+			if (M.mind && M.mind.get_ckey())
 				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else
@@ -595,7 +595,7 @@
 	heal(var/mob/M)
 		..()
 		if (prob(5))
-			if (M.mind && M.mind.ckey)
+			if (M.mind && M.mind.get_ckey())
 				boutput(M, SPAN_NOTICE("You find a shiny golden ticket in this bite!"))
 				new /obj/item/ticket/golden(get_turf(M))
 			else

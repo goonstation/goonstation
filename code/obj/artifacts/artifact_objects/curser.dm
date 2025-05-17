@@ -129,11 +129,11 @@
 			for (var/mob/living/carbon/human/cursed in src.active_cursees)
 				youngest_age = min(youngest_age, cursed.bioHolder.age)
 
-			if (H.bioHolder.age >= youngest_age || (H.ckey in src.participants))
+			if (H.bioHolder.age >= youngest_age || (H.get_ckey() in src.participants))
 				boutput(user, "<b>[O]</b> doesn't respond.")
 				return TRUE
 			boutput(user, "Your knuckles hurt kinda")
-			src.participants.Add(H.ckey)
+			src.participants.Add(H.get_ckey())
 			if (length(src.participants) >= 3)
 				src.lift_curse(TRUE)
 				src.participants = list()

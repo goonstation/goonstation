@@ -61,7 +61,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 				A = null
 				return
 			saving = 1
-			var/fname = "adventure/map_save_[usr.client.ckey].dmm"
+			var/fname = "adventure/map_save_[usr.client.get_ckey()].dmm"
 			if (fexists(fname))
 				fdel(fname)
 			var/target = file(fname)

@@ -18,7 +18,7 @@
 /datum/apiModel/Tracked/PlayerResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.ckey) \
+		isnull(src.get_ckey()) \
 		|| isnull(src.get_key()) \
 		|| isnull(src.byond_major) \
 		|| isnull(src.byond_minor) \
@@ -28,7 +28,7 @@
 /datum/apiModel/Tracked/PlayerResource/ToList()
 	. = ..()
 	.["id"] = src.id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["key"] = src.get_key()
 	.["byond_join_date"] = src.byond_join_date
 	.["byond_major"] = src.byond_major

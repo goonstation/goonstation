@@ -358,7 +358,7 @@ proc/Create_Tommyname()
 		if(!istype(M))
 			return
 		if(istype(M, /mob/living/carbon/human) && !activated)
-			switch(M.ckey)
+			switch(M.get_ckey())
 				if("hydrofloric")
 					return
 				if("kyle2143")

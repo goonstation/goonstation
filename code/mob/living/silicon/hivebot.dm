@@ -95,7 +95,7 @@
 /*
 	if(src.client)
 		SPAWN(0)
-			var/key = src.ckey
+			var/key = src.get_ckey()
 			recently_dead += key
 			sleep(recently_time)
 			recently_dead -= key

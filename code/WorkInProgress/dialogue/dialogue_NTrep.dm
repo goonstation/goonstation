@@ -80,11 +80,11 @@ This file serves as an example for various things that could be done with dialog
 
 		onActivate(var/client/C)
 			var/X = input(C,"ENTER THING","TEST","Hello") as text
-			inputs[C.ckey] = X
+			inputs[C.get_ckey()] = X
 			return
 
 		getNodeText(var/client/C)
-			return "You entered '[inputs[C.ckey]]'"
+			return "You entered '[inputs[C.get_ckey()]]'"
 
 	ntwho
 		nodeImage = "ntrep_sad.png"

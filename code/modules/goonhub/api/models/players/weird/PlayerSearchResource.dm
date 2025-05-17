@@ -33,7 +33,7 @@
 		|| isnull(src.ip) \
 		|| isnull(src.comp_id) \
 		|| isnull(src.player_id) \
-		|| isnull(src.ckey) \
+		|| isnull(src.get_ckey()) \
 		|| isnull(src.created_at) \
 	)
 		return FALSE
@@ -44,5 +44,5 @@
 	.["ip"] = src.ip
 	.["comp_id"] = src.comp_id
 	.["player_id"] = src.player_id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["created_at"] = src.created_at

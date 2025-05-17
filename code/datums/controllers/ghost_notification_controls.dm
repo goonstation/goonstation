@@ -42,8 +42,8 @@ var/datum/ghost_notification_controller/ghost_notifier
 		var/mob/dead/observer/O = C.mob
 		if(O && N.is_authorised(O))
 			// check if this is blacklisted for the round
-			if(O.ckey && (O.ckey in notifications_blacklist))
-				var/list/blacklist = notifications_blacklist[O.ckey]
+			if(O.get_ckey() && (O.get_ckey() in notifications_blacklist))
+				var/list/blacklist = notifications_blacklist[O.get_ckey()]
 				if("[N.type]" in blacklist)
 					continue // no notification for this guy
 			to_notify |= O
@@ -51,12 +51,12 @@ var/datum/ghost_notification_controller/ghost_notifier
 	active_notifications[N.get_key()] = N
 
 /datum/ghost_notification_controller/proc/add_notification_to_blacklist(var/mob/M, var/datum/ghost_notification/N)
-	if(!M || !M.ckey || !N)
+	if(!M || !M.get_ckey() || !N)
 		return
-	var/list/blacklist = notifications_blacklist[M.ckey]
+	var/list/blacklist = notifications_blacklist[M.get_ckey()]
 	if(!blacklist)
 		blacklist = list()
-		notifications_blacklist[M.ckey] = blacklist
+		notifications_blacklist[M.get_ckey()] = blacklist
 	blacklist |= "[N.type]"
 
 

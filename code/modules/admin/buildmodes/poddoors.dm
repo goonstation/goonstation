@@ -12,11 +12,11 @@ Ctrl + RMB                             = Remove pod door or door control<br>
 
 	New()
 		..()
-		id = "[holder.owner.ckey]0"
+		id = "[holder.owner.get_ckey()]0"
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		counter++
-		id = "[usr.client.ckey][counter]"
+		id = "[usr.client.get_ckey()][counter]"
 		boutput(usr, SPAN_NOTICE("ID now: [id]"))
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

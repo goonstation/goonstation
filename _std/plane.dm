@@ -92,7 +92,7 @@ client
 	var/atom/movable/screen/plane_display/master/game_display
 
 	New()
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
+		Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DISTORTION, appearance_flags = NO_CLIENT_COLOR, name = "*distortion_plane", mouse_opacity = 0, is_screen = TRUE, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))

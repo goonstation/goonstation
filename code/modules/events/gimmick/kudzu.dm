@@ -445,9 +445,9 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 					if(H in src)
 						H.full_heal()
-						if (!H.ckey && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
+						if (!H.get_ckey() && H.last_client && !H.last_client.mob.mind.get_player()?.dnr)
 							if (!istype(H.last_client.mob,/mob/living) || inafterlifebar(H.last_client.mob))
-								H.ckey = H.last_client.ckey
+								H.ckey = H.last_client.get_ckey()
 						if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 							var/datum/abilityHolder/composite/Comp = H.abilityHolder
 							Comp.removeHolder(/datum/abilityHolder/kudzu)

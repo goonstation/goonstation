@@ -177,7 +177,7 @@ var/global/datum/phrase_log/phrase_log = new
 		if(pos)
 			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
-			ircmsg["key"] = user.ckey
+			ircmsg["key"] = user.get_ckey()
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["pos"] = pos+2+length(category)+4
 			ircmsg["phrase"] = "\[[uppertext(category)]\]: [phrase]"

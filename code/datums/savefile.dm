@@ -163,7 +163,7 @@
 		if (loadFrom)
 			F = loadFrom
 		else if (user)
-			path = savefile_path(user.ckey)
+			path = savefile_path(user.get_ckey())
 			if (!fexists(path))
 				return 0
 			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
@@ -461,7 +461,7 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-		var/path = savefile_path(user.ckey)
+		var/path = savefile_path(user.get_ckey())
 
 		if (!fexists(path))
 			return 0
@@ -500,7 +500,7 @@
 			if (IsGuestKey( user.get_key() ))
 				return FALSE
 
-		var/savefile/save = src.savefile_save(user.ckey, 1, 1)
+		var/savefile/save = src.savefile_save(user.get_ckey(), 1, 1)
 		var/exported = save.ExportText()
 
 		return user.player.cloudSaves.putSave(name, exported)

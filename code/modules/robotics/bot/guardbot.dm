@@ -3871,7 +3871,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							END_NEAT
 						return
 
-					if (!(src.neat_things & NT_DORK) && (H.client && (H.client.IsByondMember() || H.traitHolder?.hasTrait("wasitsomethingisaid")) && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
+					if (!(src.neat_things & NT_DORK) && (H.client && (H.client.IsByondMember() || H.traitHolder?.hasTrait("wasitsomethingisaid")) && prob(5)))// || (H.get_ckey() in Dorks))) //If this is too mean to clarks, remove that part I guess
 						FOUND_NEAT(NT_DORK)
 							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
 							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "

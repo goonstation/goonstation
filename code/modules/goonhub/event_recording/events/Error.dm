@@ -26,6 +26,6 @@
 			invalid ? null : E.line,
 			E.desc ? E.desc : null,
 			user ? (userMob ? "[userMob]" : "[user]") : null,
-			userMob ? userMob.ckey : null,
+			userMob ? userMob.get_ckey() : null,
 			invalid
 		)

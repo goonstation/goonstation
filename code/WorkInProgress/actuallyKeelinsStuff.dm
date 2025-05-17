@@ -3280,7 +3280,7 @@ var/list/lag_list = new/list()
 	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(ckey_lock && user.ckey != ckey_lock)
+		if(ckey_lock && user.get_ckey() != ckey_lock)
 			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		if(BOUNDS_DIST(target, user) > 0)
@@ -3298,7 +3298,7 @@ var/list/lag_list = new/list()
 		return
 
 	attack_self(mob/user as mob)
-		if(ckey_lock && user.ckey != ckey_lock)
+		if(ckey_lock && user.get_ckey() != ckey_lock)
 			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		var/dat = "Engie-box modes:<BR><BR>"

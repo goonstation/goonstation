@@ -36,7 +36,7 @@ proc/save_compids(var/ckey, var/list/datum/compid_info/cid_list)
 		SF << CI
 
 proc/check_compid_list(var/client/C)
-	C.compid_info_list = load_compids(C.ckey)
+	C.compid_info_list = load_compids(C.get_ckey())
 
 	var/append_CID = 1
 
@@ -44,10 +44,10 @@ proc/check_compid_list(var/client/C)
 		if(CI.compid == C.computer_id) //Seen this computer ID before
 			append_CID = 0
 			/* This will never happen what the fuck is wrong with me?
-			if (CI.last_ckey != C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
+			if (CI.last_ckey != C.get_ckey()) //Computer-sharing? Sneaky jerk? Who knows.
 				message_admins("[C.get_key()] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				logTheThing(LOG_ADMIN, C, "[C.get_key()] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
-				CI.last_ckey = C.ckey
+				CI.last_ckey = C.get_ckey()
 			*/
 			CI.last_seen = world.realtime
 			CI.times_seen++
@@ -57,7 +57,7 @@ proc/check_compid_list(var/client/C)
 		var/datum/compid_info/CI = new
 		CI.compid = C.computer_id
 		CI.last_seen = world.realtime
-		CI.last_ckey = C.ckey
+		CI.last_ckey = C.get_ckey()
 		CI.times_seen = 1
 
 		//Has this computerid changed recently and does it have a habit of changing?
@@ -83,9 +83,9 @@ proc/check_compid_list(var/client/C)
 				if(hits >= 2) //This person used 3 computers within as many hours
 					if(!cid_test) cid_test = list()
 					if(!cid_tested) cid_tested = list()
-					if(!(C.ckey in cid_test) && !(C.ckey in cid_tested)) //They aren't yet scheduled for a test or they have been tested
-						cid_test[C.ckey] = C.computer_id
-						cid_tested += C.ckey
+					if(!(C.get_ckey() in cid_test) && !(C.get_ckey() in cid_tested)) //They aren't yet scheduled for a test or they have been tested
+						cid_test[C.get_ckey()] = C.computer_id
+						cid_tested += C.get_ckey()
 						msg += " Executing automatic test."
 						SPAWN(1 SECOND)
 							del(C) //RIP
@@ -111,16 +111,16 @@ proc/check_compid_list(var/client/C)
 		logTheThing(LOG_ADMIN, C, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
 	*/
 
-	save_compids(C.ckey, C.compid_info_list)
+	save_compids(C.get_ckey(), C.compid_info_list)
 
 var/global/list/cid_test = list()
 var/global/list/cid_tested = list()
 
 proc/do_computerid_test(var/client/C)
-	var/cid = cid_test[C.ckey]
+	var/cid = cid_test[C.get_ckey()]
 	if(!cid) return //They were not scheduled for testing
 	var/is_fucker = cid != C.computer_id //IT CHANGED!!!
-	cid_test -= C.ckey
+	cid_test -= C.get_ckey()
 
 	var/msg = " [is_fucker ? "failed" : "passed"] the automatic cid dll test."
 
@@ -137,7 +137,7 @@ proc/do_computerid_test(var/client/C)
 		bansHandler.add(
 			"bot",
 			null,
-			C.ckey,
+			C.get_ckey(),
 			C.computer_id,
 			C.address,
 			"Using a modified dreamseeker client.",
@@ -154,7 +154,7 @@ proc/view_client_compid_list(mob/user, var/C)
 	if(isclient(C))
 		var/client/CL = C
 		cid_list = CL.compid_info_list
-		ckey = CL.ckey
+		ckey = CL.get_ckey()
 	else if(istext(C))
 		cid_list = load_compids(C)
 		ckey = C

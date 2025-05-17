@@ -354,7 +354,7 @@
 			src.limbs.l_leg?.on_life(parent)
 			src.limbs.r_leg?.on_life(parent)
 
-		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
+		if (src.sims && src.get_ckey()) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
 
 		if (prob(1) && prob(5))

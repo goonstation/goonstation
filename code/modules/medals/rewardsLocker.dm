@@ -671,7 +671,7 @@
 			if (H.mind.assigned_role == "Clown")
 				H.equip_if_possible(new /obj/item/clothing/head/graduation_cap(H), SLOT_HEAD)
 				var/obj/item/toy/diploma/D = new /obj/item/toy/diploma(get_turf(H))
-				D.redeemer = H.ckey
+				D.redeemer = H.get_ckey()
 				H.put_in_hand_or_drop(D)
 				return 1
 			boutput(H, "You're not a honking clown, you imposter!")

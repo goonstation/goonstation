@@ -25,14 +25,14 @@
 	. = ..()
 	if (
 		isnull(src.id) \
-		|| isnull(src.ckey)
+		|| isnull(src.get_ckey())
 	)
 		return FALSE
 
 /datum/apiModel/GameAdminResource/ToList()
 	. = ..()
 	.["id"] = src.id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["name"] = src.name
 	.["discord_id"] = src.discord_id
 	if (src.rank)

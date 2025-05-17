@@ -347,7 +347,7 @@
 
 /obj/machinery/computer3/ui_static_data(mob/user)
 	. = list(
-		"ckey" = user.ckey,
+		"ckey" = user.get_ckey(),
 	)
 	if(src.setup_has_internal_disk) // the magic internal floppy drive is in here
 		. += list("peripherals" = list(list(
@@ -368,7 +368,7 @@
 				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_data(mob/user)
-	src.tgui_last_accessed[user.ckey] ||= ""
+	src.tgui_last_accessed[user.get_ckey()] ||= ""
 	. = list(
 		"displayHTML" = src.temp, // display data
 		"TermActive" = src.active_program, // is the terminal running or restarting
@@ -377,7 +377,7 @@
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
 		"bgColor" = src.setup_bg_color,
-		"inputValue" = src.tgui_last_accessed[user.ckey],
+		"inputValue" = src.tgui_last_accessed[user.get_ckey()],
 	)
 
 /// Get the history entry at a certain index. Returns null if the index is out of bounds or the ckey is null. Will return an empty string for length+1

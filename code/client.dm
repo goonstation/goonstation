@@ -153,7 +153,7 @@
 	src.mob?.move_dir = 0
 
 	if (player_capa && src.login_success)
-		player_cap_grace[src.ckey] = TIME + 2 MINUTES
+		player_cap_grace[src.get_ckey()] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.get_key())
@@ -202,9 +202,9 @@
 	return ..()
 
 /client/New()
-	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
-	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
-	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
+	Z_LOG_DEBUG("Client/New", "New connection from [src.get_ckey()] from [src.address] via [src.connection]")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.get_ckey()] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
+	logTheThing(LOG_DIARY, null, "Login attempt: [src.get_ckey()] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
 	login_success = 0
 
@@ -217,7 +217,7 @@
 
 	logTheThing(LOG_ADMIN, src, " has connected.")
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Connected")
 
 	src.player = make_player(key)
 	src.player.client = src
@@ -228,7 +228,7 @@
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Player set ([player])")
 
 	// moved preferences from new_player so it's accessible in the client scope
 	if (!preferences)
@@ -244,7 +244,7 @@
 
 	src.volumes = default_channel_volumes.Copy()
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Running parent new")
 
 	..()
 
@@ -284,14 +284,14 @@
 			return
 
 	if (world.time < 7 SECONDS)
-		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-			if (!(src.ckey in whitelistCkeys))
+		if (config.whitelistEnabled && !(admins.Find(src.get_ckey()) && admins[src.get_ckey()] != "Inactive"))
+			if (!(src.get_ckey() in whitelistCkeys))
 				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
 
 	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+	if (config.whitelistEnabled && !(admins.Find(src.get_ckey()) && admins[src.get_ckey()] != "Inactive"))
 		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
+		if (!(src.get_ckey() in whitelistCkeys))
 			var/whitelistString = {"
 							<!doctype html>
 							<html>
@@ -320,15 +320,15 @@
 	// So we need to do this early, and outside of a spawn
 	src.player.record_login()
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Checking bans")
+	var/list/checkBan = bansHandler.check(src.get_ckey(), src.computer_id, src.address)
 
 	if (checkBan)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+		Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Banned!!")
 		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
 		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.get_ckey()]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -355,7 +355,7 @@
 			del(src)
 		return
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Ban check complete")
 
 	if (!src.chatOutput.loaded)
 		//Load custom chat
@@ -372,7 +372,7 @@
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
 			src.verbs += /client/proc/toggle_mentorhelps
-	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.get_ckey() in bypassCapCkeys))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
@@ -417,11 +417,11 @@
 			del(src)
 		return
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Adding to clients")
 
 	clients += src
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
-	add_to_donator_list(src.ckey)
+	add_to_donator_list(src.get_ckey())
 
 	SPAWN(0) // to not lock up spawning process
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
@@ -438,7 +438,7 @@
 		var/image/I = globalImages[key]
 		src << I
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - ok mostly done")
 
 	SPAWN(0)
 		updateXpRewards()
@@ -453,12 +453,12 @@
 		var/is_newbie = 0
 #endif
 		// new player logic, moving some of the preferences handling procs from new_player.Login
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
+		Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - 3 sec spawn stuff")
 
 		if (!preferences)
 			preferences = new
 		if (istype(src.mob, /mob/new_player))
-			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
+			Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - new player crap")
 
 			//Load the preferences up here instead.
 			if(!preferences.savefile_load(src))
@@ -509,7 +509,7 @@
 				src << link("https://www.byond.com/download/build/515")
 #endif
 
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
+		Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - setjoindate")
 		setJoinDate()
 
 		if (winget(src, null, "hwmode") != "true")
@@ -593,7 +593,7 @@
 	winset(src, null, "rpanewindow.left=infowindow")
 	if(byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - new() finished.")
 
 	login_success = 1
 
@@ -684,7 +684,7 @@
 	var/static/list/list/ip_to_ckeys = list()
 	var/static/list/list/cid_to_ckeys = list()
 
-	if(isnull(src.ckey))
+	if(isnull(src.get_ckey()))
 		// logged out / autokicked due to reasons
 		return
 
@@ -692,10 +692,10 @@
 		var/list/list_to_check = list("IP"=ip_to_ckeys, "CID"=cid_to_ckeys)[what]
 		var/our_value = what == "IP" ? src.address : src.computer_id
 		if(!(our_value in list_to_check))
-			list_to_check[our_value] = list(src.ckey)
+			list_to_check[our_value] = list(src.get_ckey())
 		else
-			list_to_check[our_value] |= list(src.ckey)
-		if(length(list_to_check[our_value]) > 1 && (!only_if_first || list_to_check[our_value][1] == src.ckey))
+			list_to_check[our_value] |= list(src.get_ckey())
+		if(length(list_to_check[our_value]) > 1 && (!only_if_first || list_to_check[our_value][1] == src.get_ckey()))
 			var/list/offenders_log = list()
 			var/list/offenders_message = list()
 			for(var/found_ckey in list_to_check[our_value])
@@ -730,8 +730,8 @@
 
 /client/proc/init_admin()
 	if(!address || (world.address == src.address))
-		admins[src.ckey] = "Host"
-	if (admins.Find(src.ckey) && !src.holder)
+		admins[src.get_ckey()] = "Host"
+	if (admins.Find(src.get_ckey()) && !src.holder)
 		if (config.goonhub_auth_enabled)
 			src.goonhub_auth = new(src)
 			src.goonhub_auth.show_ui()
@@ -742,13 +742,13 @@
 	return 0
 
 /client/proc/make_admin()
-	if (admins.Find(src.ckey) && !src.holder)
+	if (admins.Find(src.get_ckey()) && !src.holder)
 		src.holder = new /datum/admins(src)
-		src.holder.rank = admins[src.ckey]
-		update_admins(admins[src.ckey])
+		src.holder.rank = admins[src.get_ckey()]
+		update_admins(admins[src.get_ckey()])
 		onlineAdmins |= (src)
-		if (!NT.Find(src.ckey))
-			NT.Add(src.ckey)
+		if (!NT.Find(src.get_ckey()))
+			NT.Add(src.get_ckey())
 
 /client/proc/clear_admin()
 	if(src.holder)
@@ -927,13 +927,13 @@ var/global/curr_day = null
 
 	// Get join date from BYOND members page
 	var/datum/http_request/request = new()
-	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.get_ckey()]?format=text", "", "")
 	request.begin_async()
 	UNTIL(request.is_complete())
 	var/datum/http_response/response = request.into_response()
 
 	if (response.errored || !response.body)
-		logTheThing(LOG_DEBUG, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		logTheThing(LOG_DEBUG, null, "setJoinDate: Failed to get join date response for [src.get_ckey()].")
 		return
 
 	var/savefile/save = new
@@ -1066,7 +1066,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1105,7 +1105,7 @@ var/global/curr_day = null
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1143,10 +1143,10 @@ var/global/curr_day = null
 				if (src.holder)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
 					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 				else
 					if (M.client && M.client.holder)
-						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS | SOUND_IGNORE_DEAF, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
@@ -1163,7 +1163,7 @@ var/global/curr_day = null
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 
@@ -1199,22 +1199,22 @@ var/global/curr_day = null
 		src << link(link)
 
 /client/proc/mute(len = -1)
-	if (!src.ckey)
+	if (!src.get_ckey())
 		return 0
 	if (!src.ismuted())
-		muted_keys += src.ckey
-		muted_keys[src.ckey] = len
+		muted_keys += src.get_ckey()
+		muted_keys[src.get_ckey()] = len
 
 /client/proc/unmute()
-	if (!src.ckey)
+	if (!src.get_ckey())
 		return 0
 	if (src.ismuted())
-		muted_keys -= src.ckey
+		muted_keys -= src.get_ckey()
 
 /client/proc/ismuted()
-	if (!src.ckey)
+	if (!src.get_ckey())
 		return 0
-	return (src.ckey in muted_keys) && muted_keys[src.ckey]
+	return (src.get_ckey() in muted_keys) && muted_keys[src.get_ckey()]
 
 /client/proc/desuss_zap(source, datum/say_message/message)
 	if (!forced_desussification)

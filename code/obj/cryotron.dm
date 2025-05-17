@@ -216,7 +216,7 @@
 					if (tgui_alert(user, confirmation_message, "Confirmation", list("Yes", "No")) == "Yes")
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
-							respawn_controller.subscribeNewRespawnee(user.ckey)
+							respawn_controller.subscribeNewRespawnee(user.get_ckey())
 							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
 								antagonist.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
@@ -347,7 +347,7 @@
 		return
 
 	proc/insert_prompt(mob/target, mob/user)
-		if (target.client || !target.ckey)
+		if (target.client || !target.get_ckey())
 			boutput(user, SPAN_ALERT("You can't force someone into cryosleep if they're still logged in or are an NPC!"))
 			return FALSE
 		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")

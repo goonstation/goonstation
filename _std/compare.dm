@@ -25,10 +25,10 @@
 	return sorttext(a.name, b.name)
 
 /proc/cmp_ckey_asc(client/a, client/b)
-	return sorttext(b.ckey, a.ckey)
+	return sorttext(b.get_ckey(), a.get_ckey())
 
 /proc/cmp_ckey_dsc(client/a, client/b)
-	return sorttext(a.ckey, b.ckey)
+	return sorttext(a.get_ckey(), b.get_ckey())
 
 // Datum cmp with vars is always slower than a specialist cmp proc, use your judgement.
 /proc/cmp_datum_numeric_asc(datum/a, datum/b, variable)

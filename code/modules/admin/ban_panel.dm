@@ -108,7 +108,7 @@
 	if (!the_ban)
 		tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
 		return
-	var/ckey = the_ban.original_ban_detail.ckey
+	var/ckey = the_ban.original_ban_detail.get_ckey()
 	var/cid = the_ban.original_ban_detail.comp_id
 	var/ip = the_ban.original_ban_detail.ip
 	var/alert_body = {"
@@ -119,7 +119,7 @@
 	"}
 	var/alert_input = tgui_alert(usr, alert_body, "Delete Ban", list("Yes", "No"))
 	if (alert_input == "Yes")
-		bansHandler.remove(ban_id, usr.client.ckey, ckey, cid, ip)
+		bansHandler.remove(ban_id, usr.client.get_ckey(), ckey, cid, ip)
 
 /// Wrapper for /datum/bansHandler/proc/getAll
 /datum/ban_panel/proc/refresh_bans(list/filters, sort_by, descending)

@@ -1059,15 +1059,15 @@ var/list/removed_jobs = list(
 #endif
 
 	proc/profile_export()
-		var/savefile/message = src.savefile_save(usr.ckey, 1, 1)
+		var/savefile/message = src.savefile_save(usr.get_ckey(), 1, 1)
 		var/fname
 		message["1_profile_name"] >> fname
-		fname = "[usr.ckey]_[fname].sav"
+		fname = "[usr.get_ckey()]_[fname].sav"
 		if(fexists(fname))
 			fdel(fname)
 		var/F = file(fname)
 		message["hash"] << null
-		var/hash = sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
+		var/hash = sha1("[sha1(message.ExportText("/"))][usr.get_ckey()][CHAR_EXPORT_SECRET]")
 		message["hash"] << hash
 		message.ExportText("/", F)
 		usr << ftp(F, fname)
@@ -1085,7 +1085,7 @@ var/list/removed_jobs = list(
 		var/hash
 		message["hash"] >> hash
 		message["hash"] << null
-		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
+		if(hash == sha1("[sha1(message.ExportText("/"))][usr.get_ckey()][CHAR_EXPORT_SECRET]"))
 			var/profilenum_old = profile_number
 			savefile_load(usr.client, 1, message)
 			src.profile_modified = TRUE
@@ -1233,7 +1233,7 @@ var/list/removed_jobs = list(
 		src.jobs_low_priority = list()
 		src.jobs_unwanted = list()
 		for (var/datum/job/J in job_controls.staple_jobs)
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.get_key()))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.get_ckey() || ckey(user.mind?.get_key()))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (user.client && !J.has_rounds_needed(user.client.player))
@@ -1452,7 +1452,7 @@ var/list/removed_jobs = list(
 					continue
 				if (JD.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					continue
-				if (JD.requires_whitelist && !NT.Find(user.ckey))
+				if (JD.requires_whitelist && !NT.Find(user.get_ckey()))
 					continue
 				if (jobban_isbanned(user, JD.name))
 					if (cat != "unwanted")

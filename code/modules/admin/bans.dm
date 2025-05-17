@@ -146,7 +146,7 @@
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
-		message += "Banned By: [ban.game_admin.ckey]<br>"
+		message += "Banned By: [ban.game_admin.get_ckey()]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
@@ -242,9 +242,9 @@
 			throw EXCEPTION(error.message)
 		var/client/adminClient = find_client(admin_ckey)
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
-		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
+		var/target = "(Ckey: [banDetail.get_ckey()], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
-		var/original_ckey = banDetail.original_ban_detail.ckey
+		var/original_ckey = banDetail.original_ban_detail.get_ckey()
 
 		// Tell admins
 		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[banId]", TRUE)]'>[banId]</a>, Original Ckey: [original_ckey]"
@@ -294,7 +294,7 @@
 	var/mob/M
 	if (target && ismob(target)) M = target
 
-	var/ckey = ckey(input(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "") as text)
+	var/ckey = ckey(input(src.mob, "Ckey of the player", "Ckey", M ? M.get_ckey() : "") as text)
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)
@@ -333,7 +333,7 @@
 	if (!reason) return
 
 	return list(
-		"akey" = src.ckey,
+		"akey" = src.get_ckey(),
 		"server" = serverId,
 		"ckey" = ckey,
 		"compId" = compId,

@@ -452,7 +452,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		for_by_tcl(heisenbee, /obj/critter/domestic_bee/heisenbee)
 			if (!heisenbee.beeMom)
 				heisenbee.beeMom = M
-				heisenbee.beeMomCkey = M.ckey
+				heisenbee.beeMomCkey = M.get_ckey()
 
 /datum/job/command/medical_director
 	name = "Medical Director"
@@ -1670,7 +1670,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (prob(15))
 			var/obj/critter/domestic_bee/bee = new(get_turf(M))
 			bee.beeMom = M
-			bee.beeMomCkey = M.ckey
+			bee.beeMomCkey = M.get_ckey()
 			bee.name = pick_string("bee_names.txt", "beename")
 			bee.name = replacetext(bee.name, "larva", "bee")
 

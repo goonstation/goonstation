@@ -287,7 +287,7 @@ Turfs and decal for the space rift
 			if (prob(40) || !death_countdown)
 				say( pick("Buhh...", "I'm...awake? No...", "I can't be awake...", "Who are you?  Where am I?", "Who--nghh. It...hurts..") )
 
-			if(src.ckey && !had_thought && !death_countdown)
+			if(src.get_ckey() && !had_thought && !death_countdown)
 				//7848(2)9(1) = 7848b9a = hex for 126127002 = 126 127 002 = coordinates to cheget key
 				//A fucker is me
 				src.show_text("<B><I>A foreign thought flashes into your mind... [SPAN_ALERT("Rem..e...mbe...r 78... 4... 8(2)... 9... (1) alw..a...ys...")]</I></B>")

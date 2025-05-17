@@ -125,7 +125,7 @@
 						larva.color = "#FFFFFF"
 
 				larva.beeMom = affected_mob
-				larva.beeMomCkey = affected_mob.ckey
+				larva.beeMomCkey = affected_mob.get_ckey()
 
 				if (ishuman(affected_mob))
 					var/mob/living/carbon/human/human = affected_mob

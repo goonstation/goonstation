@@ -206,7 +206,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if(!C)
-		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.get_ckey()] but failed.")
 		return
 
 	var/fetched_keylist = C.player.cloudSaves.getData("custom_keybind_data")

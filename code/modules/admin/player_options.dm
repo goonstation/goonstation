@@ -8,7 +8,7 @@
 	return
 
 /datum/admins/proc/playeropt_link(mob/M, action)
-	return "?src=\ref[src];action=[action];targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts"
+	return "?src=\ref[src];action=[action];targetckey=[M.get_ckey()];targetmob=\ref[M];origin=adminplayeropts"
 
 /datum/admins/proc/playeropt(mob/M)
 	if (!ismob(M))
@@ -21,7 +21,7 @@
 			M = AI.eyecam
 
 	var/mentor = M.client?.player?.mentor
-	var/hos = (M.ckey in NT)
+	var/hos = (M.get_ckey() in NT)
 	var/is_admin = M.client?.holder && ! M.client.player_mode
 
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
@@ -147,9 +147,9 @@
 	dat += {"
 <div id="topBar">
 	<div id="topOpts">
-		[M.get_key() ? "<a href='byond://?src=\ref[src];action=notes;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
+		[M.get_key() ? "<a href='byond://?src=\ref[src];action=notes;targetckey=[M.get_ckey()];targetmob=\ref[M];origin=adminplayeropts'>Notes</a> &bull; <a href='[playeropt_link(M, "show_player_stats")]'>Stats</a> &bull;" : ""]
 		<a href='byond://?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.get_key() ? M.get_key() : M.name];origin=adminplayeropts'>Logs</a> &bull;
-		<a href='byond://?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
+		<a href='byond://?src=\ref[src];action=refreshoptions;targetckey=[M.get_ckey()];targetmob=\ref[M];'>&#8635;</a>
 	</div>
 	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""][is_admin ? " <b class='admin'>(Admin)</b>" : ""]
 </div>
@@ -171,7 +171,7 @@
 				<div>
 					<div class='l'>Message</div>
 					<div class='r'>
-						<a href='byond://?action=priv_msg&target=[M.ckey]'>PM</a> &bull;
+						<a href='byond://?action=priv_msg&target=[M.get_ckey()]'>PM</a> &bull;
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
@@ -313,7 +313,7 @@
 			"}
 
 	//Admin control options
-	if (M.client || M.ckey)
+	if (M.client || M.get_ckey())
 		dat += {"
 			<div class='optionGroup' style='border-color: #FF6961;'>
 				<h2 style='background-color: #FF6961;'>Control</h2>
@@ -336,7 +336,7 @@
 					</div>
 
 				"}
-		if (M.ckey)
+		if (M.get_ckey())
 			dat += {"
 					<div class='l'>
 						Key
@@ -420,7 +420,7 @@
 					"}
 
 		//if (!isobserver(M)) //moved from SG level stuff
-		//	dat += " | <a href='byond://?src=\ref[src];action=polymorph;targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts'>Polymorph</a>"
+		//	dat += " | <a href='byond://?src=\ref[src];action=polymorph;targetckey=[M.get_ckey()];targetmob=\ref[M];origin=adminplayeropts'>Polymorph</a>"
 		//dat += "</div>"
 
 	//Coder options
@@ -463,4 +463,4 @@
 	dat += restricted_playeroptions(M)
 	windowHeight += 45
 #endif
-	usr.Browse(dat.Join(), "window=adminplayeropts[M.ckey];size=600x[windowHeight]")
+	usr.Browse(dat.Join(), "window=adminplayeropts[M.get_ckey()];size=600x[windowHeight]")

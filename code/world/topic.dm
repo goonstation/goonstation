@@ -541,7 +541,7 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='byond://?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.get_ckey()]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
 								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
@@ -616,7 +616,7 @@
 				var/who = lowertext(plist["target"])
 				var/list/found = list()
 				for (var/mob/M in mobs)
-					if (M.ckey && (findtext(M.real_name, who) || findtext(M.ckey, who)))
+					if (M.get_ckey() && (findtext(M.real_name, who) || findtext(M.get_ckey(), who)))
 						M.full_heal()
 						logTheThing(LOG_ADMIN, nick, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, nick, "healed / revived [constructTarget(M,"diary")]", "admin")
@@ -625,7 +625,7 @@
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"
 						ircmsg["who"] = who
-						ircmsg["msg"] = "Admin [nick] healed / revived [M.ckey]"
+						ircmsg["msg"] = "Admin [nick] healed / revived [M.get_ckey()]"
 						found.Add(ircmsg)
 
 				if (length(found))

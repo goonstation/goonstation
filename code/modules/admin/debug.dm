@@ -1359,7 +1359,7 @@ var/datum/flock/testflock
 	logTheThing(LOG_ADMIN, usr, "deleted profiling logs.")
 	logTheThing(LOG_DIARY, usr, "deleted profiling logs.")
 	message_admins("[key_name(usr)] deleted profiling logs.")
-	ircbot.export_async("admin_debug", list("key"=usr.ckey, "msg"="deleted profiling logs for this server."))
+	ircbot.export_async("admin_debug", list("key"=usr.get_ckey(), "msg"="deleted profiling logs for this server."))
 
 /client/proc/cause_lag(a as num, b as num)
 	set desc = "Loops a times b times over some trivial statement."

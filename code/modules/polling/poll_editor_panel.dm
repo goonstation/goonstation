@@ -43,7 +43,7 @@
 				var/servers = src.to_server_list(params["servers"])
 				var/datum/apiRoute/polls/add/addPoll = new
 				addPoll.buildBody(
-					ui.user.ckey,
+					ui.user.get_ckey(),
 					params["title"],
 					params["multipleChoice"],
 					expires_at,

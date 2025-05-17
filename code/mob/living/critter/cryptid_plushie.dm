@@ -80,7 +80,7 @@ TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
 				if(src.disposed)
 					return
 				qdel(src)
-		var/ckey_of_dead_player = src.ckey
+		var/ckey_of_dead_player = src.get_ckey()
 		var/mob/ghost_mob = src.ghostize()
 		var/our_icon_state = src.icon_state
 		// resurrection attempt

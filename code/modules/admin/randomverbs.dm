@@ -117,7 +117,7 @@
 
 	var/subtle_href = null
 	if(M.client)
-		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
+		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.get_ckey()]"
 	message_admins(SPAN_INTERNAL("<b>SubtleMessage</b>: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]"))
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
@@ -179,7 +179,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	do_admin_pm(M.ckey, src.mob) //Changed to work off of ckeys instead of mobs.
+	do_admin_pm(M.get_ckey(), src.mob) //Changed to work off of ckeys instead of mobs.
 
 
 
@@ -1793,7 +1793,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if (M.ckey)
+	if (M.get_ckey())
 		var/con = alert("[M] currently has a ckey. Continue?",, "Yes", "No")
 		if (con != "Yes")
 			return
@@ -1802,10 +1802,10 @@
 
 	if (selection)
 		if (istype(selection.mob, /mob/living))
-			var/con = alert("Target client: [selection.ckey], is of type /mob/living. Are you sure you want to transfer them?",, "Yes", "No")
+			var/con = alert("Target client: [selection.get_ckey()], is of type /mob/living. Are you sure you want to transfer them?",, "Yes", "No")
 			if (con != "Yes")
 				return
-		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
+		message_admins("[key_name(src)] moved [selection.get_ckey()] into [M].")
 		logTheThing(LOG_ADMIN, src, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
 			qdel(src)
@@ -2626,7 +2626,7 @@ var/global/night_mode_enabled = 0
 	var/list/areas = get_areas(/area/centcom/offices)
 	for (var/area/centcom/offices/office in areas)
 		//search all offices for an office with the same ckey variable as the usr.
-		if (office.ckey == src.ckey)
+		if (office.ckey == src.get_ckey())
 			var/list/turfs = get_area_turfs(office.type)
 			if (islist(turfs) && length(turfs))
 
@@ -2666,7 +2666,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		return
 	for (var/area/centcom/offices/office in areas)
 		//search all offices for an office with the same ckey variable as the usr.
-		if (office.ckey == src.ckey)
+		if (office.ckey == src.get_ckey())
 			var/list/turfs = get_area_turfs(office.type)
 			if (!length(turfs))
 				boutput(src, "Can't seem to find any turfs in your office. You must not have one here!")

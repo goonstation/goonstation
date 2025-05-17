@@ -366,7 +366,7 @@ var/global/game_force_started = FALSE
 				if (player.mind)
 					P = player.mind.get_player()
 
-				if (player.mind.ckey)
+				if (player.mind.get_ckey())
 					//Record player participation in this round via the goonhub API
 					participationRecorder.record(P)
 
@@ -735,7 +735,7 @@ var/global/game_force_started = FALSE
 		if (player?.client && player.mind && !player.mind.get_player()?.joined_observer && !istype(player,/mob/new_player))
 			logTheThing(LOG_DEBUG, null, "Iterating on [player.client]")
 			player.mind.personal_summary = new /datum/personal_summary
-			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.ckey]")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc start: [player.mind.get_ckey()]")
 
 			//get base wage + initial earnings calculation
 			var/job_wage = 100
@@ -861,11 +861,11 @@ var/global/game_force_started = FALSE
 
 			//add_to_bank and show earnings receipt
 			earnings = round(earnings)
-			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.ckey]")
+			//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] spacebux calc finish: [player.mind.get_ckey()]")
 
 			if(player.client)
 				if (player_loses_held_item)
-					logTheThing(LOG_DEBUG, null, "[player.ckey] lost held item")
+					logTheThing(LOG_DEBUG, null, "[player.get_ckey()] lost held item")
 					player.client.persistent_bank_item = "none"
 
 				if (player.client.player.id)

@@ -475,7 +475,7 @@ TYPEINFO(/mob)
 			var/area/AR = get_area(src)
 			AR?.wake_critters(src)
 
-	src.last_ckey = src.ckey
+	src.last_ckey = src.get_ckey()
 
 	src.last_client = src.client
 	src.apply_camera(src.client)
@@ -506,8 +506,8 @@ TYPEINFO(/mob)
 		src.mind = new (src)
 
 	if (src.mind)
-		if (!src.mind.ckey)
-			src.mind.ckey = src.ckey
+		if (!src.mind.get_ckey())
+			src.mind.ckey = src.get_ckey()
 		if (!src.mind.get_key())
 			src.mind.key = src.get_key()
 
@@ -983,7 +983,7 @@ TYPEINFO(/mob)
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.team_NT.members -= src.mind
 			mode.team_SY.members -= src.mind
-			message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
+			message_admins("[src]([src.get_ckey()]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
 #else
 
 		src.verbs -= list(/mob/verb/setdnr)
@@ -1225,8 +1225,8 @@ TYPEINFO(/mob)
 	if (src.suicide_alert)
 		message_attack("[key_name(src)] died shortly after spawning.")
 		src.suicide_alert = 0
-	if(src.ckey && !src.mind?.get_player()?.dnr)
-		respawn_controller.subscribeNewRespawnee(src.ckey)
+	if(src.get_ckey() && !src.mind?.get_player()?.dnr)
+		respawn_controller.subscribeNewRespawnee(src.get_ckey())
 	//stop piloting pods or whatever
 	src.override_movement_controller = null
 

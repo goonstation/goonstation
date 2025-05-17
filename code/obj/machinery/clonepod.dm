@@ -349,7 +349,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.get_key() ? src.occupant.get_key() : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
-			src.occupant.mind.ckey = src.occupant.ckey
+			src.occupant.mind.ckey = src.occupant.get_ckey()
 			src.occupant.mind.key = src.occupant.get_key()
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind

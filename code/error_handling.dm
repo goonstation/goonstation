@@ -23,7 +23,7 @@ var/global/blame_for_runtimes = FALSE
 		"file" = !invalid ? E.file : "",
 		"line" = !invalid ? E.line : "",
 		"desc" = E.desc ? E.desc : "",
-		"usr" = usr ? (ismob(usr) ? "[usr] ([usr.ckey])" : "[usr]") : "null",
+		"usr" = usr ? (ismob(usr) ? "[usr] ([usr.get_ckey()])" : "[usr]") : "null",
 		"seen" = timestamp,
 		"invalid" = invalid
 	)

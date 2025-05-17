@@ -33,14 +33,14 @@
 /datum/apiModel/Tracked/PlayerStatsResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.ckey)
+		isnull(src.get_ckey())
 	)
 		return FALSE
 
 /datum/apiModel/Tracked/PlayerStatsResource/ToList()
 	. = ..()
 	.["id"] = src.id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["key"] = src.get_key()
 	.["byond_join_date"] = src.byond_join_date
 	.["byond_major"] = src.byond_major

@@ -52,7 +52,7 @@ var/maniac_previous_victim = "Unknown"
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
 			SPAWN(0.5 SECONDS)
-				var/victimkey = target.ckey
+				var/victimkey = target.get_ckey()
 				var/victimname = target.name
 				boutput(target, "Connection axed.")
 				target.ckey = "" // disconnect the player so they rejoin wondering what the hell happened

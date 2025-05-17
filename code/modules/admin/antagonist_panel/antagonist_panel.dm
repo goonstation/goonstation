@@ -68,10 +68,10 @@
 
 		if ("admin_pm")
 			var/datum/mind/mind = locate(params["mind_ref"])
-			if (!ui.user || !mind?.ckey)
+			if (!ui.user || !mind?.get_ckey())
 				return
 
-			do_admin_pm(mind.ckey, ui.user)
+			do_admin_pm(mind.get_ckey(), ui.user)
 
 		if ("player_options")
 			var/datum/mind/mind = locate(params["mind_ref"])

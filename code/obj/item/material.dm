@@ -1025,6 +1025,6 @@
 				return FALSE
 			var/accept = tgui_alert(user, "Possible intelligence detected. Are you sure you want to reclaim [I]?", "Incinerate brain?", list("Yes", "No")) == "Yes" && can_reach(user, src) && user.equipped() == I
 			if (accept)
-				logTheThing(LOG_COMBAT, user, "loads [brain] (owner's ckey [brain.owner ? brain.owner.ckey : null]) into a portable reclaimer.")
+				logTheThing(LOG_COMBAT, user, "loads [brain] (owner's ckey [brain.owner ? brain.owner.get_ckey() : null]) into a portable reclaimer.")
 			return accept
 		return TRUE

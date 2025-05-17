@@ -192,9 +192,9 @@ var/global/datum/antagWeighter/antagWeighter
 		var/pCount = 0
 		var/list/ckeyMinds = list()
 		for (var/datum/mind/M in pool)
-			if (M.ckey)
-				apiPayload["players\[[pCount]]"] = M.ckey
-				ckeyMinds[M.ckey] = M
+			if (M.get_ckey())
+				apiPayload["players\[[pCount]]"] = M.get_ckey()
+				ckeyMinds[M.get_ckey()] = M
 				pCount++
 
 		if (!ckeyMinds.len)
@@ -272,15 +272,15 @@ var/global/datum/antagWeighter/antagWeighter
 		if (recordChosen)
 			// var/list/record = list()
 			for (var/datum/mind/M in chosen)
-				// record[M.ckey] = role
-				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+				// record[M.get_ckey()] = role
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selected [M.get_ckey()] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
 				src.record(role, M.get_player())
 			for (var/datum/mind/M in pool)
-				if(!M.ckey)
+				if(!M.get_ckey())
 					continue
 				if(M in chosen)
 					continue
-				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.get_ckey()] for [role]. (Weight: [history[M.get_ckey()]["weight"]], Seen: [history[M.get_ckey()]["seen"]])")
 
 
 			// src.recordMultiple(players = record)
@@ -301,7 +301,7 @@ var/global/datum/antagWeighter/antagWeighter
 			throw EXCEPTION("Incorrect parameters given")
 
 		if (src.debug)
-			src.debugLog("Recording selection of role: [role] for player: [P.ckey]. latejoin: [latejoin]")
+			src.debugLog("Recording selection of role: [role] for player: [P.get_ckey()]. latejoin: [latejoin]")
 
 		try
 			var/datum/apiRoute/players/antags/addAntag = new

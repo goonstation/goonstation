@@ -340,16 +340,16 @@
 	proc/handle_leader_early_death()
 		if (!src.locker)
 			choose_new_leader()
-			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early with no locker.")
-			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early with no locker.")
+			logTheThing(LOG_ADMIN, src.leader.get_ckey(), "was given the role of leader for [gang_name], as their previous leader died early with no locker.")
+			message_admins("[src.leader.get_ckey()] has been granted the role of leader for their gang, [gang_name], as the previous leader died early with no locker.")
 			src.announcer_say_source.say("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
 		else
 			src.announcer_say_source.say("Your leader has died early into the shift. If not revived, a new leader will be picked in [GANG_LEADER_SOFT_DEATH_DELAY/(1 MINUTE)] minutes.")
 			SPAWN (GANG_LEADER_SOFT_DEATH_DELAY)
 				if (!isalive(src.leader.current))
 					choose_new_leader()
-					logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their previous leader died early and wasn't respawned/revived.")
-					message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as the previous leader died early and wasn't respawned/revived.")
+					logTheThing(LOG_ADMIN, src.leader.get_ckey(), "was given the role of leader for [gang_name], as their previous leader died early and wasn't respawned/revived.")
+					message_admins("[src.leader.get_ckey()] has been granted the role of leader for their gang, [gang_name], as the previous leader died early and wasn't respawned/revived.")
 					src.announcer_say_source.say("Your leader has died early into the shift. Leadership has been transferred to [src.leader.current.real_name]")
 
 	/// how to handle the gang leader entering cryo (but not guaranteed to be permanent)
@@ -365,8 +365,8 @@
 			src.announcer_say_source.say("Your leader has entered permanent cryogenic storage. You can claim leadership at your locker.")
 			leader_claimable = TRUE
 		else
-			logTheThing(LOG_ADMIN, src.leader.ckey, "was given the role of leader for [gang_name], as their leader cryo'd without a locker.")
-			message_admins("[src.leader.ckey] has been granted the role of leader for their gang, [gang_name], as leader cryo'd without a locker.")
+			logTheThing(LOG_ADMIN, src.leader.get_ckey(), "was given the role of leader for [gang_name], as their leader cryo'd without a locker.")
+			message_admins("[src.leader.get_ckey()] has been granted the role of leader for their gang, [gang_name], as leader cryo'd without a locker.")
 			src.announcer_say_source.say("As your leader has entered cryogenic storage without a locker, [src.leader.current.real_name] is now your new leader.")
 			choose_new_leader()
 
@@ -378,8 +378,8 @@
 				if (!candidate.hibernating)
 					smelly_unfortunate = member
 		if (!smelly_unfortunate)
-			logTheThing(LOG_ADMIN, leader.ckey, "The leader of [gang_name] cryo'd/died early with no living members to take the role.")
-			message_admins("The leader of [gang_name], [leader.ckey] cryo'd/died early with no living members to take the role.")
+			logTheThing(LOG_ADMIN, leader.get_ckey(), "The leader of [gang_name] cryo'd/died early with no living members to take the role.")
+			message_admins("The leader of [gang_name], [leader.get_ckey()] cryo'd/died early with no living members to take the role.")
 			return
 
 		var/datum/mind/bad_leader = leader
@@ -800,7 +800,7 @@
 		newsignal.data["message"] = "[message]"
 		newsignal.data["address_1"] = civvie.originalPDA.net_id
 
-		logTheThing(LOG_GAMEMODE, civvie, "Informed [civvie.ckey]/[civvie.current.name] on their PDA [civvie.originalPDA] about the loot bag for [src.gang_name].")
+		logTheThing(LOG_GAMEMODE, civvie, "Informed [civvie.get_ckey()]/[civvie.current.name] on their PDA [civvie.originalPDA] about the loot bag for [src.gang_name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
 
 	/// pick a random civilian (non-gang, non-sec), ideally not picking any deferred_minds

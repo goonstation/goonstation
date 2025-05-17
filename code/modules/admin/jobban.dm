@@ -15,7 +15,7 @@
 	if (!M || !akey) return
 	if(ismob(M)) //Correct to ckey if provided a mob.
 		var/mob/keysource = M
-		M = keysource.ckey
+		M = keysource.get_ckey()
 	var/datum/game_server/game_server = global.game_servers.input_server(usr, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 	if(isnull(game_server))
 		return null
@@ -50,13 +50,13 @@
 		var/mob/M2 = M
 		//if(isnull(M2.client))
 			//return FALSE
-		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
+		var/datum/player/player = make_player(M2.get_ckey()) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
-			var/list/jobBans = jobban_get_for_player(M2.ckey)
+			var/list/jobBans = jobban_get_for_player(M2.get_ckey())
 			player.cached_jobbans = jobBans
 			if(!length(jobBans)) // API unavailable or no bans
 				return FALSE
-			if(!M2?.ckey)
+			if(!M2?.get_ckey())
 				return FALSE // new_player was disposed during api call
 		cache = player.cached_jobbans
 	else if(islist(M))
@@ -102,8 +102,8 @@
 	if (!ismob(M))
 		checkey = M
 		cache = jobban_get_for_player(checkey)
-	else if (M.ckey)
-		checkey = M.ckey
+	else if (M.get_ckey())
+		checkey = M.get_ckey()
 		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
 		cache = player.cached_jobbans
 		player.cached_jobbans = null //Invalidate their cache.

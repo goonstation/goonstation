@@ -463,4 +463,4 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 		</tbody></table>
 		"}
 
-		user.Browse(HTML,"window=part_mod_[target.ckey ? target.ckey : target];size=680x680")
+		user.Browse(HTML,"window=part_mod_[target.get_ckey() ? target.get_ckey() : target];size=680x680")

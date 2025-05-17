@@ -7,19 +7,19 @@ var/global/list/globalDialogueFlags = list()
 
 //Same as the dialogue master based versions but global.vvv
 proc/setGlobalFlag(var/client/C, var/flag="", var/value=null)
-	if(!globalDialogueFlags.Find(C.ckey))
-		globalDialogueFlags.Add(C.ckey)
-		globalDialogueFlags[C.ckey] = list()
+	if(!globalDialogueFlags.Find(C.get_ckey()))
+		globalDialogueFlags.Add(C.get_ckey())
+		globalDialogueFlags[C.get_ckey()] = list()
 
-	var/list/curr = globalDialogueFlags[C.ckey]
+	var/list/curr = globalDialogueFlags[C.get_ckey()]
 	curr[flag] = value
-	globalDialogueFlags[C.ckey] = curr
+	globalDialogueFlags[C.get_ckey()] = curr
 	return
 
 proc/getGlobalFlag(var/client/C, var/flag="")
-	if(!globalDialogueFlags.Find(C.ckey)) return null
+	if(!globalDialogueFlags.Find(C.get_ckey())) return null
 	else
-		var/list/curr = globalDialogueFlags[C.ckey]
+		var/list/curr = globalDialogueFlags[C.get_ckey()]
 		if(curr.Find(flag))
 			return curr[flag]
 		else
@@ -84,19 +84,19 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 							master.say(N.getNodeText(C))
 
 	proc/setFlag(var/client/C, var/flag="", var/value="") //Sets flag to value for this client in this dialogue master.
-		if(!dialogueFlags.Find(C.ckey))
-			dialogueFlags.Add(C.ckey)
-			dialogueFlags[C.ckey] = list()
+		if(!dialogueFlags.Find(C.get_ckey()))
+			dialogueFlags.Add(C.get_ckey())
+			dialogueFlags[C.get_ckey()] = list()
 
-		var/list/curr = dialogueFlags[C.ckey]
+		var/list/curr = dialogueFlags[C.get_ckey()]
 		curr[flag] = value
-		dialogueFlags[C.ckey] = curr //Not sure if reference or not. Just to be sure here.
+		dialogueFlags[C.get_ckey()] = curr //Not sure if reference or not. Just to be sure here.
 		return
 
 	proc/getFlag(var/client/C, var/flag="") //Returns value of dialogue flag, or null if no match.
-		if(!dialogueFlags.Find(C.ckey)) return null
+		if(!dialogueFlags.Find(C.get_ckey())) return null
 		else
-			var/list/curr = dialogueFlags[C.ckey]
+			var/list/curr = dialogueFlags[C.get_ckey()]
 			if(curr.Find(flag))
 				return curr[flag]
 			else

@@ -549,10 +549,10 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		world.save_intra_round_value("sy_win", value + 1)
 
 	// var/text = ""
-	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.ckey]):</B></FONT><br>")
+	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.get_ckey()]):</B></FONT><br>")
 	output_team_members(winner)
 
-	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander?.current] ([loser.commander?.current?.ckey]):</B></FONT><br>")
+	boutput(world, "<FONT size = 3><B>The loser was the [loser.name], commanded by [loser.commander?.current] ([loser.commander?.current?.get_ckey()]):</B></FONT><br>")
 	output_team_members(loser)
 
 
@@ -635,11 +635,11 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	var/string = ""
 	var/active_players = 0
 	for (var/datum/mind/m in pw_team.members)
-		if (m.current?.ckey)
+		if (m.current?.get_ckey())
 			active_players ++
 		if (m == pw_team.commander)
 			continue 		//count em for active players, but don't display em here, they already got their name up there!
-		string += "<b>[m.current]</b> ([m.ckey])</b><br>"
+		string += "<b>[m.current]</b> ([m.get_ckey()])</b><br>"
 	boutput(world, "<h3 class='admin'>[active_players] active players/[length(pw_team.members)] total players.</h3>")
 
 

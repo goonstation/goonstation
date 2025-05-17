@@ -21,5 +21,5 @@
 			html_decode(T.reason),
 			M.real_name,
 			M.job,
-			M.ckey
+			M.get_ckey()
 		)

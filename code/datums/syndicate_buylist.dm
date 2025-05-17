@@ -716,7 +716,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 	run_on_spawn(var/obj/storage/cart/trash/syndicate/cart,var/mob/living/owner)
 		if (owner)
-			cart.owner_ckey = owner.ckey
+			cart.owner_ckey = owner.get_ckey()
 		..()
 
 /datum/syndicate_buylist/traitor/slip_and_sign
@@ -892,7 +892,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 	run_on_spawn(var/obj/storage/cart/hotdog/syndicate/cart, var/mob/living/owner)
 		if (owner)
-			cart.owner_ckey = owner.ckey
+			cart.owner_ckey = owner.get_ckey()
 		..()
 
 /datum/syndicate_buylist/traitor/moonshine

@@ -1858,7 +1858,7 @@ Other Goonstation servers:[serverList]</span>"})
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
 			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
-			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.ckey : null
+			src.admin_ckey = (alert(user, "Attach it to your adminness? This will tell you when people buy it (and also give you the money they spend).", "FEED ME SPACEBUX", "Yes", "No") == "Yes") ? user.get_ckey() : null
 
 			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
 			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
@@ -1918,11 +1918,11 @@ Other Goonstation servers:[serverList]</span>"})
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
 
-			if (!src.purchaser_ckeys[user.client.ckey])
-				src.purchaser_ckeys[user.client.ckey] = 0
+			if (!src.purchaser_ckeys[user.client.get_ckey()])
+				src.purchaser_ckeys[user.client.get_ckey()] = 0
 
 			src.number_purchased++
-			src.purchaser_ckeys[user.client.ckey]++
+			src.purchaser_ckeys[user.client.get_ckey()]++
 			src.update_quantity()
 			playsound(src, 'sound/misc/cashregister.ogg', 33, FALSE)
 
@@ -1948,7 +1948,7 @@ Other Goonstation servers:[serverList]</span>"})
 			return FALSE
 
 		// Are we limiting how many people can buy?
-		if (limit_per_player && (src.purchaser_ckeys[user.client.ckey] && src.purchaser_ckeys[user.client.ckey] >= limit_per_player))
+		if (limit_per_player && (src.purchaser_ckeys[user.client.get_ckey()] && src.purchaser_ckeys[user.client.get_ckey()] >= limit_per_player))
 			boutput(user, SPAN_ALERT("You've reached the limit that you can buy."))
 			return FALSE
 

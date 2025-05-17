@@ -110,7 +110,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 		if (task != "attacking")
 			if (!beeMom && beeMomCkey)
 				for (var/mob/maybeOurMom in hearers(src, null))
-					if (!isdead(maybeOurMom) && beeMomCkey == maybeOurMom.ckey)
+					if (!isdead(maybeOurMom) && beeMomCkey == maybeOurMom.get_ckey())
 						beeMom = maybeOurMom
 						src.visible_message(SPAN_NOTICE("<b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!"))
 						break
@@ -1629,9 +1629,9 @@ TYPEINFO(/obj/critter/domestic_bee)
 		SPAWN(2 SECONDS)
 			if (!beeMom)
 				for (var/mob/living/M in range(2, src))
-					if (!isdead(M) && M.ckey)
+					if (!isdead(M) && M.get_ckey())
 						beeMom = M
-						beeMomCkey = M.ckey
+						beeMomCkey = M.get_ckey()
 						break
 
 	ai_think()

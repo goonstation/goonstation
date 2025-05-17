@@ -66,7 +66,7 @@
 			if (!region) return
 			region.clean_up()
 			LAZYLISTADD(region_allocator.custom_admin_regions, region)
-			var/dmm_suite/D = new/dmm_suite(debug_id = "region allocator panel - [ui.user.ckey]")
+			var/dmm_suite/D = new/dmm_suite(debug_id = "region allocator panel - [ui.user.get_ckey()]")
 			D.read_map(map_data, region.bottom_left.x + 1, region.bottom_left.y + 1, region.bottom_left.z, flags = DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS | DMM_BESPOKE_AREAS)
 			. = TRUE
 		if ("removeRegion")

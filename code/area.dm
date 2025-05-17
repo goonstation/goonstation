@@ -226,7 +226,7 @@ TYPEINFO(/area)
 						wake_critters(enteringM)
 
 					//If it's a real fuckin player
-					if (enteringM.ckey && enteringM.client)
+					if (enteringM.get_ckey() && enteringM.client)
 						if( !CanEnter( enteringM ) )
 
 							var/target = get_turf(oldloc)
@@ -262,7 +262,7 @@ TYPEINFO(/area)
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
 					src.cancel_sound_loop(exitingM)
-					if (exitingM.ckey && exitingM.client && exitingM.mind)
+					if (exitingM.get_ckey() && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
 						if( sanctuary && !blocked && !(the_area.sanctuary) )
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
@@ -3897,9 +3897,9 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 					return
 				if(M.client.holder)
 					return
-				if(M.client.ckey in entered_ckeys)
+				if(M.client.get_ckey() in entered_ckeys)
 					return
-				var/ckey = M.client.ckey
+				var/ckey = M.client.get_ckey()
 				entered_ckeys += ckey
 				SPAWN(120 SECONDS)
 					entered_ckeys -= ckey

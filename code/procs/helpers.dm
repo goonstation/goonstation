@@ -711,8 +711,8 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	else
 		if (!isnull(the_mob))
 			if(custom_href) text += "<a href=\"[custom_href][additional_url_data]\">"
-			else if(mentor) text += "<a href=\"byond://?action=mentor_msg&target=[the_mob.ckey][additional_url_data]\">"
-			else text += "<a href=\"byond://?action=priv_msg&target=[the_mob.ckey][additional_url_data]\">"
+			else if(mentor) text += "<a href=\"byond://?action=mentor_msg&target=[the_mob.get_ckey()][additional_url_data]\">"
+			else text += "<a href=\"byond://?action=priv_msg&target=[the_mob.get_ckey()][additional_url_data]\">"
 
 		if (the_client)
 			if (the_client.holder && the_client.stealth && !include_details)
@@ -749,7 +749,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 				if (isnull(user))
 					user = usr
 				linkSrc = "\ref[user.client.holder]"
-			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
+			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.get_ckey()]' class='popt'><i class='icon-info-sign'></i></a>"
 
 	return text
 
@@ -1920,10 +1920,10 @@ proc/countJob(rank)
 		return null
 	. = list()
 	for (var/mob/M in mobs)
-		if (M.ckey && (!limit || length(.) < limit))
+		if (M.get_ckey() && (!limit || length(.) < limit))
 			if (findtext(M.real_name, target))
 				. += M
-			else if (findtext(M.ckey, target))
+			else if (findtext(M.get_ckey(), target))
 				. += M
 			else if (findtext(M.get_key(), target))
 				. += M
@@ -1951,10 +1951,10 @@ proc/countJob(rank)
 			return C.mob
 	if(!exact)
 		for(var/client/C) // prefix match second
-			if(copytext(C.ckey, 1, length(target) + 1) == target)
+			if(copytext(C.get_ckey(), 1, length(target) + 1) == target)
 				return C.mob
 		for(var/client/C) // substring match third
-			if (findtext(C.ckey, target))
+			if (findtext(C.get_ckey(), target))
 				return C.mob
 
 /**
@@ -1969,10 +1969,10 @@ proc/countJob(rank)
 			return M
 	if(!exact)
 		for(var/mob/M in mobs) // prefix match second
-			if(copytext(M.ckey, 1, length(target) + 1) == target)
+			if(copytext(M.get_ckey(), 1, length(target) + 1) == target)
 				return M
 		for(var/mob/M in mobs) // substring match third
-			if (findtext(M.ckey, target))
+			if (findtext(M.get_ckey(), target))
 				return M
 
 /**
@@ -1981,7 +1981,7 @@ proc/countJob(rank)
 /proc/whodead()
 	. = list()
 	for (var/mob/M in mobs)
-		if (M.ckey && isdead(M))
+		if (M.get_ckey() && isdead(M))
 			. += M
 
 /**
@@ -2430,8 +2430,8 @@ proc/total_clients_for_cap()
 
 
 proc/client_has_cap_grace(var/client/C)
-	if (C.ckey in player_cap_grace)
-		.= (player_cap_grace[C.ckey] > TIME)
+	if (C.get_ckey() in player_cap_grace)
+		.= (player_cap_grace[C.get_ckey()] > TIME)
 
 
 //TODO: refactor the below two into one proc
@@ -2506,7 +2506,7 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	var/msg = "\"[thing]\" ([thing.type])"
 	if (ismob(thing))
 		var/mob/mobthing = thing
-		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
+		msg += " {Key: [mobthing.get_ckey() || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
 	return msg
 
 /// For runtime logs- returns the above plus ref

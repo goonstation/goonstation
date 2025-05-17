@@ -15,7 +15,7 @@
 	. = ..()
 	if (
 		isnull(src.game_admin_id) \
-		|| isnull(src.ckey) \
+		|| isnull(src.get_ckey()) \
 	)
 		return FALSE
 
@@ -23,7 +23,7 @@
 	. = ..()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	.["game_admin"] = src.game_admin

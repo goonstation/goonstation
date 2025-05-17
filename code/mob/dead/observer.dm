@@ -306,7 +306,7 @@ TYPEINFO(/mob/dead/observer)
 		if (src.hibernating == 1)
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, DNR status will be set, and you will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
-				respawn_controller.subscribeNewRespawnee(src.ckey)
+				respawn_controller.subscribeNewRespawnee(src.get_ckey())
 				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
 					antagonist.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
@@ -339,7 +339,7 @@ TYPEINFO(/mob/dead/observer)
 		var/mob/dead/observer/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
-		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
+		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.get_ckey())
 			our_ghost = src.ghost
 		// no existing ghost, make a new one
 		else
@@ -375,8 +375,8 @@ TYPEINFO(/mob/dead/observer)
 			qdel(src)
 
 		if(!mind?.get_player()?.dnr)
-			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
-		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
+			respawn_controller.subscribeNewRespawnee(our_ghost.get_ckey())
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.get_ckey()]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
 			//var/mob/dead/observer/our_observer = our_ghost

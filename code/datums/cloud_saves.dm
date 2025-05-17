@@ -27,7 +27,7 @@
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
 			if (simulatedContent)
 				var/list/simulatedCloud = json_decode(simulatedContent)
-				var/list/playerCloud = simulatedCloud["[src.player.ckey]"]
+				var/list/playerCloud = simulatedCloud["[src.player.get_ckey()]"]
 				if (playerCloud)
 					if (!("data" in playerCloud)) playerCloud["data"] = list()
 					if (!("saves" in playerCloud)) playerCloud["saves"] = list()
@@ -43,13 +43,13 @@
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
 			if (simulatedContent)
 				simulatedCloud = json_decode(simulatedContent)
-				playerCloud = simulatedCloud["[src.player.ckey]"]
+				playerCloud = simulatedCloud["[src.player.get_ckey()]"]
 
 		if (!playerCloud) playerCloud = list()
 		if (!("data" in playerCloud)) playerCloud["data"] = list()
 		if (!("saves" in playerCloud)) playerCloud["saves"] = list()
 		playerCloud[type][key] = value
-		simulatedCloud["[src.player.ckey]"] = playerCloud
+		simulatedCloud["[src.player.get_ckey()]"] = playerCloud
 		rustg_file_write(json_encode(simulatedCloud), CLOUD_SAVES_SIMULATED_CLOUD)
 
 	/// Delete data from the simulated cloud for this player, for local development
@@ -60,14 +60,14 @@
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
 			if (simulatedContent)
 				simulatedCloud = json_decode(simulatedContent)
-				playerCloud = simulatedCloud["[src.player.ckey]"]
+				playerCloud = simulatedCloud["[src.player.get_ckey()]"]
 
 		if (key in playerCloud[type])
 			var/list/thing = playerCloud[type]
 			thing.Remove(key)
 			playerCloud[type] = thing
 
-		simulatedCloud["[src.player.ckey]"] = playerCloud
+		simulatedCloud["[src.player.get_ckey()]"] = playerCloud
 		rustg_file_write(json_encode(simulatedCloud), CLOUD_SAVES_SIMULATED_CLOUD)
 
 	/// Fetch all cloud data and files associated with this player
@@ -80,10 +80,10 @@
 			src.loaded = TRUE
 
 		else
-			if (!src.player.id && !src.player.ckey) return FALSE
+			if (!src.player.id && !src.player.get_ckey()) return FALSE
 			try
 				var/datum/apiRoute/players/saves/get/getSavesAndData = new
-				getSavesAndData.queryParams = list("player_id" = src.player.id, "ckey" = src.player.ckey)
+				getSavesAndData.queryParams = list("player_id" = src.player.id, "ckey" = src.player.get_ckey())
 				var/datum/apiModel/GetPlayerSaves/savesAndData = apiHandler.queryAPI(getSavesAndData)
 				var/list/newData = list()
 				for (var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data in savesAndData.data)
@@ -97,8 +97,8 @@
 				src.loaded = TRUE
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
-				logTheThing(LOG_DIARY, src.player.ckey, "failed to have their cloud data loaded: [error.message]", "admin")
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "failed to have their cloud data loaded: [error.message]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "failed to have their cloud data loaded: [error.message]", "admin")
 
 		return TRUE
 
@@ -112,18 +112,18 @@
 			src.putSimulatedCloud("data", key, value)
 
 		else
-			if (!src.player.id && !src.player.ckey)
-				logTheThing(LOG_DEBUG, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]")
-				logTheThing(LOG_DIARY, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]", "admin")
+			if (!src.player.id && !src.player.get_ckey())
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "No player ID or ckey found in cloud data put [key], [value]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "No player ID or ckey found in cloud data put [key], [value]", "admin")
 				return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
-				addPlayerData.buildBody(src.player.id, src.player.ckey, key, value)
+				addPlayerData.buildBody(src.player.id, src.player.get_ckey(), key, value)
 				apiHandler.queryAPI(addPlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]")
-				logTheThing(LOG_DIARY, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]", "admin")
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data[key] = value
@@ -139,15 +139,15 @@
 			src.putSimulatedCloud("saves", name, data)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.id && !src.player.get_ckey()) return
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
-				addPlayerSave.buildBody(src.player.id, src.player.ckey, name, data)
+				addPlayerSave.buildBody(src.player.id, src.player.get_ckey(), name, data)
 				apiHandler.queryAPI(addPlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put save into their cloud. Error: [error.message]")
-				logTheThing(LOG_DIARY, src.player.ckey, "failed to put save into their cloud. Error: [error.message]", "admin")
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "failed to put save into their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "failed to put save into their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves[name] = data
@@ -160,15 +160,15 @@
 			src.deleteSimulatedCloud("data", key)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.id && !src.player.get_ckey()) return
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
-				deletePlayerData.buildBody(src.player.id, src.player.ckey, key)
+				deletePlayerData.buildBody(src.player.id, src.player.get_ckey(), key)
 				apiHandler.queryAPI(deletePlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]")
-				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]", "admin")
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "failed to delete data from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "failed to delete data from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.data.Remove(key)
@@ -181,15 +181,15 @@
 			src.deleteSimulatedCloud("saves", name)
 
 		else
-			if (!src.player.id && !src.player.ckey) return
+			if (!src.player.id && !src.player.get_ckey()) return
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
-				deletePlayerSave.buildBody(src.player.id, src.player.ckey, name)
+				deletePlayerSave.buildBody(src.player.id, src.player.get_ckey(), name)
 				apiHandler.queryAPI(deletePlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]")
-				logTheThing(LOG_DIARY, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]", "admin")
+				logTheThing(LOG_DEBUG, src.player.get_ckey(), "failed to delete save from their cloud. Error: [error.message]")
+				logTheThing(LOG_DIARY, src.player.get_ckey(), "failed to delete save from their cloud. Error: [error.message]", "admin")
 				return FALSE
 
 		src.saves.Remove(name)
@@ -234,12 +234,12 @@
 				break
 
 		var/list/playerCloud = list("data" = list(), "saves" = list())
-		if (P.ckey in simulatedCloud)
-			playerCloud = simulatedCloud["[P.ckey]"]
+		if (P.get_ckey() in simulatedCloud)
+			playerCloud = simulatedCloud["[P.get_ckey()]"]
 
 		playerCloud["data"][item["key"]] = item["value"]
 		P.cloudSaves.data[item["key"]] = item["value"]
-		newSimulatedCloud["[P.ckey]"] = playerCloud
+		newSimulatedCloud["[P.get_ckey()]"] = playerCloud
 
 	rustg_file_write(json_encode(newSimulatedCloud), CLOUD_SAVES_SIMULATED_CLOUD)
 	return TRUE

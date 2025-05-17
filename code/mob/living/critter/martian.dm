@@ -85,7 +85,7 @@ TYPEINFO(/mob/living/critter/martian)
 
 		// back once again to ruin the day, it's CIRR fucking up things
 		/*SPAWN(0) // Commenting this out until martian gamemode is real again
-			if (src.mind && src.ckey)
+			if (src.mind && src.get_ckey())
 				var/randomname = pick(strings("martian_names.txt", "martianname"))
 				var/newname = adminscrub(input(src,"You are a Martian. Would you like to change your name to something else?", "Name change", randomname) as text)
 

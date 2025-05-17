@@ -27,7 +27,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				try
 					var/datum/apiRoute/vpn/check/checkVpn = new
 					checkVpn.routeParams = list(src.address)
-					checkVpn.queryParams = list("ckey" = src.ckey, "round_id" = roundId)
+					checkVpn.queryParams = list("ckey" = src.get_ckey(), "round_id" = roundId)
 					checkedVpn = apiHandler.queryAPI(checkVpn)
 				catch (var/exception/e)
 					var/datum/apiModel/Error/error = e.name
@@ -91,7 +91,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		global.vpn_ip_checks["[src.address]"] = TRUE
 		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""][info ? ", info: [info]" : ""]"
 
-		addPlayerNote(src.ckey, "bot", msg_txt)
+		addPlayerNote(src.get_ckey(), "bot", msg_txt)
 		logTheThing(LOG_ADMIN, src, msg_txt)
 		logTheThing(LOG_DIARY, src, msg_txt, "admin")
 		message_admins("[key_name(src)] [msg_txt]")

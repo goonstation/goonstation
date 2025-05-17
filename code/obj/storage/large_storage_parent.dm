@@ -844,7 +844,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!M)
 			return
 
-		if (M.ckey && (M.ckey == owner_ckey))
+		if (M.get_ckey() && (M.ckey == owner_ckey))
 			return
 		src.locked = TRUE
 		M.show_text("Is it getting... smaller in here?", "red")

@@ -71,7 +71,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (!src || !istype(src))
 			return
 
-		src.owner_ckey = ownermind?.ckey
+		src.owner_ckey = ownermind?.get_ckey()
 
 		if (!islist(src.items_general))
 			src.items_general = list()

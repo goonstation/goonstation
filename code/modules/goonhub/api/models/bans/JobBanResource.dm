@@ -26,7 +26,7 @@
 /datum/apiModel/Tracked/JobBanResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.ckey) \
+		isnull(src.get_ckey()) \
 		|| isnull(src.banned_from_job)
 	)
 		return FALSE
@@ -37,7 +37,7 @@
 	.["round_id"] = src.round_id
 	.["game_admin_id"] = src.game_admin_id
 	.["server_id"] = src.server_id
-	.["ckey"] = src.ckey
+	.["ckey"] = src.get_ckey()
 	.["banned_from_job"] = src.banned_from_job
 	.["reason"] = src.reason
 	.["expires_at"] = src.expires_at

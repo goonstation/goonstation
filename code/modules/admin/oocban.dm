@@ -3,13 +3,13 @@ var
 	oocban_keylist[0]		//to store the keys & ranks
 
 /proc/oocban_fullban(mob/M)
-	if (!M || !M.ckey) return
-	oocban_keylist.Add(text("[M.ckey]"))
+	if (!M || !M.get_ckey()) return
+	oocban_keylist.Add(text("[M.get_ckey()]"))
 	oocban_savebanfile()
 
 /proc/oocban_isbanned(mob/M)
-	if (!M || !M.ckey ) return
-	if(oocban_keylist.Find(text("[M.ckey]")))
+	if (!M || !M.get_ckey() ) return
+	if(oocban_keylist.Find(text("[M.get_ckey()]")))
 		return 1
 	else
 		return 0
@@ -30,9 +30,9 @@ var
 	S["keys[0]"] << oocban_keylist
 
 /proc/oocban_unban(mob/M)
-	if (!M || !M.ckey ) return
+	if (!M || !M.get_ckey() ) return
 
-	oocban_keylist.Remove(text("[M.ckey]"))
+	oocban_keylist.Remove(text("[M.get_ckey()]"))
 
 
 	oocban_savebanfile()

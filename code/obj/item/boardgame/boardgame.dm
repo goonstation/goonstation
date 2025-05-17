@@ -416,9 +416,9 @@ TYPEINFO(/obj/item/boardgame)
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 
-		if(!src.active_users[user.ckey])
-			src.active_users[user.ckey] = list(
-				"ckey" = user.ckey,
+		if(!src.active_users[user.get_ckey()])
+			src.active_users[user.get_ckey()] = list(
+				"ckey" = user.get_ckey(),
 				"name" = user.name,
 				"selected" = null,
 				"palette" = null,
@@ -446,7 +446,7 @@ TYPEINFO(/obj/item/boardgame)
 		.["pieces"] = src.pieces
 		.["styling"] = src.styling
 		.["users"] = src.active_users
-		.["currentUser"] = src.active_users[user.ckey]
+		.["currentUser"] = src.active_users[user.get_ckey()]
 		.["lastMovedPiece"] = src.lastMovedPiece
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -515,7 +515,7 @@ TYPEINFO(/obj/item/boardgame)
 				. = TRUE
 
 	ui_close(mob/user)
-		src.active_users -= user.ckey
+		src.active_users -= user.get_ckey()
 		. = ..()
 
 	ui_status(mob/user, datum/ui_state/state)

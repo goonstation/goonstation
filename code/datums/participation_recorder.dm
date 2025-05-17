@@ -35,8 +35,8 @@ var/global/datum/participationRecorder/participationRecorder
 			throw EXCEPTION("No player given")
 
 		if (!P.id)
-			logTheThing(LOG_DEBUG, null, "No player ID for player during player participation recording. Player: [P.ckey]")
-			logTheThing(LOG_DIARY, null, "No player ID for player during player participation recording. Player: [P.ckey]", "admin")
+			logTheThing(LOG_DEBUG, null, "No player ID for player during player participation recording. Player: [P.get_ckey()]")
+			logTheThing(LOG_DIARY, null, "No player ID for player during player participation recording. Player: [P.get_ckey()]", "admin")
 			return
 
 		if (!ticker || !ticker.mode || !ticker.mode.name)
@@ -56,8 +56,8 @@ var/global/datum/participationRecorder/participationRecorder
 				addParticipation.buildBody(P.id, roundId, src.getJob(P))
 				apiHandler.queryAPI(addParticipation)
 			catch
-				logTheThing(LOG_DEBUG, null, "failed to record player participation. Player: [P.ckey]")
-				logTheThing(LOG_DIARY, null, "failed to record player participation. Player: [P.ckey]", "admin")
+				logTheThing(LOG_DEBUG, null, "failed to record player participation. Player: [P.get_ckey()]")
+				logTheThing(LOG_DIARY, null, "failed to record player participation. Player: [P.get_ckey()]", "admin")
 
 
 	//Set holding on, which enables queuing of participation data for the duration

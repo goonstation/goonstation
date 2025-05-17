@@ -14,8 +14,8 @@
 				finished = 1
 				return
 			if (T)
-				if (fexists("adventure/ADV_LOAD_[user.client.ckey]"))
-					fdel("adventure/ADV_LOAD_[user.client.ckey]")
+				if (fexists("adventure/ADV_LOAD_[user.client.get_ckey()]"))
+					fdel("adventure/ADV_LOAD_[user.client.get_ckey()]")
 				if (pasting)
 					boutput(user, SPAN_ALERT("Already loading."))
 					return
@@ -48,7 +48,7 @@
 				if (!target)
 					pasting = 0
 					return
-				var/savefile/F = new /savefile("adventure/ADV_LOAD_[user.client.ckey]")
+				var/savefile/F = new /savefile("adventure/ADV_LOAD_[user.client.get_ckey()]")
 				// fuck you
 				F.dir.len = 0
 				// and fuck you too
@@ -65,7 +65,7 @@
 				var/w
 				var/h
 				var/cz = T.z
-				var/paster = user.client.ckey
+				var/paster = user.client.get_ckey()
 				F["w"] >> w
 				F["h"] >> h
 				var/version
@@ -160,8 +160,8 @@
 						this.pasting = 0
 					if (user?.client)
 						boutput(user, SPAN_NOTICE("Pasting finished. Fixing lights."))
-						if (fexists("ADV_LOAD_[user.client.ckey]"))
-							fdel("ADV_LOAD_[user.client.ckey]")
+						if (fexists("ADV_LOAD_[user.client.get_ckey()]"))
+							fdel("ADV_LOAD_[user.client.get_ckey()]")
 					message_admins("Adventure/loader: loading initiated by [paster] is finalizing.")
 					del F
 

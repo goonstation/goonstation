@@ -20,7 +20,7 @@
 			boutput(sharktarget, "Uh oh.")
 			sharktarget.playsound_local_not_inworld('sound/misc/jaws.ogg', 100)
 			logTheThing(LOG_DIARY, usr, "has set the Banshark on [constructTarget(sharktarget,"diary")]!", "admin")
-			message_admins("[usr.client.ckey] has set the Banshark on [sharktarget.ckey]!")
+			message_admins("[usr.client.get_ckey()] has set the Banshark on [sharktarget.get_ckey()]!")
 			sleep(20 SECONDS)
 			startx = sharktarget.x - rand(-11, 11)
 			starty = sharktarget.y - rand(-11, 11)
@@ -121,7 +121,7 @@
 			sharktarget2.gib()
 			boutput(sharktarget2, SPAN_ALERT("<BIG><B>You have been eaten by the banshark!</B></BIG>"))
 			logTheThing(LOG_ADMIN, sharktarget2, "has been eaten by the banshark!")
-			message_admins(SPAN_INTERNAL("[sharktarget2.ckey] has been eaten by the banshark!"))
+			message_admins(SPAN_INTERNAL("[sharktarget2.get_ckey()] has been eaten by the banshark!"))
 		else
 			boutput(sharktarget2, SPAN_ALERT("<BIG><B>You can escape the banshark, but not the ban!</B></BIG>"))
 			logTheThing(LOG_ADMIN, sharktarget2, "has evaded the shark by ceasing to exist!  Banning them anyway.")

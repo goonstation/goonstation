@@ -131,10 +131,10 @@ var/global/logLength = 0
 		source = "(nobody)" // |GOONSTATION-CHANGE| (entry +->source ) (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
-		source = "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])" // |GOONSTATION-CHANGE| (entry +->source )
+		source = "[mob.get_ckey()] (as [mob] at [mob.x],[mob.y],[mob.z])" // |GOONSTATION-CHANGE| (entry +->source )
 	else if(istype(user, /client))
 		var/client/client = user
-		source = "[client.ckey]" // |GOONSTATION-CHANGE| (entry +->source )
+		source = "[client.get_ckey()]" // |GOONSTATION-CHANGE| (entry +->source )
 	// Insert context
 	if(context)
 		entry += " in [context]"
@@ -202,8 +202,8 @@ var/global/logLength = 0
 				mobType = "(mainframe/shell)"
 		if (mobRef.get_key())
 			key = mobRef.get_key()
-		if (mobRef.ckey)
-			ckey = mobRef.ckey
+		if (mobRef.get_ckey())
+			ckey = mobRef.get_ckey()
 		if (mobRef.client)
 			online = 1
 		if (!isdead(mobRef))
@@ -229,8 +229,8 @@ var/global/logLength = 0
 				dead = 0
 		if (clientRef.get_key())
 			key = clientRef.get_key()
-		if (clientRef.ckey)
-			ckey = clientRef.ckey
+		if (clientRef.get_ckey())
+			ckey = clientRef.get_ckey()
 	else if (istype(ref,/obj/machinery/lawrack))
 		var/list/nice_rack  = list()
 		var/obj/machinery/lawrack/rack_ref = ref
@@ -246,8 +246,8 @@ var/global/logLength = 0
 			name = "[mindRef.player.displayed_key] (character destroyed)"
 			if (mindRef.get_key())
 				key = mindRef.get_key()
-			if (mindRef.ckey)
-				ckey = mindRef.ckey
+			if (mindRef.get_ckey())
+				ckey = mindRef.get_ckey()
 	else
 		return ref
 

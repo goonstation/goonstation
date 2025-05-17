@@ -15,13 +15,13 @@ var/datum/vote_manager/vote_manager = new/datum/vote_manager()
 	if(!vote_manager) return //shits hitting the fan at ludicrous speeds
 	if(vote_manager.active_vote) vote_manager.show_vote(src.client)
 	else
-		if(src.ckey in vote_log)
-			if(vote_log[src.ckey] < max_votes_per_round)
-				if(vote_manager.show_vote_selection(src.client)) vote_log[src.ckey]++
+		if(src.get_ckey() in vote_log)
+			if(vote_log[src.get_ckey()] < max_votes_per_round)
+				if(vote_manager.show_vote_selection(src.client)) vote_log[src.get_ckey()]++
 			else
 				boutput(src, SPAN_ALERT("You may not start any more votes this round. (Maximum reached : [max_votes_per_round])"))
 		else
-			if(vote_manager.show_vote_selection(src.client)) vote_log[src.ckey] = 1
+			if(vote_manager.show_vote_selection(src.client)) vote_log[src.get_ckey()] = 1
 */
 
 /client/proc/viewnewvote()
@@ -63,7 +63,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		if(active_vote) return 0
 		var/choice
 	/*
-		if(NT.Find(C.ckey) || NTC.Find(C.ckey) || C.holder) //Trusted player.
+		if(NT.Find(C.get_ckey()) || NTC.Find(C.get_ckey()) || C.holder) //Trusted player.
 			choice = input(C,"Please choose the type of vote you would like to start:","Vote",null) in list("Restart", "Gamemode", "Player Ban", "Player Mute", "***CANCEL***")
 		else
 			choice = input(C,"Please choose the type of vote you would like to start:","Vote",null) in list("Restart", "Gamemode", "Player Mute", "***CANCEL***")
@@ -78,7 +78,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				//if(!config.allow_vote_restart && !C.holder)
 				//	boutput(C, SPAN_ALERT("Restart votes disabled."))
 				//	return
-				if((C.ckey in recently_dead) && !C.holder)
+				if((C.get_ckey() in recently_dead) && !C.holder)
 					boutput(C, SPAN_ALERT("You may not start this type of vote because you recently died."))
 					return
 				if(C.mob.stat && !C.holder)
@@ -86,7 +86,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 					return
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/restart()
-				boutput(world, SPAN_SUCCESS("<BIG><B>Vote restart initiated by [C.ckey]</B></BIG>"))
+				boutput(world, SPAN_SUCCESS("<BIG><B>Vote restart initiated by [C.get_ckey()]</B></BIG>"))
 				show_vote(C)
 				return 1
 			if("Gamemode")
@@ -103,7 +103,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				if(!mode) return 0 //Magic?!
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/mode(mode)
-				boutput(world, SPAN_SUCCESS("<BIG><B>Vote gamemode ([mode]) initiated by [C.ckey]</B></BIG>"))
+				boutput(world, SPAN_SUCCESS("<BIG><B>Vote gamemode ([mode]) initiated by [C.get_ckey()]</B></BIG>"))
 				show_vote(C)
 				return 1
 			/*if("Player Ban")
@@ -124,7 +124,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				if(!picked) return 0
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/ban(picked.client)
-				boutput(world, SPAN_SUCCESS("<BIG><B>Vote Ban ([player]) initiated by [C.ckey]</B></BIG>"))
+				boutput(world, SPAN_SUCCESS("<BIG><B>Vote Ban ([player]) initiated by [C.get_ckey()]</B></BIG>"))
 				show_vote(C)
 				return 1
 			if("Player Mute")
@@ -145,7 +145,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				if(!picked) return 0
 				if(active_vote) return 0
 				active_vote = new/datum/vote_new/mute(picked.client)
-				boutput(world, SPAN_SUCCESS("<BIG><B>Vote Mute ([player]) initiated by [C.ckey]</B></BIG>"))
+				boutput(world, SPAN_SUCCESS("<BIG><B>Vote Mute ([player]) initiated by [C.get_ckey()]</B></BIG>"))
 				show_vote(C)
 				return 1*/
 		return 0
@@ -181,7 +181,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	New(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
-			may_vote += C.ckey
+			may_vote += C.get_ckey()
 		vote_started = world.time
 		data = A
 		newVoteLinkStat.update_name(src.vote_name ? src.vote_name : "Vote")
@@ -192,10 +192,10 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	proc/show_to(var/client/C)
 		if(kill) return
 		if(C in open_votes) return
-		if(!(C.ckey in may_vote))
+		if(!(C.get_ckey() in may_vote))
 			boutput(C, SPAN_ALERT("<BIG>You may not vote as you were not present when the vote was started.</BIG>"))
 			return
-		if((C.ckey in voted_ckey) || (C.computer_id in voted_id))
+		if((C.get_ckey() in voted_ckey) || (C.computer_id in voted_id))
 			boutput(C, SPAN_ALERT("<BIG>You have already voted. Current winner: [get_winner()]</BIG>"))
 			return
 		open_votes += C
@@ -207,7 +207,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 		if(!options[choice]) options[choice] = 1
 		else options[choice]++
 		open_votes -= C
-		voted_ckey += C.ckey
+		voted_ckey += C.get_ckey()
 		voted_id += C.computer_id
 
 	proc/get_winner()
@@ -221,7 +221,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				if(A == "No") // abstain = partial no, in votes that contain a no option.
 					adjAbstain = options[A]
 					for(var/client/C in clients)
-						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+						if(!((C.get_ckey() in voted_ckey) || (C.computer_id in voted_id)))
 							adjAbstain = adjAbstain + vote_abstain_weight
 					if(adjAbstain > winner_num)
 						winner_num = adjAbstain
@@ -242,7 +242,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				if(A == "No")
 					adjAbstain = options[A]
 					for(var/client/C in clients)
-						if(!((C.ckey in voted_ckey) || (C.computer_id in voted_id)))
+						if(!((C.get_ckey() in voted_ckey) || (C.computer_id in voted_id)))
 							adjAbstain = adjAbstain + vote_abstain_weight
 					if(adjAbstain > winner_num)
 						winner_num = adjAbstain
@@ -307,7 +307,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	New(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
-			may_vote += C.ckey
+			may_vote += C.get_ckey()
 		vote_started = world.time
 		data = A
 		details = "Ban player '[A:mob:name]' for 1 day?"
@@ -346,7 +346,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	New(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
-			may_vote += C.ckey
+			may_vote += C.get_ckey()
 		vote_started = world.time
 		data = A
 		details = "Mute player '[A:mob:name]'?"

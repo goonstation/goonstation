@@ -223,7 +223,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		for (var/client/C in clients)
 			C.verbs += /client/proc/mapVote
 			if(C?.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
-				src.passiveVotes[C.ckey] = C.preferences.preferred_map
+				src.passiveVotes[C.get_ckey()] = C.preferences.preferred_map
 
 		//announce vote
 		var/msg = "<br><span class='bold notice'>"
@@ -451,9 +451,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		return results
 
 	proc/setup_client_vote_map(var/client/C)
-		if(!C.ckey)
+		if(!C.get_ckey())
 			return
-		var/key = C.ckey
+		var/key = C.get_ckey()
 		if(key in vote_map)
 			return
 		var/list/maps = list()
@@ -463,9 +463,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		voters++
 
 	proc/get_client_votes(var/client/C)
-		if(!C.ckey)
+		if(!C.get_ckey())
 			return
-		var/key = C.ckey
+		var/key = C.get_ckey()
 		if(!(key in vote_map))
 			return
 		var/list/maps = list()
@@ -476,30 +476,30 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		return maps
 
 	proc/toggle_vote(map_name, client/C)
-		if(!(C.ckey in vote_map))
+		if(!(C.get_ckey() in vote_map))
 			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
+		var/list/client_vote_map = vote_map[C.get_ckey()]
 		if(map_name in client_vote_map)
 			client_vote_map[map_name] = !client_vote_map[map_name]
 
 	proc/all_yes(client/C)
-		if(!(C.ckey in vote_map))
+		if(!(C.get_ckey() in vote_map))
 			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
+		var/list/client_vote_map = vote_map[C.get_ckey()]
 		for(var/map_name in client_vote_map)
 			client_vote_map[map_name] = 1
 
 	proc/all_no(client/C)
-		if(!(C.ckey in vote_map))
+		if(!(C.get_ckey() in vote_map))
 			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
+		var/list/client_vote_map = vote_map[C.get_ckey()]
 		for(var/map_name in client_vote_map)
 			client_vote_map[map_name] = 0
 
 	proc/special_vote(var/client/C,var/map_name)
-		if(!(C.ckey in vote_map))
+		if(!(C.get_ckey() in vote_map))
 			setup_client_vote_map(C)
-		var/list/client_vote_map = vote_map[C.ckey]
+		var/list/client_vote_map = vote_map[C.get_ckey()]
 		client_vote_map[map_name] = 1
 
 	proc/voting_box(var/obj/voting_box/V,var/map_name)
@@ -525,12 +525,12 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		)
 
 	ui_data(mob/user)
-		if(!(user.client.ckey in vote_map))
+		if(!(user.client.get_ckey() in vote_map))
 			setup_client_vote_map(user.client)
 
 		. = list(
 			"playersVoting" = mapSwitcher.playersVoting,
-			"clientVoteMap" = vote_map[user.client.ckey]
+			"clientVoteMap" = vote_map[user.client.get_ckey()]
 		)
 
 	proc/show_window(client/C)

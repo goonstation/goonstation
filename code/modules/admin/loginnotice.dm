@@ -38,24 +38,24 @@
 		if (!player.cloudSaves.deleteData("login_notice"))
 			tgui_alert(src.owner.mob, "ERROR: Failed to clear login notice to cloud for [target_key].")
 			return
-		addPlayerNote(target_key, src.owner.ckey, "Cleared the previous login notice.")
+		addPlayerNote(target_key, src.owner.get_ckey(), "Cleared the previous login notice.")
 		return
 
 
 	// otherwise, we have a new message to save
 	// yes it is using the log date. no i don't care
-	var/message_text = "Message from Admin [src.owner.ckey] at [roundLog_date]:\n[new_message]"
+	var/message_text = "Message from Admin [src.owner.get_ckey()] at [roundLog_date]:\n[new_message]"
 	if (!player.cloudSaves.putData("login_notice", message_text))
 		input(src.owner.mob, "** ERROR SAVING LOGIN MESSAGE **\nYou can copy it from here to retry later:", "Login Notice", message) as null|message
 		return
 
 	// New note saved, usual player notes bookkeeping
-	addPlayerNote(target_key, src.owner.ckey, "New login notice set:\n[message_text]")
+	addPlayerNote(target_key, src.owner.get_ckey(), "New login notice set:\n[message_text]")
 	message_admins(SPAN_INTERNAL("[key_name(src.owner.mob)] added a login notice for <a href='byond://?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div>"))
 	tgui_alert(src.owner.mob, "Login notice for '[target_key]' has been set. They should see it next time they connect.")
 
 	ircbot.export_async("admin", list(
-		"key" = src.owner.ckey,
+		"key" = src.owner.get_ckey(),
 		"name" = src.owner.mob.name,
 		"msg" = "added an admin notice for `[target_key]`:\n[message_text]"))
 
@@ -109,13 +109,13 @@
 			tgui_alert(src.mob, "ERROR: Failed to clear login notice for some reason...")
 			return
 
-		message_admins(SPAN_INTERNAL("[src.ckey] acknowledged their login notice."))
-		addPlayerNote(src.ckey, "bot", "Acknowledged their login notice.")
+		message_admins(SPAN_INTERNAL("[src.get_ckey()] acknowledged their login notice."))
+		addPlayerNote(src.get_ckey(), "bot", "Acknowledged their login notice.")
 		src.mob.Browse(null, "window=loginnotice")
 		src << csound('sound/machines/futurebuddy_beep.ogg')
 		alert("You have acknowledged the admin notice and can now play.")
 		ircbot.export_async("admin", list(
-			"key" = src.ckey,
+			"key" = src.get_ckey(),
 			"name" = src.mob.name,
 			"msg" = "Acknowledged their admin notice."))
 

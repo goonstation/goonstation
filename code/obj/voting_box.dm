@@ -21,7 +21,7 @@
 
 		if (mapSwitcher.playersVoting)
 			var/hadVoted = 0
-			var/list/client_vote_map = map_vote_holder.vote_map[C.ckey]
+			var/list/client_vote_map = map_vote_holder.vote_map[C.get_ckey()]
 			if (client_vote_map)
 				hadVoted = 1
 

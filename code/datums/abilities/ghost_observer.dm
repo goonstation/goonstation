@@ -107,7 +107,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 					points_since_last_tick += amt
 					k = 1 //3 //when ready with event.
 
-				spooktober_GH.change_points(owner.client.ckey, amt*k)		//idk why I did this with the multiplying by a constant, but I'll keep it
+				spooktober_GH.change_points(owner.client.get_ckey(), amt*k)		//idk why I did this with the multiplying by a constant, but I'll keep it
 				src.points = spooktober_GH.points
 
 	pointCheck(cost)
@@ -124,7 +124,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	deductPoints(cost)
 		..()
 		if (owner.client)
-			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+			spooktober_GH.change_points(owner.client.get_ckey(), -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif

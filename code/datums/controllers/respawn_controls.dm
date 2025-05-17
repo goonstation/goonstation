@@ -66,7 +66,7 @@ var/datum/respawn_controls/respawn_controller
 				R.notifyAndGrantVerb()
 			if(RESPAWNEE_STATE_ALIVE)
 				// They were somehow revived
-				unsubscribeRespawnee(R.ckey)
+				unsubscribeRespawnee(R.get_ckey())
 
 	proc/subscribeNewRespawnee(var/ckey)
 		if(ckey && !respawnees.Find(ckey))
@@ -213,13 +213,13 @@ var/datum/respawn_controls/respawn_controller
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)
 			boutput(M, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
-		master.unsubscribeRespawnee(src.ckey)
+		master.unsubscribeRespawnee(src.get_ckey())
 
 /client/proc/respawn_via_controller()
 	set name = "Respawn As New Character"
 	set desc = "When you're tired of being dead."
 
-	respawn_controller.doRespawn(src.ckey)
+	respawn_controller.doRespawn(src.get_ckey())
 
 /atom/movable/screen/respawn_timer
 	name = "Respawn Timer"

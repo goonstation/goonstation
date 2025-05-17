@@ -26,8 +26,8 @@
 
 	proc/add_player(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
 		//only add new stat tracker datum if one doesn't exist
-		if (mind.ckey && player_stats[mind.ckey] == null)
-			player_stats[mind.ckey] = new/datum/pw_player_stats(mind = mind, initial_name = initial_name, team_num = team_num, rank = rank )
+		if (mind.get_ckey() && player_stats[mind.get_ckey()] == null)
+			player_stats[mind.get_ckey()] = new/datum/pw_player_stats(mind = mind, initial_name = initial_name, team_num = team_num, rank = rank )
 
 	//team_num = team that just captured this point
 	//computer = computer object for the point that has been captured. used for distance check currently.
@@ -42,20 +42,20 @@
 				stat.control_point_capture_count ++
 
 	proc/inc_friendly_fire(var/mob/M)
-		if (!ismob(M) || !M.ckey)
+		if (!ismob(M) || !M.get_ckey())
 			return
-		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.get_ckey()]
 		if (istype(stat))
 			stat.friendly_fire_count ++
 
 	proc/inc_death(var/mob/M)
-		if (!ismob(M) || !M.ckey)
+		if (!ismob(M) || !M.get_ckey())
 			return
-		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.get_ckey()]
 		if (istype(stat))
 			stat.death_count ++
 
-		src.inc_longest_life(M.ckey)
+		src.inc_longest_life(M.get_ckey())
 
 	//uses shift time
 	//only called from inc_death and the loop through the player_stats list of pw_player_stats datum
@@ -77,17 +77,17 @@
 					stat.longest_life = shift_time - stat.time_of_last_death
 
 	proc/inc_farts(var/mob/M)
-		if (!ismob(M) || !M.ckey)
+		if (!ismob(M) || !M.get_ckey())
 			return
-		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.get_ckey()]
 		if (istype(stat))
 			stat.farts ++
 
 	//has a variable increment amount cause not every tic of ethanol metabolize metabolizes the same amount of alcohol.
 	proc/inc_alcohol_metabolized(var/mob/M, var/inc_amt = 1)
-		if (!ismob(M) || !M.ckey)
+		if (!ismob(M) || !M.get_ckey())
 			return
-		var/datum/pw_player_stats/stat = player_stats[M.ckey]
+		var/datum/pw_player_stats/stat = player_stats[M.get_ckey()]
 		if (istype(stat))
 			stat.alcohol_metabolized += inc_amt
 
@@ -128,12 +128,12 @@
 		for (var/ckey in player_stats)
 			var/datum/pw_player_stats/stat = player_stats[ckey]
 			//first update longest life
-			inc_longest_life(stat.ckey)
+			inc_longest_life(stat.get_ckey())
 			// p_stat_text += stat.build_text()
 			p_stat_text += {"
 <tr>
  <td>[stat.team_num == 1? "NT" : stat.team_num == 2 ? "SY" : ""]</td>
- <td>[stat.initial_name] ([stat.ckey])</td>
+ <td>[stat.initial_name] ([stat.get_ckey()])</td>
  <td>[stat.death_count]</td>
  <td>[stat.friendly_fire_count]</td>
  <td>[stat.longest_life] (min)</td>
@@ -264,5 +264,5 @@ Player Stats
 		src.team_num = team_num
 		src.rank = rank
 
-		src.ckey = mind?.ckey
+		src.ckey = mind?.get_ckey()
 

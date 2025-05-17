@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		if (traitor.id == ROLE_SLASHER)
 			var/foundmachete = FALSE
 			for_by_tcl(M, /obj/item/slasher_machete)
-				if(M.slasher_key == criminal_mind.current.ckey)
+				if(M.slasher_key == criminal_mind.current.get_ckey())
 					foundmachete = TRUE
 					var/outputval = round((M.force - 15) / 2.5)
 					stuff_to_output += "<B>Souls Stolen:</b> [outputval]"

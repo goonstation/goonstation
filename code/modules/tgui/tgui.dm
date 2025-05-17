@@ -253,7 +253,7 @@
 			"mode" = user.client.darkmode ? "dark" : "light", // |GOONSTATION-ADD|
 		),
 		"client" = list(
-			"ckey" = user.client.ckey,
+			"ckey" = user.client.get_ckey(),
 			"address" = user.client.address,
 			"computer_id" = user.client.computer_id,
 		),

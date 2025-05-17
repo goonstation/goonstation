@@ -936,12 +936,12 @@ var/list/special_pa_observing_verbs = list(
 		M << link("http://wiki.ss13.co/Rules")
 		boutput(M, SPAN_ALERT("<B>You have been warned by an administrator. This is the only warning you will receive.</B>"))
 		M.client.warned = 1
-		message_admins(SPAN_INTERNAL("[src.ckey] warned [M.ckey]."))
+		message_admins(SPAN_INTERNAL("[src.get_ckey()] warned [M.get_ckey()]."))
 	else
 		bansHandler.add(
-			src.ckey,
+			src.get_ckey(),
 			null,
-			M.ckey,
+			M.get_ckey(),
 			M.computer_id,
 			M.client.address,
 			"Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\".",
@@ -1322,7 +1322,7 @@ var/list/fun_images = list()
 	if (confirm2 == "Yes")
 		//Make everyone invisible so they don't get in the way of screenshots
 		for (var/mob/M in mobs)
-			if (M.ckey)
+			if (M.get_ckey())
 				M.alpha = 0
 
 	var/confirm3 = tgui_alert(src.mob, "Max out all power devices? (Prevents lights from going out mid-mapping)", "Max Power?", list("Yes", "No"))
@@ -1662,7 +1662,7 @@ var/list/fun_images = list()
 		return alert("The map is already on [map] you dunce!")
 
 	try
-		mapSwitcher.setNextMap(src.ckey, mapName = map)
+		mapSwitcher.setNextMap(src.get_ckey(), mapName = map)
 	catch (var/exception/e)
 		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
@@ -2208,7 +2208,7 @@ var/list/fun_images = list()
 	vpnckey = ckey(vpnckey)
 	try
 		var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
-		addWhitelist.buildBody(src.ckey, vpnckey)
+		addWhitelist.buildBody(src.get_ckey(), vpnckey)
 		apiHandler.queryAPI(addWhitelist)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
@@ -2218,7 +2218,7 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.get_key()].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
-	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.get_ckey(), "Ckey [vpnckey] added to the VPN whitelist.")
 	return TRUE
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2422,7 +2422,7 @@ var/list/fun_images = list()
 	var/list/key_list = list()
 	for (var/datum/player/player in players)
 		var/datum/antagonist/antag = players[player]
-		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
+		boutput(src, "Giving token to roundstart [antag.display_name] [player.get_ckey()], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
 		key_list += player.get_key()
