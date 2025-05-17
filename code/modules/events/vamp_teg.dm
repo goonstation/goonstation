@@ -357,7 +357,7 @@ datum/teg_transformation/vampire
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I, mob/user)
-		user.lastattacked = get_weakref(src)
+		user.lastattacked = get_weakref(T)
 		var/force = I.force
 		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
@@ -371,6 +371,11 @@ datum/teg_transformation/vampire
 				force = force / 6
 			if (60 to INFINITY)
 				force = force / 7
+		if (force > 0)
+			attack_particle(user,T)
+			hit_twitch(T)
+			if (I.hitsound)
+				playsound(T.loc, I.hitsound, 50, 1)
 		health -= force
 
 	// Customized implementation of collision with vamp blood and be susceptable to projectiles
