@@ -267,8 +267,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_radio()
-		src.mainframe.say_radio()
+	say_over_channel()
+		src.mainframe.say_over_channel()
 
 	say_main_radio(msg as text)
 		src.mainframe.say_main_radio(msg)
@@ -519,6 +519,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	stopObserving()
 		src.set_loc(get_turf(src))
 		src.observing = null
+
+	examine_verb(atom/A as mob|obj|turf in view(,usr))
+		var/turf/T = get_turf(A)
+		if (!length(T.camera_coverage_emitters))
+			return
+		. = ..()
 
 //---TURF---//
 /turf/var/image/aiImage

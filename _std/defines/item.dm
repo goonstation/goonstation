@@ -231,5 +231,13 @@
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
 
-///macro for rendering an image fullsize on paper
+/// Macro for rendering an image fullsize on paper
 #define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"
+
+// implant stuff
+#define IMPLANT_SCAN_CATEGORY_OTHER "other"
+#define IMPLANT_SCAN_CATEGORY_HEALTH "health"
+#define IMPLANT_SCAN_CATEGORY_CLONER "cloner"
+#define IMPLANT_SCAN_CATEGORY_SYNDICATE "syndicate"
+#define IMPLANT_SCAN_CATEGORY_UNKNOWN "unknown"
+#define IMPLANT_SCAN_CATEGORY_NOT_SHOWN "not_shown"
