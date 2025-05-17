@@ -1185,6 +1185,20 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 					edge_overlay.plane = PLANE_FLOOR
 					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
+/turf/unsimulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
@@ -1219,6 +1233,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state_edge = "dirtedge"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"
@@ -1228,6 +1243,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
 	var/tuft_prob = 2
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1330,6 +1346,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 	turf_flags = MOB_STEP
+	can_dig = TRUE
 
 	New()
 		. = ..()

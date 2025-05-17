@@ -96,11 +96,14 @@ atoms can be rendered by reference in browser
 	name = "beach"
 	desc = "A very strange beach, almost artificial somehow."
 	icon_state = "sand"
+	can_dig = TRUE
 
 	curve
 		icon_state = "beach-curve"
+		can_dig = FALSE
 	bodge //yes, i needed this
 		icon_state = "island-1"
+		can_dig = FALSE
 
 /turf/unsimulated/greek/water
 	name = "water"
