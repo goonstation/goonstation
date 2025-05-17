@@ -243,7 +243,11 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"interface" = interface,
+		"interface" = list(
+			"name" = interface,
+			// |GOONSTATION-CHANGE| Unsure what "layout" equivalent in Goonstation, if any, is, so commenting out for now
+			// "layout" = user.client.prefs.read_preference(src_object.layout_prefs_used),
+		),
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,
