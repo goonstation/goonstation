@@ -209,7 +209,7 @@
 	return list(list(
 		"real_name" = mind.current.real_name,
 		"dead" = isdead(mind.current) || isVRghost(mind.current),
-		"player" = mind.displayed_key,
+		"player" = mind.player.displayed_key,
 		"role" = full_role,
 		"head" = is_head,
 	))
@@ -234,7 +234,7 @@
 			src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA] += list(list(
 				"antagonist_role" = capitalize(antagonist_role.display_name),
 				"real_name" = antagonist_role.owner.current.real_name,
-				"player" = antagonist_role.owner.displayed_key,
+				"player" = antagonist_role.owner.player.displayed_key,
 				"dead" = isdead(antagonist_role.owner.current),
 				)
 			)
@@ -259,7 +259,7 @@
 		src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA] += list(list(
 			"antagonist_role" = capitalize(special_role_to_english(former_role)),
 			"real_name" = mind.current.real_name,
-			"player" = mind.displayed_key,
+			"player" = mind.player.displayed_key,
 			"dead" = isdead(mind.current),
 			)
 		)
@@ -308,7 +308,7 @@
 		subordinate_antagonists += list(list(
 			"antagonist_role" = capitalize(antagonist_role.display_name),
 			"real_name" = antagonist_role.owner.current.real_name,
-			"player" = antagonist_role.owner.displayed_key,
+			"player" = antagonist_role.owner.player.displayed_key,
 			"dead" = isdead(antagonist_role.owner.current),
 			)
 		)
@@ -316,7 +316,7 @@
 	var/list/data = list()
 	data["antagonist_roles"] = english_list(antagonist_display_names)
 	data["real_name"] = mind.current.real_name
-	data["player"] = mind.displayed_key
+	data["player"] = mind.player.displayed_key
 	data["job_role"] = (mind.assigned_role && mind.assigned_role != "MODE") ? mind.assigned_role : "N/A" //stupid internal "MODE" job
 	data["status"] = status
 	data["objectives"] = objectives

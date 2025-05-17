@@ -836,12 +836,12 @@ var/list/special_pa_observing_verbs = list(
 				new_key = copytext(new_key, 1, 50)
 			src.owner:fakekey = new_key
 		if(src.owner.fakekey)
-			src.owner.mob.mind.displayed_key = src.owner.fakekey
+			src.owner.player.displayed_key = src.owner.fakekey
 
 	else
 		src.owner:fakekey = null
 		src.owner:stealth_hide_fakekey = 0
-		src.owner.mob.mind.displayed_key = src.owner.key
+		src.owner.player.displayed_key = src.owner.key
 		if (src.auto_alt_key)
 			src.set_alt_key(src.auto_alt_key_name)
 

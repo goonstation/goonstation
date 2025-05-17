@@ -63,6 +63,7 @@
 		..()
 		START_TRACKING
 		src.key = key
+		src.displayed_key = src.key
 		src.tag = "player-[src.get_ckey()]"
 		src.cloudSaves = new /datum/cloudSaves(src)
 
@@ -257,7 +258,7 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
-		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
+		var/displayed_key = src.displayed_key || src.key
 
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new

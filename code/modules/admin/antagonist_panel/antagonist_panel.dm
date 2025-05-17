@@ -115,7 +115,7 @@
 				"antagonist_datum" = "\ref[subordinate_antagonist_datum]",
 				"display_name" = subordinate_antagonist_datum.display_name,
 				"real_name" = subordinate_antagonist_datum.owner.current.real_name,
-				"ckey" = subordinate_antagonist_datum.owner.displayed_key,
+				"ckey" = subordinate_antagonist_datum.owner.player.displayed_key,
 				"job" = get_job(subordinate_antagonist_datum.owner),
 				"dead" = is_dead_or_ghost_role(subordinate_antagonist_datum.owner.current),
 

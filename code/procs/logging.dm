@@ -243,7 +243,7 @@ var/global/logLength = 0
 		if(mindRef.current && ismob(mindRef.current))
 			return(constructName(mindRef.current, type))
 		else
-			name = "[mindRef.displayed_key] (character destroyed)"
+			name = "[mindRef.player.displayed_key] (character destroyed)"
 			if (mindRef.key)
 				key = mindRef.key
 			if (mindRef.ckey)

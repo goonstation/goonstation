@@ -97,9 +97,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 		var/datum/mind/criminal_mind = traitor.owner
 
 		if (criminal_mind.current)
-			traitor_name = "[criminal_mind.current.real_name] (played by [criminal_mind.displayed_key])"
+			traitor_name = "[criminal_mind.current.real_name] (played by [criminal_mind.player.displayed_key])"
 		else
-			traitor_name = "[criminal_mind.displayed_key] (character destroyed)"
+			traitor_name = "[criminal_mind.player.displayed_key] (character destroyed)"
 
 		switch(traitor.id)
 			if(ROLE_MINDHACK)

@@ -680,7 +680,7 @@ var/global/game_force_started = FALSE
 				allComplete = 0
 				crewMind.all_objs = 0
 		if (allComplete && count)
-			successfulCrew += "[crewMind.current.real_name] ([crewMind.displayed_key])"
+			successfulCrew += "[crewMind.current.real_name] ([crewMind.player.displayed_key])"
 		boutput(crewMind.current, "<br>")
 #endif
 
