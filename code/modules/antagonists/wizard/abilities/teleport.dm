@@ -15,13 +15,13 @@
 			return 1
 
 		. = ..()
-		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(1, 3, spell=src) == 1)
+		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(                                                         , 3, tele_spell=src) == 1)
 			return 0
 
 		return 1
 
 // These two procs were so similar that I combined them (Convair880).
-/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell, var/abort_if_incapacitated = FALSE)
+/mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/tele_spell, var/abort_if_incapacitated = FALSE, jump_to_wizden = FALSE)
 	var/voice_grim = 'sound/voice/wizard/TeleportGrim.ogg'
 	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
 	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
@@ -43,25 +43,18 @@
 		if (!istype(A, /area/wizard_station))
 			boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 			return 0
+		if (jump_to_wizden)
+			boutput(src, SPAN_ALERT("You're already at the wizard den!"))
+			return 0
 
-	var/A
 	var/area/wizard_station/wiz_shuttle = locate(/area/wizard_station)
+	var/A = wiz_shuttle.name
 	var/area/thearea = null
-	//if you have a teleport ring, you can't go to the wizard's den. lame src istypes, but I'm too lazy and tired to care right now. It should work.
-	if(ishuman(src) && istype(src:gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
-		wiz_shuttle = null
-	else if (iscritter(src) && locate(/obj/item/clothing/gloves/ring/wizard/teleport) in src)
-		wiz_shuttle = null
 
-	// Doing it this way to avoid modifying the cached areas
-	var/list/tele_areas = get_teleareas()
-	if (wiz_shuttle)
-		tele_areas |= wiz_shuttle.name
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
-		if(A == wiz_shuttle.name)
-			thearea = wiz_shuttle
+	if (jump_to_wizden)
+		thearea = wiz_shuttle
 	else
-		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
+		A = tgui_input_list(src, "Area to jump to", "Teleportation", get_teleareas() - list(A))
 
 	if(abort_if_incapacitated && !can_act(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
@@ -110,7 +103,7 @@
 			/*if (!iswizard(src))
 				boutput(src, SPAN_ALERT("You seem to have lost all magical abilities."))
 				return 0*/
-			if (src.wizard_castcheck(spell) == 0)
+			if (src.wizard_castcheck(tele_spell) == 0)
 				return 0 // Has own user feedback.
 
 	if (src.getStatusDuration("unconscious") || !isalive(src))
@@ -142,7 +135,7 @@
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
-			src.say("SCYAR NILA [uppertext(A)]", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
+			src.say("SCYAR NILA [uppertext(A)]", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = tele_spell.maptext_style, "maptext_animation_colours" = tele_spell.maptext_colors))
 			if(ishuman(src))
 				var/mob/living/carbon/human/O = src
 				if(istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
