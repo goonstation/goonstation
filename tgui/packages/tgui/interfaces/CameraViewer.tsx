@@ -69,7 +69,7 @@ export const CameraViewer = () => {
                 <LabeledList.Item label="Search">
                   <Input
                     value={search}
-                    onInput={(e, value) => setSearch(value)}
+                    onChange={(value) => setSearch(value)}
                   />
                 </LabeledList.Item>
               </LabeledList>

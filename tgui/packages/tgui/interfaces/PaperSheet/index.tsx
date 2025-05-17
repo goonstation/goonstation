@@ -311,7 +311,9 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     }
   };
 
-  const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const onKeyDownHandler = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => {
     if (event.key === KEY.Enter) {
       event.preventDefault();
       const textarea = event.target as HTMLTextAreaElement;
