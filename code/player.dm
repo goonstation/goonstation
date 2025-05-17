@@ -3,9 +3,10 @@
 	/// the ID of the player as provided by the Goonhub API
 	var/id = 0
 	/// the key of the client object that this datum is attached to
-	var/key
-	/// the ckey of the client object that this datum is attached to
-	var/ckey
+	VAR_PRIVATE/key
+	/// the goon auth "key" used to authenticate guest accounts
+	VAR_PRIVATE/gkey = "GoonAuthKey" //TODO: actual auth
+	var/displayed_key
 	/// the client object that this datum is attached to
 	var/client/client
 	/// are they a mentor?
@@ -62,8 +63,7 @@
 		..()
 		START_TRACKING
 		src.key = key
-		src.ckey = ckey(key)
-		src.tag = "player-[src.ckey]"
+		src.tag = "player-[src.get_ckey()]"
 		src.cloudSaves = new /datum/cloudSaves(src)
 
 		if (ckey(src.key) in mentors)
@@ -72,6 +72,16 @@
 		if (src.key) //just a safety check!
 			src.cache_round_stats()
 		src.last_death_time = world.timeofday
+
+	proc/get_key()
+#ifdef GOON_AUTH
+		return src.gkey
+#else
+		return src.key
+#endif
+
+	proc/get_ckey()
+		return ckey(src.get_key())
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()

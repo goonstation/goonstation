@@ -116,6 +116,12 @@
 	var/deuteranopia_toggled = FALSE
 	var/tritanopia_toggled = FALSE
 
+/client/proc/get_key()
+	return src.player.get_key()
+
+/client/proc/get_ckey()
+	return src.player.get_ckey()
+
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing(LOG_AUDIT, src, message)

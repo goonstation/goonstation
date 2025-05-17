@@ -1,9 +1,7 @@
 datum/mind
-	var/key
-	var/ckey
-	var/displayed_key
 	var/mob/current
 	var/mob/virtual
+	var/datum/player/player
 
 	/// stores valuable things about the mind's memory
 	var/memory
@@ -64,13 +62,17 @@ datum/mind
 	New(mob/M)
 		..()
 		if (M)
-			current = M
-			key = M.key
-			ckey = M.ckey
-			displayed_key = M.key
+			src.current = M
+			src.player = make_player(M.key)
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
+
+	proc/get_key()
+		return src.player.get_key()
+
+	proc/get_ckey()
+		return src.player.get_ckey()
 
 	proc/transfer_to(mob/new_character)
 		Z_LOG_DEBUG("Mind/TransferTo", "Transferring \ref[src] (\ref[current], [current]) ...")
@@ -180,8 +182,7 @@ datum/mind
 
 	proc/get_player()
 		RETURN_TYPE(/datum/player)
-		if(ckey)
-			. = make_player(ckey)
+		return src.player
 
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
