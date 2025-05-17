@@ -1761,6 +1761,20 @@ TYPEINFO(/mob)
 
 	return temperature
 
+/// Change the mob's body temperature without leaving the specified bounds
+/mob/proc/changeBodyTemp(var/amount, var/min_temp = 0 KELVIN, var/max_temp = INFINITY)
+	if(amount <= 0)
+		if(src.bodytemperature <= min_temp) // Keep body temp as is if below min
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature < min_temp)
+			src.bodytemperature = min_temp
+	else
+		if(src.bodytemperature >= max_temp)  // Keep body temp as is if above max
+			return
+		src.bodytemperature += amount
+		if(src.bodytemperature > max_temp)
+			src.bodytemperature = max_temp
 
 //Gets rid of the mob without all the messy fuss of a gib
 /mob/proc/remove()

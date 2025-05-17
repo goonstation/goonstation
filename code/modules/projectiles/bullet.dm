@@ -1274,7 +1274,7 @@ toxic - poisons
 		if ((istype(hit, /mob/living) && !istype(hit, /mob/living/silicon)) && !istype(hit, /mob/living/critter/space_phoenix))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
-			L.bodytemperature -= 3
+			L.changeBodyTemp(-3 KELVIN)
 			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 		else if (istype(hit, /mob/living/silicon/ai))
 			var/mob/living/L = hit
