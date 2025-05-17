@@ -10,7 +10,7 @@
 	density = 1
 	var/resisted = FALSE //Changes if someone is being protected from a radstorm
 	anchored = UNANCHORED
-	req_access = null
+	req_access = list(access_engineering)
 	object_flags = CAN_REPROGRAM_ACCESS
 
 	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
@@ -52,6 +52,9 @@
 
 	///List of fields that the interdictor has deployed; these fields are strictly visual, and outline the interdictor's operating range for clarity.
 	var/list/deployed_fields = list()
+
+	///Can the interdictor be toggled by anyone
+	var/unlocked = FALSE
 
 	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
 	var/sound/sound_interdict_off = 'sound/machines/interdictor_deactivate.ogg'
@@ -108,7 +111,7 @@
 		..()
 
 	attack_hand(mob/user)
-		if(!emagged && !src.allowed(user))
+		if(!emagged && !src.allowed(user) && !src.unlocked)
 			boutput(user, SPAN_ALERT("You are not authorised to operate the interdictor's locks."))
 			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
@@ -148,39 +151,17 @@
 				return
 		else if(istype(W, /obj/item/card/id))
 			if(!emagged && !src.check_access(W))
-				boutput(user, SPAN_ALERT("Engineering clearance is required to operate the interdictor's locks."))
+				boutput(user, SPAN_ALERT("You are not authorised to operate the interdictor's locks."))
 				return
-			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
-				if(anchored)
-					if(src.canInterdict)
-						src.stop_interdicting()
-					src.anchored = UNANCHORED
-					src.connected = 0
-					boutput(user, "You deactivate the interdictor's magnetic lock.")
-					playsound(src.loc, src.sound_togglebolts, 50, 0)
-				else
-					var/clear_field = TRUE
-					for_by_tcl(IX, /obj/machinery/interdictor)
-						if(IX.canInterdict)
-							var/net_range = max(src.interdict_range,IX.interdict_range)
-							if(IN_RANGE(src,IX,net_range))
-								clear_field = FALSE
-								break
-					if(clear_field)
-						src.anchored = ANCHORED
-						src.connected = 1
-						boutput(user, "You activate the interdictor's magnetic lock.")
-						playsound(src.loc, src.sound_togglebolts, 50, 0)
-						if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
-							src.start_interdicting()
-					else
-						boutput(user, SPAN_ALERT("Cannot activate interdictor - another field is already active within operating bounds."))
+			playsound(src.loc, src.sound_togglebolts, 50, 0)
+			src.unlocked = !src.unlocked
+			boutput(user, SPAN_NOTICE("You [unlocked ? "unlock" : "lock"] [src]"))
 		else
 			..()
 
 	examine()
 		. = ..()
-		. += "\n [SPAN_NOTICE("The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.")]"
+		. += "\n [SPAN_NOTICE("The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.")] [SPAN_NOTICE("It is [unlocked ? "unlocked" : "locked"].")]"
 
 	Exited(Obj, newloc)
 		. = ..()
