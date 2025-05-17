@@ -3126,8 +3126,8 @@
 				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
 			if (H.bioHolder.age >= src.original_age + 120)
 				H.visible_message(SPAN_ALERT("[H] collapses into a pile of bones!"))
-				H.death(FALSE)
 				H.set_mutantrace(/datum/mutantrace/skeleton)
+				H.death(FALSE)
 				H.decomp_stage = DECOMP_STAGE_SKELETONIZED
 				H.set_clothing_icon_dirty()
 				src.linked_curser?.lift_curse_specific(FALSE, H)
