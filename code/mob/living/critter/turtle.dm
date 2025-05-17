@@ -30,7 +30,8 @@
 
 	var/obj/item/wearing_beret = null
 	var/beret_remove_job_needed = null
-	var/list/allowed_hats = list(/obj/item/clothing/head/hos_hat, /obj/item/clothing/head/hosberet, new/obj/item/clothing/head/NTberet/commander)
+	var/list/allowed_hats = list(/obj/item/clothing/head/hos_hat, /obj/item/clothing/head/hosberet, /obj/item/clothing/head/NTberet, \
+								/obj/item/clothing/head/janiberet, /obj/item/clothing/head/beret/syndicate)
 
 	add_abilities = list(/datum/targetable/critter/charge)
 	ai_attacks_per_ability = 0
@@ -83,8 +84,14 @@
 				src.UpdateOverlays(costume_alive, "costume")
 		if(src.wearing_beret)
 			state += "-beret"
-			if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-				state += "-com"
+			if (istype(wearing_beret, /obj/item/clothing/head/NTberet))
+				state += "-nt"
+				if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
+					state += "-com"
+			else if (istype(wearing_beret, /obj/item/clothing/head/janiberet))
+				state += "-jani"
+			else if (istype(wearing_beret, /obj/item/clothing/head/beret/syndicate))
+				state += "-syn"
 		src.icon_state = state
 
 	bullet_act(var/obj/projectile/P)
