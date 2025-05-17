@@ -82,7 +82,7 @@
 	var/proc_logging = 0
 #endif
 
-	// authenticate = 0
+	authenticate = 0
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
@@ -359,6 +359,11 @@
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
 	if (admin_status == 1)
+		var/ircmsg[] = new()
+		ircmsg["key"] =  src.key
+		ircmsg["name"] = src.ckey
+		ircmsg["msg"] = "Logged in as an Administrator"
+		ircbot.export_async("admin", ircmsg)
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
 	else if (admin_status == 2)
 		boutput(src, "<span class='ooc adminooc'>You are possibly an admin! Please complete the Goonhub Auth process.</span>")
