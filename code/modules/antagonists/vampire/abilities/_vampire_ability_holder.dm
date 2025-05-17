@@ -191,7 +191,6 @@
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
 			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
 				src.addAbility(/datum/targetable/vampire/enthrall)
-			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
@@ -238,7 +237,6 @@
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
-		src.removeAbility(/datum/targetable/vampire/speak_thrall)
 		src.removeAbility(/datum/targetable/vampire/call_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)

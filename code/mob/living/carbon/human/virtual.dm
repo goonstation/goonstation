@@ -76,7 +76,7 @@ TYPEINFO(/mob/living/carbon/human/virtual)
 			src.death()
 		return
 
-	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null, var/dead_check = TRUE)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)
