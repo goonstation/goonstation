@@ -330,6 +330,33 @@
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
 
+		increased/nourished
+			id = "nourished"
+			name = "Fine Nourishment"
+			desc = "You've got some grub in you, and its not half bad either."
+			icon_state = "heart+"
+			duration = INFINITE_STATUS
+			maxDuration = null
+			change = 10
+
+			onAdd(optional=null)
+				. = ..(change)
+
+			onChange(optional=null)
+				. = ..(change)
+
+			low
+				id = "nourised_low"
+				name = "Basic Nourishment"
+				desc = "You've got some grub in you, but you'd rather not dwell of its possible sources."
+				change = 5
+
+			high
+				id = "nourished_high"
+				name = "Supreme Nourishment"
+				desc = "You think you've just eaten some of the best food in your life."
+				change = 25
+
 		decreased
 			id = "maxhealth-"
 			onUpdate(timePassed)

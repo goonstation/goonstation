@@ -160,8 +160,20 @@
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
 		depletion_rate = 0.078
 		var/debuff = "hungry"
+		var/buff = "nourished"
+		#ifdef RP_MODE
 		var/debuff_threshold = 25
+		var/lowbuff_threshold = 50
+		var/buff_threshold = 75
+		var/highbuff_threshold = 100
+		#else
+		var/debuff_threshold = 0
+		var/lowbuff_threshold = 25
+		var/buff_threshold = 50
+		var/highbuff_threshold = 75
+		#endif
 		var/debuffed = FALSE
+		var/buffed = FALSE
 
 		onIncrease()
 			if (value > debuff_threshold && debuffed)
@@ -174,11 +186,23 @@
 				showOwner(SPAN_ALERT("You feel considerably [debuff]!"))
 				holder.owner.setStatus(debuff, duration = null)
 				debuffed = TRUE
+			else if (value < lowbuff_threshold)
+				showOwner(SPAN_ALERT("You feel [buff]!"))
+				holder.owner.setStatus(buff + "_low", duration = null)
+				buffed = TRUE
+			else if (value < buff_threshold)
+				showOwner(SPAN_ALERT("You feel well [buff]!"))
+				holder.owner.setStatus(buff, duration = null)
+				buffed = TRUE
+			else if (value < highbuff_threshold)
+				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
+				holder.owner.setStatus(buff + "_high", duration = null)
+				buffed = TRUE
 
 		getWarningMessage()
-			if (value < 25)
+			if (value < 0)
 				return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!"), SPAN_ALERT("You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!"))
-			else if (value < 50)
+			else if (value < 25)
 				return SPAN_ALERT("You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!")
 			else
 				return null
@@ -191,9 +215,9 @@
 			debuff = "thirsty"
 
 			getWarningMessage()
-				if (value < 25)
+				if (value < 0)
 					return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!"), SPAN_ALERT("You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!"))
-				else if (value < 50)
+				else if (value < 25)
 					return SPAN_ALERT("You feel [pick("thirsty", "dry")]!")
 				else
 					return null
