@@ -3482,3 +3482,9 @@ TYPEINFO(/mob)
 
 /mob/proc/frostburn_temp()
 	return src.base_body_temp - (src.temp_tolerance * 4)
+
+/mob/proc/get_ckey()
+	return src.mind?.get_player()?.get_ckey()
+
+/mob/proc/get_key()
+	return src.mind?.get_player()?.get_key()
