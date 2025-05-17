@@ -202,25 +202,24 @@
 	return ..()
 
 /client/New()
-	Z_LOG_DEBUG("Client/New", "New connection from [src.get_ckey()] from [src.address] via [src.connection]")
-	logTheThing(LOG_ADMIN, null, "Login attempt: [src.get_ckey()] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
-	logTheThing(LOG_DIARY, null, "Login attempt: [src.get_ckey()] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
+	Z_LOG_DEBUG("Client/New", "New connection from [src.key] from [src.address] via [src.connection]")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.key] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
+	logTheThing(LOG_DIARY, null, "Login attempt: [src.key] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
 	login_success = 0
 
-	if(findtext(src.get_key(), "Telnet @"))
+	if(findtext(src.key, "Telnet @"))
 		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
 		preferences = new
 		sleep(5 SECONDS)
 		del(src)
 		return
 
-	logTheThing(LOG_ADMIN, src, " has connected.")
-
-	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Connected")
-
 	src.player = make_player(key)
 	src.player.client = src
+
+	logTheThing(LOG_ADMIN, src, " has connected.")
+	Z_LOG_DEBUG("Client/New", "[src.get_ckey()] - Connected")
 
 	if(config.rsc)
 		src.preload_rsc = config.rsc
