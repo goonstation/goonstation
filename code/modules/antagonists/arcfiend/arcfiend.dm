@@ -2,6 +2,7 @@
 	id = ROLE_ARCFIEND
 	display_name = "arcfiend"
 	antagonist_icon = "arcfiend"
+	wiki_link = "https://wiki.ss13.co/Arcfiend"
 
 	/// The ability holder of this arcfiend, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/arcfiend/ability_holder

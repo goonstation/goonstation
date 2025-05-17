@@ -136,42 +136,42 @@
 	proc/handle_digestion(mult = 1)
 		if (!length(src.stomach_contents))
 			return
-		src.digest_food(mult)
-		src.digest_mobs(mult)
-		src.digest_organs()
-
-	proc/digest_food(mult = 1)
 		var/count_to_process = min(length(src.stomach_contents), 10)
 		var/count_left = count_to_process
-		for(var/obj/item/reagent_containers/food/food in src.stomach_contents)
-			food.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
+		for(var/atom/movable/possibly_food in src.stomach_contents)
+			if (ismob(possibly_food))
+				src.digest_mob(possibly_food)
+			else if (istype(possibly_food, /obj/item/reagent_containers/food))
+				var/obj/item/reagent_containers/food/definitely_food = possibly_food
+				definitely_food.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
+			else if (istype(possibly_food, /obj/item/organ))
+				src.digest_organ(possibly_food)
+			else if (findtext(possibly_food.material?.getName(), "plasma") && src.donor.bioHolder?.HasEffect("plasma_metabolism"))
+				var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = src.donor.bioHolder?.GetEffect("plasma_metabolism")
+				src.eject(possibly_food)
+				plasma_bioeffect.absorb_tasty_rock(possibly_food)
 			if(count_left-- <= 0)
 				break
 
-	proc/digest_organs()
-		for(var/obj/item/organ/selectedorgan in src.stomach_contents)
-			var/obj/item/organ/organtodelete = selectedorgan
-			if (!organtodelete.robotic)
-				src.eject(organtodelete)
-				qdel(organtodelete)
-				break
+	proc/digest_organ(obj/item/organ/selectedorgan)
+		if (!selectedorgan.robotic)
+			src.eject(selectedorgan)
+			qdel(selectedorgan)
 
 	///LOOK I'M ONLY REORGANISING THIS CODE OKAY, I AM NOT RESPONSIBLE FOR THIS DO NOT @ ME
-	proc/digest_mobs(mult = 1)
-		for (var/mob/M in src.stomach_contents)
-			if (iscarbon(M) && !isdead(src.donor))
-				if (isdead(M))
-					M.death(TRUE)
-					M.ghostize()
-					qdel(M)
-					src.stomach_contents -= M
-					src.donor.emote("burp")
-					playsound(get_turf(src.donor), 'sound/voice/burp.ogg', 50, 1)
-					continue
-				if (air_master.current_cycle%3==1) //????
-					if (!M.nodamage)
-						M.TakeDamage("chest", 5, 0)
-					src.donor.nutrition += 10
+	proc/digest_mob(mob/M)
+		if (iscarbon(M) && !isdead(src.donor))
+			if (isdead(M))
+				M.death(TRUE)
+				M.ghostize()
+				qdel(M)
+				src.stomach_contents -= M
+				src.donor.emote("burp")
+				playsound(get_turf(src.donor), 'sound/voice/burp.ogg', 50, 1)
+			else if (air_master.current_cycle%3==1) //????
+				if (!M.nodamage)
+					M.TakeDamage("chest", 5, 0)
+				src.donor.nutrition += 10
 
 /obj/item/organ/stomach/synth
 	name = "synthstomach"

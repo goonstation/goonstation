@@ -49,6 +49,10 @@
 #elif defined(MAP_OVERRIDE_NADIR)
 #define UNDERWATER_MAP 1
 
+#elif defined(MAP_OVERRIDE_NEON)
+#define UNDERWATER_MAP 1
+#define HOTSPOTS_ENABLED 1
+
 // Non rotation
 #elif defined(MAP_OVERRIDE_MANTA)
 
