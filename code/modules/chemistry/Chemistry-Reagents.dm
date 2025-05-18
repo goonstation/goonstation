@@ -59,6 +59,7 @@ datum
 		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
 		var/is_produce = 0 // used to determine thirst/hunger bonuses
+		var/serving_temp = 278 // used for thirst bonus, is 5 degrees celcius, which is what most vending machines aim for.
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
 		///Is it banned from various fluid types, see _std/defines/reagents.dm
@@ -244,6 +245,9 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					if (src.thirst_value)
+						var/right_temp = FALSE
+						if (serving_temp-25 < src.total_temperature > serving_temp+25)
+							right_temp = TRUE
 						if (!requires_produce && !right_temp)
 							while (H.sims.motives("Thirst" > 50))
 								H.sims.affectMotive("Thirst", thirst_value)
