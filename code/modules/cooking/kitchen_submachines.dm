@@ -770,6 +770,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 		var/output = null /// what path / item is (getting) created
 		var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
 		var/bonus = 0 /// correct-cook-time bonus
+		var/produce = 0 /// produce bonus
 		var/derivename = 0 /// if output should derive name from human meat inputs
 		var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 		var/recook = 0
@@ -831,6 +832,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 					// severely overcooked and burnt
 					output = /obj/item/reagent_containers/food/snacks/yuck/burn
 					bonus = 0
+				if (R.requires_produce)
+					produce = 1
 			// the case where there are no valid recipies is handled below in the outer context
 			// (namely it replaces them with yuck)
 		if (isnull(output))
@@ -897,6 +900,8 @@ TYPEINFO(/obj/submachine/chef_oven)
 					F.quality = 5
 				else
 					F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
+				if (produce == 1)
+					F.is_produce = 1
 				// emagged ovens cannot re-cook their own outputs
 				if (src.emagged && istype(F))
 					F.from_emagged_oven = 1
