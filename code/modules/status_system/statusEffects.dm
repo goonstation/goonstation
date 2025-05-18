@@ -277,6 +277,15 @@
 			src.change = optional
 			. = ..()
 
+	staminaregen/food
+		id = "nourishment_stam"
+		name = "Rejuvinating Feed"
+		desc = "You feel energised from a good meal."
+		icon_state = "stam+"
+		maxDuration = INFINITE_STATUS
+		unique = 1
+		change = 10
+
 	maxhealth
 		id = "maxhealth"
 		name = ""
@@ -403,6 +412,9 @@
 					var/mob/M = owner
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 
+		food
+			id = "nourishment_hot"
+			duration = INFINITE_STATUS
 
 	acided
 		id = "acid"
