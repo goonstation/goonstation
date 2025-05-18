@@ -86,7 +86,7 @@ Run `bin/tgui.bat` with any of the options listed below.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --bench` - Run benchmarks. *Windows Only*
 - `bin/tgui --clean` - Clean up tgui folder.
-- `bin/tgui [webpack options]` - Build the project with custom webpack
+- `bin/tgui [rspack options]` - Build the project with custom rspack
 options.
 
 **For everyone else:**
@@ -125,6 +125,7 @@ BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
 
 Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
 
+[TODO 516] Does this still apply to Rspack?
 **Webpack errors out with some cryptic messages!**
 
 > Example: `No template for dependency: PureExpressionDependency`

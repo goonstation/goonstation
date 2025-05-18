@@ -102,7 +102,8 @@ task-clean() {
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
-  rm -rf .yarn/webpack
+  rm -rf .yarn/webpack # Kept to clean up old webpack if still present
+  rm -rf .yarn/rspack
   rm -f .yarn/build-state.yml
   rm -f .yarn/install-state.gz
   rm -f .yarn/install-target
@@ -234,14 +235,14 @@ if [[ ${1} == '--analyze' ]]; then
   exit 0
 fi
 
-## Make a production webpack build
+## Make a production rspack build
 if [[ ${1} == '--build' ]]; then
   task-install
   task-rspack --mode=production
   exit 0
 fi
 
-## Make a production webpack build + Run eslint
+## Make a production rspack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
   task-lint
@@ -249,6 +250,6 @@ if [[ -z ${1} ]]; then
   exit 0
 fi
 
-## Run webpack with custom flags
+## Run rspack with custom flags
 task-install
 task-rspack "${@}"

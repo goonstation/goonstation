@@ -42,7 +42,7 @@ function task-install {
   yarn install
 }
 
-## Runs webpack
+## Runs rspack
 function task-rspack {
   $env:BROWSERSLIST_IGNORE_OLD_DATA = $true
   yarn run rspack @Args
@@ -55,7 +55,7 @@ function task-dev-server {
 
 ## Runs benchmarking tests
 function task-bench {
-  yarn run rspack-cli --env TGUI_BENCH=1
+  yarn run rspack --env TGUI_BENCH=1
   yarn node "packages/tgui-bench/index.js"
   Stop-Process -processname "iexplore"
   Stop-Process -processname "ielowutil"
@@ -93,7 +93,8 @@ function task-clean {
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
-  Remove-Quiet -Recurse -Force ".yarn\webpack"
+  Remove-Quiet -Recurse -Force ".yarn\webpack" # Kept to clean up old webpack if still present
+  Remove-Quiet -Recurse -Force ".yarn\rspack"
   Remove-Quiet -Force ".yarn\build-state.yml"
   Remove-Quiet -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".yarn\install-target"
@@ -209,7 +210,7 @@ if ($Args.Length -gt 0) {
   }
 }
 
-## Make a production webpack build
+## Make a production rspack build
 if ($Args.Length -eq 0) {
   task-install
   task-lint
@@ -217,6 +218,6 @@ if ($Args.Length -eq 0) {
   exit 0
 }
 
-## Run webpack with custom flags
+## Run rspack with custom flags
 task-install
 task-rspack @Args

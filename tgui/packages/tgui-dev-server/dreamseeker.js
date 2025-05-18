@@ -72,7 +72,7 @@ export class DreamSeeker {
     }
 
     const command =
-      'netstat -ano | findstr TCP | findstr 0.0.0.0:0 | findstr /V ":8086"'; // |GOONSTATION-CHANGE| Blacklist 8086 as tracy uses that port
+      'netstat -ano | findstr TCP | findstr 0.0.0.0:0 | findstr /V ":8086"'; // |GOONSTATION-CHANGE| Blacklist 8086 as tracy uses that port [516 TODO] Verify diff still needed
 
     try {
       const { stdout } = await promisify(exec)(command, {
