@@ -173,8 +173,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			// this is null if it uses normal outputs (see below),
 			// otherwise it will be the created item from this
 			output = R.specialOutput(src)
-			if (isnull(output))
-				output = R.getVariant(src)
+			if (!output)
+				output = new R.getVariant(src)
 			if(R.cookbonus)
 				if (abs(cook_amount - R.cookbonus) <= 1)
 					// if -1, 0, or 1, you did ok
@@ -324,7 +324,7 @@ TYPEINFO(/obj/machinery/cookingmachine/oven)
 			src.possible_recipe_names += "[initial(item_path.name)][possible.ingredients[I] > 1 ? " x[possible.ingredients[I]]" : ""]"
 
 		if (ispath(possible.output))
-			var/atom/item_path = possible.output
+			var/atom/item_path = possible.getVariant(src)
 			src.output_icon = icon2base64(icon(initial(item_path.icon), initial(item_path.icon_state)), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 

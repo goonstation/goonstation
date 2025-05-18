@@ -24,9 +24,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
 		for(var/specialIngredient in variants)
-			if(ourCooker.check_item(specialIngredient, variant_quantity))
-				return new variants[specialIngredient]
-		return new output
+			if(ourCooker.check_item(specialIngredient, src.variant_quantity))
+				return variants[specialIngredient]
+		return output
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
