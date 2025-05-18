@@ -1,6 +1,6 @@
 /datum/speech_module/prefix/postmodifier/right_hand
 	id = SPEECH_PREFIX_RIGHT_HAND
-	prefix_id = ":rh"
+	prefix_id = CHAT_PREFIX_RIGHTHANDCHAT
 
 /datum/speech_module/prefix/postmodifier/right_hand/process(datum/say_message/message)
 	. = message

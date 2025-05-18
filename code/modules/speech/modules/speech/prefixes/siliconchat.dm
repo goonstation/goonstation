@@ -1,7 +1,7 @@
 /datum/speech_module/prefix/premodifier/channel/silicon
 	id = SPEECH_PREFIX_SILICON
 	priority = SPEECH_PREFIX_PRIORITY_LOW
-	prefix_id = ":s"
+	prefix_id = CHAT_PREFIX_SILICONCHAT
 	channel_id = SAY_CHANNEL_SILICON
 
 /datum/speech_module/prefix/premodifier/channel/silicon/get_prefix_choices()

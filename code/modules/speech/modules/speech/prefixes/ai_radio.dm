@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 /datum/speech_module/prefix/postmodifier/ai_radio/one
 	id = SPEECH_PREFIX_AI_RADIO_1
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 3
-	prefix_id = ":1"
+	prefix_id = CHAT_PREFIX_AI_RADIO_1
 
 /datum/speech_module/prefix/postmodifier/ai_radio/one/get_radio(mob/living/silicon/ai/AI)
 	return AI.radio1
@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 /datum/speech_module/prefix/postmodifier/ai_radio/two
 	id = SPEECH_PREFIX_AI_RADIO_2
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 2
-	prefix_id = ":2"
+	prefix_id = CHAT_PREFIX_AI_RADIO_2
 
 /datum/speech_module/prefix/postmodifier/ai_radio/two/get_radio(mob/living/silicon/ai/AI)
 	return AI.radio2
@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 /datum/speech_module/prefix/postmodifier/ai_radio/three
 	id = SPEECH_PREFIX_AI_RADIO_3
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
-	prefix_id = ":3"
+	prefix_id = CHAT_PREFIX_AI_RADIO_3
 
 /datum/speech_module/prefix/postmodifier/ai_radio/three/get_radio(mob/living/silicon/ai/AI)
 	return AI.radio3
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 /datum/speech_module/prefix/postmodifier/ai_radio/default_prefix
 	id = SPEECH_PREFIX_AI_RADIO_DEFAULT
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 4
-	prefix_id = ":"
+	prefix_id = CHAT_PREFIX_AI_RADIO_DEFAULT
 
 /datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/get_radio(mob/living/silicon/ai/AI)
 	return AI.radio3
@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 /datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/general
 	id = SPEECH_PREFIX_AI_RADIO_GENERAL
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 5
-	prefix_id = ";"
+	prefix_id = CHAT_PREFIX_AI_RADIO_GENERAL
 
 /datum/speech_module/prefix/postmodifier/ai_radio/default_prefix/general/get_radio(mob/living/silicon/ai/AI)
 	return AI.radio1

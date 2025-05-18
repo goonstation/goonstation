@@ -111,6 +111,7 @@
 #include "defines\sound.dm"
 #include "defines\spacebee_extension.dm"
 #include "defines\speech_defines\channels.dm"
+#include "defines\speech_defines\chat_prefixes.dm"
 #include "defines\speech_defines\languages.dm"
 #include "defines\speech_defines\modules.dm"
 #include "defines\speech_defines\priorities.dm"
