@@ -1150,7 +1150,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 /datum/cookingrecipe/oven/bacon
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1)
 	cookbonus = 8
-	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/
+	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
 /datum/cookingrecipe/oven/turkey
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/turkey = 1)
