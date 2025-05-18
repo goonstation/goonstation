@@ -192,7 +192,7 @@
 				buffed = TRUE
 			else if (value < buff_threshold)
 				showOwner(SPAN_ALERT("You feel well [buff]!"))
-				holder.owner.setStatus(buff, duration = null)
+				holder.owner.setStatus(buff, duration = null) // Health Part
 				buffed = TRUE
 			else if (value < highbuff_threshold)
 				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
@@ -483,7 +483,6 @@
 		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
-#ifdef RP_MODE
 			SPAWN(0)
 				set_multiplier(1)
 #endif
