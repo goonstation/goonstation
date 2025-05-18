@@ -137,14 +137,12 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			if(!locate(ingredient.type) in src.contents)
 				src.possible_recipes -= src.get_recipes_from_ingredient(ingredient)
 
-	proc/get_recipes_from_ingredient(obj/item/ingredient)
+	proc/get_recipes_from_ingredient(obj/item/ingredient) //TODO: unify the recipes_by_ingredient lists so you don't have to redefine everything
 		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		var/considered_type = ingredient.type
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
 			if(RM.oven_recipes_by_ingredient[considered_type])
-				var/output = RM.oven_recipes_by_ingredient[considered_type] //bit of a hack, remember to change when cooking flags are added
-	//			if(RM.oven_recipes_by_ingredient[type2parent(considered_type)])
-	//				output += RM.oven_recipes_by_ingredient[type2parent(considered_type)] //this ensures the more specific recipes are checked first
+				var/output = RM.oven_recipes_by_ingredient[considered_type]
 				return output
 			else
 				considered_type = type2parent(considered_type)
