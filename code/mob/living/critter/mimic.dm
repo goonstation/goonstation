@@ -150,7 +150,11 @@
 	//same health as a firebot
 	health_brute = 25
 	health_burn = 25
-	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle, /datum/targetable/critter/sting/mimic/antag_spawn)
+	add_abilities = list(/datum/targetable/critter/mimic,
+						/datum/targetable/critter/drop_disguise,
+						/datum/targetable/critter/tackle,
+						/datum/targetable/critter/sting/mimic/antag_spawn,
+						/datum/targetable/vent_move)
 	hand_count = 2
 	var/modifier = null
 	//give them an actual hand so they can open doors etc.
