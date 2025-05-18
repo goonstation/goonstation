@@ -174,7 +174,8 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			// otherwise it will be the created item from this
 			output = R.specialOutput(src)
 			if (!output)
-				output = new R.getVariant(src)
+				var/O = R.getVariant(src)
+				output = new O
 			if(R.cookbonus)
 				if (abs(cook_amount - R.cookbonus) <= 1)
 					// if -1, 0, or 1, you did ok

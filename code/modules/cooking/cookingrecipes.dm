@@ -15,6 +15,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	proc/specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
+	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
+		for(var/specialIngredient in variants)
+			if(ourCooker.check_item(specialIngredient, src.variant_quantity))
+				return variants[specialIngredient]
+		return output
+
 	proc/render()
 		var/list/icons = list()
 		for (var/obj/item/type as anything in src.ingredients)
@@ -22,11 +28,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
 		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
 
-	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
-		for(var/specialIngredient in variants)
-			if(ourCooker.check_item(specialIngredient, src.variant_quantity))
-				return variants[specialIngredient]
-		return output
+
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
