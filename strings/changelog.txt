@@ -1,5 +1,9 @@
 
 (t)sun may 18 25
+(u)CalliopeSoups
+(p)23475
+(e)🆕🐁|C-Feature, A-Critters
+(+)Mimics now get disposal travel.
 (u)JORJ949
 (p)23465
 (e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
