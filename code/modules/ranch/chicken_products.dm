@@ -11,6 +11,8 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken
 	icon = 'icons/mob/ranch/chickens.dmi'
 	icon_state = "egg-white"
+	/// for food bonuses
+	var/tier = 0
 	/// path to the egg_props datum, used to setup initial egg props object
 	var/egg_props_path = /datum/chicken_egg_props/white
 	/// datum containing various egg properties such as food_effects
@@ -78,73 +80,105 @@
 		egg_props_path = /datum/chicken_egg_props/white
 	brown
 		egg_props_path = /datum/chicken_egg_props/brown
+		tier = 1
 	silkie
 		egg_props_path = /datum/chicken_egg_props/silkie
+		tier = 1
 	silkie_black
 		egg_props_path = /datum/chicken_egg_props/silkie_black
+		tier = 1
 	silkie_white
 		egg_props_path = /datum/chicken_egg_props/silkie_white
+		tier = 1
 	golden
 		egg_props_path = /datum/chicken_egg_props/golden
+		tier = 3 // Not actually tier 3 but might as well be that worthwhile
 	spicy
 		egg_props_path = /datum/chicken_egg_props/spicy
+		tier = 2
 	honk
 		egg_props_path = /datum/chicken_egg_props/honk
+		tier = 2
 	cluwne
 		egg_props_path = /datum/chicken_egg_props/cluwne
+		tier = 2
 	raptor
 		egg_props_path = /datum/chicken_egg_props/raptor
+		tier = 2
 	plant
 		egg_props_path = /datum/chicken_egg_props/plant
 	robot
 		egg_props_path = /datum/chicken_egg_props/robot
+		tier = 3
 	purple
 		egg_props_path = /datum/chicken_egg_props/purple
+		tier = 1
 	candy
 		egg_props_path = /datum/chicken_egg_props/candy
+		tier = 2
 	sea
 		egg_props_path = /datum/chicken_egg_props/sea
+		tier = 2
 	dream
 		egg_props_path = /datum/chicken_egg_props/dream
+		tier = 2
 	snow
 		egg_props_path = /datum/chicken_egg_props/snow
+		tier = 2
 	popsicle
 		egg_props_path = /datum/chicken_egg_props/popsicle
+		tier = 3
 	pigeon
 		egg_props_path = /datum/chicken_egg_props/pigeon
+		tier = 2
 	wizard
 		egg_props_path = /datum/chicken_egg_props/wizard
+		tier = 2
 	pet
 		egg_props_path = /datum/chicken_egg_props/pet
+		tier = 1
 	ghost
 		egg_props_path = /datum/chicken_egg_props/ghost
+		tier = 2
 	cockatrice
 		egg_props_path = /datum/chicken_egg_props/cockatrice
+		tier = 3
 	onagadori
 		egg_props_path = /datum/chicken_egg_props/onagadori
+		tier = 1
 	knight
 		egg_props_path = /datum/chicken_egg_props/knight
+		tier = 2
 	mime
 		egg_props_path = /datum/chicken_egg_props/mime
+		tier = 2
 	balloon_helium
 		egg_props_path = /datum/chicken_egg_props/balloon_helium
+		tier = 2
 	balloon_hydrogen
 		egg_props_path = /datum/chicken_egg_props/balloon_hydrogen
+		tier = 2
 	glass
 		egg_props_path = /datum/chicken_egg_props/glass
+		tier = 1
 	stone
 		egg_props_path = /datum/chicken_egg_props/stone
+		tier = 2
 	time
 		egg_props_path = /datum/chicken_egg_props/time
+		tier = 2 // Again, not really but value
 	space
 		egg_props_path = /datum/chicken_egg_props/space
+		tier = 2 // Again, not really but value
 	power_blue
 		egg_props_path = /datum/chicken_egg_props/power_blue
+		tier = 3 // Again, not really but value
 		New()
 			. = ..()
 			src.reagents.add_reagent("liquid spacetime",1)
 	power_gold
 		egg_props_path = /datum/chicken_egg_props/power_gold
+		tier = 2 // Again, not really but value
 		New()
 			. = ..()
 			src.reagents.add_reagent("liquid spacetime",1)
