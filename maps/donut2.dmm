@@ -24282,23 +24282,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"hEU" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/hop,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
-	},
-/obj/machinery/door_control/bolter/new_walls/north{
-	id = "quarters_hop";
-	dir = 2
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fgreen6"
-	},
-/area/station/crew_quarters/hop)
 "hFf" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -34952,6 +34935,21 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"nSh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/hop,
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_hop";
+	dir = 2
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fgreen6"
+	},
+/area/station/crew_quarters/hop)
 "nSH" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -95446,7 +95444,7 @@ aUX
 kuu
 bcz
 lTU
-hEU
+nSh
 eYJ
 fAJ
 eXg
