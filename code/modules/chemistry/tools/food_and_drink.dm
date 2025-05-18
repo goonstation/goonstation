@@ -96,19 +96,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
-					while (H.sims.motives("Hunger" < 50))
+					while (H.sims.getValue("Hunger") < 50)
 						H.sims.affectMotive("Hunger", healing * 6)
 					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
 				healing *= 2
-				if (H.sims)
-					if (!is_produce)
-						while (H.sims.motives("Hunger" < 75))
-							H.sims.affectMotive("Hunger", healing * 8)
-					else
-						H.sims.affectMotive("Hunger", healing * 10)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.sims)
+						if (!is_produce)
+							while (H.sims.getValue("Hunger") < 75)
+								H.sims.affectMotive("Hunger", healing * 8)
+						else
+							H.sims.affectMotive("Hunger", healing * 10)
 
 			if (src.reagents && src.reagents.has_reagent("THC"))
 				boutput(M, SPAN_NOTICE("Wow this tastes really good man!!"))

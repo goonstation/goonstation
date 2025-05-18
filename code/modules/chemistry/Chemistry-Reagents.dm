@@ -58,7 +58,7 @@ datum
 		var/can_crack = 0 // used by organic chems
 		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
-		var/is_produce = 0 // used to determine thirst/hunger bonuses
+		var/requires_produce = 0 // used to determine thirst/hunger bonuses
 		var/serving_temp = 278 // used for thirst bonus, is 5 degrees celcius, which is what most vending machines aim for.
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
@@ -246,23 +246,23 @@ datum
 				if (H.sims)
 					if (src.thirst_value)
 						var/right_temp = FALSE
-						if (serving_temp-25 < src.total_temperature > serving_temp+25)
+						if (serving_temp-10 < src.holder.total_temperature > serving_temp+10)
 							right_temp = TRUE
 						if (!requires_produce && !right_temp)
-							while (H.sims.motives("Thirst" > 50))
+							while (H.sims.getValue("Thirst") > 50)
 								H.sims.affectMotive("Thirst", thirst_value)
 						else if (requires_produce || right_temp)
-							while (H.sims.motives("Thirst" > 75))
+							while (H.sims.getValue("Thirst") > 75)
 								H.sims.affectMotive("Thirst", thirst_value)
 						else
-								H.sims.affectMotive("Thirst", thirst_value)
+							H.sims.affectMotive("Thirst", thirst_value)
 					if (src.hunger_value)
 						H.sims.affectMotive("Hunger", hunger_value)
-						if (!requires_produce && !right_temp)
-							while (H.sims.motives("Hunger" > 50))
+						if (!requires_produce)
+							while (H.sims.getValue("Hunger") > 50)
 								H.sims.affectMotive("Hunger", hunger_value)
 						else if (requires_produce)
-							while (H.sims.motives("Hunger" > 75)) // Going above this is sorted in the actual food.
+							while (H.sims.getValue("Hunger") > 75) // Going above this is sorted in the actual food.
 								H.sims.affectMotive("Hunger", hunger_value)
 					if (src.bladder_value)
 						H.sims.affectMotive("Bladder", bladder_value)
