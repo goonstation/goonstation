@@ -33,7 +33,6 @@
 
 	var/randomizer = rand(pop_divisor+1)
 	var/distraction_num = rand(1,2)
-	var/distraction_type = null
 	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 2, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
