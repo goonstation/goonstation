@@ -72,16 +72,16 @@
 
 	OnAdd()
 		..()
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 20 * src.power)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 20 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
 		owner.temp_tolerance *= 5 * src.power
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 20 * newval)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 20 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
 		owner.temp_tolerance /= 5 * oldval
 		owner.temp_tolerance *= 5 * newval
 
