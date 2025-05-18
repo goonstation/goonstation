@@ -582,17 +582,6 @@
 
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
-
-				if (F.last_depth_level <= 1)
-					F.vis_contents -= F.fluid_lines
-					QDEL_NULL(F.fluid_lines)
-				else
-					if (!F.fluid_lines)
-						F.fluid_lines = new /obj/decal/fluid_lines
-						F.fluid_lines.set_loc(F)
-						F.vis_contents |= F.fluid_lines
-					F.fluid_lines.layer = F.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : F.layer
-
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
 

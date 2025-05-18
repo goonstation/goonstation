@@ -74,8 +74,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 	var/do_iconstate_updates = 1
 
-	var/obj/decal/fluid_lines/fluid_lines
-
 	New(var/atom/location = null)
 		..(location)
 		if(location) //unpool starts this thing without a loc. if none is defined, don't immediate delete
@@ -149,9 +147,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		fluid_ma.overlays = null
 		src.appearance = fluid_ma
 		src.overlay_refs = null // setting appearance removes our overlays!
-
-		src.vis_contents -= src.fluid_lines
-		QDEL_NULL(src.fluid_lines)
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
@@ -561,17 +556,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
 			src.update_perspective_overlays()
 
-		if (src.last_depth_level <= 1)
-			src.vis_contents -= src.fluid_lines
-			QDEL_NULL(src.fluid_lines)
-		else
-			if (!src.fluid_lines)
-				src.fluid_lines = new /obj/decal/fluid_lines
-				src.fluid_lines.set_loc(src)
-				src.vis_contents |= src.fluid_lines
-			src.fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-
 	proc/update_perspective_overlays() // fancy perspective overlaying
+		src.display_overlay("fluid_lines")
 		if (icon_state != "15") return
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -605,33 +591,54 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (!src.overlay_images)
 			src.overlay_images = list()
 
-		var/image/wall_overlay
-		var/image/wall_fluid_lines
-		if (src.overlay_images[overlay_key])
-			wall_overlay = src.overlay_images[overlay_key]
-			wall_fluid_lines = src.overlay_images["[overlay_key]_wall_fluid_lines"]
+		if (overlay_key == "fluid_lines")
+			var/image/fluid_lines
+
+			if (src.overlay_images[overlay_key])
+				fluid_lines = src.overlay_images[overlay_key]
+			else
+				fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
+
+			fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
+			fluid_lines.appearance_flags = RESET_COLOR
+			fluid_lines.blend_mode = BLEND_ADD
+			src.overlay_images[overlay_key] = fluid_lines
+
+			src.AddOverlays(fluid_lines, overlay_key)
 		else
-			wall_overlay = image('icons/obj/fluid.dmi', "blank")
-			wall_fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
-		var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
-		wall_overlay.layer = over_obj ? 4 : src.layer
-		wall_overlay.icon_state = "wall_[overlay_key]_[src.last_depth_level]"
-		wall_overlay.pixel_x = pox
-		wall_overlay.pixel_y = poy
-		src.overlay_images[overlay_key] = wall_overlay
-		wall_fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-		wall_fluid_lines.appearance_flags = RESET_COLOR
-		wall_fluid_lines.blend_mode = BLEND_ADD
-		wall_fluid_lines.icon_state = "[wall_overlay.icon_state]_lines"
-		wall_fluid_lines.pixel_x = pox
-		wall_fluid_lines.pixel_y = poy
-		src.overlay_images["[overlay_key]_wall_fluid_lines"] = wall_fluid_lines
-		src.AddOverlays(wall_overlay, overlay_key)
-		src.AddOverlays(wall_fluid_lines, "[overlay_key]_wall_fluid_lines")
+			var/image/wall_overlay
+			var/image/wall_fluid_lines
+
+			if (src.overlay_images[overlay_key])
+				wall_overlay = src.overlay_images[overlay_key]
+				wall_fluid_lines = src.overlay_images["[overlay_key]_wall_fluid_lines"]
+			else
+				wall_overlay = image('icons/obj/fluid.dmi', "blank")
+				wall_fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
+
+			var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
+			wall_overlay.layer = over_obj ? 4 : src.layer
+			wall_overlay.icon_state = "wall_[overlay_key]_[src.last_depth_level]"
+			wall_overlay.pixel_x = pox
+			wall_overlay.pixel_y = poy
+			src.overlay_images[overlay_key] = wall_overlay
+
+			wall_fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
+			wall_fluid_lines.appearance_flags = RESET_COLOR
+			wall_fluid_lines.blend_mode = BLEND_ADD
+			wall_fluid_lines.icon_state = "[wall_overlay.icon_state]_lines"
+			wall_fluid_lines.pixel_x = pox
+			wall_fluid_lines.pixel_y = poy
+			src.overlay_images["[overlay_key]_wall_fluid_lines"] = wall_fluid_lines
+
+			src.AddOverlays(wall_overlay, overlay_key)
+			src.AddOverlays(wall_fluid_lines, "[overlay_key]_wall_fluid_lines")
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)
-			src.ClearAllOverlays()
+			if (src.overlay_images)
+				for (var/img_key in (src.overlay_images - "fluid_lines"))
+					src.ClearSpecificOverlays(img_key)
 		else if(key && src.overlay_images && src.overlay_images[key])
 			src.ClearSpecificOverlays(key)
 
@@ -653,14 +660,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		else
 			qdel(src)
 
-/obj/decal/fluid_lines
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "fluid_lines"
-	plane = PLANE_DEFAULT
-	layer = FLUID_LAYER
-	appearance_flags = RESET_COLOR
-	blend_mode = BLEND_ADD
-	mouse_opacity = 0
+
 
 
 
