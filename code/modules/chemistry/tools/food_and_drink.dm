@@ -96,8 +96,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
-					while (H.sims.getValue("Hunger") < 50)
-						H.sims.affectMotive("Hunger", healing * 6)
+					if (is_produce)
+						while (H.sims.getValue("Hunger") < 75)
+							H.sims.affectMotive("Hunger", healing * 6)
+					else
+						while (H.sims.getValue("Hunger") < 50)
+							H.sims.affectMotive("Hunger", healing * 6)
 					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
