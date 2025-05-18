@@ -277,14 +277,26 @@
 			src.change = optional
 			. = ..()
 
-	staminaregen/food
-		id = "nourishment_stam"
-		name = "Rejuvinating Feed"
-		desc = "You feel energised from a good meal."
+	staminaregen/drink
+		id = "quenched"
+		name = "Enjoyable Drink"
+		desc = "You feel energised from a good drink."
 		icon_state = "stam+"
 		maxDuration = INFINITE_STATUS
 		unique = 1
-		change = 10
+		change = 5
+
+		low
+			id = "quenched_low"
+			name = "Mediocre Drink"
+			desc = "You are sufficently quenched."
+			change = 2.5
+
+		high
+			id = "quenched_high"
+			name = "Rejuvinating Drink"
+			desc = "You feel invigorated by a splendid drink."
+			change = 10
 
 	maxhealth
 		id = "maxhealth"
@@ -415,6 +427,9 @@
 		food
 			id = "nourishment_hot"
 			duration = INFINITE_STATUS
+
+			drink
+				id = "quenched_hot"
 
 	acided
 		id = "acid"
