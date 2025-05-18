@@ -2,7 +2,7 @@
 /obj/item/material_piece
 	name = "bar"
 	desc = "Some sort of processed material bar."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
@@ -453,8 +453,9 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/plutonium_scrap
 	name = "scrap"
-	icon_state = "plutonium"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
+	icon = 'icons/obj/items/materials/plutonium.dmi'
+	icon_state = "plutonium"
 	default_material = "plutonium"
 
 	New()

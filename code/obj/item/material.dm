@@ -1,7 +1,7 @@
 /obj/item/raw_material/
 	name = "construction materials"
 	desc = "placeholder item!"
-	icon = 'icons/obj/items/ores.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "ore1_"
 	force = 4
 	throwforce = 6
@@ -59,13 +59,13 @@
 		switch(src.amount)
 			if(1)
 				return 1
-			if(2 to 9)
+			if(2 to 4)
 				return 2
-			if(10 to 19)
+			if(5 to 9)
 				return 3
-			if(20 to 31)
+			if(10 to 24)
 				return 4
-			if(32 to 49)
+			if(25 to 49)
 				return 5
 			else
 				return 6
@@ -240,12 +240,29 @@
 /obj/item/raw_material/rock
 	name = "stone"
 	desc = "It's plain old space rock. Pretty worthless!"
+	icon = 'icons/obj/items/materials/rocks.dmi'
 	icon_state = "rock1"
 	force = 8
 	throwforce = 10
 	scoopable = 0
 	material_name = "Stone"
 	default_material = "rock"
+
+	get_stack_value()
+		// Rocks are plantiful enough to have a more even stack distribution
+		switch(src.amount)
+			if(1)
+				return 1
+			if(2 to 9)
+				return 2
+			if(10 to 19)
+				return 3
+			if(20 to 31)
+				return 4
+			if(32 to 49)
+				return 5
+			else
+				return 6
 
 	update_icon()
 		if(src.icon_stack_value == 1)
@@ -256,6 +273,7 @@
 /obj/item/raw_material/mauxite
 	name = "mauxite ore"
 	desc = "A chunk of Mauxite, a sturdy common metal."
+	icon = 'icons/obj/items/materials/mauxite.dmi'
 	material_name = "Mauxite"
 	default_material = "mauxite"
 	metal = 2
@@ -263,6 +281,7 @@
 /obj/item/raw_material/molitz
 	name = "molitz crystal"
 	desc = "A crystal of Molitz, a common crystalline substance."
+	icon = 'icons/obj/items/materials/molitz.dmi'
 	material_name = "Molitz"
 	default_material = "molitz"
 	crystal = 1
@@ -277,6 +296,7 @@
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
+	icon = 'icons/obj/items/materials/molitz.dmi'
 	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	default_material = "molitz_b"
@@ -296,6 +316,7 @@
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
 	desc = "A chunk of Pharosium, a conductive metal."
+	icon = 'icons/obj/items/materials/pharosium.dmi'
 	material_name = "Pharosium"
 	default_material = "pharosium"
 	metal = 1
@@ -304,6 +325,7 @@
 /obj/item/raw_material/cobryl // relate this to precursors
 	name = "cobryl ore"
 	desc = "A chunk of Cobryl, a somewhat valuable metal."
+	icon = 'icons/obj/items/materials/cobryl.dmi'
 	material_name = "Cobryl"
 	default_material = "cobryl"
 	metal = 1
@@ -311,6 +333,7 @@
 /obj/item/raw_material/char
 	name = "char ore"
 	desc = "A heap of Char, a fossil energy source similar to coal."
+	icon = 'icons/obj/items/materials/char.dmi'
 	material_name = "Char"
 	default_material = "char"
 	//cogwerks - burn vars
@@ -322,6 +345,7 @@
 /obj/item/raw_material/claretine // relate this to wizardry somehow
 	name = "claretine ore"
 	desc = "A heap of Claretine, a highly conductive salt."
+	icon = 'icons/obj/items/materials/claretine.dmi'
 	material_name = "Claretine"
 	default_material = "claretine"
 	conductor = 2
@@ -336,6 +360,7 @@
 /obj/item/raw_material/bohrum
 	name = "bohrum ore"
 	desc = "A chunk of Bohrum, a heavy and highly durable metal."
+	icon = 'icons/obj/items/materials/bohrum.dmi'
 	material_name = "Bohrum"
 	default_material = "bohrum"
 	metal = 3
@@ -344,6 +369,7 @@
 /obj/item/raw_material/syreline
 	name = "syreline ore"
 	desc = "A chunk of Syreline, an extremely valuable and coveted metal."
+	icon = 'icons/obj/items/materials/syreline.dmi'
 	material_name = "Syreline"
 	default_material = "syreline"
 	metal = 1
@@ -351,10 +377,18 @@
 /obj/item/raw_material/erebite
 	name = "erebite ore"
 	desc = "A chunk of Erebite, an extremely volatile high-energy mineral."
+	icon = 'icons/obj/items/materials/erebite.dmi'
 	var/exploded = 0
 	material_name = "Erebite"
 	default_material = "erebite"
 	powersource = 2
+
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
 
 	ex_act(severity)
 		if(exploded)
@@ -406,6 +440,7 @@
 /obj/item/raw_material/cerenkite
 	name = "cerenkite ore"
 	desc = "A chunk of Cerenkite, a highly radioactive mineral."
+	icon = 'icons/obj/items/materials/cerenkite.dmi'
 	material_name = "Cerenkite"
 	default_material = "cerenkite"
 	metal = 1
@@ -414,6 +449,7 @@
 /obj/item/raw_material/plasmastone
 	name = "plasmastone"
 	desc = "A piece of plasma in its solid state."
+	icon = 'icons/obj/items/materials/plasmastone.dmi'
 	material_name = "Plasmastone"
 	default_material = "plasmastone"
 	//cogwerks - burn vars
@@ -427,7 +463,7 @@
 /obj/item/raw_material/gemstone
 	name = "gem"
 	desc = "A gemstone. It's probably pretty valuable!"
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "gem1"
 	material_name = "Gem"
 	default_material = null
@@ -460,6 +496,7 @@
 /obj/item/raw_material/uqill // relate this to ancients
 	name = "uqill nugget"
 	desc = "A nugget of Uqill, a rare and very dense stone."
+	icon = 'icons/obj/items/materials/uqill.dmi'
 	material_name = "Uqill"
 	default_material = "uqill"
 	w_class = W_CLASS_POCKET_SIZED // Should fit in your pocket, since it is so dense.
@@ -468,12 +505,14 @@
 /obj/item/raw_material/fibrilith
 	name = "fibrilith chunk"
 	desc = "A compressed chunk of Fibrilith, an odd mineral known for its high tensile strength."
+	icon = 'icons/obj/items/materials/fibrilith.dmi'
 	material_name = "Fibrilith"
 	default_material = "fibrilith"
 
 /obj/item/raw_material/telecrystal
 	name = "telecrystal"
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
+	icon = 'icons/obj/items/materials/telecrystal.dmi'
 	material_name = "Telecrystal"
 	default_material = "telecrystal"
 	crystal = 1
@@ -505,7 +544,7 @@
 /obj/item/raw_material/miracle
 	name = "miracle matter"
 	desc = "Miracle Matter is a bizarre substance known to metamorphosise into other minerals when processed."
-	icon = 'icons/obj/items/ores_miracle.dmi'
+	icon = 'icons/obj/items/materials/miracle.dmi'
 	material_name = "Miracle"
 	default_material = "miracle"
 	var/static/shape = pick("ore","sphere","torus") // Shift's randomized miracle matter shape
@@ -529,6 +568,7 @@
 /obj/item/raw_material/starstone
 	name = "starstone"
 	desc = "An extremely rare jewel. Highly prized by collectors and lithovores."
+	icon = 'icons/obj/items/materials/starstone.dmi'
 	material_name = "Starstone"
 	default_material = "starstone"
 	crystal = 1
@@ -536,6 +576,7 @@
 /obj/item/raw_material/eldritch
 	name = "koshmarite ore"
 	desc = "An unusual dense pulsating stone. You feel uneasy just looking at it."
+	icon = 'icons/obj/items/materials/koshmarite.dmi'
 	material_name = "Koshmarite"
 	default_material = "koshmarite"
 	crystal = 1
@@ -544,6 +585,7 @@
 /obj/item/raw_material/martian
 	name = "viscerite lump"
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
+	icon = 'icons/obj/items/materials/viscerite.dmi'
 	material_name = "Viscerite"
 	default_material = "viscerite"
 	dense = 2
@@ -563,6 +605,7 @@
 /obj/item/raw_material/gold
 	name = "gold nugget"
 	desc = "A chunk of pure gold. Damn son."
+	icon = 'icons/obj/items/materials/gold.dmi'
 	material_name = "Gold"
 	default_material = "gold"
 	dense = 2
@@ -570,7 +613,7 @@
 /obj/item/raw_material/neutronium
 	name = "neutronium ore"
 	desc = "An ore containing deadly neutronium metal."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	material_name = "Neutronium"
 	default_material = "neutronium"
 
@@ -583,7 +626,7 @@
 /obj/item/raw_material/fabric
 	name = "fabric sheet"
 	desc = "Some spun cloth. Useful if you want to make clothing."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "fabric"
 	material_name = "Fabric"
 	scoopable = 0
@@ -594,7 +637,7 @@
 /obj/item/raw_material/cotton
 	name = "cotton wad"
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "cotton"
 	material_name = "Cotton"
 	default_material = "cotton"
@@ -605,6 +648,7 @@
 /obj/item/raw_material/ice
 	name = "ice chunk"
 	desc = "A chunk of ice. It's pretty cold."
+	icon = 'icons/obj/items/materials/ice.dmi'
 	material_name = "Ice"
 	default_material = "ice"
 	crystal = 1
@@ -614,7 +658,7 @@
 	// this should only be spawned by the game, spawning it otherwise would just be dumb
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "scrap"
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = FALSE
@@ -633,7 +677,7 @@
 	// same deal here
 	name = "shard"
 	desc = "A jagged piece of broken crystal or glass. It could probably be smelted down into something more useful."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "shard"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
@@ -723,6 +767,7 @@
 /obj/item/raw_material/chitin
 	name = "chitin sample"
 	desc = "Hard exoskeletal remains."
+	icon = 'icons/obj/items/materials/chitin.dmi'
 	material_name = "Chitin"
 	default_material = "chitin"
 	metal = 3

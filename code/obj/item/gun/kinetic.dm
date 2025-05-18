@@ -2424,7 +2424,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
-		W.icon = 'icons/obj/materials.dmi'
+		W.icon = 'icons/obj/items/materials/materials.dmi'
 		W.icon_state = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
