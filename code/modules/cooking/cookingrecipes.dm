@@ -7,12 +7,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/output = null // what you get from this recipe
 	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
 	var/category = "Unsorted" /// category for sorting, use null to hide
-<<<<<<< HEAD
-	var/priority = PRIORITY_NORMAL /// use this if the recipe should be checked before others with the same number of ingredients
-=======
 	var/list/variants = null
 	var/variant_quantity = 1
->>>>>>> upstream/master
+	var/priority = PRIORITY_NORMAL /// use this if the recipe should be checked before others with the same number of ingredients
 
 
 	proc/specialOutput(var/obj/machinery/cookingmachine/ourCooker)
@@ -44,8 +41,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven)
 ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/mixer
 
-
-
 /datum/cookingrecipe/oven/spicychickensandwich
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
@@ -68,13 +63,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger
-<<<<<<< HEAD
-	specialOutput(obj/machinery/cookingmachine/ourCooker)
-=======
 	cookbonus = 13
 	category = "Burgers"
-	specialOutput(obj/submachine/ourCooker)
->>>>>>> upstream/master
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
 		var/obj/item/possibly_meat = locate(ingredients[2]) in ourCooker
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
@@ -149,6 +140,21 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/clothing/head/butt/synth = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth,
 	/obj/item/clothing/head/butt/cyberbutt = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber)
 
+/datum/cookingrecipe/oven/burger/synthbuttburger
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/clothing/head/butt/synth = 1)
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+	category = "Burgers"
+
+/datum/cookingrecipe/oven/burger/cyberbuttburger
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/clothing/head/butt/cyberbutt = 1)
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+
 /datum/cookingrecipe/oven/burger/heartburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
@@ -199,11 +205,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/bigburger
-<<<<<<< HEAD
-	category = "Burgers"
 	priority = PRIORITY_HIGHER //so it doesn't conflict with normal cheeseburgers
-=======
->>>>>>> upstream/master
 
 /datum/cookingrecipe/oven/burger/butterburger
 	ingredients = list(\
@@ -223,13 +225,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/burger/bigburger = 4)
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
-<<<<<<< HEAD
-	category = "Burgers"
 	specialOutput(obj/machinery/cookingmachine/ourCooker) //was runtiming when it tried to access the second, nonexistent ingredient
 		return null
 
-=======
->>>>>>> upstream/master
 
 /datum/cookingrecipe/oven/swede_mball
 	ingredients = list(\
@@ -247,6 +245,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	variants = list(\
 	/obj/item/instrument/bikehorn = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
+
 
 /datum/cookingrecipe/oven/donkpocket2
 	ingredients = list(/obj/item/reagent_containers/food/snacks/donkpocket = 1)
@@ -490,39 +489,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/breadslice/french = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french)
 	category = "Toast"
 
-<<<<<<< HEAD
-/datum/cookingrecipe/oven/toast_banana
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/banana = 1)
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/banana
-	category = "Toast"
-
-/datum/cookingrecipe/oven/toast_brain
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/brain = 1)
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/brain
-	category = "Toast"
-
-/datum/cookingrecipe/oven/toast_elvis
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/elvis = 1)
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/elvis
-	category = "Toast"
-
-/datum/cookingrecipe/oven/toast_spooky
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/spooky = 1)
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/spooky
-	category = "Toast"
-
-/datum/cookingrecipe/oven/toasted_french
-	ingredients = list(/obj/item/reagent_containers/food/snacks/breadslice/french = 1)
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/breadslice/toastslice/french
-	category = "Toast"
-
-/datum/cookingrecipe/oven/sandwich_m_h
-=======
 ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 /datum/cookingrecipe/oven/sandwich
 	variant_quantity = 2
@@ -530,7 +496,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	category = "Sandwich"
 
 /datum/cookingrecipe/oven/sandwich/human
->>>>>>> upstream/master
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = 1)
@@ -548,7 +513,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_m,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_m)
-
 
 /datum/cookingrecipe/oven/sandwich/synth
 	ingredients = list(\
@@ -576,7 +540,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_pb,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_pb)
-
 
 /datum/cookingrecipe/oven/sandwich/peanutbutter_honey
 	ingredients = list(\
@@ -652,11 +615,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients =  list(/obj/item/reagent_containers/food/snacks/breadslice = 2)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich
-<<<<<<< HEAD
-	category = "Sandwich"
 	priority = PRIORITY_HIGHER //prevents conflict with toast
-=======
->>>>>>> upstream/master
 
 	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
@@ -1637,7 +1596,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
 	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
-	specialOutput(var/obj/machinery/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 

@@ -174,7 +174,13 @@ ABSTRACT_TYPE(/obj/machinery/cookingmachine)
 			// otherwise it will be the created item from this
 			output = R.specialOutput(src)
 			if (isnull(output))
-				output = new R.output
+				if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
+					for(var/specialIngredient in R.variants)
+						if(output) break
+						if(check_item(specialIngredient, R.variant_quantity))
+							output = R.variants[specialIngredient]
+				else
+					output = new R.output
 			if(R.cookbonus)
 				if (abs(cook_amount - R.cookbonus) <= 1)
 					// if -1, 0, or 1, you did ok
