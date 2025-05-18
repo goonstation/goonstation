@@ -355,8 +355,7 @@
 /area/listeningpost/break_room)
 "nM" = (
 /obj/item/device/radio/intercom/bridge{
-	dir = 4;
-	broadcasting = 0
+	dir = 4
 	},
 /obj/cable/black,
 /obj/machinery/power/data_terminal,

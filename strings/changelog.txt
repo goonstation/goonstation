@@ -1,4 +1,23 @@
 
+(t)sat may 17 25
+(u)Bartimeus973, DisturbHerb, Ikea
+(p)22887
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Goats, (more) seals, and jackalopes now possible in wintry places
+(t)fri may 16 25
+(u)RubberRats
+(p)22904
+(e)🗺🔧🔎🍝|A-Mapping, A-Tooling, C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed, again. Please report any issues.
+(u)LeahTheTech
+(+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
+(p)23374
+(e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
+(*)Intercoms now use maptext.
+(u)Egregorious
+(p)23449
+(e)🆕⚖|C-Feature, C-Balance
+(+)Cargo's traders will now buy the same items throughout the entire shift.
 (t)wed may 14 25
 (u)GeneralJay
 (p)23451
