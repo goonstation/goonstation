@@ -79,10 +79,10 @@
 				affected_mob:gib()
 				return
 
-/datum/ailment/parasite/cluwnespiders
+/datum/ailment/parasite/cluwnespider
 	name = "Unidentified Hilarity Body"
 	max_stages = 5
-	stageprob = 5
+	stage_prob = 5
 	affected_species = list("Human", "Monkey")
 	temperature_cure = INFINITY
 
@@ -119,7 +119,7 @@
 				var/babyspiders = null
 				babyspiders = rand(3,5)
 				while(babyspiders-- > 0)
-					var/obj/critter/cluwnespider/larva = new /obj/critter/cluwnespider (get_turf(affected_mob))
+					var/mob/living/critter/spider/clown/cluwne/larva = new /mob/living/critter/spider/clown/cluwne (get_turf(affected_mob))
 					larva.name = "li'l [affected_mob:real_name]"
 
 				playsound(affected_mob.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
