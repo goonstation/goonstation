@@ -206,18 +206,15 @@
 			else if (value < lowbuff_threshold && value > debuff_threshold)
 				showOwner(SPAN_ALERT("You feel [buff]!"))
 				holder.owner.setStatus(buff + "_low", duration = null)
-				holder.owner.delStatus("buff_stam")
 				buffed = TRUE
 			else if (value < buff_threshold && value > lowbuff_threshold)
 				showOwner(SPAN_ALERT("You feel well [buff]!"))
 				holder.owner.setStatus(buff, duration = null) // Health Part
-				holder.owner.setStatus(buff + "_stam", duration = null)
 				holder.owner.delStatus("buff_hot")
 				buffed = TRUE
 			else if (value < highbuff_threshold && value > buff_threshold)
 				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
 				holder.owner.setStatus(buff + "_high", duration = null) // Health Part
-				holder.owner.setStatus(buff + "_stam", duration = null)
 				holder.owner.setStatus(buff + "_hot", duration = null)
 				buffed = TRUE
 
@@ -235,6 +232,7 @@
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
 			depletion_rate = 0.0909
 			debuff = "thirsty"
+			buff = "quenched"
 
 			getWarningMessage()
 				if (value < 0)

@@ -58,6 +58,7 @@ datum
 		var/can_crack = 0 // used by organic chems
 		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
+		var/is_produce = 0 // used to determine thirst/hunger bonuses
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
 		///Is it banned from various fluid types, see _std/defines/reagents.dm
@@ -243,9 +244,22 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					if (src.thirst_value)
-						H.sims.affectMotive("Thirst", thirst_value)
+						if (!requires_produce && !right_temp)
+							while (H.sims.motives("Thirst" > 50))
+								H.sims.affectMotive("Thirst", thirst_value)
+						else if (requires_produce || right_temp)
+							while (H.sims.motives("Thirst" > 75))
+								H.sims.affectMotive("Thirst", thirst_value)
+						else
+								H.sims.affectMotive("Thirst", thirst_value)
 					if (src.hunger_value)
 						H.sims.affectMotive("Hunger", hunger_value)
+						if (!requires_produce && !right_temp)
+							while (H.sims.motives("Hunger" > 50))
+								H.sims.affectMotive("Hunger", hunger_value)
+						else if (requires_produce)
+							while (H.sims.motives("Hunger" > 75)) // Going above this is sorted in the actual food.
+								H.sims.affectMotive("Hunger", hunger_value)
 					if (src.bladder_value)
 						H.sims.affectMotive("Bladder", bladder_value)
 					if (src.energy_value)
