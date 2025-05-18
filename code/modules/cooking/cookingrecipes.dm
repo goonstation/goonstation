@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	var/list/variants = null
 	var/variant_quantity = 1
+	var/requires_produce = 0 /// Does this particular recipe utilise botany/ranch ingredients? Used for food bonuses
 
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
@@ -47,6 +48,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
 	category = "Burgers"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/chickensandwich
 	ingredients = list(\
@@ -58,6 +60,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy = /obj/item/reagent_containers/food/snacks/burger/chicken/spicy,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock = /obj/item/reagent_containers/food/snacks/burger/flockburger)
 	category = "Burgers"
+	requires_produce = 1
 
 ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger
@@ -112,12 +115,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/plant/pineappleslice = 1)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/luauburger
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/burger/coconutburger
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/plant/coconutmeat = 1)
 	output = /obj/item/reagent_containers/food/snacks/burger/coconutburger
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/burger/tikiburger
 	ingredients = list(\
@@ -127,6 +132,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/plant/coconutmeat = 1)
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/burger/tikiburger
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/burger/buttburger
 	ingredients = list(\
@@ -298,6 +304,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	category = "Pasta"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/spaghetti_m
 	ingredients = list(\
@@ -315,6 +322,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
 	category = "Pasta"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/alfredo
 	ingredients = list(\
@@ -332,6 +340,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
 	category = "Pasta"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/chickenalfredo
 	ingredients = list(\
@@ -341,6 +350,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
 	category = "Pasta"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/spaghetti_pg
 	ingredients = list(\
@@ -426,6 +436,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/pumpkin
 	category = "Bread"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/bread
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough = 1)
@@ -541,6 +552,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_blt,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_blt)
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/sandwich/c_butty
 	ingredients = list(\
@@ -581,6 +593,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/cucumber = 1)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/sandwich/bahnmi_alt //Secondary recipe that uses the baguette
 	ingredients = list(\
@@ -590,6 +603,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/cucumber = 1)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/sandwich/custom
 	ingredients =  list(/obj/item/reagent_containers/food/snacks/breadslice = 2)
@@ -837,6 +851,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/garlicbread_ch
 	ingredients = list(\
@@ -847,6 +862,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread_ch
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/painauchocolat
 	ingredients = list(\
@@ -882,6 +898,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_cherry
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/danish_blueb
 	ingredients = list(\
@@ -891,6 +908,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_blueb
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/danish_weed
 	ingredients = list(\
@@ -900,6 +918,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_weed
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/danish_cheese
 	ingredients = list(\
@@ -927,6 +946,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/cinnamonbun
 	category = "Pastries and bread-likes"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/chocolate_cherry
 	ingredients = list(\
@@ -935,6 +955,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 1)
 	cookbonus = 3
 	output = /obj/item/reagent_containers/food/snacks/chocolate_cherry
+	requires_produce = 1
 
 //Cookies
 /datum/cookingrecipe/oven/stroopwafel
@@ -958,6 +979,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/metal
 	category = "Cookies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cookie_chocolate_chip
 	ingredients = list(\
@@ -974,6 +996,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/oatmeal
 	category = "Cookies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cookie_bacon
 	ingredients = list(\
@@ -991,6 +1014,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/jaffa
 	category = "Cookies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cookie_spooky
 	ingredients = list(\
@@ -1049,6 +1073,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/onionchips
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/fries
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/chips = 1)
@@ -1062,6 +1087,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
 	cookbonus = 3
 	output = /obj/item/reagent_containers/food/snacks/chilifries
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/chilifries_alt //Secondary recipe for chili cheese fries
 	ingredients = list(\
@@ -1070,6 +1096,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheese = 1)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/poutine
 	ingredients = list(\
@@ -1118,6 +1145,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/shrimp
+	requires_produce = 1 // I guess angling can count
 
 /datum/cookingrecipe/oven/bacon
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw = 1)
@@ -1136,6 +1164,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_cherry
 	ingredients = list(\
@@ -1144,6 +1173,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/cherry
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_blueberry
 	ingredients = list(\
@@ -1152,6 +1182,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/blueberry
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_raspberry
 	ingredients = list(\
@@ -1162,6 +1193,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/plant/raspberry/blackberry = /obj/item/reagent_containers/food/snacks/pie/blackberry)
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_apple
 	ingredients = list(\
@@ -1170,6 +1202,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/apple
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_lime
 	ingredients = list(\
@@ -1178,6 +1211,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/lime
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_lemon
 	ingredients = list(\
@@ -1186,6 +1220,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/lemon
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_slurry
 	ingredients = list(\
@@ -1194,6 +1229,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/slurry
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_pumpkin
 	ingredients = list(\
@@ -1202,6 +1238,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_chocolate
 	ingredients = list(\
@@ -1326,6 +1363,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pot
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_weed
 	ingredients = list(\
@@ -1335,6 +1373,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/weed
 	category = "Pies"
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/pie_fish
 	ingredients = list(\
@@ -1366,6 +1405,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/soup/oatmeal
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/tomsoup
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/tomato = 2)
@@ -1380,6 +1420,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/mint_chutney
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/refried_beans
 	ingredients = list(\
@@ -1394,6 +1435,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/chili
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/queso
 	ingredients = list(\
@@ -1401,6 +1443,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/chili = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/queso
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/superchili
 	ingredients = list(\
@@ -1409,6 +1452,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 2)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/soup/superchili
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/ultrachili
 	ingredients = list(\
@@ -1418,6 +1462,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 1)
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/soup/ultrachili
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/salad
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/lettuce = 2)
@@ -1433,6 +1478,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/mushroom/psilocybin = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin,
 	/obj/item/reagent_containers/food/snacks/mushroom/amanita = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita)
+	requires_produce = 1
 
 //Delightful Halloween Recipes
 /datum/cookingrecipe/oven/candy_apple
@@ -1637,6 +1683,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/plant/soy = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	requires_produce = 1
 
 /datum/cookingrecipe/mixer/gravy
 	ingredients = list(\
@@ -1685,6 +1732,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/banana = 1)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cereal_box/tanhony
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cereal_roach
 	ingredients = list(\
@@ -1713,6 +1761,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/granola_bar
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/hardboiled
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/egg = 1)
@@ -1761,6 +1810,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/cookie/dog
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/hardtack
 	ingredients = list(\
@@ -1768,6 +1818,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/condiment/ironfilings = 1)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/hardtack
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/macguffin
 	ingredients = list(\
@@ -1785,6 +1836,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/haggis
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/haggass
 	ingredients = list(\
@@ -1793,6 +1845,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/onion = 1)
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/haggis/ass
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/scotch_egg
 	ingredients = list(\
@@ -1828,6 +1881,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/riceandbeans
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/friedrice
 	ingredients = list(\
@@ -1837,6 +1891,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/friedrice
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/omurice
 	ingredients = list(\
@@ -1854,6 +1909,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/risotto
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/tandoorichicken
 	ingredients = list(\
@@ -1863,6 +1919,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
 	cookbonus = 18
 	output = /obj/item/reagent_containers/food/snacks/tandoorichicken
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/potatocurry
 	ingredients = list(\
@@ -1872,6 +1929,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/peas = 1)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/potatocurry
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/coconutcurry
 	ingredients = list(\
@@ -1881,6 +1939,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/rice = 1)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/coconutcurry
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/chickenpineapplecurry
 	ingredients = list(\
@@ -1890,6 +1949,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/pineappleslice = 1)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/ramen_bowl
 	ingredients = list(\
@@ -1917,6 +1977,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/mapo_tofu
 	ingredients = list(\
@@ -1928,6 +1989,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/mapo_tofu_meat
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/mapo_tofu_synth)
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cheesewheel
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/cheese = 2)
@@ -1942,6 +2004,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/garlic = 1)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/ratatouille
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/churro
 	ingredients = list(\
@@ -1965,6 +2028,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/zongzi
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/beefood
 	ingredients = list(\
@@ -2089,6 +2153,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/gyudon
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/cheese_gyudon
 	ingredients = list(\
@@ -2098,6 +2163,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/cheese_gyudon
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/miso_soup
 	ingredients = list(\
@@ -2105,6 +2171,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/plant/soy = 1)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/miso_soup
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/bibimbap
 	ingredients = list(\
@@ -2114,6 +2181,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/bibimbap
+	requires_produce = 1
 
 /datum/cookingrecipe/oven/katsu_curry
 	ingredients = list(\

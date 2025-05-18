@@ -165,9 +165,9 @@
 		var/debuff_threshold = 25
 		var/lowbuff_threshold = 50
 		var/buff_threshold = 75
-		var/highbuff_threshold = 100
+		var/highbuff_threshold = 90
 		#else
-		var/debuff_threshold = 0
+		var/debuff_threshold = -1 // Don't want debuffs procing on classic
 		var/lowbuff_threshold = 25
 		var/buff_threshold = 50
 		var/highbuff_threshold = 75
@@ -180,23 +180,45 @@
 				showOwner(SPAN_NOTICE("You feel considerably less [debuff]!"))
 				holder.owner.delStatus(debuff)
 				debuffed = FALSE
+			else if (value > lowbuff_threshold && value < buff_threshold)
+				showOwner(SPAN_ALERT("You feel [buff]!"))
+				holder.owner.setStatus(buff + "_low", duration = null)
+				holder.owner.delStatus("buff_stam")
+				buffed = TRUE
+			else if (value > buff_threshold && value < highbuff_threshold)
+				showOwner(SPAN_ALERT("You feel well [buff]!"))
+				holder.owner.setStatus(buff, duration = null) // Health Part
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.delStatus("buff_hot")
+				buffed = TRUE
+			else if (value > highbuff_threshold)
+				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
+				holder.owner.setStatus(buff + "_high", duration = null)
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.setStatus(buff + "_hot", duration = null)
+				buffed = TRUE
 
 		onDecrease()
 			if (value < debuff_threshold && !debuffed)
 				showOwner(SPAN_ALERT("You feel considerably [debuff]!"))
 				holder.owner.setStatus(debuff, duration = null)
 				debuffed = TRUE
-			else if (value < lowbuff_threshold)
+			else if (value < lowbuff_threshold && value > debuff_threshold)
 				showOwner(SPAN_ALERT("You feel [buff]!"))
 				holder.owner.setStatus(buff + "_low", duration = null)
+				holder.owner.delStatus("buff_stam")
 				buffed = TRUE
-			else if (value < buff_threshold)
+			else if (value < buff_threshold && value > lowbuff_threshold)
 				showOwner(SPAN_ALERT("You feel well [buff]!"))
 				holder.owner.setStatus(buff, duration = null) // Health Part
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.delStatus("buff_hot")
 				buffed = TRUE
-			else if (value < highbuff_threshold)
+			else if (value < highbuff_threshold && value > buff_threshold)
 				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
-				holder.owner.setStatus(buff + "_high", duration = null)
+				holder.owner.setStatus(buff + "_high", duration = null) // Health Part
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.setStatus(buff + "_hot", duration = null)
 				buffed = TRUE
 
 		getWarningMessage()
