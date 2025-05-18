@@ -1,5 +1,142 @@
 
+(t)sat may 17 25
+(u)Bartimeus973, DisturbHerb, Ikea
+(p)22887
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Goats, (more) seals, and jackalopes now possible in wintry places
+(t)fri may 16 25
+(u)RubberRats
+(p)22904
+(e)🗺🔧🔎🍝|A-Mapping, A-Tooling, C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed, again. Please report any issues.
+(u)LeahTheTech
+(+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
+(p)23374
+(e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
+(*)Intercoms now use maptext.
+(u)Egregorious
+(p)23449
+(e)🆕⚖|C-Feature, C-Balance
+(+)Cargo's traders will now buy the same items throughout the entire shift.
+(t)wed may 14 25
+(u)GeneralJay
+(p)23451
+(e)💅🍝|C-QoL, A-Catering
+(+)Meat gained from butchering sheep can now be cooked into steaks properly. Ranchers and chefs rejoice!
+(u)Egregorious
+(p)23434
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Botany requisitions now reward large produce satchels.
+(u)glowbold
+(p)23385
+(e)🆕🗺🎨⚖|C-Feature, A-Mapping, C-Sprites, C-Balance
+(+)The listening post on some maps have received a new look.
+(+)The listening post will fully unlock once someone is inside or uses the hand scanner.
+(u)Mr. Moriarty
+(p)23313
+(e)🆕💅📄🔨|C-Feature, C-QoL, A-UI, A-Player-Actions
+(+)Hivechat, Thrallchat, and Kudzuchat are now accessed through the Y menu instead of through abilities.
+(t)sat may 10 25
+(u)CrimsonNode
+(p)23334
+(e)🪲💅📦💡|C-Bug, C-QoL, A-Game-Objects, A-Station-Systems
+(+)Computer terminals should hopefully crash less when scripting.
+(+)The mainframe can now recover from errors caused by recursive scripts by performing a self-reboot, instead of requiring a manual-reboot.
+(u)JORJ949
+(p)23405
+(e)💅🤖|C-QoL, A-Silicons
+(+)AIs and Cyborgs can now select the Robocop, Corporate or Syndicate lawset when setting their fake laws.
+(t)fri may 09 25
+(u)EmeraldCrow
+(p)23389
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Adds two new donator figurines to the game.
+(t)thu may 08 25
+(u)Chasu
+(p)23278
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Strip door frames can now be (un-)anchored with wrenching tools and have help messages
+(u)TDHooligan
+(p)23212
+(e)⚖🎭|C-Balance, A-RP
+(+)Thirst's stamina penalty has been halved.
+(u)Mr. Moriarty
+(p)23304
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Whispers now display maptext.
+(u)Cheekybrdy
+(p)23182
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)Ranch eggs can now spawn in BR lockers.
+(u)FlameArrow57
+(p)23344
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard Prismatic Spray spell can be used without a staff
+(u)FlameArrow57
+(p)23345
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard empower spell duration and CD reduced to 15s/30s from 30s/45s. It now also removes stun status effects on use.
+(u)FlameArrow57
+(p)23353
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Wizard forcewall duration changed from 30 -> 20 seconds
+(t)wed may 07 25
+(u)JORJ949
+(p)23354
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)"Fired" is now a valid word for the lawbringer's hotshot mode. Go terminate those contracts!
+(u)JORJ949
+(p)23319
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Lawbringers now check every word in a message for mode selection rather than the entire message.
+(u)CalliopeSoups
+(p)23276
+(e)🎨⏰🐁|C-Sprites, A-Status-Effects, A-Critters
+(*)Mimics will now scale their health and speed with the size of their disguise. Report any unfitting values.
+(+)Mimic is now an action bar and has a slightly longer cooldown.
+(u)FlameArrow57 & Mr. Moriarty
+(p)23138
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added manufacturable lanterns to fabs! They light up your immediate vicinity rather than directionally like flashlights
+(u)glowbold
+(p)23217
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI units see their killswitch timer when deployed to cyborg or eyebot shells
+(u)Garash & glowbold
+(p)23071
+(e)🗺🎨🔄📄💡|A-Mapping, C-Sprites, C-Rework, A-UI, A-Station-Systems
+(*)Security camera computers use a minimap to display camera locations
+(+)Televisions show a list of available cameras.
+(u)JORJ949
+(p)23103
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Wizards now have their own radio channel on :w
+(u)JORJ949
+(p)23335
+(e)💅🔨🤖|C-QoL, A-Player-Actions, A-Silicons
+(+)Silicons can now select the default lawset as the base when setting their fake laws.
+(t)tue may 06 25
+(u)glowbold
+(p)23045
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Singularity Emitters have an emag interaction.
+(u)JORJ949
+(p)23314
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)All AI Uploads now come with AI Programming 101. Corporate has had enough with law-based accidents.
+(u)Mr. Moriarty, Amylizzle, LeahTheTech, ZeWaka, Glowbold, DisturbHerb, Romayne, & Skeletonman0
+(p)19180
+(e)🔧🔎🔒🔄❗⚙|A-Tooling, C-Code-Quality, A-Secret, C-Rework, E-FUCK, A-Internal
+(*)The entire speech system has been reworked; anything that can say or hear something now uses an entirely different system to do so, including you. Please report any bugs.
+(u)TDHooligan
+(p)23257
+(e)⚖|C-Balance
+(*)Slowing effects are now applied & removed instantly, instead of on your next move. Tasers will be more affected by this change.
 (t)mon may 05 25
+(u)Chasu
+(p)23272
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Podbay doors now use an even frequency to communicate, allowing them to be manually targeted via packets
 (u)Cheekybrdy
 (p)23284
 (e)🗺🎨|A-Mapping, C-Sprites

@@ -431,7 +431,7 @@
 			src.anchored = TRUE
 
 /obj/item/storage/backpack/salvager
-	name = "salvager rucksack"
+	name = "heavy-duty rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
 	spawn_contents = list()
@@ -442,7 +442,7 @@
 	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
-	protected_radio = 1 // Ops can spawn with the deaf trait.
+	protected_radio = TRUE // Ops can spawn with the deaf trait.
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
