@@ -1,7 +1,7 @@
 #define PREFIX_TEXT_AI_RADIO_1 ":1"
 #define PREFIX_TEXT_AI_RADIO_2 ":2"
 #define PREFIX_TEXT_AI_RADIO_3 ":3"
-#define PREFIX_TEXT_DEADCHAT ":D"
+#define PREFIX_TEXT_DEADCHAT ":d"
 #define PREFIX_TEXT_HIVECHAT ":hive"
 #define PREFIX_TEXT_INTERCOM ":in"
 #define PREFIX_TEXT_KUDZUCHAT ":kudzu"
