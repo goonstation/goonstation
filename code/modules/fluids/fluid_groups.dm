@@ -594,7 +594,7 @@
 			fluid_ma.overlays = F.overlays // gross, needed because of perspective overlays
 			F.appearance = fluid_ma
 			F.name = initial(F.name) // i don't know what the fuck is going on with the appearances here
-//
+
 		if(src.disposed)
 			return 1
 
