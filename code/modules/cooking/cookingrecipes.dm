@@ -22,13 +22,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
 		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
 
-//TODO: replace variant checking code with this once cooking machines have been unified under one type
-/*	proc/getVariant(var/obj/submachine/ourCooker)
+	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
 		for(var/specialIngredient in variants)
 			if(ourCooker.check_item(specialIngredient, variant_quantity))
-				return new variants[specialIngredient]
-		return new output
-*/
+				return variants[specialIngredient]
+		return output
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
