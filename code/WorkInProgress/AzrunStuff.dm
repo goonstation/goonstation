@@ -18,7 +18,7 @@
 			return ATTACK_PRE_DONT_ATTACK
 
 		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
-		return decon_comp.pre_attackby_decon(target, user, src)
+		return decon_comp.finish_decon(target, user, src)
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
