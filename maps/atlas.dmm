@@ -2267,15 +2267,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"alR" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "alS" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -7100,12 +7091,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"aRs" = (
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
-/turf/simulated/floor/wood/two,
-/area/station/bridge/united_command)
 "aRv" = (
 /obj/machinery/plantpot,
 /obj/noticeboard/persistent{
@@ -10250,6 +10235,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"ehJ" = (
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor/wood/two,
+/area/station/bridge/united_command)
 "ehW" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -15429,6 +15418,32 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
+"lQa" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_x = 24;
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/landmark/start/job/AI,
+/obj/item/device/radio/intercom/AI,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "lQw" = (
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
@@ -19247,6 +19262,14 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"rMW" = (
+/obj/disposalpipe/segment,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon6,
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "rMY" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 8;
@@ -22210,34 +22233,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
-"vTa" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_x = 24;
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/landmark/start/job/AI,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "vUm" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
@@ -64000,7 +63995,7 @@ agN
 bZv
 bup
 bKM
-alR
+rMW
 axz
 alh
 axz
@@ -67321,7 +67316,7 @@ aqD
 lLR
 rDv
 cYo
-vTa
+lQa
 iYS
 avJ
 lXg
@@ -80311,7 +80306,7 @@ dWW
 krp
 asT
 azf
-aRs
+ehJ
 azs
 aAg
 aAW
