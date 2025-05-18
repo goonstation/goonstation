@@ -82,6 +82,12 @@
 			src.dir_locked = TRUE
 			src.base_form = FALSE
 			src.appearance = target
+			src.dir = target.dir
+			src.invisibility = initial(src.invisibility)
+			src.alpha = max(src.alpha, 200)
+			src.plane = initial(src.plane)
+			src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
+			src.start_hiding()
 			for(var/y = 1, y <= I.Height(), y++)
 				for(var/x = 1, x <= I.Width(), x++)
 					var/nullcheck = I.GetPixel(x, y)
@@ -89,12 +95,6 @@
 						pixels++
 			src.pixel_amount = pixels
 
-		src.dir = target.dir
-		src.invisibility = initial(src.invisibility)
-		src.alpha = max(src.alpha, 200)
-		src.plane = initial(src.plane)
-		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
-		src.start_hiding()
 
 	proc/start_hiding()
 		if (src.base_form)
