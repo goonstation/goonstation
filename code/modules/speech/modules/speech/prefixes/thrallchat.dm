@@ -5,4 +5,4 @@
 	channel_id = SAY_CHANNEL_THRALL
 
 /datum/speech_module/prefix/premodifier/channel/thrallchat/get_prefix_choices()
-	return list("Thrallchat" = CHAT_PREFIX_THRALL)
+	return list("Thrallchat" = CHAT_PREFIX_THRALLCHAT)
