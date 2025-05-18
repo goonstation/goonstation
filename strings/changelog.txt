@@ -1,4 +1,9 @@
 
+(t)sun may 18 25
+(u)JORJ949
+(p)23465
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(*)Turtles can now wear NT, Head of Sanitation and Syndicate berets.
 (t)sat may 17 25
 (u)Bartimeus973, DisturbHerb, Ikea
 (p)22887
