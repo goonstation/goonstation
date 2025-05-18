@@ -478,7 +478,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
 				. = TRUE
 
-	get_recipes_from_ingredient(obj/item/ingredient) //this is a gross hack
+	get_recipes_from_ingredient(obj/item/ingredient)
 		var/considered_type = ingredient.type
 		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		while(considered_type != /obj/item && considered_type != /obj/item/reagent_containers/food/snacks/ingredient)
