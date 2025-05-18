@@ -8,14 +8,16 @@
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
+	var/list/datum/mind/distractions = list()
 	var/const/minimum_salvagers = 3
-	var/const/antags_possible = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 #ifdef RP_MODE
 	var/const/pop_divisor = 6
+	var/const/antags_possible = 6
 #else
 	var/const/pop_divisor = 6
+	var/const/antags_possible = 8 // buffed for distraction
 #endif
 
 /datum/game_mode/salvager/announce()
@@ -24,13 +26,26 @@
 /datum/game_mode/salvager/pre_setup()
 	. = ..()
 	var/list/possible_salvagers = list()
+	var/list/possible_traitors = list()
+	var/list/possible_spiefs = list()
 
 	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(pop_divisor+1)
+	var/distraction_num = rand(1,2)
+	var/distraction_type = null
 	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 2, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
+	#ifdef RP_MODE
+	#else
+	if(prob(2)) // Add more if you have any in mind
+		possible_traitors = get_possible_enemies(ROLE_TRAITOR, distraction_num)
+		distraction_type = "Traitors"
+	else
+		possible_spiefs = get_possible_enemies(ROLE_SPY_THIEF, distraction_num)
+		distraction_type = "Spiefs"
+	#endif
 	if (!length(possible_salvagers))
 		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
 		return 0
@@ -55,12 +70,31 @@
 		salvager.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		salvager.special_role = ROLE_SALVAGER
 		possible_salvagers.Remove(salvager)
-	return TRUE
+
+	#ifdef RP_MODE
+	#else
+	if (distraction_type = "Spiefs")
+		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = distraction_num, recordChosen = 1)
+		for (var/datum/mind/spy in chosen_spy_thieves)
+			distractions += spy
+			spy.special_role = ROLE_SPY_THIEF
+			possible_spy_thieves.Remove(spy)
+	else
+		var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = distraction_num, recordChosen = 1)
+		for (var/datum/mind/traitor in chosen_traitors)
+			distractions += traitor
+			traitor.special_role = ROLE_TRAITOR
+			possible_traitors.Remove(traitor)
+	#endif
+
 
 /datum/game_mode/salvager/post_setup()
 	..()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
+
+	for (var/datum/mind/other in distractions)
+		equip_antag(other)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
