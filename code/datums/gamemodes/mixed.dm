@@ -51,6 +51,7 @@
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
 	var/num_flockminds = 0
+	var/num_salvagers = 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
@@ -81,6 +82,12 @@
 				if(ROLE_SPY_THIEF)
 					if(j+1<num_enemies) //don't overcap
 						num_spy_thiefs += 2
+						j++
+					else
+						j-- //reroll
+				if(ROLE_SALVAGER)
+					if(j+1<num_enemies) //don't overcap
+						num_salvagers += 2
 						j++
 					else
 						j-- //reroll
@@ -135,6 +142,10 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
+			if(ROLE_SALVAGER)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.special_role = ROLE_SALVAGER
 
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -211,6 +222,14 @@
 			traitors += spy
 			spy.special_role = ROLE_SPY_THIEF
 			possible_spy_thieves.Remove(spy)
+
+	if(num_salvagers)
+		var/list/possible_salvagers = get_possible_enemies(ROLE_SALVAGER,num_salvagers)
+		var/list/chosen_salvagers = antagWeighter.choose(pool = possible_salvagers, role = ROLE_SALVAGER, amount = num_salvagers, recordChosen = 1)
+		for (var/datum/mind/salvager in chosen_salvagers)
+			traitors += salvager
+			salvager.special_role = ROLE_SPY_THIEF
+			possible_salvagers.Remove(salvager)
 
 	if(num_werewolves)
 		var/list/possible_werewolves = get_possible_enemies(ROLE_WEREWOLF,num_werewolves)
