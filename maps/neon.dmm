@@ -7500,7 +7500,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/snacks/steak_s,
+/obj/item/reagent_containers/food/snacks/steak/synth,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -10400,7 +10400,7 @@
 /area/station/security/checkpoint/cargo)
 "htR" = (
 /obj/table/wood,
-/obj/item/reagent_containers/food/snacks/steak_h,
+/obj/item/reagent_containers/food/snacks/steak,
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "htV" = (
