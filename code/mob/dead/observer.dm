@@ -623,6 +623,9 @@ TYPEINFO(/mob/dead/observer)
 	if(QDELETED(corpse) || corpse.loc == null)
 		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
+	if(corpse.get_client())
+		tgui_alert(src, "Someone else is already in your corpse! If this seems wrong, make a bug report!", "Corpse taken")
+		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
 		src.client.clear_admin_verbs()

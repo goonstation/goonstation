@@ -91,7 +91,7 @@ datum/mind
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
 			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
 
-		if (new_character.client)
+		if (new_character.get_client() && (new_character.get_client() != current.get_client()))
 			if (current)
 				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
 				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"

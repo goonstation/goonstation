@@ -2807,3 +2807,10 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
+
+/mob/living/silicon/ai/get_client() //AIs can have no client var while still having a client
+	if(src.deployed_shell?.client)
+		return src.deployed_shell.client
+	else if(src.eyecam?.client)
+		return src.eyecam.client
+	return ..()
