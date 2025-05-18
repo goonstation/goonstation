@@ -91,7 +91,8 @@
 		return
 	switch(D.stage)
 		if (1)
-			boutput(affected_mob, SPAN_ALERT("You think you've gotten on the bad end of a joke."))
+			if(probmult(1))
+				boutput(affected_mob, SPAN_ALERT("You think you've gotten on the bad end of a joke."))
 		if (2,3)
 			if(probmult(1))
 				affected_mob.emote("sneeze")
