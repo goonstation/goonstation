@@ -2568,8 +2568,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
-	for (var/mob/M in src.juggling)
-		src.remove_juggle(M)
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
 		if(istype(A, /obj/item/device/light)) //i hate this
