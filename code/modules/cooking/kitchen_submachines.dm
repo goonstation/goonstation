@@ -832,7 +832,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 					// severely overcooked and burnt
 					output = /obj/item/reagent_containers/food/snacks/yuck/burn
 					bonus = 0
-				for(var/obj/item/reagent_containers/food/egg/chicken/C in R.ingredients)
+				for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/C in R.ingredients)
 					if(C.tier > 0)
 						requires_produce = 1
 						return
