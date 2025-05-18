@@ -90,9 +90,6 @@
 	if (..())
 		return
 	switch(D.stage)
-		if (1)
-			if(probmult(1))
-				boutput(affected_mob, SPAN_ALERT("You think you've gotten on the bad end of a joke."))
 		if (2,3)
 			if(probmult(1))
 				affected_mob.emote("sneeze")
@@ -102,6 +99,8 @@
 				boutput(affected_mob, SPAN_ALERT("Your throat feels sore."))
 			if(probmult(1))
 				boutput(affected_mob, SPAN_ALERT("Mucous runs down the back of your throat."))
+			if(probmult(1))
+				boutput(affected_mob, SPAN_ALERT("You think you've gotten on the bad end of a joke."))
 		if(4)
 			if(probmult(1))
 				affected_mob.emote("sneeze")
