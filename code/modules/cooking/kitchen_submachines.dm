@@ -834,7 +834,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 					bonus = 0
 				for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/C in R.ingredients)
 					if(C.tier > 0)
-						requires_produce = 1
+						produce = 1
 						return
 				if (R.requires_produce)
 					produce = 1
