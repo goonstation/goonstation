@@ -16,6 +16,9 @@
 			for(var/ingredient in recipe.ingredients)
 				if(!oven_recipes_by_ingredient[ingredient]) oven_recipes_by_ingredient[ingredient] = list()
 				src.oven_recipes_by_ingredient[ingredient] += recipe
+			for(var/specialIngredient in recipe.variants)
+				if(!oven_recipes_by_ingredient[specialIngredient]) oven_recipes_by_ingredient[specialIngredient] = list()
+				src.oven_recipes_by_ingredient[specialIngredient] += recipe
 		sortList(oven_recipes_by_ingredient, /proc/cmp_text_asc)
 		for(var/list/recipeList in oven_recipes_by_ingredient)
 			sortList(recipeList, /proc/cmp_recipe_priority)
@@ -27,6 +30,9 @@
 			for(var/ingredient in recipe.ingredients)
 				if(!mixer_recipes_by_ingredient[ingredient]) mixer_recipes_by_ingredient[ingredient] = list()
 				src.mixer_recipes_by_ingredient[ingredient] += recipe
+			for(var/specialIngredient in recipe.variants)
+				if(!mixer_recipes_by_ingredient[specialIngredient]) mixer_recipes_by_ingredient[specialIngredient] = list()
+				src.mixer_recipes_by_ingredient[specialIngredient] += recipe
 			sortList(mixer_recipes_by_ingredient, /proc/cmp_text_asc)
 			for(var/list/recipeList in mixer_recipes_by_ingredient)
 				sortList(recipeList, /proc/cmp_recipe_priority)
