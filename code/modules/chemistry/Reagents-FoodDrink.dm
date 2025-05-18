@@ -2136,7 +2136,7 @@ datum
 			fluid_g = 0
 			fluid_b = 26
 			alch_strength = 0.5
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 #ifdef XMAS
 			description = "Will warm your heart."
 #else
@@ -2252,7 +2252,7 @@ datum
 			transparency = 255
 			hunger_value = 2
 			taste = "bready"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5 && !(locate(/obj/item/reagent_containers/food/snacks/breadslice) in T))
@@ -2389,7 +2389,7 @@ datum
 			transparency = 40
 			taste = "hot"
 			viscosity = 0.2
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2524,7 +2524,7 @@ datum
 			hunger_value = 0.5
 			viscosity = 0.5
 			taste = "bloody"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -2564,7 +2564,7 @@ datum
 			bladder_value = -0.1
 			energy_value = 0.3
 			taste = "bitter"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2636,7 +2636,7 @@ datum
 			fluid_g = 188
 			fluid_b = 20
 			taste = "bitter"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/caffeinated/energydrink
 			name = "energy drink"
@@ -2711,7 +2711,7 @@ datum
 			minimum_reaction_temperature = -INFINITY
 			caffeine_content = 0.2
 			var/list/flushed_reagents = list("toxin","toxic_slurry")
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
@@ -2742,7 +2742,7 @@ datum
 			thirst_value = 0.75
 			bladder_value = 0.04
 			energy_value = 0.04
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -2772,7 +2772,7 @@ datum
 			transparency = 232
 			thirst_value = 1.5
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -2813,7 +2813,7 @@ datum
 			hunger_value = 1
 			viscosity = 0.5
 			var/ticks = 0
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
@@ -2994,7 +2994,7 @@ datum
 			thirst_value = 0.5
 			bladder_value = -1
 			taste = "soothing"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -3165,7 +3165,7 @@ datum
 			transparency = 250
 			taste = "herbal"
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
@@ -4256,7 +4256,7 @@ datum
 			taste = list("aromatic", "citrusy")
 			reagent_state = LIQUID
 			thirst_value = 0.8
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				return // avoid renaming in parent
@@ -4762,7 +4762,7 @@ datum
 			description = "A warm, late night drink, usually enjoyed during long winter nights."
 			reagent_state = LIQUID
 			taste = "cozy"
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/grenadine
 			name = "grenadine"
@@ -4920,7 +4920,7 @@ datum
 			energy_value = 0.04
 			var/list/flushed_reagents = list("cholesterol")
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(holder, 3 * mult, flushed_reagents)
@@ -4951,7 +4951,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/thaicoffee
 			name = "Thai iced coffee"
@@ -4964,7 +4964,7 @@ datum
 			description = "A local favorite, now available on demand."
 			reagent_state = LIQUID
 			thirst_value = 0.8
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/pepperminthotchocolate
 			name = "peppermint hot chocolate"
@@ -4978,7 +4978,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/mexicanhotchocolate
 			name = "Mexican hot chocolate"
@@ -4992,7 +4992,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.75
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"
@@ -5005,7 +5005,7 @@ datum
 			taste = list("earthy", "sweet")
 			thirst_value = 1
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING
 
 		fooddrink/lavender_essence
 			name = "lavender essence"
@@ -5062,4 +5062,4 @@ datum
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
 			requires_produce = 1
-			serving_temp = 353
+			serving_temp = HOT_SERVING

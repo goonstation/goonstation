@@ -59,7 +59,7 @@ datum
 		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
 		var/requires_produce = 0 // used to determine thirst/hunger bonuses
-		var/serving_temp = 278 // used for thirst bonus, is 5 degrees celcius, which is what most vending machines aim for.
+		var/serving_temp = COLD_SERVING // used for thirst bonus
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
 		///Is it banned from various fluid types, see _std/defines/reagents.dm
