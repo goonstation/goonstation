@@ -24,6 +24,15 @@
 			chicken_egg_props = new egg_props_path(src)
 		src.setup_special_effects()
 		src.UpdateIcon()
+		#ifdef SECRETS_ENABLED
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/c = src
+			if (C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,
+				|| C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,
+				|| C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,
+				|| C = || C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				tier = 3
+		#endif
+
 	update_icon()
 		if (egg_props_path)
 			src.icon_state = "egg-[chicken_egg_props.chicken_id]"
