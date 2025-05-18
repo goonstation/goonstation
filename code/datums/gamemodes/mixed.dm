@@ -228,7 +228,7 @@
 		var/list/chosen_salvagers = antagWeighter.choose(pool = possible_salvagers, role = ROLE_SALVAGER, amount = num_salvagers, recordChosen = 1)
 		for (var/datum/mind/salvager in chosen_salvagers)
 			traitors += salvager
-			salvager.special_role = ROLE_SPY_THIEF
+			salvager.special_role = ROLE_SALVAGER
 			possible_salvagers.Remove(salvager)
 
 	if(num_werewolves)
