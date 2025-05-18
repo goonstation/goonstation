@@ -3726,35 +3726,6 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 // end station areas //
 
-/// Nukeops listening post
-/area/listeningpost
-	name = "Listening Post"
-	icon_state = "brig"
-	teleport_blocked = 1
-	do_not_irradiate = TRUE
-	minimaps_to_render_on = MAP_SYNDICATE
-	station_map_colour = MAPC_SYNDICATE
-	occlude_foreground_parallax_layers = TRUE
-
-/area/listeningpost/syndicateassaultvessel
-		name ="Syndicate Assault Vessel"
-
-
-/area/listeningpost/power
-	name = "Listening Post Control Room"
-	icon_state = "engineering"
-
-/area/listeningpost/solars
-	name = "Listening Post Solar Array"
-	icon_state = "yellow"
-	requires_power = 0
-	luminosity = 1
-
-/area/listeningpost/syndicate_teleporter
-	name = "Syndicate Teleporter"
-	icon_state = "teleporter"
-	requires_power = 0
-
 // Salvager Spawn
 /area/salvager
 	name = "Salvager Vessel Magpie"
@@ -3911,11 +3882,11 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 			var/obj/O = A
 			if (istype(O))
 				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !O.has_access(access_security))
+					if(src.armory_auth && !(access_security in O.req_access))
 						O.req_access += access_security
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && O.has_access(access_security))
+					else if (!src.armory_auth && (access_security in O.req_access))
 						O.req_access = list(access_armory)
 						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
 						playsound(O, 'sound/machines/chime.ogg', 50)
