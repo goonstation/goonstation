@@ -37,9 +37,11 @@
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.addAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.addAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.addAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.addAbility(/datum/targetable/changeling/give_control)
+
+		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.ability_holder]")
 
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current
@@ -66,10 +68,12 @@
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/eyespider)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/legworm)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/critter/buttcrab)
-		src.ability_holder.removeAbility(/datum/targetable/changeling/hivesay)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/boot)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/give_control)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/changeling)
+
+		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[src.ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.ability_holder]")
 
 		if(istype(src.owner.current, /mob/living))
 			var/mob/living/L = src.owner.current

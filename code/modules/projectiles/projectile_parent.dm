@@ -1099,6 +1099,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	if(P.reflectcount >= max_reflects)
 		return
 
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
+
 	switch (mode)
 		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce
 			if ((P.shooter.x == reflector.x) || (P.shooter.y == reflector.y))

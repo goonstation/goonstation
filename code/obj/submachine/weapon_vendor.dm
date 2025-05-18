@@ -36,9 +36,9 @@
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
 #ifdef BONUS_POINTS
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 999, WEAPON_VENDOR_CATEGORY_LOADOUT = 999, WEAPON_VENDOR_CATEGORY_UTILITY = 999, WEAPON_VENDOR_CATEGORY_AMMO = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999, WEAPON_VENDOR_CATEGORY_ARMOR = 999)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_LOADOUT = 999, WEAPON_VENDOR_CATEGORY_SIDEARM = 999, WEAPON_VENDOR_CATEGORY_UTILITY = 999, WEAPON_VENDOR_CATEGORY_AMMO = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999, WEAPON_VENDOR_CATEGORY_ARMOR = 999)
 #else
-	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0, WEAPON_VENDOR_CATEGORY_ARMOR = 0)
 #endif
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
@@ -313,6 +313,7 @@
 
 	accepted_token(var/token)
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
@@ -320,17 +321,16 @@
 		..()
 
 /obj/submachine/weapon_vendor/podwars/neutral // Neutral for admin gimmicks, spawns non-team aligned gear usable by anyone
-	name = "Weapons Vendor"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon"
-	desc = "An automated quartermaster service for supplying your team with weapons and gear."
-	token_accepted = /obj/item/requisition_token/podwars
-	log_purchase = TRUE
+
 	New()
 		..()
 		materiel_stock += new/datum/materiel/loadout/pw_pistol
 		materiel_stock += new/datum/materiel/loadout/pw_smg
 		materiel_stock += new/datum/materiel/loadout/pw_shotgun
+
+		materiel_stock += new/datum/materiel/sidearm/knife
+		materiel_stock += new/datum/materiel/sidearm/machete
+		materiel_stock += new/datum/materiel/sidearm/axe
 
 		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
@@ -351,6 +351,10 @@
 		materiel_stock += new/datum/materiel/loadout/pw_NTpistol
 		materiel_stock += new/datum/materiel/loadout/pw_NTsmg
 		materiel_stock += new/datum/materiel/loadout/pw_NTshotgun
+
+		materiel_stock += new/datum/materiel/sidearm/knife/NT
+		materiel_stock += new/datum/materiel/sidearm/machete/NT
+		materiel_stock += new/datum/materiel/sidearm/axe/NT
 
 		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
@@ -374,6 +378,10 @@
 		materiel_stock += new/datum/materiel/loadout/pw_SYpistol
 		materiel_stock += new/datum/materiel/loadout/pw_SYsmg
 		materiel_stock += new/datum/materiel/loadout/pw_SYshotgun
+
+		materiel_stock += new/datum/materiel/sidearm/knife/SY
+		materiel_stock += new/datum/materiel/sidearm/machete/SY
+		materiel_stock += new/datum/materiel/sidearm/axe/SY
 
 		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
@@ -739,51 +747,51 @@
 /datum/materiel/loadout/pw_pistol
 	name = "Blaster Pistol"
 	path = /obj/item/storage/belt/podwars/pistol
-	description = "A small holster containing a high power blaster pistol and machete."
+	description = "A small holster containing a high power blaster pistol."
 
 /datum/materiel/loadout/pw_NTpistol
 	name = "Blaster Pistol"
 	path = /obj/item/storage/belt/podwars/NTpistol
-	description = "A small holster containing a high power blaster pistol and machete."
+	description = "A small holster containing a high power blaster pistol."
 
 /datum/materiel/loadout/pw_SYpistol
 	name = "Blaster Pistol"
 	path = /obj/item/storage/belt/podwars/SYpistol
-	description = "A small holster containing a high power blaster pistol and machete."
+	description = "A small holster containing a high power blaster pistol."
 
 /datum/materiel/loadout/pw_smg
 	name = "SMG"
 	path = /obj/item/storage/belt/podwars/smg
-	description = "A small holster containing a rapid fire SMG and machete."
+	description = "A small holster containing a rapid fire SMG."
 
 /datum/materiel/loadout/pw_NTsmg
 	name = "SMG"
 	path = /obj/item/storage/belt/podwars/NTsmg
-	description = "A small holster containing a rapid fire SMG and machete."
+	description = "A small holster containing a rapid fire SMG."
 
 /datum/materiel/loadout/pw_SYsmg
 	name = "SMG"
 	path = /obj/item/storage/belt/podwars/SYsmg
-	description = "A small holster containing a rapid fire SMG and machete."
+	description = "A small holster containing a rapid fire SMG."
 
 /datum/materiel/loadout/pw_shotgun
 	name = "Shotgun"
 	path = /obj/item/storage/belt/podwars/shotgun
-	description = "A small holster containing a shotgun and machete."
+	description = "A small holster containing a shotgun."
 
 /datum/materiel/loadout/pw_NTshotgun
 	name = "Shotgun"
 	path = /obj/item/storage/belt/podwars/NTshotgun
-	description = "A small holster containing a shotgun and machete."
+	description = "A small holster containing a shotgun."
 
 /datum/materiel/loadout/pw_SYshotgun
 	name = "Shotgun"
 	path = /obj/item/storage/belt/podwars/SYshotgun
-	description = "A small holster containing a shotgun and machete."
+	description = "A small holster containing a shotgun."
 
 // Pod wars specific utilities
 /datum/materiel/utility/pw_medical_pouch
-	name = "Medical Pouch"
+	name = "Medical Injector Pouch"
 	path = /obj/item/storage/pw_medical_pouch
 	description = "A small pouch containing four advanced medical autoinjectors."
 	cost = 2
@@ -851,6 +859,40 @@
 	name = "syndicate pod engineer suit"
 	path = /obj/item/clothing/suit/space/pod_wars/SY/eng
 	description = "Standard suit worn by Pod Engineers (Only difference between these suits is cosmetic)"
+
+// Pod wars sidearms (melee)
+/datum/materiel/sidearm/knife
+	name = "pilot survival knife"
+	path = /obj/item/survival_knife
+	description = "A low damage knife that speeds you up in combat."
+
+/datum/materiel/sidearm/knife/NT
+	path = /obj/item/survival_knife/NT
+
+/datum/materiel/sidearm/knife/SY
+	path = /obj/item/survival_knife/SY
+
+/datum/materiel/sidearm/machete
+	name = "pilot survival machete"
+	path = /obj/item/survival_machete
+	description = "A medium damage machete."
+
+/datum/materiel/sidearm/machete/NT
+	path = /obj/item/survival_machete/NT
+
+/datum/materiel/sidearm/machete/SY
+	path = /obj/item/survival_machete/SY
+
+/datum/materiel/sidearm/axe
+	name = "pilot survival axe"
+	path = /obj/item/survival_axe
+	description = "A high damage axe that can be dual wielded for increased damage. Slows you down when carried."
+
+/datum/materiel/sidearm/axe/NT
+	path = /obj/item/survival_axe/NT
+
+/datum/materiel/sidearm/axe/SY
+	path = /obj/item/survival_axe/SY
 
 // End of pod wars stuff
 
