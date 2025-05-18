@@ -25,8 +25,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
 		for(var/specialIngredient in variants)
 			if(ourCooker.check_item(specialIngredient, variant_quantity))
-				return variants[specialIngredient]
-		return output
+				return new variants[specialIngredient]
+		return new output
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
@@ -137,21 +137,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	variants = list(\
 	/obj/item/clothing/head/butt/synth = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth,
 	/obj/item/clothing/head/butt/cyberbutt = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber)
-
-/datum/cookingrecipe/oven/burger/synthbuttburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/clothing/head/butt/synth = 1)
-	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
-	category = "Burgers"
-
-/datum/cookingrecipe/oven/burger/cyberbuttburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/clothing/head/butt/cyberbutt = 1)
-	cookbonus = 15
-	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 
 /datum/cookingrecipe/oven/burger/heartburger
 	ingredients = list(\
