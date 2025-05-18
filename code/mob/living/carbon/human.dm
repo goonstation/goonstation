@@ -599,6 +599,7 @@
 	..()
 
 /mob/living/carbon/human/death(gibbed)
+	src.drop_juggle()
 	if (ticker?.mode)
 		ticker.mode?.on_human_death(src)
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
@@ -2633,7 +2634,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
-		src.RegisterSignal(src, COMSIG_MOB_DEATH, PROC_REF(drop_juggle)) // if something more important needs this signal PLEASE take it
 	src.juggling += thing
 	if(isnull(src.juggle_dummy))
 		src.juggle_dummy = new(null)
