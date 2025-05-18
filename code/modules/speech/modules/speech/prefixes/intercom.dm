@@ -1,6 +1,6 @@
 /datum/speech_module/prefix/postmodifier/intercom
 	id = SPEECH_PREFIX_INTERCOM
-	prefix_id = CHAT_PREFIX_INTERCOM
+	prefix_id = PREFIX_TEXT_INTERCOM
 
 /datum/speech_module/prefix/postmodifier/intercom/process(datum/say_message/message)
 	. = message
