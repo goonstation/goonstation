@@ -85,6 +85,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/burger/humanburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/burger/monkeyburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/burger/synthburger,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = /obj/item/reagent_containers/food/snacks/burger/baconburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat = /obj/item/reagent_containers/food/snacks/burger/mysteryburger)
 
 
@@ -177,12 +178,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
 
-/datum/cookingrecipe/oven/burger/baconburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	output = /obj/item/reagent_containers/food/snacks/burger/baconburger
-
 /datum/cookingrecipe/oven/burger/baconator
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
@@ -204,6 +199,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
 	cookbonus = 6 // still mostly raw, since we don't kill it
+	priority = PRIORITY_HIGHER
 	output = /obj/item/reagent_containers/food/snacks/burger/aburgination
 
 /datum/cookingrecipe/oven/burger/monster
@@ -1103,7 +1099,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
-/datum/cookingrecipe/oven/cook_meat //Very jank, will need future work.
+/datum/cookingrecipe/oven/cook_meat
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak
@@ -1487,6 +1483,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 3)
 	cookbonus = 14
+	priority = PRIORITY_HIGHER //conflicts with meatcake
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 	category = "Cakes"
 
