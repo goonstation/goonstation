@@ -820,7 +820,7 @@
 		else
 			src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.get_key()
+		newbody.key = src.key
 
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 

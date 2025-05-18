@@ -259,7 +259,7 @@
 					else if (ghost.client)
 						M.client = ghost.client
 					else if (ghost.get_key())
-						M.key = ghost.get_key()
+						M.key = ghost.key
 
 				else if (M.last_client) //if all fails, lets try this
 					for (var/client/C in clients)

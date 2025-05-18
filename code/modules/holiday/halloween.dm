@@ -116,7 +116,7 @@
 				if(M.mind)
 					M.mind.transfer_to(holder)
 				else
-					holder.key = M.get_key()
+					holder.key = M.key
 
 				holder.name = "Trapped Soul"
 				holder.real_name = holder.name
@@ -159,7 +159,7 @@
 			if(M.mind)
 				M.mind.transfer_to(new_body)
 			else
-				new_body.key = M.get_key()
+				new_body.key = M.key
 
 			transfer_targets.Remove(new_body)
 			blink(new_body)
@@ -308,7 +308,7 @@
 			if(M.mind)
 				M.mind.transfer_to(holder)
 			else
-				holder.key = M.get_key()
+				holder.key = M.key
 
 			holder.name = "Trapped Soul"
 			holder.real_name = holder.name

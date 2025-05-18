@@ -4612,7 +4612,7 @@ var/global/noir = 0
 		M.mind.damned = 0
 		M.mind.transfer_to(newM)
 	else
-		newM.key = M.get_key()
+		newM.key = M.key
 	M.mind = null
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 	qdel(M)
@@ -4632,7 +4632,7 @@ var/global/noir = 0
 
 	var/mob/new_player/M = new()
 
-	M.key = usr.client.get_key()
+	M.key = usr.client.key
 
 	usr.remove()
 

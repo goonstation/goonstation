@@ -267,7 +267,7 @@
 			else if (src.client)
 				src.client.mob = src.owner
 			else if (src.get_key()) //This can be null in situations where owner.get_key() is not!
-				src.owner.key = src.get_key()
+				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
 				var/mob/dead/observer/O = new/mob/dead/observer(src)

@@ -286,7 +286,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)
 						else //Oh welp, still need to move that key!
-							newbody.key = player.get_key()
+							newbody.key = player.player.get_true_key()
 						src.init_player(newbody, team)
 					else if (!dead_only && ishuman(player.current))
 						player.current.full_heal()

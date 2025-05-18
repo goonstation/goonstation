@@ -615,7 +615,7 @@
 		var/mob/new_player/newM = new()
 		newM.adminspawned = 1
 
-		newM.key = target.get_key()
+		newM.key = target.key
 		if (target.mind)
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)

@@ -63,7 +63,7 @@ datum/mind
 		..()
 		if (M)
 			src.current = M
-			src.player = make_player(M.get_key())
+			src.player = make_player(M.key)
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
@@ -170,9 +170,9 @@ datum/mind
 				target:delete_on_logout = 0
 
 			var/mob/temp = new/mob(src.current.loc) //We need to put whoever we're swapping with somewhere
-			temp.key = target.get_key()					//So now we put them there
+			temp.key = target.key					//So now we put them there
 			src.transfer_to(target)					//Then I go into their head
-			my_old_mob.key = temp.get_key()
+			my_old_mob.key = temp.key
 			qdel(temp)								//Not needed any more
 
 		if (isobserver(current))

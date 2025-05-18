@@ -1513,7 +1513,7 @@ TYPEINFO(/mob)
 
 	var/mob/new_player/M = new()
 
-	M.key = usr.client.get_key()
+	M.key = usr.client.key
 	return
 
 /mob/verb/show_preferences()
@@ -3095,7 +3095,7 @@ TYPEINFO(/mob)
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.get_key()
+		newbody.key = src.key
 	qdel(src)
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 

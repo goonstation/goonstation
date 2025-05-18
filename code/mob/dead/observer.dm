@@ -363,7 +363,7 @@ TYPEINFO(/mob/dead/observer)
 		if (src.mind)
 			src.mind.transfer_to(our_ghost)
 		else
-			our_ghost.key = src.get_key() //they're probably logged out, set key so they're in the ghost when they get back
+			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
 
 		var/turf/T = get_turf(src)
 		if (can_ghost_be_here(our_ghost, T))

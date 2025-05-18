@@ -40,7 +40,7 @@
 	else
 		if (!src.client) // NPC fallback, mostly.
 			character = new /mob/living/carbon/human
-			character.key = src.get_key()
+			character.key = src.key
 			if (src.mind)
 				src.mind.transfer_to(character)
 
@@ -53,7 +53,7 @@
 			return character
 
 		var/mob/new_player/respawned = new() // C&P from respawn_target(), which couldn't be adapted easily.
-		respawned.key = src.get_key()
+		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
@@ -236,7 +236,7 @@
 				src.client.mob = cyborg
 			else
 				//if they're logged out or whatever
-				cyborg.key = src.get_key()
+				cyborg.key = src.key
 	else
 		if(src.mind)
 			src.mind.transfer_to(cyborg)
@@ -246,7 +246,7 @@
 				src.client.mob = cyborg
 			else
 				//if they're logged out or whatever
-				cyborg.key = src.get_key()
+				cyborg.key = src.key
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
 		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
@@ -694,7 +694,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.get_key()
+		newbody.key = src.key
 
 	// copy the respawn timer to the new body.
 	// since afterlife bodies get trashed when you die it isnt too big of a deal
@@ -731,7 +731,7 @@ var/respawn_arena_enabled = 0
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
-		newbody.key = src.get_key()
+		newbody.key = src.key
 	equip_battler(newbody)
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
