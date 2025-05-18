@@ -17,9 +17,8 @@ package-lock.json
 /../browserassets/src/tgui/**/*
 !/../browserassets/src/tgui/*.html
 /coverage
-# |GOONSTATION-ADD|
-!/../browserassets/src/tgui/*.js
-!/../browserassets/src/tgui/*.css
 
-# Editor Files
-*.idea/*
+# |GOONSTATION-CHANGE| No need to ignore as we don't put anything here
+## Previously ignored locations that are kept to avoid confusing git
+## while transitioning to a new project structure.
+# /packages/tgui/public/**

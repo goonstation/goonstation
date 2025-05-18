@@ -43,9 +43,9 @@ function task-install {
 }
 
 ## Runs webpack
-function task-webpack {
+function task-rspack {
   $env:BROWSERSLIST_IGNORE_OLD_DATA = $true
-  yarn run webpack-cli @Args
+  yarn run rspack @Args
 }
 
 ## Runs a development server
@@ -55,7 +55,7 @@ function task-dev-server {
 
 ## Runs benchmarking tests
 function task-bench {
-  yarn run webpack-cli --env TGUI_BENCH=1
+  yarn run rspack-cli --env TGUI_BENCH=1
   yarn node "packages/tgui-bench/index.js"
   Stop-Process -processname "iexplore"
   Stop-Process -processname "ielowutil"
@@ -65,8 +65,8 @@ function task-bench {
 function task-lint {
   yarn run tsc
   Write-Output "tgui: type check passed"
-  yarn run tgui:eslint @Args
-  Write-Output "tgui: eslint check passed"
+  yarn run tgui:lint @Args
+  Write-Output "tgui: lint check passed"
   yarn run tgui:prettier @Args
   Write-Output "tgui: prettier check passed"
 }
@@ -182,7 +182,7 @@ if ($Args.Length -gt 0) {
   ## Analyze the bundle
   if ($Args[0] -eq "--analyze") {
     task-install
-    task-webpack --mode=production --analyze
+    task-rspack --mode=production --analyze
     exit 0
   }
 
@@ -203,7 +203,7 @@ if ($Args.Length -gt 0) {
     task-install
     task-test-ci
     task-lint @Rest
-    task-webpack --mode=production
+    task-rspack --mode=production
     task-validate-build
     exit 0
   }
@@ -213,10 +213,10 @@ if ($Args.Length -gt 0) {
 if ($Args.Length -eq 0) {
   task-install
   task-lint
-  task-webpack --mode=production
+  task-rspack --mode=production
   exit 0
 }
 
 ## Run webpack with custom flags
 task-install
-task-webpack @Args
+task-rspack @Args

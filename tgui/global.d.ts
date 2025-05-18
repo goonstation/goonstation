@@ -46,11 +46,13 @@ type ByondType = {
    */
   IS_BYOND: boolean;
 
+  // |GOONSTATION-ADD|
   /**
    * The major version of byond.
    */
   BYOND_MAJOR: string;
 
+  // |GOONSTATION-ADD|
   /**
    * The minor (build) version of byond.
    */
@@ -105,14 +107,14 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null): Promise<object>;
+  winget(id: string | null): Promise<Record<string, any>>;
 
   /**
    * Retrieves all properties of the BYOND skin element.
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null, propName: '*'): Promise<object>;
+  winget(id: string | null, propName: '*'): Promise<Record<string, any>>;
 
   /**
    * Retrieves an exactly one property of the BYOND skin element,
@@ -128,7 +130,7 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing listed properties.
    */
-  winget(id: string | null, propNames: string[]): Promise<object>;
+  winget(id: string | null, propNames: string[]): Promise<Record<string, any>>;
 
   /**
    * Assigns properties to BYOND skin elements in bulk.
@@ -200,6 +202,10 @@ interface Window {
   Byond: ByondType;
   __store__: Store<unknown, AnyAction>;
   __augmentStack__: (store: Store) => StackAugmentor;
+
+  // IE IndexedDB stuff.
+  msIndexedDB: IDBFactory;
+  msIDBTransaction: IDBTransaction;
 
   // 516 byondstorage API.
   hubStorage: Storage;

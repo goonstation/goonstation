@@ -13,3 +13,9 @@
 **/*.json
 **/*.yml
 **/*.md
+
+# |GOONSTATION-CHANGE| We keep our assets in browserassets
+# # Avoid running on any bundles.
+# /public/**/*
+# # Running it on tgui.html is fine, however.
+# !/public/tgui.html
