@@ -242,19 +242,15 @@
 
 		if (master.lock)
 			lock.name = master.lock.name
-			lock.overlays.len = 0
-			set_code.overlays.len = 0
 			if (master && master.locked)
 				lock.icon_state = "lock-locked"
 			else
 				lock.icon_state = "lock-unlocked"
+			set_code.icon_state = "set-code"
 		else
 			lock.name = "Lock"
-			lock.icon_state = "lock-locked"
-			if (!lock.overlays.len)
-				lock.overlays += missing
-			if (!set_code.overlays.len)
-				set_code.overlays += missing
+			lock.icon_state = "lock-locked-nopower"
+			set_code.icon_state = "set-code-nopower"
 		if (master.lights)
 			lights.name = master.lights.name
 			lights.overlays.len = 0
