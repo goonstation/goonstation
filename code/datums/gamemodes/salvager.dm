@@ -27,7 +27,7 @@
 	. = ..()
 	var/list/possible_salvagers = list()
 	var/list/possible_traitors = list()
-	var/list/possible_spiefs = list()
+	var/list/possible_spy_thieves = list()
 
 	var/num_players = src.roundstart_player_count()
 
@@ -39,11 +39,11 @@
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	#ifdef RP_MODE
 	#else
-	if(prob(2)) // Add more if you have any in mind
+	if(distraction_num < 2) // Add more if you have any in mind
 		possible_traitors = get_possible_enemies(ROLE_TRAITOR, distraction_num)
 		distraction_type = "Traitors"
 	else
-		possible_spiefs = get_possible_enemies(ROLE_SPY_THIEF, distraction_num)
+		possible_spy_thieves = get_possible_enemies(ROLE_SPY_THIEF, distraction_num)
 		distraction_type = "Spiefs"
 	#endif
 	if (!length(possible_salvagers))
@@ -73,7 +73,7 @@
 
 	#ifdef RP_MODE
 	#else
-	if (distraction_type = "Spiefs")
+	if (distraction_num >= 2)
 		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = distraction_num, recordChosen = 1)
 		for (var/datum/mind/spy in chosen_spy_thieves)
 			distractions += spy
