@@ -86,7 +86,7 @@
 	affected_species = list("Human", "Monkey")
 	temperature_cure = INFINITY
 
-/datum/ailment/parasite/cluwnespiders/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
+/datum/ailment/parasite/cluwnespider/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	switch(D.stage)
