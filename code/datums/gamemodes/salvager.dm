@@ -39,10 +39,8 @@
 	#ifndef RP_MODE
 	if(distraction_num < 2) // Add more if you have any in mind
 		possible_traitors = get_possible_enemies(ROLE_TRAITOR, distraction_num)
-		distraction_type = "Traitors"
 	else
 		possible_spy_thieves = get_possible_enemies(ROLE_SPY_THIEF, distraction_num)
-		distraction_type = "Spiefs"
 	#endif
 	if (!length(possible_salvagers))
 		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
