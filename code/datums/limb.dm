@@ -1726,10 +1726,10 @@
 				var/obj/item/O = target
 				var/can_pickup = 1
 
-				for (var/obj/item/D in src.weight_exemptions)
-					if (O == D)
+				for (var/type in src.weight_exemptions)
+  					if (istype(O, type))
 						exempt = TRUE
-						break
+						return
 
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
