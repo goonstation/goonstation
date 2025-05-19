@@ -572,14 +572,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
 				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
-				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
 			if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
 				var/mob/living/critter/robotic/scuttlebot/mail/P = target
 				if (connected_pigeon != P)
 					boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
-					return 1
 			else
 				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
 					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
