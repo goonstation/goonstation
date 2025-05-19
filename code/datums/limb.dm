@@ -1808,6 +1808,9 @@
 					return
 		..()
 
+/datum/limb/small_critter/mail
+	weight_exemptions = list(/obj/item/random_mail)
+
 /// same as the parent, but can pick up some heavier shit
 /datum/limb/small_critter/med
 	max_wclass = W_CLASS_SMALL

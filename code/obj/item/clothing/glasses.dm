@@ -576,8 +576,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
 			if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
-				var/mob/living/critter/robotic/scuttlebot/mail/S = target
-				if (connected_pigeon != S)
+				var/mob/living/critter/robotic/scuttlebot/mail/P = target
+				if (connected_pigeon != P)
 					boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
 					return 1
 			else
