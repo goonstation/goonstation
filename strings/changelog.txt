@@ -1,5 +1,10 @@
 
 (t)mon may 19 25
+(u)glowbold
+(p)22847
+(e)🆕🎨📦💡|C-Feature, C-Sprites, A-Game-Objects, A-Station-Systems
+(+)Stationary cameras that are unsecured no longer broadcast video/audio. Anchor them down to restart the broadcast.
+(+)Mobile cameras can be broken with wirecutters and fixed with cables, like security cameras.
 (u)Mr. Moriarty
 (p)23468
 (e)🔎⛔🔨|C-Code-Quality, C-Removal, A-Player-Actions
