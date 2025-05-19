@@ -42,10 +42,10 @@ function task-install {
   yarn install
 }
 
-## Runs webpack
-function task-webpack {
+## Runs rspack
+function task-rspack {
   $env:BROWSERSLIST_IGNORE_OLD_DATA = $true
-  yarn run webpack-cli @Args
+  yarn run rspack @Args
 }
 
 ## Runs a development server
@@ -55,7 +55,7 @@ function task-dev-server {
 
 ## Runs benchmarking tests
 function task-bench {
-  yarn run webpack-cli --env TGUI_BENCH=1
+  yarn run rspack --env TGUI_BENCH=1
   yarn node "packages/tgui-bench/index.js"
   Stop-Process -processname "iexplore"
   Stop-Process -processname "ielowutil"
@@ -65,8 +65,8 @@ function task-bench {
 function task-lint {
   yarn run tsc
   Write-Output "tgui: type check passed"
-  yarn run tgui:eslint @Args
-  Write-Output "tgui: eslint check passed"
+  yarn run tgui:lint @Args
+  Write-Output "tgui: lint check passed"
   yarn run tgui:prettier @Args
   Write-Output "tgui: prettier check passed"
 }
@@ -93,7 +93,8 @@ function task-clean {
   ## Yarn artifacts
   Remove-Quiet -Recurse -Force ".yarn\cache"
   Remove-Quiet -Recurse -Force ".yarn\unplugged"
-  Remove-Quiet -Recurse -Force ".yarn\webpack"
+  Remove-Quiet -Recurse -Force ".yarn\webpack" # Kept to clean up old webpack if still present
+  Remove-Quiet -Recurse -Force ".yarn\rspack"
   Remove-Quiet -Force ".yarn\build-state.yml"
   Remove-Quiet -Force ".yarn\install-state.gz"
   Remove-Quiet -Force ".yarn\install-target"
@@ -112,10 +113,11 @@ function task-clean {
 
 ## Validates current build against the build stored in git
 function task-validate-build {
-  $diff = git diff --text ../browserassets/src/tgui/*
+  $diff = git diff --ignore-all-space ../browserassets/src/tgui/*
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."
+    Write-Output "Diff: $diff"
     exit 1
   }
   Write-Output "tgui: build is ok"
@@ -182,7 +184,7 @@ if ($Args.Length -gt 0) {
   ## Analyze the bundle
   if ($Args[0] -eq "--analyze") {
     task-install
-    task-webpack --mode=production --analyze
+    task-rspack --mode=production --analyze
     exit 0
   }
 
@@ -203,20 +205,20 @@ if ($Args.Length -gt 0) {
     task-install
     task-test-ci
     task-lint @Rest
-    task-webpack --mode=production
+    task-rspack --mode=production
     task-validate-build
     exit 0
   }
 }
 
-## Make a production webpack build
+## Make a production rspack build
 if ($Args.Length -eq 0) {
   task-install
   task-lint
-  task-webpack --mode=production
+  task-rspack --mode=production
   exit 0
 }
 
-## Run webpack with custom flags
+## Run rspack with custom flags
 task-install
-task-webpack @Args
+task-rspack @Args

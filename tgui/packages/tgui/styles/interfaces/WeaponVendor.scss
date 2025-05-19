@@ -1,24 +1,24 @@
 @use '../colors';
 @use '../functions' as *;
-@use '../components/Button';
 
 $categories: (
-  'sidearm': colors.$teal,
-  'loadout': colors.$yellow,
-  'utility': colors.$blue,
-  'ammo': colors.$orange,
-  'assistant': colors.$grey,
-  'fishing': colors.$blue,
-  'armor': colors.$grey,
+  'sidearm': var(--color-teal),
+  'loadout': var(--color-yellow),
+  'utility': var(--color-blue),
+  'ammo': var(--color-orange),
+  'assistant': var(--color-grey),
+  'fishing': var(--color-blue),
+  'armor': var(--color-grey),
 );
 
-.WeaponVendor {
-  @each $category, $color in $categories {
-    .Button__#{$category} {
-      @include Button.button-color($color);
-    }
-  }
-}
+// [516 TODO] Uncomment and work out
+// .WeaponVendor {
+//   @each $category, $color in $categories {
+//     .Button__#{$category} {
+//       @include Button.button-color($color);
+//     }
+//   }
+// }
 
 @each $category, $color in $categories {
   .WeaponVendor__Credits {
@@ -26,16 +26,17 @@ $categories: (
       color: $color;
     }
   }
-  .WeaponVendor__Category--#{$category} {
-    $luminance: luminance($color);
-    $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
-    background-color: $color;
-    color: $text-color;
-  }
+  // [516 TODO] Uncomment and work out
+  // .WeaponVendor__Category--#{$category} {
+  //   $luminance: luminance($color);
+  //   $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
+  //   background-color: $color;
+  //   color: $text-color;
+  // }
 }
 
 .WeaponVendor__Row {
   &:not(:last-child) {
-    border-bottom: 2px solid colors.bg(colors.$primary);
+    border-bottom: 2px solid colors.bg(--color-primary);
   }
 }

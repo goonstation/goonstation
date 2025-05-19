@@ -20,7 +20,7 @@ import './styles/theme-modes/nanotrasen-light.scss';
 import './styles/theme-modes/ntos-light.scss';
 
 import { perf } from 'common/perf';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { setGlobalStore } from './backend';
 import { setupGlobalEvents } from './events';

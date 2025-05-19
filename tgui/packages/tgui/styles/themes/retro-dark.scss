@@ -3,67 +3,114 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
 $darkorange: #301f0a;
 $lightorange: #fda751;
 
-@use '../colors' with (
-  $primary: $lightorange,
-  $label: #ff0000,
-
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base' with (
-  $color-fg: color.scale($lightorange, $whiteness: +30%),
-  $color-bg: $darkorange
-);
-
-.theme-retro-dark {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-retro:root {
+  // Base
+  --color-base: #301f0a;
+  --color-primary: color.scale($lightorange, $whiteness: +30%);
+  --color-label: hsl(from var(--color-primary) h s 65);
+  --secondary-saturation: 10;
+  --secondary-lightness-adjustment: -56;
+  --base-gradient-spread: 0;
+  --border-radius-unit: 0;
 
   // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': color.scale($lightorange, $whiteness: +30%),
-      'color-disabled': #5e5e5e,
-      'color-selected': #226d0f,
-      'color-caution': #be6209,
-      'color-danger': #9a9d00,
-      'color-transparent-text': $lightorange
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(68, 46, 26, 0.5))
-  );
-  @include meta.load-css(
-    '../components/Knob.scss',
-    $with: ('ring-color': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/Input.scss',
-    $with: ('border-color': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/BlockQuote.scss',
-    $with: ('color-default': $lightorange)
-  );
-  @include meta.load-css(
-    '../components/NumberInput.scss',
-    $with: ('border-color': color.scale($lightorange, $lightness: +10%))
-  );
-  @include meta.load-css('../components/Section.scss');
+  --button-color: var(--color-black);
+  --button-background-default: color.scale($lightorange, $whiteness: +30%);
+  --button-background-selected: #226d0f;
+  --button-background-caution: hsl(30, 85%, 40%);
+  --button-background-danger: hsl(60, 100%, 30%);
+  --progress-bar-background: rgba(68, 46, 26, 0.5);
+  --input-background: transparent;
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($darkorange, $whiteness: +10%))
-  );
+  .Layout__content {
+    background-image: none;
+  }
+
+  .Button {
+    font-family: var(--font-family-mono);
+    border: var(--border-thickness-small) outset var(--color-base);
+    outline: var(--border-thickness-tiny) solid hsl(60, 6%, 8%);
+
+    &-disabled {
+      color: #5e5e5e;
+      font-family: var(--font-family-mono);
+
+      &:hover {
+        color: hsl(0, 0%, 100%);
+      }
+    }
+
+    &--selected {
+      color: var(--color-white);
+      border-style: inset;
+    }
+  }
 }
+
+// @use 'sass:color';
+// @use 'sass:meta';
+
+// $darkorange: #301f0a;
+// $lightorange: #fda751;
+
+// @use '../colors' with (
+//   $primary: $lightorange,
+//   $label: #ff0000,
+
+//   $fg-map-keys: (),
+//   $bg-map-keys: ()
+// );
+// @use '../base' with (
+//   $color-fg: color.scale($lightorange, $whiteness: +30%),
+//   $color-bg: $darkorange
+// );
+
+// .theme-retro-dark {
+//   // Atomic classes
+//   @include meta.load-css('../atomic/color.scss');
+
+//   // Components
+//   @include meta.load-css(
+//     '../components/Button.scss',
+//     $with: (
+//       'color-default': color.scale($lightorange, $whiteness: +30%),
+//       'color-disabled': #5e5e5e,
+//       'color-selected': #226d0f,
+//       'color-caution': #be6209,
+//       'color-danger': #9a9d00,
+//       'color-transparent-text': $lightorange
+//     )
+//   );
+//   @include meta.load-css(
+//     '../components/ProgressBar.scss',
+//     $with: ('background-color': rgba(68, 46, 26, 0.5))
+//   );
+//   @include meta.load-css(
+//     '../components/Knob.scss',
+//     $with: ('ring-color': $lightorange)
+//   );
+//   @include meta.load-css(
+//     '../components/Input.scss',
+//     $with: ('border-color': $lightorange)
+//   );
+//   @include meta.load-css(
+//     '../components/BlockQuote.scss',
+//     $with: ('color-default': $lightorange)
+//   );
+//   @include meta.load-css(
+//     '../components/NumberInput.scss',
+//     $with: ('border-color': color.scale($lightorange, $lightness: +10%))
+//   );
+//   @include meta.load-css('../components/Section.scss');
+
+//   // Layouts
+//   @include meta.load-css('../layouts/Layout.scss');
+//   @include meta.load-css('../layouts/Window.scss');
+//   @include meta.load-css(
+//     '../layouts/TitleBar.scss',
+//     $with: ('background-color': color.scale($darkorange, $whiteness: +10%))
+//   );
+// }

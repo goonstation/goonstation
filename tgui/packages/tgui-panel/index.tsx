@@ -15,7 +15,7 @@ import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';

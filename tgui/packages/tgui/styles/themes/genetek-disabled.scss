@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+// @use 'sass:color';
+// @use 'sass:meta';
 
-@use 'partial/genetek' with (
-  $genetek: #36645d
-);
+// @use 'partial/genetek' with (
+//   $genetek: #36645d
+// );
 
-.theme-genetek-disabled {
-  @include genetek.genetek-theme;
-  .Button {
-    // gray out buttons even when technically not disabled
-    background-color: #999999 !important;
-  }
-}
+// .theme-genetek-disabled {
+//   @include genetek.genetek-theme;
+//   .Button {
+//     // gray out buttons even when technically not disabled
+//     background-color: #999999 !important;
+//   }
+// }

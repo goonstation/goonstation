@@ -4,46 +4,43 @@
  * Modified 12/3/2022 from ntos to flock
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+// $flock: #14aa94;
 
-$flock: #14aa94;
+// @use '../colors' with (
+//   $fg-map-keys: (),
+//   $bg-map-keys: ()
+// );
+// @use '../base' with (
+//   $color-bg: color.scale($flock, $lightness: -45%)
+// );
 
-@use '../colors' with (
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base' with (
-  $color-bg: color.scale($flock, $lightness: -45%)
-);
+// .theme-flock {
+//   // Components
+//   @include meta.load-css(
+//     '../components/Button.scss',
+//     $with: (
+//       'color-default': $flock,
+//       'color-transparent-text': rgba(227, 240, 255, 0.75)
+//     )
+//   );
+//   @include meta.load-css(
+//     '../components/ProgressBar.scss',
+//     $with: (
+//       'color-default-fill': $flock,
+//       'background-color': rgba(0, 0, 0, 0.5)
+//     )
+//   );
+//   @include meta.load-css('../components/Section.scss');
 
-.theme-flock {
-  // Components
-  @include meta.load-css(
-    '../components/Button.scss',
-    $with: (
-      'color-default': $flock,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: (
-      'color-default-fill': $flock,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('../components/Section.scss');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($flock, $lightness: -25%))
-  );
-  color: 26FFE7;
-  .Layout__content {
-    background-image: none;
-  }
-}
+//   // Layouts
+//   @include meta.load-css('../layouts/Layout.scss');
+//   @include meta.load-css('../layouts/Window.scss');
+//   @include meta.load-css(
+//     '../layouts/TitleBar.scss',
+//     $with: ('background-color': color.scale($flock, $lightness: -25%))
+//   );
+//   // color: #26FFE7;
+//   .Layout__content {
+//     background-image: none;
+//   }
+// }
