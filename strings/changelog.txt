@@ -1,4 +1,9 @@
 
+(t)mon may 19 25
+(u)LorrMaster
+(p)23485
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Blueprints printed from photocopiers now work properly
 (t)sun may 18 25
 (u)CalliopeSoups
 (p)23475
