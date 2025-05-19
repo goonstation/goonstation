@@ -113,7 +113,7 @@ function task-clean {
 
 ## Validates current build against the build stored in git
 function task-validate-build {
-  $diff = git diff --text ../browserassets/src/tgui/*
+  $diff = git diff --ignore-all-space --text ../browserassets/src/tgui/*
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."
