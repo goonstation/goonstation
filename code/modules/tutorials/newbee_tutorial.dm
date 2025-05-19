@@ -56,7 +56,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/items)
 	src.AddStep(/datum/tutorialStep/newbee/unpowered_doors)
 	src.AddStep(/datum/tutorialStep/newbee/hand_swap)
-	src.AddStep(/datum/tutorialStep/newbee/storage_inhand)
+	src.AddStep(/datum/tutorialStep/newbee/storage_inhands)
 	src.AddStep(/datum/tutorialStep/newbee/storage_clickdrag)
 	src.AddStep(/datum/tutorialStep/newbee/examining)
 	src.AddStep(/datum/tutorialStep/newbee/deconstructing_girder)
