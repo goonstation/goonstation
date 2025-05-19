@@ -83,7 +83,7 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
-					if (!P.ready)
+					if (!P.ready_play)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
 				did_reminder = TRUE
@@ -201,7 +201,7 @@ var/global/game_force_started = FALSE
 		if (!istype(C.mob,/mob/new_player))
 			continue
 		var/mob/new_player/P = C.mob
-		if (P.ready)
+		if (P.ready_play)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -272,13 +272,7 @@ var/global/game_force_started = FALSE
 
 		for(var/mob/new_player/lobby_player in mobs)
 			if(lobby_player.client)
-				if(lobby_player.client.antag_tokens > 0)
-					winset(lobby_player, "joinmenu.observe", "pos=18,136")
-					winset(lobby_player, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
-				winset(lobby_player, "joinmenu", "size=240x256")
-				winset(lobby_player, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
-				winset(lobby_player, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
-				winset(lobby_player, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true")
+				lobby_player.update_joinmenu()
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -326,7 +320,7 @@ var/global/game_force_started = FALSE
 	for (var/client/C in global.clients)
 		var/mob/new_player/mob = C.mob
 		if (istype(mob))
-			if (mob.ready)
+			if (mob.ready_play)
 				readied_count++
 			else
 				unreadied_count++
@@ -362,7 +356,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready)
+			if (player.ready_play)
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()

@@ -7,12 +7,18 @@
 	set name = "Play Tutorial"
 	set desc = "Launch the in-game tutorial!"
 	set category = "Commands"
+	set hidden = TRUE
 
 	if (global.current_state < GAME_STATE_PLAYING)
-		boutput(usr, "You can only begin the tutorial after the game has started!")
-
-	src.client?.tutorial = new(src)
-	src.client?.tutorial.Start()
+		boutput(usr, SPAN_ALERT("The tutorial will launch when the game starts."))
+		src.ready_tutorial = TRUE
+		src.update_joinmenu()
+	else if (global.current_state == GAME_STATE_PLAYING)
+		boutput(usr, SPAN_ALERT("Launching the tutorial, please stand by."))
+		src.client?.tutorial = new(src)
+		src.client?.tutorial.Start()
+	else
+		boutput(usr, SPAN_ALERT("It's too late to start the tutorial! Please try next round."))
 
 /datum/tutorial_base/regional/newbee
 	name = "Newbee tutorial"
@@ -230,6 +236,12 @@
 		sleep(5 SECONDS)
 		tutorial.Advance()
 
+// Tutorial UI Buttons
+
+/datum/abilityHolder/newbee
+	usesPoints = FALSE
+	tabName = "Tutorial"
+
 /datum/targetable/newbee_tutorial_exit
 	name = "Exit Tutorial"
 	desc = "Exit the tutorial and go to the main menu."
@@ -241,6 +253,15 @@
 	cast(atom/target)
 		. = ..()
 		src.holder.owner.client?.tutorial.Finish()
+
+/datum/targetable/newbee_tutorial_previous
+	cast(atom/target)
+		. = ..()
+
+
+/datum/targetable/newbee_tutorial_next
+	cast(atom/target)
+		. = ..()
 
 /// Newbee Tutorial mob; no headset or PDA, does not spawn via jobs
 /mob/living/carbon/human/tutorial
@@ -272,11 +293,10 @@
 			var/mob/living/carbon/human/tutorial/tutorial_owner = src.lastattacker.deref()
 			tutorial_owner.client.tutorial.Finish()
 
-/mob/living/carbon/human/tutorial/verb/emergency_tutorial_stop()
-	set name = "EMERGENCY TUTORIAL STOP"
+/mob/living/carbon/human/tutorial/verb/stop_newbee_tutorial()
+	set name = "Stop Tutorial"
 	if (!src.client.tutorial)
 		boutput(src, SPAN_ALERT("You're not in a tutorial. It's real. IT'S ALL REAL."))
 		return
 	src.client.tutorial.Finish()
 	src.client.tutorial = null
-
