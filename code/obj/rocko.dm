@@ -165,10 +165,12 @@
 		if(prob(90))
 			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
 			return
+
 		// Give rocko a random material
 		var/new_material = pick(childrentypesof(/datum/material/metal))
 		var/datum/material/dummy = new new_material
 		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
+
 		// Use ore sprites if available
 		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
 		if(!rock_list.Find(src.material.getID()))
@@ -182,8 +184,7 @@
 			if("plutonium")
 				sprite_prefix = "scrap"
 		src.icon_state = "[sprite_prefix][sprite_value]_$$[src.material.getID()]"
-		var/scale = 1
-		// var/scale = 1.45 - (sprite_value * 0.15) // Scale from 1 to 1.3, depending on sprite size
+		var/scale = 1 // Scale depending on chosen ore size
 		switch(sprite_value)
 			if(1) scale = 1.3
 			if(2) scale = 1.2

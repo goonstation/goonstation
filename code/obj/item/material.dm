@@ -32,7 +32,7 @@
 			initial_material_name = src.material.getName()
 		_update_stack_appearance()
 
-	proc/setup_material() // Overwrite for ore specific setup
+	proc/setup_material() //! Overwrite for ore specific setup
 		return
 
 	_update_stack_appearance()
@@ -47,14 +47,14 @@
 	update_icon()
 		src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
 
-	proc/update_stack_name() // How the material should be named at different stack sizes
+	proc/update_stack_name() //! How the material should be named at different stack sizes
 		UpdateName(src) // get the name in order so it has whatever it needs
 		if(src.amount == 1)
 			name = "[src.name]"
 		else
 			name = "[amount] [src.name]s"
 
-	proc/get_stack_value() // Determines at what stack sizes the icon_state changes
+	proc/get_stack_value() //! Determines at what stack sizes the icon_state changes
 		// example: src.icon_state = "ore[x]_$$gold"
 		switch(src.amount)
 			if(1)
@@ -547,7 +547,7 @@
 	icon = 'icons/obj/items/materials/miracle.dmi'
 	material_name = "Miracle"
 	default_material = "miracle"
-	var/static/shape = pick("ore","sphere","torus") // Shift's randomized miracle matter shape
+	var/static/shape = pick("ore","sphere","torus") // This round's randomized miracle matter shape
 
 	update_icon()
 		src.icon_state = "[src.shape][src.icon_stack_value]_$$[src.material.getName()]"
