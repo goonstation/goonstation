@@ -309,9 +309,10 @@ TYPEINFO(/obj/submachine/cargopad)
 
 	proc/receive_cargo()
 		playsound(src.loc, 'sound/machines/click.ogg', 70, 1, pitch = 0.5)
-		src.lights.icon_state = "cpad-received"
-		src.UpdateOverlays(src.lights, "lights")
-		spawn(3 SECONDS) receive_cargo_end()
+		if(src.lights.icon_state != "cpad-received")
+			src.lights.icon_state = "cpad-received"
+			src.UpdateOverlays(src.lights, "lights")
+			spawn(3 SECONDS) receive_cargo_end()
 		if (!src.mailgroup)
 			return
 		var/datum/signal/pdaSignal = get_free_signal()
