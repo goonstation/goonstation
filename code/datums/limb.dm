@@ -25,6 +25,8 @@
 	var/can_beat_up_robots = FALSE
 	/// Bypass to allow special attacks to work on help/grab intent, kind of dumb but necessary
 	var/use_specials_on_all_intents = FALSE
+	/// Exemptions on what it can hold ignoring weight
+	var/list/weight_exemptions = list()
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -1728,7 +1730,7 @@
 					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
 						can_pickup = 0
 
-				if (O.w_class > max_wclass || !can_pickup)
+				if (O.w_class > max_wclass || !can_pickup && O != src.weight_exemptions)
 					user.visible_message(SPAN_COMBAT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
 					return
 			else
@@ -1753,6 +1755,8 @@
 					playsound(user.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 25, 1, -1)
 					return
 		..()
+
+	mail
 
 	//yeah they're not ACTUALLY biting them but let's just assume that they are because i don't want a mouse or a dog to KO someone with a brutal right hook
 	// changed to scratching, small mouths will take care of biting

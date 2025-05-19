@@ -539,10 +539,22 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	icon_state = "vr_scuttlebot"
 	item_state = "vr_scuttlebot"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
+	var/mob/living/critter/robotic/scuttlebot/mail/connected_pigeon = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
 		..()
 		var/mob/living/carbon/human/H = user
+		if(connected_pigeon != null)
+			if(connected_pigeon.mind)
+				boutput(user, SPAN_ALERT("The P1geon is already active somehow!"))
+			else if(!connected_pigeon.loc)
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
+			else
+				H.network_device = src.connected_pigeon
+				connected_pigeon.controller = H
+				user.mind.transfer_to(connected_pigeon)
+		else
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
@@ -563,6 +575,11 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
+			if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
+				var/mob/living/critter/robotic/scuttlebot/mail/S = target
+				if (connected_pigeon != S)
+					boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
+					return 1
 			else
 				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
 					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
@@ -572,7 +589,10 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			if(connected_pigeon)
+				boutput(user, "You stuff the goggles back into the P1G30N. It powers down with a low whirr.")
+			else
+				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
@@ -587,43 +607,11 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
 
-/obj/item/clothing/glasses/scuttlebot_vr/mail
-	name = "P1G30N remote controller"
-	desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
-	icon_state = "vr_dungeon_exit"
-	item_state = "vr_dungeon_exit"
-	var/mob/living/critter/robotic/scuttlebot/mail/connected_pigeon = null
-
-	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
-		..()
-		var/mob/living/carbon/human/H = user
-		if(connected_pigeon != null)
-			if(connected_pigeon.mind)
-				boutput(user, SPAN_ALERT("The P1geon is already active somehow!"))
-			else if(!connected_pigeon.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
-			else
-				H.network_device = src.connected_pigeon
-				connected_pigeon.controller = H
-				user.mind.transfer_to(connected_pigeon)
-		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (istype(target, /mob/living/critter/robotic/scuttlebot/mail))
-			var/mob/living/critter/robotic/scuttlebot/mail/S = target
-			if (connected_pigeon != S)
-				boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
-				return 1
-			if (S.linked_hat != null)
-				S.linked_hat.set_loc(get_turf(S))
-			boutput(user, "You stuff the goggles back into the P1G30N. It powers down with a low whirr.")
-			S.drop_item()
-			new /obj/item/clothing/suit/pigeon(S.loc)
-			qdel(S)
-			qdel(src)
-		else
-			..()
+	mail
+		name = "P1G30N remote controller"
+		desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
+		icon_state = "vr_dungeon_exit"
+		item_state = "vr_dungeon_exit"
 
 /obj/item/clothing/glasses/vr_fake //Only exist IN THE MATRIX.  Used to log out.
 	name = "\improper VR goggles"
