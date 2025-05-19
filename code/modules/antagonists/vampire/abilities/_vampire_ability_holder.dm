@@ -191,6 +191,7 @@
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
 			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
 				src.addAbility(/datum/targetable/vampire/enthrall)
+			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
@@ -237,6 +238,7 @@
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
+		src.removeAbility(/datum/targetable/vampire/speak_thrall)
 		src.removeAbility(/datum/targetable/vampire/call_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
@@ -320,8 +322,8 @@
 
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
-		if (src.unlock_message && src.holder && src.holder.owner && (ismob(src.holder.owner) || ismobcritter(src.holder.owner)))
-			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>")) // vamp teg is not a mob but uses this
+		if (src.unlock_message && src.holder && src.holder.owner)
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)

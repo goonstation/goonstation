@@ -47,6 +47,7 @@ export const acw: AlertContentWindow = {
           Heal Other - Target a human or kudzu person to heal them. If they are
           a kudzu person then you also transfer some of your nutrients to them.
         </li>
+        <li>Speak Kudzu- Talk to the kudzu hive mind.</li>
       </ul>
 
       <p>
@@ -54,8 +55,6 @@ export const acw: AlertContentWindow = {
         shouldn&apos;t be attacking anyone since kudzu is nonviolent, but there
         are times you must protect yourself. Since other kudzu people are
         technically part of yourself and the kudzu you should not harm them/you.
-        You can telepathically speak to other kudzu people using the{' '}
-        <em>:kuzdu</em> speech prefix.
       </p>
       <p>
         For more information, consult{' '}

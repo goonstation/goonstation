@@ -62,7 +62,7 @@ export const acw: AlertContentWindow = {
         <br />
         <br />
         <span className="small">
-          say :z I&apos;m about to activate the nuke in security. Stick
+          say :h I&apos;m about to activate the nuke in security. Stick
           together, boys!
         </span>
       </p>

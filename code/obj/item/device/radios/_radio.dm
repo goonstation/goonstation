@@ -93,8 +93,14 @@ TYPEINFO(/obj/item/device/radio)
 	/// The build status of this radio, determining whether it can be attached to other objects, and other objects attached to it.
 	var/b_stat = FALSE
 
+	/// This is solely used to reconcile renaming the radio variables with `.dmm` files. Remove in a followup PR.
+	var/broadcasting = null
+
 /obj/item/device/radio/New()
 	. = ..()
+
+	if (!isnull(src.broadcasting))
+		src.initial_microphone_enabled = src.broadcasting
 
 	if (((src.frequency < R_FREQ_MINIMUM) || (src.frequency > R_FREQ_MAXIMUM)) && !src.locked_frequency)
 		// If the frequency is somehow set outside of the normal range, clamp it back within range.

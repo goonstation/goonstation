@@ -5,6 +5,9 @@
 /datum/listen_module/modifier/mob_modifiers/process(datum/say_message/message)
 	. = message
 
+	if (message.received_module.channel != SAY_CHANNEL_OUTLOUD)
+		return
+
 	if (!ismob(src.parent_tree.listener_parent))
 		return
 

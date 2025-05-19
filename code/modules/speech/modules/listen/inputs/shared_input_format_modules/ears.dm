@@ -29,7 +29,9 @@
 	else if (istype(message.original_speaker, /obj/machinery/computer))
 		job_title = "Computer"
 
-	message.format_speaker_prefix += "<a href='byond://?src=\ref[src];action=track;heard_name=[message.speaker_to_display]'>"
+	message.speaker_to_display = message.real_ident
+
+	message.format_speaker_prefix += "<a href='byond://?src=\ref[src];action=track;heard_name=[message.real_ident]'>"
 	message.format_verb_prefix = " ([job_title])</a>" + message.format_verb_prefix
 
 // I dislike implementing AI tracking here, however the alternative, performing the above formatting per listener and using `/mob/living/silicon/Topic` would incur a performance cost.

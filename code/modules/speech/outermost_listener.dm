@@ -1,5 +1,5 @@
 /// This atom's outermost listener tracker.
-/atom/var/tmp/datum/outermost_listener_tracker/outermost_listener_tracker
+/atom/var/datum/outermost_listener_tracker/outermost_listener_tracker
 
 /// Returns this atom's outermost listener tracker. If this atom does not possess an outermost listener tracker, instantiates one.
 /atom/proc/ensure_outermost_listener_tracker()

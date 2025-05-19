@@ -537,7 +537,7 @@
 			if (!Turf || Turf.z != Z_LEVEL_STATION)
 				continue
 			var/area/A = get_area(Object)
-			if (istype(A, /area/listeningpost))
+			if (A.name == "Listening Post")
 				continue
 			if (valid_spy_thief_targets_by_type[Object.type])
 				valid_spy_thief_targets_by_type[Object.type] += Object

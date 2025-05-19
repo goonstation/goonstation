@@ -42,9 +42,8 @@ export const acw: AlertContentWindow = {
           <span style={{ float: 'left', width: '50%' }}>
             40 - <em>Bat Form</em>, consume stamina to morph into a bat.
             <br />
-            40 - <em>Enthrall</em>, revive a dead human as an enthralled
-            servant. You can telepathically speak to any thralls that you create
-            using the <em>:thrall</em> speech prefix.
+            40 - <em>Enthrall / Thrall Speak</em>, revive a dead human as an
+            enthralled servant.
             <br />
             300 - <em>Coffin Escape / Mark Coffin</em>, escape to a coffin to
             regenerate.

@@ -1174,7 +1174,7 @@
 /obj/rail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/lunar_breakdoor{
 	dir = 4
 	},
 /turf/unsimulated/floor/lunar,
@@ -1998,7 +1998,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
 "akn" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/lunar_breakdoor,
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "akp" = (
@@ -2857,6 +2857,7 @@
 	locked = 1;
 	name = "Storage Room";
 	radiorange = 25;
+	req_access_txt = "";
 	tag = "lunar_storage"
 	},
 /turf/unsimulated/floor/caution/west{
@@ -3096,8 +3097,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "aoR" = (
-/obj/machinery/door/airlock/pyro/reinforced/lunar_breakdoor,
-/obj/mapping_helper/access/lunar_breakdoor,
+/obj/machinery/door/lunar_breakdoor,
 /turf/unsimulated/floor/caution/south{
 	dir = 1
 	},
@@ -5169,7 +5169,9 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum)
 "ayV" = (
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access_txt = ""
+	},
 /turf/unsimulated/floor,
 /area/moon/museum)
 "azl" = (
@@ -6379,6 +6381,7 @@
 "aFj" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  You know, as opposed to all of those coat closet blast doors and bathroom blast doors.";
+	dir = 4;
 	id = "lunarsec1";
 	name = "Security Interlock"
 	},
@@ -6658,6 +6661,7 @@
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	desc = "A security blast door.  You know, as opposed to all of those coat closet blast doors and bathroom blast doors.";
+	dir = 4;
 	icon_state = "bdoorsingle0";
 	id = "lunarsec2";
 	name = "Security Interlock";
@@ -31428,7 +31432,8 @@
 	name = "grimy pipe"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+	dir = 4;
+	req_access_txt = ""
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -50596,7 +50601,7 @@
 /area/centcom/lounge)
 "dHW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/steak,
+/obj/item/reagent_containers/food/snacks/steak_h,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHX" = (
@@ -60989,7 +60994,8 @@
 /area/owlery/staffhall)
 "jcO" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+	dir = 4;
+	req_access_txt = ""
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -72367,7 +72373,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+	dir = 4;
+	req_access_txt = ""
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -73848,7 +73855,9 @@
 	dir = 1;
 	name = "grimy pipe"
 	},
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access_txt = ""
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "taV" = (
@@ -76081,8 +76090,9 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/gannets)
 "uWV" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/lunar_breakdoor,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access_txt = "777"
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "uXu" = (
@@ -79014,10 +79024,10 @@
 "wZe" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Security Checkpoint"
+	name = "Security Checkpoint";
+	req_access_txt = "255"
 	},
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/impossible,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "xaw" = (
@@ -79391,7 +79401,9 @@
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
 "xoT" = (
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access_txt = ""
+	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "xoW" = (

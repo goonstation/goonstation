@@ -110,8 +110,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						newcash.set_loc(src)
 					//Money laundering is a crime!
 					var/mob/living/carbon/human/criminal = src.activator
-					if(criminal)
-						criminal.apply_automated_arrest("Money laundering.")
+					if (ishuman(criminal) && seen_by_camera(criminal))
+						var/perpname = criminal.name
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
+							sec_record["mi_crim"] = "Money laundering."
+							criminal.update_arrest_icon()
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0

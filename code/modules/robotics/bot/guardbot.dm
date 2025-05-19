@@ -3742,6 +3742,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(pause_for_beacon)
 				src.awaiting_beacon += round((remaining / MAPTEXT_SLICE_SIZE)*(MAPTEXT_PAUSE/proc_delay))
 
+			master.say(text)
 			while(remaining - slice > MAPTEXT_SLICE_SIZE)
 				slice = findlasttext(text," ", slice+MAPTEXT_SLICE_SIZE, slice+1)
 				if(!slice)

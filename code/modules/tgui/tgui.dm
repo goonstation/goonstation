@@ -36,9 +36,9 @@
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
 	/// Rate limit client refreshes to prevent DoS.
-	var/list/cooldowns // |GOONSTATION-CHANGE| Different cooldown method
+	var/list/cooldowns // |GOONSTATION-CHANGE|
 	/// Are byond mouse events beyond the window passed in to the ui
-	var/mouse_hooked = FALSE // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+	var/mouse_hooked = FALSE
 
 /**
  * public
@@ -65,7 +65,7 @@
 		src.title = title
 	src.state = src_object.ui_state()
 
-/datum/tgui/disposing() // |GOONSTATION-CHANGE| Destroy -> disposing
+/datum/tgui/disposing()
 	user = null
 	src_object = null
 	. = ..()
@@ -78,16 +78,15 @@
  * return bool - TRUE if a new pooled window is opened, FALSE in all other situations including if a new pooled window didn't open because one already exists.
  */
 /datum/tgui/proc/open()
-	if(!user?.client) // |GOONSTATION-CHANGE| Handle null user check
+	if(!user?.client)
 		return FALSE
 	if(window)
 		return FALSE
 	process_status()
 	if(status < UI_UPDATE)
 		return FALSE
-	window = tgui_process.request_pooled_window(user) // |GOONSTATION-CHANGE| Different process holder
+	window = tgui_process.request_pooled_window(user)
 	if(!window)
-		// |GOONSTATION-ADD|
 		if(istype(src_object, /datum/tgui_modal))
 			qdel(src_object)
 		return FALSE
@@ -96,30 +95,29 @@
 	if(!window.is_ready())
 		window.initialize(
 			strict_mode = TRUE,
-			fancy = user.client.preferences.tgui_fancy, // |GOONSTATION-CHANGE| Different preference method
+			fancy = user.client.preferences.tgui_fancy,
 			assets = list(
-				get_assets(/datum/asset/group/base_tgui), // |GOONSTATION-CHANGE| Different asset method
+				get_assets(/datum/asset/group/base_tgui),
 			))
 	else
 		window.send_message("ping")
-	// |GOONSTATION-CHANGE| Different asset method
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		send_asset(asset)
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
-	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	if(mouse_hooked)
 		window.set_mouse_macro()
-	tgui_process.on_open(src) // |GOONSTATION-CHANGE| Different process holder
-	SEND_SIGNAL(user, COMSIG_TGUI_WINDOW_OPEN, src) // |GOONSTATION-ADD| Send signal
+	tgui_process.on_open(src)
+	SEND_SIGNAL(user, COMSIG_TGUI_WINDOW_OPEN, src)
 	return TRUE
 
-// |GOONSTATION-CHANGE| Asset caching/sending done differently
+
 /datum/tgui/proc/send_assets()
 	PRIVATE_PROC(TRUE)
 	for(var/datum/asset/asset in src_object.ui_assets(user))
 		send_asset(asset)
+
 
 /**
  * public
@@ -132,7 +130,6 @@
 	if(closing)
 		return
 	closing = TRUE
-	// |GOONSTATION-ADD| Close observers' UIs
 	for(var/mob/dead/target_observer/ghost in src.user.observers)
 		for(var/datum/tgui/ghost_win in ghost.tgui_open_uis)
 			if(ghost_win.src_object == src.src_object)
@@ -146,7 +143,7 @@
 		window.release_lock()
 		window.close(can_be_suspended)
 		src_object.ui_close(user)
-		tgui_process.on_close(src) // |GOONSTATION-CHANGE| Different process holder
+		tgui_process.on_close(src)
 	state = null
 	qdel(src)
 
@@ -160,7 +157,6 @@
 /datum/tgui/proc/set_autoupdate(autoupdate)
 	src.autoupdate = autoupdate
 
-// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /**
  * public
  *
@@ -205,9 +201,8 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_full_update(custom_data, force)
-	if(!user?.client || !initialized || closing) // |GOONSTATION-CHANGE| Handle null user check
+	if(!user?.client || !initialized || closing)
 		return
-	// |GOONSTATION-CHANGE| Different cooldown method
 	if(ON_COOLDOWN(src, "TGUI_REFRESH_COOLDOWN", TGUI_REFRESH_FULL_UPDATE_COOLDOWN))
 		refreshing = TRUE
 		SPAWN(GET_COOLDOWN(src, "TGUI_REFRESH_COOLDOWN"))
@@ -288,7 +283,7 @@
 		return
 	var/datum/host = src_object.ui_host(user)
 	// If the object or user died (or something else), abort.
-	if(!src_object || !host || !user || !window) // |GOONSTATION-CHANGE| Upstream using QDELETED, should we?
+	if(!src_object || !host || !user || !window)
 		close(can_be_suspended = FALSE)
 		return
 	// Validate ping
@@ -318,7 +313,6 @@
 /datum/tgui/proc/process_status()
 	var/prev_status = status
 	status = src_object.ui_status(user, state)
-	// |GOONSTATION-ADD| Admins can have a little ghost interaction, as a treat
 	if(user.client?.holder?.ghost_interaction)
 		status = max(status, UI_INTERACTIVE)
 	return prev_status != status
@@ -332,12 +326,11 @@
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
 		var/act_type = copytext(type, 5)
-		if(act_type != "play_note") // |GOONSTATION-ADD| Avoid music spamming logs
+		if(act_type != "play_note")
 			log_tgui(user, "Action: [act_type] [href_list["payload"]]",
 				window = window,
 				src_object = src_object)
 		process_status()
-		// |GOONSTATION-CHANGE| Different queue method
 		SPAWN(0)
 			on_act_message(act_type, payload, state)
 		return FALSE
@@ -359,13 +352,13 @@
 		if("setSharedState")
 			if(status != UI_INTERACTIVE)
 				return
-			LAZYLISTINIT(src_object.tgui_shared_states) // |GOONSTATION-CHANGE| LAZYINITLIST -> LAZYLISTINIT
+			LAZYLISTINIT(src_object.tgui_shared_states)
 			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
-			tgui_process.update_uis(src_object) // |GOONSTATION_CHANGE| Different process holder
+			tgui_process.update_uis(src_object)
 
 /// Wrapper for behavior to potentially wait until the next tick if the server is overloaded
 /datum/tgui/proc/on_act_message(act_type, payload, state)
 	if(QDELETED(src) || QDELETED(src_object))
 		return
 	if(src_object.ui_act(act_type, payload, src, state))
-		tgui_process.update_uis(src_object) // |GOONSTATION-CHANGE| Different process holder
+		tgui_process.update_uis(src_object)

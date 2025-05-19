@@ -228,7 +228,7 @@
 	#define COMSIG_MOB_LOGOUT "mob_logout"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
-	/// When a mob dies (gibbed bool)
+	/// When a mob dies
 	#define COMSIG_MOB_DEATH "mob_death"
 	/// When a mob fakes death
 	#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
@@ -270,8 +270,6 @@
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 	/// Sent when the mob points at something (point target)
 	#define COMSIG_MOB_POINT "mob_point"
-	/// Sent when a mob is pulled
-	#define COMSIG_MOB_PULL_TRIGGER "pull_trigger"
 	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
 	#define COMSIG_MOB_SPRINT "mob_sprint"
 	/// Sent when the mob should trigger a threat grab (yes this is really specific but shush)
@@ -290,7 +288,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		/// When Life() ticks (mult)
+		// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----

@@ -192,14 +192,9 @@
 				src.visible_message(SPAN_ALERT("[Obj] bursts out of [src]!"))
 		..()
 
-	Entered(atom/movable/AM, OldLoc)
-		if(istype(AM, /obj/item/rocko))
-			src.visible_message(SPAN_ALERT("[usr] places [AM] into [src]."))
-		if (!(AM in src.carrier_occupants))
-			if(src.is_allowed_type(AM.type))
-				src.add_mob(AM)
-			else
-				AM.set_loc(get_turf(src))
+	Entered(Obj, OldLoc)
+		if(istype(Obj, /obj/item/rocko))
+			src.visible_message(SPAN_ALERT("[usr] places [Obj] into [src]."))
 		..()
 
 	proc/is_allowed_type(type)
@@ -249,9 +244,9 @@
 	proc/add_mob(atom/movable/thing_to_add)
 		if (!thing_to_add)
 			return
-		src.carrier_occupants.Add(thing_to_add)
 		thing_to_add.set_loc(src)
 		thing_to_add.vis_flags |= src.mob_vis_flags
+		src.carrier_occupants.Add(thing_to_add)
 		src.vis_contents_proxy.vis_contents.Add(thing_to_add)
 		src.UpdateIcon()
 

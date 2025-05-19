@@ -35,32 +35,32 @@
 
 	src.say(message, flags = SAYFLAG_WHISPER | SAYFLAG_SPOKEN_BY_PLAYER)
 
-/mob/verb/say_over_main_radio(message as text)
-	set name = "say_over_main_radio"
-	set desc = "Speaking on the main radio frequency."
+/mob/verb/say_main_radio(message as text)
+	set name = "say_main_radio"
 	set hidden = TRUE
 
-	if (!src.ensure_speech_tree().GetPrefixByID(SPEECH_PREFIX_RADIO_GENERAL))
-		return
+/mob/living/say_main_radio(message as text)
+	set name = "say_main_radio"
+	set desc = "Speaking on the main radio frequency"
+	set hidden = TRUE
 
 	src.say_verb("; [message]")
 
-/mob/verb/say_over_channel()
-	set name = "say_over_channel"
+/mob/verb/say_radio()
+	set name = "say_radio"
+	set hidden = TRUE
+
+/mob/living/say_radio()
+	set name = "say_radio"
 	set hidden = TRUE
 
 	var/list/choices = list()
 	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
-		if (istype(prefix_module, /datum/speech_module/prefix/premodifier/channel))
-			var/datum/speech_module/prefix/premodifier/channel/channel_prefix = prefix_module
-			if (channel_prefix.channel_id == src.default_speech_output_channel)
-				continue
-
-		var/list/prefix_choices = prefix_module.get_prefix_choices()
-		if (!length(prefix_choices))
+		var/list/prefix_choice = prefix_module.get_prefix_choices()
+		if (!length(prefix_choice))
 			continue
 
-		choices += prefix_choices
+		choices += prefix_choice
 
 	if (!length(choices))
 		return
@@ -69,13 +69,13 @@
 	if (length(choices) == 1)
 		choice = choices[1]
 	else
-		choice = input("", "Select Speech Channel") as null | anything in choices
+		choice = input("", "Select Radio Channel") as null | anything in choices
 
 	if (!choice)
 		return
 
 	var/prefix = choices[choice]
-	var/message = input("", "Speaking To [choice]") as null | text
+	var/message = input("", "Speaking to [choice] Frequency") as null | text
 	if (!message)
 		return
 
@@ -100,7 +100,7 @@
 
 ADMIN_SAY_PROC(blobsay, SAY_CHANNEL_BLOB, null)
 ADMIN_SAY_PROC(dronesay, SAY_CHANNEL_GHOSTDRONE, null)
-ADMIN_SAY_PROC(dsay, SAY_CHANNEL_DEAD, SPEECH_OUTPUT_DEADCHAT_ADMIN)
+ADMIN_SAY_PROC(dsay, SAY_CHANNEL_DEAD, SPEECH_OUTPUT_DEADCHAT)
 ADMIN_SAY_PROC(flocksay, SAY_CHANNEL_GLOBAL_FLOCK, null)
 ADMIN_SAY_PROC(hivesay, SAY_CHANNEL_GLOBAL_HIVEMIND, null)
 ADMIN_SAY_PROC(kudzusay, SAY_CHANNEL_KUDZU, null)

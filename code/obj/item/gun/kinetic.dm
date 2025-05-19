@@ -3570,7 +3570,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
 			src.toggle_action(user)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
-		. = ..()
+		..()
 
 	proc/toggle_action(mob/user)
 		if (!src.broke_open)

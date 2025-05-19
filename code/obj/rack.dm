@@ -164,7 +164,6 @@
 	var/order_override = "" //! Force a specific organization layout
 	var/shuffle_chance = 1 //! Probability of the card order being shuffled
 #ifdef IN_MAP_EDITOR
-	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "rack_filled"
 #endif
 

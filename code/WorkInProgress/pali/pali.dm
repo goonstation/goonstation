@@ -173,13 +173,12 @@
 	var/loc_maptext_y = 0
 	New()
 		..()
-		SPAWN(0)
-			loc.maptext = loc_maptext
-			loc.maptext_width = loc_maptext_width
-			loc.maptext_height = loc_maptext_height
-			loc.maptext_x = loc_maptext_x
-			loc.maptext_y = loc_maptext_y
-			qdel(src)
+		loc.maptext = loc_maptext
+		loc.maptext_width = loc_maptext_width
+		loc.maptext_height = loc_maptext_height
+		loc.maptext_x = loc_maptext_x
+		loc.maptext_y = loc_maptext_y
+		qdel(src)
 
 
 // I'm archiving a slightly improved version of the hell portal which is now gone

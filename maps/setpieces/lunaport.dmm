@@ -16504,7 +16504,8 @@
 /obj/decoration/bullethole{
 	pixel_y = -7;
 	pixel_x = 11;
-	icon_state = "bullethole-large"
+	icon_state = "bullethole-large";
+
 	},
 /obj/decoration/bullethole{
 	pixel_y = -18;

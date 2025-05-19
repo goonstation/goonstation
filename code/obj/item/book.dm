@@ -359,7 +359,11 @@ Custom Books
 				return
 
 			jerk.traitHolder?.addTrait("wasitsomethingisaid")
-			jerk.apply_automated_arrest("Reading highly-confidential private information.", requires_camera_seen = FALSE, use_visible_name = FALSE)
+
+			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
+			S?["criminal"] = ARREST_STATE_ARREST
+			S?["mi_crim"] = "Reading highly-confidential private information."
+			jerk.update_arrest_icon()
 		else
 			return list("It appears to be heavily encrypted information.")
 

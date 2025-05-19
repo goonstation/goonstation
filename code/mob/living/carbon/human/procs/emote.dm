@@ -666,7 +666,7 @@
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
-			if ("twirl", "spin")
+			if ("twirl", "spin"/*, "juggle"*/)
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
@@ -2223,8 +2223,12 @@
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
-					if(!dab_id)
-						src.apply_automated_arrest("Public dabbing.")
+					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+						if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
+							sec_record["mi_crim"] = "Public dabbing."
+							src.update_arrest_icon()
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 

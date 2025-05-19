@@ -269,7 +269,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 					attempt_remote_scan(src.owner)
 
 	on_death()
-		. = ..()
 		if(!ishuman(src.owner))
 			return
 		attempt_remote_scan(src.owner)

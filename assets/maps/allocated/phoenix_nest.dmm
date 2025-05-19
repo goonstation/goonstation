@@ -21,7 +21,7 @@
 	},
 /area/phoenix_nest)
 "I" = (
-/turf/variableTurf/clear,
+/turf/space,
 /area/space)
 
 (1,1,1) = {"

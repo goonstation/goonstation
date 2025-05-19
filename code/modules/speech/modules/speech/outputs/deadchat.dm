@@ -99,8 +99,3 @@
 	"}
 
 	. = ..()
-
-
-/datum/speech_module/output/deadchat/admin
-	id = SPEECH_OUTPUT_DEADCHAT_ADMIN
-	speech_prefix = null

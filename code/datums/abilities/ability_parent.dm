@@ -264,8 +264,7 @@
 		if (!ispath(abilityType))
 			return
 		if (locate(abilityType) in src.abilities)
-			var/datum/targetable/A = locate(abilityType) in src.abilities
-			return A
+			return
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
 		src.abilities += A

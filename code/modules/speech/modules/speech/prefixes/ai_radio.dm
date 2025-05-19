@@ -22,8 +22,8 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/postmodifier/ai_radio)
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = list(radio)
-	if(src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message))
-		message.say_sound = 'sound/misc/talk/cyborg.ogg'
+	if (src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message))
+		message.say_sound = 'sound/misc/talk/radio.ogg'
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE

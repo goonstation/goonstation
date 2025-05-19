@@ -1,4 +1,4 @@
-TYPEINFO(/mob/dead/target_observer/hivemind_observer)
+TYPEINFO(/mob/dead/target_observer)
 	start_listen_modifiers = null
 	start_listen_inputs = null
 	start_listen_languages = list(LANGUAGE_ALL)

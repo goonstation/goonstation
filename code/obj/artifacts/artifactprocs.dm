@@ -77,7 +77,6 @@
 			all_origin_names += O.name
 		appearance = artifact_controls.get_origin_from_string(pick(all_origin_names))
 
-	A.artiappear = appearance
 	var/name1 = pick(appearance.adjectives)
 	var/name2 = "thingy"
 	if (isitem(src))

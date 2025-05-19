@@ -186,9 +186,17 @@
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.apply_automated_arrest("Mail fraud.")
+		if (ishuman(owner) && seen_by_camera(owner))
+			var/perpname = owner.name
+			if (owner:wear_id && owner:wear_id:registered)
+				perpname = owner:wear_id:registered
+
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
+				sec_record["criminal"] = ARREST_STATE_ARREST
+				sec_record["mi_crim"] = "Mail fraud."
+				var/mob/living/carbon/human/H = owner
+				H.update_arrest_icon()
 
 
 /obj/decal/cleanable/mail_fraud

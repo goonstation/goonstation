@@ -497,7 +497,7 @@
 	frequency = 1732;
 	desc = "Must be some fine ice fishing around here.";
 	name = "monstre du lac";
-	initial_microphone_enabled = 1
+	broadcasting = 1
 	},
 /turf/simulated/floor/wood/six,
 /area/prefab{

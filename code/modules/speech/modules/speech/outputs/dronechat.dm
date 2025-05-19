@@ -5,6 +5,9 @@
 /datum/speech_module/output/ghostdrone/process(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
 
+	if (message.prefix == ";")
+		return src.parent_tree.GetOutputByID(SPEECH_OUTPUT_DEADCHAT)?.process(message)
+
 	var/mind_ref = ""
 	if (ismob(message.speaker))
 		var/mob/mob_speaker = message.speaker

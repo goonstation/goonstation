@@ -121,6 +121,3 @@
 
 // Pirate ship access:
 #define access_pirate 89
-
-//Lunar door access, given to the tour guide to open the door
-#define access_lunar_breakdoor 90

@@ -162,7 +162,6 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/lantern, proc/toggle)
 			src.icon_state = "lantern-off"
 			src.item_state = "lantern-off"
 			src.light.disable(TRUE)
-		user.update_inhands()
 
 		if (activated_inhand)
 			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons

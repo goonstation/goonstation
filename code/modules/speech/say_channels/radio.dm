@@ -1,11 +1,10 @@
 /datum/say_channel/global_radio
 	channel_id = SAY_CHANNEL_GLOBAL_RADIO
-	suppress_hear_sound = TRUE
 
 
-/datum/say_channel/global_radio/default_only
+/datum/say_channel/global_radio_default_only
 	channel_id = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
 
 
-/datum/say_channel/global_radio/unprotected_only
+/datum/say_channel/global_radio_unprotected_only
 	channel_id = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY

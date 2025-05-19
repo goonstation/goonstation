@@ -874,7 +874,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	set_density(0)
 	for (var/obj/item/checked_item in src.contents)
 		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
-	src.can_implant = FALSE
+	if (src.can_implant)
+		for (var/obj/item/implant/H in src.implants)
+			H.on_death()
+		src.can_implant = 0
 	setdead(src)
 	if (!gibbed)
 		if (src.death_text)

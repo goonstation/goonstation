@@ -26,16 +26,12 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
-	var/image/egg_overlay_secret = null
 	var/image/lights_overlay = null
 	var/heating = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	New()
 		..()
-#ifdef SECRETS_ENABLED
-		src.egg_overlay_secret = image('+secret/icons/obj/chickens_secret.dmi', src, "incubator-egg")
-#endif
 		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
@@ -44,7 +40,6 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 		processing_items.Remove(src)
 		my_egg = null
 		egg_overlay = null
-		egg_overlay_secret = null
 		lights_overlay = null
 		..()
 
@@ -65,7 +60,6 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 						make_chooken()
 					incubate_count = 0
 					ClearSpecificOverlays("egg_overlay")
-					ClearSpecificOverlays("egg_overlay_secret")
 				else
 					incubate_count++
 			else
@@ -111,18 +105,10 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				my_egg = E
 				if (istype(E, /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
 					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/chicken_egg = E
-					if(chicken_egg.chicken_egg_props.is_secret)
-#ifdef SECRETS_ENABLED
-						egg_overlay_secret.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
-#else
-						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
-#endif
-					else
-						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+					egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
 				else
 					egg_overlay.icon_state = "incubator-egg-white"
 				UpdateOverlays(egg_overlay, "egg_overlay")
-				UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
 				incubate_count = 0
 		else if(istype(W,/obj/item/space_thing))
 			boutput(user, SPAN_ALERT("<b>[W] opens to reveal some sort of egg!</b>"))
@@ -139,7 +125,6 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 			egg_overlay.icon_state = "incubator-egg-[E.chicken_egg_props.chicken_id]"
 
 			UpdateOverlays(egg_overlay, "egg_overlay")
-			UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
 			incubate_count = 0
 
 		else
@@ -148,7 +133,6 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	attack_hand(mob/user)
 		if(my_egg)
 			ClearSpecificOverlays("egg_overlay")
-			ClearSpecificOverlays("egg_overlay_secret")
 			user.put_in_hand_or_drop(my_egg)
 			my_egg = null
 			incubate_count = 0

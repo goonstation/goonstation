@@ -63,7 +63,6 @@
 	max_wclass = W_CLASS_SMALL
 
 /obj/item/storage/box/starter // the one you get in your backpack
-	name = "emergency box"
 	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff(onlyMaskAndOxygen)

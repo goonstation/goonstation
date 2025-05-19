@@ -1,7 +1,7 @@
 
 /obj/random_item_spawner
 	name = "random item spawner"
-	icon = 'icons/obj/item_spawn.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED
@@ -926,7 +926,7 @@
 
 /obj/random_pod_spawner
 	name = "random pod spawner"
-	icon = 'icons/obj/item_spawn.dmi'
+	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
 	anchored = ANCHORED

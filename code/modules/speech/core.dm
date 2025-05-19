@@ -23,9 +23,9 @@ TYPEINFO(/atom)
 /atom
 	// Module Trees:
 	/// This atom's listen module tree. May be null if no input modules are registered.
-	var/tmp/datum/listen_module_tree/listen_tree = null
+	var/datum/listen_module_tree/listen_tree = null
 	/// This atom's speech module tree. Lazy loaded on the first `say()` call.
-	var/tmp/datum/speech_module_tree/speech_tree = null
+	var/datum/speech_module_tree/speech_tree = null
 
 	// Listen Variables:
 	/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.

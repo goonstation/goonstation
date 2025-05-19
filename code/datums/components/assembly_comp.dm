@@ -55,14 +55,6 @@ TYPEINFO(/datum/component/assembly)
 	var/is_combinable = FALSE
 	if(isghostcritter(user)) //just no
 		return FALSE
-	if(isitem(checked_atom))
-		var/obj/item/other_item = checked_atom
-		if (other_item.cant_drop)
-			return FALSE
-	if(isitem(src.parent))
-		var/obj/item/our_item = src.parent
-		if (our_item.cant_drop)
-			return FALSE
 	//if to_combine_item is a list, we look if we find the item in there
 	if (islist(src.to_combine_item))
 		var/list/combinable_items = src.to_combine_item

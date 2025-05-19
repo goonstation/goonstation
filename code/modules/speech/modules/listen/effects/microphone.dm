@@ -19,8 +19,6 @@
 
 	feedback &&= prob(10)
 
-	message.flags &= ~SAYFLAG_WHISPER
-	message.heard_range = DEFAULT_HEARING_RANGE
 	message.message_size_override = clamp(length(loudspeakers) + microphone.font_amp, 0, microphone.max_font)
 	message.output_module_channel = SAY_CHANNEL_OUTLOUD
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_MICROPHONE)

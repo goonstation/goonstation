@@ -244,15 +244,12 @@ A Flamethrower in various states of assembly
 				flamer.gastank = src
 				flamer.fueltank = src
 		if(src.loc == user && linkedflamer && W == linkedflamer)
-			src.insert_flamer(W, user)
+			boutput(user, SPAN_NOTICE("You stow [W] into your [src.name]."))
+			user.u_equip(W)
+			W.set_loc(src)
+			tooltip_rebuild = TRUE
 		else
 			..()
-
-	proc/insert_flamer(var/obj/item/gun/flamethrower/backtank/flamer, var/mob/user)
-		boutput(user, SPAN_NOTICE("You stow [flamer] into your [src.name]."))
-		user.u_equip(flamer)
-		flamer.set_loc(src)
-		tooltip_rebuild = TRUE
 
 	attack_hand(mob/user)
 		if(src.loc == user && linkedflamer && (linkedflamer in src.contents))

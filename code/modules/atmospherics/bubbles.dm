@@ -40,8 +40,6 @@
 	Move(newloc, dir)
 		. = ..()
 		var/turf/T = newloc
-		if (QDELETED(src))
-			return
 		if (istype(T) && T.active_liquid?.my_depth_level)
 			return
 		if (istype(newloc, /turf/space/fluid))

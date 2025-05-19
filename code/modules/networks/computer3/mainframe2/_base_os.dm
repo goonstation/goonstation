@@ -702,16 +702,11 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			var/datum/computer/file/mainframe_program/quitparent = caller_prog.parent_task
 			caller_prog.handle_quit()
 
-			if (istype(quitparent) && !QDELETED(quitparent) && (quitparent != src) && !istype(quitparent, /datum/computer/file/mainframe_program/driver/mountable/radio)) // Hello, this last istype() is a dirty hack.
+			if (istype(quitparent) && (quitparent != src) && !istype(quitparent, /datum/computer/file/mainframe_program/driver/mountable/radio)) // Hello, this last istype() is a dirty hack.
 				if (user.current_prog == caller_prog)
 					user.current_prog = quitparent
 				quitparent.useracc = user
 				quitparent.receive_progsignal(TRUE, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
-
-			else if (QDELETED(quitparent) && !QDELETED(user.base_shell_instance)) // We can't use quitparent if it is already queued for deletion! Lets hope our shellbase didn't get randomly deleted!
-				if (user.current_prog == caller_prog)
-					user.current_prog = user.base_shell_instance // So instead, we return user back to the main shell-
-				user.base_shell_instance.useracc = user
 
 			else if (shellexit && user) // Outermost shell should only exit if things go really wrong or the user logs out.
 				var/user_id = user.user_id
@@ -1183,17 +1178,6 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 	user.user_file?.dispose()
 	user.dispose()
 	return FALSE
-
-/// Log out all users, terminating any programs they are using, and removing all user record files
-/datum/computer/file/mainframe_program/os/kernel/proc/logout_all_users(disconnect = FALSE)
-	for (var/user_id in src.users)
-		var/datum/mainframe2_user_data/user = src.users[user_id]
-		if (!istype(user))
-			continue
-		if (!istype(user.user_file))
-			continue
-
-		logout_user(user, disconnect)
 
 /// Initialise all drivers, setting up driver data and initialising them individually.
 /datum/computer/file/mainframe_program/os/kernel/proc/initialize_drivers()
