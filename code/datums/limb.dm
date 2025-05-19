@@ -1711,6 +1711,7 @@
 	var/dmg_type = DAMAGE_BLUNT
 	var/custom_msg = null
 	var/stam_damage_mult = 0.1
+	var/exempt = FALSE // For specific items which are heavier yet carriable
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1725,12 +1726,16 @@
 				var/obj/item/O = target
 				var/can_pickup = 1
 
+				for (var/obj/item/D in src.weight_exemptions)
+					if (O == D)
+						exempt = TRUE
+						break
+
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
 						can_pickup = 0
-
-				if (O.w_class > max_wclass || !can_pickup && O != src.weight_exemptions)
+				if (O.w_class > max_wclass || !can_pickup && !exempt)
 					user.visible_message(SPAN_COMBAT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
 					return
 			else

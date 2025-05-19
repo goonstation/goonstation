@@ -546,7 +546,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		var/mob/living/carbon/human/H = user
 		if(connected_pigeon != null)
 			if(connected_pigeon.mind)
-				boutput(user, SPAN_ALERT("The P1geon is already active somehow!"))
+				boutput(user, SPAN_ALERT("The P1G30N is already active somehow!"))
 			else if(!connected_pigeon.loc)
 				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
 			else
@@ -578,11 +578,15 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				var/mob/living/critter/robotic/scuttlebot/mail/P = target
 				if (connected_pigeon != P)
 					boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
+				if (P.linked_pigeon != null)
+					P.linked_pigeon.set_loc(get_turf(P))
 			else
 				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
 					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
 					if (S.is_inspector)
 						newgadget.make_inspector()
+				else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
+					var/obj/item/clothing/suit/pigeon/newpigeon = new /obj/item/clothing/suit/pigeon(get_turf(S))
 				else
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
@@ -604,7 +608,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		..()
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
-
+		else if (connected_pigeon != null)
+			connected_pigeon.return_to_owner()
 	mail
 		name = "P1G30N remote controller"
 		desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
