@@ -2529,6 +2529,7 @@
 #include "code\obj\machinery\turret.dm"
 #include "code\obj\machinery\tv_vis.dm"
 #include "code\obj\machinery\weapon_racks.dm"
+#include "code\obj\machinery\cargo_pad.dm"
 #include "code\obj\machinery\computer\announcement.dm"
 #include "code\obj\machinery\computer\arcade.dm"
 #include "code\obj\machinery\computer\atmosphere.dm"
