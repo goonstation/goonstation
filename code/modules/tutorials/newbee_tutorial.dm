@@ -54,6 +54,7 @@
 			src.tutorial_hud.remove_client(src.newbee.client)
 			var/mob/new_player/M = new()
 			src.newbee.mind.transfer_to(M)
+			qdel(src.newbee)
 			src.newbee = null
 			qdel(src.region)
 			src.region = null
@@ -247,27 +248,37 @@
 /datum/abilityHolder/newbee
 	usesPoints = FALSE
 	tabName = "Tutorial"
-
-/datum/targetable/newbee_tutorial_exit
-	name = "Exit Tutorial"
-	desc = "Exit the tutorial and go to the main menu."
-	icon = 'icons/mob/blob_ui.dmi'
-	icon_state = "blob-exit"
+/datum/targetable/newbee
+	icon = 'icons/mob/tutorial_ui.dmi'
+	icon_state = "frame"
 	targeted = 0
 	do_logs = FALSE
+
+/datum/targetable/newbee/exit
+	name = "Exit Tutorial"
+	desc = "Exit the tutorial and go to the main menu."
+	icon_state = "exit"
 
 	cast(atom/target)
 		. = ..()
 		src.holder.owner.client?.tutorial.Finish()
 
-/datum/targetable/newbee_tutorial_previous
+/datum/targetable/newbee/previous
+	name = "Previous Step"
+	desc = "Go back one step in the tutorial."
+	icon_state = "previous"
+
 	cast(atom/target)
 		. = ..()
 
+/datum/targetable/newbee/next
+	name = "Next Step"
+	desc = "Go forward one step in the tutorial."
+	icon_state = "next"
 
-/datum/targetable/newbee_tutorial_next
 	cast(atom/target)
 		. = ..()
+
 
 /// Newbee Tutorial mob; no headset or PDA, does not spawn via jobs
 /mob/living/carbon/human/tutorial
