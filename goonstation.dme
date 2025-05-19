@@ -2486,7 +2486,6 @@
 #include "code\obj\machinery\airlock_sensor.dm"
 #include "code\obj\machinery\alarm.dm"
 #include "code\obj\machinery\arc_electroplater.dm"
-#include "code\obj\machinery\cargo_pad.dm"
 #include "code\obj\machinery\cashreg.dm"
 #include "code\obj\machinery\cell_charger.dm"
 #include "code\obj\machinery\clonepod.dm"
