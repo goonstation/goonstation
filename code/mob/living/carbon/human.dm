@@ -614,16 +614,12 @@
 	if (isdead(src))
 		return
 
-	if (health_mon)
-		health_mon.icon_state = "-1"
+	src.update_health_monitor_icon()
 
 	src.need_update_item_abilities = 1
 	setdead(src)
 	src.dizziness = 0
 	src.jitteriness = 0
-
-	for (var/obj/item/implant/H in src.implant)
-		H.on_death()
 
 	src.drop_juggle()
 
@@ -634,7 +630,6 @@
 	if (src.mind?.key)
 		var/datum/player/P = find_player(src.mind.key)
 		P.last_death_time = world.timeofday
-
 
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
@@ -662,85 +657,7 @@
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
 		R.RevenantDeath()
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			CHANGELING BUSINESS
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-	if (C)
-		if (gibbed || C.points < 10)
-			if (C.points < 10)
-				boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
-			for (var/mob/living/critter/changeling/spider in C.hivemind)
-				boutput(spider, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
-				spider.hivemind_owner = 0
-			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-				boutput(obs, SPAN_ALERT("Your telepathic link to your master has been destroyed!"))
-				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-			if (length(C.hivemind) > 0)
-				boutput(src, "Contact with the hivemind has been lost.")
-			C.hivemind = list()
-			if(C.master != C.temp_controller)
-				C.return_control_to_master()
 
-		else
-		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
-			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
-			SPAWN(0)
-				emote("deathgasp", dead_check = FALSE)
-				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
-				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
-				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
-				mind?.transfer_to(HS) //ok we're a headspider now
-				HS.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_HIVECHAT_MEMBER, subchannel = "\ref[C]")
-				HS.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[C]")
-				HS.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
-				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
-				HS.changeling = C
-				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
-				// we don't want to actually give the headspider access to the changeling abilityholder, because that would let it use all the abilities
-				// which leads to bugs and is generally bad. So we remove the HUD from corpsey over here, tell the abilityholder (C) that the headspider owns it,
-				// but we do NOT tell the headspider it has access to the abilities.
-				src.detach_hud(C.hud)
-				C.owner = HS
-				C.reassign_hivemind_target_mob()
-				sleep(20 SECONDS)
-				if(HS.disposed || !HS.mind || HS.mind.disposed || isdead(HS)) // we went somewhere else, or suicided, or something idk
-					return
-				HS.UnregisterSignal(src, COMSIG_PARENT_PRE_DISPOSING) // We no longer want to disappear if the body gets del'd
-				boutput(HS, "<b class = 'hint'>We released a headspider, using up some of our DNA reserves.</b>")
-				HS.set_loc(get_turf(src)) //be free!!!
-				src.visible_message(SPAN_ALERT("<B>[src]</B>'s head detaches, sprouts legs and wanders off looking for food!"))
-				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
-				remove_ability_holder(/datum/abilityHolder/changeling/)
-
-				if(src.client)
-					src.ghostize()
-					boutput(src, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
-
-				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
-
-				if(src.wear_mask)
-					var/obj/item/dropped_mask = src.wear_mask
-					src.u_equip(dropped_mask)
-					dropped_mask.set_loc(src.loc)
-				if(src.glasses)
-					var/obj/item/dropped_glasses = src.glasses
-					src.u_equip(dropped_glasses)
-					dropped_glasses.set_loc(src.loc)
-				if(src.head)
-					var/obj/item/dropped_headwear = src.head
-					src.u_equip(dropped_headwear)
-					dropped_headwear.set_loc(src.loc)
-				if(src.ears)
-					var/obj/item/dropped_earwear = src.ears
-					src.u_equip(dropped_earwear)
-					dropped_earwear.set_loc(src.loc)
-				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
-				qdel(organ_head)
-	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			NORMAL BUSINESS
-	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp", dead_check = FALSE) //let the world KNOW WE ARE DEAD
 
@@ -751,8 +668,8 @@
 	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
 		src.equipped():AttackSelf(src)
 
-	src.canmove = 0
-	src.lying = 1
+	src.canmove = FALSE
+	src.lying = TRUE
 	src.last_sleep = 0
 	src.ClearSpecificOverlays("sleep_bubble")
 	var/h = src.hand
@@ -783,7 +700,6 @@
 		src.mind.register_death()
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
-	//src.icon_state = "dead"
 
 	if (!src.suiciding)
 		if (emergency_shuttle?.location == SHUTTLE_LOC_STATION)
@@ -2654,8 +2570,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 /mob/living/carbon/human/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/drop_juggle()
 	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
@@ -2719,11 +2635,11 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		var/items = ""
 		var/count = 0
 		for (var/atom/movable/juggled in src.juggling)
-			count ++
+			count++
 			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [juggled]"
-				continue
-			items += ", [juggled]"
+			else
+				items += ", [juggled]"
 		items = copytext(items, 3)
 		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
@@ -3344,6 +3260,33 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			src.health_mon.icon_state = "10"
 		if (-INFINITY to 0)
 			src.health_mon.icon_state = "0"
+
+/mob/living/carbon/human/proc/apply_automated_arrest(var/reason, var/details, var/major_crime = FALSE, var/requires_camera_seen = TRUE, var/use_visible_name = TRUE)
+	if(!seen_by_camera(src) && requires_camera_seen)
+		return
+	var/target_name = src.name
+	if(!use_visible_name)
+		target_name = src.real_name
+	else if(src.face_visible())
+		target_name = src.real_name
+	var/crime_field = "mi_crim"
+	if(major_crime)
+		crime_field = "ma_crim"
+
+	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
+	if(!sec_record)
+		return
+	if(sec_record["criminal"] == ARREST_STATE_ARREST)
+		return
+	sec_record["criminal"] = ARREST_STATE_ARREST
+	sec_record[crime_field] = reason
+	if(details)
+		sec_record["[crime_field]_d"] = details
+
+	for (var/mob/living/carbon/human/H in mobs) //Anyone could be pretending to be the target, all of them need updating
+		if (H.real_name == target_name || H.name == target_name)
+			H.update_arrest_icon()
+	return
 
 /mob/living/carbon/human/proc/update_arrest_icon()
 	if (!src.arrestIcon)
