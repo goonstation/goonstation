@@ -242,12 +242,35 @@
 	icon_state = "bar"
 
 /obj/item/material_piece/iridiumalloy
-	icon_state = "iridium"
+	icon = 'icons/obj/items/materials/iridium.dmi'
 	name = "plate"
-	desc = "A chunk of some sort of iridium alloy plating."
+	desc = "A piece of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_default_material_appearance = FALSE
+	uses_default_material_appearance = TRUE
 	amount = 5
+
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$iridiumalloy"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$iridiumalloy"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$iridiumalloy"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$iridiumalloy"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$iridiumalloy"
+			else
+				src.icon_state = "scrap6_$$iridiumalloy"
 
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
@@ -455,7 +478,6 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	name = "scrap"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	icon = 'icons/obj/items/materials/plutonium.dmi'
-	icon_state = "plutonium"
 	default_material = "plutonium"
 
 	New()

@@ -556,11 +556,11 @@
 		switch(src.amount)
 			if(1)
 				return 1
-			if(2 to 9)
+			if(2 to 6)
 				return 2
-			if(10 to 29)
+			if(7 to 24)
 				return 3
-			if(30 to 49)
+			if(25 to 49)
 				return 4
 			else
 				return 5
