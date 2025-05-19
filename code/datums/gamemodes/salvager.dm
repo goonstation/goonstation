@@ -36,8 +36,7 @@
 	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 2, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
-	#ifdef RP_MODE
-	#else
+	#ifndef RP_MODE
 	if(distraction_num < 2) // Add more if you have any in mind
 		possible_traitors = get_possible_enemies(ROLE_TRAITOR, distraction_num)
 		distraction_type = "Traitors"
