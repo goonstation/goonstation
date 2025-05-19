@@ -86,7 +86,7 @@
 					else
 						j-- //reroll
 				if(ROLE_SALVAGER)
-					if(j+1<num_enemies) //don't overcap
+					if(j+2<num_enemies) //don't overcap
 						num_salvagers += 3
 						j++
 					else
