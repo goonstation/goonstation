@@ -1,5 +1,9 @@
 
 (t)mon may 19 25
+(u)Mr. Moriarty
+(p)23468
+(e)🔎⛔🔨|C-Code-Quality, C-Removal, A-Player-Actions
+(+)Ghostdrones can no longer use the ; prefix to speak to deadchat. Please use the Y menu or the :d prefix instead.
 (u)LorrMaster
 (p)23485
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
