@@ -2,7 +2,7 @@
 	name = "Drop Disguise"
 	desc = "Shed your skin and return to your base form."
 	icon_state = "drop_disguise"
-	cooldown = 3 SECONDS
+	cooldown = 10 SECONDS
 	targeted = 0
 
 	cast()
@@ -12,8 +12,8 @@
 		if (user.base_form)
 			boutput(holder.owner, SPAN_ALERT("You're in your base form already!"))
 			return TRUE
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, null, 2 SECONDS, /datum/targetable/critter/drop_disguise/proc/drop, user)
-		boutput(holder.owner, SPAN_ALERT("You begin to shed your skin..."))
+		src.drop(user)
+		boutput(holder.owner, SPAN_ALERT("You shed your skin!"))
 		return FALSE
 
 	proc/drop(mob/user)
