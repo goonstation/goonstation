@@ -26,13 +26,15 @@
 /datum/game_mode/salvager/pre_setup()
 	. = ..()
 	var/list/possible_salvagers = list()
+	#ifndef RP_MODE
 	var/list/possible_traitors = list()
 	var/list/possible_spy_thieves = list()
+	var/distraction_num = rand(1,2)
+	#endif
 
 	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(pop_divisor+1)
-	var/distraction_num = rand(1,2)
 	var/target_antag_count = clamp( round((num_players + randomizer )/ pop_divisor ), 2, antags_possible)
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
@@ -87,9 +89,9 @@
 	..()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
-
+	#ifndef RP_MODE
 	for (var/datum/mind/other in distractions)
 		equip_antag(other)
-
+	#endif
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
