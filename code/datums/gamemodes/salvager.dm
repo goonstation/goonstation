@@ -69,8 +69,7 @@
 		salvager.special_role = ROLE_SALVAGER
 		possible_salvagers.Remove(salvager)
 
-	#ifdef RP_MODE
-	#else
+	#ifndef RP_MODE
 	if (distraction_num >= 2)
 		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = distraction_num, recordChosen = 1)
 		for (var/datum/mind/spy in chosen_spy_thieves)
