@@ -35,6 +35,9 @@ TYPEINFO(/datum/component/mimic_stomach)
 	center = region.get_center()
 
 /datum/component/mimic_stomach/proc/on_entered()
+	var/mob/parent = src.parent
+	parent.HealBleeding()
+	parent.HealDamage("All", parent.max_health, parent.max_health)
 	return
 
 /datum/component/mimic_stomach/proc/on_disposing()
@@ -42,7 +45,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 	qdel(src)
 
 /datum/component/mimic_stomach/UnregisterFromParent()
-	var/obj/parent = src.parent
+	var/mob/parent = src.parent
 	src.region.move_movables_to((exit || parent))
 	region.clean_up(/turf/space, /turf/space)
 	qdel(region)
