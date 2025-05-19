@@ -9,12 +9,12 @@
 	set category = "Commands"
 	set hidden = TRUE
 
-	if (global.current_state < GAME_STATE_PLAYING)
+	if (global.current_state < GAME_STATE_SETTING_UP)
 		boutput(usr, SPAN_ALERT("The tutorial will launch when the game starts."))
 		src.ready_tutorial = TRUE
 		src.update_joinmenu()
-	else if (global.current_state == GAME_STATE_PLAYING)
-		boutput(usr, SPAN_ALERT("Launching the tutorial, please stand by."))
+	else if (global.current_state <= GAME_STATE_PLAYING)
+		boutput(usr, SPAN_ALERT("Launching the tutorial!"))
 		src.client?.tutorial = new(src)
 		src.client?.tutorial.Start()
 	else
@@ -51,8 +51,14 @@
 
 	Finish()
 		if(..())
+			src.tutorial_hud.remove_client(src.newbee.client)
 			var/mob/new_player/M = new()
 			src.newbee.mind.transfer_to(M)
+			src.newbee = null
+			qdel(src.region)
+			src.region = null
+			qdel(src.tutorial_hud)
+			src.tutorial_hud = null
 			qdel(src)
 
 /datum/tutorial_base/regional/newbee/proc/AddNewbeeSteps()
