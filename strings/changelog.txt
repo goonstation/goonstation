@@ -1,5 +1,9 @@
 
 (t)mon may 19 25
+(u)LorrMaster
+(p)23400
+(e)🗺🎨💅🧱|A-Mapping, C-Sprites, C-QoL, A-Materials
+(*)New sprites for ores at various stack sizes
 (u)glowbold
 (p)22847
 (e)🆕🎨📦💡|C-Feature, C-Sprites, A-Game-Objects, A-Station-Systems
