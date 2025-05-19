@@ -117,6 +117,7 @@ function task-validate-build {
   if ($diff) {
     Write-Output "Error: our build differs from the build committed into git."
     Write-Output "Please rebuild tgui."
+    Write-Output "Diff: $diff"
     exit 1
   }
   Write-Output "tgui: build is ok"
