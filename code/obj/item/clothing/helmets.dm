@@ -722,6 +722,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	proc/emote_handler(mob/source, var/emote)
 		switch(emote)
 			if ("nod")
+				if (ON_COOLDOWN(src, "weldingmask_nod", 1 SECOND))
+					return
 				if (src.up)
 					src.flip_down(source, silent=TRUE)
 					boutput(source, SPAN_HINT("You nod, dropping the welding mask over your face."))
