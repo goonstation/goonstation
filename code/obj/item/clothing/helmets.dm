@@ -725,6 +725,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 				if (src.up)
 					src.flip_down(source, silent=TRUE)
 					boutput(source, SPAN_HINT("You nod, dropping the welding mask over your face."))
+				else
+					src.flip_up(source, silent=TRUE)
+					boutput(source, SPAN_HINT("You nod, raising the welding mask off your face."))
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
