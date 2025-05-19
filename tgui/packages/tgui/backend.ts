@@ -16,6 +16,7 @@ import { createAction } from 'common/redux';
 import { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
+import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -105,6 +106,28 @@ export const backendReducer = (state = initialState, action) => {
         [key]: nextState,
       },
     };
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+  if (type === 'byond/mousedown') {
+    globalEvents.emit('byond/mousedown');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+
+  if (type === 'byond/mouseup') {
+    globalEvents.emit('byond/mouseup');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+
+  if (type === 'byond/ctrldown') {
+    globalEvents.emit('byond/ctrldown');
+  }
+
+  // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
+  if (type === 'byond/ctrlup') {
+    globalEvents.emit('byond/ctrlup');
   }
 
   if (type === 'backend/suspendStart') {
