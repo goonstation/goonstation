@@ -1756,7 +1756,6 @@
 					return
 		..()
 
-	mail
 
 	//yeah they're not ACTUALLY biting them but let's just assume that they are because i don't want a mouse or a dog to KO someone with a brutal right hook
 	// changed to scratching, small mouths will take care of biting
