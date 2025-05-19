@@ -162,16 +162,13 @@
 		var/debuff = "hungry"
 		var/buff = "nourished"
 		#ifdef RP_MODE
-		var/debuff_threshold = 25
-		var/lowbuff_threshold = 50
-		var/buff_threshold = 75
-		var/highbuff_threshold = 90
+		var/debuff_threshold = 0
 		#else
 		var/debuff_threshold = -1 // Don't want debuffs procing on classic
+		#endif
 		var/lowbuff_threshold = 25
 		var/buff_threshold = 50
 		var/highbuff_threshold = 75
-		#endif
 		var/debuffed = FALSE
 		var/lowbuffed = FALSE
 		var/buffed = FALSE
