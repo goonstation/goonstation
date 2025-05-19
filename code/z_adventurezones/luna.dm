@@ -427,7 +427,7 @@ Contents:
 
 		currentFolder.add_file( new /datum/computer/file/terminal_program/email (src) )
 
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(list(999));} (src) )
+		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(access_lunar_breakdoor);} (src) )
 
 /obj/machinery/computer3/generic/lunarsec
 	name = "Security computer"
@@ -487,7 +487,7 @@ Contents:
 
 		SPAWN(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 999
+				src.botcard.access += access_lunar_breakdoor
 
 
 //"Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!"
@@ -657,10 +657,10 @@ Contents:
 			if (!has_been_underground)
 				has_been_underground = TRUE
 				src.distracted = TRUE
-				master.speak("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
+				master.say("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
 				SPAWN(5 SECOND)
 					if (master)
-						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
+						master.say("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
 					src.distracted = FALSE
 
 			if (!(neat_things_underground & NT_HEMERA) && istype(ourArea, /area/moon/underground/hemera))
@@ -684,10 +684,10 @@ Contents:
 				src.distracted = TRUE
 				neat_things_underground |= NT_RISING_SUN
 
-				master.speak("There is a house on Luna that they call the Rising Sun.")
+				master.say("There is a house on Luna that they call the Rising Sun.")
 				SPAWN(5 SECOND)
 					if (master)
-						master.speak("It's been the ruin of many a poor bud and God, I know I'm one.")
+						master.say("It's been the ruin of many a poor bud and God, I know I'm one.")
 					src.distracted = FALSE
 			//todo
 
@@ -695,7 +695,7 @@ Contents:
 
 		if (istype(ourArea, /area/solarium) && !(src.neat_things & NT_SOLARIUM))
 			FOUND_NEAT(NT_SOLARIUM)
-				master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
+				master.say("Huh, this place is weird!  This is some ship and that's our sun, right?")
 				if (prob(25))
 					if (master)
 						speak_with_maptext("I, um, am going to need to go back to work.  My shift isn't over yet.")
@@ -757,11 +757,11 @@ Contents:
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
 							if (istype(masterArea, /area/russian) || istype(masterArea, /area/salyut) || istype(masterArea, /area/hospital/samostrel))
-								src.master.speak("I hope they don't ask for a travel visa...")
+								src.master.say("I hope they don't ask for a travel visa...")
 							else if (istype(masterArea, /area/moon))
-								src.master.speak("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
+								src.master.say("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
 							else
-								src.master.speak("Is this one of those \"Khrushchev in a supermarket\" things?")
+								src.master.say("Is this one of those \"Khrushchev in a supermarket\" things?")
 						END_NEAT
 					return
 
@@ -807,12 +807,12 @@ Contents:
 			src.awaiting_beacon = 10
 
 			SPAWN(1 SECOND)
-				src.master.speak("Uh.  That isn't supposed to happen.")
+				src.master.say("Uh.  That isn't supposed to happen.")
 				src.state = 0	//Yeah, let's find that route.
 
 				sleep(5.5 SECOND)
 				if (src.master)
-					src.master.speak("I guess we need to take another route.  Please follow me.")
+					src.master.say("I guess we need to take another route.  Please follow me.")
 					src.state = 0
 					src.awaiting_beacon = 3
 					next_beacon_id = current_beacon_id
@@ -908,19 +908,21 @@ Contents:
 		return
 
 
-/obj/machinery/door/lunar_breakdoor
-	name = "External Airlock"
-	icon = 'icons/obj/doors/SL_doors.dmi'
-	icon_state = "airlock_closed"
-	icon_base = "airlock"
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
+/obj/machinery/door/airlock/pyro/reinforced/lunar_breakdoor
+	icon = 'icons/misc/lunar.dmi'
+	icon_state = "breakairlock0"
+	anchored = ANCHORED_ALWAYS
 	autoclose = FALSE
-	cant_emag = TRUE
-	req_access = list(access_impossible)
+	req_access = list(access_lunar_breakdoor)
 
 	var/broken = 0
+
+	update_icon()
+		if(src.broken)
+			src.icon_state = "breakairlock2"
+		else
+			src.icon_state = "breakairlock0"
+
 
 	New()
 		..()
@@ -941,21 +943,20 @@ Contents:
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN(0)
-			FLICK("breakairlock1", src)
 			src.icon_state = "breakairlock2"
+			FLICK("breakairlock1", src)
 			sleep (2)
 			src.set_opacity(0)
 			sleep(0.6 SECONDS)
 			elecflash(src,power=2,exclude_center = 0)
 
 		for (var/obj/machinery/door/airlock/otherDoor in view(7, src))
-			if (777 in otherDoor.req_access)
-				otherDoor.req_access -= 777
+			if(access_lunar_breakdoor in otherDoor.req_access)
+				otherDoor.req_access = null
 
 		var/obj/machinery/bot/guardbot/old/theTourguide = locate() in view(src)
 		if (istype(theTourguide) && theTourguide.task)
 			theTourguide.task.task_input("broken_door")
-
 
 
 /obj/decal/lunar_bootprint
@@ -2164,7 +2165,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 				chastised = 1
 				panic = 0
 
-				master.speak( pick("Um...oh.  Sorry about that.","I was just afraid it was more of those armed NT men...sorry...","You're....you're right.  I'm sorry.") )
+				master.say(pick("Um...oh.  Sorry about that.","I was just afraid it was more of those armed NT men...sorry...","You're....you're right.  I'm sorry."))
 				master.visible_message("<b>[src.master]</b> looks ashamed!")
 				drop_arrest_target()
 

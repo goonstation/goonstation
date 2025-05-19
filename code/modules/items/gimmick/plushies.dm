@@ -179,6 +179,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush
 	name = "plush toy"
 	icon = 'icons/obj/plushies.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_plushie.dmi'
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
 	throwforce = 3

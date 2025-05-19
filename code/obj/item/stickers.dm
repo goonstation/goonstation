@@ -413,7 +413,6 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = TRUE
 
 	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null
@@ -456,8 +455,7 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = FALSE
-				//src.radio.listening = 0
+				src.radio.toggle_microphone(FALSE)
 
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
@@ -588,6 +586,7 @@
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
 	slots = 8
+	soundproofing = 20
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
 	/obj/item/device/radio/headset,
@@ -605,8 +604,8 @@
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	listening = 0
-	hardened = 0
+	initial_speaker_enabled = FALSE
+	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1

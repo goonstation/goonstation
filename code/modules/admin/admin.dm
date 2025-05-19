@@ -905,16 +905,7 @@ var/global/noir = 0
 		if ("forcespeech")
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
-				if (ismob(M))
-					var/speech = input("What will [M] say?", "Force speech", null) as text|null
-					if(!speech)
-						return
-					M.say(speech)
-					speech = copytext(sanitize(speech), 1, MAX_MESSAGE_LEN)
-					logTheThing(LOG_ADMIN, usr, "forced [constructTarget(M,"admin")] to say: [speech]")
-					logTheThing(LOG_DIARY, usr, "forced [constructTarget(M,"diary")] to say: [speech]", "admin")
-					if(M.client)
-						message_admins(SPAN_INTERNAL("[key_name(usr)] forced [key_name(M)] to say: [speech]"))
+				usr.client.cmd_say(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
