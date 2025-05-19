@@ -137,14 +137,28 @@
 	//same health as a firebot
 	health_brute = 25
 	health_burn = 25
+	hand_count = 2
+	var/datum/component/mimic_stomach/stomachHolder = null
+	var/modifier = null
 	add_abilities = list(/datum/targetable/critter/mimic,
 						/datum/targetable/critter/tackle,
 						/datum/targetable/critter/sting/mimic/antag_spawn,
-						/datum/targetable/vent_move)
-	hand_count = 2
-	var/modifier = null
-	//give them an actual hand so they can open doors etc.
-	setup_hands()
+						/datum/targetable/vent_move,
+						/datum/targetable/critter/stomach_retreat)
+
+
+	New()
+		..()
+		SPAWN(0)
+			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
+		src.toggle_stomach()
+
+	death()
+		..()
+		STOP_TRACKING
+		src.toggle_stomach()
+
+	setup_hands() //give them an actual hand so they can open doors etc.
 		. = ..()
 		var/datum/handHolder/HH = hands[2]
 		HH.limb = new /datum/limb/small_critter
@@ -158,5 +172,19 @@
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
 
+	proc/toggle_stomach()
+		stomachHolder = src.GetComponent(/datum/component/mimic_stomach/)
+		if (stomachHolder)
+			stomachHolder.RemoveComponent(/datum/component/mimic_stomach/)
+			stomachHolder = null
+		else
+			stomachHolder = src.AddComponent(/datum/component/mimic_stomach/)
+
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)
+
+/obj/mimicdummy
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mimicface"
+	desc = "You shouldn't be seeing me!"
+	// dummy object for stomach appearance stuff
