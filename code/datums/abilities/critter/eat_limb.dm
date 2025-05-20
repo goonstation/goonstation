@@ -1,7 +1,7 @@
 /datum/targetable/critter/eat_limb
 	name = "Bite Limb"
 	desc = "Swallow a limb on the ground, or attempt to gnaw a random one off of someone!"
-	icon_state = "mimic"
+	icon_state = "mimic_eat_limb"
 	cooldown = 45 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
