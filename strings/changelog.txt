@@ -1,4 +1,9 @@
 
+(t)tue may 20 25
+(u)glowbold
+(p)23165
+(e)🪲📄|C-Bug, A-UI
+(+)Long-form papers and forms work more consistently.
 (t)mon may 19 25
 (u)LorrMaster
 (p)23400
