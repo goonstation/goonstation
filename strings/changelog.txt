@@ -1,5 +1,10 @@
 
 (t)tue may 20 25
+(u)Bartimeus, Disturbherb, Firedhat, glowbold, and Mr.Moriaty
+(p)23264
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can dig holes in suitable terrain with shovels.
+(+)You can bury things and people in holes with shovels
 (u)Lefinch
 (p)23364
 (e)🎨🎩|C-Sprites, A-Clothing
