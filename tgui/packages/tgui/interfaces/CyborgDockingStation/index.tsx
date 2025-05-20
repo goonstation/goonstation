@@ -24,6 +24,7 @@ export const CyborgDockingStation = () => {
     occupant,
     viewer_is_occupant,
     viewer_is_robot,
+    viewer_is_human,
   } = data;
   const [tabIndex, setTabIndex] = useState(1);
   return (
@@ -43,6 +44,7 @@ export const CyborgDockingStation = () => {
             allowSelfService={!!allow_self_service}
             viewerIsOccupant={!!viewer_is_occupant}
             viewerIsRobot={!!viewer_is_robot}
+            viewerIsHuman={!!viewer_is_human}
           />
         )}
         <Stack>
@@ -76,10 +78,12 @@ interface DisabledDisplayReasonProps {
   allowSelfService: boolean;
   viewerIsOccupant: boolean;
   viewerIsRobot: boolean;
+  viewerIsHuman: boolean;
 }
 
 const DisabledDisplayReason = (props: DisabledDisplayReasonProps) => {
-  const { allowSelfService, viewerIsOccupant, viewerIsRobot } = props;
+  const { allowSelfService, viewerIsOccupant, viewerIsRobot, viewerIsHuman } =
+    props;
   return (
     <>
       <Box backgroundColor="#773333" p="5px" mb="5px" bold textAlign="center">
@@ -89,11 +93,16 @@ const DisabledDisplayReason = (props: DisabledDisplayReasonProps) => {
           ''}
         {(viewerIsOccupant &&
           !viewerIsRobot &&
-          'Non-cyborgs cannot use the docking station functions.') ||
+          'Only silicons can use the docking station functions from inside.') ||
           ''}
         {(viewerIsOccupant &&
           !allowSelfService &&
           'Self-service has been disabled at this station.') ||
+          ''}
+        {(!viewerIsOccupant &&
+          !viewerIsHuman &&
+          !viewerIsRobot &&
+          'Only humans can use the docking station functions from outside.') ||
           ''}
       </Box>
       <Divider />

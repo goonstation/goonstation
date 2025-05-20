@@ -23,7 +23,7 @@ export const SuppliesSection = () => {
     fuel,
     modules,
     upgrades,
-    viewer_is_robot,
+    disabled,
   } = data;
   const handleToggleSelfService = () => act('self-service');
   const handleInstallModule = (moduleRef: string) =>
@@ -50,7 +50,7 @@ export const SuppliesSection = () => {
           <Button.Checkbox
             tooltip="Toggle self-service."
             checked={allow_self_service}
-            disabled={viewer_is_robot}
+            disabled={disabled}
             onClick={handleToggleSelfService}
           >
             {allow_self_service ? 'Enabled' : 'Disabled'}
