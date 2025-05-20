@@ -858,7 +858,7 @@
 	throwforce = 4
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
-	tool_flags = TOOL_SAWING
+	tool_flags = TOOL_SAWING | TOOL_DECONSTRUCTING
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 	HELP_MESSAGE_OVERRIDE("Use the Help, Disarm, or Grab intents to attempt deconstructing objects when you click them. Switch to Harm intent to use as a weapon.")

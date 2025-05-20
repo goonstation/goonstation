@@ -105,4 +105,4 @@ TYPEINFO(/datum/component/deconstructing)
 		..()
 
 	proc/can_decon_target()
-		return BOUNDS_DIST(owner, target) == 0 || target != null || owner != null || issawingtool(decon_tool) || !(locate(/mob/living) in target) || target.can_deconstruct(owner)
+		return BOUNDS_DIST(owner, target) == 0 || target != null || owner != null || isdeconstructingtool(decon_tool) || !(locate(/mob/living) in target) || target.can_deconstruct(owner)
