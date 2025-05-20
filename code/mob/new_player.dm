@@ -19,7 +19,7 @@ TYPEINFO(/mob/new_player)
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 	/// indicates if a player is currently barred from joining the game
-	var/blocked_from_joining = FALSE
+	var/blocked_from_joining = TRUE
 
 	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
 
@@ -897,9 +897,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
@@ -920,9 +920,9 @@ a.latejoin-card:hover {
 			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if (ticker)
@@ -984,9 +984,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
-		if (src.client.has_login_notice_pending(TRUE))
-			return
 		if (src.blocked_from_joining)
+			return
+		if (src.client.has_login_notice_pending(TRUE))
 			return
 
 		if(tgui_alert(src, "Join the round as an observer?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")

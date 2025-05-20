@@ -23,9 +23,8 @@
 
 	var/client/client = src.client
 
-	if (IsGuestKey(client.key))
-		boutput(client.mob, "You are not authorized to communicate over these channels.")
-		gib(client.mob)
+	if (!client.authenticated)
+		boutput(src, "You are not authorized to communicate over these channels.")
 		return
 
 	var/mob/dead/target_observer/mentor_mouse_observer/mmouse = locate() in src

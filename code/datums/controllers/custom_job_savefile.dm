@@ -1,5 +1,5 @@
 /datum/job_controller/proc/convert_to_cloudsave(client/user)
-	if(!user || IsGuestKey( user.key ))
+	if(!user)
 		return FALSE
 	//convert cloudsave save to cloudsave data a a a a aaaaaaaaaa
 	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
@@ -123,10 +123,6 @@
 
 
 /datum/job_controller/proc/cloudsave_save(client/user, profileNum)
-	if (user)
-		if (IsGuestKey( user.key ))
-			return FALSE
-
 	var/savefile/save = src.savefile_save(src.job_creator)
 	save["profile_number"] << profileNum
 	var/exported = save.ExportText()
@@ -136,10 +132,6 @@
 
 
 /datum/job_controller/proc/cloudsave_load(client/user, profileNum)
-	if (user)
-		if (IsGuestKey(user.key))
-			return FALSE
-
 	var/cloudSaveData = user.player.cloudSaves.getData("custom_job_[profileNum]")
 
 	var/savefile/save = new

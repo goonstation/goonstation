@@ -69,8 +69,6 @@
 	var/goonhub_events_channel = null
 	var/goonhub_events_password = null
 
-	var/goonhub_auth_enabled = FALSE
-
 	//Environment
 	var/env = "dev"
 	var/cdn = ""
@@ -303,9 +301,6 @@
 				config.goonhub_events_channel = trimtext(value)
 			if ("goonhub_events_password")
 				config.goonhub_events_password = trimtext(value)
-
-			if ("goonhub_auth_enabled")
-				config.goonhub_auth_enabled = TRUE
 
 			if ("update_check_enabled")
 				config.update_check_enabled = 1
