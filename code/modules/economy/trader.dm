@@ -153,7 +153,7 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (istraitor(usr) || isspythief(usr) || isnukeop(usr) || usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_OMNITRAITOR))
+			if(usr.mind && istrainedsyndie(usr))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
@@ -1102,6 +1102,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/CBD(src)
 		src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
 		src.goods_sell += new /datum/commodity/pills/uranium(src)
 
@@ -1452,6 +1453,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/drugs/sell/krokodil(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd(src)
 		src.goods_sell += new /datum/commodity/drugs/sell/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/drugs/sell/CBD(src)
 		src.goods_sell += new /datum/commodity/medical/ether(src)
 		src.goods_sell += new /datum/commodity/medical/toxin(src)
 		src.goods_sell += new /datum/commodity/medical/cyanide(src)

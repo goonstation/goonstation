@@ -549,7 +549,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/stool/chair/comfy = 5,
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
-			/obj/item/card/id/captains_spare = 0.1,
+			/obj/item/card/id/gold/captains_spare = 0.1,
 			/obj/item/currency/spacecash/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
