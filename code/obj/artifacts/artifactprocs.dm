@@ -69,7 +69,6 @@
 	var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
 	if (prob(A.scramblechance))
 		appearance = null
-		A.disguised = TRUE
 	// rare-ish chance of an artifact appearing to be a different origin, just to throw things off
 
 	if (!istype(appearance,/datum/artifact_origin/))
