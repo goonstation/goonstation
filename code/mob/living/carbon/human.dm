@@ -365,8 +365,6 @@
 		if (istext(target))
 			var/list/limbs_to_sever = list()
 			switch (target)
-				if ("random")
-					limbs_to_sever += list(pick(src.l_arm, src.r_arm, src.l_leg, src.r_leg))
 				if ("all")
 					limbs_to_sever += list(src.l_arm, src.r_arm, src.l_leg, src.r_leg)
 				if ("both_arms")
