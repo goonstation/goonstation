@@ -141,6 +141,7 @@
 	var/datum/component/mimic_stomach/stomachHolder = null
 	var/modifier = null
 	add_abilities = list(/datum/targetable/critter/mimic,
+						/datum/targetable/critter/eat_limb,
 						/datum/targetable/critter/tackle,
 						/datum/targetable/critter/sting/mimic/antag_spawn,
 						/datum/targetable/vent_move,

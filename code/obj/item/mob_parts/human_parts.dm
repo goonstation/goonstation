@@ -16,6 +16,7 @@
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = FALSE
+	var/mimic_edible = TRUE
 
 	take_damage(brute, burn, tox, damage_type, disallow_limb_loss)
 		if (brute <= 0 && burn <= 0)// && tox <= 0)
@@ -457,6 +458,7 @@
 	partlistPart = null
 	no_icon = TRUE
 	skintoned = FALSE
+	mimic_edible = FALSE
 	var/special_icons = 'icons/mob/human.dmi'
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
@@ -603,6 +605,7 @@
 	partlistPart = null
 	no_icon = TRUE
 	skintoned = FALSE
+	mimic_edible = FALSE
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
 	var/image/handimage = 0

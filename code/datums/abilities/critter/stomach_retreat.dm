@@ -32,7 +32,6 @@
 				if ("No.")
 					return TRUE
 
-
 	proc/activate()
 		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
 		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
