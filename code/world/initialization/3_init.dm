@@ -107,9 +107,6 @@
 	Z_LOG_DEBUG("World/Init", "Updating status...")
 	src.update_status()
 
-	Z_LOG_DEBUG("World/Init", "Setting up occupations list...")
-	SetupOccupationsList()
-
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef CI_RUNTIME_CHECKING

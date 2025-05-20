@@ -1,39 +1,4 @@
-var/list/occupations = list(
-
-	"Chief Engineer",
-	"Engineer","Engineer","Engineer",
-	"Miner","Miner","Miner",
-	"Security Officer", "Security Officer", "Security Officer",
-//	"Vice Officer",
-	"Detective",
-	"Geneticist",
-	"Pathologist",
-	"Scientist","Scientist", "Scientist",
-	"Medical Doctor", "Medical Doctor",
-	"Head of Personnel",
-//	"Head of Security",
-	"Research Director",
-	"Medical Director",
-	"Chaplain",
-	"Roboticist",
-//	"Hangar Mechanic", "Hangar Mechanic",
-	"AI",
-	"Cyborg", "Cyborg",
-	"Bartender",
-	"Chef",
-	"Janitor",
-	"Clown",
-//	"Chemist","Chemist",
-	"Quartermaster","Quartermaster",
-	"Botanist","Botanist")
-//	"Attorney at Space-Law")
-
-var/list/assistant_occupations = list(
-	"Staff Assistant")
-
-//	"Mechanic",
-//	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
-
+// Used for emails (yes this is a feature)
 var/list/job_mailgroup_list = list(
 	"Captain" = MGD_COMMAND,
 	"Head of Personnel" = MGD_COMMAND,
