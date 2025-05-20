@@ -124,7 +124,7 @@
 			else
 				comms.icon_state = "comms-off"
 				rts.icon_state = "rts-off"
-				use_comms.icon_state = "comms_system-off"
+				use_comms.icon_state = "comms_system-nopower"
 
 		if (master.m_w_system)
 			if (master.m_w_system.active)
@@ -184,7 +184,8 @@
 			comms.name = master.com_system.name
 			if (!master.com_system.active)
 				rts.icon_state = "rts-off"
-				use_comms.icon_state = "comms_system-off"
+			else
+				use_comms.icon_state = "comms_system-on"
 		else
 			comms.name = "Comms"
 			comms.icon_state = "comms-off"
