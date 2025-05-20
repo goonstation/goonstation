@@ -74,15 +74,15 @@
 				return TRUE
 
 		if(cache.Find("Engineering Department"))
-			if(J.job_category = JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer))
+			if(J.job_category == JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer))
 				return TRUE
 
 		if(cache.Find("Security Department") || cache.Find("Security Officer"))
-			if(J.job_category = JOB_SECURITY || istype(J, /datum/job/command/head_of_security))
+			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security))
 				return TRUE
 
 		if(cache.Find("Heads of Staff"))
-			if(J.job_category = JOB_COMMAND)
+			if(J.job_category == JOB_COMMAND)
 				return TRUE
 
 	if(cache.Find("Ghostdrone"))
