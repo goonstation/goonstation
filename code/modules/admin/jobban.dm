@@ -65,9 +65,9 @@
 		cache = jobban_get_for_player(M)
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
-	if (J?.no_jobban_from_this_job)
-		return FALSE
 	if(J)
+		if (J.no_jobban_from_this_job)
+			return FALSE
 
 		if(cache.Find("Everything Except Assistant"))
 			if(!istype(J, /datum/job/civilian/staff_assistant))
