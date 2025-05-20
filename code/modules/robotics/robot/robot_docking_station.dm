@@ -465,7 +465,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 	. = list()
 
 	.["viewer_is_occupant"] = (user == src.occupant)
-	.["viewer_is_robot"] = isrobot(user)
+	.["viewer_is_robot"] = (isrobot(user)|| isshell(user))
+	.["viewer_is_human"] = ishuman(user)
 	.["allow_self_service"] = src.allow_self_service
 	.["conversion_chamber"] = src.conversion_chamber
 
@@ -474,9 +475,11 @@ TYPEINFO(/obj/machinery/recharge_station)
 	.["fuel"] = fuelamt
 
 	.["disabled"] = FALSE
-	if (isrobot(user))
+	if (isrobot(user) || isshell(user))
 		if (user != src.occupant)
 			.["disabled"] = TRUE
+	else if (!ishuman(user))
+		.["disabled"] = TRUE
 	else
 		if (user == src.occupant)
 			.["disabled"] = TRUE
