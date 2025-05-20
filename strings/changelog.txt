@@ -1,5 +1,9 @@
 
 (t)tue may 20 25
+(u)outbackcatgirl, Facsimile
+(p)22824
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(*)Adds the keytar, a synth instrument.
 (u)CalliopeSoups
 (p)23474
 (e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
