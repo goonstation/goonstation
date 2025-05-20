@@ -427,7 +427,7 @@ Contents:
 
 		currentFolder.add_file( new /datum/computer/file/terminal_program/email (src) )
 
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(list(999));} (src) )
+		src.root.add_file( new /datum/computer/file/terminal_program/secure_records {req_access = list(access_lunar_breakdoor);} (src) )
 
 /obj/machinery/computer3/generic/lunarsec
 	name = "Security computer"
@@ -487,7 +487,7 @@ Contents:
 
 		SPAWN(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 999
+				src.botcard.access += access_lunar_breakdoor
 
 
 //"Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!"
@@ -908,19 +908,21 @@ Contents:
 		return
 
 
-/obj/machinery/door/lunar_breakdoor
-	name = "External Airlock"
-	icon = 'icons/obj/doors/SL_doors.dmi'
-	icon_state = "airlock_closed"
-	icon_base = "airlock"
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
+/obj/machinery/door/airlock/pyro/reinforced/lunar_breakdoor
+	icon = 'icons/misc/lunar.dmi'
+	icon_state = "breakairlock0"
+	anchored = ANCHORED_ALWAYS
 	autoclose = FALSE
-	cant_emag = TRUE
-	req_access = list(access_impossible)
+	req_access = list(access_lunar_breakdoor)
 
 	var/broken = 0
+
+	update_icon()
+		if(src.broken)
+			src.icon_state = "breakairlock2"
+		else
+			src.icon_state = "breakairlock0"
+
 
 	New()
 		..()
@@ -941,21 +943,20 @@ Contents:
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
 		SPAWN(0)
-			FLICK("breakairlock1", src)
 			src.icon_state = "breakairlock2"
+			FLICK("breakairlock1", src)
 			sleep (2)
 			src.set_opacity(0)
 			sleep(0.6 SECONDS)
 			elecflash(src,power=2,exclude_center = 0)
 
 		for (var/obj/machinery/door/airlock/otherDoor in view(7, src))
-			if (777 in otherDoor.req_access)
-				otherDoor.req_access -= 777
+			if(access_lunar_breakdoor in otherDoor.req_access)
+				otherDoor.req_access = null
 
 		var/obj/machinery/bot/guardbot/old/theTourguide = locate() in view(src)
 		if (istype(theTourguide) && theTourguide.task)
 			theTourguide.task.task_input("broken_door")
-
 
 
 /obj/decal/lunar_bootprint

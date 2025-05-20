@@ -16,7 +16,7 @@
 	var/subscriber_delegate
 	var/fatally_errored = FALSE
 	var/message_queue
-	var/list/sent_assets
+	var/list/sent_assets // |GOONSTATION-CHANGE| Initialize list in New instead
 	// Vars passed to initialize proc (and saved for later)
 	var/initial_strict_mode
 	var/initial_fancy
@@ -25,8 +25,9 @@
 	var/initial_inline_js
 	var/initial_inline_css
 	var/list/oversized_payloads = list()
-	var/mouse_event_macro_set = FALSE
+	var/mouse_event_macro_set = FALSE // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 
+	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	/**
 	 * Static list used to map in macros that will then emit execute events to the tgui window
 	 * A small disclaimer though I'm no tech wiz: I don't think it's possible to map in right or middle
@@ -48,11 +49,11 @@
  * required id string A unique window identifier.
  */
 /datum/tgui_window/New(client/client, id, pooled = FALSE)
-	. = ..()
+	. = ..() // |GOONSTATION-ADD| Probably good I guess
 	src.id = id
 	src.client = client
 	src.client.tgui_windows[id] = src
-	src.sent_assets = list()
+	src.sent_assets = list() // |GOONSTATION-ADD| Initialized here instead of above
 	src.pooled = pooled
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
@@ -100,11 +101,11 @@
 	else
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
-	var/html = tgui_process.basehtml
-	html = replacetextEx(html, "\[tgui:windowId\]", id)
-	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode)
-	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version)
-	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build)
+	var/html = tgui_process.basehtml // |GOONSTATION-CHANGE| Different process holder
+	html = replacetextEx(html, "\[tgui:windowId\]", id) // |GOONSTATION-CHANGE| Escape closing ], differs to upstream
+	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode) // |GOONSTATION-CHANGE| Escape closing ], differs to upstream
+	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version) // |GOONSTATION-ADD| Include BYOND version
+	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build) // |GOONSTATION-ADD| Include BYOND build
 
 	// Inject assets
 	var/inline_assets_str = ""
@@ -120,7 +121,7 @@
 
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
-	html = replacetextEx(html, "<!-- tgui:assets -->", inline_assets_str)
+	html = replacetextEx(html, "<!-- tgui:assets -->", inline_assets_str) // |GOONSTATION-CHANGE| (-->\n") -> (-->") I realize this syntax is confusing
 
 	// Inject inline HTML
 	if (inline_html)
@@ -133,7 +134,6 @@
 	if (inline_css)
 		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
 		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
-
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
@@ -230,6 +230,8 @@
 	locked_by = ui
 
 /**
+ * public
+ *
  * Release the window lock.
  */
 /datum/tgui_window/proc/release_lock()
@@ -271,6 +273,7 @@
 /datum/tgui_window/proc/close(can_be_suspended = TRUE)
 	if(!client)
 		return
+	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	if(mouse_event_macro_set)
 		remove_mouse_macro()
 	if(can_be_suspended && can_be_suspended())
@@ -335,6 +338,7 @@
 		? "[id]:update" \
 		: "[id].browser:update")
 
+// |GOONSTATION-CHANGE| Assets sent differently
 /**
  * public
  *
@@ -347,6 +351,7 @@
 		return
 	sent_assets += list(asset)
 	. = asset.deliver(client)
+	// |GOONSTATION-CHANGE| We have not implemented separate spritesheet assets yet
 	/*
 	if(istype(asset, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/spritesheet = asset
@@ -374,7 +379,7 @@
  *
  * Callback for handling incoming tgui messages.
  */
-/datum/tgui_window/proc/on_message(type, list/payload, list/href_list)
+/datum/tgui_window/proc/on_message(type, list/payload, list/href_list) // |GOONSTATION-CHANGE| Explicit list for payload/href_list
 	// Status can be READY if user has refreshed the window.
 	if(type == "ready" && status == TGUI_WINDOW_READY)
 		// Resend the assets
@@ -412,7 +417,8 @@
 			client << link(href_list["url"])
 		if("cacheReloaded")
 			reinitialize()
-		// if("chat/resend") TGUI CHAT
+		// |GOONSTATION-CHANGE| Not implemented tgui chat
+		// if("chat/resend")
 			// SSchat.handle_resend(client, payload)
 		if("oversizedPayloadRequest")
 			var/payload_id = payload["id"]
@@ -426,6 +432,7 @@
 			append_payload_chunk(payload_id, payload["chunk"])
 			send_message("acknowlegePayloadChunk", list("id" = payload_id))
 
+// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/set_mouse_macro()
 	if(mouse_event_macro_set)
 		return
@@ -449,6 +456,7 @@
 		winset(client, "[mouseMacro]Window[id]Macro", params)
 	mouse_event_macro_set = TRUE
 
+// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/remove_mouse_macro()
 	if(!mouse_event_macro_set)
 		stack_trace("Unsetting mouse macro on tgui window that has none")
