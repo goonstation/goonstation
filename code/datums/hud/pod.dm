@@ -119,6 +119,8 @@
 		if (master.com_system)
 			if (master.com_system.active)
 				comms.icon_state = "comms-on"
+				rts.icon_state = "rts-on"
+				use_comms.icon_state = "comms_system-on"
 			else
 				comms.icon_state = "comms-off"
 				rts.icon_state = "rts-off"
@@ -206,7 +208,6 @@
 
 		if (master.sensors)
 			sensors.name = master.sensors.name
-			sensors_use.icon_state = "sensors-use-unpowered"
 		else
 			sensors.name = "Sensors"
 			sensors.icon_state = "sensors-off"
