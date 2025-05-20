@@ -119,12 +119,10 @@
 		if (master.com_system)
 			if (master.com_system.active)
 				comms.icon_state = "comms-on"
-				use_comms.overlays.len = 0
 			else
 				comms.icon_state = "comms-off"
 				rts.icon_state = "rts-off"
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
+				use_comms.icon_state = "comms_system-off"
 
 		if (master.m_w_system)
 			if (master.m_w_system.active)
@@ -182,19 +180,14 @@
 
 		if (master.com_system)
 			comms.name = master.com_system.name
-			comms.overlays.len = 0
 			if (!master.com_system.active)
 				rts.icon_state = "rts-off"
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
-			else
-				use_comms.overlays.len = 0
+				use_comms.icon_state = "comms_system-off"
 		else
 			comms.name = "Comms"
 			comms.icon_state = "comms-off"
 			rts.icon_state = "rts-off"
-			if (!use_comms.overlays.len)
-				use_comms.overlays += missing
+			use_comms.icon_state = "comms_system-nopower"
 
 		if (master.m_w_system)
 			weapon.name = master.m_w_system.name
@@ -213,7 +206,6 @@
 
 		if (master.sensors)
 			sensors.name = master.sensors.name
-			sensors.overlays.len = 0
 			sensors_use.icon_state = "sensors-use-unpowered"
 		else
 			sensors.name = "Sensors"
