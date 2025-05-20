@@ -25,8 +25,8 @@
 	var/can_beat_up_robots = FALSE
 	/// Bypass to allow special attacks to work on help/grab intent, kind of dumb but necessary
 	var/use_specials_on_all_intents = FALSE
-	/// Exemptions on what it can hold ignoring weight
-	var/list/weight_exemptions = list()
+	/// Exemptions on what it can used/help by the limb
+	var/list/interact_exemptions = list()
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -1726,9 +1726,10 @@
 				var/obj/item/O = target
 				var/can_pickup = 1
 
-				for (var/type in src.weight_exemptions)
-  					if (istype(O, type))
+				for (var/type in src.interact_exemptions)
+					if (istype(O, type))
 						exempt = TRUE
+						..()
 						return
 
 				if (issmallanimal(user))
@@ -1739,6 +1740,11 @@
 					user.visible_message(SPAN_COMBAT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
 					return
 			else
+				for (var/type in src.interact_exemptions)
+					if (istype(target, type))
+						exempt = TRUE
+						..()
+						return
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					var/obj/O = target
@@ -1813,7 +1819,7 @@
 		..()
 
 /datum/limb/small_critter/mail
-	weight_exemptions = list(/obj/item/random_mail)
+	interact_exemptions = list(/obj/item/random_mail)
 
 /// same as the parent, but can pick up some heavier shit
 /datum/limb/small_critter/med
