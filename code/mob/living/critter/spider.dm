@@ -6,7 +6,8 @@
 	icon_state = "big_spide"
 	density = 1
 	hand_count = 8 // spiders!!!
-	add_abilities = list(/datum/targetable/critter/spider_bite,
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
 						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
 	var/flailing = 0
