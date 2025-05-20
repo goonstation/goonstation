@@ -157,7 +157,7 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/mob/living/critter/human/syndicate/rifle,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -257,7 +257,7 @@
 	},
 /area/mining/magnet)
 "O" = (
-/mob/living/critter/human/syndicate/rifle,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
