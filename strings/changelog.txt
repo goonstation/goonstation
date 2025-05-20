@@ -1,5 +1,9 @@
 
 (t)tue may 20 25
+(u)CalliopeSoups
+(p)23474
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Mimics now have a base form sprite and an ability to return to it after disguising.
 (u)Bartimeus, Disturbherb, Firedhat, glowbold, and Mr.Moriaty
 (p)23264
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
