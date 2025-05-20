@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		for (var/i in 1 to rand(2, 4))
 			src.storage.add_contents(new /obj/item/stamped_bullion(src))
 		for (var/i in 1 to rand(2, 3))
-			src.storage.add_contents(new /obj/item/explosive_uplink_telecrystal(src))
+			src.storage.add_contents(new /obj/item/uplink_telecrystal/trick(src))
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET
