@@ -43,7 +43,7 @@
 		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
 		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "Lock or unlock the pod.")
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
-		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
+		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "rts", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
 		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
@@ -106,10 +106,9 @@
 				engine.icon_state = "engine-off"
 
 		if (master.engine?.active && master.sensors?.active)
-			wormhole.overlays.len = 0
+			wormhole.icon_state = "wormhole-powered"
 		else
-			if (!wormhole.overlays.len)
-				wormhole.overlays += missing
+			wormhole.icon_state = "wormhole-unpowered"
 
 		if (master.life_support)
 			if (master.life_support.active)
@@ -120,12 +119,10 @@
 		if (master.com_system)
 			if (master.com_system.active)
 				comms.icon_state = "comms-on"
-				rts.overlays.len = 0
 				use_comms.overlays.len = 0
 			else
 				comms.icon_state = "comms-off"
-				if (!rts.overlays.len)
-					rts.overlays += missing
+				rts.icon_state = "rts-off"
 				if (!use_comms.overlays.len)
 					use_comms.overlays += missing
 
@@ -146,11 +143,10 @@
 		if (master.sensors)
 			if (master.sensors.active)
 				sensors.icon_state = "sensors-on"
-				sensors_use.overlays.len = 0
+				sensors_use.icon_state = "sensors-use-powered"
 			else
 				sensors.icon_state = "sensors-off"
-				if (!sensors_use.overlays.len)
-					sensors_use.overlays += missing
+				sensors_use.icon_state = "sensors-use-unpowered"
 
 		if (master.lock)
 			if (master.lock.is_set() && master.locked)
@@ -174,47 +170,37 @@
 		check_clients()
 		if (master.engine)
 			engine.name = master.engine.name
-			engine.overlays.len = 0
 		else
 			engine.name = "Engine"
-			if (!engine.overlays.len)
-				engine.overlays += missing
+			engine.icon_state = "engine-off"
 
 		if (master.life_support)
 			life_support.name = master.life_support.name
-			life_support.overlays.len = 0
 		else
 			life_support.name = "Life Support"
-			if (!life_support.overlays.len)
-				life_support.overlays += missing
+			life_support.icon_state = "life_support-off"
 
 		if (master.com_system)
 			comms.name = master.com_system.name
 			comms.overlays.len = 0
 			if (!master.com_system.active)
-				if (!rts.overlays.len)
-					rts.overlays += missing
+				rts.icon_state = "rts-off"
 				if (!use_comms.overlays.len)
 					use_comms.overlays += missing
 			else
-				rts.overlays.len = 0
 				use_comms.overlays.len = 0
 		else
 			comms.name = "Comms"
-			if (!comms.overlays.len)
-				comms.overlays += missing
-			if (!rts.overlays.len)
-				rts.overlays += missing
+			comms.icon_state = "comms-off"
+			rts.icon_state = "rts-off"
 			if (!use_comms.overlays.len)
 				use_comms.overlays += missing
 
 		if (master.m_w_system)
 			weapon.name = master.m_w_system.name
-			weapon.overlays.len = 0
 		else
 			weapon.name = "Main Weapon"
-			if (!weapon.overlays.len)
-				weapon.overlays += missing
+			weapon.icon_state = "weapon-off"
 
 		if (master.sec_system)
 			secondary.name = master.sec_system.name
@@ -228,17 +214,11 @@
 		if (master.sensors)
 			sensors.name = master.sensors.name
 			sensors.overlays.len = 0
-			if (!master.sensors.active)
-				sensors_use.overlays.len = 0
-			else
-				if (!sensors_use.overlays.len)
-					sensors_use.overlays += missing
+			sensors_use.icon_state = "sensors-use-unpowered"
 		else
 			sensors.name = "Sensors"
-			if (!sensors.overlays.len)
-				sensors.overlays += missing
-			if (!sensors_use.overlays.len)
-				sensors_use.overlays += missing
+			sensors.icon_state = "sensors-off"
+			sensors_use.icon_state = "sensors-use-unpowered"
 
 		if (master.lock)
 			lock.name = master.lock.name
@@ -253,11 +233,9 @@
 			set_code.icon_state = "set-code-nopower"
 		if (master.lights)
 			lights.name = master.lights.name
-			lights.overlays.len = 0
 		else
 			lights.name = "Lights"
-			if (!lights.overlays.len)
-				lights.overlays += missing
+			lights.icon_state = "lights-off"
 
 	proc/switch_sound()
 		for (var/mob/M in src.master)
