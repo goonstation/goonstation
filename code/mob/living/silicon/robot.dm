@@ -991,14 +991,13 @@ TYPEINFO(/mob/living/silicon/robot)
 				if(!src.opened)
 					src.opened = TRUE
 				boutput(src, SPAN_ALERT("Your interface lock has been emagged!"))
-				elecflash(src)
 				src.locked = FALSE
 				update_appearance()
 				return TRUE
 		else
 			if(!src.opened)
 				src.opened = TRUE
-				boutput(user, "You manually disengage [src]'s interface cover")
+				boutput(user, "You manually disengage [src]'s interface cover with [E]")
 		return FALSE
 
 
