@@ -1986,10 +1986,17 @@
 	var/pixel_x_hand_offset = null
 	var/pixel_y_hand_offset = null
 
+	var/initial_pixel_x = null
+	var/initial_pixel_y = null
+	var/initial_vis_flags = null
+
 	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
 		. = ..()
 		src.user = user
 		src.item = item
+		src.initial_pixel_x = src.item.pixel_x
+		src.initial_pixel_y = src.item.pixel_y
+		src.initial_vis_flags= src.item.vis_flags
 		src.hand_icon = hand_icon
 		src.pixel_x_offset = x_offset
 		src.pixel_y_offset = y_offset
@@ -2019,5 +2026,7 @@
 	onDelete()
 		. = ..()
 		src.user.vis_contents -= src.item
-		src.item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.item.vis_flags = initial_vis_flags
+		src.item.pixel_x = initial_pixel_x
+		src.item.pixel_y = initial_pixel_y
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")
