@@ -12,7 +12,7 @@
 		if (istype(target, /obj/item/parts/human_parts))
 			var/obj/item/parts/human_parts/limb = target
 			if (limb.mimic_edible)
-				SETUP_GENERIC_ACTIONBAR(holder.owner, limb, 1 SECONDS, /datum/action/bar/icon/eat_limb/proc/gobble, list(limb, holder.owner, FALSE), null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
+				actions.start(new/datum/action/bar/icon/eat_limb(holder, limb, holder.owner), holder.owner)
 		else if (ishuman(target))
 			var/mob/living/carbon/human/targetHuman = target
 			if (!targetHuman.limbs)
@@ -23,45 +23,52 @@
 				var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(randLimb["random_limb_string"])
 				if (targetLimb)
 					boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
-					actions.start(new/datum/action/bar/icon/eat_limb(src, targetLimb), targetHuman)
+					actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
 				else
 					src.cast(target)
 
 /datum/action/bar/icon/eat_limb
-	duration = 5 SECONDS
+	duration = 1 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/datum/targetable/critter/eat_limb/eat
 	var/atom/target
+	var/mob/living/critter/mimic/antag_spawn/user
+	var/floorlimb
 
-	New(Eat, Target)
+	New(Eat, Target, User, Floorlimb)
 		eat = Eat
 		src.target = Target
+		user = User
+		floorlimb = Floorlimb
 		..()
+		if (floorlimb)
+			duration = 5 SECONDS
 
 	onStart()
 		..()
-		var/mob/living/critter/mimic/mimic = eat.holder.owner
-		mimic.last_disturbed = INFINITY
+		user.stop_hiding()
+		user.last_disturbed = INFINITY
 
 	onEnd()
 		..()
-		var/mob/living/critter/mimic/mimic = eat.holder.owner
-		mimic.last_disturbed = 1 SECONDS
-		src.gobble(target, eat.holder.owner, TRUE)
+		user.last_disturbed = 1 SECONDS
+		if (floorlimb)
+			src.gobble(target, user, TRUE)
+		else
+			src.gobble(target, user)
 
 	proc/gobble(atom/target, mob/user, var/gnaw = FALSE)
 		var/datum/human_limbs/limbTarget = target
 		var/mob/living/critter/mimic/antag_spawn/mimic = user
 		var/obj/limb = null
 		if (gnaw)
-			var/datum/targetable/critter/eat_limb/abil = mimic.getAbility(/datum/targetable/critter/eat_limb)
-
-			abil.afterAction()
 			limb = limbTarget.sever()
+			var/datum/targetable/critter/eat_limb/abil = mimic.getAbility(/datum/targetable/critter/eat_limb)
+			abil.afterAction()
 		else
-			limb = target
+			limb = limbTarget
 
 		playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
 		if (mimic.stomachHolder)

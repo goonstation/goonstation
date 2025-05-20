@@ -172,6 +172,13 @@
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
 
+	proc/death_barf()
+		for (var/obj/O in src.stomachHolder.limbs_eaten)
+			O.set_loc(get_turf(src))
+			ThrowRandom(O, 10, 2)
+			playsound(src, 'sound/voice/burp_alien.ogg', 60, 1)
+			sleep(0.2 SECONDS)
+
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)
 

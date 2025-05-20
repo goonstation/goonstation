@@ -46,11 +46,8 @@ TYPEINFO(/datum/component/mimic_stomach)
 	qdel(src)
 
 /datum/component/mimic_stomach/UnregisterFromParent()
-	var/mob/parent = src.parent
-	for (var/obj/O in src.limbs_eaten)
-		O.set_loc(get_turf(parent))
-		ThrowRandom(O, 10, 2)
-		playsound(parent, 'sound/voice/burp_alien.ogg', 60, 1)
+	var/mob/living/critter/mimic/antag_spawn/parent = src.parent
+	parent.death_barf()
 	region.clean_up(/turf/space, /turf/space)
 	qdel(region)
 	. = ..()
