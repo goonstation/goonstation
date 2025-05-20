@@ -1,5 +1,9 @@
 
 (t)tue may 20 25
+(u)Lefinch
+(p)23364
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)A new Gnome Chompsky costume is on sale in the Clownhole. Beard not included.
 (u)glowbold
 (p)23165
 (e)🪲📄|C-Bug, A-UI
