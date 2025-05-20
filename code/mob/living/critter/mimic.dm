@@ -152,12 +152,11 @@
 		..()
 		SPAWN(0)
 			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
-		src.toggle_stomach()
+		src.stomachHolder = src.AddComponent(/datum/component/mimic_stomach/)
 
 	death()
 		..()
-		STOP_TRACKING
-		src.toggle_stomach()
+		src.stomachHolder.RemoveComponent(/datum/component/mimic_stomach/)
 
 	setup_hands() //give them an actual hand so they can open doors etc.
 		. = ..()
@@ -172,14 +171,6 @@
 		HH.can_range_attack = FALSE
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
-
-	proc/toggle_stomach()
-		stomachHolder = src.GetComponent(/datum/component/mimic_stomach/)
-		if (stomachHolder)
-			stomachHolder.RemoveComponent(/datum/component/mimic_stomach/)
-			stomachHolder = null
-		else
-			stomachHolder = src.AddComponent(/datum/component/mimic_stomach/)
 
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)

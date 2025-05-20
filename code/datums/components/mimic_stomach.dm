@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/component/mimic_stomach)
 	var/turf/center
 	var/last_appearance
 	var/atom/exit
+	var/list/obj/item/parts/limbs_eaten
 
 TYPEINFO(/datum/component/mimic_stomach)
 	initialization_args = list(
@@ -46,7 +47,10 @@ TYPEINFO(/datum/component/mimic_stomach)
 
 /datum/component/mimic_stomach/UnregisterFromParent()
 	var/mob/parent = src.parent
-	src.region.move_movables_to((exit || parent))
+	for (var/obj/O in src.limbs_eaten)
+		O.set_loc(get_turf(parent))
+		ThrowRandom(O, 10, 2)
+		playsound(parent, 'sound/voice/burp_alien.ogg', 60, 1)
 	region.clean_up(/turf/space, /turf/space)
 	qdel(region)
 	. = ..()

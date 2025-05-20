@@ -12,7 +12,7 @@
 		if (istype(target, /obj/item/parts/human_parts))
 			var/obj/item/parts/human_parts/limb = target
 			if (limb.mimic_edible)
-				SETUP_GENERIC_ACTIONBAR(holder.owner, limb, 1 SECONDS, /datum/targetable/critter/eat_limb/proc/gobble, list(limb, holder.owner, FALSE), null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
+				SETUP_GENERIC_ACTIONBAR(holder.owner, limb, 1 SECONDS, /datum/action/bar/icon/eat_limb/proc/gobble, list(limb, holder.owner, FALSE), null, null, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION)
 		else if (ishuman(target))
 			var/mob/living/carbon/human/targetHuman = target
 			if (!targetHuman.limbs)
@@ -23,9 +23,33 @@
 				var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(randLimb["random_limb_string"])
 				if (targetLimb)
 					boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
-					actions.start(new/datum/action/bar/icon/werewolf_transform(src), targetHuman)
+					actions.start(new/datum/action/bar/icon/eat_limb(src, targetLimb), targetHuman)
 				else
 					src.cast(target)
+
+/datum/action/bar/icon/eat_limb
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "grabbed"
+	var/datum/targetable/critter/eat_limb/eat
+	var/atom/target
+
+	New(Eat, Target)
+		eat = Eat
+		src.target = Target
+		..()
+
+	onStart()
+		..()
+		var/mob/living/critter/mimic/mimic = eat.holder.owner
+		mimic.last_disturbed = INFINITY
+
+	onEnd()
+		..()
+		var/mob/living/critter/mimic/mimic = eat.holder.owner
+		mimic.last_disturbed = 1 SECONDS
+		src.gobble(target, eat.holder.owner, TRUE)
 
 	proc/gobble(atom/target, mob/user, var/gnaw = FALSE)
 		var/datum/human_limbs/limbTarget = target
@@ -42,28 +66,8 @@
 		playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
 		if (mimic.stomachHolder)
 			limb.set_loc(mimic.stomachHolder.region.get_random_turf())
+			LAZYLISTADD(mimic.stomachHolder.limbs_eaten, limb)
 			limb.pixel_x = rand(-12,12)
 			limb.pixel_y = rand(-12,12)
 		else
 			boutput(mimic, "You can't eat this...")
-
-	/datum/action/bar/icon/eat_limb
-	duration = 5 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
-	var/datum/targetable/critter/eat_limb/eat
-
-	New(Eat, Target)
-		eat = Eat
-		src.target = Target
-		..()
-
-	onStart()
-		..()
-			owner.last_disturbed = INFINITY
-
-	onEnd()
-		..()
-		owner.last_disturbed = 1 SECONDS
-		owner.gobble(Target)
