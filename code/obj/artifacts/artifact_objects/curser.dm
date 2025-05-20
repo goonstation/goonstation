@@ -21,7 +21,6 @@
 	react_xray = list(2, 20, 55, 7, "HOLLOW")
 	examine_hint = "It is covered in very conspicuous markings."
 	can_reticulate_when_active = FALSE
-	shard_reward = ARTIFACT_SHARD_SPACETIME
 	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 	// general vars
 	var/chosen_curse

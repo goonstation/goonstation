@@ -2,12 +2,6 @@
 #define ARTIFACT_SIZE_MEDIUM 2
 #define ARTIFACT_SIZE_TINY 1
 
-#define ARTIFACT_SHARD_ESSENCE "art_shard_essence"
-#define ARTIFACT_SHARD_POWER "art_shard_power"
-#define ARTIFACT_SHARD_SPACETIME "art_shard_spacetime"
-#define ARTIFACT_SHARD_FUSION "art_shard_fusion"
-#define ARTIFACT_SHARD_OMNI "art_shard_omni"
-
 // flags for allowed combinations
 #define ARTIFACT_COMBINES_INTO_ANY (1<<0)
 #define ARTIFACT_ACCEPTS_ANY_COMBINE (1<<1)

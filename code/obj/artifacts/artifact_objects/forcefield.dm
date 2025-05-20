@@ -23,7 +23,6 @@
 	var/icon_state = "shieldsparkles"
 	var/next_activate = 0
 	var/list/forcefields = list()
-	shard_reward = ARTIFACT_SHARD_POWER
 
 	New()
 		..()
