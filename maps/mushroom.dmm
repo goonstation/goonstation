@@ -24457,7 +24457,6 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/mask/surgical,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -32027,6 +32026,10 @@
 	print_id = "Artlab"
 	},
 /obj/cable,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_y = 8;
+	pixel_x = 10
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/artifact)
 "rKs" = (
