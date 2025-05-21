@@ -658,15 +658,16 @@ var/datum/artifact_controller/artifact_controls
 	name = "lattice"
 	max_sprites = 1
 	scramblechance = 0
+	nofx = TRUE
 	activation_sounds = list('sound/machines/ArtifactLat1.ogg', 'sound/machines/ArtifactLat2.ogg', 'sound/machines/ArtifactLat3.ogg')
 	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Lattice_1.ogg',
 		'sound/musical_instruments/artifact/Artifact_Lattice_2.ogg',
 		'sound/musical_instruments/artifact/Artifact_Lattice_3.ogg')
 	fault_types = list()
 	adjectives = list("thrumming", "chiming", "resonating", "vibrating", "humming", "ringing", "oscillating", "rhythmic")
-	nouns_large = list("crystal", "bell", "pyramid", "harp")
-	nouns_small = list("instrument", "bell", "pyramid", "harp")
-	touch_descriptors = list("You can't quite grasp the surface.", "A force repels your hand from the surface.", "It's impossible to touch.")
+	nouns_large = list("woodwork", "totem", "harp")
+	nouns_small = list("instrument", "bell", "tool")
+	touch_descriptors = list("You feel air rushing around the surface.", "It feels almost like running water.", "You feel vibrations.")
 
 	generate_name()
 		var/namestring = ""
