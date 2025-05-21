@@ -55,6 +55,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 	var/static/v_width = 12
 	/// client view height in tiles + some padding for flickering, obtained from in-game inspection
 	var/static/v_height = 9
+	var/list/open_viewports = list()
 
 	var/outer_eye_atom = null
 
@@ -83,6 +84,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (src.mind)
 			src.mind.assigned_role = "AI"
 		SPAWN(0)
+			src.remove_viewport_statics()
 			src.add_all_statics()
 
 		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(src_turf_changed))
@@ -92,6 +94,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			return ..()
 		SPAWN(0)
 			src.remove_all_statics()
+			src.add_viewport_statics()
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		.=..()
 
@@ -137,19 +140,37 @@ TYPEINFO(/mob/living/intangible/aieye)
 	proc/add_all_statics()
 		if (!src.loc)
 			return
-		for (var/turf/T as anything in block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z))
+		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
 			src.client.images |= T.aiImage
 
 	proc/remove_all_statics()
 		if (!src.last_client)
 			return
 		var/atom/center = src.last_loc
-		for (var/turf/T as anything in block(center?.x - src.v_width, center?.y - src.v_height, center?.z, center?.x + src.v_width, center?.y + src.v_height, center?.z))
+		for (var/turf/T as anything in (block(center?.x - src.v_width, center?.y - src.v_height, center?.z, center?.x + src.v_width, center?.y + src.v_height, center?.z) + src.get_viewport_turfs()))
+			src.last_client.images -= T.aiImage
+
+	proc/get_viewport_turfs()
+		var/list/turfs = list()
+		for (var/datum/viewport/vp as anything in src.open_viewports)
+			turfs |= vp.handler.vis_contents
+		return turfs
+
+	proc/add_viewport_statics()
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
+			src.last_client.images |= T.aiImage
+
+	proc/remove_viewport_statics()
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
 			src.last_client.images -= T.aiImage
 
 	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
 		SPAWN(0)
-			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z)
+			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z) + src.get_viewport_turfs()
 			var/list/remove_block = block(old_turf.x - src.v_width, old_turf.y - src.v_height, old_turf.z, old_turf.x + src.v_width, old_turf.y + src.v_height, old_turf.z)
 
 			for (var/turf/T as anything in (remove_block - add_block))
@@ -309,7 +330,13 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
 			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
 		else
-			. = ..()
+			src.open_viewports += ..()
+			src.add_all_statics()
+
+	on_close_viewport(datum/viewport/vp)
+		src.remove_all_statics()
+		src.open_viewports -= vp
+		src.add_all_statics()
 
 	proc/mainframe_check()
 		if (mainframe)
