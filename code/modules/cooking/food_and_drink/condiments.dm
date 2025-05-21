@@ -208,6 +208,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 			else
 				switch (src.stuff)
 					if ("salt")
+						logTheThing(LOG_COMBAT, user, "uses [src] on [constructTarget(H, "combat")] at [log_loc(user)].")
 						H.tri_message(user, SPAN_ALERT("<b>[user]</b> [myVerb]s something into [H]'s eyes!"),\
 							SPAN_ALERT("[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK THAT STINGS!</B>"),\
 							SPAN_ALERT("You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK THAT STINGS!</B>" : null]"))

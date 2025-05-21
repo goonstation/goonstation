@@ -1,4 +1,4 @@
-/datum/hud/shell
+/datum/hud/silicon/shell
 	var/atom/movable/screen/hud/tool1
 	var/atom/movable/screen/hud/tool2
 	var/atom/movable/screen/hud/tool3
@@ -45,6 +45,7 @@
 		update_active_tool()
 		update_tools()
 		update_tool_selector()
+		update_health()
 
 	disposing()
 		qdel(src.tool1)
@@ -256,7 +257,7 @@
 
 /mob/living/silicon/hivebot
 	updateStatusUi()
-		if(src.hud && istype(src.hud, /datum/hud/shell))
-			var/datum/hud/shell/H = src.hud
+		if(src.hud && istype(src.hud, /datum/hud/silicon/shell))
+			var/datum/hud/silicon/shell/H = src.hud
 			H.update_status_effects()
 		return

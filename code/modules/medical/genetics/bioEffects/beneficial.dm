@@ -541,19 +541,36 @@
 	stability_loss = 5
 	degrade_to = "involuntary_teleporting"
 	icon_state  = "radiobrain"
+	var/current_module = null
 
 	OnAdd()
-		radio_brains[owner] = power
+		src.onPowerChange(0, src.power)
+
 		. = ..()
 
 	onPowerChange(oldval, newval)
-		radio_brains[owner] = newval
+		if (src.owner && src.current_module)
+			src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		switch (newval)
+			if (1)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY
+			if (2)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY
+			else
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
+
+		if (src.owner)
+			src.owner.listen_tree.AddListenInput(src.current_module)
 
 	OnRemove()
-		. = ..()
-		radio_brains -= owner
+		if (!src.owner || !src.current_module)
+			return
 
-var/list/radio_brains = list()
+		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		. = ..()
+
 
 /datum/bioEffect/hulk
 	name = "Gamma Ray Exposure"
@@ -1118,7 +1135,18 @@ var/list/radio_brains = list()
 		var/stop_delay = 0
 		for (var/i in 1 to 4)
 			src.owner.glide_size = (32 / 1) * world.tick_lag
-			step(src.owner, src.owner.dir)
+			var/move_dir = src.owner.dir
+			var/misstep_angle = 0
+			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+				misstep_angle += randfloat(0,owner.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+			if(misstep_angle)
+				misstep_angle = min(misstep_angle,90)
+				var/move_angle = dir2angle(move_dir)
+				move_angle += pick(-misstep_angle,misstep_angle)
+				move_dir = angle2dir(move_angle)
+
+			step(src.owner, move_dir)
 			if (locate(/obj/table) in src.owner.loc)
 				stop_delay = 1 SECOND
 				break

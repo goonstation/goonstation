@@ -389,6 +389,25 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/football)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
+	var/list/utility_supplies = list()
+	// Ranch Eggs
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/plant)
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/void) // table ambushes ig
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/snow)
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/wizard)
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/knight)
+	utility_supplies.Add(/obj/item/kitchen/food_box/egg_box/rancher/mime)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+#ifdef SECRETS_ENABLED
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+#endif
+
 
 	var/total_storage
 	switch(total_battlers)
@@ -428,6 +447,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					if (prob(25))
 						weapon = pick(weapon_supplies)
 						new weapon(locker)
+					if (prob(15))
+						var/obj/utility = pick(utility_supplies)
+						new utility(locker)
 				else
 					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
@@ -438,6 +460,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 						new armor(chest)
 					if (prob(33))
 						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
+					if (prob(25))
+						var/obj/utility = pick(utility_supplies)
+						new utility(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
