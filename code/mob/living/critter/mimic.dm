@@ -102,6 +102,7 @@
 		if (src.is_hiding)
 			return
 		src.is_hiding = TRUE
+		src.density = 0
 		qdel(src.name_tag)
 		src.name_tag = null
 		src.UpdateIcon()
@@ -113,6 +114,7 @@
 		if(!src.is_hiding)
 			return
 		src.is_hiding = FALSE
+		src.density = 1
 		src.name_tag = new()
 		src.update_name_tag()
 		src.vis_contents += src.name_tag
