@@ -229,7 +229,7 @@
 				if (current_keymap.keys[key] == "flex")
 					keybind = current_keymap.unparse_keybind(key)
 					break
-			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote. The omnitool acts as <b>insulated gloves</b> when held."
+			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
 		else
 			return null
 
