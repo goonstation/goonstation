@@ -1,6 +1,7 @@
 /datum/hud/tutorial
-	var/atom/movable/screen/tutorial_step
-	var/atom/movable/screen/tutorial_text
+	var/atom/movable/screen/tutorial_step = "Loading Tutorial"
+	var/atom/movable/screen/tutorial_text = "Loading the tutorial..."
+	var/atom/movable/screen/tutorial_timer = null
 
 	New()
 		..()
@@ -22,9 +23,19 @@
 		src.tutorial_text.plane = PLANE_HUD
 		src.tutorial_text.layer = 420
 
+		src.tutorial_timer = create_screen("tutorial_timer", "Tutorial Timer", 'icons/mob/tutorial_ui.dmi', "", "NORTH-3, CENTER", HUD_LAYER_3)
+		src.tutorial_timer.plane = PLANE_HUD
+		src.tutorial_timer.alpha = 0 // proc below sets this to 255 when needed
+
 	proc/update_step(new_text)
 		src.tutorial_step.maptext = "<span class='c ol vga vt' style='background: #00000080;'>[new_text]</span>"
 
-
 	proc/update_text(new_text)
 		src.tutorial_text.maptext = "<span class='c ol vt' style='background: #00000080;'>[new_text]</span>"
+
+	proc/flick_timer()
+		src.tutorial_timer.alpha = 255
+		FLICK("timer", src.tutorial_timer)
+
+	proc/stop_timer()
+		src.tutorial_timer.alpha = 0
