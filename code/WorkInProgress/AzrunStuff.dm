@@ -232,6 +232,7 @@
 				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
 
 	on_death()
+		. = ..()
 		if(!online)
 			return
 		if(prob(80))
@@ -259,6 +260,7 @@
 	on_death()
 		if(!online)
 			return
+		. = ..()
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
 
 		// Uhhh.. just one thanks, don't need a pew pew army growing out of someone

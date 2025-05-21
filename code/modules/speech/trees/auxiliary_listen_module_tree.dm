@@ -131,7 +131,7 @@
 			src.target_listen_tree.RemoveListenEffect(effect_id, count = src.listen_effect_ids_with_subcount[effect_id])
 
 		for (var/control_id in src.listen_control_ids_with_subcount)
-			src.target_listen_tree.RemoveListenEffect(control_id, count = src.listen_control_ids_with_subcount[control_id])
+			src.target_listen_tree.RemoveListenControl(control_id, count = src.listen_control_ids_with_subcount[control_id])
 
 		for (var/language_id in src.known_languages_by_id)
 			src.target_listen_tree.RemoveKnownLanguage(language_id, count = src.known_language_ids_with_subcount[language_id])
