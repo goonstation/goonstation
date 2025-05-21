@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Syndicate Omnitool"
 	items = list(/obj/item/tool/omnitool/syndicate)
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes. Acts as insulation when held, like gloves!"
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/bighat
