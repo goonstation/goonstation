@@ -1702,7 +1702,7 @@
 		user.lastattacked = get_weakref(target)
 
 
-/// little critters with teeth, like mice! can pick up small items only.
+/// little critters with teeth, like mice! can pick up small items only. There are some checks in critter.dm, which might need to be updated with whatever you edit here.
 /datum/limb/small_critter
 	var/max_wclass = W_CLASS_TINY // biggest thing we can carry
 	var/dam_low = 1
