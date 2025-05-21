@@ -32,6 +32,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
+	var/last_crunch = 0
 	var/datum/targetable/critter/eat_limb/eat
 	var/atom/target
 	var/mob/living/critter/mimic/antag_spawn/user
@@ -50,6 +51,16 @@
 		..()
 		user.stop_hiding()
 		user.last_disturbed = INFINITY
+
+	onUpdate()
+		..()
+		last_crunch++
+		if (last_crunch >= 2)
+			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, user.loc)
+			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
+			eat_twitch(user)
+			ThrowRandom(gib, rand(2,6))
+			last_crunch = 0
 
 	onEnd()
 		..()
