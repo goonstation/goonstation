@@ -84,9 +84,13 @@
 		else
 			limb = limbTarget
 
-		playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
 		if (mimic.stomachHolder)
-			limb.set_loc(mimic.stomachHolder.region.get_random_turf())
+			var/turf/spawnpoint = mimic.stomachHolder.region.get_random_turf()
+			if (mimic.stomachHolder.region.turf_on_border(spawnpoint))
+				gobble(target, user) // reroll if the limb would end up on the stomach wall
+				return
+			playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
+			limb.set_loc(spawnpoint)
 			LAZYLISTADD(mimic.stomachHolder.limbs_eaten, limb)
 			limb.pixel_x = rand(-12,12)
 			limb.pixel_y = rand(-12,12)
