@@ -14,8 +14,6 @@
 		if (inside)
 			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes.", "No.")))
 				if ("Yes.")
-					current_chute.present_mimic = null
-					current_chute = null
 					deactivate()
 				if ("No.")
 					return TRUE
@@ -53,7 +51,9 @@
 		abil.inside = FALSE
 		abil.afterAction()
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] turns themself outside in!</b>"))
-		mimic.set_loc(get_turf(current_chute))
+		mimic.set_loc(current_chute)
+		current_chute.present_mimic = null
+		current_chute = null
 		mimic.appearance = last_appearance
 		last_appearance = null
 		mimic.UpdateIcon()
