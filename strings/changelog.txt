@@ -1,4 +1,47 @@
 
+(t)tue may 20 25
+(u)LeahTheTech
+(+)The Lawbringer, Sabre, and Colt "job rewards" can now be claimed via the right click menu.
+(+)Level 0 job reward claims will no longer hang trying to contact the mouldering bones of the Byond website.
+(u)outbackcatgirl, Facsimile
+(p)22824
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(*)Adds the keytar, a synth instrument.
+(u)CalliopeSoups
+(p)23474
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Mimics now have a base form sprite and an ability to return to it after disguising.
+(u)Bartimeus, Disturbherb, Firedhat, glowbold, and Mr.Moriaty
+(p)23264
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can dig holes in suitable terrain with shovels.
+(+)You can bury things and people in holes with shovels
+(u)Lefinch
+(p)23364
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)A new Gnome Chompsky costume is on sale in the Clownhole. Beard not included.
+(u)glowbold
+(p)23165
+(e)🪲📄|C-Bug, A-UI
+(+)Long-form papers and forms work more consistently.
+(t)mon may 19 25
+(u)LorrMaster
+(p)23400
+(e)🗺🎨💅🧱|A-Mapping, C-Sprites, C-QoL, A-Materials
+(*)New sprites for ores at various stack sizes
+(u)glowbold
+(p)22847
+(e)🆕🎨📦💡|C-Feature, C-Sprites, A-Game-Objects, A-Station-Systems
+(+)Stationary cameras that are unsecured no longer broadcast video/audio. Anchor them down to restart the broadcast.
+(+)Mobile cameras can be broken with wirecutters and fixed with cables, like security cameras.
+(u)Mr. Moriarty
+(p)23468
+(e)🔎⛔🔨|C-Code-Quality, C-Removal, A-Player-Actions
+(+)Ghostdrones can no longer use the ; prefix to speak to deadchat. Please use the Y menu or the :d prefix instead.
+(u)LorrMaster
+(p)23485
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Blueprints printed from photocopiers now work properly
 (t)sun may 18 25
 (u)CalliopeSoups
 (p)23475

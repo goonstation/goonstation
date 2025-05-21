@@ -3,7 +3,7 @@
 	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'
-	icon_state = "mimicface"
+	icon_state = "mimictrue"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
@@ -20,7 +20,8 @@
 	//we're an ambush critter so we use all our abilities immediately
 	ai_attacks_per_ability = 0
 
-	dir_locked = TRUE //most items don't have dirstates, so don't let us change one
+	dir_locked = FALSE //most items don't have dirstates, so don't let us change one
+	var/base_form = TRUE
 	var/icon/face_image
 	var/icon/face_displace_image
 	var/is_hiding = FALSE
@@ -34,17 +35,16 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.face_image = icon('icons/misc/critter.dmi',"mimicface")
-		var/toolboxType =pick(25;/obj/item/storage/toolbox/mechanical, 25;/obj/item/storage/toolbox/emergency, 25;/obj/item/storage/toolbox/electrical, 24;/obj/item/storage/toolbox/artistic, 1;/obj/item/storage/toolbox/memetic)
-		var/obj/item/storage/toolbox/startDisguise = new toolboxType(null)
-		src.disguise_as(startDisguise)
-		qdel(startDisguise)
 
 	update_icon()
 		. = ..()
-		if(!is_hiding)
-			src.add_filter("mimic_face", 101, layering_filter(icon = src.face_image,  blend_mode = BLEND_INSET_OVERLAY))
+		if (src.base_form)
+			return
 		else
-			src.remove_filter("mimic_face")
+			if(!is_hiding)
+				src.add_filter("mimic_face", 101, layering_filter(icon = src.face_image,  blend_mode = BLEND_INSET_OVERLAY))
+			else
+				src.remove_filter("mimic_face")
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -70,24 +70,35 @@
 		. = ..()
 		src.stop_hiding()
 
-	proc/disguise_as(var/obj/target)
-		var/icon/I = getFlatIcon(target)
-		var/pixels = null
-		src.appearance = target
-		src.dir = target.dir
-		src.invisibility = initial(src.invisibility)
-		src.alpha = max(src.alpha, 200)
-		src.plane = initial(src.plane)
-		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
-		src.start_hiding()
-		for(var/y = 1, y <= I.Height(), y++)
-			for(var/x = 1, x <= I.Width(), x++)
-				var/nullcheck = I.GetPixel(x, y)
-				if(nullcheck != null)
-					pixels++
-		src.pixel_amount = pixels
+	proc/disguise_as(var/obj/target, var/base_return=FALSE)
+		if (base_return)
+			src.dir_locked = FALSE
+			src.base_form = TRUE
+			src.appearance = /mob/living/critter/mimic/
+			src.stop_hiding()
+		else
+			var/icon/I = getFlatIcon(target)
+			var/pixels = null
+			src.dir_locked = TRUE
+			src.base_form = FALSE
+			src.appearance = target
+			src.dir = target.dir
+			src.invisibility = initial(src.invisibility)
+			src.alpha = max(src.alpha, 200)
+			src.plane = initial(src.plane)
+			src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
+			src.start_hiding()
+			for(var/y = 1, y <= I.Height(), y++)
+				for(var/x = 1, x <= I.Width(), x++)
+					var/nullcheck = I.GetPixel(x, y)
+					if(nullcheck != null)
+						pixels++
+			src.pixel_amount = pixels
+
 
 	proc/start_hiding()
+		if (src.base_form)
+			return
 		if (src.is_hiding)
 			return
 		src.is_hiding = TRUE
@@ -96,6 +107,8 @@
 		src.UpdateIcon()
 
 	proc/stop_hiding()
+		if (src.base_form)
+			return
 		src.last_disturbed = TIME
 		if(!src.is_hiding)
 			return
@@ -138,6 +151,7 @@
 	health_brute = 25
 	health_burn = 25
 	add_abilities = list(/datum/targetable/critter/mimic,
+						/datum/targetable/critter/drop_disguise,
 						/datum/targetable/critter/tackle,
 						/datum/targetable/critter/sting/mimic/antag_spawn,
 						/datum/targetable/vent_move)

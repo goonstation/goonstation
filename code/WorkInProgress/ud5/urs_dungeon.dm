@@ -330,7 +330,7 @@
 				M.show_message("<span class='say bold'>[SPAN_MESSAGE("<span style='color: [src.text_color]'>[message]")]</span></span>", 2)
 
 /area/adventure/urs_dungeon
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 	virtual = 0
 
 
