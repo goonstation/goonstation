@@ -1383,7 +1383,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Pure Telecrystal"
-	items = list(/obj/item/explosive_uplink_telecrystal)
+	items = list(/obj/item/uplink_telecrystal/trick)
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
 	telecrystal = TRUE

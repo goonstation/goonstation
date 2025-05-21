@@ -648,15 +648,13 @@ TYPEINFO(/obj/item/heat_dowsing)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype_exact(src, /turf/space/fluid))
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-			return
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 			return
 	..()
 
@@ -693,14 +691,14 @@ TYPEINFO(/obj/item/heat_dowsing)
 			var/obj/item/vent_capture_unbuilt/V = W
 			V.build(user,src.loc)
 			return
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-			actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src.loc), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
+			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 		..()
 
 #define VENT_GENFACTOR 300
