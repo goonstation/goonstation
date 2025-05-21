@@ -74,8 +74,39 @@
 #define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
+
+// Tutorials
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
+#define LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT "tutorial_newbee_basic_movement"
+#define LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS "tutorial_newbee_powered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_ID_CARD "tutorial_newbee_pickup_id_card"
+#define LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS "tutorial_newbee_idlock_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_CROWBAR "tutorial_newbee_pickup_crowbar"
+#define LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS "tutorial_newbee_unpowered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_MOUSE_ONE "tutorial_newbee_mouse_one"
+#define LANDMARK_TUTORIAL_NEWBEE_MOUSE_TWO "tutorial_newbee_mouse_two"
+#define LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH "tutorial_newbee_get_health"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRST_AID "tutorial_newbee_pickup_first_aid"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING "tutorial_newbee_exit_healing"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX "tutorial_newbee_pickup_toolbox"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER "tutorial_newbee_destroy_girder"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FLASHLIGHT "tutorial_newbee_flashlight"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS "tutorial_newbee_enter_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS "tutorial_newbee_traverse_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET "tutorial_newbee_emergency_supply_closet"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE "tutorial_newbee_enter_space"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE "tutorial_newbee_traverse_space"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_BACKPACK "tutorial_newbee_pickup_backpack"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE "tutorial_newbee_exit_storage"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK "tutorial_newbee_pickup_welding_mask"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_WALL "tutorial_newbee_decon_wall"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_RULES "tutorial_newbee_exit_rules"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_HELP "tutorial_newbee_exit_help"
+#define LANDMARK_TUTORIAL_NEWBEE_PULL_TARGET "tutorial_newbee_pull_target"
+#define LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM "tutorial_newbee_final_room"
+#define LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER "tutorial_newbee_clown_murder"
+
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 

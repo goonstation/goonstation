@@ -1,183 +1,279 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"am" = (
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/black,
+"af" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_toolbox,
+/turf/unsimulated/floor/white,
 /area/tutorial/newbee)
-"az" = (
-/obj/maptext_spawner{
-	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
+"ah" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 9
 	},
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"am" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
+	},
 /area/tutorial/newbee)
 "aJ" = (
 /turf/unsimulated/floor/greenblack,
 /area/tutorial/newbee)
-"aP" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/mask/breath,
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/black/side{
-	dir = 1
+"aQ" = (
+/turf/unsimulated/floor/escape{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"bh" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 5
 	},
 /area/tutorial/newbee)
 "bj" = (
-/turf/unsimulated/floor/black/corner{
-	dir = 8
+/turf/unsimulated/floor/blackwhite{
+	dir = 10
 	},
 /area/tutorial/newbee)
-"bn" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Kill the clown to finish.</span>"
+"bo" = (
+/obj/rack,
+/obj/item/extinguisher{
+	pixel_y = 5;
+	pixel_x = 8
 	},
-/turf/unsimulated/floor/black,
+/obj/item/extinguisher{
+	pixel_y = 5;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"bp" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 6
+	},
 /area/tutorial/newbee)
 "br" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Space ahead! Space kills the spaceman!</span>"
+/turf/unsimulated/floor/blackwhite{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
-"cB" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Control + click on it to pull it and move it.</span>"
+"bW" = (
+/obj/machinery/power/apc/autoname_north/hardened{
+	pixel_y = 0;
+	cell_type = 0
 	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor,
+/area/space,
+/area/tutorial/depowered)
+"cT" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
-"cH" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Click the backpack with an empty hand to open it</span>"
-	},
-/turf/unsimulated/floor/black,
-/area/tutorial/newbee)
-"di" = (
-/obj/table/reinforced/auto,
-/obj/item/crowbar,
+"dF" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/orange/side,
+/turf/simulated/floor/bluegreen/side{
+	dir = 1
+	},
 /area/tutorial/newbee)
 "dR" = (
 /turf/unsimulated/floor/arrival{
 	dir = 1
 	},
 /area/tutorial/newbee)
-"ea" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Then get a wrench and use it on the remaining girder</span>"
-	},
-/turf/unsimulated/floor/black,
+"ek" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/storage/firstaid/toxin,
+/turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
-"fs" = (
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/greenblack{
-	dir = 8
-	},
-/area/tutorial/newbee)
-"fK" = (
-/turf/unsimulated/floor/purplewhite{
+"eM" = (
+/obj/landmark/newbee/mouse_one,
+/turf/unsimulated/floor/red/side{
 	dir = 4
 	},
 /area/tutorial/newbee)
-"fY" = (
-/turf/unsimulated/floor/redblack,
+"fj" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkbluewhite,
 /area/tutorial/newbee)
-"gS" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Activate the welder, and use it on the wall. Your space helmet</span>"
+"fK" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
-"ho" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Congrats! You can now do some things!</span>"
+"fP" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
+/obj/landmark/newbee/exit_healing,
+/turf/unsimulated/floor/white,
 /area/tutorial/newbee)
-"iw" = (
-/turf/simulated/wall/auto/supernorn,
+"gb" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/exit_rules,
+/turf/unsimulated/floor/darkblueblack,
 /area/tutorial/newbee)
-"iC" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>The door to your right has no power. </span>"
+"gi" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 6
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
-"iM" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/oxygen{
-	pixel_x = -18
-	},
-/obj/item/tank/mini/oxygen{
-	pixel_x = 8
-	},
-/obj/item/tank/pocket/oxygen{
-	pixel_x = -4
-	},
-/turf/unsimulated/floor/black/side{
+"gj" = (
+/obj/landmark/newbee/clown_murder,
+/turf/unsimulated/floor/escape{
 	dir = 1
 	},
 /area/tutorial/newbee)
-"iV" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Control + click far away to stop pulling</span>"
+"gp" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/landmark/newbee/enter_space,
+/turf/simulated/floor/bluegreen,
+/area/tutorial/newbee)
+"gx" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_id_card,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"gL" = (
+/turf/unsimulated/floor/green/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"ho" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full,
+/area/tutorial/newbee)
+"hy" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/structure/girder,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"in" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/landmark/newbee/enter_maints,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"iv" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"iw" = (
+/obj/landmark/newbee/decon_wall,
+/turf/simulated/wall/auto,
+/area/tutorial/newbee)
+"iC" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orange/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"iZ" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"jm" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
+	},
 /area/tutorial/newbee)
 "jH" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
-"kq" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>A wall is in your way. Grab a welding tool from the toolbox</span>"
+"jJ" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"kq" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"kS" = (
+/mob/living/critter/small_animal/mouse/weak/mentor{
+	dir = 8
+	},
+/turf/unsimulated/floor/darkblue/checker/other,
 /area/tutorial/newbee)
 "kW" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 9
 	},
 /area/tutorial/newbee)
+"lc" = (
+/obj/decal/poster/wallsign/space{
+	pixel_x = -32
+	},
+/turf/simulated/floor/bluegreen/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
 "ld" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"lI" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"me" = (
+/obj/landmark/newbee/basic_movement,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"mr" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 9
+	},
 /area/tutorial/newbee)
 "ne" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 8
 	},
 /area/tutorial/newbee)
+"no" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/lattice/directional_icons{
+	dir = 9
+	},
+/turf/space,
+/area/space)
 "nE" = (
-/turf/unsimulated/floor/purplewhite{
+/turf/unsimulated/floor/darkblueblack{
 	dir = 10
 	},
 /area/tutorial/newbee)
-"or" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Inside the blue toolbox is a wrench.</span>"
-	},
-/turf/unsimulated/floor/black,
+"nL" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/greenblack,
 /area/tutorial/newbee)
+"oj" = (
+/turf/unsimulated/floor/escape{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"ol" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "oB" = (
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
-"oJ" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Walk through the space area to continue.</span>"
+"oK" = (
+/turf/unsimulated/floor/blue,
+/area/tutorial/newbee)
+"oX" = (
+/turf/simulated/floor/bluegreen/corner{
+	dir = 8
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "pd" = (
 /obj/decal/cleanable/dirt/dirt4,
@@ -188,20 +284,14 @@
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
 "po" = (
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/red,
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/black/grime,
 /area/tutorial/newbee)
 "pG" = (
-/turf/unsimulated/floor/redwhite{
+/obj/landmark/newbee/mouse_two,
+/turf/unsimulated/floor/red/side{
 	dir = 4
 	},
-/area/tutorial/newbee)
-"pS" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Equip the space suit, helmet, and breath mask with V</span>"
-	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "pU" = (
 /turf/unsimulated/floor/arrival{
@@ -209,39 +299,42 @@
 	},
 /area/tutorial/newbee)
 "qa" = (
-/turf/unsimulated/floor/red,
+/turf/unsimulated/floor/black/grime,
 /area/tutorial/newbee)
 "qf" = (
 /turf/unsimulated/floor/arrival,
 /area/tutorial/newbee)
 "qj" = (
-/turf/unsimulated/floor/black/side{
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"qn" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
 /area/tutorial/newbee)
-"rj" = (
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/purplewhite,
+"qO" = (
+/turf/unsimulated/floor/escape{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"ry" = (
+/obj/landmark/newbee/emergency_supply_closet,
+/turf/simulated/floor/bluegreen,
 /area/tutorial/newbee)
 "so" = (
-/turf/unsimulated/floor/purplewhite,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkblueblack,
 /area/tutorial/newbee)
-"sU" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Use the wrench on the girder to deconstruct it.</span>"
+"sJ" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
-/area/tutorial/newbee)
-"sZ" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Welcome to the brief SS13 tutorial.</span>"
-	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "tm" = (
-/turf/unsimulated/floor/redblack{
+/turf/unsimulated/floor/red/side{
 	dir = 4
 	},
 /area/tutorial/newbee)
@@ -249,22 +342,28 @@
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "tL" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Uh oh, attack of the angry mice!</span>"
-	},
-/turf/unsimulated/floor/redwhite{
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/red/side{
 	dir = 1
+	},
+/area/tutorial/newbee)
+"tY" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 4
 	},
 /area/tutorial/newbee)
 "uk" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 8
+	pixel_y = -5
 	},
-/obj/item/clothing/head/helmet/welding,
-/turf/unsimulated/floor/bluewhite{
+/turf/unsimulated/floor/darkpurpleblack{
 	dir = 10
+	},
+/area/tutorial/newbee)
+"um" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 5
 	},
 /area/tutorial/newbee)
 "ux" = (
@@ -272,39 +371,60 @@
 	dir = 8
 	},
 /area/tutorial/newbee)
-"uH" = (
-/obj/machinery/light/incandescent,
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/brute,
-/turf/unsimulated/floor/redwhite,
+"uG" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 9
+	},
 /area/tutorial/newbee)
 "uL" = (
-/obj/maptext_spawner{
-	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
+/turf/unsimulated/floor/orange/side{
+	dir = 10
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "uT" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/brute,
-/turf/unsimulated/floor/redwhite,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/red/side,
 /area/tutorial/newbee)
 "vb" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 5
 	},
 /area/tutorial/newbee)
-"wn" = (
-/turf/unsimulated/floor/greenblack{
+"vh" = (
+/turf/unsimulated/floor/escape{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"vA" = (
+/turf/simulated/floor/bluegreen/corner{
 	dir = 4
 	},
 /area/tutorial/newbee)
-"wp" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>or welding helmet protects your eyes from welding damage</span>"
+"vG" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood/splatter/extra,
+/obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
+/mob/living/critter/spider/clownqueen,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"vH" = (
+/mob/living/critter/small_animal/mouse/weak/mentor/admin{
+	dir = 8
 	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"vS" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"wn" = (
+/obj/decal/poster/wallsign/space{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/greenblack{
+	dir = 4
+	},
 /area/tutorial/newbee)
 "wr" = (
 /turf/unsimulated/floor/orange/side{
@@ -319,107 +439,110 @@
 "wD" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/tutorial/newbee)
-"wM" = (
-/obj/table/reinforced/auto,
-/obj/item/device/light/flashlight{
-	pixel_y = 6
+"wE" = (
+/turf/simulated/floor/bluegreen/side{
+	dir = 1
 	},
+/area/tutorial/newbee)
+"wN" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/escape{
+	dir = 8
+	},
 /area/tutorial/newbee)
 "wY" = (
-/obj/table/reinforced/auto,
-/obj/item/crowbar,
+/obj/machinery/light/incandescent,
 /turf/unsimulated/floor/orange/side,
 /area/tutorial/newbee)
+"xc" = (
+/obj/structure/girder,
+/obj/landmark/newbee/decon_girder,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
 "xX" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 4
 	},
-/turf/unsimulated/floor,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/landmark/newbee/traverse_space,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"yJ" = (
+/turf/simulated/floor/bluegreen/corner{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"zd" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"zp" = (
+/obj/decoration/damagedchair{
+	dir = 8
+	},
+/obj/item/clipboard/with_pen{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/black/grime,
 /area/tutorial/newbee)
 "zE" = (
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee)
 "zV" = (
-/obj/machinery/light/incandescent,
-/mob/living/critter/small_animal/mouse/mad,
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 1
 	},
 /area/tutorial/newbee)
 "zY" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>The water tank is in your way.</span>"
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkblueblack{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"AK" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
 "AS" = (
-/obj/maptext_spawner{
-	loc_maptext = "<span class='c pixel sh'>E to switch hands</span>"
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 6
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "Bv" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
 "Bw" = (
-/obj/machinery/door/airlock/pyro/alt{
+/obj/mapping_helper/access/engineering,
+/obj/landmark/newbee/idlock_doors,
+/obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/turf/unsimulated/floor/orange,
-/area/tutorial/depowered)
-"BA" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/maptext_spawner{
-	loc_maptext = "<span class='c pixel sh'>Q to drop items</span>"
-	},
-/turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
-"BD" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Click the backpack with an item in hand to store it</span>"
-	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor,
 /area/tutorial/newbee)
 "BP" = (
-/turf/unsimulated/floor/black/corner{
-	dir = 1
+/turf/unsimulated/floor/blackwhite{
+	dir = 6
 	},
 /area/tutorial/newbee)
 "Ck" = (
-/turf/unsimulated/floor/black/side{
-	dir = 4
-	},
-/area/tutorial/newbee)
-"Cy" = (
-/turf/unsimulated/floor/redwhite{
-	dir = 1
-	},
-/area/tutorial/newbee)
-"CF" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 128;
-	loc_maptext = "<span class='c pixel sh'>Take off your space suit and helmet by clicking on them with an empty hand.</span>";
-	loc_maptext_x = 16
-	},
-/turf/unsimulated/floor/greenblack{
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
 /area/tutorial/newbee)
-"Da" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 128;
-	loc_maptext = "<span class='c pixel sh'>Press the 4 hotkey to switch to Harm intent and click the mouse to kill it!</span>";
-	loc_maptext_x = 16
-	},
-/turf/unsimulated/floor/redblack{
+"CF" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_backpack,
+/turf/unsimulated/floor/greenblack{
 	dir = 8
 	},
 /area/tutorial/newbee)
@@ -433,14 +556,36 @@
 	dir = 4
 	},
 /area/tutorial/newbee)
-"Ef" = (
-/obj/item/swords/pirate,
-/turf/unsimulated/floor/black,
-/area/tutorial/newbee)
-"Ff" = (
-/obj/structure/girder,
+"Ec" = (
+/obj/item/scrapweapons/weapons/dagger,
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
+"Ek" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Ev" = (
+/turf/unsimulated/floor/green/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"EA" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/green/side,
+/area/tutorial/newbee)
+"EE" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Ff" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/landmark/newbee/unpowered_doors,
+/turf/unsimulated/floor,
+/area/tutorial/depowered)
 "Fw" = (
 /turf/unsimulated/floor/arrival{
 	dir = 5
@@ -453,38 +598,62 @@
 /area/tutorial/newbee)
 "Gf" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/orangeblack,
-/area/tutorial/newbee)
-"Go" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Click on yourself with a patch to use it</span>"
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
-"GT" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Click+drag the toolbox onto you to open it and grab the wrench.</span>"
+"Gz" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_first_aid,
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"GU" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"Hb" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Hd" = (
+/turf/simulated/floor/bluegreen/side{
+	dir = 8
+	},
 /area/tutorial/newbee)
 "HV" = (
 /turf/space,
 /area/space)
-"If" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Pick up a crowbar and use it on the door to open it.</span>"
-	},
-/turf/unsimulated/floor/black,
+"Im" = (
+/obj/item/swords/pirate,
+/turf/unsimulated/floor,
 /area/tutorial/newbee)
 "Ir" = (
 /obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/final_room,
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
+"Iw" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"IJ" = (
+/obj/item/bat,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"IK" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
 "IY" = (
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 9
 	},
 /area/tutorial/newbee)
@@ -493,35 +662,99 @@
 	dir = 4
 	},
 /area/tutorial/newbee)
+"JH" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/item/clothing/under/rank/geneticist{
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/obj/item/clothing/suit/labcoat/genetics{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/tutorial/newbee)
 "Kk" = (
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 5
 	},
+/area/tutorial/newbee)
+"Kn" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/traverse_maints,
+/turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
 "Kz" = (
 /obj/fakeobject/teleport_pad,
 /obj/landmark/tutorial_start,
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
-"Lr" = (
-/obj/item/scrapweapons/weapons/dagger,
-/turf/unsimulated/floor/redblack,
+"KM" = (
+/obj/machinery/light/incandescent,
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_welding_mask,
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Lt" = (
+/turf/unsimulated/floor/green/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"LB" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 8
+	},
 /area/tutorial/newbee)
 "LQ" = (
-/obj/machinery/power/apc{
-	cell_type = 0
+/turf/unsimulated/floor/escape{
+	dir = 6
 	},
-/turf/unsimulated/floor,
-/area/space,
-/area/tutorial/depowered)
-"Ni" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
+/area/tutorial/newbee)
+"LX" = (
+/turf/simulated/wall/auto,
+/area/tutorial/newbee)
+"Mh" = (
+/turf/simulated/floor/bluegreen/corner,
+/area/tutorial/newbee)
+"Mr" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/orange/side,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"MB" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/get_health,
+/turf/unsimulated/floor/white/side,
+/area/tutorial/newbee)
+"MD" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluegreen/side,
+/area/tutorial/newbee)
+"Ni" = (
+/turf/unsimulated/floor/green/side,
+/area/tutorial/newbee)
+"Nr" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/escape{
+	dir = 4
+	},
 /area/tutorial/newbee)
 "Nu" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Nz" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_flashlight,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"NG" = (
+/turf/unsimulated/floor/green/side{
+	dir = 10
+	},
 /area/tutorial/newbee)
 "NL" = (
 /turf/unsimulated/floor/orange/side,
@@ -535,57 +768,91 @@
 /turf/cordon,
 /area/space)
 "NP" = (
-/turf/unsimulated/floor/purplewhite{
+/turf/unsimulated/floor/darkblueblack{
 	dir = 6
 	},
+/area/tutorial/newbee)
+"Oa" = (
+/turf/unsimulated/floor/darkblue/checker/other,
 /area/tutorial/newbee)
 "OP" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 10
 	},
 /area/tutorial/newbee)
-"Pi" = (
-/obj/item/bat,
-/turf/unsimulated/floor/redblack,
-/area/tutorial/newbee)
 "Qb" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
+/obj/landmark/newbee/powered_doors,
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
-"QI" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>The next area is dark. Grab a flashlight to help you navigate</span>"
+"Qq" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/directional_icons{
+	dir = 9
 	},
-/turf/unsimulated/floor/black,
-/area/tutorial/newbee)
-"QT" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>To move around, use WASD. Walk into the door to the right.</span>"
+/turf/space,
+/area/space)
+"QM" = (
+/turf/unsimulated/floor/green/side{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "Rd" = (
 /turf/unsimulated/floor/bluewhite,
 /area/tutorial/newbee)
+"Rn" = (
+/obj/adventurepuzzle/triggerable/light/gauntlet,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
 "Rz" = (
-/obj/machinery/light/small/floor/warm,
+/obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
+"RA" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/exit_storage,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"RG" = (
+/obj/critter/domestic_bee{
+	pixel_y = 6;
+	pixel_x = -19
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy{
+	pixel_y = 16;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/tutorial/newbee)
+"Sq" = (
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"SH" = (
+/obj/mesh/catwalk,
+/turf/unsimulated/floor/airless/plating/catwalk/auto,
+/area/space)
 "Tp" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
 	},
 /area/tutorial/newbee)
-"TD" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>There is a girder blocking your way.</span>"
+"Tz" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 8
 	},
-/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"TD" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/green/side{
+	dir = 1
+	},
 /area/tutorial/newbee)
 "TN" = (
 /turf/unsimulated/floor/plating,
@@ -595,15 +862,15 @@
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
 "Ui" = (
+/turf/unsimulated/floor/blackwhite,
+/area/tutorial/newbee)
+"Ul" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/turf/unsimulated/floor/black/side{
-	dir = 1
-	},
+/obj/landmark/newbee/pickup_crowbar,
+/turf/unsimulated/floor,
 /area/tutorial/newbee)
 "UE" = (
-/turf/unsimulated/floor/purplewhite{
+/turf/unsimulated/floor/darkblueblack{
 	dir = 8
 	},
 /area/tutorial/newbee)
@@ -613,24 +880,22 @@
 	},
 /area/tutorial/newbee)
 "Ve" = (
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 10
 	},
 /area/tutorial/newbee)
 "Vh" = (
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 6
 	},
 /area/tutorial/newbee)
-"Vy" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Grab an oxygen tank and click the button on the top left to turn it on.</span>"
+"VJ" = (
+/turf/unsimulated/floor/green/side{
+	dir = 6
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
 "VV" = (
-/turf/unsimulated/floor/redwhite{
+/turf/unsimulated/floor/red/side{
 	dir = 8
 	},
 /area/tutorial/newbee)
@@ -638,31 +903,68 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor,
 /area/tutorial/newbee)
-"WM" = (
-/obj/machinery/light/incandescent,
-/turf/unsimulated/floor/arrival{
-	dir = 8
+"Wy" = (
+/turf/unsimulated/floor/escape{
+	dir = 9
 	},
 /area/tutorial/newbee)
-"Yy" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>You can store items in your backpack.</span>"
+"WF" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 5
 	},
-/turf/unsimulated/floor/black,
 /area/tutorial/newbee)
-"Zf" = (
+"Xs" = (
+/turf/unsimulated/floor/darkpurpleblack,
+/area/tutorial/newbee)
+"Yk" = (
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/arrival{
+/turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},
 /area/tutorial/newbee)
-"ZE" = (
-/obj/maptext_spawner{
-	loc_maptext_width = 96;
-	loc_maptext = "<span class='c pixel sh'>Use C when the flashlight is in your hand to activate it</span>"
+"Yl" = (
+/turf/unsimulated/floor/escape,
+/area/tutorial/newbee)
+"Yq" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
 	},
-/turf/unsimulated/floor/black,
+/obj/landmark/newbee/exit_help,
+/turf/unsimulated/floor/blue/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Yy" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/greenblack{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"YH" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"YZ" = (
+/obj/window/auto/reinforced/indestructible/extreme,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"ZG" = (
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ZL" = (
+/turf/unsimulated/floor/escape{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ZN" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"ZP" = (
+/turf/simulated/floor/bluegreen,
 /area/tutorial/newbee)
 
 (1,1,1) = {"
@@ -698,10 +1000,10 @@ wD
 wD
 wD
 wD
-NO
-NO
-NO
-NO
+wD
+wD
+wD
+wD
 wD
 wD
 wD
@@ -714,21 +1016,21 @@ NO
 (3,1,1) = {"
 NO
 wD
-oB
-Wh
 pU
 Tp
-WM
+Tp
+Tp
 wt
 wD
-NO
-NO
-NO
-NO
-wD
-Wh
-oB
-oB
+Wy
+wN
+vh
+wN
+aQ
+LX
+qa
+qa
+zp
 qa
 po
 wD
@@ -737,22 +1039,22 @@ NO
 (4,1,1) = {"
 NO
 wD
-sZ
-QT
 dR
 oB
+Kz
 oB
 qf
 wD
-wD
-wD
-wD
-wD
-wD
+oj
+Im
 oB
+oB
+Yl
+wD
+wD
 ho
-bn
-Lr
+wD
+wD
 qa
 wD
 NO
@@ -760,69 +1062,69 @@ NO
 (5,1,1) = {"
 NO
 wD
-tv
-tv
 dR
 oB
-Kz
+Rn
+oB
 qf
 wD
-wD
-Wh
+gj
+oB
+Ec
 oB
 oB
 Ir
+Wh
 oB
-tv
-Ef
-fY
-qa
+Ud
+wD
+ZG
 wD
 NO
 "}
 (6,1,1) = {"
 NO
 wD
-tv
-tv
 dR
 oB
+me
 oB
 qf
 wD
-wD
-Ud
+oj
+IJ
+oB
+oB
+Yl
 wD
 wD
 wD
 oB
-tv
-tv
-Pi
-qa
+wD
+RG
 wD
 NO
 "}
 (7,1,1) = {"
 NO
 wD
-oB
-Wh
 Fw
 DI
-Zf
+oB
+DI
 FM
 wD
-wD
-oB
-wD
+qO
+Nr
+ZL
+Nr
 LQ
 wD
+bW
+wD
 Wh
-oB
-oB
-qa
-po
+wD
+JH
 wD
 NO
 "}
@@ -837,13 +1139,13 @@ wD
 wD
 wD
 wD
-oB
 wD
 wD
 wD
 wD
 wD
 wD
+Yq
 wD
 wD
 wD
@@ -852,116 +1154,116 @@ NO
 (9,1,1) = {"
 NO
 wD
-oB
-oB
 kW
+ne
+oB
 ne
 uL
 wD
-UE
+mr
 UE
 UE
 UE
 nE
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+Mr
+Oa
+Oa
+Oa
+Mr
+wD
 NO
 "}
 (10,1,1) = {"
 NO
 wD
 iC
-If
-wr
+oB
+oB
 oB
 wY
 wD
 zY
-cB
-zE
-iV
+tv
+tv
+tv
 so
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+Oa
+Oa
+Oa
+Oa
+Oa
+wD
 NO
 "}
 (11,1,1) = {"
 NO
 wD
-am
-tv
 wr
+gx
 oB
-di
+oB
+NL
 wD
 am
 tv
-zE
 tv
-rj
+tv
+tv
+gb
+Oa
+Oa
+Oa
+Oa
+Oa
 wD
-NO
-NO
-NO
-NO
-NO
-NO
 NO
 "}
 (12,1,1) = {"
 NO
 wD
-tv
-tv
-wr
+iC
+oB
+oB
 oB
 wY
 wD
+zY
 tv
 tv
-zE
 tv
 so
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+YZ
+YZ
+YZ
+YZ
+YZ
+wD
 NO
 "}
 (13,1,1) = {"
 NO
 wD
-oB
-oB
 vb
 DQ
-AS
+oB
+DQ
+iZ
 wD
+um
 fK
-fK
-fK
+tv
 fK
 NP
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+Mr
+kS
+Oa
+vH
+Mr
+wD
 NO
 "}
 (14,1,1) = {"
@@ -990,22 +1292,22 @@ NO
 (15,1,1) = {"
 NO
 wD
-ne
-ne
-ne
-ne
-uL
+gL
+Ev
+oB
+Ev
+NG
 wD
-ux
-ux
-ux
-ux
+Ek
+LB
+tv
+KM
 uk
 wD
-NN
+Iw
 NN
 CF
-fs
+NN
 OP
 wD
 NO
@@ -1014,63 +1316,40 @@ NO
 NO
 wD
 TD
-or
-GT
-sU
-NL
+oB
+oB
+oB
+EA
 wD
 kq
-gS
-wp
-ea
-Rd
-Ir
-Yy
-BD
 tv
-cH
-aJ
+tv
+tv
+Xs
+wD
+Yy
+tv
+tv
+tv
+nL
 wD
 NO
 "}
 (17,1,1) = {"
 NO
 wD
-am
-tv
-tv
-tv
+Sq
+oB
+oB
+Ul
 Ni
 wD
-am
+kq
 tv
 tv
 tv
-az
-wD
-am
-tv
-tv
-tv
-uL
-wD
-NO
-"}
-(18,1,1) = {"
-NO
-wD
-tv
-tv
-tv
-tv
-NL
-wD
-tv
-tv
-tv
-tv
-Rd
-wD
+Xs
+RA
 tv
 tv
 tv
@@ -1079,24 +1358,47 @@ aJ
 wD
 NO
 "}
+(18,1,1) = {"
+NO
+wD
+TD
+oB
+oB
+oB
+EA
+wD
+kq
+tv
+tv
+tv
+Xs
+wD
+Yy
+tv
+tv
+tv
+nL
+wD
+NO
+"}
 (19,1,1) = {"
 NO
 wD
-DQ
-DQ
-DQ
-DQ
+Lt
+QM
+oB
+QM
+VJ
+wD
+bh
+iv
+tY
+iv
 AS
 wD
-Jd
-Jd
-Jd
-Jd
-AS
-wD
+WF
 wn
-wn
-wn
+tv
 wn
 UX
 wD
@@ -1130,21 +1432,21 @@ NO
 wD
 IY
 VV
-Da
+oB
 VV
 Ve
 wD
+ah
+qn
+ux
+qn
+Hb
+wD
+GU
 HV
 HV
 HV
-HV
-HV
-HV
-HV
-HV
-HV
-HV
-HV
+ol
 wD
 NO
 "}
@@ -1152,17 +1454,17 @@ NO
 NO
 wD
 tL
-tv
-tv
-Go
+oB
+oB
+oB
 uT
 wD
-HV
-HV
-TN
-HV
-HV
-TN
+jm
+zE
+Jd
+zE
+Rd
+wD
 HV
 HV
 HV
@@ -1175,40 +1477,40 @@ NO
 NO
 wD
 zV
-tv
-tv
-tv
-uH
+bo
+oB
+oB
+oB
+MB
+zE
+Rd
+oK
+Gz
+Rd
 wD
 HV
 HV
 HV
 HV
 HV
-HV
-HV
-HV
-TN
-HV
-TN
 wD
 NO
 "}
 (24,1,1) = {"
 NO
 wD
-Cy
-tv
-tv
-tv
+tL
+oB
+oB
+oB
 uT
 wD
-HV
-HV
-HV
-HV
-HV
-HV
+jm
+zE
+ux
+zE
+Rd
+wD
 HV
 HV
 HV
@@ -1221,22 +1523,22 @@ NO
 NO
 wD
 Kk
-pG
+eM
 tm
 pG
 Vh
+wD
+IK
+Yk
+zE
+zd
+gi
 wD
 HV
 HV
 HV
 HV
 HV
-TN
-HV
-HV
-HV
-HV
-TN
 wD
 NO
 "}
@@ -1245,137 +1547,137 @@ NO
 wD
 wD
 wD
-Ff
-wD
-wD
-wD
-BA
-pe
-xX
-pe
-pe
 wD
 wD
 wD
 wD
 wD
 wD
+fP
+wD
+wD
+wD
+HV
+TN
+TN
+TN
+HV
 wD
 NO
 "}
 (27,1,1) = {"
 NO
 wD
-Nu
-Nu
-Nu
-Nu
+EE
+Tz
+Tz
+Tz
 Nu
 wD
+uG
 Ck
-Ck
-Ck
+zE
 Ck
 bj
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+HV
+HV
+HV
+HV
+HV
+wD
 NO
 "}
 (28,1,1) = {"
 NO
 wD
-Nu
-QI
-Nu
-ZE
-Nu
+jJ
+zE
+zE
+zE
+fj
 wD
 br
-pS
-Vy
-oJ
+zE
+zE
+zE
 Ui
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+HV
+HV
+HV
+HV
+HV
+wD
 NO
 "}
 (29,1,1) = {"
 NO
 wD
 Gf
-tv
-Nu
-tv
-wM
+Nz
+zE
+zE
+zE
+xc
+zE
+zE
+zE
+zE
+Ui
 wD
-am
-tv
-tv
-tv
-aP
+HV
+HV
+HV
+HV
+HV
 wD
-NO
-NO
-NO
-NO
-NO
-NO
 NO
 "}
 (30,1,1) = {"
 NO
 wD
-Nu
-tv
-Nu
-tv
-Nu
+jJ
+zE
+zE
+zE
+fj
 wD
-tv
-tv
-tv
-tv
-iM
+br
+zE
+af
+zE
+Ui
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+HV
+HV
+HV
+HV
+HV
+wD
 NO
 "}
 (31,1,1) = {"
 NO
 wD
-Nu
-Nu
-Nu
-Nu
-Nu
+ZN
+sJ
+zE
+sJ
+bp
 wD
+vS
+zd
 qj
-qj
-qj
-qj
+zd
 BP
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+HV
+HV
+HV
+HV
+HV
+wD
 NO
 "}
 (32,1,1) = {"
@@ -1383,22 +1685,22 @@ NO
 wD
 wD
 wD
-Qb
+in
 wD
 wD
 wD
 wD
 wD
-Qb
 wD
 wD
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+wD
+no
+HV
+SH
+HV
+Qq
+wD
 NO
 "}
 (33,1,1) = {"
@@ -1410,18 +1712,18 @@ TN
 wD
 Bv
 TN
+jH
 TN
 TN
+pd
 TN
 wD
-TN
+pe
+pe
+gp
+pe
+pe
 wD
-NO
-NO
-NO
-NO
-NO
-NO
 NO
 "}
 (34,1,1) = {"
@@ -1429,114 +1731,114 @@ NO
 wD
 jH
 Rz
-TN
+pd
 wD
 TN
 TN
 wD
-wD
-wD
-wD
+TN
+TN
+TN
 TN
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+Mh
+lc
+ZP
+lc
+vA
+wD
 NO
 "}
 (35,1,1) = {"
 NO
 wD
 TN
-pd
 wD
 wD
+wD
 TN
 TN
-TN
+wD
 TN
 Bv
 wD
-TN
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+wD
+MD
+ZP
+ZP
+ZP
+dF
+wD
 NO
 "}
 (36,1,1) = {"
 NO
 wD
 TN
+jH
 TN
-wD
-wD
-wD
-wD
-wD
-wD
+TN
+YH
 TN
 wD
 TN
+TN
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+TN
+Kn
+ZP
+ZP
+ZP
+ry
+wE
+wD
 NO
 "}
 (37,1,1) = {"
 NO
 wD
+wD
+wD
+wD
+wD
+wD
+cT
+wD
 TN
-jH
-TN
-TN
-Bv
-TN
-pd
-TN
-TN
-ld
 TN
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+TN
+wD
+MD
+ZP
+ZP
+ZP
+dF
+wD
 NO
 "}
 (38,1,1) = {"
 NO
 wD
-ld
-TN
-TN
-TN
-ld
-TN
-TN
+ek
+vG
+lI
+lI
+hy
+AK
+wD
 Bv
 TN
 TN
-TN
+ld
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+oX
+Hd
+Hd
+Hd
+yJ
+wD
 NO
 "}
 (39,1,1) = {"
@@ -1554,12 +1856,12 @@ wD
 wD
 wD
 wD
-NO
-NO
-NO
-NO
-NO
-NO
+wD
+wD
+wD
+wD
+wD
+wD
 NO
 "}
 (40,1,1) = {"

@@ -13,6 +13,7 @@ TYPEINFO(/mob/new_player)
 
 	var/ready_play = FALSE //!Ready to play game
 	var/ready_tutorial = FALSE //!Ready to start tutorial
+	var/tutorial_loading = FALSE //!Tutorial is loading
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
