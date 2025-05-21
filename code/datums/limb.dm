@@ -27,6 +27,7 @@
 	var/use_specials_on_all_intents = FALSE
 	/// Exemptions on what it can used/help by the limb
 	var/list/interact_exemptions = list()
+	var/exempt = FALSE // For specific items which are heavier yet carriable, has to be here cause of critter.dm checks
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -1711,7 +1712,6 @@
 	var/dmg_type = DAMAGE_BLUNT
 	var/custom_msg = null
 	var/stam_damage_mult = 0.1
-	var/exempt = FALSE // For specific items which are heavier yet carriable
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
