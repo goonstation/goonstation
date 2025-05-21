@@ -101,7 +101,7 @@
 			return
 		if (src.is_hiding)
 			return
-		if (src.max_health > 50)
+		if (src.max_health >= 50)
 			src.density = 0
 		src.is_hiding = TRUE
 		qdel(src.name_tag)
