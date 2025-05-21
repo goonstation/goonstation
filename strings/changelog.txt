@@ -1,5 +1,8 @@
 
 (t)tue may 20 25
+(u)LeahTheTech
+(+)The Lawbringer, Sabre, and Colt "job rewards" can now be claimed via the right click menu.
+(+)Level 0 job reward claims will no longer hang trying to contact the mouldering bones of the Byond website.
 (u)outbackcatgirl, Facsimile
 (p)22824
 (e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
