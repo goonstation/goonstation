@@ -2231,7 +2231,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 			if (istype(effect, /datum/statusEffect/drunk))
 				var/mob/living/carbon/human/H = pilot
 				H.apply_automated_arrest("DUI.")
-			break
+				break
 
 		return ..(lifeform_inside_me, breath_request, mult)
 
