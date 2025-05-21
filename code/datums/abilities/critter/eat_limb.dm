@@ -36,15 +36,15 @@
 	var/datum/targetable/critter/eat_limb/eat
 	var/atom/target
 	var/mob/living/critter/mimic/antag_spawn/user
-	var/floorlimb
+	var/moblimb
 
-	New(Eat, Target, User, Floorlimb)
+	New(Eat, Target, User, Moblimb)
 		eat = Eat
-		src.target = Target
+		target = Target
 		user = User
-		floorlimb = Floorlimb
+		moblimb = Moblimb
 		..()
-		if (floorlimb)
+		if (moblimb)
 			duration = 5 SECONDS
 
 	onStart()
@@ -56,16 +56,18 @@
 		..()
 		last_crunch++
 		if (last_crunch >= 2)
-			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, user.loc)
+			var/datum/human_limbs/T = target
+			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
 			eat_twitch(user)
+			random_brute_damage(T.holder, 2)
 			ThrowRandom(gib, rand(2,6))
 			last_crunch = 0
 
 	onEnd()
 		..()
 		user.last_disturbed = 1 SECONDS
-		if (floorlimb)
+		if (moblimb)
 			src.gobble(target, user, TRUE)
 		else
 			src.gobble(target, user)
@@ -76,6 +78,7 @@
 		var/obj/limb = null
 		if (gnaw)
 			limb = limbTarget.sever()
+			target.emote("scream")
 			var/datum/targetable/critter/eat_limb/abil = mimic.getAbility(/datum/targetable/critter/eat_limb)
 			abil.afterAction()
 		else

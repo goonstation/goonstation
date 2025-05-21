@@ -6,7 +6,7 @@
 	cooldown_after_action = TRUE
 	needs_turf = FALSE
 	var/inside = FALSE
-	var/current_chute = null
+	var/obj/machinery/disposal/current_chute = null
 	var/last_appearance = null
 
 	cast(atom/target)
@@ -14,6 +14,8 @@
 		if (inside)
 			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes.", "No.")))
 				if ("Yes.")
+					current_chute.present_mimic = null
+					current_chute = null
 					deactivate()
 				if ("No.")
 					return TRUE
@@ -28,6 +30,8 @@
 					if (!istype(holder.owner.loc, /obj/machinery/disposal))
 						boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
 						return TRUE
+					current_chute = holder.owner.loc
+					current_chute.present_mimic = holder.owner
 					activate()
 				if ("No.")
 					return TRUE

@@ -37,6 +37,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/repair_step = DISPOSAL_REPAIR_STEP_FIXED
 	///How fast do we repressurize
 	var/repressure_speed = 0.1
+	/// for if a mimic has trapped the chute
+	var/mob/living/critter/mimic/antag_spawn/present_mimic = null
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
 
@@ -944,6 +946,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(target == user)
 				msg = "[user.name] climbs into the [chute]."
 				boutput(user, "You climb into the [chute].")
+
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
@@ -954,6 +957,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				..()
 				return
 			target.set_loc(chute)
+			if (chute.present_mimic)
+				if (GET_COOLDOWN(chute, "mimicTrap"))
+					boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [chute]!</B>"))
+				else
+					mimicTrap(target)
 
 			if (msg)
 				chute.visible_message(msg)
@@ -972,6 +980,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return FALSE
 		return TRUE
 
+	proc/mimicTrap(mob/living/carbon/human/target)
+		ON_COOLDOWN(chute, "mimicTrap", 5 SECONDS)
+		var/randLimb = list("random_limb_string" = pick("l_arm", "r_arm", "l_leg", "r_leg"))
+		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(randLimb["random_limb_string"])
+		if (targetLimb)
+			var/obj/item/limb = targetLimb.sever()
+			boutput(target, SPAN_ALERT("Something in the [chute] tears off [limb]!"))
+			target.emote("scream")
+			limb.set_loc(chute.present_mimic.stomachHolder.region.get_random_turf())
+			playsound(chute, 'sound/voice/burp_alien.ogg', 60, 1)
+		else
+			mimicTrap(target)
 
 #undef DISPOSAL_REPAIR_STEP_FIXED
 #undef DISPOSAL_REPAIR_STEP_SCREWDRIVER
