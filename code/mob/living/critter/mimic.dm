@@ -27,6 +27,7 @@
 	var/is_hiding = FALSE
 	///The last time our disguise was interrupted
 	var/last_disturbed = INFINITY
+	var/obj/current_disguise = null
 	///Time taken to hide if we sit still (Life interval dependent)
 	var/rehide_time = 5 SECONDS
 	var/pixel_amount = null
@@ -74,6 +75,7 @@
 		if (base_return)
 			src.dir_locked = FALSE
 			src.base_form = TRUE
+			src.current_disguise = null
 			src.appearance = /mob/living/critter/mimic/
 			src.stop_hiding()
 		else
@@ -81,6 +83,7 @@
 			var/pixels = null
 			src.dir_locked = TRUE
 			src.base_form = FALSE
+			src.current_disguise = target
 			src.appearance = target
 			src.dir = target.dir
 			src.invisibility = initial(src.invisibility)
@@ -101,8 +104,7 @@
 			return
 		if (src.is_hiding)
 			return
-		if (src.max_health >= 50)
-			src.density = 0
+		src.density = src.current_disguise.density
 		src.is_hiding = TRUE
 		qdel(src.name_tag)
 		src.name_tag = null
