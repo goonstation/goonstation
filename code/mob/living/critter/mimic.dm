@@ -101,8 +101,9 @@
 			return
 		if (src.is_hiding)
 			return
+		if (src.max_health > 50)
+			src.density = 0
 		src.is_hiding = TRUE
-		src.density = 0
 		qdel(src.name_tag)
 		src.name_tag = null
 		src.UpdateIcon()
