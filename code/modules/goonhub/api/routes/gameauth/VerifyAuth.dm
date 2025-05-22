@@ -8,6 +8,7 @@
 	correct_response = /datum/apiModel/VerifyAuthResource
 
 	buildBody(
-		session
+		session,
+		server_id
 	)
 		. = ..(args)

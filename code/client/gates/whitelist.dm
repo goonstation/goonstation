@@ -2,11 +2,11 @@
 	check(client/C)
 		if (!config.whitelistEnabled || IsLocalClient(C)) return TRUE
 
-		// Admins are always allowed
-		if (C.client_auth_intent.admin) return TRUE
+		// Active admins are always allowed
+		if (C.client_auth_intent.admin && C.client_auth_intent.admin_rank != "Inactive") return TRUE
 
 		// Check if the client is on the whitelist
-		if (C.ckey in whitelistCkeys) return TRUE
+		if (C.client_auth_intent.whitelisted) return TRUE
 
 		// If the client is not on the whitelist, show them a message and boot them
 		SPAWN(-1)

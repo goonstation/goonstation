@@ -9,7 +9,7 @@
 		if (total_clients_for_cap() < player_cap) return TRUE
 
 		// The player is allowed to bypass the cap
-		if (C.ckey in bypassCapCkeys)
+		if (C.client_auth_intent.can_bypass_cap)
 			boutput(C, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 			return TRUE
 
