@@ -190,7 +190,7 @@
 		var/counter = 0
 		for (var/obj/O in src.stomachHolder.limbs_eaten)
 			O.set_loc(get_turf(src))
-			ThrowRandom(O, 10, 2)
+			ThrowRandom(O, 10, 2, bonus_throwforce=10)
 			if (counter <= 0)
 				playsound(src, 'sound/voice/burp_alien.ogg', 60, 1)
 				counter = 5
