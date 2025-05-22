@@ -3141,3 +3141,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	food_effects = list("food_warm","food_energized","food_brute")
 	bites_left = 5
 	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/flan
+	name = "flan"
+	desc = "dtl"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "flan"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	bites_left = 3 //changing this later just need this to work ::))))
+	heal_amt = 2
+	food_color = "#38130C"
+	initial_volume = 10
+	initial_reagents = list("sugar" = 10)
+	food_effects = list("food_warm","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
