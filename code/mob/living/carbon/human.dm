@@ -2472,12 +2472,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
-	else if(limb == "random")
-		var/randLimb = (pick("l_arm", "r_arm", "l_leg", "r_leg"))
-		if (src.has_limb(randLimb))
-			src.sever_limb(randLimb)
-		else
-			src.sever_limb("random")
 	else
 		return FALSE
 

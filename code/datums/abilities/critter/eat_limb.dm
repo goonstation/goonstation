@@ -19,13 +19,15 @@
 				boutput(holder.owner, "Your target doesn't have any limbs! Did you do that?")
 				return
 			else
-				var/randLimb = list("random_limb_string" = pick("l_arm", "r_arm", "l_leg", "r_leg"))
-				var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(randLimb["random_limb_string"])
-				if (targetLimb)
-					boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
-					actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
-				else
-					src.cast(target)
+				var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+				var/list/randLimb = null
+				for (var/L in randLimbBase)
+					if (targetHuman.limbs.get_limb(L))
+						LAZYLISTADD(randLimb, L)
+				var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(pick(randLimb))
+
+				boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
+				actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
 
 /datum/action/bar/icon/eat_limb
 	duration = 1 SECONDS
@@ -85,14 +87,11 @@
 			limb = limbTarget
 
 		if (mimic.stomachHolder)
-			var/turf/spawnpoint = mimic.stomachHolder.region.get_random_turf()
-			if (mimic.stomachHolder.region.turf_on_border(spawnpoint))
-				gobble(target, user) // reroll if the limb would end up on the stomach wall
-				return
 			playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
-			limb.set_loc(spawnpoint)
+			limb.set_loc(mimic.stomachHolder.limb_target_turf)
 			LAZYLISTADD(mimic.stomachHolder.limbs_eaten, limb)
 			limb.pixel_x = rand(-12,12)
 			limb.pixel_y = rand(-12,12)
+			mimic.stomachHolder.limb_target_turf = get_turf(pick(mimic.stomachHolder.non_walls))
 		else
 			boutput(mimic, "You can't eat this...")

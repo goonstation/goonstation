@@ -3,6 +3,8 @@ ABSTRACT_TYPE(/datum/component/mimic_stomach)
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/datum/allocated_region/region
 	var/turf/center
+	var/turf/limb_target_turf
+	var/list/non_walls
 	var/last_appearance
 	var/atom/exit
 	var/list/obj/item/parts/limbs_eaten
@@ -29,10 +31,12 @@ TYPEINFO(/datum/component/mimic_stomach)
 			var/turf/T = region.turf_at(x, y)
 			if (region.turf_on_border(T))
 				T.ReplaceWith(/turf/unsimulated/wall/setpieces/bloodwall)
+			else
+				LAZYLISTADD(non_walls, T)
 			var/chance = rand(1,6)
 			if (chance == 3)
 				make_cleanable(/obj/decal/cleanable/blood/gibs, T)
-
+	limb_target_turf = get_turf(pick(non_walls))
 	center = region.get_center()
 
 /datum/component/mimic_stomach/proc/on_entered()

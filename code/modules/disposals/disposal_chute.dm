@@ -37,8 +37,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/repair_step = DISPOSAL_REPAIR_STEP_FIXED
 	///How fast do we repressurize
 	var/repressure_speed = 0.1
-	/// for if a mimic has trapped the chute
-	var/mob/living/critter/mimic/antag_spawn/present_mimic = null
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
 
@@ -957,11 +955,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				..()
 				return
 			target.set_loc(chute)
-			if (chute.present_mimic)
-				if (GET_COOLDOWN(chute, "mimicTrap"))
-					boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [chute]!</B>"))
-				else
-					mimicTrap(target)
 
 			if (msg)
 				chute.visible_message(msg)

@@ -6,7 +6,8 @@
 	cooldown_after_action = TRUE
 	needs_turf = FALSE
 	var/inside = FALSE
-	var/obj/machinery/disposal/current_chute = null
+	var/list/trap_whitelist = list(/obj/machinery/disposal, /obj/storage/)
+	var/obj/current_container = null
 	var/last_appearance = null
 
 	cast(atom/target)
@@ -21,16 +22,21 @@
 			switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes.", "No.")))
 				if ("Yes.")
 					var/turf/T = get_turf(holder.owner)
+					var/obj/target_container = holder.owner.loc
 					if (!T.z || isrestrictedz(T.z))
 						boutput(holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
 						return TRUE
 					// Attempt entry via disposal machinery OR a disconnected disposal pipe
-					if (!istype(holder.owner.loc, /obj/machinery/disposal))
+					if (target_container.type in trap_whitelist)
+						current_container = target_container
+						current_container.present_mimic = holder.owner
+						activate()
+					else if (target_container.present_mimic)
+						boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
+						return TRUE
+					else
 						boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
 						return TRUE
-					current_chute = holder.owner.loc
-					current_chute.present_mimic = holder.owner
-					activate()
 				if ("No.")
 					return TRUE
 
@@ -38,9 +44,11 @@
 		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
 		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = TRUE
-		boutput(holder.owner, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
-		current_chute = holder.owner.loc
+		boutput(mimic, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
+		current_container = holder.owner.loc
+		current_container.present_mimic = mimic
 		mimic.set_loc(mimic.stomachHolder.center)
+		RegisterSignal(current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
 		last_appearance = mimic.appearance
 		mimic.appearance = /obj/mimicdummy
 		mimic.UpdateIcon()
@@ -48,14 +56,40 @@
 	proc/deactivate()
 		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
 		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
-		abil.inside = FALSE
+		abil.inside = TRUE
 		abil.afterAction()
-		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] turns themself outside in!</b>"))
-		mimic.set_loc(current_chute)
-		current_chute.present_mimic = null
-		current_chute = null
+		holder.owner.visible_message(SPAN_ALERT("<b>[mimic] turns themself outside in!</b>"))
+		mimic.set_loc(current_container)
+		UnregisterSignal(current_container, COMSIG_ATOM_ENTERED)
+		current_container.present_mimic = null
+		current_container = null
 		mimic.appearance = last_appearance
 		last_appearance = null
 		mimic.UpdateIcon()
+
+	proc/trap_chomp()
+		var/mob/living/carbon/human/target = locate(/mob/living/carbon/human) in current_container
+		if (!target)
+			return
+		if (GET_COOLDOWN(current_container, "mimicTrap"))
+			boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [current_container]!</B>"))
+			return
+
+		ON_COOLDOWN(current_container, "mimicTrap", 5 SECONDS)
+		var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+		var/list/randLimb
+		for (var/L in randLimbBase) // build a list of limbs the target actually has
+			if (target.limbs.get_limb(L))
+				LAZYLISTADD(randLimb, L)
+		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(pick(randLimb))
+
+		if (targetLimb)
+			var/obj/item/limb = targetLimb.sever()
+			boutput(target, SPAN_ALERT("Something in the [current_container] tears off [limb]!"))
+			target.emote("scream")
+			limb.set_loc(current_container.present_mimic.stomachHolder.limb_target_turf)
+			current_container.present_mimic.stomachHolder.limb_target_turf = get_turf(pick(current_container.present_mimic.stomachHolder.non_walls))
+			playsound(current_container, 'sound/voice/burp_alien.ogg', 60, 1)
+
 
 
