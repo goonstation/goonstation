@@ -75,7 +75,7 @@
 			boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [current_container]!</B>"))
 			return
 
-		ON_COOLDOWN(current_container, "mimicTrap", 5 SECONDS)
+		ON_COOLDOWN(current_container, "mimicTrap", 20 SECONDS)
 		var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
 		var/list/randLimb
 		for (var/L in randLimbBase) // build a list of limbs the target actually has
