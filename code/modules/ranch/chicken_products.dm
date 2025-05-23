@@ -25,7 +25,7 @@
 		src.setup_special_effects()
 		src.UpdateIcon()
 		#ifdef SECRETS_ENABLED
-		    var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/egg = src
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/egg = src
 			var/list/secret_eggs = (/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,
