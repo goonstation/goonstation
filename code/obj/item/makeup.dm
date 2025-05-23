@@ -33,7 +33,7 @@
 			return
 
 		for (var/mob/O in AIviewers(owner))
-			O.show_message("[owner] begins applying [blush] to [owner == target ? "[him_or_her(owner)]self" : target]!", 1)
+			O.show_message("[owner] begins applying blush to [owner == target ? "[him_or_her(owner)]self" : target]!", 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -114,12 +114,15 @@
 	icon = 'icons/obj/items/makeup.dmi'
 	icon_state = "dark_lipstick"
 	click_delay = 0.7 SECONDS
+	var/lipsticktype = "dark_lipstick"
+	var/lipstickcolor = "#DD0029" //temporary var to help get around parent lipstick always being random until I refactor it
 
 
 	New()
 		..()
 		src.ColorOverride()
 		src.IconOverride()
+		return
 
 	attack_self(var/mob/user)
 		src.open = !src.open
@@ -131,15 +134,15 @@
 		return
 
 	proc/ColorOverride() //really crusty workaround until I can refactor lipstick
-		src.font_color = "#e00d31"
+		src.font_color = "[src.lipstickcolor]"
 		src.color_name = hex2color_name(src.font_color)
 		src.name = "lipstick"
 		return
 
 	proc/IconOverride() //also really crusty workaround
-		src.icon_state = "dark_lipstick[src.open]"
+		src.icon_state = "[src.lipsticktype][src.open]"
 		if (src.open)
-			ENSURE_IMAGE(src.image_stick, src.icon, "dark_lipstick")
+			ENSURE_IMAGE(src.image_stick, src.icon, "[src.lipsticktype]")
 			return
 
 	proc/activate(mob/user as mob)
@@ -154,9 +157,13 @@
 
 /obj/item/pen/crayon/lipstick/fancy/gold
 	icon_state = "gold_lipstick"
+	lipsticktype = "gold_lipstick"
+	lipstickcolor = "#F3445A"
 
 /obj/item/pen/crayon/lipstick/fancy/light
 	icon_state = "light_lipstick"
+	lipsticktype = "light_lipstick"
+	lipstickcolor = "#EE929F"
 
 /datum/action/bar/icon/apply_makeup/fancy
 	duration = 40
@@ -179,9 +186,6 @@
 	m_amt = 60
 	click_delay = 0.7 SECONDS
 	var/makeup_color = "#ffffff"
-	var/spam_flag_sound = 0
-	var/spam_flag_message = 0
-	var/spam_timer = 20
 	var/open = 0
 	var/makeuptype = "blush_light"
 
@@ -212,7 +216,7 @@
 		flick("[makeuptype]_close", src)
 		playsound(user, 'sound/items/penclick.ogg', 30, TRUE)
 
-/////blush
+/////Blush
 /obj/item/makeup/blush
 	name = "blush"
 	desc = "A container full of ultra-fine powder intended to be used to tiny a person's cheeks."
