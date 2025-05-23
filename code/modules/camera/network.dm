@@ -108,7 +108,14 @@
 				candidate.vars[rec_var] = C
 				C.addToReferrers(candidate)
 
-/// Return true if mob is on a turf with camera coverage
-/proc/seen_by_camera(var/mob/M)
-	var/turf/T = get_turf(M)
+/// Return true if atom is a turf or on a turf with camera coverage
+/proc/seen_by_camera(var/atom/atom)
+	#ifdef SKIP_CAMERA_COVERAGE
+	return TRUE
+	#endif
+	if(isarea(atom))
+		return
+	var/turf/T = atom
+	if(!istype(T))
+		T = get_turf(atom)
 	. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))

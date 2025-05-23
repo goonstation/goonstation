@@ -2450,9 +2450,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 		if (M == usr)
 			continue
-
-		var/turf/T = get_turf(M)
-		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
+		if(!seen_by_camera(M))
 			continue
 
 		var/name = M.name
