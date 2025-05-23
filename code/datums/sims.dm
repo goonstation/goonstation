@@ -508,7 +508,6 @@
 				motives[M] = new M(1)
 			SPAWN(0)
 				set_multiplier(1)
-#endif
 
 	Topic(href, href_list)
 		USR_ADMIN_ONLY
