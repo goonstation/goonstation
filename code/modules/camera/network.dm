@@ -110,11 +110,11 @@
 
 /// Return true if atom is a turf or on a turf with camera coverage
 /proc/seen_by_camera(var/atom/atom)
+	if(isarea(atom) || !atom)
+		return FALSE
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
 	#endif
-	if(isarea(atom))
-		return
 	var/turf/T = atom
 	if(!istype(T))
 		T = get_turf(atom)
