@@ -64,6 +64,10 @@ datum
 		var/initial_metabolized = FALSE
 		///Is it banned from various fluid types, see _std/defines/reagents.dm
 		var/fluid_flags = 0
+		///Thresholds for hunger and thirst
+		var/lowbuff_threshold = 25
+		var/midbuff_threshold = 50
+		var/highbuff_threshold = 75
 
 		New()
 			..()
@@ -249,21 +253,29 @@ datum
 						if (serving_temp-10 < src.holder.total_temperature > serving_temp+10)
 							right_temp = TRUE
 						if (!requires_produce && !right_temp)
-							while (H.sims.getValue("Thirst") > 50)
+							while (H.sims.getValue("Thirst") < midbuff_threshold)
 								H.sims.affectMotive("Thirst", thirst_value)
+								if (H.sims.getValue("Thirst") > midbuff_threshold)
+									H.sims.affectMotive("Hunger", midbuff_threshold)
 						else if (requires_produce || right_temp)
-							while (H.sims.getValue("Thirst") > 75)
+							while (H.sims.getValue("Thirst") < highbuff_threshold)
 								H.sims.affectMotive("Thirst", thirst_value)
+								if (H.sims.getValue("Thirst") > highbuff_threshold)
+									H.sims.affectMotive("Thirst", highbuff_threshold)
 						else
 							H.sims.affectMotive("Thirst", thirst_value)
 					if (src.hunger_value)
 						H.sims.affectMotive("Hunger", hunger_value)
 						if (!requires_produce)
-							while (H.sims.getValue("Hunger") > 50)
+							while (H.sims.getValue("Hunger") < midbuff_threshold)
 								H.sims.affectMotive("Hunger", hunger_value)
+								if (H.sims.getValue("Hunger") > midbuff_threshold)
+									H.sims.affectMotive("Hunger", midbuff_threshold)
 						else if (requires_produce)
-							while (H.sims.getValue("Hunger") > 75) // Going above this is sorted in the actual food.
+							while (H.sims.getValue("Hunger") < highbuff_threshold) // Going above this is sorted in the actual food.
 								H.sims.affectMotive("Hunger", hunger_value)
+								if (H.sims.getValue("Hunger") > midbuff_threshold)
+									H.sims.affectMotive("Hunger", midbuff_threshold)
 					if (src.bladder_value)
 						H.sims.affectMotive("Bladder", bladder_value)
 					if (src.energy_value)
