@@ -112,6 +112,8 @@
 /proc/seen_by_camera(var/atom/atom)
 	if(isarea(atom) || !atom)
 		return FALSE
+	if(!isturf(atom.loc))
+		return FALSE
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
 	#endif
