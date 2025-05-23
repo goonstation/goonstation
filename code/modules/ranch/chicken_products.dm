@@ -25,12 +25,14 @@
 		src.setup_special_effects()
 		src.UpdateIcon()
 		#ifdef SECRETS_ENABLED
-			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/c = src
-			if (C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,
-				|| C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,
-				|| C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,
-				|| C = || C = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
-				tier = 3
+		    var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/egg = src
+			var/list/secret_eggs = (/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/secret_egg in secret_eggs)
+				if(egg == secret_egg)
+					src.tier = 3
 		#endif
 
 	update_icon()

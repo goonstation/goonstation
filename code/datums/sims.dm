@@ -215,7 +215,7 @@
 				holder.owner.delStatus("buff_hot")
 				buffed = TRUE
 				highbuffed = FALSE
-			else if (value < highbuff_threshold && value > buff_threshold && !highbuffed)
+			else if (value > highbuff_threshold && !highbuffed)
 				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
 				holder.owner.setStatus(buff + "_high", duration = null) // Health Part
 				holder.owner.setStatus(buff + "_hot", duration = null)
