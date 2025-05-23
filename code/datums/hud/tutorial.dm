@@ -24,7 +24,7 @@
 		src.tutorial_text.plane = PLANE_HUD
 		src.tutorial_text.layer = 420
 
-		src.tutorial_sidebar = create_screen("tutorial_sidebar", "Tutorial Sidebar", null, "", "NORTH-5, WEST", HUD_LAYER_3)
+		src.tutorial_sidebar = create_screen("tutorial_sidebar", "Tutorial Sidebar", null, "", "NORTH-5, WEST+1", HUD_LAYER_3)
 		src.tutorial_sidebar.maptext = ""
 		src.tutorial_sidebar.maptext_width = 480
 		src.tutorial_sidebar.maptext_x = 16
