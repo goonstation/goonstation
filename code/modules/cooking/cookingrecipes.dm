@@ -2135,5 +2135,5 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 /datum/cookingrecipe/oven/flan
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
-	cookbonus = 14
+	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/flan
