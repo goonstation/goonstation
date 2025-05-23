@@ -43013,7 +43013,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/access/bar,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/catering)
 "ssc" = (
 /obj/cable{
