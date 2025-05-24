@@ -1208,7 +1208,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 
 	set_loc(newloc)
 		. = ..()
-		unbuckle()
+		if(src.buckled_guy?.loc != src.loc)
+			unbuckle()
 
 /* ======================================================= */
 /* -------------------- Dining Chairs -------------------- */
