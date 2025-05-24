@@ -755,7 +755,7 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 
-	var/mob/living/carbon/human/tutorial_help/target_mob
+	var/mob/living/carbon/human/normal/tutorial_help/target_mob
 
 	SetUp()
 		. = ..()
@@ -830,7 +830,7 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 
-	var/mob/living/carbon/human/tutorial_disarm/target_mob
+	var/mob/living/carbon/human/normal/tutorial_disarm/target_mob
 	var/obj/item/target_item_left
 	var/obj/item/target_item_right
 
@@ -907,7 +907,7 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
 
-	var/mob/living/carbon/human/tutorial_grab/target_mob
+	var/mob/living/carbon/human/normal/tutorial_grab/target_mob
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1599,7 +1599,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/welding_mask
 	name = "Space OSHA Reminder"
-	instructions = "Welding without proper eyewear is a bad idea.<br><b>Click</b> the welding mask to pick it up."
+	instructions = "Welding without proper eyewear is a bad idea!<br><b>Click</b> the welding mask to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK
@@ -1670,7 +1670,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/weldingtool
 	name = "Welding Tools"
-	instructions = "Deconstructing walls requires a welding tool.<br><b>Click</b> the welding tool to pick it up and wait for the action bar to finish."
+	instructions = "Deconstructing walls requires a welding tool.<br><b>Click</b> the welding tool to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL
@@ -1678,14 +1678,14 @@
 
 /datum/tutorialStep/newbee/using_welder
 	name = "Using Welding Tools"
-	instructions = "Welding tools can be used in-hand to light them. While lit, welding tools will slowly use up fuel.<br>Turn on the welding tool with <b>C</b>."
+	instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>C</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/weldingtool/tutorial
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
-		src.instructions = "Welding tools can be used in-hand to light them. While lit, welding tools will slowly use up fuel.<br>Turn on the welding tool with <b>[attackself]</b>."
+		src.instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>[attackself]</b>."
 
 	PerformAction(action, context)
 		. = ..()
@@ -1699,7 +1699,7 @@
 
 /datum/tutorialStep/newbee/move_to/decon_wall
 	name = "Deconstructing a Wall"
-	instructions = "Regular walls can be deconstructed with lit welding tools.<br><b>Click</b> the wall with the lit welding tool in-hand."
+	instructions = "Regular walls can be deconstructed with lit welding tools.<br><b>Click</b> the wall with the lit welding tool and wait for the action bar to finish."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/weldingtool/tutorial
 
@@ -1731,7 +1731,7 @@
 
 /datum/tutorialStep/newbee/move_to/decon_wall_girder
 	name = "Removing the Girder"
-	instructions = "With the cover sliced open, all that remains is a girder.<br>Remove the girder with a wrench, and then proceed into the next room."
+	instructions = "With the wall sliced open, all that remains is a girder.<br>Remove the girder with a wrench, and then proceed into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
@@ -1748,7 +1748,7 @@
 
 /datum/tutorialStep/newbee/move_to/laying_down
 	name = "Laying Down"
-	instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>=</b> or <b>click</b> the rest button in the HUD to crawl under the flaps."
+	instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>=</b> or <b>click</b> the REST button in the HUD to crawl under the flaps."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "rest"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STAND
@@ -1758,7 +1758,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/rest = src.keymap.action_to_keybind("rest") || "="
-		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the rest button in the HUD to crawl under the flaps."
+		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the REST button in the HUD to crawl under the flaps."
 
 /obj/landmark/newbee/sprinting
 	name = LANDMARK_TUTORIAL_NEWBEE_SPRINTING
@@ -1767,7 +1767,7 @@
 
 /datum/tutorialStep/newbee/move_to/sprinting
 	name = "Sprinting"
-	instructions = "Sprint to move faster. It takes stamina, displayed in the top-right corner.<br>Hold <b>SHIFT</b> to sprint across the conveyors."
+	instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>SHIFT</b> to sprint across the conveyors."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "stamina"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1777,7 +1777,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/sprint = src.keymap.action_to_keybind(KEY_RUN) || "SHIFT"
-		src.instructions = "Sprinting increases your speed, but uses stamina. Your stamina is displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
+		src.instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
 
 	SetUp()
 		. = ..()
@@ -1933,6 +1933,7 @@
 		. = ..()
 		var/pull = src.keymap.action_to_keybind(KEY_PULL) || "CTRL"
 		src.instructions = "You can pull objects (and people!) by holding <b>[pull]</b> and <b>clicking</b> them.<br>Start pulling the water tank."
+
 	SetUp()
 		. = ..()
 		if (!src.target_object)
@@ -1958,7 +1959,7 @@
 
 /datum/tutorialStep/newbee/move_to/pull_target
 	name = "Pull the Tank"
-	instructions = "Walk to the marker while pulling the water tank to move it out of your way."
+	instructions = "Walk to the previous room while pulling the water tank to move it out of your way.<br>Drag the water tank to the marker."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
@@ -1972,13 +1973,19 @@
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
 
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/pull = src.keymap.action_to_keybind(KEY_PULL) || "CTRL"
+		src.instructions = "Press <b>[pull]</b> and <b>click</b> far away to stop pulling the water tank.<br>You can also press the PULL button in your hud to stop pulling."
+
+
 	PerformAction(action, context)
 		. = ..()
 		if (action == "remove_pulling" && istype(context, /obj/reagent_dispensers/watertank))
 			src.finished = TRUE
 
 /obj/landmark/newbee/final_room
-	name  = LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM
+	name = LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "lightning_marker"
 
@@ -2001,7 +2008,7 @@
 	instructions = "To activate the special attack of some items, <b>click</b> far away and use <span style='color:#EAC300; font-weight: bold'>Disarm</span> or <span style='color:#B51214; font-weight:bold'>Harm</span> intent.<br><span style='color:#962121; font-weight:bold'>Kill the clown</span> to complete the tutorial."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 
-	var/mob/living/carbon/human/tutorial_clown/tutorial_clown
+	var/mob/living/carbon/human/normal/tutorial_kill/tutorial_clown
 
 	SetUp()
 		. = ..()
@@ -2047,7 +2054,7 @@
 
 /datum/tutorialStep/newbee/timer/finished
 	name = "Tutorial Complete!"
-	instructions = "Congratulations on completing the basic tutorial!<br>There's more to learn and discover, but you can condifently take your first space-steps.<br>Returning to the main menu..."
+	instructions = "Congratulations on completing the basic tutorial!<br>There's more to learn and discover, but you can confidently take your first space-steps.<br>Returning to the main menu..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
 	SetUp()
@@ -2155,22 +2162,30 @@
 		else
 			. = ..(gibbed)
 
-/mob/living/carbon/human/tutorial_help
+/mob/living/carbon/human/normal/tutorial_help
 	New()
 		. = ..()
+		src.real_name = "The Clown You Help"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/blue, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/blue, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/blue, SLOT_SHOES)
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Help"
 		clown_id.assignment = "Clown"
+		clown_id.update_name()
+		src.UpdateName()
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
+		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+
 		src.setStatus("resting", INFINITE_STATUS)
 		src.force_laydown_standup()
+		SPAWN (0.3 SECONDS)
+			src.say("Owie! My funny bone is shattered!")
 
-/mob/living/carbon/human/tutorial_disarm
+/mob/living/carbon/human/normal/tutorial_disarm
 	New()
 		. = ..()
+		src.real_name = "The Clown You Disarm"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/yellow, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/yellow, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/yellow, SLOT_SHOES)
@@ -2178,27 +2193,43 @@
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Disarm"
 		clown_id.assignment = "Clown"
+		clown_id.update_name()
+		src.UpdateName()
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
-		src.l_hand.AttackSelf() // honk
+		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 
-/mob/living/carbon/human/tutorial_grab
+		SPAWN (0.5 SECONDS)
+			src.say("We're gonna have a honkin' good time!")
+		SPAWN (0.8 SECONDS)
+			src.l_hand?.AttackSelf() // honk
+
+/mob/living/carbon/human/normal/tutorial_grab
 	New()
 		. = ..()
+		src.real_name = "The Clown You Grab"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat/purple, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/purple, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/purple, SLOT_SHOES)
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Grab"
 		clown_id.assignment = "Clown"
+		clown_id.update_name()
+		src.UpdateName()
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
+		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+		src.bioHolder?.AddEffect("sims_stinky", innate = TRUE)
+
+		SPAWN (0.7 SECONDS)
+			src.say("Do I smell funny?")
 
 /// Newbee Tutorial mob; the clown you kill to Win the Tutorial
-/mob/living/carbon/human/tutorial_clown
+/mob/living/carbon/human/normal/tutorial_kill
 	/// Owner of the tutorial, assigned in the step that spawns this mob
 	var/mob/tutorial_owner
 
 	New()
 		. = ..()
+		src.real_name = "The Clown You Kill"
 		src.equip_new_if_possible(/obj/item/clothing/mask/clown_hat, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes, SLOT_SHOES)
@@ -2208,10 +2239,25 @@
 		var/obj/item/card/id/clown/clown_id = new()
 		clown_id.registered = "The Clown You Kill"
 		clown_id.assignment = "Clown"
+		clown_id.update_name()
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
+		src.UpdateName()
+		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+
+		SPAWN (0.3 SECONDS)
+			src?.l_hand?.AttackSelf() // honk
+
+		SPAWN (0.8 SECONDS)
+			src?.say("Honk honk!")
+
+		SPAWN (1.4 SECONDS)
+			src.l_hand?.AttackSelf() // honk
+
+		SPAWN (2.8 SECONDS)
+			src?.say("Did you find that banana a-peel-ing?")
 
 	death(gibbed)
-		if (tutorial_owner && istype(src.lastattacker.deref(), /mob/living/critter/spider))
+		if (tutorial_owner && istype(src.lastattacker?.deref(), /mob/living/critter/spider))
 			src.tutorial_owner.unlock_medal("On My Own (Eight) Space Legs")
 		. = ..()
 
