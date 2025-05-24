@@ -1466,8 +1466,14 @@ TYPEINFO(/mob/living)
 	if (ishuman(src))
 		H = src
 		var/obj/item/clothing/gloves/G = H.gloves
+		var/obj/item/leftItem = H.l_hand
+		var/obj/item/rightItem = H.r_hand
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
+		if (leftItem && !ignore_gloves && (leftItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(leftItem.hasProperty("conductivity") ? leftItem.getProperty("conductivity") : 1))
+		if (rightItem && !ignore_gloves && (rightItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(rightItem.hasProperty("conductivity") ? rightItem.getProperty("conductivity") : 1))
 		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
 		if (H.limbs.r_arm && !ignore_gloves)
