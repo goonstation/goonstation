@@ -29,6 +29,8 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 		return 1
 	if (!src.activated && !src.active)
 		src.activated = 1
+	if (src.charges <= -1) // infinite charges
+		boutput(user, "[src] has been activated.")
 	if (src.charges > 0)
 		src.charges--
 		if (src.charges == 0)
@@ -46,3 +48,4 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	if (!user)
 		return 1
 	src.activated = 0
+	boutput(user, "[src] has been deactivated.")

@@ -1975,7 +1975,6 @@ TYPEINFO(/mob/living/silicon/robot)
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 		if (upgrade?.borg_overlay)
 			src.update_appearance()
