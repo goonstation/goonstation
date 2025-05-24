@@ -12509,15 +12509,15 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bbG" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
 	},
 /turf/unsimulated/floor/arctic/cliff{
 	dir = 4
