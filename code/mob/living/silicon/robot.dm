@@ -1237,7 +1237,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]'s head."))
-				if ((B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg"))) || B.donor_original?.traitHolder?.hasTrait("cyber_incompatible"))
+				if ((B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg"))) || B.cyber_incompatible)
 					src.visible_message(SPAN_ALERT("The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies."))
 					B.combust()
 					return
