@@ -610,7 +610,7 @@
 
 /datum/tutorialStep/newbee/wear_id_card
 	name = "Worn Items"
-	instructions = "Some items can be worn. Press <b>V</b> to wear the ID card."
+	instructions = "Some items can be worn. Press <b>V</b> to wear the ID card, or click the ID card slot in your HUD."
 	highlight_hud_element = "id"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
@@ -619,7 +619,7 @@
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card."
+		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card, or click the ID card slot in your HUD.."
 
 	SetUp()
 		. = ..()
@@ -789,7 +789,7 @@
 
 /datum/tutorialStep/newbee/intent_disarm
 	name = "Disarm Intent"
-	instructions = "The <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent will knock someone's item out of their hands or push them to the ground.<br>Press <b>2</b> to switch to the <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent."
+	instructions = "The <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent will knock items out of someone's hands or push them to the ground.<br>Press <b>2</b> to switch to the <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent."
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
@@ -797,7 +797,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/disarm = src.keymap.action_to_keybind("disarm") || "2"
-		src.instructions = "The <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent will knock someone's item out of their hands or push them to the ground.<br>Press <b>[disarm]</b> to switch to the <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent."
+		src.instructions = "The <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent will knock items out of someone's hands or push them to the ground.<br>Press <b>[disarm]</b> to switch to the <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent."
 
 	SetUp()
 		. = ..()
@@ -825,7 +825,7 @@
 
 /datum/tutorialStep/newbee/disarm_person
 	name = "Disarming People"
-	instructions = "<b>Click</b> the clown while on <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent.<br>Knock an item out of the clown's hands."
+	instructions = "<b>Click</b> the clown while on <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent.<br>Knock the bike horn out of the clown's hands."
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
@@ -866,7 +866,7 @@
 
 /datum/tutorialStep/newbee/intent_grab
 	name = "Grab Intent"
-	instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will loosely grab someone.<br>Press <b>3</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
+	instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will grab someone.<br>Press <b>3</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
@@ -874,7 +874,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/grab = src.keymap.action_to_keybind("grab") || "3"
-		src.instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will loosely grab someone.<br>Press <b>[grab]</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
+		src.instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will grab someone.<br>Press <b>[grab]</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
 
 	SetUp()
 		. = ..()
@@ -902,7 +902,7 @@
 
 /datum/tutorialStep/newbee/grab_person
 	name = "Grabbing People"
-	instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>C</b>to upgrade the grab.<br>Get the clown in an upgraded grab."
+	instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>C</b>to grip tighter.<br>Get the clown in an aggressive grab."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
@@ -912,7 +912,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
-		src.instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>[attackself]</b> to upgrade the grab.<br>Get the clown in an upgraded grab."
+		src.instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>[attackself]</b> to grip tighter.<br>Get the clown in an aggressive grab."
 
 	SetUp()
 		. = ..()
@@ -946,7 +946,7 @@
 
 /datum/tutorialStep/newbee/intent_harm
 	name = "Harm Intent"
-	instructions = "The <span style='color:#B51214; font-weight:bold'>Harm</span> intent will attack people by punching them or hitting them with what's in your hand.<br>Press <b>4</b> to switch to the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
+	instructions = "The <span style='color:#B51214; font-weight:bold'>Harm</span> intent will attack people by punching them or hitting them with items.<br>Press <b>4</b> to switch to the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
@@ -954,7 +954,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/harm = src.keymap.action_to_keybind("harm") || "4"
-		src.instructions = "The <span style='color:#B51214; font-weight:bold'>Harm</span> intent will attack people by punching them or hitting them with what's in your hand.<br>Press <b>[harm]</b> to switch to the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
+		src.instructions = "The <span style='color:#B51214; font-weight:bold'>Harm</span> intent will attack people by punching them or hitting them with items.<br>Press <b>[harm]</b> to switch to the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
 
 	SetUp()
 		. = ..()
@@ -1025,7 +1025,7 @@
 
 /datum/tutorialStep/newbee/move_to/exit_intents
 	name = "Healing Up"
-	instructions = "Your overall health is displayed in the top-right corner.<br>Head into the next room to patch yourself up."
+	instructions = "Your health is displayed in the top-right corner. As you can see, you've taken some damage.<br>Head into the next room to patch yourself up."
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 
@@ -1318,7 +1318,7 @@
 
 /datum/tutorialStep/newbee/equip_space_suit
 	name = "Space Suits"
-	instructions = "Space suits help protect against the vacuum of space.<br><b>Click</b> to pick up the space suit and press <b>V</b> to equip it."
+	instructions = "Space suits help protect against the vacuum of space.<br><b>Click</b> to pick up the emergency suit and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "suit"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1336,7 +1336,7 @@
 
 /datum/tutorialStep/newbee/equip_breath_mask
 	name = "Breath Masks"
-	instructions = "To use an air tank, you need a breath mask.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
+	instructions = "Before using an air tank, you need to equip a breath mask.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "mask"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1344,7 +1344,7 @@
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "To use an air tank, you need a breath mask.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
+		src.instructions = "Before using an air tank, you need to equip a breath mask.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
 
 	PerformAction(action, context)
 		. = ..()
@@ -1353,7 +1353,7 @@
 
 /datum/tutorialStep/newbee/equip_space_helmet
 	name = "Space Helmets"
-	instructions = "Space helmets finish making you space-worthy.<br><b>Click</b> the emergency helmet and press <b>V</b> to equip it."
+	instructions = "Space helmets complete your ability to survive space.<br><b>Click</b> the emergency hood and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "head"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1361,7 +1361,7 @@
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Space helmets finish making you space-worthy.<br><b>Click</b> the emergency helmet and press <b>[equip]</b> to equip it."
+		src.instructions = "Space helmets complete your ability to survive space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
 
 
 	PerformAction(action, context)
@@ -2244,17 +2244,16 @@
 		src.UpdateName()
 		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 
-		SPAWN (0.3 SECONDS)
+		SPAWN (0.2 SECONDS)
 			src?.l_hand?.AttackSelf() // honk
 
-		SPAWN (0.8 SECONDS)
+		SPAWN (0.3 SECONDS)
 			src?.say("Honk honk!")
 
-		SPAWN (1.4 SECONDS)
+		SPAWN (1.7 SECONDS)
 			src.l_hand?.AttackSelf() // honk
-
 		SPAWN (2.8 SECONDS)
-			src?.say("Did you find that banana a-peel-ing?")
+			src?.say("Was that banana a-peel-ing?")
 
 	death(gibbed)
 		if (tutorial_owner && istype(src.lastattacker?.deref(), /mob/living/critter/spider))
