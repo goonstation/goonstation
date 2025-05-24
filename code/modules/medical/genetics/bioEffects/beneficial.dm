@@ -16,6 +16,10 @@
 	effect_group = "thermal"
 
 	OnAdd()
+		if (ishuman(owner))
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
+			overlay_image.color = "#FFA200"
+
 		..()
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
 
@@ -45,6 +49,9 @@
 	effect_group = "thermal"
 
 	OnAdd()
+		if (ishuman(owner))
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
+			overlay_image.color = "#009DFF"
 		..()
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
 
@@ -66,12 +73,21 @@
 	blockCount = 3
 	occur_in_genepools = 0
 	stability_loss = 10
+	var/image/overlay_image_two = null
 	degrade_to = "thermal_vuln"
 	icon_state  = "thermal_res"
 	effect_group = "thermal"
 
 	OnAdd()
+		if (ishuman(owner))
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
+			overlay_image_two = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse-offset", layer = MOB_LIMB_LAYER)
+			overlay_image.color = "#FFA200"
+			overlay_image_two.color = "#009DFF"
 		..()
+		if(overlay_image_two)
+			var/mob/living/L = owner
+			L.UpdateOverlays(overlay_image_two, id + "2")
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
 		owner.temp_tolerance *= 5 * src.power
@@ -90,6 +106,10 @@
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
 		owner.temp_tolerance /= 5 * src.power
+		if(overlay_image_two)
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(null, id + "2")
 		return
 
 /datum/bioEffect/elecres
