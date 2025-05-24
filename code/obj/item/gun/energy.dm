@@ -485,6 +485,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -500,6 +501,34 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 		UpdateIcon()
 		M.update_inhands()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Head of Security")
+			src.verbs |= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		else if (user.mind?.assigned_role == "Captain")
+			src.verbs |= /obj/item/gun/energy/egun/verb/claim_sword
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
+
+	verb/claim_lawbringer()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Lawbringer"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Lawbringer"]
+		reward.try_claim(usr, FALSE)
+
+	verb/claim_sword()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Sabre"
+
+		var/datum/jobXpReward/reward = global.xpRewards["Commander's Sabre"]
+		reward.try_claim(usr, FALSE)
 
 	proc/noreward()
 		src.nojobreward = 1
@@ -1505,7 +1534,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/sleep.ogg', 50)
 				src.toggle_recoil(FALSE)
-			if ("hotshot","incendiary")
+			if ("hotshot","incendiary","fired")
 				set_current_projectile(projectiles["hotshot"])
 				current_projectile.cost = 60
 				item_state = "lawg-hotshot"
@@ -1537,7 +1566,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	//Are you really the law? takes the mob as speaker, and the text spoken, sanitizes it. If you say "i am the law" and you in fact are NOT the law, it's gonna blow. Moved out of the switch statement because it that switch is only gonna run if the owner speaks
 	proc/are_you_the_law(mob/M as mob, text)
 		text = sanitize_talk(text)
-		if (findtext(text, "iamthelaw"))
+		if (findtext(text, "i am the law"))
 			//you must be holding/wearing the weapon
 			//this check makes it so that someone can't stun you, stand on top of you and say "I am the law" to kill you
 			if (src in M.contents)
@@ -1609,10 +1638,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				indicator_display.color = "#000000"				//default, should never reach. make it black
 			src.overlays += indicator_display
 
-	//just remove all capitalization and non-letter characters
+	//just remove all capitalization and non-letter, non-space characters
 	proc/sanitize_talk(var/msg)
-		//find all characters that are not letters and remove em
-		var/regex/r = regex("\[^a-z\]+", "g")
+		//find all characters that are not letters or whitespace and remove em
+		var/regex/r = regex("\[^a-z\\s\]+", "g")
 		msg = lowertext(msg)
 		msg = r.Replace(msg, "")
 		return msg

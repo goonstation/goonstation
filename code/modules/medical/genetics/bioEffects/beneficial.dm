@@ -1135,7 +1135,18 @@
 		var/stop_delay = 0
 		for (var/i in 1 to 4)
 			src.owner.glide_size = (32 / 1) * world.tick_lag
-			step(src.owner, src.owner.dir)
+			var/move_dir = src.owner.dir
+			var/misstep_angle = 0
+			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+				misstep_angle += randfloat(0,owner.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+			if(misstep_angle)
+				misstep_angle = min(misstep_angle,90)
+				var/move_angle = dir2angle(move_dir)
+				move_angle += pick(-misstep_angle,misstep_angle)
+				move_dir = angle2dir(move_angle)
+
+			step(src.owner, move_dir)
 			if (locate(/obj/table) in src.owner.loc)
 				stop_delay = 1 SECOND
 				break

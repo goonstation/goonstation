@@ -31,6 +31,9 @@
 		return FALSE
 
 	src.speech_output_ids_with_subcount[module_id] -= count
+	if (!src.speech_output_ids_with_subcount[module_id])
+		src.speech_output_ids_with_subcount -= module_id
+
 	src.target_speech_tree?.RemoveSpeechOutput(output_id, subchannel, count)
 	return TRUE
 
@@ -50,6 +53,9 @@
 		return FALSE
 
 	src.speech_modifier_ids_with_subcount[modifier_id] -= count
+	if (!src.speech_modifier_ids_with_subcount[modifier_id])
+		src.speech_modifier_ids_with_subcount -= modifier_id
+
 	src.target_speech_tree?.RemoveSpeechModifier(modifier_id, count)
 	return TRUE
 
@@ -66,6 +72,9 @@
 		return FALSE
 
 	src.speech_prefix_ids_with_subcount[prefix_id] -= count
+	if (!src.speech_prefix_ids_with_subcount[prefix_id])
+		src.speech_prefix_ids_with_subcount -= prefix_id
+
 	src.target_speech_tree?.RemoveSpeechPrefix(prefix_id, count)
 	return TRUE
 

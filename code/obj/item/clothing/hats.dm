@@ -744,6 +744,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
+/obj/item/clothing/head/wizard/traveller
+	name = "traveller's hat"
+	desc = "Oh, how much the stars have to show! Look up, and you'll see them, just right there!"
+	icon_state = "wizardstars"
+	item_state = "wizardnec"
+
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
 	desc = "A pink wizard hat. Must've been a reject from the assembly line."
@@ -1076,13 +1082,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = ARREST_STATE_ARREST
-		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/reason = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		var/details = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 		var/mob/living/carbon/human/H = user
-		if (istype(H))
-			H.update_arrest_icon()
+		if(istype(H))
+			H.apply_automated_arrest(reason,details,TRUE,FALSE,FALSE)
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -2538,3 +2542,17 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "blorbohat"
 	item_state = "blorbohat"
 	seal_hair = TRUE
+
+/obj/item/clothing/head/chompskyhat
+	name = "Gnome hat"
+	desc = "A mirthful gnome's hat, now crew-sized!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "chompskyhat"
+	item_state = "chompskyhat"
+
+// The haunting giggle was a must.
+	equipped(var/mob/user, var/slot)
+		..()
+		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
+		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)

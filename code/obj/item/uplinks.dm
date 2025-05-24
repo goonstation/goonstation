@@ -231,21 +231,21 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/uplink_telecrystal))
-			if (!src.locked)
-				var/crystal_amount = W.amount
-				uses = uses + crystal_amount
-				boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
-				qdel(W)
-		if (istype(W, /obj/item/explosive_uplink_telecrystal))
-			if (!src.locked)
-				boutput(user, SPAN_ALERT("The [W] explodes!"))
-				var/turf/T = get_turf(W.loc)
-				if(T)
-					T.hotspot_expose(700,125)
-					explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
-				W.set_loc(user.loc)
-				qdel(W)
+		if(src.locked)
+			return
+		if (istype(W, /obj/item/uplink_telecrystal/trick))
+			boutput(user, SPAN_ALERT("The [W] explodes!"))
+			var/turf/T = get_turf(W.loc)
+			if(T)
+				T.hotspot_expose(700,125)
+				explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
+			W.set_loc(user.loc)
+			qdel(W)
+		else if (istype(W, /obj/item/uplink_telecrystal))
+			var/crystal_amount = W.amount
+			uses = uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
+			qdel(W)
 
 	proc/generate_menu()
 		if (src.uses < 0)
@@ -1612,7 +1612,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/empower
 	name = "Empower"
 	eqtype = "Utility"
-	desc = "This spell causes you to turn into a hulk, and gain passive wrestling powers for a short while."
+	desc = "This spell removes stuns on use, causes you to turn into a hulk, and gain passive wrestling powers for a short while."
 	assoc_spell = /datum/targetable/spell/mutate
 
 /datum/SWFuplinkspell/summongolem

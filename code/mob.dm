@@ -15,6 +15,8 @@ TYPEINFO(/mob)
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
+	open_to_sound = FALSE
+
 	speech_verb_say = "says"
 	speech_verb_ask = "asks"
 	speech_verb_exclaim = "exclaims"
@@ -146,8 +148,6 @@ TYPEINFO(/mob)
 	var/faction = list()
 
 	var/nodamage = 0
-
-	var/spellshield = 0
 
 	var/voice_name = "unidentifiable voice"
 	var/oldname = null
@@ -1213,7 +1213,7 @@ TYPEINFO(/mob)
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))

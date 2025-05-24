@@ -1,5 +1,5 @@
 /// This atom's outermost listener tracker.
-/atom/var/datum/outermost_listener_tracker/outermost_listener_tracker
+/atom/var/tmp/datum/outermost_listener_tracker/outermost_listener_tracker
 
 /// Returns this atom's outermost listener tracker. If this atom does not possess an outermost listener tracker, instantiates one.
 /atom/proc/ensure_outermost_listener_tracker()
@@ -52,7 +52,7 @@
 
 /// Determines whether the loc of the outermost listener is open to sound.
 /datum/outermost_listener_tracker/proc/loc_open_to_sound()
-	if (!src.outermost_listener.loc)
+	if (!ismovable(src.outermost_listener.loc))
 		return FALSE
 
 	if (src.outermost_listener.loc.open_to_sound)

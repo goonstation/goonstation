@@ -2,13 +2,14 @@
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 TYPEINFO(/mob/new_player)
 	start_listen_modifiers = null
-	start_listen_inputs = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = null
 
 /mob/new_player
 	anchored = ANCHORED
+	has_typing_indicator = FALSE
 
 	var/ready = 0
 	var/spawning = 0

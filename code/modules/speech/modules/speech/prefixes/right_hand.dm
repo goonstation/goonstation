@@ -1,6 +1,6 @@
 /datum/speech_module/prefix/postmodifier/right_hand
 	id = SPEECH_PREFIX_RIGHT_HAND
-	prefix_id = ":rh"
+	prefix_id = PREFIX_TEXT_RIGHT_HAND
 
 /datum/speech_module/prefix/postmodifier/right_hand/process(datum/say_message/message)
 	. = message
@@ -32,8 +32,8 @@
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = list(listener)
-	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+	if (src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message))
+		message.say_sound = 'sound/misc/talk/radio.ogg'
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
-	message.say_sound = 'sound/misc/talk/radio.ogg'
