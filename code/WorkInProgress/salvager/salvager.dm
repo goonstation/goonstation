@@ -294,6 +294,7 @@
 	icon_state = "arcwelder-off"
 	item_state = "arcwelder-off"
 	inventory_counter_enabled = TRUE
+	fuel_capacity = 0
 	var/charge_to_fuel = 7
 
 	New()
@@ -390,7 +391,6 @@
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 		else
 			inventory_counter.update_text("-")
-
 
 /datum/item_special/spark/arcwelder
 	cooldown = 1.5 SECONDS
