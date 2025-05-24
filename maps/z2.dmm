@@ -9829,10 +9829,7 @@
 	},
 /area/upper_arctic/hall)
 "aSN" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
+/obj/lattice,
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
 "aSO" = (
@@ -9847,11 +9844,12 @@
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
 "aSQ" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
 	},
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
@@ -10770,7 +10768,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/unsimulated/floor/arctic/cliff{
-	dir = 1
+	dir = 9
 	},
 /area/upper_arctic/exterior/surface)
 "aVO" = (
@@ -11210,9 +11208,6 @@
 	dir = 1
 	},
 /area/upper_arctic/exterior/surface)
-"aXp" = (
-/turf/unsimulated/floor/arctic/cliff_outsidecorner,
-/area/upper_arctic/exterior/abyss)
 "aXq" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -11549,14 +11544,11 @@
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/surface)
 "aYn" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
+/obj/lattice,
 /turf/unsimulated/floor/arctic/cliff{
 	dir = 4
 	},
-/area/upper_arctic/exterior/abyss)
+/area/upper_arctic/exterior/surface)
 "aYo" = (
 /obj/lattice{
 	dir = 8;
@@ -12524,12 +12516,12 @@
 	},
 /area/upper_arctic/exterior/surface)
 "bbH" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/surface)
@@ -32635,6 +32627,14 @@
 	tag = "icon-fred2 (SOUTHWEST)"
 	},
 /area/afterlife/hell)
+"cwz" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff_outsidecorner{
+	dir = 9
+	},
+/area/upper_arctic/exterior/surface)
 "cwA" = (
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -54582,6 +54582,14 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"dZD" = (
+/obj/decal/icefloor,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "eal" = (
 /obj/table/wood/round/auto,
 /obj/map/light/white,
@@ -54835,6 +54843,15 @@
 	},
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
+"eit" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/cliff_outsidecorner{
+	dir = 10
+	},
+/area/upper_arctic/exterior/surface)
 "eix" = (
 /obj/machinery/door/window{
 	layer = 4
@@ -56667,6 +56684,14 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/hall)
+"fLh" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 4
+	},
+/area/upper_arctic/exterior/surface)
 "fLm" = (
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
@@ -57160,6 +57185,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"gdT" = (
+/obj/lattice,
+/turf/unsimulated/floor/arctic/abyss,
+/area/upper_arctic/exterior/surface)
 "gec" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
@@ -57195,6 +57224,15 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
+"gif" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/cliff_outsidecorner{
+	dir = 6
+	},
+/area/upper_arctic/exterior/surface)
 "gig" = (
 /obj/lattice{
 	dir = 6;
@@ -66136,6 +66174,15 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"nkp" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 10
+	},
+/area/upper_arctic/exterior/surface)
 "nlC" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 1
@@ -67971,9 +68018,24 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"ozv" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "ozw" = (
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"ozR" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 8
+	},
+/area/upper_arctic/exterior/surface)
 "ozT" = (
 /obj/machinery/computer3/terminal{
 	desc = "A computer for controlling the laser-designated artillery cannon aboard the Cairngorm.";
@@ -68796,6 +68858,12 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma/lab)
+"pip" = (
+/obj/item/device/radio/signaler{
+	desc = "Surprising that it still works, seems like it's been lost in the snow for awhile."
+	},
+/turf/unsimulated/wall/arctic/abyss,
+/area/upper_arctic/exterior/abyss)
 "piC" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
@@ -71360,6 +71428,23 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"rcj" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 6
+	},
+/area/upper_arctic/exterior/surface)
+"rcE" = (
+/obj/decal/icefloor,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "rcQ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
@@ -76061,6 +76146,13 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
+"uVb" = (
+/obj/decal/icefloor,
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "uVk" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -80124,6 +80216,15 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"xLn" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/floor/arctic/cliff{
+	dir = 1
+	},
+/area/upper_arctic/exterior/surface)
 "xLp" = (
 /obj/decal/poster/cygportrait{
 	pixel_y = -3
@@ -83413,11 +83514,11 @@ aIo
 aIo
 aIo
 aKX
-aKX
-aKX
-aKX
-aKX
-aKX
+aLp
+aMt
+aMt
+aMt
+aNa
 aKX
 aKX
 aKX
@@ -83715,12 +83816,12 @@ aIo
 aIo
 aIo
 aKX
-aKX
-aLp
-aMt
+aLq
+aLN
+aLN
+aLN
+aNb
 aNa
-aKX
-aKX
 aKX
 aKX
 aKX
@@ -84017,15 +84118,15 @@ aIo
 aIo
 aIo
 aKX
-aLp
-aLM
-aLO
-aNb
-aMt
-aMt
-aMt
-aMt
-aMt
+aLq
+aLN
+dZD
+aRJ
+aRJ
+nkp
+ozR
+ozR
+aRK
 aNa
 aRE
 aRE
@@ -84321,18 +84422,18 @@ aIo
 aKX
 aLq
 aLN
-aLP
+ozv
 mJF
 mJF
 aOw
 mJF
 mJF
-aQP
+aLQ
 aRB
 aSG
 aSG
 aSG
-aSG
+cwz
 aVL
 aRJ
 ndE
@@ -84621,8 +84722,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLN
+xLn
+aRJ
 mJF
 mJF
 aNC
@@ -84634,8 +84735,8 @@ aRC
 aRE
 aRE
 aRE
-aRE
 aLq
+aLN
 aLN
 faP
 faP
@@ -84923,7 +85024,7 @@ aIo
 aIo
 aIo
 aKX
-aLq
+aXn
 aLO
 mJF
 aNd
@@ -85225,7 +85326,7 @@ aIo
 aIo
 aIo
 aKX
-aLq
+aXn
 aLO
 mJF
 aNe
@@ -85527,8 +85628,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLP
+aMA
+aRJ
 mJF
 mJF
 mJF
@@ -85829,8 +85930,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLQ
+aXn
+aLN
 mJF
 aNg
 aNF
@@ -86131,8 +86232,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLQ
+aXn
+aLN
 aMw
 aNh
 aNF
@@ -86433,8 +86534,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLQ
+aXn
+aLN
 mJF
 aNi
 aNG
@@ -86735,8 +86836,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLQ
+aXn
+aLN
 mJF
 aNj
 aNH
@@ -87037,8 +87138,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLR
+aMA
+aRJ
 mJF
 mJF
 mbi
@@ -87339,7 +87440,7 @@ aIo
 aIo
 aIo
 aKX
-aLq
+aXn
 aLN
 mJF
 aNk
@@ -87641,7 +87742,7 @@ aIo
 aIo
 aIo
 aKX
-aLq
+aXn
 aLN
 mJF
 aNl
@@ -87943,8 +88044,8 @@ aIo
 aIo
 aIo
 aKX
-aLq
-aLN
+aXo
+aRJ
 mJF
 mJF
 aNL
@@ -88247,13 +88348,13 @@ aIo
 aKX
 aLq
 aLN
-aLR
+ozv
 mJF
 mJF
 aOw
 mJF
 mJF
-aQS
+aLQ
 aRJ
 aRB
 aTE
@@ -88547,15 +88648,15 @@ aIo
 aIo
 aIo
 aKX
-aLr
-aLS
-aLO
-aLO
-aNM
-aMy
-aMy
-aMy
-aMy
+aLq
+aLN
+rcE
+uVb
+aRJ
+rcj
+fLh
+fLh
+aRP
 aMy
 aNN
 aKX
@@ -88849,14 +88950,12 @@ aIo
 aIo
 aIo
 aKX
-aKX
-aLr
-aMy
-aMy
-aNN
-aKX
-aKX
-aKX
+aLq
+aLN
+aLN
+aLN
+aLN
+aRC
 aKX
 aKX
 aKX
@@ -88865,7 +88964,9 @@ aKX
 aKX
 aKX
 aKX
-aXo
+aKX
+aKX
+aMA
 aYm
 aZj
 aZT
@@ -89151,6 +89252,12 @@ aIo
 aIo
 aIo
 aKX
+aLr
+aMy
+aMy
+aMy
+aMy
+aNN
 aKX
 aKX
 aKX
@@ -89161,18 +89268,12 @@ aKX
 aKX
 aKX
 aKX
-aKX
-aKX
-aKX
-aKX
-aKX
-aKX
-aXp
+aMB
 aYn
 aZk
 aZU
 aZU
-bbf
+gdT
 bbH
 aRE
 aKX
@@ -93086,8 +93187,8 @@ aOJ
 aPz
 aPz
 aPz
-aRK
-aNa
+aPz
+eit
 aKX
 aLr
 aVg
@@ -94898,8 +94999,8 @@ aMB
 aNp
 aNp
 aNp
-aRP
-aNN
+aNp
+gif
 aKX
 aKX
 aLr
@@ -96104,7 +96205,7 @@ aIo
 aIo
 aIo
 aIo
-aIo
+pip
 aIo
 aIo
 aIo
