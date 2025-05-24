@@ -1353,7 +1353,7 @@
 
 /datum/tutorialStep/newbee/equip_space_helmet
 	name = "Space Helmets"
-	instructions = "Space helmets complete your ability to survive space.<br><b>Click</b> the emergency hood and press <b>V</b> to equip it."
+	instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "head"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1361,7 +1361,7 @@
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Space helmets complete your ability to survive space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
+		src.instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
 
 
 	PerformAction(action, context)

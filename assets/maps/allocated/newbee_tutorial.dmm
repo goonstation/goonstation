@@ -97,6 +97,11 @@
 /mob/living/critter/spider/clownqueen,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee)
+"fe" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_backpack,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
 "fj" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkbluewhite,
@@ -880,13 +885,6 @@
 	dir = 10
 	},
 /area/tutorial/newbee)
-"PL" = (
-/obj/landmark/newbee/pickup_backpack,
-/obj/table/reinforced/auto,
-/turf/unsimulated/floor/greenblack{
-	dir = 8
-	},
-/area/tutorial/newbee)
 "PV" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
@@ -1439,7 +1437,7 @@ uk
 Ma
 Iw
 NN
-PL
+NN
 NN
 OP
 Ma
@@ -1462,7 +1460,7 @@ Xs
 Ma
 Yy
 tv
-tv
+fe
 tv
 nL
 Ma
