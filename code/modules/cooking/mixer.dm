@@ -201,7 +201,13 @@ TYPEINFO(/obj/machinery/mixer)
 					if (!bowl_checkitem(I, R.ingredients[I])) continue check_recipe
 				output = R.specialOutput(src)
 				if (!output)
-					output = R.output
+					if(R.variants)//replace all of this with getVariant() once cooking machines are given a common type
+						for(var/specialIngredient in R.variants)
+							if(output) break
+							if(bowl_checkitem(specialIngredient, R.variant_quantity))
+								output = R.variants[specialIngredient]
+					else
+						output = R.output
 				if (R.useshumanmeat)
 					derivename = 1
 				break

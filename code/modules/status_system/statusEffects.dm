@@ -3072,13 +3072,16 @@
 			if (src.blood_to_collect <= 0)
 				src.linked_curser.lift_curse(TRUE)
 			else if (H.blood_volume <= 0 || isdead(H))
-				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
-				for (var/i in 1 to rand(3, 4))
-					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
-					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
-				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
-				H.implode(TRUE)
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				H.visible_message(SPAN_ALERT("[H] spontaneously dessicates, drained of all fluids! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
+				playsound(H, 'sound/impact_sounds/Flesh_Crush_1.ogg', 70, TRUE)
+				H.death(FALSE)
+				H.disfigured = TRUE
+				H.UpdateName()
+				H.bioHolder?.AddEffect("husk")
+				H.bioHolder?.mobAppearance.flavor_text = "A desiccated husk."
+				H.set_clothing_icon_dirty()
+				src.linked_curser?.lift_curse_specific(FALSE, H)
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3122,9 +3125,13 @@
 				src.final_msg_given = TRUE
 				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
 			if (H.bioHolder.age >= src.original_age + 120)
+				H.visible_message(SPAN_ALERT("[H] collapses into a pile of bones!"))
+				H.set_mutantrace(/datum/mutantrace/skeleton)
 				H.death(FALSE)
-				H.skeletonize()
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+				H.set_clothing_icon_dirty()
+				src.linked_curser?.lift_curse_specific(FALSE, H)
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3199,7 +3206,8 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (QDELETED(H) || isdead(H))
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				src.linked_curser?.lift_curse_specific(FALSE, H)
+				src.remove_self()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
@@ -3736,7 +3744,7 @@
 			mob_owner.modifier = /datum/movement_modifier/mimic/mimic_fast
 			health = 10
 			speed_string = "Fast!"
-		else if (src.pixels <= 230)
+		else if (src.pixels <= 230 || mob_owner.base_form)
 			mob_owner.modifier = /datum/movement_modifier/mimic
 			health = 25
 			speed_string = "Normal."

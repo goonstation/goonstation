@@ -12,6 +12,9 @@
 /// Amount a missing arm will speed you up (as long as you have legs)
 #define ROBOT_MISSING_ARM_MOVEMENT_ADJUST -0.1
 
+/// Amount of time between using a state laws command
+#define STATE_LAW_COOLDOWN 20 SECONDS
+
 /// Cell power remaining before the low power distress effect occurs
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
 

@@ -95,6 +95,7 @@ TYPEINFO(/mob/living/silicon/ai)
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
+	voice_type = "cyborg"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	anchored = ANCHORED
@@ -1641,17 +1642,44 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State Standard Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State Standard Laws", say_targets)
+
+	if (!choice)
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("1. [/obj/item/aiModule/asimov1::lawText]")
+	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("2. [/obj/item/aiModule/asimov2::lawText]")
+	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("3. [/obj/item/aiModule/asimov3::lawText]")
+	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
@@ -1668,21 +1696,48 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State All Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	if(!src.law_rack_connection)
+		boutput(src.get_message_mob(), "You have no laws!")
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
-	if(!src.law_rack_connection)
-		boutput(src, "You have no laws!")
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State All Laws", say_targets)
+
+	if (!choice)
 		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
 
 	logTheThing(LOG_SAY, usr, "states all their current laws.")
 	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
-		src.say("[number]. [laws[number]]")
+		src.say("[prefix] [number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY
