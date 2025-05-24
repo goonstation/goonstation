@@ -1170,6 +1170,11 @@ TYPEINFO(/datum/trait/partyanimal)
 	disability_name = "Cybernetics Incompatable"
 	disability_desc = "Patient is incompatible with all forms of cybernetic augmentation, including cyborgification."
 
+	onAdd(mob/owner)
+		. = ..()
+		var/mob/living/carbon/human/H = owner
+		H.organHolder?.brain?.cyber_incompatible = TRUE
+
 	onLife(mob/owner, mult)
 		. = ..()
 		var/mob/living/carbon/human/H = owner
