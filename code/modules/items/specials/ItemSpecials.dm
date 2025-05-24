@@ -1218,7 +1218,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if (ismob(hit))
 			var/mob/M = hit
 			M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
-			M.bodytemperature += (4 * mult)
+			M.changeBodyTemp(4 KELVIN * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 
 		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
@@ -1589,7 +1589,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (ismob(hit))
 				var/mob/M = hit
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				M.bodytemperature += (4 * mult)
+				M.changeBodyTemp(4 KELVIN * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 

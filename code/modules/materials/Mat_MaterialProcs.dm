@@ -551,8 +551,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
-			if (C.bodytemperature > 0)
-				C.bodytemperature -= 2
+			C.changeBodyTemp(-2 KELVIN)
 			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)

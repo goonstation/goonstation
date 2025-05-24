@@ -55,7 +55,7 @@
 			if (probmult(8))
 				H.emote(pick("pale", "groan"))
 			if (probmult(8))
-				H.bodytemperature += 4
+				H.changeBodyTemp(4 KELVIN)
 				H.show_text(pick_string("organ_disease_messages.txt", "appendicitis1"), "red")
 			if (probmult(5))
 				boutput(H, SPAN_ALERT("Your back aches terribly!"))
