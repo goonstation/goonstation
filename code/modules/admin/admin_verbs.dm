@@ -32,6 +32,7 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
+		/client/proc/wraithsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
