@@ -944,6 +944,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(target == user)
 				msg = "[user.name] climbs into the [chute]."
 				boutput(user, "You climb into the [chute].")
+
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
@@ -972,6 +973,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return FALSE
 		return TRUE
 
+	proc/mimicTrap(mob/living/carbon/human/target, var/reroll = FALSE)
+		ON_COOLDOWN(chute, "mimicTrap", 5 SECONDS)
+		var/randLimb = list("random_limb_string" = pick("l_arm", "r_arm", "l_leg", "r_leg"))
+		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(randLimb["random_limb_string"])
+		if (targetLimb && !reroll)
+			var/obj/item/limb = targetLimb.sever()
+			boutput(target, SPAN_ALERT("Something in the [chute] tears off [limb]!"))
+			target.emote("scream")
+			var/turf/spawnpoint = chute.present_mimic.stomachHolder.region.get_random_turf()
+			if (chute.present_mimic.stomachHolder.region.turf_on_border(spawnpoint))
+				mimicTrap(target, TRUE) // reroll if the limb would end up on the stomach wall
+			limb.set_loc(chute.present_mimic.stomachHolder.region.get_random_turf())
+			playsound(chute, 'sound/voice/burp_alien.ogg', 60, 1)
+		else
+			mimicTrap(target)
 
 #undef DISPOSAL_REPAIR_STEP_FIXED
 #undef DISPOSAL_REPAIR_STEP_SCREWDRIVER
