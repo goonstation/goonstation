@@ -118,10 +118,10 @@
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff++
 						continue
-					if (I.scan_category == "not_shown")
+					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 						continue
-					if (I.scan_category != "syndicate")
-						if (I.scan_category != "unknown")
+					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
+						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
 							implant_list["Unknown implant"]++
