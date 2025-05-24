@@ -106,6 +106,9 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				boutput(user, SPAN_ALERT("<b>There's already an egg in there!</b>"))
 			else
 				var/obj/item/reagent_containers/food/snacks/ingredient/egg/E = W
+				if (E.infertile)
+					boutput(user, SPAN_ALERT("<b>This egg is infertile and cannot be used!</b>"))
+					return
 				user.u_equip(E)
 				E.set_loc(src)
 				my_egg = E
