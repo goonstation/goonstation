@@ -526,3 +526,5 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 			src.UpdateOverlays(src.blender_working, "blender_light")
 
 		return
+#undef OVEN_LOW
+#undef OVEN_HIGH
