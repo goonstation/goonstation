@@ -307,6 +307,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

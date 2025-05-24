@@ -599,7 +599,6 @@
 	..()
 
 /mob/living/carbon/human/death(gibbed)
-	src.drop_juggle()
 	if (ticker?.mode)
 		ticker.mode?.on_human_death(src)
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
@@ -614,6 +613,8 @@
 	setdead(src)
 	src.dizziness = 0
 	src.jitteriness = 0
+
+	src.drop_juggle()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -2566,6 +2567,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	return FALSE
 
 /mob/living/carbon/human/proc/drop_juggle()
+	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
+
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))

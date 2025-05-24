@@ -126,7 +126,7 @@ var/global/list/mapNames = list(
 	var/auto_windows = FALSE
 
 	var/ext_airlocks = /obj/machinery/door/airlock/pyro/external
-	var/airlock_style = "gannets"
+	var/airlock_style = "pyro"
 
 	/// The Syndicate Listening Post prefab datum, used to dynamically insert the listening post at runtime
 	var/listening_post_prefab = /datum/mapPrefab/listening_post/standard
@@ -263,8 +263,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	escape_centcom = null
 	escape_transit = null
 	escape_station = null
@@ -296,8 +294,6 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
-
-	airlock_style = "pyro"
 
 	listening_post_prefab = /datum/mapPrefab/listening_post/wrestlemap
 
@@ -343,8 +339,6 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
-
-	airlock_style = "pyro"
 
 	escape_dir = SOUTH
 
@@ -398,8 +392,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -431,7 +423,6 @@ var/global/list/mapNames = list(
 /datum/map_settings/donut2
 	name = "DONUT2"
 	goonhub_map = "/maps/donut2"
-	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -477,7 +468,6 @@ var/global/list/mapNames = list(
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "/maps/donut3"
-	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
@@ -556,8 +546,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	listening_post_prefab = /datum/mapPrefab/listening_post/kondaru
 
 	escape_dir = EAST
@@ -605,8 +593,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	airlock_style = "pyro"
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -746,8 +732,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	listening_post_prefab = /datum/mapPrefab/listening_post/oshan
 
 	escape_dir = EAST
@@ -804,8 +788,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	listening_post_prefab = /datum/mapPrefab/listening_post/nadir
 
 	escape_dir = EAST
@@ -849,8 +831,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	escape_dir = EAST
 
 /datum/map_settings/mushroom
@@ -859,8 +839,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	airlock_style = "pyro"
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -900,8 +878,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
-	airlock_style = "pyro"
-
 	listening_post_prefab = /datum/mapPrefab/listening_post/density2
 
 	default_shuttle = "east_density"
@@ -935,8 +911,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	airlock_style = "pyro"
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -987,7 +961,6 @@ var/global/list/mapNames = list(
 	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-	airlock_style = "pyro"
 
 	listening_post_prefab = /datum/mapPrefab/listening_post/neon
 
