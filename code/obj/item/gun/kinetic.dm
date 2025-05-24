@@ -1494,7 +1494,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Detective")
+			src.verbs |= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	verb/claim_colt()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Colt"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Colt"]
+		reward.try_claim(usr, FALSE)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun
@@ -2424,7 +2442,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
-		W.icon = 'icons/obj/materials.dmi'
+		W.icon = 'icons/obj/items/materials/materials.dmi'
 		W.icon_state = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris

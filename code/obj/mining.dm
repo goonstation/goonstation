@@ -1965,6 +1965,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
