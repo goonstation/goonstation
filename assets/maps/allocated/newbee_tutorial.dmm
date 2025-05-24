@@ -1,0 +1,2020 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"af" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_toolbox,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"ah" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"aJ" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = 7
+	},
+/turf/unsimulated/floor/greenblack,
+/area/tutorial/newbee)
+"aK" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"aQ" = (
+/turf/unsimulated/floor/escape{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"bh" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"bj" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"bp" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"br" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"bN" = (
+/obj/table/reinforced/auto,
+/obj/item/wrench,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"bW" = (
+/obj/machinery/power/apc/autoname_north/hardened{
+	pixel_y = 0;
+	cell_type = 0
+	},
+/turf/unsimulated/floor,
+/area/tutorial/newbee/unpowered)
+"cE" = (
+/turf/simulated/wall/false_wall/centcom{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"cT" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"dF" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluegreen/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"dK" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"dR" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"ee" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"ek" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/storage/firstaid/toxin,
+/mob/living/critter/spider/clownqueen,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"fe" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_backpack,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"fj" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkbluewhite,
+/area/tutorial/newbee)
+"fK" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"fP" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/landmark/newbee/exit_healing,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"gb" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/exit_movement,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"gi" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"gj" = (
+/obj/landmark/newbee/clown_murder,
+/turf/unsimulated/floor/escape{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"gl" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/red/side{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"gp" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/landmark/newbee/enter_space,
+/turf/simulated/floor/bluegreen,
+/area/tutorial/newbee)
+"gx" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_id_card,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"gL" = (
+/turf/unsimulated/floor/black/corner,
+/area/tutorial/newbee)
+"gM" = (
+/obj/landmark/newbee/mouse,
+/turf/unsimulated/floor/red/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"he" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ho" = (
+/turf/unsimulated/wall/setpieces/leadwindow/full,
+/area/tutorial/newbee)
+"hy" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/structure/girder,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"hC" = (
+/obj/health_scanner/floor,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"il" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"in" = (
+/obj/landmark/newbee/enter_maints,
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"iv" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"iw" = (
+/obj/landmark/newbee/decon_wall,
+/turf/simulated/wall/auto/supernorn,
+/area/tutorial/newbee)
+"iC" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/purple/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"iZ" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"jm" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"jH" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"jJ" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"kq" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"kK" = (
+/obj/item/scrapweapons/weapons/spear/glass,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"kW" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"lc" = (
+/obj/decal/poster/wallsign/space{
+	pixel_x = -32
+	},
+/turf/simulated/floor/bluegreen/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ld" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"lI" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"me" = (
+/obj/landmark/newbee/basic_movement,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"mr" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"mS" = (
+/obj/landmark/newbee/disarm_person,
+/turf/unsimulated/floor/orange/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"mZ" = (
+/obj/strip_door,
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"ne" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"nk" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"no" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/lattice/directional_icons{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"nE" = (
+/obj/machinery/light/incandescent,
+/obj/landmark/newbee/sprinting,
+/obj/item/bananapeel,
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"nL" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/greenblack,
+/area/tutorial/newbee)
+"oc" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"oj" = (
+/turf/unsimulated/floor/escape{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"ol" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"ou" = (
+/turf/unsimulated/floor/green/side{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"oB" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"oK" = (
+/obj/health_scanner/floor,
+/turf/unsimulated/floor/blue,
+/area/tutorial/newbee)
+"oX" = (
+/turf/simulated/floor/bluegreen/corner{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"pd" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"pe" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"po" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/black/grime,
+/area/tutorial/newbee)
+"pO" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction_four,
+/area/tutorial/newbee)
+"pU" = (
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"qa" = (
+/turf/unsimulated/floor/black/grime,
+/area/tutorial/newbee)
+"qf" = (
+/turf/unsimulated/floor/arrival,
+/area/tutorial/newbee)
+"qj" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"qn" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/bluewhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"qO" = (
+/turf/unsimulated/floor/escape{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"ry" = (
+/obj/landmark/newbee/emergency_supply_closet,
+/turf/simulated/floor/bluegreen,
+/area/tutorial/newbee)
+"so" = (
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"sJ" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"tv" = (
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"tL" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/green/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"tY" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"uk" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"um" = (
+/obj/machinery/light/incandescent,
+/obj/item/gun/energy/phaser_gun{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/grey/blackgrime/other,
+/area/tutorial/newbee)
+"ux" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"uG" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"uL" = (
+/turf/unsimulated/floor/orange/side{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"uT" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/yellow/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"vb" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"vh" = (
+/turf/unsimulated/floor/escape{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"vi" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"vA" = (
+/turf/simulated/floor/bluegreen/corner{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"vG" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood/splatter/extra,
+/obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"vS" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"wn" = (
+/obj/decal/poster/wallsign/space{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/greenblack{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"wr" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"wt" = (
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"wD" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"wE" = (
+/turf/simulated/floor/bluegreen/side{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"wI" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"wN" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/escape{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"wY" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/purple/side,
+/area/tutorial/newbee)
+"xc" = (
+/obj/structure/girder,
+/obj/landmark/newbee/decon_girder,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"xX" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/landmark/newbee/traverse_space,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"yJ" = (
+/turf/simulated/floor/bluegreen/corner{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"zd" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"zp" = (
+/obj/decoration/damagedchair{
+	dir = 8
+	},
+/obj/item/clipboard/with_pen{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/black/grime,
+/area/tutorial/newbee)
+"zE" = (
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"zN" = (
+/turf/unsimulated/floor/darkblueblack{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"zY" = (
+/obj/landmark/newbee/laying_down,
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"AI" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_headset,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"AK" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"AS" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Bd" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"Bv" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Bw" = (
+/obj/landmark/newbee/idlock_doors,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_power,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"BB" = (
+/obj/strip_door{
+	dir = 4
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"BP" = (
+/turf/unsimulated/floor/blackwhite{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"BY" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"Ck" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/blackwhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Cs" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/orange/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"CW" = (
+/turf/unsimulated/floor/yellow/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"DB" = (
+/turf/simulated/wall/false_wall/centcom{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"DI" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"DQ" = (
+/turf/unsimulated/floor/purple/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Ec" = (
+/obj/item/scrapweapons/weapons/dagger,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Ek" = (
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Ev" = (
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"EA" = (
+/turf/unsimulated/floor/green/side{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"EE" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Ff" = (
+/obj/landmark/newbee/unpowered_doors,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	panel_open = 1
+	},
+/turf/unsimulated/floor,
+/area/tutorial/newbee/unpowered)
+"Fw" = (
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"FM" = (
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Gf" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"Gz" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_first_aid,
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"GU" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/directional_icons{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"GV" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Hb" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Hd" = (
+/turf/simulated/floor/bluegreen/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"HV" = (
+/turf/space,
+/area/space)
+"Ir" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/final_room,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Iw" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"IJ" = (
+/obj/item/bat,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"IK" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"IY" = (
+/turf/unsimulated/floor/red/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Jd" = (
+/turf/unsimulated/floor/bluewhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"JH" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/item/clothing/under/rank/geneticist{
+	pixel_y = 3;
+	pixel_x = -8
+	},
+/obj/item/clothing/suit/labcoat/genetics{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/tutorial/newbee)
+"JS" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Kk" = (
+/turf/unsimulated/floor/red/side{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"Kn" = (
+/obj/landmark/newbee/traverse_maints,
+/obj/machinery/door/airlock/pyro/maintenance,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Kz" = (
+/obj/fakeobject/teleport_pad,
+/obj/landmark/tutorial_start,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"KK" = (
+/obj/machinery/light/incandescent,
+/obj/item/gun/energy/tasershotgun{
+	pixel_x = 17
+	},
+/turf/unsimulated/floor/redblack,
+/area/tutorial/newbee)
+"KP" = (
+/obj/landmark/newbee/help_person,
+/turf/unsimulated/floor/green/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Lr" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_weldingtool,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Lt" = (
+/turf/unsimulated/floor/black/corner{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"LB" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkpurpleblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"LQ" = (
+/turf/unsimulated/floor/escape{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"LX" = (
+/turf/simulated/wall/auto/supernorn,
+/area/tutorial/newbee)
+"Ma" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Mh" = (
+/turf/simulated/floor/bluegreen/corner,
+/area/tutorial/newbee)
+"Mr" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"MB" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/get_health,
+/turf/unsimulated/floor/white/side,
+/area/tutorial/newbee)
+"MD" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluegreen/side,
+/area/tutorial/newbee)
+"MY" = (
+/turf/simulated/wall/false_wall/centcom,
+/area/tutorial/newbee)
+"Nr" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/escape{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Nu" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Nz" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_flashlight,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee)
+"NL" = (
+/turf/unsimulated/floor/purple/side,
+/area/tutorial/newbee)
+"NN" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"NO" = (
+/turf/cordon,
+/area/space)
+"NP" = (
+/obj/machinery/crusher/slow/tutorial,
+/turf/unsimulated/floor/grey/blackgrime/other,
+/area/tutorial/newbee)
+"Oa" = (
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"OP" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"PV" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Qb" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/landmark/newbee/powered_doors,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Qq" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice/directional_icons{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"QM" = (
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Rd" = (
+/turf/unsimulated/floor/bluewhite,
+/area/tutorial/newbee)
+"Rz" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"RA" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/landmark/newbee/exit_storage,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"RG" = (
+/obj/critter/domestic_bee{
+	pixel_y = 6;
+	pixel_x = -19
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy{
+	pixel_y = 16;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/honeyblocks,
+/area/tutorial/newbee)
+"Sq" = (
+/turf/unsimulated/floor/black/side,
+/area/tutorial/newbee)
+"SE" = (
+/obj/machinery/light/incandescent,
+/obj/item/swords_sheaths/captain/blue{
+	pixel_x = -14
+	},
+/turf/unsimulated/floor/darkblueblack,
+/area/tutorial/newbee)
+"Tm" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_welding_mask,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Tp" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"Tz" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 8
+	},
+/area/tutorial/newbee)
+"TD" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/black/side,
+/area/tutorial/newbee)
+"TN" = (
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"Ud" = (
+/obj/landmark/newbee/water_tank,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Ui" = (
+/turf/unsimulated/floor/blackwhite,
+/area/tutorial/newbee)
+"Ul" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_crowbar,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"UE" = (
+/obj/machinery/conveyor/area_activated{
+	dir = 1;
+	move_lag = 1.5
+	},
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee)
+"UX" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"Va" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/mapping_helper/access/heads,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"Ve" = (
+/obj/landmark/newbee/grab_person,
+/turf/unsimulated/floor/yellow/side{
+	dir = 10
+	},
+/area/tutorial/newbee)
+"Vh" = (
+/turf/unsimulated/floor/redblack{
+	dir = 6
+	},
+/area/tutorial/newbee)
+"VV" = (
+/turf/unsimulated/floor/yellow/side{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"Wh" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor,
+/area/tutorial/newbee)
+"Wy" = (
+/turf/unsimulated/floor/escape{
+	dir = 9
+	},
+/area/tutorial/newbee)
+"WC" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 1
+	},
+/obj/mapping_helper/access/security,
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee)
+"WF" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"Xs" = (
+/turf/unsimulated/floor/darkpurpleblack,
+/area/tutorial/newbee)
+"Xu" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/arrival,
+/area/tutorial/newbee)
+"XV" = (
+/turf/unsimulated/wall/setpieces/leadwall/cap,
+/area/tutorial/newbee)
+"Yk" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/bluewhite{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Yl" = (
+/turf/unsimulated/floor/escape,
+/area/tutorial/newbee)
+"Yq" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/landmark/newbee/exit_radio,
+/turf/unsimulated/floor/blue/side{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"Yy" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/greenblack{
+	dir = 1
+	},
+/area/tutorial/newbee)
+"YH" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee)
+"YZ" = (
+/obj/landmark/newbee/pull_target,
+/turf/unsimulated/floor/darkblue/checker/other,
+/area/tutorial/newbee)
+"ZG" = (
+/turf/unsimulated/floor/honeyblocks/border{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ZL" = (
+/turf/unsimulated/floor/escape{
+	dir = 4
+	},
+/area/tutorial/newbee)
+"ZN" = (
+/turf/unsimulated/floor/darkbluewhite{
+	dir = 5
+	},
+/area/tutorial/newbee)
+"ZP" = (
+/turf/simulated/floor/bluegreen,
+/area/tutorial/newbee)
+"ZZ" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction,
+/area/tutorial/newbee)
+
+(1,1,1) = {"
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}
+(2,1,1) = {"
+NO
+JS
+dK
+dK
+dK
+dK
+dK
+GV
+dK
+dK
+dK
+dK
+dK
+GV
+dK
+dK
+dK
+dK
+dK
+wD
+NO
+"}
+(3,1,1) = {"
+NO
+Ma
+pU
+Tp
+Tp
+Tp
+wt
+Ma
+Wy
+wN
+vh
+wN
+aQ
+LX
+qa
+qa
+zp
+qa
+po
+Ma
+NO
+"}
+(4,1,1) = {"
+NO
+Ma
+BY
+oB
+Kz
+oB
+Xu
+Ma
+oj
+Ec
+oB
+oB
+Yl
+ZZ
+dK
+ho
+dK
+wD
+qa
+Ma
+NO
+"}
+(5,1,1) = {"
+NO
+Ma
+dR
+oB
+oB
+oB
+qf
+Ma
+gj
+oB
+kK
+oB
+oB
+Ir
+Wh
+oB
+Ud
+Ma
+ZG
+Ma
+NO
+"}
+(6,1,1) = {"
+NO
+Ma
+BY
+oB
+me
+oB
+Xu
+Ma
+oj
+IJ
+oB
+oB
+Yl
+ZZ
+dK
+wD
+oB
+Ma
+RG
+Ma
+NO
+"}
+(7,1,1) = {"
+NO
+Ma
+Fw
+DI
+oB
+DI
+FM
+Ma
+qO
+Nr
+ZL
+Nr
+LQ
+Ma
+bW
+Ma
+Wh
+Ma
+JH
+Ma
+NO
+"}
+(8,1,1) = {"
+NO
+ZZ
+dK
+dK
+Qb
+GV
+dK
+pO
+dK
+dK
+dK
+dK
+dK
+pO
+dK
+aK
+Yq
+aK
+dK
+il
+NO
+"}
+(9,1,1) = {"
+NO
+Ma
+gL
+Ev
+oB
+Ma
+zN
+Ma
+mr
+UE
+UE
+UE
+nE
+Ma
+Mr
+Oa
+Oa
+Oa
+Mr
+Ma
+NO
+"}
+(10,1,1) = {"
+NO
+Ma
+TD
+oB
+oB
+Va
+SE
+Ma
+zY
+Bd
+ho
+wD
+so
+Ma
+Oa
+Oa
+Oa
+Oa
+Oa
+Ma
+NO
+"}
+(11,1,1) = {"
+NO
+Ma
+Sq
+gx
+oB
+ZZ
+MY
+il
+so
+mZ
+so
+Ma
+so
+gb
+Oa
+Oa
+Oa
+AI
+Oa
+Ma
+NO
+"}
+(12,1,1) = {"
+NO
+Ma
+TD
+oB
+oB
+WC
+KK
+ZZ
+cE
+wD
+BB
+Ma
+BB
+Ma
+Oa
+Oa
+YZ
+Oa
+Oa
+Ma
+NO
+"}
+(13,1,1) = {"
+NO
+Ma
+Lt
+QM
+oB
+Ma
+Vh
+DB
+um
+ee
+so
+fK
+NP
+Ma
+Mr
+Oa
+Oa
+Oa
+Mr
+Ma
+NO
+"}
+(14,1,1) = {"
+NO
+ZZ
+dK
+dK
+Bw
+aK
+dK
+pO
+dK
+aK
+iw
+aK
+dK
+pO
+dK
+dK
+dK
+dK
+dK
+il
+NO
+"}
+(15,1,1) = {"
+NO
+Ma
+kW
+ne
+oB
+ne
+oc
+Ma
+Ek
+LB
+tv
+LB
+uk
+Ma
+Iw
+NN
+NN
+NN
+OP
+Ma
+NO
+"}
+(16,1,1) = {"
+NO
+Ma
+iC
+oB
+oB
+oB
+wY
+Ma
+kq
+Tm
+tv
+tv
+Xs
+Ma
+Yy
+tv
+fe
+tv
+nL
+Ma
+NO
+"}
+(17,1,1) = {"
+NO
+Ma
+wr
+oB
+oB
+Ul
+NL
+Ma
+kq
+Lr
+tv
+tv
+Xs
+RA
+tv
+tv
+tv
+hC
+aJ
+Ma
+NO
+"}
+(18,1,1) = {"
+NO
+Ma
+iC
+oB
+oB
+oB
+wY
+Ma
+kq
+bN
+tv
+tv
+Xs
+Ma
+Yy
+tv
+tv
+tv
+nL
+Ma
+NO
+"}
+(19,1,1) = {"
+NO
+Ma
+vb
+DQ
+oB
+DQ
+nk
+Ma
+bh
+iv
+tY
+iv
+AS
+Ma
+WF
+wn
+tv
+wn
+UX
+Ma
+NO
+"}
+(20,1,1) = {"
+NO
+ZZ
+dK
+dK
+Ff
+dK
+dK
+pO
+dK
+dK
+dK
+dK
+dK
+pO
+pe
+pe
+xX
+pe
+pe
+il
+NO
+"}
+(21,1,1) = {"
+NO
+Ma
+KP
+ou
+oB
+VV
+Ve
+Ma
+ah
+qn
+ux
+qn
+Hb
+Ma
+GU
+HV
+HV
+HV
+ol
+Ma
+NO
+"}
+(22,1,1) = {"
+NO
+Ma
+tL
+EA
+oB
+CW
+uT
+Ma
+jm
+zE
+Jd
+zE
+Rd
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(23,1,1) = {"
+NO
+Ma
+oB
+oB
+oB
+oB
+oB
+MB
+zE
+Rd
+oK
+Gz
+Rd
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(24,1,1) = {"
+NO
+Ma
+Cs
+uL
+oB
+IY
+gl
+Ma
+jm
+zE
+ux
+zE
+Rd
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(25,1,1) = {"
+NO
+Ma
+mS
+iZ
+oB
+Kk
+gM
+Ma
+IK
+Yk
+zE
+Yk
+gi
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(26,1,1) = {"
+NO
+ZZ
+dK
+dK
+dK
+dK
+dK
+pO
+dK
+dK
+fP
+dK
+dK
+il
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(27,1,1) = {"
+NO
+Ma
+EE
+Tz
+Tz
+Tz
+Nu
+Ma
+uG
+Ck
+zE
+Ck
+bj
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(28,1,1) = {"
+NO
+Ma
+jJ
+zE
+zE
+zE
+fj
+Ma
+br
+zE
+zE
+zE
+Ui
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(29,1,1) = {"
+NO
+Ma
+Gf
+Nz
+zE
+zE
+zE
+xc
+zE
+zE
+zE
+zE
+Ui
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(30,1,1) = {"
+NO
+Ma
+jJ
+zE
+zE
+zE
+fj
+Ma
+br
+zE
+af
+zE
+Ui
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(31,1,1) = {"
+NO
+Ma
+ZN
+sJ
+zE
+sJ
+bp
+Ma
+vS
+zd
+qj
+zd
+BP
+Ma
+HV
+HV
+HV
+HV
+HV
+Ma
+NO
+"}
+(32,1,1) = {"
+NO
+ZZ
+dK
+dK
+in
+GV
+dK
+aK
+dK
+dK
+dK
+dK
+dK
+il
+no
+HV
+HV
+HV
+Qq
+Ma
+NO
+"}
+(33,1,1) = {"
+NO
+Ma
+TN
+ld
+TN
+Ma
+Bv
+TN
+jH
+TN
+TN
+pd
+TN
+ZZ
+pe
+pe
+gp
+pe
+pe
+il
+NO
+"}
+(34,1,1) = {"
+NO
+Ma
+jH
+Rz
+pd
+Ma
+TN
+TN
+vi
+TN
+Bv
+TN
+TN
+Ma
+Mh
+lc
+ZP
+lc
+vA
+Ma
+NO
+"}
+(35,1,1) = {"
+NO
+Ma
+TN
+Bd
+dK
+PV
+TN
+TN
+Ma
+TN
+JS
+dK
+dK
+il
+MD
+ZP
+ZP
+ZP
+dF
+Ma
+NO
+"}
+(36,1,1) = {"
+NO
+Ma
+TN
+jH
+TN
+TN
+YH
+TN
+Ma
+TN
+Ma
+TN
+TN
+Kn
+ZP
+ZP
+ZP
+ry
+wE
+Ma
+NO
+"}
+(37,1,1) = {"
+NO
+ZZ
+dK
+dK
+dK
+dK
+XV
+cT
+Ma
+TN
+he
+TN
+TN
+Ma
+MD
+ZP
+ZP
+ZP
+dF
+Ma
+NO
+"}
+(38,1,1) = {"
+NO
+Ma
+ek
+vG
+lI
+lI
+hy
+AK
+Ma
+Bv
+TN
+TN
+ld
+Ma
+oX
+Hd
+Hd
+Hd
+yJ
+Ma
+NO
+"}
+(39,1,1) = {"
+NO
+wI
+dK
+dK
+dK
+dK
+dK
+dK
+aK
+dK
+dK
+dK
+dK
+aK
+dK
+dK
+dK
+dK
+dK
+PV
+NO
+"}
+(40,1,1) = {"
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+"}

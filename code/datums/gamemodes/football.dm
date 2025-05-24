@@ -40,7 +40,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
 			if (!istype(player)) continue
-			if (player.ready)
+			if (player.ready_play)
 				if (player.mind)
 					src.init_player(player, 0, 1)
 

@@ -131,6 +131,9 @@
 	proc/load_antag_tokens()
 		PRIVATE_PROC(TRUE) //call get_antag_tokens
 		. = TRUE
+		#ifdef BONUS_POINTS
+		antag_tokens = 99
+		#else
 		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 		if (!AT)
 			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
@@ -148,6 +151,7 @@
 		antag_tokens += text2num( src.cloudSaves.getData( "antag_tokens" ) || "0" )
 		if (src.cloudSaves.putData( "antag_tokens", antag_tokens ))
 			AT[ckey] << null
+		#endif
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)

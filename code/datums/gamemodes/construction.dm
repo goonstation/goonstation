@@ -39,7 +39,7 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if (player.ready)
+		if (player.ready_play)
 			player.close_spawn_windows()
 
 	var/datum/job/special/station_builder/C = new /datum/job/special/station_builder()

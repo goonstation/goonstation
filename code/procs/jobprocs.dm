@@ -54,7 +54,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (!istype(player) || !player.mind) continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
-		if (player.ready && !player.mind.assigned_role)
+		if (player.ready_play && !player.mind.assigned_role)
 			unassigned += player
 
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
