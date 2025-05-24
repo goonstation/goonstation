@@ -3482,3 +3482,6 @@ TYPEINFO(/mob)
 
 /mob/proc/frostburn_temp()
 	return src.base_body_temp - (src.temp_tolerance * 4)
+
+/mob/proc/get_client() //AIs can have no client var while still having a client
+	return src.client
