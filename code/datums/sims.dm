@@ -160,25 +160,71 @@
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
 		depletion_rate = 0.078
 		var/debuff = "hungry"
-		var/debuff_threshold = 25
+		var/buff = "nourished"
+		#ifdef RP_MODE
+		var/debuff_threshold = 0
+		#else
+		var/debuff_threshold = -1 // Don't want debuffs procing on classic
+		#endif
+		var/lowbuff_threshold = 25
+		var/buff_threshold = 50
+		var/highbuff_threshold = 75
 		var/debuffed = FALSE
+		var/lowbuffed = FALSE
+		var/buffed = FALSE
+		var/highbuffed = TRUE
 
 		onIncrease()
 			if (value > debuff_threshold && debuffed)
 				showOwner(SPAN_NOTICE("You feel considerably less [debuff]!"))
 				holder.owner.delStatus(debuff)
 				debuffed = FALSE
+			else if (value > lowbuff_threshold && value < buff_threshold && !lowbuffed)
+				showOwner(SPAN_ALERT("You feel [buff]!"))
+				holder.owner.setStatus(buff + "_low", duration = null)
+				holder.owner.delStatus("buff_stam")
+				lowbuffed = TRUE
+			else if (value > buff_threshold && value < highbuff_threshold && !buffed)
+				showOwner(SPAN_ALERT("You feel well [buff]!"))
+				holder.owner.setStatus(buff, duration = null) // Health Part
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.delStatus("buff_hot")
+				buffed = TRUE
+				lowbuffed = FALSE
+			else if (value > highbuff_threshold && !highbuffed)
+				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
+				holder.owner.setStatus(buff + "_high", duration = null)
+				holder.owner.setStatus(buff + "_stam", duration = null)
+				holder.owner.setStatus(buff + "_hot", duration = null)
+				highbuffed = TRUE
+				buffed = FALSE
 
 		onDecrease()
 			if (value < debuff_threshold && !debuffed)
 				showOwner(SPAN_ALERT("You feel considerably [debuff]!"))
 				holder.owner.setStatus(debuff, duration = null)
 				debuffed = TRUE
+			else if (value < lowbuff_threshold && value > debuff_threshold && !lowbuffed)
+				showOwner(SPAN_ALERT("You feel [buff]!"))
+				holder.owner.setStatus(buff + "_low", duration = null)
+				lowbuffed = TRUE
+				buffed = FALSE
+			else if (value < buff_threshold && value > lowbuff_threshold && !buffed)
+				showOwner(SPAN_ALERT("You feel well [buff]!"))
+				holder.owner.setStatus(buff, duration = null) // Health Part
+				holder.owner.delStatus("buff_hot")
+				buffed = TRUE
+				highbuffed = FALSE
+			else if (value > highbuff_threshold && !highbuffed)
+				showOwner(SPAN_ALERT("You feel extremely well [buff]!"))
+				holder.owner.setStatus(buff + "_high", duration = null) // Health Part
+				holder.owner.setStatus(buff + "_hot", duration = null)
+				highbuffed = TRUE
 
 		getWarningMessage()
-			if (value < 25)
+			if (value < 0)
 				return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!"), SPAN_ALERT("You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!"))
-			else if (value < 50)
+			else if (value < 25)
 				return SPAN_ALERT("You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!")
 			else
 				return null
@@ -189,11 +235,12 @@
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
 			depletion_rate = 0.0909
 			debuff = "thirsty"
+			buff = "quenched"
 
 			getWarningMessage()
-				if (value < 25)
+				if (value < 0)
 					return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!"), SPAN_ALERT("You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!"))
-				else if (value < 50)
+				else if (value < 25)
 					return SPAN_ALERT("You feel [pick("thirsty", "dry")]!")
 				else
 					return null
@@ -459,10 +506,8 @@
 		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
-#ifdef RP_MODE
 			SPAWN(0)
 				set_multiplier(1)
-#endif
 
 	Topic(href, href_list)
 		USR_ADMIN_ONLY
