@@ -1,3 +1,5 @@
+#define PRIORITY_NORMAL 0
+#define PRIORITY_HIGHER 0.1
 ABSTRACT_TYPE(/datum/cookingrecipe)
 /datum/cookingrecipe
 	var/list/ingredients
@@ -7,9 +9,17 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/category = "Unsorted" /// category for sorting, use null to hide
 	var/list/variants = null
 	var/variant_quantity = 1
+	var/priority = PRIORITY_NORMAL /// use this if the recipe should be checked before others with the same number of ingredients
 
-	proc/specialOutput(var/obj/submachine/ourCooker)
+
+	proc/specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		return null //If returning an object, that is used as the output
+
+	proc/getVariant(var/obj/machinery/cookingmachine/ourCooker)
+		for(var/specialIngredient in variants)
+			if(ourCooker.check_item(specialIngredient, src.variant_quantity))
+				return variants[specialIngredient]
+		return output
 
 	proc/render()
 		var/list/icons = list()
@@ -18,13 +28,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 		. = jointext(icons, "<span style='font-size: 300%'> + </span>")
 		. += "<span style='font-size: 300%'> = </span>[bicon(src.output, 2)]"
 
-//TODO: replace variant checking code with this once cooking machines have been unified under one type
-/*	proc/getVariant(var/obj/submachine/ourCooker)
-		for(var/specialIngredient in variants)
-			if(ourCooker.check_item(specialIngredient, variant_quantity))
-				return new variants[specialIngredient]
-		return new output
-*/
+
 
 // potential future update:
 // specialOutput should have a flag for if it is used or not,
@@ -36,8 +40,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven)
 /datum/cookingrecipe/oven
 ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/mixer
-
-
 
 /datum/cookingrecipe/oven/spicychickensandwich
 	ingredients = list(\
@@ -63,7 +65,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger
 	cookbonus = 13
 	category = "Burgers"
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		//this is dumb and assumes the second thing is always the meat but it usually is so :iiam:
 		var/obj/item/possibly_meat = locate(ingredients[2]) in ourCooker
 		if (possibly_meat?.reagents?.get_reagent_amount("crime") >= 5)
@@ -83,6 +85,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat = /obj/item/reagent_containers/food/snacks/burger/humanburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/burger/monkeyburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = /obj/item/reagent_containers/food/snacks/burger/synthburger,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = /obj/item/reagent_containers/food/snacks/burger/baconburger,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat = /obj/item/reagent_containers/food/snacks/burger/mysteryburger)
 
 
@@ -175,12 +178,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
 
-/datum/cookingrecipe/oven/burger/baconburger
-	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	output = /obj/item/reagent_containers/food/snacks/burger/baconburger
-
 /datum/cookingrecipe/oven/burger/baconator
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
@@ -188,6 +185,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/bigburger
+	priority = PRIORITY_HIGHER //so it doesn't conflict with normal cheeseburgers
 
 /datum/cookingrecipe/oven/burger/butterburger
 	ingredients = list(\
@@ -201,12 +199,16 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling = 1)
 	cookbonus = 6 // still mostly raw, since we don't kill it
+	priority = PRIORITY_HIGHER
 	output = /obj/item/reagent_containers/food/snacks/burger/aburgination
 
 /datum/cookingrecipe/oven/burger/monster
 	ingredients = list(/obj/item/reagent_containers/food/snacks/burger/bigburger = 4)
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/burger/monsterburger
+	specialOutput(obj/machinery/cookingmachine/ourCooker) //was runtiming when it tried to access the second, nonexistent ingredient
+		return null
+
 
 /datum/cookingrecipe/oven/swede_mball
 	ingredients = list(\
@@ -224,6 +226,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/donkpocket/warm
 	variants = list(\
 	/obj/item/instrument/bikehorn = /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm)
+
 
 /datum/cookingrecipe/oven/donkpocket2
 	ingredients = list(/obj/item/reagent_containers/food/snacks/donkpocket = 1)
@@ -492,7 +495,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_m,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_m)
 
-
 /datum/cookingrecipe/oven/sandwich/synth
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice = 2,
@@ -519,7 +521,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	variants = list(\
 	/obj/item/reagent_containers/food/snacks/breadslice/elvis = /obj/item/reagent_containers/food/snacks/sandwich/elvis_pb,
 	/obj/item/reagent_containers/food/snacks/breadslice/spooky = /obj/item/reagent_containers/food/snacks/sandwich/spooky_pb)
-
 
 /datum/cookingrecipe/oven/sandwich/peanutbutter_honey
 	ingredients = list(\
@@ -595,8 +596,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	ingredients =  list(/obj/item/reagent_containers/food/snacks/breadslice = 2)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/sandwich
+	priority = PRIORITY_HIGHER //prevents conflict with toast
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -755,7 +757,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1097,7 +1099,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/hotdog
 
-/datum/cookingrecipe/oven/cook_meat //Very jank, will need future work.
+/datum/cookingrecipe/oven/cook_meat
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/meat = 1)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak
@@ -1229,7 +1231,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	category = "Pies"
 	var/base_pie_name = "pie"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 		if (length(ourCooker.contents) <= 2)
@@ -1481,6 +1483,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/cake_batter = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 3)
 	cookbonus = 14
+	priority = PRIORITY_HIGHER //conflicts with meatcake
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 	category = "Cakes"
 
@@ -1500,7 +1503,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1517,7 +1520,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/reagent_containers/food/snacks/cake
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if(!ourCooker)
 			return null
 
@@ -1558,7 +1561,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	output = /obj/item/cake_item
 	category = "Cakes"
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1573,9 +1576,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 
 /datum/cookingrecipe/mixer/mix_cake_custom
 	ingredients = list(/obj/item/reagent_containers/food/snacks/cake_batter = 1)
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/cake_batter
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -1726,7 +1729,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!length(ourCooker.contents))
 			return new src.output()
 		for (var/obj/item/item in ourCooker.contents)
@@ -1983,7 +1986,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 22
 	output = /obj/item/reagent_containers/food/snacks/b_cupcake
 
-	specialOutput(var/obj/submachine/ourCooker)
+	specialOutput(var/obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 
@@ -2011,7 +2014,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	cookbonus = 10
 	output = /obj/item/pen/crayon/lipstick
 
-	specialOutput(obj/submachine/ourCooker)
+	specialOutput(obj/machinery/cookingmachine/ourCooker)
 		if (!ourCooker)
 			return null
 		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
@@ -2123,3 +2126,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
+
+#undef PRIORITY_NORMAL
+#undef PRIORITY_HIGHER
