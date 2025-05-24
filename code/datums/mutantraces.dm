@@ -2383,29 +2383,21 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (!A)
 			return
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		var/adjective = pick("astutely", "discerningly", "intently")
+		var/adjective = pick("astutely", "discerningly", "intently", "casually", "doggedly", "intriguingly")
 		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
-		if (ismob(A))
-			var/mob/living/M = A
-			if (M.mind)
-				boutput(src.mob, SPAN_NOTICE("[M] smells like a [M.mind?.color]."))
-				return
-		var/list/L = A.fingerprints_full
-		if (!length(L))
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/list/print = L[pick(L)]
-		var/color = print["color"]
-		if (!color)
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/timestamp = print["timestamp"]
-		var/intensity = "faintly"
-		if (TIME < timestamp + 3 MINUTES)
-			intensity = "strongly"
-		else if (TIME < timestamp + 10 MINUTES)
-			intensity = "kind"
-		boutput(src.mob, SPAN_NOTICE("\The [A] smells [intensity] of a [color]."))
+
+		var/sleuth_text = ""
+		if (isliving(A))
+			var/mob/living/L = A
+			if (L.mind?.color)
+				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
+		if(A.forensic_holder)
+			var/datum/forensic_group/basic_list/sleuth/sleuth_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
+			if(istype(sleuth_group))
+				sleuth_text += sleuth_group.get_sleuth_text(A, FALSE)
+		if(!sleuth_text)
+			sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
+		boutput(src.mob, sleuth_text)
 
 	proc/sneeze()
 		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
