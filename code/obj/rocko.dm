@@ -26,11 +26,19 @@
 		choose_rocko_material()
 		UpdateIcon()
 		START_TRACKING_CAT(TR_CAT_PETS)
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		processing_items |= src
 
 	disposing()
 		processing_items -= src
 		STOP_TRACKING_CAT(TR_CAT_PETS)
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+		var/turf/where = get_turf(src)
+		var/where_text = "Unknown (?, ?, ?)"
+		if (where)
+			where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+		message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
 		..()
 
 	proc/can_mob_observe(mob/M)
@@ -178,12 +186,19 @@
 		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
 		var/sprite_prefix = "ore"
 		var/sprite_value = pick(1,2,3,4,5,6)
+		var/list/sprite_variants = list("")
 		switch(src.material.getID())
 			if("bohrum")
-				sprite_value = pick(1,2,3,4)
+				sprite_value = pick(1,2,3,4) // Larger bohrum stack sizes are more piles of rocks than rocks
 			if("plutonium")
 				sprite_prefix = "scrap"
-		src.icon_state = "[sprite_prefix][sprite_value]_$$[src.material.getID()]"
+		// Include variants of ores if they exist
+		for(var/letter in list("b","c","d"))
+			if(is_valid_icon_state("[sprite_prefix][sprite_value][letter]_$$[src.material.getID()]"))
+				sprite_variants += letter
+			else
+				break
+		src.icon_state = "[sprite_prefix][sprite_value][pick(sprite_variants)]_$$[src.material.getID()]"
 		var/scale = 1 // Scale depending on chosen ore size
 		switch(sprite_value)
 			if(1) scale = 1.3
