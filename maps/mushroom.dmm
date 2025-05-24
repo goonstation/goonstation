@@ -18453,6 +18453,19 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/hor)
+"heo" = (
+/obj/machinery/power/data_terminal,
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Artlab"
+	},
+/obj/cable,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_y = 8;
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/artifact)
 "her" = (
 /obj/stool/chair/couch/green{
 	dir = 4
@@ -22184,22 +22197,6 @@
 /mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"kwg" = (
-/obj/table/auto,
-/obj/machinery/light/incandescent,
-/obj/item/robodefibrillator,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical,
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 8
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay)
 "kwr" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -31973,15 +31970,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"rKh" = (
-/obj/machinery/power/data_terminal,
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Artlab"
-	},
-/obj/cable,
-/turf/simulated/floor/purplewhite,
-/area/station/science/artifact)
 "rKs" = (
 /obj/machinery/door_timer/solitary2/new_walls/north,
 /turf/simulated/floor/red/side{
@@ -36925,6 +36913,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"vor" = (
+/obj/item/robodefibrillator,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
+/obj/table/auto,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "voE" = (
 /turf/simulated/floor{
 	icon_state = "L1";
@@ -97262,7 +97265,7 @@ vZE
 dxC
 jNn
 aPQ
-kwg
+vor
 kvV
 dgF
 spP
@@ -99686,7 +99689,7 @@ nxF
 oIX
 pTJ
 qOd
-rKh
+heo
 sXL
 xis
 sZp

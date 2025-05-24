@@ -9897,12 +9897,6 @@
 "cQi" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/south_side)
-"cQo" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/black/grime,
-/area/station/quartermaster/refinery)
 "cQy" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/engineering,
@@ -47655,6 +47649,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"oFT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/slag_shovel{
+	pixel_x = 11;
+	pixel_y = 11
+	},
+/turf/simulated/floor/black/grime,
+/area/station/quartermaster/refinery)
 "oFZ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -134940,7 +134944,7 @@ gWF
 dhW
 uyd
 uyd
-cQo
+oFT
 fNb
 lGB
 gVQ

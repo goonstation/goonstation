@@ -15770,25 +15770,6 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"cwn" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/window_blinds/cog2/middle{
-	dir = 4;
-	icon_state = "blinds_cog2-M-c";
-	opacity = 1;
-	open = 0
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced/auto,
-/turf/simulated/bar,
-/area/station/crew_quarters/kitchen)
 "cwM" = (
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/white,
@@ -19132,6 +19113,26 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"eui" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	icon_state = "blinds_cog2-M-c";
+	opacity = 1;
+	open = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "euy" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Outpost mail hub'";
@@ -20959,6 +20960,25 @@
 "fBl" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"fBH" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	icon_state = "blinds_cog2-M-c";
+	opacity = 1;
+	open = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "fCc" = (
 /obj/disposalpipe/segment/food{
 	dir = 8
@@ -26342,26 +26362,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"iNG" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/window_blinds/cog2/middle{
-	dir = 4;
-	icon_state = "blinds_cog2-M-c";
-	opacity = 1;
-	open = 0
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/machinery/light/small/floor,
-/obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced/auto,
-/turf/simulated/bar,
-/area/station/crew_quarters/kitchen)
 "iNJ" = (
 /obj/table/wood/auto,
 /obj/machinery/phone{
@@ -29885,6 +29885,18 @@
 /obj/linen_bin/bedsheet,
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
+"kVq" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro{
+	dir = 1
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/catering)
 "kVt" = (
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/science/hall)
@@ -34007,36 +34019,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"nnB" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/table/reinforced/auto,
-/obj/item/shaker/ketchup{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/shaker/mustard{
-	pixel_x = -2;
-	pixel_y = -7
-	},
-/obj/window_blinds/cog2/right{
-	dir = 4;
-	icon_state = "blinds_cog2-R-c";
-	opacity = 1;
-	open = 0
-	},
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/bar,
-/area/station/crew_quarters/kitchen)
 "nnN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34774,6 +34756,25 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"nLk" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	icon_state = "blinds_cog2-L-c";
+	opacity = 1;
+	open = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "nLy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/transport,
@@ -41942,6 +41943,36 @@
 	dir = 5
 	},
 /area/station/crew_quarters/stockex)
+"rMR" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/shaker/ketchup{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/shaker/mustard{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4;
+	icon_state = "blinds_cog2-R-c";
+	opacity = 1;
+	open = 0
+	},
+/obj/disposalpipe/segment/food{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/kitchen)
 "rNn" = (
 /obj/juggleplaque,
 /turf/simulated/wall/auto/supernorn,
@@ -43023,18 +43054,6 @@
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"srV" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro{
-	dir = 1
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/obj/mapping_helper/access/bar,
-/turf/simulated/bar,
-/area/station/crew_quarters/catering)
 "ssc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45745,25 +45764,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"tXk" = (
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/window_blinds/cog2/left{
-	dir = 4;
-	icon_state = "blinds_cog2-L-c";
-	opacity = 1;
-	open = 0
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced/auto,
-/turf/simulated/bar,
-/area/station/crew_quarters/kitchen)
 "tXu" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -72209,10 +72209,10 @@ wYD
 bjm
 bjm
 hFE
-nnB
-cwn
-iNG
-tXk
+rMR
+fBH
+eui
+nLk
 bjm
 gmL
 gRz
@@ -72818,7 +72818,7 @@ bXk
 bXk
 key
 nzd
-srV
+kVq
 bBF
 mei
 kBo
