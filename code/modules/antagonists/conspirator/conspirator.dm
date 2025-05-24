@@ -1,5 +1,6 @@
 /datum/antagonist/conspirator
 	id = ROLE_CONSPIRATOR
+	antagonist_icon = "conspirator"
 	display_name = "conspirator"
 	wiki_link = "https://wiki.ss13.co/Conspirator"
 	var/static/list/datum/mind/conspirators
