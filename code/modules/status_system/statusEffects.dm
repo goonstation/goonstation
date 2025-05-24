@@ -3790,3 +3790,263 @@
 		boutput(M, SPAN_NOTICE("<b>Your magical barrier fades away!</b>"))
 		M.visible_message(SPAN_ALERT("The shield protecting [M] fades away."))
 		playsound(M, 'sound/effects/MagShieldDown.ogg', 50, TRUE)
+
+/datum/statusEffect/mindeater_becoming_visible
+	id = "mindeater_appearing"
+	name = "Appearing"
+	icon_state = "mindeater_appearing"
+	desc = "While in light you are becoming visible!"
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (mindeater.on_bright_turf())
+			mindeater.reveal()
+
+/datum/statusEffect/mindeater_becoming_invisible
+	id = "mindeater_cloaking"
+	name = "Cloaking"
+	icon_state = "mindeater_cloaking"
+	desc = "You are starting to cloak. Stay out of light and combat!"
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onRemove()
+		..()
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		if (!mindeater.on_bright_turf())
+			mindeater.set_invisible()
+
+/datum/statusEffect/mindeater_brain_draining
+	id = "mindeater_brain_draining"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/image/mindeater_brain_drain_targeted/target_image
+
+	onAdd()
+		..()
+		src.target_image = new /image/mindeater_brain_drain_targeted(loc = src.owner)
+
+	onRemove()
+		..()
+		QDEL_NULL(src.target_image)
+
+/datum/statusEffect/psi_bolt_slown
+	id = "mindeater_psi_slow"
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	movement_modifier = /datum/movement_modifier/psi_bolt
+
+/datum/statusEffect/piercing_the_veil
+	id = "mindeater_abducted"
+	icon_state = "mindeater_abducted"
+	name = "Abducted"
+	desc = "You're trapped at the border of the Intruder plane! Survive, and you might just make it back."
+	var/turf/start_turf
+	var/datum/allocated_region/alloc_region
+	var/list/active_mindmites = list()
+
+	onAdd(optional)
+		..()
+		src.start_turf = optional[1]
+		src.alloc_region = optional[2]
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+
+		if (probmult(50))
+			var/mob/living/carbon/human/H = src.owner
+			H.take_brain_damage(1 * mult)
+
+		if (probmult(20) && length(src.active_mindmites) < 5)
+			var/turf/T = get_turf(src.owner)
+			var/list/turfs_in_view = list()
+			for (var/turf/turf_to_check in view(5, src.owner))
+				if (turf_to_check.density)
+					continue
+				turfs_in_view += turf_to_check
+			if (length(turfs_in_view))
+				T = pick(turfs_in_view)
+				var/mob/living/critter/mindmite/mite = new(locate(T.x, T.y, T.z), target_mob = src.owner, associated_status = src)
+				src.active_mindmites += mite
+
+	onRemove()
+		..()
+		var/mob/living/L = src.owner
+		if (!QDELETED(L))
+			L.set_loc(src.start_turf)
+		QDEL_NULL(alloc_region)
+
+		for (var/mite in src.active_mindmites)
+			qdel(mite)
+		src.active_mindmites = null
+
+/datum/statusEffect/pierce_the_veil_channel_shield
+	id = "pierce_the_veil_shield"
+	icon_state = "mindeater_pierce_the_veil_shield"
+	name = "3 Charge Shield"
+	desc = "You have a shield with 3 charges that are removed upon being attacked. If the charges run out, Pierce the Veil is cancelled."
+	var/hits_left = 3
+
+	onAdd()
+		..()
+		src.owner.color = "#ff08f3"
+
+	onRemove()
+		..()
+		src.owner.color = null
+		actions.stopId(/datum/action/bar/mindeater_pierce_the_veil, src.owner)
+
+	proc/process_hit()
+		src.hits_left--
+		if (src.hits_left <= 0)
+			src.owner.delStatus(src)
+
+/datum/statusEffect/mind_being_eaten
+	id = "mindeater_mind_eating"
+	visible = FALSE
+	var/static/list/low_pct_messages = list("Your head feels off.",
+											 "Something is... eating your mind?",
+											 "What is that noise?",
+											 "You see visions of an ancient eldritch being.",
+											 "Oh god, what is that thing?",
+											 "You feel your memories fading",
+											 "You feel your mind being sucked away",
+											 "Something is trying to take control of your mind!")
+
+	var/static/list/high_pct_messages = list("Why are you thinking that way?",
+										     "Let us in",
+											 "Open the door, we are here",
+											 "Why are you doing that?",
+											 "Your thoughts are strange, human",
+											 "Your vessel is strange, human",
+											 "Your senses are strange, human",
+											 "Do you see the door? Open it",
+											 "Let your mind go",
+											 "Cease your being")
+	var/mob/living/critter/mindeater/owning_mindeater
+
+	onAdd(optional)
+		..()
+		src.owning_mindeater = optional
+
+	onUpdate(timePassed)
+		..()
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING
+		var/mob/living/L = src.owner
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) < 25)
+			if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
+				L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+				L.ClearSpecificParticles("mindeater_mind_eating")
+				L.ClearSpecificParticles("mindeater_mind_eating-directional")
+			if (probmult(5))
+				boutput(L, SPAN_ALERT("<b>[pick(src.low_pct_messages)]</b>"))
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 25)
+			if (!L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
+				L.addOverlayComposition(/datum/overlayComposition/insanity/large)
+				L.UpdateParticles(new /particles/mindeater_mind_eating, "mindeater_mind_eating")
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 50)
+			if (probmult(5))
+				boutput(L, SPAN_ALERT("<i>[pick(src.high_pct_messages)]</i>"))
+			if (!ON_COOLDOWN(L, "mindeater_directional_particle_clear", 1 SECOND))
+				L.ClearSpecificParticles("mindeater_mind_eating")
+				L.ClearSpecificParticles("mindeater_mind_eating-directional")
+				var/particles/mindeater_mind_eating/directional/effect = new(src.owning_mindeater, L)
+				L.UpdateParticles(effect, "mindeater_mind_eating-directional")
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 75)
+			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(L)
+			if (probmult(5))
+				var/list/turfs_in_view = list()
+				for (var/turf/T in view(6, L))
+					if (T.density)
+						continue
+					for (var/obj/O in T)
+						if (O.density)
+							continue
+						turfs_in_view += T
+				if (length(turfs_in_view))
+					new /obj/dummy/mindeater_structure(pick(turfs_in_view))
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(L)
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) >= 100)
+			L.setStatus("mindeater_mind_eaten_warp")
+		else
+			L.delStatus("mindeater_mind_eaten_warp")
+
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) <= 0 || isdead(L))
+			L.delStatus(src)
+
+	onRemove()
+		..()
+		src.owning_mindeater = null
+		var/mob/living/L = src.owner
+		if (!L.hasStatus("broken_madness") && L.hasOverlayComposition(/datum/overlayComposition/insanity/large))
+			L.removeOverlayComposition(/datum/overlayComposition/insanity/large)
+			L.ClearSpecificParticles("mindeater_mind_eating")
+			L.ClearSpecificParticles("mindeater_mind_eating-directional")
+
+/datum/statusEffect/mindeater_mind_eaten_warp
+	id = "mindeater_mind_eaten_warp"
+	visible = FALSE
+
+	onAdd()
+		..()
+		animate_wave(src.owner, 2)
+
+	onRemove()
+		..()
+		for(var/i in 1 to 2)
+			var/dm_filter/f = src.owner.get_filter("wave-[i]")
+			f.offset = 0
+			src.owner.remove_filter("wave-[i]")
+		animate(src.owner)
+
+/datum/statusEffect/cosmic_light
+	id = "mindeater_cosmic_light"
+	name = "Cosmic Light"
+	desc = "You're emitting a light that causes you to gain Intellect from nearby humans looking towards you."
+	icon_state = "mindeater_cosmic_light"
+	var/obj/dummy/rays_holder
+
+	onAdd()
+		..()
+		src.owner.add_simple_light("cosmic_light", rgb2num("#6302ff") + list(255))
+		src.rays_holder = new
+		src.rays_holder.blend_mode = BLEND_ADD
+		src.rays_holder.mouse_opacity = 0
+		src.rays_holder.add_filter("cosmic_light_rays", 0, rays_filter(size = 32, color = "#5900ff", offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
+		var/dm_filter/filter = src.rays_holder.get_filter("cosmic_light_rays")
+		UNLINT(animate(filter, time = 5 MINUTES, loop = -1, offset = filter.offset + 100))
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.vis_contents += src.rays_holder
+
+	onUpdate(timePassed)
+		..()
+		var/list/nearby_mobs = viewers(6, get_turf(src.owner))
+		for (var/mob/M in nearby_mobs)
+			if (!src.is_valid_mob(M))
+				nearby_mobs -= M
+
+		if (!length(nearby_mobs))
+			return
+
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		for (var/mob/living/carbon/human/H as anything in nearby_mobs)
+			if (!src.is_valid_mob(H))
+				continue
+			mindeater.collect_intellect(H, 1 * max(LIFE_PROCESS_TICK_SPACING, timePassed) / LIFE_PROCESS_TICK_SPACING)
+
+	onRemove()
+		..()
+		src.owner.remove_simple_light("cosmic_light")
+		var/mob/living/critter/mindeater/mindeater = src.owner
+		mindeater.vis_contents -= src.rays_holder
+		QDEL_NULL(src.rays_holder)
+
+	proc/is_valid_mob(mob/M)
+		return ishuman(M) && !isdead(M) && (M in viewers(6, get_turf(src.owner))) && (abs(dir2angle(M.dir) - dir2angle(get_dir(M, src.owner))) <= 45)

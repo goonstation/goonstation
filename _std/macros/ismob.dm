@@ -22,7 +22,7 @@
 #define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/amphibian))
 #define isskeleton(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton))
 #define iscritter(x) istype(x, /obj/critter)
-#define isintangible(x) istype(x, /mob/living/intangible)
+#define isintangible(x) (istype(x, /mob/living/intangible) || HAS_ATOM_PROPERTY(x, PROP_MOB_ACTING_INTANGIBLE))
 #define ismobcritter(x) istype(x, /mob/living/critter)
 #define isrobocritter(x) istype(x, /mob/living/critter/robotic)
 

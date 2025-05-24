@@ -1555,6 +1555,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.take_brain_damage(-3 * mult)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (HAS_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) && !H.hasStatus("mindeater_brain_draining"))
+						APPLY_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED, H, max(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) - 2, 0))
+						H.brain_level.set_icon_state(floor(GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) / 10) * 10, INTRUDER_MAX_INTELLECT_THRESHOLD)
+						if (GET_ATOM_PROPERTY(H, PROP_MOB_INTELLECT_COLLECTED) <= 0)
+							H.delStatus("mindeater_brain_draining")
 				..()
 				return
 
