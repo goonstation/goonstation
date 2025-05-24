@@ -1824,6 +1824,7 @@
 /area/hospital)
 "ajs" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/candy/nougat,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "ajt" = (
@@ -2578,6 +2579,10 @@
 	},
 /turf/unsimulated/floor,
 /area/hospital/samostrel)
+"amY" = (
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/unsimulated/floor/carpet/office,
+/area/hospital/samostrel)
 "amZ" = (
 /obj/trigger/spooky_emote,
 /turf/unsimulated/floor/carpet/office,
@@ -2959,6 +2964,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "aoB" = (
+/obj/item/reagent_containers/food/drinks/cola/random,
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
@@ -3564,6 +3570,10 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
+"ars" = (
+/obj/submachine/chef_oven,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/hospital)
 "aru" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for a pod door.  I guess that pod door is working as part of an improvised observation window?";
@@ -3684,6 +3694,16 @@
 	dir = 8
 	},
 /obj/stool/bench/auto,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/hospital)
+"arZ" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/spoon,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/hospital)
+"asa" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital)
 "asb" = (
@@ -3904,6 +3924,7 @@
 	brightness = 2;
 	dir = 4
 	},
+/obj/machinery/mixer,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ata" = (
@@ -4067,6 +4088,10 @@
 	},
 /area/moon/museum/west)
 "atq" = (
+/obj/item/reagent_containers/food/snacks/sandwich/meat_s{
+	desc = "Wax meat between two slices of wax bread.";
+	name = "wax sandwich"
+	},
 /turf/unsimulated/floor{
 	icon_state = "picnic";
 	name = "picnic mat"
@@ -4163,6 +4188,8 @@
 /area/hospital)
 "atN" = (
 /obj/table/auto,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/kitchen/utensil/spoon,
 /obj/item/storage/box/cutlery,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
@@ -4563,6 +4590,10 @@
 	},
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital)
+"awk" = (
+/obj/submachine/foodprocessor,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/hospital)
 "awt" = (
 /turf/unsimulated/floor/grey/side,
 /area/moon/museum)
@@ -4791,10 +4822,15 @@
 "axD" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital)
+"axE" = (
+/obj/kitchenspike,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/hospital)
 "axF" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "axG" = (
@@ -4933,6 +4969,11 @@
 /area/hospital)
 "ayx" = (
 /obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "ayA" = (
@@ -5143,6 +5184,11 @@
 /turf/unsimulated/floor,
 /area/hospital)
 "azr" = (
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /obj/storage/crate/freezer/hospital,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
@@ -7592,6 +7638,14 @@
 	dir = 8
 	},
 /area/marsoutpost)
+"aLH" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "How are these not stale?";
+	name = "Robust Donuts"
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "aLI" = (
 /obj/machinery/light{
 	dir = 8
@@ -8017,6 +8071,10 @@
 	dir = 1
 	},
 /obj/table/auto,
+/obj/item/reagent_containers/food/snacks/pizza/standard/cheese{
+	desc = "A plain cheese and tomato pizza. I wonder if you could fit this in a keyhole.";
+	name = "cheese keyzza"
+	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
 "aMW" = (
@@ -8070,15 +8128,26 @@
 /area/upper_arctic/pod2)
 "aNg" = (
 /obj/table/auto,
+/obj/item/kitchen/food_box/donut_box,
 /obj/noticeboard,
+/turf/unsimulated/floor/specialroom/bar,
+/area/upper_arctic/pod2)
+"aNh" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNi" = (
 /obj/machinery/vending/snack,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNj" = (
 /obj/table/auto,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNk" = (
@@ -8811,6 +8880,7 @@
 	dir = 4
 	},
 /obj/machinery/recharger,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aPw" = (
@@ -9021,6 +9091,7 @@
 "aQd" = (
 /obj/table/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aQe" = (
@@ -9579,6 +9650,7 @@
 	dir = 8
 	},
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "aSc" = (
@@ -9614,6 +9686,9 @@
 /area/crater/biodome/research)
 "aSm" = (
 /obj/table/wood/auto,
+/obj/machinery/microwave{
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
 "aSn" = (
@@ -9769,12 +9844,12 @@
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
 "aSQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/arctic/cliff,
 /area/upper_arctic/exterior/surface)
@@ -9876,6 +9951,7 @@
 /area/crater/biodome/research)
 "aTf" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/condiment/syrup,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTg" = (
@@ -9916,6 +9992,7 @@
 "aTl" = (
 /obj/table/wood/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/agar_block,
 /turf/unsimulated/floor/specialroom/bar,
 /area/crater/biodome/maint)
 "aTm" = (
@@ -11223,6 +11300,7 @@
 	},
 /obj/storage/crate,
 /obj/item/extinguisher,
+/obj/item/reagent_containers/food/snacks/condiment/ironfilings,
 /obj/item/raw_material/char,
 /obj/item/raw_material/char,
 /obj/item/raw_material/char,
@@ -12337,6 +12415,7 @@
 /area/lower_arctic/pod1)
 "bbo" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
 "bbp" = (
@@ -12422,27 +12501,27 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bbG" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
 /turf/unsimulated/floor/arctic/cliff{
 	dir = 4
 	},
 /area/upper_arctic/exterior/surface)
 "bbH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/surface)
@@ -13138,6 +13217,17 @@
 /obj/item/plate{
 	desc = "You bet your grandma would like this.";
 	name = "antique plate"
+	},
+/obj/item/reagent_containers/food/snacks/cookie/spooky{
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/cookie/spooky{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/cookie/spooky{
+	pixel_x = -5;
+	pixel_y = 11
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -14211,6 +14301,9 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
+/obj/item/device/radio/signaler{
+	desc = "Surprising that it still works, seems like it's been lost in the snow for awhile."
+	},
 /obj/decal/snowbits,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
@@ -14612,6 +14705,16 @@
 "biP" = (
 /obj/item/instrument/large/jukebox,
 /turf/unsimulated/floor/specialroom/bar,
+/area/marsoutpost)
+"biQ" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/pizza_base{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese{
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "biR" = (
 /obj/stone{
@@ -15346,6 +15449,7 @@
 "bkG" = (
 /obj/table/wood/auto,
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/unsimulated/floor/specialroom/bar,
 /area/marsoutpost)
 "bkH" = (
@@ -15418,6 +15522,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/specialroom/bar,
 /area/drone/crew_quarters)
 "bkR" = (
@@ -15519,6 +15624,7 @@
 /area/drone/crew_quarters)
 "blf" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/specialroom/bar,
 /area/drone/crew_quarters)
 "blg" = (
@@ -16892,6 +16998,7 @@
 "bpG" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/device/radio/signaler,
 /obj/item/electronics/frame,
 /obj/item/cell/cerenkite,
 /obj/item/cell/cerenkite,
@@ -17830,6 +17937,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
+/obj/item/reagent_containers/food/drinks/noodlecup,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bsN" = (
@@ -18689,6 +18797,7 @@
 "bwE" = (
 /obj/table/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/iomoon/base)
 "bwG" = (
@@ -20044,6 +20153,7 @@
 "bDA" = (
 /obj/table/auto,
 /obj/fakeobject/lightbulb_broken,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
@@ -20414,6 +20524,22 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon/caves)
+"bEW" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 5;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/obj/item/reagent_containers/food/snacks/cereal_box/honey,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "bEX" = (
 /obj/iomoon_puzzle/ancient_robot_door{
 	dir = 4;
@@ -21467,6 +21593,7 @@
 /area/solarium)
 "bII" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -21861,6 +21988,7 @@
 /area/solarium)
 "bKf" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/solarium)
 "bKg" = (
@@ -23078,6 +23206,13 @@
 	},
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/gauntlet/viewing)
+"bOp" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fred1"
+	},
+/area/crunch)
 "bOq" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
@@ -23699,6 +23834,10 @@
 	desc = "This looks strangely familiar.";
 	name = "snack cart"
 	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor,
 /area/crunch)
@@ -24447,6 +24586,10 @@
 /obj/table/monodesk/auto/candystash{
 	icon_state = "8"
 	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy{
+	pixel_x = -11;
+	pixel_y = 23
+	},
 /obj/decoration/wineholder{
 	pixel_y = 26;
 	layer = 2
@@ -24515,6 +24658,30 @@
 /area/crypt/sigma/mainhall)
 "bTp" = (
 /obj/table/reinforced/bar/auto,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/crypt/sigma/mainhall)
+"bTq" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate{
+	desc = "You bet your grandma would like this.";
+	name = "antique plate"
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/crypt/sigma/mainhall)
+"bTr" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate{
+	desc = "You bet your grandma would like this.";
+	name = "antique plate"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred1"
@@ -25235,6 +25402,10 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/crunch)
+"bWq" = (
+/obj/machinery/deep_fryer,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/kitchen)
 "bWr" = (
 /obj/fakeobject/oven{
 	name = "broken oven"
@@ -25804,6 +25975,10 @@
 /obj/item/c_tube,
 /obj/item/sponge,
 /obj/mopbucket,
+/turf/unsimulated/floor/plating/scorched,
+/area/crypt/sigma/storage)
+"bYt" = (
+/obj/machinery/gibber,
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bYu" = (
@@ -26398,6 +26573,7 @@
 /obj/table/reinforced/auto,
 /obj/item/decoration/ashtray,
 /obj/item/cigbutt,
+/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
 /obj/item/cigbutt,
 /obj/item/cigbutt,
 /obj/machinery/light{
@@ -26545,6 +26721,7 @@
 /area/shuttle/john/owlery)
 "caS" = (
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/lollipop,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caT" = (
@@ -27010,6 +27187,11 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/turf/unsimulated/floor,
+/area/crunch)
+"cdm" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/fork,
 /turf/unsimulated/floor,
 /area/crunch)
 "cdn" = (
@@ -27489,6 +27671,7 @@
 /area/meat_derelict/entry)
 "cfx" = (
 /obj/table/auto,
+/obj/item/shaker/salt,
 /obj/item/kitchen/utensil/knife,
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
@@ -27614,6 +27797,9 @@
 /obj/storage/crate/bloody{
 	welded = 1
 	},
+/obj/item/reagent_containers/food/snacks/ectoplasm,
+/obj/item/reagent_containers/food/snacks/ectoplasm,
+/obj/item/reagent_containers/food/snacks/ectoplasm,
 /turf/unsimulated/floor/caution/corner/ne{
 	dir = 1
 	},
@@ -29248,6 +29434,7 @@
 	desc = "";
 	icon_state = "chair_pool"
 	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";
@@ -29581,7 +29768,17 @@
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
+"cmH" = (
+/obj/item/reagent_containers/food/snacks/spaghetti,
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
 "cmI" = (
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
+"cmJ" = (
+/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni,
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
@@ -29676,6 +29873,17 @@
 	},
 /turf/unsimulated/floor/void,
 /area/crunch)
+"cmX" = (
+/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter,
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
 "cmY" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -30597,6 +30805,7 @@
 /area/dojo)
 "cqs" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/noodlecup,
 /turf/unsimulated/floor/tatami/south,
 /area/dojo)
 "cqt" = (
@@ -30613,6 +30822,11 @@
 /area/dojo)
 "cqv" = (
 /obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/tea,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = " When Scotland feels far away, Japan has you covered.";
+	name = "Taketsuru single malt"
+	},
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqw" = (
@@ -31544,6 +31758,23 @@
 	icon_state = "iocrust_corner"
 	},
 /area/afterlife/hell)
+"ctO" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
+	name = "crusty vent"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/breadloaf/elvis,
+/obj/machinery/light/small/iomoon{
+	dir = 4;
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/diner/tug)
 "ctP" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -32717,6 +32948,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/owlery/staffhall)
 "cxv" = (
+/obj/machinery/gibber,
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib3"
 	},
@@ -32725,12 +32957,15 @@
 "cxx" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/storage/crate/freezer,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/obj/item/reagent_containers/food/snacks/ice_cream/random,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cxy" = (
@@ -32817,6 +33052,10 @@
 	name = "half corpse";
 	pixel_x = -10
 	},
+/turf/unsimulated/floor/sanitary/white,
+/area/owlery/staffhall)
+"cxP" = (
+/obj/kitchenspike,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cxQ" = (
@@ -32941,6 +33180,10 @@
 /turf/unsimulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
+/area/owlery/staffhall)
+"cyk" = (
+/obj/submachine/ice_cream_dispenser,
+/turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cyl" = (
 /turf/unsimulated/floor/sanitary/white,
@@ -33179,9 +33422,21 @@
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
+"cza" = (
+/obj/stool/bench/auto,
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/turf/unsimulated/floor/wood/two,
+/area/owlery/staffhall)
 "czb" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife,
+/obj/item/reagent_containers/food/snacks/omelette,
+/turf/unsimulated/floor/wood/two,
+/area/owlery/staffhall)
+"czc" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "czg" = (
@@ -33201,6 +33456,7 @@
 /area/owlery/staffhall)
 "czi" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/noodlecup,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "czk" = (
@@ -33421,6 +33677,7 @@
 /obj/table/reinforced/auto{
 	layer = 2
 	},
+/obj/machinery/mixer,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "czR" = (
@@ -33431,6 +33688,11 @@
 	name = "decomposed corpse"
 	},
 /turf/unsimulated/floor/sanitary/white,
+/area/owlery/staffhall)
+"czS" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/fries,
+/turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "czT" = (
 /obj/stool/bar,
@@ -33561,6 +33823,11 @@
 /obj/item/reagent_containers/glass/oilcan,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
+"cAm" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/fork,
+/turf/unsimulated/floor/wood/two,
+/area/owlery/staffhall)
 "cAn" = (
 /obj/table/round,
 /obj/item/decoration/flower_vase,
@@ -33758,6 +34025,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cAP" = (
@@ -33770,6 +34038,7 @@
 /area/owlery/staffhall)
 "cAR" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/corndog,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cAS" = (
@@ -34378,6 +34647,7 @@
 	open = 1
 	},
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/pickle/trash,
 /obj/item/c_tube,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/plating,
@@ -34623,6 +34893,7 @@
 	name = "Grungy Crate";
 	welded = 1
 	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -34688,6 +34959,7 @@
 /area/owlery/Owlmait)
 "cDF" = (
 /obj/table/reinforced/auto,
+/obj/machinery/microwave,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -35058,6 +35330,7 @@
 "cEF" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/tvdinner,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -35655,6 +35928,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
+"cGA" = (
+/obj/disposalpipe/segment,
+/obj/item/reagent_containers/food/snacks/onionchips,
+/turf/unsimulated/floor/white,
+/area/owlery/owleryhall)
 "cGB" = (
 /obj/stool/bench/green/auto,
 /obj/cable{
@@ -35972,6 +36250,7 @@
 /area/owlery/gangzone)
 "cHy" = (
 /obj/stool/chair/comfy/shuttle/brown,
+/obj/item/shaker/mustard,
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cHB" = (
@@ -36662,6 +36941,7 @@
 /area/shuttle/john/owlery)
 "cJE" = (
 /obj/storage/closet/coffin/wood,
+/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/crowbar,
 /turf/unsimulated/floor/white,
@@ -36677,6 +36957,7 @@
 	},
 /area/drone/office)
 "cJG" = (
+/obj/machinery/shitty_grill,
 /turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cJH" = (
@@ -36827,6 +37108,13 @@
 	dir = 4
 	},
 /area/syndicate_station/battlecruiser)
+"cKh" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/snacks/chips,
+/turf/unsimulated/floor/white,
+/area/shuttle/john/owlery)
 "cKi" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -37254,6 +37542,12 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
+"cLK" = (
+/obj/item/reagent_containers/food/snacks/popcorn,
+/turf/unsimulated/floor/yellowblack{
+	dir = 10
+	},
+/area/owlery/gangzone)
 "cLL" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -37433,6 +37727,7 @@
 /obj/stool/chair/couch{
 	dir = 6
 	},
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMh" = (
@@ -37606,6 +37901,10 @@
 	dir = 4
 	},
 /area/owlery/gangzone)
+"cMI" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
 "cMJ" = (
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/floor/yellow,
@@ -37617,6 +37916,10 @@
 "cML" = (
 /obj/decal/cleanable/eggsplat,
 /obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
+"cMM" = (
+/obj/item/reagent_containers/food/snacks/ingredient/pizza_base,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMN" = (
@@ -37802,7 +38105,15 @@
 	dir = 1
 	},
 /area/owlery/gangzone)
+"cNw" = (
+/obj/item/reagent_containers/food/snacks/chips,
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "cNx" = (
+/turf/unsimulated/grass,
+/area/owlery/owllock)
+"cNy" = (
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cNz" = (
@@ -37813,6 +38124,7 @@
 /area/owlery/owllock)
 "cNA" = (
 /obj/storage/crate/bin,
+/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
@@ -37927,6 +38239,13 @@
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
+"cNS" = (
+/obj/item/reagent_containers/food/snacks/granola_bar,
+/obj/stool/chair/couch/green{
+	dir = 9
+	},
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "cNU" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -38026,6 +38345,10 @@
 /obj/disposalpipe/segment,
 /turf/space,
 /area/space)
+"cOh" = (
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "cOj" = (
 /obj/item/sticker/ribbon/first_place,
 /obj/window{
@@ -38126,6 +38449,7 @@
 /area/owlery/Owlmait2)
 "cOo" = (
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/raw_material/shard,
 /turf/unsimulated/floor/redblack{
 	dir = 4
@@ -38352,6 +38676,7 @@
 	},
 /area/owlery/owleryhall)
 "cOZ" = (
+/obj/item/reagent_containers/food/snacks/granola_bar,
 /obj/shrub{
 	dir = 10;
 	pixel_y = 10
@@ -38991,6 +39316,7 @@
 /area/owlery/Owlmait2)
 "cQE" = (
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/computerframe{
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
@@ -39313,6 +39639,7 @@
 /area/owlery/owleryhall)
 "cRr" = (
 /obj/table/wood/auto/desk,
+/obj/item/kitchen/food_box/donut_box,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -39871,6 +40198,10 @@
 	dir = 2
 	},
 /turf/unsimulated/floor/green,
+/area/owlery/owllock)
+"cSR" = (
+/obj/item/reagent_containers/food/snacks/breadslice,
+/turf/unsimulated/grass,
 /area/owlery/owllock)
 "cSS" = (
 /obj/stone{
@@ -40482,6 +40813,13 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
+"cUr" = (
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/unsimulated/grass,
+/area/owlery/owllock)
 "cUs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40698,6 +41036,7 @@
 "cVa" = (
 /obj/item/clothing/suit/bedsheet,
 /obj/fakeobject/skeleton,
+/obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cVe" = (
@@ -41403,6 +41742,17 @@
 	name = "antique plate";
 	pixel_y = 10
 	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
+	pixel_y = 9
+	},
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cWJ" = (
@@ -41980,6 +42330,7 @@
 /area/owlery/Owlmait2)
 "cYq" = (
 /obj/item/raw_material/shard/glass,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -42002,6 +42353,7 @@
 /area/owlery/Owlmait)
 "cYw" = (
 /obj/decal/cleanable/slime,
+/obj/item/reagent_containers/food/snacks/yuck,
 /obj/fluid_spawner/polluted_filth/crank,
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
@@ -42658,6 +43010,7 @@
 /area/afterlife/bar)
 "daO" = (
 /obj/table/auto,
+/obj/machinery/mixer,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -43165,6 +43518,10 @@
 	},
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
+"dcH" = (
+/obj/submachine/ice_cream_dispenser,
+/turf/unsimulated/floor/black,
+/area/afterlife/bar)
 "dcI" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/white,
@@ -43209,6 +43566,7 @@
 /area/afterlife/bar)
 "dcN" = (
 /obj/decal/cleanable/dirt,
+/obj/machinery/gibber/output_east,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcP" = (
@@ -43332,6 +43690,13 @@
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/pancake,
+/obj/item/reagent_containers/food/snacks/condiment/syrup{
+	pixel_x = 4
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -4
+	},
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
@@ -43348,6 +43713,10 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/item/reagent_containers/bath_bomb,
+/obj/item/reagent_containers/bath_bomb,
+/obj/item/reagent_containers/bath_bomb,
+/obj/item/reagent_containers/bath_bomb,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "ddk" = (
@@ -43425,6 +43794,15 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
+/area/afterlife/bar)
+"ddx" = (
+/obj/map/light/brighterwhite,
+/obj/submachine/chef_oven{
+	desc = "An appliance back from the dead.";
+	dir = 8;
+	name = "salvaged oven"
+	},
+/turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddy" = (
 /obj/decal/stage_edge{
@@ -43533,6 +43911,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
+/obj/machinery/microwave,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 4;
@@ -43721,6 +44100,13 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -5;
+	pixel_y = 5
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
@@ -44026,6 +44412,10 @@
 	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
+"dfi" = (
+/obj/kitchenspike,
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "dfj" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -44960,10 +45350,15 @@
 "dih" = (
 /obj/table/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burrito,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dii" = (
 /obj/table/auto,
+/obj/machinery/microwave{
+	pixel_x = -2;
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dik" = (
@@ -45109,6 +45504,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/kitchen/food_box/donut_box,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dja" = (
@@ -45326,10 +45722,20 @@
 /area/wizard_station)
 "dkb" = (
 /obj/table/wood/auto,
+/obj/machinery/microwave,
 /turf/unsimulated/floor/white,
 /area/wizard_station)
 "dkc" = (
 /obj/table/wood/round,
+/obj/item/reagent_containers/food/drinks/tea/mugwort{
+	pixel_x = -6;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/snacks/soup/oatmeal,
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
 "dkd" = (
@@ -45353,6 +45759,9 @@
 	},
 /obj/item/kitchen/utensil/knife{
 	pixel_x = 8
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 4
 	},
 /turf/unsimulated/floor/white,
 /area/wizard_station)
@@ -45518,6 +45927,9 @@
 "dkC" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
+/obj/item/reagent_containers/food/snacks/cookie/oatmeal{
+	pixel_x = 19
+	},
 /obj/item/paper/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
@@ -45528,6 +45940,10 @@
 	name = "Paper-'To the world's best wizard...'"
 	},
 /obj/item/pen/fancy,
+/obj/item/reagent_containers/food/drinks/tea/mugwort{
+	pixel_x = 14;
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
 "dkE" = (
@@ -45794,6 +46210,10 @@
 	icon_state = "track_1"
 	},
 /area/shuttle/battle)
+"dlU" = (
+/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal,
+/turf/unsimulated/floor/black,
+/area/sim/racing_track)
 "dlV" = (
 /obj/map/light/white,
 /obj/disco_ball,
@@ -46508,6 +46928,14 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -4;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -1;
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 8
 	},
@@ -47079,6 +47507,20 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dvZ" = (
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry{
+	pixel_x = -12;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry{
+	pixel_x = 7;
+	pixel_y = -10
+	},
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry{
+	pixel_x = -7
+	},
 /obj/storage/crate/wooden,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/flourish)
@@ -47086,6 +47528,9 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/plate{
 	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/zongzi{
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/flourish)
@@ -47193,6 +47638,14 @@
 /area/centcom/offices/zewaka)
 "dwr" = (
 /obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/bagel{
+	icon_state = "seedbagel"
+	},
+/obj/item/reagent_containers/food/snacks/plant/coffeebean,
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry,
+/obj/item/reagent_containers/food/snacks/plant/pineapple,
+/obj/item/reagent_containers/food/snacks/burger/luauburger,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
 /obj/drink_rack/cup{
 	pixel_y = 24
 	},
@@ -47511,6 +47964,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/plant/strawberry{
+	pixel_x = 8
+	},
 /obj/item/clothing/head/apprentice{
 	desc = "It's a little crumpled at the top from some dozy clown falling over all the time.";
 	name = "Strawberry's Cap";
@@ -47555,6 +48011,11 @@
 /obj/item/clothing/under/gimmick/kilt{
 	pixel_x = -5;
 	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "Cheap whiskey, drank on the rocks with a bunch of cola, you big baby.";
+	name = "Gannet Brand Black Label Scotch";
+	pixel_x = 9
 	},
 /obj/item/instrument/bagpipe{
 	pixel_x = -3
@@ -47644,6 +48105,10 @@
 	},
 /obj/machinery/shipalert/bill{
 	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/shotgunbill)
@@ -47861,6 +48326,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/offices/wire)
+"dyx" = (
+/obj/item/reagent_containers/food/snacks/plant/potato{
+	pixel_x = 13
+	},
+/obj/item/kitchen/peach_rings,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/mbc)
 "dyy" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/unsimulated/floor/wood/two,
@@ -47947,6 +48419,16 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cal)
 "dyH" = (
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 5
+	},
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cal)
@@ -47961,6 +48443,14 @@
 /area/centcom/offices/tarmunora)
 "dyJ" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 8
+	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "dyK" = (
@@ -48005,6 +48495,11 @@
 /area/centcom/offices/gannets)
 "dyN" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	desc = "A fine cup of tea.  If they made lincolnshire tea, you'd drink that instead.";
+	name = "yorkshire tea";
+	pixel_x = 5
+	},
 /obj/machinery/light,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -48365,13 +48860,174 @@
 	icon_state = "blue"
 	})
 "dBk" = (
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 15;
+	pixel_y = -2
+	},
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"dBl" = (
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 2;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -11;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 15;
+	pixel_y = -4
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
+"dBm" = (
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -12;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = -14;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 16;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "dBn" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 6;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 14;
+	pixel_y = -2
+	},
 /obj/table/regal/auto,
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
@@ -48471,6 +49127,14 @@
 	desc = "Looks fairly robust.";
 	name = "robust pedestal"
 	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/kitchen/rollingpin{
+	name = "robust rolling pin";
+	pixel_x = -2
+	},
 /turf/unsimulated/floor/void,
 /area/centcom/offices/tterc)
 "dCg" = (
@@ -48487,7 +49151,91 @@
 "dCj" = (
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/shotgunbill)
+"dCl" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 11;
+	pixel_y = 13
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "dCm" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -12;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 13;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 11;
+	pixel_y = 13
+	},
 /obj/table/regal/auto,
 /obj/machinery/light,
 /turf/unsimulated/floor/carpet/red/standard,
@@ -48785,6 +49533,12 @@
 	pixel_x = 5
 	},
 /obj/item/turret_deployer/riot,
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
+"dEp" = (
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
 "dEr" = (
@@ -49364,6 +50118,12 @@
 /area/centcom/lounge)
 "dGs" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 6
+	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -49389,6 +50149,17 @@
 /area/centcom/lounge)
 "dGw" = (
 /obj/storage/secure/closet/security,
+/turf/unsimulated/floor,
+/area/centcom/lounge)
+"dGx" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 6
+	},
+/obj/item/kitchen/food_box/donut_box,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGz" = (
@@ -49503,6 +50274,12 @@
 /area/centcom/lounge)
 "dGQ" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 6
+	},
 /obj/machinery/light,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
@@ -49557,13 +50334,33 @@
 "dGZ" = (
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
+"dHa" = (
+/obj/machinery/gibber/output_south,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/centcom/lounge)
+"dHb" = (
+/obj/kitchenspike,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/centcom/lounge)
 "dHc" = (
 /obj/machinery/vending/kitchen,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHd" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey,
 /obj/item/kitchen/utensil/knife,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
+"dHe" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/surstromming,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
+"dHf" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
+/obj/item/reagent_containers/food/snacks/pickle,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHg" = (
@@ -49579,6 +50376,15 @@
 /obj/machinery/vending/monkey,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
+"dHk" = (
+/obj/table/reinforced/auto,
+/obj/machinery/mixer,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
+"dHl" = (
+/obj/submachine/chef_oven,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "dHm" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -49588,6 +50394,11 @@
 /area/centcom/lounge)
 "dHn" = (
 /obj/machinery/light,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/centcom/lounge)
+"dHo" = (
+/obj/item/reagent_containers/food/snacks/fish_fingers,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "dHp" = (
@@ -49605,6 +50416,10 @@
 "dHs" = (
 /obj/shrub,
 /turf/unsimulated/floor,
+/area/centcom/lounge)
+"dHu" = (
+/obj/machinery/deep_fryer,
+/turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHv" = (
 /obj/machinery/light{
@@ -49648,6 +50463,11 @@
 	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
+"dHC" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/swedishmeatball,
+/turf/unsimulated/floor/specialroom/bar,
+/area/centcom/lounge)
 "dHD" = (
 /obj/stool/chair/comfy/green{
 	dir = 8
@@ -49662,6 +50482,11 @@
 	dir = 8;
 	tag = ""
 	},
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
+"dHG" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/swedishmeatball,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dHH" = (
@@ -49769,6 +50594,11 @@
 	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
+"dHW" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/steak,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "dHX" = (
 /turf/unsimulated/floor/stairs{
 	dir = 6;
@@ -49829,6 +50659,14 @@
 	icon_state = "fpurple2"
 	},
 /area/centcom/lounge)
+"dIf" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fpurple1"
+	},
+/area/centcom/lounge)
 "dIg" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -49864,6 +50702,11 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor/specialroom/bar,
+/area/centcom/lounge)
+"dIl" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/cake/cream,
+/turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
 "dIm" = (
 /obj/table/reinforced/auto,
@@ -49918,6 +50761,7 @@
 "dIt" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"
@@ -49925,6 +50769,7 @@
 /area/centcom/lounge)
 "dIu" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/popcorn,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"
@@ -49933,6 +50778,14 @@
 "dIv" = (
 /obj/table/wood/round/auto,
 /obj/random_item_spawner/pizza,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fpurple1"
+	},
+/area/centcom/lounge)
+"dIw" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"
@@ -49950,11 +50803,13 @@
 "dIy" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/sandwich/meatball,
 /obj/machinery/light,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
 "dIz" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/salad,
 /obj/machinery/light,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
@@ -50809,6 +51664,20 @@
 /area/centcom/garden)
 "dKU" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	canberandom = 0;
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = -3;
+	pixel_y = 18;
+	transform = list(0,1,0,-1,0,0)
+	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
 	pixel_y = 5
@@ -51364,6 +52233,19 @@
 /turf/unsimulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue4"
+	},
+/area/centcom/lobby)
+"dMI" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue3"
 	},
 /area/centcom/lobby)
 "dMJ" = (
@@ -52471,6 +53353,9 @@
 /area/centcom/garden)
 "dPP" = (
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 3
+	},
 /obj/item/decoration/flower_vase{
 	pixel_x = -4;
 	pixel_y = 6
@@ -52613,6 +53498,11 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
+/turf/unsimulated/floor/black,
+/area/centcom/lobby)
+"dQo" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dQp" = (
@@ -52927,6 +53817,12 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
+"dSp" = (
+/obj/table/wood/round/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/plague,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "dSq" = (
 /obj/stool/bar,
 /turf/unsimulated/floor/wood/two,
@@ -53048,6 +53944,7 @@
 "dSL" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSM" = (
@@ -53101,6 +53998,10 @@
 "dSP" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/haggis,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -4
+	},
 /obj/item/kitchen/utensil/knife{
 	pixel_x = 4
 	},
@@ -53169,6 +54070,7 @@
 "dTb" = (
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
@@ -53247,9 +54149,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"dTm" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/obj/machinery/shitty_grill,
+/turf/unsimulated/floor/grass/random,
+/area/afterlife/heaven)
 "dTn" = (
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
@@ -53273,9 +54184,19 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
+"dTr" = (
+/obj/submachine/foodprocessor{
+	dir = 8
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "dTs" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/meatloaf,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
@@ -53695,6 +54616,9 @@
 	pixel_x = 6
 	},
 /obj/decal/cleanable/generic,
+/obj/item/reagent_containers/food/snacks/chips{
+	name = "crisps"
+	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
 "ebm" = (
@@ -54311,6 +55235,10 @@
 /area/crypt/sigma/morgue)
 "ezH" = (
 /obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/mushroom/amanita{
+	pixel_x = -9;
+	pixel_y = 7
+	},
 /obj/item/paper/blueprint/cog1{
 	pixel_x = -12;
 	pixel_y = -2
@@ -54477,6 +55405,10 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar/sanctuary)
+"eHZ" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
 "eIE" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/white/grime,
@@ -54501,6 +55433,7 @@
 	dir = 4
 	},
 /obj/item/device/timer,
+/obj/item/device/radio/signaler,
 /turf/unsimulated/floor/purple/side,
 /area/iomoon/base)
 "eJV" = (
@@ -54539,6 +55472,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/snacks/candy/negativeonebar,
 /obj/item/storage/secure/ssafe/loot{
 	pixel_y = 28
 	},
@@ -54555,6 +55489,10 @@
 	name = "strange stairs"
 	},
 /area/crater/cave/lower)
+"eNi" = (
+/obj/item/reagent_containers/food/drinks/water,
+/turf/unsimulated/floor/plating,
+/area/meat_derelict/entry)
 "eNm" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility{
@@ -55227,6 +56165,10 @@
 	dir = 1
 	},
 /obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -10;
+	pixel_y = 7
+	},
 /obj/item/clothing/head/pinwheel_hat{
 	pixel_x = 6;
 	pixel_y = 3
@@ -55579,6 +56521,10 @@
 /area/centcom/offices/flaborized)
 "fDe" = (
 /obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /obj/item/device/light/lava_lamp{
 	pixel_x = -4;
 	pixel_y = 8
@@ -56159,6 +57105,9 @@
 /obj/table/wood/auto/desk{
 	icon_state = "1"
 	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_y = 9
+	},
 /obj/item/decoration/flower_vase/vase7{
 	icon_state = "vase3";
 	pixel_x = 8;
@@ -56200,6 +57149,7 @@
 /area/centcom)
 "gcv" = (
 /obj/table/auto,
+/obj/machinery/microwave,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -56750,7 +57700,10 @@
 	desc = "A staff fridge. This one is filthy.";
 	name = "gross refrigerator"
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti,
+/obj/item/reagent_containers/food/snacks/yuck,
 /obj/item/reagent_containers/food/drinks/cola,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor/white/grime,
 /area/observatory)
 "gyp" = (
@@ -56771,6 +57724,11 @@
 /area/sim/gunsim/lobby)
 "gzf" = (
 /obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/noodlecup{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/noodlecup,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -57113,6 +58071,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon)
+"gJz" = (
+/obj/item/reagent_containers/food/snacks/yuck/burn,
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "gJG" = (
 /obj/fakeobject/pipe{
 	desc = "It won't budge.";
@@ -57414,6 +58379,10 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
+"gXJ" = (
+/obj/item/reagent_containers/food/snacks/yuck/burn,
+/turf/unsimulated/floor/plating/scorched,
+/area/owlery/staffhall)
 "gYp" = (
 /obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -58140,6 +59109,10 @@
 /area/centcom/offices/cogwerks)
 "hEq" = (
 /obj/table/wood/round,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -3;
+	pixel_y = 11
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = 3;
 	pixel_y = 9
@@ -58168,6 +59141,9 @@
 /area/centcom/offices/rodney)
 "hFf" = (
 /obj/map/light/brighterwhite,
+/obj/machinery/deep_fryer{
+	dir = 4
+	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "hFk" = (
@@ -58477,6 +59453,11 @@
 /area/observatory)
 "hTr" = (
 /obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	name = "weird meat"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
@@ -59053,6 +60034,12 @@
 	desc = "It's full of a bunch of old nerds. Looks like they're hanging out on the NSS Destiny and NSS Clarion.  Geeze, those really must be old!";
 	name = "old photo album"
 	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	desc = "It looks well loved.";
+	name = "water bottle";
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on.";
 	name = "chewed pen";
@@ -59552,6 +60539,11 @@
 /obj/decoration/bullethole,
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
+"iMC" = (
+/obj/lattice,
+/obj/submachine/chef_oven,
+/turf/unsimulated/floor/void,
+/area/void_diner)
 "iNm" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -60230,6 +61222,16 @@
 /area/hospital/samostrel)
 "jiJ" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	initial_reagents = list("milk"=30);
+	name = "mood";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 3;
+	pixel_y = 9
+	},
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "red2"
@@ -60564,6 +61566,13 @@
 	name = "Freezer - Spare Parts"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
 "jvG" = (
@@ -62312,6 +63321,10 @@
 /area/void_diner)
 "kPz" = (
 /obj/decal/cleanable/sakura,
+/obj/item/reagent_containers/food/snacks/ramen_bowl{
+	pixel_y = 6
+	},
+/obj/item/kitchen/chopsticks_package,
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/tatami/west,
 /area/centcom/offices/angel)
@@ -62331,6 +63344,10 @@
 	icon_state = "ancientfloor3"
 	},
 /area/iomoon/robot_ruins)
+"kPR" = (
+/obj/submachine/foodprocessor,
+/turf/unsimulated/outdoors/grass,
+/area/void_diner)
 "kQR" = (
 /obj/fakeobject/skeleton{
 	desc = "The burnt remains of some poor sod.";
@@ -63157,6 +64174,7 @@
 /area/observatory)
 "lyg" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "lyh" = (
@@ -63236,6 +64254,17 @@
 /obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
+"lDx" = (
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crater/cave/lower)
 "lDQ" = (
 /obj/shrub{
 	dir = 1;
@@ -63276,6 +64305,27 @@
 	icon_state = "shore-1"
 	},
 /area/titlescreen)
+"lFb" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/salt{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/shaker/mustard{
+	name = "moostard bottle";
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/shaker/pepper{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/unsimulated/outdoors/grass,
+/area/void_diner)
 "lFq" = (
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/arrival{
@@ -63566,6 +64616,7 @@
 "lUo" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/cookbook,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
 "lUK" = (
@@ -63943,6 +64994,19 @@
 "mmI" = (
 /obj/storage/cart/hotdog,
 /obj/item/clothing/suit/gimmick/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
 /obj/machinery/light{
 	dir = 1;
 	on = 1
@@ -64314,6 +65378,12 @@
 	name = "security door"
 	},
 /area/owlery/staffhall)
+"mzt" = (
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
+/turf/unsimulated/outdoors/grass,
+/area/void_diner)
 "mAe" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -64382,6 +65452,11 @@
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/mainhall)
+"mET" = (
+/obj/lattice,
+/obj/kitchenspike,
+/turf/unsimulated/floor/void,
+/area/void_diner)
 "mEW" = (
 /obj/machinery/light,
 /obj/machinery/plantpot,
@@ -65235,6 +66310,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nrv" = (
+/obj/machinery/gibber/output_west,
+/turf/unsimulated/floor/plating,
+/area/void_diner)
 "nrB" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
@@ -65250,9 +66329,14 @@
 "nsm" = (
 /obj/table/wood/auto,
 /obj/item/baton/cane,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = -3;
+	pixel_y = 13
+	},
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/plant/peach,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "nte" = (
@@ -65803,6 +66887,20 @@
 /area/meat_derelict/soviet)
 "nKS" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "Moo knows how to get you drunk, by diddley!";
+	initial_reagents = "milk";
+	name = "Moo Jack Daniel's";
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/moonshine{
+	desc = "A jug of milk.";
+	initial_reagents = "milk";
+	name = "jug of mooshine";
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "nLL" = (
@@ -65818,6 +66916,14 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -4;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -1;
+	pixel_y = 10
+	},
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
@@ -65826,6 +66932,10 @@
 	dir = 1
 	},
 /obj/table/nanotrasen/auto,
+/obj/item/kitchen/utensil/knife/bread{
+	pixel_y = -14;
+	pixel_x = -8
+	},
 /obj/item/radio_tape,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
@@ -66845,6 +67955,13 @@
 /obj/storage/crate{
 	name = "Cone Crate"
 	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "oxn" = (
@@ -66928,6 +68045,12 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "oAH" = (
+/obj/stove{
+	density = 0;
+	desc = "Whatever is cooking smells heavenly.";
+	icon_state = "stove2";
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
 "oAZ" = (
@@ -67346,6 +68469,10 @@
 	dir = 8
 	},
 /area/meat_derelict/entry)
+"oUu" = (
+/obj/item/reagent_containers/food/drinks/bottle/empty,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "oUv" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/beach.dmi';
@@ -67410,6 +68537,10 @@
 /area/watchful_eye_sensor)
 "oWJ" = (
 /obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/snacks/burger/monsterburger{
+	pixel_x = -4;
+	pixel_y = 10
+	},
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 9
 	},
@@ -67727,6 +68858,12 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crypt/sigma/lab)
+"pip" = (
+/obj/item/device/radio/signaler{
+	desc = "Surprising that it still works, seems like it's been lost in the snow for awhile."
+	},
+/turf/unsimulated/wall/arctic/abyss,
+/area/upper_arctic/exterior/abyss)
 "piC" = (
 /obj/decal/residual_energy,
 /mob/living/critter/small_animal/floateye/watchful,
@@ -67854,6 +68991,47 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
+"pmV" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -14;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 14;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 12;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "png" = (
 /obj/table/auto,
 /obj/item/storage/belt/medical,
@@ -67981,6 +69159,13 @@
 	dir = 1
 	},
 /area/centcom/offices/janantilles)
+"psB" = (
+/obj/machinery/conveyor/NS{
+	id = "ddan"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "psH" = (
 /obj/table/auto,
 /obj/cable,
@@ -68163,6 +69348,8 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/glassbox,
 /obj/item/storage/box/cutlery,
+/obj/item/reagent_containers/food/snacks/ingredient/pancake_batter,
+/obj/item/kitchen/rollingpin,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -68383,6 +69570,10 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = 9;
+	pixel_y = -3
+	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 5
 	},
@@ -68500,6 +69691,13 @@
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor/plating,
 /area/solarium)
+"pNh" = (
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
+	pixel_x = -11;
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/dream/beach,
+/area/titlescreen)
 "pNk" = (
 /obj/item/storage/wall/random,
 /obj/decal/cleanable/blood/tracks{
@@ -68521,6 +69719,10 @@
 /area/syndicate_station/medbay)
 "pNy" = (
 /obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -5;
+	pixel_y = 16
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = -4;
 	pixel_y = 1
@@ -69341,6 +70543,7 @@
 "qtB" = (
 /obj/lattice,
 /obj/table/reinforced/auto,
+/obj/machinery/microwave,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "quB" = (
@@ -69412,6 +70615,10 @@
 /area/moon/museum)
 "qwW" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/burger/plague/fishstick{
+	pixel_x = 6;
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
 "qwZ" = (
@@ -69759,6 +70966,9 @@
 /area/moon/museum)
 "qHX" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 7
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
@@ -69911,6 +71121,7 @@
 	dir = 1
 	},
 /obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/mushroom,
 /obj/item/paper/blueprint/cog2{
 	pixel_x = -15;
 	pixel_y = -5
@@ -70022,6 +71233,10 @@
 	name = "Angel's to-do-list";
 	pixel_x = -8;
 	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 11;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/angel)
@@ -70290,7 +71505,12 @@
 /area/iomoon/base)
 "rgX" = (
 /obj/storage/secure/closet/fridge/kitchen,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_y = 10
+	},
 /obj/item/reagent_containers/food/snacks/slimjim,
+/obj/item/reagent_containers/food/snacks/candy/candy_apple/poison,
+/obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lounge)
 "rhp" = (
@@ -71444,6 +72664,12 @@
 /area/centcom/gallery)
 "rXp" = (
 /obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
 /obj/mapping_helper/mob_spawn/corpse/critter/owl,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
@@ -71648,6 +72874,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"scX" = (
+/obj/machinery/conveyor/EW{
+	id = "ddan"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "sdh" = (
 /obj/rack,
 /obj/item/clothing/mask/gas,
@@ -71770,6 +73003,41 @@
 "siz" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/afterlife/bar)
+"siD" = (
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 9;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/rum{
+	pixel_x = 11;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/table/regal/auto,
+/turf/unsimulated/floor/carpet/red/standard,
+/area/centcom/offices/questx)
 "siI" = (
 /obj/lattice{
 	dir = 5;
@@ -72043,6 +73311,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/storage/box/id_kit,
+/obj/item/reagent_containers/food/snacks/donkpocket,
 /obj/mapping_helper/access/owlsecurity,
 /obj/item/device/radio/intercom/adventure/owlery,
 /turf/unsimulated/floor/redblack{
@@ -72111,6 +73380,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "sxc" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/glass/bottle/acetone/janitors,
 /obj/item/reagent_containers/glass/bottle/ammonia/janitors,
 /turf/unsimulated/floor/white,
@@ -74003,6 +75273,15 @@
 /area/sim/tdome/tdome2)
 "ulB" = (
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	canberandom = 0;
+	pixel_x = 8;
+	pixel_y = 15
+	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
 	pixel_y = 5
@@ -74191,6 +75470,9 @@
 /obj/random_item_spawner/organs{
 	pixel_x = 7
 	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -7
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/circuit/white,
 /area/centcom/offices/bilo)
@@ -74286,6 +75568,10 @@
 	pixel_y = 15;
 	pixel_x = 9
 	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy{
+	pixel_x = 16;
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "uzz" = (
@@ -74318,6 +75604,10 @@
 	name = "Greenest's Nanotrasen beret";
 	pixel_x = -5;
 	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical{
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /turf/unsimulated/floor/circuit/white,
 /area/centcom/offices/bilo)
@@ -75921,6 +77211,9 @@
 /area/centcom/offices/mbc)
 "vJI" = (
 /obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 4
+	},
 /obj/death_button/hotdog{
 	pixel_x = 24
 	},
@@ -76357,6 +77650,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"vVV" = (
+/obj/machinery/conveyor/SN{
+	id = "ddan"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "vVW" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -76375,6 +77675,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -77558,6 +78859,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/gangzone)
 "wNz" = (
+/obj/item/reagent_containers/food/drinks/coffee,
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
@@ -77935,6 +79237,12 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
+"xeg" = (
+/obj/submachine/ice_cream_dispenser{
+	flavors = list("shirley_temple")
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/glowbold)
 "xem" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -78138,6 +79446,10 @@
 /area/iomoon/base)
 "xnI" = (
 /obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 6;
+	pixel_y = 15
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = -4;
 	pixel_y = 2
@@ -78210,6 +79522,14 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = -8;
 	pixel_y = 6
@@ -78268,6 +79588,7 @@
 	},
 /area/sim/racing_track)
 "xqB" = (
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin,
 /turf/unsimulated/floor/grey/side{
 	dir = 6
 	},
@@ -78545,7 +79866,15 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "xyS" = (
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 12;
+	rand_pos = 0
+	},
 /obj/table/flock/auto,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -7;
+	pixel_y = -2
+	},
 /obj/item/clothing/head/NTberet{
 	pixel_x = 8;
 	pixel_y = -4
@@ -78771,6 +80100,13 @@
 "xHa" = (
 /obj/lattice,
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/snacks/salad{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 5
+	},
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "xHc" = (
@@ -79564,6 +80900,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
+"yfT" = (
+/obj/submachine/ice_cream_dispenser,
+/turf/unsimulated/outdoors/grass,
+/area/void_diner)
 "ygm" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -81731,7 +83071,7 @@ bLX
 bOv
 bLn
 cai
-bLX
+cdm
 bLX
 bLn
 ceO
@@ -82703,7 +84043,7 @@ cIf
 cIM
 cJA
 cJD
-cIf
+cKh
 cic
 aBL
 cHy
@@ -84190,7 +85530,7 @@ cnw
 cxc
 cxv
 cxN
-cyl
+cyk
 cyI
 cyX
 czq
@@ -84793,7 +86133,7 @@ cnw
 cnw
 aBY
 cxx
-cyl
+cxP
 cym
 cyl
 cyY
@@ -84895,7 +86235,7 @@ aKX
 aXn
 aLN
 aMw
-aQd
+aNh
 aNF
 aOC
 aPt
@@ -85100,7 +86440,7 @@ cyn
 aBY
 aBY
 aBY
-cAR
+czS
 cAf
 cAR
 cBx
@@ -85400,7 +86740,7 @@ bBm
 aBY
 cyU
 cyK
-cAR
+czc
 czt
 czT
 czT
@@ -85701,8 +87041,8 @@ cBL
 bBm
 gec
 cyo
-cyK
-cAR
+cza
+cAm
 cyK
 cyo
 cAg
@@ -87425,7 +88765,7 @@ bMy
 bLy
 bMy
 bNR
-bOL
+bOp
 bOI
 bPh
 bPC
@@ -88433,7 +89773,7 @@ cEj
 cES
 cFs
 cFY
-cHe
+cGA
 cHe
 cHe
 cHe
@@ -90534,7 +91874,7 @@ cxI
 aBY
 cBp
 czk
-cyH
+gXJ
 cxD
 aBY
 cBR
@@ -92673,7 +94013,7 @@ cnw
 cnw
 cnw
 fSK
-cNx
+cNw
 cNz
 cNx
 cNx
@@ -92977,7 +94317,7 @@ cnw
 fSK
 cNx
 cNR
-cNx
+cOh
 cNx
 cPb
 aBB
@@ -93277,8 +94617,8 @@ cnw
 cnw
 cnw
 fSK
-cNx
-cNz
+cNy
+cNS
 wKn
 cNx
 cPc
@@ -94071,7 +95411,7 @@ bLn
 bLn
 bLn
 bOv
-etZ
+scX
 bLn
 bLn
 bLn
@@ -94371,12 +95711,12 @@ bMD
 bLn
 bNy
 hho
-hho
+psB
 hho
 etZ
 uJs
 uJs
-uJs
+vVV
 uJs
 uJs
 bRg
@@ -94487,7 +95827,7 @@ cnw
 cnw
 fSK
 fSK
-cSp
+cUr
 cOF
 cPc
 cPC
@@ -94500,7 +95840,7 @@ cNx
 cNx
 cQB
 cPc
-cNx
+cSR
 cNx
 cZm
 cPw
@@ -94799,7 +96139,7 @@ cPS
 cNx
 cRz
 cNx
-cNx
+cSR
 cNx
 cPc
 cNx
@@ -94865,7 +96205,7 @@ aIo
 aIo
 aIo
 aIo
-aIo
+pip
 aIo
 aIo
 aIo
@@ -97240,7 +98580,7 @@ fTb
 uVv
 mkm
 tKt
-tKt
+yfT
 nxw
 all
 tKt
@@ -97536,7 +98876,7 @@ axy
 aaa
 iBf
 iBf
-glz
+mET
 fTb
 kMt
 uVv
@@ -97805,7 +99145,7 @@ xWw
 vrH
 cLF
 cMg
-cKc
+cMI
 cNh
 cNA
 cGK
@@ -97953,7 +99293,7 @@ izT
 izT
 nYx
 wpP
-buN
+oUu
 izT
 nEi
 wOp
@@ -98142,9 +99482,9 @@ iBf
 iBf
 iBf
 glz
-wIJ
+nrv
 xNY
-tKt
+mzt
 tKt
 tKt
 nKS
@@ -98449,7 +99789,7 @@ uVv
 pyP
 iTT
 tKt
-nKS
+lFb
 jlN
 tKt
 tKt
@@ -98748,7 +100088,7 @@ iBf
 iBf
 iBf
 uVv
-tKt
+kPR
 iTT
 iTT
 ixz
@@ -99010,7 +100350,7 @@ cIG
 cJx
 cKc
 cKM
-cKc
+eHZ
 cKc
 cMk
 cMK
@@ -99352,7 +100692,7 @@ iBf
 iBf
 iBf
 iBf
-glz
+iMC
 tKt
 tKt
 wkZ
@@ -99919,7 +101259,7 @@ cKO
 cKc
 cLJ
 cMn
-cKc
+cMM
 cNk
 cNC
 bAB
@@ -99934,7 +101274,7 @@ cFN
 uTF
 cSy
 lsn
-cKc
+cMI
 cTI
 cGK
 cXG
@@ -100521,7 +101861,7 @@ cnw
 xWw
 xWw
 iwD
-cJy
+cLK
 cMp
 cKc
 sAi
@@ -101363,7 +102703,7 @@ dba
 gbs
 dSb
 cwC
-dSL
+dSp
 dSt
 dcv
 dTD
@@ -104677,7 +106017,7 @@ daL
 dcp
 dbi
 dcp
-daK
+dcH
 dbZ
 daK
 ddL
@@ -105888,7 +107228,7 @@ dcB
 dcF
 ddt
 hFf
-dct
+dfi
 dcN
 daN
 cwC
@@ -106205,7 +107545,7 @@ daN
 aaa
 bXs
 djb
-djc
+dlU
 bXs
 aaa
 jwK
@@ -106792,8 +108132,8 @@ aaa
 daN
 daO
 dcU
-dct
-hFf
+dTr
+ddx
 dSF
 dTv
 daN
@@ -117391,8 +118731,8 @@ cku
 ckr
 ckY
 cmq
-cmI
-cmI
+cmH
+cmX
 cmq
 civ
 "}
@@ -117995,7 +119335,7 @@ cku
 ckr
 civ
 lar
-cmI
+cmJ
 cmI
 kqE
 civ
@@ -119099,7 +120439,7 @@ bwU
 dbf
 bwU
 dbl
-bwU
+gJz
 txy
 txy
 txy
@@ -120056,7 +121396,7 @@ bSg
 bSr
 bSg
 bSX
-bTs
+bTq
 dTZ
 bUh
 bSr
@@ -120358,7 +121698,7 @@ bSh
 bSs
 bSf
 bSX
-bTs
+bTr
 bTs
 bUh
 bSs
@@ -120661,7 +122001,7 @@ bSr
 bSg
 bSX
 bTs
-bTs
+bTq
 bUh
 bSr
 bSg
@@ -120972,7 +122312,7 @@ bVl
 bVz
 bVP
 lUo
-bVA
+bWq
 bWy
 wMp
 bWY
@@ -121714,7 +123054,7 @@ bQI
 bko
 vXn
 lmT
-bUF
+dTm
 bLr
 bLr
 bYY
@@ -122187,7 +123527,7 @@ kxa
 bXq
 bXp
 bXM
-bXp
+bYt
 kxa
 aaa
 bXs
@@ -122987,7 +124327,7 @@ aIr
 aIr
 aaa
 biL
-bjm
+lDx
 bjm
 bjm
 biL
@@ -123289,7 +124629,7 @@ aIr
 aIr
 aaa
 biL
-bjm
+lDx
 bjm
 bjm
 xUA
@@ -124844,7 +126184,7 @@ bpo
 bpo
 bpo
 bEB
-bqH
+bEW
 bpo
 bpo
 aaa
@@ -133437,7 +134777,7 @@ aoy
 aeX
 aeX
 arm
-arn
+arZ
 arn
 arp
 arp
@@ -133739,13 +135079,13 @@ ahO
 apt
 adj
 arn
-arn
+asa
 asY
 arp
 arp
 arn
 arn
-arn
+arZ
 aeX
 aeX
 aeX
@@ -134115,7 +135455,7 @@ aTs
 aKo
 aKS
 aKS
-aTx
+aLH
 aMo
 aMo
 aNw
@@ -135557,9 +136897,9 @@ atM
 aeL
 aeL
 aeL
-aeL
+awk
 aeX
-aeL
+axE
 ayx
 azr
 aeX
@@ -135852,7 +137192,7 @@ aha
 aha
 aeX
 aeX
-aeL
+ars
 aeL
 aeL
 aeL
@@ -138209,7 +139549,7 @@ kAX
 tSM
 nWG
 aqL
-nWG
+eNi
 nWG
 eWy
 aqL
@@ -139294,7 +140634,7 @@ bht
 aTs
 bie
 aTs
-bfO
+biQ
 aIB
 bkn
 aIe
@@ -142362,7 +143702,7 @@ cnw
 brA
 mmr
 crK
-cuW
+ctO
 crK
 cuN
 cuC
@@ -145529,7 +146869,7 @@ wLo
 dGf
 dGf
 wLo
-dGs
+dGx
 dnY
 dnY
 dGU
@@ -151947,7 +153287,7 @@ eoV
 pVP
 dwY
 wel
-dEx
+dEp
 dEx
 dEF
 wel
@@ -152220,7 +153560,7 @@ dPR
 dPZ
 sWb
 dLl
-dLL
+dQo
 dQq
 sWb
 sJH
@@ -152488,7 +153828,7 @@ wLo
 dnU
 dnY
 dHO
-dIu
+dIf
 dIt
 dGv
 dIU
@@ -152790,7 +154130,7 @@ wLo
 dnY
 dnY
 dHP
-dIu
+dIf
 dIu
 dGv
 dIU
@@ -153092,7 +154432,7 @@ wLo
 dnY
 dnY
 dHQ
-dIu
+dIf
 dIv
 dGv
 dIV
@@ -153394,8 +154734,8 @@ wLo
 dnY
 dnY
 dHR
-dIu
-dIu
+dIf
+dIw
 dGv
 dIU
 dJi
@@ -153696,7 +155036,7 @@ wLo
 dnU
 dnY
 dHS
-dIu
+dIf
 dIx
 dGv
 dIU
@@ -154318,7 +155658,7 @@ aES
 sWb
 dLg
 dMi
-dMJ
+dMI
 dNf
 dNz
 dNP
@@ -156110,7 +157450,7 @@ aES
 aES
 aES
 iuD
-dJS
+dHC
 dHU
 dHU
 dIz
@@ -157015,7 +158355,7 @@ wLo
 wLo
 dHc
 dHj
-dGZ
+dHu
 wLo
 dHU
 dIj
@@ -157618,7 +158958,7 @@ aES
 iuD
 dGZ
 dHd
-dIm
+dHk
 dGZ
 xEP
 dHV
@@ -157919,8 +159259,8 @@ aES
 aES
 iuD
 dGZ
-dIm
-dGZ
+dHe
+dHl
 dGZ
 wLo
 dHU
@@ -157997,7 +159337,7 @@ dvW
 wel
 hYK
 oKw
-rZl
+xeg
 wel
 dRD
 dEQ
@@ -158221,12 +159561,12 @@ aES
 aES
 iuD
 dGZ
-dIm
-dGZ
+dHf
+dHl
 dGZ
 wLo
-dIm
-dIm
+dHW
+dIl
 dIm
 wLo
 dJb
@@ -159130,8 +160470,8 @@ wLo
 dHg
 wLo
 wLo
-dIm
-dIm
+dHG
+dHe
 dIm
 dIm
 wLo
@@ -159192,7 +160532,7 @@ wMG
 kmZ
 wel
 dxU
-dxV
+dyx
 dyZ
 wel
 ezH
@@ -159428,7 +160768,7 @@ aES
 gmA
 aES
 wLo
-dHh
+dHa
 dHh
 dHn
 wLo
@@ -159730,9 +161070,9 @@ aES
 aES
 aES
 wLo
+dHb
 dHh
-dHh
-dHh
+dHo
 wLo
 dHI
 dHJ
@@ -161619,9 +162959,9 @@ nUL
 dAe
 ciY
 wel
-dBn
+dBl
 mAM
-dBn
+dCl
 wel
 uoX
 dBo
@@ -161921,9 +163261,9 @@ dzy
 dAg
 dAJ
 wel
-dBn
+dBm
 mAM
-dBn
+pmV
 wel
 mmI
 dBp
@@ -162223,7 +163563,7 @@ dzz
 dAg
 dAK
 wel
-dBn
+siD
 dBS
 dCm
 wel
@@ -163863,7 +165203,7 @@ abr
 afK
 alG
 alH
-alH
+amY
 abr
 aoK
 apz
@@ -165703,7 +167043,7 @@ smg
 unx
 ozw
 ozw
-ozw
+pNh
 ozw
 ozw
 ozw
