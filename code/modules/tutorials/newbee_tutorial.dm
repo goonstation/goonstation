@@ -128,10 +128,9 @@
 			M.key = src.newbee.client.key
 			qdel(src.newbee)
 			src.newbee = null
-			qdel(src.region)
-			src.region = null
 			qdel(src.tutorial_hud)
 			src.tutorial_hud = null
+			src.region.clean_up() // aggressive cleanup to wipe out landmarks/spawned objects
 			qdel(src)
 
 	proc/generate_sidebars()
@@ -197,8 +196,8 @@
 		M.client.tutorial.PerformSilentAction(src.name)
 
 	disposing()
-		. = ..()
 		landmarks[name] -= src.loc
+		. = ..()
 
 /datum/tutorial_base/regional/newbee/proc/AddNewbeeSteps()
 	// room 1 - Arrivals & Movement
@@ -323,9 +322,16 @@
 	/// The icon state to apply to the HUD
 	var/highlight_hud_marker
 
+	/// A needed item to complete this tutorial step. Will attempt to find the object on the player and highlight it. Failing that, it will create one.
+	var/needed_item_path
+
 	// internal tracking for setup/teardown
 	/// A reference to the currently targeted hud element for HUD highlighting
-	var/atom/movable/screen/hud/_target_hud
+	var/atom/movable/screen/hud/_target_hud_element
+	/// Reference to the currently needed item
+	var/obj/item/_needed_item
+	/// A reference to the currently targeted hud element for HUD highlighting
+	var/atom/movable/screen/hud/_target_hud_item
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		src.newbee_tutorial = tutorial
@@ -368,13 +374,20 @@
 		. = ..()
 		if (src.highlight_hud_element && src.highlight_hud_marker)
 			src.highlight_hud()
+		if (src.needed_item_path)
+			src.highlight_needed_item()
 
 	TearDown()
 		. = ..()
-		if (src.highlight_hud_element)
-			src._target_hud?.UpdateOverlays(null, "marker")
+		src._target_hud_element?.UpdateOverlays(null, "marker")
+		src._needed_item?.UpdateOverlays(null, "marker")
+		src._target_hud_item?.UpdateOverlays(null, "marker")
 
+	/// highlight a specific hud element
 	proc/highlight_hud()
+		if (!src.highlight_hud_element || !src.highlight_hud_marker)
+			return
+
 		var/image/highlight_image
 		switch(src.highlight_hud_marker)
 			if(NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY)
@@ -397,10 +410,64 @@
 
 		for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 			if (hud_element.id == src.highlight_hud_element)
-				src._target_hud = hud_element
+				src._target_hud_element = hud_element
 				break
 
-		src._target_hud?.UpdateOverlays(highlight_image, "marker")
+		src._target_hud_element?.UpdateOverlays(highlight_image, "marker")
+
+	/// highlight a needed item, including the inventory slot if on the character
+	proc/highlight_needed_item()
+		if (!src.needed_item_path)
+			return
+
+		src._needed_item = locate(src.needed_item_path) in src.newbee_tutorial.newbee
+		if (!src._needed_item)
+			src._needed_item = new src.needed_item_path(get_turf(src.newbee_tutorial.newbee))
+			src.newbee_tutorial.newbee.put_in_hand_or_drop(src._needed_item)
+
+		var/highlight_target
+		if (src._needed_item == src.newbee_tutorial.newbee.l_hand)
+			highlight_target = "lhand"
+		else if (src._needed_item == src.newbee_tutorial.newbee.r_hand)
+			highlight_target = "rhand"
+		else if (src._needed_item == src.newbee_tutorial.newbee.l_store)
+			highlight_target = "storage1"
+		else if (src._needed_item == src.newbee_tutorial.newbee.l_store)
+			highlight_target = "storage2"
+		else if (src._needed_item == src.newbee_tutorial.newbee.back)
+			highlight_target = "back"
+		else if (src._needed_item == src.newbee_tutorial.newbee.belt)
+			highlight_target = "belt"
+		else if (src._needed_item == src.newbee_tutorial.newbee.shoes)
+			highlight_target = "shoes"
+		else if (src._needed_item == src.newbee_tutorial.newbee.gloves)
+			highlight_target = "gloves"
+		else if (src._needed_item == src.newbee_tutorial.newbee.wear_id)
+			highlight_target = "id"
+		else if (src._needed_item == src.newbee_tutorial.newbee.w_uniform)
+			highlight_target = "under"
+		else if (src._needed_item == src.newbee_tutorial.newbee.wear_suit)
+			highlight_target = "suit"
+		else if (src._needed_item == src.newbee_tutorial.newbee.glasses)
+			highlight_target = "glasses"
+		else if (src._needed_item == src.newbee_tutorial.newbee.ears)
+			highlight_target = "ears"
+		else if (src._needed_item == src.newbee_tutorial.newbee.back)
+			highlight_target = "back"
+		else if (src._needed_item == src.newbee_tutorial.newbee.wear_mask)
+			highlight_target = "mask"
+		else if (src._needed_item == src.newbee_tutorial.newbee.head)
+			highlight_target = "head"
+
+		if (highlight_target)
+			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
+				if (hud_element.id == highlight_target)
+					src._target_hud_item = hud_element
+					break
+			src._target_hud_item.UpdateOverlays(src.inventory_marker, "marker")
+
+		src._needed_item.UpdateOverlays(src.point_marker, "marker")
+
 
 // tutorial step subtypes with common behavior
 
@@ -484,7 +551,7 @@
 
 /datum/tutorialStep/newbee/timer/welcome
 	name = "Welcome to Space Station 13!"
-	instructions = "This tutorial covers the basics of the game. It will progress automatically as you play.<br>The green top-left buttons allow you to exit the tutorial, go back a step, or go to the next step."
+	instructions = "This tutorial covers the basics of the game.<br>The top-left buttons let you exit, go back a step, or skip a step."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
 /obj/landmark/newbee/basic_movement
@@ -494,7 +561,7 @@
 
 /datum/tutorialStep/newbee/move_to/basic_movement
 	name = "Basic Movement"
-	instructions = "Use W/A/S/D to move around.<br>Move to the marker to continue."
+	instructions = "Use W/A/S/D to move your character.<br>Walk to the marker to continue."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 
@@ -504,7 +571,7 @@
 		var/left = src.keymap.action_to_keybind(KEY_LEFT) || "A"
 		var/down = src.keymap.action_to_keybind(KEY_BACKWARD) || "S"
 		var/right = src.keymap.action_to_keybind(KEY_RIGHT) || "D"
-		src.instructions = "Use [up]/[left]/[down]/[right] to move around.<br>Move to the marker to continue."
+		src.instructions = "Use [up]/[left]/[down]/[right] to move your character.<br>Walk to the marker to continue."
 
 /obj/landmark/newbee/powered_doors
 	name = LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS
@@ -528,7 +595,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/id_card
 	name = "Picking Up Items"
-	instructions = "You can <b>click</b> on items to pick them up.<br><b>Click</b> on the ID card to pick it up."
+	instructions = "You can <b>click</b> on items to pick them up.<br><b>Click</b> the ID card to pick it up."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_ID_CARD
 	item_path = /obj/item/card/id/engineering/tutorial
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
@@ -537,28 +604,26 @@
 		. = ..()
 		if (istype(src._target_item, /obj/item/card/id/engineering/tutorial))
 			var/obj/item/card/id/engineering/tutorial/tutorial_card = src._target_item
-			tutorial_card.registered = src.tutorial.owner.name
+			tutorial_card.registered = src.newbee_tutorial.newbee.name
 			tutorial_card.assignment = "Engineer"
 			tutorial_card.update_name()
 
 /datum/tutorialStep/newbee/wear_id_card
-	name = "Equipping Items"
-	instructions = "Some items can be worn. Press <b>V</b> to equip the ID card."
+	name = "Worn Items"
+	instructions = "Some items can be worn. Press <b>V</b> to wear the ID card."
 	highlight_hud_element = "id"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-
-	var/obj/item/card/id/engineering/tutorial/target_item
+	needed_item_path = /obj/item/card/id/engineering/tutorial
 
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to equip the ID card."
+		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card."
 
 	SetUp()
 		. = ..()
-		src.target_item = locate(/obj/item/card/id/engineering/tutorial) in src.tutorial.owner
-		RegisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
 		src.tutorial.PerformSilentAction("item_equipped", "id_card")
@@ -570,7 +635,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED)
+		UnregisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED)
 
 /obj/landmark/newbee/idlock_doors
 	name = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
@@ -579,9 +644,13 @@
 
 /datum/tutorialStep/newbee/move_to/id_locked_doors
 	name = "ID-Locked Doors"
-	instructions = "Some doors require a valid ID to use.<br>With your ID on, you can head into the next room."
-	target_landmark = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
+	instructions = "Some doors require a valid ID to open.<br>With your worn ID, you can head into the next room."
+	highlight_hud_element = "id"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	needed_item_path = /obj/item/card/id/engineering/tutorial
+
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
 
 //
 // room 3 - Items & Unpowered Doors
@@ -594,7 +663,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/crowbar
 	name = "Usable Items"
-	instructions = "Some items can be used to interact with objects.<br><b>Click</b> the crowbar to pick it up."
+	instructions = "Some items can interact with the world.<br><b>Click</b> the crowbar to pick it up."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_CROWBAR
 	item_path = /obj/item/crowbar
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
@@ -606,10 +675,11 @@
 
 /datum/tutorialStep/newbee/move_to/unpowered_doors
 	name = "Unpowered Doors"
-	instructions = "Unpowered doors can be opened with crowbars.<br>Open this door and head into the next room."
+	instructions = "Unpowered doors can be opened with crowbars.<br><b>Click</b> the door with the crowbar, and head into the next room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	needed_item_path = /obj/item/crowbar
 
 //
 // room 4 - Intents & Combat
@@ -617,24 +687,18 @@
 
 /datum/tutorialStep/newbee/drop_item
 	name = "Dropping Items"
-	instructions = "Drop the item in your active hand by pressing <b>Q</b>."
+	instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>Q</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-
-	var/obj/item/held_item
+	needed_item_path = /obj/item/crowbar
 
 	New()
 		. = ..()
 		var/drop = src.keymap.action_to_keybind("drop") || "Q"
-		src.instructions = "Drop the item in your active hand by pressing <b>[drop]</b>."
+		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b>."
 
 	SetUp()
 		. = ..()
-		src.held_item = src.tutorial.owner.equipped()
-		if (!src.held_item)
-			src.tutorial.Advance()
-			return
-		src.held_item.UpdateOverlays(src.point_marker, "marker")
-		RegisterSignal(src.held_item, COMSIG_ITEM_DROPPED, PROC_REF(check_item_dropped))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_DROPPED, PROC_REF(check_item_dropped))
 
 	proc/check_item_dropped(item, mob/user)
 		src.tutorial.PerformAction("item_dropped", "held_item")
@@ -646,8 +710,7 @@
 
 	TearDown()
 		. = ..()
-		src.held_item?.UpdateOverlays(null, "marker")
-		UnregisterSignal(src.held_item, COMSIG_ITEM_DROPPED)
+		UnregisterSignal(src._needed_item, COMSIG_ITEM_DROPPED)
 
 /datum/tutorialStep/newbee/intent_help
 	name = "Help Intent"
@@ -663,9 +726,9 @@
 
 	SetUp()
 		. = ..()
-		if (src.tutorial.owner.intent == INTENT_HELP || src.tutorial.owner.intent == null)
-			src.tutorial.owner.set_a_intent(INTENT_HARM)
-		RegisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
+		if (src.newbee_tutorial.newbee.intent == INTENT_HELP || src.newbee_tutorial.newbee.intent == null)
+			src.newbee_tutorial.newbee.set_a_intent(INTENT_HARM)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
 
 	proc/check_intent(datum/source, intent)
 		if (intent == INTENT_HELP)
@@ -678,7 +741,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT)
 
 /obj/landmark/newbee/help_person
 	name = LANDMARK_TUTORIAL_NEWBEE_HELP_PERSON
@@ -687,7 +750,7 @@
 
 /datum/tutorialStep/newbee/help_person
 	name = "Helping People"
-	instructions = "<b>Click</b> on the clown with the <span style='color:#349E00; font-weight: bold'>Help</span> intent.<br>Help the clown stand up."
+	instructions = "<b>Click</b> the clown with the <span style='color:#349E00; font-weight: bold'>Help</span> intent.<br>Help the clown stand up."
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
@@ -738,9 +801,9 @@
 
 	SetUp()
 		. = ..()
-		if (src.tutorial.owner.intent == INTENT_DISARM)
-			src.tutorial.owner.set_a_intent(INTENT_HELP)
-		RegisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
+		if (src.newbee_tutorial.newbee.intent == INTENT_DISARM)
+			src.newbee_tutorial.newbee.set_a_intent(INTENT_HELP)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
 
 	proc/check_intent(datum/source, intent)
 		if (intent == INTENT_DISARM)
@@ -753,7 +816,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT)
 
 /obj/landmark/newbee/disarm_person
 	name = LANDMARK_TUTORIAL_NEWBEE_DISARM_PERSON
@@ -762,7 +825,7 @@
 
 /datum/tutorialStep/newbee/disarm_person
 	name = "Disarming People"
-	instructions = "<b>Click</b> on the clown while on <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent.<br>Knock an item out of the clown's hands."
+	instructions = "<b>Click</b> the clown while on <span style='color:#EAC300; font-weight: bold'>Disarm</span> intent.<br>Knock an item out of the clown's hands."
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
@@ -803,7 +866,7 @@
 
 /datum/tutorialStep/newbee/intent_grab
 	name = "Grab Intent"
-	instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will grab someone. <b>Click</b> again or press <b>C</b> to upgrade the grab.<br>Press <b>3</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
+	instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will loosely grab someone.<br>Press <b>3</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
@@ -811,14 +874,13 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/grab = src.keymap.action_to_keybind("grab") || "3"
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
-		src.instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will grab someone. <b>Click</b> again or press <b>[attackself]</b> to upgrade the grab.<br>Press <b>[grab]</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
+		src.instructions = "The <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent will loosely grab someone.<br>Press <b>[grab]</b> to switch to the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent."
 
 	SetUp()
 		. = ..()
-		if (src.tutorial.owner.intent == INTENT_GRAB)
-			src.tutorial.owner.set_a_intent(INTENT_DISARM)
-		RegisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
+		if (src.newbee_tutorial.newbee.intent == INTENT_GRAB)
+			src.newbee_tutorial.newbee.set_a_intent(INTENT_DISARM)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
 
 	proc/check_intent(datum/source, intent)
 		if (intent == INTENT_GRAB)
@@ -831,7 +893,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT)
 
 /obj/landmark/newbee/grab_person
 	name = LANDMARK_TUTORIAL_NEWBEE_GRAB_PERSON
@@ -840,12 +902,17 @@
 
 /datum/tutorialStep/newbee/grab_person
 	name = "Grabbing People"
-	instructions = "<b>Click</b> with the <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent to grab people. <b>Click</b> them again to upgrade the grab.<br>Get the clown in an upgraded grab."
+	instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>C</b>to upgrade the grab.<br>Get the clown in an upgraded grab."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
 
 	var/mob/living/carbon/human/tutorial_grab/target_mob
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		src.instructions = "<b>Click</b> the clown while on <span style='color:#FF6A00; font-weight:bold'>Grab</span> intent. <b>Click</b> them again or press <b>[attackself]</b> to upgrade the grab.<br>Get the clown in an upgraded grab."
 
 	SetUp()
 		. = ..()
@@ -884,7 +951,6 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
 
-
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/harm = src.keymap.action_to_keybind("harm") || "4"
@@ -892,9 +958,9 @@
 
 	SetUp()
 		. = ..()
-		if (src.tutorial.owner.intent == INTENT_HARM)
-			src.tutorial.owner.set_a_intent(INTENT_GRAB)
-		RegisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
+		if (src.newbee_tutorial.newbee.intent == INTENT_HARM)
+			src.newbee_tutorial.newbee.set_a_intent(INTENT_GRAB)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
 
 	proc/check_intent(datum/source, intent)
 		if (intent == INTENT_HARM)
@@ -907,7 +973,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_MOB_SET_A_INTENT)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT)
 
 /obj/landmark/newbee/mouse
 	name = LANDMARK_TUTORIAL_NEWBEE_MOUSE
@@ -916,7 +982,7 @@
 
 /datum/tutorialStep/newbee/basic_combat
 	name = "Basic Combat"
-	instructions = "Oh no - attack of the angry mouse!<br>Defeat the mouse by <b>clicking</b> on them while using the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
+	instructions = "Oh no! Attack of the angry mouse!<br>Defeat the mouse by <b>clicking</b> on them while using the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
@@ -981,8 +1047,11 @@
 
 /datum/tutorialStep/newbee/item_pickup/first_aid
 	name = "First Aid Kits"
-	instructions = "You can heal yourself by using supplies from first aid kits.<br><b>Click</b> on the first aid kit to pick it up."
+	instructions = "You can heal yourself by using supplies from first aid kits.<br><b>Click</b> the first aid kit to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	highlight_hud_element = "health"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRST_AID
 	item_path = /obj/item/storage/firstaid/brute/tutorial
 
@@ -990,43 +1059,36 @@
 	name = "Opening Storage"
 	instructions = "With the first aid kit in-hand, press <b>C</b> to open it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-
-	var/obj/item/storage/firstaid/brute/tutorial/target_firstaid
+	highlight_hud_element = "health"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 
 	New()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
 		src.instructions = "With the first aid kit in-hand, press <b>[attackself]</b> to open it."
 
-	SetUp()
-		. = ..()
-		src.target_firstaid = locate(/obj/item/storage/firstaid/brute/tutorial) in src.tutorial.owner
-		src.target_firstaid?.UpdateOverlays(src.point_marker, "marker")
-
 	PerformAction(action, context)
 		. = ..()
 		if (action == "open_storage" && context == "first_aid")
 			src.finished = TRUE
 
-	TearDown()
-		. = ..()
-		src.target_firstaid?.UpdateOverlays(null, "marker")
-
 /datum/tutorialStep/newbee/hand_swap
 	name = "Swapping Hands"
-	instructions = "Only one hand can be active at a time. You can use an open hand to grab items from held storage.<br>Press <b>E</b> to swap to your open hand."
+	instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>E</b> to swap to your open hand."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	var/obj/item/storage/firstaid/brute/target_firstaid
+	highlight_hud_element = "health"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 
 	New()
 		. = ..()
 		var/swaphand = src.keymap.action_to_keybind("swaphand") || "E"
-		src.instructions = "Only one hand can be active at a time. You can use an open hand to grab items from held storage.<br>Press <b>[swaphand]</b> to swap to your open hand."
+		src.instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>[swaphand]</b> to swap to your open hand."
 
 	SetUp()
 		. = ..()
-		src.target_firstaid = locate(/obj/item/storage/firstaid/brute) in src.tutorial.owner
-		RegisterSignal(src.target_firstaid, COMSIG_ITEM_SWAP_AWAY, PROC_REF(check_swap))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_SWAP_AWAY, PROC_REF(check_swap))
 
 	proc/check_swap()
 		src.tutorial.PerformAction("swapped-hands")
@@ -1038,12 +1100,14 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.target_firstaid, COMSIG_ITEM_SWAP_AWAY)
+		UnregisterSignal(src._needed_item, COMSIG_ITEM_SWAP_AWAY)
 
 /datum/tutorialStep/newbee/apply_patch
 	name = "Applying Patches"
 	instructions = "Grab a patch out of the first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>C</b> to self-apply the patch."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	highlight_hud_element = "health"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1052,7 +1116,7 @@
 
 	SetUp()
 		. = ..()
-		RegisterSignal(src.tutorial.owner, COMSIG_ATTACKBY, PROC_REF(check_attackby))
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
 		if (istype(I, /obj/item/reagent_containers/patch))
@@ -1065,7 +1129,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_ATTACKBY)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY)
 
 /obj/landmark/newbee/exit_healing
 	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
@@ -1074,7 +1138,7 @@
 
 /datum/tutorialStep/newbee/move_to/exit_healing
 	name = "All Better!"
-	instructions = "Now that you're patched up, head into the next room."
+	instructions = "Now that you're patched up, let's learn some deconstruction.<br>Head into the next room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
 
 //
@@ -1142,7 +1206,7 @@
 
 /datum/tutorialStep/newbee/move_to/deconstructing_girder
 	name = "Deconstructing a Girder"
-	instructions = "To deconstruct the girder, you need a wrench from the toolbox.<br><b>CLick</b> the girder with a wrench, then head into the next room."
+	instructions = "To deconstruct the girder, you need a wrench from the toolbox.<br><b>Click</b> the girder with a wrench, then head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER
@@ -1319,14 +1383,12 @@
 	name = "Using Internals"
 	instructions = "Make sure you are breathing from your oxygen tank before heading into space.<br><b>Click</b> the 'Toggle Tank Valve' button in the top-left corner to turn on your internals."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	var/obj/item/tank/oxygen/target_item
+	needed_item_path = /obj/item/tank/oxygen/tutorial
 
 	SetUp()
 		. = ..()
-		src.target_item = locate(/obj/item/tank/oxygen) in src.tutorial.owner
-		if (src.target_item)
-			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src.target_item.ability_buttons)
-				tank_ability.UpdateOverlays(src.inventory_marker, "marker")
+		for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
+			tank_ability.UpdateOverlays(src.inventory_marker, "marker")
 
 	PerformAction(action, context)
 		. = ..()
@@ -1335,10 +1397,9 @@
 
 	TearDown()
 		. = ..()
-		if (src.target_item)
-			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src.target_item.ability_buttons)
+		if (src._needed_item)
+			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
 				tank_ability.UpdateOverlays(null, "marker")
-
 
 //
 // room 10 - Space Traversal
@@ -1379,7 +1440,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/backpack
 	name = "Backpack Storage"
-	instructions = "Backpacks allow you to keep more items on you than what you can carry.<br><b>Click</b> on the backpack to pick it up."
+	instructions = "Backpacks allow you to store items for later use.<br><b>Click</b> the backpack with an empty hand to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_BACKPACK
@@ -1391,8 +1452,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "back"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-
-	var/obj/item/storage/backpack/empty/target_item
+	needed_item_path = /obj/item/storage/backpack/empty
 
 	New()
 		. = ..()
@@ -1401,8 +1461,7 @@
 
 	SetUp()
 		. = ..()
-		src.target_item = locate(/obj/item/storage/backpack/empty) in src.tutorial.owner
-		RegisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
 		src.tutorial.PerformSilentAction("item_equipped", "backpack")
@@ -1414,7 +1473,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED)
+		UnregisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED)
 
 /datum/tutorialStep/newbee/unequipping_worn_items
 	name = "Storing Items"
@@ -1432,29 +1491,37 @@
 	SetUp()
 		. = ..()
 		src.worn_head = src.newbee_tutorial.newbee.head
+		if (!src.worn_head)
+			src.worn_head = new /obj/item/clothing/head/emerg(get_turf(src.newbee_tutorial.newbee))
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_head)
 		if (src.worn_head)
 			src.worn_head.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "head")
 					src.head_hud = hud_element
 					break
+
 		src.worn_suit = src.newbee_tutorial.newbee.wear_suit
+		if (!src.worn_suit)
+			src.worn_suit = new /obj/item/clothing/suit/space/emerg(get_turf(src.newbee_tutorial.newbee))
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_suit)
 		if (src.worn_suit)
 			src.worn_suit.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "suit")
 					src.suit_hud = hud_element
 					break
+
 		src.worn_mask = src.newbee_tutorial.newbee.wear_mask
+		if (!src.worn_mask)
+			src.worn_mask = new /obj/item/clothing/mask/breath(get_turf(src.newbee_tutorial.newbee))
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_mask)
 		if (src.worn_mask)
 			src.worn_mask.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "mask")
 					src.mask_hud = hud_element
 					break
-
-		if (isnull(src.worn_head) && isnull(src.worn_suit) && isnull(src.worn_mask))
-			src.tutorial.Advance() // not wearing any space gear
 
 		if (src.head_hud)
 			src.head_hud.UpdateOverlays(src.inventory_marker, "marker")
@@ -1532,7 +1599,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/welding_mask
 	name = "Space OSHA Reminder"
-	instructions = "Welding without proper eyewear is a bad idea. <b>Click</b> on the welding mask to pick it up."
+	instructions = "Welding without proper eyewear is a bad idea.<br><b>Click</b> the welding mask to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK
@@ -1550,8 +1617,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "head"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-
-	var/obj/item/clothing/head/helmet/welding/tutorial/target_item
+	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
 
 	New()
 		. = ..()
@@ -1560,11 +1626,7 @@
 
 	SetUp()
 		. = ..()
-		src.target_item = locate(/obj/item/clothing/head/helmet/welding) in src.tutorial.owner
-		if (!src.target_item) // whered it go
-			src.target_item = new(src.newbee_tutorial.newbee.loc)
-		src.target_item.UpdateOverlays(src.point_marker, "marker")
-		RegisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
 		src.tutorial.PerformSilentAction("item_equipped", "welding_mask")
@@ -1576,23 +1638,18 @@
 
 	TearDown()
 		. = ..()
-		if (src.target_item)
-			src.target_item.UpdateOverlays(null, "marker")
-			UnregisterSignal(src.target_item, COMSIG_ITEM_EQUIPPED)
+		if (src._needed_item)
+			UnregisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED)
 
 /datum/tutorialStep/newbee/flip_welding_mask
 	name = "Flipping Welding Masks"
 	instructions = "Welding masks protect your head while up, and protect your eyes when down.<br><b>Click</b> the icon in the top-left corner to lower the mask."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-
-	var/obj/item/clothing/head/helmet/welding/tutorial/target_item
+	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
 
 	SetUp()
 		. = ..()
-		src.target_item = locate(/obj/item/clothing/head/helmet/welding/tutorial) in src.tutorial.owner
-		if (!src.target_item) // where'd it go
-			src.target_item = new(src.newbee_tutorial.newbee.loc)
-		for(var/obj/ability_button/mask_toggle/toggle in src.target_item.ability_buttons)
+		for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
 			toggle.UpdateOverlays(src.inventory_marker, "marker")
 
 	PerformAction(action, context)
@@ -1602,8 +1659,8 @@
 
 	TearDown()
 		. = ..()
-		if (src.target_item)
-			for(var/obj/ability_button/mask_toggle/toggle in src.target_item.ability_buttons)
+		if (src._needed_item)
+			for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
 				toggle.UpdateOverlays(null, "marker")
 
 /obj/landmark/newbee/pickup_weldingtool
@@ -1613,7 +1670,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/weldingtool
 	name = "Welding Tools"
-	instructions = "Deconstructing walls requires a welding tool.<br><b>Click</b> the welding tool to pick it up."
+	instructions = "Deconstructing walls requires a welding tool.<br><b>Click</b> the welding tool to pick it up and wait for the action bar to finish."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL
@@ -1623,30 +1680,17 @@
 	name = "Using Welding Tools"
 	instructions = "Welding tools can be used in-hand to light them. While lit, welding tools will slowly use up fuel.<br>Turn on the welding tool with <b>C</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-
-	var/obj/item/weldingtool/target_item
+	needed_item_path = /obj/item/weldingtool/tutorial
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
 		src.instructions = "Welding tools can be used in-hand to light them. While lit, welding tools will slowly use up fuel.<br>Turn on the welding tool with <b>[attackself]</b>."
 
-	SetUp()
-		. = ..()
-		src.target_item = locate(/obj/item/weldingtool/tutorial) in src.newbee_tutorial.newbee
-		if (src.target_item)
-			src.target_item.UpdateOverlays(src.point_marker, "marker")
-
-
 	PerformAction(action, context)
 		. = ..()
 		if (action == "use_item" && context == "weldingtool")
 			src.finished = TRUE
-
-	TearDown()
-		. = ..()
-		if (src.target_item)
-			src.target_item.UpdateOverlays(null, "marker")
 
 /obj/landmark/newbee/decon_wall
 	name = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
@@ -1655,14 +1699,22 @@
 
 /datum/tutorialStep/newbee/move_to/decon_wall
 	name = "Deconstructing a Wall"
-	instructions = "Regular walls can be deconstructed with lit welding tools.<br><b>Click</b> on the wall with the lit welding tool in-hand."
+	instructions = "Regular walls can be deconstructed with lit welding tools.<br><b>Click</b> the wall with the lit welding tool in-hand."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	needed_item_path = /obj/item/weldingtool/tutorial
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
 
 	SetUp()
 		. = ..()
+		if (!istype(src._target_destination, /turf/simulated/wall/auto/supernorn))
+			src._target_destination.ReplaceWith(/turf/simulated/wall/auto/supernorn)
+
+		var/obj/structure/girder/girder = locate(/obj/structure/girder) in src._target_destination
+		if (istype(girder))
+			qdel(girder)
+
 		RegisterSignal(src._target_destination, COMSIG_TURF_REPLACED, PROC_REF(check_turf_replaced))
 
 	proc/check_turf_replaced(turf/replaced, turf/new_turf)
@@ -1762,7 +1814,7 @@
 
 	SetUp()
 		. = ..()
-		RegisterSignal(src.tutorial.owner, COMSIG_ATOM_SAY, PROC_REF(check_say))
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY, PROC_REF(check_say))
 
 	proc/check_say(source, datum/say_message/message)
 		src.tutorial.PerformAction("atom_say", "say")
@@ -1774,7 +1826,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_ATOM_SAY)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY)
 
 /obj/landmark/newbee/pickup_headset
 	name = LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET
@@ -1783,7 +1835,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/headset
 	name = "Headsets"
-	instructions = "Headsets let you speak over the radio to the entire station.<br><b>Click</b> on the headset to pick it up."
+	instructions = "Headsets let you speak over the radio to the entire station.<br><b>Click</b> the headset to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET
@@ -1791,23 +1843,20 @@
 
 /datum/tutorialStep/newbee/equip_headset
 	name = "Equipping Headsets"
-	instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>V</b> or clicking the ear slot in your HUD."
+	instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>V</b> or <b>clicking</b> the ear slot in your HUD."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
 	highlight_hud_element = "ears"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-
-	var/obj/item/device/radio/headset/tutorial/target_headset
+	needed_item_path = /obj/item/device/radio/headset/tutorial
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>[equip]</b> or clicking the ear slot in your HUD."
-
+		instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>[equip]</b> or <b>clicking</b> the ear slot in your HUD."
 
 	SetUp()
 		. = ..()
-		src.target_headset = locate(/obj/item/device/radio/headset/tutorial) in src.tutorial.owner
-		RegisterSignal(src.target_headset, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
+		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
 		src.tutorial.PerformAction("item_equipped", "headset")
@@ -1819,12 +1868,14 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.target_headset, COMSIG_ITEM_EQUIPPED)
+		if (src._needed_item)
+			UnregisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED)
 
 /datum/tutorialStep/newbee/using_headset
 	name = "Using the Radio"
 	instructions = "Press <b>Y</b> to get a list of radio channels, and press <b>ENTER</b> to select one.<br>Say something over the radio to continue."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
+	needed_item_path = /obj/item/device/radio/headset/tutorial
 
 	New()
 		. = ..()
@@ -1833,7 +1884,7 @@
 
 	SetUp()
 		. = ..()
-		RegisterSignal(src.tutorial.owner, COMSIG_ATOM_SAY, PROC_REF(check_say))
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY, PROC_REF(check_say))
 
 	proc/check_say(source, datum/say_message/message)
 		if (message.prefix)
@@ -1846,7 +1897,7 @@
 
 	TearDown()
 		. = ..()
-		UnregisterSignal(src.tutorial.owner, COMSIG_ATOM_SAY)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY)
 
 /obj/landmark/newbee/exit_radio
 	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO
@@ -1921,10 +1972,6 @@
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
-		. = ..()
-
-
 	PerformAction(action, context)
 		. = ..()
 		if (action == "remove_pulling" && istype(context, /obj/reagent_dispensers/watertank))
@@ -1984,7 +2031,7 @@
 
 /datum/tutorialStep/newbee/timer/following_rules
 	name = "Server Rules"
-	instructions = "The 'Rules' verb is located in the Commands tab above the chat top-right.<br>The 'RP Rules' verb is in the same tab.<br><b>Not knowing the rules isn't an excuse for breaking 'em!</b>"
+	instructions = "The 'Rules' verb is located in the Commands tab above the chat top-right.<br>On the RP servers, the 'Rules - RP' verb is in the same tab.<br><b>Not knowing the rules isn't an excuse for breaking 'em!</b>"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_META
 
 /datum/tutorialStep/newbee/timer/getting_help
@@ -1996,17 +2043,17 @@
 		. = ..()
 		var/adminhelp = src.keymap.action_to_keybind("adminhelp") || "F1"
 		var/mentorhelp = src.keymap.action_to_keybind("mentorhelp") || "F3"
-		src.instructions = "The <a href=\"https://wiki.ss13.co/\">Wiki</a> has detailed guides and information.<br>If you have gameplay questions in-game, press <b>[mentorhelp]</b> to ask mentors.<br>If you have rules questions in-game, press <b>[adminhelp]</b> to ask administrators."
+		src.instructions = "The <a href=\"https://wiki.ss13.co/\">Wiki</a> has detailed guides for each job and other useful information.<br>If you have gameplay questions in-game, press <b>[mentorhelp]</b> to ask mentors.<br>If you have rules questions in-game, press <b>[adminhelp]</b> to ask administrators."
 
 /datum/tutorialStep/newbee/timer/finished
 	name = "Tutorial Complete!"
-	instructions = "Congratulations on completing the basic tutorial!<br>There is a lot more to learn and do, so enjoy the game!<br>Returning to the main menu..."
+	instructions = "Congratulations on completing the basic tutorial!<br>There's more to learn and discover, but you can condifently take your first space-steps.<br>Returning to the main menu..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
 	SetUp()
 		..()
 		src.newbee_tutorial.newbee.unlock_medal("On My Own Two (Space) Legs")
-		playsound(src.tutorial.owner, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 60, 0)
+		playsound(src.newbee_tutorial.newbee, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 60, 0)
 
 //
 // Tutorial UI Buttons
@@ -2115,7 +2162,7 @@
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/clown/blue, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/clown_shoes/blue, SLOT_SHOES)
 		var/obj/item/card/id/clown/clown_id = new()
-		clown_id.registered = "The Clown You Help Stand Up"
+		clown_id.registered = "The Clown You Help"
 		clown_id.assignment = "Clown"
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
 		src.setStatus("resting", INFINITE_STATUS)
@@ -2132,7 +2179,7 @@
 		clown_id.registered = "The Clown You Disarm"
 		clown_id.assignment = "Clown"
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
-		src.Attackhand() // honk
+		src.l_hand.AttackSelf() // honk
 
 /mob/living/carbon/human/tutorial_grab
 	New()
@@ -2159,7 +2206,7 @@
 		src.equip_new_if_possible(/obj/item/instrument/bikehorn, SLOT_L_HAND)
 		src.equip_new_if_possible(/obj/item/bananapeel, SLOT_R_HAND)
 		var/obj/item/card/id/clown/clown_id = new()
-		clown_id.registered = "Kill Me To Win"
+		clown_id.registered = "The Clown You Kill"
 		clown_id.assignment = "Clown"
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
 
@@ -2296,8 +2343,11 @@
 		"b" = RADIOCL_RESEARCH,
 	)
 
+	src.set_secure_frequencies()
+
 	SPAWN(1 SECOND)
 		src.frequency = src.radio_freq_alpha
+
 
 /obj/item/device/radio/headset/tutorial/proc/pick_randomized_freq()
 	var/list/blacklisted = list(FREQ_SIGNALER)
