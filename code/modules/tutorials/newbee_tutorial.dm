@@ -1,5 +1,5 @@
 /// How long before auto-continuing for timed steps. Matches the related tutorial timer animation duration.
-#define NEWBEE_TUTORIAL_TIMER_DURATION 10 SECONDS
+#define NEWBEE_TUTORIAL_TIMER_DURATION 11 SECONDS
 
 // Markers
 
@@ -82,6 +82,8 @@
 /datum/tutorial_base/regional/newbee
 	name = "Newbee Tutorial"
 	region_type = /datum/mapPrefab/allocated/newbee_tutorial
+
+	step_sound = 'sound/misc/win-blip.ogg'
 
 	var/mob/living/carbon/human/tutorial/newbee = null
 	var/mob/new_player/origin_mob
@@ -267,10 +269,11 @@
 	// room 12 - Wall Deconstruction
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/welding_mask)
 	src.AddStep(/datum/tutorialStep/newbee/equip_welding_mask)
-	src.AddStep(/datum/tutorialStep/newbee/flip_welding_mask)
+	src.AddStep(/datum/tutorialStep/newbee/flip_welding_mask_down)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/weldingtool)
 	src.AddStep(/datum/tutorialStep/newbee/using_welder)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/decon_wall)
+	src.AddStep(/datum/tutorialStep/newbee/flip_welding_mask_up)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/decon_wall_girder)
 
 	// room 13 - Advanced Movement
@@ -1610,6 +1613,8 @@
 		if (istype(src._target_item, /obj/item/clothing/head/helmet/welding/tutorial))
 			var/obj/item/clothing/head/helmet/welding/tutorial/welding_mask = src._target_item
 			welding_mask.flip_up(silent=TRUE)
+			for(var/obj/ability_button/mask_toggle/toggle in welding_mask.ability_buttons)
+				toggle.icon_state = "welddown" // manually set the ability button state
 
 /datum/tutorialStep/newbee/equip_welding_mask
 	name = "Welding Masks"
@@ -1641,9 +1646,9 @@
 		if (src._needed_item)
 			UnregisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED)
 
-/datum/tutorialStep/newbee/flip_welding_mask
-	name = "Flipping Welding Masks"
-	instructions = "Welding masks protect your head while up, and protect your eyes when down.<br><b>Click</b> the icon in the top-left corner to lower the mask."
+/datum/tutorialStep/newbee/flip_welding_mask_down
+	name = "Eye Protection"
+	instructions = "Flipping a welding mask down will protect your eyes, but obscure your sight.<br><b>Click</b> the icon in the top-left corner to lower the mask."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
 
@@ -1654,7 +1659,7 @@
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "action_button" && context == "welding_mask")
+		if (action == "welding_mask" && context == "flip_down")
 			src.finished = TRUE
 
 	TearDown()
@@ -1728,6 +1733,28 @@
 	TearDown()
 		UnregisterSignal(src._target_destination, COMSIG_TURF_REPLACED)
 		. = ..()
+
+/datum/tutorialStep/newbee/flip_welding_mask_up
+	name = "Lift the Veil"
+	instructions = "With the welding done, flip the welding mask back up to see better.<br><b>Click</b> the icon in the top-left corner to raise the mask."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
+
+	SetUp()
+		. = ..()
+		for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
+			toggle.UpdateOverlays(src.inventory_marker, "marker")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "welding_mask" && context == "flip_up")
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		if (src._needed_item)
+			for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
+				toggle.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/newbee/move_to/decon_wall_girder
 	name = "Removing the Girder"
@@ -2005,7 +2032,7 @@
 
 /datum/tutorialStep/newbee/murder
 	name = "Advanced Combat"
-	instructions = "To activate the special attack of some items, <b>click</b> far away and use <span style='color:#EAC300; font-weight: bold'>Disarm</span> or <span style='color:#B51214; font-weight:bold'>Harm</span> intent.<br><span style='color:#962121; font-weight:bold'>Kill the clown</span> to complete the tutorial."
+	instructions = "To activate the special attack of some items, <b>click</b> far away and use <span style='color:#EAC300; font-weight: bold'>Disarm</span> or <span style='color:#B51214; font-weight:bold'>Harm</span> intent.<br><span style='color:#962121; font-weight:bold'>Kill the clown</span> to complete the tutorial. Their robustness may surprise you!"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 
 	var/mob/living/carbon/human/normal/tutorial_kill/tutorial_clown
@@ -2017,7 +2044,6 @@
 				src.tutorial_clown = new(T)
 				break
 		src.tutorial_clown.tutorial_owner = src.newbee_tutorial.newbee
-		src.tutorial_clown.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src.tutorial_clown, COMSIG_MOB_DEATH, PROC_REF(check_mob_death))
 
 	proc/check_mob_death()
@@ -2031,7 +2057,6 @@
 
 	TearDown()
 		. = ..()
-		src.tutorial_clown.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.tutorial_clown, COMSIG_MOB_DEATH)
 		if (src.tutorial_clown)
 			src.tutorial_clown.gib()
@@ -2043,14 +2068,14 @@
 
 /datum/tutorialStep/newbee/timer/getting_help
 	name = "Getting Help"
-	instructions = "The <a href=\"https://wiki.ss13.co/\">Wiki</a> has detailed guides and information.<br>If you have gameplay questions in-game, press <b>F3</b> to ask mentors.<br>If you have rules questions in-game, press <b>F1</b> to ask administrators."
+	instructions = "The <a href=\"https://wiki.ss13.co/\" style='color:#0099cc;text-decoration: underline;'>wiki</a> has detailed guides and information.<br>Ask our mentors gameplay questions in-game by pressing <b>F3</b>.<br>Ask our admins rules questions in-game by pressing <b>F1</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_META
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/adminhelp = src.keymap.action_to_keybind("adminhelp") || "F1"
 		var/mentorhelp = src.keymap.action_to_keybind("mentorhelp") || "F3"
-		src.instructions = "The <a href=\"https://wiki.ss13.co/\">Wiki</a> has detailed guides for each job and other useful information.<br>If you have gameplay questions in-game, press <b>[mentorhelp]</b> to ask mentors.<br>If you have rules questions in-game, press <b>[adminhelp]</b> to ask administrators."
+		src.instructions = "The <a href=\"https://wiki.ss13.co/\" style='color:#0099cc;text-decoration: underline;'>wiki</a> has detailed guides and information.<br>Ask our mentors gameplay questions in-game by pressing <b>[mentorhelp]</b>.<br>Ask our admins rules questions in-game by pressing <b>[adminhelp]</b>."
 
 /datum/tutorialStep/newbee/timer/finished
 	name = "Tutorial Complete!"
@@ -2243,6 +2268,7 @@
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
 		src.UpdateName()
 		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
+		src.AddComponent(/datum/component/health_maptext)
 
 		SPAWN (0.2 SECONDS)
 			src?.l_hand?.AttackSelf() // honk
@@ -2281,10 +2307,14 @@
 			user.client.tutorial.PerformSilentAction("use_item", "flashlight")
 
 /obj/item/clothing/head/helmet/welding/tutorial
+	flip_up(mob/living/carbon/human/user, silent)
+		. = ..()
+		if (user?.client?.tutorial)
+			user.client.tutorial.PerformSilentAction("welding_mask", "flip_up")
 	flip_down(mob/living/carbon/human/user, silent)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("action_button", "welding_mask")
+		if (user?.client?.tutorial)
+			user.client.tutorial.PerformSilentAction("welding_mask", "flip_down")
 
 /obj/item/weldingtool/tutorial
 	fuel_capacity = 999
@@ -2407,3 +2437,24 @@
 	. = ..()
 	global.protected_frequencies -= src.radio_freq_alpha
 	global.protected_frequencies -= src.radio_freq_beta
+
+#undef NEWBEE_TUTORIAL_TIMER_DURATION
+
+#undef NEWBEE_TUTORIAL_MARKER_TARGET_GROUND
+#undef NEWBEE_TUTORIAL_MARKER_TARGET_POINT
+#undef NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+#undef NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
+#undef NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
+#undef NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
+#undef NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
+#undef NEWBEE_TUTORIAL_MARKER_HUD_STAND
+#undef NEWBEE_TUTORIAL_MARKER_HUD_PULL
+
+#undef NEWBEE_TUTORIAL_SIDEBAR_EMPTY
+#undef NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+#undef NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+#undef NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+#undef NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
+#undef NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
+#undef NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
+#undef NEWBEE_TUTORIAL_SIDEBAR_META
