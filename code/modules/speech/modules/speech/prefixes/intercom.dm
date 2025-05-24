@@ -1,6 +1,6 @@
 /datum/speech_module/prefix/postmodifier/intercom
 	id = SPEECH_PREFIX_INTERCOM
-	prefix_id = ":in"
+	prefix_id = PREFIX_TEXT_INTERCOM
 
 /datum/speech_module/prefix/postmodifier/intercom/process(datum/say_message/message)
 	. = message
@@ -19,8 +19,8 @@
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = intercoms
-	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+	if (src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message))
+		message.say_sound = 'sound/misc/talk/radio.ogg'
 
 	message.flags |= SAYFLAG_WHISPER
 	message.heard_range = WHISPER_EAVESDROPPING_RANGE
-	message.say_sound = 'sound/misc/talk/radio.ogg'

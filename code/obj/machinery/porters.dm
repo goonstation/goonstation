@@ -323,7 +323,6 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
 	anchored = UNANCHORED
-	open_to_sound = TRUE
 	p_class = 1.8
 	req_access = list(access_security)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER

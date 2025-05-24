@@ -2,7 +2,7 @@
 // CE's pet rock! A true hellburn companion
 /obj/item/rocko
 	name = "Rocko"
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/rocks.dmi'
 	icon_state = "rock1"
 	w_class = W_CLASS_TINY
 	force = 10
@@ -20,23 +20,11 @@
 		. = ..()
 		if(prob(20))
 			src.bright = TRUE
-
-		src.icon_state = "rock[pick(1,3)]"
-		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
-		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
-
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
 
-		if (prob(10))
-			var/new_material = pick(childrentypesof(/datum/material/metal))
-			var/datum/material/dummy = new new_material
-			src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
-		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
-
+		choose_rocko_material()
 		UpdateIcon()
-
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
@@ -170,4 +158,39 @@
 			src.smile = FALSE
 			UpdateIcon()
 
+	proc/choose_rocko_material()
+		src.icon_state = pick("rock1","rock1b","rock1c","rock1d")
+		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
+		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
+		if(prob(90))
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+			return
+
+		// Give rocko a random material
+		var/new_material = pick(childrentypesof(/datum/material/metal))
+		var/datum/material/dummy = new new_material
+		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
+
+		// Use ore sprites if available
+		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
+		if(!rock_list.Find(src.material.getID()))
+			return
+		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
+		var/sprite_prefix = "ore"
+		var/sprite_value = pick(1,2,3,4,5,6)
+		switch(src.material.getID())
+			if("bohrum")
+				sprite_value = pick(1,2,3,4)
+			if("plutonium")
+				sprite_prefix = "scrap"
+		src.icon_state = "[sprite_prefix][sprite_value]_$$[src.material.getID()]"
+		var/scale = 1 // Scale depending on chosen ore size
+		switch(sprite_value)
+			if(1) scale = 1.3
+			if(2) scale = 1.2
+			if(3) scale = 1
+			if(4) scale = 0.9
+			if(5) scale = 0.85
+			if(6) scale = 0.8
+		src.transform = matrix(scale,0,0,0,scale,-3)
 
