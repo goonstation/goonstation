@@ -116,7 +116,7 @@
 	icon_state = "dark_lipstick"
 	click_delay = 0.7 SECONDS
 	var/lipsticktype = "dark_lipstick"
-	var/lipstickcolor = "#DD0029" //temporary var to help get around parent lipstick always being random until I refactor it
+	var/lipstickcolor = "#9e0925" //temporary var to help get around parent lipstick always being random until I refactor it
 
 
 	New()
@@ -248,9 +248,9 @@
 	name = "eyeshadow"
 	desc = "A palette of pigmented powders that is intended to be used around a person's eyes."
 	makeuptype = "eyeshadow_light"
-	var/list/eyeshadow_light_colors = list("#ff9eb6", "#f8aaaa", "#ff757b", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
+	var/list/eyeshadow_light_colors = list("#af20a8", "#f8aaaa", "#fd9368", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
 	"#e253de", "#bc88bb")
-	var/list/eyeshadow_dark_colors = list("#87a2ad", "#4d5a96", "#c2eeff", "#64b0ce", "#6a9b95", "#3e4746", "#00000000", "#dbeff5",
+	var/list/eyeshadow_dark_colors = list("#7c44b1", "#4052a5", "#c2eeff", "#64b0ce", "#65a36f", "#4c4e4e", "#00000000", "#dbeff5",
 	"#3b2c5e", "#28527d")
 	var/list/eyeshadow_gold_colors = list("#be5e51", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#605131", "#8e4f0e",
 	"#ffa200")
