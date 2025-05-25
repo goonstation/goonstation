@@ -210,7 +210,7 @@
 /////Blush
 /obj/item/makeup/blush
 	name = "blush"
-	desc = "A container full of ultra-fine powder intended to be used to tiny a person's cheeks."
+	desc = "A container full of ultra-fine powder intended to be used to tint a person's cheeks."
 	makeuptype = "blush_light"
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
