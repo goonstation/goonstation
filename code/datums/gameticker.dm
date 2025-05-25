@@ -469,19 +469,25 @@ var/global/game_force_started = FALSE
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				// adjust the counter up or down and keep it within the set boundaries
+				var/next_higher_tl = min(world.tick_lag + TICKLAG_DILATION_INC, timeDilationUpperBound)
+				var/next_lower_tl  = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+
+				var/pred_cpu_high  = world.cpu     * (world.tick_lag / next_higher_tl)
+				var/pred_cpu_low   = world.cpu     * (world.tick_lag / next_lower_tl)
+				var/pred_map_high  = world.map_cpu * (world.tick_lag / next_higher_tl)
+				var/pred_map_low   = world.map_cpu * (world.tick_lag / next_lower_tl)
+
 				if (world.cpu >= TICKLAG_CPU_MAX)
-					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+					if (pred_cpu_high >= TICKLAG_CPU_MAX && highCpuCount < TICKLAG_INCREASE_THRESHOLD)
 						highCpuCount++
 				else if (world.cpu <= TICKLAG_CPU_MIN)
-					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+					if (pred_cpu_low < TICKLAG_CPU_MAX && highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
 						highCpuCount--
-
 				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
-					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
+					if (pred_map_high >= TICKLAG_MAPCPU_MAX && highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
 						highMapCpuCount++
 				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
-					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+					if (pred_map_low < TICKLAG_MAPCPU_MAX && highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
 						highMapCpuCount--
 
 				// adjust the tick_lag, if needed
@@ -489,12 +495,7 @@ var/global/game_force_started = FALSE
 				if (max(highCpuCount, highMapCpuCount) >= TICKLAG_INCREASE_THRESHOLD)
 					dilated_tick_lag = round(min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 				else if (max(highCpuCount, highMapCpuCount) <= -TICKLAG_DECREASE_THRESHOLD)
-					var/next_tick_lag = round(max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
-					// Predict CPU usage if we lowered ticklag
-					var/predicted_cpu = world.cpu * (world.tick_lag / next_tick_lag)
-					// only lower tick lag if the predicted cpu is lower than the upperbound to re-raise it to prevent oscillating ticklag values
-					if (predicted_cpu < TICKLAG_CPU_MAX)
-						dilated_tick_lag = next_tick_lag
+					dilated_tick_lag = round(max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 
 
 				// only set the value if it changed! earlier iteration of this was
