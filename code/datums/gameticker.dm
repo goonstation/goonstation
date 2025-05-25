@@ -489,7 +489,13 @@ var/global/game_force_started = FALSE
 				if (max(highCpuCount, highMapCpuCount) >= TICKLAG_INCREASE_THRESHOLD)
 					dilated_tick_lag = round(min(world.tick_lag + TICKLAG_DILATION_INC,	timeDilationUpperBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
 				else if (max(highCpuCount, highMapCpuCount) <= -TICKLAG_DECREASE_THRESHOLD)
-					dilated_tick_lag = round(max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
+					var/next_tick_lag = round(max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound), min(TICKLAG_DILATION_INC, TICKLAG_DILATION_DEC))
+					// Predict CPU usage if we lowered ticklag
+					var/predicted_cpu = world.cpu * (world.tick_lag / next_tick_lag)
+					// only lower tick lag if the predicted cpu is lower than the upperbound to re-raise it to prevent oscillating ticklag values
+					if (predicted_cpu < TICKLAG_CPU_MAX)
+						dilated_tick_lag = next_tick_lag
+
 
 				// only set the value if it changed! earlier iteration of this was
 				// setting world.tick_lag very often, which caused instability with
