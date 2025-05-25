@@ -46,9 +46,62 @@
 	icon_state = "green"
 	sound_group = "newbee"
 
+	/// Landmark at the start of the area, used for warping players backwards
+	var/starting_landmark = LANDMARK_TUTORIAL_START
+
 /area/tutorial/newbee/unpowered
 	icon_state = "red"
 	requires_power = TRUE
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
+
+/area/tutorial/newbee/room_1
+	icon_state = "start"
+	starting_landmark = LANDMARK_TUTORIAL_START
+/area/tutorial/newbee/room_2
+	icon_state = "yellow"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS
+/area/tutorial/newbee/room_3
+	icon_state = "blue"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
+/area/tutorial/newbee/room_4
+	icon_state = "orange"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
+/area/tutorial/newbee/room_5
+	icon_state = "purple"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
+/area/tutorial/newbee/room_6
+	icon_state = "pink"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
+/area/tutorial/newbee/room_7
+	icon_state = "yellow"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER
+/area/tutorial/newbee/room_8
+	icon_state = "blue"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS
+/area/tutorial/newbee/room_9
+	icon_state = "orange"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS
+/area/tutorial/newbee/room_10
+	icon_state = "purple"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE
+/area/tutorial/newbee/room_11
+	icon_state = "pink"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE
+/area/tutorial/newbee/room_12
+	icon_state = "yellow"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE
+/area/tutorial/newbee/room_13
+	icon_state = "blue"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
+/area/tutorial/newbee/room_14
+	icon_state = "orange"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT
+/area/tutorial/newbee/room_15
+	icon_state = "purple"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO
+/area/tutorial/newbee/room_16
+	icon_state = "exit"
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM
 
 /mob/new_player/verb/play_tutorial()
 	set name = "Play Tutorial"
@@ -120,6 +173,24 @@
 		animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
 		animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
 		. = ..()
+
+	Advance(manually_selected=FALSE)
+var/datum/tutorialStep/newbee/T = steps[current_step]
+		if (!manually_selected)
+			var/completion_sound = step_sound
+						if (T.custom_completion_sound)
+				completion_sound = T.custom_completion_sound
+			playsound(get_turf(owner), completion_sound, 40, pitch = 0.5)
+		if (current_step > steps.len)
+			return
+		T.TearDown()
+		current_step++
+		if (current_step > steps.len)
+			Finish()
+			return
+		T = steps[current_step]
+		ShowStep()
+		T.SetUp(manually_selected)
 
 	ShowStep()
 		. = ..()
@@ -327,6 +398,12 @@
 	/// Which sidebar to display; see NEWBEE_TUTORIAL_SIDEBAR_*
 	var/sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
+	/// Associated area of the step. Used to handle warping for stepping backwards
+	var/area/tutorial/newbee/step_area
+
+	/// an optional custom sound to use when completing this step
+	var/custom_completion_sound
+
 	/// Which HUD element to highlight, by ID
 	var/highlight_hud_element
 	/// The icon state to apply to the HUD
@@ -380,8 +457,13 @@
 			src.pull_marker.plane = PLANE_HUD
 		..()
 
-	SetUp()
+	SetUp(manually_selected=FALSE)
 		. = ..()
+		if (manually_selected && src.step_area)
+			if (!istype(get_area(src.newbee_tutorial.newbee), src.step_area))
+				for(var/turf/T in landmarks[src.step_area.starting_landmark])
+					if(src.region.turf_in_region(T))
+						src.newbee_tutorial.newbee.set_loc(T)
 		if (src.highlight_hud_element && src.highlight_hud_marker)
 			src.highlight_hud()
 		if (src.needed_item_path)
@@ -564,6 +646,8 @@
 	instructions = "This tutorial covers the basics of the game.<br>The top-left buttons let you exit, go back a step, or skip a step."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
+	step_area = /area/tutorial/newbee/room_1
+
 /obj/landmark/newbee/basic_movement
 	name = LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT
 	icon = 'icons/effects/VR.dmi'
@@ -574,6 +658,7 @@
 	instructions = "Use W/A/S/D to move your character.<br>Walk to the marker to continue."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_1
 
 	New()
 		. = ..()
@@ -593,6 +678,7 @@
 	instructions = "Powered doors will open when you walk into them.<br>Head through the doorway into the next room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_1
 
 //
 // room 2 - ID-locked Doors
@@ -609,6 +695,7 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_ID_CARD
 	item_path = /obj/item/card/id/engineering/tutorial
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_2
 
 	SetUp()
 		. = ..()
@@ -625,6 +712,7 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/card/id/engineering/tutorial
+	step_area = /area/tutorial/newbee/room_2
 
 	New()
 		. = ..()
@@ -659,6 +747,7 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/card/id/engineering/tutorial
+	step_area = /area/tutorial/newbee/room_2
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
 
@@ -677,6 +766,7 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_CROWBAR
 	item_path = /obj/item/crowbar
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_3
 
 /obj/landmark/newbee/unpowered_doors
 	name = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
@@ -690,6 +780,7 @@
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/crowbar
+	step_area = /area/tutorial/newbee/room_3
 
 //
 // room 4 - Intents & Combat
@@ -700,6 +791,7 @@
 	instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>Q</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/crowbar
+	step_area = /area/tutorial/newbee/room_4
 
 	New()
 		. = ..()
@@ -728,6 +820,7 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+	step_area = /area/tutorial/newbee/room_4
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -764,6 +857,7 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_help/target_mob
 
@@ -804,6 +898,7 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+	step_area = /area/tutorial/newbee/room_4
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -840,6 +935,7 @@
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_disarm/target_mob
 	var/obj/item/target_item_left
@@ -882,6 +978,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
+	step_area = /area/tutorial/newbee/room_4
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -918,6 +1015,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
+	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_grab/target_mob
 
@@ -963,6 +1061,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
+	step_area = /area/tutorial/newbee/room_4
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -999,6 +1098,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
+	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/critter/small_animal/mouse/mad/target_mob
 
@@ -1042,6 +1142,7 @@
 	instructions = "Your health is displayed in the top-right corner. As you can see, you've taken some damage.<br>Head into the next room to patch yourself up."
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_4
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
 
@@ -1065,6 +1166,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_5
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRST_AID
 	item_path = /obj/item/storage/firstaid/brute/tutorial
@@ -1076,6 +1178,7 @@
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
+	step_area = /area/tutorial/newbee/room_5
 
 	New()
 		. = ..()
@@ -1094,6 +1197,7 @@
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
+	step_area = /area/tutorial/newbee/room_5
 
 	New()
 		. = ..()
@@ -1122,6 +1226,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_5
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1154,6 +1259,7 @@
 	name = "All Better!"
 	instructions = "Now that you're patched up, let's learn some deconstruction.<br>Head into the next room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
+	step_area = /area/tutorial/newbee/room_5
 
 //
 // room 6 - Girder Deconstruction
@@ -1168,6 +1274,7 @@
 	name = "Taking a Closer Look"
 	instructions = "Examine things by holding <b>ALT</b> and <b>clicking</b> them. Text in blue boxes are hints.<br>Examine the girder to find out how to deconstruct it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
+	step_area = /area/tutorial/newbee/room_6
 
 	var/obj/structure/girder/target_girder
 
@@ -1208,6 +1315,7 @@
 	name = "Toolboxes"
 	instructions = "Toolboxes contain up to 7 small objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>C</b> to open it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_6
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX
 	item_path = /obj/item/storage/toolbox/mechanical
@@ -1222,6 +1330,7 @@
 	name = "Deconstructing a Girder"
 	instructions = "To deconstruct the girder, you need a wrench from the toolbox.<br><b>Click</b> the girder with a wrench, then head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_6
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
@@ -1251,6 +1360,7 @@
 	name = "Exploring Darkness"
 	instructions = "The next area has no lights.<br>Pick up the flashlight to help you navigate."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_7
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FLASHLIGHT
 	item_path = /obj/item/device/light/flashlight/tutorial
@@ -1259,6 +1369,7 @@
 	name = "Activating Items"
 	instructions = "Some items do something when used in-hand.<br>Press <b>C</b> to activate the flashlight."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_7
 
 	New()
 		. = ..()
@@ -1279,22 +1390,24 @@
 	name = "Maintenance"
 	instructions = "Enter the maintenance tunnel. Don't dawdle..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_6
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS
+
+//
+// room 8 - Dark Areas
+//
 
 /obj/landmark/newbee/traverse_maints
 	name = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "lightning_marker"
 
-//
-// room 8 - Dark Areas
-//
-
 /datum/tutorialStep/newbee/move_to/traversing_maints
 	name = "Traversing Maintenance"
 	instructions = "Head through the maintenance tunnel to get to the next area."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_8
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS
 
@@ -1311,6 +1424,7 @@
 	name = "Emergency Closets"
 	instructions = "Closets contain specialized gear.<br>Open the emergency supply closet by <b>clicking</b> on it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_9
 
 	var/obj/storage/closet/emergency_tutorial/target_closet
 
@@ -1327,15 +1441,13 @@
 		if (action == "open_storage" && context == "emergency_tutorial")
 			src.finished = TRUE
 
-	TearDown()
-		. = ..()
-
 /datum/tutorialStep/newbee/equip_space_suit
 	name = "Space Suits"
 	instructions = "Space suits help protect against the vacuum of space.<br><b>Click</b> to pick up the emergency suit and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "suit"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_9
 
 	New()
 		. = ..()
@@ -1354,6 +1466,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "mask"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_9
 
 	New()
 		. = ..()
@@ -1371,12 +1484,12 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "head"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_9
 
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
 		src.instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
-
 
 	PerformAction(action, context)
 		. = ..()
@@ -1387,6 +1500,7 @@
 	name = "Oxygen Required"
 	instructions = "You need oxygen to breathe in areas without air, like space.<br><b>Click</b> the oxygen tank to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_9
 
 	PerformAction(action, context)
 		. = ..()
@@ -1398,6 +1512,7 @@
 	instructions = "Make sure you are breathing from your oxygen tank before heading into space.<br><b>Click</b> the 'Toggle Tank Valve' button in the top-left corner to turn on your internals."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/tank/oxygen/tutorial
+	step_area = /area/tutorial/newbee/room_9
 
 	SetUp()
 		. = ..()
@@ -1428,6 +1543,7 @@
 	name = "Entering Space"
 	instructions = "With your suit on and internals set, you're ready to go into space.<br>Head through the airlock!"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_10
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE
 
@@ -1440,6 +1556,7 @@
 	name = "Traversing Space"
 	instructions = "You slowly float in space without solid ground under you.<br>Drift to the airlock on the other side."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
+	step_area = /area/tutorial/newbee/room_10
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE
 
@@ -1456,6 +1573,7 @@
 	name = "Backpack Storage"
 	instructions = "Backpacks allow you to store items for later use.<br><b>Click</b> the backpack with an empty hand to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_11
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_BACKPACK
 	item_path = /obj/item/storage/backpack/empty
@@ -1467,6 +1585,7 @@
 	highlight_hud_element = "back"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/storage/backpack/empty
+	step_area = /area/tutorial/newbee/room_11
 
 	New()
 		. = ..()
@@ -1493,6 +1612,7 @@
 	name = "Storing Items"
 	instructions = "Space suits slow you down on solid ground. You can keep the gear in your backpack, instead.<br><b>Click</b> a piece of space gear to take it off, and then <b>click</b> your backpack to store it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_11
 
 	var/atom/movable/screen/hud/head_hud
 	var/atom/movable/screen/hud/suit_hud
@@ -1599,6 +1719,7 @@
 	name = "Backpack Storage"
 	instructions = "You can <b>Click</b> on your backpack to open it. Backpacks can store 7 normal-sized objects.<br>Head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_11
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE
 
@@ -1615,6 +1736,7 @@
 	name = "Space OSHA Reminder"
 	instructions = "Welding without proper eyewear is a bad idea!<br><b>Click</b> the welding mask to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_12
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK
 	item_path = /obj/item/clothing/head/helmet/welding/tutorial
@@ -1634,6 +1756,7 @@
 	highlight_hud_element = "head"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
+	step_area = /area/tutorial/newbee/room_12
 
 	New()
 		. = ..()
@@ -1662,6 +1785,7 @@
 	instructions = "Flipping a welding mask down will protect your eyes, but obscure your sight.<br><b>Click</b> the icon in the top-left corner to lower the mask."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
+	step_area = /area/tutorial/newbee/room_12
 
 	SetUp()
 		. = ..()
@@ -1688,6 +1812,7 @@
 	name = "Welding Tools"
 	instructions = "Deconstructing walls requires a welding tool.<br><b>Click</b> the welding tool to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_12
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL
 	item_path = /obj/item/weldingtool/tutorial
@@ -1697,6 +1822,7 @@
 	instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>C</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/weldingtool/tutorial
+	step_area = /area/tutorial/newbee/room_12
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1718,6 +1844,7 @@
 	instructions = "Regular walls can be deconstructed with lit welding tools.<br><b>Click</b> the wall with the lit welding tool and wait for the action bar to finish."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/weldingtool/tutorial
+	step_area = /area/tutorial/newbee/room_12
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
@@ -1750,6 +1877,7 @@
 	instructions = "With the welding done, flip the welding mask back up to see better.<br><b>Click</b> the icon in the top-left corner to raise the mask."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
+	step_area = /area/tutorial/newbee/room_12
 
 	SetUp()
 		. = ..()
@@ -1771,6 +1899,7 @@
 	name = "Removing the Girder"
 	instructions = "With the wall sliced open, all that remains is a girder.<br>Remove the girder with a wrench, and then proceed into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_12
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
@@ -1790,6 +1919,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "rest"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STAND
+	step_area = /area/tutorial/newbee/room_13
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_LAYING_DOWN
 
@@ -1809,6 +1939,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "stamina"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_13
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_SPRINTING
 
@@ -1833,6 +1964,7 @@
 	name = "Whoa, Careful!"
 	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
+	step_area = /area/tutorial/newbee/room_13
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT
 
@@ -1844,6 +1976,7 @@
 	name = "Talking"
 	instructions = "Talking is a great way to communicate with nearby crewmates!<br>Press <b>T</b> to open the talk dialog and press <b>ENTER</b> to say something."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
+	step_area = /area/tutorial/newbee/room_14
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1875,6 +2008,7 @@
 	name = "Headsets"
 	instructions = "Headsets let you speak over the radio to the entire station.<br><b>Click</b> the headset to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
+	step_area = /area/tutorial/newbee/room_14
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET
 	item_path = /obj/item/device/radio/headset/tutorial
@@ -1886,6 +2020,7 @@
 	highlight_hud_element = "ears"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/device/radio/headset/tutorial
+	step_area = /area/tutorial/newbee/room_14
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1914,6 +2049,7 @@
 	instructions = "Press <b>Y</b> to get a list of radio channels, and press <b>ENTER</b> to select one.<br>Say something over the radio to continue."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
 	needed_item_path = /obj/item/device/radio/headset/tutorial
+	step_area = /area/tutorial/newbee/room_14
 
 	New()
 		. = ..()
@@ -1946,6 +2082,7 @@
 	name = "Radio Channels"
 	instructions = "Each department has their own dedicated radio channel.<br>Move into the next room to learn about pulling objects."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
+	step_area = /area/tutorial/newbee/room_14
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO
 
@@ -1964,6 +2101,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
+	step_area = /area/tutorial/newbee/room_15
 
 	var/obj/reagent_dispensers/watertank/target_object
 
@@ -2001,6 +2139,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
+	step_area = /area/tutorial/newbee/room_15
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PULL_TARGET
 
@@ -2010,6 +2149,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	highlight_hud_element = "pull"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_PULL
+	step_area = /area/tutorial/newbee/room_15
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -2031,6 +2171,7 @@
 	name = "Almost Done!"
 	instructions = "You're almost a fully functioning spacefarer! There's just one more thing to learn...<br>Head through the hallway into the final room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM
+	step_area = /area/tutorial/newbee/room_15
 
 //
 // room 16 - escape (Advanced Combat)
@@ -2045,6 +2186,7 @@
 	name = "Advanced Combat"
 	instructions = "To activate the special attack of some items, <b>click</b> far away and use <span style='color:#EAC300; font-weight: bold'>Disarm</span> or <span style='color:#B51214; font-weight:bold'>Harm</span> intent.<br><span style='color:#962121; font-weight:bold'>Kill the clown</span> to complete the tutorial. Their robustness may surprise you!"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
+	step_area = /area/tutorial/newbee/room_16
 
 	var/mob/living/carbon/human/normal/tutorial_kill/tutorial_clown
 
@@ -2076,11 +2218,13 @@
 	name = "Server Rules"
 	instructions = "The 'Rules' verb is located in the Commands tab above the chat top-right.<br>On the RP servers, the 'Rules - RP' verb is in the same tab.<br><b>Not knowing the rules isn't an excuse for breaking 'em!</b>"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_META
+	step_area = /area/tutorial/newbee/room_16
 
 /datum/tutorialStep/newbee/timer/getting_help
 	name = "Getting Help"
 	instructions = "The <a href=\"https://wiki.ss13.co/\" style='color:#0099cc;text-decoration: underline;'>wiki</a> has detailed guides and information.<br>Ask our mentors gameplay questions in-game by pressing <b>F3</b>.<br>Ask our admins rules questions in-game by pressing <b>F1</b>."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_META
+	step_area = /area/tutorial/newbee/room_16
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -2092,6 +2236,7 @@
 	name = "Tutorial Complete!"
 	instructions = "Congratulations on completing the basic tutorial!<br>There's more to learn and discover, but you can confidently take your first space-steps.<br>Returning to the main menu..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
+	step_area = /area/tutorial/newbee/room_16
 
 	SetUp()
 		..()
@@ -2118,7 +2263,9 @@
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.client?.tutorial.Finish()
+		var/confirm = tgui_alert(src.holder.owner, "Do you want to exit the tutorial?", "Leave Tutorial", list("Yes", "No"))
+		if (confirm == "Yes")
+			src.holder.owner.client?.tutorial?.Finish()
 
 /datum/targetable/newbee/previous
 	name = "Previous Step"
@@ -2127,16 +2274,18 @@
 
 	cast(atom/target)
 		. = ..()
-		var/datum/tutorial_base/tutorial = src.holder.owner.client?.tutorial
+		var/datum/tutorial_base/regional/newbee/tutorial = src.holder.owner.client?.tutorial
+		if (!istype(tutorial))
+			return // ???
 		if (tutorial.current_step <= 1)
 			boutput(src.holder.owner, SPAN_ALERT("You're already at the first step!"))
 			return
-		var/datum/tutorialStep/current_step = tutorial.steps[tutorial.current_step]
+		var/datum/tutorialStep/newbee/current_step = tutorial.steps[tutorial.current_step]
 		current_step.TearDown()
 		tutorial.current_step -= 1
-		var/datum/tutorialStep/previous_step = tutorial.steps[tutorial.current_step]
+		var/datum/tutorialStep/newbee/previous_step = tutorial.steps[tutorial.current_step]
 		tutorial.ShowStep()
-		previous_step.SetUp()
+		previous_step.SetUp(TRUE)
 
 /datum/targetable/newbee/next
 	name = "Next Step"
@@ -2145,7 +2294,7 @@
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.client?.tutorial?.Advance()
+		src.holder.owner.client?.tutorial?.Advance(TRUE)
 
 //
 // tutorial mobs

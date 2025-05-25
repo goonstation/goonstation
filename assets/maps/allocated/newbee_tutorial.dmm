@@ -3,12 +3,12 @@
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_toolbox,
 /turf/unsimulated/floor/white,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "ah" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "aJ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -18,7 +18,7 @@
 	pixel_x = 7
 	},
 /turf/unsimulated/floor/greenblack,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "aK" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 8
@@ -28,32 +28,32 @@
 /turf/unsimulated/floor/escape{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "bh" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "bj" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "bp" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "br" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "bN" = (
 /obj/table/reinforced/auto,
 /obj/item/wrench,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "bW" = (
 /obj/machinery/power/apc/autoname_north/hardened{
 	pixel_y = 0;
@@ -65,17 +65,17 @@
 /turf/simulated/wall/false_wall/centcom{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "cT" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "dF" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "dK" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 1
@@ -85,7 +85,7 @@
 /turf/unsimulated/floor/arrival{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "ee" = (
 /turf/unsimulated/wall/setpieces/leadwindow/full{
 	dir = 8
@@ -96,16 +96,20 @@
 /obj/item/storage/firstaid/toxin,
 /mob/living/critter/spider/clownqueen,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
+"eo" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_9)
 "fe" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_backpack,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "fj" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkbluewhite,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "fK" = (
 /turf/unsimulated/wall/setpieces/leadwindow/full{
 	dir = 4
@@ -117,29 +121,29 @@
 	},
 /obj/landmark/newbee/exit_healing,
 /turf/unsimulated/floor/white,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "gb" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/exit_movement,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_14)
 "gi" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "gj" = (
 /obj/landmark/newbee/clown_murder,
 /turf/unsimulated/floor/escape{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "gl" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/red/side{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "gp" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 4
@@ -149,21 +153,21 @@
 	},
 /obj/landmark/newbee/enter_space,
 /turf/simulated/floor/bluegreen,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_10)
 "gx" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_id_card,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "gL" = (
 /turf/unsimulated/floor/black/corner,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "gM" = (
 /obj/landmark/newbee/mouse,
 /turf/unsimulated/floor/red/side{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "he" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap{
 	dir = 4
@@ -176,11 +180,11 @@
 /obj/decal/cleanable/blood/tracks,
 /obj/structure/girder,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "hC" = (
 /obj/health_scanner/floor,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "il" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 1
@@ -192,56 +196,56 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "iv" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "iw" = (
 /obj/landmark/newbee/decon_wall,
 /turf/simulated/wall/auto/supernorn,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "iC" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/purple/side{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "iZ" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "jm" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "jH" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "jJ" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "kq" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "kK" = (
 /obj/item/scrapweapons/weapons/spear/glass,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "kW" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "lc" = (
 /obj/decal/poster/wallsign/space{
 	pixel_x = -32
@@ -249,106 +253,109 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "ld" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "lI" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "me" = (
 /obj/landmark/newbee/basic_movement,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "mr" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "mS" = (
 /obj/landmark/newbee/disarm_person,
 /turf/unsimulated/floor/orange/side{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "mZ" = (
 /obj/strip_door,
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "ne" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "nk" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "no" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/lattice/directional_icons{
 	dir = 9
 	},
 /turf/space,
-/area/space)
+/area/tutorial/newbee/room_10)
 "nE" = (
 /obj/machinery/light/incandescent,
 /obj/landmark/newbee/sprinting,
 /obj/item/bananapeel,
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "nL" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/greenblack,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
+"nV" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_3)
 "oc" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "oj" = (
 /turf/unsimulated/floor/escape{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "ol" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/lattice/directional_icons{
 	dir = 5
 	},
 /turf/space,
-/area/space)
+/area/tutorial/newbee/room_10)
 "ou" = (
 /turf/unsimulated/floor/green/side{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "oB" = (
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_15)
 "oK" = (
 /obj/health_scanner/floor,
 /turf/unsimulated/floor/blue,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "oX" = (
 /turf/simulated/floor/bluegreen/corner{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "pd" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "pe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "po" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/black/grime,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "pO" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction_four,
 /area/tutorial/newbee)
@@ -356,60 +363,69 @@
 /turf/unsimulated/floor/arrival{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "qa" = (
 /turf/unsimulated/floor/black/grime,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "qf" = (
 /turf/unsimulated/floor/arrival,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "qj" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "qn" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
+"qp" = (
+/turf/unsimulated/floor/black,
+/area/tutorial/newbee/room_12)
 "qO" = (
 /turf/unsimulated/floor/escape{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "ry" = (
 /obj/landmark/newbee/emergency_supply_closet,
 /turf/simulated/floor/bluegreen,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "so" = (
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "sJ" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "tv" = (
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
+"tI" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_1)
 "tL" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/green/side{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "tY" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
+"ue" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_2)
 "uk" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "um" = (
 /obj/machinery/light/incandescent,
 /obj/item/gun/energy/phaser_gun{
@@ -417,38 +433,38 @@
 	pixel_y = 2
 	},
 /turf/unsimulated/floor/grey/blackgrime/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "ux" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "uG" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "uL" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "uT" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/yellow/side{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "vb" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "vh" = (
 /turf/unsimulated/floor/escape{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "vi" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap{
 	dir = 8
@@ -458,18 +474,18 @@
 /turf/simulated/floor/bluegreen/corner{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "vG" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/decal/cleanable/blood/splatter/extra,
 /obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "vS" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "wn" = (
 /obj/decal/poster/wallsign/space{
 	pixel_x = 32
@@ -477,17 +493,17 @@
 /turf/unsimulated/floor/greenblack{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "wr" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "wt" = (
 /turf/unsimulated/floor/arrival{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "wD" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
@@ -497,7 +513,7 @@
 /turf/simulated/floor/bluegreen/side{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "wI" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
@@ -508,16 +524,16 @@
 /turf/unsimulated/floor/escape{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "wY" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/purple/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "xc" = (
 /obj/structure/girder,
 /obj/landmark/newbee/decon_girder,
 /turf/unsimulated/floor/white,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "xX" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 4
@@ -527,18 +543,18 @@
 	},
 /obj/landmark/newbee/traverse_space,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "yJ" = (
 /turf/simulated/floor/bluegreen/corner{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "zd" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/blackwhite{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "zp" = (
 /obj/decoration/damagedchair{
 	dir = 8
@@ -548,36 +564,36 @@
 	pixel_x = -6
 	},
 /turf/unsimulated/floor/black/grime,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "zE" = (
 /turf/unsimulated/floor/white,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "zN" = (
 /turf/unsimulated/floor/darkblueblack{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "zY" = (
 /obj/landmark/newbee/laying_down,
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "AI" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_headset,
 /turf/unsimulated/floor/darkblue/checker/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_14)
 "AK" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/cleanable/blood/tracks{
 	dir = 6
 	},
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "AS" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "Bd" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap{
 	dir = 1
@@ -586,7 +602,7 @@
 "Bv" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "Bw" = (
 /obj/landmark/newbee/idlock_doors,
 /obj/machinery/door/airlock/pyro/engineering/alt{
@@ -594,80 +610,83 @@
 	},
 /obj/mapping_helper/access/engineering_power,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "BB" = (
 /obj/strip_door{
 	dir = 4
 	},
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "BP" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "BY" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/arrival{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "Ck" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
 "Cs" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/orange/side{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "CW" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "DB" = (
 /turf/simulated/wall/false_wall/centcom{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "DI" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "DQ" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "Ec" = (
 /obj/item/scrapweapons/weapons/dagger,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
+"Ei" = (
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_7)
 "Ek" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "Ev" = (
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "EA" = (
 /turf/unsimulated/floor/green/side{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "EE" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "Ff" = (
 /obj/landmark/newbee/unpowered_doors,
 /obj/machinery/door/airlock/pyro/classic{
@@ -680,32 +699,32 @@
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "FM" = (
 /turf/unsimulated/floor/arrival{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "Gf" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "Gz" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_first_aid,
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "GU" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice/directional_icons{
 	dir = 5
 	},
 /turf/space,
-/area/space)
+/area/tutorial/newbee/room_10)
 "GV" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
@@ -715,44 +734,47 @@
 /turf/unsimulated/floor/bluewhite{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "Hd" = (
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "HV" = (
 /turf/space,
-/area/space)
+/area/tutorial/newbee/room_10)
 "Ir" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/final_room,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "Iw" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "IJ" = (
 /obj/item/bat,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "IK" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "IY" = (
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "Jd" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
+"Jv" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_16)
 "JH" = (
 /obj/machinery/light/small/floor/warm/very,
 /obj/item/clothing/under/rank/geneticist{
@@ -764,7 +786,7 @@
 	pixel_y = -6
 	},
 /turf/unsimulated/floor/honeyblocks,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "JS" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
@@ -774,54 +796,57 @@
 /turf/unsimulated/floor/red/side{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "Kn" = (
 /obj/landmark/newbee/traverse_maints,
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "Kz" = (
 /obj/fakeobject/teleport_pad,
 /obj/landmark/tutorial_start,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "KK" = (
 /obj/machinery/light/incandescent,
 /obj/item/gun/energy/tasershotgun{
 	pixel_x = 17
 	},
 /turf/unsimulated/floor/redblack,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "KP" = (
 /obj/landmark/newbee/help_person,
 /turf/unsimulated/floor/green/side{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "Lr" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_weldingtool,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "Lt" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
+"Ly" = (
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_4)
 "LB" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "LQ" = (
 /turf/unsimulated/floor/escape{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "LX" = (
 /turf/simulated/wall/auto/supernorn,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "Ma" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 8
@@ -829,62 +854,62 @@
 /area/tutorial/newbee)
 "Mh" = (
 /turf/simulated/floor/bluegreen/corner,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "Mr" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkblue/checker/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_14)
 "MB" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/get_health,
 /turf/unsimulated/floor/white/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "MD" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/bluegreen/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "MY" = (
 /turf/simulated/wall/false_wall/centcom,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "Nr" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/escape{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "Nu" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "Nz" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_flashlight,
 /turf/unsimulated/floor/white,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "NL" = (
 /turf/unsimulated/floor/purple/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "NN" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "NO" = (
 /turf/cordon,
 /area/space)
 "NP" = (
 /obj/machinery/crusher/slow/tutorial,
 /turf/unsimulated/floor/grey/blackgrime/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "Oa" = (
 /turf/unsimulated/floor/darkblue/checker/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_14)
 "OP" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "PV" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
@@ -896,31 +921,31 @@
 	},
 /obj/landmark/newbee/powered_doors,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "Qq" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice/directional_icons{
 	dir = 9
 	},
 /turf/space,
-/area/space)
+/area/tutorial/newbee/room_10)
 "QM" = (
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "Rd" = (
 /turf/unsimulated/floor/bluewhite,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "Rz" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "RA" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/exit_storage,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "RG" = (
 /obj/critter/domestic_bee{
 	pixel_y = 6;
@@ -934,113 +959,116 @@
 	pixel_x = 8
 	},
 /turf/unsimulated/floor/honeyblocks,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "Sq" = (
 /turf/unsimulated/floor/black/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "SE" = (
 /obj/machinery/light/incandescent,
 /obj/item/swords_sheaths/captain/blue{
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/darkblueblack,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "Tm" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_welding_mask,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "Tp" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "Tz" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 8
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "TD" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/black/side,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_2)
 "TN" = (
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "Ud" = (
 /obj/landmark/newbee/water_tank,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_15)
 "Ui" = (
 /turf/unsimulated/floor/blackwhite,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_6)
+"Uk" = (
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_6)
 "Ul" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_crowbar,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_3)
 "UE" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 1;
 	move_lag = 1.5
 	},
 /turf/unsimulated/floor/yellow/checker,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "UX" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "Va" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "Ve" = (
 /obj/landmark/newbee/grab_person,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "Vh" = (
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "VV" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_4)
 "Wh" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_15)
 "Wy" = (
 /turf/unsimulated/floor/escape{
 	dir = 9
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "WC" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_13)
 "WF" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "Xs" = (
 /turf/unsimulated/floor/darkpurpleblack,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_12)
 "Xu" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/arrival,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_1)
 "XV" = (
 /turf/unsimulated/wall/setpieces/leadwall/cap,
 /area/tutorial/newbee)
@@ -1049,10 +1077,10 @@
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_5)
 "Yl" = (
 /turf/unsimulated/floor/escape,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "Yq" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -1061,39 +1089,39 @@
 /turf/unsimulated/floor/blue/side{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_15)
 "Yy" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/greenblack{
 	dir = 1
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_11)
 "YH" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_8)
 "YZ" = (
 /obj/landmark/newbee/pull_target,
 /turf/unsimulated/floor/darkblue/checker/other,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_14)
 "ZG" = (
 /turf/unsimulated/floor/honeyblocks/border{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "ZL" = (
 /turf/unsimulated/floor/escape{
 	dir = 4
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_16)
 "ZN" = (
 /turf/unsimulated/floor/darkbluewhite{
 	dir = 5
 	},
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_7)
 "ZP" = (
 /turf/simulated/floor/bluegreen,
-/area/tutorial/newbee)
+/area/tutorial/newbee/room_9)
 "ZZ" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction,
 /area/tutorial/newbee)
@@ -1171,15 +1199,15 @@ NO
 NO
 Ma
 BY
-oB
+tI
 Kz
-oB
+tI
 Xu
 Ma
 oj
 Ec
-oB
-oB
+Jv
+Jv
 Yl
 ZZ
 dK
@@ -1194,16 +1222,16 @@ NO
 NO
 Ma
 dR
-oB
-oB
-oB
+tI
+tI
+tI
 qf
 Ma
 gj
-oB
+Jv
 kK
-oB
-oB
+Jv
+Jv
 Ir
 Wh
 oB
@@ -1217,15 +1245,15 @@ NO
 NO
 Ma
 BY
-oB
+tI
 me
-oB
+tI
 Xu
 Ma
 oj
 IJ
-oB
-oB
+Jv
+Jv
 Yl
 ZZ
 dK
@@ -1241,7 +1269,7 @@ NO
 Ma
 Fw
 DI
-oB
+tI
 DI
 FM
 Ma
@@ -1287,7 +1315,7 @@ NO
 Ma
 gL
 Ev
-oB
+ue
 Ma
 zN
 Ma
@@ -1309,8 +1337,8 @@ NO
 NO
 Ma
 TD
-oB
-oB
+ue
+ue
 Va
 SE
 Ma
@@ -1333,7 +1361,7 @@ NO
 Ma
 Sq
 gx
-oB
+ue
 ZZ
 MY
 il
@@ -1355,8 +1383,8 @@ NO
 NO
 Ma
 TD
-oB
-oB
+ue
+ue
 WC
 KK
 ZZ
@@ -1379,7 +1407,7 @@ NO
 Ma
 Lt
 QM
-oB
+ue
 Ma
 Vh
 DB
@@ -1425,13 +1453,13 @@ NO
 Ma
 kW
 ne
-oB
+nV
 ne
 oc
 Ma
 Ek
 LB
-tv
+qp
 LB
 uk
 Ma
@@ -1447,15 +1475,15 @@ NO
 NO
 Ma
 iC
-oB
-oB
-oB
+nV
+nV
+nV
 wY
 Ma
 kq
 Tm
-tv
-tv
+qp
+qp
 Xs
 Ma
 Yy
@@ -1470,15 +1498,15 @@ NO
 NO
 Ma
 wr
-oB
-oB
+nV
+nV
 Ul
 NL
 Ma
 kq
 Lr
-tv
-tv
+qp
+qp
 Xs
 RA
 tv
@@ -1493,15 +1521,15 @@ NO
 NO
 Ma
 iC
-oB
-oB
-oB
+nV
+nV
+nV
 wY
 Ma
 kq
 bN
-tv
-tv
+qp
+qp
 Xs
 Ma
 Yy
@@ -1517,7 +1545,7 @@ NO
 Ma
 vb
 DQ
-oB
+nV
 DQ
 nk
 Ma
@@ -1563,7 +1591,7 @@ NO
 Ma
 KP
 ou
-oB
+Ly
 VV
 Ve
 Ma
@@ -1586,7 +1614,7 @@ NO
 Ma
 tL
 EA
-oB
+Ly
 CW
 uT
 Ma
@@ -1607,11 +1635,11 @@ NO
 (23,1,1) = {"
 NO
 Ma
-oB
-oB
-oB
-oB
-oB
+Ly
+Ly
+Ly
+Ly
+Ly
 MB
 zE
 Rd
@@ -1632,7 +1660,7 @@ NO
 Ma
 Cs
 uL
-oB
+Ly
 IY
 gl
 Ma
@@ -1655,7 +1683,7 @@ NO
 Ma
 mS
 iZ
-oB
+Ly
 Kk
 gM
 Ma
@@ -1707,7 +1735,7 @@ Nu
 Ma
 uG
 Ck
-zE
+Uk
 Ck
 bj
 Ma
@@ -1723,15 +1751,15 @@ NO
 NO
 Ma
 jJ
-zE
-zE
-zE
+Ei
+Ei
+Ei
 fj
 Ma
 br
-zE
-zE
-zE
+Uk
+Uk
+Uk
 Ui
 Ma
 HV
@@ -1747,14 +1775,14 @@ NO
 Ma
 Gf
 Nz
-zE
-zE
-zE
+Ei
+Ei
+Ei
 xc
-zE
-zE
-zE
-zE
+Uk
+Uk
+Uk
+Uk
 Ui
 Ma
 HV
@@ -1769,15 +1797,15 @@ NO
 NO
 Ma
 jJ
-zE
-zE
-zE
+Ei
+Ei
+Ei
 fj
 Ma
 br
-zE
+Uk
 af
-zE
+Uk
 Ui
 Ma
 HV
@@ -1793,7 +1821,7 @@ NO
 Ma
 ZN
 sJ
-zE
+Ei
 sJ
 bp
 Ma
@@ -1849,11 +1877,11 @@ TN
 pd
 TN
 ZZ
-pe
-pe
+eo
+eo
 gp
-pe
-pe
+eo
+eo
 il
 NO
 "}
