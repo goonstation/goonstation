@@ -28,6 +28,7 @@ var/list/admin_verbs = list(
 		/client/proc/dsay,
 		/client/proc/flocksay,
 		/client/proc/hivesay,
+		/client/proc/intrudersay,
 		/client/proc/kudzusay,
 		/client/proc/marsay,
 		/client/proc/silisay,

@@ -67,12 +67,18 @@
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).add_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).add_mob(src)
 
+		src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
+		src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_INTRUDERCHAT)
+
 	disposing()
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
 		get_image_group(CLIENT_IMAGE_GROUP_MINDEATER_STRUCTURE_VISION).remove_mob(src)
 		QDEL_NULL(src.vis_indicator)
 		QDEL_NULL(src.hp_indicator)
+
+		src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
+		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_INTRUDERCHAT)
 
 	Life()
 		. = ..()
@@ -198,14 +204,7 @@
 		..()
 		if (src.pulling)
 			src.reveal(FALSE)
-	/*
-	say(message)
-		if (!src.shared_speaking)
-			return ..()
-		//for (var/datum/mind/mind in ticker.mode.traitors)
-		for (var/mob/living/critter/mindeater/mindeater in mobs)
-			boutput(mindeater, "<span style='color:#8600C8'>[capitalize(src.real_name)] says: [message]</span>")
-	*/
+
 	//say_understands(var/other)
 	//	return 1
 

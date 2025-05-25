@@ -47,6 +47,10 @@ export const acw: AlertContentWindow = {
         Swap, Paralyze, and Cosmic Light to gain as much Intellect as you can.
         Finish off the attack with by using Pierce the Veil on the target.
       </p>
+      <p>
+        6. You can speak over Intruder chat with the radio hotkey, or prefixing
+        your message with <em>:int</em>.
+      </p>
       <p>This is a work in progress antag and will not be found on the wiki.</p>
     </div>
   ),
