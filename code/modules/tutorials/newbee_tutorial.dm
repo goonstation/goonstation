@@ -195,7 +195,7 @@
 
 	Crossed(atom/movable/AM)
 		..()
-		if (!ismob(AM))
+		if (!ismob(AM) || !isliving(AM))
 			return
 		var/mob/M = AM
 		if (!M.client)
