@@ -136,7 +136,7 @@
 	name = "Newbee Tutorial"
 	region_type = /datum/mapPrefab/allocated/newbee_tutorial
 
-	step_sound = 'sound/misc/win-blip.ogg'
+	advance_sound = 'sound/misc/tutorial-bloop.ogg'
 
 	var/mob/living/carbon/human/tutorial/newbee = null
 	var/mob/new_player/origin_mob
@@ -175,11 +175,11 @@
 		. = ..()
 
 	Advance(manually_selected=FALSE)
-var/datum/tutorialStep/newbee/T = steps[current_step]
+		var/datum/tutorialStep/newbee/T = steps[current_step]
 		if (!manually_selected)
-			var/completion_sound = step_sound
-						if (T.custom_completion_sound)
-				completion_sound = T.custom_completion_sound
+			var/completion_sound = src.advance_sound
+			if (T.custom_advance_sound)
+				completion_sound = T.custom_advance_sound
 			playsound(get_turf(owner), completion_sound, 40, pitch = 0.5)
 		if (current_step > steps.len)
 			return
@@ -401,8 +401,8 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	/// Associated area of the step. Used to handle warping for stepping backwards
 	var/area/tutorial/newbee/step_area
 
-	/// an optional custom sound to use when completing this step
-	var/custom_completion_sound
+	/// an optional custom sound to use when advacing this step
+	var/custom_advance_sound
 
 	/// Which HUD element to highlight, by ID
 	var/highlight_hud_element
@@ -617,7 +617,13 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[target_landmark])
 			if(src.region.turf_in_region(T))
-				src._target_item = new item_path(T)
+				if (src._target_item)
+					if (ismob(src._target_item.loc))
+						var/mob/M = src._target_item.loc
+						M.drop_item(src._target_item)
+					src._target_item.set_loc(T)
+				else
+					src._target_item = new item_path(T)
 				break
 		src._target_item.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src._target_item, COMSIG_ITEM_PICKUP, PROC_REF(check_item))
@@ -679,6 +685,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_1
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 //
 // room 2 - ID-locked Doors
@@ -748,6 +755,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/card/id/engineering/tutorial
 	step_area = /area/tutorial/newbee/room_2
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS
 
@@ -781,6 +789,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/crowbar
 	step_area = /area/tutorial/newbee/room_3
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 //
 // room 4 - Intents & Combat
@@ -865,10 +874,15 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_HELP_PERSON])
 			if(src.region.turf_in_region(T))
-				src.target_mob = new(T)
+				if (src.target_mob)
+					src.target_mob.set_loc(T)
+				else
+					src.target_mob = new(T)
 				break
-		src.target_mob?.UpdateOverlays(src.point_marker, "marker")
-		RegisterSignal(src.target_mob, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_mob_laydown_standup))
+		src.target_mob.setStatus("resting", INFINITE_STATUS)
+		src.target_mob.force_laydown_standup()
+		src.target_mob.UpdateOverlays(src.point_marker, "marker")
+		RegisterSignal(src.target_mob, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_mob_laydown_standup), TRUE)
 
 	proc/check_mob_laydown_standup(source, lying)
 		src.tutorial.PerformAction("mob_laydown_standup", "standup")
@@ -880,17 +894,21 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	TearDown()
 		. = ..()
-		src.target_mob?.UpdateOverlays(null, "marker")
 		if (!src.target_mob)
 			return
+		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_mob, COMSIG_MOB_LAYDOWN_STANDUP)
+		var/mob/M = src.target_mob
+		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(src.target_mob)
-			showswirl_out(src.target_mob)
+			animate_teleport(M)
+			showswirl_out(M)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/G in M.grabbed_by)
+					qdel(G)
 			SPAWN (1.5 SECONDS)
-				if (src.target_mob)
-					qdel(src.target_mob)
-					src.target_mob = null
+				if (M)
+					qdel(M)
 
 /datum/tutorialStep/newbee/intent_disarm
 	name = "Disarm Intent"
@@ -939,13 +957,15 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	var/mob/living/carbon/human/normal/tutorial_disarm/target_mob
 	var/obj/item/target_item_left
-	var/obj/item/target_item_right
 
 	SetUp()
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_DISARM_PERSON])
 			if(src.region.turf_in_region(T))
-				src.target_mob = new(T)
+				if (src.target_mob)
+					src.target_mob.set_loc(T)
+				else
+					src.target_mob = new(T)
 				break
 		src.target_mob.UpdateOverlays(src.point_marker, "marker")
 		src.target_item_left = src.target_mob.l_hand
@@ -961,15 +981,21 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	TearDown()
 		. = ..()
+		if (!src.target_mob)
+			return
 		src.target_mob.UpdateOverlays(null, "marker")
-		UnregisterSignal(src.target_item_left, COMSIG_ITEM_DROPPED)
+		UnregisterSignal(src.target_mob, COMSIG_ITEM_DROPPED)
+		var/mob/M = src.target_mob
+		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(src.target_mob)
-			showswirl_out(src.target_mob)
+			animate_teleport(M)
+			showswirl_out(M)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/G in M.grabbed_by)
+					qdel(G)
 			SPAWN (1.5 SECONDS)
-				if (src.target_mob)
-					qdel(src.target_mob)
-					src.target_mob = null
+				if (M)
+					qdel(M)
 
 
 /datum/tutorialStep/newbee/intent_grab
@@ -1028,7 +1054,10 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_GRAB_PERSON])
 			if(src.region.turf_in_region(T))
-				src.target_mob = new(T)
+				if (src.target_mob)
+					src.target_mob.set_loc(T)
+				else
+					src.target_mob = new(T)
 				break
 		src.target_mob.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src.target_mob, COMSIG_MOB_GRABBED, PROC_REF(check_mob_grabbed))
@@ -1044,16 +1073,21 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	TearDown()
 		. = ..()
+		if (!src.target_mob)
+			return
 		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_mob, COMSIG_MOB_GRABBED)
+		var/mob/M = src.target_mob
+		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(src.target_mob)
-			showswirl_out(src.target_mob)
-			qdel(src.target_mob.grabbed_by) // drop the player's grab
+			animate_teleport(M)
+			showswirl_out(M)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/G in M.grabbed_by)
+					qdel(G)
 			SPAWN (1.5 SECONDS)
-				if (src.target_mob)
-					qdel(src.target_mob)
-					src.target_mob = null
+				if (M)
+					qdel(M)
 
 /datum/tutorialStep/newbee/intent_harm
 	name = "Harm Intent"
@@ -1106,7 +1140,10 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_MOUSE])
 			if(src.region.turf_in_region(T))
-				src.target_mob = new /mob/living/critter/small_animal/mouse/mad(T)
+				if (src.target_mob && isalive(src.target_mob))
+					src.target_mob.set_loc(T)
+				else
+					src.target_mob = new(T)
 				break
 		RegisterSignal(src.target_mob, COMSIG_MOB_DEATH, PROC_REF(check_mob_death))
 		src.target_mob.UpdateOverlays(src.point_marker, "marker")
@@ -1122,15 +1159,21 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	TearDown()
 		. = ..()
+		if (!src.target_mob)
+			return
 		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_mob, COMSIG_MOB_DEATH)
+		var/mob/M = src.target_mob
+		src.target_mob = null
 		SPAWN(4 SECONDS)
-			animate_teleport(src.target_mob)
-			showswirl_out(src.target_mob)
+			animate_teleport(M)
+			showswirl_out(M)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/G in M.grabbed_by)
+					qdel(G)
 			SPAWN (1.5 SECONDS)
-				if (src.target_mob)
-					qdel(src.target_mob)
-					src.target_mob = null
+				if (M)
+					qdel(M)
 
 /obj/landmark/newbee/get_health
 	name = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
@@ -1143,6 +1186,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_4
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
 
@@ -1260,6 +1304,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "Now that you're patched up, let's learn some deconstruction.<br>Head into the next room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
 	step_area = /area/tutorial/newbee/room_5
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 //
 // room 6 - Girder Deconstruction
@@ -1331,6 +1376,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "To deconstruct the girder, you need a wrench from the toolbox.<br><b>Click</b> the girder with a wrench, then head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_6
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
@@ -1390,7 +1436,8 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	name = "Maintenance"
 	instructions = "Enter the maintenance tunnel. Don't dawdle..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
-	step_area = /area/tutorial/newbee/room_6
+	step_area = /area/tutorial/newbee/room_7
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS
 
@@ -1408,6 +1455,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "Head through the maintenance tunnel to get to the next area."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_8
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS
 
@@ -1432,9 +1480,13 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET])
 			if(src.region.turf_in_region(T))
-				src.target_closet = new(T)
+				if (src.target_closet)
+					src.target_closet.reset(T)
+				else
+					src.target_closet = new(T)
 				break
 		src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+		src.newbee_tutorial.newbee.hud.update_inventory()
 
 	PerformAction(action, context)
 		. = ..()
@@ -1530,10 +1582,6 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
 				tank_ability.UpdateOverlays(null, "marker")
 
-//
-// room 10 - Space Traversal
-//
-
 /obj/landmark/newbee/enter_space
 	name = LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE
 	icon = 'icons/effects/VR.dmi'
@@ -1543,9 +1591,14 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	name = "Entering Space"
 	instructions = "With your suit on and internals set, you're ready to go into space.<br>Head through the airlock!"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
-	step_area = /area/tutorial/newbee/room_10
+	step_area = /area/tutorial/newbee/room_9
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE
+
+//
+// room 10 - Space Traversal
+//
 
 /obj/landmark/newbee/traverse_space
 	name = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE
@@ -1557,6 +1610,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "You slowly float in space without solid ground under you.<br>Drift to the airlock on the other side."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_10
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE
 
@@ -1720,6 +1774,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "You can <b>Click</b> on your backpack to open it. Backpacks can store 7 normal-sized objects.<br>Head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_11
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE
 
@@ -1900,6 +1955,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "With the wall sliced open, all that remains is a girder.<br>Remove the girder with a wrench, and then proceed into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_12
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_WALL
 	targeting_type = NEWBEE_TUTORIAL_MARKER_TARGET_POINT
@@ -1965,6 +2021,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Head into the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT
 
@@ -2083,6 +2140,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "Each department has their own dedicated radio channel.<br>Move into the next room to learn about pulling objects."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
 	step_area = /area/tutorial/newbee/room_14
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO
 
@@ -2112,11 +2170,13 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	SetUp()
 		. = ..()
-		if (!src.target_object)
-			for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_WATER_TANK])
-				if(src.region.turf_in_region(T))
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_WATER_TANK])
+			if(src.region.turf_in_region(T))
+				if(src.target_object)
+					src.target_object.set_loc(T)
+				else
 					src.target_object = new(T)
-					break
+				break
 		src.target_object.UpdateOverlays(src.point_marker, "marker")
 
 	PerformAction(action, context)
@@ -2172,6 +2232,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "You're almost a fully functioning spacefarer! There's just one more thing to learn...<br>Head through the hallway into the final room."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM
 	step_area = /area/tutorial/newbee/room_15
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 //
 // room 16 - escape (Advanced Combat)
@@ -2194,7 +2255,10 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER])
 			if(src.region.turf_in_region(T))
-				src.tutorial_clown = new(T)
+				if (src.tutorial_clown)
+					src.tutorial_clown.set_loc(T)
+				else
+					src.tutorial_clown = new(T)
 				break
 		src.tutorial_clown.tutorial_owner = src.newbee_tutorial.newbee
 		RegisterSignal(src.tutorial_clown, COMSIG_MOB_DEATH, PROC_REF(check_mob_death))
@@ -2237,6 +2301,7 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	instructions = "Congratulations on completing the basic tutorial!<br>There's more to learn and discover, but you can confidently take your first space-steps.<br>Returning to the main menu..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 	step_area = /area/tutorial/newbee/room_16
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
 	SetUp()
 		..()
@@ -2326,13 +2391,6 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		else
 			. = ..(give_medal, include_ejectables)
 
-	ghostize()
-		if (src.client?.tutorial)
-			src.death()
-			return null
-		else
-			. = ..()
-
 	death(gibbed)
 		if (src.client?.tutorial)
 			var/datum/tutorial_base/regional/newbee/current_tutorial = src.client.tutorial
@@ -2362,10 +2420,8 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		src.equip_if_possible(clown_id, SLOT_WEAR_ID)
 		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 
-		src.setStatus("resting", INFINITE_STATUS)
-		src.force_laydown_standup()
 		SPAWN (0.3 SECONDS)
-			src.say("Owie! My funny bone is shattered!")
+			src?.say("Owie! My funny bone is shattered!")
 
 /mob/living/carbon/human/normal/tutorial_disarm
 	New()
@@ -2384,9 +2440,11 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 
 		SPAWN (0.5 SECONDS)
-			src.say("We're gonna have a honkin' good time!")
-		SPAWN (0.8 SECONDS)
-			src.l_hand?.AttackSelf() // honk
+			if (!QDELETED(src))
+				src.say("We're gonna have a honkin' good time!")
+		SPAWN (1 SECOND)
+			if (!QDELETED(src))
+				src.l_hand?.AttackSelf() // honk
 
 /mob/living/carbon/human/normal/tutorial_grab
 	New()
@@ -2405,7 +2463,8 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		src.bioHolder?.AddEffect("sims_stinky", innate = TRUE)
 
 		SPAWN (0.7 SECONDS)
-			src.say("Do I smell funny?")
+			if (!QDELETED(src))
+				src.say("Do I smell funny?")
 
 /// Newbee Tutorial mob; the clown you kill to Win the Tutorial
 /mob/living/carbon/human/normal/tutorial_kill
@@ -2431,15 +2490,20 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 		src.AddComponent(/datum/component/health_maptext)
 
 		SPAWN (0.2 SECONDS)
-			src?.l_hand?.AttackSelf() // honk
+			if (!QDELETED(src))
+				src.l_hand?.AttackSelf() // honk
 
 		SPAWN (0.3 SECONDS)
-			src?.say("Honk honk!")
+			if (!QDELETED(src))
+				src.say("Honk honk!")
 
 		SPAWN (1.7 SECONDS)
-			src.l_hand?.AttackSelf() // honk
+			if (!QDELETED(src))
+				src.l_hand?.AttackSelf() // honk
+
 		SPAWN (2.8 SECONDS)
-			src?.say("Was that banana a-peel-ing?")
+			if (!QDELETED(src))
+				src.say("Was that banana a-peel-ing?")
 
 	death(gibbed)
 		if (tutorial_owner && istype(src.lastattacker?.deref(), /mob/living/critter/spider))
@@ -2492,29 +2556,77 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 	icon_closed = "emergency"
 	icon_opened = "emergency-open"
 
+	var/obj/item/clothing/suit/space/emerg/emergency_suit
+	var/obj/item/clothing/mask/breath/breath_mask
+	var/obj/item/clothing/head/emerg/emergency_hood
+	var/obj/item/tank/oxygen/tutorial/oxygen_tank
+
+	proc/reset(turf/move_to)
+		src.set_loc(move_to)
+		src.close()
+
+		if (!src.emergency_suit)
+			src.make_emergency_suit()
+		if (ismob(src.emergency_suit.loc))
+			var/mob/M = src.emergency_suit.loc
+			M.drop_item(src.emergency_suit)
+		src.emergency_suit.set_loc(src)
+
+
+		if (!src.breath_mask)
+			src.make_breath_mask()
+		if (ismob(src.breath_mask.loc))
+			var/mob/M = src.breath_mask.loc
+			M.drop_item(src.breath_mask)
+		src.breath_mask.set_loc(src)
+
+		if (!src.emergency_hood)
+			src.make_emergency_hood()
+		if (ismob(src.emergency_hood.loc))
+			var/mob/M = src.emergency_hood.loc
+			M.drop_item(src.emergency_hood)
+		src.emergency_hood.set_loc(src)
+
+		if (!src.oxygen_tank)
+			src.make_oxygen_tank()
+		if (ismob(src.oxygen_tank.loc))
+			var/mob/M = src.oxygen_tank.loc
+			M.drop_item(src.oxygen_tank)
+		src.oxygen_tank.set_loc(src)
+
+	proc/make_emergency_suit()
+		src.emergency_suit = new(src)
+		src.emergency_suit.layer = OBJ_LAYER + 0.04
+		RegisterSignal(src.emergency_suit, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
+		RegisterSignal(src.emergency_suit, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
+		RegisterSignal(src.emergency_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
+
+	proc/make_breath_mask()
+		src.breath_mask = new(src)
+		src.breath_mask.layer = OBJ_LAYER + 0.03
+		RegisterSignal(src.breath_mask, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
+		RegisterSignal(src.breath_mask, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
+		RegisterSignal(src.breath_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
+
+	proc/make_emergency_hood()
+		src.emergency_hood = new(src)
+		src.emergency_hood.layer = OBJ_LAYER + 0.02
+		RegisterSignal(src.emergency_hood, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
+		RegisterSignal(src.emergency_hood, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
+		RegisterSignal(src.emergency_hood, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
+
+	proc/make_oxygen_tank()
+		src.oxygen_tank = new(src)
+		src.oxygen_tank.layer = OBJ_LAYER + 0.01
+		RegisterSignal(oxygen_tank, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
+
 	make_my_stuff()
 		if(..())
-			var/obj/item/clothing/suit/space/emerg/emergency_suit = new(src)
-			emergency_suit.layer = OBJ_LAYER + 0.04
-			RegisterSignal(emergency_suit, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-			RegisterSignal(emergency_suit, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-			RegisterSignal(emergency_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
-
-			var/obj/item/clothing/mask/breath/breath_mask = new(src)
-			breath_mask.layer = OBJ_LAYER + 0.03
-			RegisterSignal(breath_mask, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-			RegisterSignal(breath_mask, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-			RegisterSignal(breath_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
-
-			var/obj/item/clothing/head/emerg/emergency_helmet = new(src)
-			emergency_helmet.layer = OBJ_LAYER + 0.02
-			RegisterSignal(emergency_helmet, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-			RegisterSignal(emergency_helmet, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-			RegisterSignal(emergency_helmet, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
-
-			var/obj/item/tank/oxygen/tutorial/oxygen_tank = new(src)
-			oxygen_tank.layer = OBJ_LAYER + 0.01
-			RegisterSignal(oxygen_tank, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
+			src.make_emergency_suit()
+			src.make_breath_mask()
+			src.make_emergency_hood()
+			src.make_oxygen_tank()
+			return 1
 
 	proc/pickup_tutorial_item(datum/source, mob/user)
 		if (user.client?.tutorial)
@@ -2580,8 +2692,8 @@ var/datum/tutorialStep/newbee/T = steps[current_step]
 
 	src.set_secure_frequencies()
 
-	SPAWN(1 SECOND)
-		src.frequency = src.radio_freq_alpha
+	// SPAWN(1 SECOND)
+	src.frequency = src.radio_freq_alpha
 
 
 /obj/item/device/radio/headset/tutorial/proc/pick_randomized_freq()

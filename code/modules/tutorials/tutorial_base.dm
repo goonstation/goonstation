@@ -8,7 +8,7 @@
 	var/list/steps = list()
 	var/current_step = 0
 	var/finished = FALSE
-	var/step_sound = 'sound/machines/ping.ogg'
+	var/advance_sound = 'sound/machines/ping.ogg'
 
 	New(var/mob/M)
 		..()
@@ -39,7 +39,7 @@
 			return 1
 
 		Advance()
-			playsound(get_turf(owner), step_sound, 40, pitch = 0.5)
+			playsound(get_turf(owner), advance_sound, 50, pitch = 0.5)
 			if (current_step > steps.len)
 				return
 			var/datum/tutorialStep/T = steps[current_step]
