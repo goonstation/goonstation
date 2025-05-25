@@ -2,6 +2,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
@@ -18,17 +21,20 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 0.5
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	is_syndicate = TRUE
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
 	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
+
+	speech_verb_say = "blares"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/speak_lines = TRUE
 	var/uses_eye_light = TRUE
@@ -147,32 +153,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		. = ..()
 
 		if (length(.) && prob(10) && src.speak_lines)
-			src.speak(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
-
-	proc/speak(var/message) // Come back and make this use say after speech rework is in
-		var/fontSize = 2
-		var/fontIncreasing = 1
-		var/fontSizeMax = 2
-		var/fontSizeMin = -2
-		var/messageLen = length(message)
-		var/processedMessage = ""
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-			if(prob(10))
-				processedMessage += pick("%","##A","-","- - -","ERROR")
-
-		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""))
-
-		return
+			src.say(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
 
 /mob/living/critter/robotic/gunbot/strong // Midrounds
 	hand_count = 3

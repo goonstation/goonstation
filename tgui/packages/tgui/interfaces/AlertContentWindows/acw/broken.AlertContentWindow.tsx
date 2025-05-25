@@ -36,10 +36,15 @@ export const acw: AlertContentWindow = {
         guarantee of cooperation.
       </p>
 
-      {/* <p> //TODO: wiki
+      <p>
+        5. Any antagonistic actions you take <b>must</b> be in pursuit of your
+        objective.
+      </p>
+
+      <p>
         For more information, consult{' '}
-        <a href="https://wiki.ss13.co/index.php?search=Traitor">the wiki</a>
-      </p> */}
+        <a href="https://wiki.ss13.co/Broken">the wiki</a>
+      </p>
     </div>
   ),
 };

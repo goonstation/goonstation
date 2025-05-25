@@ -241,7 +241,7 @@
 		)
 
 		.["icons"] = list(
-			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id_basic")),
 			list(style = "civilian", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
 			list(style = "engineering", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
 			list(style = "research", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
