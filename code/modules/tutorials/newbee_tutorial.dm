@@ -1339,7 +1339,7 @@
 
 /datum/tutorialStep/newbee/equip_breath_mask
 	name = "Breath Masks"
-	instructions = "Before using an air tank, you need to equip a breath mask.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
+	instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "mask"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1347,7 +1347,7 @@
 	New()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Before using an air tank, you need to equip a breath mask.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
+		src.instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
 
 	PerformAction(action, context)
 		. = ..()
