@@ -159,6 +159,7 @@
 		icon_state = "hunger"
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
 		depletion_rate = 0.078
+		value = 50
 		var/debuff = "hungry"
 		var/buff = "nourished"
 		#ifdef RP_MODE
