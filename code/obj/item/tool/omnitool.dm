@@ -238,6 +238,7 @@
 	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
+	c_flags = EQUIPPED_WHILE_HELD
 
 	afterattack(obj/O, mob/user)
 
@@ -273,7 +274,9 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-
+	setupProperties()
+		..()
+		setProperty("conductivity", 0)
 
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
