@@ -1,4 +1,9 @@
 
+(t)sun may 25 25
+(u)444explorer
+(p)23547
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Syndicate Omnitool acts as Insulated Gloves while held.
 (t)sat may 24 25
 (u)CalliopeSoups
 (p)23549
