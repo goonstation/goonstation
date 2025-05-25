@@ -470,9 +470,9 @@ var/global/game_force_started = FALSE
 				last_try_dilate = world.time
 
 				// Pre-compute the next lower tick-lag and what CPU would look like
-				var/next_lower_tl = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
-				var/pred_cpu_low  = world.cpu     * (world.tick_lag / next_lower_tl)
-				var/pred_map_low  = world.map_cpu * (world.tick_lag / next_lower_tl)
+				var/next_lower_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+				var/pred_cpu_low  = world.cpu     * (world.tick_lag / next_lower_tick_lag)
+				var/pred_map_low  = world.map_cpu * (world.tick_lag / next_lower_tick_lag)
 
 				if (world.cpu >= TICKLAG_CPU_MAX)
 					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
