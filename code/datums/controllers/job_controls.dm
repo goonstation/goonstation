@@ -1079,9 +1079,9 @@ var/datum/job_controller/job_controls
 ///
 /// case_sensitive - boolean (default TRUE): match search string case exactly
 ///
-/// latejoin_available - boolean (default: FALSE): Only list jobs that can currently be late-joined
+/// latejoin_only - boolean (default: FALSE): Only list jobs that can currently be late-joined
 ///
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE, var/latejoin_available = FALSE)
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE, var/latejoin_only = FALSE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string '[string]' in controller detected")
@@ -1095,7 +1095,7 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
-		if (latejoin_available)
+		if (latejoin_only)
 			if (J.no_late_join)
 				continue
 			if (J.limit == 0)
@@ -1104,14 +1104,14 @@ var/datum/job_controller/job_controls
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
-			if (latejoin_available)
+			if (latejoin_only)
 				if (J.no_late_join)
 					continue
 				if (J.limit == 0)
 					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J
-		if (!latejoin_available)
+		if (!latejoin_only)
 			for (var/datum/job/J in job_controls.hidden_jobs)
 				if (J.match_to_string(string, case_sensitive))
 					results += J
