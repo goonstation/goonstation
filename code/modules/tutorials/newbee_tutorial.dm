@@ -783,12 +783,13 @@
 		if (!src.target_mob)
 			return
 		UnregisterSignal(src.target_mob, COMSIG_MOB_LAYDOWN_STANDUP)
-		animate_teleport(src.target_mob)
-		showswirl_out(src.target_mob)
-		SPAWN (1.5 SECONDS)
-			if (src.target_mob)
-				qdel(src.target_mob)
-				src.target_mob = null
+		SPAWN(4 SECONDS)
+			animate_teleport(src.target_mob)
+			showswirl_out(src.target_mob)
+			SPAWN (1.5 SECONDS)
+				if (src.target_mob)
+					qdel(src.target_mob)
+					src.target_mob = null
 
 /datum/tutorialStep/newbee/intent_disarm
 	name = "Disarm Intent"
@@ -859,12 +860,13 @@
 		. = ..()
 		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_item_left, COMSIG_ITEM_DROPPED)
-		animate_teleport(src.target_mob)
-		showswirl_out(src.target_mob)
-		SPAWN (1.5 SECONDS)
-			if (src.target_mob)
-				qdel(src.target_mob)
-				src.target_mob = null
+		SPAWN(4 SECONDS)
+			animate_teleport(src.target_mob)
+			showswirl_out(src.target_mob)
+			SPAWN (1.5 SECONDS)
+				if (src.target_mob)
+					qdel(src.target_mob)
+					src.target_mob = null
 
 
 /datum/tutorialStep/newbee/intent_grab
@@ -939,13 +941,14 @@
 		. = ..()
 		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_mob, COMSIG_MOB_GRABBED)
-		animate_teleport(src.target_mob)
-		showswirl_out(src.target_mob)
-		qdel(src.target_mob.grabbed_by) // drop the player's grab
-		SPAWN (1.5 SECONDS)
-			if (src.target_mob)
-				qdel(src.target_mob)
-				src.target_mob = null
+		SPAWN(4 SECONDS)
+			animate_teleport(src.target_mob)
+			showswirl_out(src.target_mob)
+			qdel(src.target_mob.grabbed_by) // drop the player's grab
+			SPAWN (1.5 SECONDS)
+				if (src.target_mob)
+					qdel(src.target_mob)
+					src.target_mob = null
 
 /datum/tutorialStep/newbee/intent_harm
 	name = "Harm Intent"
@@ -1014,12 +1017,13 @@
 		. = ..()
 		src.target_mob.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.target_mob, COMSIG_MOB_DEATH)
-		animate_teleport(src.target_mob)
-		showswirl_out(src.target_mob)
-		SPAWN (1.5 SECONDS)
-			if (src.target_mob)
-				qdel(src.target_mob)
-				src.target_mob = null
+		SPAWN(4 SECONDS)
+			animate_teleport(src.target_mob)
+			showswirl_out(src.target_mob)
+			SPAWN (1.5 SECONDS)
+				if (src.target_mob)
+					qdel(src.target_mob)
+					src.target_mob = null
 
 /obj/landmark/newbee/get_health
 	name = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
