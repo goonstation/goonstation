@@ -829,6 +829,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 				src.desc = "A loop of dragon's beard candy that has been folded into uncountable microscopic strands."
 				src.real_name = "infinity-fold dragon's beard candy loop"
 				src.eat_message = "[src] immediately dissolves in your mouth."
+				if (src.reagents.total_volume + 3 > src.reagents.maximum_volume)
+					src.reagents.remove_any(3) // we need space for the msg
 				src.reagents.add_reagent("enriched_msg", 3)
 
 /obj/item/reagent_containers/food/snacks/candy/dragons_beard/infinity
@@ -839,6 +841,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 
 	New()
 		..()
+		if (src.reagents.total_volume + 3 > src.reagents.maximum_volume)
+			src.reagents.remove_any(3) // we need space for the msg
 		src.reagents.add_reagent("enriched_msg", 3)
 
 /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
