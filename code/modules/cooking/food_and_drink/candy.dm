@@ -839,12 +839,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	icon_state = "dragonsbeard-loopinf"
 	folds = 32
 
-	New()
-		..()
-		if (src.reagents.total_volume + 3 > src.reagents.maximum_volume)
-			src.reagents.remove_any(3) // we need space for the msg
-		src.reagents.add_reagent("enriched_msg", 3)
-
 /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
 	name = "dragon's beard candy"
 	desc = "A piece of dragon's beard candy."
