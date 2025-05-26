@@ -1488,6 +1488,7 @@
 				else
 					src.target_closet = new(T)
 				break
+		src.target_closet.UpdateOverlays(src.point_marker, "marker")
 		src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 		src.newbee_tutorial.newbee.hud.update_inventory()
 
@@ -1495,6 +1496,10 @@
 		. = ..()
 		if (action == "open_storage" && context == "emergency_tutorial")
 			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		src.target_closet.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/newbee/equip_space_suit
 	name = "Space Suits"
