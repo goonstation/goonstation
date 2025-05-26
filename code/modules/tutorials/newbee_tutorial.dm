@@ -1281,6 +1281,7 @@
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_5
+	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1290,10 +1291,10 @@
 	SetUp()
 		. = ..()
 		var/patch_count = 0
-		for (var/obj/item/reagent_containers/patch/bruise in src._target_item.contents)
+		for (var/obj/item/reagent_containers/patch/bruise in src._needed_item.contents)
 			patch_count++
 		if (patch_count < 1)
-			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
+			src._needed_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
