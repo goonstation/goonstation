@@ -1884,7 +1884,7 @@
 		. = ..()
 		var/obj/item/weldingtool/tutorial/welding_tool = src._target_item
 		welding_tool.set_state(FALSE)
-		welding_tool.fuel_capacity = 999
+		welding_tool.reagents.add_reagent("fuel", welding_tool.fuel_capacity)
 
 /datum/tutorialStep/newbee/using_welder
 	name = "Using Welding Tools"
