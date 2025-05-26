@@ -1216,6 +1216,15 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRST_AID
 	item_path = /obj/item/storage/firstaid/brute/tutorial
 
+	SetUp()
+		. = ..()
+		// make sure it has a patch here so we don't pop-in while storage is open
+		var/patch_count = 0
+		for (var/obj/item/reagent_containers/patch/bruise in src._target_item.contents)
+			patch_count++
+		if (patch_count < 1)
+			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
+
 /datum/tutorialStep/newbee/storage_inhands
 	name = "Opening Storage"
 	instructions = "With the first aid kit in-hand, press <b>C</b> to open it."
@@ -1280,6 +1289,11 @@
 
 	SetUp()
 		. = ..()
+		var/patch_count = 0
+		for (var/obj/item/reagent_containers/patch/bruise in src._target_item.contents)
+			patch_count++
+		if (patch_count < 1)
+			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
