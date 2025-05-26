@@ -1880,6 +1880,11 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL
 	item_path = /obj/item/weldingtool/tutorial
 
+	SetUp()
+		. = ..()
+		var/obj/item/weldingtool/tutorial/welding_tool = src._target_item
+		welding_tool.set_state(FALSE)
+
 /datum/tutorialStep/newbee/using_welder
 	name = "Using Welding Tools"
 	instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>C</b>."
