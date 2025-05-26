@@ -97,7 +97,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 /datum/cookingrecipe/oven/burger/cheeseburger/monkey
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkey = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 
