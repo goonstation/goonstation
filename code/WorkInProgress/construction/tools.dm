@@ -533,6 +533,8 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = 'icons/turf/walls/lead/gray.dmi',
 		"lead white" = 'icons/turf/walls/lead/white.dmi',
 		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
+		"tempus green" = 'icons/turf/walls/unused/walls_tempus-green.dmi',
+		"tempus white" = 'icons/turf/walls/unused/walls_tempus-white.dmi',
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",
@@ -548,6 +550,8 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = "leadg-",
 		"lead white" = "leadw-",
 		"ancient smooth" = "interior-",
+		"tempus green" = "",
+		"tempus white" = "",
 	)
 
 	attack_self(mob/user as mob)
