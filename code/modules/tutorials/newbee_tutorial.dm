@@ -2275,10 +2275,9 @@
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER])
 			if(src.region.turf_in_region(T))
-				if (src.tutorial_clown)
-					src.tutorial_clown.set_loc(T)
-				else
+				if (!src.tutorial_clown || QDELETED(src.tutorial_clown))
 					src.tutorial_clown = new(T)
+				src.tutorial_clown.set_loc(T)
 				break
 		src.tutorial_clown.tutorial_owner = src.newbee_tutorial.newbee
 		RegisterSignal(src.tutorial_clown, COMSIG_MOB_DEATH, PROC_REF(check_mob_death))
