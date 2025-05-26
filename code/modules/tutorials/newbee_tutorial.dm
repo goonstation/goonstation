@@ -617,13 +617,12 @@
 		. = ..()
 		for(var/turf/T in landmarks[target_landmark])
 			if(src.region.turf_in_region(T))
-				if (src._target_item)
-					if (ismob(src._target_item.loc))
-						var/mob/M = src._target_item.loc
-						M.drop_item(src._target_item)
-					src._target_item.set_loc(T)
-				else
+				if (!src._target_item || QDELETED(src._target_item))
 					src._target_item = new item_path(T)
+				if (ismob(src._target_item.loc))
+					var/mob/M = src._target_item.loc
+					M.drop_item(src._target_item)
+				src._target_item.set_loc(T)
 				break
 		src._target_item.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src._target_item, COMSIG_ITEM_PICKUP, PROC_REF(check_item))
@@ -1363,13 +1362,21 @@
 	step_area = /area/tutorial/newbee/room_6
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX
-	item_path = /obj/item/storage/toolbox/mechanical
+	item_path = /obj/item/storage/toolbox/tutorial
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
 		src.instructions = "Toolboxes contain up to 7 small objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>[attackself]</b> to open it."
 
+	SetUp()
+		. = ..()
+		if (istype(src._target_item, /obj/item/storage/toolbox/tutorial))
+			var/obj/item/storage/toolbox/tutorial/tutorial_box = src._target_item
+			for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX])
+				if(src.region.turf_in_region(T))
+					tutorial_box.reset(T)
+					break
 
 /datum/tutorialStep/newbee/move_to/deconstructing_girder
 	name = "Deconstructing a Girder"
@@ -2565,29 +2572,28 @@
 		src.set_loc(move_to)
 		src.close()
 
-		if (!src.emergency_suit)
+		if (!src.emergency_suit || QDELETED(src.emergency_suit))
 			src.make_emergency_suit()
 		if (ismob(src.emergency_suit.loc))
 			var/mob/M = src.emergency_suit.loc
 			M.drop_item(src.emergency_suit)
 		src.emergency_suit.set_loc(src)
 
-
-		if (!src.breath_mask)
+		if (!src.breath_mask || QDELELTED(src.breath_mask))
 			src.make_breath_mask()
 		if (ismob(src.breath_mask.loc))
 			var/mob/M = src.breath_mask.loc
 			M.drop_item(src.breath_mask)
 		src.breath_mask.set_loc(src)
 
-		if (!src.emergency_hood)
+		if (!src.emergency_hood || QDELETED(src.emergency_hood))
 			src.make_emergency_hood()
 		if (ismob(src.emergency_hood.loc))
 			var/mob/M = src.emergency_hood.loc
 			M.drop_item(src.emergency_hood)
 		src.emergency_hood.set_loc(src)
 
-		if (!src.oxygen_tank)
+		if (!src.oxygen_tank || QDELETED(src.oxygen_tank))
 			src.make_oxygen_tank()
 		if (ismob(src.oxygen_tank.loc))
 			var/mob/M = src.oxygen_tank.loc
@@ -2644,6 +2650,66 @@
 		. = ..()
 		if (user.client?.tutorial)
 			user.client.tutorial.PerformSilentAction("open_storage", "emergency_tutorial")
+
+/// mechanical toolbox that tracks its contents
+/obj/item/storage/toolbox/tutorial
+	name = "mechanical toolbox"
+	icon_state = "blue"
+	item_state = "toolbox-blue"
+	desc = "A metal container designed to hold various tools. This variety holds standard construction tools."
+
+	var/obj/item/screwdriver/screwdriver
+	var/obj/item/wrench/wrench
+	var/obj/item/weldingtool/weldingtool
+	var/obj/item/crowbar/crowbar
+	var/obj/item/wirecutters/wirecutters
+	var/obj/item/device/analyzer/atmospheric/atmos_scanner
+
+	proc/reset(turf/move_to)
+		if (isnull(move_to))
+			return
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.drop_item(src)
+		src.set_loc(move_to)
+		src.pixel_x = 0
+		src.pixel_y = 0
+
+		if (!src.screwdriver || QDELETED(src.screwdriver))
+			src.screwdriver = new(src)
+		src.ensure_item_in_storage(src.screwdriver)
+
+		if (!src.wrench || QDELETED(src.wrench))
+			src.wrench = new(src)
+		src.ensure_item_in_storage(src.wrench)
+
+		if (!src.weldingtool || QDELETED(src.weldingtool))
+			src.weldingtool = new(src)
+		src.ensure_item_in_storage(src.weldingtool)
+
+		if (!src.crowbar || QDELETED(src.crowbar))
+			src.crowbar = new(src)
+		src.ensure_item_in_storage(src.crowbar)
+
+		if (!src.wirecutters || QDELETED(src.wirecutters))
+			src.wirecutters = new(src)
+		src.ensure_item_in_storage(src.wirecutters)
+
+		if (!src.atmos_scanner || QDELETED(src.atmos_scanner))
+			src.atmos_scanner = new(src)
+		src.ensure_item_in_storage(src.atmos_scanner)
+
+	proc/ensure_item_in_storage(obj/item)
+		if (ismob(item.loc))
+			var/mob/M = item.loc
+			M.drop_item(item)
+		if (!(item in src.storage.stored_items))
+			src.storage.add_contents(item, visible=FALSE)
+
+	make_my_stuff()
+		if(..())
+			src.reset(get_turf(src))
+			return TRUE
 
 /obj/item/tank/oxygen/tutorial
 	toggle_valve()
