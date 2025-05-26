@@ -1,4 +1,9 @@
 
+(t)mon may 26 25
+(u)LorrMaster
+(p)23476
+(e)🆕🎨🔒🧛|C-Feature, C-Sprites, A-Secret, A-Gamemodes
+(*)Added the dualconstruction device, a new tool for salvagers
 (t)sun may 25 25
 (u)444explorer
 (p)23547
