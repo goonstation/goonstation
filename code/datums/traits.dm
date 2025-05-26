@@ -1167,7 +1167,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "cyber_incompatible"
 	points = 1
 	disability_type = TRAIT_DISABILITY_MAJOR
-	disability_name = "Cybernetics Incompatable"
+	disability_name = "Cybernetics Incompatibility"
 	disability_desc = "Patient is incompatible with all forms of cybernetic augmentation, including cyborgification."
 
 	onAdd(mob/owner)
