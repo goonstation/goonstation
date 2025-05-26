@@ -15816,7 +15816,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "cwM" = (
 /obj/machinery/light_switch/south,
@@ -24282,23 +24282,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"hEU" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/hop,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	frequency = 1485;
-	name = "Station Intercom (Security)"
-	},
-/obj/machinery/door_control/bolter/new_walls/north{
-	id = "quarters_hop";
-	dir = 2
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fgreen6"
-	},
-/area/station/crew_quarters/hop)
 "hFf" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -26368,7 +26351,7 @@
 /obj/machinery/light/small/floor,
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "iNJ" = (
 /obj/table/wood/auto,
@@ -34032,7 +34015,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "nnN" = (
 /obj/cable{
@@ -34952,6 +34935,21 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"nSh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/hop,
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/obj/machinery/door_control/bolter/new_walls/north{
+	id = "quarters_hop";
+	dir = 2
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fgreen6"
+	},
+/area/station/crew_quarters/hop)
 "nSH" = (
 /turf/simulated/floor/stairs{
 	dir = 4;
@@ -43015,7 +43013,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/access/bar,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/catering)
 "ssc" = (
 /obj/cable{
@@ -45744,7 +45742,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/table/reinforced/auto,
-/turf/simulated/bar,
+/turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "tXu" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -95446,7 +95444,7 @@ aUX
 kuu
 bcz
 lTU
-hEU
+nSh
 eYJ
 fAJ
 eXg

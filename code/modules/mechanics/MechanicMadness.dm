@@ -2712,7 +2712,9 @@ TYPEINFO(/obj/item/mechanics)
 			proj.event_handler_flags |= IMMUNE_SINGULARITY
 			proj.has_atmosphere = TRUE
 			for(var/atom/movable/AM in src.loc)
-				if(AM == src || AM.invisibility || AM.anchored) continue
+				if(AM == src || AM.invisibility || AM.anchored)
+					continue
+				continue_if_overlay_or_effect(AM)
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] targeting destination [log_loc(picked)]")
 				AM.set_loc(proj)
 				AM.changeStatus("teleporting", INFINITY)
