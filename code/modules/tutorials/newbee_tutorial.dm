@@ -2434,7 +2434,7 @@
 		src.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 
 		SPAWN (0.3 SECONDS)
-			src?.say("Owie! My funny bone is shattered!")
+			src?.say("Owie! I broke my funny bone!")
 
 /mob/living/carbon/human/normal/tutorial_disarm
 	New()
