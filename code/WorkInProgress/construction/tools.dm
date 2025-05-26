@@ -544,6 +544,7 @@ TYPEINFO(/obj/item/room_planner)
 		"mossy rock" = 'icons/turf/walls/mossy_rock.dmi',
 		"panel" = 'icons/turf/walls/panel.dmi',
 		"mars" = 'icons/turf/walls/marsoutpost.dmi',
+		"precursor" = 'icons/turf/walls/precursor.dmi',
 
 	)
 	var/list/wallmods = list(
@@ -571,6 +572,7 @@ TYPEINFO(/obj/item/room_planner)
 		"mossy rock" = "rock-",
 		"panel" = "interior-",
 		"mars" = "interior-",
+		"precursor" = "interior-",
 
 	)
 
