@@ -93,9 +93,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
-	variants = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m,
-	)
+
+/datum/cookingrecipe/oven/burger/cheeseburger/monkey
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
+	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 
 /datum/cookingrecipe/oven/burger/wcheeseburger
 	ingredients = list(\
