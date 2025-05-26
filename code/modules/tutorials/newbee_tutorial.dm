@@ -2385,6 +2385,10 @@
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/rank/assistant, SLOT_W_UNIFORM)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+		SPAWN(0)
+			if (src.sims)
+				for (var/motive in src.sims.motives)
+					src.sims.removeMotive(motive)
 
 	set_pulling(atom/movable/A)
 		. = ..()
