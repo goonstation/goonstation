@@ -2590,7 +2590,7 @@
 			M.drop_item(src.emergency_suit)
 		src.emergency_suit.set_loc(src)
 
-		if (!src.breath_mask || QDELELTED(src.breath_mask))
+		if (!src.breath_mask || QDELETED(src.breath_mask))
 			src.make_breath_mask()
 		if (ismob(src.breath_mask.loc))
 			var/mob/M = src.breath_mask.loc
