@@ -1844,6 +1844,7 @@ proc/alert_all_ghosts(atom/target, message)
 	for(var/client/C)
 		if (isdead(C.mob) && !istype(C.mob, /mob/dead/target_observer/slasher_ghost))
 			SPAWN(0)
+				C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
 				if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
 					var/mob/dead/M = C.mob
 					if(ismob(target) || isobj(target))
