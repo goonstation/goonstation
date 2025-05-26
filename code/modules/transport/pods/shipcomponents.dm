@@ -24,6 +24,7 @@
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
 	if(ship && src.loc == ship)
+		src.ship_uninstall(ship)
 		ship.components -= src
 	ship = null
 	..()
@@ -101,4 +102,10 @@
 //In case stuff should be done when the ship breaks
 /obj/item/shipcomponent/proc/on_shipdeath(var/obj/machinery/vehicle/ship)
 	src.ship = null
+	return
+
+/obj/item/shipcomponent/proc/ship_install()
+	return
+
+/obj/item/shipcomponent/proc/ship_uninstall()
 	return

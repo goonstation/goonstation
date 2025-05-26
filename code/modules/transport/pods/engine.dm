@@ -16,6 +16,7 @@
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
+	var/image/engine_icon = null
 
 	get_desc()
 		return "Rated for [src.powergenerated] units of continuous power output."
@@ -28,6 +29,8 @@
 			return
 		ship.powercapacity = src.powergenerated
 		src.ship.speedmod *= src.engine_speed
+		src.engine_icon.icon_state = "[src.icon_state]-on"
+		ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 	////Warp requires recharge time
 	ready()
@@ -43,6 +46,8 @@
 		for(var/obj/item/shipcomponent/S in ship.components)
 			if(S.active)
 				S.deactivate()
+		src.engine_icon.icon_state = "[src.icon_state]-off"
+		ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 
 	opencomputer(mob/user as mob)
@@ -65,6 +70,19 @@
 		user.Browse(dat, "window=ship_engine")
 		onclose(user, "ship_engine")
 		return
+
+	ship_install()
+		if(istype(src.ship, /obj/machinery/vehicle/pod_smooth))
+			src.engine_icon = image('icons/effects/64x64.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		else if(istype(src.ship, /obj/machinery/vehicle/miniputt) || istype(src.ship, /obj/machinery/vehicle/escape_pod))
+			src.engine_icon = image('icons/obj/ship.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		..()
+
+	ship_uninstall()
+		ship.ClearSpecificOverlays("engine")
+		..()
 
 /obj/item/shipcomponent/engine/proc/Wormhole()
 	if (wormholeQueued || warprecharge == -1)
@@ -225,3 +243,4 @@
 	desc = "This engine can probably make a warp jump. Once."
 	warprecharge = 20 MINUTES
 	portaldelay = 0 SECONDS
+	icon_state = "engine-4"

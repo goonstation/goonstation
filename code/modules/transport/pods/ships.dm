@@ -131,6 +131,7 @@
 	New()
 		. = ..()
 		src.com_system.deactivate()
+		src.engine.ship_uninstall()
 		qdel(src.engine)
 		qdel(src.com_system)
 		src.components -= src.engine
@@ -1469,6 +1470,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	New()
 		. = ..()
+		src.engine.ship_uninstall()
 		src.components -= src.engine
 		qdel(src.engine)
 		src.engine = new /obj/item/shipcomponent/engine/escape(src)

@@ -226,6 +226,7 @@
 
 //each pod part is a var so we have to macro this, yegh
 #define EJECT_PART(part) \
+	part.ship_uninstall(src); \
 	src.eject_part(part); \
 	usr.put_in_hand_or_drop(part); \
 	src.null_part(part); \
@@ -967,6 +968,7 @@
 				return
 	components += S
 	S.ship = src
+	S.ship_install()
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
 		if (give_feedback)
@@ -2048,6 +2050,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	New()
 		. = ..()
+		src.engine.ship_uninstall()
 		src.components -= src.engine
 		qdel(src.engine)
 		src.engine = new /obj/item/shipcomponent/engine/escape(src)
