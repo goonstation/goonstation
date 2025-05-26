@@ -1,5 +1,5 @@
 /// How long before auto-continuing for timed steps. Matches the related tutorial timer animation duration.
-#define NEWBEE_TUTORIAL_TIMER_DURATION 13 SECONDS
+#define NEWBEE_TUTORIAL_TIMER_DURATION 14 SECONDS
 
 // Markers
 
