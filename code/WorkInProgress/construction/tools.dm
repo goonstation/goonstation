@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/room_planner)
 		"ice" = 'icons/turf/walls/ice.dmi',
 		"mossy rock" = 'icons/turf/walls/mossy_rock.dmi',
 		"panel" = 'icons/turf/walls/panel.dmi',
-		"mars" = 'icons/turf/walls/marsoutpost.dmi',
+		"marsoutpost" = 'icons/turf/walls/marsoutpost.dmi',
 		"precursor" = 'icons/turf/walls/precursor.dmi',
 
 	)
@@ -571,7 +571,7 @@ TYPEINFO(/obj/item/room_planner)
 		"ice" = "ice-",
 		"mossy rock" = "rock-",
 		"panel" = "interior-",
-		"mars" = "interior-",
+		"marsoutpost" = "interior-",
 		"precursor" = "interior-",
 
 	)
