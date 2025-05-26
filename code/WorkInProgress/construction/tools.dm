@@ -538,6 +538,13 @@ TYPEINFO(/obj/item/room_planner)
 		"black red" = 'icons/turf/walls/supernorn/blackred.dmi',
 		"orange" = 'icons/turf/walls/supernorn/orange.dmi',
 		"yellow" = 'icons/turf/walls/supernorn/yellow.dmi',
+		"beehive" = 'icons/turf/walls/beehive.dmi',
+		"hedge" = 'icons/turf/walls/hedge.dmi',
+		"ice" = 'icons/turf/walls/ice.dmi',
+		"mossy rock" = 'icons/turf/walls/mossy_rock.dmi',
+		"panel" = 'icons/turf/walls/panel.dmi',
+		"mars" = 'icons/turf/walls/marsoutpost.dmi',
+
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",
@@ -558,6 +565,13 @@ TYPEINFO(/obj/item/room_planner)
 		"black red" = "norn-BR-",
 		"orange" = "norn-O-",
 		"yellow" = "norn-Y-",
+		"beehive" = "bee-",
+		"hedge" = "hedge-",
+		"ice" = "ice-",
+		"mossy rock" = "rock-",
+		"panel" = "interior-",
+		"mars" = "interior-",
+
 	)
 
 	attack_self(mob/user as mob)
