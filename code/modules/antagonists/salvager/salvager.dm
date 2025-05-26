@@ -54,7 +54,7 @@
 
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_IN_BACKPACK)
-		H.equip_new_if_possible(/obj/item/deconstructor, SLOT_IN_BACKPACK)
+		H.equip_new_if_possible(/obj/item/tool/omnitool/dualconstruction_device, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/weldingtool, SLOT_IN_BACKPACK)
 
