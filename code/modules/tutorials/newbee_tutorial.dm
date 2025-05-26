@@ -180,7 +180,7 @@
 			var/completion_sound = src.advance_sound
 			if (T.custom_advance_sound)
 				completion_sound = T.custom_advance_sound
-			playsound(get_turf(owner), completion_sound, 40, pitch = 0.5)
+			playsound(get_turf(owner), completion_sound, 50)
 		if (current_step > steps.len)
 			return
 		T.TearDown()
