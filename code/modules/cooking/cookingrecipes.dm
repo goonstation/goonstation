@@ -93,7 +93,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
-	)
 
 /datum/cookingrecipe/oven/burger/cheeseburger/monkey
 	ingredients = list(\
