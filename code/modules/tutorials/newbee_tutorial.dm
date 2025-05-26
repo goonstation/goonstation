@@ -269,11 +269,7 @@
 		if (!ismob(AM) || !isliving(AM))
 			return
 		var/mob/M = AM
-		if (!M.client)
-			return
-		if (!M.client.tutorial)
-			return
-		M.client.tutorial.PerformSilentAction(src.name)
+		M.client?.tutorial?.PerformSilentAction(src.name)
 
 	disposing()
 		landmarks[name] -= src.loc
