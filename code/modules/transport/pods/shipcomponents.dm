@@ -20,13 +20,13 @@
 	var/disrupted = FALSE
 	/// Can this part be used by 2x2 pods
 	var/large_pod_compatible = TRUE
+	var/default_slot = "" //! Which slot to install this part if not otherwise specified
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
-	if(ship && src.loc == ship)
-		src.ship_uninstall(ship)
-		ship.components -= src
-	ship = null
+	if(ship)
+		var/slot = src.ship.find_part_slot(src)
+		src.ship.eject_part(null, slot)
 	..()
 
 //Code for when device needs recharging

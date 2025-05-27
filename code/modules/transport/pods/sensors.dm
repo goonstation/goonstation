@@ -33,6 +33,17 @@
 	var/same_z_level = 0
 	var/trackable_range = 0
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (!isobj(target))
+			return
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_SENSORS)
+			return ATTACK_PRE_DONT_ATTACK
 
 	disposing()
 		stop_tracking_me()
@@ -109,7 +120,7 @@
 		if (src.tracking_target)
 			var/obj/machinery/vehicle/target_pod = src.tracking_target
 			if (istype(target_pod))
-				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.sensors
+				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.get_part(POD_PART_SENSORS)
 				if (istype(target_sensor))
 					target_sensor.whos_tracking_me |= src.ship
 					target_pod.myhud.sensor_lock.icon_state = "master-caution"
@@ -125,7 +136,7 @@
 		if (src.tracking_target)
 			var/obj/machinery/vehicle/target_pod = src.tracking_target
 			if (istype(target_pod))
-				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.sensors
+				var/obj/item/shipcomponent/sensor/target_sensor = target_pod.get_part(POD_PART_SENSORS)
 				if (istype(target_sensor))
 					target_sensor.whos_tracking_me -= src.ship
 					if (islist(target_sensor.whos_tracking_me) && length(target_sensor.whos_tracking_me) == 0)
@@ -176,7 +187,8 @@
 	//currently only using this for tracking. It doesn't effect the active sensor scan button.
 	proc/adjust_seekrange(var/obj/machinery/vehicle/pod)
 		if (istype(pod))
-			if (pod.sec_system && pod.sec_system.f_active && istype(pod.sec_system, /obj/item/shipcomponent/secondary_system/cloak))
+			var/obj/item/shipcomponent/secondary_system/sec_part = pod.get_part(POD_PART_SECONDARY)
+			if (sec_part?.f_active && istype(sec_part, /obj/item/shipcomponent/secondary_system/cloak))
 				return src.seekrange/3
 			if (pod.powercapacity == 0 || (pod.powercurrent/pod.powercapacity) <= 0.1)
 				return src.seekrange/2
@@ -267,7 +279,7 @@
 		for (var/obj/O in whos_tracking_me)
 			var/obj/machinery/vehicle/pod = O
 			if (istype(pod))
-				var/obj/item/shipcomponent/sensor/S = pod.sensors
+				var/obj/item/shipcomponent/sensor/S = pod.get_part(POD_PART_SENSORS)
 				if (istype(S))
 					S.end_tracking()
 

@@ -24,6 +24,23 @@
 
 	power_used = 65
 	system = "Main Weapon"
+
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (!isobj(target))
+			return
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_MAIN_WEAPON)
+			return ATTACK_PRE_DONT_ATTACK
+
+	ship_install()
+		if(src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(image('icons/effects/64x64.dmi', "[src.appearanceString]"), "mainweapon")
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return

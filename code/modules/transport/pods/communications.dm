@@ -17,6 +17,18 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 	var/list/access_type = list(POD_ACCESS_STANDARD)
 	var/obj/item/device/ship_radio_control/rc_ship = null
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (!isobj(target))
+			return
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_COMMS)
+			return ATTACK_PRE_DONT_ATTACK
+
 	mining
 		name = "NT Magnet Link Array"
 		desc = "Allows a pod to communicate with a Mining Magnet for more convenient mining."

@@ -11,7 +11,17 @@
 	var/col_g = 0.8
 	var/col_b = 0.7
 
-	// base class for pod lights
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (!isobj(target))
+			return
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_LIGHTS)
+			return ATTACK_PRE_DONT_ATTACK
 
 	activate()
 		return ..()
