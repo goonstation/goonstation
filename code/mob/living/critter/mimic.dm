@@ -151,7 +151,6 @@
 	health_brute = 25
 	health_burn = 25
 	hand_count = 2
-	var/datum/component/mimic_stomach/stomachHolder = null
 	var/modifier = null
 	add_abilities = list(/datum/targetable/critter/mimic,
 						/datum/targetable/critter/eat_limb,

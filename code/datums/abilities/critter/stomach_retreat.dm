@@ -41,31 +41,33 @@
 					return TRUE
 
 	proc/activate()
-		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
-		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
+		var/mob/living/critter/parent = holder.owner
+		if (!parent.stomachHolder)
+			return
+		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = TRUE
-		boutput(mimic, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
+		boutput(parent, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
 		current_container = holder.owner.loc
 		current_container.present_mimic = mimic
-		mimic.set_loc(mimic.stomachHolder.center)
+		parent.set_loc(parent.stomachHolder.center)
 		RegisterSignal(current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
-		last_appearance = mimic.appearance
-		mimic.appearance = /obj/mimicdummy
-		mimic.UpdateIcon()
+		last_appearance = parent.appearance
+		parent.appearance = /obj/mimicdummy
+		parent.UpdateIcon()
 
 	proc/deactivate()
-		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
-		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
+		var/mob/living/critter/parent = holder.owner
+		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = FALSE
 		abil.afterAction()
-		holder.owner.visible_message(SPAN_ALERT("<b>[mimic] turns themself outside in!</b>"))
-		mimic.set_loc(current_container)
+		parent.visible_message(SPAN_ALERT("<b>[parent] turns themself outside in!</b>"))
+		parent.set_loc(current_container)
 		UnregisterSignal(current_container, COMSIG_ATOM_ENTERED)
 		current_container.present_mimic = null
 		current_container = null
-		mimic.appearance = last_appearance
+		parent.appearance = last_appearance
 		last_appearance = null
-		mimic.UpdateIcon()
+		parent.UpdateIcon()
 
 	proc/trap_chomp()
 		var/mob/living/carbon/human/target = locate(/mob/living/carbon/human) in current_container

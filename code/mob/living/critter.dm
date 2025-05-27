@@ -87,6 +87,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/ghost_spawned = FALSE //Am i inhabited by a ghost player who used the respawn critter option?
 	var/original_name = null
 
+	/// region holder for eat_limb and stomach_retreat
+	var/datum/component/mimic_stomach/stomachHolder = null
+
 	var/yeet_chance = 1 //yeet
 
 	var/last_life_process = 0
