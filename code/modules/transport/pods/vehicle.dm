@@ -397,15 +397,12 @@
 				if(!main_weapon.removable)
 					boutput(usr, SPAN_ALERT("[main_weapon] is fused to the hull and cannot be removed."))
 					return
-				logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([main_weapon]) from [src] at [log_loc(src)]")
-				if (src.uses_weapon_overlays && main_weapon.appearanceString)
-					src.UpdateOverlays(null, POD_PART_MAIN_WEAPON)
-				src.eject_part("main_weapon")
+				if(src.eject_part(POD_PART_MAIN_WEAPON))
+					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([main_weapon]) from [src] at [log_loc(src)]")
 			else if (href_list["unloco"])
-				if (istype(src,/obj/machinery/vehicle/tank))
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_LOCOMOTION)
+				if(ejected_part)
 					logTheThing(LOG_VEHICLE, usr, "ejects the locomotion system from [src] at [log_loc(src)]")
-					src:remove_locomotion()
-					src.updateDialog()
 			else if (href_list["unsec_system"])
 				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_SECONDARY)
 				if (ejected_part)
@@ -430,7 +427,6 @@
 					usr.drop_item()
 					W.set_loc(src)
 					src.atmostank = W
-					src.updateDialog()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 			else if (href_list["takeatmostank"])
@@ -438,7 +434,6 @@
 					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
 					usr.put_in_hand_or_drop(src.atmostank)
 					atmostank = null
-					src.updateDialog()
 				else
 					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
@@ -453,7 +448,6 @@
 					usr.drop_item()
 					W.set_loc(src)
 					src.fueltank = W
-					src.updateDialog()
 					src.myhud?.update_fuel()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
@@ -470,7 +464,7 @@
 					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
 
-			src.updateUsrDialog()
+			src.updateDialog()
 			myhud.update_systems()
 		else
 			usr.Browse(null, "window=ship_main")
@@ -1285,26 +1279,26 @@
 		dat += "<A href='byond://?src=\ref[src];fueltank=1'>--------</A>"
 	dat += "<HR><B>Engine</B>: "
 	//Engine
-	if(src.installed_parts[POD_PART_ENGINE])
-		dat += "<A href='byond://?src=\ref[src];unengine=1'>[src.installed_parts[POD_PART_ENGINE]]</A>"
+	if(src.get_part(POD_PART_ENGINE))
+		dat += "<A href='byond://?src=\ref[src];unengine=1'>[src.get_part(POD_PART_ENGINE)]</A>"
 	else
 		dat += "None Installed"
 	///Life Support
 	dat += "<HR><B>Life Support</B>: "
-	if(src.installed_parts[POD_PART_LIFE_SUPPORT])
-		dat += "<A href='byond://?src=\ref[src];unlife=1'>[src.installed_parts[POD_PART_LIFE_SUPPORT]]</A>"
+	if(src.get_part(POD_PART_LIFE_SUPPORT))
+		dat += "<A href='byond://?src=\ref[src];unlife=1'>[src.get_part(POD_PART_LIFE_SUPPORT)]</A>"
 	else
 		dat += "None Installed"
 	//// Com System
 	dat += "<HR><B>Com System</B>: "
-	if(src.installed_parts[POD_PART_COMMS])
-		dat += "<A href='byond://?src=\ref[src];uncom=1'>[src.installed_parts[POD_PART_COMMS]]</A>"
+	if(src.get_part(POD_PART_COMMS))
+		dat += "<A href='byond://?src=\ref[src];uncom=1'>[src.get_part(POD_PART_COMMS)]</A>"
 	else
 		dat += "None Installed"
 	///Main Weapon
 	if(weapon_class != 0)
 		dat += "<HR><B>Main Weapon</B>: "
-		var/obj/item/shipcomponent/mainweapon/main_weapon = src.installed_parts[POD_PART_MAIN_WEAPON]
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
 		if(main_weapon)
 			dat += "<A href='byond://?src=\ref[src];unm_w=1'>[main_weapon]</A>"
 			if (main_weapon.uses_ammunition)
@@ -1313,32 +1307,32 @@
 			dat += "None Installed"
 	if(istype(src,/obj/machinery/vehicle/tank))
 		dat += "<HR><B>Locomotion</B>: "
-		if(src:locomotion)
-			dat += "<A href='byond://?src=\ref[src];unloco=1'>[src:locomotion]</A>"
+		if(src.get_part(POD_PART_LOCOMOTION))
+			dat += "<A href='byond://?src=\ref[src];unloco=1'>[src.get_part(POD_PART_LOCOMOTION)]</A>"
 		else
 			dat += "None Installed"
 	////Sensors
 	dat += "<HR><B>Sensors</B>: "
-	if(src.installed_parts[POD_PART_SENSORS])
-		dat += "<A href='byond://?src=\ref[src];unsensors=1'>[src.installed_parts[POD_PART_SENSORS]]</A>"
+	if(src.get_part(POD_PART_SENSORS))
+		dat += "<A href='byond://?src=\ref[src];unsensors=1'>[src.get_part(POD_PART_SENSORS)]</A>"
 	else
 		dat += "None Installed"
 	////Secondary System
 	dat += "<HR><B>Secondary System</B>: "
-	if(src.installed_parts[POD_PART_SECONDARY])
-		dat += "<A href='byond://?src=\ref[src];unsec_system=1'>[src.installed_parts[POD_PART_SECONDARY]]</A>"
+	if(src.get_part(POD_PART_SECONDARY))
+		dat += "<A href='byond://?src=\ref[src];unsec_system=1'>[src.get_part(POD_PART_SECONDARY)]</A>"
 	else
 		dat += "None Installed"
 	////Lights System
 	dat += "<HR><B>Lights System</B>: "
-	if(src.installed_parts[POD_PART_LIGHTS])
-		dat += "<A href='byond://?src=\ref[src];unlights=1'>[src.installed_parts[POD_PART_LIGHTS]]</A>"
+	if(src.get_part(POD_PART_LIGHTS))
+		dat += "<A href='byond://?src=\ref[src];unlights=1'>[src.get_part(POD_PART_LIGHTS)]</A>"
 	else
 		dat += "None Installed"
 	////Locking System
 	dat += "<HR><B>Locking System</B>: "
-	if(src.installed_parts[POD_PART_LOCK])
-		dat += "<A href='byond://?src=\ref[src];un_lock=1'>[src.installed_parts[POD_PART_LOCK]]</A>"
+	if(src.get_part(POD_PART_LOCK))
+		dat += "<A href='byond://?src=\ref[src];un_lock=1'>[src.get_part(POD_PART_LOCK)]</A>"
 	else
 		dat += "None Installed"
 
@@ -1462,18 +1456,18 @@
 	src.atmostank = new /obj/item/tank/air(src)
 	src.install_part(null, new /obj/item/shipcomponent/life_support(src), POD_PART_LIFE_SUPPORT, FALSE)
 	/////Com-System Setup
-	src.intercom = new /obj/item/device/radio/intercom/ship( src )
+	src.intercom = new /obj/item/device/radio/intercom/ship(src)
 	//src.intercom.icon_state = src.icon_state
 	src.install_part(null, new src.init_comms_type(src), POD_PART_COMMS, FALSE)
 	///// Sensor System Setup
 	src.install_part(null, new /obj/item/shipcomponent/sensor(src), POD_PART_SENSORS, FALSE)
+	///// Lights Subsystem
+	src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_1x1(src), POD_PART_LIGHTS, FALSE)
+	// src.get_part(POD_PART_ENGINE).deactivate() // gotta not use up all that fuel!
 	myhud.update_systems()
 	myhud.update_states()
 	myhud.update_health()
 	myhud.update_fuel()
-	///// Lights Subsystem
-	src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_1x1(src), POD_PART_LIGHTS, FALSE)
-	src.get_part(POD_PART_ENGINE).deactivate() // gotta not use up all that fuel!
 
 	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
@@ -1655,7 +1649,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	icon_state = "minisub_body"
 	numbers_in_name = FALSE
 	var/body_type = "minisub"
-	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
+	// var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
@@ -1681,29 +1675,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
-
-	install_part(var/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE)
-		if(part.system == "Locomotion")
-			if (istype(src,/obj/machinery/vehicle/tank))
-				var/obj/machinery/vehicle/tank/T = src
-				if (!T.locomotion)
-					T.locomotion = part
-					T.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]"), "locomotion")
-				else
-					if (usr) //Occuring during gameplay
-						boutput(usr, "That system already has a part!")
-					return
-		..(part)
-
-		 //lol
-		if (part.system == "Locomotion")
-			src.locomotion.activate()
-
-	proc/remove_locomotion()
-		if (src.locomotion)
-			src.eject_part(POD_PART_LOCOMOTION)
-			src.UpdateOverlays(null, "locomotion")
-			src.locomotion = null
 
 /obj/machinery/vehicle/tank/minisub
 	name = "minisub"

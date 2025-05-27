@@ -17,8 +17,8 @@
 	proc/pre_attackby(source, atom/target, mob/user)
 		if (!isobj(target))
 			return
-		if(istype(target, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/vehicle = target
+		if(istype(target, /obj/machinery/vehicle/tank))
+			var/obj/machinery/vehicle/tank/vehicle = target
 			vehicle.install_part(user, src, POD_PART_LOCOMOTION)
 			return ATTACK_PRE_DONT_ATTACK
 
@@ -27,6 +27,16 @@
 		if (src.active == 1 && ship)
 			var/path = text2path("/datum/movement_controller/tank/[movement_controller_type]")
 			ship.movement_controller = new path(ship)
+
+	ship_install()
+		..()
+		if(istype(src.ship, /obj/machinery/vehicle/tank))
+			var/obj/machinery/vehicle/tank/tank = src.ship
+			tank.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[tank.body_type]_[src.appearanceString]"), "locomotion")
+
+	ship_uninstall()
+		. = ..()
+		src.ship.UpdateOverlays(null, "locomotion")
 
 /obj/item/shipcomponent/locomotion/treads
 	name = "Treads"

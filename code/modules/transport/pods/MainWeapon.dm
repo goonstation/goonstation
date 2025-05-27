@@ -38,8 +38,14 @@
 			return ATTACK_PRE_DONT_ATTACK
 
 	ship_install()
+		..()
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
 			src.ship.UpdateOverlays(image('icons/effects/64x64.dmi', "[src.appearanceString]"), "mainweapon")
+
+	ship_uninstall()
+		..()
+		if (src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(null, POD_PART_MAIN_WEAPON)
 
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)

@@ -41,8 +41,9 @@
 			return
 		ship.powercapacity = src.powergenerated
 		src.ship.speedmod *= src.engine_speed
-		src.engine_icon.icon_state = "[src.icon_state]-on"
-		ship.UpdateOverlays(src.engine_icon, "engine")
+		if(src.engine_icon) // Vehicles might not have an engine overlay
+			src.engine_icon.icon_state = "[src.icon_state]-on"
+			ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 	////Warp requires recharge time
 	ready()
@@ -59,8 +60,9 @@
 			var/obj/item/shipcomponent/part = ship.get_part(part_slot)
 			if(part?.active)
 				part.deactivate()
-		src.engine_icon.icon_state = "[src.icon_state]-off"
-		ship.UpdateOverlays(src.engine_icon, "engine")
+		if(src.engine_icon)
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+			ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 
 	opencomputer(mob/user as mob)
@@ -95,6 +97,7 @@
 
 	ship_uninstall()
 		ship.ClearSpecificOverlays("engine")
+		src.engine_icon = null // In case the next vehicle does not have an engine overlay
 		..()
 
 /obj/item/shipcomponent/engine/proc/Wormhole()

@@ -52,7 +52,7 @@
 			if (!owner.get_part(POD_PART_ENGINE)) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
 				return
-			if (istype(owner,/obj/machinery/vehicle/tank) && !owner:locomotion)
+			if (istype(owner,/obj/machinery/vehicle/tank) && !owner.get_part(POD_PART_LOCOMOTION))
 				boutput(user, "[owner.ship_message("WARNING! No locomotion detected!")]")
 				return
 
