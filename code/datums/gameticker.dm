@@ -480,9 +480,11 @@ var/global/game_force_started = FALSE
 				var/cpu_low = ((world.cpu <= TICKLAG_CPU_MIN) && (pred_cpu_low < TICKLAG_CPU_MAX))
 
 				if (cpu_over_high || cpu_over_predicted)
-					++highCpuCount
+					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						++highCpuCount
 				else if (cpu_low)
-					--highCpuCount
+					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						--highCpuCount
 
 				// Map-CPU counters
 				var/map_over_high = (world.map_cpu >= TICKLAG_MAPCPU_MAX)
@@ -490,9 +492,11 @@ var/global/game_force_started = FALSE
 				var/map_low = ((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (pred_map_low < TICKLAG_MAPCPU_MAX))
 
 				if (map_over_high || map_over_predicted)
-					++highMapCpuCount
+					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						++highMapCpuCount
 				else if (map_low)
-					--highMapCpuCount
+					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						--highMapCpuCount
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag
