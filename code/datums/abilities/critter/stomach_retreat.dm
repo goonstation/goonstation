@@ -48,7 +48,7 @@
 		abil.inside = TRUE
 		boutput(parent, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
 		current_container = holder.owner.loc
-		current_container.present_mimic = mimic
+		current_container.present_mimic = parent
 		parent.set_loc(parent.stomachHolder.center)
 		RegisterSignal(current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
 		last_appearance = parent.appearance
