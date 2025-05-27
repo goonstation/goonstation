@@ -402,7 +402,13 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("profile-file-export")
+#ifndef LIVE_SERVER
+				var/response = tgui_alert(ui.user, "You are exporting on a server that doesn't have the ability to properly salt your character file. This character file will not be able to be imported on the live servers.", "NO SALT FOUND", list("Continue", "Cancel"))
+				if (response == "Continue")
+					src.profile_export()
+#else
 				src.profile_export()
+#endif
 
 			if ("profile-file-import")
 				src.profile_import()
