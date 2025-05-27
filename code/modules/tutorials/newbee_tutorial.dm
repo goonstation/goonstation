@@ -18,9 +18,9 @@
 /// Highlights the Harm intent
 #define NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM "intent_harm"
 /// Highlights the Stand intent
-#define NEWBEE_TUTORIAL_MARKER_HUD_STAND "stand"
+#define NEWBEE_TUTORIAL_MARKER_HUD_STAND "lower_half"
 /// Highlights the Pull intent
-#define NEWBEE_TUTORIAL_MARKER_HUD_PULL "pull"
+#define NEWBEE_TUTORIAL_MARKER_HUD_PULL "upper_half"
 
 // Sidebars
 
