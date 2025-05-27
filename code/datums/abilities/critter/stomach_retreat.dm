@@ -42,8 +42,8 @@
 
 	proc/activate()
 		var/mob/living/critter/parent = holder.owner
-		if (!parent.stomachHolder)
-			return
+		if (!parent.stomachHolder) // give the owner a stomach if they don't have one
+			parent.AddComponent(/datum/component/mimic_stomach/)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = TRUE
 		boutput(parent, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
