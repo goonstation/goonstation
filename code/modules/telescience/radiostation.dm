@@ -543,8 +543,9 @@ ABSTRACT_TYPE(/obj/item/record/random)
 
 /obj/item/record/random/clowncollege
 	name = "record - \"Clown College Fight Song\""  // This needs a better name
-	record_name = "Clown College Fight Song"
+	desc = "A fairly large record that has been scribbled on with crayon. It feels out of place."
 	song = 'sound/radio_station/music/clowncollege.ogg'
+	contraband = 4
 
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
