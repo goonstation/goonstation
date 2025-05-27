@@ -51,6 +51,9 @@
 
 	proc/move_storage_contents_to_turf()
 		for (var/atom/movable/AM as anything in src)
+			if(AM == src || AM.invisibility || AM.anchored)
+				continue
+			continue_if_overlay_or_effect(AM)
 			AM.set_loc(parent_turf)
 
 		src.has_buried_mob = FALSE
