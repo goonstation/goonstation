@@ -27,13 +27,13 @@
 						boutput(holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
 						return TRUE
 					// Attempt entry via disposal machinery OR a disconnected disposal pipe
-					if (target_container.type in trap_whitelist)
+					if (target_container.present_mimic)
+						boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
+						return TRUE
+					if (istypes(target_container, trap_whitelist))
 						current_container = target_container
 						current_container.present_mimic = holder.owner
 						activate()
-					else if (target_container.present_mimic)
-						boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
-						return TRUE
 					else
 						boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
 						return TRUE
@@ -56,7 +56,7 @@
 	proc/deactivate()
 		var/mob/living/critter/mimic/antag_spawn/mimic = holder.owner
 		var/datum/targetable/critter/stomach_retreat/abil = mimic.getAbility(/datum/targetable/critter/stomach_retreat)
-		abil.inside = TRUE
+		abil.inside = FALSE
 		abil.afterAction()
 		holder.owner.visible_message(SPAN_ALERT("<b>[mimic] turns themself outside in!</b>"))
 		mimic.set_loc(current_container)
