@@ -1094,7 +1094,6 @@ var/list/removed_jobs = list(
 #ifdef LIVE_SERVER
 		var/hash
 		file["hash"] >> hash
-		file["hash"] << null
 		return hash == sha1("[sha1(file.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
 #else
 		return TRUE //we're on a local, accept any old character imports
