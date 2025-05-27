@@ -541,6 +541,11 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	record_name = "december"
 	song = "sound/radio_station/music/december.xm"
 
+/obj/item/record/random/clowncollege
+	name = "record - \"Clown College Fight Song\""  // This needs a better name
+	record_name = "Clown College Fight Song"
+	song = 'sound/radio_station/music/clowncollege.ogg'
+
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
