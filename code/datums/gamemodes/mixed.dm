@@ -11,7 +11,7 @@
 	var/has_wizards = TRUE
 	var/has_werewolves = TRUE
 
-	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 0.5, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1, ROLE_SALVAGER = 1)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 0.5, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1, ROLE_SALVAGER = 0.5)
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
