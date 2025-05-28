@@ -1,5 +1,4 @@
 //attempts to make each cooking recipe, to ensure they are all reachable
-TEST_FOCUS(/datum/unit_test/recipe_picker)
 /datum/unit_test/recipe_picker/Run()
 	var/obj/machinery/cookingmachine/oven/test_oven = new /obj/machinery/cookingmachine/oven
 	var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
