@@ -15,11 +15,10 @@
 
 	var/obj/item/tank/atmostank = null // provides the air for the passengers
 	var/obj/item/tank/fueltank = null // provides fuel, different mixes affect engine performance
-	// var/list/obj/components = list() //List of current components in ship
+	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
+
 	var/list/obj/item/shipcomponent/installed_parts = list(POD_PART_ENGINE=null, POD_PART_LIFE_SUPPORT=null, POD_PART_COMMS=null, \
 		POD_PART_MAIN_WEAPON=null, POD_PART_SECONDARY=null, POD_PART_SENSORS=null, POD_PART_LOCK=null, POD_PART_LIGHTS=null)
-
-	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 
 	/// brake toggle
 	var/rcs = TRUE
@@ -278,6 +277,11 @@
 			src.myhud.update_states()
 		return TRUE
 
+	/// Returns the part currently installed in the specified slot, if any
+	proc/get_part(var/slot)
+		RETURN_TYPE(/obj/item/shipcomponent)
+		return src.installed_parts[slot]
+
 	/// Check if the part can be used before returning it
 	proc/get_usable_part(var/mob/user, var/slot)
 		RETURN_TYPE(/obj/item/shipcomponent)
@@ -296,10 +300,6 @@
 			return null
 		return part
 
-	proc/get_part(var/slot)
-		RETURN_TYPE(/obj/item/shipcomponent)
-		return src.installed_parts[slot]
-
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -308,49 +308,15 @@
 		//////////////////////////////////////
 		if (usr.loc == src)
 			src.add_dialog(usr)
-			if (href_list["dengine"])
-				if (usr != pilot)
+			if(href_list["deactivate"])
+				if(href_list["deactivate"] == POD_PART_ENGINE && usr != pilot)
 					boutput(usr, "[ship_message("Only the pilot may do this!")]")
 					return
-				src.get_part(POD_PART_ENGINE).deactivate()
-			else if (href_list["aengine"])
-				src.get_part(POD_PART_ENGINE).activate()
-			else if (href_list["dlife_support"])
-				src.get_part(POD_PART_LIFE_SUPPORT).deactivate()
-			else if (href_list["alife_support"])
-				src.get_part(POD_PART_LIFE_SUPPORT).activate()
-			else if (href_list["acomms"])
-				src.get_part(POD_PART_COMMS).activate()
-			else if (href_list["dcomms"])
-				src.get_part(POD_PART_COMMS).deactivate()
-			else if (href_list["amain_weapon"])
-				src.get_part(POD_PART_MAIN_WEAPON).activate()
-			else if (href_list["dmain_weapon"])
-				src.get_part(POD_PART_MAIN_WEAPON).deactivate()
-			else if (href_list["asensors"])
-				src.get_part(POD_PART_SENSORS).activate()
-			else if (href_list["dsensors"])
-				src.get_part(POD_PART_SENSORS).deactivate()
-			else if (href_list["asec_system"])
-				src.get_part(POD_PART_SECONDARY).activate()
-			else if (href_list["dsec_system"])
-				src.get_part(POD_PART_SECONDARY).deactivate()
-			else if (href_list["alights"])
-				src.get_part(POD_PART_LIGHTS).activate()
-			else if (href_list["dlights"])
-				src.get_part(POD_PART_LIGHTS).deactivate()
-			else if (href_list["commscomp"])
-				src.get_part(POD_PART_COMMS).opencomputer(usr)
-			else if (href_list["main_weaponcomp"])
-				src.get_part(POD_PART_MAIN_WEAPON).opencomputer(usr)
-			else if (href_list["enginecomp"])
-				src.get_part(POD_PART_ENGINE).opencomputer(usr)
-			else if (href_list["sensorcomp"])
-				src.get_part(POD_PART_SENSORS).opencomputer(usr)
-			else if (href_list["sec_systemcomp"])
-				src.get_part(POD_PART_SECONDARY).opencomputer(usr)
-			else if (href_list["lightscomp"])
-				src.get_part(POD_PART_LIGHTS).opencomputer(usr)
+				src.get_part(href_list["deactivate"])?.deactivate()
+			else if(href_list["activate"])
+				src.get_part(href_list["activate"])?.activate()
+			else if (href_list["opencomp"])
+				src.get_part(href_list["opencomp"])?.opencomputer(usr)
 
 			src.updateDialog()
 			src.add_fingerprint(usr)
@@ -1404,11 +1370,11 @@
 		if(!part)
 			continue
 		if(part.active)
-			dat += {"<HR><B>[part.system]</B>: <I><A href='byond://?src=\ref[src];[slot]comp=1'>[part]</A></I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];d[slot]=1'>(Deactivate)</A>"}
+			dat += {"<HR><B>[part.system]</B>: <I><A href='byond://?src=\ref[src];opencomp=[slot]'>[part]</A></I>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];deactivate=[slot]'>(Deactivate)</A>"}
 		else
 			dat += {"<HR><B>[part.system]</B>: <I>[part]</I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];a[slot]=1'>(Activate)</A>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];activate=[slot]'>(Activate)</A>"}
 		if(slot != POD_PART_ENGINE) // Engine power used should be zero, but just in case
 			dat+={"([part.power_used])<BR>"}
 

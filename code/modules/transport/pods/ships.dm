@@ -999,7 +999,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speedmod = 1.11
-	init_comms_type = /obj/item/shipcomponent/communications
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"

@@ -20,7 +20,6 @@
 	var/disrupted = FALSE
 	/// Can this part be used by 2x2 pods
 	var/large_pod_compatible = TRUE
-	var/default_slot = "" //! Which slot to install this part if not otherwise specified
 
 	New()
 		..()

@@ -30,7 +30,7 @@
 			boutput(user, "Weapons cannot be installed in this ship!")
 			return FALSE
 		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
-		if(!current_weapon.removable)
+		if(current_weapon && !current_weapon.removable)
 			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
 			return FALSE
 		return TRUE
