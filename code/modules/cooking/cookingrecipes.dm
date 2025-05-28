@@ -98,6 +98,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
 
 /datum/cookingrecipe/oven/burger/cheeseburger/monkey
+	priority = PRIORITY_HIGHER //conflicts with normal cheeseburgers
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1,
