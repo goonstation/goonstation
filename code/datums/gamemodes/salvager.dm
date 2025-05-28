@@ -91,7 +91,7 @@
 		equip_antag(salvager)
 	#ifndef RP_MODE
 	for (var/datum/mind/other in distractions)
-		equip_antag(other)
+		other.add_antagonist(other.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 	#endif
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
