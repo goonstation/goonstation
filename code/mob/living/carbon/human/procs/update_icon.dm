@@ -1144,7 +1144,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				src.body_standing.overlays += makeup_image
 
 			if (src.blush && src.blush_color)
-				blush_image.icon_state = "blush"
+				blush_image.icon_state = "blush[src.blush]"
 				blush_image.color = src.blush_color
 				blush_image.pixel_y = eye_offset
 				src.body_standing.overlays += blush_image

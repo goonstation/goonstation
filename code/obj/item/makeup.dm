@@ -38,7 +38,9 @@
 	onInterrupt(var/flag)
 		..()
 		if (prob(owner == target ? 50 : 60))
-			target.blush = 0
+			target.blush = 2
+			target.blush_color = blush.makeup_color
+			target.update_body()
 			for (var/mob/O in AIviewers(owner))
 				O.show_message(SPAN_ALERT("[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!"), 1)
 
