@@ -830,8 +830,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	New()
 		..()
-		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON, FALSE)
-		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/pw_id(src), POD_PART_LOCK, FALSE)
+		/obj/item/shipcomponent/mainweapon/phaser/short
+		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON, weap_class_override = TRUE)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/pw_id(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -842,7 +843,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// src.sensors = new /obj/item/shipcomponent/sensor/mining( src )
 		// src.sensors.ship = src
 		// src.components += src.sensors
-		src.install_part(null, new /obj/item/shipcomponent/secondary_system/orescoop(src), POD_PART_MAIN_WEAPON, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/orescoop(src), POD_PART_SECONDARY)
 
 
 	nanotrasen

@@ -254,14 +254,14 @@
 		return FALSE
 
 	/// Use this proc to install a part onto the ship. Returns TRUE if successful.
-	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE)
+	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE, var/weap_class_override = FALSE)
 		if(src.get_part(slot))
 			if(eject)
 				src.eject_part(user, slot)
 			else
 				boutput(usr, "That system already has a part!")
 				return FALSE
-		if(slot == "main_weapon" && src.weapon_class == 0)
+		if(slot == "main_weapon" && src.weapon_class == 0 && !weap_class_override)
 			boutput(usr, "Weapons cannot be installed in this ship!")
 			return FALSE
 		if(user) //This mean it's going on during the game!
@@ -273,8 +273,8 @@
 		part.ship_install()
 		if(activate)
 			part.activate()
-		myhud.update_systems()
-		myhud.update_states()
+		myhud?.update_systems()
+		myhud?.update_states()
 		return TRUE
 
 	/// Check if the part can be used before returning it
@@ -764,7 +764,7 @@
 		if(src.installed_parts)
 			for(var/slot_type in src.installed_parts)
 				var/obj/part = src.installed_parts[slot_type]
-				part.dispose()
+				part?.dispose()
 		src.installed_parts.len = 0
 		src.installed_parts = null
 		src.atmostank = null
@@ -1649,7 +1649,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	icon_state = "minisub_body"
 	numbers_in_name = FALSE
 	var/body_type = "minisub"
-	// var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100

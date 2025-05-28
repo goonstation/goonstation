@@ -33,6 +33,7 @@
 		if(istype(src.ship, /obj/machinery/vehicle/tank))
 			var/obj/machinery/vehicle/tank/tank = src.ship
 			tank.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[tank.body_type]_[src.appearanceString]"), "locomotion")
+		src.activate() // Locomotion should always be active
 
 	ship_uninstall()
 		. = ..()
