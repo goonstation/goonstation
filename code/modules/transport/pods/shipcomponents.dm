@@ -28,9 +28,11 @@
 	proc/pre_attackby(source, atom/target, mob/user)
 		if (istype(target, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/vehicle = target
+			if(vehicle.locked)
+				boutput(user, SPAN_ALERT("Cannot modify [vehicle] while it is locked."))
 			if(src.can_install(user, vehicle))
 				vehicle.install_part(user, src, src.get_install_slot(vehicle))
-				return ATTACK_PRE_DONT_ATTACK
+			return ATTACK_PRE_DONT_ATTACK
 
 	/// Return true if the part can be installed into this vehicle. False if not.
 	proc/can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)

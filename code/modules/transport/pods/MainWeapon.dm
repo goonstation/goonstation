@@ -27,7 +27,7 @@
 
 	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
 		if(vehicle.weapon_class == 0)
-			boutput(user, "Weapons cannot be installed in this ship!")
+			boutput(user, SPAN_ALERT("Weapons cannot be installed in this ship!"))
 			return FALSE
 		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
 		if(current_weapon && !current_weapon.removable)
