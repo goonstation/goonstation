@@ -6,7 +6,7 @@
 	antag_token_support = TRUE
 	has_werewolves = TRUE
 	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WEREWOLF = 1)
-	major_threats = list(ROLE_WRAITH)
+	major_threats = list(ROLE_WRAITH = 1)
 
 /datum/game_mode/mixed/mixed_rp/announce()
 	boutput(world, "<B>The current game mode is - Mixed Spooky!</B>")
