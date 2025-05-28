@@ -145,6 +145,7 @@
 			if(ROLE_SALVAGER)
 				traitors += tplayer
 				token_players.Remove(tplayer)
+				tplayer.assigned_role = "MODE"
 				tplayer.special_role = ROLE_SALVAGER
 
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
@@ -228,6 +229,7 @@
 		var/list/chosen_salvagers = antagWeighter.choose(pool = possible_salvagers, role = ROLE_SALVAGER, amount = num_salvagers, recordChosen = 1)
 		for (var/datum/mind/salvager in chosen_salvagers)
 			traitors += salvager
+			salvager.assigned_role = "MODE"
 			salvager.special_role = ROLE_SALVAGER
 			possible_salvagers.Remove(salvager)
 
