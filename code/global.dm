@@ -479,7 +479,10 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "\
+		[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful","Treason")]\
+		[pick("-"," ")]\
+		[pick("Credits","Bux","Tokens","Cash","Dollars","Crystals","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees","Coins")]"
 
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 
