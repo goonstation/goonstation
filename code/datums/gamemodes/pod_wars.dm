@@ -831,7 +831,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	New()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
-		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON, weap_class_override = TRUE)
+		src.install_part(null, new weapon_type(src), POD_PART_MAIN_WEAPON)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/pw_id(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()

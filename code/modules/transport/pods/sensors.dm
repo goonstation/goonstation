@@ -33,17 +33,8 @@
 	var/same_z_level = 0
 	var/trackable_range = 0
 
-	New()
-		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
-
-	proc/pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
-			return
-		if(istype(target, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/vehicle = target
-			vehicle.install_part(user, src, POD_PART_SENSORS)
-			return ATTACK_PRE_DONT_ATTACK
+	get_install_slot()
+		return POD_PART_SENSORS
 
 	disposing()
 		stop_tracking_me()

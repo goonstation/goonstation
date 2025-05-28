@@ -7,17 +7,8 @@
 	var/hud_state = "blank"
 	icon_state= "sec_system"
 
-	New()
-		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
-
-	proc/pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
-			return
-		if(istype(target, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/vehicle = target
-			vehicle.install_part(user, src, POD_PART_SECONDARY)
-			return ATTACK_PRE_DONT_ATTACK
+	get_install_slot()
+		return POD_PART_SECONDARY
 
 	proc/Use(mob/user as mob)
 		boutput(user, "[ship.ship_message("No special function for this ship!")]")
@@ -874,6 +865,9 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	var/code = ""
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
 	var/can_reset = TRUE //! Can you reset the code for this lock?
+
+	get_install_slot()
+		return POD_PART_LOCK
 
 	disposing()
 		if (ship)

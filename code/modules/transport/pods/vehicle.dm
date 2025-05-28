@@ -254,16 +254,16 @@
 		return FALSE
 
 	/// Use this proc to install a part onto the ship. Returns TRUE if successful.
-	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE, var/weap_class_override = FALSE)
+	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE)
+		if(!slot)
+			boutput(usr, "Report dev error! Slot not found.")
+			return FALSE
 		if(src.get_part(slot))
 			if(eject)
 				src.eject_part(user, slot)
 			else
 				boutput(usr, "That system already has a part!")
 				return FALSE
-		if(slot == "main_weapon" && src.weapon_class == 0 && !weap_class_override)
-			boutput(usr, "Weapons cannot be installed in this ship!")
-			return FALSE
 		if(user) //This mean it's going on during the game!
 			user.drop_item(part)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
@@ -273,8 +273,9 @@
 		part.ship_install()
 		if(activate)
 			part.activate()
-		myhud?.update_systems()
-		myhud?.update_states()
+		if(src.myhud)
+			src.myhud.update_systems()
+			src.myhud.update_states()
 		return TRUE
 
 	/// Check if the part can be used before returning it
@@ -397,7 +398,7 @@
 				if(!main_weapon.removable)
 					boutput(usr, SPAN_ALERT("[main_weapon] is fused to the hull and cannot be removed."))
 					return
-				if(src.eject_part(POD_PART_MAIN_WEAPON))
+				if(src.eject_part(usr, POD_PART_MAIN_WEAPON))
 					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([main_weapon]) from [src] at [log_loc(src)]")
 			else if (href_list["unloco"])
 				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_LOCOMOTION)

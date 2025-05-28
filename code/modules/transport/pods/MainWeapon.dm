@@ -25,17 +25,18 @@
 	power_used = 65
 	system = "Main Weapon"
 
-	New()
-		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(vehicle.weapon_class == 0)
+			boutput(user, "Weapons cannot be installed in this ship!")
+			return FALSE
+		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
+		if(!current_weapon.removable)
+			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
+			return FALSE
+		return TRUE
 
-	proc/pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
-			return
-		if(istype(target, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/vehicle = target
-			vehicle.install_part(user, src, POD_PART_MAIN_WEAPON)
-			return ATTACK_PRE_DONT_ATTACK
+	get_install_slot()
+		return POD_PART_MAIN_WEAPON
 
 	ship_install()
 		..()
@@ -45,7 +46,7 @@
 	ship_uninstall()
 		..()
 		if (src.ship.uses_weapon_overlays && src.appearanceString)
-			src.ship.UpdateOverlays(null, POD_PART_MAIN_WEAPON)
+			src.ship.UpdateOverlays(null, "mainweapon")
 
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)

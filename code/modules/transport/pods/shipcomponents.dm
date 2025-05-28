@@ -22,6 +22,25 @@
 	var/large_pod_compatible = TRUE
 	var/default_slot = "" //! Which slot to install this part if not otherwise specified
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			if(src.can_install(user, vehicle))
+				vehicle.install_part(user, src, src.get_install_slot(vehicle))
+				return ATTACK_PRE_DONT_ATTACK
+
+	/// Return true if the part can be installed into this vehicle. False if not.
+	proc/can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		return TRUE
+
+	/// Return the slot to install the part in if it can be installed
+	proc/get_install_slot()
+		return null
+
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
 	if(ship)

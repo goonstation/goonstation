@@ -10,17 +10,13 @@
 	var/appearanceString = "minisub_treads"
 	var/movement_controller_type = "treads"
 
-	New()
-		..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(istype(vehicle, /obj/machinery/vehicle/tank))
+			return TRUE
+		return FALSE
 
-	proc/pre_attackby(source, atom/target, mob/user)
-		if (!isobj(target))
-			return
-		if(istype(target, /obj/machinery/vehicle/tank))
-			var/obj/machinery/vehicle/tank/vehicle = target
-			vehicle.install_part(user, src, POD_PART_LOCOMOTION)
-			return ATTACK_PRE_DONT_ATTACK
+	get_install_slot()
+		return POD_PART_LOCOMOTION
 
 	activate()
 		..()
