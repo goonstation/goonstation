@@ -90,8 +90,6 @@
 	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
 	/// How broken is our pipe.
 	var/ruptured = 0
-	/// Are we destroyed and need replacement?
-	var/destroyed = FALSE
 	/// Are we currently in a disconnected state?
 	var/disconnected = FALSE
 	var/initial_icon_state = null //what do i change back to when repaired???
@@ -148,34 +146,16 @@
 	UpdateIcon()
 	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
-/// Rebuilds pipe from completely destroyed state to disconnected state.
-/obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe(mob/M, obj/item/rods/R)
-	if(istype(R) && istype(M))
-		R.change_stack_amount(-1)
-		src.setMaterial(R.material)
-		src.destroyed = FALSE
-		src.disconnected = TRUE
-		// create valid edges back to us and rebuild from here out to merge pipeline(s)
-		src.initialize()
-		src?.node1.initialize()
-		src?.node2.initialize()
-		src.parent.build_pipeline(src)
-		src.icon_state = "disco"
-		src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
-
 /// Ruptures the pipe, with varying levels of leakage.
 /obj/machinery/atmospherics/pipe/simple/proc/rupture(pressure, destroy=FALSE)
 	var/new_rupture
-	if (src.destroyed || destroy)
-		ruptured = 10
-		src.destroyed = TRUE
-		src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
+	if (destroy)
 		parent?.mingle_with_turf(loc, volume)
 		node1?.disconnect(src)
 		node2?.disconnect(src)
 		src.node1 = null
 		src.node2 = null
-		UpdateIcon()
+		qdel(src)
 		return
 
 	if(pressure && src.fatigue_pressure)
@@ -197,10 +177,6 @@
 
 	var/datum/gas_mixture/hi_side = gas
 	var/datum/gas_mixture/lo_side = environment
-
-	if(destroyed)
-		parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
-		return
 
 	// vacuum
 	if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
@@ -293,12 +269,9 @@
 /obj/machinery/atmospherics/pipe/simple/ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 	switch(severity)
 		if(1)
-			if(prob(5))
-				qdel(src)
-			else
-				rupture(destroy=TRUE)
+			qdel(src)
 		if(2)
-			if(prob(10))
+			if(prob(30))
 				rupture(destroy=TRUE)
 			else
 				rupture()
@@ -312,9 +285,6 @@
 		if(!ruptured)
 			boutput(user, SPAN_ALERT("That isn't damaged!"))
 			return
-		else if(destroyed)
-			boutput(user, SPAN_ALERT("This needs more than just a welder. We need to make a new pipe!"))
-			return
 
 		if(!W:try_weld(user, 0.8, noisy=2))
 			return
@@ -325,19 +295,10 @@
 		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
 				list(user), SPAN_NOTICE("[user] repairs the [src.name]."), positions[1], positions[2]),user)
 
-	else if(destroyed && istype(W, /obj/item/rods))
-		var/duration = 15 SECONDS
-		if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
-			duration = round(duration / 2)
-		var/obj/item/rods/S = W
-		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-		list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
-		actions.start(action_bar, user)
-
 	else if (istype(W, /obj/item/sheet))
 		if (actions.hasAction(user, /datum/action/bar/private/welding))
 			return
-		if (src.destroyed || src.ruptured)
+		if (src.ruptured)
 			boutput(user, SPAN_ALERT("You should repair [src] first."))
 			return
 		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
@@ -378,16 +339,9 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
-	. = list(node1, node2)
-	if(destroyed)
-		. = list(null, null)
+	return list(node1, node2)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	if(destroyed)
-		icon_state = "destroyed"
-		src.ClearSpecificOverlays("1", "2", "4", "8")
-		return
-
 	if(disconnected)
 		return
 	if(ruptured)

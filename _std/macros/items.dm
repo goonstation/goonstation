@@ -8,6 +8,7 @@
 #define ispryingtool(x) (istool(x, TOOL_PRYING))
 #define ispulsingtool(x) (istool(x, TOOL_PULSING))
 #define issawingtool(x) (istool(x, TOOL_SAWING))
+#define isdeconstructingtool(x) (istool(x, TOOL_DECONSTRUCTING))
 #define isscrewingtool(x) (istool(x, TOOL_SCREWING) || (istype(x, /obj/item/reagent_containers) && x:reagents:has_reagent("screwdriver")) ) //the joke is too good
 #define issnippingtool(x) (istool(x, TOOL_SNIPPING))
 #define isspooningtool(x) (istool(x, TOOL_SPOONING))

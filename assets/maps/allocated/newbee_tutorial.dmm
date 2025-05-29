@@ -19,11 +19,6 @@
 	},
 /turf/unsimulated/floor/greenblack,
 /area/tutorial/newbee/room_11)
-"aK" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 8
-	},
-/area/tutorial/newbee)
 "aQ" = (
 /turf/unsimulated/floor/escape{
 	dir = 10
@@ -51,7 +46,7 @@
 /area/tutorial/newbee/room_6)
 "bN" = (
 /obj/table/reinforced/auto,
-/obj/item/wrench,
+/obj/landmark/newbee/pickup_wrench,
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_12)
 "bW" = (
@@ -61,26 +56,37 @@
 	},
 /turf/unsimulated/floor,
 /area/tutorial/newbee/unpowered)
+"bZ" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
+"cn" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_7)
 "cE" = (
 /turf/simulated/wall/false_wall/centcom{
 	dir = 1
 	},
 /area/tutorial/newbee/room_13)
+"cR" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "cT" = (
 /obj/decal/cleanable/blood/splatter,
+/obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "dF" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bluegreen/side{
+/turf/unsimulated/floor/bluegreen/side{
 	dir = 1
 	},
 /area/tutorial/newbee/room_9)
-"dK" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 1
-	},
-/area/tutorial/newbee)
 "dR" = (
 /turf/unsimulated/floor/arrival{
 	dir = 1
@@ -93,14 +99,22 @@
 /area/tutorial/newbee)
 "ek" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/item/storage/firstaid/toxin,
-/mob/living/critter/spider/clownqueen,
+/obj/disposaloutlet/south,
+/obj/disposalpipe/trunk/regular/south,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "eo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_9)
+"eE" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_4)
+"eO" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_6)
 "fe" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_backpack,
@@ -110,6 +124,11 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/darkbluewhite,
 /area/tutorial/newbee/room_7)
+"fm" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "fK" = (
 /turf/unsimulated/wall/setpieces/leadwindow/full{
 	dir = 4
@@ -120,6 +139,7 @@
 	dir = 4
 	},
 /obj/landmark/newbee/exit_healing,
+/obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_6)
 "gb" = (
@@ -152,13 +172,17 @@
 	dir = 4
 	},
 /obj/landmark/newbee/enter_space,
-/turf/simulated/floor/bluegreen,
+/turf/unsimulated/floor/bluegreen,
 /area/tutorial/newbee/room_10)
 "gx" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_id_card,
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_2)
+"gI" = (
+/obj/cable/auto,
+/turf/unsimulated/floor/bluegreen,
+/area/tutorial/newbee/room_9)
 "gL" = (
 /turf/unsimulated/floor/black/corner,
 /area/tutorial/newbee/room_2)
@@ -168,33 +192,31 @@
 	dir = 6
 	},
 /area/tutorial/newbee/room_4)
-"he" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap{
-	dir = 4
-	},
-/area/tutorial/newbee)
+"hn" = (
+/obj/disposalpipe/segment/bent/south,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "ho" = (
 /turf/unsimulated/wall/setpieces/leadwindow/full,
 /area/tutorial/newbee)
 "hy" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/structure/girder,
+/obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "hC" = (
 /obj/health_scanner/floor,
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_11)
-"il" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 1
-	},
-/area/tutorial/newbee)
 "in" = (
 /obj/landmark/newbee/enter_maints,
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable/auto,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "iv" = (
@@ -205,7 +227,7 @@
 /area/tutorial/newbee/room_12)
 "iw" = (
 /obj/landmark/newbee/decon_wall,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/supernorn/tutorial,
 /area/tutorial/newbee/room_13)
 "iC" = (
 /obj/machinery/light/incandescent,
@@ -213,6 +235,11 @@
 	dir = 1
 	},
 /area/tutorial/newbee/room_3)
+"iR" = (
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "iZ" = (
 /turf/unsimulated/floor/orange/side{
 	dir = 6
@@ -225,6 +252,7 @@
 /area/tutorial/newbee/room_5)
 "jH" = (
 /obj/decal/cleanable/dirt,
+/obj/cable/auto,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "jJ" = (
@@ -237,6 +265,10 @@
 	dir = 1
 	},
 /area/tutorial/newbee/room_12)
+"kH" = (
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "kK" = (
 /obj/item/scrapweapons/weapons/spear/glass,
 /turf/unsimulated/floor,
@@ -250,7 +282,7 @@
 /obj/decal/poster/wallsign/space{
 	pixel_x = -32
 	},
-/turf/simulated/floor/bluegreen/side{
+/turf/unsimulated/floor/bluegreen/side{
 	dir = 4
 	},
 /area/tutorial/newbee/room_9)
@@ -260,6 +292,7 @@
 /area/tutorial/newbee/room_8)
 "lI" = (
 /obj/decal/cleanable/blood/tracks,
+/obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "me" = (
@@ -270,6 +303,10 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/yellow/checker,
 /area/tutorial/newbee/room_13)
+"mP" = (
+/obj/machinery/light/small/frostedred,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "mS" = (
 /obj/landmark/newbee/disarm_person,
 /turf/unsimulated/floor/orange/side{
@@ -335,12 +372,17 @@
 "oB" = (
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_15)
+"oJ" = (
+/obj/item/bananapeel,
+/turf/unsimulated/floor/yellow/checker,
+/area/tutorial/newbee/room_13)
 "oK" = (
 /obj/health_scanner/floor,
+/obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/floor/blue,
 /area/tutorial/newbee/room_5)
 "oX" = (
-/turf/simulated/floor/bluegreen/corner{
+/turf/unsimulated/floor/bluegreen/corner{
 	dir = 8
 	},
 /area/tutorial/newbee/room_9)
@@ -351,14 +393,16 @@
 "pe" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
-/area/tutorial/newbee/room_11)
+/area/tutorial/newbee/room_10)
+"pn" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable/auto,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_7)
 "po" = (
 /obj/machinery/light/small/floor/warm/very,
 /turf/unsimulated/floor/black/grime,
 /area/tutorial/newbee/room_16)
-"pO" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four,
-/area/tutorial/newbee)
 "pU" = (
 /turf/unsimulated/floor/arrival{
 	dir = 9
@@ -384,15 +428,39 @@
 "qp" = (
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_12)
+"qz" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_3)
 "qO" = (
 /turf/unsimulated/floor/escape{
 	dir = 5
 	},
 /area/tutorial/newbee/room_16)
+"qQ" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_fire_first_aid,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_5)
+"rd" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_3)
+"rt" = (
+/obj/decal/cleanable/dirt,
+/obj/disposalpipe/segment/vertical,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "ry" = (
 /obj/landmark/newbee/emergency_supply_closet,
-/turf/simulated/floor/bluegreen,
+/turf/unsimulated/floor/bluegreen,
 /area/tutorial/newbee/room_9)
+"rH" = (
+/obj/disposalpipe/segment/bent/west,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "so" = (
 /turf/unsimulated/floor/yellow/checker,
 /area/tutorial/newbee/room_13)
@@ -401,6 +469,14 @@
 	dir = 4
 	},
 /area/tutorial/newbee/room_7)
+"sW" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/light/small/frostedred{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "tv" = (
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_11)
@@ -413,6 +489,11 @@
 	dir = 5
 	},
 /area/tutorial/newbee/room_4)
+"tR" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/cable/auto,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "tY" = (
 /turf/unsimulated/floor/darkpurpleblack{
 	dir = 4
@@ -465,20 +546,17 @@
 	dir = 8
 	},
 /area/tutorial/newbee/room_16)
-"vi" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap{
-	dir = 8
-	},
-/area/tutorial/newbee)
 "vA" = (
-/turf/simulated/floor/bluegreen/corner{
+/turf/unsimulated/floor/bluegreen/corner{
 	dir = 4
 	},
 /area/tutorial/newbee/room_9)
 "vG" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/decal/cleanable/blood/splatter/extra,
-/obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
+/mob/living/critter/spider/clownqueen,
+/obj/item/storage/firstaid/toxin,
+/obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "vS" = (
@@ -495,6 +573,9 @@
 	},
 /area/tutorial/newbee/room_11)
 "wr" = (
+/obj/landmark/newbee/can_throw,
+/obj/machinery/disposal/tutorial,
+/obj/disposalpipe/trunk/regular/south,
 /turf/unsimulated/floor/purple/side{
 	dir = 1
 	},
@@ -505,20 +586,13 @@
 	},
 /area/tutorial/newbee/room_1)
 "wD" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10
-	},
+/turf/unsimulated/wall/auto/lead/blue,
 /area/tutorial/newbee)
 "wE" = (
-/turf/simulated/floor/bluegreen/side{
+/turf/unsimulated/floor/bluegreen/side{
 	dir = 1
 	},
 /area/tutorial/newbee/room_9)
-"wI" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/tutorial/newbee)
 "wN" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/escape{
@@ -530,10 +604,15 @@
 /turf/unsimulated/floor/purple/side,
 /area/tutorial/newbee/room_3)
 "xc" = (
-/obj/structure/girder,
 /obj/landmark/newbee/decon_girder,
+/obj/structure/girder/tutorial,
+/obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_7)
+"xB" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_5)
 "xX" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 4
@@ -545,7 +624,7 @@
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_11)
 "yJ" = (
-/turf/simulated/floor/bluegreen/corner{
+/turf/unsimulated/floor/bluegreen/corner{
 	dir = 1
 	},
 /area/tutorial/newbee/room_9)
@@ -587,6 +666,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 6
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "AS" = (
@@ -594,11 +674,6 @@
 	dir = 6
 	},
 /area/tutorial/newbee/room_12)
-"Bd" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap{
-	dir = 1
-	},
-/area/tutorial/newbee)
 "Bv" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/plating,
@@ -640,6 +715,10 @@
 	dir = 9
 	},
 /area/tutorial/newbee/room_4)
+"CK" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_6)
 "CW" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
@@ -687,11 +766,15 @@
 	dir = 9
 	},
 /area/tutorial/newbee/room_7)
+"EP" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_3)
 "Ff" = (
 /obj/landmark/newbee/unpowered_doors,
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	panel_open = 1
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/door/airlock/pyro/classic/tutorial{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/tutorial/newbee/unpowered)
@@ -711,9 +794,12 @@
 	dir = 1
 	},
 /area/tutorial/newbee/room_7)
+"Gt" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_6)
 "Gz" = (
 /obj/table/reinforced/auto,
-/obj/landmark/newbee/pickup_first_aid,
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
@@ -725,21 +811,24 @@
 	},
 /turf/space,
 /area/tutorial/newbee/room_10)
-"GV" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 4
-	},
-/area/tutorial/newbee)
 "Hb" = (
 /turf/unsimulated/floor/bluewhite{
 	dir = 10
 	},
 /area/tutorial/newbee/room_5)
 "Hd" = (
-/turf/simulated/floor/bluegreen/side{
+/turf/unsimulated/floor/bluegreen/side{
 	dir = 8
 	},
 /area/tutorial/newbee/room_9)
+"Hg" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor/bluewhite,
+/area/tutorial/newbee/room_5)
+"Hu" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "HV" = (
 /turf/space,
 /area/tutorial/newbee/room_10)
@@ -772,6 +861,12 @@
 	dir = 4
 	},
 /area/tutorial/newbee/room_5)
+"Jf" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/bluewhite{
+	dir = 8
+	},
+/area/tutorial/newbee/room_5)
 "Jv" = (
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_16)
@@ -787,11 +882,6 @@
 	},
 /turf/unsimulated/floor/honeyblocks,
 /area/tutorial/newbee/room_16)
-"JS" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/tutorial/newbee)
 "Kk" = (
 /turf/unsimulated/floor/red/side{
 	dir = 5
@@ -800,6 +890,7 @@
 "Kn" = (
 /obj/landmark/newbee/traverse_maints,
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/cable/auto,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_9)
 "Kz" = (
@@ -809,9 +900,6 @@
 /area/tutorial/newbee/room_1)
 "KK" = (
 /obj/machinery/light/incandescent,
-/obj/item/gun/energy/tasershotgun{
-	pixel_x = 17
-	},
 /turf/unsimulated/floor/redblack,
 /area/tutorial/newbee/room_13)
 "KP" = (
@@ -847,13 +935,8 @@
 "LX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/tutorial/newbee/room_16)
-"Ma" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 8
-	},
-/area/tutorial/newbee)
 "Mh" = (
-/turf/simulated/floor/bluegreen/corner,
+/turf/unsimulated/floor/bluegreen/corner,
 /area/tutorial/newbee/room_9)
 "Mr" = (
 /obj/machinery/light/incandescent,
@@ -862,11 +945,12 @@
 "MB" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/get_health,
+/obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/white/side,
 /area/tutorial/newbee/room_5)
 "MD" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/bluegreen/side,
+/turf/unsimulated/floor/bluegreen/side,
 /area/tutorial/newbee/room_9)
 "MY" = (
 /turf/simulated/wall/false_wall/centcom,
@@ -910,11 +994,15 @@
 	dir = 10
 	},
 /area/tutorial/newbee/room_11)
-"PV" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6
-	},
-/area/tutorial/newbee)
+"PR" = (
+/obj/disposalpipe/segment/vertical,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_4)
+"PX" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/landmark/newbee/pickup_can,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_3)
 "Qb" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -937,10 +1025,6 @@
 "Rd" = (
 /turf/unsimulated/floor/bluewhite,
 /area/tutorial/newbee/room_5)
-"Rz" = (
-/obj/machinery/light/small/floor/warm/very,
-/turf/unsimulated/floor/plating,
-/area/tutorial/newbee/room_8)
 "RA" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/landmark/newbee/exit_storage,
@@ -960,6 +1044,10 @@
 	},
 /turf/unsimulated/floor/honeyblocks,
 /area/tutorial/newbee/room_16)
+"Sb" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_7)
 "Sq" = (
 /turf/unsimulated/floor/black/side,
 /area/tutorial/newbee/room_2)
@@ -1019,6 +1107,10 @@
 	dir = 6
 	},
 /area/tutorial/newbee/room_11)
+"UY" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_7)
 "Va" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/machinery/door/airlock/pyro/glass/command,
@@ -1032,10 +1124,18 @@
 	},
 /area/tutorial/newbee/room_4)
 "Vh" = (
+/obj/item/baton{
+	pixel_x = -14
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
 /area/tutorial/newbee/room_13)
+"Vp" = (
+/obj/table/reinforced/auto,
+/obj/landmark/newbee/pickup_brute_first_aid,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_5)
 "VV" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
@@ -1050,6 +1150,10 @@
 	dir = 9
 	},
 /area/tutorial/newbee/room_16)
+"WA" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/unsimulated/floor/plating,
+/area/tutorial/newbee/room_8)
 "WC" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1
@@ -1069,9 +1173,14 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/arrival,
 /area/tutorial/newbee/room_1)
-"XV" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap,
-/area/tutorial/newbee)
+"XK" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/unsimulated/floor,
+/area/tutorial/newbee/room_4)
+"XR" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/unsimulated/floor/white,
+/area/tutorial/newbee/room_5)
 "Yk" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/bluewhite{
@@ -1098,6 +1207,8 @@
 /area/tutorial/newbee/room_11)
 "YH" = (
 /obj/decal/cleanable/dirt/dirt2,
+/obj/disposalpipe/segment/vertical,
+/obj/cable/auto,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "YZ" = (
@@ -1120,11 +1231,8 @@
 	},
 /area/tutorial/newbee/room_7)
 "ZP" = (
-/turf/simulated/floor/bluegreen,
+/turf/unsimulated/floor/bluegreen,
 /area/tutorial/newbee/room_9)
-"ZZ" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction,
-/area/tutorial/newbee)
 
 (1,1,1) = {"
 NO
@@ -1151,36 +1259,36 @@ NO
 "}
 (2,1,1) = {"
 NO
-JS
-dK
-dK
-dK
-dK
-dK
-GV
-dK
-dK
-dK
-dK
-dK
-GV
-dK
-dK
-dK
-dK
-dK
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 wD
 NO
 "}
 (3,1,1) = {"
 NO
-Ma
+wD
 pU
 Tp
 Tp
 Tp
 wt
-Ma
+wD
 Wy
 wN
 vh
@@ -1192,41 +1300,41 @@ qa
 zp
 qa
 po
-Ma
+wD
 NO
 "}
 (4,1,1) = {"
 NO
-Ma
+wD
 BY
 tI
 Kz
 tI
 Xu
-Ma
+wD
 oj
 Ec
 Jv
 Jv
 Yl
-ZZ
-dK
+wD
+wD
 ho
-dK
+wD
 wD
 qa
-Ma
+wD
 NO
 "}
 (5,1,1) = {"
 NO
-Ma
+wD
 dR
 tI
 tI
 tI
 qf
-Ma
+wD
 gj
 Jv
 kK
@@ -1236,179 +1344,179 @@ Ir
 Wh
 oB
 Ud
-Ma
+wD
 ZG
-Ma
+wD
 NO
 "}
 (6,1,1) = {"
 NO
-Ma
+wD
 BY
 tI
 me
 tI
 Xu
-Ma
+wD
 oj
 IJ
 Jv
 Jv
 Yl
-ZZ
-dK
+wD
+wD
 wD
 oB
-Ma
+wD
 RG
-Ma
+wD
 NO
 "}
 (7,1,1) = {"
 NO
-Ma
+wD
 Fw
 DI
 tI
 DI
 FM
-Ma
+wD
 qO
 Nr
 ZL
 Nr
 LQ
-Ma
+wD
 bW
-Ma
+wD
 Wh
-Ma
+wD
 JH
-Ma
+wD
 NO
 "}
 (8,1,1) = {"
 NO
-ZZ
-dK
-dK
+wD
+wD
+wD
 Qb
-GV
-dK
-pO
-dK
-dK
-dK
-dK
-dK
-pO
-dK
-aK
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 Yq
-aK
-dK
-il
+wD
+wD
+wD
 NO
 "}
 (9,1,1) = {"
 NO
-Ma
+wD
 gL
 Ev
 ue
-Ma
+wD
 zN
-Ma
+wD
 mr
 UE
 UE
 UE
 nE
-Ma
+wD
 Mr
 Oa
 Oa
 Oa
 Mr
-Ma
+wD
 NO
 "}
 (10,1,1) = {"
 NO
-Ma
+wD
 TD
 ue
 ue
 Va
 SE
-Ma
+wD
 zY
-Bd
+wD
 ho
 wD
 so
-Ma
+wD
 Oa
 Oa
 Oa
 Oa
 Oa
-Ma
+wD
 NO
 "}
 (11,1,1) = {"
 NO
-Ma
+wD
 Sq
 gx
 ue
-ZZ
+wD
 MY
-il
+wD
 so
 mZ
 so
-Ma
-so
+wD
+oJ
 gb
 Oa
 Oa
 Oa
 AI
 Oa
-Ma
+wD
 NO
 "}
 (12,1,1) = {"
 NO
-Ma
+wD
 TD
 ue
 ue
 WC
 KK
-ZZ
+wD
 cE
 wD
 BB
-Ma
+wD
 BB
-Ma
+wD
 Oa
 Oa
 YZ
 Oa
 Oa
-Ma
+wD
 NO
 "}
 (13,1,1) = {"
 NO
-Ma
+wD
 Lt
 QM
 ue
-Ma
+wD
 Vh
 DB
 um
@@ -1416,93 +1524,93 @@ ee
 so
 fK
 NP
-Ma
+wD
 Mr
 Oa
 Oa
 Oa
 Mr
-Ma
+wD
 NO
 "}
 (14,1,1) = {"
 NO
-ZZ
-dK
-dK
+wD
+wD
+wD
 Bw
-aK
-dK
-pO
-dK
-aK
+wD
+wD
+wD
+wD
+wD
 iw
-aK
-dK
-pO
-dK
-dK
-dK
-dK
-dK
-il
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 NO
 "}
 (15,1,1) = {"
 NO
-Ma
+wD
 kW
 ne
 nV
 ne
 oc
-Ma
+wD
 Ek
 LB
 qp
 LB
 uk
-Ma
+wD
 Iw
 NN
 NN
 NN
 OP
-Ma
+wD
 NO
 "}
 (16,1,1) = {"
 NO
-Ma
+wD
 iC
 nV
 nV
 nV
 wY
-Ma
+wD
 kq
 Tm
 qp
 qp
 Xs
-Ma
+wD
 Yy
 tv
 fe
 tv
 nL
-Ma
+wD
 NO
 "}
 (17,1,1) = {"
 NO
-Ma
+wD
 wr
-nV
-nV
+EP
+qz
 Ul
 NL
-Ma
+wD
 kq
 Lr
 qp
@@ -1514,513 +1622,513 @@ tv
 tv
 hC
 aJ
-Ma
+wD
 NO
 "}
 (18,1,1) = {"
 NO
-Ma
+wD
 iC
 nV
-nV
+PX
 nV
 wY
-Ma
+wD
 kq
 bN
 qp
 qp
 Xs
-Ma
+wD
 Yy
 tv
 tv
 tv
 nL
-Ma
+wD
 NO
 "}
 (19,1,1) = {"
 NO
-Ma
+wD
 vb
 DQ
-nV
+rd
 DQ
 nk
-Ma
+wD
 bh
 iv
 tY
 iv
 AS
-Ma
+wD
 WF
 wn
 tv
 wn
 UX
-Ma
+wD
 NO
 "}
 (20,1,1) = {"
 NO
-ZZ
-dK
-dK
+wD
+wD
+wD
 Ff
-dK
-dK
-pO
-dK
-dK
-dK
-dK
-dK
-pO
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 pe
 pe
 xX
 pe
 pe
-il
+wD
 NO
 "}
 (21,1,1) = {"
 NO
-Ma
+wD
 KP
 ou
-Ly
+eE
 VV
 Ve
-Ma
+wD
 ah
 qn
 ux
 qn
 Hb
-Ma
+wD
 GU
 HV
 HV
 HV
 ol
-Ma
+wD
 NO
 "}
 (22,1,1) = {"
 NO
-Ma
+wD
 tL
 EA
-Ly
+eE
 CW
 uT
-Ma
+wD
 jm
 zE
 Jd
-zE
+Vp
 Rd
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (23,1,1) = {"
 NO
-Ma
+wD
 Ly
 Ly
-Ly
-Ly
-Ly
+XK
+PR
+PR
 MB
-zE
-Rd
+xB
+Hg
 oK
 Gz
 Rd
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (24,1,1) = {"
 NO
-Ma
+wD
 Cs
 uL
 Ly
 IY
 gl
-Ma
+wD
 jm
 zE
-ux
-zE
+Jf
+qQ
 Rd
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (25,1,1) = {"
 NO
-Ma
+wD
 mS
 iZ
 Ly
 Kk
 gM
-Ma
+wD
 IK
 Yk
-zE
+XR
 Yk
 gi
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (26,1,1) = {"
 NO
-ZZ
-dK
-dK
-dK
-dK
-dK
-pO
-dK
-dK
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 fP
-dK
-dK
-il
+wD
+wD
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (27,1,1) = {"
 NO
-Ma
+wD
 EE
 Tz
 Tz
 Tz
 Nu
-Ma
+wD
 uG
 Ck
-Uk
+Gt
 Ck
 bj
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (28,1,1) = {"
 NO
-Ma
+wD
 jJ
 Ei
 Ei
 Ei
 fj
-Ma
+wD
 br
 Uk
-Uk
+Gt
 Uk
 Ui
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (29,1,1) = {"
 NO
-Ma
+wD
 Gf
 Nz
-Ei
-Ei
-Ei
+UY
+cn
+cn
 xc
-Uk
-Uk
-Uk
+CK
+CK
+eO
 Uk
 Ui
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (30,1,1) = {"
 NO
-Ma
+wD
 jJ
 Ei
-Ei
+Sb
 Ei
 fj
-Ma
+wD
 br
 Uk
 af
 Uk
 Ui
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (31,1,1) = {"
 NO
-Ma
+wD
 ZN
 sJ
-Ei
+pn
 sJ
 bp
-Ma
+wD
 vS
 zd
 qj
 zd
 BP
-Ma
+wD
 HV
 HV
 HV
 HV
 HV
-Ma
+wD
 NO
 "}
 (32,1,1) = {"
 NO
-ZZ
-dK
-dK
+wD
+wD
+wD
 in
-GV
-dK
-aK
-dK
-dK
-dK
-dK
-dK
-il
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 no
 HV
 HV
 HV
 Qq
-Ma
+wD
 NO
 "}
 (33,1,1) = {"
 NO
-Ma
-TN
-ld
-TN
-Ma
+wD
+Hu
+sW
+rH
+wD
 Bv
 TN
 jH
-TN
+kH
 TN
 pd
 TN
-ZZ
+wD
 eo
 eo
 gp
 eo
 eo
-il
+wD
 NO
 "}
 (34,1,1) = {"
 NO
-Ma
-jH
-Rz
+wD
+iR
+kH
 pd
-Ma
+wD
 TN
-TN
-vi
-TN
+kH
+wD
+kH
 Bv
 TN
 TN
-Ma
+wD
 Mh
 lc
 ZP
 lc
 vA
-Ma
+wD
 NO
 "}
 (35,1,1) = {"
 NO
-Ma
+wD
+fm
+wD
+wD
+wD
 TN
-Bd
-dK
-PV
-TN
-TN
-Ma
-TN
-JS
-dK
-dK
-il
+kH
+wD
+kH
+wD
+wD
+wD
+wD
 MD
 ZP
 ZP
 ZP
 dF
-Ma
+wD
 NO
 "}
 (36,1,1) = {"
 NO
-Ma
-TN
-jH
-TN
-TN
+wD
+hn
+rt
+cR
+cR
 YH
+WA
+wD
+kH
+wD
 TN
-Ma
-TN
-Ma
-TN
-TN
+kH
 Kn
-ZP
+gI
 ZP
 ZP
 ry
 wE
-Ma
+wD
 NO
 "}
 (37,1,1) = {"
 NO
-ZZ
-dK
-dK
-dK
-dK
-XV
+wD
+wD
+wD
+wD
+wD
+wD
 cT
-Ma
-TN
-he
-TN
-TN
-Ma
+wD
+kH
+wD
+kH
+mP
+wD
 MD
 ZP
 ZP
 ZP
 dF
-Ma
+wD
 NO
 "}
 (38,1,1) = {"
 NO
-Ma
+wD
 ek
 vG
-lI
+bZ
 lI
 hy
 AK
-Ma
-Bv
-TN
-TN
+wD
+tR
+kH
+kH
 ld
-Ma
+wD
 oX
 Hd
 Hd
 Hd
 yJ
-Ma
+wD
 NO
 "}
 (39,1,1) = {"
 NO
-wI
-dK
-dK
-dK
-dK
-dK
-dK
-aK
-dK
-dK
-dK
-dK
-aK
-dK
-dK
-dK
-dK
-dK
-PV
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+wD
 NO
 "}
 (40,1,1) = {"
