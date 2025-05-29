@@ -17,6 +17,7 @@
 	system = "Engine"
 	icon_state = "engine-1"
 	var/image/engine_icon = null
+	var/startup_time = 0.8 SECONDS // Currently visual only
 
 	get_install_slot()
 		return POD_PART_ENGINE
@@ -32,9 +33,12 @@
 			return
 		ship.powercapacity = src.powergenerated
 		src.ship.speedmod *= src.engine_speed
+
+		// ----- Startup sequence -----
 		if(src.engine_icon) // Vehicles might not have an engine overlay
-			src.engine_icon.icon_state = "[src.icon_state]-on"
+			src.engine_icon.icon_state = "[src.icon_state]-start"
 			ship.UpdateOverlays(src.engine_icon, "engine")
+			spawn(src.startup_time) src.startup_finished()
 		return
 	////Warp requires recharge time
 	ready()
@@ -90,6 +94,16 @@
 		ship.ClearSpecificOverlays("engine")
 		src.engine_icon = null // In case the next vehicle does not have an engine overlay
 		..()
+
+	proc/startup_finished()
+		if(!src.ship || !src.engine_icon)
+			return
+		if(src.active)
+			src.engine_icon.icon_state = "[src.icon_state]-on"
+		else
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+		src.ship.UpdateOverlays(src.engine_icon, "engine")
+
 
 /obj/item/shipcomponent/engine/proc/Wormhole()
 	if (wormholeQueued || warprecharge == -1)
