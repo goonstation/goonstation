@@ -906,6 +906,12 @@ TYPEINFO(/mob)
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
 
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
+
 // medals
 
 /mob/proc/revoke_medal(title)

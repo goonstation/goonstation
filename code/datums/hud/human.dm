@@ -410,9 +410,9 @@
 
 			if ("mintent")
 				if (master.m_intent == "run")
-					master.m_intent = "walk"
+					master.set_m_intent("walk")
 				else
-					master.m_intent = "run"
+					master.set_m_intent("run")
 				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
