@@ -194,4 +194,10 @@
 	icon = 'icons/effects/VR.dmi'
 	camera_networks = list(CAMERA_NETWORK_VSPACE)
 
+/obj/machinery/computer/television/viewer
+	name = "security camera network viewer"
+	desc = "A computer that allows one to connect to a camera network and view camera images."
+	icon = 'icons/obj/computerpanel.dmi'
+	icon_state = "cameras1"
+
 #undef CANCEL_CAMERA_VIEW

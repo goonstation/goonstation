@@ -667,7 +667,10 @@ TYPEINFO(/obj/machinery/door_control)
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (istrainedsyndie(user))
-		src.toggle()
+		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+		if (listening_post.unlocked)
+			listening_post.first_unlock(user)
+		src.toggle(user)
 		if (src.entrance_scanner)
 			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else

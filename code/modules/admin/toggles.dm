@@ -254,13 +254,6 @@ client/proc/toggle_ghost_respawns()
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
 
-		if (src.preferences.listen_ooc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
-		if (src.preferences.listen_looc)
-			src.listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
-
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
 
@@ -319,13 +312,6 @@ client/proc/toggle_ghost_respawns()
 			else
 				// Cancel = don't turn on player mode
 				return
-
-		if (src.preferences.listen_ooc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
-		if (src.preferences.listen_looc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
-			src.listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 		src.holder.admin_speech_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()

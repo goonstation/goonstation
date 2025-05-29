@@ -29,7 +29,9 @@ export const acw: AlertContentWindow = {
         Using some of the powers requires you to expend some <em>DNA points</em>
         .<br />
         To acquire more, you will have to absorb new victims. Any living victim
-        that you absorb will be forced into your <em>hivemind</em>.
+        that you absorb will be forced into your <em>hivemind</em>. You can
+        telepathically speak to your hivemind using the <em>:hive</em> speech
+        prefix.
         <span className="small indent">
           <em>Absorb DNA</em>, to steal the DNA of your victims. They must be
           grabbed firmly.
@@ -64,9 +66,6 @@ export const acw: AlertContentWindow = {
           have absorbed.
           <br />
           <em>Mimic Voice</em>, to speak in the voice of other crew members.
-          <br />
-          <em>Speak to Hivemind</em>, to telepathically speak with those that
-          you have collected into your hivemind.
           <br />
           <em>Handspider</em>, to transfer a consciousness from your hivemind
           into a weak scouting critter.

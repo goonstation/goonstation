@@ -294,6 +294,7 @@
 	icon_state = "arcwelder-off"
 	item_state = "arcwelder-off"
 	inventory_counter_enabled = TRUE
+	fuel_capacity = 0
 	var/charge_to_fuel = 7
 
 	New()
@@ -391,7 +392,6 @@
 		else
 			inventory_counter.update_text("-")
 
-
 /datum/item_special/spark/arcwelder
 	cooldown = 1.5 SECONDS
 
@@ -431,7 +431,7 @@
 			src.anchored = TRUE
 
 /obj/item/storage/backpack/salvager
-	name = "salvager rucksack"
+	name = "heavy-duty rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
 	spawn_contents = list()

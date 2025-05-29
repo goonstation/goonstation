@@ -269,6 +269,7 @@
 		src.speech_outputs_by_channel[src.speech_outputs_by_id[module_id].channel] -= src.speech_outputs_by_id[module_id]
 		qdel(src.speech_outputs_by_id[module_id])
 		src.speech_outputs_by_id -= module_id
+		src.speech_output_ids_with_subcount -= module_id
 
 	return TRUE
 
@@ -314,6 +315,7 @@
 		qdel(src.speech_modifiers_by_id[modifier_id])
 		src.speech_modifiers_by_id -= modifier_id
 		src.persistent_speech_modifiers_by_id -= modifier_id
+		src.speech_modifier_ids_with_subcount -= modifier_id
 
 	return TRUE
 
@@ -360,6 +362,7 @@
 
 		qdel(prefix_module)
 		src.speech_prefixes_by_id -= prefix_id
+		src.speech_prefix_ids_with_subcount -= prefix_id
 
 	return TRUE
 
@@ -367,6 +370,11 @@
 /datum/speech_module_tree/proc/GetPrefixByID(prefix_id)
 	RETURN_TYPE(/datum/speech_module/prefix)
 	return src.speech_prefixes_by_id[prefix_id]
+
+/// Returns the speech prefix module that matches the specified prefix text.
+/datum/speech_module_tree/proc/GetPrefixByPrefixText(prefix_text)
+	RETURN_TYPE(/datum/speech_module/prefix)
+	return src.premodifier_speech_prefixes_by_prefix_id[prefix_text] || src.postmodifier_speech_prefixes_by_prefix_id[prefix_text]
 
 /// Returns all speech prefix modules on this speech tree.
 /datum/speech_module_tree/proc/GetAllPrefixes()
