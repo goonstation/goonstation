@@ -34,10 +34,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	blood_id = null
 	use_stamina = FALSE // floating ghostly eyes dont get tired
 
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	voice_name = "synthesized voice"
+	voice_type = "cyborg"
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"
 	speech_verb_exclaim = "declares"
-	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	speech_bubble_icon_sing = "noterobot"
 	speech_bubble_icon_sing_bad = "noterobot"
 
@@ -267,11 +269,11 @@ TYPEINFO(/mob/living/intangible/aieye)
 		else
 			return 0.75 + movement_delay_modifier
 
-	say_radio()
-		src.mainframe.say_radio()
+	say_over_channel()
+		src.mainframe.say_over_channel()
 
-	say_main_radio(msg as text)
-		src.mainframe.say_main_radio(msg)
+	say_over_main_radio(msg as text)
+		src.mainframe.say_over_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		..()
@@ -519,6 +521,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	stopObserving()
 		src.set_loc(get_turf(src))
 		src.observing = null
+
+	examine_verb(atom/A as mob|obj|turf in view(,usr))
+		var/turf/T = get_turf(A)
+		if (!length(T.camera_coverage_emitters))
+			return
+		. = ..()
 
 //---TURF---//
 /turf/var/image/aiImage

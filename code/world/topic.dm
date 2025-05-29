@@ -640,7 +640,7 @@
 				var/address = plist["address"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "<a href='[address]'>Click here to join it</a><br>"
+				msg += "<a href='[address]'>Click here to join the next one!</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)
 					if (isdead(C.mob))
