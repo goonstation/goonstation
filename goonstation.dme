@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\defines\tutorial.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -2055,8 +2056,15 @@
 #include "code\modules\transport\shuttle\shuttle_turfobjs.dm"
 #include "code\modules\tutorials\blob_tutorial.dm"
 #include "code\modules\tutorials\flock_tutorial.dm"
-#include "code\modules\tutorials\newbee_tutorial.dm"
 #include "code\modules\tutorials\tutorial_base.dm"
+#include "code\modules\tutorials\newbee\newbee_tutorial.dm"
+#include "code\modules\tutorials\newbee\tutorial_area.dm"
+#include "code\modules\tutorials\newbee\tutorial_landmark.dm"
+#include "code\modules\tutorials\newbee\tutorial_mob.dm"
+#include "code\modules\tutorials\newbee\tutorial_obj.dm"
+#include "code\modules\tutorials\newbee\tutorial_player.dm"
+#include "code\modules\tutorials\newbee\tutorial_steps.dm"
+#include "code\modules\tutorials\newbee\tutorial_ui.dm"
 #include "code\modules\unit_tests\_map_correctness.dm"
 #include "code\modules\unit_tests\_unit_tests.dm"
 #include "code\modules\vending\jobclothing.dm"
