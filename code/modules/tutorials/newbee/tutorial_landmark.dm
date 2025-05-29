@@ -173,6 +173,11 @@
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "lightning_marker"
 
+/obj/landmark/newbee/walking
+	name = LANDMARK_TUTORIAL_NEWBEE_WALKING
+	icon = 'icons/obj/foodNdrink/food_produce.dmi'
+	icon_state = "banana-peel"
+
 /obj/landmark/newbee/exit_movement
 	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT
 	icon = 'icons/effects/VR.dmi'

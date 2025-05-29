@@ -110,6 +110,7 @@
 #define LANDMARK_TUTORIAL_NEWBEE_DECON_WALL "tutorial_newbee_decon_wall"
 #define LANDMARK_TUTORIAL_NEWBEE_LAYING_DOWN "tutorial_newbee_laying_down"
 #define LANDMARK_TUTORIAL_NEWBEE_SPRINTING "tutorial_newbee_sprinting"
+#define LANDMARK_TUTORIAL_NEWBEE_WALKING "tutorial_newbee_walking"
 #define LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT "tutorial_newbee_exit_movement"
 #define LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET "tutorial_newbee_pickup_headset"
 #define LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO "tutorial_newbee_exit_radio"
