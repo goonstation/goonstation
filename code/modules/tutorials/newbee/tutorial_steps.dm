@@ -103,7 +103,6 @@
 	SetUp()
 		. = ..()
 		// setup the railings for the next room before we enter the room so they don't pop in
-		var/obj/railing/guard/railing_n
 		var/obj/railing/guard/railing_s
 		var/obj/railing/guard/railing_e
 		var/obj/railing/guard/railing_w
@@ -113,8 +112,6 @@
 				disposal_unit = locate(/obj/machinery/disposal/tutorial) in T
 				if (!disposal_unit || QDELETED(disposal_unit))
 					disposal_unit = new(T)
-				railing_n = new(T)
-				railing_n.dir = NORTH
 				railing_s = new(T)
 				railing_s.dir = SOUTH
 				railing_e = new(T)
@@ -146,7 +143,6 @@
 
 	SetUp()
 		. = ..()
-		var/obj/railing/guard/railing_n
 		var/obj/railing/guard/railing_s
 		var/obj/railing/guard/railing_e
 		var/obj/railing/guard/railing_w
@@ -156,8 +152,6 @@
 				disposal_unit = locate(/obj/machinery/disposal/tutorial) in T
 				if (!disposal_unit || QDELETED(disposal_unit))
 					disposal_unit = new(T)
-				railing_n = new(T)
-				railing_n.dir = NORTH
 				railing_s = new(T)
 				railing_s.dir = SOUTH
 				railing_e = new(T)
@@ -193,7 +187,6 @@
 
 	SetUp(manually_selected)
 		. = ..()
-		var/obj/railing/guard/railing_n
 		var/obj/railing/guard/railing_s
 		var/obj/railing/guard/railing_e
 		var/obj/railing/guard/railing_w
@@ -203,8 +196,6 @@
 				src.disposal_unit = locate(/obj/machinery/disposal/tutorial) in T
 				if (!src.disposal_unit || QDELETED(src.disposal_unit))
 					src.disposal_unit = new(T)
-				railing_n = new(T)
-				railing_n.dir = NORTH
 				railing_s = new(T)
 				railing_s.dir = SOUTH
 				railing_e = new(T)
@@ -1562,9 +1553,17 @@
 		. = ..()
 
 
+/datum/tutorialStep/newbee/walking
+	name = "Whoa, Careful!"
+	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Toggle walking by pressing <b>-</b> to safely walk over banana peels."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
+	step_area = /area/tutorial/newbee/room_13
+	highlight_hud_element = "mintent"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF
+
 /datum/tutorialStep/newbee/move_to/exit_movement
-	name = "Whoa, Careful!" // todo: WALKING
-	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Head into the next room."
+	name = "Whoa, Careful!"
+	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Toggle walking by pressing <b>-</b> to safely walk over banana peels."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
