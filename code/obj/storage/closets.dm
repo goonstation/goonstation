@@ -445,7 +445,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
 
-	close(var/entangleLogic)
+	close(var/entangleLogic, mob/user)
 		if (!src.open)
 			return 0
 		if (!src.can_close())

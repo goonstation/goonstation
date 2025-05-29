@@ -1,6 +1,7 @@
 /datum/speech_module/output/kudzuchat
 	id = SPEECH_OUTPUT_KUDZUCHAT
 	channel = SAY_CHANNEL_KUDZU
+	speech_prefix = SPEECH_PREFIX_KUDZUCHAT
 
 /datum/speech_module/output/kudzuchat/process(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
@@ -30,3 +31,8 @@
 	"}
 
 	. = ..()
+
+
+/datum/speech_module/output/kudzuchat/admin
+	id = SPEECH_OUTPUT_KUDZUCHAT_ADMIN
+	speech_prefix = null

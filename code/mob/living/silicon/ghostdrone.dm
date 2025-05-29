@@ -2,8 +2,9 @@
 
 TYPEINFO(/mob/living/silicon/ghostdrone)
 	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
-	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY)
+	start_listen_inputs = list(LISTEN_INPUT_GHOSTDRONE, LISTEN_INPUT_EARS_GHOSTDRONE, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_prefixes = null
 	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
 	start_speech_outputs = list(SPEECH_OUTPUT_GHOSTDRONE, SPEECH_OUTPUT_DEADCHAT)
 
@@ -80,6 +81,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power)
 		src.radio = new /obj/item/device/radio(src)
+		src.radio.toggle_speaker(TRUE)
 		src.ears = src.radio
 
 		//Attach shit to tools
