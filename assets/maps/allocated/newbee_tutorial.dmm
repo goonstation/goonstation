@@ -58,8 +58,8 @@
 /area/tutorial/newbee/unpowered)
 "bZ" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/mapping_helper/mob_spawn/corpse/human/random/webbed/clown,
 /obj/disposalpipe/segment/vertical,
+/mob/living/critter/spider/clownqueen,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "cn" = (
@@ -566,7 +566,6 @@
 "vG" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/decal/cleanable/blood/splatter/extra,
-/mob/living/critter/spider/clownqueen,
 /obj/item/storage/firstaid/toxin,
 /obj/disposalpipe/segment/vertical,
 /turf/unsimulated/floor/plating,

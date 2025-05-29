@@ -70,6 +70,7 @@
 /datum/tutorial_base/regional/newbee/Finish()
 	if(..())
 		src.tutorial_hud.remove_client(src.newbee.client)
+		src.newbee.unequip_all(TRUE) // removes any lingering item ability HUDs
 		var/mob/new_player/M = new()
 		M.key = src.newbee.client.key
 		qdel(src.newbee)
