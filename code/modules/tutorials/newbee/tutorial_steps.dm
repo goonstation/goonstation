@@ -688,7 +688,7 @@
 
 /datum/tutorialStep/newbee/timer/damage_types
 	name = "Damage Types"
-	instructions = "There are four types of damage that all contribute to your total health:<br>Brute, Burn, Toxin, and Oxygen."
+	instructions = "There are four types of damage that count towards your total health:<br>Brute, Burn, Toxin, and Oxygen."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -1546,24 +1546,47 @@
 		var/sprint = src.keymap.action_to_keybind(KEY_RUN) || "SHIFT"
 		src.instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
 
-	SetUp()
-		. = ..()
-
-	TearDown()
-		. = ..()
-
-
 /datum/tutorialStep/newbee/walking
 	name = "Whoa, Careful!"
-	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Toggle walking by pressing <b>-</b> to safely walk over banana peels."
+	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>-</b> or click the Walk HUD button to safely walk over banana peels."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	highlight_hud_element = "mintent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF
 
+	var/obj/item/bananapeel/target_peel
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/walk = src.keymap.action_to_keybind("walk") || "-"
+		src.instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>[walk]</b> or click the Walk HUD button to safely walk over banana peels."
+
+	SetUp(manually_selected)
+		. = ..()
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_WALKING])
+			if(src.region.turf_in_region(T))
+				if (!src.target_peel || QDELETED(src.target_peel))
+					src.target_peel = new /obj/item/bananapeel(T)
+				if (ismob(src.target_peel.loc))
+					var/mob/M = src.target_peel.loc
+					M.drop_item(src.target_peel)
+				src.target_peel.set_loc(T)
+				break
+		src.target_peel.UpdateOverlays(src.point_marker, "marker")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "m_intent" && context == "walk")
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		if (src.target_peel && !QDELETED(src.target_peel))
+			src.target_peel.UpdateOverlays(null, "marker")
+
 /datum/tutorialStep/newbee/move_to/exit_movement
-	name = "Whoa, Careful!"
-	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Toggle walking by pressing <b>-</b> to safely walk over banana peels."
+	name = "Communication"
+	instructions = "Head into the next room to learn how to talk and use the radio."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'

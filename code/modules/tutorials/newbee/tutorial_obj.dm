@@ -243,7 +243,7 @@
 				if (M.client?.tutorial)
 					M.client.tutorial.PerformSilentAction("flush", "disposals")
 
-/// Send action on wrenching
+/// Send action on removal
 /obj/structure/girder/tutorial
 	name = "girder"
 

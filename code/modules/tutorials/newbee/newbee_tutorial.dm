@@ -218,6 +218,7 @@
 	// room 13 - Advanced Movement
 	src.AddStep(/datum/tutorialStep/newbee/move_to/laying_down)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/sprinting)
+	src.AddStep(/datum/tutorialStep/newbee/walking)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_movement)
 
 	// room 14 - Talking / Radio

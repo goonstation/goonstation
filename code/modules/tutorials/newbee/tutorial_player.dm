@@ -30,8 +30,8 @@
 		if (trait_id != species_trait.id)
 			src.traitHolder.removeTrait(trait_id)
 
-	// clear mildly mutated given genes
-	src.bioHolder.DeactivateAllPoolEffects()
+	SPAWN(0) // we can't add and remove speech effects on the same tick
+		src.bioHolder.DeactivateAllPoolEffects() // clear mildly mutated given genes
 
 
 	src.equip_new_if_possible(/obj/item/clothing/under/rank/assistant, SLOT_W_UNIFORM)
@@ -51,6 +51,11 @@
 	if (src.client?.tutorial)
 		src.client.tutorial.PerformSilentAction("remove_pulling", src.pulling)
 	. = ..()
+
+/mob/living/carbon/human/tutorial/set_m_intent(intent)
+	. = ..()
+	if (src.client?.tutorial)
+		src.client.tutorial.PerformSilentAction("m_intent", intent)
 
 /mob/living/carbon/human/tutorial/contract_disease()
 	return // no
