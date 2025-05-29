@@ -392,25 +392,41 @@
 			highlight_target = "back"
 		else if (src._needed_item == src.newbee_tutorial.newbee.belt)
 			highlight_target = "belt"
-		else if (src._needed_item == src.newbee_tutorial.newbee.shoes)
-			highlight_target = "shoes"
-		else if (src._needed_item == src.newbee_tutorial.newbee.gloves)
-			highlight_target = "gloves"
 		else if (src._needed_item == src.newbee_tutorial.newbee.wear_id)
 			highlight_target = "id"
-		else if (src._needed_item == src.newbee_tutorial.newbee.w_uniform)
-			highlight_target = "under"
-		else if (src._needed_item == src.newbee_tutorial.newbee.wear_suit)
-			highlight_target = "suit"
-		else if (src._needed_item == src.newbee_tutorial.newbee.glasses)
-			highlight_target = "glasses"
-		else if (src._needed_item == src.newbee_tutorial.newbee.ears)
-			highlight_target = "ears"
 		else if (src._needed_item == src.newbee_tutorial.newbee.back)
 			highlight_target = "back"
+		else if (src._needed_item == src.newbee_tutorial.newbee.shoes)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "shoes"
+		else if (src._needed_item == src.newbee_tutorial.newbee.gloves)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "gloves"
+		else if (src._needed_item == src.newbee_tutorial.newbee.w_uniform)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "under"
+		else if (src._needed_item == src.newbee_tutorial.newbee.wear_suit)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "suit"
+		else if (src._needed_item == src.newbee_tutorial.newbee.glasses)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "glasses"
+		else if (src._needed_item == src.newbee_tutorial.newbee.ears)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
+			highlight_target = "ears"
 		else if (src._needed_item == src.newbee_tutorial.newbee.wear_mask)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "mask"
 		else if (src._needed_item == src.newbee_tutorial.newbee.head)
+			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
+			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "head"
 	else
 		src._needed_item = locate(src.needed_item_path) in REGION_TILES(src.region)
@@ -426,7 +442,7 @@
 			if (hud_element.id == highlight_target)
 				src._target_hud_item = hud_element
 				break
-		src._target_hud_item.UpdateOverlays(src.inventory_marker, "marker")
+		src._target_hud_item?.UpdateOverlays(src.inventory_marker, "marker")
 
 	src._needed_item.UpdateOverlays(src.point_marker, "marker")
 
