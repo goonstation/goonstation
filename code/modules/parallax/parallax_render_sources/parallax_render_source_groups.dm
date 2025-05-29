@@ -115,6 +115,11 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/typhon
 	)
 
+/datum/parallax_render_source_group/area/veil_border
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/foreground/veil_border
+	)
+
 // Planet Parallax Layers
 /datum/parallax_render_source_group/planet/snow
 	parallax_render_source_types = list(

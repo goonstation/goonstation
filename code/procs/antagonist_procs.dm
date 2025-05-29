@@ -66,6 +66,7 @@ var/list/roles_to_prefs = list(
 	ROLE_ARCFIEND = "be_arcfiend",
 	ROLE_FLOCKMIND = "be_flock",
 	ROLE_SALVAGER = "be_salvager",
+	ROLE_MINDEATER = "be_mindeater",
 	ROLE_MISC = "be_misc"
 	)
 

@@ -84,6 +84,7 @@
 #define SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY "global_radio_unprotected"
 #define SAY_CHANNEL_GLOBAL_THRALL "global_thrall"
 #define SAY_CHANNEL_HIVEMIND "hivemind"
+#define SAY_CHANNEL_INTRUDER "intruder"
 #define SAY_CHANNEL_KUDZU "kudzu"
 #define SAY_CHANNEL_LOOC "looc"
 #define SAY_CHANNEL_MARTIAN "martian"
