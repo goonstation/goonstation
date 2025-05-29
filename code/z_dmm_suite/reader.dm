@@ -134,6 +134,8 @@ dmm_suite
 					)
 				sleep(-1)
 			sleep(-1)
+		// for (var/turf/T in block(locate(coordX, coordY, coordZ), locate(props.maxX, props.maxY, coordZ)))
+		// 	RL_UPDATE_LIGHT(T)
 		//
 		return props
 
@@ -243,6 +245,8 @@ dmm_suite
 			else
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
+					location.RL_Cleanup()
+					location.RL_Reset()
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
 					if(instance) // I hate that we made it so ReplaceWith can return null, it sucks so much
 						instance.set_dir(initial(instance.dir))
