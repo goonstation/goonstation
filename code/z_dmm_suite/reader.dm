@@ -134,9 +134,7 @@ dmm_suite
 					)
 				sleep(-1)
 			sleep(-1)
-		// for (var/turf/T in block(locate(coordX, coordY, coordZ), locate(props.maxX, props.maxY, coordZ)))
-		// 	RL_UPDATE_LIGHT(T)
-		//
+
 		return props
 
 	/*-- load_map ------------------------------------
