@@ -1,4 +1,7 @@
-
+(t)wed may 28 25
+(u)LeahTheTech
+(+)The Neon megafauna shadow now lasts for roughly the same time as the madness it causes.
+(+)Neon megafauna events can now only occur once per round.
 (t)mon may 26 25
 (u)LeahTheTech
 (+)Rare metal nanites are now... rarer! They will also only spawn alongside higher tier ores.
