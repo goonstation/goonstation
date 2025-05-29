@@ -23046,6 +23046,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "btE" = (
