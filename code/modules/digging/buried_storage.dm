@@ -28,8 +28,9 @@
 		for (var/atom/movable/AM as anything in parent_turf)
 			if (!istype(AM, /obj) && !istype(AM, /mob))
 				continue
-			if (!AM.mouse_opacity || istype(AM, /obj/decal) || istype(AM, /obj/effect) || istype(AM, /obj/effects))
+			if(AM == src || AM.invisibility || AM.anchored)
 				continue
+			continue_if_overlay_or_effect(AM)
 
 			if (istype(AM, /mob))
 				if (src.has_buried_mob)

@@ -9901,6 +9901,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/item/slag_shovel{
+	pixel_x = 11;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black/grime,
 /area/station/quartermaster/refinery)
 "cQy" = (

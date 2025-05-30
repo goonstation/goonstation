@@ -34,10 +34,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	blood_id = null
 	use_stamina = FALSE // floating ghostly eyes dont get tired
 
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	voice_name = "synthesized voice"
+	voice_type = "cyborg"
 	speech_verb_say = "states"
 	speech_verb_ask = "queries"
 	speech_verb_exclaim = "declares"
-	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	speech_bubble_icon_sing = "noterobot"
 	speech_bubble_icon_sing_bad = "noterobot"
 
