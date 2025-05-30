@@ -78400,6 +78400,8 @@
 	},
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
+	icon_state_alive = "cat2";
+	icon_state_dead = "cat2";
 	name = "Moo";
 	random_look = 0;
 	random_name = 0;
