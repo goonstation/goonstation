@@ -9,11 +9,11 @@
 	major_threats = list(ROLE_WRAITH = 1)
 	var/minimum_players = 15
 
-/datum/game_mode/mixed/mixed_rp/announce()
+/datum/game_mode/mixed/spooky/announce()
 	boutput(world, "<B>The current game mode is - Mixed Spooky!</B>")
 	boutput(world, "<B>Watch out for ghosts!</B>")
 
-/datum/game_mode/mixed/pre_setup()
+/datum/game_mode/mixed/spooky/pre_setup()
 	var/num_players = src.roundstart_player_count()
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (num_players < minimum_players)
