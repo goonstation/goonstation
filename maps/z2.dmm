@@ -78402,7 +78402,8 @@
 	icon_state = "cat2";
 	name = "Moo";
 	random_look = 0;
-	random_name = 0
+	random_name = 0;
+	nodamage = 1
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';
