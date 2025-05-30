@@ -30,3 +30,4 @@
 		return 0
 #endif
 	global.debug_mixed_forced_wraith = 1
+	return 1
