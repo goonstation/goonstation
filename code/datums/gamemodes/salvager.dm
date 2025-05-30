@@ -84,6 +84,7 @@
 			possible_traitors.Remove(traitor)
 	#endif
 
+	return 1
 
 /datum/game_mode/salvager/post_setup()
 	..()
@@ -91,7 +92,7 @@
 		equip_antag(salvager)
 	#ifndef RP_MODE
 	for (var/datum/mind/other in distractions)
-		other.add_antagonist(other.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
+		equip_antag(other)
 	#endif
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
