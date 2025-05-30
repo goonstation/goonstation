@@ -22,8 +22,8 @@
 	boutput(world, "<B>Watch out for ghosts!</B>")
 
 /datum/game_mode/mixed/spooky/pre_setup()
-	var/num_players = src.roundstart_player_count()
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	var/num_players = src.roundstart_player_count()
 	if (num_players < minimum_players)
 		message_admins("<b>ERROR: Minimum player count of [minimum_players] required for Spooky game mode, aborting spook round pre-setup.</b>")
 		logTheThing(LOG_GAMEMODE, src, "Failed to start Spooky mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
