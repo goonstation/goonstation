@@ -88,7 +88,7 @@
 	if(new_rupture > src.ruptured)
 		ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
 	ruptured = max(src.ruptured, new_rupture, 1)
-	src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
+	src.desc = "[initial(src.desc)] Still looks salvageable through some careful welding."
 	UpdateIcon()
 
 /// Moves gas from the high pressure mixture to the low pressure mixture, usually pipe to tile.
@@ -167,6 +167,25 @@
 	src.UpdateIcon()
 
 #undef SHEETS_TO_REINFORCE
+
+/obj/machinery/atmospherics/pipe/update_icon()
+	if(ruptured)
+		icon_state = "[src.initial_icon_state]-broken"
+
+		var/image/leak
+		var/datum/gas_mixture/gas = return_air()
+		var/datum/gas_mixture/environment = loc.return_air()
+
+		if( (MIXTURE_PRESSURE(gas) - (2 * MIXTURE_PRESSURE(environment))) > 0 )
+			leak = SafeGetOverlayImage("leak", 'icons/obj/atmospherics/pipes/pipe.dmi', "leak")
+			leak.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
+			leak.alpha = clamp(ruptured * 10, 40, 200)
+		UpdateOverlays(leak,"leak")
+	else
+		icon_state = src.initial_icon_state
+		ClearSpecificOverlays("leak")
+	alpha = invisibility ? 128 : 255
+
 
 /obj/machinery/atmospherics/pipe/check_pressure(pressure)
 	if (!loc)
@@ -344,22 +363,7 @@
 	return list(node1, node2)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	if(ruptured)
-		icon_state = "broken"
-
-		var/image/leak
-		var/datum/gas_mixture/gas = return_air()
-		var/datum/gas_mixture/environment = loc.return_air()
-
-		if( (MIXTURE_PRESSURE(gas) - (2 * MIXTURE_PRESSURE(environment))) > 0 )
-			leak = SafeGetOverlayImage("leak", src.icon, "leak")
-			leak.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
-			leak.alpha = clamp(ruptured * 10, 40, 200)
-		UpdateOverlays(leak,"leak")
-	else
-		icon_state = "normal"
-		ClearSpecificOverlays("leak")
-	alpha = invisibility ? 128 : 255
+	. = ..()
 	switch(src.dir)
 		if(NORTH, SOUTH, EAST, WEST)
 			SET_SIMPLE_PIPE_UNDERLAY(src.node1, turn(src.dir, 180))
@@ -569,7 +573,7 @@
 	icon_state = "manifold"
 #endif
 	name = "pipe manifold"
-	desc = "A manifold composed of regular pipes"
+	desc = "A manifold composed of regular pipes."
 	level = UNDERFLOOR
 	volume = 105
 	can_rupture = TRUE
@@ -640,6 +644,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
+	. = ..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
 	alpha = invisibility ? 128 : 255
@@ -755,6 +760,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/quadway/update_icon()
+	. = ..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
 
