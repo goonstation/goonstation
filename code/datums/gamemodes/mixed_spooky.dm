@@ -2,10 +2,18 @@
 	name = "Spooky"
 	config_tag = "spooky"
 	latejoin_antag_compatible = 1
+#ifdef RP_MODE
+	latejoin_antag_roles = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1)
+#else
 	latejoin_antag_roles = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WEREWOLF = 1, ROLE_HUNTER = 1)
+#endif
 	antag_token_support = TRUE
 	has_werewolves = TRUE
+#ifdef RP_MODE
+	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1)
+#else
 	traitor_types = list(ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WEREWOLF = 1)
+#endif
 	major_threats = list(ROLE_WRAITH = 1)
 	var/minimum_players = 15
 
