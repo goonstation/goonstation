@@ -18,6 +18,8 @@
 	var/ruptured = 0
 	/// What do I change back to when repaired???
 	var/initial_icon_state = null
+	/// Do we weld this pipe at a right angle to its actual direction?
+	var/orthogonal_welding = FALSE
 
 /obj/machinery/atmospherics/pipe/New()
 	. = ..()
@@ -38,7 +40,9 @@
 	else
 		axis_start_value = 12
 		axis_stop_value = 12
-
+	var/dir = src.dir
+	if (src.orthogonal_welding)
+		dir = turn(dir, 90)
 	switch(dir)
 		if(SOUTH, NORTH)
 			start = list(0, axis_start_value)
@@ -569,6 +573,7 @@
 	level = UNDERFLOOR
 	volume = 105
 	can_rupture = TRUE
+	orthogonal_welding = TRUE
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
