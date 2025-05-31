@@ -664,7 +664,7 @@
 /turf/unsimulated/floor/darkblueblack{
 	dir = 10
 	},
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "zY" = (
 /obj/landmark/newbee/laying_down,
 /turf/unsimulated/floor/yellow/checker{
@@ -741,11 +741,6 @@
 	dir = 5
 	},
 /area/tutorial/newbee/room_4)
-"DB" = (
-/turf/simulated/wall/false_wall/centcom{
-	dir = 8
-	},
-/area/tutorial/newbee/room_13)
 "DI" = (
 /turf/unsimulated/floor/arrival{
 	dir = 4
@@ -918,7 +913,7 @@
 "KK" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/redblack,
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "KP" = (
 /obj/landmark/newbee/help_person,
 /turf/unsimulated/floor/green/side{
@@ -969,9 +964,6 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/bluegreen/side,
 /area/tutorial/newbee/room_9)
-"MY" = (
-/turf/simulated/wall/false_wall/centcom,
-/area/tutorial/newbee/room_13)
 "Nr" = (
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/escape{
@@ -1074,7 +1066,7 @@
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/darkblueblack,
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "Tm" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_welding_mask,
@@ -1134,7 +1126,7 @@
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "Ve" = (
 /obj/landmark/newbee/grab_person,
 /turf/unsimulated/floor/yellow/side{
@@ -1148,7 +1140,7 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "Vp" = (
 /obj/table/reinforced/auto,
 /obj/landmark/newbee/pickup_brute_first_aid,
@@ -1178,7 +1170,7 @@
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/black,
-/area/tutorial/newbee/room_13)
+/area/tutorial/newbee/room_2)
 "WF" = (
 /turf/unsimulated/floor/greenblack{
 	dir = 5
@@ -1489,7 +1481,7 @@ Sq
 gx
 ue
 wD
-MY
+wD
 wD
 so
 mZ
@@ -1536,7 +1528,7 @@ QM
 ue
 wD
 Vh
-DB
+wD
 um
 ee
 so
