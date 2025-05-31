@@ -70,7 +70,8 @@
 /datum/tutorial_base/regional/newbee/Finish()
 	if(..())
 		var/mob/new_player/M = new()
-		src.newbee.mind.transfer_to(M)
+		M.adminspawned = TRUE
+		src.newbee.mind?.transfer_to(M)
 		src.region.clean_up() // aggressive cleanup to wipe out landmarks/spawned objects
 		qdel(src)
 
