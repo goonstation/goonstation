@@ -50,7 +50,9 @@
 	if (src.client?.tutorial)
 		src.client.tutorial.PerformSilentAction("m_intent", intent)
 
-/mob/living/carbon/human/tutorial/contract_disease()
+/mob/living/carbon/human/tutorial/contract_disease(ailment_path, ailment_name, datum/ailment_data/disease/strain, bypass_resistance = FALSE)
+	if (ailment_path == /datum/ailment/parasite/bee_larva)
+		. = ..() // bee :)
 	return // no
 
 /mob/living/carbon/human/tutorial/gib(give_medal, include_ejectables)
