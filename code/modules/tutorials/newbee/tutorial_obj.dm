@@ -289,6 +289,14 @@ TYPEINFO(/obj/item/device/radio/headset/tutorial)
 	hardened = TRUE // needs to always work
 	locked_frequency = TRUE
 
+	secure_frequencies = list(
+		"e" = R_FREQ_ENGINEERING,
+		"c" = R_FREQ_CIVILIAN)
+	secure_classes = list(
+		"e" = RADIOCL_ENGINEERING,
+		"c" = RADIOCL_CIVILIAN,
+		)
+
 /obj/item/device/radio/headset/tutorial/receive_signal()
 	return
 
