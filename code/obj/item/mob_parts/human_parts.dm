@@ -424,24 +424,33 @@
 				holder.change_misstep_chance(20)
 
 	/// Used by synth legs to absorb reagents from fluids
-	proc/fluid_absorbtion()
+	proc/fluid_absorbtion(var/absorbtion_rate)
 		if(!src.holder)
 			return
 		var/turf/T = get_turf(src.holder)
 		if(!T.active_liquid?.group?.reagents)
 			src.last_fluid_group = null
 			return
-		if(!prob(30) || !ishuman(src.holder))
+		if(!ishuman(src.holder))
 			return
 		var/mob/living/carbon/human/H = src.holder
-		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
-			return // Do not absorb through space suit
-		else if(H.shoes)
-			if(T.active_liquid.my_depth_level >= 2)
-				// Absorb through shoes if legs are submerged
-				absorb_reagents(T.active_liquid.group, 5)
+		if(!H.shoes && !H.wear_suit?.check_for_covered("both legs"))
+			// Do not apply chemprot if legs aren't covered
+			if(prob(30))
+				absorb_reagents(T.active_liquid.group, absorbtion_rate)
+			return
+		else if(T.active_liquid.my_depth_level < 2)
+			// Fluid not deep enough to absorb through shoes/suit
+			return
 		else
-			absorb_reagents(T.active_liquid.group, 5)
+			// Less likely to absorb based on chem protection
+			var/chem_prot = clamp(GET_ATOM_PROPERTY(H, PROP_MOB_CHEMPROT), 0, 40)
+			if(chem_prot >= 40)
+				return
+			var/absorb_prob = (30 - (chem_prot / 2))
+			if(!prob(absorb_prob))
+				return
+			absorb_reagents(T.active_liquid.group, absorbtion_rate)
 
 	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
 		var/datum/reagents/R = fluids.reagents
@@ -949,7 +958,7 @@
 
 	on_life()
 		. = ..()
-		src.fluid_absorbtion()
+		src.fluid_absorbtion(5)
 
 
 /obj/item/parts/human_parts/leg/right/synth
@@ -974,7 +983,7 @@
 
 	on_life()
 		. = ..()
-		src.fluid_absorbtion()
+		src.fluid_absorbtion(5)
 
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
@@ -2017,7 +2026,7 @@
 
 	on_life()
 		. = ..()
-		src.fluid_absorbtion()
+		src.fluid_absorbtion(5)
 
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"
