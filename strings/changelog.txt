@@ -1,3 +1,9 @@
+
+(t)sat may 31 25
+(u)CalliopeSoups
+(p)23630
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's engine has less heat pipe covering wires.
 (t)fri may 30 25
 (u)CalliopeSoups and LeahTheTech
 (*)Added a new "Mixed Spooky" gamemode with a guaranteed wraith and supernatural antags. Enabled on all servers.
