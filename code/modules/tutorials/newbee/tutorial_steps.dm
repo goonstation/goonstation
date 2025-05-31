@@ -23,10 +23,10 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/up = src.keymap.action_to_keybind(KEY_FORWARD) || "W"
-		var/left = src.keymap.action_to_keybind(KEY_LEFT) || "A"
-		var/down = src.keymap.action_to_keybind(KEY_BACKWARD) || "S"
-		var/right = src.keymap.action_to_keybind(KEY_RIGHT) || "D"
+		var/up = src.keymap.action_to_keybind(KEY_FORWARD)
+		var/left = src.keymap.action_to_keybind(KEY_LEFT)
+		var/down = src.keymap.action_to_keybind(KEY_BACKWARD)
+		var/right = src.keymap.action_to_keybind(KEY_RIGHT)
 		src.instructions = "Use <b>[up]</b>/<b>[left]</b>/<b>[down]</b>/<b>[right]</b> to move your character.<br>Walk to the marker to continue."
 
 /datum/tutorialStep/newbee/move_to/powered_doors
@@ -68,7 +68,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card, or <b>click</b> the ID card slot in your HUD."
 
 	SetUp()
@@ -181,8 +181,8 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/key_throw = src.keymap.action_to_keybind(KEY_THROW) || "SPACE"
-		var/toggle_throw = src.keymap.action_to_keybind("togglethrow") || "DELETE"
+		var/key_throw = src.keymap.action_to_keybind(KEY_THROW)
+		var/toggle_throw = src.keymap.action_to_keybind("togglethrow")
 		src.instructions = "Throw items by holding <b>[key_throw]</b> or toggling throw mode with <b>[toggle_throw]</b>, then <b>clicking</b>.<br>Throw the crushed can into the disposals unit."
 
 	SetUp(manually_selected)
@@ -294,7 +294,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/drop = src.keymap.action_to_keybind("drop") || "Q"
+		var/drop = src.keymap.action_to_keybind("drop")
 		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b> or <b>clicking</b> the Drop Item HUD button.."
 
 	SetUp()
@@ -339,7 +339,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/help = src.keymap.action_to_keybind("help") || "1"
+		var/help = src.keymap.action_to_keybind("help")
 		src.instructions = "The [TEXT_INTENT_HELP] intent will help people up, or give critical people CPR.<br>Press <b>[help]</b> to switch to the [TEXT_INTENT_HELP] intent."
 
 	SetUp()
@@ -425,7 +425,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/disarm = src.keymap.action_to_keybind("disarm") || "2"
+		var/disarm = src.keymap.action_to_keybind("disarm")
 		src.instructions = "The [TEXT_INTENT_DISARM] intent will knock items out of someone's hands or push them to the ground.<br>Press <b>[disarm]</b> to switch to the [TEXT_INTENT_DISARM] intent."
 
 	SetUp()
@@ -511,7 +511,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/grab = src.keymap.action_to_keybind("grab") || "3"
+		var/grab = src.keymap.action_to_keybind("grab")
 		src.instructions = "The [TEXT_INTENT_GRAB] intent will grab someone.<br>Press <b>[grab]</b> to switch to the [TEXT_INTENT_GRAB] intent."
 
 	SetUp()
@@ -545,7 +545,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_GRAB] intent. <b>Click</b> them again or press <b>[attackself]</b> to grip tighter.<br>Get the clown in an aggressive grab."
 
 	SetUp()
@@ -597,7 +597,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/harm = src.keymap.action_to_keybind("harm") || "4"
+		var/harm = src.keymap.action_to_keybind("harm")
 		src.instructions = "The [TEXT_INTENT_HARM] intent will attack people by punching them or hitting them with items.<br>Press <b>[harm]</b> to switch to the [TEXT_INTENT_HARM] intent."
 
 	SetUp()
@@ -731,7 +731,7 @@
 
 	SetUp(manually_selected)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "With the first aid kit in-hand, press <b>[attackself]</b> to open it."
 
 	PerformAction(action, context)
@@ -750,7 +750,7 @@
 
 	New()
 		. = ..()
-		var/swaphand = src.keymap.action_to_keybind("swaphand") || "E"
+		var/swaphand = src.keymap.action_to_keybind("swaphand")
 		src.instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
 
 	SetUp()
@@ -780,7 +780,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Grab a [TEXT_HEALTH_BRUTE] patch out of the brute first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>[attackself]</b> to self-apply the patch."
 
 	SetUp()
@@ -866,7 +866,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Just like [TEXT_HEALTH_BRUTE] patches, apply a [TEXT_HEALTH_BURN] patch from the first aid kit.<br>You can <b>click</b> yourself or press <b>[attackself]</b> with a patch in hand to self-apply the patch."
 
 	SetUp()
@@ -950,7 +950,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Toolboxes contain up to 7 small objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>[attackself]</b> to open it."
 
 	SetUp()
@@ -1020,7 +1020,7 @@
 
 	New()
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Some items do something when used in-hand.<Br>Press <b>[attackself]</b> to activate the flashlight."
 
 	PerformAction(action, context)
@@ -1102,7 +1102,7 @@
 
 	New()
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Space suits protect against the vacuum of space.<br><b>Click</b> the emergency suit and press <b>[equip]</b> to equip it."
 
 	PerformAction(action, context)
@@ -1120,7 +1120,7 @@
 
 	New()
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
 
 	PerformAction(action, context)
@@ -1138,7 +1138,7 @@
 
 	New()
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
 
 	PerformAction(action, context)
@@ -1257,7 +1257,7 @@
 
 	New()
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Backpacks can be worn on your back.<br>Equip the backpack with <b>[equip]</b> or <b>click</b> the back slot in your HUD."
 
 	SetUp()
@@ -1419,7 +1419,7 @@
 
 	New()
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "You need to wear the welding mask before it will protect your eyes.<br>Equip the welding mask with <b>[equip]</b> or by <b>clicking</b> the head slot in your HUD."
 
 	SetUp()
@@ -1486,7 +1486,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>[attackself]</b>."
 
 	PerformAction(action, context)
@@ -1612,7 +1612,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/rest = src.keymap.action_to_keybind("rest") || "="
+		var/rest = src.keymap.action_to_keybind("rest")
 		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to crawl under the flaps."
 
 /datum/tutorialStep/newbee/move_to/sprinting
@@ -1627,7 +1627,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/sprint = src.keymap.action_to_keybind(KEY_RUN) || "SHIFT"
+		var/sprint = src.keymap.action_to_keybind(KEY_RUN)
 		src.instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
 
 /datum/tutorialStep/newbee/walking
@@ -1642,7 +1642,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/walk = src.keymap.action_to_keybind("walk") || "-"
+		var/walk = src.keymap.action_to_keybind("walk")
 		src.instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>[walk]</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."
 
 	SetUp(manually_selected)
@@ -1689,7 +1689,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/say = src.keymap.action_to_keybind("say") || "T"
+		var/say = src.keymap.action_to_keybind("say")
 		src.instructions = "Talking is a great way to communicate with nearby crewmates!<br>Press <b>[say]</b> to open the talk dialog and press <b>ENTER</b> to say something."
 
 	SetUp()
@@ -1728,7 +1728,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip") || "V"
+		var/equip = src.keymap.action_to_keybind("equip")
 		instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>[equip]</b> or <b>clicking</b> the ear slot in your HUD."
 
 	SetUp()
@@ -1757,7 +1757,7 @@
 
 	New()
 		. = ..()
-		var/say_over_channel = src.keymap.action_to_keybind("say_over_channel") || "Y"
+		var/say_over_channel = src.keymap.action_to_keybind("say_over_channel")
 		src.instructions = "Press <b>[say_over_channel]</b> to get a list of radio channels, and press <b>ENTER</b> to select one.<br>Say something over the radio to continue."
 
 	SetUp()
@@ -1802,7 +1802,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/pull = src.keymap.action_to_keybind(KEY_PULL) || "CTRL"
+		var/pull = src.keymap.action_to_keybind(KEY_PULL)
 		src.instructions = "You can pull objects (and people!) by holding <b>[pull]</b> and <b>clicking</b> them.<br>Start pulling the water tank."
 
 	SetUp()
@@ -1845,7 +1845,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/pull = src.keymap.action_to_keybind(KEY_PULL) || "CTRL"
+		var/pull = src.keymap.action_to_keybind(KEY_PULL)
 		src.instructions = "Press <b>[pull]</b> and <b>click</b> far away to stop pulling the water tank.<br>You can also press the PULL button in your hud to stop pulling."
 
 
@@ -1922,8 +1922,8 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		var/adminhelp = src.keymap.action_to_keybind("adminhelp") || "F1"
-		var/mentorhelp = src.keymap.action_to_keybind("mentorhelp") || "F3"
+		var/adminhelp = src.keymap.action_to_keybind("adminhelp")
+		var/mentorhelp = src.keymap.action_to_keybind("mentorhelp")
 		src.instructions = "The <a href=\"https://wiki.ss13.co/\" style='color:#0099cc;text-decoration: underline;'>wiki</a> has detailed guides and information.<br>Ask our mentors gameplay questions in-game by pressing <b>[mentorhelp]</b>.<br>Ask our admins rules questions in-game by pressing <b>[adminhelp]</b>."
 
 /datum/tutorialStep/newbee/timer/finished

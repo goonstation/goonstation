@@ -19,15 +19,15 @@
 	src.origin_mob = M
 	src.origin_mob.close_spawn_windows()
 	animate(src.origin_mob.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
-	src.keymap = src.origin_mob.client.keymap
-	src.generate_sidebars()
 	src.newbee = new(src.initial_turf, src.origin_mob.client.preferences.AH, src.origin_mob.client.preferences, TRUE)
 	src.owner = src.newbee
-	src.AddNewbeeSteps() // need the keymap	 in place before adding steps for reading player custom binds
 
 /datum/tutorial_base/regional/newbee/Start()
 	src.tutorial_hud = new()
 	src.origin_mob.mind.transfer_to(src.newbee)
+	src.keymap = src.newbee.client.keymap
+	src.generate_sidebars()
+	src.AddNewbeeSteps() // need the keymap	in place before adding steps for reading player custom binds
 	src.newbee.attach_hud(src.tutorial_hud)
 	src.newbee.addAbility(/datum/targetable/newbee/exit)
 	src.newbee.addAbility(/datum/targetable/newbee/previous)
