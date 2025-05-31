@@ -1,5 +1,5 @@
 /obj/linked_laser
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/lasers/ptl_beam.dmi'
 	icon_state = "ptl_beam"
 	anchored = ANCHORED_ALWAYS
 	layer = ABOVE_OBJ_LAYER //layer over mirrors

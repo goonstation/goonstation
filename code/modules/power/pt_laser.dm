@@ -643,7 +643,7 @@
 /obj/linked_laser/ptl
 	name = "laser"
 	desc = "A powerful laser beam."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/lasers/ptl_beam.dmi'
 	icon_state = "ptl_beam"
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/power/pt_laser/source = null
