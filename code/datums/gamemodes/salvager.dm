@@ -12,9 +12,11 @@
 	var/const/antags_possible = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-	#ifdef RP_MODE
-		var/const/pop_divisor = 6
-	#else
+#ifdef RP_MODE
+	var/const/pop_divisor = 6
+#else
+	var/const/pop_divisor = 6
+#endif
 
 /datum/game_mode/salvager/announce()
 	boutput(world, "<B>The current game mode is - Salvagers!</B>")
