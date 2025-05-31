@@ -1586,6 +1586,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	anchored = ANCHORED
 	density = 1
 	weldable = FALSE
+	object_flags = NO_BLOCK_TABLE
 	var/turf/stuff_chucking_target
 	HELP_MESSAGE_OVERRIDE("The smart disposal outlet cannot be detached by welding.")
 
@@ -1653,6 +1654,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	name = "filter disposal outlet"
 	desc = "A disposal outlet with a little sensor in it, to allow it to filter out unwanted things from the system."
 	icon_state = "unblockoutlet"
+	object_flags = NO_BLOCK_TABLE
 	var/turf/stuff_chucking_target
 	var/list/allowed_types = list()
 
@@ -2038,6 +2040,7 @@ TYPEINFO(/obj/disposaloutlet)
 	icon_state = "outlet"
 	density = 1
 	anchored = ANCHORED
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.

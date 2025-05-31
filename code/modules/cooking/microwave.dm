@@ -53,6 +53,7 @@ TYPEINFO(/obj/machinery/microwave)
 	var/obj/item/reagent_containers/food/snacks/being_cooked = null
 	/// Single non food item that can be added to the microwave
 	var/obj/item/extra_item
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/emagged = FALSE
 

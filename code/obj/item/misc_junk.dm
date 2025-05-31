@@ -481,6 +481,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0
 
