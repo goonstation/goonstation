@@ -1406,6 +1406,21 @@ datum
 			reagent_state = LIQUID
 			taste = list("strong", "fruity")
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (M.mind.assigned_role == "Botanist" || src.drinker_is_bee(M))
+					M.emote("twitch_v")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (prob(60))
+					if(M.mind.assigned_role == "Botanist" || src.drinker_is_bee(M))
+						M.emote("twitch_v")
+				..()
+
+			proc/drinker_is_bee(var/mob/M)
+				return istype(M, /obj/critter/domestic_bee) || istype(M, /mob/living/critter/small_animal/bee) || M.bioHolder?.HasEffect("bee")
+
 		fooddrink/alcoholic/maitai
 			name = "Mai Tai"
 			id = "maitai"
@@ -1765,8 +1780,14 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(istype(M) && !(M.mutantrace.name == "roach"))
-					bioeffect_length++
+				if(isliving(M) && !(M.mutantrace.name == "roach"))
+					src.bioeffect_length++
+					var/mob/living/L = M
+					if(L.organHolder?.intestines?.synthetic)
+						src.bioeffect_length++
+						if(L.organHolder?.stomach?.synthetic) // Synth stomach digests insects. A grasshopper is an insect.
+							L.reagents.add_reagent("ammonia", 0.5 * src.calculate_depletion_rate(M, mult))
+							L.reagents.add_reagent("phosphorus", 0.5 * src.calculate_depletion_rate(M, mult))
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)

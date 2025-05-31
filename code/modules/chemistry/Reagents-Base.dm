@@ -400,9 +400,24 @@
 	fluid_g = 110
 	fluid_b = 110
 	transparency = 255
+	threshold = THRESHOLD_INIT
 
 	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 		growth_tick.growth_rate += 0.66
+
+	cross_threshold_over()
+		if(ismob(holder?.my_atom))
+			var/mob/living/L = holder.my_atom
+			if (L.organHolder?.intestines?.synthetic)
+				L.add_stam_mod_max("synth_phosphorus", STAMINA_MAX * 0.2)
+		..()
+
+	cross_threshold_under()
+		if(ismob(holder?.my_atom))
+			var/mob/living/L = holder.my_atom
+			if (L.organHolder?.intestines?.synthetic)
+				L.remove_stam_mod_max("synth_phosphorus")
+		..()
 
 /datum/reagent/plasma
 	name = "plasma"
@@ -481,6 +496,15 @@
 	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 		growth_tick.growth_rate += 0.4
 		growth_tick.health_change += 0.4
+
+	on_mob_life(var/mob/M, var/mult = 1)
+		if(!M) M = holder.my_atom
+		if(prob(55) && isliving(M))
+			var/mob/living/L = M
+			if (L.organHolder?.intestines?.synthetic)
+				M.HealDamage("All", 0.5 * mult, 0.5 * mult)
+				M.reagents.remove_reagent(src.id, 2)
+		..()
 
 /datum/reagent/silicon
 	name = "silicon"

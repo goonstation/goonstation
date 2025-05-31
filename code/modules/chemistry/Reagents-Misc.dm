@@ -920,11 +920,25 @@ datum
 			transparency = 75
 			value = 2 // 1c + 1c
 			hygiene_value = 0.25
+			threshold = THRESHOLD_INIT
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 4
 				growth_tick.health_change += 0.66
 				growth_tick.water_consumption += 4
+
+			cross_threshold_over()
+				if(isliving(holder?.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (L.organHolder?.intestines?.synthetic)
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_STAMINA_REGEN_BONUS, "synth_ammonia", STAMINA_REGEN * 0.5)
+				..()
+
+			cross_threshold_under()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "synth_ammonia")
+				..()
 
 		diethylamine
 			name = "diethylamine"
@@ -936,9 +950,23 @@ datum
 			fluid_b = 0
 			transparency = 255
 			value = 4 // 2c + 1c + heat
+			threshold = THRESHOLD_INIT
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 1.23
+
+			cross_threshold_over()
+				if(isliving(holder?.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (L.organHolder?.intestines?.synthetic)
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_STAMINA_REGEN_BONUS, "synth_diethylamine", STAMINA_REGEN * 0.25)
+				..()
+
+			cross_threshold_under()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "synth_diethylamine")
+				..()
 
 		acetone
 			name = "acetone"
@@ -1069,10 +1097,26 @@ datum
 			value = 2
 			hygiene_value = -0.5
 			viscosity = 0.55
-
+			threshold = THRESHOLD_INIT
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.endurance_bonus += 0.5
+
+			cross_threshold_over()
+				if(isliving(holder?.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (L.organHolder?.intestines?.synthetic)
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_STUN_RESIST, "synth_digest_fungus", 10)
+						APPLY_ATOM_PROPERTY(L, PROP_MOB_STUN_RESIST_MAX, "synth_digest_fungus", 10)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					if (ismartian(M))
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "synth_digest_fungus")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "synth_digest_fungus")
+				..()
 
 		cryostylane
 			name = "cryostylane"
@@ -1204,6 +1248,10 @@ datum
 				if(method == TOUCH)
 					M.clean_forensic()
 					M.delStatus("marker_painted")
+				if(method == INGEST && isliving(M))
+					var/mob/living/L = M
+					if (L.organHolder?.intestines?.synthetic)
+						M.reagents.add_reagent(("ammonia"), volume * 0.3)
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"
@@ -1691,6 +1739,12 @@ datum
 					return
 				if(isghostcritter(M) || issmallanimal(M))
 					return
+				if(method == INGEST && isliving(M))
+					var/mob/living/L = M
+					if (L.organHolder?.stomach?.synthetic)
+						boutput(M, "The ants disolve inside your stomach.")
+						return
+
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "ants_scream", 10 SECONDS)) //lets make it less spammy
@@ -1705,6 +1759,17 @@ datum
 				if(isghostcritter(M) || issmallanimal(M))
 					return
 				if (!M) M = holder.my_atom
+
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.organHolder?.stomach?.synthetic)
+						H.reagents.remove_reagent(src.id, 2)
+						if (H.organHolder?.intestines?.synthetic)
+							H.reagents.add_reagent("ammonia", 1 * src.calculate_depletion_rate(M, mult))
+							H.reagents.add_reagent("phosphorus", 1 * src.calculate_depletion_rate(M, mult))
+							H.sims?.affectMotive("Hunger", mult)
+						return
+
 				random_brute_damage(M, 2 * mult)
 				..()
 
@@ -1725,6 +1790,13 @@ datum
 				. = ..()
 				if(volume < 1 || istype(M, /mob/living/critter/spider))
 					return
+
+				if(method == INGEST && isliving(M))
+					var/mob/living/L = M
+					if (L.organHolder?.stomach?.synthetic)
+						boutput(M, "The spiders disolve inside your stomach.")
+						return
+
 				if(method == TOUCH)
 					. = 0 // for depleting fluid pools
 				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
@@ -1768,6 +1840,15 @@ datum
 				if (!M) M = holder.my_atom
 				if(istype(M, /mob/living/critter/spider))
 					return
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.organHolder?.stomach?.synthetic)
+						H.reagents.remove_reagent(src.id, 2)
+						if (H.organHolder?.intestines?.synthetic)
+							H.reagents.add_reagent("ammonia", 1 * src.calculate_depletion_rate(M, mult))
+							H.reagents.add_reagent("phosphorus", 1 * src.calculate_depletion_rate(M, mult))
+							H.sims?.affectMotive("Hunger", mult)
+						return
 				if (prob(50))
 					random_brute_damage(M, 1 * mult)
 				else if (prob(10))
@@ -1789,9 +1870,10 @@ datum
 				return
 
 			on_add()
-				if (ismob(holder.my_atom))
-					var/mob/mob = holder.my_atom
-					mob.add_vomit_behavior(/datum/vomit_behavior/spider)
+				if (isliving(holder.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (!L.organHolder?.stomach?.synthetic)
+						L.add_vomit_behavior(/datum/vomit_behavior/spider)
 
 			on_remove()
 				if (ismob(holder.my_atom))
@@ -1999,8 +2081,10 @@ datum
 
 				if(method == INGEST)
 					var/mob/living/H = M
-					if (H.bioHolder && H.bioHolder.HasEffect("bee"))
+					if (H.bioHolder?.HasEffect("bee"))
 						boutput(M, SPAN_NOTICE("That tasted amazing!"))
+					else if(H.organHolder?.intestines?.synthetic)
+						boutput(M, SPAN_NOTICE("That tasted great!"))
 					else
 						boutput(M, SPAN_ALERT("Ugh! Eating that was a terrible idea!"))
 						M.setStatusMin("knockdown", 3 SECONDS)
@@ -3101,10 +3185,15 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
-				if (istype(M, /mob/living/critter/plant))
-					M.take_toxin_damage(3 * mult)
-				else
-					M.take_toxin_damage(2 * mult)
+				var/damage_val = 2
+				if(isliving(M))
+					var/mob/living/L = M
+					if(L.organHolder?.intestines?.synthetic)
+						damage_val = 3
+					else if (istype(M, /mob/living/critter/plant))
+						damage_val = 3
+
+				M.take_toxin_damage(damage_val * mult)
 				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
@@ -3151,6 +3240,15 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 1.6
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if(isliving(M))
+					var/mob/living/L = M
+					if (L.organHolder?.intestines?.synthetic)
+						M.HealDamage("All", 1 * mult, 1 * mult)
+						M.reagents.remove_reagent(src.id, 2)
+				..()
+
 		potash
 			name = "potash"
 			id = "potash"
@@ -3176,6 +3274,15 @@ datum
 				growth_tick.growth_rate += 0.5
 				growth_tick.health_change += 0.5
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if(isliving(M))
+					var/mob/living/L = M
+					if (L.organHolder?.intestines?.synthetic)
+						M.HealDamage("All", 1 * mult, 1 * mult, 0.5 * mult)
+						M.reagents.remove_reagent(src.id, 2)
+				..()
+
 		plant_nutrients
 			name = "saltpetre"
 			id = "saltpetre"
@@ -3185,6 +3292,7 @@ datum
 			fluid_g = 240
 			fluid_b = 240
 			hunger_value = 0.048
+			threshold = THRESHOLD_INIT
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 2.4
@@ -3192,6 +3300,20 @@ datum
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
 					growth_tick.cropsize_bonus -= 0.24
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (L.organHolder?.intestines?.synthetic)
+						L.add_stam_mod_max("saltpetre", STAMINA_MAX * 0.35)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/living/L = holder.my_atom
+					if (L.organHolder?.intestines?.synthetic)
+						L.remove_stam_mod_max("saltpetre")
+				..()
 
 		///////////////////////////
 		/// BODILY FLUIDS /////////
@@ -3390,10 +3512,26 @@ datum
 			transparency = 255
 			hygiene_value = -5
 			viscosity = 0.5
-			fluid_flags = FLUID_STACKING_BANNED
+			taste = "like dirt"
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.health_change += 0.66
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				..()
+				if (method == INGEST && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.sims && H.organHolder?.intestines?.synthetic && prob(20))
+						H.sims.affectMotive("Hunger", 10)
+						boutput(M, SPAN_NOTICE("The compost feels [pick("enriching","nutritious","earthy","organic")]."))
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (H.sims && H.organHolder?.intestines?.synthetic)
+						H.sims.affectMotive("Hunger", 2 * mult)
+				..()
 
 		big_bang_precursor
 			name = "stable bose-einstein macro-condensate"

@@ -595,10 +595,10 @@
 			src.liver = new /obj/item/organ/liver(src.donor, src)
 			organ_list["liver"] = liver
 		if (!src.stomach)
-			src.stomach = new /obj/item/organ/stomach(src.donor, src)
+			src.stomach = new /obj/item/organ/stomach/synth(src.donor, src)
 			organ_list["stomach"] = stomach
 		if (!src.intestines)
-			src.intestines = new /obj/item/organ/intestines(src.donor, src)
+			src.intestines = new /obj/item/organ/intestines/synth(src.donor, src)
 			organ_list["intestines"] = intestines
 		if (!src.spleen)
 			src.spleen = new /obj/item/organ/spleen(src.donor, src)
