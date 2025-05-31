@@ -644,13 +644,14 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			if (V.locked && V.lock)
+			if (V.locked && V.get_part(POD_PART_LOCK))
 				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.lock.show_lock_panel(user,0)
+			var/obj/item/shipcomponent/secondary_system/lock/lock_part = V.get_part(POD_PART_LOCK)
+			lock_part.show_lock_panel(user,0)
 
 	parts
 		name = "Show Parts Panel"
@@ -704,12 +705,12 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
+			. = ..() && istype(V.get_part(POD_PART_SECONDARY), /obj/item/shipcomponent/secondary_system/thrusters/lateral)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.get_part(POD_PART_SECONDARY)
 			thrusters.change_thruster_direction()
 			if (src.icon_state == "thrusters_right")
 				src.desc = "Change the lateral thrusters to move the ship left"
