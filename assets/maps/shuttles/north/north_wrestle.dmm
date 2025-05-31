@@ -1368,7 +1368,7 @@
 /area/shuttle/escape/centcom)
 "Ua" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "Uk" = (
