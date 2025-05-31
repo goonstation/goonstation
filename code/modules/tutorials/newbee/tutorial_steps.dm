@@ -390,11 +390,12 @@
 		RegisterSignal(src.target_mob, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_mob_laydown_standup), TRUE)
 
 	proc/check_mob_laydown_standup(source, lying)
-		src.tutorial.PerformAction("mob_laydown_standup", "standup")
+		if (!lying)
+			src.tutorial.PerformSilentAction("mob_standup", source)
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "mob_laydown_standup" && context == "standup")
+		if (action == "mob_standup" && context == src.target_mob)
 			src.finished = TRUE
 
 	TearDown()
@@ -834,6 +835,36 @@
 	TearDown()
 		. = ..()
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST)
+
+/datum/tutorialStep/newbee/standing_up
+	name = "Standing Up"
+	instructions = "With the fire out, you need to stand yourself back upright.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
+	highlight_hud_element = "rest"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
+	step_area = /area/tutorial/newbee/room_5
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/rest = src.keymap.action_to_keybind("rest")
+		src.instructions = "With the fire out, you need to stand yourself back upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+
+	SetUp(manually_selected)
+		. = ..()
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_mob_laydown_standup))
+
+	proc/check_mob_laydown_standup(source, lying)
+		if (!lying)
+			src.tutorial.PerformSilentAction("mob_standup", source)
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "mob_standup" && context == src.newbee_tutorial.newbee)
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP)
 
 /datum/tutorialStep/newbee/item_pickup/fire_first_aid
 	name = "Fire First Aid"

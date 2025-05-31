@@ -167,6 +167,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/hand_swap)
 	src.AddStep(/datum/tutorialStep/newbee/apply_brute_patch)
 	src.AddStep(/datum/tutorialStep/newbee/resisting)
+	src.AddStep(/datum/tutorialStep/newbee/standing_up)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/fire_first_aid)
 	src.AddStep(/datum/tutorialStep/newbee/apply_fire_patch)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_healing)
