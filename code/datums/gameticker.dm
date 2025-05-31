@@ -394,7 +394,8 @@ var/global/game_force_started = FALSE
 					player.create_character()
 					qdel(player)
 			else if (player.ready_tutorial)
-				player.play_tutorial()
+				SPAWN(0)
+					player.play_tutorial()
 
 	proc/add_minds(var/periodic_check = 0)
 		// SHOULD_NOT_SLEEP(TRUE)
