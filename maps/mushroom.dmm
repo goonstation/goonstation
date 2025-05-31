@@ -14737,25 +14737,6 @@
 	tag = "icon-grass1"
 	},
 /area/station/hydroponics/bay)
-"ecS" = (
-/obj/item/paper_bin{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/stamp{
-	pixel_y = 1
-	},
-/obj/item/pen{
-	pixel_x = 4
-	},
-/obj/item/clipboard{
-	pixel_y = 3
-	},
-/obj/table/auto,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "ecT" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
@@ -18472,6 +18453,19 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/crew_quarters/hor)
+"heo" = (
+/obj/machinery/power/data_terminal,
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Artlab"
+	},
+/obj/cable,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_y = 8;
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/artifact)
 "her" = (
 /obj/stool/chair/couch/green{
 	dir = 4
@@ -24454,18 +24448,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
-"mnZ" = (
-/obj/table/auto,
-/obj/machinery/light/incandescent,
-/obj/item/robodefibrillator,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay)
 "moy" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
@@ -27031,6 +27013,29 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
+"oqp" = (
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/stamp{
+	pixel_y = 1
+	},
+/obj/item/pen{
+	pixel_x = 4
+	},
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = 10
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/table/auto,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "oqD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31965,19 +31970,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"rKh" = (
-/obj/machinery/power/data_terminal,
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Artlab"
-	},
-/obj/cable,
-/obj/item/pinpointer/category/artifacts/safe{
-	pixel_y = 8;
-	pixel_x = 10
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/artifact)
 "rKs" = (
 /obj/machinery/door_timer/solitary2/new_walls/north,
 /turf/simulated/floor/red/side{
@@ -36921,6 +36913,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"vor" = (
+/obj/item/robodefibrillator,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 8
+	},
+/obj/table/auto,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "voE" = (
 /turf/simulated/floor{
 	icon_state = "L1";
@@ -95448,7 +95455,7 @@ cxV
 vGD
 txb
 esb
-ecS
+oqp
 odZ
 oGN
 olZ
@@ -97258,7 +97265,7 @@ vZE
 dxC
 jNn
 aPQ
-mnZ
+vor
 kvV
 dgF
 spP
@@ -99682,7 +99689,7 @@ nxF
 oIX
 pTJ
 qOd
-rKh
+heo
 sXL
 xis
 sZp
