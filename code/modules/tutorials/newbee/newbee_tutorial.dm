@@ -73,6 +73,7 @@
 		src.newbee.unequip_all(TRUE) // removes any lingering item ability HUDs
 		var/mob/new_player/M = new()
 		M.key = src.newbee.client.key
+		src.newbee.mind.transfer_to(M)
 		qdel(src.newbee)
 		src.newbee = null
 		qdel(src.tutorial_hud)
