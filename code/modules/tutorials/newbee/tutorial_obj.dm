@@ -359,3 +359,7 @@
 	. = ..()
 	global.protected_frequencies -= src.radio_freq_alpha
 	global.protected_frequencies -= src.radio_freq_beta
+
+/obj/health_scanner/floor/tutorial
+	crit_alert(mob/living/carbon/human/H)
+		return // don't alert station to tutorial crit users

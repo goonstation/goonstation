@@ -209,7 +209,7 @@
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "hC" = (
-/obj/health_scanner/floor,
+/obj/health_scanner/floor/tutorial,
 /turf/unsimulated/floor/black,
 /area/tutorial/newbee/room_11)
 "in" = (
@@ -387,9 +387,9 @@
 	},
 /area/tutorial/newbee/room_13)
 "oK" = (
-/obj/health_scanner/floor,
 /obj/disposalpipe/segment/bent/north,
 /obj/landmark/newbee/check_health,
+/obj/health_scanner/floor/tutorial,
 /turf/unsimulated/floor/blue,
 /area/tutorial/newbee/room_5)
 "oX" = (
