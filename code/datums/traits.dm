@@ -667,6 +667,13 @@
 	category = list("trinkets")
 	points = 0
 
+/datum/trait/makeup
+	name = "Makeup Artist"
+	desc = "Start your shift with a pouch of fancy cosmetics that come in a variety of styles!"
+	id = "makeup"
+	icon_state = "makeup"
+	points = -1
+	category = list("trinkets")
 // Skill - White Border
 
 /datum/trait/smoothtalker
