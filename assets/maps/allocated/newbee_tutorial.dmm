@@ -569,6 +569,7 @@
 /obj/decal/cleanable/blood/splatter/extra,
 /obj/item/storage/firstaid/toxin,
 /obj/disposalpipe/segment/vertical,
+/obj/item/wrench/green,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "vS" = (
