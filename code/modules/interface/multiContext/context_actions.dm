@@ -489,7 +489,7 @@
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
 			return TRUE
-		if(user.find_type_in_hand(/obj/item/deconstructor/))
+		if(user.find_tool_in_hand(TOOL_DECONSTRUCTING))
 			return TRUE
 
 	wrench

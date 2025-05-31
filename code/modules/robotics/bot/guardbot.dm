@@ -379,9 +379,11 @@
 
 			src.net_id = generate_net_id(src)
 
+			#ifndef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", control_freq)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "beacon", beacon_freq)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+			#endif
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
