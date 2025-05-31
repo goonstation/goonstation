@@ -388,63 +388,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		..()
 		reagents.add_reagent("juice_peach",5)
 
-/obj/item/kitchen/popcorn_box
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state =  "popcorn0"
-	name = "empty popcorn box"
-	desc = "A sad waste of hollow space."
-	var/items_left = 0
-	var/seasoning = null
-
-	New()
-		..()
-
-
-	attack_hand(mob/user, unused, flag)
-		if (flag)
-			return ..()
-		if (user.r_hand == src || user.l_hand == src)
-			if(src.items_left == 0)
-				boutput(user, SPAN_ALERT("You're out of [item_name]. The world is a little bleaker."))
-				return
-			else
-				var/obj/item/reagent_containers/food/snacks/popcorn_kernel/kernel = new(user)
-				if (seasoning)
-					kernel.add_reagent(seasoning, 1)
-					kernel.name = "[seasoning] popcorn box"
-					kernel.desc = "Nature's fluffy snack, with added [seasoning]!. May contain unpopped kernels..."
-				if (rand(8))
-					kernel.unpopped = TRUE
-				user.put_in_hand_or_drop(kernel)
-				src.items_left--
-				if(src.items_left == 0)
-					src.icon_state = "popcorn-empty"
-					src.name = "empty popcorn box"
-					src.desc = "A sad waste of hollow space."
-		else
-			return ..()
-		return
-
-/obj/item/kitchen/popcorn_box/full_popcorn
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state =  "popcorn1"
-	name = "popcorn box"
-	desc = "Nature's fluffy snack. May contain unpopped kernels..."
-	items_left = 30
-
-/obj/item/reagent_containers/food/snacks/popcorn_kernel
-	name = "popcorn kernel"
-	desc = "Nature's fluffy snack."
-	icon_state = "popcorn-kernel-1"
-	bites_left = 1
-	var/unpopped = FALSE
-
-	New()
-		..()
-		src.icon_state = "popcorn-kernel-[rand(1,3)]"
-		src.heal_amt = 0.5
-
-
 /obj/item/kitchen/gummy_worms_bag
 	var/worms_left = 6
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'

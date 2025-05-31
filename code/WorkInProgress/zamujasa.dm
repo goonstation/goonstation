@@ -1999,7 +1999,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 /obj/admin_spacebux_store/premade/popcorn
 	price = 5
-	type_to_spawn = /obj/item/reagent_containers/food/snacks/popcorn
+	type_to_spawn = /obj/item/kitchen/popcorn_box
 
 	New()
 		. = ..()

@@ -240,12 +240,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 		popping = 1
 		src.visible_message(SPAN_ALERT("[src] pops violently!"))
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 		FLICK("cornsplode", src)
+
 		SPAWN(1 SECOND)
-			var/obj/item/reagent_containers/food/snacks/new_popcorn = new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
-			new_popcorn.reagents.maximum_volume = max(new_popcorn.reagents.maximum_volume, src.reagents.total_volume)
-			src.reagents.trans_to(new_popcorn, src.reagents.total_volume)
+			for (var/i = 1, i > rand(4, 10))
+				playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+				var/obj/item/reagent_containers/food/snacks/new_popcorn = new /obj/item/reagent_containers/food/snacks/popcorn_single(get_turf(src))
+				new_popcorn.reagents.maximum_volume = max(new_popcorn.reagents.maximum_volume, src.reagents.total_volume)
+				src.reagents.trans_to(new_popcorn, src.reagents.total_volume)
+				ThrowRandom(new_popcorn, rand(2,6))
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/corn/clear

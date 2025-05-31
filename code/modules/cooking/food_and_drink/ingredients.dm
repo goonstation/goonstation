@@ -298,6 +298,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "semolina"
 	food_color = "#FFFFEE"
 
+/obj/item/reagent_containers/food/snacks/ingredient/kernels
+	name = "kernels"
+	desc = "A bunch of kernels from the cob."
+	icon_state = "kernels"
+	food_color = "#FFFFFF"
+	var/seasoning = null
+
+	on_reagent_change()
+		..()
+		src.set_open_container(FALSE)
+
+
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
 	desc = "A sprig of rice. There's probably a decent amount in it, thankfully."

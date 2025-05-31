@@ -424,12 +424,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
-
-		if (istype(src, /obj/item/reagent_containers/food/snacks/popcorn_kernel))
-			var/obj/item/reagent_containers/food/snacks/popcorn_kernel/kernel = src
-			if (kernel.unpopped)
-				random_brute_damage(consumer, 1)
-				consumer.visible_message(SPAN_NOTICE("<b>[consumer]</b> bites down on an unpopped kernel. Ouch!"))
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity && !ethereal_eater && !inafterlife(consumer))

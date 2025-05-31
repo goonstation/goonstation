@@ -907,16 +907,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_explosion_resist")
 	meal_time_flags = MEAL_TIME_SNACK
 
-/obj/item/reagent_containers/food/snacks/popcorn
-	name = "popcorn"
-	desc = "Pop that corn!"
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state =  "popcorn1"
-	bites_left = 4
-	heal_amt = 1
-	food_effects = list("food_cateyes")
-	meal_time_flags = MEAL_TIME_SNACK
-
 /obj/item/reagent_containers/food/snacks/spaghetti
 	name = "spaghetti noodles"
 	desc = "Just noodles on their own."
@@ -3141,3 +3131,99 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	food_effects = list("food_warm","food_energized","food_brute")
 	bites_left = 5
 	heal_amt = 3
+
+/obj/item/kitchen/popcorn_box
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state =  "popcorn_full"
+	name = "popcorn box"
+	desc = "A box of nature's fluffy treats. May contain unpopped kernels..."
+	var/items_left = 15
+	var/max_items = 30
+	var/seasoning = null
+	var/obj/item/contained_item = null
+	var/obj/item/last_input = null
+	var/list/enabled_items = list(/obj/item/reagent_containers/food/snacks/ingredient/kernels) // support for future stuff eg: fried chicken
+
+	New()
+		..()
+		src.contained_item = /obj/item/reagent_containers/food/snacks/popcorn_single
+
+	attackby(obj/item/W, mob/user)
+		if (istypes(W, src.enabled_items))
+			if (src.items_left >= max_items)
+				boutput(user, SPAN_NOTICE("The box is full!"))
+				return
+			else if (!istype(W, src.last_input) && src.items_left > 0)
+				boutput(user, SPAN_NOTICE("You wonder why you're trying to mix foods in what should be a holy and pure bucket."))
+				return
+
+			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
+				if (src.contained_item != /obj/item/reagent_containers/food/snacks/popcorn_single)
+					src.contained_item = /obj/item/reagent_containers/food/snacks/popcorn_single
+				src.last_input = W
+				src.icon_state = "popcorn_full"
+				src.name = "popcorn box"
+				src.desc = "A box of nature's fluffy treats, [src.items_left] left. May contain unpopped kernels..."
+				src.UpdateIcon()
+				src.items_left += 15
+
+			if (src.items_left > max_items)
+				src.items_left = max_items
+			qdel(W)
+
+	attack_hand(mob/user, unused, flag)
+		if (flag)
+			return ..()
+		if (user.r_hand == src || user.l_hand == src)
+			if(src.items_left == 0)
+				boutput(user, SPAN_ALERT("You're out of [contained_item.name]. The world is a little bleaker."))
+				return
+
+			var/obj/item/reagent_containers/food_orb = new contained_item(user)
+			if (seasoning)
+				food_orb.reagents.add_reagent(seasoning, 1)
+			if (istype(food_orb, /obj/item/reagent_containers/food/snacks/popcorn_single) && rand(1,8) == 4)
+				var/obj/item/reagent_containers/food/snacks/popcorn_single/kernel = food_orb
+				kernel.unpopped = TRUE
+				user.put_in_hand_or_drop(kernel)
+			else
+				user.put_in_hand_or_drop(food_orb)
+
+			src.items_left--
+			if(src.items_left <= 0)
+				if (src.contained_item == /obj/item/reagent_containers/food/snacks/popcorn_single)
+					src.icon_state = "popcorn_empty"
+					src.name = "empty popcorn box"
+					src.desc = "A sad waste of hollow space."
+					src.UpdateIcon()
+				src.seasoning = null
+				src.contained_item = null
+		else
+			return ..()
+		return
+
+/obj/item/kitchen/popcorn_box/empty
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state =  "popcorn_empty"
+	name = "empty popcorn box"
+	desc = "A sad waste of hollow space."
+	items_left = 0
+
+/obj/item/reagent_containers/food/snacks/popcorn_single
+	name = "popcorn"
+	desc = "Nature's fluffy snack."
+	icon_state = "popcorn_kernel_1"
+	bites_left = 1
+	fill_amt = 0.2
+	var/unpopped = FALSE
+
+	New()
+		..()
+		src.icon_state = "popcorn_kernel_[rand(1,3)]"
+		src.heal_amt = 0.5
+
+	on_bite(mob/eater)
+		. = ..()
+		if (unpopped)
+			random_brute_damage(eater, 1)
+			eater.visible_message(SPAN_NOTICE("<b>[eater]</b> bites down on an unpopped kernel. Ouch!"))
