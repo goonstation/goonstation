@@ -278,6 +278,9 @@
 	name = "girder"
 
 	attackby(obj/item/I, mob/user)
+		if (ispryingtool(I) && user?.client?.tutorial)
+			boutput(user, SPAN_ALERT("This girder refuses to dislodge from the floor! You need to use a <b>wrench</b>!"))
+			return
 		. = ..()
 		if (iswrenchingtool(I) && user?.client?.tutorial)
 			user.client.tutorial.PerformSilentAction("deconstruct", "girder")
