@@ -205,6 +205,7 @@
 
 		if (!src.weldingtool || QDELETED(src.weldingtool))
 			src.weldingtool = new(src)
+		src.weldingtool.reagents.add_reagent("fuel", src.weldingtool.fuel_capacity)
 		src.ensure_item_in_storage(src.weldingtool)
 
 		if (!src.crowbar || QDELETED(src.crowbar))
