@@ -277,6 +277,27 @@
 			src.change = optional
 			. = ..()
 
+	staminaregen/drink
+		id = "quenched"
+		name = "Enjoyable Drink"
+		desc = "You feel energised from a good drink."
+		icon_state = "stam+"
+		maxDuration = INFINITE_STATUS
+		unique = 1
+		change = 5
+
+		low
+			id = "quenched_low"
+			name = "Mediocre Drink"
+			desc = "You are sufficently quenched."
+			change = 2.5
+
+		high
+			id = "quenched_high"
+			name = "Rejuvinating Drink"
+			desc = "You feel invigorated by a splendid drink."
+			change = 10
+
 	maxhealth
 		id = "maxhealth"
 		name = ""
@@ -330,6 +351,33 @@
 				if(change < 0) //Someone fucked this up; remove effect.
 					duration = 1
 
+		increased/nourished
+			id = "nourished"
+			name = "Fine Nourishment"
+			desc = "You've got some grub in you, and its not half bad either."
+			icon_state = "heart+"
+			duration = INFINITE_STATUS
+			maxDuration = null
+			change = 10
+
+			onAdd(optional=null)
+				. = ..(change)
+
+			onChange(optional=null)
+				. = ..(change)
+
+			low
+				id = "nourised_low"
+				name = "Basic Nourishment"
+				desc = "You've got some grub in you, but you'd rather not dwell of its possible sources."
+				change = 5
+
+			high
+				id = "nourished_high"
+				name = "Supreme Nourishment"
+				desc = "You think you've just eaten some of the best food in your life."
+				change = 25
+
 		decreased
 			id = "maxhealth-"
 			onUpdate(timePassed)
@@ -376,6 +424,12 @@
 					var/mob/M = owner
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 
+		food
+			id = "nourishment_hot"
+			duration = INFINITE_STATUS
+
+			drink
+				id = "quenched_hot"
 
 	acided
 		id = "acid"
