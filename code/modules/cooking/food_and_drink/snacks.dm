@@ -3157,15 +3157,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 				boutput(user, SPAN_NOTICE("You wonder why you're trying to mix foods in what should be a holy and pure bucket."))
 				return
 
-			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
-				if (src.contained_item != /obj/item/reagent_containers/food/snacks/popcorn_single)
+			if (istype(W, /obj/item/ladle))
+				var/obj/item/ladle/utensil = W
+				if (utensil.corn_scoop)
 					src.contained_item = /obj/item/reagent_containers/food/snacks/popcorn_single
-				src.last_input = W
-				src.icon_state = "popcorn_full"
-				src.name = "popcorn box"
-				src.desc = "A box of nature's fluffy treats, [src.items_left] left. May contain unpopped kernels..."
-				src.UpdateIcon()
-				src.items_left += 15
+					src.last_input = W
+					src.icon_state = "popcorn_full"
+					src.name = "popcorn box"
+					src.desc = "A box of nature's fluffy treats, [src.items_left] left. May contain unpopped kernels..."
+					src.UpdateIcon()
+					src.items_left += 15
+					utensil.corn_scoop = null
+					utensil.icon_state = "ladle_corn"
 
 			if (src.items_left > max_items)
 				src.items_left = max_items
@@ -3226,4 +3229,4 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 		. = ..()
 		if (unpopped)
 			random_brute_damage(eater, 1)
-			eater.visible_message(SPAN_NOTICE("<b>[eater]</b> bites down on an unpopped kernel. Ouch!"))
+			eater.visible_message(SPAN_ALERT("<b>[eater]</b> bites down on an unpopped kernel. Ouch!"))

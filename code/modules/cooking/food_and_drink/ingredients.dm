@@ -305,10 +305,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	food_color = "#FFFFFF"
 	var/seasoning = null
 
-	on_reagent_change()
-		..()
-		src.set_open_container(FALSE)
-
+	cooked
+		name = "cooked kernels"
+		desc = "You shouldn't be seeing this."
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"

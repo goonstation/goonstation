@@ -2127,3 +2127,5 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/breadcrumbs = 1)
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/katsu_curry
+
+/datum/cookingrecipe/
