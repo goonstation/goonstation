@@ -927,7 +927,7 @@
 		var/mob/living/carbon/human/H = src.holder
 		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
 			return // Can't absorb through space suit
-		else if(H.shoes && fluid.my_depth_level >= depth_levels[2])
+		else if(H.shoes && T.active_liquid.my_depth_level >= depth_levels[2])
 			// Absorb through shoes if legs are submerged
 			absorb_reagents(T.active_liquid, 5)
 		else
@@ -981,7 +981,7 @@
 		var/mob/living/carbon/human/H = src.holder
 		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
 			return // Can't absorb through space suit
-		else if(H.shoes && fluid.my_depth_level >= depth_levels[2])
+		else if(H.shoes && T.active_liquid.my_depth_level >= depth_levels[2])
 			// Absorb through shoes if legs are submerged
 			absorb_reagents(T.active_liquid, 5)
 		else
