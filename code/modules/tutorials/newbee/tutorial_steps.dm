@@ -1872,6 +1872,7 @@
 	step_area = /area/tutorial/newbee/room_16
 
 	var/mob/living/carbon/human/normal/tutorial_kill/tutorial_clown
+	var/gibbed = FALSE
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
@@ -1901,7 +1902,11 @@
 		. = ..()
 		UnregisterSignal(src.tutorial_clown, COMSIG_MOB_DEATH)
 		if (src.tutorial_clown)
-			src.tutorial_clown.gib()
+			if (!src.gibbed)
+				gibbed = TRUE
+				src.tutorial_clown.gib()
+			else
+				src.tutorial_clown.implode()
 
 /datum/tutorialStep/newbee/timer/following_rules
 	name = "Server Rules"
