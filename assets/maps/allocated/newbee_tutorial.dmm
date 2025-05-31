@@ -1130,7 +1130,6 @@
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_7)
 "Va" = (
-/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/black,
