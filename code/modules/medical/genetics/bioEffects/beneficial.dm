@@ -21,6 +21,17 @@
 			overlay_image.color = "#FFA200"
 
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		return
 
 /datum/bioEffect/coldres
 	name = "Cold Resistance"
@@ -42,6 +53,17 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		return
 
 /datum/bioEffect/thermalres
 	name = "Thermal Resistance"
@@ -66,15 +88,24 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
-		owner.temp_tolerance *= 10
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+		owner.temp_tolerance *= 5 * src.power
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+		owner.temp_tolerance /= 5 * oldval
+		owner.temp_tolerance *= 5 * newval
 
 	OnRemove()
 		..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		owner.temp_tolerance /= 10
+		owner.temp_tolerance /= 5 * src.power
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
