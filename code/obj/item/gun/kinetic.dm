@@ -215,8 +215,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				FLICK(flick_state, src)
 
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
+			user.inertia_dir = get_dir_accurate(target, user)
+			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
