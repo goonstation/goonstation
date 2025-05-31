@@ -25,10 +25,10 @@
 	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
 /area/tutorial/newbee/room_5
 	icon_state = "purple"
-	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_INTENTS
 /area/tutorial/newbee/room_6
 	icon_state = "pink"
-	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
+	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALTH
 /area/tutorial/newbee/room_7
 	icon_state = "yellow"
 	starting_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER

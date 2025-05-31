@@ -22,17 +22,10 @@
 /// Newbee Tutorial mob; no headset or PDA, does not spawn via jobs
 /mob/living/carbon/human/tutorial
 /mob/living/carbon/human/tutorial/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
-	. = ..(loc, AH_passthru, init_preferences, ignore_randomizer, role_for_traits)
+	. = ..(loc, AH_passthru, init_preferences, ignore_randomizer, "tutorial")
 
-	// only use the species trait
-	var/datum/trait/species_trait = src.traitHolder.getTraitWithCategory("species")
-	for (var/trait_id in src.traitHolder.traits)
-		if (trait_id != species_trait.id)
-			src.traitHolder.removeTrait(trait_id)
-
-	SPAWN(0) // we can't add and remove speech effects on the same tick
-		src.bioHolder.DeactivateAllPoolEffects() // clear mildly mutated given genes
-
+	// force the player to resist to put out flames
+	src.traitHolder.addTrait("burning", force_trait=TRUE)
 
 	src.equip_new_if_possible(/obj/item/clothing/under/rank/assistant, SLOT_W_UNIFORM)
 	src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)

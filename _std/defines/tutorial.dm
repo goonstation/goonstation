@@ -21,6 +21,10 @@
 #define NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF "lower_half"
 /// Highlights the upper half of a HUD element
 #define NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF "upper_half"
+/// Toggle ability button in HUD
+#define NEWBEE_TUTORIAL_MARKER_HUD_ABILITY "ability"
+/// Stats button in HUD
+#define NEWBEE_TUTORIAL_MARKER_HUD_STATS "stats"
 
 // Sidebar types
 
@@ -52,5 +56,5 @@
 
 #define TEXT_HEALTH_OXY "<span style='color:#1F75D1'>Oxygen</span>"
 #define TEXT_HEALTH_TOXIN "<span style='color:#138015'>Toxin</span>"
-#define TEXT_HEALTH_BURN "<span style='color:#CC7A1D'>Burns</span>"
+#define TEXT_HEALTH_BURN "<span style='color:#CC7A1D'>Burn</span>"
 #define TEXT_HEALTH_BRUTE "<span style='color:#E60E4E'>Brute</span>"

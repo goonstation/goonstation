@@ -138,8 +138,8 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
-/obj/landmark/newbee/exit_healing,
 /obj/disposalpipe/segment/horizontal,
+/obj/landmark/newbee/exit_health,
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_6)
 "gb" = (
@@ -389,6 +389,7 @@
 "oK" = (
 /obj/health_scanner/floor,
 /obj/disposalpipe/segment/bent/north,
+/obj/landmark/newbee/check_health,
 /turf/unsimulated/floor/blue,
 /area/tutorial/newbee/room_5)
 "oX" = (
@@ -959,8 +960,8 @@
 /area/tutorial/newbee/room_14)
 "MB" = (
 /obj/machinery/door/airlock/pyro/alt,
-/obj/landmark/newbee/get_health,
 /obj/disposalpipe/segment/vertical,
+/obj/landmark/newbee/exit_intents,
 /turf/unsimulated/floor/white/side,
 /area/tutorial/newbee/room_5)
 "MD" = (

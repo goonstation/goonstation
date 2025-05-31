@@ -163,13 +163,14 @@
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_intents)
 
 	// room 5 - Healing
-	src.AddStep(/datum/tutorialStep/newbee/timer/damage_types)
+	src.AddStep(/datum/tutorialStep/newbee/move_to/damage_types)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/brute_first_aid)
 	src.AddStep(/datum/tutorialStep/newbee/storage_inhands)
 	src.AddStep(/datum/tutorialStep/newbee/hand_swap)
-	src.AddStep(/datum/tutorialStep/newbee/apply_patch)
+	src.AddStep(/datum/tutorialStep/newbee/apply_brute_patch)
 	src.AddStep(/datum/tutorialStep/newbee/resisting)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/fire_first_aid)
+	src.AddStep(/datum/tutorialStep/newbee/apply_fire_patch)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_healing)
 
 	// room 6 - Girder Deconstruction
@@ -187,18 +188,21 @@
 	src.AddStep(/datum/tutorialStep/newbee/move_to/traversing_maints)
 
 	// room 9 - Space Prep
+	src.AddStep(/datum/tutorialStep/newbee/timer/stats_before)
 	src.AddStep(/datum/tutorialStep/newbee/opening_closets)
 	src.AddStep(/datum/tutorialStep/newbee/equip_space_suit)
 	src.AddStep(/datum/tutorialStep/newbee/equip_breath_mask)
 	src.AddStep(/datum/tutorialStep/newbee/equip_space_helmet)
+	src.AddStep(/datum/tutorialStep/newbee/timer/stats_after)
 	src.AddStep(/datum/tutorialStep/newbee/oxygen)
-	src.AddStep(/datum/tutorialStep/newbee/internals)
+	src.AddStep(/datum/tutorialStep/newbee/internals_on)
 
 	// room 10 - Space Traversal
 	src.AddStep(/datum/tutorialStep/newbee/move_to/enter_space)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/traversing_space)
 
 	// room 11 - Storage
+	src.AddStep(/datum/tutorialStep/newbee/internals_off)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/backpack)
 	src.AddStep(/datum/tutorialStep/newbee/equip_backpack)
 	src.AddStep(/datum/tutorialStep/newbee/unequipping_worn_items)
@@ -251,6 +255,8 @@
 	var/static/image/harm_intent_marker = null
 	var/static/image/lower_half_marker = null
 	var/static/image/upper_half_marker = null
+	var/static/image/ability_marker = null
+	var/static/image/stats_marker = null
 
 	// common vars
 	/// Reference to our newbee tutorial
@@ -283,7 +289,7 @@
 	var/atom/movable/screen/hud/_target_hud_element
 	/// Reference to the currently needed item
 	var/obj/item/_needed_item
-	/// A reference to the currently targeted hud element for HUD highlighting
+	/// A reference to the currently targeted item in the HUD for highlighting
 	var/atom/movable/screen/hud/_target_hud_item
 
 /datum/tutorialStep/newbee/New(datum/tutorial_base/regional/newbee/tutorial)
@@ -321,6 +327,12 @@
 	if (!src.upper_half_marker)
 		src.upper_half_marker = image('icons/mob/tutorial_ui.dmi', "upper_half", HUD_LAYER_3)
 		src.upper_half_marker.plane = PLANE_HUD
+	if (!src.ability_marker)
+		src.ability_marker = image('icons/mob/tutorial_ui.dmi', "ability", HUD_LAYER_3)
+		src.ability_marker.plane = PLANE_HUD
+	if (!src.stats_marker)
+		src.stats_marker = image('icons/mob/tutorial_ui.dmi', "stats", HUD_LAYER_3)
+		src.stats_marker.plane = PLANE_HUD
 	..()
 
 /datum/tutorialStep/newbee/SetUp(manually_selected=FALSE)
@@ -362,6 +374,10 @@
 			highlight_image = src.lower_half_marker
 		if(NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF)
 			highlight_image = src.upper_half_marker
+		if(NEWBEE_TUTORIAL_MARKER_HUD_ABILITY)
+			highlight_image = src.ability_marker
+		if(NEWBEE_TUTORIAL_MARKER_HUD_STATS)
+			highlight_image = src.stats_marker
 
 	if (!highlight_image)
 		return

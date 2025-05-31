@@ -73,8 +73,13 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mouse_white"
 
-/obj/landmark/newbee/get_health
-	name = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
+/obj/landmark/newbee/exit_intents
+	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_INTENTS
+	icon = 'icons/effects/VR.dmi'
+	icon_state = "lightning_marker"
+
+/obj/landmark/newbee/check_health
+	name = LANDMARK_TUTORIAL_NEWBEE_CHECK_HEALTH
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "lightning_marker"
 
@@ -88,8 +93,8 @@
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "burn1"
 
-/obj/landmark/newbee/exit_healing
-	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
+/obj/landmark/newbee/exit_health
+	name = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALTH
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "lightning_marker"
 

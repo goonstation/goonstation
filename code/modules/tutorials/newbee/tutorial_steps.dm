@@ -16,7 +16,7 @@
 
 /datum/tutorialStep/newbee/move_to/basic_movement
 	name = "Basic Movement"
-	instructions = "Use W/A/S/D to move your character.<br>Walk to the marker to continue."
+	instructions = "Use <b>W</b>/<b>A</b>/<b>S</b>/<b>D</b> to move your character.<br>Walk to the marker to continue."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_1
@@ -27,7 +27,7 @@
 		var/left = src.keymap.action_to_keybind(KEY_LEFT) || "A"
 		var/down = src.keymap.action_to_keybind(KEY_BACKWARD) || "S"
 		var/right = src.keymap.action_to_keybind(KEY_RIGHT) || "D"
-		src.instructions = "Use [up]/[left]/[down]/[right] to move your character.<br>Walk to the marker to continue."
+		src.instructions = "Use <b>[up]</b>/<b>[left]</b>/<b>[down]</b>/<b>[right]</b> to move your character.<br>Walk to the marker to continue."
 
 /datum/tutorialStep/newbee/move_to/powered_doors
 	name = "Powered Doors"
@@ -59,7 +59,7 @@
 
 /datum/tutorialStep/newbee/wear_id_card
 	name = "Worn Items"
-	instructions = "Some items can be worn. Press <b>V</b> to wear the ID card, or click the ID card slot in your HUD."
+	instructions = "Some items can be worn. Press <b>V</b> to wear the ID card, or <b>click</b> the ID card slot in your HUD."
 	highlight_hud_element = "id"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
@@ -69,7 +69,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip") || "V"
-		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card, or click the ID card slot in your HUD."
+		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card, or <b>click</b> the ID card slot in your HUD."
 
 	SetUp()
 		. = ..()
@@ -222,7 +222,7 @@
 
 /datum/tutorialStep/newbee/flush_disposals
 	name = "Object Interation"
-	instructions = "With an open hand, <b>Click</b> the disposals unit to open up its UI.<br>Then, click the <b>Flush</b> button to dispose of the can."
+	instructions = "With an open hand, <b>Click</b> the disposals unit to open up its UI.<br>Then, <b>click</b> the Flush button to dispose of the can."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	step_area = /area/tutorial/newbee/room_3
 
@@ -285,15 +285,17 @@
 
 /datum/tutorialStep/newbee/drop_item
 	name = "Dropping Items"
-	instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>Q</b>."
+	instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>Q</b> or <b>clicking</b> the Drop Item HUD button."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	highlight_hud_element = "throw"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 	needed_item_path = /obj/item/crowbar
 	step_area = /area/tutorial/newbee/room_3
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/drop = src.keymap.action_to_keybind("drop") || "Q"
-		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b>."
+		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b> or <b>clicking</b> the Drop Item HUD button.."
 
 	SetUp()
 		. = ..()
@@ -447,7 +449,7 @@
 
 /datum/tutorialStep/newbee/disarm_person
 	name = "Disarming People"
-	instructions = "<b>Click</b> the clown while on Disarm intent.<br>Knock the bike horn out of the clown's hands."
+	instructions = "<b>Click</b> the clown while on Disarm intent.<br>Knock the bike horn out of the clown's hands - it may take a few tries!"
 	highlight_hud_element = "intent"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
@@ -458,7 +460,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_DISARM] intent.<br>Knock the bike horn out of the clown's hands."
+		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_DISARM] intent.<br>Knock the bike horn out of the clown's hands - it may take a few tries!"
 
 	SetUp()
 		. = ..()
@@ -675,7 +677,7 @@
 	step_area = /area/tutorial/newbee/room_4
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
-	target_landmark = LANDMARK_TUTORIAL_NEWBEE_GET_HEALTH
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_INTENTS
 
 	SetUp()
 		. = ..()
@@ -686,12 +688,13 @@
 // room 5 - Healing
 //
 
-/datum/tutorialStep/newbee/timer/damage_types
+/datum/tutorialStep/newbee/move_to/damage_types
 	name = "Damage Types"
-	instructions = "There are four types of damage that count towards your total health:<br>Brute, Burn, Toxin, and Oxygen."
+	instructions = "There are four types of damage that count towards your total health: Brute, Burn, Toxin, and Oxygen.<br>Floor health"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_CHECK_HEALTH
 	step_area = /area/tutorial/newbee/room_5
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
@@ -726,16 +729,19 @@
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
-	PerformAction(action, context)
+	SetUp(manually_selected)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
 		src.instructions = "With the first aid kit in-hand, press <b>[attackself]</b> to open it."
-		if (action == "open_storage" && context == "first_aid")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "open_storage" && context == "brute_first_aid")
 			src.finished = TRUE
 
 /datum/tutorialStep/newbee/hand_swap
 	name = "Swapping Hands"
-	instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>E</b> to swap to your open hand."
+	instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>E</b> or <b>middle-mouse click</b> to swap hands."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -745,7 +751,7 @@
 	New()
 		. = ..()
 		var/swaphand = src.keymap.action_to_keybind("swaphand") || "E"
-		src.instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>[swaphand]</b> to swap to your open hand."
+		src.instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
 
 	SetUp()
 		. = ..()
@@ -763,9 +769,9 @@
 		. = ..()
 		UnregisterSignal(src._needed_item, COMSIG_ITEM_SWAP_AWAY)
 
-/datum/tutorialStep/newbee/apply_patch
+/datum/tutorialStep/newbee/apply_brute_patch
 	name = "Applying Patches"
-	instructions = "Grab a patch out of the first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>C</b> to self-apply the patch."
+	instructions = "Grab a brute patch out of the brute first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>C</b> to self-apply the patch."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -775,7 +781,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
-		src.instructions = "Grab a patch out of the first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>[attackself]</b> to self-apply the patch."
+		src.instructions = "Grab a [TEXT_HEALTH_BRUTE] patch out of the brute first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>[attackself]</b> to self-apply the patch."
 
 	SetUp()
 		. = ..()
@@ -801,7 +807,7 @@
 
 /datum/tutorialStep/newbee/resisting
 	name = "Resisting"
-	instructions = "Oh no! You've been set on fire!<br>Press <b>Z</b> or click the Resist HUD button to begin putting out the flames!<br>"
+	instructions = "Oh no! You've been set on fire!<br>Press <b>Z</b> or <b>click</b> the Resist HUD button to begin putting out the flames!<br>"
 	step_area = /area/tutorial/newbee/room_5
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "resist"
@@ -810,7 +816,7 @@
 	SetUp(manually_selected)
 		. = ..()
 		var/resist = src.keymap.action_to_keybind("resist")
-		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or click the Resist HUD button to resist the flames and put out the flames"
+		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to resist the flames and put out the flames"
 		src.newbee_tutorial.newbee.set_burning(10)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_resist))
 
@@ -828,14 +834,18 @@
 
 /datum/tutorialStep/newbee/item_pickup/fire_first_aid
 	name = "Fire First Aid"
-	instructions = "Yellow patches from fire first aid kits will heal Burn damage.<br>"
+	instructions = "Burn patches from fire first aid kits will heal burn damage.<br>"
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_5
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRE_FIRST_AID
-	item_path = /obj/item/storage/firstaid/fire
+	item_path = /obj/item/storage/firstaid/fire/tutorial
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		src.instructions = "[TEXT_HEALTH_BURN] patches in fire first aid kits will heal [TEXT_HEALTH_BURN] damage.<br>Pick up the fire first aid kit."
 
 	SetUp()
 		. = ..()
@@ -845,10 +855,46 @@
 		if (patch_count < 1)
 			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/burn)
 
+/datum/tutorialStep/newbee/apply_fire_patch
+	name = "Applying Patches"
+	instructions = "Just like brute patches, apply a burn patch from the first aid kit.<br>You can <b>click</b> yourself or press <b>C</b> with a patch in hand to self-apply the patch."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	highlight_hud_element = "health"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
+	step_area = /area/tutorial/newbee/room_5
+	needed_item_path = /obj/item/storage/firstaid/fire/tutorial
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/attackself = src.keymap.action_to_keybind("attackself") || "C"
+		src.instructions = "Just like [TEXT_HEALTH_BRUTE] patches, apply a [TEXT_HEALTH_BURN] patch from the first aid kit.<br>You can <b>click</b> yourself or press <b>[attackself]</b> with a patch in hand to self-apply the patch."
+
+	SetUp()
+		. = ..()
+		var/patch_count = 0
+		for (var/obj/item/reagent_containers/patch/burn/patch in src._needed_item.contents)
+			patch_count++
+		if (patch_count < 1)
+			src._needed_item.storage.add_contents(new /obj/item/reagent_containers/patch/burn)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
+
+	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
+		if (istype(I, /obj/item/reagent_containers/patch/burn))
+			src.tutorial.PerformAction("attackby", "patch_burn")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "attackby" && context == "patch_burn")
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY)
+
 /datum/tutorialStep/newbee/move_to/exit_healing
 	name = "All Better!"
 	instructions = "Now that you're patched up, let's learn some deconstruction.<br>Head into the next room."
-	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALING
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALTH
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
 	step_area = /area/tutorial/newbee/room_5
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
@@ -895,7 +941,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/toolbox
 	name = "Toolboxes"
-	instructions = "Toolboxes contain up to 7 small objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>C</b> to open it."
+	instructions = "Toolboxes contain up to 7 objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>C</b> to open it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_6
 
@@ -997,7 +1043,7 @@
 
 /datum/tutorialStep/newbee/move_to/traversing_maints
 	name = "Traversing Maintenance"
-	instructions = "Head through the maintenance tunnel to get to the next area."
+	instructions = "Head through the maintenance tunnel to get to the next room."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_8
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
@@ -1007,6 +1053,14 @@
 //
 // room 9 - Space Prep
 //
+
+// TODO: detection ?
+/datum/tutorialStep/newbee/timer/stats_before
+	name = "Character Stats"
+	instructions = "You can see your current character stats by pressing the STAT button in the HUD.<br>Note your cold resistance - space will freeze you to death in your current state!"
+	step_area = /area/tutorial/newbee/room_9
+	highlight_hud_element = "stats"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
 
 /datum/tutorialStep/newbee/opening_closets
 	name = "Emergency Closets"
@@ -1056,7 +1110,6 @@
 		if (action == "item_equipped" && istype(context, /obj/item/clothing/suit/space/emerg))
 			src.finished = TRUE
 
-
 /datum/tutorialStep/newbee/equip_breath_mask
 	name = "Breath Masks"
 	instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
@@ -1093,6 +1146,14 @@
 		if (action == "item_equipped" && istype(context, /obj/item/clothing/head/emerg))
 			src.finished = TRUE
 
+// TODO: detection ?
+/datum/tutorialStep/newbee/timer/stats_after
+	name = "Suited Up"
+	instructions = "With full space gear, you now have 100% cold resistance.<br><b>Click</b> the STAT button to check your current stats."
+	step_area = /area/tutorial/newbee/room_9
+	highlight_hud_element = "stats"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
+
 /datum/tutorialStep/newbee/oxygen
 	name = "Oxygen Required"
 	instructions = "You need oxygen to breathe in areas without air, like space.<br><b>Click</b> the oxygen tank to pick it up."
@@ -1104,7 +1165,7 @@
 		if (action == "item_pickup" && istype(context, /obj/item/tank/oxygen))
 			src.finished = TRUE
 
-/datum/tutorialStep/newbee/internals
+/datum/tutorialStep/newbee/internals_on
 	name = "Using Internals"
 	instructions = "Make sure you are breathing from your oxygen tank before heading into space.<br><b>Click</b> the 'Toggle Tank Valve' button in the top-left corner to turn on your internals."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
@@ -1118,7 +1179,7 @@
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "action_button" && context == "internals")
+		if (action == "action_button" && context == "internals_on")
 			src.finished = TRUE
 
 	TearDown()
@@ -1152,6 +1213,29 @@
 //
 // room 11 - Storage
 //
+
+/datum/tutorialStep/newbee/internals_off
+	name = "Disabling Internals"
+	instructions = "Keeping internals on while in a place with atmosphere will waste precious oxygen.<br><b>Click</b> the 'Toggle Tank Valve' button in the top-left corner to turn off your internals."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	needed_item_path = /obj/item/tank/oxygen/tutorial
+	step_area = /area/tutorial/newbee/room_11
+
+	SetUp()
+		. = ..()
+		for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
+			tank_ability.UpdateOverlays(src.inventory_marker, "marker")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "action_button" && context == "internals_off")
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		if (src._needed_item)
+			for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
+				tank_ability.UpdateOverlays(null, "marker")
 
 /datum/tutorialStep/newbee/item_pickup/backpack
 	name = "Backpack Storage"
@@ -1518,7 +1602,7 @@
 
 /datum/tutorialStep/newbee/move_to/laying_down
 	name = "Laying Down"
-	instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>=</b> or <b>click</b> the REST button in the HUD to crawl under the flaps."
+	instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to crawl under the flaps."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "rest"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
@@ -1529,7 +1613,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/rest = src.keymap.action_to_keybind("rest") || "="
-		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the REST button in the HUD to crawl under the flaps."
+		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to crawl under the flaps."
 
 /datum/tutorialStep/newbee/move_to/sprinting
 	name = "Sprinting"
@@ -1548,7 +1632,7 @@
 
 /datum/tutorialStep/newbee/walking
 	name = "Whoa, Careful!"
-	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>-</b> or click the Walk HUD button to safely walk over banana peels."
+	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>-</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	highlight_hud_element = "mintent"
@@ -1559,7 +1643,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/walk = src.keymap.action_to_keybind("walk") || "-"
-		src.instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>[walk]</b> or click the Walk HUD button to safely walk over banana peels."
+		src.instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>[walk]</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."
 
 	SetUp(manually_selected)
 		. = ..()

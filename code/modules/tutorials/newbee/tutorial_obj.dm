@@ -25,7 +25,14 @@
 	attack_self(mob/user)
 		. = ..()
 		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("open_storage", "first_aid")
+			user.client.tutorial.PerformSilentAction("open_storage", "brute_first_aid")
+
+/obj/item/storage/firstaid/fire/tutorial
+	attack_self(mob/user)
+		. = ..()
+		if (user.client?.tutorial)
+			user.client.tutorial.PerformSilentAction("open_storage", "fire_first_aid")
+
 
 /obj/item/device/light/flashlight/tutorial
 	toggle(mob/user, activated_inhand)
@@ -74,6 +81,8 @@
 			var/mob/M = src.emergency_suit.loc
 			M.drop_item(src.emergency_suit)
 		src.emergency_suit.set_loc(src)
+		src.emergency_suit.pixel_x = -8
+		src.emergency_suit.pixel_y = 8
 
 		if (!src.breath_mask || QDELETED(src.breath_mask))
 			src.make_breath_mask()
@@ -81,6 +90,8 @@
 			var/mob/M = src.breath_mask.loc
 			M.drop_item(src.breath_mask)
 		src.breath_mask.set_loc(src)
+		src.breath_mask.pixel_x = 8
+		src.breath_mask.pixel_y = 8
 
 		if (!src.emergency_hood || QDELETED(src.emergency_hood))
 			src.make_emergency_hood()
@@ -88,6 +99,8 @@
 			var/mob/M = src.emergency_hood.loc
 			M.drop_item(src.emergency_hood)
 		src.emergency_hood.set_loc(src)
+		src.emergency_hood.pixel_x = -8
+		src.emergency_hood.pixel_y = -8
 
 		if (!src.oxygen_tank || QDELETED(src.oxygen_tank))
 			src.make_oxygen_tank()
@@ -95,6 +108,9 @@
 			var/mob/M = src.oxygen_tank.loc
 			M.drop_item(src.oxygen_tank)
 		src.oxygen_tank.set_loc(src)
+		src.oxygen_tank.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 LITERS / (R_IDEAL_GAS_EQUATION * T20C)
+		src.oxygen_tank.pixel_x = 8
+		src.oxygen_tank.pixel_y = -8
 
 	proc/make_emergency_suit()
 		src.emergency_suit = new(src)
@@ -125,9 +141,17 @@
 	make_my_stuff()
 		if(..())
 			src.make_emergency_suit()
+			src.emergency_suit.pixel_x = -8
+			src.emergency_suit.pixel_y = 8
 			src.make_breath_mask()
+			src.breath_mask.pixel_x = 8
+			src.breath_mask.pixel_y = 8
 			src.make_emergency_hood()
+			src.emergency_hood.pixel_x = -8
+			src.emergency_hood.pixel_y = -8
 			src.make_oxygen_tank()
+			src.oxygen_tank.pixel_x = 8
+			src.oxygen_tank.pixel_y = -8
 			return 1
 
 	proc/pickup_tutorial_item(datum/source, mob/user)
@@ -210,11 +234,16 @@
 /// Sends an action on toggling the valve on
 /obj/item/tank/oxygen/tutorial
 	toggle_valve()
-		if (..())
-			var/mob/living/carbon/M = src.loc
-			if (istype(M) && M.client?.tutorial)
+		var/mob/living/carbon/M = src.loc
+		if (istype(M) && M.client?.tutorial)
+			if (..())
 				if (M.internal == src)
-					M.client.tutorial.PerformSilentAction("action_button", "internals")
+					M.client.tutorial.PerformSilentAction("action_button", "internals_on")
+			else
+				M.client.tutorial.PerformSilentAction("action_button", "internals_off")
+
+		else
+			..()
 
 /// Crusher that doesn't qdel the tutorial mob
 /obj/machinery/crusher/slow/tutorial
