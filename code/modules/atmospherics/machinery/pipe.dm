@@ -90,8 +90,6 @@
 	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
 	/// How broken is our pipe.
 	var/ruptured = 0
-	/// Are we currently in a disconnected state?
-	var/disconnected = FALSE
 	var/initial_icon_state = null //what do i change back to when repaired???
 
 	level = UNDERFLOOR
@@ -141,7 +139,6 @@
 /// Repairs the pipe back to orginal state.
 /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe()
 	src.ruptured = 0
-	src.disconnected = FALSE
 	desc = initial(desc)
 	UpdateIcon()
 	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
@@ -342,8 +339,6 @@
 	return list(node1, node2)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
-	if(disconnected)
-		return
 	if(ruptured)
 		icon_state = "broken"
 

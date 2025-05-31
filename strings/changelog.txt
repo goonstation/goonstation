@@ -1,4 +1,15 @@
-
+(t)fri may 30 25
+(u)CalliopeSoups and LeahTheTech
+(*)Added a new "Mixed Spooky" gamemode with a guaranteed wraith and supernatural antags. Enabled on all servers.
+(t)thu may 29 25
+(u)LeahTheTech
+(p)23623
+(e)⚖📄🌠|C-Balance, A-UI, A-Events
+(*)Neon Broken antagonist objectives are now mandatory in the same way mindhack instructions are. Reminder: you can disable rolling Broken under the "Other foes" antag preferences option.
+(t)wed may 28 25
+(u)LeahTheTech
+(+)The Neon megafauna shadow now lasts for roughly the same time as the madness it causes.
+(+)Neon megafauna events can now only occur once per round.
 (t)mon may 26 25
 (u)LeahTheTech
 (+)Rare metal nanites are now... rarer! They will also only spawn alongside higher tier ores.

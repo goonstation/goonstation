@@ -402,6 +402,7 @@
 #include "code\datums\gamemodes\gm_parent.dm"
 #include "code\datums\gamemodes\mixed.dm"
 #include "code\datums\gamemodes\mixed_rp.dm"
+#include "code\datums\gamemodes\mixed_spooky.dm"
 #include "code\datums\gamemodes\nuclear.dm"
 #include "code\datums\gamemodes\pirate.dm"
 #include "code\datums\gamemodes\pod_wars.dm"
