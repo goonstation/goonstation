@@ -821,7 +821,7 @@
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_resist))
 
 	proc/check_resist(mob/living/parent)
-		parent.client?.tutorial?.PerformSilentAction("resist")
+		parent.mind?.get_player()?.tutorial?.PerformSilentAction("resist")
 
 	PerformAction(action, context)
 		. = ..()

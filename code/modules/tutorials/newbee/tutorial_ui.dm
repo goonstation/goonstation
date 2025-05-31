@@ -22,7 +22,7 @@
 		. = ..()
 		var/confirm = tgui_alert(src.holder.owner, "Do you want to exit the tutorial?", "Leave Tutorial", list("Yes", "No"))
 		if (confirm == "Yes")
-			src.holder.owner.client?.tutorial?.Finish()
+			src.holder.owner.mind?.get_player()?.tutorial?.Finish()
 
 /datum/targetable/newbee/previous
 	name = "Previous Step"
@@ -31,7 +31,7 @@
 
 	cast(atom/target)
 		. = ..()
-		var/datum/tutorial_base/regional/newbee/tutorial = src.holder.owner.client?.tutorial
+		var/datum/tutorial_base/regional/newbee/tutorial = src.holder.owner.mind?.get_player()?.tutorial
 		if (!istype(tutorial))
 			return // ???
 		if (tutorial.current_step <= 1)
@@ -51,4 +51,4 @@
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.client?.tutorial?.Advance(TRUE)
+		src.holder.owner.mind?.get_player()?.tutorial?.Advance(TRUE)

@@ -18,45 +18,39 @@
 
 	open(manual_activation, surpress_send)
 		. = ..()
-		if (manual_activation && src.tutorial_user?.client?.tutorial)
-			src.tutorial_user.client.tutorial.PerformSilentAction("door", "manual_open")
+		if (manual_activation)
+			src.tutorial_user?.mind?.get_player()?.tutorial?.PerformSilentAction("door", "manual_open")
 
 /obj/item/storage/firstaid/brute/tutorial
 	attack_self(mob/user)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("open_storage", "brute_first_aid")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("open_storage", "brute_first_aid")
 
 /obj/item/storage/firstaid/fire/tutorial
 	attack_self(mob/user)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("open_storage", "fire_first_aid")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("open_storage", "fire_first_aid")
 
 
 /obj/item/device/light/flashlight/tutorial
 	toggle(mob/user, activated_inhand)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("use_item", "flashlight")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("use_item", "flashlight")
 
 /obj/item/clothing/head/helmet/welding/tutorial
 	flip_up(mob/living/carbon/human/user, silent)
 		. = ..()
-		if (user?.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("welding_mask", "flip_up")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("welding_mask", "flip_up")
 	flip_down(mob/living/carbon/human/user, silent)
 		. = ..()
-		if (user?.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("welding_mask", "flip_down")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("welding_mask", "flip_down")
 
 /obj/item/weldingtool/tutorial
 	fuel_capacity = 999
 
 	attack_self(mob/user)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("use_item", "weldingtool")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("use_item", "weldingtool")
 
 /// Guaranteed to contain everything needed for a space walk
 /obj/storage/closet/emergency_tutorial
@@ -155,21 +149,17 @@
 			return 1
 
 	proc/pickup_tutorial_item(datum/source, mob/user)
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("item_pickup", source)
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_pickup", source)
 
 	proc/equip_tutorial_item(datum/source, mob/user, slot)
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("item_equipped", source)
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_equipped", source)
 
 	proc/unequip_tutorial_item(datum/source, mob/user)
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("item_unequipped", source)
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_unequipped", source)
 
 	open(entangleLogic, mob/user)
 		. = ..()
-		if (user.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("open_storage", "emergency_tutorial")
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("open_storage", "emergency_tutorial")
 
 /// mechanical toolbox that tracks its contents
 /obj/item/storage/toolbox/tutorial
@@ -236,12 +226,12 @@
 /obj/item/tank/oxygen/tutorial
 	toggle_valve()
 		var/mob/living/carbon/M = src.loc
-		if (istype(M) && M.client?.tutorial)
+		if (istype(M) && M.mind?.get_player()?.tutorial)
 			if (..())
 				if (M.internal == src)
-					M.client.tutorial.PerformSilentAction("action_button", "internals_on")
+					M.mind?.get_player()?.tutorial.PerformSilentAction("action_button", "internals_on")
 			else
-				M.client.tutorial.PerformSilentAction("action_button", "internals_off")
+				M.mind?.get_player()?.tutorial.PerformSilentAction("action_button", "internals_off")
 
 		else
 			..()
@@ -262,35 +252,33 @@
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		. = ..()
 		var/mob/M = thr.thrown_by
-		if (M.client?.tutorial)
-			M.client.tutorial.PerformSilentAction("throw_item", MO)
+		M.mind?.get_player()?.tutorial?.PerformSilentAction("throw_item", MO)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (action == "toggleHandle")
 			var/mob/M = ui.user
 			if (istype(M))
-				if (M.client?.tutorial)
-					M.client.tutorial.PerformSilentAction("flush", "disposals")
+				M.mind?.get_player()?.tutorial?.PerformSilentAction("flush", "disposals")
 
 /// Send action on removal
 /obj/structure/girder/tutorial
 	name = "girder"
 
 	attackby(obj/item/I, mob/user)
-		if (ispryingtool(I) && user?.client?.tutorial)
+		if (ispryingtool(I) && user?.mind?.get_player()?.tutorial)
 			boutput(user, SPAN_ALERT("This girder refuses to dislodge from the floor! You need to use a <b>wrench</b>!"))
 			return
 		. = ..()
-		if (iswrenchingtool(I) && user?.client?.tutorial)
-			user.client.tutorial.PerformSilentAction("deconstruct", "girder")
+		if (iswrenchingtool(I))
+			user?.mind?.get_player()?.tutorial?.PerformSilentAction("deconstruct", "girder")
 
 /// On decon, send action and turn into a tutorial girder
 /turf/simulated/wall/auto/supernorn/tutorial
 	var/mob/who_unwelded_me
 
 	attackby(obj/item/W, mob/user, params)
-		if (user?.client?.tutorial)
+		if (user?.mind?.get_player()?.tutorial)
 			src.who_unwelded_me = user
 		. = ..()
 
@@ -304,7 +292,7 @@
 		B.setMaterial(src.material ? src.material : defaultMaterial)
 		C.setMaterial(src.material ? src.material : defaultMaterial)
 
-		src.who_unwelded_me.client?.tutorial?.PerformSilentAction("deconstruct", "wall")
+		src.who_unwelded_me.mind?.get_player()?.tutorial?.PerformSilentAction("deconstruct", "wall")
 
 		var/atom/D = ReplaceWithFloor()
 

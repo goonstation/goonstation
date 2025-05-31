@@ -62,9 +62,6 @@
 	var/persistent_bank = 0 //cross-round persistent cash value (is increased as a function of job paycheck + station score)
 	var/persistent_bank_item = 0 //Name of a bank item that may have persisted from a previous round. (Using name because I'm assuming saving a string is better than saving a whole datum)
 
-	/// Newbee Tutorial
-	var/datum/tutorial_base/regional/newbee/tutorial = null
-
 	var/datum/reputations/reputations = null
 
 	var/list/datum/compid_info_list = list()

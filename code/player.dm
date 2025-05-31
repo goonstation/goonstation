@@ -56,6 +56,8 @@
 	var/joined_names = list()
 	/// Antag tokens this person has, null until it's fetched
 	var/antag_tokens = null
+	/// Newbee Tutorial
+	var/datum/tutorial_base/regional/newbee/tutorial = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)

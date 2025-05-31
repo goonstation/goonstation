@@ -7,7 +7,8 @@
 	if (!ismob(AM) || !isliving(AM))
 		return
 	var/mob/M = AM
-	M.client?.tutorial?.PerformSilentAction(src.name)
+	if (istype(M))
+		M.mind?.get_player()?.tutorial?.PerformSilentAction(src.name)
 
 /obj/landmark/newbee/disposing()
 	landmarks[name] -= src.loc

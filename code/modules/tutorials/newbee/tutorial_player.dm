@@ -14,8 +14,8 @@
 			return
 		src.tutorial_loading = TRUE
 		boutput(usr, SPAN_ALERT("Launching the tutorial!"))
-		src.client?.tutorial = new(src)
-		src.client?.tutorial.Start()
+		src.mind?.get_player()?.tutorial = new /datum/tutorial_base/regional/newbee(src)
+		src.mind?.get_player()?.tutorial.Start()
 	else
 		boutput(usr, SPAN_ALERT("It's too late to start the tutorial! Please try next round."))
 
@@ -37,18 +37,15 @@
 
 /mob/living/carbon/human/tutorial/set_pulling(atom/movable/A)
 	. = ..()
-	if (src.client?.tutorial)
-		src.client.tutorial.PerformSilentAction("set_pulling", A)
+	src.mind?.get_player()?.tutorial?.PerformSilentAction("set_pulling", A)
 
 /mob/living/carbon/human/tutorial/remove_pulling()
-	if (src.client?.tutorial)
-		src.client.tutorial.PerformSilentAction("remove_pulling", src.pulling)
+	src.mind?.get_player()?.tutorial?.PerformSilentAction("remove_pulling", src.pulling)
 	. = ..()
 
 /mob/living/carbon/human/tutorial/set_m_intent(intent)
 	. = ..()
-	if (src.client?.tutorial)
-		src.client.tutorial.PerformSilentAction("m_intent", intent)
+	src.mind?.get_player()?.tutorial?.PerformSilentAction("m_intent", intent)
 
 /mob/living/carbon/human/tutorial/contract_disease(ailment_path, ailment_name, datum/ailment_data/disease/strain, bypass_resistance = FALSE)
 	if (ailment_path == /datum/ailment/parasite/bee_larva)
@@ -56,14 +53,14 @@
 	return // no
 
 /mob/living/carbon/human/tutorial/gib(give_medal, include_ejectables)
-	if (src.client?.tutorial)
+	if (src.mind?.get_player()?.tutorial)
 		src.death(TRUE) // don't actually blow us up, thanks
 	else
 		. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/human/tutorial/death(gibbed)
-	if (src.client?.tutorial)
-		var/datum/tutorial_base/regional/newbee/current_tutorial = src.client.tutorial
+	if (src.mind?.get_player()?.tutorial)
+		var/datum/tutorial_base/regional/newbee/current_tutorial = src.mind?.get_player()?.tutorial
 		for(var/turf/T in landmarks[current_tutorial.checkpoint_landmark])
 			if(current_tutorial.region.turf_in_region(T))
 				src.set_loc(T)
@@ -77,8 +74,8 @@
 
 /mob/living/carbon/human/tutorial/verb/stop_newbee_tutorial()
 	set name = "Stop Tutorial"
-	if (!src.client.tutorial)
+	if (!src.mind?.get_player()?.tutorial)
 		boutput(src, SPAN_ALERT("You're not in a tutorial. It's real. IT'S ALL REAL."))
 		return
-	src.client.tutorial.Finish()
-	src.client.tutorial = null
+	src.mind?.get_player()?.tutorial.Finish()
+	src.mind?.get_player()?.tutorial = null
