@@ -1298,8 +1298,9 @@
 		src.worn_head = src.newbee_tutorial.newbee.head
 		if (!src.worn_head)
 			src.worn_head = new /obj/item/clothing/head/emerg(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_head)
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_head, SLOT_HEAD)
 		if (src.worn_head)
+			RegisterSignal(src.worn_head, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 			src.worn_head.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "head")
@@ -1309,8 +1310,9 @@
 		src.worn_suit = src.newbee_tutorial.newbee.wear_suit
 		if (!src.worn_suit)
 			src.worn_suit = new /obj/item/clothing/suit/space/emerg(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_suit)
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_suit, SLOT_WEAR_SUIT)
 		if (src.worn_suit)
+			RegisterSignal(src.worn_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 			src.worn_suit.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "suit")
@@ -1320,8 +1322,9 @@
 		src.worn_mask = src.newbee_tutorial.newbee.wear_mask
 		if (!src.worn_mask)
 			src.worn_mask = new /obj/item/clothing/mask/breath(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_mask)
+			src.newbee_tutorial.newbee.equip_if_possible(src.worn_mask, SLOT_WEAR_MASK)
 		if (src.worn_mask)
+			RegisterSignal(src.worn_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 			src.worn_mask.UpdateOverlays(src.point_marker, "marker")
 			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 				if (hud_element.id == "mask")
@@ -1334,6 +1337,9 @@
 			src.suit_hud.UpdateOverlays(src.inventory_marker, "marker")
 		if (src.mask_hud)
 			src.mask_hud.UpdateOverlays(src.inventory_marker, "marker")
+
+	proc/unequip_tutorial_item(datum/source, mob/user)
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_unequipped", source)
 
 	PerformAction(action, context)
 		. = ..()
