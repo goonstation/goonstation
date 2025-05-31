@@ -1,5 +1,7 @@
 TYPEINFO(/obj/machinery/secscanner)
 	mats = 18
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/secscanner
 	name = "security scanner"
@@ -13,6 +15,9 @@ TYPEINFO(/obj/machinery/secscanner)
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	power_usage = 5
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/timeBetweenUses = 20//I can see this being fun
 	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
@@ -104,7 +109,7 @@ TYPEINFO(/obj/machinery/secscanner)
 					var/mob/living/carbon/human/H = target
 					var/perpname = H.name
 					src.use_power(15)
-					src.speak("[uppertext(perpname)] HAS FAILED THE VIBE CHECK! BAD VIBES! BAD VIBES!!")
+					src.say("[uppertext(perpname)] HAS FAILED THE VIBE CHECK! BAD VIBES! BAD VIBES!!")
 
 				//////PDA NOTIFY/////
 				if (src.report_scans)
@@ -273,16 +278,6 @@ TYPEINFO(/obj/machinery/secscanner)
 			if (2,3)
 				if(!prob(60 + severity*10))
 					qdel(src)
-
-	proc/speak(var/message)
-		if (status & NOPOWER)
-			return
-
-		if (!message)
-			return
-
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\"")), 2)
 
 
 /obj/machinery/fakesecscanner

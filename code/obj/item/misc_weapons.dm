@@ -820,7 +820,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife_b"
 	item_state = "knife_b"
-	force = 5
+	force = 25
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 8
@@ -867,7 +867,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=user))
 			return ..()
 		if (!isdead(C))
-			random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
@@ -903,7 +902,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "hunter_spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "hunter_spear"
-	force = 8
+	force = 28
 	throwforce = 35
 	throw_speed = 6
 	throw_range = 10

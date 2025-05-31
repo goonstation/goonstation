@@ -433,7 +433,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
 
 	get_desc(dist, mob/user)
-		if(istraitor(user) || isnukeop(user) || user.mind?.get_antagonist(ROLE_SLEEPER_AGENT)) //no issleeperagent() >:(
+		if(istrainedsyndie(user))
 			. += SPAN_ALERT("<b>The latest in syndicate spy technology. </b>")
 		else
 			. += "Is that an antenna? "
@@ -1287,6 +1287,11 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			name = "Space Station 10"
 			desc = "Looks like the regional Nanotrasen hub station passing by your orbit."
 			icon_state = "ss10"
+	earth
+		name = "Earth"
+		desc = "Oh shit, it's Earth!"
+		icon = 'icons/obj/large/160x160.dmi'
+		icon_state = "earthrise"
 
 obj/decoration
 

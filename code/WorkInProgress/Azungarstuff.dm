@@ -156,12 +156,12 @@
 	temperature = 10+T0C
 
 /turf/unsimulated/floor/carpet/purple
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "purple1"
 
 
 /turf/unsimulated/floor/carpet/purple/decal
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "fpurple1"
 	innercross
 		dir = NORTH
@@ -169,7 +169,7 @@
 		dir = EAST
 
 /turf/unsimulated/floor/carpet/purple/standard/edge
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "purple2"
 
 	north
@@ -190,7 +190,7 @@
 		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/innercorner
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "purple3"
 
 	ne
@@ -232,7 +232,7 @@
 		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/standard/narrow
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "purple6"
 
 	ne
@@ -274,7 +274,7 @@
 		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/junction
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "purple5"
 
 	sw_e
@@ -297,7 +297,7 @@
 //fancy subvariant///////////////////////
 
 /turf/unsimulated/floor/carpet/purple/fancy/edge
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "fpurple2"
 
 	north
@@ -318,7 +318,7 @@
 		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "fpurple3"
 
 	ne
@@ -360,7 +360,7 @@
 		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/narrow
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "fpurple6"
 
 	ne
@@ -399,7 +399,7 @@
 		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/junction
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "fpurple5"
 
 	sw_e

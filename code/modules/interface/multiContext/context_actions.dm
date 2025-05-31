@@ -489,7 +489,7 @@
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
 			return TRUE
-		if(user.find_type_in_hand(/obj/item/deconstructor/))
+		if(user.find_tool_in_hand(TOOL_DECONSTRUCTING))
 			return TRUE
 
 	wrench
@@ -2361,8 +2361,9 @@
 		if (!istype(sp, /obj/item/device/speech_pro))
 			return
 		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
-			sp.speak(src.speech_text, user)
+			sp.say(src.speech_text)
 			playsound(sp, src.speech_sound, 50, 1)
+			logTheThing(LOG_DEBUG, sp, "[user] said [src.speech_text] using [sp].")
 		else
 			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
 

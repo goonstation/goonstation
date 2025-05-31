@@ -2,7 +2,7 @@
 // CE's pet rock! A true hellburn companion
 /obj/item/rocko
 	name = "Rocko"
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/rocks.dmi'
 	icon_state = "rock1"
 	w_class = W_CLASS_TINY
 	force = 10
@@ -20,33 +20,25 @@
 		. = ..()
 		if(prob(20))
 			src.bright = TRUE
-
-		src.chat_text = new(null, src)
-
-		src.icon_state = "rock[pick(1,3)]"
-		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
-		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
-
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
 
-		if (prob(10))
-			var/new_material = pick(childrentypesof(/datum/material/metal))
-			var/datum/material/dummy = new new_material
-			src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
-		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
-
+		choose_rocko_material()
 		UpdateIcon()
-
 		START_TRACKING_CAT(TR_CAT_PETS)
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		processing_items |= src
 
 	disposing()
 		processing_items -= src
-		qdel(chat_text)
-		chat_text = null
 		STOP_TRACKING_CAT(TR_CAT_PETS)
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+		var/turf/where = get_turf(src)
+		var/where_text = "Unknown (?, ?, ?)"
+		if (where)
+			where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+		message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
 		..()
 
 	proc/can_mob_observe(mob/M)
@@ -86,35 +78,28 @@
 			if(4)
 				emote("<B>[src]</B> rants about job site safety.", "<I>Goes on about job safety</I>")
 			if(5)
-				speak("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].")
+				if (!src.holder)
+					return
+				src.say("We really need to do something about the [pick("captain", "head of personnel", "clown", "research director", "head of security", "medical director", "AI")].", atom_listeners_override = list(src.holder))
 
-	proc/speak(message)
-		var/list/targets
-		var/image/chat_maptext/chat_text = null
+	emote(message, maptext_out)
+		. = ..()
 
-		if(!src.holder)
-			targets = hearers(src, null)
-			chat_text = make_chat_maptext(src, message, "color: ["#bfd6d8"];", alpha = 200)
-		else
-			targets = list(src.holder)
-
-		for(var/mob/O in targets)
-			if(src.can_mob_observe(O))
-				O.show_message("<span class='say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
-
-	proc/emote(message, maptext_out)
-		var/list/targets
-		var/image/chat_maptext/chat_text = null
-
+		var/list/mob/targets
 		if(!src.holder)
 			targets = viewers(src, null)
-			chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;", alpha = 120)
 		else
 			targets = list(src.holder)
 
-		for (var/mob/O in targets)
-			if(src.can_mob_observe(O))
-				O.show_message(SPAN_EMOTE("[message]"), assoc_maptext = chat_text)
+		var/list/mob/recipients = list()
+		for (var/mob/M as anything in targets)
+			if(!src.can_mob_observe(M))
+				continue
+
+			recipients += M
+			M.show_message(SPAN_EMOTE("[message]"))
+
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")
@@ -181,4 +166,46 @@
 			src.smile = FALSE
 			UpdateIcon()
 
+	proc/choose_rocko_material()
+		src.icon_state = pick("rock1","rock1b","rock1c","rock1d")
+		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
+		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
+		if(prob(90))
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+			return
+
+		// Give rocko a random material
+		var/new_material = pick(childrentypesof(/datum/material/metal))
+		var/datum/material/dummy = new new_material
+		src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
+
+		// Use ore sprites if available
+		var/list/rock_list = list("bohrum","cerenkite","cobryl","gold","mauxite","pharosium","syreline","plutonium")
+		if(!rock_list.Find(src.material.getID()))
+			return
+		src.icon = file("icons/obj/items/materials/[src.material.getID()].dmi")
+		var/sprite_prefix = "ore"
+		var/sprite_value = pick(1,2,3,4,5,6)
+		var/list/sprite_variants = list("")
+		switch(src.material.getID())
+			if("bohrum")
+				sprite_value = pick(1,2,3,4) // Larger bohrum stack sizes are more piles of rocks than rocks
+			if("plutonium")
+				sprite_prefix = "scrap"
+		// Include variants of ores if they exist
+		for(var/letter in list("b","c","d"))
+			if(is_valid_icon_state("[sprite_prefix][sprite_value][letter]_$$[src.material.getID()]"))
+				sprite_variants += letter
+			else
+				break
+		src.icon_state = "[sprite_prefix][sprite_value][pick(sprite_variants)]_$$[src.material.getID()]"
+		var/scale = 1 // Scale depending on chosen ore size
+		switch(sprite_value)
+			if(1) scale = 1.3
+			if(2) scale = 1.2
+			if(3) scale = 1
+			if(4) scale = 0.9
+			if(5) scale = 0.85
+			if(6) scale = 0.8
+		src.transform = matrix(scale,0,0,0,scale,-3)
 
