@@ -168,7 +168,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 				. = TRUE
 		if("eject-tank")
 			src.eject_tank()
-			src.on = FALSE
+			src.turn_off()
 			. = TRUE
 
 /obj/machinery/portable_atmospherics/pump/suicide(var/mob/living/carbon/human/user)
