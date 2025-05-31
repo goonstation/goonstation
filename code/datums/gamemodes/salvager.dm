@@ -8,11 +8,9 @@
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
-	var/list/datum/mind/distractions = list()
 	var/const/minimum_salvagers = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-	var/distractions_enabled = FALSE // means extra syndicate fluff is added to divert attention from early-game salvs
 	var/const/pop_divisor = 6
 	var/const/antags_possible = 6
 
@@ -22,6 +20,7 @@
 /datum/game_mode/salvager/pre_setup()
 	. = ..()
 	var/list/possible_salvagers = list()
+
 	var/num_players = src.roundstart_player_count()
 
 	var/randomizer = rand(pop_divisor+1)
@@ -52,7 +51,7 @@
 		salvager.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		salvager.special_role = ROLE_SALVAGER
 		possible_salvagers.Remove(salvager)
-	return 1
+	return TRUE
 
 /datum/game_mode/salvager/post_setup()
 	..()
