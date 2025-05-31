@@ -16108,7 +16108,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/obj/machinery/mixer{
+/obj/machinery/cookingmachine/mixer{
 	pixel_y = 10
 	},
 /turf/simulated/floor/white,
@@ -28058,7 +28058,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbR" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cbS" = (
@@ -28173,7 +28173,7 @@
 /area/diner/kitchen)
 "ccn" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "cco" = (
@@ -31242,7 +31242,7 @@
 	},
 /area/station/medical/medbooth)
 "dlH" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -35344,7 +35344,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "iAL" = (
-/obj/submachine/chef_oven{
+/obj/machinery/cookingmachine/oven{
 	dir = 4
 	},
 /turf/simulated/floor/blackwhite/whitegrime/other{

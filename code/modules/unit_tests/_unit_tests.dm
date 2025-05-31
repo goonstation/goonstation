@@ -52,6 +52,7 @@
 #include "mutation_combo_valid_ids.dm"
 #include "od_compile_bot.dm"
 #include "terrainify.dm"
+#include "recipe_picker.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
