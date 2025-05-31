@@ -65,26 +65,25 @@
 		cache = jobban_get_for_player(M)
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
-	if (J?.no_jobban_from_this_job)
-		return FALSE
+	if(J)
+		if (J.no_jobban_from_this_job)
+			return FALSE
 
+		if(cache.Find("Everything Except Assistant"))
+			if(!istype(J, /datum/job/civilian/staff_assistant))
+				return TRUE
 
+		if(cache.Find("Engineering Department"))
+			if(J.job_category == JOB_ENGINEERING || istype(J, /datum/job/command/chief_engineer))
+				return TRUE
 
-	if(cache.Find("Everything Except Assistant"))
-		if(rank != "Staff Assistant" && rank != "Technical Assistant" && rank != "Medical Assistant")
-			return TRUE
+		if(cache.Find("Security Department") || cache.Find("Security Officer"))
+			if(J.job_category == JOB_SECURITY || istype(J, /datum/job/command/head_of_security))
+				return TRUE
 
-	if(cache.Find("Engineering Department"))
-		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
-			return TRUE
-
-	if(cache.Find("Security Department") || cache.Find("Security Officer"))
-		if(rank in list("Security Officer","Security Assistant","Vice Officer","Detective"))
-			return TRUE
-
-	if(cache.Find("Heads of Staff"))
-		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
-			return TRUE
+		if(cache.Find("Heads of Staff"))
+			if(J.job_category == JOB_COMMAND)
+				return TRUE
 
 	if(cache.Find("Ghostdrone"))
 		if(rank in list("Ghostdrone","Remy","Bumblespider","Crow"))
