@@ -28,7 +28,7 @@
 /datum/tutorial_base/regional/newbee/Start()
 	src.tutorial_hud = new()
 	src.origin_mob.mind.transfer_to(src.newbee)
-	src.tutorial_hud.add_client(src.newbee.client)
+	src.newbee.attach_hud(src.tutorial_hud)
 	src.newbee.addAbility(/datum/targetable/newbee/exit)
 	src.newbee.addAbility(/datum/targetable/newbee/previous)
 	src.newbee.addAbility(/datum/targetable/newbee/next)
