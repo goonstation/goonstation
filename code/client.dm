@@ -66,8 +66,6 @@
 
 	var/list/datum/compid_info_list = list()
 
-	var/login_success = 0
-
 	var/view_tint
 
 	/// saturation_matrix: the client's game saturation
@@ -82,7 +80,15 @@
 	var/proc_logging = 0
 #endif
 
-	// authenticate = 0
+	// Turn off BYOND Hub authentication if using another auth provider
+	#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
+	authenticate = TRUE
+	#else
+	authenticate = FALSE
+	#endif
+
+	var/authenticated = FALSE
+
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
@@ -146,7 +152,7 @@
 
 	src.mob?.move_dir = 0
 
-	if (player_capa && src.login_success)
+	if (player_capa && src.authenticated)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
 	if (current_state < GAME_STATE_FINISHED)
@@ -195,252 +201,128 @@
 
 	return ..()
 
+/*********************************
+* NEW
+*********************************/
+
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
 	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
-	login_success = 0
+	var/client_auth_status = src.auth()
+	if (client_auth_status == CLIENT_AUTH_FAILED) return FALSE
 
-	if(findtext(src.key, "Telnet @"))
-		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
-		preferences = new
-		sleep(5 SECONDS)
-		del(src)
-		return
+	// TODO: is this necessary?
+	if (config.rsc) src.preload_rsc = config.rsc
 
-	logTheThing(LOG_ADMIN, src, " has connected.")
+	//Assign custom interface datums
+	if (!isnewplayer(src.mob)) src.loadResources()
+	src.initSizeHelpers()
+	src.chatOutput = new /datum/chatOutput(src)
+	SPAWN(-1)
+		src.chatOutput.start()
+	src.tooltipHolder = new /datum/tooltipHolder(src)
+	src.tooltipHolder.clearOld()
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
+	if (!preferences) src.preferences = new
+	src.volumes = default_channel_volumes.Copy()
 
+	// Creates or assigns the client's mob
+	. = ..()
+
+	src.initialize_interface()
+	winset(src, null, "rpanewindow.left=infowindow")
+
+	if (byond_version >= 516)
+		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+
+	if (client_auth_status == CLIENT_AUTH_SUCCESS)
+		src.on_auth()
+
+
+/client/proc/post_auth()
+	world.log << "post_auth"
+	src.authenticated = TRUE
+
+	// TODO: player/New handles mentor checking and assignment
+	// will need to tweak for goonhub auth due to no ckey
 	src.player = make_player(key)
 	src.player.client = src
 
-	if(config.rsc)
-		src.preload_rsc = config.rsc
+	src.init_admin()
 
-	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
-		src.player.log_join_time()
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
-
-	// moved preferences from new_player so it's accessible in the client scope
-	if (!preferences)
-		preferences = new
-
-
-	//Assign custom interface datums
-	src.chatOutput = new /datum/chatOutput(src)
-	//src.chui = new /datum/chui(src)
-
-	if (!isnewplayer(src.mob))
-		src.loadResources()
-
-	src.volumes = default_channel_volumes.Copy()
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
-
-	..()
-
-	if (join_motd)
-		boutput(src, "<div class='motd'>[join_motd]</div>")
-
-	//this is a little spooky to be doing here because the poll list never gets cleared out but I don't think it'll be too bad and I blame Sov if it is
-	var/list/active_polls = global.poll_manager.get_active_poll_names()
-	if (length(active_polls))
-		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
-		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
-
-	if (IsGuestKey(src.key))
-		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
-			var/gueststring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>No guest logins allowed!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>Guest Login Denied</h1>
-									Don't forget to log in to your byond account prior to connecting to this server.
-								</body>
-							</html>
-						"}
-			src.mob.Browse(gueststring, "window=getout")
-			sleep(10)
-			if (src)
-				del(src)
-			return
-
-	if (world.time < 7 SECONDS)
-		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-			if (!(src.ckey in whitelistCkeys))
-				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
-
-	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
-	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
-		//Key not in whitelist, show them a vaguely sassy message and boot them
-		if (!(src.ckey in whitelistCkeys))
-			var/whitelistString = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>Server Whitelist Enabled</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>Server whitelist enabled</h1>
-									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
-								</body>
-							</html>
-						"}
-			src.mob.Browse(whitelistString, "window=whiteout")
-			sleep(10)
-			if (src)
-				del(src)
-			return
+	if (!isnull(src.mob) && !isnewplayer(src.mob)) src.player.log_join_time()
 
 	// Record a login, sets player.id, which is used by almost every future API call for a player
 	// So we need to do this early, and outside of a spawn
 	src.player.record_login()
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
+	if (join_motd) boutput(src, "<div class='motd'>[join_motd]</div>")
 
-	if (checkBan)
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
-		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
-		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
-		var/banstring = {"
-							<!doctype html>
-							<html>
-								<head>
-									<title>BANNED!</title>
-									<style>
-										h1, .banreason {
-											font-color:#F00;
-										}
-
-									</style>
-								</head>
-								<body>
-									<h1>You have been banned.</h1>
-									<span class='banreason'>Reason: [checkBan["message"]]</span><br>
-									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
-									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
-								</body>
-							</html>
-						"}
-		src.mob.Browse(banstring, "window=ripyou")
-		sleep(10)
-		if (src)
-			del(src)
-		return
-
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
-
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		SPAWN(-1)
-			src.chatOutput.start()
-
-	//admins and mentors can enter a server through player caps.
-	var/admin_status = init_admin()
-	if (admin_status == 1)
+	if (src.holder)
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
-	else if (admin_status == 2)
-		boutput(src, "<span class='ooc adminooc'>You are possibly an admin! Please complete the Goonhub Auth process.</span>")
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
-		if (!src.holder)
-			src.verbs += /client/proc/toggle_mentorhelps
-	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
-		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
-	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
-		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
-	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
-		if (istype(src.mob, /mob/new_player))
-			var/mob/new_player/new_player = src.mob
-			new_player.blocked_from_joining = TRUE
-#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
-		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
-#elif defined(LIVE_SERVER)
-		var/list/servers_to_offer = list("main1", "main3", "main4")
-#else
-		var/list/servers_to_offer = list()
-#endif
-		var/list/valid_servers = list()
-		for (var/server in servers_to_offer)
-			if (config.server_id == server)
-				continue
-			var/datum/game_server/game_server = game_servers.find_server(server)
-			if (game_server)
-				valid_servers[game_server.name] = game_server
-		if (length(valid_servers))
-			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
-			var/idx = tgui_input_list(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
-			var/datum/game_server/redirect_choice = valid_servers[idx]
-			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
-			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
-			if (global.pcap_kick_messages)
-				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
-			if (redirect_choice)
-				changeServer(redirect_choice.id)
-			tgui_process.close_user_uis(src.mob)
-			del(src)
-		else
-			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
-			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
-			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
-			if (global.pcap_kick_messages)
-				message_admins("[key_name(src)] was kicked by popcap limit.")
-			tgui_process.close_user_uis(src.mob)
-			del(src)
-		return
+		src.verbs += /client/proc/toggle_mentorhelps
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
-
-	clients += src
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
-	add_to_donator_list(src.ckey)
-
-	SPAWN(0) // to not lock up spawning process
-		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
-
-	src.initSizeHelpers()
-
-	src.tooltipHolder = new /datum/tooltipHolder(src)
-	src.tooltipHolder.clearOld()
+	var/list/active_polls = global.poll_manager.get_active_poll_names()
+	if (length(active_polls))
+		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
+		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
 
 	createRenderSourceHolder()
 	screen += renderSourceHolder
 
-	for(var/key in globalImages)
+	for (var/key in globalImages)
 		var/image/I = globalImages[key]
 		src << I
 
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
-
-	SPAWN(0)
-		updateXpRewards()
-
-	//tg controls stuff
-
 	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
 	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
+
+	add_to_donator_list(src.ckey)
+
+	clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
+
+	if (do_compid_analysis)
+		do_computerid_test(src) //Will ban yonder fucker in case they are prix
+		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
+
+	src.reputations = new(src)
+
+	if (browse_item_initial_done)
+		SPAWN(0)
+			sendItemIcons(src)
+
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.set_color(normalize_color_to_matrix("#AAAAAA"))
+
+	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
+	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+	if (config.log_access)
+		src.ip_cid_conflict_check()
+
+	if(src.holder)
+		// when an admin logs in check all clients again per Mordent's request
+		for(var/client/C)
+			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
+
+	SPAWN(0) // to not lock up spawning process
+		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
+		updateXpRewards()
 
 	SPAWN(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
@@ -503,7 +385,6 @@
 				src << link("https://www.byond.com/download/build/515")
 #endif
 
-		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
 
 		if (winget(src, null, "hwmode") != "true")
@@ -546,50 +427,406 @@
 			src.cmd_rp_rules()
 #endif
 
-	if(do_compid_analysis)
-		do_computerid_test(src) //Will ban yonder fucker in case they are prix
-		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
 
-	src.initialize_interface()
+/*********************************
+* OLD
+*********************************/
 
-	src.reputations = new(src)
+// /client/proc/old_New()
+// 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
+// 	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
+// 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
-	if(src.holder && src.holder.level >= LEVEL_ADMIN)
-		src.control_freak = 0
+// 	login_success = 0
 
-	if (browse_item_initial_done)
-		SPAWN(0)
-			sendItemIcons(src)
+// 	if(findtext(src.key, "Telnet @"))
+// 		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
+// 		preferences = new
+// 		sleep(5 SECONDS)
+// 		del(src)
+// 		return
 
-	// fixing locked ability holders
-	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
-	ability_holder?.locked = FALSE
-	var/datum/abilityHolder/composite/composite = ability_holder
-	if(istype(composite))
-		for(var/datum/abilityHolder/inner_holder in composite.holders)
-			inner_holder.locked = FALSE
+// 	logTheThing(LOG_ADMIN, src, " has connected.")
 
-	if(spooky_light_mode)
-		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
-		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
-		src.set_color(normalize_color_to_matrix("#AAAAAA"))
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
 
-	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
-	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+// 	src.player = make_player(key)
+// 	src.player.client = src
 
-	if (config.log_access)
-		src.ip_cid_conflict_check()
+// 	if(config.rsc)
+// 		src.preload_rsc = config.rsc
 
-	if(src.holder)
-		// when an admin logs in check all clients again per Mordent's request
-		for(var/client/C)
-			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
-	winset(src, null, "rpanewindow.left=infowindow")
-	if(byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
-	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
+// 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
+// 		src.player.log_join_time()
 
-	login_success = 1
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Player set ([player])")
+
+// 	// moved preferences from new_player so it's accessible in the client scope
+// 	if (!preferences)
+// 		preferences = new
+
+
+// 	//Assign custom interface datums
+// 	src.chatOutput = new /datum/chatOutput(src)
+// 	//src.chui = new /datum/chui(src)
+
+// 	if (!isnewplayer(src.mob))
+// 		src.loadResources()
+
+// 	src.volumes = default_channel_volumes.Copy()
+
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
+
+// 	// ..()
+
+// 	if (join_motd)
+// 		boutput(src, "<div class='motd'>[join_motd]</div>")
+
+// 	//this is a little spooky to be doing here because the poll list never gets cleared out but I don't think it'll be too bad and I blame Sov if it is
+// 	var/list/active_polls = global.poll_manager.get_active_poll_names()
+// 	if (length(active_polls))
+// 		boutput(src, "<h2 style='color: red'>There are polls running!</h2>")
+// 		boutput(src, SPAN_BOLD("🗳️Active polls: [english_list(active_polls)] - <a href='byond://winset?command=Player-Polls'>Click here to vote!</a>🗳️"))
+
+// 	if (IsGuestKey(src.key))
+// 		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
+// 			var/gueststring = {"
+// 							<!doctype html>
+// 							<html>
+// 								<head>
+// 									<title>No guest logins allowed!</title>
+// 									<style>
+// 										h1, .banreason {
+// 											font-color:#F00;
+// 										}
+
+// 									</style>
+// 								</head>
+// 								<body>
+// 									<h1>Guest Login Denied</h1>
+// 									Don't forget to log in to your byond account prior to connecting to this server.
+// 								</body>
+// 							</html>
+// 						"}
+// 			src.mob.Browse(gueststring, "window=getout")
+// 			sleep(10)
+// 			if (src)
+// 				del(src)
+// 			return
+
+// 	if (world.time < 7 SECONDS)
+// 		if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+// 			if (!(src.ckey in whitelistCkeys))
+// 				sleep(3 SECONDS) //silly wait period bandaid so clients arent booted before whitelist load (probably)
+
+// 	//We're limiting connected players to a whitelist of ckeys (but let active admins in)
+// 	if (config.whitelistEnabled && !(admins.Find(src.ckey) && admins[src.ckey] != "Inactive"))
+// 		//Key not in whitelist, show them a vaguely sassy message and boot them
+// 		if (!(src.ckey in whitelistCkeys))
+// 			var/whitelistString = {"
+// 							<!doctype html>
+// 							<html>
+// 								<head>
+// 									<title>Server Whitelist Enabled</title>
+// 									<style>
+// 										h1, .banreason {
+// 											font-color:#F00;
+// 										}
+
+// 									</style>
+// 								</head>
+// 								<body>
+// 									<h1>Server whitelist enabled</h1>
+// 									This server has a player whitelist ON. You are not on the whitelist and will now be forcibly disconnected.
+// 								</body>
+// 							</html>
+// 						"}
+// 			src.mob.Browse(whitelistString, "window=whiteout")
+// 			sleep(10)
+// 			if (src)
+// 				del(src)
+// 			return
+
+// 	// Record a login, sets player.id, which is used by almost every future API call for a player
+// 	// So we need to do this early, and outside of a spawn
+// 	src.player.record_login()
+
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
+// 	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
+
+// 	if (checkBan)
+// 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
+// 		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
+// 		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
+// 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
+// 		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='byond://?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
+// 		var/banstring = {"
+// 							<!doctype html>
+// 							<html>
+// 								<head>
+// 									<title>BANNED!</title>
+// 									<style>
+// 										h1, .banreason {
+// 											font-color:#F00;
+// 										}
+
+// 									</style>
+// 								</head>
+// 								<body>
+// 									<h1>You have been banned.</h1>
+// 									<span class='banreason'>Reason: [checkBan["message"]]</span><br>
+// 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
+// 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
+// 								</body>
+// 							</html>
+// 						"}
+// 		src.mob.Browse(banstring, "window=ripyou")
+// 		sleep(10)
+// 		if (src)
+// 			del(src)
+// 		return
+
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+// 	if (!src.chatOutput.loaded)
+// 		//Load custom chat
+// 		SPAWN(-1)
+// 			src.chatOutput.start()
+
+// 	//admins and mentors can enter a server through player caps.
+// 	var/admin_status = init_admin()
+// 	if (admin_status == 1)
+// 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+// 	else if (admin_status == 2)
+// 		boutput(src, "<span class='ooc adminooc'>You are possibly an admin! Please complete the Goonhub Auth process.</span>")
+// 	else if (player.mentor)
+// 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
+// 		if (!src.holder)
+// 			src.verbs += /client/proc/toggle_mentorhelps
+// 	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
+// 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
+// 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
+// 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
+// 	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+// 		if (istype(src.mob, /mob/new_player))
+// 			var/mob/new_player/new_player = src.mob
+// 			new_player.blocked_from_joining = TRUE
+// #if defined(LIVE_SERVER) && defined(NIGHTSHADE)
+// 		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
+// #elif defined(LIVE_SERVER)
+// 		var/list/servers_to_offer = list("main1", "main3", "main4")
+// #else
+// 		var/list/servers_to_offer = list()
+// #endif
+// 		var/list/valid_servers = list()
+// 		for (var/server in servers_to_offer)
+// 			if (config.server_id == server)
+// 				continue
+// 			var/datum/game_server/game_server = game_servers.find_server(server)
+// 			if (game_server)
+// 				valid_servers[game_server.name] = game_server
+// 		if (length(valid_servers))
+// 			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
+// 			var/idx = tgui_input_list(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
+// 			var/datum/game_server/redirect_choice = valid_servers[idx]
+// 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+// 			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
+// 			if (global.pcap_kick_messages)
+// 				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+// 			if (redirect_choice)
+// 				changeServer(redirect_choice.id)
+// 			tgui_process.close_user_uis(src.mob)
+// 			del(src)
+// 		else
+// 			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+// 			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+// 			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
+// 			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
+// 			if (global.pcap_kick_messages)
+// 				message_admins("[key_name(src)] was kicked by popcap limit.")
+// 			tgui_process.close_user_uis(src.mob)
+// 			del(src)
+// 		return
+
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
+
+// 	clients += src
+// 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
+// 	add_to_donator_list(src.ckey)
+
+// 	SPAWN(0) // to not lock up spawning process
+// 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
+
+// 	src.initSizeHelpers()
+
+// 	src.tooltipHolder = new /datum/tooltipHolder(src)
+// 	src.tooltipHolder.clearOld()
+
+// 	createRenderSourceHolder()
+// 	screen += renderSourceHolder
+
+// 	for(var/key in globalImages)
+// 		var/image/I = globalImages[key]
+// 		src << I
+
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
+
+// 	SPAWN(0)
+// 		updateXpRewards()
+
+// 	//tg controls stuff
+
+// 	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
+// 	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
+
+// 	SPAWN(3 SECONDS)
+// #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+// 		var/is_newbie = 0
+// #endif
+// 		// new player logic, moving some of the preferences handling procs from new_player.Login
+// 		Z_LOG_DEBUG("Client/New", "[src.ckey] - 3 sec spawn stuff")
+
+// 		if (!preferences)
+// 			preferences = new
+// 		if (istype(src.mob, /mob/new_player))
+// 			Z_LOG_DEBUG("Client/New", "[src.ckey] - new player crap")
+
+// 			//Load the preferences up here instead.
+// 			if(!preferences.savefile_load(src))
+// #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+// 				//preferences.randomizeLook()
+// 				preferences.ShowChoices(src.mob)
+// 				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
+// 				boutput(src, SPAN_ALERT("Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!"))
+// 				//hey maybe put some 'new player mini-instructional' prompt here
+// 				//ok :)
+// 				is_newbie = 1
+// #endif
+// 			else if(!src.holder)
+// 				preferences.sanitize_name()
+
+// 			if (noir)
+// 				animate_fade_grayscale(src, 50)
+// #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+// 			if (!changes && preferences.view_changelog && !is_newbie)
+// 				if (!cdn)
+// 					//src << browse_rsc(file("browserassets/src/images/changelog/postcardsmall.jpg"))
+// 					src << browse_rsc(file("browserassets/src/images/changelog/88x31.png"))
+// 				changes()
+
+// 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
+// 				admin_changes()
+// #endif
+// 		else
+// 			if (noir)
+// 				animate_fade_grayscale(src, 1)
+// 			preferences.savefile_load(src)
+// 			src.antag_tokens = src.player?.get_antag_tokens()
+// 			load_persistent_bank()
+
+// #ifdef LIVE_SERVER
+// 		// check client version validity
+// 		if (src.byond_version < 515 || src.byond_build < 1633)
+// 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
+// 			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the latest 515 version (at the bottom of the page).", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+// 				src << link("https://www.byond.com/download/build/515")
+// 			// kick out of date clients
+// 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
+// 			tgui_process.close_user_uis(src.mob)
+// 			del(src)
+// 			return
+// 		if (src.byond_version >= 517)
+// 			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+// 				src << link("https://www.byond.com/download/build/515")
+// #endif
+
+// 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
+// 		setJoinDate()
+
+// 		if (winget(src, null, "hwmode") != "true")
+// 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
+
+// 		ircbot.event("login", src.key)
+// 		//Cloud data
+// 		if (!src.player.cloudSaves.loaded)
+// 			src.player.cloudSaves.fetch()
+// 		src.antag_tokens = src.player?.get_antag_tokens()
+// 		src.load_persistent_bank()
+// 		var/decoded = src.player.cloudSaves.getData("audio_volume")
+// 		if(decoded)
+// 			var/list/old_volumes = volumes.Copy()
+// 			volumes = json_decode(decoded)
+// 			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+// 				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+// 					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+// 				else
+// 					volumes += old_volumes[i]
+
+// 			// Show login notice, if one exists
+// 			src.show_login_notice()
+
+// 			// Set screen saturation
+// 			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
+
+// 		src.mob.reset_keymap()
+
+// 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
+// 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
+
+// 		if(istype(src.mob, /mob/new_player))
+// 			var/mob/new_player/M = src.mob
+// 			M.new_player_panel() // update if tokens available
+
+// #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
+// 		src.verbs += /client/proc/cmd_rp_rules
+// 		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+// 			src.cmd_rp_rules()
+// #endif
+
+// 	if(do_compid_analysis)
+// 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
+// 		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
+
+// 	src.initialize_interface()
+
+// 	src.reputations = new(src)
+
+// 	if(src.holder && src.holder.level >= LEVEL_ADMIN)
+// 		src.control_freak = 0
+
+// 	if (browse_item_initial_done)
+// 		SPAWN(0)
+// 			sendItemIcons(src)
+
+// 	// fixing locked ability holders
+// 	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+// 	ability_holder?.locked = FALSE
+// 	var/datum/abilityHolder/composite/composite = ability_holder
+// 	if(istype(composite))
+// 		for(var/datum/abilityHolder/inner_holder in composite.holders)
+// 			inner_holder.locked = FALSE
+
+// 	if(spooky_light_mode)
+// 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+// 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+// 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
+
+// 	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
+// 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+
+// 	if (config.log_access)
+// 		src.ip_cid_conflict_check()
+
+// 	if(src.holder)
+// 		// when an admin logs in check all clients again per Mordent's request
+// 		for(var/client/C)
+// 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
+// 	winset(src, null, "rpanewindow.left=infowindow")
+// 	if(byond_version >= 516)
+// 		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+// 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
+
+// 	login_success = 1
 
 /client/proc/initialize_interface()
 	set waitfor = FALSE
@@ -723,22 +960,18 @@
 
 
 /client/proc/init_admin()
-	if(!address || (world.address == src.address))
-		admins[src.ckey] = "Host"
+	// TODO: debug, uncomment
+	// if (IsLocalClient(src)) admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
-		if (config.goonhub_auth_enabled)
-			src.goonhub_auth = new(src)
-			src.goonhub_auth.show_ui()
-			return 2
-		else
-			src.make_admin()
-			return 1
+		src.make_admin()
+		return 1
 	return 0
 
 /client/proc/make_admin()
 	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
 		src.holder.rank = admins[src.ckey]
+		src.control_freak = 0
 		update_admins(admins[src.ckey])
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
@@ -749,6 +982,7 @@
 		src.holder.dispose()
 		src.holder = null
 		src.clear_admin_verbs()
+		src.control_freak = 1
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
