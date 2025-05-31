@@ -23,7 +23,7 @@
 	src.generate_sidebars()
 	src.newbee = new(src.initial_turf, src.origin_mob.client.preferences.AH, src.origin_mob.client.preferences, TRUE)
 	src.owner = src.newbee
-	src.AddNewbeeSteps() // need the keymap in place before adding steps for reading player custom binds
+	src.AddNewbeeSteps() // need the keymap	 in place before adding steps for reading player custom binds
 
 /datum/tutorial_base/regional/newbee/Start()
 	src.tutorial_hud = new()
@@ -69,8 +69,6 @@
 
 /datum/tutorial_base/regional/newbee/Finish()
 	if(..())
-		src.tutorial_hud.remove_client(src.newbee.client)
-		src.newbee.unequip_all(TRUE) // removes any lingering item ability HUDs
 		var/mob/new_player/M = new()
 		M.key = src.newbee.client.key
 		src.newbee.mind.transfer_to(M)
