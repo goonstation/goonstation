@@ -9,10 +9,12 @@
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/salvager_minds = list()
 	var/const/minimum_salvagers = 3
+	var/const/antags_possible = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/pop_divisor = 6
-	var/const/antags_possible = 6
+	#ifdef RP_MODE
+		var/const/pop_divisor = 6
+	#else
 
 /datum/game_mode/salvager/announce()
 	boutput(world, "<B>The current game mode is - Salvagers!</B>")
