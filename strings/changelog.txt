@@ -1,5 +1,9 @@
 
 (t)sat may 31 25
+(u)LeahTheTech
+(p)23646
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(*)Manifolds can now rupture and be reinforced just like regular pipes.
 (u)RubberRats
 (p)23658
 (e)🪲🍝|C-Bug, A-Catering
