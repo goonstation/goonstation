@@ -70,7 +70,6 @@
 /datum/tutorial_base/regional/newbee/Finish()
 	if(..())
 		var/mob/new_player/M = new()
-		M.key = src.newbee.client.key
 		src.newbee.mind.transfer_to(M)
 		qdel(src.newbee)
 		src.newbee = null
