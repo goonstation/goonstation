@@ -71,12 +71,18 @@
 	if(..())
 		var/mob/new_player/M = new()
 		src.newbee.mind.transfer_to(M)
-		qdel(src.newbee)
-		src.newbee = null
-		qdel(src.tutorial_hud)
-		src.tutorial_hud = null
 		src.region.clean_up() // aggressive cleanup to wipe out landmarks/spawned objects
 		qdel(src)
+
+/datum/tutorial_base/regional/newbee/disposing()
+	. = ..()
+	qdel(src.newbee)
+	src.newbee = null
+	qdel(src.origin_mob)
+	src.origin_mob = null
+	qdel(src.tutorial_hud)
+	src.tutorial_hud = null
+	src.keymap = null
 
 /datum/tutorial_base/regional/newbee/proc/generate_sidebars()
 	if (!src.keymap)
