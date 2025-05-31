@@ -399,6 +399,7 @@
 	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
+	var/datum/fluid_group/last_fluid_group = null //! Used to tell when the fluid has changed to reduce absorbtion message spam
 
 	on_holder_examine()
 		if (src.show_on_examine)
@@ -421,6 +422,39 @@
 			boutput(holder, SPAN_ALERT("<b>Your [src.name] won't do what you tell it to!</b>"))
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
+
+	/// Used by synth legs to absorb reagents from fluids
+	proc/fluid_absorbtion()
+		if(!src.holder)
+			return
+		var/turf/T = get_turf(src.holder)
+		if(!T.active_liquid?.group?.reagents)
+			src.last_fluid_group = null
+			return
+		if(!prob(30) || !ishuman(src.holder))
+			return
+		var/mob/living/carbon/human/H = src.holder
+		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
+			return // Do not absorb through space suit
+		else if(H.shoes)
+			if(T.active_liquid.my_depth_level >= 2)
+				// Absorb through shoes if legs are submerged
+				absorb_reagents(T.active_liquid.group, 5)
+		else
+			absorb_reagents(T.active_liquid.group, 5)
+
+	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
+		var/datum/reagents/R = fluids.reagents
+		if(!R.total_volume)
+			return
+		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
+		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
+		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
+		eat_twitch(src.holder)
+		if(fluids != src.last_fluid_group)
+			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
+			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")
+			src.last_fluid_group = fluids
 
 /obj/item/parts/human_parts/leg/left
 	name = "left leg"
@@ -907,7 +941,6 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
-	var/datum/fluid_group/absorbing_group = null //! Used to tell when the fluid has changed to reduce message spam
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -916,36 +949,7 @@
 
 	on_life()
 		. = ..()
-		if(!src.holder)
-			return
-		var/turf/T = get_turf(src.holder)
-		if(!T.active_liquid?.group?.reagents)
-			src.absorbing_group = null
-			return
-		if(!prob(30) || !ishuman(src.holder))
-			return
-		var/mob/living/carbon/human/H = src.holder
-		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
-			return // Can't absorb through space suit
-		else if(H.shoes)
-			if(T.active_liquid.my_depth_level >= depth_levels[2])
-				// Absorb through shoes if legs are submerged
-				absorb_reagents(T.active_liquid, 5)
-		else
-			absorb_reagents(T.active_liquid, 5)
-
-	proc/absorb_reagents(var/obj/fluid/fluid, var/absorbtion_rate)
-		var/datum/reagents/R = fluid.group.reagents
-		if(!R.total_volume)
-			return
-		if(fluid.group != src.absorbing_group)
-			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
-			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")
-			src.absorbing_group = fluid.group
-		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
-		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
-		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
-		eat_twitch(src.holder)
+		src.fluid_absorbtion()
 
 
 /obj/item/parts/human_parts/leg/right/synth
@@ -962,7 +966,6 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
-	var/datum/fluid_group/absorbing_group = null //! Used to tell when the fluid has changed to reduce message spam
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -971,36 +974,7 @@
 
 	on_life()
 		. = ..()
-		if(!src.holder)
-			return
-		var/turf/T = get_turf(src.holder)
-		if(!T.active_liquid?.group?.reagents)
-			src.absorbing_group = null
-			return
-		if(!prob(30) || !ishuman(src.holder))
-			return
-		var/mob/living/carbon/human/H = src.holder
-		if(HAS_FLAG(H.wear_suit?.c_flags, SPACEWEAR) || HAS_FLAG(H.w_uniform?.c_flags, SPACEWEAR))
-			return // Can't absorb through space suit
-		else if(H.shoes)
-			if(T.active_liquid.my_depth_level >= depth_levels[2])
-				// Absorb through shoes if legs are submerged
-				absorb_reagents(T.active_liquid, 5)
-		else
-			absorb_reagents(T.active_liquid, 5)
-
-	proc/absorb_reagents(var/obj/fluid/fluid, var/absorbtion_rate)
-		var/datum/reagents/R = fluid.group.reagents
-		if(!R.total_volume)
-			return
-		if(fluid.group != src.absorbing_group)
-			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
-			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")
-			src.absorbing_group = fluid.group
-		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
-		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
-		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
-		eat_twitch(src.holder)
+		src.fluid_absorbtion()
 
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
@@ -2040,6 +2014,10 @@
 	severed_overlay_1_color = null
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
+
+	on_life()
+		. = ..()
+		src.fluid_absorbtion()
 
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"
