@@ -1935,5 +1935,5 @@
 
 	SetUp()
 		..()
-		src.newbee_tutorial.newbee.unlock_medal("On My Own Two (Space) Legs")
+		src.newbee_tutorial.newbee.unlock_medal("On My Own Two (Space) Legs", TRUE)
 		playsound(src.newbee_tutorial.newbee, pick(20;'sound/misc/openlootcrate.ogg',100;'sound/misc/openlootcrate2.ogg'), 60, 0)

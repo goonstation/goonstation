@@ -100,5 +100,5 @@
 
 	death(gibbed)
 		if (tutorial_owner && istype(src.lastattacker?.deref(), /mob/living/critter/spider))
-			src.tutorial_owner.unlock_medal("On My Own (Eight) Space Legs")
+			src.tutorial_owner.unlock_medal("On My Own (Eight) Space Legs", TRUE)
 		. = ..()
