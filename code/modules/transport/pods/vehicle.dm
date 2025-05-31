@@ -959,6 +959,7 @@
 	EJ.last_move = null
 	ejectee.set_loc(location) // set_loc will call eject()
 
+	// Items can fall off the player while they are in the pod. Eject anything not considered to be installed.
 	for (var/obj/item/I in src)
 		var/is_installed = (I == src.atmostank || I == src.fueltank || I == src.intercom)
 		if(!is_installed)
