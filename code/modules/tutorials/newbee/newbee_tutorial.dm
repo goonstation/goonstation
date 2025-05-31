@@ -192,7 +192,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/equip_breath_mask)
 	src.AddStep(/datum/tutorialStep/newbee/equip_space_helmet)
 	src.AddStep(/datum/tutorialStep/newbee/timer/stats_after)
-	src.AddStep(/datum/tutorialStep/newbee/oxygen)
+	src.AddStep(/datum/tutorialStep/newbee/item_pickup/oxygen)
 	src.AddStep(/datum/tutorialStep/newbee/internals_on)
 
 	// room 10 - Space Traversal

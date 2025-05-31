@@ -1157,16 +1157,14 @@
 	highlight_hud_element = "stats"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
 
-/datum/tutorialStep/newbee/oxygen
+/datum/tutorialStep/newbee/item_pickup/oxygen
 	name = "Oxygen Required"
 	instructions = "You need oxygen to breathe in areas without air, like space.<br><b>Click</b> the oxygen tank to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_9
 
-	PerformAction(action, context)
-		. = ..()
-		if (action == "item_pickup" && istype(context, /obj/item/tank/oxygen))
-			src.finished = TRUE
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET
+	item_path = /obj/item/tank/oxygen/tutorial
 
 /datum/tutorialStep/newbee/internals_on
 	name = "Using Internals"

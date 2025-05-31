@@ -63,7 +63,6 @@
 	var/obj/item/clothing/suit/space/emerg/emergency_suit
 	var/obj/item/clothing/mask/breath/breath_mask
 	var/obj/item/clothing/head/emerg/emergency_hood
-	var/obj/item/tank/oxygen/tutorial/oxygen_tank
 
 	proc/reset(turf/move_to)
 		src.set_loc(move_to)
@@ -96,16 +95,6 @@
 		src.emergency_hood.pixel_x = -8
 		src.emergency_hood.pixel_y = -8
 
-		if (!src.oxygen_tank || QDELETED(src.oxygen_tank))
-			src.make_oxygen_tank()
-		if (ismob(src.oxygen_tank.loc))
-			var/mob/M = src.oxygen_tank.loc
-			M.drop_item(src.oxygen_tank)
-		src.oxygen_tank.set_loc(src)
-		src.oxygen_tank.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 LITERS / (R_IDEAL_GAS_EQUATION * T20C)
-		src.oxygen_tank.pixel_x = 8
-		src.oxygen_tank.pixel_y = -8
-
 	proc/make_emergency_suit()
 		src.emergency_suit = new(src)
 		src.emergency_suit.layer = OBJ_LAYER + 0.04
@@ -127,11 +116,6 @@
 		RegisterSignal(src.emergency_hood, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
 		RegisterSignal(src.emergency_hood, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
 
-	proc/make_oxygen_tank()
-		src.oxygen_tank = new(src)
-		src.oxygen_tank.layer = OBJ_LAYER + 0.01
-		RegisterSignal(oxygen_tank, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-
 	make_my_stuff()
 		if(..())
 			src.make_emergency_suit()
@@ -143,9 +127,6 @@
 			src.make_emergency_hood()
 			src.emergency_hood.pixel_x = -8
 			src.emergency_hood.pixel_y = -8
-			src.make_oxygen_tank()
-			src.oxygen_tank.pixel_x = 8
-			src.oxygen_tank.pixel_y = -8
 			return 1
 
 	proc/pickup_tutorial_item(datum/source, mob/user)
@@ -329,10 +310,7 @@
 	)
 
 	src.set_secure_frequencies()
-
-	// SPAWN(1 SECOND)
 	src.frequency = src.radio_freq_alpha
-
 
 /obj/item/device/radio/headset/tutorial/proc/pick_randomized_freq()
 	var/list/blacklisted = list(FREQ_SIGNALER)
