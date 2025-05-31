@@ -40,7 +40,7 @@
 	set desc = "Speaking on the main radio frequency."
 	set hidden = TRUE
 
-	if (!src.ensure_speech_tree().GetPrefixByID(SPEECH_PREFIX_RADIO_GENERAL))
+	if (!src.ensure_speech_tree().GetPrefixByPrefixText(PREFIX_TEXT_RADIO_GENERAL))
 		return
 
 	src.say_verb("; [message]")
