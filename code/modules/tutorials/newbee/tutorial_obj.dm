@@ -282,49 +282,16 @@
 		else
 			D.setMaterial(getMaterial("steel"))
 
+TYPEINFO(/obj/item/device/radio/headset/tutorial)
+	start_listen_effects = list(LISTEN_EFFECT_RADIO_TUTORIAL)
+
 /obj/item/device/radio/headset/tutorial
 	hardened = TRUE // needs to always work
-	protected_radio = TRUE
 	locked_frequency = TRUE
 
-	var/radio_freq_alpha
-	var/radio_freq_beta
+/obj/item/device/radio/headset/tutorial/receive_signal()
+	return
 
-/obj/item/device/radio/headset/tutorial/New()
-	. = ..()
-	src.radio_freq_alpha = src.pick_randomized_freq()
-	global.protected_frequencies += src.radio_freq_alpha
-
-	src.radio_freq_beta = src.pick_randomized_freq()
-	global.protected_frequencies += src.radio_freq_beta
-
-	src.bricked = FALSE // always. work.
-
-	src.secure_frequencies = list(
-		"a" = src.radio_freq_alpha,
-		"b" = src.radio_freq_beta,
-	)
-	src.secure_classes = list(
-		"a" = RADIOCL_ENGINEERING,
-		"b" = RADIOCL_RESEARCH,
-	)
-
-	src.set_secure_frequencies()
-	src.frequency = src.radio_freq_alpha
-
-/obj/item/device/radio/headset/tutorial/proc/pick_randomized_freq()
-	var/list/blacklisted = list(FREQ_SIGNALER)
-	blacklisted.Add(R_FREQ_BLACKLIST)
-	blacklisted += global.protected_frequencies
-
-	do
-		. = rand(1352, 1439)
-	while (blacklisted.Find(.))
-
-/obj/item/device/radio/headset/tutorial/disposing()
-	. = ..()
-	global.protected_frequencies -= src.radio_freq_alpha
-	global.protected_frequencies -= src.radio_freq_beta
 
 /obj/health_scanner/floor/tutorial
 	crit_alert(mob/living/carbon/human/H)
