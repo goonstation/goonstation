@@ -1248,10 +1248,8 @@ datum
 				if(method == TOUCH)
 					M.clean_forensic()
 					M.delStatus("marker_painted")
-				if(method == INGEST && isliving(M))
-					var/mob/living/L = M
-					if (L.organHolder?.intestines?.synthetic)
-						M.reagents.add_reagent(("ammonia"), volume * 0.3)
+				if(method == INGEST)
+					M.reagents.add_reagent(("ammonia"), volume * 0.3)
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"
