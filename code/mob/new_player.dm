@@ -169,12 +169,13 @@ TYPEINFO(/mob/new_player)
 			if(client.statpanel=="Lobby" && ticker)
 				for (var/client/C)
 					var/mob/new_player/player = C.mob
+					if (!istype(player)) continue
+
 					var/playing = null
 					if (player.ready_play)
 						playing = "(Playing)"
 					else if (player.ready_tutorial)
 						playing = "(Tutorial)"
-					if (!istype(player)) continue
 
 					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
