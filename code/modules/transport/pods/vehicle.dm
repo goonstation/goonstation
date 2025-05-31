@@ -17,7 +17,8 @@
 	var/obj/item/tank/fueltank = null // provides fuel, different mixes affect engine performance
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 
-	var/list/obj/item/shipcomponent/installed_parts = list(POD_PART_ENGINE=null, POD_PART_LIFE_SUPPORT=null, POD_PART_COMMS=null, \
+	///Associative list of part slot to the part installed in it
+	var/list/installed_parts = list(POD_PART_ENGINE=null, POD_PART_LIFE_SUPPORT=null, POD_PART_COMMS=null, \
 		POD_PART_MAIN_WEAPON=null, POD_PART_SECONDARY=null, POD_PART_SENSORS=null, POD_PART_LOCK=null, POD_PART_LIGHTS=null)
 
 	/// brake toggle
