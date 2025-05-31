@@ -12,12 +12,14 @@
 	var/const/minimum_salvagers = 3
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	var/distractions_enabled = FALSE // means extra syndicate fluff is added to divert attention from early-game salvs
 #ifdef RP_MODE
 	var/const/pop_divisor = 6
 	var/const/antags_possible = 6
 #else
 	var/const/pop_divisor = 6
 	var/const/antags_possible = 8 // buffed for distraction
+	distractions_enabled = TRUE
 #endif
 
 /datum/game_mode/salvager/announce()
@@ -69,20 +71,19 @@
 		salvager.special_role = ROLE_SALVAGER
 		possible_salvagers.Remove(salvager)
 
-	#ifndef RP_MODE
-	if (distraction_num >= 2)
-		var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = distraction_num, recordChosen = 1)
-		for (var/datum/mind/spy in chosen_spy_thieves)
-			distractions += spy
-			spy.special_role = ROLE_SPY_THIEF
-			possible_spy_thieves.Remove(spy)
-	else
-		var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = distraction_num, recordChosen = 1)
-		for (var/datum/mind/traitor in chosen_traitors)
-			distractions += traitor
-			traitor.special_role = ROLE_TRAITOR
-			possible_traitors.Remove(traitor)
-	#endif
+	if(distractions_enabled)
+		if (distraction_num >= 2)
+			var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spy_thieves, role = ROLE_SPY_THIEF, amount = distraction_num, recordChosen = 1)
+			for (var/datum/mind/spy in chosen_spy_thieves)
+				distractions += spy
+				spy.special_role = ROLE_SPY_THIEF
+				possible_spy_thieves.Remove(spy)
+		else
+			var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = distraction_num, recordChosen = 1)
+			for (var/datum/mind/traitor in chosen_traitors)
+				distractions += traitor
+				traitor.special_role = ROLE_TRAITOR
+				possible_traitors.Remove(traitor)
 
 	return 1
 
@@ -90,9 +91,9 @@
 	..()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
-	#ifndef RP_MODE
-	for (var/datum/mind/other in distractions)
-		equip_antag(other)
-	#endif
+
+	if(distractions_enabled)
+		for (var/datum/mind/other in distractions)
+			equip_antag(other)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
