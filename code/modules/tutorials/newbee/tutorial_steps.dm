@@ -729,7 +729,7 @@
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
-	SetUp(manually_selected)
+	New()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "With the first aid kit in-hand, press <b>[attackself]</b> to open it."
@@ -813,10 +813,13 @@
 	highlight_hud_element = "resist"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 
-	SetUp(manually_selected)
+	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/resist = src.keymap.action_to_keybind("resist")
 		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to resist the flames and put out the flames"
+
+	SetUp(manually_selected)
+		. = ..()
 		src.newbee_tutorial.newbee.set_burning(10)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_resist))
 
