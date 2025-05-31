@@ -338,20 +338,7 @@
 						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 				show_inventory = !show_inventory
-				if (show_inventory)
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.add_screen(S)
-					for (var/obj/O in inventory_items)
-						src.add_object(O, HUD_LAYER+2)
-					if (layout_style == "tg")
-						src.add_screen(legend)
-				else
-					for (var/atom/movable/screen/hud/S in inventory_bg)
-						src.remove_screen(S)
-					for (var/obj/O in inventory_items)
-						src.remove_object(O)
-					if (layout_style == "tg")
-						src.remove_screen(legend)
+				src.update_inventory()
 
 			if ("lhand")
 				master.swap_hand(1)
@@ -423,9 +410,9 @@
 
 			if ("mintent")
 				if (master.m_intent == "run")
-					master.m_intent = "walk"
+					master.set_m_intent("walk")
 				else
-					master.m_intent = "run"
+					master.set_m_intent("run")
 				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
@@ -744,6 +731,22 @@
 			src.add_object(I, HUD_LAYER+2, loc)
 		else
 			I.screen_loc = loc
+
+	proc/update_inventory()
+		if (src.show_inventory)
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.add_screen(S)
+			for (var/obj/O in inventory_items)
+				src.add_object(O, HUD_LAYER+2)
+			if (layout_style == "tg")
+				src.add_screen(legend)
+		else
+			for (var/atom/movable/screen/hud/S in inventory_bg)
+				src.remove_screen(S)
+			for (var/obj/O in inventory_items)
+				src.remove_object(O)
+			if (layout_style == "tg")
+				src.remove_screen(legend)
 
 	proc/remove_item(obj/item/I)
 		if (length(inventory_items))

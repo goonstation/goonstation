@@ -997,7 +997,7 @@
 		src.maptext_x = 36
 		src.maptext_y = 64
 
-		src.m_intent = "walk"
+		src.set_m_intent("walk")
 		hud.update_mintent()
 
 		// dirty code for a loop since taking up an actual processing loop for a gimmick seems excessive

@@ -241,6 +241,8 @@
 		..()
 
 	proc/preventAddTrait(mob/owner, var/resolved_role)
+		if (resolved_role == "tutorial" && !("species" in src.category))
+			return TRUE
 		. = FALSE
 
 	proc/onAdd(var/mob/owner)
