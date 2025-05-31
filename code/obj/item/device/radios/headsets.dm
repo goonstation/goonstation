@@ -555,7 +555,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.frequency = R_FREQ_SYNDICATE // let's see if this stops rounds from being ruined every fucking time
+			src.set_frequency(R_FREQ_SYNDICATE) // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"
@@ -623,7 +623,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.frequency = R_FREQ_PIRATE
+			src.set_frequency(R_FREQ_PIRATE)
 
 	first_mate
 		icon_override = "pirate_first_mate"

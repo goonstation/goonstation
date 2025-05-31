@@ -198,7 +198,7 @@ TYPEINFO(/obj/flock_structure/relay)
 			wearer.show_text("A final scream of horrific static bursts from your radio, destroying it!", "red")
 			wearer.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 		radio.bricked = TRUE
-		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
+		radio.set_frequency(rand(R_FREQ_MINIMUM, 10000))
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
 		no_more_radios = TRUE
