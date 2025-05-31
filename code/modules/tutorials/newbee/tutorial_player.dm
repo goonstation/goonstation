@@ -21,6 +21,8 @@
 
 /// Newbee Tutorial mob; no headset or PDA, does not spawn via jobs
 /mob/living/carbon/human/tutorial
+	job = "Playing Tutorial" // for observers
+
 /mob/living/carbon/human/tutorial/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..(loc, AH_passthru, init_preferences, ignore_randomizer, "tutorial")
 
