@@ -693,6 +693,7 @@
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
 	volume = 140
+	can_rupture = TRUE
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
