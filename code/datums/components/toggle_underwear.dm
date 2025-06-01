@@ -49,7 +49,7 @@
 
 /obj/ability_button/underwear_toggle
 	name = "(Un)Tuck Underwear"
-	icon_state = "blank-blue"
+	icon_state = "underwear"
 	requires_equip = TRUE
 	var/datum/component/toggle_underwear/target
 	execute_ability()
