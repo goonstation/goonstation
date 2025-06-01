@@ -349,6 +349,7 @@ var/global/game_force_started = FALSE
 
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
+		var/tutorial_offset = 0.2 SECONDS
 		for (var/mob/new_player/player in mobs)
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
@@ -394,8 +395,10 @@ var/global/game_force_started = FALSE
 					player.create_character()
 					qdel(player)
 			else if (player.ready_tutorial)
-				SPAWN(0)
+				boutput(player, SPAN_ALERT("Spawning the tutorial area in [ceil(tutorial_offset/10)] second[s_es(ceil(tutorial_offset/10))]."))
+				SPAWN(tutorial_offset)
 					player.play_tutorial()
+				tutorial_offset += 0.2 SECONDS
 
 	proc/add_minds(var/periodic_check = 0)
 		// SHOULD_NOT_SLEEP(TRUE)
