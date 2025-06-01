@@ -3139,10 +3139,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A box of nature's fluffy treats. May contain unpopped kernels..."
 	var/items_left = 15
 	var/max_items = 30
-	var/seasoning = null
+	var/datum/reagent/seasoning = null
 	var/obj/item/contained_item = null
-	var/obj/item/last_input = null
-	var/list/enabled_items = list(/obj/item/reagent_containers/food/snacks/ingredient/kernels) // support for future stuff eg: fried chicken
+	var/obj/item/last_input = /obj/item/ladle
+	var/list/enabled_items = list(/obj/item/ladle) // support for future stuff eg: fried chicken
 
 	New()
 		..()
@@ -3158,21 +3158,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 				return
 
 			if (istype(W, /obj/item/ladle))
-				var/obj/item/ladle/utensil = W
-				if (utensil.corn_scoop)
+				var/obj/item/ladle/L = W
+				if (L.corn_scoop)
 					src.contained_item = /obj/item/reagent_containers/food/snacks/popcorn_single
 					src.last_input = W
+					src.seasoning = L.seasoning
 					src.icon_state = "popcorn_full"
-					src.name = "popcorn box"
-					src.desc = "A box of nature's fluffy treats, [src.items_left] left. May contain unpopped kernels..."
-					src.UpdateIcon()
+					if (src.seasoning)
+						src.name = "popcorn box with [src.seasoning]"
+						src.desc = "A box of nature's fluffy treats with added [src.seasoning]! [src.items_left] left. May contain unpopped kernels..."
+					else
+						src.name = "popcorn box"
+						src.desc = "A box of nature's fluffy treats, [src.items_left] left. May contain unpopped kernels..."
 					src.items_left += 15
-					utensil.corn_scoop = null
-					utensil.icon_state = "ladle_corn"
+					src.UpdateIcon()
+					L.corn_scoop = FALSE
+					L.icon_state = "ladle"
+					L.seasoning = null
 
 			if (src.items_left > max_items)
 				src.items_left = max_items
-			qdel(W)
 
 	attack_hand(mob/user, unused, flag)
 		if (flag)
@@ -3183,8 +3188,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 				return
 
 			var/obj/item/reagent_containers/food_orb = new contained_item(user)
-			if (seasoning)
-				food_orb.reagents.add_reagent(seasoning, 1)
+			if (src.seasoning)
+				food_orb.reagents.add_reagent(src.seasoning, 1)
+				food_orb.name = "popcorn with [src.seasoning]"
 			if (istype(food_orb, /obj/item/reagent_containers/food/snacks/popcorn_single) && rand(1,8) == 4)
 				var/obj/item/reagent_containers/food/snacks/popcorn_single/kernel = food_orb
 				kernel.unpopped = TRUE

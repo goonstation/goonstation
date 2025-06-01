@@ -303,11 +303,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "A bunch of kernels from the cob."
 	icon_state = "kernels"
 	food_color = "#FFFFFF"
+	var/cooked = FALSE
 	var/seasoning = null
-
-	cooked
-		name = "cooked kernels"
-		desc = "You shouldn't be seeing this."
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 	name = "rice sprig"
