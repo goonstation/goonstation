@@ -333,7 +333,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// because that's what the player is, not the one we were initially given.
 
 		src = possible_new_mob // let's hope this breaks nothing
-
+		src.job = JOB.name
 
 	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff

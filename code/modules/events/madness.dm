@@ -68,12 +68,13 @@
 			message_admins("[src.name] was just a scare, no madness caused.")
 
 		var/start_time = TIME
-		while (TIME - start_time < 4 MINUTES)
+		while (TIME - start_time < 10 MINUTES)
 			sleep(rand(20, 60) SECONDS)
 			src.sound_event()
 		animate(monster, alpha = 0, time = 10 SECONDS)
 		sleep(10 SECONDS)
 		qdel(monster)
+		src.disabled = TRUE
 
 	proc/cause_madness(source)
 		var/list/potential_victims = list()
