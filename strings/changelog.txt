@@ -1,4 +1,52 @@
 
+(t)sat may 31 25
+(u)LeahTheTech
+(*)Material analysers now display the rupture pressure of breakable pipes.
+(+)All concussive charges can now break geodes (if they're soft enough)
+(p)23646
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(*)Manifolds can now rupture and be reinforced just like regular pipes.
+(u)RubberRats
+(p)23658
+(e)🪲🍝|C-Bug, A-Catering
+(+)Peanut butter and honey sandwiches are now cookable again
+(u)CalliopeSoups
+(p)23630
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's engine has less heat pipe covering wires.
+(t)fri may 30 25
+(u)CalliopeSoups and LeahTheTech
+(*)Added a new "Mixed Spooky" gamemode with a guaranteed wraith and supernatural antags. Enabled on all servers.
+(t)thu may 29 25
+(u)LeahTheTech
+(p)23623
+(e)⚖📄🌠|C-Balance, A-UI, A-Events
+(*)Neon Broken antagonist objectives are now mandatory in the same way mindhack instructions are. Reminder: you can disable rolling Broken under the "Other foes" antag preferences option.
+(t)wed may 28 25
+(u)LeahTheTech
+(+)The Neon megafauna shadow now lasts for roughly the same time as the madness it causes.
+(+)Neon megafauna events can now only occur once per round.
+(t)mon may 26 25
+(u)LeahTheTech
+(+)Rare metal nanites are now... rarer! They will also only spawn alongside higher tier ores.
+(u)LorrMaster
+(p)23476
+(e)🆕🎨🔒🧛|C-Feature, C-Sprites, A-Secret, A-Gamemodes
+(*)Added the dualconstruction device, a new tool for salvagers
+(t)sun may 25 25
+(u)444explorer
+(p)23547
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Syndicate Omnitool acts as Insulated Gloves while held.
+(t)sat may 24 25
+(u)CalliopeSoups
+(p)23549
+(e)⚖💅🐁|C-Balance, C-QoL, A-Critters
+(+)Mimics copy the density of their disguise while hiding, letting people walk over you as most items.
+(u)glowbold
+(p)23490
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)The cyber-incompatible trait makes you incompatible with cybernetics, including casual cyborgification. The syndicate conversion chamber will still make you a syndicate cyborg.
 (t)tue may 20 25
 (u)LeahTheTech
 (+)The Lawbringer, Sabre, and Colt "job rewards" can now be claimed via the right click menu.

@@ -1065,11 +1065,26 @@ var/datum/job_controller/job_controls
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 	return JOB
 
-///Soft supresses logging on failing to find a job
-/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
+/// Searches all jobs in the controller by name, including special and hidden jobs, to find a match
+///
+/// Returns the matching `/datum/job`, or `null` if there are no matches.
+///
+/// Parameters:
+///
+/// string - string (default ""): The job name to search for
+///
+/// staple_only - boolean (default FALSE): Only search staple jobs
+///
+/// soft - boolean (default FALSE): Do not log search misses
+///
+/// case_sensitive - boolean (default TRUE): match search string case exactly
+///
+/// latejoin_only - boolean (default: FALSE): Only list jobs that can currently be late-joined
+///
+/proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE, var/latejoin_only = FALSE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
-		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
+		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string '[string]' in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
@@ -1080,15 +1095,26 @@ var/datum/job_controller/job_controls
 		return null
 	var/list/results = list()
 	for (var/datum/job/J in job_controls.staple_jobs)
+		if (latejoin_only)
+			if (J.no_late_join)
+				continue
+			if (J.limit == 0)
+				continue
 		if (J.match_to_string(string, case_sensitive))
 			results += J
 	if (!staple_only)
 		for (var/datum/job/J in job_controls.special_jobs)
+			if (latejoin_only)
+				if (J.no_late_join)
+					continue
+				if (J.limit == 0)
+					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J
-		for (var/datum/job/J in job_controls.hidden_jobs)
-			if (J.match_to_string(string, case_sensitive))
-				results += J
+		if (!latejoin_only)
+			for (var/datum/job/J in job_controls.hidden_jobs)
+				if (J.match_to_string(string, case_sensitive))
+					results += J
 	if(length(results) == 1)
 		return results[1]
 	else if(length(results) > 1)
