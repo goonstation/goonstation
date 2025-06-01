@@ -8,7 +8,11 @@
 
 	var/content
 	if (microphone.add_sender)
+		if (isnull(message.speaker_to_display))
+			message.speaker_to_display = message.real_ident || message.face_ident
+
 		content = "name=[message.speaker_to_display]&message=[message.content]"
+
 	else
 		content = message.content
 
