@@ -706,14 +706,7 @@
 				src.insert_id_card(ID, user)
 				boutput(user, SPAN_NOTICE("You insert [ID] into [src]."))
 
-	else if (istype(C, /obj/item/uplink_telecrystal))
-		if (src.uplink && src.uplink.active)
-			var/crystal_amount = C.amount
-			src.uplink.uses = src.uplink.uses + crystal_amount
-			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
-			qdel(C)
-
-	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
+	else if (istype(C, /obj/item/uplink_telecrystal/trick))
 		if (src.uplink && src.uplink.active)
 			boutput(user, SPAN_ALERT("The [C] explodes!"))
 			var/turf/T = get_turf(C.loc)
@@ -721,6 +714,13 @@
 				T.hotspot_expose(700,125)
 				explosion(C, T, -1, -1, 2, 3) //about equal to a PDA bomb
 			C.set_loc(user.loc)
+			qdel(C)
+
+	else if (istype(C, /obj/item/uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
+			var/crystal_amount = C.amount
+			src.uplink.uses = src.uplink.uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(C)
 
 	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))

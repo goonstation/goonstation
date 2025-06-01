@@ -821,14 +821,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/P)
 		for (var/atom/movable/AM in P.contents)
 			AM.set_loc(get_turf(P))
-			AM.delStatus("teleporting")
-			if (istype(AM, /mob))
-				var/mob/M = AM
-				if (M.client)
-					M.client.eye = M
 		qdel(src.eye_glider)
 		src.eye_glider = null
 		..()
+
+	on_exited(obj/projectile/P, atom/movable/AM)
+		AM.delStatus("teleporting")
+		if (istype(AM, /mob))
+			var/mob/M = AM
+			if (M.client)
+				M.client.eye = M
 
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"

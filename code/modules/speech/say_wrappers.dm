@@ -35,14 +35,13 @@
 
 	src.say(message, flags = SAYFLAG_WHISPER | SAYFLAG_SPOKEN_BY_PLAYER)
 
-/mob/verb/say_main_radio(message as text)
-	set name = "say_main_radio"
+/mob/verb/say_over_main_radio(message as text)
+	set name = "say_over_main_radio"
+	set desc = "Speaking on the main radio frequency."
 	set hidden = TRUE
 
-/mob/living/say_main_radio(message as text)
-	set name = "say_main_radio"
-	set desc = "Speaking on the main radio frequency"
-	set hidden = TRUE
+	if (!src.ensure_speech_tree().GetPrefixByPrefixText(PREFIX_TEXT_RADIO_GENERAL))
+		return
 
 	src.say_verb("; [message]")
 
