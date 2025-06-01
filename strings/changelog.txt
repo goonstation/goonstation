@@ -1,4 +1,10 @@
 
+(t)sun jun 01 25
+(u)nova2053
+(p)23620
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Tables, racks, and other items which use a similar construction method can now be constructed on the same tile as thindows, sliding glass doors, and other objects with directional blocking.
+(+)Tables can now be constructed under a couple more objects, such as microwaves, espresso machines, and more. See PR page for full list.
 (t)sat may 31 25
 (u)LeahTheTech
 (*)Material analysers now display the rupture pressure of breakable pipes.
