@@ -110,7 +110,7 @@ TYPEINFO(/obj/strip_door)
 				return TRUE
 			else if (isintangible(A))
 				return TRUE
-			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
+			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider) || istype(A,/mob/living/critter/small_animal))
 				return TRUE
 			else if (isdead(M))
 				return TRUE
@@ -128,6 +128,8 @@ TYPEINFO(/obj/strip_door)
 			return
 		if (isliving(A))
 			var/mob/living/M = A
+			if (istype(A,/mob/living/critter/small_animal))
+				A.layer = src.layer - 0.01
 			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
 		src.flap_material.triggerOnEntered(src, A)
@@ -137,6 +139,8 @@ TYPEINFO(/obj/strip_door)
 		..()
 		if (isliving(A))
 			var/mob/living/M = A
+			if (istype(A,/mob/living/critter/small_animal))
+				A.layer = MOB_LAYER
 			M.delStatus("slowed")
 
 	ex_act(severity)
