@@ -562,7 +562,7 @@ TYPEINFO(/obj/stove)
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "ladle"
 	var/datum/custom_soup/my_soup
-	var/obj/corn_scoop
+	var/corn_scoop = FALSE
 	var/datum/reagent/seasoning
 	var/image/fluid_icon
 
@@ -572,6 +572,13 @@ TYPEINFO(/obj/stove)
 		if(prob(1))
 			src.name = "Soup sword" //https://discordapp.com/channels/182249960895545344/469379618168897538/698632230851051552
 			src.setItemSpecial(/datum/item_special/swipe)
+
+	afterattack(atom/target, mob/user)
+		if (istype(target, /obj/machinery/drainage) && src.corn_scoop)
+			src.corn_scoop = FALSE
+			src.seasoning = null
+			src.icon_state = "ladle"
+			src.UpdateIcon()
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color
