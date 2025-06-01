@@ -56,7 +56,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready && !player.mind.assigned_role)
 			unassigned += player
-	var/inital_ready = len(unassigned) // Doing this here cause other job allocations take away
+	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
