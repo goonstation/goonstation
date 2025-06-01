@@ -838,7 +838,7 @@
 
 /datum/tutorialStep/newbee/standing_up
 	name = "Standing Up"
-	instructions = "With the fire out, you need to stand yourself back upright.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+	instructions = "Once the fire is out, you can stand yourself back upright.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "rest"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
@@ -847,7 +847,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/rest = src.keymap.action_to_keybind("rest")
-		src.instructions = "With the fire out, you need to stand yourself back upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+		src.instructions = "Once the fire is out, you can stand yourself back upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
 
 	SetUp(manually_selected)
 		. = ..()
