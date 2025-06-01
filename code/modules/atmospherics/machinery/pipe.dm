@@ -14,6 +14,8 @@
 	var/fatigue_pressure = 150*ONE_ATMOSPHERE
 	/// Can this pipe rupture?
 	var/can_rupture = FALSE // Currently only used for simple pipes and manifolds
+	///Before rupturing, weaken and complain
+	var/weakened = 0
 	/// How broken is our pipe.
 	var/ruptured = 0
 	/// What do I change back to when repaired???
@@ -71,6 +73,8 @@
 /// Repairs the pipe back to orginal state.
 /obj/machinery/atmospherics/pipe/proc/repair_pipe()
 	src.ruptured = 0
+	src.weakened = 0
+	animate(src)
 	desc = initial(desc)
 	UpdateIcon()
 	ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
@@ -118,11 +122,23 @@
 	if (!src.can_rupture) //can't rupture, so can't reinforce either
 		return ..()
 
+	if (iswrenchingtool(W))
+		if (ruptured)
+			boutput(user, SPAN_ALERT("That pipe needs more than a wrench..."))
+			return
+		if (!weakened)
+			boutput(user, SPAN_ALERT("This pipe is in perfect condition."))
+			return
+
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		src.repair_pipe()
+		src.visible_message("[user] tightens up the connections on [src].")
+		return
+
 	if(isweldingtool(W))
 		if(!ruptured)
 			boutput(user, SPAN_ALERT("That isn't damaged!"))
 			return
-
 		if(!W:try_weld(user, 0.8, noisy=2))
 			return
 
@@ -198,7 +214,15 @@
 	if(can_rupture && !GET_COOLDOWN(parent, "pipeline_rupture_protection") && !GET_COOLDOWN(src, "rupture_protection") && pressure_difference > src.effective_fatigue_pressure())
 		var/rupture_prob = (pressure_difference - src.effective_fatigue_pressure())/50000
 		if(prob(rupture_prob))
-			rupture(pressure_difference)
+			if (src.weakened > 0 || (pressure_difference > (100 * src.effective_fatigue_pressure())))
+				rupture(pressure_difference)
+			else
+				src.weakened++
+				animate_storage_thump(src)
+				src.add_filter("bulge", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0))
+				var/filter = src.get_filter("bulge")
+				animate(filter, size=10, time = 1, easing = ELASTIC_EASING, loop = -1)
+				animate(size=50, time = 3, easing = ELASTIC_EASING, loop = -1)
 
 /// Returns a list of nodes that we can add to the pipeline. List may be null or contain nulls.
 /obj/machinery/atmospherics/pipe/proc/pipeline_expansion()
