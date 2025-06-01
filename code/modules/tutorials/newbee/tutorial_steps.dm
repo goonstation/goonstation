@@ -1668,6 +1668,10 @@
 		var/sprint = src.keymap.action_to_keybind(KEY_RUN)
 		src.instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
 
+	SetUp()
+		. = ..()
+		src.newbee_tutorial.newbee.full_heal() // full health/stamina to ensure they can sprint through the next part
+
 /datum/tutorialStep/newbee/walking
 	name = "Whoa, Careful!"
 	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>-</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."

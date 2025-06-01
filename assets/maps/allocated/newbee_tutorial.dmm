@@ -1107,7 +1107,7 @@
 "UE" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 1;
-	move_lag = 1.5
+	move_lag = 1.6
 	},
 /turf/unsimulated/floor/yellow/checker{
 	dir = 1
