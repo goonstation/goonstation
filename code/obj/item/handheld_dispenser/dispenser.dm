@@ -15,7 +15,7 @@
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
 		/obj/machinery/atmospherics/binary/reactor_turbine,
 		/obj/machinery/atmospherics/unary/cryo_cell))
-	var/const/silicon_cost_multiplier = 100
+	var/const/silicon_cost_multiplier = 200
 	var/datum/pipe_recipe/selection = /datum/pipe_recipe/pipe/simple
 	var/selectedimage
 	var/direction = EAST
@@ -25,7 +25,6 @@
 
 /obj/item/places_pipes/New()
 	. = ..()
-	src.inventory_counter.update_number(src.resources)
 	if (!src.atmospipesforcreation)
 		src.atmospipesforcreation = list()
 		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/pipe))
@@ -81,7 +80,8 @@
 		ammo.matter = 0
 		qdel(ammo)
 	src.tooltip_rebuild = 1
-	src.inventory_counter.update_number(src.resources)
+	if (!issilicon(user))
+		src.inventory_counter.update_number(src.resources)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	boutput(user, "\The [src] now holds [src.resources] matter-units.")
@@ -131,7 +131,7 @@
 	if (issilicon(user))
 		S = user
 		if (!(S.cell && (S.cell.charge >= recipe.cost * silicon_cost_multiplier)))
-			boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
+			boutput(user, SPAN_ALERT("Not enough charge to make a [recipe.name]!"))
 			return
 	else if(src.resources < recipe.cost)
 		boutput(user, SPAN_ALERT("Not enough resources to make a [recipe.name]!"))
@@ -146,9 +146,9 @@
 			return
 	if (S?.cell)
 		S.cell.use(recipe.cost * silicon_cost_multiplier)
-		src.inventory_counter.update_number(S.cell.charge)
 	else
 		src.resources -= recipe.cost
+	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = 1
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
@@ -164,7 +164,7 @@
 	if (issilicon(user))
 		S = user
 		if (!(S.cell && (S.cell.charge >= silicon_cost_multiplier)))
-			boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
+			boutput(user, SPAN_ALERT("Not enough charge to destroy that!"))
 			return
 	else if(!src.resources)
 		boutput(user, SPAN_ALERT("Not enough resources to destroy that!"))
@@ -177,9 +177,9 @@
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
 	if (S?.cell)
 		S.cell.use(silicon_cost_multiplier)
-		src.inventory_counter.update_number(S.cell.charge)
 	else
 		resources -= 1
+	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.tooltip_rebuild = 1
 	qdel(target)
@@ -198,7 +198,7 @@
 		S = user
 	. = list(
 		"selectedimage" = (src.selectedimage || getBase64Img(selection, src.direction)),
-		"selectedcost" = src.selection.cost * (issilicon(user)*silicon_cost_multiplier),
+		"selectedcost" = S ? (src.selection.cost * silicon_cost_multiplier) : src.selection.cost,
 		"resources" = S ? (S.cell ? S.cell.charge : 0) : src.resources,
 		"destroying" = src.destroying,
 		"selecteddesc" = src.selection.desc,
@@ -249,8 +249,6 @@
 		return
 	. = icon2base64(icon = icon(icon = recipe.icon, icon_state = recipe.icon_state, dir = direction))
 	src.cache["[recipe.name][direction]"] = .
-
-/obj/item/places_pipes/proc/do_pipe_action()
 
 /datum/pipe_recipe
 	var/icon = 'icons/obj/atmospherics/hhd_recipe_images.dmi'
