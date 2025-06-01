@@ -43,6 +43,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 5
 		prefabSizeY = 5
 
+	radshuttle //An ill-fated and ill-equipped "transport"
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/space/prefab_Radshuttle.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 14
+
 	shuttle
 		maxNum = 1
 		probability = 25

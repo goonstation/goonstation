@@ -1,6 +1,6 @@
 // emote
 
-/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
+/mob/living/carbon/human/emote(var/act, var/voluntary = 0, var/emoteTarget = null, var/dead_check = TRUE) //mbc : if voluntary is 2, it's a hotkeyed emote and that means that we can skip the findtext check. I am sorry, cleanup later
 	set waitfor = FALSE
 	..()
 	var/param = null
@@ -10,8 +10,15 @@
 	if(voluntary && !src.emote_allowed)
 		return
 
+	if (dead_check && isdead(src))
+		src.emote_allowed = FALSE
+		return
+
 	if (src.hasStatus("paralysis"))
 		return //pls stop emoting :((
+
+	if (voluntary && (src.hasStatus("unconscious") || isunconscious(src)))
+		return
 
 	if (src.bioHolder.HasEffect("revenant"))
 		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
@@ -538,7 +545,7 @@
 				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
-				burp, fart, monologue, contemplate, custom")
+				burp, fart, monologue, contemplate, nudge, adjust, custom")
 
 			if ("listtarget")
 				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
@@ -659,7 +666,7 @@
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
-			if ("twirl", "spin"/*, "juggle"*/)
+			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
@@ -693,6 +700,22 @@
 							src.add_karma(-10)
 							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
+
+			if ("nudge", "adjust")
+				if (!src.restrained() && src.glasses?.nudge_compatible)
+					var/obj/item/clothing/glasses/eyewear = src.glasses
+					if (eyewear.flash_compatible)
+						eyewear.nudge_flash()
+					if (!eyewear.is_nudged)
+						var/flavor_one = pick("adjusts", "pushes up")
+						var/flavor_two = pick("intelligently.", "with a smirk.", "very seriously.")
+						message = "<B>[src]</B> [flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]"
+						maptext_out = "<I>[flavor_one] [his_or_her(src)] [eyewear.name] [flavor_two]</I>"
+						eyewear.is_nudged = TRUE
+					else
+						message = "<B>[src]</B> nudges [his_or_her(src)] [eyewear.name] back down [his_or_her(src)] nose."
+						maptext_out = "<I>nudges [his_or_her(src)] [eyewear.name] back down [his_or_her(src)] nose.</I>"
+						eyewear.is_nudged = FALSE
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
@@ -1668,7 +1691,22 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick(SPAN_ALERT("<B>[src]</B> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[src]'s</B> dance move borders on the goddamn diabolical!"))
-							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
+							var/message_params = list(
+								"maptext_css_values" = list(
+									"color" = "white !important",
+									"text-shadow" = "1px 1px 3px white",
+									"-dm-text-outline" = "1px black",
+								),
+								"maptext_animation_colours" = list(
+									"#FF0000",
+									"#FFFF00",
+									"#00FF00",
+									"#00FFFF",
+									"#0000FF",
+									"#FF00FF",
+								),
+							)
+							src.say("GHEIT DAUN!", message_params = message_params)
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -2167,7 +2205,8 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
+					var/datum/job/job = find_job_in_controller_by_string(src.mind.assigned_role)
+					if (src.mind && job.receives_miranda)
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2184,12 +2223,8 @@
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
-					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
-						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-						if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-							sec_record["criminal"] = ARREST_STATE_ARREST
-							sec_record["mi_crim"] = "Public dabbing."
-							src.update_arrest_icon()
+					if(!dab_id)
+						src.apply_automated_arrest("Public dabbing.")
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
@@ -2263,52 +2298,28 @@
 
 	showmessage:
 
-	//copy paste lol
+	if (!message)
+		return
+
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					if(m_type & 1)
-						chat_text.plane = PLANE_NOSHADOW_ABOVE
-						chat_text.layer = 420
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-
-
-	else
-
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			act = lowertext(act)
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (m_type & 2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
-			else if (!isturf(src.loc))
-				var/atom/A = src.loc
-				for (var/mob/O in A.contents)
-					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)

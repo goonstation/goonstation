@@ -114,7 +114,7 @@
 
 	if(.)
 		src.UpdateIcon()
-		flick("alert", src)
+		FLICK("alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)

@@ -2863,7 +2863,7 @@
 /obj/item/clothing/head/boater_hat{
 	pixel_y = 14
 	},
-/obj/item/plant/flower/rose/holorose,
+/obj/item/clothing/head/flower/rose/holorose/holorose,
 /obj/item/clothing/shoes/tourist{
 	pixel_y = -12
 	},

@@ -32,7 +32,7 @@
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/table/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /turf/simulated/floor/sanitary,
 /area/dmm_suite/clear_area)
 

@@ -2,6 +2,8 @@
 #define TERRAINIFY_VEHICLE_CARS (1 << 1)
 #define TERRAINIFY_ALLOW_VEHCILES (1 << 2)
 
+var/global/is_map_on_ground_terrain = FALSE
+
 /client/proc/cmd_terrainify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Terrainify"
@@ -242,6 +244,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/syndi_camo_color = null
 	var/ambient_color
 	var/startTime
+	var/generates_solid_ground = TRUE
 
 	New()
 		..()
@@ -330,6 +333,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 		if(params["Parallax"])
 			var/datum/parallax_render_source_group/render_group = new parallax_render_source_group()
 			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
+
+		if (src.generates_solid_ground)
+			global.is_map_on_ground_terrain = TRUE
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
 
@@ -573,20 +579,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 				if ("All")
 					algae_coverage = 1
 			if (algae_coverage)
-				if(!bioluminescent_algae)
-					bioluminescent_algae = new(algae_coverage)
-					bioluminescent_algae.setup()
 				SPAWN(1 MINUTE) // bad hack
 					for (var/turf/simulated/wall/auto/asteroid/wall in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-						if (wall.icon_state == "asteroid-255") continue
-						if (wall.ore) continue // Skip if there's ore here already
-						var/list/color_vals = bioluminescent_algae?.get_color(wall)
-						if (length(color_vals))
-							var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
-							algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-							algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[wall.icon_state]"))
-							wall.AddOverlays(algea, "glow_algae")
-							wall.add_medium_light("glow_algae", color_vals)
+						if (wall.icon_state == "asteroid-255")
+							continue
+						if (wall.ore)
+							continue // Skip if there's ore here already
+						algae_controller().algae_wall(wall)
 						LAGCHECK(LAG_LOW)
 
 			var/list/space = list()
@@ -602,6 +601,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list()
 	additional_toggles = list()
 	ambient_color = "#222222"
+	generates_solid_ground = FALSE
 
 	New()
 		..()
@@ -658,6 +658,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
 	additional_toggles = list("Void Bubbles"=FALSE, "Void Worley"=FALSE)
+	generates_solid_ground = FALSE
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
@@ -1240,6 +1241,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/plasma
 	name = "Plasma Station"
 	desc = "Fill space with plasma gas? Warning: this is as bad as it sounds."
+	generates_solid_ground = FALSE
 
 	convert_turfs(list/turfs)
 		for (var/turf/T in turfs)
@@ -1460,6 +1462,7 @@ client/proc/unterrainify()
 		station_repair.preconvert_turfs = preconvert_turfs
 
 		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+		global.is_map_on_ground_terrain = FALSE
 
 		message_admins("Finished returning the station to space!")
 

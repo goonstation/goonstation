@@ -145,7 +145,7 @@
 
 		if(status & NOPOWER)
 
-			dat += "<b>Memory Core:</b> <a href='?src=\ref[src];core=1'>[src.hd ? "LOADED" : "---------"]</a><br>"
+			dat += "<b>Memory Core:</b> <a href='byond://?src=\ref[src];core=1'>[src.hd ? "LOADED" : "---------"]</a><br>"
 			dat += "Core Shield Maglock is <b>OFF</b><hr>[net_switch_html()]<hr>"
 		else
 
@@ -264,8 +264,11 @@
 				try
 					prog.process()
 				catch(var/exception/e)
-					if(findtext(e.name, "Maximum recursion level reached"))
-						src.unload_all()
+					if (findtext(e.name, "Maximum recursion level reached"))
+						if (istype(src.os, /datum/computer/file/mainframe_program/os/kernel))
+							var/datum/computer/file/mainframe_program/os/kernel/os_kernel = src.os
+							os_kernel.message_all_users("|nA program encountered a critical error (maximum recursion). Rebooting the mainframe.|n", "System", TRUE) // Lets warn all connected users that the mainframe has crashed!
+						src.reboot_mainframe()
 					else
 						throw e
 /*
@@ -563,7 +566,16 @@
 
 			return 1
 
+		reboot_mainframe()
+			src.unload_all() // Unload all running programs, log out all users
+			src.posted = 0 // Waiting for startup!
+			src.post_system() // Time to start back!
+			src.reconnect_all_devices() // Should probably reconnect all devices as well
+
 		unload_all()
+			if (istype(src.os, /datum/computer/file/mainframe_program/os/kernel))
+				var/datum/computer/file/mainframe_program/os/kernel/os_kernel = src.os
+				os_kernel.logout_all_users(FALSE) // Lets logout all users so when the mainframe reboots, they can log into their old user account, instead of creating a new user.
 			src.os = null
 			for(var/datum/computer/file/mainframe_program/M in src.processing)
 				src.unload_program(M)

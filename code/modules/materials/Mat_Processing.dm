@@ -34,7 +34,7 @@
 		playsound(src, 'sound/machines/hiss.ogg', 50, TRUE, -1)
 		boutput(user, "You load [taken_piece] into [src].")
 		SPAWN(2 SECONDS)
-			flick("fab3-work", src)
+			FLICK("fab3-work", src)
 			sleep(0.5 SECONDS)
 			src.working = FALSE
 			if (src.is_disabled() || QDELETED(src) || QDELETED(taken_piece))
@@ -150,7 +150,7 @@
 		var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
 		amt = max(0, amt)
 		if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
-			flick("smelter1",src)
+			FLICK("smelter1",src)
 			var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
 			var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
 			var/newtype = getProcessedMaterialForm(merged)
@@ -278,25 +278,29 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(GET_DIST(src, target) <= world.view)
-			animate_scanning(target, "#597B6D")
-			var/atom/W = target
-			if(!W.material)
-				boutput(user, SPAN_ALERT("No significant material found in \the [target]."))
-			else
-				boutput(user, SPAN_NOTICE("<u>[capitalize(W.material.getName())]</u>"))
-				boutput(user, SPAN_NOTICE("[W.material.getDesc()]"))
-
-				if(length(W.material.getMaterialProperties()))
-					boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
-					for(var/datum/material_property/X in W.material.getMaterialProperties())
-						var/value = W.material.getProperty(X.id)
-						boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
-				else
-					boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
-		else
+		if(GET_DIST(src, target) > world.view)
 			boutput(user, SPAN_ALERT("[target] is too far away."))
-		return
+			return
+		animate_scanning(target, "#597B6D")
+		var/atom/W = target
+		if(!W.material)
+			boutput(user, SPAN_ALERT("No significant material found in \the [target]."))
+		else
+			boutput(user, SPAN_NOTICE("<u>[capitalize(W.material.getName())]</u>"))
+			boutput(user, SPAN_NOTICE("[W.material.getDesc()]"))
+
+			if(length(W.material.getMaterialProperties()))
+				boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
+				for(var/datum/material_property/X in W.material.getMaterialProperties())
+					var/value = W.material.getProperty(X.id)
+					boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
+			else
+				boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
+		if (istype(target, /obj/machinery/atmospherics/pipe))
+			var/obj/machinery/atmospherics/pipe/pipe = target
+			if (pipe.can_rupture)
+				boutput(user, SPAN_NOTICE("<u>This pipe has an estimated fatigue pressure of [round(pipe.effective_fatigue_pressure(), 10)]KPa</u>"))
+
 
 /obj/item/slag_shovel
 	name = "slag shovel"
@@ -307,6 +311,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

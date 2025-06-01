@@ -138,30 +138,8 @@
 		else
 			if (ishuman(target) && ishuman(src))
 				var/mob/living/carbon/human/Z = src
-				var/mob/living/carbon/human/X = target
-
-				if (Z.zone_sel && Z.zone_sel.selecting == "head")
-					var/obj/item/clothing/head/sunhat/hat = X.head
-					if(istype(hat) && hat.uses)
-						src.visible_message(SPAN_ALERT("[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!"))
-						elecflash(target)
-
-						hat.uses = max(0, hat.uses - 1)
-						if (hat.uses < 1)
-							X.head.icon_state = splittext(hat.icon_state,"-")[1]
-							X.head.item_state = splittext(hat.item_state,"-")[1]
-							X.update_clothing()
-
-						if (hat.uses <= 0)
-							X.show_text("The sunhat is no longer electrically charged.", "red")
-						else
-							X.show_text("The stunhat has [hat.uses] charges left!", "red")
-
-
-						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
-						src.stuttering = max(target.stuttering,30)
-					else
-						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
+				if (Z.zone_sel?.selecting == "head")
+					src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
 
 			if (ismobcritter(target))

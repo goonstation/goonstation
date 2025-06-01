@@ -80,7 +80,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		src.lag_check()
+		src.lag_check(flags)
 
 /datum/biome/forest/generate_turf(turf/gen_turf, flags)
 	. = ..()

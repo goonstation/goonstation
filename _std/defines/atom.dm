@@ -26,8 +26,6 @@
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted
 #define SPACE_PUSHING				(1 << 0)
-/// used for removing us from spacepush list when we get beleted
-#define MANTA_PUSHING				(1 << 1)
 /// atom has a particlesystem right now - used for clean gc to clear refs to itself etc blah
 #define HAS_PARTICLESYSTEM			(1 << 2)
 /// atom is a particlesystem target - " "
@@ -52,7 +50,7 @@
 /// Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
 #define HANDLE_STICKER				(1 << 2)
 /// cannot be pushed by MANTAwaters
-#define IMMUNE_MANTA_PUSH			(1 << 3)
+#define IMMUNE_OCEAN_PUSH			(1 << 3)
 #define IMMUNE_SINGULARITY			(1 << 4)
 #define IMMUNE_SINGULARITY_INACTIVE	(1 << 5)
 /// used for trinkets GC
@@ -74,6 +72,7 @@
 #define THROW_BASEBALL  (1 << 5) // throw that doesn't stun into walls.
 #define THROW_THROUGH_WALL (1 << 6) //throw that will blow through one wall/other dense object before becoming a normal throw again
 #define THROW_GIB 		(1 << 7) //!gibs thrown mob on end (use with care)
+#define THROW_PHASE		(1 << 8) //! throw has phasing through walls for two tiles. For white holes
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)

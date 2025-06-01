@@ -255,7 +255,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		src.lag_check()
+		src.lag_check(flags)
 
 /datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]
@@ -309,10 +309,6 @@
 
 	New()
 		..()
-		if(!meatier)
-			meatier = rustg_dbp_generate("[rand(1,420)]", "5", "15", "[world.maxx]", "0.001", "0.9")
-		if(!stomach)
-			stomach = rustg_worley_generate("17", "10", "30", "[world.maxx]", "5", "10")
 
 	assign_turf(turf/T, flags)
 		var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
@@ -320,6 +316,12 @@
 		var/meaty = FALSE
 		var/stomach_goop = FALSE
 		var/index = T.x * world.maxx + T.y
+
+		if(!meatier)
+			meatier = rustg_dbp_generate("[rand(1,420)]", "5", "15", "[world.maxx]", "0.001", "0.9")
+		if(!stomach)
+			stomach = rustg_worley_generate("17", "10", "30", "[world.maxx]", "5", "10")
+
 		if(index <= length(meatier))
 			meaty = text2num(meatier[T.x * world.maxx + T.y])
 		if(index <= length(stomach))

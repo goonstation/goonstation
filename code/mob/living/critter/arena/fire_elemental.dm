@@ -107,7 +107,7 @@
 
 	on_launch(var/obj/projectile/P)
 		P.layer = EFFECTS_LAYER_BASE
-		// flick("ember",P)
+		// FLICK("ember",P)
 		P.special_data["returned"] = FALSE
 
 		..()

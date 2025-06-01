@@ -228,9 +228,10 @@
 			else
 				boutput(user, SPAN_ALERT("[satchel] is empty!"))
 		else if (!broken)
-			if (W.hitsound)
-				playsound(src.loc, W.hitsound, 50, 1)
+			user.lastattacked = get_weakref(src)
 			if (W.force)
+				if (W.hitsound)
+					playsound(src.loc, W.hitsound, 50, 1)
 				src.health = max(src.health - randfloat(W.force/1.5, W.force),0)
 
 				attack_particle(user,src)
@@ -336,7 +337,7 @@
 				OCD.amount--
 
 		if(transmit)
-			flick("ore_storage_unit-transmit",src)
+			FLICK("ore_storage_unit-transmit",src)
 			showswirl(eject_location)
 			leaveresidual(eject_location)
 

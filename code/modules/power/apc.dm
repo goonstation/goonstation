@@ -301,8 +301,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 		if (cell)
 			// if opened, update overlays for cell
-			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			AddOverlays(I_cell, "cell")
+			var/image/i_cell
+			if(cell.artifact)
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.artifact.artiappear.name]")
+			else
+				i_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			AddOverlays(i_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -366,7 +370,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			if (user)
 				boutput(user, "This APC doesn't have a local interface to hack.")
 		else
-			flick("apc-spark", src)
+			FLICK("apc-spark", src)
 			sleep(0.6 SECONDS)
 			if(prob(50))
 				emagged = 1
@@ -1451,10 +1455,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/set_broken()
+	if(src.hardened) // cannot be broken
+		return TRUE
 	. = ..()
 	if(.) return
 	operating = 0
 	update()
+
+/obj/machinery/power/apc/overload_act()
+	if(src.hardened)
+		return FALSE
+	return !src.set_broken()
 
 // overload all the lights in this APC area
 

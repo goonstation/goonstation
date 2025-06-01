@@ -9,6 +9,8 @@
 	var/obj/item/parts/holder = null
 	/// used for ON_COOLDOWN stuff
 	var/cooldowns
+	/// this limb's click usage is limited by lastattacked. set to false for custom cooldowns.
+	var/use_lastattacked_click_delay = TRUE
 	var/special_next = 0
 	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/disarm_special = null
@@ -287,8 +289,11 @@
 		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
+	// if firing this limb pushes you back in space
+	var/has_space_pushback = TRUE
+
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
 
@@ -340,7 +345,7 @@
 		spread_angle = 15
 
 	artillery
-		proj = new/datum/projectile/bullet/autocannon
+		proj = new/datum/projectile/special/spreader/uniform_burst/circle/airburst
 		shots = 1
 		current_shots = 1
 		cooldown = 5 SECONDS
@@ -381,6 +386,15 @@
 		current_shots = 1
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
+
+	space_phoenix
+		proj = new/datum/projectile/bullet/space_phoenix_icicle
+		shots = INFINITY
+		current_shots = 1
+		cooldown = 1 SECOND
+		reload_time = 0
+		spread_angle = 2
+		has_space_pushback = FALSE
 
 	syringe
 		proj = new/datum/projectile/syringefilled
@@ -1462,7 +1476,7 @@
 
 			msgs.played_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 			msgs.damage = rand(8, 17)
-			flick("hastur-attack", user)
+			FLICK("hastur-attack", user)
 			msgs.damage_type = DAMAGE_CUT // Nasty tentacles with sharp spikes!
 
 		else
@@ -1811,6 +1825,14 @@
 /datum/limb/small_critter/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/small_critter/space_phoenix
+	dam_low = 5
+	dam_high = 10
+	dmg_type = DAMAGE_CUT
+	actions = list("scratches", "slices", "claws")
+	can_gun_grab = FALSE
+	can_beat_up_robots = TRUE
 
 /datum/limb/small_critter/med/dash
 	dam_low = 3

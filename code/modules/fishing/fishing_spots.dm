@@ -468,7 +468,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 20,\
 	/obj/item/reagent_containers/food/fish/dace = 5,\
 	/obj/item/reagent_containers/food/fish/minnow = 5,\
-	/obj/item/plant/flower/rose = 10,\
+	/obj/item/clothing/head/flower/rose = 10,\
 	/mob/living/critter/small_animal/slug = 5)
 
 /datum/fishing_spot/blob

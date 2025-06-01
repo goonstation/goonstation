@@ -96,6 +96,10 @@ export const JobManager = () => {
       jobs: stapleJobs.filter((job) => job.type === 'research'),
     },
     {
+      name: 'Medical Jobs',
+      jobs: stapleJobs.filter((job) => job.type === 'medical'),
+    },
+    {
       name: 'Engineering Jobs',
       jobs: stapleJobs.filter((job) => job.type === 'engineering'),
     },

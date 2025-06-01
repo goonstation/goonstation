@@ -461,9 +461,8 @@
 /turf/unsimulated/floor/damaged3,
 /area/wrecknsspolaris)
 "ct" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -471,9 +470,8 @@
 	},
 /area/wrecknsspolaris)
 "cu" = (
-/obj/machinery/door/airlock/pyro/glass/brig{
-	dir = 4;
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/wrecknsspolaris)

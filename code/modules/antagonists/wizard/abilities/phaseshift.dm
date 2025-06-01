@@ -19,7 +19,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("PHEE CABUE", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("PHEE CABUE", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
 		..()
 
 		var/SPtime = 35
@@ -74,7 +74,7 @@
 		animation.icon_state = "liquify"
 		animation.layer = EFFECTS_LAYER_BASE
 		animation.master = holder
-		flick("liquify",animation)
+		FLICK("liquify",animation)
 		H.set_loc(holder)
 		var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 		steam.set_up(10, 0, mobloc)
@@ -88,7 +88,7 @@
 		H.restrain_time = TIME + 40
 		holder.canmove = 0
 		sleep(2 SECONDS)
-		flick("reappear",animation)
+		FLICK("reappear",animation)
 		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		logTheThing(LOG_COMBAT, H, "used phaseshift to move from [log_loc(start_loc)] to [log_loc(H.loc)].")

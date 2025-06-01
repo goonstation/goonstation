@@ -579,7 +579,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_gun = 2)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -589,7 +589,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_small = 4)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -599,16 +599,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
 	cost = PAY_EXECUTIVE*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
+
+/datum/supply_packs/weapons5
+	name = "Weapons Crate - Phaser SMGs (Cardlocked \[Security Equipment])"
+	desc = "x2 Phaser SMGs"
+	category = "Security Department"
+	contains = list(/obj/item/gun/energy/phaser_smg = 2)
+	cost = PAY_IMPORTANT*2
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
+	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
+	access = access_securitylockers
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
 	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
 	/obj/item/clothing/mask/gas = 4,
-	/obj/item/tank/mini_oxygen = 4,
+	/obj/item/tank/mini/oxygen = 4,
 	/obj/item/tank/air = 2,
 	/obj/item/clothing/head/emerg = 4,
 	/obj/item/clothing/suit/space/emerg = 4)
@@ -1441,7 +1451,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/administrative_id
 	name = "Administrative ID card"
 	desc = "1x Captain level ID"
-	contains = list(/obj/item/card/id/captains_spare)
+	contains = list(/obj/item/card/id/gold/captains_spare)
 	cost = PAY_EXECUTIVE*2
 	hidden = 1
 	containertype = null
@@ -1585,7 +1595,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 		return A
 
 /datum/supply_packs/complex/electronics_kit
-	name = "Mechanics Reconstruction Kit"
+	name = "Mechanics Reconstruction Kit (Cardlocked \[Chief Engineer])"
 	desc = "1x Ruckingenur frame, 1x Manufacturer frame, 1x reclaimer frame, 1x device analyzer, 1x soldering iron"
 	category = "Engineering Department"
 	contains = list(/obj/item/electronics/scanner,
@@ -1595,8 +1605,9 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/machinery/manufacturer/mechanic,
 					/obj/machinery/portable_reclaimer)
 	cost = PAY_TRADESMAN*10
-	containertype = /obj/storage/crate
-	containername = "Mechanics Reconstruction Kit"
+	containertype = /obj/storage/secure/crate/eng
+	access = access_engineering_chief
+	containername = "Mechanics Reconstruction Kit (Cardlocked \[Chief Engineer])"
 
 /datum/supply_packs/complex/barbershop_kit
 	name = "Barbershop Kit"
@@ -2072,6 +2083,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = PAY_TRADESMAN*2
 	containername = "Bass Guitar Kit"
 	contains = list(/obj/item/instrument/bass)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/keytar
+	name = "Keytar Kit"
+	desc = "1x Keytar"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*2
+	containername = "Keytar Kit"
+	contains = list(/obj/item/instrument/keytar)
 	containertype = /obj/storage/crate/wooden
 
 /datum/supply_packs/complex/player_piano

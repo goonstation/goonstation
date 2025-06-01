@@ -52,23 +52,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		STOP_TRACKING
 		..()
 
-	old
-		icon_state = "old2"
-		desc = "With the price of cloning pods nowadays it's not unexpected to skimp on the controller."
-
-		power_change()
-
-			if(status & BROKEN)
-				icon_state = "old2b"
-			else
-				if( powered() )
-					icon_state = initial(icon_state)
-					status &= ~NOPOWER
-				else
-					SPAWN(rand(0, 15))
-						src.icon_state = "old20"
-						status |= NOPOWER
-
 /obj/item/cloner_upgrade
 	name = "\improper NecroScan II cloner upgrade module"
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even skeletal remains may be scanned."

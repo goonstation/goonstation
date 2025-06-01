@@ -378,6 +378,44 @@ TYPEINFO(/datum/component/equipment_fault)
 			if (zamus_dumb_power_popups)
 				new /obj/maptext_junk/power(get_turf(M), change = -M.power_usage * mult, channel = M.power_channel)
 
+/datum/component/equipment_fault/dangerously_shorted
+	///base probability to shock each tick
+	var/static/base_probability = 10
+	///current probability to shock on this process tick
+	var/current_prob
+	///increase in probability per process tick
+	var/static/prob_raise = 5
+
+/datum/component/equipment_fault/dangerously_shorted/Initialize(tool_flags)
+	. = COMPONENT_INCOMPATIBLE
+	if(istype(parent, /obj/machinery/power))
+		. = ..()
+
+/datum/component/equipment_fault/dangerously_shorted/ef_process(obj/machinery/M, mult)
+	. = TRUE
+	elecflash(M)
+	if(probmult(current_prob))
+		src.ef_perform_fault(M)
+		src.current_prob = src.base_probability
+	else
+		src.current_prob += src.prob_raise
+
+/datum/component/equipment_fault/dangerously_shorted/ef_perform_fault(obj/machinery/M)
+	if(..())
+		M.visible_message(SPAN_ALERT("[M] sparks violently!"))
+
+		var/list/mob/targets = list()
+		for (var/mob/mob in hearers(8, M.loc))
+			if (mob.invisibility >= INVIS_AI_EYE) continue
+			targets.Add(mob)
+
+		if (!length(targets))
+			elecflash(M.loc, power=5, exclude_center=FALSE)
+			return
+
+		var/target = pick(targets)
+		arcFlash(M, target, 200000) // TODO: maybe some sort of PNET check?
+
 
 /datum/component/equipment_fault/faulty_wiring
 	fault_delay = 45 SECONDS
@@ -441,14 +479,14 @@ TYPEINFO(/datum/component/equipment_fault)
 		S.setup(flame_turf)
 
 		if (prob(20))
-			flick("flame",S)
+			FLICK("flame",S)
 			flame_turf.hotspot_expose(T0C + 400, 400)
 			playsound(flame_turf, 'sound/effects/flame.ogg', 50, FALSE)
 			O.visible_message(SPAN_ALERT("A tuft of flame erupts from [O]!"))
 			for (var/mob/M in flame_turf)
 				M.changeStatus("burning", 2 SECONDS)
 		else
-			flick("spark",S)
+			FLICK("spark",S)
 			flame_turf.hotspot_expose(T0C + 50, 50)
 			playsound(flame_turf, 'sound/effects/gust.ogg', 50, FALSE)
 			O.visible_message(SPAN_NOTICE("An ember flies out of [O]."))

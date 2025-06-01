@@ -1069,6 +1069,34 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Normal Human"
 		icon_state = "normalhuman"
 		ckey = "lazybones123"
+	emeraldcrow
+		name = "\improper Caitlin"
+		icon_state = "caitlin"
+		ckey = "emeraldcrow"
+	kikimofo
+		name = "\improper Kiki Kolana"
+		icon_state = "kikikolana"
+		ckey = "kikimofo"
+	fffootloose
+		name = "\improper Leeland Ponds"
+		icon_state = "leelandponds"
+		ckey = "fffootloose"
+	tamedevil
+		name = "\improper Vaughn Guy"
+		icon_state = "vaughnguy"
+		ckey = "tamedevil"
+	laticauda
+		name = "\improper Tommy Guillaume"
+		icon_state = "tommyguillaume"
+		ckey = "laticauda"
+	brainrot
+		name = "\improper Latte Cappuccino"
+		icon_state = "lattecappuccino"
+		ckey = "brainrot"
+	outbackcatgirl
+		name = "\improper Catherine McFluffums"
+		icon_state = "catherinemcfluffums"
+		ckey = "outbackcatgirl"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -1153,6 +1181,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	fall()
 		..()
+		src.capsule_image.pixel_x = src.pixel_x - 4
+		src.capsule_image.pixel_y = src.pixel_y - 8
+		src.UpdateOverlays(src.capsule_image, "capsules")
 		if (src.status & BROKEN)
 			src.icon_state = "[src.base_icon_state]-fallen-broken"
 		else
@@ -1160,6 +1191,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	right()
 		..()
+		src.capsule_image.pixel_x = src.pixel_x
+		src.capsule_image.pixel_y = src.pixel_y
+		src.UpdateOverlays(src.capsule_image, "capsules")
 		src.icon_state = src.base_icon_state
 
 	powered()

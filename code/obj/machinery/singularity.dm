@@ -812,7 +812,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		return
 	if(P.proj_data.damage_type == D_ENERGY)
 		src.power += P.power
-		flick("Field_Gen_Flash", src)
+		FLICK("Field_Gen_Flash", src)
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -1145,6 +1145,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/shot_number = 0
 	var/state = UNWRENCHED
 	var/locked = 1
+	var/emagged = FALSE
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -1211,6 +1212,9 @@ TYPEINFO(/obj/machinery/emitter)
 	..()
 
 /obj/machinery/emitter/attack_ai(mob/user as mob)
+	if (src.emagged)
+		boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
+		return
 	if(state == WELDED)
 		if(src.active==1)
 			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
@@ -1359,7 +1363,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-	if(!src.link || !target_id)
+	if(!src.link || src.emagged || !target_id)
 		return
 
 	var/datum/signal/signal = get_free_signal()
@@ -1378,7 +1382,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //What do we do with an incoming command?
 /obj/machinery/emitter/receive_signal(datum/signal/signal)
-	if(!src.link)
+	if(!src.link || src.emagged)
 		return
 	if(!signal || !src.net_id || signal.encryption)
 		return
@@ -1414,6 +1418,16 @@ TYPEINFO(/obj/machinery/emitter)
 		icon_state = "Emitter"
 
 	return
+
+/obj/machinery/emitter/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		boutput(user, SPAN_ALERT("\The [src] shorts out its remote connectivity controls!"))
+		src.emagged = TRUE
+
+/obj/machinery/emitter/demag(mob/user)
+	. = ..()
+	if (src.emagged)
+		src.emagged = FALSE
 
 /obj/machinery/emitter/assault
 	name = "prototype assault emitter"
@@ -1949,8 +1963,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
-		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='byond://?src=\ref[];tp=-30'>-</A> <A href='byond://?src=\ref[];tp=-1'>-</A> <A href='byond://?src=\ref[];tp=1'>+</A> <A href='byond://?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='byond://?src=\ref[];time=0'>Timing</A>", src) : text("<A href='byond://?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
+		dat += "<BR><BR><A href='byond://?src=\ref[src];close=1'>Close</A>"
 		*/
 		user.Browse(src.get_interface(), "window=timer")
 		onclose(user, "timer")
@@ -2116,28 +2130,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 
 							<tr>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-30">
+									<a href="byond://?src=\ref[src];action=timer;tp=-30">
 										<div class="button timer_b">
 											--
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-1">
+									<a href="byond://?src=\ref[src];action=timer;tp=-1">
 										<div class="button timer_b">
 											-
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=1">
+									<a href="byond://?src=\ref[src];action=timer;tp=1">
 										<div class="button timer_b">
 											+
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=30">
+									<a href="byond://?src=\ref[src];action=timer;tp=30">
 										<div class="button timer_b">
 											++
 										</div>
@@ -2146,14 +2160,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 							</tr>
 							<tr>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=abort">
+									<a href="byond://?src=\ref[src];action=trigger;spec=abort">
 										<div class="button" id="abort">
 											Abort
 										</div>
 									</a>
 								</td>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=prime">
+									<a href="byond://?src=\ref[src];action=trigger;spec=prime">
 										<div class="button" id="prime">
 											Prime
 										</div>

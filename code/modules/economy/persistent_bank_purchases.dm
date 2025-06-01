@@ -477,7 +477,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000
-		path = /obj/item/tank/emergency_oxygen  // oh boy they'll need this if they are unlucky
+		path = /obj/item/tank/pocket/oxygen  // oh boy they'll need this if they are unlucky
 		icon = 'icons/obj/large/32x64.dmi'
 		icon_state = "arrival_missile"
 		icon_dir = SOUTH
@@ -486,6 +486,17 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+			var/mob/living/silicon/sillycon = M
+			if(istype(sillycon))
+				var/obj/item/organ/brain/latejoin/latejoin_brain = null
+				if (istype(sillycon,/mob/living/silicon/ai))
+					var/mob/living/silicon/ai/AI = sillycon
+					latejoin_brain = AI.brain
+				if (istype(sillycon,/mob/living/silicon/robot))
+					var/mob/living/silicon/robot/R = sillycon
+					latejoin_brain = R.part_head?.brain
+				if(istype(latejoin_brain))
+					return FALSE //Don't missile launch latejoin silicons that already exist
 			SPAWN(0)
 				if(istype(M.loc, /obj/storage))
 					launch_with_missile(M.loc)

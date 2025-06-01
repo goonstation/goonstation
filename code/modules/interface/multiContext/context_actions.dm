@@ -489,7 +489,7 @@
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
 			return TRUE
-		if(user.find_type_in_hand(/obj/item/deconstructor/))
+		if(user.find_tool_in_hand(TOOL_DECONSTRUCTING))
 			return TRUE
 
 	wrench
@@ -607,7 +607,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target) && can_act(user)
+		. = (user.loc == target) && can_act(user) && user.can_interface_with_pods
 
 	board
 		name = "Board"
@@ -616,7 +616,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -630,7 +630,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -645,7 +645,7 @@
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
 			if (V.locked && V.lock)
-				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -659,7 +659,7 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user))
+			. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
@@ -2361,8 +2361,9 @@
 		if (!istype(sp, /obj/item/device/speech_pro))
 			return
 		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
-			sp.speak(src.speech_text, user)
+			sp.say(src.speech_text)
 			playsound(sp, src.speech_sound, 50, 1)
+			logTheThing(LOG_DEBUG, sp, "[user] said [src.speech_text] using [sp].")
 		else
 			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
 

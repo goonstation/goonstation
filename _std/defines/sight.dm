@@ -23,3 +23,4 @@
 #define CLIENT_IMAGE_GROUP_MECHCOMP "mechcomp"
 #define CLIENT_IMAGE_GROUP_SALVAGER_VALUES "salvage_value_icons"
 #define CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE "art_curser_hidden_nightmares"
+#define CLIENT_IMAGE_GROUP_TEMPERATURE_OVERLAYS "phoenix_temperature_overlays"

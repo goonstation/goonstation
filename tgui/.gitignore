@@ -13,13 +13,13 @@ package-lock.json
 !/.yarn/lock.yml
 
 ## Build artifacts |GOONSTATION-CHANGE|
-/../browserassets/tgui/.tmp/**/*
-/../browserassets/tgui/**/*
-!/../browserassets/tgui/*.html
+/../browserassets/src/tgui/.tmp/**/*
+/../browserassets/src/tgui/**/*
+!/../browserassets/src/tgui/*.html
 /coverage
 # |GOONSTATION-ADD|
-!/../browserassets/tgui/*.js
-!/../browserassets/tgui/*.css
+!/../browserassets/src/tgui/*.js
+!/../browserassets/src/tgui/*.css
 
 # Editor Files
 *.idea/*

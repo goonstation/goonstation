@@ -68,7 +68,7 @@ Contents:
 * icons/turf/dojo.dmi <-- floor icons
 * icons/obj/dojo.dmi <-- object icons
 * radiotelescope.dm
-* browserassets/images/radioTelescope
+* browserassets/src/images/radioTelescope
 * icons/effects/224x160.dmi
 * weapons.dmi
 * hand_weapons.dmi

@@ -225,7 +225,7 @@
 						src.name = "Irreparably Destroyed Paint Dispenser"
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
 
-						flick("vendbreak", src)
+						FLICK("vendbreak", src)
 						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)

@@ -159,6 +159,8 @@
 	<li>Ratcheting followed by a complete shutdown means that you forgot to input a piece of a note cluster somewhere.</li>
 	<li>A lot of noise followed by a count of beeps means that a note you tried to play doesn't exist. The number of beeps is the position of the note.</li>
 	<li>A loud grinding noise, followed by a boop means your Timing event's value was too high or too low.</li>
+	<li>A high-pitched screeching sound followed by beeping means you have an invalid note somewhere. The number of beeps is the position of the note.</li>
+	<li>Quaking before beeping means that your input is over the note limit. The number of beeps is the amount of notes.</li>
 	<li>If the song ends earlier than expected, make sure that you don't have any double vertical bars in your input.</li>
 	<li>And remember, if things are funky and not working, use your piano reset key!</li>
 </ul>

@@ -81,7 +81,7 @@
 			reagents.add_reagent("werewolf_serum", 2) // awoo
 			usedCapacity += 2
 		if (prob(2))
-			reagents.add_reagent("liquid plasma", 15)
+			reagents.add_reagent("activated plasma", 15)
 			usedCapacity += 15
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)

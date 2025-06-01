@@ -41,7 +41,6 @@
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
-	var/list/play_antag_rates = list()  // % of rounds players should get to play as X antag
 	var/allow_ai = 1					// allow ai job
 	var/respawn = 1
 
@@ -88,6 +87,9 @@
 
 	//Rotating full logs saved to disk
 	var/allowRotatingFullLogs = 0
+
+	//Maximum number of 1kb TGUI chunks for large payloads
+	var/tgui_max_chunk_count = 32
 
 	/// Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
@@ -254,18 +256,6 @@
 				else
 					logDiary("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
-			if ("play_antag")
-				var/rate_pos = findtext(value, " ")
-				var/antag_name = null
-				var/antag_rate = null
-
-				if (rate_pos)
-					antag_name = lowertext(copytext(value, 1, rate_pos))
-					antag_rate = copytext(value, rate_pos + 1)
-					config.play_antag_rates[antag_name] = text2num(antag_rate)
-				else
-					logDiary("Incorrect antag rate configuration definition: [antag_name]  [antag_rate].")
-
 			if ("use_mysql")
 				config.sql_enabled = 1
 
@@ -358,6 +348,9 @@
 
 			if ("server_buddy_id")
 				config.server_buddy_id = trimtext(value)
+
+			if ("tgui_max_chunk_count")
+				config.tgui_max_chunk_count = text2num(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

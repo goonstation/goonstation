@@ -417,6 +417,9 @@ TYPEINFO(/datum/component/mechanics_holder)
 		var/obj/machinery/vending/hacked_vendor = comsig_target
 		if(hacked_vendor.panel_open)
 			return
+	//slightly cursed pattern here, maybe factor out into a signal/init var if we add any more of these
+	if (istype(comsig_target, /obj/machinery/shieldgenerator))
+		return
 	if(length(src.configs))
 		var/selected_config = tgui_input_list(user, "Select a config to modify!", "Config", src.configs)
 		if (!in_interact_range(parent, user)) return TRUE

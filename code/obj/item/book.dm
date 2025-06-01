@@ -133,6 +133,11 @@ Custom Books
 	desc = "A Book on how to use the wireless Components of the Mechanic's lab"
 	file_path = "strings/books/mechanicbook.txt"
 
+/obj/item/paper/book/from_file/text_to_music_com // based off the revised Player Piano book
+	name = "Text to Music Component Manual"
+	desc = "Details the use of the Text to Music Component."
+	file_path = "strings/books/text_to_music_com.txt"
+
 /obj/item/paper/book/from_file/teg_guide //By Azrun, part of the February 2021 Contest
 	name = "Thermo-electric Power Generation"
 	icon_state = "tegbook"
@@ -354,11 +359,7 @@ Custom Books
 				return
 
 			jerk.traitHolder?.addTrait("wasitsomethingisaid")
-
-			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = ARREST_STATE_ARREST
-			S?["mi_crim"] = "Reading highly-confidential private information."
-			jerk.update_arrest_icon()
+			jerk.apply_automated_arrest("Reading highly-confidential private information.", requires_camera_seen = FALSE, use_visible_name = FALSE)
 		else
 			return list("It appears to be heavily encrypted information.")
 

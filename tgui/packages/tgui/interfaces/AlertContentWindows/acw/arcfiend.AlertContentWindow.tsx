@@ -15,10 +15,13 @@ export const acw: AlertContentWindow = {
       <p>2. Use energy to cast abilities</p>
       Abilities:
       <ul>
-        <li>Sap Power - Drain power from a target person or machine</li>
+        <li>
+          Sap Power - Drain power from a target person or machine. Broken
+          machines let you drain power faster.
+        </li>
         <li>
           Discharge - Run a powerful current through a target in melee range
-          damaging mobs and depowering doors
+          damaging mobs, depowering doors, and overloading machines.
         </li>
         <li>
           Flash - Release a sudden burst of power around yourself disorienting

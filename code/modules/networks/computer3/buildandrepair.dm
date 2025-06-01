@@ -49,6 +49,7 @@ TYPEINFO(/obj/item/motherboard)
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
+		object_flags = NO_BLOCK_TABLE
 
 
 	azungarcomputer_upper

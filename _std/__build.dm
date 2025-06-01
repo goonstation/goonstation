@@ -52,6 +52,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
 //#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
 //#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
+//#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -130,7 +131,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
 //#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT        // Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
@@ -139,22 +139,16 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
+//#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
-//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
-//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
-//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
-//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
-//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
 
 //------------ Unit Test Framework ------------//
 
@@ -228,7 +222,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
 #define BUILD_TIME_YEAR 2053
-#define BUILD_TIME_MONTH 01
+#define BUILD_TIME_MONTH 03
 #define BUILD_TIME_DAY 13
 #define BUILD_TIME_HOUR 18
 #define BUILD_TIME_MINUTE 31

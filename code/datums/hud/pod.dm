@@ -41,7 +41,7 @@
 		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
 		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
 		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
-		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
+		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "Lock or unlock the pod.")
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
 		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
@@ -153,7 +153,7 @@
 					sensors_use.overlays += missing
 
 		if (master.lock)
-			if (master.lock.code && master.locked)
+			if (master.lock.is_set() && master.locked)
 				lock.icon_state = "lock-locked"
 			else
 				lock.icon_state = "lock-unlocked"
@@ -325,13 +325,11 @@
 					master.sensors.opencomputer(user)
 			if ("lock")
 				if (master.lock)
-					if (!master.lock.code || master.lock.code == "")
+					if (!master.lock.is_set())
 						master.lock.configure_mode = 1
 						if (master)
 							master.locked = 0
 						master.lock.code = ""
-
-						boutput(user, SPAN_NOTICE("Code reset.  Please type new code and press enter."))
 						master.lock.show_lock_panel(user)
 					else if (!master.locked)
 						master.locked = 1
@@ -341,11 +339,15 @@
 						boutput(user, SPAN_ALERT("The ship mechanism clicks unlocked."))
 			if ("set_code")
 				if (master.lock)
+					if (master.lock.is_set())
+						if (!master.lock.can_reset)
+							boutput(user, SPAN_NOTICE("This lock cannot have its code reset."))
+							return
+						boutput(user, SPAN_NOTICE("Code reset. Please type new code and press enter."))
 					master.lock.configure_mode = 1
 					if (master)
 						master.locked = 0
 					master.lock.code = ""
-					boutput(user, SPAN_NOTICE("Code reset.  Please type new code and press enter."))
 					master.lock.show_lock_panel(user)
 			if ("return_to_station")
 				master.return_to_station()

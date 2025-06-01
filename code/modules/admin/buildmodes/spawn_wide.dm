@@ -84,7 +84,7 @@ change the direction of created objects.<br>
 						animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 						SPAWN(0.7 SECONDS)
 							swirl.loc = Q
-							flick("portswirl", swirl)
+							FLICK("portswirl", swirl)
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))
@@ -118,7 +118,7 @@ change the direction of created objects.<br>
 							animate(pad, alpha = 255, transform = mtx.Reset(), time = 5, easing=SINE_EASING)
 							sleep(0.7 SECONDS)
 							swirl.loc = Q
-							flick("portswirl", swirl)
+							FLICK("portswirl", swirl)
 
 							var/atom/A = 0
 							if(ispath(objpath, /turf))

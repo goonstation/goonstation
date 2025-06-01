@@ -924,7 +924,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			. = ..()
 			if (length(space_overlays)) // Are we on the edge of a chunk wall
 				if (src.ore) return // Skip if there's ore here already
-				var/list/color_vals = bioluminescent_algae?.get_color(src)
+				var/list/color_vals = algae_controller().get_color(src)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
@@ -1044,6 +1044,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#114444"
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
+
+	plasma_reef
+		name = "dense plasmacoral"
+		desc = "A large formation of plasmacoral, completely impassable."
+		invincible = TRUE
+		default_material = "plasmacoral"
+		mat_changename = TRUE
+		uses_default_material_appearance = FALSE
+		stone_color = "#A114FF"
+		color = "#A114FF"
 
 	algae
 		name = "sea foam"
@@ -1955,6 +1965,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
@@ -1997,12 +2008,12 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
-		flick("hedron-WtoM", src)
+		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
-		flick("hedron-MtoW", src)
+		FLICK("hedron-MtoW", src)
 		..()
 
 	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
@@ -2173,7 +2184,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
@@ -2729,6 +2740,8 @@ TYPEINFO(/obj/submachine/cargopad)
 	researchoutpost
 		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
+	radio
+		name = "Radio Station Pad"
 
 	New()
 		..()

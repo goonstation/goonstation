@@ -310,7 +310,7 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
@@ -330,13 +330,17 @@ proc/filter_trait_hats(var/type)
 		src.icon_state = "inspector"
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
+TYPEINFO(/obj/item/clothing/head/det_hat/gadget)
+	start_listen_effects = list(LISTEN_EFFECT_DETGADGET)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_modifiers = null
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
 	desc = "Detective's special hat you can outfit with various items for easy retrieval!"
 	var/phrase = "go go gadget"
-
 	var/list/items
-
 	var/max_cigs = 15
 	var/list/cigs
 	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
@@ -365,49 +369,6 @@ proc/filter_trait_hats(var/type)
 				. += "<br>There is no [name]!"
 		if (cigs.len)
 			. += "<br>[SPAN_NOTICE("It contains <b>[cigs.len]</b> cigarettes!")]"
-
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, null, real_name, lang_id)
-
-	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		var/gadget = findtext(messages[1], src.phrase) //check the spoken phrase
-		if(gadget)
-			gadget = replacetext(copytext(messages[1], gadget + length(src.phrase)), " ", "") //get rid of spaces as well
-			for (var/name in items)
-				var/type = items[name]
-				var/obj/item/I = locate(type) in contents
-				if(findtext(gadget, name) && I)
-					M.put_in_hand_or_drop(I)
-					M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and pulls out \the [I]!"))
-					return
-
-			if(findtext(gadget, "cigarette"))
-				if (!cigs.len)
-					M.show_text("You're out of cigs, shit! How you gonna get through the rest of the day?", "red")
-					return
-				else
-					var/obj/item/clothing/mask/cigarette/W = cigs[cigs.len] //Grab the last cig entry
-					cigs.Cut(cigs.len) //Get that cig outta there
-					var/boop = "hand"
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
-							boop = "mouth"
-						else
-							H.put_in_hand_or_drop(W) //Put it in their hand
-					else
-						M.put_in_hand_or_drop(W) //Put it in their hand
-
-					M.visible_message(SPAN_ALERT("<b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!"))
-					var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
-					if (lighter)
-						W.light(M, SPAN_ALERT("<b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa."))
-						lighter.firesource_interact()
-			else
-				M.show_text("Requested object missing or nonexistant!", "red")
-				return
 
 	attackby(obj/item/W, mob/M)
 		var/success = 0
@@ -449,7 +410,7 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
 			return
-		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] DetGadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
 		if (src.inspector == TRUE)
 			S.make_inspector()
@@ -618,18 +579,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
-	team_num = TEAM_NANOTRASEN
-	#ifdef MAP_OVERRIDE_POD_WARS
-	attack_hand(mob/user)
-		if (get_pod_wars_team_num(user) == team_num)
-			..()
-		else
-			boutput(user, SPAN_ALERT("The beret <b>explodes</b> as you reach out to grab it!"))
-			make_fake_explosion(src)
-			user.u_equip(src)
-			src.dropped(user)
-			qdel(src)
-	#endif
 	c_flags = SPACEWEAR
 
 	setupProperties()
@@ -794,6 +743,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	see_face = FALSE
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+
+/obj/item/clothing/head/wizard/traveller
+	name = "traveller's hat"
+	desc = "Oh, how much the stars have to show! Look up, and you'll see them, just right there!"
+	icon_state = "wizardstars"
+	item_state = "wizardnec"
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -1127,13 +1082,11 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
-		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = ARREST_STATE_ARREST
-		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
-		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/reason = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
+		var/details = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
 		var/mob/living/carbon/human/H = user
-		if (istype(H))
-			H.update_arrest_icon()
+		if(istype(H))
+			H.apply_automated_arrest(reason,details,TRUE,FALSE,FALSE)
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1164,7 +1117,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 /obj/item/clothing/head/bighat/syndicate/biggest
 	name = "very syndicate hat"
-	desc = "An actual war crime, under the space geneva convention"
+	desc = "An actual war crime, under the space Geneva Convention"
 	icon_state = "syndicate_top_biggest"
 	item_state = "syndicate_top"
 	contraband = 100 // heh
@@ -1377,6 +1330,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		icon_state = "sunhatr-stun"
 		item_state = "sunhatr-stun"
 
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_ATTACKHAND, PROC_REF(attempt_shock))
+
+	unequipped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_ATTACKHAND)
+
 	examine()
 		. = ..()
 		if (src.stunready)
@@ -1420,6 +1381,42 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 		..()
 
+	proc/attempt_shock(mob/wearer, mob/target)
+		if(wearer != target && src.uses > 0 && target.a_intent == INTENT_HELP && target.zone_sel?.selecting == "head")
+			wearer.visible_message(SPAN_ALERT("[target] tries to pat [wearer] on the head, but gets shocked by [src]!"))
+			zap_headpatter(target)
+
+			src.uses = max(0, src.uses - 1)
+			if (src.uses < 1)
+				src.icon_state = splittext(src.icon_state,"-")[1]
+				src.item_state = splittext(src.item_state,"-")[1]
+				wearer.update_clothing()
+
+			if (src.uses <= 0)
+				wearer.show_text("The sunhat is no longer electrically charged.", "red")
+			else
+				wearer.show_text("The stunhat has [src.uses] charges left!", "red")
+			return TRUE
+
+	proc/zap_headpatter(mob/target)
+		elecflash(src)
+		target.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+		target.stuttering = max(target.stuttering,30)
+
+/obj/item/clothing/head/sunhat/killhat
+	name = "killhat"
+	desc = "The be-all, end-all of personal space protection."
+	stunready = 1
+	uses = 1
+	icon_state = "sunhatr-stun"
+	item_state = "sunhatr-stun"
+	blocked_from_petasusaphilic = TRUE
+	var/wattage = 3 MEGA WATTS //equivalent to ~120 burn damage
+
+	zap_headpatter(mob/target)
+		elecflash(src)
+		target.shock(src, wattage, ignore_gloves = TRUE)
+
 
 /obj/item/clothing/head/headmirror
 	name = "head mirror"
@@ -1458,7 +1455,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 /obj/item/clothing/head/jester
 	name = "jester's hat"
-	desc = "The hat of not-so-funny-clown."
+	desc = "The hat of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
 	seal_hair = 1
@@ -2533,3 +2530,29 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "rabbithat"
 	item_state = "rabbithat"
 	seal_hair = TRUE
+
+// Mx Blorbo's lovable visage.
+
+/obj/item/clothing/head/blorbohat
+	name = "Blorbo costume head"
+	desc = "Everyone's favourite gimmick character, Mx. Blorbo!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "blorbohat"
+	item_state = "blorbohat"
+	seal_hair = TRUE
+
+/obj/item/clothing/head/chompskyhat
+	name = "Gnome hat"
+	desc = "A mirthful gnome's hat, now crew-sized!"
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "chompskyhat"
+	item_state = "chompskyhat"
+
+// The haunting giggle was a must.
+	equipped(var/mob/user, var/slot)
+		..()
+		if(ON_COOLDOWN(src, "gnome giggle",15 SECONDS)) return
+		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 100, 1)

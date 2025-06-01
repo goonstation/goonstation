@@ -110,13 +110,8 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						newcash.set_loc(src)
 					//Money laundering is a crime!
 					var/mob/living/carbon/human/criminal = src.activator
-					if (ishuman(criminal) && seen_by_camera(criminal))
-						var/perpname = criminal.name
-						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
-							sec_record["criminal"] = ARREST_STATE_ARREST
-							sec_record["mi_crim"] = "Money laundering."
-							criminal.update_arrest_icon()
+					if(criminal)
+						criminal.apply_automated_arrest("Money laundering.")
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
@@ -255,6 +250,19 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/submachine/laundry_machine/proc/force_into_machine, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
 	else
 		return ..()
+
+/obj/submachine/laundry_machine/hitby(atom/movable/MO, datum/thrown_thing/thr)
+	if (istype(MO, /mob/living))
+		if (src.open)
+			var/mob/living/M = MO
+			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
+			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
+			M.set_loc(src)
+			src.open = 0
+			UpdateIcon()
+	else
+		return ..()
+
 
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))

@@ -53,7 +53,7 @@
 
 		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
-		flick("cambot-spark", src)
+		FLICK("cambot-spark", src)
 		src.emagged = 1
 		return 1
 	return 0
