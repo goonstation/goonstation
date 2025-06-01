@@ -714,6 +714,24 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	record_name = "Biodome"
 	song = 'sound/radio_station/music/biodome.ogg'
 
+ABSTRACT_TYPE(/obj/item/record/random/offwhites)
+/obj/item/record/random/offwhites
+	New()
+		. = ..()
+		src.desc += {" The label on the record says it's by an experimental band called The Off-Whites. Is that even a noun?"}
+
+/obj/item/record/random/offwhites/acheron
+	record_name = "Acheron"
+	song = 'sound/radio_station/music/acheron.ogg'
+
+/obj/item/record/random/offwhites/cliffside
+	record_name = "Cliffside"
+	song = 'sound/radio_station/music/cliffside.ogg'
+
+/obj/item/record/random/offwhites/regrets
+	record_name = "Regrets"
+	song = 'sound/radio_station/music/regrets.ogg'
+
 /obj/item/record/spacebux/New()
 	..()
 	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
