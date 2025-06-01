@@ -755,7 +755,7 @@ datum/commodity/drugs/sell/poppies
 	comname = "12ga AEX ammo"
 	comtype = /obj/item/ammo/bullets/aex
 	desc = "12 gauge ammo marked 12ga AEX Large Wildlife Dispersal Cartridge. Huh."
-	price = PAY_EMBEZZLED
+	price = PAY_EMBEZZLED * 2.5
 
 /datum/commodity/contraband/flare
 	comname = "12ga Flare Shells"
