@@ -306,12 +306,12 @@
 	highlight_hud_element = "throw"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 	needed_item_path = /obj/item/crowbar
-	step_area = /area/tutorial/newbee/room_3
+	step_area = /area/tutorial/newbee/room_4
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/drop = src.keymap.action_to_keybind("drop")
-		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b> or <b>clicking</b> the Drop Item HUD button.."
+		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b> or <b>clicking</b> the Drop Item HUD button."
 
 	SetUp()
 		. = ..()
@@ -1126,6 +1126,56 @@
 	TearDown()
 		. = ..()
 		src.target_closet.UpdateOverlays(null, "marker")
+
+/datum/tutorialStep/newbee/equipping_space_gear
+	name = "Becoming Spaceworthy"
+	instructions = "A space suit, helmet, and breath mask are needed to survive in the vacuum of space.<br><b>Click</b> a piece of space gear to pick it up, then press <b>V</b> or <b>click</b> the item slot to equip it."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_9
+
+	var/obj/item/clothing/head/emerg/worn_head
+	var/obj/item/clothing/suit/space/emerg/worn_suit
+	var/obj/item/clothing/mask/breath/worn_mask
+
+	SetUp()
+		. = ..()
+
+		src.worn_head = src.highlight_needed_item(/obj/item/clothing/head/emerg)
+		RegisterSignal(src.worn_head, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item), TRUE)
+
+		src.worn_suit = src.highlight_needed_item(/obj/item/clothing/suit/space/emerg/)
+		RegisterSignal(src.worn_suit, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item), TRUE)
+
+		src.worn_mask = src.highlight_needed_item(/obj/item/clothing/mask/breath/)
+		RegisterSignal(src.worn_mask, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item), TRUE)
+
+	proc/equip_tutorial_item(datum/source, mob/user)
+		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_equipped", source)
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "item_equipped")
+			if (context == src.worn_head)
+				src.worn_head.UpdateOverlays(null, "marker")
+				src.worn_head = null
+			else if (context == src.worn_suit)
+				src.worn_suit.UpdateOverlays(null, "marker")
+				src.worn_suit = null
+			else if (context == src.worn_mask)
+				src.worn_mask.UpdateOverlays(null, "marker")
+				src.worn_mask = null
+
+		if (isnull(src.worn_head) && isnull(src.worn_suit) && isnull(src.worn_mask))
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		src.worn_head?.UpdateOverlays(null, "marker")
+		src.worn_head = null
+		src.worn_suit?.UpdateOverlays(null, "marker")
+		src.worn_suit = null
+		src.worn_mask?.UpdateOverlays(null, "marker")
+		src.worn_mask = null
 
 /datum/tutorialStep/newbee/equip_space_suit
 	name = "Space Suits"
