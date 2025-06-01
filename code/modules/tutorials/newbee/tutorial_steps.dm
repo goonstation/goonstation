@@ -1139,7 +1139,7 @@
 
 	SetUp()
 		var/obj/storage/closet/emergency_tutorial/closet = locate(/obj/storage/closet/emergency_tutorial) in REGION_TILES(src.region)
-		closet.open()
+		closet?.open()
 		. = ..()
 
 		src.worn_head = src.highlight_needed_item(/obj/item/clothing/head/emerg)
