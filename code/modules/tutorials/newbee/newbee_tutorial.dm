@@ -153,10 +153,10 @@
 	src.AddStep(/datum/tutorialStep/newbee/flush_disposals)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/crowbar)
 	src.AddStep(/datum/tutorialStep/newbee/open_unpowered_door)
-	src.AddStep(/datum/tutorialStep/newbee/drop_item)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_items)
 
 	// room 4 - Intents
+	src.AddStep(/datum/tutorialStep/newbee/drop_item)
 	src.AddStep(/datum/tutorialStep/newbee/intent_help)
 	src.AddStep(/datum/tutorialStep/newbee/help_person)
 	src.AddStep(/datum/tutorialStep/newbee/intent_disarm)

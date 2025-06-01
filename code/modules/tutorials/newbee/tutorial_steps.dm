@@ -283,6 +283,22 @@
 		. = ..()
 		src.tutorial_door.UpdateOverlays(null, "marker")
 
+/datum/tutorialStep/newbee/move_to/exit_items
+	name = "Intents"
+	instructions = "The next room will teach you about the four intents:<br>Help, Disarm, Grab, and Harm."
+	target_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
+	step_area = /area/tutorial/newbee/room_3
+	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		src.instructions = "The next room will teach you about the four intents:<br>[TEXT_INTENT_HELP], [TEXT_INTENT_DISARM], [TEXT_INTENT_GRAB], and [TEXT_INTENT_HARM]."
+
+//
+// room 4 - Intents & Combat
+//
+
 /datum/tutorialStep/newbee/drop_item
 	name = "Dropping Items"
 	instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>Q</b> or <b>clicking</b> the Drop Item HUD button."
@@ -312,22 +328,6 @@
 	TearDown()
 		. = ..()
 		UnregisterSignal(src._needed_item, COMSIG_ITEM_DROPPED)
-
-/datum/tutorialStep/newbee/move_to/exit_items
-	name = "Intents"
-	instructions = "The next room will teach you about the four intents:<br>Help, Disarm, Grab, and Harm."
-	target_landmark = LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS
-	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
-	step_area = /area/tutorial/newbee/room_3
-	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
-
-	New(datum/tutorial_base/regional/newbee/tutorial)
-		. = ..()
-		src.instructions = "The next room will teach you about the four intents:<br>[TEXT_INTENT_HELP], [TEXT_INTENT_DISARM], [TEXT_INTENT_GRAB], and [TEXT_INTENT_HARM]."
-
-//
-// room 4 - Intents & Combat
-//
 
 /datum/tutorialStep/newbee/intent_help
 	name = "Help Intent"
