@@ -98,23 +98,14 @@
 	proc/make_emergency_suit()
 		src.emergency_suit = new(src)
 		src.emergency_suit.layer = OBJ_LAYER + 0.04
-		RegisterSignal(src.emergency_suit, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-		RegisterSignal(src.emergency_suit, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-		RegisterSignal(src.emergency_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
 
 	proc/make_breath_mask()
 		src.breath_mask = new(src)
 		src.breath_mask.layer = OBJ_LAYER + 0.03
-		RegisterSignal(src.breath_mask, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-		RegisterSignal(src.breath_mask, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-		RegisterSignal(src.breath_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
 
 	proc/make_emergency_hood()
 		src.emergency_hood = new(src)
 		src.emergency_hood.layer = OBJ_LAYER + 0.02
-		RegisterSignal(src.emergency_hood, COMSIG_ITEM_PICKUP, PROC_REF(pickup_tutorial_item))
-		RegisterSignal(src.emergency_hood, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_tutorial_item))
-		RegisterSignal(src.emergency_hood, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item))
 
 	make_my_stuff()
 		if(..())
@@ -128,15 +119,6 @@
 			src.emergency_hood.pixel_x = -8
 			src.emergency_hood.pixel_y = -8
 			return 1
-
-	proc/pickup_tutorial_item(datum/source, mob/user)
-		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_pickup", source)
-
-	proc/equip_tutorial_item(datum/source, mob/user, slot)
-		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_equipped", source)
-
-	proc/unequip_tutorial_item(datum/source, mob/user)
-		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_unequipped", source)
 
 	open(entangleLogic, mob/user)
 		. = ..()

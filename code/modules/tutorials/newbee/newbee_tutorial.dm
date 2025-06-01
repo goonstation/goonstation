@@ -196,9 +196,7 @@
 	// room 9 - Space Prep
 	src.AddStep(/datum/tutorialStep/newbee/timer/stats_before)
 	src.AddStep(/datum/tutorialStep/newbee/opening_closets)
-	src.AddStep(/datum/tutorialStep/newbee/equip_space_suit)
-	src.AddStep(/datum/tutorialStep/newbee/equip_breath_mask)
-	src.AddStep(/datum/tutorialStep/newbee/equip_space_helmet)
+	src.AddStep(/datum/tutorialStep/newbee/equipping_space_gear)
 	src.AddStep(/datum/tutorialStep/newbee/timer/stats_after)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/oxygen)
 	src.AddStep(/datum/tutorialStep/newbee/internals_on)
@@ -453,7 +451,8 @@
 	else
 		target_item = locate(item_path) in REGION_TILES(src.region)
 		if (target_item) // item is in tutorial region
-			target_item.set_loc(get_turf(src.newbee_tutorial.newbee))
+			if (!istype(get_area(target_item), src.step_area)) // only move if out of area
+				target_item.set_loc(get_turf(src.newbee_tutorial.newbee))
 		else // item doesn't exist
 			target_item = new item_path(get_turf(src.newbee_tutorial.newbee))
 			src.newbee_tutorial.newbee.put_in_hand_or_drop(target_item)

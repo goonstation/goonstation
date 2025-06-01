@@ -1138,6 +1138,8 @@
 	var/obj/item/clothing/mask/breath/worn_mask
 
 	SetUp()
+		var/obj/storage/closet/emergency_tutorial/closet = locate(/obj/storage/closet/emergency_tutorial) in REGION_TILES(src.region)
+		closet.open()
 		. = ..()
 
 		src.worn_head = src.highlight_needed_item(/obj/item/clothing/head/emerg)
@@ -1176,60 +1178,6 @@
 		src.worn_suit = null
 		src.worn_mask?.UpdateOverlays(null, "marker")
 		src.worn_mask = null
-
-/datum/tutorialStep/newbee/equip_space_suit
-	name = "Space Suits"
-	instructions = "Space suits protect against the vacuum of space.<br><b>Click</b> to pick up the emergency suit and press <b>V</b> to equip it."
-	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "suit"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-	step_area = /area/tutorial/newbee/room_9
-
-	New()
-		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip")
-		src.instructions = "Space suits protect against the vacuum of space.<br><b>Click</b> the emergency suit and press <b>[equip]</b> to equip it."
-
-	PerformAction(action, context)
-		. = ..()
-		if (action == "item_equipped" && istype(context, /obj/item/clothing/suit/space/emerg))
-			src.finished = TRUE
-
-/datum/tutorialStep/newbee/equip_breath_mask
-	name = "Breath Masks"
-	instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>V</b> to equip it."
-	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "mask"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-	step_area = /area/tutorial/newbee/room_9
-
-	New()
-		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip")
-		src.instructions = "A breath mask is required to use an air tank.<br><b>Click</b> the breath mask and press <b>[equip]</b> to equip it."
-
-	PerformAction(action, context)
-		. = ..()
-		if (action == "item_equipped" && istype(context, /obj/item/clothing/mask/breath))
-			src.finished = TRUE
-
-/datum/tutorialStep/newbee/equip_space_helmet
-	name = "Space Helmets"
-	instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>V</b> to equip it."
-	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "head"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
-	step_area = /area/tutorial/newbee/room_9
-
-	New()
-		. = ..()
-		var/equip = src.keymap.action_to_keybind("equip")
-		src.instructions = "Space helmets complete your ability to survive the cold of space.<br><b>Click</b> the emergency hood and press <b>[equip]</b> to equip it."
-
-	PerformAction(action, context)
-		. = ..()
-		if (action == "item_equipped" && istype(context, /obj/item/clothing/head/emerg))
-			src.finished = TRUE
 
 // TODO: detection ?
 /datum/tutorialStep/newbee/timer/stats_after
@@ -1365,58 +1313,20 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_11
 
-	var/atom/movable/screen/hud/head_hud
-	var/atom/movable/screen/hud/suit_hud
-	var/atom/movable/screen/hud/mask_hud
-
 	var/obj/item/clothing/head/worn_head
 	var/obj/item/clothing/suit/worn_suit
 	var/obj/item/clothing/mask/worn_mask
 
 	SetUp()
 		. = ..()
-		src.worn_head = src.newbee_tutorial.newbee.head
-		if (!src.worn_head)
-			src.worn_head = new /obj/item/clothing/head/emerg(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_head, SLOT_HEAD)
-		if (src.worn_head)
-			RegisterSignal(src.worn_head, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
-			src.worn_head.UpdateOverlays(src.point_marker, "marker")
-			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
-				if (hud_element.id == "head")
-					src.head_hud = hud_element
-					break
+		src.worn_head = src.highlight_needed_item(/obj/item/clothing/head/emerg)
+		RegisterSignal(src.worn_head, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 
-		src.worn_suit = src.newbee_tutorial.newbee.wear_suit
-		if (!src.worn_suit)
-			src.worn_suit = new /obj/item/clothing/suit/space/emerg(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_suit, SLOT_WEAR_SUIT)
-		if (src.worn_suit)
-			RegisterSignal(src.worn_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
-			src.worn_suit.UpdateOverlays(src.point_marker, "marker")
-			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
-				if (hud_element.id == "suit")
-					src.suit_hud = hud_element
-					break
+		src.worn_suit = src.highlight_needed_item(/obj/item/clothing/suit/space/emerg/)
+		RegisterSignal(src.worn_suit, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 
-		src.worn_mask = src.newbee_tutorial.newbee.wear_mask
-		if (!src.worn_mask)
-			src.worn_mask = new /obj/item/clothing/mask/breath(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.equip_if_possible(src.worn_mask, SLOT_WEAR_MASK)
-		if (src.worn_mask)
-			RegisterSignal(src.worn_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
-			src.worn_mask.UpdateOverlays(src.point_marker, "marker")
-			for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
-				if (hud_element.id == "mask")
-					src.mask_hud = hud_element
-					break
-
-		if (src.head_hud)
-			src.head_hud.UpdateOverlays(src.inventory_marker, "marker")
-		if (src.suit_hud)
-			src.suit_hud.UpdateOverlays(src.inventory_marker, "marker")
-		if (src.mask_hud)
-			src.mask_hud.UpdateOverlays(src.inventory_marker, "marker")
+		src.worn_mask = src.highlight_needed_item(/obj/item/clothing/mask/breath/)
+		RegisterSignal(src.worn_mask, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequip_tutorial_item), TRUE)
 
 	proc/unequip_tutorial_item(datum/source, mob/user)
 		user?.mind?.get_player()?.tutorial?.PerformSilentAction("item_unequipped", source)
@@ -1425,21 +1335,12 @@
 		. = ..()
 		if (action == "item_unequipped")
 			if (context == src.worn_head)
-				if (src.head_hud)
-					src.head_hud.UpdateOverlays(null, "marker")
-					src.head_hud = null
 				src.worn_head.UpdateOverlays(null, "marker")
 				src.worn_head = null
 			else if (context == src.worn_suit)
-				if (src.suit_hud)
-					src.suit_hud.UpdateOverlays(null, "marker")
-					src.suit_hud = null
 				src.worn_suit.UpdateOverlays(null, "marker")
 				src.worn_suit = null
 			else if (context == src.worn_mask)
-				if (src.mask_hud)
-					src.mask_hud.UpdateOverlays(null, "marker")
-					src.mask_hud = null
 				src.worn_mask.UpdateOverlays(null, "marker")
 				src.worn_mask = null
 
@@ -1448,24 +1349,12 @@
 
 	TearDown()
 		. = ..()
-		if (src.worn_head)
-			src.worn_head.UpdateOverlays(null, "marker")
-			src.worn_head = null
-		if (src.worn_suit)
-			src.worn_suit.UpdateOverlays(null, "marker")
-			src.worn_suit = null
-		if (src.worn_mask)
-			src.worn_mask.UpdateOverlays(null, "marker")
-			src.worn_mask = null
-		if (src.head_hud)
-			src.head_hud.UpdateOverlays(null, "marker")
-			src.head_hud = null
-		if (src.suit_hud)
-			src.suit_hud.UpdateOverlays(null, "marker")
-			src.suit_hud = null
-		if (src.mask_hud)
-			src.mask_hud.UpdateOverlays(null, "marker")
-			src.mask_hud = null
+		src.worn_head?.UpdateOverlays(null, "marker")
+		src.worn_head = null
+		src.worn_suit?.UpdateOverlays(null, "marker")
+		src.worn_suit = null
+		src.worn_mask?.UpdateOverlays(null, "marker")
+		src.worn_mask = null
 
 /datum/tutorialStep/newbee/move_to/exit_storage
 	name = "Backpack Storage"
