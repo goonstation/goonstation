@@ -174,6 +174,7 @@ TYPEINFO(/obj/stove)
 			if (pot.popcorn)
 				pot.popcorn.cooked = TRUE
 				pot.icon_state = "cornpot_cooked"
+				pot.corn_scoops = 2
 				pot.total_wclass = 0
 				pot.create_reagents(30)
 				pot.UpdateIcon()
@@ -315,7 +316,6 @@ TYPEINFO(/obj/stove)
 
 		return S
 
-
 /obj/item/soup_pot
 	name = "soup pot"
 	desc = "Well, for a very broad definition of \"soup\", anyways. In space, popcorn counts."
@@ -333,7 +333,7 @@ TYPEINFO(/obj/stove)
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
 	var/obj/item/reagent_containers/food/snacks/ingredient/kernels/popcorn = null
-	var/max_corn_scoops = null
+	var/corn_scoops = null
 	tooltip_flags = REBUILD_DIST
 
 	New()
@@ -407,21 +407,7 @@ TYPEINFO(/obj/stove)
 						boutput(user,"There's not enough room in [src] for [W]!")
 						return
 					else if (!src.popcorn)
-						if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
-							if (src.reagents.total_volume > 0)
-								boutput(user,SPAN_ALERT("You think you should wait to pop the kernels before you coat them..."))
-								return
-							src.popcorn = W
-							src.max_corn_scoops = 2
-							src.create_reagents(0)
-							src.total_wclass = src.total_wclass_max
-							src.icon_state = "cornpot_raw"
-							src.UpdateIcon()
-						else
-							src.update_wclass_total()
-						W.set_loc(src)
-						user.u_equip(W)
-						user.visible_message("[user] puts [W] in [src].", "You put [W] in [src]")
+						place_corn(user, W)
 					else
 						user.visible_message(SPAN_ALERT("The pot is full of kernals already!"))
 						return
@@ -430,21 +416,7 @@ TYPEINFO(/obj/stove)
 						boutput(user,"There's not enough room in [src] for [W]!")
 						return
 					else if (!src.popcorn)
-						if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
-							if (src.reagents.total_volume > 0)
-								boutput(user,SPAN_ALERT("No... You can't dump unpopped kernels into liquid!"))
-								return
-							src.popcorn = W
-							src.max_corn_scoops = 2 // this should be set when it's cooked instead
-							src.create_reagents(0)
-							src.total_wclass = src.total_wclass_max
-							src.icon_state = "cornpot_raw"
-							src.UpdateIcon()
-						else
-							src.update_wclass_total()
-						W.set_loc(src)
-						user.u_equip(W)
-						user.visible_message("[user] puts [W] in [src].", "You put [W] in [src]")
+						place_corn(user, W)
 					else
 						user.visible_message(SPAN_ALERT("The pot is full of kernals already!"))
 						return
@@ -465,14 +437,14 @@ TYPEINFO(/obj/stove)
 					return
 
 				if (L.corn_scoop)
-					if (src.max_corn_scoops >= 2)
+					if (src.corn_scoops >= 2)
 						boutput(user,SPAN_ALERT("<b>That pot's full of popcorn already!"))
 						return
 					L.corn_scoop = FALSE
 					L.icon_state = "ladle"
 					L.seasoning = null
 					L.UpdateIcon()
-					src.max_corn_scoops++
+					src.corn_scoops++
 					src.create_reagents(30)
 					return
 				else
@@ -481,11 +453,11 @@ TYPEINFO(/obj/stove)
 					L.UpdateIcon()
 					if (src.reagents.reagent_list)
 						L.seasoning = src.reagents.get_master_reagent()
-					src.max_corn_scoops--
-					if (src.max_corn_scoops <= 0)
+					src.corn_scoops--
+					if (src.corn_scoops <= 0)
 						qdel(src.popcorn)
 						src.popcorn = null
-						src.reagents.remove_any(src.reagents.total_volume)
+						src.reagents.clear_reagents()
 						src.UpdateOverlays(null, "fluid")
 						src.create_reagents(src.max_reagents)
 						src.icon_state = "souppot"
@@ -515,6 +487,13 @@ TYPEINFO(/obj/stove)
 
 			return
 		..()
+
+	afterattack(atom/target, mob/user)
+		if (istype(target, /obj/machinery/drainage) && src.popcorn)
+			qdel(src.popcorn)
+			src.popcorn = null
+			src.icon_state = "souppot"
+			src.UpdateIcon()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
@@ -561,6 +540,21 @@ TYPEINFO(/obj/stove)
 		for(var/obj/item/I in src.contents)
 			src.total_wclass += I.w_class
 
+	proc/place_corn(mob/user, var/obj/item/item)
+		if (istype(item, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
+			if (src.reagents.total_volume > 0)
+				boutput(user,SPAN_ALERT("You think you should wait to pop the kernels before you coat them..."))
+				return
+			src.popcorn = item
+			src.create_reagents(0)
+			src.total_wclass = src.total_wclass_max
+			src.icon_state = "cornpot_raw"
+			src.UpdateIcon()
+		else
+			src.update_wclass_total()
+		item.set_loc(src)
+		user.u_equip(item)
+		user.visible_message("[user] puts [item] in [src].", "You put [item] in [src]")
 
 /obj/item/ladle
 	name = "ladle"

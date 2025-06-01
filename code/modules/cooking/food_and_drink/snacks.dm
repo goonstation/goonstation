@@ -3137,7 +3137,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	icon_state =  "popcorn_full"
 	name = "popcorn box"
 	desc = "A box of nature's fluffy treats. May contain unpopped kernels..."
-	var/items_left = 15
+	var/items_left = 30
 	var/max_items = 30
 	var/datum/reagent/seasoning = null
 	var/obj/item/contained_item = null
@@ -3191,7 +3191,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 			if (src.seasoning)
 				food_orb.reagents.add_reagent(src.seasoning, 1)
 				food_orb.name = "popcorn with [src.seasoning]"
-			if (istype(food_orb, /obj/item/reagent_containers/food/snacks/popcorn_single) && rand(1,8) == 4)
+			if (istype(food_orb, /obj/item/reagent_containers/food/snacks/popcorn_single) && prob(8))
 				var/obj/item/reagent_containers/food/snacks/popcorn_single/kernel = food_orb
 				kernel.unpopped = TRUE
 				user.put_in_hand_or_drop(kernel)
