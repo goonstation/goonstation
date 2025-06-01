@@ -439,18 +439,17 @@
 			if(prob(30))
 				absorb_reagents(T.active_liquid.group, absorbtion_rate)
 			return
-		else if(T.active_liquid.my_depth_level < 2)
-			// Fluid not deep enough to absorb through shoes/suit
+		if(T.active_liquid.my_depth_level < 2)
+			return // Fluid not deep enough to absorb through shoes/suit
+
+		// Less likely to absorb based on chem protection
+		var/chem_prot = clamp(GET_ATOM_PROPERTY(H, PROP_MOB_CHEMPROT), 0, 40)
+		if(chem_prot >= 40)
 			return
-		else
-			// Less likely to absorb based on chem protection
-			var/chem_prot = clamp(GET_ATOM_PROPERTY(H, PROP_MOB_CHEMPROT), 0, 40)
-			if(chem_prot >= 40)
-				return
-			var/absorb_prob = (30 - (chem_prot / 2))
-			if(!prob(absorb_prob))
-				return
-			absorb_reagents(T.active_liquid.group, absorbtion_rate)
+		var/absorb_prob = (30 - (chem_prot / 2))
+		if(!prob(absorb_prob))
+			return
+		absorb_reagents(T.active_liquid.group, absorbtion_rate)
 
 	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
 		var/datum/reagents/R = fluids.reagents
