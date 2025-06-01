@@ -291,12 +291,10 @@
 	var/needed_item_path
 
 	// internal tracking for setup/teardown
-	/// A reference to the currently targeted hud element for HUD highlighting
-	var/atom/movable/screen/hud/_target_hud_element
+	/// A reference to the currently targeted hud elements for HUD highlighting
+	var/list/atom/movable/screen/hud/_target_hud_elements = list()
 	/// Reference to the currently needed item
 	var/obj/item/_needed_item
-	/// A reference to the currently targeted item in the HUD for highlighting
-	var/atom/movable/screen/hud/_target_hud_item
 
 /datum/tutorialStep/newbee/New(datum/tutorial_base/regional/newbee/tutorial)
 	src.newbee_tutorial = tutorial
@@ -349,23 +347,23 @@
 				if(src.region.turf_in_region(T))
 					src.newbee_tutorial.newbee.set_loc(T)
 	if (src.highlight_hud_element && src.highlight_hud_marker)
-		src.highlight_hud()
+		src.highlight_hud(src.highlight_hud_element, src.highlight_hud_marker)
 	if (src.needed_item_path)
-		src.highlight_needed_item()
+		src._needed_item = src.highlight_needed_item(src.needed_item_path)
 
 /datum/tutorialStep/newbee/TearDown()
 	. = ..()
-	src._target_hud_element?.UpdateOverlays(null, "marker")
+	for (var/atom/movable/screen/hud/hud_element in src._target_hud_elements)
+		hud_element?.UpdateOverlays(null, "marker")
 	src._needed_item?.UpdateOverlays(null, "marker")
-	src._target_hud_item?.UpdateOverlays(null, "marker")
 
 /// highlight a specific hud element
-/datum/tutorialStep/newbee/proc/highlight_hud()
-	if (!src.highlight_hud_element || !src.highlight_hud_marker)
+/datum/tutorialStep/newbee/proc/highlight_hud(hud_element, hud_marker)
+	if (!hud_element || !hud_marker)
 		return
 
 	var/image/highlight_image
-	switch(src.highlight_hud_marker)
+	switch(hud_marker)
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY)
 			highlight_image = src.inventory_marker
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP)
@@ -388,87 +386,87 @@
 	if (!highlight_image)
 		return
 
-	for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
-		if (hud_element.id == src.highlight_hud_element)
-			src._target_hud_element = hud_element
+	for (var/atom/movable/screen/hud/element in src.newbee_tutorial.newbee.hud.objects)
+		if (element.id == hud_element)
+			src._target_hud_elements += element
+			element.UpdateOverlays(highlight_image, "marker")
 			break
 
-	src._target_hud_element?.UpdateOverlays(highlight_image, "marker")
-
 /// highlight a needed item, including the inventory slot if on the character
-/datum/tutorialStep/newbee/proc/highlight_needed_item()
-	if (!src.needed_item_path)
+/datum/tutorialStep/newbee/proc/highlight_needed_item(item_path)
+	if (!item_path)
 		return
 
 	var/highlight_target
+	var/obj/item/target_item
 
-	src._needed_item = locate(src.needed_item_path) in src.newbee_tutorial.newbee
-	if (src._needed_item) // item is on newbee
-		if (src._needed_item == src.newbee_tutorial.newbee.l_hand)
+	target_item = locate(item_path) in src.newbee_tutorial.newbee
+	if (target_item) // item is on newbee
+		if (target_item == src.newbee_tutorial.newbee.l_hand)
 			highlight_target = "lhand"
-		else if (src._needed_item == src.newbee_tutorial.newbee.r_hand)
+		else if (target_item == src.newbee_tutorial.newbee.r_hand)
 			highlight_target = "rhand"
-		else if (src._needed_item == src.newbee_tutorial.newbee.l_store)
+		else if (target_item == src.newbee_tutorial.newbee.l_store)
 			highlight_target = "storage1"
-		else if (src._needed_item == src.newbee_tutorial.newbee.l_store)
+		else if (target_item == src.newbee_tutorial.newbee.l_store)
 			highlight_target = "storage2"
-		else if (src._needed_item == src.newbee_tutorial.newbee.back)
+		else if (target_item == src.newbee_tutorial.newbee.back)
 			highlight_target = "back"
-		else if (src._needed_item == src.newbee_tutorial.newbee.belt)
+		else if (target_item == src.newbee_tutorial.newbee.belt)
 			highlight_target = "belt"
-		else if (src._needed_item == src.newbee_tutorial.newbee.wear_id)
+		else if (target_item == src.newbee_tutorial.newbee.wear_id)
 			highlight_target = "id"
-		else if (src._needed_item == src.newbee_tutorial.newbee.back)
+		else if (target_item == src.newbee_tutorial.newbee.back)
 			highlight_target = "back"
-		else if (src._needed_item == src.newbee_tutorial.newbee.shoes)
+		else if (target_item == src.newbee_tutorial.newbee.shoes)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "shoes"
-		else if (src._needed_item == src.newbee_tutorial.newbee.gloves)
+		else if (target_item == src.newbee_tutorial.newbee.gloves)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "gloves"
-		else if (src._needed_item == src.newbee_tutorial.newbee.w_uniform)
+		else if (target_item == src.newbee_tutorial.newbee.w_uniform)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "under"
-		else if (src._needed_item == src.newbee_tutorial.newbee.wear_suit)
+		else if (target_item == src.newbee_tutorial.newbee.wear_suit)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "suit"
-		else if (src._needed_item == src.newbee_tutorial.newbee.glasses)
+		else if (target_item == src.newbee_tutorial.newbee.glasses)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "glasses"
-		else if (src._needed_item == src.newbee_tutorial.newbee.ears)
+		else if (target_item == src.newbee_tutorial.newbee.ears)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "ears"
-		else if (src._needed_item == src.newbee_tutorial.newbee.wear_mask)
+		else if (target_item == src.newbee_tutorial.newbee.wear_mask)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "mask"
-		else if (src._needed_item == src.newbee_tutorial.newbee.head)
+		else if (target_item == src.newbee_tutorial.newbee.head)
 			src.newbee_tutorial.newbee.hud.show_inventory = TRUE
 			src.newbee_tutorial.newbee.hud.update_inventory()
 			highlight_target = "head"
 	else
-		src._needed_item = locate(src.needed_item_path) in REGION_TILES(src.region)
-		if (src._needed_item) // item is in tutorial area
-			src._needed_item.set_loc(get_turf(src.newbee_tutorial.newbee))
+		target_item = locate(item_path) in REGION_TILES(src.region)
+		if (target_item) // item is in tutorial region
+			target_item.set_loc(get_turf(src.newbee_tutorial.newbee))
 		else // item doesn't exist
-			src._needed_item = new src.needed_item_path(get_turf(src.newbee_tutorial.newbee))
-			src.newbee_tutorial.newbee.put_in_hand_or_drop(src._needed_item)
-
+			target_item = new item_path(get_turf(src.newbee_tutorial.newbee))
+			src.newbee_tutorial.newbee.put_in_hand_or_drop(target_item)
 
 	if (highlight_target)
 		for (var/atom/movable/screen/hud/hud_element in src.newbee_tutorial.newbee.hud.objects)
 			if (hud_element.id == highlight_target)
-				src._target_hud_item = hud_element
+				src._target_hud_elements += hud_element
+				hud_element.UpdateOverlays(src.inventory_marker, "marker")
 				break
-		src._target_hud_item?.UpdateOverlays(src.inventory_marker, "marker")
 
-	src._needed_item.UpdateOverlays(src.point_marker, "marker")
+	target_item.UpdateOverlays(src.point_marker, "marker")
+	return target_item
 
 // tutorial step subtypes with common behavior
 
