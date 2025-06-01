@@ -501,9 +501,9 @@
 /datum/tutorialStep/newbee/timer
 /datum/tutorialStep/newbee/timer/SetUp()
 	. = ..()
-	src.newbee_tutorial.tutorial_hud.flick_timer()
+	src.newbee_tutorial.tutorial_hud?.flick_timer()
 	SPAWN (NEWBEE_TUTORIAL_TIMER_DURATION)
-		if (src.tutorial.current_step <= length(src.tutorial.steps) && (src.tutorial.steps[src.tutorial.current_step] == src))
+		if (src.tutorial && !QDELETED(src.tutorial) && src.tutorial.current_step <= length(src.tutorial.steps) && (src.tutorial.steps[src.tutorial.current_step] == src))
 			src.tutorial.Advance()
 
 /datum/tutorialStep/newbee/timer/TearDown()
