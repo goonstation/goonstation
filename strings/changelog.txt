@@ -1,6 +1,7 @@
 
 (t)sat may 31 25
 (u)LeahTheTech
+(+)All concussive charges can now break geodes (if they're soft enough)
 (p)23646
 (e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
 (*)Manifolds can now rupture and be reinforced just like regular pipes.
