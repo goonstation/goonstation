@@ -9460,7 +9460,7 @@
 /area/station/hallway/secondary/exit)
 "efs" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market{
 	name = "Seating Area"
@@ -12112,7 +12112,7 @@
 /area/station/hallway/primary/south)
 "fqh" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -16492,7 +16492,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
 "hsq" = (
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "hsH" = (
@@ -31320,7 +31320,7 @@
 /turf/space,
 /area/space)
 "nRj" = (
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/market{
 	name = "Seating Area"
@@ -36455,9 +36455,9 @@
 "qjb" = (
 /obj/storage/crate,
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/popcorn,
-/obj/item/reagent_containers/food/snacks/popcorn,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
+/obj/item/kitchen/popcorn_box,
+/obj/item/kitchen/popcorn_box,
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
@@ -48266,7 +48266,7 @@
 	pixel_y = -24
 	},
 /obj/table/reinforced,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /obj/machinery/light,
 /turf/simulated/floor/red,
 /area/station/security/processing)

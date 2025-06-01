@@ -15487,7 +15487,7 @@
 /area/station/security/brig)
 "fie" = (
 /obj/table/wood,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /obj/item/spraybottle/cleaner{
 	pixel_x = -5;
 	pixel_y = 7

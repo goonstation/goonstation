@@ -43461,7 +43461,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start/job/detective,
-/obj/item/reagent_containers/food/snacks/popcorn{
+/obj/item/kitchen/popcorn_box{
 	desc = "Those chickens are up to something...";
 	name = "suspicious popcorn"
 	},

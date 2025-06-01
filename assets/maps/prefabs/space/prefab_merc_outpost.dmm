@@ -688,7 +688,7 @@
 /area/prefab/merc_outpost)
 "XU" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/simulated/floor/airless/carpet/grime,
 /area/prefab/merc_outpost)
 "YQ" = (

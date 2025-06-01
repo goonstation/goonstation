@@ -102,7 +102,6 @@ TYPEINFO(/obj/machinery/microwave)
 	src.available_recipes += new /datum/recipe/donkpocket(src)
 	src.available_recipes += new /datum/recipe/donkpocket_warm(src)
 	src.available_recipes += new /datum/recipe/pie(src)
-	src.available_recipes += new /datum/recipe/popcorn(src)
 	UnsubscribeProcess()
 
 /**

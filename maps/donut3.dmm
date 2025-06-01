@@ -35758,7 +35758,7 @@
 /area/station/hydroponics/bay)
 "kXR" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/popcorn{
+/obj/item/kitchen/popcorn_box{
 	desc = "It's a little stale...";
 	name = "old popcorn";
 	pixel_x = -6;
@@ -40648,7 +40648,7 @@
 /obj/item/device/multitool{
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mws" = (
