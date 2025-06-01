@@ -864,6 +864,7 @@
 
 	TearDown()
 		. = ..()
+		src.newbee_tutorial.newbee.delStatus("burning")
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP)
 
 /datum/tutorialStep/newbee/item_pickup/fire_first_aid
