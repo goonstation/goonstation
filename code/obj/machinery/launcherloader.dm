@@ -177,7 +177,7 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(M)) continue
+				if(M == src || M.anchored || HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
