@@ -416,6 +416,10 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon_state = "machopants"
 	item_state = "machopants"
 
+	New()
+		. = ..()
+		AddComponent(/datum/component/toggle_underwear)
+
 	random_color
 		icon_state = "machopants_base"
 		item_state = "machopants_base"

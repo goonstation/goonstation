@@ -1957,6 +1957,10 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	icon_state = "westerndress"
 	item_state = "westerndress"
 
+	New()
+		. = ..()
+		AddComponent(/datum/component/toggle_underwear)
+
 //Crate Loot
 /obj/item/clothing/under/misc/tiedye
     name = "tiedye shirt"
