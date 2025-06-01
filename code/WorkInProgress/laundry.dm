@@ -259,7 +259,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
 			M.set_loc(src)
 			src.open = 0
-			UpdateIcon()
+			src.on = 1
+			src.occupant = M
+			src.cycle = PRE
+			src.cycle_max = CYCLE_TIME_MOB_INSIDE
+			src.UpdateIcon()
+			if (!processing_items.Find(src))
+				processing_items.Add(src)
 	else
 		return ..()
 
