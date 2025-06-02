@@ -222,7 +222,7 @@
 
 /datum/tutorialStep/newbee/flush_disposals
 	name = "Object Interation"
-	instructions = "With an open hand, <b>Click</b> the disposals unit to open up its UI.<br>Then, <b>click</b> the Flush button to dispose of the can."
+	instructions = "With an empty hand, <b>Click</b> the disposals unit to open up its UI.<br>Then, <b>click</b> the Flush button to dispose of the can."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	step_area = /area/tutorial/newbee/room_3
 
@@ -742,7 +742,7 @@
 
 /datum/tutorialStep/newbee/hand_swap
 	name = "Swapping Hands"
-	instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>E</b> or <b>middle-mouse click</b> to swap hands."
+	instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>E</b> or <b>middle-mouse click</b> to swap hands."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -752,7 +752,7 @@
 	New()
 		. = ..()
 		var/swaphand = src.keymap.action_to_keybind("swaphand")
-		src.instructions = "Only one hand can be active at a time. You need an open hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
+		src.instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
 
 	SetUp()
 		. = ..()
@@ -1040,7 +1040,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/flashlight
 	name = "Exploring Darkness"
-	instructions = "The next area has no lights.<br>Pick up the flashlight to help you navigate."
+	instructions = "The next area has no lights.<br>Pick up the flashlight with an empty hand to help you navigate."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_7
 
@@ -1092,14 +1092,14 @@
 // TODO: detection ?
 /datum/tutorialStep/newbee/timer/stats_before
 	name = "Character Stats"
-	instructions = "You can see your current character stats by pressing the STAT button in the HUD.<br>Note your cold resistance - space will freeze you to death in your current state!"
+	instructions = "Press the STAT button in the HUD to show your current stats.<br>Note your cold resistance - space will freeze you to death in your current state!"
 	step_area = /area/tutorial/newbee/room_9
 	highlight_hud_element = "stats"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
 
 /datum/tutorialStep/newbee/opening_closets
 	name = "Emergency Closets"
-	instructions = "Closets contain specialized gear.<br>Open the emergency supply closet by <b>clicking</b> on it."
+	instructions = "Closets contain specialized gear, and this one contains a space suit.<br>Open the emergency supply closet by <b>clicking</b> on it with an empty hand."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_9
 
@@ -1530,7 +1530,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/wrench
 	name = "Removing the Girder"
-	instructions = "With the wall sliced open, all that remains is a girder. As before, you'll need a wrench.<br><b>Click</b> the wrench to pick it up."
+	instructions = "With the wall sliced open, all that remains is a girder. As before, you'll need a wrench.<br><b>Click</b> the wrench with an empty hand to pick it up."
 	step_area = /area/tutorial/newbee/room_12
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_WRENCH
