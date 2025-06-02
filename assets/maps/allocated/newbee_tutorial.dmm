@@ -59,7 +59,7 @@
 "bZ" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/disposalpipe/segment/vertical,
-/mob/living/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen/tutorial,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "cn" = (
