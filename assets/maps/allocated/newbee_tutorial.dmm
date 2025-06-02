@@ -1176,6 +1176,18 @@
 	dir = 5
 	},
 /area/tutorial/newbee/room_11)
+"Xd" = (
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_y = 31
+	},
+/obj/machinery/light/emergencyflashing{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/yellow/checker{
+	dir = 1
+	},
+/area/tutorial/newbee/room_13)
 "Xs" = (
 /turf/unsimulated/floor/darkpurpleblack,
 /area/tutorial/newbee/room_12)
@@ -1510,7 +1522,7 @@ cE
 wD
 BB
 wD
-so
+Xd
 wD
 Oa
 Oa
