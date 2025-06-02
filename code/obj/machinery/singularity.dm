@@ -201,7 +201,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	. = ..()
 
-/obj/machinery/the_singularity/process(mult)
+/obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
 	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
 		src.visible_message(SPAN_NOTICE("Something about this place makes [src] wither and implode."))
@@ -228,7 +228,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN(2 SECONDS * mult) // slowing this baby down a little -drsingh // smooth movement
+		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
@@ -291,7 +291,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/next_dir = pick(alldirs)
 		if (!src.target_turf)
 			src.target_turf = get_random_station_turf()
-		if (src.target_turf_counter)
+		if (src.target_turf_counter > 0)
 			src.target_turf_counter--
 			next_dir = get_dir_accurate(src, src.target_turf)
 		else
