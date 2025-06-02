@@ -31,7 +31,6 @@
 
 	if (id)
 		if (id in simple_light_rgbas)
-			//simple_light_rgbas -= simple_light_rgbas[id]
 			simple_light_rgbas.Remove(id)
 	else
 		simple_light_rgbas.len = 0
@@ -47,15 +46,17 @@
 	var/avg_b = 0
 	var/sum_a = 0
 
-	for (var/id in simple_light_rgbas)
-		avg_r += simple_light_rgbas[id][1]
-		avg_g += simple_light_rgbas[id][2]
-		avg_b += simple_light_rgbas[id][3]
-		sum_a += simple_light_rgbas[id][4]
+	for (var/id in simple_light_rgbas) //waiting for 516 so i can change this shit to be associative weh
+		var/list/L = simple_light_rgbas[id]
+		avg_r += L[1]
+		avg_g += L[2]
+		avg_b += L[3]
+		sum_a += L[4]
 
-	avg_r /= length(simple_light_rgbas)
-	avg_g /= length(simple_light_rgbas)
-	avg_b /= length(simple_light_rgbas)
+	var/length = length(simple_light_rgbas)
+	avg_r /= length
+	avg_g /= length
+	avg_b /= length
 	sum_a = min(255,sum_a)
 
 	simple_light.color = list(avg_r, avg_g, avg_b, sum_a)
@@ -86,13 +87,14 @@
 	if (simple_light)
 		destroy_simple_light()
 
+/* ---------------------- Medium Lightz -------------------------*/
 
-/atom/movable/light/simple_light/medium/medium
+/atom/movable/light/simple_light/medium
 	icon_state = "medium_dir"
-	New(loc, dir=0)
+	New(loc, direction=0)
 		..()
-		src.dir = dir //nothing will care about whether or not light rotates, so why spend precious time calling set_dir()?
-		switch(dir)
+		src.dir = direction //nothing will care about whether or not light rotates, so why spend precious time calling set_dir()?
+		switch(direction)
 			if(NORTH)
 				pixel_y += 32
 			if(SOUTH)
@@ -154,14 +156,16 @@
 	var/sum_a = 0
 
 	for (var/id in medium_light_rgbas)
-		avg_r += medium_light_rgbas[id][1]
-		avg_g += medium_light_rgbas[id][2]
-		avg_b += medium_light_rgbas[id][3]
-		sum_a += medium_light_rgbas[id][4]
+		var/list/L = medium_light_rgbas[id]
+		avg_r += L[1]
+		avg_g += L[2]
+		avg_b += L[3]
+		sum_a += L[4]
 
-	avg_r /= length(medium_light_rgbas)
-	avg_g /= length(medium_light_rgbas)
-	avg_b /= length(medium_light_rgbas)
+	var/length = length(medium_light_rgbas)
+	avg_r /= length
+	avg_g /= length
+	avg_b /= length
 	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
 	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a / 2)) // divided by two because the directional sprites are brighter
 	for(var/atom/movable/light/simple_light/medium/medium_light in src.medium_lights)
@@ -216,9 +220,7 @@
 		else
 			src:vis_contents += light
 
-
-
-
+/* ---------------------- Medium Directional Lightz -------------------------*/
 
 /atom/movable/light/simple_light/medium/directional
 	icon_state = "medium_dir"
@@ -275,15 +277,17 @@
 	var/avg_b = 0
 	var/sum_a = 0
 
-	for (var/id in mdir_light_rgbas)
-		avg_r += mdir_light_rgbas[id][1]
-		avg_g += mdir_light_rgbas[id][2]
-		avg_b += mdir_light_rgbas[id][3]
-		sum_a += mdir_light_rgbas[id][4]
+	for (var/id in medium_light_rgbas)
+		var/list/L = mdir_light_rgbas[id]
+		avg_r += L[1]
+		avg_g += L[2]
+		avg_b += L[3]
+		sum_a += L[4]
 
-	avg_r /= length(mdir_light_rgbas)
-	avg_g /= length(mdir_light_rgbas)
-	avg_b /= length(mdir_light_rgbas)
+	var/length = length(mdir_light_rgbas)
+	avg_r /= length
+	avg_g /= length
+	avg_b /= length
 
 	var/list/unscaled = list(avg_r, avg_g, avg_b, min(255, sum_a))
 	var/list/scaled = list(avg_r, avg_g, avg_b, min(255, sum_a * 0.4))
@@ -381,6 +385,7 @@
 
 		src:vis_contents += light
 
+/* ---------------------- "Smart" Lightz -------------------------*/
 
 /atom/proc/add_sm_light(id, list/rgba, medium=null, directional=null)
 	if(isnull(medium)) // medium = choose automatically whether to use simple or medium

@@ -20,7 +20,7 @@
 	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
 /atom/movable/light
-	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 	anchored = ANCHORED_ALWAYS
 	pass_unstable = FALSE
 	mouse_opacity = 0
@@ -32,13 +32,6 @@
 	density = FALSE
 
 	meteorhit(obj/M)
-		return
-
-	ex_act(severity)
-		return
-
-	track_blood()
-		src.tracked_blood = null
 		return
 
 /area
