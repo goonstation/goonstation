@@ -75,7 +75,7 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = get_weakref(src)
-		if (!istype(W, /obj/item/tinyhammer/wrestling))
+		if (istype(W, /obj/item/tinyhammer/wrestling))
 			if (user.a_intent != "harm")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50)
 				src.put_back_hammer()
