@@ -258,17 +258,27 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
 			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
 			M.set_loc(src)
-			src.open = 0
-			src.on = 1
+			M.changeStatus("knockdown", 1.5 SECONDS)
 			src.occupant = M
+			src.open = 0
 			src.cycle = PRE
-			src.cycle_max = CYCLE_TIME_MOB_INSIDE
-			src.UpdateIcon()
+			cycle_max = CYCLE_TIME_MOB_INSIDE
 			if (!processing_items.Find(src))
 				processing_items.Add(src)
+			UpdateIcon()
 	else
 		return ..()
 
+/obj/submachine/laundry_machine/relaymove(mob/user as mob)
+	if (src.occupant == user)
+		if (!can_act(user))
+			return
+		user.set_loc(src.loc)
+		src.occupant = null
+		src.open = 1
+		src.UpdateIcon()
+		cycle_max = CYCLE_TIME
+		playsound(src, 'sound/machines/click.ogg', 50)
 
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
