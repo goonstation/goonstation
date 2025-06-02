@@ -5167,7 +5167,6 @@
 /area/station/crew_quarters/catering)
 "ard" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/juicer,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
