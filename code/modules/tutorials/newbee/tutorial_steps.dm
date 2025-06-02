@@ -671,7 +671,7 @@
 
 /datum/tutorialStep/newbee/move_to/exit_intents
 	name = "Healing Up"
-	instructions = "Your health is displayed in the top-right corner. As you can see, you've taken some damage.<br>Head into the next room to patch yourself up."
+	instructions = "Your health is displayed in the top-right corner - you've taken some damage!<br>Head into the next room to patch yourself up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -691,7 +691,7 @@
 
 /datum/tutorialStep/newbee/move_to/damage_types
 	name = "Damage Types"
-	instructions = "There are four types of damage that count towards your total health: Brute, Burn, Toxin, and Oxygen.<br>Floor health"
+	instructions = "Your total health is combined from four damage types: Brute, Burn, Toxin, and Oxygen.<br>Floor health scanners will display how mcuh damage you've taken in each category."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -700,7 +700,7 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		src.instructions = "There are four types of damage that all contribute to your total health:<br>[TEXT_HEALTH_BRUTE], [TEXT_HEALTH_BURN], [TEXT_HEALTH_TOXIN], and [TEXT_HEALTH_OXY]."
+		src.instructions = "Your total health is combined from four damage types: [TEXT_HEALTH_BRUTE], [TEXT_HEALTH_BURN], [TEXT_HEALTH_TOXIN], and [TEXT_HEALTH_OXY].<br>Floor health scanners will display how mcuh damage you've taken in each category."
 
 /datum/tutorialStep/newbee/item_pickup/brute_first_aid
 	name = "First Aid Kits"
