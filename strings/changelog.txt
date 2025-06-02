@@ -1,4 +1,9 @@
 
+(t)mon jun 02 25
+(u)LorrMaster
+(p)23669
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Synth legs will now passively absorb reagents. Shoes prevent the effect in shallow fluids. An additional chem protection of 40% prevents it while submerged.
 (t)sun jun 01 25
 (u)glowbold
 (p)23591

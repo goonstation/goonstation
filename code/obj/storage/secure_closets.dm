@@ -947,7 +947,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_bar)
 	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
-	/obj/item/storage/box/glassbox)
+	/obj/item/storage/box/glassbox,\
+	/obj/item/reagent_containers/food/drinks/juicer)
 
 /obj/storage/secure/closet/civilian/chaplain
 	name = "\improper Religious supplies locker"
