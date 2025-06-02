@@ -94,6 +94,7 @@ TYPEINFO(/obj/loudspeaker)
 	icon_state = "loudspeaker"
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()
