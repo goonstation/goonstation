@@ -372,7 +372,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "oQ" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -429,7 +429,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "qI" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "stairs_middle"
@@ -744,7 +744,7 @@
 /area/centcom/outside)
 "AG" = (
 /obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
@@ -803,7 +803,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "BQ" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -1265,7 +1265,7 @@
 /area/centcom/outside)
 "Ra" = (
 /obj/machinery/light/small/floor,
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
@@ -1462,7 +1462,7 @@
 	},
 /area/centcom/outside)
 "Xn" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "Xs" = (

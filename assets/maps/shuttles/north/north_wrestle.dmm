@@ -388,7 +388,7 @@
 	},
 /area/centcom/outside)
 "jE" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "kc" = (
@@ -720,7 +720,7 @@
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/outside)
 "va" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -747,7 +747,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zk" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,

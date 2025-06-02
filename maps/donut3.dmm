@@ -33809,7 +33809,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "kri" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,

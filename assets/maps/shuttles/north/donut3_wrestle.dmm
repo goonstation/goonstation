@@ -387,7 +387,7 @@
 	},
 /area/centcom/outside)
 "jE" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/window/reinforced/east,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
@@ -717,7 +717,7 @@
 /turf/unsimulated/floor/stairs/dark,
 /area/centcom/outside)
 "va" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -748,7 +748,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zk" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -1441,7 +1441,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "Xg" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/window/reinforced/west,
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)

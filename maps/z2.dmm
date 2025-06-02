@@ -36747,7 +36747,7 @@
 	},
 /area/owlery/owleryhall)
 "cJa" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/gym,
@@ -53919,7 +53919,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSH" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/gym,

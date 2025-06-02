@@ -17388,7 +17388,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "drp" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/grey{
@@ -50140,7 +50140,7 @@
 /area/station/crew_quarters/stockex)
 "wDk" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,

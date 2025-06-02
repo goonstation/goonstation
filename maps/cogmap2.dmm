@@ -8238,7 +8238,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
 "azI" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/stool,
@@ -8257,7 +8257,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "azK" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/black{

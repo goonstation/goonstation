@@ -5474,7 +5474,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "avT" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{

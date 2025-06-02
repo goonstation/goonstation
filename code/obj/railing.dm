@@ -117,6 +117,8 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
+		if (istype(src, /obj/railing/wrestling))
+			return
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
@@ -251,7 +253,7 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/decal/boxingropeenter, /obj/sec_tape,)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/railing/wrestling, /obj/sec_tape,)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner

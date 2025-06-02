@@ -3921,7 +3921,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aGj" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
