@@ -898,8 +898,7 @@
 		for (var/obj/item/reagent_containers/patch/mini/burn/patch in src._target_item.contents)
 			patch_count++
 		if (patch_count < 1)
-			src.patch_to_apply = new /obj/item/reagent_containers/patch/mini/burn
-			src._target_item.storage.add_contents(src.patch_to_apply)
+			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/mini/burn)
 
 /datum/tutorialStep/newbee/apply_fire_patch
 	name = "Applying Patches"
