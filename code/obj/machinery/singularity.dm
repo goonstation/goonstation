@@ -289,21 +289,23 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/list/vector = src.calc_direction()
 		var/next_dir = pick(alldirs)
-		if (!src.target_turf)
-			src.target_turf = get_random_station_turf()
-		if (src.target_turf_counter > 0)
-			src.target_turf_counter--
-			next_dir = get_dir_accurate(src, src.target_turf)
-		else
-			if (prob(20))
+
+		if (src.target_turf_counter <= 0)
+			if (prob(20)) // drift towards a random station turf for a few steps
 				src.target_turf = get_random_station_turf()
 				src.target_turf_counter = rand(3,7)
+		else
+			if (!src.target_turf)
+				src.target_turf = get_random_station_turf()
+			src.target_turf_counter--
+			next_dir = get_dir_accurate(src, src.target_turf)
 
 		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
 		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
 			var/angle = arctan(vector[2], vector[1])
 			next_dir = angle2dir(angle)
 
+		// don't cross containment fields
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
 			var/turf/checkloc = get_ranged_target_turf(src.get_center(), next_dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
