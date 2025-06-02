@@ -204,9 +204,17 @@
 
 /// Crusher that doesn't qdel the tutorial mob
 /obj/machinery/crusher/slow/tutorial
+	start_crushing(atom/movable/AM)
+		. = ..()
+		if (istype(AM, /mob/living/carbon/human/tutorial))
+			var/mob/M = AM
+			boutput(M, SPAN_ALERT("<b>Uh oh, that was a bad idea... good thing this is all a simulation, right?</b>"))
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "tutorial_crusher")
+
 	finish_crushing(atom/movable/AM)
 		if (istype(AM, /mob/living/carbon/human/tutorial))
 			var/mob/M = AM
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "tutorial_crusher")
 			M.temp_flags &= ~BEING_CRUSHERED
 			M.gib() // don't qdel the tutorial mob
 			return

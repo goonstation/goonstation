@@ -71,7 +71,7 @@
 
 		src.full_heal()
 		src.temp_flags &= ~BEING_CRUSHERED
-		boutput(src, SPAN_ALERT("Whoa, you almost died! Let's try that again..."))
+		boutput(src, SPAN_ALERT("<b>Whoa, you almost died! Let's try that again...</b>"))
 	else
 		. = ..(gibbed)
 
