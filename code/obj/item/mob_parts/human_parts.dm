@@ -933,6 +933,7 @@
 			set_loc(holder)
 		..()
 
+
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "arm_left_plant_bloom"
