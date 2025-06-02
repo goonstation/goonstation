@@ -412,8 +412,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					var/egg = pick(eggs_weak)
 					if (ispath(egg))
 						src.storage.add_contents(new egg(src))
-					for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
-						E.infertile = TRUE
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
 
 			if (11) // strong power eggs
 				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
