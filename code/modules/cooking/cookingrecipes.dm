@@ -1572,11 +1572,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 		var/found2 = 0
 		for (var/obj/item/T in ourCooker.contents)
 
-			if (T.type == ingredients[1] && !found1)
+			if (!found1 && istype(T, ingredients[1]))
 				found1 = TRUE
 				continue
 
-			if (T.type == ingredients[2] && !found2)
+			if (!found2 && istype( T, ingredients[2]))
 				found2 = TRUE
 				continue
 
