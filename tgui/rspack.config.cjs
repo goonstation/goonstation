@@ -102,6 +102,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.(png|jpg)$/,
+          // type: 'asset/resource',
           use: [
             {
               loader: require.resolve('url-loader'),
