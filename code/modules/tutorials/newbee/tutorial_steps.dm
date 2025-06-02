@@ -716,7 +716,7 @@
 	SetUp()
 		. = ..()
 		var/patch_count = 0
-		for (var/obj/item/reagent_containers/patch/bruise/patch in src._target_item.contents)
+		for (var/obj/item/reagent_containers/patch/mini/bruise/patch in src._target_item.contents)
 			patch_count++
 		if (patch_count < 1)
 			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/mini/bruise)
@@ -788,6 +788,9 @@
 
 	SetUp()
 		. = ..()
+		// clear burning if heading backwards through steps
+		src.newbee_tutorial.newbee.delStatus("burning")
+
 		var/patch_count = 0
 		for (var/obj/item/reagent_containers/patch/mini/bruise/patch in src._needed_item.contents)
 			src.patch_to_apply = patch
@@ -1055,7 +1058,7 @@
 
 /datum/tutorialStep/newbee/item_pickup/flashlight
 	name = "Exploring Darkness"
-	instructions = "The next area has no lights.<br>Pick up the flashlight with an empty hand to help you navigate."
+	instructions = "The maintenance tunnel ahead has no lights.<br>Pick up the flashlight with an empty hand to help you navigate."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_7
 
@@ -1114,7 +1117,7 @@
 
 /datum/tutorialStep/newbee/opening_closets
 	name = "Emergency Closets"
-	instructions = "Closets contain specialized gear, and this one contains a space suit.<br>Open the emergency supply closet by <b>clicking</b> on it with an empty hand."
+	instructions = "Closets contain specialized gear; this one contains a space suit.<br>Open the emergency supply closet by <b>clicking</b> on it with an empty hand."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_9
 
@@ -1629,7 +1632,7 @@
 
 /datum/tutorialStep/newbee/walking
 	name = "Whoa, Careful!"
-	instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>-</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."
+	instructions = "Some things on the ground can make you slip while running, like that banana peel!<br>Press <b>-</b> or <b>click</b> the Run/Walk HUD button to walk and past the banana peel."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	highlight_hud_element = "mintent"
@@ -1640,7 +1643,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/walk = src.keymap.action_to_keybind("walk")
-		src.instructions = "Some things on the ground can make you slip, like that banana peel!<br>Press <b>[walk]</b> or <b>click</b> the Run/Walk HUD button to not slip on banana peels."
+		src.instructions = "Some things on the ground can make you slip while running, like that banana peel!<br>Press <b>[walk]</b> or <b>click</b> the Run/Walk HUD button to walk past the banana peel."
 
 	SetUp(manually_selected)
 		. = ..()
