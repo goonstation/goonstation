@@ -7,7 +7,7 @@
 		parent = null
 		..()
 
-/obj/item/wrestlingbell/hammer
+/obj/item/tinyhammer/wrestling
 	name = "tiny bell hammer"
 	desc = "Notorious violent cousin of teeny tiny hammer."
 	icon = 'icons/obj/wrestlingbell.dmi'
@@ -21,6 +21,7 @@
 	stamina_damage = 33
 	stamina_cost = 18
 	stamina_crit_chance = 10
+	var/obj/machinery/wrestlingbell/parent
 
 /obj/machinery/wrestlingbell // this is essentially a renamed mounted defib
 	name = "Wrestling bell"
@@ -33,12 +34,13 @@
 	icon_state = "wrestlingbell1"
 	var/last_ring = 0
 	/// tiny hammer when taken out
-	var/obj/item/wrestlingbell/hammer/hammer = null
+	var/obj/item/tinyhammer/wrestling/hammer = null
 
 	New()
 		..()
 		if (!hammer)
-			src.hammer = new /obj/item/wrestlingbell/hammer(src)
+			src.hammer = new /obj/item/tinyhammer/wrestling(src)
+			src.hammer.parent = src
 		RegisterSignal(src.hammer, COMSIG_MOVABLE_MOVED, PROC_REF(hammer_move))
 
 	disposing()
@@ -73,12 +75,13 @@
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = get_weakref(src)
-		if (user.a_intent != "harm")
-
-			src.put_back_hammer()
-			return
-		else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
-			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+		if (!istype(W, /obj/item/tinyhammer/wrestling))
+			if (user.a_intent != "harm")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50)
+				src.put_back_hammer()
+				return
+			else if (!ON_COOLDOWN(src, "bell", 10 SECONDS))
+				playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 	/// snap back if too far away
 	proc/hammer_move()
