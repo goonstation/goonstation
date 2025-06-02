@@ -255,7 +255,7 @@
 				)
 			)
 
-	for (var/former_role in mind.former_antagonist_roles)
+	for (var/former_role in uniquelist(mind.former_antagonist_roles))
 		src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA] += list(list(
 			"antagonist_role" = capitalize(special_role_to_english(former_role)),
 			"real_name" = mind.current.real_name,

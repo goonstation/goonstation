@@ -411,6 +411,10 @@
 			if (P.proj_data && src.proj_data && P.proj_data.type != src.proj_data.type) //ignore collisions with me own subtype
 				src.collide(A)
 
+	Exited(Obj, newloc)
+		. = ..()
+		src.proj_data?.on_exited(src, Obj)
+
 	proc/collide_with_applicable_in_tile(var/turf/T)
 		var/i = 0
 		for(var/thing as mob|obj|turf|area in T)
@@ -802,6 +806,8 @@ ABSTRACT_TYPE(/datum/projectile)
 		on_pointblank(var/obj/projectile/O, var/mob/target)
 			return
 		on_end(var/obj/projectile/O)
+			return
+		on_exited(var/obj/projectile/O, atom/movable/AM)
 			return
 		on_max_range_die(var/obj/projectile/O)
 			return

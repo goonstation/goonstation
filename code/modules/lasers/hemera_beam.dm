@@ -1,7 +1,7 @@
 /obj/linked_laser/h7_beam
 	name = "energy beam"
 	desc = "A rather threatening beam of photons!"
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/lasers/hemera_beam.dmi'
 	icon_state = "h7beam1"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	///How dangerous is this beam, anyhow? 1-5. 1-3 cause minor teleport hops and radiation damage, 4 tends to deposit people in a place separate from their stuff (or organs), and 5 tears their molecules apart
@@ -68,7 +68,7 @@
 /obj/linked_laser/h7_beam/proc/hit(atom/movable/AM)
 	var/power = src.get_power()
 
-	if (isobj(AM) && !istypes(AM, list(/obj/effects, /obj/overlay, /obj/laser_sink)))
+	if (isobj(AM) && !istypes(AM, list(/obj/effects, /obj/overlay, /obj/laser_sink, /obj/linked_laser)))
 		telehop(AM, power, power > 2)
 		return
 

@@ -16,6 +16,11 @@
 	power_used = 0
 	system = "Engine"
 	icon_state = "engine-1"
+	var/image/engine_icon = null
+	var/startup_time = 0.8 SECONDS // Currently visual only
+
+	get_install_slot()
+		return POD_PART_ENGINE
 
 	get_desc()
 		return "Rated for [src.powergenerated] units of continuous power output."
@@ -28,6 +33,12 @@
 			return
 		ship.powercapacity = src.powergenerated
 		src.ship.speedmod *= src.engine_speed
+
+		// ----- Startup sequence -----
+		if(src.engine_icon) // Vehicles might not have an engine overlay
+			src.engine_icon.icon_state = "[src.icon_state]-start"
+			ship.UpdateOverlays(src.engine_icon, "engine")
+			spawn(src.startup_time) src.startup_finished()
 		return
 	////Warp requires recharge time
 	ready()
@@ -40,9 +51,13 @@
 			src.ship.speedmod /= src.engine_speed
 		..()
 		ship.powercapacity = 0
-		for(var/obj/item/shipcomponent/S in ship.components)
-			if(S.active)
-				S.deactivate()
+		for(var/part_slot in ship.installed_parts)
+			var/obj/item/shipcomponent/part = ship.get_part(part_slot)
+			if(part?.active)
+				part.deactivate()
+		if(src.engine_icon)
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+			ship.UpdateOverlays(src.engine_icon, "engine")
 		return
 
 	opencomputer(mob/user as mob)
@@ -66,11 +81,35 @@
 		onclose(user, "ship_engine")
 		return
 
+	ship_install()
+		if(istype(src.ship, /obj/machinery/vehicle/pod_smooth))
+			src.engine_icon = image('icons/effects/64x64.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		else if(istype(src.ship, /obj/machinery/vehicle/miniputt) || istype(src.ship, /obj/machinery/vehicle/escape_pod) || istype(src.ship, /obj/machinery/vehicle/pod_wars_dingy))
+			src.engine_icon = image('icons/obj/ship.dmi', "[src.icon_state]-off")
+			ship.AddOverlays(engine_icon, "engine")
+		..()
+
+	ship_uninstall()
+		ship.ClearSpecificOverlays("engine")
+		src.engine_icon = null // In case the next vehicle does not have an engine overlay
+		..()
+
+	proc/startup_finished()
+		if(!src.ship || !src.engine_icon)
+			return
+		if(src.active)
+			src.engine_icon.icon_state = "[src.icon_state]-on"
+		else
+			src.engine_icon.icon_state = "[src.icon_state]-off"
+		src.ship.UpdateOverlays(src.engine_icon, "engine")
+
+
 /obj/item/shipcomponent/engine/proc/Wormhole()
 	if (wormholeQueued || warprecharge == -1)
 		return
 	//check for sensors, maybe communications too?
-	var/obj/item/shipcomponent/sensor/S = ship.sensors
+	var/obj/item/shipcomponent/sensor/S = ship.get_part(POD_PART_SENSORS)
 	if (istype(S))
 		if (!S.active)
 			boutput(usr, "[ship.ship_message("Sensors inactive! Unable to calculate warp trajectory!")]")
@@ -105,7 +144,8 @@
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 		if(W.encrypted)
-			if(QDELETED(ship.com_system) || !(W.encrypted in ship.com_system.access_type))
+			var/obj/item/shipcomponent/communications/comms_part = ship.get_part(POD_PART_COMMS)
+			if(QDELETED(comms_part) || !(W.encrypted in comms_part.access_type))
 				continue
 		count[W.name]++
 		beacons["[W.name][count[W.name] == 1 ? null : " #[count[W.name]]"]"] = W
@@ -225,3 +265,4 @@
 	desc = "This engine can probably make a warp jump. Once."
 	warprecharge = 20 MINUTES
 	portaldelay = 0 SECONDS
+	icon_state = "engine-esc"

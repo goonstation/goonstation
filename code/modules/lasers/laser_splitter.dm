@@ -4,7 +4,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 				"reflective" = 30)
 /obj/laser_sink/splitter
 	name = "beam splitter"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/lasers/laser_devices.dmi'
 	icon_state = "laser_splitter"
 	density = 1
 	var/obj/linked_laser/left = null

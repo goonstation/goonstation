@@ -95,10 +95,12 @@ TYPEINFO(/mob/dead/target_observer)
 
 			var/mob/living/M = src.target
 			src.target = null
-			M.removeOverlaysClient(src.client)
-			for (var/datum/hud/hud in M.huds)
-				src.detach_hud(hud)
 			if(istype(M))
+				M.removeOverlaysClient(src.client)
+
+				for (var/datum/hud/hud in M.huds)
+					src.detach_hud(hud)
+
 				LAZYLISTREMOVE(M.observers, src)
 
 		if(!target) //Uh oh, something went wrong here. Act natural and return the user to a regular ghost.

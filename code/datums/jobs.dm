@@ -3078,6 +3078,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			C.assignment = "Staff Assistant"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 
+			M.job = "Staff Assistant" // for observers
+
 			var/obj/item/device/pda2/pda = locate() in M
 			pda.assignment = "Staff Assistant"
 			pda.ownerAssignment = "Staff Assistant"

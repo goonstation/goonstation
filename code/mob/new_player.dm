@@ -266,6 +266,7 @@ TYPEINFO(/mob/new_player)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						S.job = "Cyborg"
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()

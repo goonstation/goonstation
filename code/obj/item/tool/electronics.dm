@@ -919,7 +919,7 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = 0
+	tool_flags = TOOL_DECONSTRUCTING
 	w_class = W_CLASS_NORMAL
 
 

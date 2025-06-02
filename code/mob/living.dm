@@ -553,18 +553,20 @@ TYPEINFO(/mob/living)
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
+			var/obj/item/shipcomponent/secondary_system/sec_part = ship.get_part(POD_PART_SECONDARY)
 			if (ship.pilot == src)
-				if (ship.sensors)
-					if (ship.sensors.active)
+				var/obj/item/shipcomponent/sensor/sensors_part = ship.get_part(POD_PART_SENSORS)
+				if (sensors_part)
+					if (sensors_part.active)
 						var/obj/machinery/vehicle/target_pod = target
 						if (src.loc != target_pod && istype(target_pod))
-							ship.sensors.end_tracking()
-							ship.sensors.quick_obtain_target(target_pod)
+							sensors_part.end_tracking()
+							sensors_part.quick_obtain_target(target_pod)
 					else
 						if (istype(target, /obj/machinery/vehicle))
 							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
-			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
-				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+			else if (istype(sec_part, /obj/item/shipcomponent/secondary_system/gunner_support) && sec_part.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = sec_part
 				support_gunner.fire_at(target, src)
 
 

@@ -142,8 +142,9 @@
 					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
-			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
-				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/sec_part = V.get_part(POD_PART_SECONDARY)
+			if (istype(sec_part, /obj/item/shipcomponent/secondary_system/orescoop))
+				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = sec_part
 				if (length(SCOOP.contents) >= SCOOP.capacity || !src.scoopable)
 					return
 				var/max_stack_reached = FALSE
