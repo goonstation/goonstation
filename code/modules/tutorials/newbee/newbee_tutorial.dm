@@ -91,47 +91,47 @@
 
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_EMPTY = "")
 
-	var/up = src.keymap.action_to_keybind(KEY_FORWARD) || "W"
-	var/left = src.keymap.action_to_keybind(KEY_LEFT) || "A"
-	var/down = src.keymap.action_to_keybind(KEY_BACKWARD) || "S"
-	var/right = src.keymap.action_to_keybind(KEY_RIGHT) || "D"
-	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT = "Movement:<br>[up] - Up<br>[left] - Left<br>[down] - Down<br>[right] - Right")
+	var/up = src.keymap.action_to_keybind(KEY_FORWARD)
+	var/left = src.keymap.action_to_keybind(KEY_LEFT)
+	var/down = src.keymap.action_to_keybind(KEY_BACKWARD)
+	var/right = src.keymap.action_to_keybind(KEY_RIGHT)
+	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT = "Movement:<br>[up] - Up<br>[down] - Down<br>[left] - Left<br>[right] - Right")
 
-	var/equip = src.keymap.action_to_keybind("equip") || "V"
-	var/attackself = src.keymap.action_to_keybind("attackself") || "C"
-	var/drop_item = src.keymap.action_to_keybind("drop") || "Q"
-	var/swaphand = src.keymap.action_to_keybind("swaphand") || "E"
-	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_ITEMS = "Items:<br>[equip] - Equip<br>[attackself] - Use in hand<br>[drop_item] - Drop<br>[swaphand] - Swap Hands")
+	var/equip = src.keymap.action_to_keybind("equip")
+	var/attackself = src.keymap.action_to_keybind("attackself")
+	var/drop_item = src.keymap.action_to_keybind("drop")
+	var/swaphand = src.keymap.action_to_keybind("swaphand")
+	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_ITEMS = "Items:<br>[equip] - Wear/Stow<br>[attackself] - Open/Use<br>[drop_item] - Drop<br>[swaphand] - Swap hands")
 
-	var/help = src.keymap.action_to_keybind("help") || "1"
-	var/disarm = src.keymap.action_to_keybind("disarm") || "2"
-	var/grab = src.keymap.action_to_keybind("grab") || "3"
-	var/harm = src.keymap.action_to_keybind("harm") || "4"
+	var/help = src.keymap.action_to_keybind("help")
+	var/disarm = src.keymap.action_to_keybind("disarm")
+	var/grab = src.keymap.action_to_keybind("grab")
+	var/harm = src.keymap.action_to_keybind("harm")
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_INTENTS = "Intents:<br>[help] - [TEXT_INTENT_HELP]<br>[disarm] - [TEXT_INTENT_DISARM]<br>[grab] - [TEXT_INTENT_GRAB]<br>[harm] - [TEXT_INTENT_HARM]")
 
-	var/rest = src.keymap.action_to_keybind("rest") || "="
-	var/walk = src.keymap.action_to_keybind("walk") || "-"
-	var/resist = src.keymap.action_to_keybind("resist") || "Z"
-	var/sprint = src.keymap.action_to_keybind(KEY_RUN) || "SHIFT"
-	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_ACTIONS = "Actions:<br>[rest] - Rest/Stand<br>[walk] - Walk<br>[resist] - Resist<br>[sprint] - Sprint")
+	var/rest = src.keymap.action_to_keybind("rest")
+	var/walk = src.keymap.action_to_keybind("walk")
+	var/resist = src.keymap.action_to_keybind("resist")
+	var/sprint = src.keymap.action_to_keybind(KEY_RUN)
+	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_ACTIONS = "Actions:<br>[rest] - Rest/Stand<br>[walk] - Walk/Run<br>[resist] - Resist<br>[sprint] - Sprint")
 
-	var/say = src.keymap.action_to_keybind("say") || "T"
-	var/say_over_channel = src.keymap.action_to_keybind("say_over_channel") || "Y"
-	var/say_over_main_radio = src.keymap.action_to_keybind("say_over_main_radio") || ";"
-	var/emote = src.keymap.action_to_keybind("emote") || "M"
+	var/say = src.keymap.action_to_keybind("say")
+	var/say_over_channel = src.keymap.action_to_keybind("say_over_channel")
+	var/say_over_main_radio = src.keymap.action_to_keybind("say_over_main_radio")
+	var/emote = src.keymap.action_to_keybind("emote")
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION = "Communication:<br>[say] - Talk<br>[say_over_channel] - Radio Channels<br>[say_over_main_radio] - Main Radio<br>[emote] - Emote")
 
-	var/throw_key = src.keymap.action_to_keybind("throw") || "SPACE"
-	var/examine = src.keymap.action_to_keybind(KEY_EXAMINE) || "ALT"
-	var/pull = src.keymap.action_to_keybind(KEY_PULL) || "CTRL"
-	var/point = src.keymap.action_to_keybind(KEY_POINT) || "B"
+	var/throw_key = src.keymap.action_to_keybind("throw")
+	var/examine = src.keymap.action_to_keybind(KEY_EXAMINE)
+	var/pull = src.keymap.action_to_keybind(KEY_PULL)
+	var/point = src.keymap.action_to_keybind(KEY_POINT)
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS = "Modifiers:<br>[throw_key] - Throw<br>[examine] - Examine<br>[pull] - Pull<br>[point] - Point")
 
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_HEALTH = "Damage Types:<br>[TEXT_HEALTH_BRUTE]<br>[TEXT_HEALTH_BURN]<br>[TEXT_HEALTH_TOXIN]<br>[TEXT_HEALTH_OXY]")
 
-	var/adminhelp = src.keymap.action_to_keybind("adminhelp") || "F1"
-	var/mentorhelp = src.keymap.action_to_keybind("mentorhelp") || "F3"
-	var/looc = src.keymap.action_to_keybind("looc") || "ALT+L"
+	var/adminhelp = src.keymap.action_to_keybind("adminhelp")
+	var/mentorhelp = src.keymap.action_to_keybind("mentorhelp")
+	var/looc = src.keymap.action_to_keybind("looc")
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_META = "Meta:<br>[adminhelp] - Admin Help<br>[mentorhelp] - Mentor Help<br>[looc] - Local OOC")
 
 
