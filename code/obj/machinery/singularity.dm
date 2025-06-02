@@ -157,8 +157,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 
 	/// Targeted turf when loose
 	var/turf/target_turf
-	///
-	var/target_turf_counter
+	/// How many steps we'll continue to walk towards the target turf before rerolling
+	var/target_turf_counter = 0
 
 #ifdef SINGULARITY_TIME
 /*
