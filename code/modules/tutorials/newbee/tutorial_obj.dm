@@ -22,11 +22,14 @@
 			src.tutorial_user?.mind?.get_player()?.tutorial?.PerformSilentAction("door", "manual_open")
 
 /obj/item/storage/firstaid/brute/tutorial
+	spawn_contents = list(/obj/item/reagent_containers/patch/mini/bruise=5)
 	attack_self(mob/user)
 		. = ..()
 		user?.mind?.get_player()?.tutorial?.PerformSilentAction("open_storage", "brute_first_aid")
 
 /obj/item/storage/firstaid/fire/tutorial
+	spawn_contents = list(/obj/item/reagent_containers/patch/mini/burn=5)
+
 	attack_self(mob/user)
 		. = ..()
 		user?.mind?.get_player()?.tutorial?.PerformSilentAction("open_storage", "fire_first_aid")

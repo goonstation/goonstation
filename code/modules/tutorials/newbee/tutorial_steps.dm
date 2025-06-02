@@ -719,7 +719,7 @@
 		for (var/obj/item/reagent_containers/patch/bruise/patch in src._target_item.contents)
 			patch_count++
 		if (patch_count < 1)
-			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
+			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/mini/bruise)
 
 /datum/tutorialStep/newbee/storage_inhands
 	name = "Opening Storage"
@@ -779,6 +779,8 @@
 	step_area = /area/tutorial/newbee/room_5
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 
+	var/obj/item/reagent_containers/patch/mini/bruise/patch_to_apply
+
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
@@ -787,23 +789,28 @@
 	SetUp()
 		. = ..()
 		var/patch_count = 0
-		for (var/obj/item/reagent_containers/patch/bruise in src._needed_item.contents)
+		for (var/obj/item/reagent_containers/patch/mini/bruise/patch in src._needed_item.contents)
+			src.patch_to_apply = patch
 			patch_count++
 		if (patch_count < 1)
-			src._needed_item.storage.add_contents(new /obj/item/reagent_containers/patch/bruise)
+			src.patch_to_apply = new /obj/item/reagent_containers/patch/mini/bruise
+			src._needed_item.storage.add_contents(src.patch_to_apply)
+
+		src.patch_to_apply.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
-		if (istype(I, /obj/item/reagent_containers/patch))
-			src.tutorial.PerformAction("attackby", "patch")
+		if (istype(I, /obj/item/reagent_containers/patch/mini/bruise))
+			src.tutorial.PerformAction("attackby", "bruise_patch")
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "attackby" && context == "patch")
+		if (action == "attackby" && context == "bruise_patch")
 			src.finished = TRUE
 
 	TearDown()
 		. = ..()
+		patch_to_apply?.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY)
 
 /datum/tutorialStep/newbee/resisting
@@ -817,7 +824,7 @@
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/resist = src.keymap.action_to_keybind("resist")
-		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to resist the flames and put out the flames"
+		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to begin putting out the flames!"
 
 	SetUp(manually_selected)
 		. = ..()
@@ -885,10 +892,11 @@
 	SetUp()
 		. = ..()
 		var/patch_count = 0
-		for (var/obj/item/reagent_containers/patch/burn/patch in src._target_item.contents)
+		for (var/obj/item/reagent_containers/patch/mini/burn/patch in src._target_item.contents)
 			patch_count++
 		if (patch_count < 1)
-			src._target_item.storage.add_contents(new /obj/item/reagent_containers/patch/burn)
+			src.patch_to_apply = new /obj/item/reagent_containers/patch/mini/burn
+			src._target_item.storage.add_contents(src.patch_to_apply)
 
 /datum/tutorialStep/newbee/apply_fire_patch
 	name = "Applying Patches"
@@ -899,6 +907,8 @@
 	step_area = /area/tutorial/newbee/room_5
 	needed_item_path = /obj/item/storage/firstaid/fire/tutorial
 
+	var/obj/item/reagent_containers/patch/mini/burn/patch_to_apply
+
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
@@ -907,14 +917,18 @@
 	SetUp()
 		. = ..()
 		var/patch_count = 0
-		for (var/obj/item/reagent_containers/patch/burn/patch in src._needed_item.contents)
+		for (var/obj/item/reagent_containers/patch/mini/burn/patch in src._needed_item.contents)
 			patch_count++
+			src.patch_to_apply = patch
 		if (patch_count < 1)
-			src._needed_item.storage.add_contents(new /obj/item/reagent_containers/patch/burn)
+			src.patch_to_apply = new /obj/item/reagent_containers/patch/mini/burn
+			src._needed_item.storage.add_contents(src.patch_to_apply)
+
+		src.patch_to_apply.UpdateOverlays(src.point_marker, "marker")
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
-		if (istype(I, /obj/item/reagent_containers/patch/burn))
+		if (istype(I, /obj/item/reagent_containers/patch/mini/burn))
 			src.tutorial.PerformAction("attackby", "patch_burn")
 
 	PerformAction(action, context)
@@ -924,6 +938,7 @@
 
 	TearDown()
 		. = ..()
+		src.patch_to_apply?.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY)
 
 /datum/tutorialStep/newbee/move_to/exit_healing
