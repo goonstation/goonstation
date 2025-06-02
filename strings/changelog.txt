@@ -1,6 +1,22 @@
 
+(t)sun jun 01 25
+(u)glowbold
+(p)23591
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)You must use an aggressive grab to pull people away from aggressive grabs.
+(u)LorrMaster
+(p)23612
+(e)🆕🚗|C-Feature, A-Vehicles
+(+)Pod visuals now change depending on their installed engine type
+(u)nova2053
+(p)23620
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Tables, racks, and other items which use a similar construction method can now be constructed on the same tile as thindows, sliding glass doors, and other objects with directional blocking.
+(+)Tables can now be constructed under a couple more objects, such as microwaves, espresso machines, and more. See PR page for full list.
 (t)sat may 31 25
 (u)LeahTheTech
+(*)Material analysers now display the rupture pressure of breakable pipes.
+(+)All concussive charges can now break geodes (if they're soft enough)
 (p)23646
 (e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
 (*)Manifolds can now rupture and be reinforced just like regular pipes.
