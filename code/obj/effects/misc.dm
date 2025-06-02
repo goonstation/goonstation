@@ -60,6 +60,7 @@
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "magicspark"
 	layer = EFFECTS_LAYER_4
+	plane = PLANE_DEFAULT_NOWARP
 
 	New()
 		. = ..()
