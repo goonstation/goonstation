@@ -553,18 +553,20 @@ TYPEINFO(/mob/living)
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
+			var/obj/item/shipcomponent/secondary_system/sec_part = ship.get_part(POD_PART_SECONDARY)
 			if (ship.pilot == src)
-				if (ship.sensors)
-					if (ship.sensors.active)
+				var/obj/item/shipcomponent/sensor/sensors_part = ship.get_part(POD_PART_SENSORS)
+				if (sensors_part)
+					if (sensors_part.active)
 						var/obj/machinery/vehicle/target_pod = target
 						if (src.loc != target_pod && istype(target_pod))
-							ship.sensors.end_tracking()
-							ship.sensors.quick_obtain_target(target_pod)
+							sensors_part.end_tracking()
+							sensors_part.quick_obtain_target(target_pod)
 					else
 						if (istype(target, /obj/machinery/vehicle))
 							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
-			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
-				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+			else if (istype(sec_part, /obj/item/shipcomponent/secondary_system/gunner_support) && sec_part.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = sec_part
 				support_gunner.fire_at(target, src)
 
 
@@ -1466,8 +1468,14 @@ TYPEINFO(/mob/living)
 	if (ishuman(src))
 		H = src
 		var/obj/item/clothing/gloves/G = H.gloves
+		var/obj/item/leftItem = H.l_hand
+		var/obj/item/rightItem = H.r_hand
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
+		if (leftItem && !ignore_gloves && (leftItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(leftItem.hasProperty("conductivity") ? leftItem.getProperty("conductivity") : 1))
+		if (rightItem && !ignore_gloves && (rightItem.c_flags & EQUIPPED_WHILE_HELD))
+			prot = min(prot,(rightItem.hasProperty("conductivity") ? rightItem.getProperty("conductivity") : 1))
 		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
 		if (H.limbs.r_arm && !ignore_gloves)

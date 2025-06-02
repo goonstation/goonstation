@@ -192,19 +192,8 @@
 
 		data["text_ban_length"] = length
 		data["reason"] = reason
-		if (length == "hour")
-			length = 60
-		else if (length == "day")
-			length = 1440
-		else if (length == "halfweek")
-			length = 5040
-		else if (length == "week")
-			length = 10080
-		else if (length == "twoweeks")
-			length = 20160
-		else if (length == "month")
-			length = 43200
-		else if (length == "perma")
+		length = src.duration_to_minutes(length)
+		if (length == "perma")
 			length = 0
 			data["text_ban_length"] = "Permanent"
 		else if (ckey(length) == "untilappeal")
