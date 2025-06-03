@@ -293,6 +293,8 @@
 	var/list/atom/movable/screen/hud/_target_hud_elements = list()
 	/// Reference to the currently needed item
 	var/obj/item/_needed_item
+	/// Current HUD point
+	var/obj/decal/point/hud_point
 
 /datum/tutorialStep/newbee/New(datum/tutorial_base/regional/newbee/tutorial)
 	src.newbee_tutorial = tutorial
@@ -354,6 +356,7 @@
 	for (var/atom/movable/screen/hud/hud_element in src._target_hud_elements)
 		hud_element?.UpdateOverlays(null, "marker")
 	src._needed_item?.UpdateOverlays(null, "marker")
+	qdel(src.hud_point)
 
 /// highlight a specific hud element
 /datum/tutorialStep/newbee/proc/highlight_hud(hud_element, hud_marker)
@@ -361,25 +364,46 @@
 		return
 
 	var/image/highlight_image
+
+	var/point_x_offset = 0
+	var/point_y_offset = 0
 	switch(hud_marker)
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY)
 			highlight_image = src.inventory_marker
+			point_x_offset += 16
+			point_y_offset += 32
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP)
 			highlight_image = src.help_intent_marker
+			point_x_offset += 8
+			point_y_offset += 32
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM)
 			highlight_image = src.disarm_intent_marker
+			point_x_offset += 24
+			point_y_offset += 32
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB)
 			highlight_image = src.grab_intent_marker
+			point_x_offset += 8
+			point_y_offset += 16
 		if(NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM)
 			highlight_image = src.harm_intent_marker
+			point_x_offset += 24
+			point_y_offset += 16
 		if(NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF)
 			highlight_image = src.lower_half_marker
+			point_x_offset += 16
+			point_y_offset += 16
 		if(NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF)
 			highlight_image = src.upper_half_marker
+			point_x_offset += 16
+			point_y_offset += 32
 		if(NEWBEE_TUTORIAL_MARKER_HUD_ABILITY)
 			highlight_image = src.ability_marker
+			point_x_offset += 16
+			point_y_offset += 32
 		if(NEWBEE_TUTORIAL_MARKER_HUD_STATS)
 			highlight_image = src.stats_marker
+			point_x_offset += 8
+			point_y_offset += 32
 
 	if (!highlight_image)
 		return
@@ -388,6 +412,11 @@
 		if (element.id == hud_element)
 			src._target_hud_elements += element
 			element.UpdateOverlays(highlight_image, "marker")
+			if (src.newbee_tutorial.newbee.client)
+				var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, element.screen_loc)
+				point_x_offset += hud_x_y_offset[1]
+				point_y_offset += hud_x_y_offset[2]
+				src.hud_point_loop(src.newbee_tutorial.current_step, point_x_offset, point_y_offset)
 			break
 
 /// highlight a needed item, including the inventory slot if on the character
@@ -466,6 +495,75 @@
 
 	target_item.UpdateOverlays(src.point_marker, "marker")
 	return target_item
+
+/// Loops a hud pointer until the step moves on
+/datum/tutorialStep/newbee/proc/hud_point_loop(step_number, x_offset, y_offset)
+	if (src.newbee_tutorial.current_step == step_number)
+		src.hud_point = make_hud_point(src.newbee_tutorial.newbee, x_offset, y_offset, "#9eee80", 3 SECONDS)
+		SPAWN (4 SECONDS)
+			src.hud_point_loop(step_number, x_offset, y_offset)
+
+/// Points from a mob to a target X/Y point; meant for HUDs. See also: screen_loc_to_pixel_offset
+proc/make_hud_point(mob/pointer, target_x=0, target_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
+	if(QDELETED(pointer)) return
+	if(!istype(pointer)) return
+
+	var/obj/decal/point/point = new
+	point.color = color
+	point.invisibility = invisibility
+	point.layer = HUD_LAYER_3
+	point.plane = PLANE_ABOVE_HUD
+	pointer.vis_contents += point
+
+	var/matrix/M = matrix()
+	M.Translate(target_x,  target_y)
+	animate(point, transform=M, time=1 SECOND) // slower so you can track it
+
+	SPAWN(time)
+		if(pointer)
+			pointer.vis_contents -= point
+		qdel(point)
+	return point
+
+/// For a client and target screen location, give a pixel offset from the client to the bottom-left corner of the location on screen
+proc/screen_loc_to_pixel_offset(client/C, target_screen_loc)
+	var/list/x_y = splittext(target_screen_loc, ",")
+	var/x_component = x_y[1]
+	var/y_component = x_y[2]
+
+	// go to 0,0 from centre
+	var/x_offset = -(istext(C.view) ? WIDE_TILE_WIDTH / 2 : SQUARE_TILE_WIDTH / 2) * 32
+	var/y_offset = -TILE_HEIGHT / 2 * 32
+
+	if (findtext(x_component, "CENTER"))
+		x_offset += (istext(C.view) ? WIDE_TILE_WIDTH / 2 : SQUARE_TILE_WIDTH / 2) * 32 - 16
+	else if (findtext(x_component, "WEST"))
+		x_offset += 0
+	else if (findtext(x_component, "EAST"))
+		x_offset += (istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) * 32 - 32
+
+	if (findtext(x_component, "+"))
+		x_offset += text2num(splittext(splittext(x_component, "+")[2], ":")[1]) * 32// between + and :
+	if (findtext(x_component, "-"))
+		x_offset -= text2num(splittext(splittext(x_component, "-")[2], ":")[1]) * 32 // between - and :
+	if (findtext(x_component, ":"))
+		x_offset += text2num(splittext(x_component, ":")[2])
+
+	if (findtext(y_component, "CENTER"))
+		y_offset += TILE_HEIGHT / 2 * 32 - 16
+	else if (findtext(y_component, "SOUTH"))
+		y_offset += 0
+	else if (findtext(y_component, "NORTH"))
+		y_offset += TILE_HEIGHT * 32 - 32
+
+	if (findtext(y_component, "+"))
+		y_offset += text2num(splittext(splittext(y_component, "+")[2], ":")[1]) * 32// between + and :
+	if (findtext(y_component, "-"))
+		y_offset -= text2num(splittext(splittext(y_component, "-")[2], ":")[1]) * 32 // between - and :
+	if (findtext(y_component, ":"))
+		y_offset += text2num(splittext(y_component, ":")[2])
+
+	return list(x_offset, y_offset)
 
 // tutorial step subtypes with common behavior
 
