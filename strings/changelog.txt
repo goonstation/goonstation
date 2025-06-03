@@ -1,5 +1,9 @@
 
 (t)tue jun 03 25
+(u)Bobbis dobbis
+(p)23703
+(e)⚖|C-Balance
+(+)Small animals are no longer affected by food poisoning.
 (u)Lord_Earthfire
 (p)23706
 (e)🪲💨⚗|C-Bug, A-Atmospherics, A-Chemistry
