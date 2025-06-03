@@ -416,6 +416,9 @@
 				var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, element.screen_loc)
 				point_x_offset += hud_x_y_offset[1]
 				point_y_offset += hud_x_y_offset[2]
+				// points to north-anchored items go off the screen, so slightly lower them
+				if (findtext(element.screen_loc, "NORTH"))
+					point_y_offset -= 10
 				src.hud_point_loop(src.newbee_tutorial.current_step, point_x_offset, point_y_offset)
 			break
 
