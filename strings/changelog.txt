@@ -1,5 +1,10 @@
 
 (t)tue jun 03 25
+(u)glowbold
+(p)23686
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)AI Eyebots now count as floating when active
+(+)Floating objects should react more consistently with expected behavior
 (u)Bobbis dobbis
 (p)23703
 (e)⚖|C-Balance
