@@ -21586,6 +21586,7 @@
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
 "jzL" = (
