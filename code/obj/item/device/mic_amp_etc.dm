@@ -22,8 +22,8 @@ TYPEINFO(/obj/item/device/microphone)
 		tooltip_rebuild = 1
 		user.show_text("You switch [src] [src.on ? "on" : "off"].")
 		if (src.on && prob(5))
-			if (locate(/obj/loudspeaker) in range(2, user))
-				for_by_tcl(S, /obj/loudspeaker)
+			if (locate(/obj/machinery/loudspeaker) in range(2, user))
+				for_by_tcl(S, /obj/machinery/loudspeaker)
 					if(!IN_RANGE(S, user, 7)) continue
 					S.visible_message(SPAN_ALERT("[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
@@ -85,10 +85,10 @@ TYPEINFO(/obj/mic_stand)
 		else
 			src.icon_state = "micstand-empty"
 
-TYPEINFO(/obj/loudspeaker)
+TYPEINFO(/obj/machinery/loudspeaker)
 	mats = 15
 
-/obj/loudspeaker
+/obj/machinery/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
@@ -97,10 +97,46 @@ TYPEINFO(/obj/loudspeaker)
 	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
-	New()
-		. = ..()
-		START_TRACKING
+/obj/machinery/loudspeaker/New()
+	. = ..()
+	START_TRACKING
+	src.UnsubscribeProcess()
 
-	disposing()
-		. = ..()
-		STOP_TRACKING
+/obj/machinery/loudspeaker/disposing()
+	. = ..()
+	STOP_TRACKING
+
+/obj/machinery/loudspeaker/set_broken()
+	. = ..()
+	if(.) return
+	src.SubscribeToProcess()
+	AddComponent(/datum/component/equipment_fault/elecflash, tool_flags = TOOL_SCREWING | TOOL_WIRING | TOOL_SOLDERING)
+	src.visible_message(SPAN_ALERT("[src] sparks and pops, shorting out!"))
+	playsound(src, 'sound/effects/screech_tone.ogg', 70, 2, pitch=0.5)
+
+/obj/machinery/loudspeaker/ex_act(severity)
+	. = ..()
+	if(QDELETED(src))
+		return
+	switch(severity)
+		if (2)
+			src.set_broken()
+		if (3)
+			if (prob(50))
+				src.set_broken()
+
+/obj/machinery/loudspeaker/process(mult)
+	. = ..()
+	if (!(src.status & BROKEN))
+		src.UnsubscribeProcess()
+
+/obj/machinery/loudspeaker/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (src.is_broken())
+				if (prob(P.power * P.proj_data?.ks_ratio))
+					src.gib(src.loc)
+					qdel(src)
+			else if (prob(P.power))
+				src.set_broken()

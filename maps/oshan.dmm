@@ -25710,7 +25710,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "bTi" = (
-/obj/loudspeaker{
+/obj/machinery/loudspeaker{
 	layer = 4;
 	pixel_y = -6
 	},
@@ -40545,7 +40545,7 @@
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "pdH" = (
-/obj/loudspeaker{
+/obj/machinery/loudspeaker{
 	layer = 4;
 	pixel_y = -6
 	},
