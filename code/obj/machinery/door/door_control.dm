@@ -1195,7 +1195,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			return ..()
 		if(istype(usr.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/V = usr.loc
-			V.toggle.hangar.door(pass)
+			V.toggle_hangar_door(pass)
 
 
 	attack_ai(mob/user as mob)

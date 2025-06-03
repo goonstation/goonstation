@@ -1591,17 +1591,7 @@
 
 /obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
-		return
-	if(usr.loc != src)
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
-		return
 	if(!comms)
-		boutput(usr, "[src.ship_message("System not installed in ship!")]")
-		return
-	if(!comms.active)
-		output(usr, "[src.ship_message("SYSTEM OFFLINE")]")
 		return
 	comms.rc_ship.toggle_hangar_door(usr, pass)
 
