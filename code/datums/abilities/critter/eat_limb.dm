@@ -18,16 +18,15 @@
 			if (!targetHuman.limbs)
 				boutput(holder.owner, "Your target doesn't have any limbs! Did you do that?")
 				return
-			else
-				var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
-				var/list/randLimb = null
-				for (var/L in randLimbBase)
-					if (targetHuman.limbs.get_limb(L))
-						LAZYLISTADD(randLimb, L)
-				var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(pick(randLimb))
+			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+			var/list/randLimb = null
+			for (var/checklimb in randLimbBase)
+				if (targetHuman.limbs.get_limb(checklimb)) // check if they actually have the limb then add it to the target list
+					LAZYLISTADD(randLimb, checklimb)
+			var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(pick(randLimb))
 
-				boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
-				actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
+			boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
+			actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
 
 /datum/action/bar/icon/eat_limb
 	duration = 1 SECONDS
@@ -58,11 +57,11 @@
 		..()
 		last_crunch++
 		if (last_crunch >= 2)
-			var/datum/human_limbs/T = target
+			var/datum/human_limbs/targetlimb = target
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
 			eat_twitch(user)
-			random_brute_damage(T.holder, 2)
+			random_brute_damage(targetlimb.holder, 2)
 			ThrowRandom(gib, rand(2,6))
 			last_crunch = 0
 
