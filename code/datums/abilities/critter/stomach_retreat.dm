@@ -12,33 +12,28 @@
 
 	cast(atom/target)
 		. = ..()
+		var/obj/target_container = holder.owner.loc
 		if (inside)
 			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes.", "No.")))
 				if ("Yes.")
 					deactivate()
 				if ("No.")
 					return TRUE
-		else
-			switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes.", "No.")))
-				if ("Yes.")
-					var/turf/T = get_turf(holder.owner)
-					var/obj/target_container = holder.owner.loc
-					if (!T.z || isrestrictedz(T.z))
-						boutput(holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
-						return TRUE
-					// Attempt entry via disposal machinery OR a disconnected disposal pipe
-					if (target_container.present_mimic)
-						boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
-						return TRUE
-					if (istypes(target_container, trap_whitelist))
-						current_container = target_container
-						current_container.present_mimic = holder.owner
-						activate()
-					else
-						boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
-						return TRUE
-				if ("No.")
-					return TRUE
+		if (istypes(target_container, trap_whitelist))
+			boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
+			return TRUE
+		else if (target_container.present_mimic)
+			boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
+			return TRUE
+
+		switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes.", "No.")))
+			if ("Yes.")
+				current_container = target_container
+				current_container.present_mimic = holder.owner
+				activate()
+			if ("No.")
+				return TRUE
+
 
 	proc/activate()
 		var/mob/living/critter/parent = holder.owner
@@ -77,15 +72,16 @@
 			boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [current_container]!</B>"))
 			return
 
-		ON_COOLDOWN(current_container, "mimicTrap", 20 SECONDS)
+		ON_COOLDOWN(current_container, "mimicTrap", 5 SECONDS)
 		var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
 		var/list/randLimb
-		for (var/L in randLimbBase) // build a list of limbs the target actually has
-			if (target.limbs.get_limb(L))
-				LAZYLISTADD(randLimb, L)
+		for (var/targetlimb in randLimbBase) // build a list of limbs the target actually has
+			if (target.limbs.get_limb(targetlimb))
+				LAZYLISTADD(randLimb, targetlimb)
 		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(pick(randLimb))
 
 		if (targetLimb)
+			random_brute_damage(targetlimb.holder, 12)
 			var/obj/item/limb = targetLimb.sever()
 			boutput(target, SPAN_ALERT("Something in the [current_container] tears off [limb]!"))
 			target.emote("scream")

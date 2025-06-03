@@ -21,7 +21,7 @@
 			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
 			var/list/randLimb = null
 			for (var/checklimb in randLimbBase)
-				if (targetHuman.limbs.get_limb(checklimb)) // check if they actually have the limb then add it to the target list
+				if (targetHuman.limbs.get_limb(checklimb)) // build a list of limbs the target actually has
 					LAZYLISTADD(randLimb, checklimb)
 			var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(pick(randLimb))
 
