@@ -1,12 +1,3 @@
-/*
- * Copyright (C) 2025 DisturbHerb
- *
- * Originally contributed to the 35 Below Project
- * Made available under the terms of the CC BY-NC-SA 3.0
- * Full terms available in the "LICENSE" file or at:
- * http://creativecommons.org/licenses/by-nc-sa/3.0/us/
- */
-
 TYPEINFO(/obj/barricade/sandbags)
 	var/list/connects_to_turf = list()
 	var/list/connects_to_obj = list()
