@@ -270,7 +270,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 		return ..()
 
 /obj/submachine/laundry_machine/relaymove(mob/user as mob)
-	if (src.occupant == user)
+	if (src.occupant == user && !src.on)
 		if (!can_act(user))
 			return
 		user.set_loc(src.loc)
