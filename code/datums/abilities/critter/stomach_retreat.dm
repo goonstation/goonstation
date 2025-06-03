@@ -81,7 +81,7 @@
 		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(pick(randLimb))
 
 		if (targetLimb)
-			random_brute_damage(targetlimb.holder, 12)
+			random_brute_damage(target, 12)
 			var/obj/item/limb = targetLimb.sever()
 			boutput(target, SPAN_ALERT("Something in the [current_container] tears off [limb]!"))
 			target.emote("scream")
