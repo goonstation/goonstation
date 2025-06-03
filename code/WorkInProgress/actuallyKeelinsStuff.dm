@@ -747,7 +747,7 @@ Returns:
 	var/list/oneTurfsExpend = oneTurfs.Copy()
 	var/list/twoTurfsExpend = twoTurfs.Copy()
 
-	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/atom/movable/light/robust_lights)
+	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/atom/movable/light/robust_light)
 
 	var/oneName = ""
 	var/twoName = ""
