@@ -1,5 +1,9 @@
 
 (t)tue jun 03 25
+(u)Flamearrow
+(p)22973
+(e)🚄📡🤖|C-Performance, A-AI, A-Silicons
+(*)AI static rendering has been reworked, please report any glitches or performance changes.
 (u)glowbold
 (p)23686
 (e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
