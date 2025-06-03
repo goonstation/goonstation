@@ -6,6 +6,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED
 	power_usage = 5
+	deconstruct_flags = DECON_SIMPLE
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
