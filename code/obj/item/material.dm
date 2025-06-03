@@ -142,8 +142,9 @@
 					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
-			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
-				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/sec_part = V.get_part(POD_PART_SECONDARY)
+			if (istype(sec_part, /obj/item/shipcomponent/secondary_system/orescoop))
+				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = sec_part
 				if (length(SCOOP.contents) >= SCOOP.capacity || !src.scoopable)
 					return
 				var/max_stack_reached = FALSE
@@ -322,6 +323,13 @@
 	metal = 1
 	conductor = 1
 
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b", "ore1c")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
+
 /obj/item/raw_material/cobryl // relate this to precursors
 	name = "cobryl ore"
 	desc = "A chunk of Cobryl, a somewhat valuable metal."
@@ -365,6 +373,13 @@
 	default_material = "bohrum"
 	metal = 3
 	dense = 1
+
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b")
+			src.icon_state = "[ore_state]_$$[src.material.getName()]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.material.getName()]"
 
 /obj/item/raw_material/syreline
 	name = "syreline ore"
