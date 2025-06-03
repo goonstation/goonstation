@@ -1,18 +1,13 @@
 /datum/abilityHolder/newbee
 	usesPoints = FALSE
 	tabName = "Tutorial"
-	abilities = list(
-		/datum/targetable/newbee/exit,
-		/datum/targetable/newbee/previous,
-		/datum/targetable/newbee/next,
-	)
 	var/datum/tutorial_base/regional/newbee/my_tutorial
 
-	New(mob/M)
+	onAttach(mob/to_whom)
 		. = ..()
-		src.owner.addAbility(/datum/targetable/newbee/exit)
-		src.owner.addAbility(/datum/targetable/newbee/previous)
-		src.owner.addAbility(/datum/targetable/newbee/next)
+		src.addAbility(/datum/targetable/newbee/exit)
+		src.addAbility(/datum/targetable/newbee/previous)
+		src.addAbility(/datum/targetable/newbee/next)
 
 	onAbilityStat()
 		. = ..()
