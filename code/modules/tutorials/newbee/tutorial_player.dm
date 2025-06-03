@@ -9,6 +9,9 @@
 		src.ready_tutorial = TRUE
 		src.update_joinmenu()
 	else if (global.current_state <= GAME_STATE_PLAYING)
+		if (global.emergency_shuttle.online)
+			boutput(usr, SPAN_ALERT("It's too late to start the tutorial! Please try next round."))
+			return
 		if (src.tutorial_loading)
 			boutput(usr, SPAN_ALERT("The tutorial is loading, please be patient!"))
 			return
