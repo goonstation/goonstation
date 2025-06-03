@@ -27,6 +27,7 @@
 	event_effect(source)
 		set waitfor = FALSE
 		. = ..()
+		src.disabled = TRUE
 
 		src.sound_event()
 
@@ -74,7 +75,6 @@
 		animate(monster, alpha = 0, time = 10 SECONDS)
 		sleep(10 SECONDS)
 		qdel(monster)
-		src.disabled = TRUE
 
 	proc/cause_madness(source)
 		var/list/potential_victims = list()
