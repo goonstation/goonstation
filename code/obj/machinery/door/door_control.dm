@@ -1191,12 +1191,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
-		var/obj/item/shipcomponent/communications/comms_part = V.get_part(POD_PART_COMMS)
-		if(GET_DIST(usr, src) < 16)
-			if(istype(usr.loc, /obj/machinery/vehicle))
-				var/obj/machinery/vehicle/V = usr.loc
-				V.toggle.hangar.door(pass)
+		if(GET_DIST(usr, src) > 16)
 			return ..()
+		if(istype(usr.loc, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/V = usr.loc
+			V.toggle.hangar.door(pass)
+
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
