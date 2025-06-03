@@ -607,12 +607,12 @@
 	if (isdead(src))
 		return
 
-	src.update_health_monitor_icon()
-
 	src.need_update_item_abilities = 1
 	setdead(src)
 	src.dizziness = 0
 	src.jitteriness = 0
+
+	src.update_health_monitor_icon()
 
 	src.drop_juggle()
 

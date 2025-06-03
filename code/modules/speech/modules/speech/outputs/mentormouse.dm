@@ -11,7 +11,6 @@
 	message.say_verb = "whispers"
 	message.flags |= SAYFLAG_NO_MAPTEXT | SAYFLAG_DO_NOT_PASS_TO_IMPORTING_TREES
 
-	// Handles mentor/admin mouse speech, since they are just rebranded mentor mice
 	var/ooc_flavor = "mhelp"
 	if (istype(message.speaker, /mob/dead/target_observer/mentor_mouse_observer))
 		var/mob/dead/target_observer/mentor_mouse_observer/mentor_mouse = message.speaker
