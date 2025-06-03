@@ -1,7 +1,7 @@
 /datum/speech_module/prefix/postmodifier/radio
 	id = SPEECH_PREFIX_RADIO
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
-	prefix_id = ":"
+	prefix_id = PREFIX_TEXT_RADIO
 
 /datum/speech_module/prefix/postmodifier/radio/process(datum/say_message/message)
 	. = message
@@ -55,7 +55,7 @@
 /datum/speech_module/prefix/postmodifier/radio/general
 	id = SPEECH_PREFIX_RADIO_GENERAL
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 1
-	prefix_id = ";"
+	prefix_id = PREFIX_TEXT_RADIO_GENERAL
 
 /datum/speech_module/prefix/postmodifier/radio/general/get_prefix_choices()
 	var/obj/item/device/radio/radio

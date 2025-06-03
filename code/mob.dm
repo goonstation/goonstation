@@ -743,6 +743,11 @@ TYPEINFO(/mob)
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
+
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/atom/movable/hotspot) in tmob.loc)
@@ -1213,7 +1218,7 @@ TYPEINFO(/mob)
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))

@@ -16,16 +16,17 @@
 
 	attack_self(mob/user)
 		..()
-		if(!ON_COOLDOWN(src, "panic button", 15 SECONDS))
-			if(isliving(user))
-				playsound(src, 'sound/items/security_alert.ogg', 30)
-				usr.visible_message(SPAN_ALERT("[usr] presses the red button on [src]."),
-				SPAN_NOTICE("You press the button on [src]."),
-				SPAN_ALERT("You see [usr] press a button on [src]."))
-				logTheThing(LOG_COMBAT, user, "triggers [src] at [log_loc(user)]")
-				triggerpanicbutton()
-		else
-			boutput(user, SPAN_NOTICE("The [src] buzzes faintly. It must be cooling down."))
+		if(ON_COOLDOWN(src, "panic button", 15 SECONDS))
+			boutput(user, SPAN_NOTICE("\The [src] buzzes faintly. It must be cooling down."))
+			return
+		if(isliving(user) && !is_dead_or_ghost_role(user))
+			playsound(src, 'sound/items/security_alert.ogg', 30)
+			usr.visible_message(SPAN_ALERT("[usr] presses the red button on [src]."),
+			SPAN_NOTICE("You press the button on [src]."),
+			SPAN_ALERT("You see [usr] press a button on [src]."))
+			logTheThing(LOG_COMBAT, user, "triggers [src] at [log_loc(user)]")
+			triggerpanicbutton()
+
 
 	proc/triggerpanicbutton(user)
 		var/datum/signal/signal = get_free_signal()

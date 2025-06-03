@@ -296,12 +296,18 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	compatible_species = list("human", "cow", "werewolf", "martian")
 	var/new_language = LANGUAGE_ENGLISH	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
-	equipped(mob/M)
+	equipped(mob/user, slot)
 		. = ..()
-		M.say_language = src.new_language
 
-	unequipped(mob/M)
-		M.say_language = initial(M.say_language)
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TRANSLATOR, language_id = src.new_language)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_TRANSLATOR)
+
 		. = ..()
 
 /obj/item/clothing/mask/breath

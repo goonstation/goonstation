@@ -667,7 +667,10 @@ TYPEINFO(/obj/machinery/door_control)
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
 	if (istrainedsyndie(user))
-		src.toggle()
+		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
+		if (listening_post.unlocked)
+			listening_post.first_unlock(user)
+		src.toggle(user)
 		if (src.entrance_scanner)
 			src.say("Biometric profile accepted. Welcome, Agent. All facilities permanently unlocked.")
 	else
@@ -1188,10 +1191,11 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
+		var/obj/item/shipcomponent/communications/comms_part = V.get_part(POD_PART_COMMS)
 		if(GET_DIST(usr, src) < 16)
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
-				V.toggle_hangar_door(pass)
+				V.toggle.hangar.door(pass)
 			return ..()
 
 	attack_ai(mob/user as mob)

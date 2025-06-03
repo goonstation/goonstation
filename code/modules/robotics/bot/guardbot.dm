@@ -379,9 +379,11 @@
 
 			src.net_id = generate_net_id(src)
 
+			#ifndef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", control_freq)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "beacon", beacon_freq)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
+			#endif
 
 			var/obj/machinery/guardbot_dock/dock = null
 			if(setup_spawn_dock)
@@ -3742,7 +3744,6 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(pause_for_beacon)
 				src.awaiting_beacon += round((remaining / MAPTEXT_SLICE_SIZE)*(MAPTEXT_PAUSE/proc_delay))
 
-			master.say(text)
 			while(remaining - slice > MAPTEXT_SLICE_SIZE)
 				slice = findlasttext(text," ", slice+MAPTEXT_SLICE_SIZE, slice+1)
 				if(!slice)
@@ -4778,6 +4779,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
+	object_flags = NO_BLOCK_TABLE
 
 	New()
 		..()
