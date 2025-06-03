@@ -21,7 +21,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_1
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/up = src.keymap.action_to_keybind(KEY_FORWARD)
 		var/left = src.keymap.action_to_keybind(KEY_LEFT)
@@ -66,13 +66,11 @@
 	needed_item_path = /obj/item/card/id/engineering/tutorial
 	step_area = /area/tutorial/newbee/room_2
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Some items can be worn.<br>Press <b>[equip]</b> to wear the ID card, or <b>click</b> the ID card slot in your HUD."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
@@ -177,14 +175,12 @@
 
 	var/obj/machinery/disposal/tutorial/disposal_unit
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/key_throw = src.keymap.action_to_keybind(KEY_THROW)
 		var/toggle_throw = src.keymap.action_to_keybind("togglethrow")
 		src.instructions = "Throw items by holding <b>[key_throw]</b> or toggling throw mode with <b>[toggle_throw]</b>, then <b>clicking</b>.<br>Throw the crushed can into the disposals unit."
 
-	SetUp(manually_selected)
-		. = ..()
 		var/obj/railing/guard/railing_s
 		var/obj/railing/guard/railing_e
 		var/obj/railing/guard/railing_w
@@ -226,7 +222,7 @@
 
 	var/obj/machinery/disposal/tutorial/disposal_unit
 
-	SetUp(manually_selected)
+	SetUp()
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_CAN_THROW])
 			if(src.region.turf_in_region(T))
@@ -262,7 +258,7 @@
 
 	var/obj/machinery/door/airlock/pyro/classic/tutorial/tutorial_door
 
-	SetUp(manually_selected)
+	SetUp()
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS])
 			if(src.region.turf_in_region(T))
@@ -289,7 +285,7 @@
 	step_area = /area/tutorial/newbee/room_3
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions = "The next room will teach you about the four intents:<br>[TEXT_INTENT_HELP], [TEXT_INTENT_DISARM], [TEXT_INTENT_GRAB], and [TEXT_INTENT_HARM]."
 
@@ -306,13 +302,11 @@
 	needed_item_path = /obj/item/crowbar
 	step_area = /area/tutorial/newbee/room_4
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/drop = src.keymap.action_to_keybind("drop")
 		src.instructions = "You'll need to free your hands up for the next lesson.<br>Drop the crowbar in your active hand by pressing <b>[drop]</b> or <b>clicking</b> the Drop Item HUD button."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_DROPPED, PROC_REF(check_item_dropped))
 
 	proc/check_item_dropped(item, mob/user)
@@ -335,13 +329,12 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	step_area = /area/tutorial/newbee/room_4
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/help = src.keymap.action_to_keybind("help")
 		src.instructions = "The [TEXT_INTENT_HELP] intent will help people up, or give critical people CPR.<br>Press <b>[help]</b> to switch to the [TEXT_INTENT_HELP] intent."
 
-	SetUp()
-		. = ..()
+
 		if (src.newbee_tutorial.newbee.intent == INTENT_HELP || src.newbee_tutorial.newbee.intent == null)
 			src.newbee_tutorial.newbee.set_a_intent(INTENT_HARM)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
@@ -362,19 +355,15 @@
 /datum/tutorialStep/newbee/help_person
 	name = "Helping People"
 	instructions = "<b>Click</b> the clown while on Help intent.<br>Help the clown stand up."
-	highlight_hud_element = "intent"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HELP
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_help/target_mob
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_HELP] intent.<br>Help the clown stand up."
 
-	SetUp()
-		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_HELP_PERSON])
 			if(src.region.turf_in_region(T))
 				if (src.target_mob)
@@ -422,13 +411,11 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	step_area = /area/tutorial/newbee/room_4
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/disarm = src.keymap.action_to_keybind("disarm")
 		src.instructions = "The [TEXT_INTENT_DISARM] intent will knock items out of someone's hands or push them to the ground.<br>Press <b>[disarm]</b> to switch to the [TEXT_INTENT_DISARM] intent."
 
-	SetUp()
-		. = ..()
 		if (src.newbee_tutorial.newbee.intent == INTENT_DISARM)
 			src.newbee_tutorial.newbee.set_a_intent(INTENT_HELP)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
@@ -449,20 +436,17 @@
 /datum/tutorialStep/newbee/disarm_person
 	name = "Disarming People"
 	instructions = "<b>Click</b> the clown while on Disarm intent.<br>Knock the bike horn out of the clown's hands - it may take a few tries!"
-	highlight_hud_element = "intent"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_DISARM
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_disarm/target_mob
 	var/obj/item/target_item_left
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_DISARM] intent.<br>Knock the bike horn out of the clown's hands - it may take a few tries!"
 
-	SetUp()
-		. = ..()
+
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_DISARM_PERSON])
 			if(src.region.turf_in_region(T))
 				if (src.target_mob)
@@ -508,13 +492,11 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
 	step_area = /area/tutorial/newbee/room_4
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/grab = src.keymap.action_to_keybind("grab")
 		src.instructions = "The [TEXT_INTENT_GRAB] intent will grab someone.<br>Press <b>[grab]</b> to switch to the [TEXT_INTENT_GRAB] intent."
 
-	SetUp()
-		. = ..()
 		if (src.newbee_tutorial.newbee.intent == INTENT_GRAB)
 			src.newbee_tutorial.newbee.set_a_intent(INTENT_DISARM)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
@@ -536,19 +518,15 @@
 	name = "Grabbing People"
 	instructions = "<b>Click</b> the clown while on Grab intent. <b>Click</b> them again or press <b>C</b>to grip tighter.<br>Get the clown in an aggressive grab."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
-	highlight_hud_element = "intent"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_GRAB
 	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/carbon/human/normal/tutorial_grab/target_mob
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "<b>Click</b> the clown while on [TEXT_INTENT_GRAB] intent. <b>Click</b> them again or press <b>[attackself]</b> to grip tighter.<br>Get the clown in an aggressive grab."
 
-	SetUp()
-		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_GRAB_PERSON])
 			if(src.region.turf_in_region(T))
 				if (src.target_mob)
@@ -594,13 +572,11 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
 	step_area = /area/tutorial/newbee/room_4
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/harm = src.keymap.action_to_keybind("harm")
 		src.instructions = "The [TEXT_INTENT_HARM] intent will attack people by punching them or hitting them with items.<br>Press <b>[harm]</b> to switch to the [TEXT_INTENT_HARM] intent."
 
-	SetUp()
-		. = ..()
 		if (src.newbee_tutorial.newbee.intent == INTENT_HARM)
 			src.newbee_tutorial.newbee.set_a_intent(INTENT_GRAB)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_SET_A_INTENT, PROC_REF(check_intent))
@@ -622,8 +598,6 @@
 	name = "Basic Combat"
 	instructions = "Oh no! Attack of the angry mouse!<br>Defeat the mouse by <b>clicking</b> on them while using the <span style='color:#B51214; font-weight:bold'>Harm</span> intent."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
-	highlight_hud_element = "intent"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INTENT_HARM
 	step_area = /area/tutorial/newbee/room_4
 
 	var/mob/living/critter/small_animal/mouse/mad/target_mob
@@ -696,7 +670,7 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_CHECK_HEALTH
 	step_area = /area/tutorial/newbee/room_5
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions = "Your total health is the sum of four damage types: [TEXT_HEALTH_BRUTE], [TEXT_HEALTH_BURN], [TEXT_HEALTH_TOXIN], and [TEXT_HEALTH_OXY].<br>Floor health scanners will display how much damage you've taken in each category."
 
@@ -724,7 +698,7 @@
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
-	New()
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "With the first aid kit in-hand, press <b>[attackself]</b> to open it."
@@ -741,13 +715,11 @@
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
-	New()
+	SetUp()
 		. = ..()
 		var/swaphand = src.keymap.action_to_keybind("swaphand")
 		src.instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>[swaphand]</b> or <b>middle-mouse click</b> to swap hands."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_SWAP_AWAY, PROC_REF(check_swap))
 
 	proc/check_swap()
@@ -771,13 +743,11 @@
 
 	var/obj/item/reagent_containers/patch/mini/bruise/patch_to_apply
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Grab a [TEXT_HEALTH_BRUTE] patch out of the brute first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>[attackself]</b> to self-apply the patch."
 
-	SetUp()
-		. = ..()
 		// clear burning if heading backwards through steps
 		src.newbee_tutorial.newbee.delStatus("burning")
 
@@ -817,13 +787,11 @@
 	highlight_hud_element = "resist"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/resist = src.keymap.action_to_keybind("resist")
 		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to begin putting out the flames!"
 
-	SetUp(manually_selected)
-		. = ..()
 		src.newbee_tutorial.newbee.set_burning(10)
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_resist))
 
@@ -847,13 +815,11 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 	step_area = /area/tutorial/newbee/room_5
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/rest = src.keymap.action_to_keybind("rest")
 		src.instructions = "Once the fire is out, you can stand yourself back upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
 
-	SetUp(manually_selected)
-		. = ..()
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_mob_laydown_standup))
 
 	proc/check_mob_laydown_standup(source, lying)
@@ -881,12 +847,10 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRE_FIRST_AID
 	item_path = /obj/item/storage/firstaid/fire/tutorial
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions = "[TEXT_HEALTH_BURN] patches in fire first aid kits will heal [TEXT_HEALTH_BURN] damage.<br>Pick up the fire first aid kit."
 
-	SetUp()
-		. = ..()
 		var/patch_count = 0
 		for (var/obj/item/reagent_containers/patch/mini/burn/patch in src._target_item.contents)
 			patch_count++
@@ -902,13 +866,11 @@
 
 	var/obj/item/reagent_containers/patch/mini/burn/patch_to_apply
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Just like [TEXT_HEALTH_BRUTE] patches, apply a [TEXT_HEALTH_BURN] patch from the first aid kit.<br>You can <b>click</b> yourself or press <b>[attackself]</b> with a patch in hand to self-apply the patch."
 
-	SetUp()
-		. = ..()
 		var/patch_count = 0
 		for (var/obj/item/reagent_containers/patch/mini/burn/patch in src._needed_item.contents)
 			patch_count++
@@ -954,13 +916,11 @@
 
 	var/obj/structure/girder/target_girder
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/examine = src.keymap.action_to_keybind(KEY_EXAMINE)
 		src.instructions = "Holding <b>[examine]</b> and <b>clicking</b> something shows more info in the right-side chat box.<br>Examine the girder to find out how to deconstruct it from the light-blue text in chat."
 
-	SetUp()
-		. = ..()
 		var/turf/target_turf
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER])
 			if(src.region.turf_in_region(T))
@@ -996,13 +956,11 @@
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX
 	item_path = /obj/item/storage/toolbox/tutorial
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Toolboxes contain up to 7 small objects. This one has a set of tools.<br><b>Click</b> the toolbox to pick it up, then press <b>[attackself]</b> to open it."
 
-	SetUp()
-		. = ..()
 		if (istype(src._target_item, /obj/item/storage/toolbox/tutorial))
 			var/obj/item/storage/toolbox/tutorial/tutorial_box = src._target_item
 			for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX])
@@ -1018,7 +976,7 @@
 
 	var/obj/structure/girder/tutorial/target_girder
 
-	SetUp(manually_selected)
+	SetUp()
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER])
 			if(src.region.turf_in_region(T))
@@ -1047,7 +1005,7 @@
 	step_area = /area/tutorial/newbee/room_6
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/drop = src.keymap.action_to_keybind("drop")
 		src.instructions = "You don't need the toolbox, so feel free to drop it with <b>[drop]</b>.<br>Head to the next room to learn about activatable items."
@@ -1072,7 +1030,7 @@
 	step_area = /area/tutorial/newbee/room_7
 	needed_item_path = /obj/item/device/light/flashlight/tutorial
 
-	New()
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Some items do something when used in-hand.<Br>Press <b>[attackself]</b> to activate the flashlight."
@@ -1309,13 +1267,11 @@
 	needed_item_path = /obj/item/storage/backpack/empty
 	step_area = /area/tutorial/newbee/room_11
 
-	New()
+	SetUp()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "Backpacks can be worn on your back.<br>Equip the backpack with <b>[equip]</b> or <b>click</b> the back slot in your HUD."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
@@ -1418,13 +1374,11 @@
 	needed_item_path = /obj/item/clothing/head/helmet/welding/tutorial
 	step_area = /area/tutorial/newbee/room_12
 
-	New()
+	SetUp()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip")
 		src.instructions = "You need to wear the welding mask before it will protect your eyes.<br>Equip the welding mask with <b>[equip]</b> or by <b>clicking</b> the head slot in your HUD."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
@@ -1487,7 +1441,7 @@
 	needed_item_path = /obj/item/weldingtool/tutorial
 	step_area = /area/tutorial/newbee/room_12
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/attackself = src.keymap.action_to_keybind("attackself")
 		src.instructions = "Welding tools can be used in-hand to light them. Lit welding tools slowly use up fuel.<br>Turn on the welding tool with <b>[attackself]</b>."
@@ -1572,7 +1526,7 @@
 
 	var/obj/structure/girder/tutorial/target_girder
 
-	SetUp(manually_selected)
+	SetUp()
 		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_DECON_WALL])
 			if(src.region.turf_in_region(T))
@@ -1615,7 +1569,7 @@
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_LAYING_DOWN
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/rest = src.keymap.action_to_keybind("rest")
 		src.instructions = "Laying down drops all items in your hands and lets you pass under some objects.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to crawl under the flaps."
@@ -1630,13 +1584,11 @@
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_SPRINTING
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/sprint = src.keymap.action_to_keybind(KEY_RUN)
 		src.instructions = "Sprint to move faster. Sprinting takes stamina, displayed in the top-right corner.<br>Hold <b>[sprint]</b> to sprint across the conveyors."
 
-	SetUp()
-		. = ..()
 		src.newbee_tutorial.newbee.full_heal() // full health/stamina to ensure they can sprint through the next part
 
 /datum/tutorialStep/newbee/walking
@@ -1649,13 +1601,11 @@
 
 	var/obj/item/bananapeel/target_peel
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/walk = src.keymap.action_to_keybind("walk")
 		src.instructions = "Some things on the ground can make you slip while running, like that banana peel!<br>Press <b>[walk]</b> or <b>click</b> the Run/Walk HUD button to walk past the banana peel."
 
-	SetUp(manually_selected)
-		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_WALKING])
 			if(src.region.turf_in_region(T))
 				if (!src.target_peel || QDELETED(src.target_peel))
@@ -1696,13 +1646,11 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_COMMUNICATION
 	step_area = /area/tutorial/newbee/room_14
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/say = src.keymap.action_to_keybind("say")
 		src.instructions = "Talking is a great way to communicate with nearby crewmates!<br>Press <b>[say]</b> to open the talk dialog and press <b>ENTER</b> to say something."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY, PROC_REF(check_say))
 
 	proc/check_say(source, datum/say_message/message)
@@ -1735,13 +1683,11 @@
 	needed_item_path = /obj/item/device/radio/headset/tutorial
 	step_area = /area/tutorial/newbee/room_14
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/equip = src.keymap.action_to_keybind("equip")
 		instructions = "Headsets go on your ear.<br>Equip the headset by pressing <b>[equip]</b> or <b>clicking</b> the ear slot in your HUD."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src._needed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(check_item_equipped))
 
 	proc/check_item_equipped(datum/source, mob/equipper, slot)
@@ -1764,13 +1710,11 @@
 	needed_item_path = /obj/item/device/radio/headset/tutorial
 	step_area = /area/tutorial/newbee/room_14
 
-	New()
+	SetUp()
 		. = ..()
 		var/say_over_channel = src.keymap.action_to_keybind("say_over_channel")
 		src.instructions = "Press <b>[say_over_channel]</b> to get a list of radio channels, and press <b>ENTER</b> to select one.<br>Say something over the radio to continue."
 
-	SetUp()
-		. = ..()
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATOM_SAY, PROC_REF(check_say))
 
 	proc/check_say(source, datum/say_message/message)
@@ -1809,13 +1753,11 @@
 
 	var/obj/reagent_dispensers/watertank/target_object
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/pull = src.keymap.action_to_keybind(KEY_PULL)
 		src.instructions = "You can pull objects (and people!) by holding <b>[pull]</b> and <b>clicking</b> them.<br>Start pulling the water tank."
 
-	SetUp()
-		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_WATER_TANK])
 			if(src.region.turf_in_region(T))
 				if(src.target_object)
@@ -1850,11 +1792,10 @@
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF
 	step_area = /area/tutorial/newbee/room_15
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/pull = src.keymap.action_to_keybind(KEY_PULL)
 		src.instructions = "Press <b>[pull]</b> and <b>click</b> far away to stop pulling the water tank.<br>You can also press the PULL button in your hud to stop pulling."
-
 
 	PerformAction(action, context)
 		. = ..()
@@ -1881,12 +1822,10 @@
 	var/mob/living/carbon/human/normal/tutorial_kill/tutorial_clown
 	var/gibbed = FALSE
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		src.instructions ="To activate the special attack of some items, use the [TEXT_INTENT_DISARM] or [TEXT_INTENT_HARM] intent and <b>click</b> far away.<br><span style='color:#962121; font-weight:bold'>Kill the clown</span> to complete the tutorial. Their robustness may surprise you!"
 
-	SetUp()
-		. = ..()
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER])
 			if(src.region.turf_in_region(T))
 				if (!src.tutorial_clown || QDELETED(src.tutorial_clown))
@@ -1927,7 +1866,7 @@
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_META
 	step_area = /area/tutorial/newbee/room_16
 
-	New(datum/tutorial_base/regional/newbee/tutorial)
+	SetUp()
 		. = ..()
 		var/adminhelp = src.keymap.action_to_keybind("adminhelp")
 		var/mentorhelp = src.keymap.action_to_keybind("mentorhelp")
