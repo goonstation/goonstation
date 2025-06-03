@@ -68,6 +68,7 @@
 		src.current_sidebar = T.sidebar
 
 /datum/tutorial_base/regional/newbee/Finish()
+	src.newbee.unequip_all(TRUE)
 	if(..())
 		var/mob/new_player/M = new()
 		M.adminspawned = TRUE
