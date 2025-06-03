@@ -1956,8 +1956,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			var/obj/machinery/vehicle/O = mover
-			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
-				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+			var/sec_system = O?.get_part(POD_PART_SECONDARY)
+			if (istype(sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = sec_system
 				if (I.crashable)
 					mover.Bump(src)
 					return TRUE
