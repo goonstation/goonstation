@@ -1,5 +1,9 @@
 
 (t)tue jun 03 25
+(u)Chasu
+(p)23715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Secured assemblies can now be splashed with reagents, such as glue.
 (u)Cheekybrdy
 (p)23508
 (e)🆕🧛|C-Feature, A-Gamemodes
