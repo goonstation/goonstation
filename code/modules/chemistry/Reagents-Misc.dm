@@ -719,8 +719,8 @@ datum
 					return
 
 				var/colorize
-				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
-					var/obj/machinery/atmospherics/pipe/simple/P = O
+				if (istype(O,/obj/machinery/atmospherics/pipe))
+					var/obj/machinery/atmospherics/pipe/P = O
 
 					if(P.can_rupture)
 						var/max_reinforcement = 1e9
