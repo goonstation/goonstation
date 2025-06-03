@@ -136,14 +136,17 @@
 /area/tutorial/newbee)
 "fP" = (
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/landmark/newbee/exit_health,
 /turf/unsimulated/floor/white,
 /area/tutorial/newbee/room_6)
 "gb" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	autoclose_delay = 75
+	},
 /obj/landmark/newbee/exit_movement,
 /turf/unsimulated/floor/darkblue/checker{
 	dir = 1
@@ -171,7 +174,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/landmark/newbee/enter_space,
 /turf/unsimulated/floor/bluegreen,
@@ -215,7 +219,8 @@
 "in" = (
 /obj/landmark/newbee/enter_maints,
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/cable/auto,
@@ -631,7 +636,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/landmark/newbee/traverse_space,
 /turf/unsimulated/floor/black,
@@ -696,7 +702,8 @@
 "Bw" = (
 /obj/landmark/newbee/idlock_doors,
 /obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/mapping_helper/access/engineering_power,
 /turf/unsimulated/floor,
@@ -786,7 +793,8 @@
 /obj/landmark/newbee/unpowered_doors,
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/classic/tutorial{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /turf/unsimulated/floor,
 /area/tutorial/newbee/unpowered)
@@ -845,7 +853,9 @@
 /turf/space,
 /area/tutorial/newbee/room_10)
 "Ir" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	autoclose_delay = 75
+	},
 /obj/landmark/newbee/final_room,
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_16)
@@ -901,7 +911,9 @@
 /area/tutorial/newbee/room_4)
 "Kn" = (
 /obj/landmark/newbee/traverse_maints,
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/machinery/door/airlock/pyro/maintenance{
+	autoclose_delay = 75
+	},
 /obj/cable/auto,
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_9)
@@ -955,7 +967,9 @@
 /turf/unsimulated/floor/darkblue/checker/other,
 /area/tutorial/newbee/room_14)
 "MB" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	autoclose_delay = 75
+	},
 /obj/disposalpipe/segment/vertical,
 /obj/landmark/newbee/exit_intents,
 /turf/unsimulated/floor/white/side,
@@ -1014,7 +1028,8 @@
 /area/tutorial/newbee/room_3)
 "Qb" = (
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 75
 	},
 /obj/landmark/newbee/powered_doors,
 /turf/unsimulated/floor,
@@ -1035,7 +1050,9 @@
 /turf/unsimulated/floor/bluewhite,
 /area/tutorial/newbee/room_5)
 "RA" = (
-/obj/machinery/door/airlock/pyro/alt,
+/obj/machinery/door/airlock/pyro/alt{
+	autoclose_delay = 75
+	},
 /obj/landmark/newbee/exit_storage,
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_12)
@@ -1214,7 +1231,8 @@
 /area/tutorial/newbee/room_16)
 "Yq" = (
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 4
+	dir = 4;
+	autoclose_delay = 300
 	},
 /obj/landmark/newbee/exit_radio,
 /turf/unsimulated/floor/blue/side{
