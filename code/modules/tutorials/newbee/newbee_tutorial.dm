@@ -29,9 +29,8 @@
 	src.generate_sidebars()
 	src.AddNewbeeSteps() // need the keymap	in place before adding steps for reading player custom binds
 	src.newbee.attach_hud(src.tutorial_hud)
-	src.newbee.addAbility(/datum/targetable/newbee/exit)
-	src.newbee.addAbility(/datum/targetable/newbee/previous)
-	src.newbee.addAbility(/datum/targetable/newbee/next)
+	var/datum/abilityHolder/newbee/newbee_holder = src.newbee.add_ability_holder(/datum/abilityHolder/newbee)
+	newbee_holder.my_tutorial = src
 	var/target_color = "#FFFFFF"
 	if(src.newbee.client.color != "#000000")
 		target_color = src.newbee.client.color
@@ -54,9 +53,11 @@
 	if (current_step > steps.len)
 		Finish()
 		return
+	var/datum/abilityHolder/newbee/newbee_holder = src.newbee.get_ability_holder(/datum/abilityHolder/newbee)
+	newbee_holder.updateText()
 	T = steps[current_step]
-	ShowStep()
 	T.SetUp(manually_selected)
+	src.ShowStep()
 
 /datum/tutorial_base/regional/newbee/ShowStep()
 	. = ..()
