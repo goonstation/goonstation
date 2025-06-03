@@ -41,7 +41,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 
 /datum/component/mimic_stomach/proc/on_entered(mob/user)
 	user.HealBleeding()
-	user.HealDamage("All", parent.max_health, parent.max_health)
+	user.HealDamage("All", user.max_health, user.max_health)
 	return
 
 /datum/component/mimic_stomach/UnregisterFromParent()
