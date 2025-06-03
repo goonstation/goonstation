@@ -39,15 +39,10 @@ TYPEINFO(/datum/component/mimic_stomach)
 	limb_target_turf = get_turf(pick(non_walls))
 	center = region.get_center()
 
-/datum/component/mimic_stomach/proc/on_entered()
-	var/mob/parent = src.parent
-	parent.HealBleeding()
-	parent.HealDamage("All", parent.max_health, parent.max_health)
+/datum/component/mimic_stomach/proc/on_entered(mob/user)
+	user.HealBleeding()
+	user.HealDamage("All", parent.max_health, parent.max_health)
 	return
-
-/datum/component/mimic_stomach/proc/on_disposing()
-	exit = null
-	qdel(src)
 
 /datum/component/mimic_stomach/UnregisterFromParent()
 	var/mob/living/critter/mimic/antag_spawn/parent = src.parent
