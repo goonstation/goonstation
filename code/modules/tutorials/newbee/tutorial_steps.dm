@@ -10,7 +10,7 @@
 
 /datum/tutorialStep/newbee/timer/custom_controls
 	name = "Customizing Controls"
-	instructions = "Customize kebyinds via the menu bar under Game > Interface > Modify Keybinds.<br>Options for TG-style controls or HUD are in the same menu."
+	instructions = "Customize kebyinds via the top-most menu bar under Game > Interface > Modify Keybinds.<br>Options for TG-style controls or HUD are in the same menu."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 	step_area = /area/tutorial/newbee/room_1
 
@@ -90,8 +90,6 @@
 /datum/tutorialStep/newbee/move_to/id_locked_doors
 	name = "ID-Locked Doors"
 	instructions = "Some doors require a valid ID to open.<br>With your worn ID, you can head into the next room."
-	highlight_hud_element = "id"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	needed_item_path = /obj/item/card/id/engineering/tutorial
 	step_area = /area/tutorial/newbee/room_2
@@ -135,8 +133,8 @@
 
 /datum/tutorialStep/newbee/item_pickup/can
 	name = "Pick Up That Can"
-	instructions = "<b>Click</b> on the crushed can to pick it up."
-	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
+	instructions = "<b>Click</b> on the crushed can with an empty hand to pick it up."
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_CAN
 	item_path = /obj/item/canned_laughter/crushed
 	step_area = /area/tutorial/newbee/room_3
@@ -691,7 +689,7 @@
 
 /datum/tutorialStep/newbee/move_to/damage_types
 	name = "Damage Types"
-	instructions = "Your total health is combined from four damage types: Brute, Burn, Toxin, and Oxygen.<br>Floor health scanners will display how mcuh damage you've taken in each category."
+	instructions = "Your total health is the sum of four damage types: Brute, Burn, Toxin, and Oxygen.<br>Floor health scanners will display how much damage you've taken in each category."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
 	highlight_hud_element = "health"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
@@ -700,14 +698,12 @@
 
 	New(datum/tutorial_base/regional/newbee/tutorial)
 		. = ..()
-		src.instructions = "Your total health is combined from four damage types: [TEXT_HEALTH_BRUTE], [TEXT_HEALTH_BURN], [TEXT_HEALTH_TOXIN], and [TEXT_HEALTH_OXY].<br>Floor health scanners will display how mcuh damage you've taken in each category."
+		src.instructions = "Your total health is the sum of four damage types: [TEXT_HEALTH_BRUTE], [TEXT_HEALTH_BURN], [TEXT_HEALTH_TOXIN], and [TEXT_HEALTH_OXY].<br>Floor health scanners will display how much damage you've taken in each category."
 
 /datum/tutorialStep/newbee/item_pickup/brute_first_aid
 	name = "First Aid Kits"
 	instructions = "You can heal yourself by using supplies from first aid kits.<br><b>Click</b> the first aid kit to pick it up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_HEALTH
-	highlight_hud_element = "health"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_5
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PICKUP_BRUTE_FIRST_AID
@@ -725,8 +721,6 @@
 	name = "Opening Storage"
 	instructions = "With the first aid kit in-hand, press <b>C</b> to open it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "health"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
@@ -744,8 +738,6 @@
 	name = "Swapping Hands"
 	instructions = "Only one hand can be active at a time. You need an empty hand to take items from storage.<br>Press <b>E</b> or <b>middle-mouse click</b> to swap hands."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "health"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 	step_area = /area/tutorial/newbee/room_5
 
@@ -774,8 +766,6 @@
 	name = "Applying Patches"
 	instructions = "Grab a brute patch out of the brute first aid kit, and apply it by <b>clicking</b> yourself.<br>You can also press <b>C</b> to self-apply the patch."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "health"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_5
 	needed_item_path = /obj/item/storage/firstaid/brute/tutorial
 
@@ -800,6 +790,9 @@
 			src._needed_item.storage.add_contents(src.patch_to_apply)
 
 		src.patch_to_apply.UpdateOverlays(src.point_marker, "marker")
+		var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, src.patch_to_apply.screen_loc)
+		hud_point_loop(src.newbee_tutorial.current_step, hud_x_y_offset[1] + 16, hud_x_y_offset[2] + 30)
+
 		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY, PROC_REF(check_attackby))
 
 	proc/check_attackby(source, obj/item/I, mob/user, params, is_special)
@@ -904,8 +897,6 @@
 	name = "Applying Patches"
 	instructions = "Just like brute patches, apply a burn patch from the first aid kit.<br>You can <b>click</b> yourself or press <b>C</b> with a patch in hand to self-apply the patch."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
-	highlight_hud_element = "health"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_INVENTORY
 	step_area = /area/tutorial/newbee/room_5
 	needed_item_path = /obj/item/storage/firstaid/fire/tutorial
 
@@ -957,11 +948,16 @@
 
 /datum/tutorialStep/newbee/examining
 	name = "Taking a Closer Look"
-	instructions = "Examine things by holding <b>ALT</b> and <b>clicking</b> them. Text in blue boxes are hints.<br>Examine the girder to find out how to deconstruct it."
+	instructions = "Holding <b>ALT</b> and <b>clicking</b> something shows more info in the right-side chat box.<br>Examine the girder to find out how to deconstruct it from the light-blue text in chat."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
 	step_area = /area/tutorial/newbee/room_6
 
 	var/obj/structure/girder/target_girder
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/examine = src.keymap.action_to_keybind(KEY_EXAMINE)
+		src.instructions = "Holding <b>[examine]</b> and <b>clicking</b> something shows more info in the right-side chat box.<br>Examine the girder to find out how to deconstruct it from the light-blue text in chat."
 
 	SetUp()
 		. = ..()
@@ -1046,10 +1042,15 @@
 
 /datum/tutorialStep/newbee/move_to/exit_girder
 	name = "Activatable Items"
-	instructions = "Let's learn about activatable items in the next room."
+	instructions = "You don't need the toolbox, so feel free to drop it with <b>Q</b>.<br>Head to the next room to learn about activatable items."
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER
 	step_area = /area/tutorial/newbee/room_6
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
+
+	New(datum/tutorial_base/regional/newbee/tutorial)
+		. = ..()
+		var/drop = src.keymap.action_to_keybind("drop")
+		src.instructions = "You don't need the toolbox, so feel free to drop it with <b>[drop]</b>.<br>Head to the next room to learn about activatable items."
 
 //
 // room 7 - Active Items
@@ -1069,6 +1070,7 @@
 	instructions = "Some items do something when used in-hand.<br>Press <b>C</b> to activate the flashlight."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_7
+	needed_item_path = /obj/item/device/light/flashlight/tutorial
 
 	New()
 		. = ..()
@@ -1081,8 +1083,8 @@
 			src.finished = TRUE
 
 /datum/tutorialStep/newbee/move_to/enter_maints
-	name = "Maintenance"
-	instructions = "Enter the maintenance tunnel. Don't dawdle..."
+	name = "Maintenance Tunnels"
+	instructions = "Time to enter the maintenance tunnel. Don't dawdle..."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MOVEMENT
 	step_area = /area/tutorial/newbee/room_7
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
@@ -1109,7 +1111,7 @@
 // TODO: detection ?
 /datum/tutorialStep/newbee/timer/stats_before
 	name = "Character Stats"
-	instructions = "Press the STAT button in the HUD to show your current stats.<br>Note your cold resistance - space will freeze you to death in your current state!"
+	instructions = "<b>Click</b> the STAT button in the HUD to show your current stats.<br>Note your cold resistance - space will freeze you to death in your current state!"
 	step_area = /area/tutorial/newbee/room_9
 	highlight_hud_element = "stats"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
@@ -1146,7 +1148,7 @@
 
 /datum/tutorialStep/newbee/equipping_space_gear
 	name = "Becoming Spaceworthy"
-	instructions = "A space suit, helmet, and breath mask are needed to survive in the vacuum of space.<br><b>Click</b> a piece of space gear to pick it up, then press <b>V</b> or <b>click</b> the item slot to equip it."
+	instructions = "A space suit, helmet, and breath mask are needed to survive in the vacuum of space.<br><b>Click</b> each piece of space gear to pick it up, then press <b>V</b> or <b>click</b> the item slot to equip it."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ITEMS
 	step_area = /area/tutorial/newbee/room_9
 
@@ -1199,7 +1201,7 @@
 // TODO: detection ?
 /datum/tutorialStep/newbee/timer/stats_after
 	name = "Suited Up"
-	instructions = "With full space gear, you now have 100% cold resistance.<br><b>Click</b> the STAT button to check your current stats."
+	instructions = "With full space gear, you now have 100% cold resistance.<br><b>Click</b> the STAT button again to check your current stats."
 	step_area = /area/tutorial/newbee/room_9
 	highlight_hud_element = "stats"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_STATS
@@ -1224,6 +1226,8 @@
 		. = ..()
 		for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
 			tank_ability.UpdateOverlays(src.inventory_marker, "marker")
+			var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, tank_ability.screen_loc)
+			src.hud_point_loop(src.newbee_tutorial.current_step, hud_x_y_offset[1] + 16, hud_x_y_offset[2] + 30)
 
 	PerformAction(action, context)
 		. = ..()
@@ -1273,6 +1277,8 @@
 		. = ..()
 		for(var/obj/ability_button/tank_valve_toggle/tank_ability in src._needed_item.ability_buttons)
 			tank_ability.UpdateOverlays(src.inventory_marker, "marker")
+			var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, tank_ability.screen_loc)
+			src.hud_point_loop(src.newbee_tutorial.current_step, hud_x_y_offset[1] + 16, hud_x_y_offset[2] + 30)
 
 	PerformAction(action, context)
 		. = ..()
@@ -1445,6 +1451,8 @@
 		. = ..()
 		for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
 			toggle.UpdateOverlays(src.inventory_marker, "marker")
+			var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, toggle.screen_loc)
+			src.hud_point_loop(src.newbee_tutorial.current_step, hud_x_y_offset[1] + 16, hud_x_y_offset[2] + 30)
 
 	PerformAction(action, context)
 		. = ..()
@@ -1533,6 +1541,8 @@
 		. = ..()
 		for(var/obj/ability_button/mask_toggle/toggle in src._needed_item.ability_buttons)
 			toggle.UpdateOverlays(src.inventory_marker, "marker")
+			var/hud_x_y_offset = screen_loc_to_pixel_offset(src.newbee_tutorial.newbee.client, toggle.screen_loc)
+			src.hud_point_loop(src.newbee_tutorial.current_step, hud_x_y_offset[1] + 16, hud_x_y_offset[2] + 30)
 
 	PerformAction(action, context)
 		. = ..()
@@ -1828,8 +1838,6 @@
 	name = "Pull the Tank"
 	instructions = "Walk to the previous room while pulling the water tank to move it out of your way.<br>Drag the water tank to the marker."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS
-	highlight_hud_element = "pull"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_UPPER_HALF
 	step_area = /area/tutorial/newbee/room_15
 
 	target_landmark = LANDMARK_TUTORIAL_NEWBEE_PULL_TARGET

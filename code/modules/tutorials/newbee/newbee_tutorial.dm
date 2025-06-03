@@ -532,41 +532,63 @@ proc/make_hud_point(mob/pointer, target_x=0, target_y=0, color="#ffffff", time=2
 
 /// For a client and target screen location, give a pixel offset from the client to the bottom-left corner of the location on screen
 proc/screen_loc_to_pixel_offset(client/C, target_screen_loc)
-	var/list/x_y = splittext(target_screen_loc, ",")
-	var/x_component = x_y[1]
-	var/y_component = x_y[2]
+	var/x_component
+	var/y_component
+
+	var/list/a_b = splittext(target_screen_loc, ",")
+	if (findtext(a_b[1], "NORTH") || findtext(a_b[1], "SOUTH") || findtext(a_b[2], "EAST") || findtext(a_b[2], "WEST"))
+		x_component = a_b[2]
+		y_component = a_b[1]
+	else
+		x_component = a_b[1]
+		y_component = a_b[2]
 
 	// go to 0,0 from centre
 	var/x_offset = -(istext(C.view) ? WIDE_TILE_WIDTH / 2 : SQUARE_TILE_WIDTH / 2) * 32
 	var/y_offset = -TILE_HEIGHT / 2 * 32
 
-	if (findtext(x_component, "CENTER"))
+	var/list/x_subcomponent = splittext(x_component, ":")
+	var/list/y_subcomponent = splittext(y_component, ":")
+
+	if (findtext(x_subcomponent[1], "CENTER"))
 		x_offset += (istext(C.view) ? WIDE_TILE_WIDTH / 2 : SQUARE_TILE_WIDTH / 2) * 32 - 16
-	else if (findtext(x_component, "WEST"))
+	else if (findtext(x_subcomponent[1], "WEST"))
 		x_offset += 0
-	else if (findtext(x_component, "EAST"))
+	else if (findtext(x_subcomponent[1], "EAST"))
 		x_offset += (istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) * 32 - 32
+	else
+		// bare number
+		x_offset += text2num(x_subcomponent[1]) * 32 - 32
 
-	if (findtext(x_component, "+"))
-		x_offset += text2num(splittext(splittext(x_component, "+")[2], ":")[1]) * 32// between + and :
-	if (findtext(x_component, "-"))
-		x_offset -= text2num(splittext(splittext(x_component, "-")[2], ":")[1]) * 32 // between - and :
+	// grid offsets
+	if (findtext(x_subcomponent[1], "+"))
+		x_offset += text2num(splittext(x_subcomponent[1], "+")[2]) * 32
+	if (findtext(x_subcomponent[1], "-"))
+		x_offset -= text2num(splittext(x_subcomponent[1], "-")[2]) * 32
+
+	// pixel_x component
 	if (findtext(x_component, ":"))
-		x_offset += text2num(splittext(x_component, ":")[2])
+		x_offset += text2num(x_subcomponent[2])
 
-	if (findtext(y_component, "CENTER"))
+	if (findtext(y_subcomponent[1], "CENTER"))
 		y_offset += TILE_HEIGHT / 2 * 32 - 16
-	else if (findtext(y_component, "SOUTH"))
+	else if (findtext(y_subcomponent[1], "SOUTH"))
 		y_offset += 0
-	else if (findtext(y_component, "NORTH"))
+	else if (findtext(y_subcomponent[1], "NORTH"))
 		y_offset += TILE_HEIGHT * 32 - 32
+	else
+		// bare number
+		y_offset += text2num(y_subcomponent[1]) * 32 - 32
 
-	if (findtext(y_component, "+"))
-		y_offset += text2num(splittext(splittext(y_component, "+")[2], ":")[1]) * 32// between + and :
-	if (findtext(y_component, "-"))
-		y_offset -= text2num(splittext(splittext(y_component, "-")[2], ":")[1]) * 32 // between - and :
+	// grid offsets
+	if (findtext(y_subcomponent[1], "+"))
+		y_offset += text2num(splittext(y_component, "+")[2]) * 32
+	if (findtext(y_subcomponent[1], "-"))
+		y_offset -= text2num(splittext(y_component, "-")[2]) * 32
+
+	 // pixel_y component
 	if (findtext(y_component, ":"))
-		y_offset += text2num(splittext(y_component, ":")[2])
+		y_offset += text2num(y_subcomponent[2])
 
 	return list(x_offset, y_offset)
 
