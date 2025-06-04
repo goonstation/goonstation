@@ -17922,7 +17922,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/id_computer,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},

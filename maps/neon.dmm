@@ -26897,7 +26897,7 @@
 	enter_id = "hop";
 	name = "Bridge"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/id_computer,
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "tjm" = (

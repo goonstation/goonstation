@@ -1327,7 +1327,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/id_computer,
 /turf/simulated/floor/plating/jen,
 /area/station/bridge/customs)
 "arc" = (

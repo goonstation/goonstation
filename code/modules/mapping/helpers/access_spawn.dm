@@ -234,6 +234,11 @@
 	req_access = list(access_teleporter)
 	color = COMMAND
 
+/obj/mapping_helper/access/id_computer
+	name = "id computer access spawn"
+	req_access = list(access_change_ids)
+	color = COMMAND
+
 /obj/mapping_helper/access/eva
 	name = "eva access spawn"
 	req_access = list(access_eva)
