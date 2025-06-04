@@ -293,7 +293,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (src.target_turf_counter <= 0)
 			if (prob(20)) // drift towards a random station turf for a few steps
 				src.target_turf = get_random_station_turf()
-				src.target_turf_counter = rand(3,7)
+				src.target_turf_counter = rand(radius,radius*2)
 		else
 			if (!src.target_turf)
 				src.target_turf = get_random_station_turf()
