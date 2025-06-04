@@ -917,6 +917,10 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
+#ifndef LIVE_SERVER
+	UNLINT(return) //shut uppp
+#endif
+
 	joined_date = ""
 
 	// Get join date from BYOND members page
@@ -943,7 +947,7 @@ var/global/curr_day = null
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
-	set name = "RP Rules"
+	set name = "Rules - RP"
 	set category = "Commands"
 
 	var/cant_interact_time = null

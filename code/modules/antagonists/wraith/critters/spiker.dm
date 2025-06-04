@@ -15,6 +15,7 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 1
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/spiker
 	///Are we currently escaping?
 	var/shuffling = FALSE
 	var/mob/living/intangible/wraith/master = null

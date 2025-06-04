@@ -330,6 +330,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"T" = "",
 		"Y" = "",
 		"U" = "",
+		"I" = "",
 		"O" = "",
 		"P" = "",
 		"A" = "",
