@@ -532,7 +532,7 @@
 
 /datum/tutorialStep/newbee/grab_person
 	name = "Grabbing People"
-	instructions = "Stand next to the clown and <b>click</b> them while on Grab intent. <b>Click</b> them again or press <b>C</b>to grip tighter.<br>Get the clown in an aggressive grab."
+	instructions = "Stand next to the clown and <b>click</b> them while on Grab intent.<br> <b>Click</b> them again or press <b>C</b> to get the clown in an aggressive grab."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_INTENTS
 	step_area = /area/tutorial/newbee/room_4
 
@@ -540,7 +540,7 @@
 
 	update_instructions()
 		var/attackself = src.keymap.action_to_keybind("attackself")
-		src.instructions = "Stand next to the clown and <b>click</b> them while on [TEXT_INTENT_GRAB] intent. <b>Click</b> them again or press <b>[attackself]</b> to grip tighter.<br>Get the clown in an aggressive grab."
+		src.instructions = "Stand next to the clown and <b>click</b> them while on [TEXT_INTENT_GRAB] intent.<br><b>Click</b> them again or press <b>[attackself]</b> to get the clown in an aggressive grab."
 		..()
 
 	SetUp()
