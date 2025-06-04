@@ -1,5 +1,9 @@
 
 (t)wed jun 04 25
+(u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
+(p)23481
+(e)🆕🗺🎨🔊📄|C-Feature, A-Mapping, C-Sprites, C-Sound, A-UI
+(*)The new player options menu includes an in-game tutorial.
 (u)Cheekybrdy
 (p)23683
 (e)⚖🐣|C-Balance, A-Respawning
