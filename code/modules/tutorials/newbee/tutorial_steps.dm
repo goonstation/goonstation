@@ -635,8 +635,20 @@
 				else
 					src.target_mob = new(T)
 				break
+		// make it look like an admin mouse
+		src.target_mob.icon_state = "mouse-admin"
+		src.target_mob.icon_state_dead = "mouse-admin-dead"
+		src.target_mob.use_custom_color = FALSE
+		src.target_mob.ClearAllOverlays()
+		src.target_mob.dir = WEST
+
 		RegisterSignal(src.target_mob, COMSIG_MOB_DEATH, PROC_REF(check_mob_death))
 		src.target_mob.UpdateOverlays(src.point_marker, "marker")
+
+		SPAWN (0.5 SECONDS)
+			// squeak!
+			if (src.target_mob && !QDELETED(src.target_mob))
+				playsound(src.target_mob, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 
 	proc/check_mob_death()
 		if (isdead(src.target_mob))
@@ -664,6 +676,48 @@
 			SPAWN (1.5 SECONDS)
 				if (M)
 					qdel(M)
+
+/datum/tutorialStep/newbee/resisting
+	name = "Resisting"
+	instructions = "That mouse was a protected species! You've been handcuffed for your horrible crime...<br>Resisting will block attacks, stop grabs, and start removing handcuffs.<br>Press <b>Z</b> or <b>click</b> the Resist HUD button and stand still to break free."
+	step_area = /area/tutorial/newbee/room_4
+	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
+	highlight_hud_element = "resist"
+	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
+
+	var/obj/item/handcuffs/guardbot/target_handcuffs
+
+	update_instructions()
+		var/resist = src.keymap.action_to_keybind("resist")
+		src.instructions = "That mouse was a protected species! You've been handcuffed for your horrible crime...<br>Resisting will block attacks, stop grabs, and start removing handcuffs.<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button and stand still to break free."
+		. = ..()
+
+	SetUp(manually_selected)
+		. = ..()
+		if(!src.target_handcuffs || QDELETED(src.target_handcuffs))
+			src.target_handcuffs = new /obj/item/handcuffs/guardbot
+		src.target_handcuffs.cuff(src.newbee_tutorial.newbee)
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_handcuffs))
+
+	proc/check_handcuffs(mob/living/parent)
+		if (src.newbee_tutorial.newbee.hasStatus("handcuffed"))
+			SPAWN (0.5 SECONDS)
+				src.check_handcuffs(parent)
+		else
+			src.newbee_tutorial.PerformSilentAction("break_handcuffs")
+
+	PerformAction(action, context)
+		. = ..()
+		if (action == "break_handcuffs")
+			src.finished = TRUE
+
+	TearDown()
+		. = ..()
+		src.target_handcuffs = null
+		if (src.newbee_tutorial.newbee.hasStatus("handcuffed"))
+			src.newbee_tutorial.newbee.handcuffs.destroy_handcuffs(src.newbee_tutorial.newbee)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST)
+
 
 /datum/tutorialStep/newbee/move_to/exit_intents
 	name = "Healing Up"
@@ -776,9 +830,6 @@
 
 	SetUp()
 		. = ..()
-		// clear burning if heading backwards through steps
-		src.newbee_tutorial.newbee.delStatus("burning")
-
 		var/patch_count = 0
 		for (var/obj/item/reagent_containers/patch/mini/bruise/patch in src._needed_item.contents)
 			src.patch_to_apply = patch
@@ -807,39 +858,45 @@
 		patch_to_apply?.UpdateOverlays(null, "marker")
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_ATTACKBY)
 
-/datum/tutorialStep/newbee/resisting
-	name = "Resisting"
-	instructions = "Oh no! You've been set on fire!<br>Press <b>Z</b> or <b>click</b> the Resist HUD button to begin putting out the flames!<br>"
+/datum/tutorialStep/newbee/on_fire
+	name = "Putting Out Fire"
+	instructions = "You've been set on fire - stop, drop, and roll to put it out!<br>Press <b>Z</b> or <b>=</b> to begin rolling on the floor.<br>"
 	step_area = /area/tutorial/newbee/room_5
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
-	highlight_hud_element = "resist"
-	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
 
 	update_instructions()
 		var/resist = src.keymap.action_to_keybind("resist")
-		src.instructions = "Oh no! You've been set on fire!<br>Press <b>[resist]</b> or <b>click</b> the Resist HUD button to begin putting out the flames!"
+		var/rest = src.keymap.action_to_keybind("rest")
+		src.instructions = "You've been set on fire - stop, drop, and roll to put it out!<br>Press <b>[resist]</b> or <b>[rest]</b> to begin rolling on the floor."
 		..()
 
 	SetUp()
 		. = ..()
 		src.newbee_tutorial.newbee.set_burning(10)
-		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_resist))
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST, PROC_REF(check_fire))
+		RegisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP, PROC_REF(check_fire))
 
-	proc/check_resist(mob/living/parent)
-		parent.mind?.get_player()?.tutorial?.PerformSilentAction("resist")
+	proc/check_fire(mob/living/parent)
+		if (parent.hasStatus("burning"))
+			SPAWN (0.5 SECONDS)
+				src.check_fire(parent)
+		else
+			src.newbee_tutorial.PerformSilentAction("fire_out")
 
 	PerformAction(action, context)
 		. = ..()
-		if (action == "resist")
+		if (action == "fire_out")
 			src.finished = TRUE
 
 	TearDown()
 		. = ..()
+		src.newbee_tutorial.newbee.delStatus("burning")
 		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_RESIST)
+		UnregisterSignal(src.newbee_tutorial.newbee, COMSIG_MOB_LAYDOWN_STANDUP)
 
 /datum/tutorialStep/newbee/standing_up
 	name = "Standing Up"
-	instructions = "Once the fire is out, you can stand yourself back upright.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+	instructions = "Now that the fire is out, it's time to stand upright.<br>Press <b>=</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	highlight_hud_element = "rest"
 	highlight_hud_marker = NEWBEE_TUTORIAL_MARKER_HUD_LOWER_HALF
@@ -847,7 +904,7 @@
 
 	update_instructions()
 		var/rest = src.keymap.action_to_keybind("rest")
-		src.instructions = "Once the fire is out, you can stand yourself back upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
+		src.instructions = "Now that the fire is out, it's time to stand upright.<br>Press <b>[rest]</b> or <b>click</b> the Stand/Rest button in the HUD to stand up."
 		..()
 
 	SetUp()

@@ -139,7 +139,7 @@
 	var/point = src.keymap.action_to_keybind(KEY_POINT)
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_MODIFIERS = "Modifiers:<br>[throw_key] - Throw<br>[examine] - Examine<br>[pull] - Pull<br>[point] - Point")
 
-	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_HEALTH = "Damage Types:<br>[TEXT_HEALTH_BRUTE] - Punches/Stabs<br>[TEXT_HEALTH_BURN] - Fire/Shocks<br>[TEXT_HEALTH_TOXIN] - Poisons <br>[TEXT_HEALTH_OXY] - Suffocation")
+	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_HEALTH = "Damage Types:<br>[TEXT_HEALTH_BRUTE] - Blunt/Cut/Stab<br>[TEXT_HEALTH_BURN] - Fire/Shocks<br>[TEXT_HEALTH_TOXIN] - Poison/Radiation<br>[TEXT_HEALTH_OXY] - Suffocation")
 
 	var/adminhelp = src.keymap.action_to_keybind("adminhelp")
 	var/mentorhelp = src.keymap.action_to_keybind("mentorhelp")
@@ -172,7 +172,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/open_unpowered_door)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_items)
 
-	// room 4 - Intents
+	// room 4 - Intents & Resist
 	src.AddStep(/datum/tutorialStep/newbee/drop_item)
 	src.AddStep(/datum/tutorialStep/newbee/intent_help)
 	src.AddStep(/datum/tutorialStep/newbee/help_person)
@@ -182,6 +182,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/grab_person)
 	src.AddStep(/datum/tutorialStep/newbee/intent_harm)
 	src.AddStep(/datum/tutorialStep/newbee/basic_combat)
+	src.AddStep(/datum/tutorialStep/newbee/resisting)
 	src.AddStep(/datum/tutorialStep/newbee/move_to/exit_intents)
 
 	// room 5 - Healing
@@ -190,7 +191,7 @@
 	src.AddStep(/datum/tutorialStep/newbee/storage_inhands)
 	src.AddStep(/datum/tutorialStep/newbee/hand_swap)
 	src.AddStep(/datum/tutorialStep/newbee/apply_brute_patch)
-	src.AddStep(/datum/tutorialStep/newbee/resisting)
+	src.AddStep(/datum/tutorialStep/newbee/on_fire)
 	src.AddStep(/datum/tutorialStep/newbee/standing_up)
 	src.AddStep(/datum/tutorialStep/newbee/item_pickup/fire_first_aid)
 	src.AddStep(/datum/tutorialStep/newbee/apply_fire_patch)
