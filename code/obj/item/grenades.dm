@@ -270,8 +270,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/thing_thrower/aconite
 	desc = "It is set to detonate in 3 seconds."
 	name = "aconite grenade"
-	icon_state = "smoke"
-	icon_state_armed = "smoke1"
+	icon_state = "aconite"
+	icon_state_armed = "aconite1"
 
 	payload = /obj/item/plant/herb/aconite
 	count = 8
@@ -279,8 +279,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/thing_thrower/garlic
 	desc = "It is set to detonate in 3 seconds."
 	name = "garlic grenade"
-	icon_state = "smoke"
-	icon_state_armed = "smoke1"
+	icon_state = "garlic"
+	icon_state_armed = "garlic1"
 
 	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
 	count = 16
