@@ -14,9 +14,6 @@
 	var/move_triggered = 0
 	var/object_flags = 0
 
-	/// for if a mimic has trapped the obj, for things like crates and chutes
-	var/mob/living/critter/mimic/antag_spawn/present_mimic = null
-
 	animate_movement = 2
 //	desc = SPAN_ALERT("HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???")
 //heh no not really

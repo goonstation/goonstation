@@ -6,89 +6,51 @@
 	cooldown_after_action = TRUE
 	needs_turf = FALSE
 	var/inside = FALSE
-	var/list/trap_whitelist = list(/obj/machinery/disposal, /obj/storage/)
 	var/obj/current_container = null
 	var/last_appearance = null
 
 	cast(atom/target)
 		. = ..()
-		var/obj/target_container = holder.owner.loc
 		if (inside)
 			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes.", "No.")))
 				if ("Yes.")
 					deactivate()
+					return TRUE
 				if ("No.")
 					return TRUE
-		if (istypes(target_container, trap_whitelist))
+		var/obj/target_container = holder.owner.loc
+		if (!isobj(target_container))
 			boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
 			return TRUE
-		else if (target_container.present_mimic)
+
+		var/datum/component/mimic_stomach/component = target_container.GetComponent(/datum/component/mimic_stomach)
+		if (component)
 			boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
 			return TRUE
 
 		switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes.", "No.")))
 			if ("Yes.")
-				current_container = target_container
-				current_container.present_mimic = holder.owner
-				activate()
+				activate(target_container)
 			if ("No.")
 				return TRUE
 
-
-	proc/activate()
+	proc/activate(obj/target)
 		var/mob/living/critter/parent = holder.owner
-		if (!parent.stomachHolder) // give the owner a stomach if they don't have one
-			parent.AddComponent(/datum/component/mimic_stomach/)
+		var/datum/component/mimic_stomach/component = parent.GetComponent(/datum/component/mimic_stomach)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = TRUE
-		boutput(parent, SPAN_ALERT("<b>[holder.owner] turns themself inside out!</b>"))
-		current_container = holder.owner.loc
-		current_container.present_mimic = parent
-		parent.set_loc(parent.stomachHolder.center)
-		parent.stomachHolder.on_entered()
-		RegisterSignal(current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
+		component.mimic_move(parent, target)
 		last_appearance = parent.appearance
 		parent.appearance = /obj/mimicdummy
 		parent.UpdateIcon()
 
 	proc/deactivate()
 		var/mob/living/critter/parent = holder.owner
+		var/datum/component/mimic_stomach/component = parent.GetComponent(/datum/component/mimic_stomach)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = FALSE
 		abil.afterAction()
-		parent.visible_message(SPAN_ALERT("<b>[parent] turns themself outside in!</b>"))
-		parent.set_loc(current_container)
-		UnregisterSignal(current_container, COMSIG_ATOM_ENTERED)
-		current_container.present_mimic = null
-		current_container = null
+		component.mimic_move(exit=TRUE)
 		parent.appearance = last_appearance
 		last_appearance = null
 		parent.UpdateIcon()
-
-	proc/trap_chomp()
-		var/mob/living/carbon/human/target = locate(/mob/living/carbon/human) in current_container
-		if (!target)
-			return
-		if (GET_COOLDOWN(current_container, "mimicTrap"))
-			boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [current_container]!</B>"))
-			return
-
-		ON_COOLDOWN(current_container, "mimicTrap", 5 SECONDS)
-		var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
-		var/list/randLimb
-		for (var/targetlimb in randLimbBase) // build a list of limbs the target actually has
-			if (target.limbs.get_limb(targetlimb))
-				LAZYLISTADD(randLimb, targetlimb)
-		var/obj/item/parts/human_parts/targetLimb = target.limbs.get_limb(pick(randLimb))
-
-		if (targetLimb)
-			random_brute_damage(target, 12)
-			var/obj/item/limb = targetLimb.sever()
-			boutput(target, SPAN_ALERT("Something in the [current_container] tears off [limb]!"))
-			target.emote("scream")
-			limb.set_loc(current_container.present_mimic.stomachHolder.limb_target_turf)
-			current_container.present_mimic.stomachHolder.limb_target_turf = get_turf(pick(current_container.present_mimic.stomachHolder.non_walls))
-			playsound(current_container, 'sound/voice/burp_alien.ogg', 60, 1)
-
-
-

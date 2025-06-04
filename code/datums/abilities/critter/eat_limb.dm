@@ -9,24 +9,11 @@
 
 	cast(atom/target)
 		. = ..()
-		if (istype(target, /obj/item/parts/human_parts))
-			var/obj/item/parts/human_parts/limb = target
-			if (limb.mimic_edible)
-				actions.start(new/datum/action/bar/icon/eat_limb(holder, limb, holder.owner), holder.owner)
-		else if (ishuman(target))
-			var/mob/living/carbon/human/targetHuman = target
-			if (!targetHuman.limbs)
-				boutput(holder.owner, "Your target doesn't have any limbs! Did you do that?")
-				return
-			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
-			var/list/randLimb = null
-			for (var/checklimb in randLimbBase)
-				if (targetHuman.limbs.get_limb(checklimb)) // build a list of limbs the target actually has
-					LAZYLISTADD(randLimb, checklimb)
-			var/obj/item/parts/human_parts/targetLimb = targetHuman.limbs.get_limb(pick(randLimb))
-
-			boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [targetLimb]!</b>"))
-			actions.start(new/datum/action/bar/icon/eat_limb(holder, targetLimb, holder.owner, TRUE), holder.owner)
+		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
+			boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [target]!</b>"))
+		else
+			return
+		actions.start(new/datum/action/bar/icon/eat_limb(target, holder.owner), holder.owner)
 
 /datum/action/bar/icon/eat_limb
 	duration = 1 SECONDS
@@ -34,22 +21,20 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/last_crunch = 0
-	var/datum/targetable/critter/eat_limb/eat
 	var/atom/target
 	var/mob/living/critter/mimic/antag_spawn/user
-	var/moblimb
 
-	New(Eat, Target, User, Moblimb)
-		eat = Eat
+	New(Target, User)
 		target = Target
 		user = User
-		moblimb = Moblimb
 		..()
-		if (moblimb)
-			duration = 5 SECONDS
 
 	onStart()
 		..()
+		if (ishuman(target))
+			duration = 5 SECONDS
+		else
+			duration = 1 SECONDS
 		user.stop_hiding()
 		user.last_disturbed = INFINITY
 
@@ -57,40 +42,24 @@
 		..()
 		last_crunch++
 		if (last_crunch >= 2)
-			var/datum/human_limbs/targetlimb = target
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
 			eat_twitch(user)
-			random_brute_damage(targetlimb.holder, 2)
+			random_brute_damage(target, 2)
 			ThrowRandom(gib, rand(2,6))
 			last_crunch = 0
 
 	onEnd()
 		..()
 		user.last_disturbed = 1 SECONDS
-		if (moblimb)
-			src.gobble(target, user, TRUE)
-		else
-			src.gobble(target, user)
+		src.gobble(target, user)
 
-	proc/gobble(atom/target, mob/user, var/gnaw = FALSE)
-		var/datum/human_limbs/limbTarget = target
-		var/mob/living/critter/mimic/antag_spawn/mimic = user
-		var/obj/limb = null
-		if (gnaw)
-			limb = limbTarget.sever()
+	proc/gobble(atom/target, mob/user)
+		var/datum/component/mimic_stomach/comp = user.GetComponent(/datum/component/mimic_stomach)
+		if (!isobj(target))
+			comp.add_limb(target, FALSE)
 			target.emote("scream")
-			var/datum/targetable/critter/eat_limb/abil = mimic.getAbility(/datum/targetable/critter/eat_limb)
+			var/datum/targetable/critter/eat_limb/abil = user.getAbility(/datum/targetable/critter/eat_limb)
 			abil.afterAction()
 		else
-			limb = limbTarget
-
-		if (mimic.stomachHolder)
-			playsound(mimic, 'sound/voice/burp_alien.ogg', 60, 1)
-			limb.set_loc(mimic.stomachHolder.limb_target_turf)
-			LAZYLISTADD(mimic.stomachHolder.limbs_eaten, limb)
-			limb.pixel_x = rand(-12,12)
-			limb.pixel_y = rand(-12,12)
-			mimic.stomachHolder.limb_target_turf = get_turf(pick(mimic.stomachHolder.non_walls))
-		else
-			boutput(mimic, "You can't eat this...")
+			comp.add_limb(target, FALSE)

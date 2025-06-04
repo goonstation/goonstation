@@ -165,16 +165,11 @@
 						/datum/targetable/vent_move,
 						/datum/targetable/critter/stomach_retreat)
 
-
 	New()
 		..()
 		SPAWN(0)
 			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
-		src.stomachHolder = src.AddComponent(/datum/component/mimic_stomach/)
-
-	death()
-		..()
-		src.stomachHolder.RemoveComponent(/datum/component/mimic_stomach/)
+			src.AddComponent(/datum/component/mimic_stomach)
 
 	setup_hands() //give them an actual hand so they can open doors etc.
 		. = ..()
@@ -189,17 +184,6 @@
 		HH.can_range_attack = FALSE
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
-
-	proc/death_barf()
-		var/counter = 0
-		for (var/obj/O in src.stomachHolder.limbs_eaten)
-			O.set_loc(get_turf(src))
-			ThrowRandom(O, 10, 2, bonus_throwforce=10)
-			if (counter <= 0)
-				playsound(src, 'sound/voice/burp_alien.ogg', 60, 1)
-				counter = 5
-			counter--
-			sleep(0.1 SECONDS)
 
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)
