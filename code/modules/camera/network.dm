@@ -112,7 +112,7 @@
 /proc/seen_by_camera(var/atom/atom)
 	if(isarea(atom) || !atom)
 		return FALSE
-	if(!isturf(atom.loc))
+	if(!isturf(atom) && !isturf(atom.loc)) //Not on a turf, probably in a locker or something
 		return FALSE
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
