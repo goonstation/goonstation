@@ -1,5 +1,9 @@
 
 (t)wed jun 04 25
+(u)Lord_Earthfire
+(p)23705
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Atmospheric pipes in walls have their fatigue pressure increased by 5 times the walls material density. Double the value for reinforced walls.
 (u)Mr. Moriarty
 (p)23466
 (e)🆕🔎💅🔨|C-Feature, C-Code-Quality, C-QoL, A-Player-Actions
