@@ -338,7 +338,7 @@
 	SHOW_VERB_DESC
 
 	var/current_laws = list()
-	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_circuits)
+	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_modules)
 		if(!X)
 			continue
 		var/lt = X.get_law_text(TRUE)

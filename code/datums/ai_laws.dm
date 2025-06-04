@@ -170,9 +170,9 @@
 		return jointext(laws, glue)
 
 /datum/ai_lawset
-	var/list/current_laws[LAWRACK_MAX_CIRCUITS]
+	var/list/current_laws[LAWRACK_MAX_MODULES]
 	/// used during UpdateLaws to determine which laws have changed
-	var/list/last_laws[LAWRACK_MAX_CIRCUITS]
+	var/list/last_laws[LAWRACK_MAX_MODULES]
 	var/obj/machinery/lawrack/host_rack = null //law rack this datum is tied to. Might not exist
 	New()
 		. = ..()
@@ -195,7 +195,7 @@
 	proc/format_for_logs(var/glue = "<br>")
 		var/law_counter = 1
 		var/lawOut = list()
-		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			if(!current_laws[i])
 				continue
 			var/lt = current_laws[i]["law"]
@@ -213,7 +213,7 @@
 		var/list/lawOut = new
 		var/list/removed_laws = new
 
-		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			if(!current_laws[i])
 				if (last_laws[i])
 					//load the law number and text from our saved law list
@@ -251,7 +251,7 @@
 		var/list/laws = list()
 
 		var/law_counter = 1
-		for (var/i in 1 to LAWRACK_MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			if(!current_laws[i])
 				continue
 			var/lt = current_laws[i]["law"]
