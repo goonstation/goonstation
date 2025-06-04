@@ -2951,7 +2951,7 @@ TYPEINFO(/obj/item/mechanics/miccomp)
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (level == OVERFLOOR || isobserver(AM) || isintangible(AM))
+		if (level == OVERFLOOR || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
 			return
