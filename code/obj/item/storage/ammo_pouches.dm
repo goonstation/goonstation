@@ -367,8 +367,8 @@
 	)
 
 /obj/item/storage/werewolf_hunter_pouch
-	name = "werewolf hunter pouch"
-	desc = "A pouch for carrying some useful grenades."
+	name = "werewolf hunter's pouch"
+	desc = "A pouch for carrying some useful herbal grenades."
 	icon_state = "ammopouch"
 	health = 6
 	w_class = W_CLASS_SMALL
