@@ -1,5 +1,9 @@
 
 (t)wed jun 04 25
+(u)Cheekybrdy
+(p)23683
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Automatic Command promotions to HoS won't happen in single digit staffing stations.
 (u)Lord_Earthfire
 (p)23705
 (e)🆕💨|C-Feature, A-Atmospherics
