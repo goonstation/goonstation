@@ -133,6 +133,7 @@
 #include "defines\traits.dm"
 #include "defines\trader.dm"
 #include "defines\turf.dm"
+#include "defines\tutorial.dm"
 #include "defines\ui.dm"
 #include "defines\uplink.dm"
 #include "defines\vehicles.dm"
