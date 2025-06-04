@@ -4801,6 +4801,11 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
+"btX" = (
+/obj/table/auto,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "btZ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -9897,6 +9902,16 @@
 "cQi" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/south_side)
+"cQo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/item/slag_shovel{
+	pixel_x = 11;
+	pixel_y = 11
+	},
+/turf/simulated/floor/black/grime,
+/area/station/quartermaster/refinery)
 "cQy" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/engineering,
@@ -39359,15 +39374,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/inner)
-"lYc" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/juicer{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "lYh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -47649,16 +47655,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"oFT" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/item/slag_shovel{
-	pixel_x = 11;
-	pixel_y = 11
-	},
-/turf/simulated/floor/black/grime,
-/area/station/quartermaster/refinery)
 "oFZ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -123424,7 +123420,7 @@ oHX
 cev
 flq
 hcg
-lYc
+btX
 pQh
 rbK
 rTC
@@ -134944,7 +134940,7 @@ gWF
 dhW
 uyd
 uyd
-oFT
+cQo
 fNb
 lGB
 gVQ

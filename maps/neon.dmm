@@ -5850,6 +5850,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"ekK" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "eli" = (
 /obj/landmark/spawner/artifact,
 /obj/cable{
@@ -7490,6 +7501,23 @@
 	},
 /turf/simulated/floor/grime,
 /area/tech_outpost)
+"fnv" = (
+/obj/machinery/light/incandescent/netural,
+/obj/storage/secure/closet/fridge{
+	desc = "A staff fridge."
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/steak/synth,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "fnU" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro,
@@ -10420,6 +10448,11 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
+"htR" = (
+/obj/table/wood,
+/obj/item/reagent_containers/food/snacks/steak,
+/turf/simulated/floor/damaged2,
+/area/derelict_diner)
 "htV" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -12821,6 +12854,16 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
+"jge" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/launcher_loader/east{
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "jgM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21976,20 +22019,6 @@
 	icon_state = "floor"
 	},
 /area/station/crewquarters/cryotron)
-"pLu" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "pLx" = (
 /obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
@@ -26835,13 +26864,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"tii" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
 "tis" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -26926,19 +26948,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"tkB" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
-	},
-/obj/machinery/launcher_loader/east{
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "tkN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30228,6 +30237,13 @@
 /obj/machinery/shuttle/engine/heater/seaheater,
 /turf/simulated/floor/plating/airless,
 /area/radiostation/hallway)
+"vAM" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 "vBd" = (
 /obj/machinery/light_switch/north,
 /obj/cable{
@@ -31093,11 +31109,6 @@
 	dir = 10
 	},
 /area/station/security/brig)
-"wba" = (
-/obj/table/wood,
-/obj/item/reagent_containers/food/snacks/steak,
-/turf/simulated/floor/damaged2,
-/area/derelict_diner)
 "wbh" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/radiostation/bedroom)
@@ -33304,23 +33315,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"xEc" = (
-/obj/machinery/light/incandescent/netural,
-/obj/storage/secure/closet/fridge{
-	desc = "A staff fridge."
-	},
-/obj/item/reagent_containers/food/snacks/donkpocket,
-/obj/item/reagent_containers/food/snacks/donkpocket{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/snacks/steak/synth,
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
 "xEm" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41395,7 +41389,7 @@ bod
 eEP
 eEP
 vxz
-wba
+htR
 eEP
 qpn
 qpn
@@ -76767,8 +76761,8 @@ fIi
 dGY
 wWe
 xkU
-tii
-tii
+vAM
+vAM
 xkU
 xkU
 qpn
@@ -88789,7 +88783,7 @@ xMR
 uSR
 jjv
 slU
-xEc
+fnv
 wIf
 sxa
 cVy
@@ -93606,7 +93600,7 @@ qpn
 qpn
 qpn
 dFl
-tkB
+jge
 wZe
 lUj
 fcB
@@ -93908,7 +93902,7 @@ qpn
 qpn
 qpn
 dFl
-pLu
+ekK
 jaJ
 lUj
 nTQ

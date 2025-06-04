@@ -891,8 +891,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	desc = "A collection of parts that can be used to make some kind of barricade."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "barricade"
-	var/object_type = /obj/barricade 		//object to deploy
-	var/build_duration = 2 SECONDS
+	var/object_type = /obj/barricade 		//!object to deploy
+	var/build_duration = 2 SECONDS			//!how long it takes to deploy it
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy the barricade on solid ground. Cannot be picked back up once deployed.")
 
 	New(loc)
 		..()

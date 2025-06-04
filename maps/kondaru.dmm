@@ -30531,12 +30531,6 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
-"dFj" = (
-/obj/rack,
-/obj/item/reagent_containers/food/drinks/juicer,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "dFk" = (
 /obj/blind_switch/area/north,
 /turf/simulated/floor/wood/two,
@@ -41445,6 +41439,11 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"lfg" = (
+/obj/rack,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "lfn" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -116391,7 +116390,7 @@ jOn
 qsw
 tmx
 pvj
-dFj
+lfg
 boo
 gkQ
 pJk

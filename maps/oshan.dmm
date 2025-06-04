@@ -433,26 +433,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aby" = (
-/obj/machinery/conveyor/EW{
-	id = "outbound"
-	},
-/obj/machinery/mass_driver{
-	dir = 8;
-	drive_range = 100;
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"abz" = (
-/obj/machinery/conveyor/EW{
-	id = "outbound"
-	},
-/obj/machinery/launcher_loader/west{
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "abA" = (
 /turf/space/fluid/warp_z5/edge,
 /area/space)
@@ -31994,6 +31974,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/turret_protected/ai_upload)
+"efc" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	drive_range = 100;
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "efw" = (
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -42215,6 +42203,11 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
+"roD" = (
+/obj/table/wood,
+/obj/item/reagent_containers/food/snacks/steak,
+/turf/simulated/floor/damaged2,
+/area/derelict_diner)
 "roP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -42645,11 +42638,6 @@
 /obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/floor/martian,
 /area/evilreaver)
-"saU" = (
-/obj/table/wood,
-/obj/item/reagent_containers/food/snacks/steak,
-/turf/simulated/floor/damaged2,
-/area/derelict_diner)
 "sdf" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -43641,6 +43629,12 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"tru" = (
+/obj/machinery/launcher_loader/west{
+	id = "qm_dock_out"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "trY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -76720,7 +76714,7 @@ bJw
 bJw
 bMO
 bJw
-aby
+efc
 bJw
 bJw
 fRj
@@ -77022,7 +77016,7 @@ bJx
 bJx
 bMO
 qrW
-abz
+tru
 bJx
 bJx
 aNw
@@ -110411,7 +110405,7 @@ gUu
 gmD
 gmD
 tFb
-saU
+roD
 gmD
 aqn
 aqn
