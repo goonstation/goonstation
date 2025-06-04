@@ -113,7 +113,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 		eaten_thing.set_loc(get_turf(src.parent))
 		ThrowRandom(eaten_thing, 10, 2, bonus_throwforce=10)
 		if (!ON_COOLDOWN(global, "burp", 1 SECONDS))
-			playsound(src.parent, 'sound/voice/burp_alien.ogg', 60, 1, pitch=pitch_counter)
+			playsound(src.parent, 'sound/voice/burp_alien.ogg', 60, 0, pitch=pitch_counter)
 			if (pitch_counter >= 0)
 				pitch_counter -= 0.5
 		sleep(0.2 SECONDS)
