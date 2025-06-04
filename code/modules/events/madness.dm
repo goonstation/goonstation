@@ -79,6 +79,8 @@
 	proc/cause_madness(source)
 		var/list/potential_victims = list()
 		for (var/mob/living/carbon/human/H in global.mobs)
+			if (get_z(H) != Z_LEVEL_STATION)
+				continue
 			if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && H.client.preferences.be_misc && isalive(H)) //using "misc" prefs for now
 				potential_victims += H
 		if (src.num_victims <= 0)

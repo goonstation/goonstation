@@ -128,6 +128,8 @@ TYPEINFO(/obj/item/mine)
 		..()
 		if (AM == src || !(istype(AM, /obj/vehicle) || istype(AM, /obj/machinery/bot) || ismob(AM)))
 			return
+		if (HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING))
+			return
 		if (ismob(AM) && (!isliving(AM) || isintangible(AM) || iswraith(AM)))
 			return
 		if (src.used_up)
