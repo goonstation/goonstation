@@ -934,9 +934,10 @@ var/global/game_force_started = FALSE
 					E.show_inspector_report()
 					E.addAbility(/datum/targetable/inspector_report)
 				SPAWN(0)
-					E.mind?.personal_summary.generate_xp(E.key)
-					E.mind?.personal_summary.ui_interact(E)
-					E.addAbility(/datum/targetable/personal_summary)
+					if (E.mind?.personal_summary)
+						E.mind?.personal_summary.generate_xp(E.key)
+						E.mind?.personal_summary.ui_interact(E)
+						E.addAbility(/datum/targetable/personal_summary)
 
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
