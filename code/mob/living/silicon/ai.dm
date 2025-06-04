@@ -1821,6 +1821,7 @@ or don't if it uses a custom topopen overlay
 	src.deployed_shell = target_shell
 	src.mind.transfer_to(target_shell)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
+	target_shell.gender = src.gender
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"

@@ -61,6 +61,7 @@
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
+	soundproofing = 20
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	name = "emergency box"

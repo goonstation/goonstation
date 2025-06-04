@@ -201,7 +201,7 @@
 		. = ..()
 		src.material = getMaterial("gnesis")
 
-	on_life(mult)
+	on_life(mob/M, mult = 1)
 		. = ..()
 		if(src.reagents?.total_volume == 0)
 			if(!ON_COOLDOWN(src.owner, "gnesis_barb_spam", 5 SECONDS))

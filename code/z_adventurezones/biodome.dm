@@ -400,12 +400,12 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (istype(O, /obj/machinery/vehicle) && !src.no_fly_zone)
 				var/obj/machinery/vehicle/V = O
-				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.engine?.active)
+				if(istype(V.movement_controller, /datum/movement_controller/pod) && V.get_part(POD_PART_ENGINE)?.active)
 					return
 
 			if (isliving(O))
 				var/mob/living/M = O
-				if(M.isFlying && !src.no_fly_zone)
+				if(HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) && !src.no_fly_zone)
 					return
 				if (M.mind?.damned)
 					melt_away(M)

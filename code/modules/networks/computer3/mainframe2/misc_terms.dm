@@ -1702,6 +1702,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	desc = "A networked printer.  It's designed to print."
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
@@ -2179,6 +2180,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	anchored = ANCHORED
 	density = 1
 	icon_state = "scanner0"
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?

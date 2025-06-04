@@ -716,7 +716,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			build(user,src.loc)
 			return
 		..()
@@ -781,7 +781,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			update_capture()
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			actions.start(new/datum/action/bar/icon/unbuild_vent_capture(src), user)
 			return
 		..()
