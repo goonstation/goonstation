@@ -1063,7 +1063,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					dat += "<h4>Fine Request List</h4>"
 					var/ticket_level = src.get_ticket_level()
 					if (ticket_level < 2)
-						dat += "<br><br>Please insert a security ID to approve fines.<br><br>"
+						dat += "<br><br>Please insert an ID with fining access to approve fines.<br><br>"
 						dat += "<br><br>"
 
 					for (var/datum/fine/F in data_core.fines)
