@@ -21964,9 +21964,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
-	},
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "qmdockout"
@@ -26942,9 +26939,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
 	},
 /obj/machinery/launcher_loader/east{
 	id = "qmdockout"

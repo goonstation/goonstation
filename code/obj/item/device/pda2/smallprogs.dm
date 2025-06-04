@@ -870,7 +870,7 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (length(eye_loc.camera_coverage_emitters))
+			if (seen_by_camera(eye_loc))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
