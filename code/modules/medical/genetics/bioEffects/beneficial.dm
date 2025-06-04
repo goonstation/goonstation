@@ -308,7 +308,6 @@
 	icon_state  = "regen"
 	effect_group = "regen"
 
-
 	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
