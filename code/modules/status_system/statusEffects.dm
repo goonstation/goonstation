@@ -848,6 +848,7 @@
 				else if (duration <= 0)
 					ag_stage = 0
 					return
+				// TODO: different icons per stage
 				// icon_state = "werewolf_bane[ag_stage]"
 
 	stuns
