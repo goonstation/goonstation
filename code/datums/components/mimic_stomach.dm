@@ -109,7 +109,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 /datum/component/mimic_stomach/proc/death_barf()
 	UnregisterSignal(src.parent, COMSIG_MOB_DEATH)
 	var/pitch_counter = 2
-	for (var/obj/item/parts/eaten_thing in src.limbs_eaten)
+	for (var/obj//eaten_thing in src.limbs_eaten)
 		eaten_thing.set_loc(get_turf(src.parent))
 		ThrowRandom(eaten_thing, 10, 2, bonus_throwforce=10)
 		if (!ON_COOLDOWN(global, "burp", 1 SECONDS))
