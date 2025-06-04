@@ -63,8 +63,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	var/holder_name = "piano"
 	/// The object this datum is attached to
 	var/obj/holder = null
-	/// The sound bank where sound-related data is stored.
-	var/static/datum/instrument_sound_bank/sound_bank = new()
 	/// List of all sound instrument paths.
 	var/list/sounds_instrument_associative = null
 
@@ -72,7 +70,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	. = ..()
 
 	src.holder = new_holder
-	src.sounds_instrument_associative = src.sound_bank.bank[src.instrument_name].sounds_instrument_associative
+	src.sounds_instrument_associative = global.instrument_sound_bank.bank[src.instrument_name].sounds_instrument_associative
 
 /datum/text_to_music/proc/clean_input() //breaks our big input string into chunks
 	src.is_busy = TRUE
@@ -451,7 +449,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/mech_comp/proc/build_allow_list()
 	src.allow_list = list()
 
-	for (var/key in src.sound_bank.bank)
+	for (var/key in global.instrument_sound_bank.bank)
 		if (key in src.deny_list)
 			continue
 
@@ -477,7 +475,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 	if (instrument in src.allow_list)
 		src.instrument_name = instrument
-		src.sounds_instrument_associative = src.sound_bank.bank[instrument_name].sounds_instrument_associative
+		src.sounds_instrument_associative = global.instrument_sound_bank.bank[instrument_name].sounds_instrument_associative
 
 		src.rebuild_tooltip()
 

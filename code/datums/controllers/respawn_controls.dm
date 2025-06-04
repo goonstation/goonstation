@@ -266,4 +266,4 @@ var/datum/respawn_controls/respawn_controller
 			src.server_name = server_name
 		if (server_id == config.server_id)
 			return
-		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="?src=\ref[src]&action=close">X</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join<br>[server_name]!</a></span>"}
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Dead? No worries. <a style='color:red;background-color:black;' href="byond://?src=\ref[src]&action=close">X</a><br><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Change-Server [server_id]'>Click here to join<br>[server_name]!</a></span>"}

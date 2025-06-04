@@ -666,7 +666,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
-	proc/close(var/entangleLogic)
+	proc/close(var/entangleLogic, var/mob/user)
 		FLICK(src.closing_anim,src)
 		if (!src.open)
 			return 0
@@ -783,10 +783,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		for (var/obj/O in src)
 			if (!(O in vis_controller?.vis_items))
 				O.set_loc(newloc)
-			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/our_trap = O
-				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
+			if(user)
+				SEND_SIGNAL(O, COMSIG_ITEM_STORAGE_INTERACTION, user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -803,7 +801,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/toggle(var/mob/user)
 		if (src.open)
-			return src.close()
+			return src.close(user=user)
 		return src.open(user=user)
 
 	proc/unlock()
@@ -887,7 +885,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (usr.stat || !usr.can_use_hands() || isAI(usr) || !can_reach(usr, src))
 			return
 
-		return toggle()
+		return toggle(usr)
 
 	verb/move_inside()
 		set src in oview(1)

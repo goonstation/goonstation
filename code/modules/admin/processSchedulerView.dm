@@ -33,7 +33,7 @@ var/global/datum/processSchedulerView/processSchedulerView
 	usr << output(data, "processSchedulerContext.browser:[function]")
 
 /datum/processSchedulerView/proc/getProcessTable()
-	var/text = "<table class='table table-striped'><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
+	var/text = "<table class='table table-striped'><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td class='non-sortable'>Action</td></tr></thead><tbody>"
 	// and the context of each
 	for (var/list/data in processScheduler.getStatusData())
 		text += "<tr>"
@@ -63,13 +63,9 @@ var/global/datum/processSchedulerView/processSchedulerView
 /datum/processSchedulerView/proc/getContext()
 	var/text = {"<html><head>
 		<title>Process Scheduler Detail</title>
-		<link rel="stylesheet" href="[resource("vendor/css/bootstrap.min.css")]" />
+		<link rel="stylesheet" href="[resource("css/processScheduler.css")]" />
 		<script type="text/javascript">var ref = '\ref[src]';</script>
-		<script type="text/javascript" src="[resource("vendor/js/json2.js")]"></script>
-		<script type="text/javascript" src="[resource("vendor/js/jquery.min.js")]"></script>
-		<script type="text/javascript" src="[resource("vendor/js/bootstrap.min.js")]"></script>
 		<script type="text/javascript" src="[resource("js/processScheduler.js")]"></script>
-		<style type="text/css">.btn { padding: 0; }</style>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -81,4 +77,4 @@ var/global/datum/processSchedulerView/processSchedulerView
 	text += getProcessTable()
 	text += "</div></div></body></html>"
 
-	usr.Browse(text, "window=processSchedulerContext;size=800x600")
+	usr.Browse(text, "window=processSchedulerContext;size=830x600")

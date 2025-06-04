@@ -3736,7 +3736,7 @@
 				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle."))
 				var/gathered = 0
 				for(var/mob/living/M in view(5,reaction_loc))
-					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it, so it's still saleable to Zoldorf
+					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it
 					gathered += round(M.max_health / 2)
 					var/datum/statusEffect/maxhealth/decreased/current_status = M.hasStatus("maxhealth-")
 					var/old_maxhealth_decrease = current_status ? current_status.change : 0

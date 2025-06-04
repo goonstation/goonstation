@@ -669,7 +669,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 			var/obj/blocker
 			for (var/obj/O in target_turf)
-				if (O.density)
+				if (O.density && !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) || (ispath(parts.furniture_type, /obj/table) && HAS_FLAG(O.object_flags, NO_BLOCK_TABLE))))
 					blocker = O
 					break
 

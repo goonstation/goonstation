@@ -9,6 +9,8 @@
 	var/obj/item/parts/holder = null
 	/// used for ON_COOLDOWN stuff
 	var/cooldowns
+	/// this limb's click usage is limited by lastattacked. set to false for custom cooldowns.
+	var/use_lastattacked_click_delay = TRUE
 	var/special_next = 0
 	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/datum/item_special/disarm_special = null
@@ -292,7 +294,7 @@
 
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
-			user.inertia_dir = get_dir(target, user)
+			user.inertia_dir = get_dir_accurate(target, user)
 			step(user, user.inertia_dir)
 
 	arm38
@@ -343,7 +345,7 @@
 		spread_angle = 15
 
 	artillery
-		proj = new/datum/projectile/bullet/autocannon
+		proj = new/datum/projectile/special/spreader/uniform_burst/circle/airburst
 		shots = 1
 		current_shots = 1
 		cooldown = 5 SECONDS

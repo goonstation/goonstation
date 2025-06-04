@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Syndicate Omnitool"
 	items = list(/obj/item/tool/omnitool/syndicate)
 	cost = 2
-	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes."
+	desc = "A miniature set of tools that you can hide in your clothing and retrieve with the flex emote. Has knife and weldingtool modes. The handle is insulated, no gloves needed!"
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/bighat
@@ -349,10 +349,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
-	items = list(/obj/item/pipebomb/bomb/miniature_syndicate)
+	items = list(/obj/item/assembly/timer_ignite_pipebomb/mini_syndicate)
 	cost = 3
 	vr_allowed = FALSE
-	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
+	desc = "A rather volatile pipe bomb packed with miniature syndicate troops. Assembled and ready for use"
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -1092,6 +1092,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
 	job = list("Rancher", "Angler")
 	can_buy = UPLINK_TRAITOR
+	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/ai_laser
 	name = "AI Camera Laser Module"
@@ -1382,7 +1383,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Pure Telecrystal"
-	items = list(/obj/item/explosive_uplink_telecrystal)
+	items = list(/obj/item/uplink_telecrystal/trick)
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
 	telecrystal = TRUE

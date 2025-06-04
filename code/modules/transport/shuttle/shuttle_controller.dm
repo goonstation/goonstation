@@ -168,6 +168,13 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 									continue
 								if (istype(AM, /obj/effects/precipitation))
 									continue
+								if (istype(AM, /atom/movable/buried_storage))
+									var/atom/movable/buried_storage/buried_storage = AM
+									for (var/atom/movable/buried as anything in buried_storage)
+										buried.set_loc(D)
+									buried_storage.has_buried_mob = FALSE
+									buried_storage.number_of_objects = 0
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*

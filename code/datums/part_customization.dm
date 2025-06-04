@@ -305,28 +305,16 @@ ABSTRACT_TYPE(/datum/part_customization/human/organ)
 			part_type = /obj/item/organ/eye/cyber/configurable
 
 		eye_missing_left
-			custom_icon = 'icons/ui/character_editor.dmi'
-			custom_icon_state = "missing"
 			id = "eye_missing_left"
 			slot = "left_eye"
 			associated_trait_id = "eye_missing_left"
-			trait_cost = 1
 			part_type = /obj/item/organ/eye/glass
 
-			get_name()
-				return "missing left eye"
-
 		eye_missing_right
-			custom_icon = 'icons/ui/character_editor.dmi'
-			custom_icon_state = "missing"
 			id = "eye_missing_right"
 			slot = "right_eye"
 			associated_trait_id = "eye_missing_right"
-			trait_cost = 1
 			part_type = /obj/item/organ/eye/glass
-
-			get_name()
-				return "missing right eye"
 
 ///Lazy init singleton list
 var/list/datum/part_customization/part_customizations = null

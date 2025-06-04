@@ -741,6 +741,7 @@ toxic - poisons
 			..()
 
 	weak
+		name = "muckshot"
 		damage = 50 //can have a little throwing, as a treat
 
 /datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
@@ -2073,9 +2074,9 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	name = "Salvo Rocket"
 	max_rotation_rate = 5
 	dissipation_delay = 30
-	start_speed = 15
+	start_speed = 6
 	explosion_power = 1
-	shot_delay = 0.3 SECONDS
+	shot_delay = 0.5 SECONDS
 	var/initial_projectile = TRUE
 
 	is_valid_target(atom/A, obj/projectile/P)
@@ -2141,8 +2142,18 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
-			qdel(S)
+			if (S.radius > 3)
+				S.target_turf_counter = 0
+				S.shrink()
+				new /obj/effects/magicspark(S.loc)
+				SPAWN(3 SECONDS)
+					if(S)
+						S.target_turf_counter = 0
+						S.shrink()
+						new /obj/effects/magicspark(S.loc)
+			else
+				new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
+				qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))
