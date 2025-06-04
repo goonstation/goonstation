@@ -116,8 +116,9 @@
 		return FALSE
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
-	#endif
+	#else
 	var/turf/T = atom
 	if(!istype(T))
 		T = get_turf(atom)
 	. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
+	#endif
