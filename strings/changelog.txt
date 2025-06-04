@@ -1,5 +1,9 @@
 
 (t)wed jun 04 25
+(u)Mr. Moriarty
+(p)23466
+(e)🆕🔎💅🔨|C-Feature, C-Code-Quality, C-QoL, A-Player-Actions
+(*)Added wraithchat. Wraiths now speak over wraithchat using T and deadchat using Y. Wraith summons can now speak over wraithchat using Y or by using the :wraith prefix.
 (u)LorrMaster
 (p)23552
 (e)💅🔨|C-QoL, A-Player-Actions
