@@ -49,8 +49,8 @@
 		current_step.TearDown()
 		tutorial.current_step -= 1
 		var/datum/tutorialStep/newbee/previous_step = tutorial.steps[tutorial.current_step]
-		tutorial.ShowStep()
 		previous_step.SetUp(TRUE)
+		tutorial.ShowStep()
 
 /datum/targetable/newbee/next
 	name = "Next Step"

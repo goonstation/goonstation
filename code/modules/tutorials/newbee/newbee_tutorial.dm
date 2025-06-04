@@ -2,15 +2,27 @@
 	name = "Newbee Tutorial"
 	region_type = /datum/mapPrefab/allocated/newbee_tutorial
 
+	/// The sound to play when advancing a step in the tutorial
 	var/advance_sound = 'sound/misc/tutorial-bloop.ogg'
 
+	/// Reference to the generated tutorial mob
 	var/mob/living/carbon/human/tutorial/newbee = null
+	/// Reference to the original new player mob, needed to transfer the mind properly on startup
 	var/mob/new_player/origin_mob
+	/// Reference to the tutorial instructions HUD given to the tutorial mob
 	var/datum/hud/tutorial/tutorial_hud
+	/// Reference to the player's keymap for dyanmic key instructions
 	var/datum/keymap/keymap
+	/// The current checkpoint landmark, used if the player dies
 	var/checkpoint_landmark = LANDMARK_TUTORIAL_START
 
+	/// The currently displayed sidebar step (uses `NEWBEE_TUTORIAL_SIDEBAR_*` defines)
 	var/current_sidebar
+
+	/// A key-value list of pre-generated sidebar content
+	///
+	/// The key is a `NEWBEE_TUTORIAL_SIDEBAR_*` define.
+	/// The value is a generated HTML blob to put as maptext.
 	var/list/sidebars = list()
 
 /datum/tutorial_base/regional/newbee/New(mob/M)
@@ -26,8 +38,7 @@
 	src.tutorial_hud = new()
 	src.origin_mob.mind.transfer_to(src.newbee)
 	src.keymap = src.newbee.client.keymap
-	src.generate_sidebars()
-	src.AddNewbeeSteps() // need the keymap	in place before adding steps for reading player custom binds
+	src.AddNewbeeSteps()
 	src.newbee.attach_hud(src.tutorial_hud)
 	var/datum/abilityHolder/newbee/newbee_holder = src.newbee.add_ability_holder(/datum/abilityHolder/newbee)
 	newbee_holder.my_tutorial = src
@@ -38,6 +49,7 @@
 	animate(color = "#000000", time = 10, easing = QUAD_EASING | EASE_IN)
 	animate(color = target_color, time = 10, easing = QUAD_EASING | EASE_IN)
 	. = ..()
+	src.setup_keymap(src.keymap)
 
 /datum/tutorial_base/regional/newbee/Advance(manually_selected=FALSE)
 	var/datum/tutorialStep/newbee/T = steps[current_step]
@@ -62,11 +74,7 @@
 /datum/tutorial_base/regional/newbee/ShowStep()
 	. = ..()
 	var/datum/tutorialStep/newbee/T = src.steps[src.current_step]
-	src.tutorial_hud?.update_step(T.name)
-	src.tutorial_hud.update_text(T.instructions)
-	if (T.sidebar && T.sidebar != src.current_sidebar)
-		src.tutorial_hud.update_sidebar(src.sidebars[T.sidebar])
-		src.current_sidebar = T.sidebar
+	T.update_instructions()
 
 /datum/tutorial_base/regional/newbee/Finish()
 	src.newbee.unequip_all(TRUE)
@@ -87,11 +95,13 @@
 	src.tutorial_hud = null
 	src.keymap = null
 
-/datum/tutorial_base/regional/newbee/proc/generate_sidebars()
-	if (!src.keymap)
+/datum/tutorial_base/regional/newbee/proc/setup_keymap(datum/keymap/keymap)
+	if (!keymap)
 		CRASH("Tried to generate tutorial sidebar without keymap")
 
-	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_EMPTY = "")
+	src.keymap = keymap
+
+	src.sidebars = list(NEWBEE_TUTORIAL_SIDEBAR_EMPTY = "")
 
 	var/up = src.keymap.action_to_keybind(KEY_FORWARD)
 	var/left = src.keymap.action_to_keybind(KEY_LEFT)
@@ -136,6 +146,11 @@
 	var/looc = src.keymap.action_to_keybind("looc")
 	src.sidebars += list(NEWBEE_TUTORIAL_SIDEBAR_META = "Meta:<br>[adminhelp] - Admin Help<br>[mentorhelp] - Mentor Help<br>[looc] - Local OOC")
 
+	if (src.current_sidebar)
+		src.tutorial_hud.update_sidebar(src.sidebars[src.current_sidebar])
+	if (length(src.steps)) // keymaps call this a little early, so we have to check
+		var/datum/tutorialStep/newbee/step_to_update = src.steps[src.current_step]
+		step_to_update.update_instructions()
 
 /datum/tutorial_base/regional/newbee/proc/AddNewbeeSteps()
 	// room 1 - Arrivals & Movement
@@ -276,7 +291,7 @@
 	/// Which sidebar to display; see NEWBEE_TUTORIAL_SIDEBAR_*
 	var/sidebar = NEWBEE_TUTORIAL_SIDEBAR_EMPTY
 
-	/// Associated area of the step. Used to handle warping for stepping backwards
+	/// Associated area of the step. Used to handle warping for previous step
 	var/area/tutorial/newbee/step_area
 
 	/// an optional custom sound to use when advancing this step
@@ -359,6 +374,15 @@
 		hud_element?.UpdateOverlays(null, "marker")
 	src._needed_item?.UpdateOverlays(null, "marker")
 	qdel(src.hud_point)
+
+/// update instruction text. IMPORTANT: tail-call parent to update properly
+/datum/tutorialStep/newbee/proc/update_instructions()
+	SHOULD_CALL_PARENT(TRUE)
+	src.newbee_tutorial.tutorial_hud.update_step(src.name)
+	src.newbee_tutorial.tutorial_hud.update_text(src.instructions)
+	if (src.sidebar && src.sidebar != src.newbee_tutorial.current_sidebar)
+		src.newbee_tutorial.tutorial_hud.update_sidebar(src.newbee_tutorial.sidebars[src.sidebar])
+		src.newbee_tutorial.current_sidebar = src.sidebar
 
 /// highlight a specific hud element
 /datum/tutorialStep/newbee/proc/highlight_hud(hud_element, hud_marker)
