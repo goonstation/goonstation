@@ -189,6 +189,7 @@
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)
 
 /obj/mimicdummy
+	name = "mimic"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mimicface"
 	desc = "You shouldn't be seeing me!"
