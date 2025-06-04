@@ -59828,6 +59828,21 @@
 	},
 /turf/space,
 /area/space)
+"iml" = (
+/obj/fakeobject/pipe{
+	color = "b4b4b4";
+	dir = 4
+	},
+/obj/machinery/door_control/oneshot{
+	desc = "A remote override panel for a blast door.";
+	icon_state = "doorctrl1";
+	id = "meatstation_wrath";
+	name = "override panel-'deep storage'";
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/meat_derelict/main)
 "imL" = (
 /obj/submachine/slot_machine,
 /turf/unsimulated/outdoors/grass,
@@ -75464,17 +75479,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/syndicate_station_space)
-"uyC" = (
-/obj/machinery/door_control/oneshot{
-	desc = "A remote override panel for a blast door.";
-	icon_state = "doorctrl1";
-	id = "meatstation_wrath";
-	name = "override panel-'deep storage'";
-	pixel_x = 24;
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/plating,
-/area/meat_derelict/guts)
 "uyI" = (
 /obj/item/paper/folded/ball{
 	pixel_y = 11
@@ -136412,7 +136416,7 @@ bZs
 bZs
 cdF
 cdF
-cdF
+gDC
 bZd
 rtM
 cdd
@@ -138529,7 +138533,7 @@ mfw
 cay
 cay
 cba
-uyC
+rEI
 rEI
 vRa
 gRO
@@ -140031,7 +140035,7 @@ cnw
 cnw
 aaa
 bWD
-lzG
+iml
 myh
 xdm
 bXG
