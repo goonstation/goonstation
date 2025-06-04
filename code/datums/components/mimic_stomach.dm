@@ -5,7 +5,9 @@ ABSTRACT_TYPE(/datum/component/mimic_stomach)
 	var/datum/allocated_region/region
 	var/turf/center
 	var/obj/current_container
+	/// Target for eaten limbs to be teleported to, rerolled to another turf after
 	var/turf/limb_target_turf
+	/// Place eaten things in here so they don't break through the stomach wall!!
 	var/list/non_walls
 	/// Hold the mimic's last disguise to reapply once they're out
 	var/last_appearance
