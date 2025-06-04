@@ -292,7 +292,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	. = list()
 
 	var/turf/T = get_turf(center)
-	if(length(T?.camera_coverage_emitters))
+	if(seen_by_camera(T))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
 				var/mob/living/intangible/aieye/AIeye = theAI.eyecam

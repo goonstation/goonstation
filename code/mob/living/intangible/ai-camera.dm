@@ -567,8 +567,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		src.observing = null
 
 	examine_verb(atom/A as mob|obj|turf in view(,usr))
-		var/turf/T = get_turf(A)
-		if (!length(T.camera_coverage_emitters))
+		if (!seen_by_camera(A))
 			return
 		. = ..()
 
