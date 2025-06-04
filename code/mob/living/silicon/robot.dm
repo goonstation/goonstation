@@ -2617,13 +2617,14 @@ TYPEINFO(/mob/living/silicon/robot)
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
-			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
+			if (ROBOT_DEATH_MOD_NONE)
 				message = "CONTACT LOST: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
+			if (ROBOT_DEATH_MOD_SUICIDE)
 				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
+			if (ROBOT_DEATH_MOD_KILLSWITCH)
 				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
-			else	//Someone passed us an unkown modifier
+			else	//Someone passed us an unknown modifier
+				logTheThing(LOG_DEBUG, src, "death alert was passed an unknown cyborg death modifier")
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
 		if (message)
