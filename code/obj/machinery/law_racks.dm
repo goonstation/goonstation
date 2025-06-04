@@ -39,7 +39,7 @@
 
 		UpdateIcon()
 
-	/// Causes all law modules to drop to the ground, does not call UpdateModules()
+	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
 		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			src.welded[i] = FALSE
@@ -155,7 +155,7 @@
 		if(law_update_needed)
 			logTheThing(LOG_STATION, causer, "[causer] damaged the [constructName(src)] causing a law update")
 			UpdateIcon()
-			UpdateModules()
+			UpdateLaws()
 
 
 
@@ -206,6 +206,14 @@
 			. += "It's almost falling apart!"
 		else
 			. += "It's about to collapse!"
+
+		if (isobserver(user))
+			. += "<br>"
+			if(user.mind.get_player()?.dnr)
+				. += "Current Laws:<br>"
+				. += src.lawset.format_for_logs()
+			else
+				. += SPAN_ALERT("You must enable DNR to see the current laws.")
 
 	blob_act(power)
 		changeHealth(-power*0.15,"blob")
@@ -485,7 +493,7 @@
 				laws[i] = null
 		return laws
 
-	proc/UpdateModules()
+	proc/UpdateLaws()
 		for(var/mob/living/silicon/ai/holoAI in mobs)
 			holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
 			src.reset_ai_abilities(holoAI)
@@ -527,7 +535,7 @@
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> an AI law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
-		UpdateModules()
+		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		if(isnull(src.law_modules[slotNum]))
@@ -547,7 +555,7 @@
 		src.law_modules[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
-		UpdateModules()
+		UpdateLaws()
 
 	proc/insert_videocard_callback(var/mob/user, var/obj/item/peripheral/videocard/I)
 		var/mob/living/target = null
@@ -596,7 +604,7 @@
 
 	/**
 	 * Sets an arbitrary slot to the passed aiModule - will override any module in the slot.
-	 * Does not call UpdateModules()
+	 * Does not call UpdateLaws()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
 		if(istype(src.law_modules[slot],/obj/item/aiModule/hologram_expansion))
@@ -622,7 +630,7 @@
 
 	/**
 	 * Sets an arbitrary slot to a custom law specified by lawName and lawText - will override any module in the slot.
-	 * Does not call UpdateModules()
+	 * Does not call UpdateLaws()
 	 * Intended for Admemery
 	 */
 	proc/SetLawCustom(lawName, lawText, slot = 1, screwed_in = FALSE, welded_in = FALSE, path)
@@ -631,7 +639,7 @@
 		var/mod = new path(lawName,lawText)
 		return src.SetLaw(mod,slot,screwed_in,welded_in)
 
-	/// Deletes a law in an abritrary slot. Does not call UpdateModules()
+	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
 		if(istype(src.law_modules[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_modules[slot]
@@ -646,7 +654,7 @@
 		src.calculate_power_usage()
 		UpdateIcon()
 
-	/// Deletes all laws. Does not call UpdateModules()
+	/// Deletes all laws. Does not call UpdateLaws()
 	proc/DeleteAllLaws()
 		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			src.DeleteLaw(i)

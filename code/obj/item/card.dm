@@ -144,34 +144,24 @@ TYPEINFO(/obj/item/card/emag)
 	keep_icon = TRUE
 
 /obj/item/card/id/gold
-	name = "identification card"
+	name = "gold identification card"
 	icon_state = "id_gold"
 	item_state = "gold_id"
 	desc = "This card is important!"
 	keep_icon = TRUE
 
-/obj/item/card/id/blank_deluxe
-	name = "Deluxe ID"
-	icon_state = "id_gold"
-	item_state = "gold_id"
-	registered = "Member"
-	assignment = "Member"
-	keep_icon = TRUE
-
-/obj/item/card/id/captains_spare
+/obj/item/card/id/gold/captains_spare
 	name = "Captain's spare ID"
-	icon_state = "id_gold"
-	item_state = "gold_id"
 	registered = "Captain"
 	assignment = "Captain"
-	keep_icon = TRUE
-	var/touched = FALSE
+
 	New()
 		..()
-		access = get_access("Captain")
+		src.access = get_access("Captain")
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
 
-/obj/item/card/id/nt_specialist
+/obj/item/card/id/nanotrasen
+	name = "Nanotrasen identification card"
 	icon_state = "id_nanotrasen"
 	keep_icon = TRUE
 
@@ -269,7 +259,7 @@ TYPEINFO(/obj/item/card/emag)
 	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
 	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
-/obj/item/card/id/captains_spare/explosive
+/obj/item/card/id/gold/captains_spare/explosive
 	pickup(mob/user)
 		boutput(user, SPAN_ALERT("The ID-Card explodes."))
 		user.transforming = 1

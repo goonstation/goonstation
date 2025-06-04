@@ -215,8 +215,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				FLICK(flick_state, src)
 
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
+			user.inertia_dir = get_dir_accurate(target, user)
+			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -818,12 +818,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_max = 14
 	recoil_inaccuracy_max = 20
 	rarity = 3
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
+
 
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
@@ -1492,7 +1494,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Detective")
+			src.verbs |= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	verb/claim_colt()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Colt"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Colt"]
+		reward.try_claim(usr, FALSE)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun
@@ -2422,7 +2442,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
-		W.icon = 'icons/obj/materials.dmi'
+		W.icon = 'icons/obj/items/materials/materials.dmi'
 		W.icon_state = "scrap4"
 
 		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
@@ -2503,6 +2523,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/four_bore/stun/two
 	fire_animation = FALSE
 	recoil_strength = 20
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		ammo = new default_magazine
@@ -3429,6 +3450,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_restock_cost = 3
 	recoil_strength = 15
 	recoil_inaccuracy_max = 0 // just to be nice :)
+	abilities = list(/obj/ability_button/toggle_scope)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
@@ -3475,6 +3497,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
+	abilities = list(/obj/ability_button/toggle_scope)
 
 
 	New()
@@ -3525,7 +3548,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	update_icon()
 		. = ..()
-		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
+		src.icon_state = initial(src.icon_state) + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot(mob/user)
 		if (!src.broke_open)
@@ -3565,7 +3588,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
 			src.toggle_action(user)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!"))
-		..()
+		. = ..()
 
 	proc/toggle_action(mob/user)
 		if (!src.broke_open)
@@ -3580,3 +3603,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		UpdateIcon()
 
+/obj/item/gun/kinetic/sawnoff/long_barrel
+	name = "\improper Double Barrel Shotgun"
+	desc = "A bloody and worn double barreled shotgun. Details indicate recent usage in a last stand fight."
+	item_state = "double_barrel"
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	icon_state = "double_barrel"
+	gildable = FALSE
+	recoil_strength = 20
+	two_handed = TRUE
+	contraband = 5
+	force = MELEE_DMG_RIFLE
+	default_magazine = /obj/item/ammo/bullets/a12/bird/two
+
+	New()
+		..()
+		src.name = "\improper Double Barrel Shotgun"
+		if (prob(25))
+			src.name = pick("Last Stand", "Zombie Slayer", "Head Popper")
+		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = 'sound/weapons/long_barrel.ogg'

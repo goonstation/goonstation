@@ -216,7 +216,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(istype(T, /turf/space) || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
 			return FALSE
 		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
 		//what are the chances they're also next to botany's server lag weed pile at the same time?

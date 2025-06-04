@@ -171,7 +171,7 @@
 	var/reduction = 0
 	var/shielded = 0
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		reduction += 2
 		shielded = 1
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some blast!</b>"))
@@ -224,7 +224,7 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -243,7 +243,7 @@
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")

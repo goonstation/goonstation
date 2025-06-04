@@ -321,7 +321,7 @@
 	else
 		ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",input,law_num,TRUE,TRUE,/obj/item/aiModule/custom/centcom)
 	boutput(usr, "Uploaded '[input]' as law # [law_num]")
-	ticker.ai_law_rack_manager.default_ai_rack.UpdateModules() //I don't love this, but meh
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
 
 	logTheThing(LOG_ADMIN, usr, "has added a new AI law - [input] (law # [law_num])")
@@ -369,7 +369,7 @@
 
 			else
 				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE,/obj/item/aiModule/custom/centcom)
-	ticker.ai_law_rack_manager.default_ai_rack.UpdateModules()
+	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
 	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
 	logTheThing(LOG_ADMIN, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.lawset.format_for_logs()]")
@@ -401,7 +401,7 @@
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
-		ticker.ai_law_rack_manager.default_ai_rack.UpdateModules()
+		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
 		logTheThing(LOG_ADMIN, usr, "reset the centralized AI laws.")
 		logTheThing(LOG_DIARY, usr, "reset the centralized AI laws.", "admin")
@@ -1627,6 +1627,27 @@
 		return
 	A.setMaterial(material_selected)
 	boutput(src, "Set material of [A] to [material_selected]")
+
+/client/proc/cmd_say(atom/A)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Say"
+	set desc = "Force an atom to say a line of text."
+	set popup_menu = 0
+
+	var/message = tgui_input_text(src, "Force [A] to say something:", "Say", "")
+
+	if (!message)
+		return
+
+	A.say(message)
+
+	message = copytext(sanitize(message), 1, MAX_MESSAGE_LEN)
+	logTheThing(LOG_ADMIN, usr, "forced [constructTarget(A, "admin")] to say: [message]")
+	logTheThing(LOG_DIARY, usr, "forced [constructTarget(A, "diary")] to say: [message]", "admin")
+
+	var/mob/M = A
+	if(istype(M) && M.client)
+		message_admins("<span class='internal'>[key_name(src)] forced [key_name(M)] to say: [message]</span>")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

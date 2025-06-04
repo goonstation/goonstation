@@ -431,7 +431,11 @@
 		if(!M) M = holder.my_atom
 		if(holder.has_reagent("epinephrine"))
 			holder.remove_reagent("epinephrine", 2 * mult)
-		M.take_toxin_damage(1 * mult)
+		var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+		if (!plasma_bioeffect)
+			M.take_toxin_damage(1 * mult)
+		else
+			plasma_bioeffect.absorb_liquid_plasma(mult)
 		..()
 		return
 

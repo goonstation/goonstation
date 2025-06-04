@@ -211,6 +211,16 @@
 		depletion_rate = 0.18
 		var/criminal = -1 //-1 unset, 0 law-abiding citizen, 1 traitor
 
+		New()
+			. = ..()
+
+			SPAWN(0)
+				src.holder?.owner?.ensure_listen_tree().AddListenEffect(LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE)
+
+		disposing()
+			src.holder?.owner?.ensure_listen_tree().RemoveListenEffect(LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE)
+			. = ..()
+
 		mayStandardDeplete()
 			if (..())
 				if (!ticker || !ticker.mode)

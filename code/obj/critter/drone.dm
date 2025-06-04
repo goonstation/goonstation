@@ -752,7 +752,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			projectile_type = /datum/projectile/laser/drill/saw_teeth
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
-			event_handler_flags = IMMUNE_MANTA_PUSH
+			event_handler_flags = IMMUNE_OCEAN_PUSH
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
 			New()
@@ -783,7 +783,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		current_projectile = new/datum/projectile/bullet/lmg/weak
 		attack_cooldown = 20
 		projectile_spread = 13
-		event_handler_flags = IMMUNE_MANTA_PUSH
+		event_handler_flags = IMMUNE_OCEAN_PUSH
 
 		New()
 			..()

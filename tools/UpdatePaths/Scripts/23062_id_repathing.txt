@@ -1,0 +1,4 @@
+/obj/item/card/id/captains_spare/@SUBTYPES : /obj/item/card/id/gold/captains_spare/@SUBTYPES{@OLD}
+/obj/item/card/id/blank_deluxe : /obj/item/card/id/gold{@OLD}
+/obj/item/card/id/nt_specialist : /obj/item/card/id/nanotrasen{@OLD}
+/obj/item/card/id/blank_polaris : /obj/item/card/id/nanotrasen{@OLD}

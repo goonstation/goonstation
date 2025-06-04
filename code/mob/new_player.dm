@@ -1,7 +1,15 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
+TYPEINFO(/mob/new_player)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+
 /mob/new_player
 	anchored = ANCHORED
+	has_typing_indicator = FALSE
 
 	var/ready = 0
 	var/spawning = 0
@@ -26,6 +34,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	anchored = ANCHORED	//  don't get pushed around
 
 	var/datum/spend_spacebux/bank_menu
+	default_speech_output_channel = SAY_CHANNEL_OOC
 
 	New()
 		. = ..()
@@ -257,6 +266,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						S.job = "Cyborg"
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						S.apply_roundstart_events()
 						S.show_laws()
@@ -1014,12 +1024,6 @@ a.latejoin-card:hover {
 			respawn_controller.subscribeNewRespawnee(observer?.client?.ckey)
 
 			qdel(src)
-
-	say(message)
-		if(dd_hasprefix(message, "*"))
-			return
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-		src.ooc(message)
 
 #ifdef TWITCH_BOT_ALLOWED
 	proc/try_force_into_bill() //try to put the twitch mob into shittbill

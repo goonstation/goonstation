@@ -3106,8 +3106,10 @@ var/list/lag_list = new/list()
 	name = "Spawn ID card"
 	desc = "Allows you to spawn an id card with a certain access level."
 	used(atom/user, atom/target)
-		var/obj/item/card/id/blank_deluxe/D = new/obj/item/card/id/blank_deluxe(get_turf(target))
+		var/obj/item/card/id/gold/D = new/obj/item/card/id/gold(get_turf(target))
 		D.access = get_access(input(usr) in get_all_jobs() + "Club member")
+		D.registered = "Member"
+		D.assignment = "Member"
 		return
 
 /datum/engibox_mode/fwall
