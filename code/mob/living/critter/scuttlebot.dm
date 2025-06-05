@@ -151,6 +151,10 @@
 		HH.name = "claw"
 		HH.limb_name = "claws"
 
+	make_inspector()
+		return
+
+
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 
 	add_abilities = list(/datum/targetable/critter/takepicture/nostorage)
