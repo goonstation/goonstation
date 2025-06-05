@@ -141,7 +141,7 @@
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
 	/// When an item is picked up (user)
 	#define COMSIG_ITEM_PICKUP "itm_pickup"
-	/// When an item is picked dropped (user)
+	/// When an item is dropped (user)
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
@@ -254,7 +254,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab object)
+	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
 	#define COMSIG_MOB_EMOTE "mob_emote"
