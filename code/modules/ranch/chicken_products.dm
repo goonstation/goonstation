@@ -125,7 +125,7 @@
 		name = "raptor egg"
 		egg_props_path = /datum/chicken_egg_props/raptor
 	plant
-		name = "synthegg" // Trying to match the namng theme of other synth items
+		name = "synthegg" // Trying to match the naming theme of other synth items
 		egg_props_path = /datum/chicken_egg_props/plant
 	robot
 		name = "robot egg"
