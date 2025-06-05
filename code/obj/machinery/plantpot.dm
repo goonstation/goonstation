@@ -869,17 +869,18 @@ TYPEINFO(/obj/machinery/plantpot)
 	// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
 	// with since i've tried to account for most special circumstances that might come up.
 	if(!user) return
-	var/satchelpick = 0
+	var/fill_seeds = 0
+	var/fill_produce = 0
 	if(SA)
+		var/obj/item/satchel/hydro/produce_satchel = SA
+		if (produce_satchel)
+			var/satchelpick = 0
+			satchelpick = produce_satchel.harvest_what
+			fill_seeds = satchelpick == HARVEST_ONLY_SEEDS || satchelpick == HARVEST_BOTH
+			fill_produce = satchelpick == HARVEST_ONLY_PRODUCE || satchelpick == HARVEST_BOTH
 		if(length(SA.contents) >= SA.maxitems)
 			boutput(user, SPAN_ALERT("Your satchel is already full! Free some space up first."))
 			return
-		else
-			satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
-			if(!HYPcheck_if_harvestable() || satchelpick == "Never Mind")
-				return
-			if(satchelpick == "Everything")
-				satchelpick = null
 	// it's okay if we don't have a satchel at all since it'll just harvest by hand instead
 	var/datum/plant/growing = src.current
 	var/datum/plantgenes/DNA = src.plantgenes
@@ -1138,8 +1139,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// At this point all the harvested items are inside the plant pot, and this is the
 		// part where we decide where they're going and get them out.
-		var/seeds_only = satchelpick == "Seeds Only"
-		var/produce_only = satchelpick == "Produce Only"
 		if(SA)
 			// If we're putting stuff in a satchel, this is where we do it.
 			for(var/obj/item/I in src.contents)
@@ -1147,11 +1146,11 @@ TYPEINFO(/obj/machinery/plantpot)
 					boutput(user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 					break
 				if(istype(I,/obj/item/seed/))
-					if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
+					if(fill_seeds && SA.check_valid_content(I))
 						I.set_loc(SA)
 						I.add_fingerprint(user)
 				else
-					if(SA.check_valid_content(I) && (!satchelpick || produce_only))
+					if(fill_produce && SA.check_valid_content(I))
 						I.set_loc(SA)
 						I.add_fingerprint(user)
 			SA.UpdateIcon()

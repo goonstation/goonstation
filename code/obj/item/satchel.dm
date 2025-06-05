@@ -1,3 +1,7 @@
+#define HARVEST_ONLY_PRODUCE 1
+#define HARVEST_ONLY_SEEDS 2
+#define HARVEST_BOTH 3
+
 /obj/item/satchel
 	name = "satchel"
 	desc = "A leather satchel for holding things."
@@ -256,6 +260,11 @@
 		icon_state = "hydrosatchel"
 		item_state = "hydrosatchel"
 		itemstring = "items of produce"
+		var/list/harvesting_strings = list(HARVEST_ONLY_PRODUCE = "produce", HARVEST_ONLY_SEEDS = "seeds", HARVEST_BOTH = "seeds and produce",)
+		var/harvest_what = HARVEST_ONLY_PRODUCE
+
+		HELP_MESSAGE_OVERRIDE({"Click on it to pull out a random item, or click on it with <b>Grab Intent</b> to search for a specific item.
+		 	Click on it with <b>Disarm Intent</b> to change what you fill it with when harvesting."})
 
 		New()
 			..()
@@ -279,6 +288,23 @@
 				var/obj/item/seed/template_seed = template
 				. = (inserted_seed.planttype?.type == template_seed.planttype?.type) && \
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
+
+		attack_hand(mob/user)
+			if (src.loc == user && user.a_intent == INTENT_DISARM)
+				if(harvest_what == HARVEST_ONLY_PRODUCE)
+					boutput(user, SPAN_ALERT("You will fill [src] with seeds when harvesting."))
+					harvest_what = HARVEST_ONLY_SEEDS
+				else if (harvest_what == HARVEST_ONLY_SEEDS)
+					boutput(user, SPAN_ALERT("You will fill [src] with seeds and produce when harvesting."))
+					harvest_what = HARVEST_BOTH
+				else if (harvest_what == HARVEST_BOTH)
+					boutput(user, SPAN_ALERT("You will fill [src] with produce when harvesting."))
+					harvest_what = HARVEST_ONLY_PRODUCE
+				return
+			else return ..()
+
+		get_desc()
+			return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]. The autofibre label reads \"[harvesting_strings[harvest_what]]\"."
 
 		large
 			name = "large produce satchel"
