@@ -589,7 +589,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_pigeon)
 				boutput(user, "You stuff the goggles back into the P1G30N. It powers down with a low whirr.")
 			else
-				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+				boutput(user, "You stuff the goggles back into [src]. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
