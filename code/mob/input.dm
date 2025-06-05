@@ -309,7 +309,6 @@
 						if (src.pulling)
 							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
-								//hud.update_pulling() // FIXME
 							else
 								var/can_pull = TRUE
 								if (ismob(src.pulling))
