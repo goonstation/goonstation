@@ -68,6 +68,8 @@ datum
 		var/lowbuff_threshold = 25
 		var/midbuff_threshold = 50
 		var/highbuff_threshold = 75
+		// Applied to reagents in vendor containers, used in hunger and thirst
+		var/vendor_chem = FALSE
 
 		New()
 			..()
@@ -252,11 +254,17 @@ datum
 						var/right_temp = FALSE
 						if (serving_temp-10 < src.holder.total_temperature > serving_temp+10)
 							right_temp = TRUE
+						if (vendor_chem)
+							while (H.sims.getValue("Thirst") < lowbuff_threshold)
+								H.sims.affectMotive("Thirst", thirst_value)
+								if (H.sims.getValue("Thirst") > lowbuff_threshold)
+									H.sims.affectMotive("Thirst", lowbuff_threshold)
+								return
 						if (!requires_produce && !right_temp)
 							while (H.sims.getValue("Thirst") < midbuff_threshold)
 								H.sims.affectMotive("Thirst", thirst_value)
 								if (H.sims.getValue("Thirst") > midbuff_threshold)
-									H.sims.affectMotive("Hunger", midbuff_threshold)
+									H.sims.affectMotive("Thirst", midbuff_threshold)
 						else if (requires_produce || right_temp)
 							while (H.sims.getValue("Thirst") < highbuff_threshold)
 								H.sims.affectMotive("Thirst", thirst_value)
@@ -266,6 +274,12 @@ datum
 							H.sims.affectMotive("Thirst", thirst_value)
 					if (src.hunger_value)
 						H.sims.affectMotive("Hunger", hunger_value)
+						if (vendor_chem)
+							while (H.sims.getValue("Hunger") < lowbuff_threshold)
+								H.sims.affectMotive("Hunger", hunger_value)
+								if (H.sims.getValue("Hunger") > lowbuff_threshold)
+									H.sims.affectMotive("Hunger", lowbuff_threshold)
+								return
 						if (!requires_produce)
 							while (H.sims.getValue("Hunger") < midbuff_threshold)
 								H.sims.affectMotive("Hunger", hunger_value)

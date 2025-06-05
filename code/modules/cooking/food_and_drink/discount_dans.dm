@@ -9,6 +9,7 @@
 	var/activated = 0
 	initial_volume = 60
 	can_recycle = FALSE
+	vendor_item = TRUE
 	initial_reagents = list("chickensoup"=10,"msg"=9,"salt"=10,"nicotine"=8)
 
 	New()
@@ -188,6 +189,7 @@
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
+	vendor_item = TRUE
 	initial_reagents = list("msg"=9)
 	brew_result = list("sewage"=20, "ethanol"=20)
 	food_effects = list("food_sweaty")
@@ -332,6 +334,7 @@
 	heal_amt = 2
 	var/color_prob = 100
 	initial_volume = 50
+	vendor_item = TRUE
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
 	brew_result = list("sewage"=20, "yuck"=20)
 	food_effects = list("food_sweaty")
@@ -373,6 +376,7 @@
 	desc = "A box containing a self-heating TV dinner."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
+	vendor_item = TRUE
 	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/full = 1
@@ -442,6 +446,7 @@
 	heal_amt = 2
 	fill_amt = 4 //it's a whole dinner!
 	doants = 0 //Ants aren't dumb enough to try to eat these.
+	vendor_item = TRUE
 	var/activated = 0
 	initial_volume = 50
 	food_effects = list("food_hp_up")
@@ -581,6 +586,7 @@
 	fill_amt = 2
 	doants = 0
 	initial_volume = 30
+	vendor_item = TRUE
 	initial_reagents = list("juice_strawberry"=15,"vanilla"=6)
 	food_effects = list("food_energized")
 
