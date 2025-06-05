@@ -308,7 +308,7 @@
 		src.payload.transform *= 0.75
 		src.payload.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
 		src.vis_contents += src.payload
-		if(istype(src.payload.applier, /obj/item/gimmickbomb/butt))
+		if(istype(src.payload.applier, /obj/item/clothing/head/butt) || istype(src.payload.target, /obj/item/clothing/head/butt))
 			src.buttbomb = TRUE
 
 

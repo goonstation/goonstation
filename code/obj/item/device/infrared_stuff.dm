@@ -66,7 +66,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 
 /obj/item/device/infra_sensor/attack_self(mob/user as mob)
 	src.add_dialog(user)
-	var/dat = text("<TT><B>Infrared Sensor</B><BR><br><B>Passive Emitter</B>: []<BR><br><B>Active Emitter</B>: <A href='?src=\ref[];active=0'>Burst Fire</A><br></TT>", (src.passive ? text("<A href='?src=\ref[];passive=0'>On</A>", src) : text("<A href='?src=\ref[];passive=1'>Off</A>", src)), src)
+	var/dat = text("<TT><B>Infrared Sensor</B><BR><br><B>Passive Emitter</B>: []<BR><br><B>Active Emitter</B>: <A href='byond://?src=\ref[];active=0'>Burst Fire</A><br></TT>", (src.passive ? text("<A href='byond://?src=\ref[];passive=0'>On</A>", src) : text("<A href='byond://?src=\ref[];passive=1'>Off</A>", src)), src)
 	user.Browse(dat, "window=infra_sensor")
 	onclose(user, "infra_sensor")
 	return
@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/device/infra_sensor)
 
 /obj/item/device/infra/attack_self(mob/user as mob)
 	src.add_dialog(user)
-	var/dat = text("<TT><B>Infrared Laser</B><br><B>Status</B>: []<BR><br><B>Visibility</B>: []<BR><br></TT>", (src.state ? text("<A href='?src=\ref[];state=0'>On</A>", src) : text("<A href='?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='?src=\ref[];visible=1'>Invisible</A>", src)))
+	var/dat = text("<TT><B>Infrared Laser</B><br><B>Status</B>: []<BR><br><B>Visibility</B>: []<BR><br></TT>", (src.state ? text("<A href='byond://?src=\ref[];state=0'>On</A>", src) : text("<A href='byond://?src=\ref[];state=1'>Off</A>", src)), (src.visible ? text("<A href='byond://?src=\ref[];visible=0'>Visible</A>", src) : text("<A href='byond://?src=\ref[];visible=1'>Invisible</A>", src)))
 	user.Browse(dat, "window=infra")
 	onclose(user, "infra")
 	return

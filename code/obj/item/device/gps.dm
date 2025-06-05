@@ -246,7 +246,7 @@ TYPEINFO(/obj/item/device/gps)
 			icon_state = "gps-off"
 			return
 
-		src.set_dir(get_dir(src,tracking_target))
+		src.set_dir(get_dir_accurate(src,tracking_target))
 		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else

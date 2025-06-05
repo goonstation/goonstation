@@ -1,4 +1,4 @@
-
+#define IMG_OFFSET 20
 /obj/decal/poster
 	desc = "A piece of paper with an image on it. Clearly dealing with incredible technology here."
 	name = "poster"
@@ -25,7 +25,7 @@
 		if (!C || !src.popup_win)
 			return
 		// wtf why is this using wizardtips... with a custom size... fuck it im leaving this one out of the centralization -singh
-		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw]x[imgh];title=Antagonist Tips")
+		C.Browse(grabResource("html/traitorTips/wizardTips.html"),"window=antagTips;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Antagonist Tips")
 
 	wallsign
 		desc = "A sign, on a wall. Wow!"
@@ -1140,7 +1140,7 @@
 	show_popup_win(var/client/C)
 		if (!C || !src.popup_win)
 			return
-		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=How to Build a Space Pod")
 
 /obj/decal/poster/wallsign/pod_build/nt
 	icon_state = "nt-pod-poster"
@@ -1160,7 +1160,20 @@
 		if (!C || !src.popup_win)
 			return
 
-		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Map")
+
+/obj/decal/poster/miners_almanac
+	name = "Miner's almanac"
+	desc = "An informational poster kindly provided by Gragg Industries."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "almanac"
+	popup_win = TRUE
+	imgw = 605
+	imgh = 784
+
+	show_popup_win(client/C)
+		C?.Browse("<img src=\"[resource("images/miners_almanac.png")]\">","window=Almanac;size=[imgw + IMG_OFFSET]x[imgh + IMG_OFFSET];title=Miner's Almanac")
+
 
 /obj/decal/poster/banner
 	name = "banner"
@@ -1228,3 +1241,5 @@
 				clear_banner()
 			else
 				return
+
+#undef IMG_OFFSET

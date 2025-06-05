@@ -723,7 +723,7 @@
 /turf/simulated/floor/purple,
 /area/ship/artemis)
 "ZE" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet{
 	dir = 8;

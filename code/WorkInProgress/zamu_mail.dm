@@ -186,17 +186,9 @@
 
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
-		if (ishuman(owner) && seen_by_camera(owner))
-			var/perpname = owner.name
-			if (owner:wear_id && owner:wear_id:registered)
-				perpname = owner:wear_id:registered
-
-			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-			if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-				sec_record["criminal"] = ARREST_STATE_ARREST
-				sec_record["mi_crim"] = "Mail fraud."
-				var/mob/living/carbon/human/H = owner
-				H.update_arrest_icon()
+		var/mob/living/carbon/human/H = owner
+		if(istype(H))
+			H.apply_automated_arrest("Mail fraud.")
 
 
 /obj/decal/cleanable/mail_fraud
@@ -657,7 +649,7 @@ var/global/mail_types_everyone = list(
 	/obj/item/reagent_containers/food/snacks/chips = 6,
 	/obj/item/reagent_containers/food/snacks/popcorn = 6,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
-	/obj/item/tank/emergency_oxygen = 5,
+	/obj/item/tank/pocket/oxygen = 5,
 	/obj/item/wrench = 4,
 	/obj/item/crowbar = 4,
 	/obj/item/screwdriver = 4,

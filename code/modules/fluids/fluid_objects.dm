@@ -151,7 +151,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 
 	var/datum/reagents/R
 
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_OCEAN_PUSH
 
 	New()
 		..()

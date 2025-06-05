@@ -25,7 +25,7 @@
 		src.equip_if_possible(new /obj/item/clothing/shoes/swat, SLOT_SHOES)
 		src.equip_if_possible(new /obj/item/clothing/glasses/sunglasses/tanning, SLOT_GLASSES)
 		src.equip_if_possible(new /obj/item/clothing/mask/gas/swat, SLOT_WEAR_MASK)
-		src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended, SLOT_L_STORE)
+		src.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen, SLOT_L_STORE)
 		src.equip_if_possible(new /obj/item/device/radio/headset/syndicate, SLOT_EARS)
 		var/obj/item/card/id/ID = new/obj/item/card/id(src)
 		ID.name = "Syndicate Identification Card"
