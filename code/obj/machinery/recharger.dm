@@ -43,7 +43,7 @@ TYPEINFO(/obj/machinery/recharger)
 	var/accepted_types = list( /obj/item/gun/energy, \
 								/obj/item/baton, \
 								/obj/item/cargotele, \
-								/obj/item/mining_tool/powered/, \
+								/obj/item/mining_tool/powered, \
 								/obj/item/ammo/power_cell, \
 								/obj/item/hand_tele, \
 								/obj/item/power_pack, \
@@ -99,7 +99,13 @@ TYPEINFO(/obj/machinery/recharger)
 		return
 	if (src.charging)
 		return
-	if (!(G.type in accepted_types))
+	var/compatible = FALSE
+	for (var/accepted_type in accepted_types)
+		if (istype(G, accepted_type))
+			compatible = TRUE
+			break
+
+	if (!compatible)
 		boutput(user, SPAN_ALERT("You cannot put [G] in [src]."))
 		return
 
