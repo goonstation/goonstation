@@ -1529,7 +1529,22 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 100
 			else
 				img.app.alpha = 0
-
+	fluid_pipes
+		name = "fluid pipes"
+		help = {"highlights fluid pipes<br>pipe color - the pipeline to which it belongs<br>numbers:<br>total units<br>maximum units<br>% filled"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = "#ffffff"
+			img.app.overlays = list()
+			img.app.alpha = 0
+			for(var/obj/fluid_pipe/pipe in theTurf)
+				var/image/pipe_image = image(pipe.icon, icon_state = pipe.icon_state, dir = pipe.dir)
+				pipe_image.alpha = 200
+				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+				img.app.alpha = 80
+				pipe_image.color = debug_color_of(pipe.network)
+				pipe_image.maptext = "<span class='pixel r ol'>[round(pipe.network.reagents.total_volume,0.1)]<br>[round(pipe.network.reagents.maximum_volume,1)]<br>[round(100*pipe.network.reagents.total_volume/pipe.network.reagents.maximum_volume,0.1)]%</span>"
+				pipe_image.maptext_x = -3
+				img.app.overlays += pipe_image
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
