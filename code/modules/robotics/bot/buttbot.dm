@@ -179,7 +179,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	if(istype(W, /obj/item/card/emag))
 		return // Do not hit the buttbot with the emag tia
 	else
-		src.visible_message(SPAN_ALERT("[user] hits [src] with [W]!"))
+		..()
 		src.health -= W.force * 0.5
 		if(src.health <= 0)
 			src.explode()

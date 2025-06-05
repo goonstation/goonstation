@@ -93,9 +93,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 1)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger
-	variants = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m,
-	)
+
+/datum/cookingrecipe/oven/burger/cheeseburger/monkey
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/ingredient/dough = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = 2)
+	output = /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 
 /datum/cookingrecipe/oven/burger/wcheeseburger
 	ingredients = list(\
@@ -1245,11 +1249,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/sandwich)
 		var/found2 = 0
 		for (var/obj/item/T in ourCooker.contents)
 
-			if (T.type == ingredients[1] && !found1)
+			if (!found1 && istype(T, ingredients[1]))
 				found1 = TRUE
 				continue
 
-			if (T.type == ingredients[2] && !found2)
+			if (!found2 && istype( T, ingredients[2]))
 				found2 = TRUE
 				continue
 

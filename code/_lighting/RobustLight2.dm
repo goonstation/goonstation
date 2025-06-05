@@ -715,24 +715,28 @@ proc/get_moving_lights_stats()
 	return max(0, ((src.RL_LumR * 0.33) + (src.RL_LumG * 0.5) + (src.RL_LumB * 0.16)))
 
 /turf/proc/RL_Cleanup()
-	/*
 	if (src.RL_MulOverlay)
-		src.RL_MulOverlay.set_loc(null)
 		qdel(src.RL_MulOverlay)
 		src.RL_MulOverlay = null
 	if (src.RL_AddOverlay)
-		src.RL_AddOverlay.set_loc(null)
 		qdel(src.RL_AddOverlay)
 		src.RL_AddOverlay = null
-	// cirr effort to remove redundant overlays that still persist EVEN THOUGH they shouldn't
-	for(var/obj/overlay/tile_effect/lighting/L in src.contents)
-		L.set_loc(null)
-		qdel(L)
-	*/
 
 /turf/proc/RL_Reset()
-	// TODO
-	//for fucks sake tobba - ZeWaka
+	src.RL_ApplyGeneration = 0
+	src.RL_UpdateGeneration = 0
+	src.RL_MulOverlay = null
+	src.RL_AddOverlay = null
+
+	src.RL_LumR = 0
+	src.RL_LumG = 0
+	src.RL_LumB = 0
+	src.RL_AddLumR = 0
+	src.RL_AddLumG = 0
+	src.RL_AddLumB = 0
+	src.RL_NeedsAdditive = FALSE
+	src.RL_OverlayState = ""
+	src.RL_Lights = null
 
 /turf/proc/RL_Init()
 	if (!fullbright && !loc:force_fullbright)

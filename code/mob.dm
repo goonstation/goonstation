@@ -743,6 +743,11 @@ TYPEINFO(/mob)
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
+
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/atom/movable/hotspot) in tmob.loc)
@@ -905,6 +910,12 @@ TYPEINFO(/mob)
 	src.a_intent = intent
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
+
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
 
 // medals
 

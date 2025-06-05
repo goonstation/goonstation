@@ -9901,6 +9901,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/item/slag_shovel{
+	pixel_x = 11;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black/grime,
 /area/station/quartermaster/refinery)
 "cQy" = (
@@ -39361,10 +39365,6 @@
 /area/station/engine/inner)
 "lYc" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/juicer{
-	pixel_x = -4;
-	pixel_y = 10
-	},
 /obj/item/swingsignfolded,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
