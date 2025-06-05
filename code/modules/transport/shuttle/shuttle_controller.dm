@@ -198,6 +198,11 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
 								S.establish_bridge()
 
+						for(var/client/C in global.clients)
+							if (istype(C.mob, /mob/living/carbon/human/tutorial))
+								C.mob.playsound_local_not_inworld('sound/misc/clock_tick.ogg', 50, FALSE)
+								tgui_alert(C.mob, {"The round is ending in five minutes. You can restart the tutorial next round and use the top-left arrow buttons to skip ahead."}, "Five Minute Warning!")
+
 						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [src.timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
 						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
