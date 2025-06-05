@@ -720,6 +720,78 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			willow_fade
 				name = "Willow: Faded"
 				id = "willow_fade"
+			hime
+				name = "Himecut"
+				id = "hime"
+				gender = MASCULINE | FEMININE
+			wild_bedhead
+				name = "Wild Bedhead"
+				id = "wild_bedhead"
+				gender = MASCULINE | FEMININE
+			straight_long
+				name = "Long Straight"
+				id = "straight_long"
+				gender = MASCULINE | FEMININE
+			choppy_long
+				name = "Choppy Long"
+				id = "choppy_long"
+				gender = MASCULINE | FEMININE
+			sway
+				name = "Sway"
+				id = "sway"
+				gender = MASCULINE | FEMININE
+			med_bob
+				name = "Medium Bob"
+				id = "med_bob"
+				gender = MASCULINE | FEMININE
+			poofy_long
+				name = "Long Poofy"
+				id = "poofy_long"
+				gender = MASCULINE | FEMININE
+			royal_curls
+				name = "Royal Curls"
+				id = "royal_curls"
+				gender = MASCULINE | FEMININE
+
+			med_Curly
+				name = "Med Curls"
+				id = "med_Curly"
+				gender = MASCULINE | FEMININE
+
+			poofy_wave
+
+				name = "Poofy Wave"
+				id = "poofy_wave"
+				gender = MASCULINE | FEMININE
+
+			longer_curls
+				name = "Longer Curls"
+				id = "longer_curls"
+				gender = MASCULINE | FEMININE
+
+			wild_waves
+
+				name = "Wild Wave"
+				id = "wild_waves"
+				gender = MASCULINE | FEMININE
+
+			curly_twists
+
+				name = "Curly Twists"
+				id = "curly_twists"
+				gender = MASCULINE | FEMININE
+
+			straightened_long
+
+				name = "Long Straight"
+				id = "straightened_long"
+				gender = MASCULINE | FEMININE
+
+			symm_bob
+
+				name = "Symmetrical Bob"
+				id = "symm_bob"
+				gender = MASCULINE | FEMININE
 		hairup
 			bun
 				name = "Bun"
