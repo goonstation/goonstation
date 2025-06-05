@@ -1106,8 +1106,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					var/mob/living/carbon/human/human = src.the_mob
-					human.shoes?.say("Hotspot pinned.", flags = SAYFLAG_IGNORE_POSITION)
+					src.the_item.say("Hotspot pinned.", flags = SAYFLAG_IGNORE_POSITION)
 
 			for (var/mob/M in get_turf(src))
 				if (isliving(M) && !isintangible(M) && M != jumper)
