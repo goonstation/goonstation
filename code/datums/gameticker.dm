@@ -83,7 +83,7 @@ var/global/game_force_started = FALSE
 				// hey boo the rounds starting and you didnt ready up
 				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
-					if (!P.ready)
+					if (!P.ready_play && !P.ready_tutorial)
 						targets += P
 				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
 				did_reminder = TRUE
@@ -201,7 +201,7 @@ var/global/game_force_started = FALSE
 		if (!istype(C.mob,/mob/new_player))
 			continue
 		var/mob/new_player/P = C.mob
-		if (P.ready)
+		if (P.ready_play)
 			Z_LOG_DEBUG("Game Start/Ani", "Animating [P.client]")
 			animateclients += P.client
 			animate(P.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
@@ -272,12 +272,7 @@ var/global/game_force_started = FALSE
 
 		for(var/mob/new_player/lobby_player in mobs)
 			if(lobby_player.client)
-				if(lobby_player.client.antag_tokens > 0)
-					winset(lobby_player, "joinmenu", "size=240x200")
-					winset(lobby_player, "joinmenu.observe", "pos=18,136")
-					winset(lobby_player, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
-				winset(lobby_player, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
-				winset(lobby_player, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
+				lobby_player.update_joinmenu()
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -325,7 +320,7 @@ var/global/game_force_started = FALSE
 	for (var/client/C in global.clients)
 		var/mob/new_player/mob = C.mob
 		if (istype(mob))
-			if (mob.ready)
+			if (mob.ready_play)
 				readied_count++
 			else
 				unreadied_count++
@@ -354,6 +349,7 @@ var/global/game_force_started = FALSE
 
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
+		var/tutorial_offset = 0.2 SECONDS
 		for (var/mob/new_player/player in mobs)
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
@@ -361,7 +357,7 @@ var/global/game_force_started = FALSE
 				continue
 #endif
 
-			if (player.ready)
+			if (player.ready_play)
 				var/datum/player/P
 				if (player.mind)
 					P = player.mind.get_player()
@@ -398,6 +394,11 @@ var/global/game_force_started = FALSE
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)
+			else if (player.ready_tutorial)
+				boutput(player, SPAN_ALERT("Spawning the tutorial area in [ceil(tutorial_offset/10)] second[s_es(ceil(tutorial_offset/10))]."))
+				SPAWN(tutorial_offset)
+					player.play_tutorial()
+				tutorial_offset += 0.2 SECONDS
 
 	proc/add_minds(var/periodic_check = 0)
 		// SHOULD_NOT_SLEEP(TRUE)
@@ -934,9 +935,10 @@ var/global/game_force_started = FALSE
 					E.show_inspector_report()
 					E.addAbility(/datum/targetable/inspector_report)
 				SPAWN(0)
-					E.mind?.personal_summary.generate_xp(E.key)
-					E.mind?.personal_summary.ui_interact(E)
-					E.addAbility(/datum/targetable/personal_summary)
+					if (E.mind?.personal_summary)
+						E.mind?.personal_summary.generate_xp(E.key)
+						E.mind?.personal_summary.ui_interact(E)
+						E.addAbility(/datum/targetable/personal_summary)
 
 	logTheThing(LOG_DEBUG, null, "Did credits")
 

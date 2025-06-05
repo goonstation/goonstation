@@ -808,6 +808,7 @@ var/global/in_replace_with = 0
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
+
 	new_turf.opaque_atom_count = old_opaque_atom_count
 	new_turf.pass_unstable += old_pass_unstable
 
@@ -844,9 +845,6 @@ var/global/in_replace_with = 0
 					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
-	//cleanup old overlay to prevent some Stuff
-	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
-	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.

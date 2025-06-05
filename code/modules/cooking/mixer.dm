@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/mixer)
 	density = 1
 	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	var/image/blender_off
