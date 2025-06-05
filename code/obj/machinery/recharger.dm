@@ -99,13 +99,8 @@ TYPEINFO(/obj/machinery/recharger)
 		return
 	if (src.charging)
 		return
-	var/compatible = FALSE
-	for (var/accepted_type in accepted_types)
-		if (istype(G, accepted_type))
-			compatible = TRUE
-			break
 
-	if (!compatible)
+	if (!istypes(G, accepted_types))
 		boutput(user, SPAN_ALERT("You cannot put [G] in [src]."))
 		return
 
