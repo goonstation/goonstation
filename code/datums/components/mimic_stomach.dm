@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/component/mimic_stomach)
 	var/list/non_walls
 	/// Hold the mimic's last disguise to reapply once they're out
 	var/last_appearance
-	var/list/obj/item/parts/limbs_eaten
+	var/list/obj/things_eaten
 	var/mob/living/critter/mimic/antag_spawn/present_mimic
 
 TYPEINFO(/datum/component/mimic_stomach)
@@ -99,7 +99,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 		else
 			limb_obj = target
 
-	LAZYLISTADD(src.limbs_eaten, limb_obj)
+	LAZYLISTADD(src.things_eaten, limb_obj)
 	limb_obj.set_loc(src.limb_target_turf)
 	limb_obj.pixel_x = rand(-12,12)
 	limb_obj.pixel_y = rand(-12,12)
@@ -109,7 +109,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 /datum/component/mimic_stomach/proc/death_barf()
 	UnregisterSignal(src.parent, COMSIG_MOB_DEATH)
 	var/pitch_counter = 2
-	for (var/obj/eaten_thing in src.limbs_eaten)
+	for (var/obj/eaten_thing in src.things_eaten)
 		eaten_thing.set_loc(get_turf(src.parent))
 		ThrowRandom(eaten_thing, 10, 2, bonus_throwforce=10)
 		if (!ON_COOLDOWN(global, "burp", 1 SECONDS))
