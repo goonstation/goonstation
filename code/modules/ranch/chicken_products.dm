@@ -22,6 +22,26 @@
 			chicken_egg_props = new egg_props_path(src)
 		src.setup_special_effects()
 		src.UpdateIcon()
+
+		#ifdef SECRETS_ENABLED //Name handling for secret eggs
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/egg = src
+			var/list/secret_eggs = (/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+			for(var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/secret_egg in secret_eggs)
+				if(src != secret_egg)
+					return
+				else
+					if(src = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+						name = "coral egg"
+					else if(src = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+						name = "dragon egg"
+					else if(src = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
+						name = "phoenix egg"
+					else if(src = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+						name = "zappy egg"
+		#endif
 	update_icon()
 		if (egg_props_path)
 			src.icon_state = "egg-[chicken_egg_props.chicken_id]"
@@ -75,75 +95,109 @@
  * egg subtypes, for easy spawning
  */
 	white
+		name = "white egg"
 		egg_props_path = /datum/chicken_egg_props/white
 	brown
+		name = "brown egg"
 		egg_props_path = /datum/chicken_egg_props/brown
 	silkie
+		name = "silkie egg"
 		egg_props_path = /datum/chicken_egg_props/silkie
 	silkie_black
+		name = "black silkie egg"
 		egg_props_path = /datum/chicken_egg_props/silkie_black
 	silkie_white
+		name = "white silkie egg"
 		egg_props_path = /datum/chicken_egg_props/silkie_white
 	golden
+		name = "golden egg"
 		egg_props_path = /datum/chicken_egg_props/golden
 	spicy
+		name = "spicy egg"
 		egg_props_path = /datum/chicken_egg_props/spicy
 	honk
+		name = "henk egg"
 		egg_props_path = /datum/chicken_egg_props/honk
 	cluwne
+		name = "hueneneuenk egg"
 		egg_props_path = /datum/chicken_egg_props/cluwne
 	raptor
+		name = "raptor egg"
 		egg_props_path = /datum/chicken_egg_props/raptor
 	plant
+		name = "synthegg" // Trying to match the namng theme of other synth items
 		egg_props_path = /datum/chicken_egg_props/plant
 	robot
+		name = "robot egg"
 		egg_props_path = /datum/chicken_egg_props/robot
 	purple
+		name = "void egg"
 		egg_props_path = /datum/chicken_egg_props/purple
 	candy
+		name = "cotton candy egg"
 		egg_props_path = /datum/chicken_egg_props/candy
 	sea
+		name = "sea egg"
 		egg_props_path = /datum/chicken_egg_props/sea
 	dream
+		name = "dream egg"
 		egg_props_path = /datum/chicken_egg_props/dream
 	snow
+		name = "snow egg"
 		egg_props_path = /datum/chicken_egg_props/snow
 	popsicle
+		name = "dreamsickle egg"
 		egg_props_path = /datum/chicken_egg_props/popsicle
 	pigeon
+		name = "pigeon egg"
 		egg_props_path = /datum/chicken_egg_props/pigeon
 	wizard
+		name = "wizard egg"
 		egg_props_path = /datum/chicken_egg_props/wizard
 	pet
+		name = "ixworth egg"
 		egg_props_path = /datum/chicken_egg_props/pet
 	ghost
+		name = "spirit egg"
 		egg_props_path = /datum/chicken_egg_props/ghost
 	cockatrice
+		name = "cockatrice egg"
 		egg_props_path = /datum/chicken_egg_props/cockatrice
 	onagadori
+		name = "onigadori egg"
 		egg_props_path = /datum/chicken_egg_props/onagadori
 	knight
+		name = "knight egg"
 		egg_props_path = /datum/chicken_egg_props/knight
 	mime
+		name = "mime egg"
 		egg_props_path = /datum/chicken_egg_props/mime
 	balloon_helium
+		name = "balloon egg"
 		egg_props_path = /datum/chicken_egg_props/balloon_helium
 	balloon_hydrogen
+		name = "balloon egg"
 		egg_props_path = /datum/chicken_egg_props/balloon_hydrogen
 	glass
+		name = "glass egg"
 		egg_props_path = /datum/chicken_egg_props/glass
 	stone
+		name "stone egg"
 		egg_props_path = /datum/chicken_egg_props/stone
 	time
+		name = "time egg"
 		egg_props_path = /datum/chicken_egg_props/time
 	space
+		name = "space egg"
 		egg_props_path = /datum/chicken_egg_props/space
 	power_blue
+		name = "spacetime egg"
 		egg_props_path = /datum/chicken_egg_props/power_blue
 		New()
 			. = ..()
 			src.reagents.add_reagent("liquid spacetime",1)
 	power_gold
+		name = "timespace egg"
 		egg_props_path = /datum/chicken_egg_props/power_gold
 		New()
 			. = ..()
