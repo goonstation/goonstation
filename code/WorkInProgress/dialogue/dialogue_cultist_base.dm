@@ -346,7 +346,7 @@
 		D.dir = 4
 		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
 		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
-		user.unlock_medal("Waking Dream", TRUE)
+		user.unlock_medal("Waking Dream", TRUE) // Alternate medal maybe? for replayability?
 		qdel(src)
 
 	proc/lever_lv(mob/user)
