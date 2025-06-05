@@ -334,7 +334,7 @@
 	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
-	proc/lever_hv(mob/user) // TODO: Sounds?
+	proc/lever_hv(mob/user)
 		for(var/obj/decoration/ritual/R in(range(7))) // any better ideas I'm all ears
 			new /mob/living/critter/void_scale(R.loc)
 		for(var/atom/movable/mysterious_beast/B in (range(7)))
@@ -344,6 +344,8 @@
 		user.changeStatus("knockdown", 1 SECOND)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4
+		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
 		user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
@@ -355,6 +357,8 @@
 		shake_camera(user, 4, 4)
 		var/obj/decoration/bustedmantapc/D = new /obj/decoration/bustedmantapc(src.loc) // Swapping it out so people can't double dip
 		D.dir = 4
+		playsound(user, 'sound/effects/seamonster/beats/boom1.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/seamonster/whale1.ogg', 50, TRUE)
 		user.unlock_medal("Waking Dream", TRUE)
 		qdel(src)
 
