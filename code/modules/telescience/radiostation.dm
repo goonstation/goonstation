@@ -782,6 +782,28 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	song = 'sound/radio_station/music/core_of_poo.ogg'
 	color = "#DE9F47"
 
+ABSTRACT_TYPE(/obj/item/record/random/divertimento)
+/obj/item/record/random/divertimento
+	New()
+		. = ..()
+		src.desc += {" An amusing little song."}
+
+/obj/item/record/random/divertimento/acylite
+	record_name = "Acylite"
+	song = 'sound/radio_station/music/acylite.ogg'
+
+/obj/item/record/random/divertimento/epoxide
+	record_name = "Epoxide"
+	song = 'sound/radio_station/music/epoxide.ogg'
+
+/obj/item/record/random/divertimento/key_lime2
+	record_name = "Key Lime #2"
+	song = 'sound/radio_station/music/key_lime2.ogg'
+
+/obj/item/record/random/divertimento/project2
+	record_name = "Project 2"
+	song = 'sound/radio_station/music/project2.ogg'
+
 /obj/item/record/remote
 	name = "remote record"
 	desc = "You know those casettes that you put in tape decks that are actually aux cables? This is like that, but for records! You have no idea how it works."
