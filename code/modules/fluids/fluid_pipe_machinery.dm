@@ -115,7 +115,6 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/hand_pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	FLICK("output1", src)
-	user.visible_message(SPAN_NOTICE("[user] pumps [src]."), SPAN_NOTICE("You pump [src]."))
 	if(!src.network)
 		return
 	var/turf/simulated/T = get_turf(src)
