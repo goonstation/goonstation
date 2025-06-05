@@ -240,7 +240,15 @@
 		ASSERT(src.name)
 		..()
 
-	proc/preventAddTrait(mob/owner, var/resolved_role)
+	/// Returns TRUE if a trait should NOT be added to a mob.
+	proc/preventAddTrait(mob/owner, resolved_role)
+		if (resolved_role == "tutorial")
+			for (var/trait_cateogry in src.category)
+				if (trait_cateogry == "species")
+					return FALSE
+				if (trait_cateogry == "language")
+					return FALSE
+			return TRUE
 		. = FALSE
 
 	proc/onAdd(var/mob/owner)
@@ -1472,6 +1480,11 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 0
 	category = list("body", "nohair","nowig")
 	icon_state = "hair"
+
+	preventAddTrait(mob/owner, resolved_role)
+		. = ..()
+		if (resolved_role == "tutorial")
+			. = FALSE
 
 	onAdd(mob/owner)
 		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)

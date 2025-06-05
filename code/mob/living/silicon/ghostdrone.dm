@@ -25,7 +25,6 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 	punchMessage = "whaps"
 	kickMessage = "bonks"
-	isFlying = TRUE
 
 	var/default_hat_y = 7
 

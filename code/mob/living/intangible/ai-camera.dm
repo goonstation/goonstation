@@ -249,7 +249,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
-				src.set_dir(get_dir(src, target))
+				src.set_dir(get_dir_accurate(src, target, FALSE)) // Eye faces target when interacting
 
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
@@ -567,8 +567,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		src.observing = null
 
 	examine_verb(atom/A as mob|obj|turf in view(,usr))
-		var/turf/T = get_turf(A)
-		if (!length(T.camera_coverage_emitters))
+		if (!seen_by_camera(A))
 			return
 		. = ..()
 
