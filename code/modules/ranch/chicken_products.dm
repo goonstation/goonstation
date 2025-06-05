@@ -164,7 +164,7 @@
 		name = "cockatrice egg"
 		egg_props_path = /datum/chicken_egg_props/cockatrice
 	onagadori
-		name = "onigadori egg"
+		name = "onagadori egg"
 		egg_props_path = /datum/chicken_egg_props/onagadori
 	knight
 		name = "knight egg"
@@ -182,7 +182,7 @@
 		name = "glass egg"
 		egg_props_path = /datum/chicken_egg_props/glass
 	stone
-		name "stone egg"
+		name = "stone egg"
 		egg_props_path = /datum/chicken_egg_props/stone
 	time
 		name = "time egg"
