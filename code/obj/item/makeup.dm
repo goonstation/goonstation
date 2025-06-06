@@ -31,9 +31,7 @@
 		if (blush != ownerMob.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		for (var/mob/O in AIviewers(owner))
-			O.show_message("[owner] begins applying blush to [owner == target ? "[him_or_her(owner)]self" : target]!", 1)
+		owner.visible_message(SPAN_ALERT("[owner] begins applying blush to [owner == target ? "[him_or_her(owner)]self" : target]!"))
 
 	onInterrupt(var/flag)
 		..()
@@ -41,8 +39,7 @@
 			target.blush = 2
 			target.blush_color = blush.makeup_color
 			target.update_body()
-			for (var/mob/O in AIviewers(owner))
-				O.show_message(SPAN_ALERT("[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!"), 1)
+			owner.visible_message(SPAN_ALERT("[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!"))
 
 	onEnd()
 		..()
@@ -51,8 +48,7 @@
 			target.blush = 1
 			target.blush_color = blush.makeup_color
 			target.update_body()
-			for (var/mob/O in AIviewers(ownerMob))
-				O.show_message("[owner] applies blush to [target ]!", 1)
+			owner.visible_message(SPAN_ALERT("[owner] applies blush to [target ]!"))
 
 /datum/action/bar/icon/apply_eyeshadow
 	duration = 40
@@ -87,9 +83,7 @@
 		if (eyeshadow != ownerMob.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		for (var/mob/O in AIviewers(owner))
-			O.show_message("[owner] begins applying eyeshadow to [owner == target ? "[him_or_her(owner)]self" : target]!", 1)
+		owner.visible_message(SPAN_ALERT("[owner] begins applying eyeshadow to [owner == target ? "[him_or_her(owner)]self" : target]!"))
 
 	onInterrupt(var/flag)
 		..()
@@ -97,8 +91,7 @@
 			target.eyeshadow = 2
 			target.eyeshadow_color = eyeshadow.makeup_color
 			target.update_body()
-			for (var/mob/O in AIviewers(owner))
-				O.show_message(SPAN_ALERT("[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!"), 1)
+			owner.visible_message(SPAN_ALERT("[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!"))
 
 	onEnd()
 		..()
@@ -107,8 +100,7 @@
 			target.eyeshadow = 1
 			target.eyeshadow_color = eyeshadow.makeup_color
 			target.update_body()
-			for (var/mob/O in AIviewers(ownerMob))
-				O.show_message("[owner] applies eyeshadow to [target ]!", 1)
+			owner.visible_message(SPAN_ALERT("[owner] applies eyeshadow to [target ]!"))
 
 //Lipstick
 /obj/item/pen/crayon/lipstick/fancy
@@ -250,12 +242,7 @@
 	name = "eyeshadow"
 	desc = "A palette of pigmented powders that is intended to be used around a person's eyes."
 	makeuptype = "eyeshadow_light"
-	var/list/eyeshadow_light_colors = list("#af20a8", "#f8aaaa", "#fd9368", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
-	"#e253de", "#bc88bb")
-	var/list/eyeshadow_dark_colors = list("#7c44b1", "#4052a5", "#c2eeff", "#64b0ce", "#65a36f", "#4c4e4e", "#141314ff", "#dbeff5",
-	"#3b2c5e", "#28527d")
-	var/list/eyeshadow_gold_colors = list("#be5e51", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#493e25", "#8e4f0e",
-	"#ffa200")
+	var/eyeshadow_colors = "#ffff"
 
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -267,12 +254,7 @@
 			if (H.eyeshadow == 2)
 				user.show_text("Gurl, [H == user ? "you" : H] a hot mess right now. That all needs to be cleaned up first.", "red")
 				return
-			if(src.makeuptype == "eyeshadow_light")
-				makeup_color = pick(eyeshadow_light_colors)
-			if(src.makeuptype == "eyeshadow_dark")
-				makeup_color = pick(eyeshadow_dark_colors)
-			if(src.makeuptype == "eyeshadow_gold")
-				makeup_color = pick(eyeshadow_gold_colors)
+			makeup_color = pick(eyeshadow_colors)
 			actions.start(new /datum/action/bar/icon/apply_eyeshadow(target, src, target == user ? 40 : 60), user)
 		else
 			return ..()
@@ -280,14 +262,20 @@
 /obj/item/makeup/eyeshadow/light
 	name = "eyeshadow"
 	makeuptype = "eyeshadow_light"
+	eyeshadow_colors = list("#af20a8", "#f8aaaa", "#fd9368", "#de3862", "#dd506b", "#ffd6da", "#ab1e42", "#8a3e3e",
+	"#e253de", "#bc88bb")
 
 /obj/item/makeup/eyeshadow/dark
 	name = "eyeshadow"
 	makeuptype = "eyeshadow_dark"
+	eyeshadow_colors = list("#7c44b1", "#4052a5", "#c2eeff", "#64b0ce", "#65a36f", "#4c4e4e", "#141314ff", "#dbeff5",
+	"#3b2c5e", "#28527d")
 
 /obj/item/makeup/eyeshadow/gold
 	name = "eyeshadow"
 	makeuptype = "eyeshadow_gold"
+	eyeshadow_colors = list("#be5e51", "#e95c2c", "#f38e26", "#ffe2a7", "#c98b0d", "#ffff", "#493e25", "#8e4f0e",
+	"#ffa200")
 
 //Makeup Bags
 /obj/item/storage/makeup_bag
