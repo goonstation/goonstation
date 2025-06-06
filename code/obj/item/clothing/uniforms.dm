@@ -15,6 +15,7 @@
 	burn_output = 800
 	burn_possible = TRUE
 	health = 10
+	var/hide_underwear = FALSE
 	var/team_num
 	var/cutting_product = /obj/item/material_piece/cloth/cottonfabric
 
@@ -33,6 +34,16 @@
 				boutput(user, SPAN_ALERT("You can't cut that unless it's on a flat surface!"))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/item/clothing/under/proc/cut_tha_crap, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(src.hide_underwear)
+			user.update_body()
+
+	unequipped(mob/user)
+		. = ..()
+		if(src.hide_underwear)
+			user.update_body()
 
 	proc/cut_tha_crap(mob/user)
 		qdel(src)
@@ -992,10 +1003,7 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "fswimW"
 	item_state = "fswimW"
-
-	New()
-		. = ..()
-		AddComponent(/datum/component/toggle_underwear)
+	hide_underwear = TRUE
 
 	red
 		name = "red swimsuit"
