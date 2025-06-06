@@ -9,6 +9,9 @@
 /datum/ailment/disease/food_poisoning/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if(istype(affected_mob,/mob/living/critter/small_animal))
+		affected_mob.cure_disease(D)
+		return
 	switch(D.stage)
 		if(1)
 			if(probmult(5))

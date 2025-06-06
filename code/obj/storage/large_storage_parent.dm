@@ -666,7 +666,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		playsound(src.loc, src.open_sound, volume, 1, -3)
 		return 1
 
-	proc/close(var/entangleLogic)
+	proc/close(var/entangleLogic, var/mob/user)
 		FLICK(src.closing_anim,src)
 		if (!src.open)
 			return 0
@@ -801,7 +801,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/toggle(var/mob/user)
 		if (src.open)
-			return src.close()
+			return src.close(user=user)
 		return src.open(user=user)
 
 	proc/unlock()
@@ -885,7 +885,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (usr.stat || !usr.can_use_hands() || isAI(usr) || !can_reach(usr, src))
 			return
 
-		return toggle()
+		return toggle(usr)
 
 	verb/move_inside()
 		set src in oview(1)

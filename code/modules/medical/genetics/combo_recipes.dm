@@ -41,6 +41,10 @@ ABSTRACT_TYPE(/datum/geneticsrecipe)
 	required_effects = list("radioactive","glowy")
 	result = /datum/bioEffect/rad_resist
 
+/datum/geneticsrecipe/elec_resist
+	required_effects = list("colorshift","glowy")
+	result = /datum/bioEffect/elecres
+
 /datum/geneticsrecipe/alch_resist
 	required_effects = list("drunk","detox")
 	result = /datum/bioEffect/alcres

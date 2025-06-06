@@ -22,7 +22,7 @@
 		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+		src.equip_new_if_possible(/obj/item/tank/pocket/oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
@@ -997,7 +997,7 @@
 		src.maptext_x = 36
 		src.maptext_y = 64
 
-		src.m_intent = "walk"
+		src.set_m_intent("walk")
 		hud.update_mintent()
 
 		// dirty code for a loop since taking up an actual processing loop for a gimmick seems excessive

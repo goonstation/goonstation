@@ -1,0 +1,2218 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aL" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/submachine/ATM/atm_alt{
+	dir = 1;
+	pixel_y = 26
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"bA" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/syndicate_teleporter)
+"bK" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"cD" = (
+/obj/mesh/catwalk{
+	dir = 5
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/tracker/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/listeningpost/solars)
+"cH" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"ej" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+"eq" = (
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/cable/orange,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"ex" = (
+/obj/reagent_dispensers/watertank/fountain,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"eM" = (
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"eT" = (
+/obj/machinery/computer/announcement/syndicate,
+/obj/item/device/radio/intercom/security,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/listeningpost/tech_room)
+"fr" = (
+/obj/mesh/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/comm_dish)
+"fE" = (
+/obj/cable/black{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east/hardened,
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/listeningpost/tech_room)
+"fM" = (
+/obj/machinery/vending/snack{
+	profit = 0
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"gj" = (
+/obj/cable/black,
+/obj/machinery/power/smes{
+	charge = 100000;
+	chargelevel = 40000;
+	output = 15000
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"gy" = (
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor,
+/area/listeningpost/vestibule)
+"gP" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 1
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/listeningpost/tech_room)
+"ho" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"ht" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"hR" = (
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"iv" = (
+/obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
+"jb" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/listeningpost/solars)
+"jd" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"jQ" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_south,
+/area/listeningpost/barracks)
+"ke" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"kk" = (
+/obj/table/auto,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"km" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/sw,
+/area/listeningpost/barracks)
+"kw" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"kV" = (
+/obj/table/auto,
+/obj/item/storage/box/donkpocket_kit,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"lB" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/power)
+"lG" = (
+/obj/machinery/light/small/frostedred,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"lN" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"mk" = (
+/obj/securearea{
+	desc = "";
+	icon_state = "shock";
+	name = "Danger: High Voltage"
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/power)
+"mZ" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/barracks)
+"nj" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"nm" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"of" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/comm_dish)
+"ph" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"pB" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/shrub/syndicateplant,
+/turf/simulated/floor/carpet/red/fancy/narrow/se,
+/area/listeningpost/barracks)
+"pC" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/listeningpost/power)
+"qf" = (
+/obj/machinery/vending/computer3{
+	profit = 0
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/listeningpost/tech_room)
+"qh" = (
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/guardbot_dock,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/listeningpost/tech_room)
+"rn" = (
+/obj/cable/black{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/caution/west,
+/area/listeningpost/power)
+"ru" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"rC" = (
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"rY" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"sH" = (
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/listeningpost/vestibule)
+"sW" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+"tm" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/incandescent/warm,
+/obj/item/device/radio/intercom/brig,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/listeningpost/tech_room)
+"ts" = (
+/obj/machinery/light/incandescent/warm,
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_north,
+/area/listeningpost/barracks)
+"tv" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/tech_room)
+"tU" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 8;
+	pixel_x = 2
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/east,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"vt" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"vD" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/listeningpost/tech_room)
+"wl" = (
+/obj/machinery/vending/cola/blue{
+	credit = 12;
+	profit = 0
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"wz" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/listeningpost/solars)
+"wH" = (
+/obj/machinery/power/data_terminal,
+/obj/computer3frame,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/listeningpost/tech_room)
+"wR" = (
+/turf/variableTurf/wall,
+/area/space)
+"xE" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/listeningpost/vestibule)
+"yf" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/obj/item/paper/printout/emerg1,
+/obj/item/peripheral/network/radio/locked,
+/turf/simulated/floor/yellowblack,
+/area/listeningpost/tech_room)
+"yj" = (
+/obj/table/wood/round/auto,
+/obj/item/paper/pipebombs{
+	pixel_y = 5
+	},
+/obj/machinery/light_switch/west,
+/obj/item/tank/pocket/extended/oxygen,
+/turf/simulated/floor/carpet/red/fancy/narrow/T_west,
+/area/listeningpost/barracks)
+"yw" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/listeningpost/power)
+"yE" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/stool/chair,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"zo" = (
+/obj/machinery/power/apc/autoname_west/hardened,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"zP" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/tech_room)
+"zV" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Bl" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	dir = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/vestibule)
+"Bv" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/barracks)
+"BC" = (
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/listeningpost/solars)
+"BK" = (
+/obj/marker/supplymarker,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Cf" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/general)
+"Ch" = (
+/obj/stool/bar,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"Cw" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/communications_dish,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/comm_dish)
+"CA" = (
+/obj/machinery/vending/floppy{
+	profit = 0
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 6
+	},
+/area/listeningpost/tech_room)
+"Dh" = (
+/obj/cable/yellow,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Ds" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/listeningpost/power)
+"Eb" = (
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
+/area/listeningpost/barracks)
+"Ee" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+/obj/item/kitchen/utensil/knife,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"Eg" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_east,
+/area/listeningpost/barracks)
+"EC" = (
+/obj/storage/crate/furnacefuel,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"ES" = (
+/obj/cable/yellow,
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
+"EW" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24;
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/syndicate_teleporter)
+"Fa" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Listening Post"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	dir = 4
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/red,
+/area/listeningpost/vestibule)
+"Fz" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"FA" = (
+/obj/table/auto,
+/obj/item/pinpointer/disk,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"FB" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/break_room)
+"FF" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
+"FQ" = (
+/obj/machinery/power/apc/autoname_west/hardened,
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_west,
+/area/listeningpost/barracks)
+"Gi" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	id = "Sleeper_Access";
+	name = "Teleport Pad"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicate_teleporter)
+"Gn" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
+"GF" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"GY" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/listeningpost/tech_room)
+"Hn" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/nw,
+/area/listeningpost/barracks)
+"IJ" = (
+/obj/machinery/power/furnace{
+	active = 1;
+	fuel = 600
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Jp" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/listeningpost/vestibule)
+"JE" = (
+/obj/submachine/syndicate_teleporter,
+/obj/machinery/light/incandescent/warm,
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"JQ" = (
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"KB" = (
+/obj/machinery/computer/power_monitor,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/power)
+"Ly" = (
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/break_room)
+"Mu" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+"Mw" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"MG" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room)
+"MT" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/break_room)
+"Nj" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Nl" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/listeningpost/solars)
+"On" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
+/area/listeningpost/barracks)
+"Ot" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"OJ" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"Pm" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/listeningpost/power)
+"Po" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/syndicate_teleporter)
+"PH" = (
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/solar_control/small_backup4,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/power)
+"PV" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Control Room"
+	},
+/obj/decal/stripe_caution,
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/listeningpost/general)
+"QH" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/space)
+"QU" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/T_east,
+/area/listeningpost/barracks)
+"QZ" = (
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/machinery/bot/medbot/no_camera,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Rn" = (
+/obj/cable/black{
+	icon_state = "1-4"
+	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+"RG" = (
+/obj/table/reinforced/auto,
+/obj/item/disk/data/cartridge/captain{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/disk/data/cartridge/captain{
+	pixel_y = 10
+	},
+/obj/item/pinpointer/disk,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"RH" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+"SD" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"SK" = (
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/listeningpost/vestibule)
+"SM" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/comm_dish)
+"SN" = (
+/turf/simulated/floor/plating/airless,
+/area/listeningpost/landing_bay)
+"TL" = (
+/turf/variableTurf/floor,
+/area/space)
+"UE" = (
+/obj/securearea,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/vestibule)
+"UL" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/vestibule)
+"Vg" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/power)
+"VO" = (
+/obj/table/auto,
+/obj/item/currency/spacecash/thousand,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/obj/item/paper/telecrystal_update,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/yellowblack,
+/area/listeningpost/tech_room)
+"VV" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/black,
+/area/listeningpost/syndicate_teleporter)
+"Wb" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/break_room)
+"Wh" = (
+/obj/decal/tile_edge/line/red{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor,
+/area/listeningpost/vestibule)
+"Ww" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/power)
+"WY" = (
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 6;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"XJ" = (
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/listeningpost/solars)
+"XU" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"XY" = (
+/obj/machinery/power/solar/small_backup4,
+/obj/cable/yellow,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/listeningpost/solars)
+"Yh" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/cereal_box/syndie,
+/turf/simulated/floor/black,
+/area/listeningpost/general)
+"Yy" = (
+/obj/machinery/cell_charger,
+/obj/table/auto,
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
+"YN" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/carpet/red/fancy/narrow/ne,
+/area/listeningpost/barracks)
+"YY" = (
+/turf/variableTurf/clear,
+/area/space)
+"Zj" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/space)
+"ZW" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general)
+
+(1,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(2,1,1) = {"
+YY
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(3,1,1) = {"
+YY
+YY
+YY
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+"}
+(4,1,1) = {"
+YY
+YY
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+YY
+YY
+"}
+(5,1,1) = {"
+YY
+wR
+wR
+TL
+TL
+TL
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+YY
+"}
+(6,1,1) = {"
+YY
+wR
+TL
+TL
+TL
+TL
+YY
+YY
+YY
+YY
+YY
+YY
+ph
+Zj
+SN
+SN
+SN
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+YY
+"}
+(7,1,1) = {"
+YY
+wR
+TL
+TL
+TL
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+ke
+QH
+SN
+SN
+SN
+wR
+wR
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+YY
+"}
+(8,1,1) = {"
+YY
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+wR
+ph
+Zj
+QH
+QH
+SN
+SN
+lG
+mZ
+mZ
+mZ
+mZ
+mZ
+mZ
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+wR
+YY
+"}
+(9,1,1) = {"
+YY
+YY
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+wR
+wR
+QH
+QH
+QH
+SN
+SN
+GF
+mZ
+Hn
+yj
+FQ
+km
+mZ
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(10,1,1) = {"
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+QH
+UL
+UE
+Bl
+UE
+mZ
+ts
+Eb
+On
+jQ
+mZ
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(11,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+wR
+UL
+gy
+sH
+xE
+mZ
+YN
+Eg
+QU
+pB
+mZ
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(12,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+Vg
+Vg
+Vg
+UL
+SK
+Jp
+Wh
+mZ
+mZ
+mZ
+Bv
+mZ
+mZ
+Cf
+Cf
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(13,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+nm
+Zj
+Zj
+wR
+wR
+Vg
+kk
+Yy
+UL
+UL
+Fa
+UL
+Cf
+RG
+Nj
+RH
+zV
+zo
+BK
+Cf
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(14,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+fr
+fr
+fr
+wR
+wR
+Vg
+eM
+OJ
+Cf
+WY
+RH
+jd
+ru
+ru
+rY
+RH
+kw
+vt
+Mw
+Cf
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(15,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+fr
+Cw
+SM
+of
+of
+lB
+yw
+rn
+PV
+ZW
+ej
+ZW
+ZW
+Mu
+ZW
+sW
+ZW
+Rn
+zV
+Cf
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(16,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+fr
+fr
+fr
+wR
+wR
+Vg
+EC
+Ds
+Cf
+aL
+yE
+Yh
+Ot
+RH
+QZ
+nj
+lN
+RH
+zV
+Cf
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(17,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+nm
+Fz
+Fz
+wR
+wR
+Vg
+mk
+Pm
+Cf
+Cf
+zP
+zP
+zP
+tv
+zP
+zP
+Wb
+FB
+Wb
+Wb
+Wb
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(18,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+Vg
+KB
+pC
+ht
+gj
+zP
+wH
+vD
+GY
+qf
+zP
+fM
+MT
+kV
+FF
+Wb
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(19,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+Vg
+PH
+XU
+XU
+Dh
+zP
+tm
+rC
+MG
+VO
+zP
+wl
+MT
+Ch
+Ee
+Wb
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(20,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+Vg
+Ww
+ho
+IJ
+eq
+zP
+eT
+rC
+MG
+yf
+zP
+ex
+Ly
+tU
+FA
+Wb
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(21,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+Ww
+Vg
+Vg
+Vg
+zP
+gP
+qh
+fE
+CA
+zP
+Wb
+Gi
+Wb
+Wb
+Wb
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(22,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+BC
+Nl
+wR
+wR
+wR
+zP
+zP
+zP
+zP
+zP
+bA
+VV
+Po
+EW
+bA
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+"}
+(23,1,1) = {"
+YY
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+iv
+wz
+YY
+wR
+wR
+wR
+wR
+wR
+wR
+wR
+wR
+bA
+cH
+hR
+SD
+bA
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(24,1,1) = {"
+YY
+YY
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+iv
+wz
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+wR
+wR
+bA
+JQ
+JQ
+JQ
+bA
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(25,1,1) = {"
+YY
+YY
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+iv
+jb
+XY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+bA
+JQ
+JE
+bK
+bA
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(26,1,1) = {"
+YY
+YY
+YY
+wR
+wR
+wR
+YY
+YY
+YY
+iv
+jb
+XY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+bA
+bA
+bA
+bA
+bA
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+"}
+(27,1,1) = {"
+YY
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+YY
+iv
+jb
+XY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(28,1,1) = {"
+YY
+YY
+YY
+YY
+wR
+wR
+YY
+YY
+YY
+iv
+jb
+XY
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+YY
+"}
+(29,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Gn
+XJ
+ES
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+YY
+"}
+(30,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+cD
+YY
+YY
+YY
+YY
+wR
+wR
+wR
+wR
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+wR
+YY
+"}
+(31,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+wR
+YY
+YY
+"}
+(32,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}

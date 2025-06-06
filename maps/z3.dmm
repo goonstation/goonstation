@@ -183,7 +183,7 @@
 "aaL" = (
 /obj/machinery/computer/announcement{
 	name = "Radio Station Announcement Computer";
-	req_access_txt = "";
+	req_access = null;
 	dir = 1
 	},
 /obj/cable{
@@ -319,10 +319,6 @@
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
-"abn" = (
-/obj/machinery/computer/security/wooden_tv/public,
-/turf/unsimulated/floor/honeyblocks,
-/area/space_hive)
 "abo" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -366,14 +362,6 @@
 	},
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
-"abr" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/radiostation/bridge)
 "abs" = (
 /obj/structure/girder,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -5578,12 +5566,6 @@
 "aFg" = (
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"aFh" = (
-/obj/machinery/computer/security{
-	camera_networks = list("Pathopost")
-	},
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aFj" = (
 /turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
@@ -5815,11 +5797,6 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aGu" = (
-/turf/simulated/floor{
-	icon_state = "carpetNE"
-	},
-/area/radiostation/bedroom)
 "aGv" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -7080,7 +7057,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_out";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
@@ -8839,19 +8817,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aQy" = (
-/obj/mesh/grille/steel,
-/obj/window/crystal/reinforced,
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
-/turf/simulated/floor/plating,
-/area/abandonedship)
-"aQz" = (
-/obj/mesh/grille/steel,
-/obj/window/crystal/reinforced,
-/obj/window/crystal/reinforced/east,
-/obj/window/crystal/reinforced/north,
-/obj/window/crystal/reinforced/south,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/abandonedship)
 "aQA" = (
@@ -8890,10 +8856,6 @@
 	name = "smashed computer"
 	},
 /obj/map/light/screen,
-/turf/simulated/floor/carpet/grime,
-/area/abandonedship)
-"aQG" = (
-/obj/machinery/computer/security/wooden_tv/small,
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "aQH" = (
@@ -9311,8 +9273,9 @@
 /obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
-	icon = 'icons/obj/doors/Doorext.dmi';
-	icon_state = "door_locked";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
 /turf/simulated/floor/airless/scorched,
@@ -14134,7 +14097,8 @@
 "biN" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
-	color = "gray"
+	color = "gray";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -14213,13 +14177,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/radiostation/serverroom)
-"biZ" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/turf/simulated/floor{
-	icon_state = "carpetSE"
-	},
-/area/radiostation/bedroom)
 "bja" = (
 /obj/item/storage/toilet{
 	dir = 8
@@ -15421,7 +15378,7 @@
 /area/radiostation/tv_set)
 "byl" = (
 /obj/table/reinforced/auto,
-/obj/towelbin,
+/obj/linen_bin/towel,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
@@ -15700,13 +15657,6 @@
 	},
 /turf/space,
 /area/bee_trader)
-"cdo" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer/security/wooden_tv/public,
-/turf/simulated/floor{
-	icon_state = "hive"
-	},
-/area/bee_trader)
 "cfW" = (
 /obj/machinery/light{
 	dir = 8
@@ -15804,6 +15754,10 @@
 "ctc" = (
 /turf/unsimulated/floor/black,
 /area/space_hive)
+"cto" = (
+/obj/machinery/computer/television/small,
+/turf/simulated/floor/carpet/grime,
+/area/abandonedship)
 "cty" = (
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
@@ -17815,14 +17769,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"hwS" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/diner/dining)
 "hzu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18725,6 +18671,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"jHP" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "research_open";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "jIB" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -18851,14 +18810,6 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/radiostation/tv_set)
-"jWl" = (
-/obj/storage/secure/closet/personal,
-/obj/item/device/microphone,
-/obj/item/clothing/under/gimmick/sweater,
-/turf/simulated/floor{
-	icon_state = "carpetNW"
-	},
-/area/radiostation/bedroom)
 "jYd" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/diner/hallway)
@@ -19039,6 +18990,12 @@
 	name = "broken door"
 	},
 /area/space_hive)
+"kqW" = (
+/obj/machinery/computer/television{
+	camera_networks = list("Pathopost")
+	},
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "kse" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
@@ -19101,6 +19058,14 @@
 "kyb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/jucer_trader)
+"kyc" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/radiostation/bridge)
 "kAu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19285,6 +19250,11 @@
 "lab" = (
 /turf/simulated/floor/grime,
 /area/diner/arcade)
+"lae" = (
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNE"
+	},
+/area/radiostation/bedroom)
 "laI" = (
 /obj/mesh/catwalk{
 	dir = 5
@@ -19417,7 +19387,8 @@
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
-	color = "gray"
+	color = "gray";
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -20402,6 +20373,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"nxy" = (
+/obj/machinery/computer/television/public,
+/turf/unsimulated/floor/honeyblocks,
+/area/space_hive)
 "nxO" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20694,7 +20669,8 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "salvage_in";
-	name = "GLOMAR Salvager"
+	name = "GLOMAR Salvager";
+	dir = 8
 	},
 /turf/simulated/floor/plating/scorched,
 /area/salvage_trader)
@@ -20745,6 +20721,14 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"ouf" = (
+/obj/storage/secure/closet/personal,
+/obj/item/device/microphone,
+/obj/item/clothing/under/gimmick/sweater,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetNW"
+	},
+/area/radiostation/bedroom)
 "owN" = (
 /obj/lattice{
 	dir = 4;
@@ -20950,6 +20934,13 @@
 	icon_state = "red4"
 	},
 /area/diner/dining)
+"oXL" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer/television/public,
+/turf/simulated/floor{
+	icon_state = "hive"
+	},
+/area/bee_trader)
 "oXO" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -21637,6 +21628,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/salvage_trader)
+"qvF" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSW"
+	},
+/area/radiostation/bedroom)
 "qyc" = (
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -22548,18 +22545,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"sQW" = (
-/obj/storage/crate/internals,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/machinery/light/small/cool{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/simulated/floor/longtile/black,
-/area/space)
 "sRO" = (
 /obj/map/light/yellowbright,
 /turf/unsimulated/floor/plating/scorched,
@@ -22747,6 +22732,14 @@
 /mob/living/critter/zombie/security,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
+"tdV" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 8
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/diner/dining)
 "teK" = (
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
@@ -23721,6 +23714,18 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"vvv" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/pocket/oxygen,
+/obj/item/tank/pocket/oxygen,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/space)
 "vws" = (
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
@@ -24536,12 +24541,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"xzt" = (
-/obj/table/wood/auto/desk,
-/turf/simulated/floor{
-	icon_state = "carpetSW"
-	},
-/area/radiostation/bedroom)
 "xCP" = (
 /obj/warp_beacon/diner,
 /obj/lattice,
@@ -24655,6 +24654,13 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/radiostation/hallway)
+"xTQ" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet{
+	icon_state = "carpetSE"
+	},
+/area/radiostation/bedroom)
 "xVr" = (
 /mob/living/critter/zombie/scientist,
 /obj/machinery/telejam/active,
@@ -38287,7 +38293,7 @@ aaa
 aaa
 aaa
 aaa
-aQz
+aQy
 aQF
 nsI
 aQE
@@ -38299,7 +38305,7 @@ iYn
 aTk
 aTx
 aTF
-aQz
+aQy
 aaa
 aaa
 aaa
@@ -38590,7 +38596,7 @@ aaa
 aaa
 axl
 iYn
-aQG
+cto
 aQE
 aRm
 iYn
@@ -44147,7 +44153,7 @@ aaq
 gaf
 aaY
 hFn
-abn
+nxy
 aaf
 aaf
 acd
@@ -53324,7 +53330,7 @@ bkA
 bkF
 bkN
 afR
-sQW
+vvv
 afR
 afR
 aab
@@ -61785,7 +61791,7 @@ aaa
 hme
 iYn
 iYn
-aAo
+jHP
 iYn
 fqY
 aGD
@@ -73180,7 +73186,7 @@ iDu
 vpl
 azq
 asW
-hwS
+tdV
 iZr
 wli
 tkr
@@ -73468,7 +73474,7 @@ aaa
 aaa
 wvT
 alp
-cdo
+oXL
 sFI
 hGO
 dYj
@@ -106729,7 +106735,7 @@ aac
 aab
 aab
 aDy
-aFh
+kqW
 aFy
 aFg
 aGc
@@ -107863,7 +107869,7 @@ aaa
 aaa
 uiy
 aaD
-abr
+kyc
 abU
 acm
 ptd
@@ -109399,9 +109405,9 @@ adg
 adg
 agJ
 fzx
-jWl
+ouf
 foM
-xzt
+qvF
 hKk
 boO
 bjC
@@ -109701,9 +109707,9 @@ wbC
 uqk
 agU
 dzN
-aGu
+lae
 aIR
-biZ
+xTQ
 agJ
 bjl
 bjB

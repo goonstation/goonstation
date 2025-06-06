@@ -25,6 +25,11 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
     st=1
 fi;
 
+if grep -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/**/*.dmm; then
+    echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
+    st=1
+fi;
+
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
 if grep -P '/obj/merge_conflict_marker' assets/maps/**/*.dmm maps/**/*.dmm; then
     echo "ERROR: Merge conflict markers detected in map, please resolve all merge failures!"

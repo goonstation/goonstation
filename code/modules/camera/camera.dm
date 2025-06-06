@@ -8,6 +8,8 @@
 
 	/// Used by things that can view cameras to display certain cameras only
 	var/network = CAMERA_NETWORK_STATION
+	/// bitmask of minimaps this camera should appear on
+	var/minimap_types = 0
 	/// Used by autoname: EX "security camera"
 	var/prefix = "security"
 	/// Used by autoname: EX "camera - west primary hallway"
@@ -23,8 +25,6 @@
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
-	/// Cameras only the AI can see through
-	var/ai_only = FALSE
 	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
 	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
@@ -41,6 +41,8 @@
 	/// Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Should this camera have a light?
+	var/has_light = TRUE
 	/// Robust light
 	var/datum/light/point/light
 
@@ -61,7 +63,7 @@
 	All cameras are tallied regardless of this tag to apply a number to them.
 	*/
 
-/obj/machinery/camera/New()
+/obj/machinery/camera/New(loc)
 	..()
 	START_TRACKING
 	var/area/area = get_area(src)
@@ -72,8 +74,9 @@
 							/area/station/turret_protected/AIbasecore1,
 							/area/station/turret_protected/ai_upload_foyer)
 	if (locate(area) in aiareas)
-		src.ai_only = TRUE
 		src.prefix = "AI"
+		src.network = CAMERA_NETWORK_AI_ONLY
+		src.color = "#9999cc"
 
 	if (src.sticky)
 		autoposition(src.alternate_sprites)
@@ -82,11 +85,15 @@
 
 	LAZYLISTINIT(src.viewers)
 
-	src.light = new /datum/light/point
-	src.light.set_brightness(0.3)
-	src.light.set_color(209/255, 27/255, 6/255)
-	src.light.attach(src)
-	src.light.enable()
+	if (src.has_light)
+		src.light = new /datum/light/point
+		src.light.set_brightness(0.3)
+		src.light.set_color(209/255, 27/255, 6/255)
+		src.light.attach(src)
+		src.light.enable()
+
+	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
+		src.minimap_types |= MAP_CAMERA_STATION
 
 	SPAWN(1 SECOND)
 		addToNetwork()
@@ -180,16 +187,14 @@
 	..()
 	if(!src.network)
 		return //avoid stacking emp
-	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
-		src.icon_state = "cameraemp"
+	src.icon_state = "[initial(src.icon_state)]emp"
 	src.network = null //Not the best way but it will do. I think.
 	src.set_camera_status(FALSE)
 
 	SPAWN(90 SECONDS)
 		src.set_camera_status(TRUE)
 		src.network = initial(src.network)
-		if(!istype(src, /obj/machinery/camera/television))
-			src.icon_state = initial(src.icon_state)
+		src.icon_state = initial(src.icon_state)
 
 		src.update_coverage()
 
@@ -285,7 +290,7 @@
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-	src.icon_state = "camera1"
+	src.icon_state = "[initial(src.icon_state)]1"
 	src.light.disable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
@@ -297,11 +302,15 @@
 	cables?.change_stack_amount(-1)
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
-	src.icon_state = "camera"
+	src.icon_state = initial(src.icon_state)
 	src.light.enable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
+
+/// Adds the minimap component for the camera
+/obj/machinery/camera/proc/add_to_minimap()
+	src.AddComponent(/datum/component/minimap_marker/minimap, src.minimap_types, "camera", name=src.c_tag)
 
 /obj/machinery/camera/ranch
 	name = "autoname - ranch"
@@ -338,8 +347,9 @@
 /// AI only camera
 /obj/machinery/camera/auto/AI
 	name = "autoname - AI"
+	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
-	ai_only = TRUE // TODO: Make this a separate network instead of a flag
+	color = "#9999cc"
 
 /// Mining outpost cameras
 /obj/machinery/camera/auto/mining

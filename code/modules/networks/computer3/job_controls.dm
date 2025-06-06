@@ -48,7 +48,7 @@ var/datum/job/priority_job = null
 					global.priority_job = null
 					src.print_text("Cleared priority job listing.")
 					return
-				var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE)
+				var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE, latejoin_only = TRUE)
 				if (!job)
 					src.print_text("Error: unable to identify role with name \[[job_name]\]")
 					return
@@ -58,7 +58,7 @@ var/datum/job/priority_job = null
 
 			if ("info")
 				var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
-				var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE)
+				var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE, latejoin_only = TRUE)
 				if (!job)
 					src.print_text("Error: unable to identify role with name \[[job_name]\]")
 					return

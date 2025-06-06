@@ -5,6 +5,7 @@
 	mob_path = /mob/living/intangible/blob_overmind
 	uses_pref_name = FALSE
 	has_info_popup = FALSE
+	wiki_link = "https://wiki.ss13.co/Blob"
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()

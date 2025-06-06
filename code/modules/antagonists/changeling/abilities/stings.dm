@@ -172,6 +172,7 @@
 	copiable = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
+	do_logs = FALSE
 	var/list/possible_stings = list(
 				/datum/targetable/changeling/sting/neurotoxin,
 				/datum/targetable/changeling/sting/neurodepressant,

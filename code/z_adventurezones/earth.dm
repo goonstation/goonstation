@@ -20,7 +20,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "purple"
 	requires_power = 0
 	sound_environment = 4
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 	skip_sims = 1
 	sims_score = 25
 	sound_group = "centcom"
@@ -143,6 +143,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	gibbed
 		ckey = "gibbed"
 		name = "Office of Rick"
+	glowbold
+		ckey = "glowbold"
+		name = "Office of Glowbold"
 	grayshift
 		ckey = "grayshift"
 		name = "Office of Grayshift"
@@ -306,7 +309,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/retentioncenter/teleblocked
 	name = "NT Retention Center (teleblocked)"
 	icon_state = "death"
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 
 /area/retentioncenter/depot
 	name = "NT Retention Center (depot)"

@@ -1628,6 +1628,27 @@
 	A.setMaterial(material_selected)
 	boutput(src, "Set material of [A] to [material_selected]")
 
+/client/proc/cmd_say(atom/A)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Say"
+	set desc = "Force an atom to say a line of text."
+	set popup_menu = 0
+
+	var/message = tgui_input_text(src, "Force [A] to say something:", "Say", "")
+
+	if (!message)
+		return
+
+	A.say(message)
+
+	message = copytext(sanitize(message), 1, MAX_MESSAGE_LEN)
+	logTheThing(LOG_ADMIN, usr, "forced [constructTarget(A, "admin")] to say: [message]")
+	logTheThing(LOG_DIARY, usr, "forced [constructTarget(A, "diary")] to say: [message]", "admin")
+
+	var/mob/M = A
+	if(istype(M) && M.client)
+		message_admins("<span class='internal'>[key_name(src)] forced [key_name(M)] to say: [message]</span>")
+
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Cat County"

@@ -233,7 +233,7 @@
 	item_requirements = list("metal_superdense" = 50,
 							 "conductive_high" = 40,
 							 "crystal" = 10)
-	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun/pod_wars)
 	create = 1
 	time = 10 SECONDS
 	category = "Tool"

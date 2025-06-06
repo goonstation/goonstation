@@ -8,6 +8,7 @@
 #define MAP_ALERTS					(1<<5) //! Station General Alerts
 #define MAP_OBSERVER				(1<<6) // observer map
 #define MAP_SPACE_PHOENIX			(1<<7)
+#define MAP_CAMERA_STATION			(1<<8) //! Station camera networks for security camera viewer computer
 #define MAP_HTR_TEAM 				(1<<20)
 
 // Area groups, which will be treated as one atom/movable by the renderer, allowing for efficient recolouring across minimaps.

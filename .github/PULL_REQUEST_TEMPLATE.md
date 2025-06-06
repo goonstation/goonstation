@@ -4,13 +4,14 @@
 
 ## About the PR <!-- Describe the Pull Request here. What does it change? What other things could this impact? -->
 
-
-
 ## Why's this needed? <!-- Describe why you think this should be added to the game. -->
 
+## Testing <!-- Please provide at least one screenshot of your changes working if appropriate, or a description of how you've tested them if not. -->
 
+<!-- !!! PRs that are opened without being properly tested may be reverted to draft or closed without warning !!! -->
 
 ## Changelog <!-- If necessary, put your changelog entry below. Otherwise, /please/ delete this entire section. -->
+
 <!-- Put how you want to be credited in the changelog in place of CodeDude. -->
 <!-- Use (*) for major changes and (+) for minor changes. See the contributor guide for details. For example: -->
 

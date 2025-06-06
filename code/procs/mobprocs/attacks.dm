@@ -22,7 +22,7 @@
 		return
 
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 		boutput(user, SPAN_ALERT("<b>[src]'s Spell Shield prevents your attack!</b>"))
 

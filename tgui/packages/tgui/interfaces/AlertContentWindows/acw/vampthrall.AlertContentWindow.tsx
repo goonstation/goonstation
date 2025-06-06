@@ -21,6 +21,10 @@ export const acw: AlertContentWindow = {
         and straying too far from their power will result in your swift demise.
       </p>
       <p>
+        You can telepathically speak to your master and any other thralls
+        created by your master using the <em>:thrall</em> speech prefix.
+      </p>
+      <p>
         You will slowly lose blood points over time. Your max health will
         decrease as blood points are lost. You can regain blood points by
         drinking the blood of humans or taking an additional donation from your

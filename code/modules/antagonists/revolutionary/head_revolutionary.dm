@@ -3,6 +3,7 @@
 	display_name = "head revolutionary"
 	antagonist_icon = "rev_head"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
+	wiki_link = "https://wiki.ss13.co/Revolutionary"
 
 	var/static/list/datum/mind/heads_of_staff
 	/// A list of items that this head revolutionary has purchased using their uplink.

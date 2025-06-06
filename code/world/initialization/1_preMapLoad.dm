@@ -164,8 +164,6 @@
 	actions = new /datum/action_controller()
 	Z_LOG_DEBUG("Preload", "  explosions")
 	explosions = new /datum/explosion_controller()
-	Z_LOG_DEBUG("Preload", "  ghost_notifier")
-	ghost_notifier = new /datum/ghost_notification_controller()
 	Z_LOG_DEBUG("Preload", "  respawn_controller")
 	respawn_controller = new /datum/respawn_controls()
 	Z_LOG_DEBUG("Preload", " cargo_pad_manager")

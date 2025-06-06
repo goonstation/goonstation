@@ -1025,12 +1025,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			if(iscritter(mob_or_critter))
 				var/obj/critter/C = mob_or_critter
 				C.health *= health_multiplier
+				C.butcherable = BUTCHER_NOT_ALLOWED
 				C.aggressive = 1
 				C.defensive = 1
 				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
-				C.butcherable = FALSE
+				C.butcherable = BUTCHER_NOT_ALLOWED
 				C.health *= health_multiplier //for critters that don't user health holders
 				C.faction = list(FACTION_GUANTLET)
 				for(var/damage_key in C.healthlist) //for critters that do

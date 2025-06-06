@@ -13,9 +13,10 @@
 			loc_temp = S.temperature
 		else if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
-			if (ship.life_support)
-				if (ship.life_support.active)
-					loc_temp = ship.life_support.tempreg
+			var/obj/item/shipcomponent/life_support/life_support_part = ship.get_part(POD_PART_LIFE_SUPPORT)
+			if (life_support_part)
+				if (life_support_part.active)
+					loc_temp = life_support_part.tempreg
 				else
 					loc_temp = environment.temperature
 		// why am i repeating this shit?

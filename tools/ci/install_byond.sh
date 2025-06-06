@@ -11,7 +11,7 @@ else
   rm -rf "$HOME/BYOND"
   mkdir -p "$HOME/BYOND"
   cd "$HOME/BYOND"
-  curl "http://www.byond.com/download/build/${BYOND_MAJOR_VERSION}/${BYOND_MAJOR_VERSION}.${BYOND_MINOR_VERSION}_byond_linux.zip" -o byond.zip
+  curl "http://www.byond.com/download/build/${BYOND_MAJOR_VERSION}/${BYOND_MAJOR_VERSION}.${BYOND_MINOR_VERSION}_byond_linux.zip" -o byond.zip -A "GoonstationCI/1.0"
   unzip byond.zip
   rm byond.zip
   cd byond

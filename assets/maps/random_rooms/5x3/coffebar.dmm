@@ -42,7 +42,7 @@
 /area/dmm_suite/clear_area)
 "W" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/public{
+/obj/machinery/computer/television/public{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,

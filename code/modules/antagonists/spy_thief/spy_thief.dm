@@ -2,6 +2,7 @@
 	id = ROLE_SPY_THIEF
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
+	wiki_link = "https://wiki.ss13.co/Spy_Thief"
 
 	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
 	/// Associative list of string names to mutable appearances

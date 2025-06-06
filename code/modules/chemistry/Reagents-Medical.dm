@@ -812,6 +812,8 @@ datum
 				flush(holder, 5 * mult, flushed_reagents)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
+				if(M.hasStatus("broken_madness"))
+					M.changeStatus("broken_madness", -5 SECONDS * mult)
 				if(probmult(5))
 					for(var/datum/ailment_data/disease/virus in M.ailments)
 						if(istype(virus.master,/datum/ailment/disease/space_madness) || istype(virus.master,/datum/ailment/disease/berserker))

@@ -294,6 +294,7 @@
 	icon_state = "arcwelder-off"
 	item_state = "arcwelder-off"
 	inventory_counter_enabled = TRUE
+	fuel_capacity = 0
 	var/charge_to_fuel = 7
 
 	New()
@@ -391,7 +392,6 @@
 		else
 			inventory_counter.update_text("-")
 
-
 /datum/item_special/spark/arcwelder
 	cooldown = 1.5 SECONDS
 
@@ -431,7 +431,7 @@
 			src.anchored = TRUE
 
 /obj/item/storage/backpack/salvager
-	name = "salvager rucksack"
+	name = "heavy-duty rucksack"
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
 	spawn_contents = list()
@@ -442,7 +442,7 @@
 	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
-	protected_radio = 1 // Ops can spawn with the deaf trait.
+	protected_radio = TRUE // Ops can spawn with the deaf trait.
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
@@ -713,9 +713,9 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	New()
 		..()
 		name = "salvager minisub"
-		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
-		Install(new /obj/item/shipcomponent/secondary_system/cargo(src))
-		Install(new /obj/item/shipcomponent/secondary_system/lock/bioscan(src))
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
 
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
@@ -730,9 +730,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 	New()
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock/bioscan(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -778,8 +776,11 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 			boutput(usr, "[ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
 			return TRUE
 
-		if(ship.engine.active)
-			if(ship.engine.ready)
+		var/obj/item/shipcomponent/engine/engine_part = ship.get_part(POD_PART_ENGINE)
+		if(!engine_part)
+			boutput(usr, "[ship.ship_message("Engines missing! Unable to calculate trajectory!")]")
+		if(engine_part.active)
+			if(engine_part.ready)
 				//brake the pod, we must stop to calculate warp trajectory.
 				if (istype(ship.movement_controller, /datum/movement_controller/pod))
 					var/datum/movement_controller/pod/MCP = ship.movement_controller
@@ -795,7 +796,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 						return TRUE
 
 
-				ship.engine.warp_autopilot = 1
+				engine_part.warp_autopilot = 1
 				boutput(usr, "[ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
 
 				var/health_perc = ship.health_percentage
@@ -804,7 +805,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 
 				if(ship.health_percentage < (health_perc - 30))
 					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
-				else if(ship.engine.active && ship.engine.ready && src.active)
+				else if(src.active)
 					var/old_color = ship.color
 					animate_teleport(ship)
 					sleep(0.8 SECONDS)
@@ -813,9 +814,9 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 				else
 					boutput(usr, "[ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
 
-				ship.engine.ready = 0
-				ship.engine.warp_autopilot = 0
-				ship.engine.ready()
+				engine_part.ready = 0
+				engine_part.warp_autopilot = 0
+				engine_part.ready()
 			else
 				boutput(usr, "[ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
 		else

@@ -192,7 +192,7 @@
 		T = src.maze.get_center()
 		var/area/A = get_area(T)
 		A.name = "unknown pocket dimension"
-		A.teleport_blocked = 2
+		A.teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 		A.allowed_restricted_z = TRUE
 
 		logTheThing(LOG_STATION, src.holder, "Maze created for Curser artifact [src.holder] with center point [log_loc(T)]")
@@ -372,6 +372,9 @@
 
 /*********** DISPLACEMENT CURSE STUFF *************/
 
+TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_DISPLACED_SOUL)
+
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
 
@@ -427,11 +430,6 @@
 				src.client?.screen += U
 				pos_x -= spacing
 				animate_buff_in(U)
-
-	say()
-		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
-			src.visible_message(SPAN_ALERT("\The [src.name]'s mouth moves, but you can't tell what they're saying!"), SPAN_ALERT("Nothing comes out of your mouth!"))
-		return
 
 	click(atom/target)
 		if (src.client?.check_key(KEY_EXAMINE))

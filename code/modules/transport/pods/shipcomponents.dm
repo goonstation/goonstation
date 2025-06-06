@@ -21,11 +21,32 @@
 	/// Can this part be used by 2x2 pods
 	var/large_pod_compatible = TRUE
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
+
+	proc/pre_attackby(source, atom/target, mob/user)
+		if (istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			if(vehicle.locked)
+				boutput(user, SPAN_ALERT("Cannot modify [vehicle] while it is locked."))
+			if(src.can_install(user, vehicle))
+				vehicle.install_part(user, src, src.get_install_slot(vehicle))
+			return ATTACK_PRE_DONT_ATTACK
+
+	/// Return true if the part can be installed into this vehicle. False if not.
+	proc/can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		return TRUE
+
+	/// Return the slot to install the part in if it can be installed
+	proc/get_install_slot()
+		return null
+
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
-	if(ship && src.loc == ship)
-		ship.components -= src
-	ship = null
+	if(ship)
+		var/slot = src.ship.find_part_slot(src)
+		src.ship.eject_part(null, slot)
 	..()
 
 //Code for when device needs recharging
@@ -60,8 +81,7 @@
 		for(var/mob/M in src.ship)
 			boutput(M, "[ship.ship_message("[src] is coming online...")]")
 			mob_activate(M)
-	if (src.ship.myhud)
-		src.ship.myhud.update_states()
+	src.ship.myhud?.update_states()
 	return TRUE
 
 ///Component does this constantly
@@ -78,7 +98,7 @@
 		if (give_message)
 			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
 		mob_deactivate(M)
-	src.ship.myhud.update_states()
+	src.ship.myhud?.update_states()
 	return
 ///Handles mob entering ship
 /obj/item/shipcomponent/proc/mob_activate(mob/M as mob)
@@ -101,4 +121,10 @@
 //In case stuff should be done when the ship breaks
 /obj/item/shipcomponent/proc/on_shipdeath(var/obj/machinery/vehicle/ship)
 	src.ship = null
+	return
+
+/obj/item/shipcomponent/proc/ship_install()
+	return
+
+/obj/item/shipcomponent/proc/ship_uninstall()
 	return

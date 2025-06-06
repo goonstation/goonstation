@@ -402,7 +402,13 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("profile-file-export")
+#ifndef LIVE_SERVER
+				var/response = tgui_alert(ui.user, "You are exporting on a server that doesn't have the ability to properly salt your character file. This character file will not be able to be imported on the live servers.", "NO SALT FOUND", list("Continue", "Cancel"))
+				if (response == "Continue")
+					src.profile_export()
+#else
 				src.profile_export()
+#endif
 
 			if ("profile-file-import")
 				src.profile_import()
@@ -850,12 +856,12 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-listenOoc")
-				src.listen_ooc = !src.listen_ooc
+				usr.client.toggle_ooc(!src.listen_ooc)
 				src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-listenLooc")
-				src.listen_looc = !src.listen_looc
+				usr.client.toggle_looc(!src.listen_looc)
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1018,7 +1024,7 @@ var/list/removed_jobs = list(
 				src.flying_chat_hidden = FALSE
 				src.local_deadchat = FALSE
 				src.auto_capitalization = FALSE
-				src.listen_ooc = TRUE
+				usr.client.toggle_ooc(TRUE)
 				src.view_changelog = TRUE
 				src.view_score = TRUE
 				src.view_tickets = TRUE
@@ -1082,16 +1088,23 @@ var/list/removed_jobs = list(
 			return
 		var/savefile/message = new()
 		message.ImportText("/", file2text(F))
-		var/hash
-		message["hash"] >> hash
-		message["hash"] << null
-		if(hash == sha1("[sha1(message.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]"))
-			var/profilenum_old = profile_number
-			savefile_load(usr.client, 1, message)
-			src.profile_modified = TRUE
-			src.profile_number = profilenum_old
-			src.traitPreferences.traitDataDirty = TRUE
+		if (!src.check_hash(message))
+			return
+		var/profilenum_old = profile_number
+		savefile_load(usr.client, 1, message)
+		src.profile_modified = TRUE
+		src.profile_number = profilenum_old
+		src.traitPreferences.traitDataDirty = TRUE
 
+	proc/check_hash(savefile/file)
+#ifdef LIVE_SERVER
+		var/hash
+		file["hash"] >> hash
+		file["hash"] << null
+		return hash == sha1("[sha1(file.ExportText("/"))][usr.ckey][CHAR_EXPORT_SECRET]")
+#else
+		return TRUE //we're on a local, accept any old character imports
+#endif
 
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.

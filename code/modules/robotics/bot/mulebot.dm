@@ -706,7 +706,7 @@
 	bump(var/atom/obs)
 		if(ismob(obs))
 			var/mob/M = obs
-			if(M.traitHolder.hasTrait("wasitsomethingisaid")) //tee hee
+			if(M.traitHolder?.hasTrait("wasitsomethingisaid")) //tee hee
 				knock_over_mob(M)
 			if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
 				knock_over_mob(M)

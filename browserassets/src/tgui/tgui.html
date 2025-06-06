@@ -333,6 +333,18 @@
 					if (!sync) {
 						node.media = 'only x';
 					}
+					// CLear the node and rety
+					var removeNodeAndRetry = function () {
+						node.parentNode.removeChild(node);
+						node = null;
+						retry();
+					}
+					// 516: Chromium won't call onload() if there is a 404 error
+					// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#stylesheet_load_events
+					node.onerror = function () {
+						node.onerror = null;
+						removeNodeAndRetry();
+					}
 					node.onload = function () {
 						node.onload = null;
 						if (isStyleSheetLoaded(node, url)) {
@@ -340,10 +352,8 @@
 							node.media = 'all';
 							return;
 						}
-						// Try again
-						node.parentNode.removeChild(node);
-						node = null;
-						retry();
+						// 515: Legacy IE doesn't use onerror so we reload here instead
+						removeNodeAndRetry();
 					};
 					injectNode(node);
 					return;

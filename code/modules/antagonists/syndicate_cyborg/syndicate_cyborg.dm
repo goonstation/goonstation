@@ -6,6 +6,7 @@
 	remove_on_clone = TRUE
 	keep_equipment_on_death = TRUE
 	faction = list(FACTION_SYNDICATE)
+	wiki_link = "https://wiki.ss13.co/AI_Laws#Syndicate"
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)

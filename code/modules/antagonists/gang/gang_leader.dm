@@ -3,6 +3,7 @@
 	display_name = "gang leader"
 	antagonist_icon = "gang_head"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/gang
+	wiki_link = "https://wiki.ss13.co/Gang"
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang

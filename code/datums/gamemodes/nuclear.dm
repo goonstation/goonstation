@@ -18,7 +18,6 @@ var/global/list/nuke_op_camo_matrix = null
 	var/list/datum/mind/syndicates = list()
 	var/finished = 0
 	var/nuke_detonated = 0 //Has the nuke gone off?
-	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
 	var/minimum_players = 15 // Minimum ready players for the mode
@@ -181,9 +180,6 @@ var/global/list/nuke_op_camo_matrix = null
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
-
-	agent_radiofreq = random_radio_frequency()
-	protected_frequencies += agent_radiofreq
 
 	return 1
 
@@ -402,15 +398,6 @@ var/global/list/nuke_op_camo_matrix = null
 
 /datum/game_mode/nuclear/send_intercept()
 	..(ticker.minds)
-/datum/game_mode/nuclear/proc/random_radio_frequency()
-	. = 0
-	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST)
-
-	do
-		. = rand(1352, 1439)
-
-	while (. in blacklisted)
 
 /datum/game_mode/nuclear/proc/create_plant_location_markers(var/list/target_locations, var/list/target_location_names)
 	// Find the centres of the plant sites.

@@ -455,6 +455,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		return ..()
 
 	get_desc(dist, mob/user)
+		. = ..()
 		if(!user.traitHolder?.hasTrait("training_chef"))
 			return
 
@@ -2021,12 +2022,20 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	desc = ""
 	icon_state = "HoSMug"
 	item_state = "mug"
+	var/emagged = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.emagged)
+			return
+		src.emagged = TRUE
+		boutput(user, SPAN_NOTICE("You scratch some of the white paint off [src] with [E]"))
+		src.icon_state += "Two"
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Spacemas from a secret admirer."
+			. = "Its your favourite mug! It reads 'Galaxy's Number [src.emagged ? "Two" : "One"] HoS!' on the front. [src.emagged ? SPAN_ALERT("WHAT!!!") : "You remember when you got it last Spacemas from a secret admirer."]"
 		else
-			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
+			. = "It reads 'Galaxy's Number [src.emagged ? "Two" : "One"] HoS!' on the front. [src.emagged ? "Hah!" : "You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."]"
 
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 	icon_state = "HoSMugBlue"

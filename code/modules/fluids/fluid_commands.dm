@@ -155,15 +155,6 @@ client/proc/replace_space_exclusive()
 		map_currently_underwater = 1
 
 
-client/proc/update_ocean_lighting()
-	ADMIN_ONLY
-	SPAWN(0)
-		for(var/turf/space/fluid/S in world)
-			S.update_light()
-			LAGCHECK(LAG_REALTIME)
-		message_admins("Finished space light update!!!")
-
-
 client/proc/dereplace_space()
 	set name = "Unoceanify"
 	set desc = "uh oh."

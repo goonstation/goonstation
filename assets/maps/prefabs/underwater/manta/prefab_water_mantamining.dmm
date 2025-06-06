@@ -101,7 +101,7 @@
 "ap" = (
 /obj/machinery/computer/announcement{
 	name = "Communications Office Announcement Computer";
-	req_access_txt = ""
+	req_access = null
 	},
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
@@ -388,7 +388,7 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/orange,
 /area/prefab/tunnelsnake)

@@ -159,15 +159,21 @@ datum
 			disease = /datum/ailment/disease/monkey_madness
 
 		disease/liquid_plasma // Plasmatoid
-			name = "liquid plasma"
-			id = "liquid plasma"
-			description = "Liquid plasma."
+			name = "activated plasma"
+			id = "activated plasma"
+			description = "This liquid plasma seems to be moving on its own."
 			reagent_state = LIQUID
 			fluid_r = 200
 			fluid_g = 0
 			fluid_b = 200
 			transparency = 80
 			disease = /datum/ailment/disease/plasmatoid
+
+			on_mob_life(mob/M, mult = 1)
+				. = ..()
+				var/datum/bioEffect/plasma_metabolism/plasma_bioeffect = M.bioHolder?.GetEffect("plasma_metabolism")
+				if (plasma_bioeffect)
+					plasma_bioeffect.absorb_liquid_plasma(mult * 2)
 
 		disease/hootonium // Owlstone juice
 			name = "Hootonium"

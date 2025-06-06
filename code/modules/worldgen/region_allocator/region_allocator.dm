@@ -141,7 +141,7 @@ var/global/datum/region_allocator/region_allocator = new
 			main_area = new main_area(null)
 		for(var/turf/T in REGION_TURFS(src))
 			var/target_type = turf_on_border(T) ? edge_turf : main_turf
-			T = T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
+			T = T.ReplaceWith(target_type, FALSE, TRUE, FALSE, force=TRUE)
 			if(!isnull(main_area) && T)
 				main_area.contents += T
 			for(var/atom/movable/AM in T)

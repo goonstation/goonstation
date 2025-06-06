@@ -42,6 +42,7 @@
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
 							src.implant += implanted
+							implanted.forensic_holder = P.forensic_holder // Give projectile forensics to the implanted bullet
 							if (P.proj_data.material)
 								implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 60)
@@ -74,6 +75,7 @@
 						src.implant += implanted
 						if (P.forensic_ID)
 							implanted.forensic_ID = P.forensic_ID
+						implanted.forensic_holder = P.forensic_holder
 						if (P.proj_data.material)
 							implanted.setMaterial(P.proj_data.material)
 						implanted.implanted(src, null, 100)
@@ -127,6 +129,7 @@
 							implanted.owner = src
 							if (P.forensic_ID)
 								implanted.forensic_ID = P.forensic_ID
+							implanted.forensic_holder = P.forensic_holder
 							implanted.setMaterial(P.proj_data.material)
 							implanted.implanted(src, null, 0)
 	return 1
@@ -171,7 +174,7 @@
 	var/reduction = 0
 	var/shielded = 0
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		reduction += 2
 		shielded = 1
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some blast!</b>"))
@@ -224,7 +227,7 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -243,7 +246,7 @@
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	var/list/zones = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")

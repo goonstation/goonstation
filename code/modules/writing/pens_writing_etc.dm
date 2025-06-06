@@ -1007,12 +1007,12 @@
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
 		if (src.pen)
-			dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
+			dat += "<A href='byond://?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
 		for(var/obj/item/paper/P in src)
-			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='byond://?src=\ref[src];title=\ref[P]'>Title</A> <A href='byond://?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
 
 		for(var/obj/item/photo/P in src) //Todo: make it actually show the photo.  Currently, using [bicon()] just makes an egg image pop up (??)
-			dat += "<A href='?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
+			dat += "<A href='byond://?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
 
 		user.Browse(dat, "window=clipboard")
 		onclose(user, "clipboard")
@@ -1253,7 +1253,7 @@
 	proc/show_window(var/user, var/action = "retrieve")
 		var/output = "<html><head><title>Folder</title></head><body><br>"
 		for(var/i = 1, i <= src.contents.len, i++)
-			output += "<a href='?src=\ref[src];id=[i];action=[action]'>[src.contents[i].name]</a><br>"
+			output += "<a href='byond://?src=\ref[src];id=[i];action=[action]'>[src.contents[i].name]</a><br>"
 		output += "</body></html>"
 		user << browse(output, "window=folder;size=400x600")
 

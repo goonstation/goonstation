@@ -16,19 +16,12 @@
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
 
-		var/image/chat_maptext/whisper_text = null
-		var/maptext_color = dead_maptext_color(src.holder.owner.name)
-
 		var/hearers = 0
-		for (var/mob/living/carbon/human/H in range(8, src.holder.owner))
+		for (var/mob/H in range(8, src.holder.owner))
 			if (isdead(H))
 				continue
 			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
-			whisper_text = make_chat_maptext(H, "<span style='text-shadow: 0 0 3px black; -dm-text-outline: 2px black;'>[message]</span>", alpha = 180)
-			if(whisper_text)
-				whisper_text.show_to(src.holder.owner.client)
-				whisper_text.show_to(H.client)
-				oscillate_colors(whisper_text, list(maptext_color, "#c482d1"))
+			DISPLAY_MAPTEXT(H, list(H), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/wraith_whisper, message, src.holder.owner)
 			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> \"[message]\"")
 			H.playsound_local(H, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65)
 			hearers++

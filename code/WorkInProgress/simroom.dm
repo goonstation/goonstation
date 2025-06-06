@@ -72,7 +72,7 @@
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
+	dat += "<A HREF='byond://?action=mach_close&window=mm'>Close</A><br><br>"
 
 	dat += {"<B>System Status:</B>[active] <BR>
 	<A href='byond://?src=\ref[src];setup=1'>Setup System</A><BR>"}
@@ -179,7 +179,7 @@
 //A VR-Bed to replace the stupid chairs.
 
 /obj/machinery/sim/vr_bed
-	name = "VR containment unit"
+	name = "VR simulation pod"
 	desc = "An advanced pod that lets the user enter V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "vrbed"//_0"
@@ -189,7 +189,7 @@
 	machine_registry_idx = MACHINES_SIM
 	var/active = 0
 	var/internal_id = 0
-	var/network = "none"
+	var/network = "arcadevr"
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null
@@ -225,13 +225,13 @@
 		src.add_dialog(user)
 		var/d2
 		if (src.timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=0'>Stop Timed</A><br>", src)
 		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time</A><br>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=1'>Initiate Time</A><br>", src)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-5'>-</A> <A href='?src=\ref[src];tp=5'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
-		dat += text("<BR><BR><A href='?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
+		dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-5'>-</A> <A href='byond://?src=\ref[src];tp=5'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>")
+		dat += text("<BR><BR><A href='byond://?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
 		user.Browse(dat, "window=computer;size=400x500")
 		onclose(user, "computer")
 
@@ -329,13 +329,13 @@
 	src.add_dialog(user)
 	var/d2
 	if (src.timing)
-		d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
+		d2 = text("<A href='byond://?src=\ref[];time=0'>Stop Timed</A><br>", src)
 	else
-		d2 = text("<A href='?src=\ref[];time=1'>Initiate Time</A><br>", src)
+		d2 = text("<A href='byond://?src=\ref[];time=1'>Initiate Time</A><br>", src)
 	var/second = src.time % 60
 	var/minute = (src.time - second) / 60
-	dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-5'>-</A> <A href='?src=\ref[src];tp=5'>+</A> <A href='?src=\ref[src];tp=30'>+</A>")
-	dat += text("<BR><BR><A href='?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
+	dat += text("<br><HR><br>Timer System: [d2]<br>Time Left: [(minute ? text("[minute]:") : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-5'>-</A> <A href='byond://?src=\ref[src];tp=5'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>")
+	dat += text("<BR><BR><A href='byond://?action=mach_close&window=computer'>Close</A></TT></BODY></HTML>")
 	user.Browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 	src.add_fingerprint(user)
@@ -427,7 +427,7 @@
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
-	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
+	dat += "<A HREF='byond://?action=mach_close&window=mm'>Close</A><br><br>"
 
 
 	dat +={"

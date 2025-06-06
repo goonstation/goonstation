@@ -311,13 +311,6 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
-	technical_assistant
-		name = "Technical Assistant PDA"
-		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
-		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
-		setup_default_module = /obj/item/device/pda_module/tray
-		alertgroups = list(MGA_MAIL,MGA_RADIO)
-
 	mining
 		name = "Mining PDA"
 		icon_state = "pda-q"
@@ -713,14 +706,7 @@
 				src.insert_id_card(ID, user)
 				boutput(user, SPAN_NOTICE("You insert [ID] into [src]."))
 
-	else if (istype(C, /obj/item/uplink_telecrystal))
-		if (src.uplink && src.uplink.active)
-			var/crystal_amount = C.amount
-			src.uplink.uses = src.uplink.uses + crystal_amount
-			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
-			qdel(C)
-
-	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
+	else if (istype(C, /obj/item/uplink_telecrystal/trick))
 		if (src.uplink && src.uplink.active)
 			boutput(user, SPAN_ALERT("The [C] explodes!"))
 			var/turf/T = get_turf(C.loc)
@@ -728,6 +714,13 @@
 				T.hotspot_expose(700,125)
 				explosion(C, T, -1, -1, 2, 3) //about equal to a PDA bomb
 			C.set_loc(user.loc)
+			qdel(C)
+
+	else if (istype(C, /obj/item/uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
+			var/crystal_amount = C.amount
+			src.uplink.uses = src.uplink.uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(C)
 
 	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))

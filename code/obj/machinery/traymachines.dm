@@ -734,10 +734,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		dat += "[state_str]<BR>"
 		dat += "Set Time: [linked ? (linked.settime / (1 SECOND)) : "--"] seconds<BR>"
 		dat += "<b>Tanning Bed Control:</b><BR>"
-		dat += "<A href='?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
-		dat += "<A href='?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
-		dat += "<A href='?src=\ref[src];settime=1'>Increase Time</A><BR>"
-		dat += "<A href='?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];settime=1'>Increase Time</A><BR>"
+		dat += "<A href='byond://?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
 
 		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(

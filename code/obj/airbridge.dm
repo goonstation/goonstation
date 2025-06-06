@@ -375,9 +375,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		[state_str]<BR><BR>
 		[working ? "Working..." : "Idle..."]<BR><BR>
 		<b>Airbridge Control:</b><BR>
-		<A href='?src=\ref[src];create=1'>Establish</A><BR>
-		<A href='?src=\ref[src];remove=1'>Retract</A><BR>
-		<A href='?src=\ref[src];air=1'>Pressurize</A><BR>
+		<A href='byond://?src=\ref[src];create=1'>Establish</A><BR>
+		<A href='byond://?src=\ref[src];remove=1'>Retract</A><BR>
+		<A href='byond://?src=\ref[src];air=1'>Pressurize</A><BR>
 		"}
 
 		if (user.client?.tooltipHolder) // BAD MONKEY!

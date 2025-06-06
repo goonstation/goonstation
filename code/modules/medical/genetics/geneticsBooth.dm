@@ -34,6 +34,8 @@
 
 TYPEINFO(/obj/machinery/genetics_booth)
 	mats = 40
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/genetics_booth
 	name = "gene booth"
@@ -47,6 +49,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -118,13 +122,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				return
 
 			started++
-			if (started == 2)
-				if (!try_billing(occupant))
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
-					occupant.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
+			if ((started == 2) && !try_billing(occupant))
+				src.say("<b>[occupant.name]</b>! You can't afford [selected_product.name] with a bank account like that.", flags = SAYFLAG_IGNORE_HTML)
+				src.eject_occupant(0)
 
-					eject_occupant(0)
 		else if (started)
 			eject_occupant(0)
 
@@ -178,8 +179,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				. = ""
 				for (var/datum/geneboothproduct/P as() in offered_genes)
 					. += "<u>[P.name]</u><small> "
-					. += " * Price: <A href='?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
-					. += " * <A href='?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+					. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+					. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
 
 			else
 				. += "[src] has no products available for purchase right now."
@@ -320,13 +321,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 							else
 								wagesystem.research_budget += selected_product.cost
 
-							for (var/mob/O in hearers(src, null))
-								//if (src.glitchy_slogans)
-								//	O.show_message("<span class='say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
-								//else
-
-								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"")), 2)
-
+							src.say("Thank you for your patronage, <b>[M.name]</b>.", flags = SAYFLAG_IGNORE_HTML)
 
 							.= 1
 							notify_sale(selected_product.cost)

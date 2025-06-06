@@ -155,6 +155,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	var/gib_mobs = 0 //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
+	/// Targeted turf when loose
+	var/turf/target_turf
+	/// How many steps we'll continue to walk towards the target turf before rerolling
+	var/target_turf_counter = 0
 
 #ifdef SINGULARITY_TIME
 /*
@@ -224,7 +228,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
+		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
@@ -284,18 +288,30 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (selfmove)
 		var/list/vector = src.calc_direction()
-		var/dir = pick(cardinal)
+		var/next_dir = pick(alldirs)
+
+		if (src.target_turf_counter <= 0)
+			if (prob(20)) // drift towards a random station turf for a few steps
+				src.target_turf = get_random_station_turf()
+				src.target_turf_counter = rand(radius,radius*2)
+		else
+			if (!src.target_turf)
+				src.target_turf = get_random_station_turf()
+			src.target_turf_counter--
+			next_dir = get_dir_accurate(src, src.target_turf)
+
 		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
 		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
 			var/angle = arctan(vector[2], vector[1])
-			dir = angle2dir(angle)
+			next_dir = angle2dir(angle)
 
+		// don't cross containment fields
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
-			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), next_dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
 
-		step(src, dir)
+		step(src, next_dir)
 
 ///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
 /obj/machinery/the_singularity/proc/calc_direction()
@@ -483,6 +499,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return ..()
 	else
 		return ..()
+
+/obj/machinery/the_singularity/proc/shrink()
+	radius--
+	SafeScaleAnim((radius-0.5)/(radius+0.5),(radius-0.5)/(radius+0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
+	grav_pull = min((radius+1)*3, grav_pull)
 
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
@@ -1145,6 +1166,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/shot_number = 0
 	var/state = UNWRENCHED
 	var/locked = 1
+	var/emagged = FALSE
 	//Remote control stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -1211,6 +1233,9 @@ TYPEINFO(/obj/machinery/emitter)
 	..()
 
 /obj/machinery/emitter/attack_ai(mob/user as mob)
+	if (src.emagged)
+		boutput(user, SPAN_NOTICE("Unable to interface with [src]!"))
+		return
 	if(state == WELDED)
 		if(src.active==1)
 			if(tgui_alert(user, "Turn off the emitter?","Switch",list("Yes","No")) == "Yes")
@@ -1359,7 +1384,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
-	if(!src.link || !target_id)
+	if(!src.link || src.emagged || !target_id)
 		return
 
 	var/datum/signal/signal = get_free_signal()
@@ -1378,7 +1403,7 @@ TYPEINFO(/obj/machinery/emitter)
 
 //What do we do with an incoming command?
 /obj/machinery/emitter/receive_signal(datum/signal/signal)
-	if(!src.link)
+	if(!src.link || src.emagged)
 		return
 	if(!signal || !src.net_id || signal.encryption)
 		return
@@ -1414,6 +1439,16 @@ TYPEINFO(/obj/machinery/emitter)
 		icon_state = "Emitter"
 
 	return
+
+/obj/machinery/emitter/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		boutput(user, SPAN_ALERT("\The [src] shorts out its remote connectivity controls!"))
+		src.emagged = TRUE
+
+/obj/machinery/emitter/demag(mob/user)
+	. = ..()
+	if (src.emagged)
+		src.emagged = FALSE
 
 /obj/machinery/emitter/assault
 	name = "prototype assault emitter"
@@ -1949,8 +1984,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 	if ((BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 		src.add_dialog(user)
 		/*
-		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
+		var/dat = text("<TT><B>Timing Unit</B><br>[] []:[]<br><A href='byond://?src=\ref[];tp=-30'>-</A> <A href='byond://?src=\ref[];tp=-1'>-</A> <A href='byond://?src=\ref[];tp=1'>+</A> <A href='byond://?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='byond://?src=\ref[];time=0'>Timing</A>", src) : text("<A href='byond://?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
+		dat += "<BR><BR><A href='byond://?src=\ref[src];close=1'>Close</A>"
 		*/
 		user.Browse(src.get_interface(), "window=timer")
 		onclose(user, "timer")
@@ -2116,28 +2151,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 
 							<tr>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-30">
+									<a href="byond://?src=\ref[src];action=timer;tp=-30">
 										<div class="button timer_b">
 											--
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=-1">
+									<a href="byond://?src=\ref[src];action=timer;tp=-1">
 										<div class="button timer_b">
 											-
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=1">
+									<a href="byond://?src=\ref[src];action=timer;tp=1">
 										<div class="button timer_b">
 											+
 										</div>
 									</a>
 								</td>
 								<td>
-									<a href="?src=\ref[src];action=timer;tp=30">
+									<a href="byond://?src=\ref[src];action=timer;tp=30">
 										<div class="button timer_b">
 											++
 										</div>
@@ -2146,14 +2181,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitybomb, proc/prime, proc/abort)
 							</tr>
 							<tr>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=abort">
+									<a href="byond://?src=\ref[src];action=trigger;spec=abort">
 										<div class="button" id="abort">
 											Abort
 										</div>
 									</a>
 								</td>
 								<td colspan=2>
-									<a href="?src=\ref[src];action=trigger;spec=prime">
+									<a href="byond://?src=\ref[src];action=trigger;spec=prime">
 										<div class="button" id="prime">
 											Prime
 										</div>

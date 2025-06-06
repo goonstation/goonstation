@@ -1,6 +1,12 @@
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 
+TYPEINFO(/obj/critter/parrot)
+	start_listen_effects = list(LISTEN_EFFECT_PARROT)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
+
 /obj/critter/parrot // if you didn't want me to make a billion dumb parrot things you shouldn't have let me anywhere near the code so this is YOUR FAULT NOT MINE - Haine
 	name = "space parrot"
 	desc = "A spacefaring species of parrot."
@@ -25,6 +31,10 @@
 	health_gain_from_food = 2
 	feed_text = "chirps happily!"
 	flags = CONDUCT | USEDELAY | TABLEPASS | FLUID_SUBMERGE
+
+	speech_verb_say = list("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/species = "parrot"						// the species, used to update icon
 	var/list/learned_words = null				// the single words that the bird knows
 	var/list/learned_phrases = null				// ^^^ for complete phrases
@@ -58,27 +68,6 @@
 		..()
 		if (src.treasure)
 			. += "<br>[src] is holding \a [src.treasure]."
-
-	hear_talk(mob/M as mob, messages, heardname, lang_id)
-		if (!src.alive || src.sleeping || !text)
-			return
-		var/m_id = (lang_id == "english" || lang_id == "") ? 1 : 2
-		if (M.singing)
-			if (M.singing & BAD_SINGING || M.singing & LOUD_SINGING)
-				SPAWN(0.3 SECONDS)
-					if(BOUNDS_DIST(src, M) == 0)
-						src.CritterAttack(M)
-					else
-						FLICK("[src.species]-flaploop", src)
-			else
-				spawn(rand(4,10))
-					chatter(1)
-
-		var/boost = M.singing ? signing_learn_boost : 0
-		if (prob(learn_words_chance + boost))
-			src.learn_stuff(messages[m_id])
-		if (prob(learn_phrase_chance + boost))
-			src.learn_stuff(messages[m_id], 1)
 
 	proc/learn_stuff(var/message, var/learn_phrase = 0)
 		if (!message)
@@ -129,17 +118,8 @@
 		else if (islist(src.learned_words) && length(src.learned_words))
 			thing_to_say = pick(src.learned_words) // :monocle:
 			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
-		// format
-		var/quote = "'"
-		if (sing)
-			quote = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/note.png")]'>"
-			thing_to_say = "<span style='color: bisque; font-style: italic;'>[thing_to_say]</span>"
-		thing_to_say = "[quote][thing_to_say][quote]"
-		src.say(thing_to_say)
 
-	proc/say(var/text) // mehhh
-		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [my_verb], [text]"))
+		src.say(thing_to_say, (sing ? SAYFLAG_SINGING : 0))
 
 	proc/take_stuff()
 		if (src.treasure)

@@ -256,11 +256,6 @@
 			I.layer = initial(I.layer)
 			if(SEND_SIGNAL(I, COMSIG_ITEM_STORAGE_INTERACTION, user))
 				I.visible_message(SPAN_ALERT("[I] triggers as it falls on the ground!"))
-			else if (istype(I, /obj/item/mine))
-				var/obj/item/mine/M = I
-				if (M.armed && M.used_up != TRUE)
-					M.visible_message(SPAN_ALERT("[M] triggers as it falls on the ground!"))
-					M.triggered(user)
 
 /// using storage item in hand
 /datum/storage/proc/storage_item_attack_self(mob/user)

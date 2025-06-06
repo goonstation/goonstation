@@ -247,7 +247,7 @@
 					T.hidden = 0
 					T.current_message = pick(T.dialogue_greet)
 					T.patience = rand(T.base_patience[1],T.base_patience[2])
-					T.set_up_goods()
+					T.set_up_goods(FALSE)
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1

@@ -118,6 +118,12 @@
 #define COLOR_MATRIX_INVERSE_LABEL "inverse"
 #define COLOR_MATRIX_INVERSE list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
+#define COLOR_MATRIX_PLASMA_MADNESS_LABEL "plasma"
+#define COLOR_MATRIX_PLASMA_MADNESS list(1.2,0,0,0,\
+										0.2,0.8,0.2,0,\
+										0,0,1.2,0,\
+										0,0,0,1,\
+										0,0,0,0)
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
 	if (length(Mat1) != 20 || length(Mat2) != 20)
@@ -498,7 +504,7 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 		src.color_matrix = src.view_tint ? matrix : null
 	src.color = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 
-/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
+/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING, respect_view_tint_settings = FALSE)
 	src.color_matrix = matrix
 	matrix = mult_color_matrix(mult_color_matrix(src.color_matrix, src.saturation_matrix), src.colorblind_matrix)
 	animate(src, color=matrix, time=time, easing=easing)

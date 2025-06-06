@@ -43,13 +43,13 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini/oxygen) || istype(W, /obj/item/tank/jetpack))
 			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
 				return
 
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini/oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -216,7 +216,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 
 	proc/check_move(mob/mover, turf/T, direction, quiet = FALSE)
 		//is the turf we're on solid?
-		if (!istype(T) || !(istype(T, /turf/space) || T.throw_unlimited))
+		if (!istype(T) || !(istype(T, /turf/space) && !istype(T, /turf/space/fluid) || T.throw_unlimited))
 			return FALSE
 		//this is kind of expensive to put on Move BUT in my defense it will only happen for magboots wearers standing on a space tile
 		//what are the chances they're also next to botany's server lag weed pile at the same time?
@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/mini_oxygen(src)
+		src.tank = new /obj/item/tank/mini/oxygen(src)
 
 	setupProperties()
 		..()
@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 			if (src.tank)
 				boutput(user, SPAN_ALERT("There's already a tank installed!"))
 				return
-			if (!istype(W, /obj/item/tank/mini_oxygen))
+			if (!istype(W, /obj/item/tank/mini/oxygen))
 				boutput(user, SPAN_ALERT("[W] doesn't fit!"))
 				return
 			boutput(user, SPAN_NOTICE("You install [W] into [src]."))

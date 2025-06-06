@@ -490,6 +490,48 @@ Contents:
 		sheet_stack.update_appearance()
 		qdel(src)
 
+// hehe angilvib but anyone under it
+/obj/table/anvil/gimmick/gib_any
+	New()
+		..()
+		src.anchored = ANCHORED_ALWAYS
+		src.density = 0
+		src.pixel_y = 224 // 32 * 7 default anvilgib
+		src.alpha = 0
+		src.layer += 4
+		src.plane = PLANE_NOSHADOW_ABOVE
+
+		animate(src, alpha = 255, time = 0.9 SECONDS, flags = ANIMATION_PARALLEL)
+		animate(src, pixel_y = 0, easing = EASE_IN | QUAD_EASING, time = 1.84 SECONDS, flags = ANIMATION_PARALLEL)
+
+		var/obj/effects/shadow = new /obj/effects{
+			icon='icons/effects/96x96.dmi';
+			icon_state="circle";
+			mouse_opacity = 0;
+			color = "#000000";
+			alpha = 0;
+			transform = matrix(0.8, 0, 0, 0, 0.5, 0);
+			pixel_x = -32;
+			pixel_y = -32 - 7;
+			anchored = ANCHORED_ALWAYS;
+			plane = PLANE_NOSHADOW_BELOW
+		}(get_turf(src))
+		animate(shadow, alpha = 150, transform = matrix(0.25, 0, 0, 0, 0.17, 0), easing = EASE_IN | QUAD_EASING, time = 1.75 SECONDS, flags = ANIMATION_PARALLEL)
+
+		playsound(get_turf(src), 'sound/effects/cartoon_fall.ogg', 50, FALSE)
+		SPAWN (1.8 SECONDS)
+			// yoinked from lethal supplydrops
+			for(var/mob/M in view(7, src.loc))
+				shake_camera(M, 1 SECOND, 4)
+				if(M.loc == src.loc && isliving(M) && !isintangible(M))
+					if(isliving(M))
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+					M.gib(1, 1)
+			src.anchored = initial(src.anchored)
+			src.plane = initial(src.plane)
+			src.density = initial(src.density)
+			qdel(shadow)
+
 /obj/dojo_bellows
 	name = "bellows"
 	desc = "An old bellows. Used to keep a flame alight."

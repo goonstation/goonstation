@@ -396,7 +396,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 							ordershit += {"
 								<tbody class='supply-package'>
 									<tr class='row[rownum % 2]'>
-										<th class='noborder itemtop'><a href='?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
+										<th class='noborder itemtop'><a href='byond://?src=\ref[src];action=order;subaction=buy;what=\ref[S]'>[S.name]</a></td>
 										<th class='noborder itemtop' style='text-align: right;'>[S.cost]</td>
 									</tr>
 									<tr class='row[rownum % 2]'>

@@ -207,6 +207,14 @@
 		else
 			. += "It's about to collapse!"
 
+		if (isobserver(user))
+			. += "<br>"
+			if(user.mind.get_player()?.dnr)
+				. += "Current Laws:<br>"
+				. += src.format_for_logs()
+			else
+				. += SPAN_ALERT("You must enable DNR to see the current laws.")
+
 	blob_act(power)
 		changeHealth(-power*0.15,"blob")
 

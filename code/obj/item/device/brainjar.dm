@@ -246,13 +246,6 @@
 			detonator_part = null
 			update_controller_verbs()
 
-/obj/item/device/brainjar/hear_talk(mob/M as mob, text, real_name, lang_id)
-	if(!controller || M == controller) return
-	var/heardname = real_name ? M.name : real_name
-
-	var/rendered = SPAN_SAY("[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]")
-	controller.show_message(rendered, 2)
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				VERBS

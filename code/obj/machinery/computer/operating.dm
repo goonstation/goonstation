@@ -304,9 +304,9 @@
 			if (istype(I, /obj/item/implant/projectile))
 				foreign_object_count++
 				continue
-			if (I.scan_category == "not_shown")
+			if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
 				continue
-			if (I.scan_category != "syndicate")
+			if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
 				implant_count++
 
 	if (ishuman(L))

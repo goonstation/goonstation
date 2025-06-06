@@ -35,7 +35,7 @@
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	skinresult = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	custom_vomit_type = /obj/decal/cleanable/blood

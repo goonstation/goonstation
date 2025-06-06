@@ -532,6 +532,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/icemoon
 	name = "Senex"
 
+/obj/landmark/lrt/icemoon2
+	name = "Senex II"
+
 /obj/landmark/lrt/solarium
 	name = "Sol"
 

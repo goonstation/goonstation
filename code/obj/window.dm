@@ -516,7 +516,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		logTheThing(LOG_STATION, usr, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
-			qdel(src)
+			SPAWN(0)
+				qdel(src)
 			return
 		var/atom/movable/A
 		// catastrophic event litter reduction
@@ -532,7 +533,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			A = new /obj/item/rods(src.loc)
 			A.setMaterial(reinforcement)
 		playsound(src, src.shattersound, 70, 1)
-		qdel(src)
+		SPAWN(0)
+			qdel(src)
 
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
 		if(!air_master) return 0

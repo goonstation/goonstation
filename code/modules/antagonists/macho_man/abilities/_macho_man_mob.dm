@@ -336,7 +336,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.targeting_ability = macho_heartpunch
 			M.update_cursor()
 
-	emote(var/act, var/emoteTarget = null)
+	emote(var/act, var/emoteTarget = null, var/dead_check = TRUE)
 		switch(act)
 			if ("scream")
 				if (src.pseudo)

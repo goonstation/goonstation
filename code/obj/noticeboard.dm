@@ -48,7 +48,7 @@
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/item in src)
 		if(istype(item, /obj/item/paper) || istype(item, /obj/item/canvas))
-			dat += "<A href='?src=\ref[src];read=\ref[item]'>[item]</A> <A href='?src=\ref[src];remove=\ref[item]'>Remove</A><BR>"
+			dat += "<A href='byond://?src=\ref[src];read=\ref[item]'>[item]</A> <A href='byond://?src=\ref[src];remove=\ref[item]'>Remove</A><BR>"
 	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
 	onclose(user, "noticeboard")
 

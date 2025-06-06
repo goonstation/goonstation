@@ -279,7 +279,7 @@
 	secure = 2
 	can_leghole = FALSE
 
-	close()
+	close(var/entangleLogic, mob/user)
 		..()
 		if(!src.locked)
 			src.locked = 1

@@ -82,6 +82,9 @@
 		TILE_GRAPHIC.overlays.Add(gas_overlays[1 + OVERLAY_ID])
 #endif
 
+#define GAS_MIXTURE_COLOR(COLOR, MOLES, GAS_COLOR) \
+	if (MOLES > MOLES_GAS_VISIBLE) COLOR = GAS_COLOR
+
 /// liters in a normal breath
 #define BREATH_VOLUME 0.5
 /// Amount of air to take a from a tile

@@ -116,7 +116,10 @@ TYPEINFO(/datum/component/glue_ready)
 		maybe_sticker = glued_to
 	if(!gluability_check(glued_to, thing_glued, user))
 		return
-	thing_glued.AddComponent(/datum/component/glued, glued_to, src.dries_up_timestamp - TIME, src.glue_removal_time)
+	var/new_timestamp = null
+	if (src.dries_up_timestamp)
+		new_timestamp = src.dries_up_timestamp - TIME
+	thing_glued.AddComponent(/datum/component/glued, glued_to, new_timestamp, src.glue_removal_time)
 	var/turf/T = get_turf(glued_to)
 	if(user)
 		T.visible_message(SPAN_NOTICE("[user] glues [thing_glued] to [glued_to]."))

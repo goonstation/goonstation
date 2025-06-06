@@ -24,8 +24,10 @@
 // areas
 
 /area/radiostation
+	requires_power = FALSE
 	name = "Radio Station"
 	icon_state = "purple"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/radiostation/studio
 	name = "Radio Studio"
@@ -147,26 +149,38 @@
 	anchored = ANCHORED
 	density = 1
 	flags = TGUI_INTERACTIVE
+	/// A static list of mixingdesk permitted accent IDs, indexed by their name.
 	var/static/list/accents
-	var/list/voices
-	var/selected_voice = 0
+	/// The maximum number of voices that this mixing desk may store.
 	var/const/max_voices = 9
+	/// A list of name/accent pairs to be displayed on the UI.
+	var/list/voices
+	/// A list of abstract say sources to be used for each voice.
+	var/list/atom/movable/abstract_say_source/mixing_desk/voice_say_sources
+	/// The index of the current voice selected.
+	var/selected_voice = 0
+	/// Whether the UI should display a say popup window.
 	var/say_popup = FALSE
 
 /obj/submachine/mixing_desk/New()
 	. = ..()
 	src.voices = list()
-	if(!src.accents)
-		src.accents = list()
-		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
-			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
-				continue
-			var/name = effect.id
-			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
-				name = copytext(name, 8)
-			name = replacetext(name, "_", " ")
-			accents[name] = effect
+	src.voice_say_sources = list()
+
+	if (src.accents)
+		return
+
+	src.accents = list()
+	for (var/datum/bioEffect/speech/effect_type as anything in concrete_typesof(/datum/bioEffect/speech))
+		if (!effect_type::acceptable_in_mutini || !effect_type::occur_in_genepools || !effect_type::mixingdesk_allowed)
+			continue
+
+		var/name = effect_type::id
+		if ((length(name) >= 7) && findtext(name, "accent_", 1, 8))
+			name = copytext(name, 8)
+
+		name = replacetext(name, "_", " ")
+		src.accents[name] = effect_type::id
 
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
@@ -188,65 +202,82 @@
 	)
 
 /obj/submachine/mixing_desk/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	if (..())
 		return
-	switch(action)
-		if("add_voice")
-			if(length(src.voices) >= src.max_voices)
+
+	switch (action)
+		if ("add_voice")
+			if (length(src.voices) >= src.max_voices)
 				return FALSE
-			var/name = strip_html(input("Enter voice name:", "Voice name"))
-			if(!name)
+
+			var/name = tgui_input_text(usr, "Enter voice name:", "Voice Name", max_length = FULLNAME_MAX)
+			if (!name)
 				return FALSE
-			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
-			if(length(name) > FULLNAME_MAX)
-				name = copytext(name, 1, FULLNAME_MAX)
-			name = strip_html(name)
-			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
-			if(accent == "none")
+
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates = TRUE)
+
+			var/accent = tgui_input_list(usr, "Pick an accent:", "Accent", list("None") + src.accents)
+			if (accent == "None")
 				accent = null
-			src.voices += list(list("name"=name, "accent"=accent))
+				src.voice_say_sources += new /atom/movable/abstract_say_source/mixing_desk(src, name)
+			else
+				src.voice_say_sources += new /atom/movable/abstract_say_source/mixing_desk(src, name, src.accents[accent])
+
+			src.voices += list(list(
+				"name" = name,
+				"accent" = accent,
+			))
+
 			. = TRUE
+
 		if("remove_voice")
 			var/id = params["id"]
-			if(id <= 0 || id > length(voices))
+			if ((id <= 0) || (id > length(src.voices)))
 				return FALSE
-			if(id == src.selected_voice)
+
+			if (id == src.selected_voice)
 				src.selected_voice = 0
-			else if(id < src.selected_voice)
-				src.selected_voice--
+			else if (id < src.selected_voice)
+				src.selected_voice -= 1
+
 			src.voices.Cut(id, id + 1)
+			qdel(src.voice_say_sources[id])
+
 			. = TRUE
+
 		if("switch_voice")
 			var/id = params["id"]
-			if(id <= 0 || id > length(voices))
+			if ((id <= 0) || (id > length(src.voices)))
 				src.selected_voice = 0
 			else
 				src.selected_voice = id
+
 			. = TRUE
+
 		if("say_popup")
 			if("id" in params)
 				src.selected_voice = params["id"]
+
 			src.say_popup = TRUE
 			. = TRUE
+
 		if("cancel_say")
 			src.say_popup = FALSE
 			. = TRUE
+
 		if("say")
 			src.say_popup = FALSE
 			var/message = strip_html(params["message"])
-			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
-				usr.say(message)
+			if ((src.selected_voice <= 0) || (src.selected_voice > length(src.voices)))
+				usr.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER)
 				return TRUE
-			var/name = voices[src.selected_voice]["name"]
-			var/accent_id = voices[src.selected_voice]["accent"]
-			if(!isnull(accent_id))
-				var/datum/bioEffect/speech/accent = src.accents[accent_id]
-				message = accent.OnSpeak(message)
-			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
-			var/original_name = usr.real_name
-			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
-			usr.say(message)
-			usr.real_name = original_name
+
+			src.voice_say_sources[src.selected_voice].say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER | SAYFLAG_IGNORE_POSITION)
+
+			var/name = src.voices[src.selected_voice]["name"]
+			var/accent_id = src.accents[src.voices[src.selected_voice]["accent"]]
+			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name, "say")])</b> with accent [accent_id])")
+
 			. = TRUE
 
 // Record player

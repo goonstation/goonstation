@@ -38,7 +38,7 @@ Ctrl + Right Mouse Button on buildmode  = Toggle density<br>
 			if (old_plant != src.plant)
 				src.mutation = null
 			boutput(usr, "Set plant to [src.plant.name]")
-		src.update_button_text("[src.mutation.name] [src.plant.name]")
+		src.update_button_text("[src.mutation?.name] [src.plant.name]")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift) //component crime :)
 		var/datum/component/arable/component = object.AddComponent(/datum/component/arable/single_use)

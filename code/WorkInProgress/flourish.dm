@@ -146,7 +146,7 @@ TYPEINFO(/datum/component/pet)
 
 /obj/item/random_trinket_spawner
 	name = "random trinket spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED
@@ -192,7 +192,7 @@ var/list/possible_lost_items = list(
 
 /obj/item/random_lost_item_spawner
 	name = "random lost item spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED

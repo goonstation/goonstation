@@ -6,7 +6,8 @@
 	icon_state = "big_spide"
 	density = 1
 	hand_count = 8 // spiders!!!
-	add_abilities = list(/datum/targetable/critter/spider_bite,
+	add_abilities = list(/datum/targetable/spider/lay_spider_web,
+						/datum/targetable/critter/spider_bite,
 						/datum/targetable/critter/spider_flail,
 						/datum/targetable/critter/spider_drain)
 	var/flailing = 0
@@ -451,6 +452,10 @@
 	ai_type = /datum/aiHolder/clown_spider_queen
 
 	faction = list(FACTION_CLOWN)
+
+	// stop spewing eggs and blocking yourself in the tutorial
+	tutorial
+		ai_type = /datum/aiHolder/tutorial_clown_spider_queen
 
 	cluwne
 		name = "queen cluwnespider"

@@ -1,13 +1,10 @@
+TYPEINFO(/obj/item/device/radio/intercom/ship)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
+
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
 	anchored = ANCHORED
-
-/obj/item/device/radio/intercom/ship/send_hear()
-	if (src.listening)
-		var/list/shiphears = list()
-		for(var/mob/M in src.loc)
-			shiphears += M
-		return shiphears
+	speaker_range = 0
 
 /obj/item/shipcomponent/communications
 	power_used = 10
@@ -19,6 +16,9 @@
 	color = "#16CC77"
 	var/list/access_type = list(POD_ACCESS_STANDARD)
 	var/obj/item/device/ship_radio_control/rc_ship = null
+
+	get_install_slot()
+		return POD_PART_COMMS
 
 	mining
 		name = "NT Magnet Link Array"
@@ -89,8 +89,8 @@
 	deactivate()
 		..()
 		if(ship.intercom)
-			ship.intercom.broadcasting = 0
-			ship.intercom.listening = 0
+			ship.intercom.toggle_microphone(FALSE)
+			ship.intercom.toggle_speaker(FALSE)
 
 	New()
 		..()
