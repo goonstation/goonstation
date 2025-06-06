@@ -434,9 +434,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aby" = (
-/obj/machinery/conveyor/EW{
-	id = "outbound"
-	},
 /obj/machinery/mass_driver{
 	dir = 8;
 	drive_range = 100;
@@ -445,9 +442,6 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "abz" = (
-/obj/machinery/conveyor/EW{
-	id = "outbound"
-	},
 /obj/machinery/launcher_loader/west{
 	id = "qm_dock_out"
 	},
@@ -40034,11 +40028,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "radio booth"
-	},
 /obj/disposalpipe/trunk/mail/north,
+/obj/machinery/disposal/mail/small/autoname/security/brig{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/processing)
 "oyo" = (

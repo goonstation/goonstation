@@ -11,7 +11,9 @@ TYPEINFO(/mob/new_player)
 	anchored = ANCHORED
 	has_typing_indicator = FALSE
 
-	var/ready = 0
+	var/ready_play = FALSE //!Ready to play game
+	var/ready_tutorial = FALSE //!Ready to start tutorial
+	var/tutorial_loading = FALSE //!Tutorial is loading
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
@@ -41,7 +43,7 @@ TYPEINFO(/mob/new_player)
 		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-		ready = TRUE
+		src.ready_play = TRUE
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -125,7 +127,8 @@ TYPEINFO(/mob/new_player)
 #endif
 
 	Logout()
-		ready = 0
+		src.ready_play = FALSE
+		src.ready_tutorial = FALSE
 		if (src.ckey) //Null if the client changed to another mob, but not null if they disconnected.
 			spawned_in_keys -= "[src.ckey]"
 		else if (isclient(src.last_client)) //playtime logging stuff
@@ -148,33 +151,7 @@ TYPEINFO(/mob/new_player)
 
 	verb/new_player_panel()
 		set src = usr
-		if(client)
-			winset(src, "joinmenu.button_charsetup", "is-disabled=false")
-		// drsingh i put the extra ifs here. i think its dumb but there's a bad client error here so maybe it's somehow going away in winset because byond is shitty
-		if(client)
-			if(ticker && current_state >= GAME_STATE_PLAYING)
-				winset(src, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
-				winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
-			else
-				winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
-				winset(src, "joinmenu.button_joingame", "is-disabled=true;is-visible=false")
-		if(client)
-			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
-		if(client)
-			winshow(src, "joinmenu", 1)
-		if(client?.antag_tokens > 0 && (!ticker || current_state <= GAME_STATE_PREGAME))
-			winset(src, "joinmenu.button_ready_antag", "is-disabled=false;is-visible=true")
-			winset(src, "joinmenu", "size=240x256")
-			winset(src, "joinmenu.observe", "pos=18,192")
-		else if(client) // this shouldn't be necessary but it is
-			winset(src, "joinmenu", "size=240x200")
-			winset(src, "joinmenu.observe", "pos=18,136")
-			winset(src, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
-		if(src.ready)
-			if (client) winset(src, "joinmenu.button_charsetup", "is-disabled=true")
-			if (client) winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
-			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
-			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
+		src.update_joinmenu()
 		#ifndef NO_PREGAME_HTML
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
@@ -194,13 +171,19 @@ TYPEINFO(/mob/new_player)
 					var/mob/new_player/player = C.mob
 					if (!istype(player)) continue
 
+					var/playing = null
+					if (player.ready_play)
+						playing = "(Playing)"
+					else if (player.ready_tutorial)
+						playing = "(Tutorial)"
+
 					if (player.client.holder && (player.client.stealth || player.client.alt_key)) // are they an admin and in stealth mode/have a fake key?
 						if (client.holder) // are we an admin?
-							stat("[player.key] (as [player.client.fakekey])", (player.ready)?("(Playing)"):(null)) // give us the full deets
+							stat("[player.key] (as [player.client.fakekey])", playing) // give us the full deets
 						else // are we not an admin?
-							stat("[player.client.fakekey]", (player.ready)?("(Playing)"):(null)) // only show the fake key
+							stat("[player.client.fakekey]", playing) // only show the fake key
 					else // are they a normal player or not in stealth mode/using a fake key?
-						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
+						stat("[player.key]", playing) // show them normally
 
 	Topic(href, href_list[])
 		if(href_list["SelectedJob"])
@@ -281,7 +264,7 @@ TYPEINFO(/mob/new_player)
 					AttemptLateSpawn(JOB)
 
 		if(href_list["preferences"])
-			if (!ready)
+			if (!src.ready_play)
 				client.preferences.process_link(src, href_list)
 		else if(!href_list["late_join"])
 			new_player_panel()
@@ -939,12 +922,9 @@ a.latejoin-card:hover {
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
-			if(!ready)
-				ready = 1
-				if (usr.client) winset(src, "joinmenu.button_charsetup", "is-disabled=true")
-				if (usr.client) winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
-				if (usr.client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
-				if (usr.client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
+			if(!src.ready_play)
+				src.ready_play = TRUE
+				src.update_joinmenu()
 				usr.Browse(null, "window=mob_occupation")
 				if(!bank_menu)
 					bank_menu = new
@@ -971,15 +951,16 @@ a.latejoin-card:hover {
 						boutput(usr, SPAN_ALERT("You are already spawning, and cannot unready. Please wait until setup finishes."))
 						return
 
-		if(ready)
-			ready = 0
-			winset(src, "joinmenu.button_charsetup", "is-disabled=false")
-			winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
-			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
-			winset(src, "joinmenu.button_ready_antag", "is-disabled=false")
+		if(src.ready_play)
+			src.ready_play = FALSE
 			if (src.client.using_antag_token)
 				src.client.using_antag_token = 0
 				src.show_text("Token cancelled", "red")
+			src.update_joinmenu()
+
+		if(src.ready_tutorial)
+			src.ready_tutorial = FALSE
+			src.update_joinmenu()
 
 	verb/observe_round()
 		set hidden = 1
@@ -1034,3 +1015,85 @@ a.latejoin-card:hover {
 				src.mind.transfer_to(shittybill)
 				break
 #endif
+
+#define JOINMENU_VERTICAL_OFFSET_START 24
+#define JOINMENU_VERTICAL_OFFSET_PER_BUTTON 56
+
+/mob/new_player/proc/update_joinmenu()
+	if (!client)
+		return
+
+	// super conservative with client checks as we *really* don't want to crash here
+
+	var/current_vertical_offset = JOINMENU_VERTICAL_OFFSET_START
+	var/pre_game = TRUE
+	if (ticker && global.current_state >= GAME_STATE_PLAYING)
+		pre_game = FALSE
+
+	if (client) winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false") // cancel button re-enabled as needed below
+
+	// character setup button
+	if (src.ready_play || src.ready_tutorial)
+		if (client) winset(src, "joinmenu.button_charsetup", "is-disabled=true;pos=18,[current_vertical_offset]")
+	else
+		if (client) winset(src, "joinmenu.button_charsetup", "is-disabled=false;pos=18,[current_vertical_offset]")
+	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+
+	// ready play / join game / cancel ready play
+	if (pre_game)
+		if (client) winset(src, "joinmenu.button_joingame", "is-disabled=true;is-visible=false") // hide join
+		if (src.ready_play)
+			if (client?.using_antag_token) // show disabled ready
+				if (client) winset(src, "joinmenu.button_ready_play", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+			else // remove ready, show cancel
+				if (client) winset(src, "joinmenu.button_ready_play", "is-disabled=true;is-visible=false")
+				if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		else if (src.ready_tutorial) // show disabled ready
+			if (client) winset(src, "joinmenu.button_ready_play", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else // enable ready button, hide cancel
+			if (client) winset(src, "joinmenu.button_ready_play", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
+	else // replace ready play with join game
+		if (client) winset(src, "joinmenu.button_joingame", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+
+	// ready antag / cancel ready antag
+	if (pre_game && client?.antag_tokens > 0) // only show ready antag button if pre game and the client has antag tokens
+		if (src.ready_play)
+			if (client?.using_antag_token) // hide ready antag, show cancel button
+				if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
+				if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+			else // show disabled ready antag
+				if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else if (src.ready_tutorial) // show disabled ready antag
+			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else // show ready antag
+			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+	else
+		if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true;is-visible=false")
+
+	// observe
+	if (src.ready_play || src.ready_tutorial)
+		if (client) winset(src, "joinmenu.button_observe", "is-disabled=true;pos=18,[current_vertical_offset]")
+	else
+		if (client) winset(src, "joinmenu.button_observe", "is-disabled=false;pos=18,[current_vertical_offset]")
+	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+
+	// ready tutorial / cancel ready tutorial
+	if (src.ready_play) // disabled tutorial
+		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+	else if (src.ready_tutorial) // hide ready tutorial, show cancel here
+		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
+		if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+	else // show ready tutorial
+		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+
+	if(client) winset(src, "joinmenu", "size=240x[current_vertical_offset]")
+
+	if(client)
+		winshow(src, "joinmenu", 1)
+
+#undef JOINMENU_VERTICAL_OFFSET_START
+#undef JOINMENU_VERTICAL_OFFSET_PER_BUTTON

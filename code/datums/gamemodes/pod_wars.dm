@@ -88,7 +88,7 @@ var/list/pw_rewards_tier3 = null
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
-		if (player.ready && player.mind)
+		if (player.ready_play && player.mind)
 			readied_minds += player.mind
 
 	if (islist(readied_minds))

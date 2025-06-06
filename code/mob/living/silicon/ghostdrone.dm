@@ -25,7 +25,6 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 	punchMessage = "whaps"
 	kickMessage = "bonks"
-	isFlying = TRUE
 
 	var/default_hat_y = 7
 
@@ -1105,6 +1104,10 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		. = ..()
 		if(isdead(src))
 			return FALSE
+
+/mob/living/silicon/ghostdrone/remove_pulling()
+	..()
+	src.hud?.update_pulling()
 
 /proc/droneize(target = null, pickNew = 1)
 	if (!target) return 0
