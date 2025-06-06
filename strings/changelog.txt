@@ -1,4 +1,9 @@
 
+(t)fri jun 06 25
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
 (t)wed jun 04 25
 (u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
 (p)23481
