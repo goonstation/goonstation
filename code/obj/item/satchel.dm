@@ -264,7 +264,7 @@
 		var/harvest_what = HARVEST_ONLY_PRODUCE
 
 		HELP_MESSAGE_OVERRIDE({"Click on it to pull out a random item, or click on it with <b>Grab Intent</b> to search for a specific item.
-		 	Click on it with <b>Disarm Intent</b> to change what you fill it with when harvesting."})
+		 	Use a pen on it to change what you fill it with when harvesting."})
 
 		New()
 			..()
