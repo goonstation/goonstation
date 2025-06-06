@@ -219,7 +219,7 @@
 				showOwner(SPAN_ALERT("You feel well [buff]!"))
 				holder.owner.setStatus(buff, duration = null) // Health/Stam Part
 				holder.owner.delStatus(buff + "_high")
-				holder.owner.delStatus("buff_hot")
+				holder.owner.delStatus(buff + "_hot")
 				depletion_rate = 0.3
 				buffed = TRUE
 				highbuffed = FALSE
