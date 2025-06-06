@@ -1965,6 +1965,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
@@ -2183,7 +2184,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10

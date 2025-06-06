@@ -650,18 +650,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 				if (ismob(hit_atom))
 					var/mob/hitMob = hit_atom
-					if (ishuman(hitMob))
-						SPAWN( 0 )
-							if (istype(user))
-								if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
-									src.hitHard(hitMob, user)
-
-									if(!(hitMob == user))
-										user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
-								else
-									src.hitWeak(hitMob, user)
+					SPAWN( 0 )
+						if (istype(user))
+							if (user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+								src.hitHard(hitMob, user)
+								if(!(hitMob == user) && ishuman(hitMob))
+									user.say(pick("Who's the kingpin now, baby?", "STRIIIKE!", "Watch it, pinhead!", "Ten points!"))
 							else
 								src.hitWeak(hitMob, user)
+						else
+							src.hitWeak(hitMob, user)
 				if(already_burst)
 					return
 				already_burst = TRUE

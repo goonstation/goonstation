@@ -2142,8 +2142,18 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
-			qdel(S)
+			if (S.radius > 3)
+				S.target_turf_counter = 0
+				S.shrink()
+				new /obj/effects/magicspark(S.loc)
+				SPAWN(3 SECONDS)
+					if(S)
+						S.target_turf_counter = 0
+						S.shrink()
+						new /obj/effects/magicspark(S.loc)
+			else
+				new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
+				qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))

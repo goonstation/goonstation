@@ -40,8 +40,6 @@ var/global
 	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
-	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/donator_ckeys = list()
 	list/online_donator_ckeys = list()
@@ -93,7 +91,7 @@ var/global
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
 	/// All the accessible areas on the station in one convenient place
-	list/station_areas = list()
+	list/area/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = FALSE
 	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
@@ -479,7 +477,10 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "\
+		[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful","Treason")]\
+		[pick("-"," ")]\
+		[pick("Credits","Bux","Tokens","Cash","Dollars","Crystals","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees","Coins")]"
 
 	list/valid_modes = list("secret","action","random") // Other modes added by build_valid_game_modes()
 

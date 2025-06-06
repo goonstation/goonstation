@@ -183,6 +183,13 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 						ejectT = locate(T.x,southBound - 1,T.z)
 					if (WEST)
 						ejectT = locate(westBound - 1,T.y,T.z)
+				if (istype(AM, /atom/movable/buried_storage))
+					var/atom/movable/buried_storage/buried_storage = AM
+					for (var/atom/movable/buried as anything in buried_storage)
+						buried.set_loc(ejectT)
+					buried_storage.has_buried_mob = FALSE
+					buried_storage.number_of_objects = 0
+					continue
 				AM.set_loc(ejectT)
 
 		currentlocation.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
