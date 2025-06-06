@@ -43,6 +43,7 @@
 	unequipped(mob/user)
 		. = ..()
 		if(src.hide_underwear)
+			SPAWN(0) //uniform still counts as worn as unequipped() is called
 			user.update_body()
 
 	proc/cut_tha_crap(mob/user)
