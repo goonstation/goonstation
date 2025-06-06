@@ -5167,7 +5167,6 @@
 /area/station/crew_quarters/catering)
 "ard" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/juicer,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -75141,6 +75140,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "ygg" = (

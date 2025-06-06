@@ -1,4 +1,88 @@
 
+(t)fri jun 06 25
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
+(t)wed jun 04 25
+(u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
+(p)23481
+(e)🆕🗺🎨🔊📄|C-Feature, A-Mapping, C-Sprites, C-Sound, A-UI
+(*)The new player options menu includes an in-game tutorial.
+(u)Cheekybrdy
+(p)23683
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Automatic Command promotions to HoS won't happen in single digit staffing stations.
+(u)Lord_Earthfire
+(p)23705
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Atmospheric pipes in walls have their fatigue pressure increased by 5 times the walls material density. Double the value for reinforced walls.
+(u)Mr. Moriarty
+(p)23466
+(e)🆕🔎💅🔨|C-Feature, C-Code-Quality, C-QoL, A-Player-Actions
+(*)Added wraithchat. Wraiths now speak over wraithchat using T and deadchat using Y. Wraith summons can now speak over wraithchat using Y or by using the :wraith prefix.
+(u)LorrMaster
+(p)23552
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Controls and inertia directions more accurately reflect player inputs
+(u)KakoLookiyam
+(p)23713
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Gas flow meters are now mechscannable and deployable.
+(t)tue jun 03 25
+(u)Chasu
+(p)23715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Secured assemblies can now be splashed with reagents, such as glue.
+(u)Cheekybrdy
+(p)23508
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Readds Salvagers to classic, as a roundstart mixed role.
+(u)Flamearrow
+(p)22973
+(e)🚄📡🤖|C-Performance, A-AI, A-Silicons
+(*)AI static rendering has been reworked, please report any glitches or performance changes.
+(u)glowbold
+(p)23686
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)AI Eyebots now count as floating when active
+(+)Floating objects should react more consistently with expected behavior
+(u)Bobbis dobbis
+(p)23703
+(e)⚖|C-Balance
+(+)Small animals are no longer affected by food poisoning.
+(u)Lord_Earthfire
+(p)23706
+(e)🪲💨⚗|C-Bug, A-Atmospherics, A-Chemistry
+(+)Graphene hardening compound works on pipe manifolds now.
+(t)mon jun 02 25
+(u)glowbold
+(p)23698
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Anti-singularity buster shots will shrink large singularities. Small singularities will explode into white holes.
+(+)Loose singularities are more likely to drift towards station tiles.
+(u)LorrMaster
+(p)23669
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Synth legs will now passively absorb reagents. Shoes prevent the effect in shallow fluids. An additional chem protection of 40% prevents it while submerged.
+(t)sun jun 01 25
+(u)glowbold
+(p)23591
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)You must use an aggressive grab to pull people away from aggressive grabs.
+(u)LorrMaster
+(p)23612
+(e)🆕🚗|C-Feature, A-Vehicles
+(+)Pod visuals now change depending on their installed engine type
+(u)nova2053
+(p)23620
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Tables, racks, and other items which use a similar construction method can now be constructed on the same tile as thindows, sliding glass doors, and other objects with directional blocking.
+(+)Tables can now be constructed under a couple more objects, such as microwaves, espresso machines, and more. See PR page for full list.
 (t)sat may 31 25
 (u)LeahTheTech
 (*)Material analysers now display the rupture pressure of breakable pipes.

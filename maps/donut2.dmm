@@ -48283,7 +48283,6 @@
 /area/station/maintenance/northwest)
 "vwb" = (
 /obj/storage/secure/closet/civilian/bartender,
-/obj/item/reagent_containers/food/drinks/juicer,
 /obj/item/storage/box/donkpocket_kit{
 	pixel_x = -7;
 	pixel_y = 4
