@@ -361,16 +361,17 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					src.unload()
 					src.cycle = PRE
 		if("cycle")
-			if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
-				src.on = !src.on
-				. = TRUE
-				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-				src.activator = usr
-				if (src.on)
-					src.cycle = PRE
-					src.open = 0
-					if (!(src in processing_items))
-						processing_items.Add(src)
+			if (src.occupant)
+				src.cycle_max = CYCLE_TIME_MOB_INSIDE
+			src.on = !src.on
+			. = TRUE
+			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+			src.activator = usr
+			if (src.on)
+				src.cycle = PRE
+				src.open = 0
+				if (!(src in processing_items))
+					processing_items.Add(src)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Click(location, control, params)
