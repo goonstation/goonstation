@@ -369,7 +369,7 @@
 			low
 				id = "nourised_low"
 				name = "Basic Nourishment"
-				desc = "You've got some grub in you, but you'd rather not dwell of its possible sources."
+				desc = "You've got some grub in you, but you'd rather not dwell on its possible sources."
 				change = 5
 
 			high
