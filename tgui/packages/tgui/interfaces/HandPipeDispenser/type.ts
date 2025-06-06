@@ -16,6 +16,8 @@ export type PipeData = {
 export type HandPipeDispenserData = {
   atmospipes: PipeData[];
   atmosmachines: PipeData[];
+  fluidpipes: PipeData[];
+  fluidmachines: PipeData[];
   selectedimage: string; // base64 image
   destroying: BooleanLike;
   selectedcost: number;
@@ -34,4 +36,6 @@ export enum ByondDir {
 export enum Tab {
   AtmosPipes = 'atmospipes',
   AtmosMachines = 'atmosmachines',
+  FluidPipes = 'fluidpipes',
+  FluidMachines = 'fluidmachines',
 }

@@ -10,6 +10,8 @@
 	var/dispenser_delay = 5 DECI SECONDS
 	var/static/list/atmospipesforcreation = null
 	var/static/list/atmosmachinesforcreation = null
+	var/static/list/fluidpipesforcreation = null
+	var/static/list/fluidmachinesforcreation = null
 	var/static/list/icon/cache = list()
 	var/static/list/exemptedtypes = typecacheof(list(/obj/machinery/atmospherics/binary/circulatorTemp,
 		/obj/machinery/atmospherics/binary/nuclear_reactor,
@@ -35,6 +37,15 @@
 		for (var/datum/pipe_recipe/machine/recipe as anything in concrete_typesof(/datum/pipe_recipe/machine))
 			src.atmosmachinesforcreation[initial(recipe.name)] = new recipe
 
+	if (!src.fluidpipesforcreation)
+		src.fluidpipesforcreation = list()
+		for (var/datum/pipe_recipe/pipe/recipe as anything in concrete_typesof(/datum/pipe_recipe/fluidpipe))
+			src.fluidpipesforcreation[initial(recipe.name)] = new recipe
+
+	if (!src.fluidmachinesforcreation)
+		src.fluidmachinesforcreation = list()
+		for (var/datum/pipe_recipe/machine/recipe as anything in concrete_typesof(/datum/pipe_recipe/fluidmachine))
+			src.fluidmachinesforcreation[initial(recipe.name)] = new recipe
 	src.selection = src.atmospipesforcreation["Pipe"]
 	src.UpdateIcon()
 
@@ -190,6 +201,20 @@
 			"image" = getBase64Img(recipe),
 			"cost" = recipe.cost,
 			))
+	for (var/name in src.fluidpipesforcreation)
+		var/datum/pipe_recipe/machine/recipe = src.fluidpipesforcreation[name]
+		.["fluidpipes"] += list(list(
+			"name" = name,
+			"image" = getBase64Img(recipe),
+			"cost" = recipe.cost,
+			))
+	for (var/name in src.fluidmachinesforcreation)
+		var/datum/pipe_recipe/machine/recipe = src.fluidmachinesforcreation[name]
+		.["fluidmachines"] += list(list(
+			"name" = name,
+			"image" = getBase64Img(recipe),
+			"cost" = recipe.cost,
+			))
 
 /obj/item/places_pipes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -197,7 +222,8 @@
 		return
 	switch(action)
 		if("select")
-			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
+			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]] || \
+				fluidpipesforcreation[params["name"]] || fluidmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
 			src.tooltip_rebuild = 1
 			. = TRUE
@@ -441,6 +467,110 @@ ABSTRACT_TYPE(/datum/pipe_recipe/machine/binary)
 		path = /obj/machinery/atmospherics/binary/heat_exchanger
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluidpipe)
+/datum/pipe_recipe/fluidpipe
+	simple
+		name = "Fluid pipe"
+		path = /obj/fluid_pipe/straight/overfloor
+		cost = 1
+		icon_state = "fluidpipe"
+		desc = "A mere fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH, SOUTH)
+					return NORTH|SOUTH
+				if(EAST, WEST)
+					return EAST|WEST
+	bent
+		name = "Bent fluid pipe"
+		path = /obj/fluid_pipe/elbow/overfloor
+		cost = 1
+		icon_state = "bentfluidpipe"
+		bent = TRUE
+		desc = "A mere fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH)
+					return NORTH|WEST
+				if(SOUTH)
+					return SOUTH|EAST
+				if(EAST)
+					return NORTH|EAST
+				if(WEST)
+					return SOUTH|WEST
+	junction
+		name = "Junction fluid pipe"
+		path = /obj/fluid_pipe/t_junction/overfloor
+		icon_state = "fluidjunction"
+		desc = "A three way fluid pipe."
+
+		get_directions(dir)
+			switch(dir)
+				if(NORTH)
+					return EAST|WEST|SOUTH
+				if(SOUTH)
+					return EAST|WEST|NORTH
+				if(EAST)
+					return NORTH|SOUTH|WEST
+				if(WEST)
+					return NORTH|SOUTH|EAST
+
+	quadway
+		name = "Quadway fluid pipe"
+		path = /obj/fluid_pipe/quad/overfloor
+		cost = 3
+		icon_state = "fluidquad"
+		desc = "A four way fluid pipe"
+
+		get_directions(dir)
+			return NORTH|SOUTH|EAST|WEST
+
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluidmachine)
+/datum/pipe_recipe/fluidmachine
+	cost = 4
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluidmachine/unary)
+/datum/pipe_recipe/fluidmachine/unary
+	exclusionary = TRUE
+	get_directions(dir)
+		return dir
+
+	fluidinlet
+		name = "Inlet pump"
+		path = /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/overfloor
+		icon_state = "fluidinlet"
+		desc = "Drains between 10-15 units of fluid actively."
+
+	handpump
+		name = "Hand pump"
+		path = /obj/machinery/fluid_pipe_machinery/unary/hand_pump
+		icon_state = "handpump"
+		desc = "Pumps out up to 100 units of fluid manually."
+
+ABSTRACT_TYPE(/datum/pipe_recipe/fluidmachine/binary)
+/datum/pipe_recipe/fluidmachine/binary
+	get_directions(dir)
+		switch(dir)
+			if(NORTH, SOUTH)
+				return NORTH|SOUTH
+			if(EAST, WEST)
+				return EAST|WEST
+
+	fluidpump
+		name = "Fluid pump"
+		path = /obj/machinery/fluid_pipe_machinery/binary/pump
+		icon_state = "fluidpump"
+		desc = "Pumps from one network to another at up to 200 units per pump."
+	fluidvalve
+		name = "Fluid valve"
+		path = /obj/machinery/fluid_pipe_machinery/binary/valve
+		icon_state = "fluidvalve"
+		desc = "Connects two networks together when the valve is open."
+
 
 /obj/item/places_pipes/research
 	icon_state = "hpd-place-r"

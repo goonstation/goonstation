@@ -75,6 +75,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 			T.active_liquid.group.drain(T.active_liquid, amount, src.network)
 			playsound(T, 'sound/misc/drain_glug.ogg', 50, TRUE)
 
+/obj/machinery/fluid_pipe_machinery/unary/drain/passive
+	name = "Passive drain"
+	icon_state = ""
+
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump
 	name = "Inlet Pump"
 	icon_state = "inlet0"
@@ -101,9 +105,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/update_icon()
 	var/turf/T = get_turf(src)
 	var/intact = T.intact
-	flick("inlet[!src.on][src.on][CHECKHIDEPIPE(src) ? "h" : null]", src)
+	FLICK("inlet[!src.on][src.on][CHECKHIDEPIPE(src) ? "h" : null]", src)
 	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
 
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/overfloor
+	level = OVERFLOOR
 
 /obj/machinery/fluid_pipe_machinery/unary/hand_pump
 	name = "Hand Pump"
@@ -162,6 +168,26 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	var/on = FALSE
 	var/pumprate = 200
 
+/obj/machinery/fluid_pipe_machinery/binary/pump/New()
+	..()
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", PROC_REF(deactivate))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
+
+/obj/machinery/fluid_pipe_machinery/binary/pump/proc/activate()
+	if(src.on == FALSE)
+		src.on = TRUE
+		src.UpdateIcon()
+
+/obj/machinery/fluid_pipe_machinery/binary/pump/proc/deactivate()
+	if(src.on == TRUE)
+		src.on = FALSE
+		src.UpdateIcon()
+
+/obj/machinery/fluid_pipe_machinery/binary/pump/proc/toggle()
+	src.on = !src.on
+	src.UpdateIcon()
+
 /obj/machinery/fluid_pipe_machinery/binary/pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
@@ -169,7 +195,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/update_icon()
-	flick("pump[!src.on][src.on]", src)
+	FLICK("pump[!src.on][src.on]", src)
 	src.icon_state = "pump[src.on]"
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/process()
@@ -178,6 +204,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	var/datum/reagents/removed_fluid = src.pull_from_network(src.network1, src.pumprate)
 	if(!src.push_to_network(src.network2, removed_fluid))
 		removed_fluid.trans_to(network1, removed_fluid.total_volume)
+	FLICK("actuallypump", src)
 
 /obj/machinery/fluid_pipe_machinery/binary/valve
 	name = "Fluid Valve"
@@ -199,7 +226,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 		src.network1.rebuild_network()
 
 /obj/machinery/fluid_pipe_machinery/binary/valve/update_icon()
-	flick("valve[!src.on][src.on]", src)
+	FLICK("valve[!src.on][src.on]", src)
 	src.icon_state = "valve[src.on]"
 
 /obj/machinery/fluid_pipe_machinery/binary/valve/refresh_network(datum/flow_network/network)
