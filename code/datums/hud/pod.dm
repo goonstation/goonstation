@@ -99,26 +99,35 @@
 
 	proc/update_states()
 		check_clients()
-		if (master.engine)
-			if (master.engine.active)
+		var/obj/item/shipcomponent/engine_part = master.get_part(POD_PART_ENGINE)
+		var/obj/item/shipcomponent/life_support_part = master.get_part(POD_PART_LIFE_SUPPORT)
+		var/obj/item/shipcomponent/comms_part = master.get_part(POD_PART_COMMS)
+		var/obj/item/shipcomponent/sensors_part = master.get_part(POD_PART_SENSORS)
+		var/obj/item/shipcomponent/pod_lights/lights_part = master.get_part(POD_PART_LIGHTS)
+		var/obj/item/shipcomponent/main_weapon_part = master.get_part(POD_PART_MAIN_WEAPON)
+		var/obj/item/shipcomponent/secondary_system/sec_part = master.get_part(POD_PART_SECONDARY)
+		var/obj/item/shipcomponent/secondary_system/lock/lock_part = master.get_part(POD_PART_LOCK)
+
+		if (engine_part)
+			if (engine_part.active)
 				engine.icon_state = "engine-on"
 			else
 				engine.icon_state = "engine-off"
 
-		if (master.engine?.active && master.sensors?.active)
+		if (engine_part?.active && sensors_part?.active)
 			wormhole.overlays.len = 0
 		else
 			if (!wormhole.overlays.len)
 				wormhole.overlays += missing
 
-		if (master.life_support)
-			if (master.life_support.active)
+		if (life_support_part)
+			if (life_support_part.active)
 				life_support.icon_state = "life_support-on"
 			else
 				life_support.icon_state = "life_support-off"
 
-		if (master.com_system)
-			if (master.com_system.active)
+		if (comms_part)
+			if (comms_part.active)
 				comms.icon_state = "comms-on"
 				rts.overlays.len = 0
 				use_comms.overlays.len = 0
@@ -129,22 +138,22 @@
 				if (!use_comms.overlays.len)
 					use_comms.overlays += missing
 
-		if (master.m_w_system)
-			if (master.m_w_system.active)
+		if (main_weapon_part)
+			if (main_weapon_part.active)
 				weapon.icon_state = "weapon-on"
 			else
 				weapon.icon_state = "weapon-off"
 
-		if (master.sec_system)
-			if (master.sec_system.f_active)
-				secondary.icon_state = master.sec_system.hud_state
-			else if (master.sec_system.active)
-				secondary.icon_state = "[master.sec_system.hud_state]-on"
+		if (sec_part)
+			if (sec_part.f_active)
+				secondary.icon_state = sec_part.hud_state
+			else if (sec_part.active)
+				secondary.icon_state = "[sec_part.hud_state]-on"
 			else
-				secondary.icon_state = "[master.sec_system.hud_state]-off"
+				secondary.icon_state = "[sec_part.hud_state]-off"
 
-		if (master.sensors)
-			if (master.sensors.active)
+		if (sensors_part)
+			if (sensors_part.active)
 				sensors.icon_state = "sensors-on"
 				sensors_use.overlays.len = 0
 			else
@@ -152,17 +161,17 @@
 				if (!sensors_use.overlays.len)
 					sensors_use.overlays += missing
 
-		if (master.lock)
-			if (master.lock.is_set() && master.locked)
+		if (lock_part)
+			if (lock_part.is_set() && master.locked)
 				lock.icon_state = "lock-locked"
 			else
 				lock.icon_state = "lock-unlocked"
 
-		if (master.lights)
-			if (master.lights.active)
-				lights.icon_state = "[master.lights.hud_state]-on"
+		if (lights_part)
+			if (lights_part.active)
+				lights.icon_state = "[lights_part.hud_state]-on"
 			else
-				lights.icon_state = "[master.lights.hud_state]-off"
+				lights.icon_state = "[lights_part.hud_state]-off"
 
 		if (master.rcs)
 			rcs.icon_state = "rcs-on"
@@ -171,27 +180,36 @@
 
 
 	proc/update_systems()
+		var/obj/item/shipcomponent/engine_part = master.get_part(POD_PART_ENGINE)
+		var/obj/item/shipcomponent/life_support_part = master.get_part(POD_PART_LIFE_SUPPORT)
+		var/obj/item/shipcomponent/comms_part = master.get_part(POD_PART_COMMS)
+		var/obj/item/shipcomponent/sensors_part = master.get_part(POD_PART_SENSORS)
+		var/obj/item/shipcomponent/lights_part = master.get_part(POD_PART_LIGHTS)
+		var/obj/item/shipcomponent/main_weapon_part = master.get_part(POD_PART_MAIN_WEAPON)
+		var/obj/item/shipcomponent/sec_part = master.get_part(POD_PART_SECONDARY)
+		var/obj/item/shipcomponent/lock_part = master.get_part(POD_PART_LOCK)
+
 		check_clients()
-		if (master.engine)
-			engine.name = master.engine.name
+		if (engine_part)
+			engine.name = engine_part.name
 			engine.overlays.len = 0
 		else
 			engine.name = "Engine"
 			if (!engine.overlays.len)
 				engine.overlays += missing
 
-		if (master.life_support)
-			life_support.name = master.life_support.name
+		if (life_support_part)
+			life_support.name = life_support_part.name
 			life_support.overlays.len = 0
 		else
 			life_support.name = "Life Support"
 			if (!life_support.overlays.len)
 				life_support.overlays += missing
 
-		if (master.com_system)
-			comms.name = master.com_system.name
+		if (comms_part)
+			comms.name = comms_part.name
 			comms.overlays.len = 0
-			if (!master.com_system.active)
+			if (!comms_part.active)
 				if (!rts.overlays.len)
 					rts.overlays += missing
 				if (!use_comms.overlays.len)
@@ -208,16 +226,16 @@
 			if (!use_comms.overlays.len)
 				use_comms.overlays += missing
 
-		if (master.m_w_system)
-			weapon.name = master.m_w_system.name
+		if (main_weapon_part)
+			weapon.name = main_weapon_part.name
 			weapon.overlays.len = 0
 		else
 			weapon.name = "Main Weapon"
 			if (!weapon.overlays.len)
 				weapon.overlays += missing
 
-		if (master.sec_system)
-			secondary.name = master.sec_system.name
+		if (sec_part)
+			secondary.name = sec_part.name
 			secondary.overlays.len = 0
 		else
 			secondary.name = "Secondary System"
@@ -225,10 +243,10 @@
 				secondary.overlays += missing
 			secondary.icon_state = "blank"
 
-		if (master.sensors)
-			sensors.name = master.sensors.name
+		if (sensors_part)
+			sensors.name = sensors_part.name
 			sensors.overlays.len = 0
-			if (!master.sensors.active)
+			if (!sensors_part.active)
 				sensors_use.overlays.len = 0
 			else
 				if (!sensors_use.overlays.len)
@@ -240,8 +258,8 @@
 			if (!sensors_use.overlays.len)
 				sensors_use.overlays += missing
 
-		if (master.lock)
-			lock.name = master.lock.name
+		if (lock_part)
+			lock.name = lock_part.name
 			lock.overlays.len = 0
 			set_code.overlays.len = 0
 			if (master && master.locked)
@@ -255,8 +273,8 @@
 				lock.overlays += missing
 			if (!set_code.overlays.len)
 				set_code.overlays += missing
-		if (master.lights)
-			lights.name = master.lights.name
+		if (lights_part)
+			lights.name = lights_part.name
 			lights.overlays.len = 0
 		else
 			lights.name = "Lights"
@@ -279,58 +297,68 @@
 		if (is_incapacitated(user))
 			boutput(user, SPAN_ALERT("Not when you are incapacitated."))
 			return
+
 		// WHAT THE FUCK PAST MARQUESAS
 		// GET IT TOGETHER
 		// - Future Marquesas
 		// switch ("id")
 		switch (id)
 			if ("engine")
-				if (master.engine)
+				var/obj/item/shipcomponent/engine_part = master.get_part(POD_PART_ENGINE)
+				if (engine_part)
 					if (user != master.pilot)
 						boutput(user, SPAN_ALERT("Only the pilot may do that!"))
 						return
-					master.engine.toggle()
+					engine_part.toggle()
 					src.switch_sound()
 			if ("life_support")
-				if (master.life_support)
-					master.life_support.toggle()
+				var/obj/item/shipcomponent/life_support_part = master.get_part(POD_PART_LIFE_SUPPORT)
+				if (life_support_part)
+					life_support_part.toggle()
 					src.switch_sound()
 			if ("comms")
-				if (master.com_system)
-					master.com_system.toggle()
+				var/obj/item/shipcomponent/comms_part = master.get_part(POD_PART_COMMS)
+				if (comms_part)
+					comms_part.toggle()
 					src.switch_sound()
 					update_systems()
 			if ("comms_system")
-				if(master.com_system)
-					if(master.com_system.active)
-						master.com_system.External()
+				var/obj/item/shipcomponent/communications/comms_part = master.get_part(POD_PART_COMMS)
+				if(comms_part)
+					if(comms_part.active)
+						comms_part.External()
 					else
 						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
 				else
 					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("weapon")
-				if (master.m_w_system)
-					master.m_w_system.toggle()
+				var/obj/item/shipcomponent/main_weapon_part = master.get_part(POD_PART_MAIN_WEAPON)
+				if (main_weapon_part)
+					main_weapon_part.toggle()
 					src.switch_sound()
 			if ("secondary")
-				if (master.sec_system)
-					master.sec_system.toggle()
+				var/obj/item/shipcomponent/secondary_system/sec_part = master.get_part(POD_PART_SECONDARY)
+				if (sec_part)
+					sec_part.toggle()
 					src.switch_sound()
 			if ("sensors")
-				if (master.sensors)
-					master.sensors.toggle()
+				var/obj/item/shipcomponent/sensors_part = master.get_part(POD_PART_SENSORS)
+				if (sensors_part)
+					sensors_part.toggle()
 					src.switch_sound()
 			if ("sensors_use")
-				if (master.sensors && master.sensors.active)
-					master.sensors.opencomputer(user)
+				var/obj/item/shipcomponent/sensors_part = master.get_part(POD_PART_SENSORS)
+				if (sensors_part && sensors_part.active)
+					sensors_part.opencomputer(user)
 			if ("lock")
-				if (master.lock)
-					if (!master.lock.is_set())
-						master.lock.configure_mode = 1
+				var/obj/item/shipcomponent/secondary_system/lock/lock_part = master.get_part(POD_PART_LOCK)
+				if (lock_part)
+					if (!lock_part.is_set())
+						lock_part.configure_mode = 1
 						if (master)
 							master.locked = 0
-						master.lock.code = ""
-						master.lock.show_lock_panel(user)
+						lock_part.code = ""
+						lock_part.show_lock_panel(user)
 					else if (!master.locked)
 						master.locked = 1
 						boutput(user, SPAN_ALERT("The lock mechanism clunks locked."))
@@ -338,39 +366,28 @@
 						master.locked = 0
 						boutput(user, SPAN_ALERT("The ship mechanism clicks unlocked."))
 			if ("set_code")
-				if (master.lock)
-					if (master.lock.is_set())
-						if (!master.lock.can_reset)
+				var/obj/item/shipcomponent/secondary_system/lock/lock_part = master.get_part(POD_PART_LOCK)
+				if (lock_part)
+					if (lock_part.is_set())
+						if (!lock_part.can_reset)
 							boutput(user, SPAN_NOTICE("This lock cannot have its code reset."))
 							return
 						boutput(user, SPAN_NOTICE("Code reset. Please type new code and press enter."))
-					master.lock.configure_mode = 1
+					lock_part.configure_mode = 1
 					if (master)
 						master.locked = 0
-					master.lock.code = ""
-					master.lock.show_lock_panel(user)
+					lock_part.code = ""
+					lock_part.show_lock_panel(user)
 			if ("return_to_station")
 				master.return_to_station()
 			if ("leave")
 				master.leave_pod(user)
-			if ("wormhole") //HEY THIS DOES SAMETHING AS CLIENT WORMHOLE PROC IN VEHICLE.DM
-				if(master.engine && !istype(master,/obj/machinery/vehicle/tank/car))
-					if(master.engine.active)
-						if(master.engine.ready)
-							var/turf/T = master.loc
-							if (istype(T) && T.allows_vehicles)
-								master.engine.Wormhole()
-							else
-								boutput(user, "[master.ship_message("Cannot create wormhole on this flooring!")]")
-						else
-							boutput(user, "[master.ship_message("Engine recharging wormhole capabilities!")]")
-					else
-						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
-				else
-					boutput(user, "[master.ship_message("System not installed in ship!")]")
+			if ("wormhole")
+				master.create_wormhole()
 			if ("lights")
-				if (master.lights)
-					master.lights.toggle()
+				var/obj/item/shipcomponent/pod_lights/lights_part = master.get_part(POD_PART_LIGHTS)
+				if (lights_part)
+					lights_part.toggle()
 					src.switch_sound()
 			if ("rcs")
 				master.rcs = !master.rcs

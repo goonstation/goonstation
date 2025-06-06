@@ -53,3 +53,17 @@
 	pixel_x = 0
 	pixel_y = 0
 	layer = EFFECTS_LAYER_4
+
+/obj/effects/magicspark
+	name = "magic spark"
+	anchored = ANCHORED_ALWAYS
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "magicspark"
+	layer = EFFECTS_LAYER_4
+	plane = PLANE_DEFAULT_NOWARP
+
+	New()
+		. = ..()
+		src.pixel_x -= 80
+		src.pixel_y -= 80
+		SPAWN(2.5 SECONDS) qdel(src)

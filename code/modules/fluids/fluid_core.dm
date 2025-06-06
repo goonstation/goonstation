@@ -677,7 +677,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			I.alpha = F.finalalpha
 		src.show_submerged_image(F.my_depth_level)
 
-	if (F.my_depth_level == 1 && !isintangible(src) && !src.throwing)
+	if (F.my_depth_level == 1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !src.throwing)
 		new /obj/decal/puddle_ripple(null, F)
 
 	..()
