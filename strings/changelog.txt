@@ -1,5 +1,9 @@
 
 (t)fri jun 06 25
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
 (u)Egregorious
 (p)23745
 (e)💅🌱|C-QoL, A-Hydroponics
