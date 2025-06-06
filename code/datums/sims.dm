@@ -205,17 +205,17 @@
 				buffed = FALSE
 
 		onDecrease()
-			if (value < debuff_threshold && !debuffed)
+			if (value <= debuff_threshold && !debuffed)
 				showOwner(SPAN_ALERT("You feel considerably [debuff]!"))
 				holder.owner.setStatus(debuff, duration = null)
 				debuffed = TRUE
-			else if (value < lowbuff_threshold && value > debuff_threshold && !lowbuffed)
+			else if (value > lowbuff_threshold && value < buff_threshold && !lowbuffed)
 				showOwner(SPAN_ALERT("You feel [buff]!"))
 				holder.owner.setStatus(buff + "_low", duration = null)
 				depletion_rate = 0.2
 				lowbuffed = TRUE
 				buffed = FALSE
-			else if (value < buff_threshold && value > lowbuff_threshold && !buffed)
+			else if (value > buff_threshold && value < highbuff_threshold && !buffed)
 				showOwner(SPAN_ALERT("You feel well [buff]!"))
 				holder.owner.setStatus(buff, duration = null) // Health Part
 				holder.owner.delStatus("buff_hot")
