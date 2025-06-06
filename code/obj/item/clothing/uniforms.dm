@@ -1964,10 +1964,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 	desc = "Featuring a skirt over a skirt!"
 	icon_state = "westerndress"
 	item_state = "westerndress"
-
-	New()
-		. = ..()
-		AddComponent(/datum/component/toggle_underwear)
+	hide_underwear = TRUE
 
 //Crate Loot
 /obj/item/clothing/under/misc/tiedye
