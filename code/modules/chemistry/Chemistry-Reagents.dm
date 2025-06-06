@@ -270,8 +270,6 @@ datum
 								H.sims.affectMotive("Thirst", thirst_value)
 								if (H.sims.getValue("Thirst") > highbuff_threshold)
 									H.sims.affectMotive("Thirst", highbuff_threshold)
-						else
-							H.sims.affectMotive("Thirst", thirst_value)
 					if (src.hunger_value)
 						H.sims.affectMotive("Hunger", hunger_value)
 						if (vendor_chem)
