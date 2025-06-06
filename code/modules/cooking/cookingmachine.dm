@@ -399,6 +399,7 @@ TYPEINFO(/obj/machinery/cookingmachine/mixer)
 	name = "KitchenHelper"
 	desc = "A food mixer."
 	icon_state = "blender_empty"
+	object_flags = NO_BLOCK_TABLE
 	power_active = 1 KILO WATT
 	max_contents = 4
 	cooktime = 2 SECONDS
