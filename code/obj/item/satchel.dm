@@ -292,13 +292,13 @@
 		attackby(obj/item/W, mob/user)
 			if (src.loc == user && istype(W, /obj/item/pen))
 				if(harvest_what == HARVEST_ONLY_PRODUCE)
-					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with seeds when harvesting."))
+					boutput(user, SPAN_NOTICE("You scribble on the label that you'll fill [src] with seeds when harvesting."))
 					harvest_what = HARVEST_ONLY_SEEDS
 				else if (harvest_what == HARVEST_ONLY_SEEDS)
-					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with seeds and produce when harvesting."))
+					boutput(user, SPAN_NOTICE("You scribble on the label that you'll fill [src] with seeds and produce when harvesting."))
 					harvest_what = HARVEST_BOTH
 				else if (harvest_what == HARVEST_BOTH)
-					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with produce when harvesting."))
+					boutput(user, SPAN_NOTICE("You scribble on the label that you'll fill [src] with produce when harvesting."))
 					harvest_what = HARVEST_ONLY_PRODUCE
 				return
 			. = ..()
