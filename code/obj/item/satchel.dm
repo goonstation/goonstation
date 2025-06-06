@@ -289,22 +289,22 @@
 				. = (inserted_seed.planttype?.type == template_seed.planttype?.type) && \
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
-		attack_hand(mob/user)
-			if (src.loc == user && user.a_intent == INTENT_DISARM)
+		attackby(obj/item/W, mob/user)
+			if (src.loc == user && istype(W, /obj/item/pen))
 				if(harvest_what == HARVEST_ONLY_PRODUCE)
-					boutput(user, SPAN_ALERT("You will fill [src] with seeds when harvesting."))
+					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with seeds when harvesting."))
 					harvest_what = HARVEST_ONLY_SEEDS
 				else if (harvest_what == HARVEST_ONLY_SEEDS)
-					boutput(user, SPAN_ALERT("You will fill [src] with seeds and produce when harvesting."))
+					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with seeds and produce when harvesting."))
 					harvest_what = HARVEST_BOTH
 				else if (harvest_what == HARVEST_BOTH)
-					boutput(user, SPAN_ALERT("You will fill [src] with produce when harvesting."))
+					boutput(user, SPAN_ALERT("You scribble on the label that you'll fill [src] with produce when harvesting."))
 					harvest_what = HARVEST_ONLY_PRODUCE
 				return
-			else return ..()
+			. = ..()
 
 		get_desc()
-			return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]. The autofibre label reads \"[harvesting_strings[harvest_what]]\"."
+			return "It contains [src.contents.len]/[src.maxitems] [src.itemstring]. A small label in the lining reads \"[harvesting_strings[harvest_what]]\"."
 
 		large
 			name = "large produce satchel"
