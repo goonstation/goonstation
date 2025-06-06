@@ -411,6 +411,10 @@
 			if (P.proj_data && src.proj_data && P.proj_data.type != src.proj_data.type) //ignore collisions with me own subtype
 				src.collide(A)
 
+	Exited(Obj, newloc)
+		. = ..()
+		src.proj_data?.on_exited(src, Obj)
+
 	proc/collide_with_applicable_in_tile(var/turf/T)
 		var/i = 0
 		for(var/thing as mob|obj|turf|area in T)
@@ -803,6 +807,8 @@ ABSTRACT_TYPE(/datum/projectile)
 			return
 		on_end(var/obj/projectile/O)
 			return
+		on_exited(var/obj/projectile/O, atom/movable/AM)
+			return
 		on_max_range_die(var/obj/projectile/O)
 			return
 		/// Check if we want to do something before actually hitting the thing we hit
@@ -1098,6 +1104,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	if(P.reflectcount >= max_reflects)
 		return
+
+	SEND_SIGNAL(reflector, COMSIG_ATOM_PROJECTILE_REFLECTED)
 
 	switch (mode)
 		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce

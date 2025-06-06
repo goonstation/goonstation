@@ -453,6 +453,10 @@
 
 	faction = list(FACTION_CLOWN)
 
+	// stop spewing eggs and blocking yourself in the tutorial
+	tutorial
+		ai_type = /datum/aiHolder/tutorial_clown_spider_queen
+
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."

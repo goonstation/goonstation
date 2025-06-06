@@ -1354,12 +1354,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/clothing/shoes/galoshes = 1)
 
 	slot_back = list(\
-	/obj/item/storage/backpack = 1,
+	/obj/item/storage/backpack = 3,
 	/obj/item/storage/backpack/anello = 1,
 	/obj/item/storage/backpack/security = 1,
 	/obj/item/storage/backpack/engineering = 1,
-	/obj/item/storage/backpack/robotics = 1,
-	/obj/item/storage/backpack/research = 1)
+	/obj/item/storage/backpack/research = 1,
+	/obj/item/storage/backpack/salvager = 1,
+	/obj/item/storage/backpack/syndie/tactical = 0.2) //hehe
 
 	slot_belt = list(\
 	/obj/item/crowbar = 6,
@@ -3076,6 +3077,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
 			C.assignment = "Staff Assistant"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
+
+			M.job = "Staff Assistant" // for observers
 
 			var/obj/item/device/pda2/pda = locate() in M
 			pda.assignment = "Staff Assistant"

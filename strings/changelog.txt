@@ -1,4 +1,225 @@
 
+(t)fri jun 06 25
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
+(t)wed jun 04 25
+(u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
+(p)23481
+(e)🆕🗺🎨🔊📄|C-Feature, A-Mapping, C-Sprites, C-Sound, A-UI
+(*)The new player options menu includes an in-game tutorial.
+(u)Cheekybrdy
+(p)23683
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Automatic Command promotions to HoS won't happen in single digit staffing stations.
+(u)Lord_Earthfire
+(p)23705
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Atmospheric pipes in walls have their fatigue pressure increased by 5 times the walls material density. Double the value for reinforced walls.
+(u)Mr. Moriarty
+(p)23466
+(e)🆕🔎💅🔨|C-Feature, C-Code-Quality, C-QoL, A-Player-Actions
+(*)Added wraithchat. Wraiths now speak over wraithchat using T and deadchat using Y. Wraith summons can now speak over wraithchat using Y or by using the :wraith prefix.
+(u)LorrMaster
+(p)23552
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Controls and inertia directions more accurately reflect player inputs
+(u)KakoLookiyam
+(p)23713
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Gas flow meters are now mechscannable and deployable.
+(t)tue jun 03 25
+(u)Chasu
+(p)23715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Secured assemblies can now be splashed with reagents, such as glue.
+(u)Cheekybrdy
+(p)23508
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Readds Salvagers to classic, as a roundstart mixed role.
+(u)Flamearrow
+(p)22973
+(e)🚄📡🤖|C-Performance, A-AI, A-Silicons
+(*)AI static rendering has been reworked, please report any glitches or performance changes.
+(u)glowbold
+(p)23686
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)AI Eyebots now count as floating when active
+(+)Floating objects should react more consistently with expected behavior
+(u)Bobbis dobbis
+(p)23703
+(e)⚖|C-Balance
+(+)Small animals are no longer affected by food poisoning.
+(u)Lord_Earthfire
+(p)23706
+(e)🪲💨⚗|C-Bug, A-Atmospherics, A-Chemistry
+(+)Graphene hardening compound works on pipe manifolds now.
+(t)mon jun 02 25
+(u)glowbold
+(p)23698
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Anti-singularity buster shots will shrink large singularities. Small singularities will explode into white holes.
+(+)Loose singularities are more likely to drift towards station tiles.
+(u)LorrMaster
+(p)23669
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Synth legs will now passively absorb reagents. Shoes prevent the effect in shallow fluids. An additional chem protection of 40% prevents it while submerged.
+(t)sun jun 01 25
+(u)glowbold
+(p)23591
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)You must use an aggressive grab to pull people away from aggressive grabs.
+(u)LorrMaster
+(p)23612
+(e)🆕🚗|C-Feature, A-Vehicles
+(+)Pod visuals now change depending on their installed engine type
+(u)nova2053
+(p)23620
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Tables, racks, and other items which use a similar construction method can now be constructed on the same tile as thindows, sliding glass doors, and other objects with directional blocking.
+(+)Tables can now be constructed under a couple more objects, such as microwaves, espresso machines, and more. See PR page for full list.
+(t)sat may 31 25
+(u)LeahTheTech
+(*)Material analysers now display the rupture pressure of breakable pipes.
+(+)All concussive charges can now break geodes (if they're soft enough)
+(p)23646
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(*)Manifolds can now rupture and be reinforced just like regular pipes.
+(u)RubberRats
+(p)23658
+(e)🪲🍝|C-Bug, A-Catering
+(+)Peanut butter and honey sandwiches are now cookable again
+(u)CalliopeSoups
+(p)23630
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's engine has less heat pipe covering wires.
+(t)fri may 30 25
+(u)CalliopeSoups and LeahTheTech
+(*)Added a new "Mixed Spooky" gamemode with a guaranteed wraith and supernatural antags. Enabled on all servers.
+(t)thu may 29 25
+(u)LeahTheTech
+(p)23623
+(e)⚖📄🌠|C-Balance, A-UI, A-Events
+(*)Neon Broken antagonist objectives are now mandatory in the same way mindhack instructions are. Reminder: you can disable rolling Broken under the "Other foes" antag preferences option.
+(t)wed may 28 25
+(u)LeahTheTech
+(+)The Neon megafauna shadow now lasts for roughly the same time as the madness it causes.
+(+)Neon megafauna events can now only occur once per round.
+(t)mon may 26 25
+(u)LeahTheTech
+(+)Rare metal nanites are now... rarer! They will also only spawn alongside higher tier ores.
+(u)LorrMaster
+(p)23476
+(e)🆕🎨🔒🧛|C-Feature, C-Sprites, A-Secret, A-Gamemodes
+(*)Added the dualconstruction device, a new tool for salvagers
+(t)sun may 25 25
+(u)444explorer
+(p)23547
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Syndicate Omnitool acts as Insulated Gloves while held.
+(t)sat may 24 25
+(u)CalliopeSoups
+(p)23549
+(e)⚖💅🐁|C-Balance, C-QoL, A-Critters
+(+)Mimics copy the density of their disguise while hiding, letting people walk over you as most items.
+(u)glowbold
+(p)23490
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(+)The cyber-incompatible trait makes you incompatible with cybernetics, including casual cyborgification. The syndicate conversion chamber will still make you a syndicate cyborg.
+(t)tue may 20 25
+(u)LeahTheTech
+(+)The Lawbringer, Sabre, and Colt "job rewards" can now be claimed via the right click menu.
+(+)Level 0 job reward claims will no longer hang trying to contact the mouldering bones of the Byond website.
+(u)outbackcatgirl, Facsimile
+(p)22824
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(*)Adds the keytar, a synth instrument.
+(u)CalliopeSoups
+(p)23474
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(+)Mimics now have a base form sprite and an ability to return to it after disguising.
+(u)Bartimeus, Disturbherb, Firedhat, glowbold, and Mr.Moriaty
+(p)23264
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can dig holes in suitable terrain with shovels.
+(+)You can bury things and people in holes with shovels
+(u)Lefinch
+(p)23364
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)A new Gnome Chompsky costume is on sale in the Clownhole. Beard not included.
+(u)glowbold
+(p)23165
+(e)🪲📄|C-Bug, A-UI
+(+)Long-form papers and forms work more consistently.
+(t)mon may 19 25
+(u)LorrMaster
+(p)23400
+(e)🗺🎨💅🧱|A-Mapping, C-Sprites, C-QoL, A-Materials
+(*)New sprites for ores at various stack sizes
+(u)glowbold
+(p)22847
+(e)🆕🎨📦💡|C-Feature, C-Sprites, A-Game-Objects, A-Station-Systems
+(+)Stationary cameras that are unsecured no longer broadcast video/audio. Anchor them down to restart the broadcast.
+(+)Mobile cameras can be broken with wirecutters and fixed with cables, like security cameras.
+(u)Mr. Moriarty
+(p)23468
+(e)🔎⛔🔨|C-Code-Quality, C-Removal, A-Player-Actions
+(+)Ghostdrones can no longer use the ; prefix to speak to deadchat. Please use the Y menu or the :d prefix instead.
+(u)LorrMaster
+(p)23485
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Blueprints printed from photocopiers now work properly
+(t)sun may 18 25
+(u)CalliopeSoups
+(p)23475
+(e)🆕🐁|C-Feature, A-Critters
+(+)Mimics now get disposal travel.
+(u)JORJ949
+(p)23465
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(*)Turtles can now wear NT, Head of Sanitation and Syndicate berets.
+(t)sat may 17 25
+(u)Bartimeus973, DisturbHerb, Ikea
+(p)22887
+(e)🎨🔊|C-Sprites, C-Sound
+(+)Goats, (more) seals, and jackalopes now possible in wintry places
+(t)fri may 16 25
+(u)RubberRats
+(p)22904
+(e)🗺🔧🔎🍝|A-Mapping, A-Tooling, C-Code-Quality, A-Catering
+(+)Cooking recipe code has been changed, again. Please report any issues.
+(u)LeahTheTech
+(+)"Standard" vending machines (the ones with all the bomb parts) now contain a screwdriver and a wrench instead of wirecutters.
+(p)23374
+(e)⚖🔨📦|C-Balance, A-Player-Actions, A-Game-Objects
+(*)Intercoms now use maptext.
+(u)Egregorious
+(p)23449
+(e)🆕⚖|C-Feature, C-Balance
+(+)Cargo's traders will now buy the same items throughout the entire shift.
+(t)wed may 14 25
+(u)GeneralJay
+(p)23451
+(e)💅🍝|C-QoL, A-Catering
+(+)Meat gained from butchering sheep can now be cooked into steaks properly. Ranchers and chefs rejoice!
+(u)Egregorious
+(p)23434
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Botany requisitions now reward large produce satchels.
+(u)glowbold
+(p)23385
+(e)🆕🗺🎨⚖|C-Feature, A-Mapping, C-Sprites, C-Balance
+(+)The listening post on some maps have received a new look.
+(+)The listening post will fully unlock once someone is inside or uses the hand scanner.
+(u)Mr. Moriarty
+(p)23313
+(e)🆕💅📄🔨|C-Feature, C-QoL, A-UI, A-Player-Actions
+(+)Hivechat, Thrallchat, and Kudzuchat are now accessed through the Y menu instead of through abilities.
 (t)sat may 10 25
 (u)CrimsonNode
 (p)23334
