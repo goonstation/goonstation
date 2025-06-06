@@ -27,7 +27,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/image/lid_image = null
 	var/original_icon_state = null
 
-	var/one_type_only = FALSE // if true, the container can only hold the reagent type you first put inside
 
 	New(loc, new_initial_reagents)
 		..()
