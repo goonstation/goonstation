@@ -3635,6 +3635,10 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		//STEP SOUND HANDLING OVER
 
+/mob/living/silicon/robot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 #undef can_step_sfx
 #undef ROBOT_BATTERY_DISTRESS_INACTIVE
 #undef ROBOT_BATTERY_DISTRESS_ACTIVE

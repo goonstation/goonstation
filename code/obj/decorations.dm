@@ -1629,6 +1629,7 @@ obj/decoration/gibberBroken
 	mouse_opacity = 0
 
 /obj/decoration/damagedchair
+	name = "damaged chair"
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "damagedchair"
