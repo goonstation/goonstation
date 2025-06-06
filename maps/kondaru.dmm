@@ -9141,29 +9141,6 @@
 	dir = 5
 	},
 /area/station/crew_quarters/quarters_north)
-"aJV" = (
-/obj/machinery/power/data_terminal,
-/obj/landmark/start/job/AI,
-/obj/cable,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	dir = 8;
-	layer = 5
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_y = -21;
-	dir = 1;
-	pixel_x = -1
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "aJW" = (
 /obj/machinery/turret,
 /obj/decal/tile_edge/line/white{
@@ -29356,25 +29333,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"cNP" = (
-/obj/table/auto,
-/obj/item/storage/box/trackimp_kit,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/item/device/radio,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	pixel_x = 2;
-	pixel_y = 24
-	},
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "cNX" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/gas_sensor{
@@ -30591,7 +30549,6 @@
 /area/station/hangar/engine)
 "dFj" = (
 /obj/rack,
-/obj/item/reagent_containers/food/drinks/juicer,
 /obj/item/swingsignfolded,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -39313,6 +39270,20 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/station/security/beepsky)
+"jGl" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/bridge,
+/obj/machinery/light/small/blueish{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/decal/tile_edge/floorguide/command{
+	dir = 4
+	},
+/turf/simulated/floor/black/side,
+/area/station/hallway/primary/south)
 "jGn" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -42722,6 +42693,28 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"lSb" = (
+/obj/machinery/power/data_terminal,
+/obj/landmark/start/job/AI,
+/obj/cable,
+/obj/item/device/radio/intercom/AI{
+	dir = 8;
+	layer = 5
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_y = -21;
+	dir = 1;
+	pixel_x = -1
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "lSk" = (
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -51333,6 +51326,24 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"smX" = (
+/obj/table/auto,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/item/device/radio,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/obj/item/device/radio/intercom/AI{
+	pixel_x = 2;
+	pixel_y = 24
+	},
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "sns" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -52689,6 +52700,22 @@
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
+"tje" = (
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/item/device/radio/intercom/bridge{
+	dir = 4;
+	pixel_x = -21;
+	pixel_y = 3
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -10
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/bridge)
 "tjJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -56704,22 +56731,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"whY" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0
-	},
-/obj/machinery/light/small/blueish{
-	dir = 4;
-	pixel_x = 8
-	},
-/obj/decal/tile_edge/floorguide/command{
-	dir = 4
-	},
-/turf/simulated/floor/black/side,
-/area/station/hallway/primary/south)
 "wic" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood/seven,
@@ -57546,23 +57557,6 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
-"wLh" = (
-/obj/machinery/computer3/generic/secure_data,
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/item/device/radio/intercom/bridge{
-	broadcasting = 0;
-	dir = 4;
-	pixel_x = -21;
-	pixel_y = 3
-	},
-/obj/machinery/light_switch/west{
-	pixel_y = -10
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/bridge)
 "wLG" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -121824,7 +121818,7 @@ bxz
 byH
 bzI
 dVg
-whY
+jGl
 bxm
 bvY
 pEe
@@ -123046,7 +123040,7 @@ bNT
 hXH
 cEm
 mnt
-wLh
+tje
 ghr
 bfO
 bDX
@@ -123929,7 +123923,7 @@ skS
 jvh
 kaa
 wDf
-cNP
+smX
 kIt
 qhy
 bvf
@@ -127508,7 +127502,7 @@ aBl
 aDo
 aEE
 qQY
-aJV
+lSb
 anX
 aOq
 aQR

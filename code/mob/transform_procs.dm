@@ -180,6 +180,7 @@
 
 		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
 			newmob.name_prefix("ethereal")
+			newmob.job = "Ethereal Critter" // for observer menu
 			newmob.name_suffix("[rand(10,99)][rand(10,99)]")
 			newmob.UpdateName()
 

@@ -135,7 +135,7 @@ proc/load_listening_post()
 /area/listeningpost
 	name = "Listening Post"
 	icon_state = "brig"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	do_not_irradiate = TRUE
 	lightswitch = FALSE
 	minimaps_to_render_on = MAP_SYNDICATE

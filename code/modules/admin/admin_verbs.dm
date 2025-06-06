@@ -32,6 +32,7 @@ var/list/admin_verbs = list(
 		/client/proc/marsay,
 		/client/proc/silisay,
 		/client/proc/thrallsay,
+		/client/proc/wraithsay,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
@@ -1825,17 +1826,57 @@ var/list/fun_images = list()
 // 	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
 // 	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
 
+/datum/targetable/ghost_alert_picker
+	target_anything = TRUE
+	targeted = TRUE
+	max_range = 3000
 
-/client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
+	castcheck(mob/M)
+		if (M.client && M.client.holder)
+			return 1
+
+	handleCast(atom/target, params)
+		var/message = tgui_input_text(src.holder, "What message should ghosts see on the notice?", "Ghost Notice Message", "Something is happening! Observe [target]?")
+		if (message)
+			global.alert_all_ghosts(target, message)
+
+/// Send an alert to all ghosts to observe a thing with a given message
+proc/alert_all_ghosts(atom/target, message)
+	for(var/client/C)
+		if (isdead(C.mob) && !istype(C.mob, /mob/dead/target_observer/slasher_ghost))
+			SPAWN(0)
+				C.mob.playsound_local(C.mob, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
+				if(tgui_alert(C.mob, message, "Ghost Notification", list("Observe", "No"), 30 SECONDS, FALSE) == "Observe")
+					var/mob/dead/M = C.mob
+					if(ismob(target) || isobj(target))
+						if (istype(M, /mob/dead/observer))
+							var/mob/dead/observer/O = M
+							O.insert_observer(target)
+						else if (istype(M, /mob/dead/target_observer))
+							var/mob/dead/target_observer/TO = M
+							TO.set_observe_target(target)
+					else if(isturf(target))
+						if (istype(M, /mob/dead/observer))
+							var/mob/dead/observer/O = M
+							O.set_loc(target)
+						else if (istype(M, /mob/dead/target_observer))
+							var/mob/dead/target_observer/TO = M
+							TO.ghostjump(target.x, target.y, target.z)
+
+
+/client/proc/cmd_dispatch_observe_to_ghosts()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Alert All Ghosts"
-	set desc = "Send a notice to ghosts that something weird is happening at a person"
+	set desc = "Send a notice to ghosts to observe a selected target."
 	set popup_menu = 0
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
-	if(ghost_notifier)
-		ghost_notifier.send_notification(src, target, /datum/ghost_notification/observe/admin)
+	var/mob/M = usr
+	var/datum/targetable/ghost_alert_picker/picker = new()
+	M.targeting_ability = picker
+	M.update_cursor()
+	boutput(usr, SPAN_NOTICE("Select the target to notify ghosts about."))
 
 /client/proc/showLoadingHint()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)

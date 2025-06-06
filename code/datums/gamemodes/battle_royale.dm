@@ -44,7 +44,7 @@ var/global/area/current_battle_spawn = null
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if (player.ready)
+		if (player.ready_play)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"

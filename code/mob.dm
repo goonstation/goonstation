@@ -743,6 +743,11 @@ TYPEINFO(/mob)
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
 
+				if(tmob.buckled)
+					tmob.buckled.set_loc(oldloc)
+				if(src.buckled)
+					src.buckled.set_loc(newloc)
+
 				if (istype(tmob.loc, /turf/space))
 					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/atom/movable/hotspot) in tmob.loc)
@@ -792,7 +797,6 @@ TYPEINFO(/mob)
 			var/list/pulling = list()
 			if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || src.pulling == src) // fucks sake
 				src.remove_pulling()
-				//hud.update_pulling() // FIXME
 			else
 				pulling += src.pulling
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
@@ -905,6 +909,12 @@ TYPEINFO(/mob)
 	src.a_intent = intent
 	if (src.equipped()?.item_function_flags & USE_INTENT_SWITCH_TRIGGER)
 		src.equipped().intent_switch_trigger(src)
+
+/// Set movement intent variable on a mob
+/mob/proc/set_m_intent(intent)
+	if (!intent)
+		return
+	src.m_intent = intent
 
 // medals
 
@@ -1213,7 +1223,7 @@ TYPEINFO(/mob)
 
 /mob/proc/death(gibbed = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
+	SEND_SIGNAL(src, COMSIG_MOB_DEATH, gibbed)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))

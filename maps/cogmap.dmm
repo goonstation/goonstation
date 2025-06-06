@@ -1305,7 +1305,7 @@
 	beacon_freq = 1443;
 	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  This one has a little name tag on the front labeled 'Murray'";
 	name = "Murray";
-	req_access_txt = ""
+	req_access = null
 	},
 /obj/machinery/navbeacon/tour/cog1/tour20,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6849,8 +6849,7 @@
 /obj/table/auto,
 /obj/machinery/cashreg,
 /obj/machinery/door/window/eastleft{
-	name = "Tool Storage";
-	req_access_txt = "12"
+	name = "Tool Storage"
 	},
 /turf/simulated/floor,
 /area/station/storage/auxillary{
@@ -6859,13 +6858,13 @@
 "aAN" = (
 /obj/table/auto,
 /obj/machinery/door/window/westleft{
-	name = "Hydroponics Lobby";
-	req_access_txt = "35"
+	name = "Hydroponics Lobby"
 	},
 /obj/machinery/cashreg,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/mapping_helper/access/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aAO" = (
@@ -7213,8 +7212,7 @@
 	pixel_y = 7
 	},
 /obj/machinery/door/window/southleft{
-	name = "Tool Storage";
-	req_access_txt = "12"
+	name = "Tool Storage"
 	},
 /obj/item/device/gps{
 	pixel_x = 7;
@@ -7267,13 +7265,13 @@
 /obj/table/auto,
 /obj/disposalpipe/segment,
 /obj/machinery/door/window/southright{
-	name = "Hydroponics Lobby";
-	req_access_txt = "35"
+	name = "Hydroponics Lobby"
 	},
 /obj/item/hand_labeler,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/mapping_helper/access/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aCm" = (
@@ -9620,12 +9618,12 @@
 	},
 /obj/machinery/door/window/westright{
 	dir = 1;
-	name = "Medical Booth";
-	req_access_txt = "5"
+	name = "Medical Booth"
 	},
 /obj/window/reinforced{
 	dir = 4
 	},
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
 "aJO" = (
@@ -9868,12 +9866,12 @@
 	dir = 2
 	},
 /obj/machinery/door/window/eastleft{
-	name = "Security Office";
-	req_access_txt = "1"
+	name = "Security Office"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "aKx" = (
@@ -12926,20 +12924,6 @@
 "aTM" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/sanctuary)
-"aTO" = (
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/disposalpipe/segment/mail,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
 /area/station/chapel/sanctuary)
 "aTP" = (
 /obj/machinery/door/window/northleft,
@@ -39451,9 +39435,7 @@
 /obj/item/device/radio/intercom/botany{
 	dir = 1
 	},
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
-	},
+/obj/storage/cart/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/reagent_containers/food/snacks/hotdog,
@@ -39934,18 +39916,6 @@
 	dir = 5
 	},
 /area/space)
-"fBI" = (
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	dir = 1
-	},
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
-/turf/simulated/floor/stairs{
-	dir = 4
-	},
-/area/station/crew_quarters/market)
 "fBV" = (
 /obj/lattice{
 	dir = 4;
@@ -50181,18 +50151,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
-"nyE" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
-/turf/simulated/floor/circuit,
-/area/station/bridge)
 "nyI" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -50872,6 +50830,29 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/atmos/hookups/east)
+"nYR" = (
+/obj/disposalpipe/switch_junction{
+	dir = 1;
+	icon_state = "pipe-sj2";
+	mail_tag = "bridge";
+	name = "bridge mail router"
+	},
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor,
+/area/station/bridge)
+"nZh" = (
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/disposalpipe/segment/mail,
+/obj/item/device/radio/intercom{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "nZV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment)
@@ -51211,18 +51192,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
-"okK" = (
-/obj/disposalpipe/switch_junction{
-	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "bridge";
-	name = "bridge mail router"
-	},
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0
-	},
-/turf/simulated/floor,
-/area/station/bridge)
 "okN" = (
 /obj/machinery/light/emergency,
 /obj/machinery/firealarm/east,
@@ -52525,6 +52494,16 @@
 	dir = 5
 	},
 /area/mining/magnet)
+"pdH" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/device/radio/intercom/AI,
+/turf/simulated/floor/circuit,
+/area/station/bridge)
 "pev" = (
 /obj/stool/chair{
 	dir = 1
@@ -64231,6 +64210,17 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
+"xMo" = (
+/obj/item/device/radio/intercom/AI{
+	dir = 1
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/crew_quarters/market)
 "xMr" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -90482,7 +90472,7 @@ adC
 adC
 adC
 aKd
-nyE
+pdH
 aMy
 aNH
 aKc
@@ -92298,7 +92288,7 @@ aJO
 aKe
 aMh
 aON
-okK
+nYR
 eyC
 aQS
 aST
@@ -102305,7 +102295,7 @@ jsk
 bAt
 bAt
 bAt
-fBI
+xMo
 bAt
 bBq
 bAt
@@ -122501,7 +122491,7 @@ aJV
 aJV
 aRN
 otx
-aTO
+nZh
 aWw
 aWw
 aWw
