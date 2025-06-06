@@ -215,8 +215,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				FLICK(flick_state, src)
 
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
-			user.inertia_dir = get_dir(target, user)
-			step(user, user.inertia_dir)
+			user.inertia_dir = get_dir_accurate(target, user)
+			step(user, user.inertia_dir) // Propel user in opposite direction
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -1494,7 +1494,25 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if (user.mind?.assigned_role == "Detective")
+			src.verbs |= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	dropped(mob/user)
+		. = ..()
+		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+
+	verb/claim_colt()
+		set src in usr
+		set category = "Local"
+		set name = "Convert to Colt"
+
+		var/datum/jobXpReward/reward = global.xpRewards["The Colt"]
+		reward.try_claim(usr, FALSE)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun

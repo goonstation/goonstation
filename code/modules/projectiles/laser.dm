@@ -298,8 +298,9 @@ toxic - poisons
 				var/mob/M = vehicle.pilot
 				if (istype(M))
 					var/damage_pilot = TRUE
-					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
-						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
+					var/sec_part = vehicle.get_part(POD_PART_SECONDARY)
+					if (istype(sec_part, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = sec_part
 						if (shielding.active)
 							damage_pilot = FALSE
 					if (damage_pilot)

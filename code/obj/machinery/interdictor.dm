@@ -521,6 +521,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			var/obj/frame = new /obj/interdictor_frame( get_turf(user) )
 			frame.fingerprints = src.fingerprints
 			frame.fingerprints_full = src.fingerprints_full
+			frame.forensic_holder = src.forensic_holder
 			qdel(src)
 
 //unconstructed interdictor, where the assembly procedure happens

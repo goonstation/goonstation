@@ -245,7 +245,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/say_verb()
 		return null
 
-	proc/emote(var/act)
+	/// Mutant race emote overrides. Called before main emote processing.
+	///
+	/// It can return either a single text value, which will be the emote's chat message,
+	/// or it can return a list of two items, the first being chat message, the second being map text.
+	///
+	/// If it returns a message, no other emote processing occurs.
+	proc/emote(act, voluntary=FALSE)
 		return null
 
 	// custom attacks, should return attack_hand by default or bad things will happen!!
@@ -815,15 +821,12 @@ TYPEINFO(/datum/mutantrace/virtual)
 		src.mob.see_in_dark = SEE_DARK_FULL
 		src.mob.see_invisible = INVIS_CLOAK
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emotes_on_cooldown = TRUE
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
 				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1008,15 +1011,12 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		src.mob.see_in_dark = SEE_DARK_FULL
 		src.mob.see_invisible = INVIS_NONE
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emotes_on_cooldown = TRUE
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1087,15 +1087,12 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emotes_on_cooldown = TRUE
+			if (src.mob.emote_check(voluntary, 3 SECONDS))
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-				SPAWN(3 SECONDS)
-					src.mob?.emotes_on_cooldown = FALSE
 			return message
 		else
 			..()
@@ -1332,16 +1329,13 @@ TYPEINFO(/datum/mutantrace/abomination)
 	say_verb()
 		return "screeches"
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		switch (act)
 			if ("scream")
-				if (src.mob.emote_allowed)
-					src.mob.emotes_on_cooldown = TRUE
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
 					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
@@ -1453,23 +1447,17 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 	say_verb()
 		return "snarls"
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		switch(act)
 			if("howl", "scream")
-				if(src.mob.emote_allowed)
-					src.mob.emotes_on_cooldown = TRUE
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
 					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						src.mob?.emotes_on_cooldown = FALSE
 			if("burp")
-				if(src.mob.emote_allowed)
-					src.mob.emotes_on_cooldown = TRUE
+				if (src.mob.emote_check(voluntary, 1 SECONDS))
 					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(1 SECOND)
-						src.mob?.emotes_on_cooldown = FALSE
 		return message
 
 	/// Has a chance to snap at mobs that try to pet them.
@@ -1644,12 +1632,12 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> screams!"
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
-					if (!src.mob.emote_check(voluntary, 10))
+					if (!src.mob.emote_check(voluntary, 1 SECOND))
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in src.mob.loc)
@@ -1955,25 +1943,19 @@ TYPEINFO(/datum/mutantrace/amphibian)
 			src.mob.bioHolder.RemoveEffect("accent_chav")
 		..()
 
-	emote(var/act)
+	emote(act, voluntary)
 		var/message = null
 		switch (act)
 			if ("scream","howl","laugh")
-				if (src.mob.emote_allowed)
-					src.mob.emotes_on_cooldown = TRUE
+				if (src.mob.emote_check(voluntary, 3 SECONDS))
 					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 
 			if("burp","fart","gasp")
-				if(src.mob.emote_allowed)
-					src.mob.emotes_on_cooldown = TRUE
+				if (src.mob.emote_check(voluntary, 1 SECOND))
 					message = "<B>[src.mob]</B> croaks."
 					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(1 SECOND)
-						if (src.mob) src.mob.emotes_on_cooldown = FALSE
 					return message
 			else ..()
 
@@ -2263,7 +2245,7 @@ TYPEINFO(/datum/mutantrace/cow)
 			if ("scream")
 				if (src.mob.bioHolder.HasEffect("mute"))
 					return // use muted scream emote handling
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
@@ -2401,29 +2383,21 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (!A)
 			return
 		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		var/adjective = pick("astutely", "discerningly", "intently")
+		var/adjective = pick("astutely", "discerningly", "intently", "casually", "doggedly", "intriguingly")
 		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
-		if (ismob(A))
-			var/mob/living/M = A
-			if (M.mind)
-				boutput(src.mob, SPAN_NOTICE("[M] smells like a [M.mind?.color]."))
-				return
-		var/list/L = A.fingerprints_full
-		if (!length(L))
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/list/print = L[pick(L)]
-		var/color = print["color"]
-		if (!color)
-			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
-			return
-		var/timestamp = print["timestamp"]
-		var/intensity = "faintly"
-		if (TIME < timestamp + 3 MINUTES)
-			intensity = "strongly"
-		else if (TIME < timestamp + 10 MINUTES)
-			intensity = "kind"
-		boutput(src.mob, SPAN_NOTICE("\The [A] smells [intensity] of a [color]."))
+
+		var/sleuth_text = ""
+		if (isliving(A))
+			var/mob/living/L = A
+			if (L.mind?.color)
+				sleuth_text = SPAN_NOTICE("<li>[L] mostly smells like \a [L.mind.color.id].</li>")
+		if(A.forensic_holder)
+			var/datum/forensic_group/basic_list/sleuth/sleuth_group = A.forensic_holder.get_group(FORENSIC_GROUP_SLEUTH)
+			if(istype(sleuth_group))
+				sleuth_text += sleuth_group.get_sleuth_text(A, FALSE)
+		if(!sleuth_text)
+			sleuth_text = SPAN_NOTICE("Smells like \a [A], alright.")
+		boutput(src.mob, sleuth_text)
 
 	proc/sneeze()
 		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
@@ -2463,10 +2437,10 @@ TYPEINFO(/datum/mutantrace/pug)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 
-	emote(var/act, var/voluntary)
+	emote(act, voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> BWAHCAWCKs!"
 					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
