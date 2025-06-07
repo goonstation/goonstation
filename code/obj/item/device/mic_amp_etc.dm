@@ -131,14 +131,33 @@ TYPEINFO(/obj/loudspeaker)
 	. = ..()
 
 /obj/loudspeaker/attackby(obj/item/I, mob/user)
-	. = ..()
 	if (isscrewingtool(I))
 		if (src._health < src._max_health)
+			src.visible_message(SPAN_NOTICE("[user] begins repairing [src]."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair), list(user), I.icon, I.icon_state, null,\
 					INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else
 			boutput(user, SPAN_NOTICE("[src] seems fully repaired!"))
+		return
+	. = ..()
+	user.lastattacked = get_weakref(src)
+	attack_particle(user,src)
+	hit_twitch(src)
+	if (I.hitsound)
+		playsound(src.loc, I.hitsound, 50, 1)
+	if (I.force)
+		var/damage = I.force
+		damage /= 3
+		if (user.is_hulk())
+			damage *= 4
+		if (iscarbon(user))
+			var/mob/living/carbon/C = user
+			if (C.bioHolder && C.bioHolder.HasEffect("strong"))
+				damage *= 2
+		if (damage >= 1)
+			src.changeHealth(-damage)
+
 
 /obj/loudspeaker/proc/repair(user)
-		src.visible_message(SPAN_NOTICE("[user] repairs some of the damage on [src]"))
+		src.visible_message(SPAN_NOTICE("[user] repairs some of the damage on [src]!"))
 		src.changeHealth(15)
