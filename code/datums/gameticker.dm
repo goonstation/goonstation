@@ -470,20 +470,34 @@ var/global/game_force_started = FALSE
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
 				last_try_dilate = world.time
 
-				// adjust the counter up or down and keep it within the set boundaries
-				if (world.cpu >= TICKLAG_CPU_MAX)
-					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highCpuCount++
-				else if (world.cpu <= TICKLAG_CPU_MIN)
-					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highCpuCount--
+				// Pre-compute the next lower tick-lag and what CPU would look like
+				var/next_lower_tick_lag = max(world.tick_lag - TICKLAG_DILATION_DEC, timeDilationLowerBound)
+				var/pred_cpu_low = world.cpu * (world.tick_lag / next_lower_tick_lag)
+				var/pred_map_low = world.map_cpu * (world.tick_lag / next_lower_tick_lag)
 
-				if (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				// CPU counters
+				var/cpu_over_high = (world.cpu >= TICKLAG_CPU_MAX)
+				var/cpu_over_predicted = ((pred_cpu_low >= TICKLAG_CPU_MAX) && (highCpuCount < 0))
+				var/cpu_low = (((world.cpu <= TICKLAG_CPU_MIN) && (pred_cpu_low < TICKLAG_CPU_MAX)) || ((world.cpu <= TICKLAG_CPU_MIN) && (highCpuCount > 0)))
+
+				if (cpu_over_high || cpu_over_predicted)
+					if (highCpuCount < TICKLAG_INCREASE_THRESHOLD)
+						++highCpuCount
+				else if (cpu_low)
+					if (highCpuCount > -TICKLAG_DECREASE_THRESHOLD)
+						--highCpuCount
+
+				// Map-CPU counters
+				var/map_over_high = (world.map_cpu >= TICKLAG_MAPCPU_MAX)
+				var/map_over_predicted = ((pred_map_low >= TICKLAG_MAPCPU_MAX) && (highMapCpuCount < 0))
+				var/map_low = (((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (pred_map_low < TICKLAG_MAPCPU_MAX)) || ((world.map_cpu <= TICKLAG_MAPCPU_MIN) && (highMapCpuCount > 0)))
+
+				if (map_over_high || map_over_predicted)
 					if (highMapCpuCount < TICKLAG_INCREASE_THRESHOLD)
-						highMapCpuCount++
-				else if (world.map_cpu <= TICKLAG_MAPCPU_MIN)
+						++highMapCpuCount
+				else if (map_low)
 					if (highMapCpuCount > -TICKLAG_DECREASE_THRESHOLD)
-						highMapCpuCount--
+						--highMapCpuCount
 
 				// adjust the tick_lag, if needed
 				var/dilated_tick_lag
