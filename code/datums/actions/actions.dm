@@ -2015,10 +2015,17 @@
 	var/pixel_x_hand_offset = null
 	var/pixel_y_hand_offset = null
 
+	var/initial_pixel_x = null
+	var/initial_pixel_y = null
+	var/initial_vis_flags = null
+
 	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
 		. = ..()
 		src.user = user
 		src.item = item
+		src.initial_pixel_x = src.item.pixel_x
+		src.initial_pixel_y = src.item.pixel_y
+		src.initial_vis_flags= src.item.vis_flags
 		src.hand_icon = hand_icon
 		src.pixel_x_offset = x_offset
 		src.pixel_y_offset = y_offset
@@ -2035,15 +2042,20 @@
 			src.pixel_x_offset = -src.pixel_x_offset
 			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
 
-		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
-		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
+		src.item.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
+		src.item.pixel_x = src.pixel_x_offset
+		src.item.pixel_y = src.pixel_y_offset
+		src.user.vis_contents += src.item
 
-		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
 
 		src.user.set_dir(SOUTH)
 
 	onDelete()
 		. = ..()
-		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.user.vis_contents -= src.item
+		src.item.vis_flags = initial_vis_flags
+		src.item.pixel_x = initial_pixel_x
+		src.item.pixel_y = initial_pixel_y
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")
