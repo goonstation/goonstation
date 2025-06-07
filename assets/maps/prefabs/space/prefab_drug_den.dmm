@@ -409,7 +409,7 @@
 /obj/machinery/light/small/blueish{
 	dir = 8
 	},
-/obj/item/reagent_containers/food/snacks/popcorn{
+/obj/item/kitchen/popcorn_box{
 	desc = "It's a little stale...";
 	name = "old popcorn";
 	pixel_x = -6;

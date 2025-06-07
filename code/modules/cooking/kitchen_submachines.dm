@@ -1162,7 +1162,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)
-					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
+					new/obj/item/reagent_containers/food/snacks/ingredient/kernels/(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
 					var/datum/plantgenes/DNA = P:plantgenes

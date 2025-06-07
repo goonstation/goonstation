@@ -27440,7 +27440,7 @@
 /area/station/quartermaster/office)
 "jyc" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/popcorn{
+/obj/item/kitchen/popcorn_box{
 	pixel_x = 26;
 	pixel_y = 2
 	},

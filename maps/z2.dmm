@@ -37543,7 +37543,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLK" = (
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
 	},
@@ -37727,7 +37727,7 @@
 /obj/stool/chair/couch{
 	dir = 6
 	},
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMh" = (
@@ -40814,7 +40814,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cUr" = (
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -50769,7 +50769,7 @@
 /area/centcom/lounge)
 "dIu" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/kitchen/popcorn_box,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"

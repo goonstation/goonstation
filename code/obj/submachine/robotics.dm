@@ -625,7 +625,7 @@
 						if(1)
 							new /obj/item/reagent_containers/food/snacks/fries(get_turf(src))
 						if(2)
-							new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
+							new /obj/item/kitchen/popcorn_box(get_turf(src))
 						if(3)
 							new /obj/item/reagent_containers/food/snacks/donut(get_turf(src))
 						if(4)

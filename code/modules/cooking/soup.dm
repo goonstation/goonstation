@@ -78,11 +78,17 @@ TYPEINFO(/obj/stove)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
 				boutput(user,SPAN_ALERT("<b>There's already a pot on the stove, dummy!"))
-			else
-				src.icon_state = "stove1"
-				src.pot = W
-				user.u_equip(W)
-				W.set_loc(src)
+				return
+			var/obj/item/soup_pot/incomingpot = W
+			src.icon_state = "stove1"
+			if (incomingpot.popcorn)
+				if (istype(incomingpot.popcorn, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
+					src.icon_state = "stove1_cornraw"
+				else
+					src.icon_state = "stove1_corncooked"
+			src.pot = W
+			user.u_equip(W)
+			W.set_loc(src)
 
 		if (!src.on && src.pot)
 
@@ -147,22 +153,35 @@ TYPEINFO(/obj/stove)
 			return src.Attackhand(user)
 
 	proc/light(var/mob/user, var/message as text)
-		if(pot.my_soup)
+		if(pot.my_soup || (pot.popcorn && pot.popcorn.cooked))
 			boutput(user,SPAN_ALERT("<b>There's still soup in the pot, dummy!</b>"))
 			return
 		if(!pot.total_wclass)
-			boutput(user,SPAN_ALERT("<b>You can't have a soup with no ingredients, dummy!</b>"))
+			if (!pot.popcorn)
+				boutput(user,SPAN_ALERT("<b>You can't have a soup with no ingredients, dummy!</b>"))
 			return
-		if(!pot.reagents.total_volume)
+		if(!pot.reagents.total_volume && !pot.popcorn)
 			boutput(user,SPAN_ALERT("<b>You can't have a soup with no broth, dummy!</b>"))
 			return
 		user.visible_message(message)
 		src.on = 1
-		src.icon_state = "stove2"
+		if (pot.popcorn)
+			src.icon_state = "stove2_corn"
+		else
+			src.icon_state = "stove2"
 		spawn(pot.total_wclass SECONDS)
 			src.on = 0
-			src.icon_state = "stove1"
-			src.generate_soup()
+			if (pot.popcorn)
+				pot.popcorn.cooked = TRUE
+				pot.icon_state = "cornpot_cooked"
+				pot.corn_scoops = 2
+				pot.total_wclass = 0
+				pot.create_reagents(30)
+				pot.UpdateIcon()
+				src.icon_state = "stove1_corncooked"
+			else
+				src.icon_state = "stove1"
+				src.generate_soup()
 
 	proc/generate_soup()
 		if(!pot)
@@ -297,10 +316,9 @@ TYPEINFO(/obj/stove)
 
 		return S
 
-
 /obj/item/soup_pot
 	name = "soup pot"
-	desc = "Well, for a very broad definition of \"soup\", anyways."
+	desc = "Well, for a very broad definition of \"soup\", anyways. In space, popcorn counts."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "souppot"
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
@@ -314,6 +332,8 @@ TYPEINFO(/obj/stove)
 	w_class = W_CLASS_HUGE
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
+	var/obj/item/reagent_containers/food/snacks/ingredient/kernels/popcorn = null
+	var/corn_scoops = null
 	tooltip_flags = REBUILD_DIST
 
 	New()
@@ -362,8 +382,6 @@ TYPEINFO(/obj/stove)
 
 	on_reagent_change()
 		..()
-		if(my_soup)
-			return
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			fluid_icon.color = average.to_rgba()
@@ -372,7 +390,7 @@ TYPEINFO(/obj/stove)
 			src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W) && !istype(W,/obj/item/ladle))
+		if(istype(W) && !istype(W,/obj/item/ladle)) // welcome child to the land of ifs and elses
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
 					boutput(user, SPAN_ALERT("You can't put that in \the [src] when it's attached to you!"))
@@ -382,34 +400,74 @@ TYPEINFO(/obj/stove)
 				return
 			if(W.w_class <= max_wclass)
 				if(!(W.flags & OPENCONTAINER)) // is it a reagent container?
+					if (src.total_wclass >= src.total_wclass_max && !src.popcorn.cooked)
+						boutput(user,"There's not enough room in [src] for [W]!")
+						return
 					if((W.w_class + src.total_wclass) > src.total_wclass_max)
 						boutput(user,"There's not enough room in [src] for [W]!")
 						return
+					else if (!src.popcorn)
+						place_corn(user, W)
 					else
-						W.set_loc(src)
-						user.u_equip(W)
-						user.visible_message("[user] puts [W] in [src].", "You put [W] in [src]")
-						src.update_wclass_total()
+						user.visible_message(SPAN_ALERT("The pot is full of kernals already!"))
 						return
 				else if (!W.reagents.total_volume) // if is a container, is it empty?
 					if((W.w_class + src.total_wclass) > src.total_wclass_max)
 						boutput(user,"There's not enough room in [src] for [W]!")
 						return
+					else if (!src.popcorn)
+						place_corn(user, W)
 					else
-						W.set_loc(src)
-						user.u_equip(W)
-						user.visible_message("[user] puts [W] in [src].", "You put [W] in [src]")
-						src.update_wclass_total()
+						user.visible_message(SPAN_ALERT("The pot is full of kernals already!"))
 						return
+
 		else if (istype(W,/obj/item/ladle))
 			var/obj/item/ladle/L = W
-			if(!src.my_soup)
+
+			if(!src.my_soup && !src.popcorn)
 				if(src.total_wclass || src.reagents.total_volume)
 					boutput(user,SPAN_ALERT("<b>That's not ready to serve!"))
 				else
 					boutput(user,SPAN_ALERT("<b>There's nothing in there to serve!"))
+				return
 
-			else if (L.my_soup)
+			if (src.popcorn)
+				if (!src.popcorn.cooked)
+					boutput(user,SPAN_ALERT("<b>That's not ready to serve!"))
+					return
+
+				if (L.corn_scoop)
+					if (src.corn_scoops >= 2)
+						boutput(user,SPAN_ALERT("<b>That pot's full of popcorn already!"))
+						return
+					L.corn_scoop = FALSE
+					L.icon_state = "ladle"
+					L.seasoning = null
+					L.UpdateIcon()
+					src.corn_scoops++
+					src.create_reagents(30)
+					return
+				else
+					L.corn_scoop = TRUE
+					L.icon_state = "ladle_corn"
+					L.UpdateIcon()
+					if (src.reagents.reagent_list)
+						L.seasoning = src.reagents.get_master_reagent()
+					src.corn_scoops--
+					if (src.corn_scoops <= 0)
+						qdel(src.popcorn)
+						src.popcorn = null
+						src.reagents.clear_reagents()
+						src.UpdateOverlays(null, "fluid")
+						src.create_reagents(src.max_reagents)
+						src.icon_state = "souppot"
+						src.total_wclass = 0
+						src.UpdateIcon()
+					return
+			else if (L.corn_scoop)
+				return
+
+			if (L.my_soup)
 				if(L.my_soup == src.my_soup)
 					src.total_wclass++
 					tooltip_rebuild = 1
@@ -429,6 +487,13 @@ TYPEINFO(/obj/stove)
 
 			return
 		..()
+
+	afterattack(atom/target, mob/user)
+		if (istype(target, /obj/machinery/drainage) && src.popcorn)
+			qdel(src.popcorn)
+			src.popcorn = null
+			src.icon_state = "souppot"
+			src.UpdateIcon()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
@@ -475,6 +540,21 @@ TYPEINFO(/obj/stove)
 		for(var/obj/item/I in src.contents)
 			src.total_wclass += I.w_class
 
+	proc/place_corn(mob/user, var/obj/item/item)
+		if (istype(item, /obj/item/reagent_containers/food/snacks/ingredient/kernels))
+			if (src.reagents.total_volume > 0)
+				boutput(user,SPAN_ALERT("You think you should wait to pop the kernels before you coat them..."))
+				return
+			src.popcorn = item
+			src.create_reagents(0)
+			src.total_wclass = src.total_wclass_max
+			src.icon_state = "cornpot_raw"
+			src.UpdateIcon()
+		else
+			src.update_wclass_total()
+		item.set_loc(src)
+		user.u_equip(item)
+		user.visible_message("[user] puts [item] in [src].", "You put [item] in [src]")
 
 /obj/item/ladle
 	name = "ladle"
@@ -482,6 +562,8 @@ TYPEINFO(/obj/stove)
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "ladle"
 	var/datum/custom_soup/my_soup
+	var/corn_scoop = FALSE
+	var/datum/reagent/seasoning
 	var/image/fluid_icon
 
 	New()
@@ -490,6 +572,13 @@ TYPEINFO(/obj/stove)
 		if(prob(1))
 			src.name = "Soup sword" //https://discordapp.com/channels/182249960895545344/469379618168897538/698632230851051552
 			src.setItemSpecial(/datum/item_special/swipe)
+
+	afterattack(atom/target, mob/user)
+		if (istype(target, /obj/machinery/drainage) && src.corn_scoop)
+			src.corn_scoop = FALSE
+			src.seasoning = null
+			src.icon_state = "ladle"
+			src.UpdateIcon()
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color
