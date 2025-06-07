@@ -31083,7 +31083,6 @@
 "dbU" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
 	req_access_txt = "1"
 	},
 /obj/mapping_helper/access/security,
@@ -31496,9 +31495,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "dAB" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Customs"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
@@ -32060,9 +32057,7 @@
 	},
 /area/station/hydroponics/bay)
 "ehM" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	name = "Teleporter"
-	},
+/obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/teleporter,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
@@ -32941,9 +32936,7 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "fhj" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	name = "Bridge"
-	},
+/obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler{
@@ -33842,7 +33835,6 @@
 "grm" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
 	req_access_txt = "1"
 	},
 /obj/mapping_helper/access/security,
@@ -34535,9 +34527,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "hnc" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	name = "Bridge"
-	},
+/obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -35021,9 +35011,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/alt{
-	name = "Refinery"
-	},
+/obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -35247,7 +35235,6 @@
 "isV" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	name = "Captain's Quarters";
 	req_access_txt = "20";
 	id = "quarters_cap"
 	},
@@ -36173,9 +36160,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "jFe" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Courtroom"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36506,7 +36491,6 @@
 /area/station/janitor/office)
 "kcY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Captain's Quarters";
 	req_access_txt = "20";
 	id = "quarters_cap"
 	},
@@ -37041,9 +37025,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Customs"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
@@ -37489,7 +37471,6 @@
 /area/station/maintenance/southwest)
 "ltY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Head of Personnel's Office";
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -39676,9 +39657,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "nZg" = (
-/obj/machinery/door/airlock/pyro/alt{
-	name = "Refinery"
-	},
+/obj/machinery/door/airlock/pyro/alt,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -39757,7 +39736,6 @@
 "ofe" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4;
-	name = "Processing Room";
 	req_access_txt = "1"
 	},
 /obj/mapping_helper/access/security,
@@ -40923,7 +40901,6 @@
 /area/station/crew_quarters/barber_shop)
 "pDm" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	name = "Courtroom";
 	req_access_txt = "1"
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -40959,9 +40936,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "pFI" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	name = "Bridge"
-	},
+/obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -41600,9 +41575,7 @@
 	name = "Catering Hangar"
 	})
 "qvi" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Courtroom"
-	},
+/obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
@@ -42229,7 +42202,6 @@
 "rqp" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
-	name = "Head of Personnel's Office";
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
@@ -45047,8 +45019,7 @@
 /area/station/maintenance/inner/central)
 "vGD" = (
 /obj/machinery/door/airlock/pyro/glass{
-	id = "security_foyer";
-	name = "Security Foyer"
+	id = "security_foyer"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
@@ -45917,7 +45888,6 @@
 /area/research_outpost)
 "wJX" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	name = "Head of Personnel's Office";
 	id = "quarters_hop"
 	},
 /obj/mapping_helper/access/head_of_personnel,
