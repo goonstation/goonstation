@@ -308,7 +308,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	make_my_stuff()
 		..()
-		var/loot = rand(1,9)
+		var/loot = rand(1,11)
 		switch (loot)
 			if (1)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
@@ -399,6 +399,38 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					else // if what we selected wasn't a valid path
 						i++ // try again
 
+			if (10) // weaker power eggs
+				var/list/eggs_weak = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
+
+				for (var/i=rand(1,src.storage.slots), i>0, i--)
+					var/egg = pick(eggs_weak)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
+
+			if (11) // strong power eggs
+				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
+				#ifdef SECRETS_ENABLED
+					eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
+					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				#endif
+				var/egg = pick(eggs_strong)
+				if (ispath(egg))
+					src.storage.add_contents(new egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
 	New()
