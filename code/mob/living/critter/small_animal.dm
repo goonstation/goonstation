@@ -362,8 +362,9 @@ proc/filter_carrier_pets(var/type)
 		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
 			return
 		src.visible_message("[src] sniffs \the [food].")
+		var/datum/recipe_manager/RM = get_singleton(/datum/recipe_manager)
 		var/list/possible_recipes = list()
-		for (var/datum/cookingrecipe/recipe in global.oven_recipes)
+		for (var/datum/cookingrecipe/recipe in RM.oven_recipes)
 			if (istypes(food, recipe.ingredients))
 				possible_recipes += recipe
 		src.set_dir(get_dir(src, user))

@@ -20105,7 +20105,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "buq" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -47456,7 +47456,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "lwM" = (
-/obj/submachine/chef_oven,
+/obj/machinery/cookingmachine/oven,
 /obj/landmark/bill_spawn,
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
@@ -48847,7 +48847,7 @@
 /area/station/maintenance/solar/west)
 "mBW" = (
 /obj/table/auto,
-/obj/machinery/mixer,
+/obj/machinery/cookingmachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mCe" = (
