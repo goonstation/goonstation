@@ -3141,3 +3141,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	food_effects = list("food_warm","food_energized","food_brute")
 	bites_left = 5
 	heal_amt = 3
+
+/obj/item/reagent_containers/food/snacks/flan
+	name = "flan"
+	desc = "A sweet custard dessert with a layer of caramel on top."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "flan"
+	food_color = "#fac34d"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	bites_left = 3
+	heal_amt = 2
+	initial_reagents = list("sugar" = 10, "vanilla" = 10)
+	food_effects = list("food_energized")
+	meal_time_flags = MEAL_TIME_SNACK
