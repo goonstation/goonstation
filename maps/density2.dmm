@@ -4443,7 +4443,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "Ej" = (
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/ranch)
 "Ek" = (

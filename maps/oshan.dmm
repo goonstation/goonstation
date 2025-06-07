@@ -43893,7 +43893,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "tLt" = (
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "tLA" = (
