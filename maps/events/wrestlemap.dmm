@@ -3984,32 +3984,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"bMW" = (
-/obj/table/auto,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/random_item_spawner/medicine/two,
-/obj/item/robodefibrillator{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -7;
-	pixel_y = 16
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/storage/box/health_upgrade_kit{
-	pixel_x = -8;
-	pixel_y = 7
-	},
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/surgery/storage)
 "bMZ" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -20726,20 +20700,6 @@
 /area/station/security/brig{
 	name = "The Cage Arena"
 	})
-"jga" = (
-/obj/table/auto,
-/obj/item/wrench{
-	pixel_x = 11
-	},
-/obj/item/weldingtool{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/item/paper/cryo,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "jgn" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -25977,6 +25937,17 @@
 	},
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
+"lzw" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/boxing,
+/obj/item/clothing/mask/wrestling/blue,
+/obj/machinery/recharger/defibrillator,
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "lzH" = (
 /obj/storage/crate{
 	name = "Spare Parts"
@@ -37497,6 +37468,21 @@
 	dir = 10
 	},
 /area/station/hallway/primary/west)
+"qGM" = (
+/obj/table/auto,
+/obj/item/wrench{
+	pixel_x = 11
+	},
+/obj/item/weldingtool{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/paper/cryo,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "qGR" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -40036,16 +40022,6 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
-"rPH" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/boxing,
-/obj/item/clothing/mask/wrestling/blue,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "rQa" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
@@ -43586,6 +43562,33 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"ttC" = (
+/obj/table/auto,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/random_item_spawner/medicine/two,
+/obj/item/robodefibrillator{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = -7;
+	pixel_y = 16
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/storage/box/health_upgrade_kit{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/surgery/storage)
 "ttD" = (
 /obj/decal/tile_edge/stripe{
 	dir = 1
@@ -84097,7 +84100,7 @@ aVd
 aVd
 aVd
 aVd
-rPH
+lzw
 irp
 gef
 gef
@@ -84393,7 +84396,7 @@ nyP
 afD
 tNG
 aVd
-bMW
+ttC
 hhn
 sIc
 ldV
@@ -88623,7 +88626,7 @@ snp
 ljs
 mWw
 hsS
-jga
+qGM
 xfg
 xfg
 xfg
