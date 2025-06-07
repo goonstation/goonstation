@@ -620,9 +620,9 @@
 	category = list("trinkets")
 	
 /datum/trait/eyepatch
-	name = "Eyepatch"
+	name = "Monophthalmic"
 	icon_state = "eyepatch"
-	desc = "Start the shift with an eyepatch on. You hate being not able to see through it, but your too scared to just make a hole in it with a screwdriver in order to fix that issue. Its still probably valuable you know!"
+	desc = "Start the shift with an eyepatch. You hate being not able to see through it, but your too scared to just make a hole in it with a screwdriver in order to fix that issue. Its still probably valuable you know!"
 	id = "eyepatch"
 	points = -1 
 	category = list("trinkets")
