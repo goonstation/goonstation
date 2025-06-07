@@ -753,7 +753,7 @@
 			sec_part.run_component(mult)
 		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
 		if(engine_part?.active)
-			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+			var/usage = src.powercurrent/3000*mult * max(src.speedmod, 1) ** 2 * max(src.engine?.powergenerated / 200, 1) // 0.0333 moles consumed per 100W per tick
 			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 			var/toxins = consumed?.toxins
 			if(isnull(toxins))
