@@ -18277,7 +18277,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "dUq" = (

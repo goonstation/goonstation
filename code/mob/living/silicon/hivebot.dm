@@ -893,6 +893,10 @@ Frequency:
 	. = ..()
 	src.hud?.update_pulling()
 
+/mob/living/silicon/hivebot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 /*-----Actual AI Shells---------------------------------------*/
 
 /mob/living/silicon/hivebot/eyebot

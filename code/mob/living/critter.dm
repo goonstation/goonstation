@@ -1557,6 +1557,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 
+/mob/living/critter/remove_pulling()
+	. = ..()
+	src.hud?.update_pulling()
+
 /mob/living/critter/proc/admincmd_attack()
 	set name = "Start Attacking"
 	if(isnull(src.ai))
