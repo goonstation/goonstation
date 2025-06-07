@@ -2290,15 +2290,14 @@
 					return
 				else
 					src.remove_stamina(STAMINA_DEFAULT_WOOF_COST)
-					if (src.get_stamina() > 0)
+					if (src.get_stamina() > 0 && !GET_COOLDOWN(src, "pug_woof_wheeze"))
 						message = "<b>[src]</b> woofs!"
 						playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 					else
-						if (!ON_COOLDOWN(src, "pug_woof_wheeze", 2 SECONDS))
-							message = "[src] wheezes"
-							playsound(src.loc, 'sound/voice/pug_wheeze.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
+						if (!ON_COOLDOWN(src, "pug_woof_wheeze", 3 SECONDS))
 							src.take_oxygen_deprivation(STAMINA_DEFAULT_WOOF_COST)
 							src.changeStatus("knockdown", 4 SECONDS)
+							return src.emote("wheeze", voluntary, emoteTarget, dead_check) //tail recursion, geddit?
 			else
 				if (voluntary)
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
