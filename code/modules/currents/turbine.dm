@@ -212,6 +212,7 @@
 				if (ishuman(M) && prob(30))
 					var/mob/living/carbon/human/human = M
 					human.limbs.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+					take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 			if (1)
 				src.visible_message(SPAN_ALERT("[M] gets mangled by the rapidly spinning blades of [src]! SHIT!"))
 				random_brute_damage(M, rand(20, 30))
@@ -220,6 +221,7 @@
 				if (ishuman(M))
 					var/mob/living/carbon/human/human = M
 					human.limbs.sever(pick("l_arm", "r_arm", "l_leg", "r_leg", "both_legs"))
+					take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 
 
 	update_icon()

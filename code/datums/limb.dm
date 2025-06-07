@@ -294,7 +294,7 @@
 
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		if((..() && istype(user.loc, /turf/space) || user.no_gravity) && src.has_space_pushback)
-			user.inertia_dir = get_dir(target, user)
+			user.inertia_dir = get_dir_accurate(target, user)
 			step(user, user.inertia_dir)
 
 	arm38

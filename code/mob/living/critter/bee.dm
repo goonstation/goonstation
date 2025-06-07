@@ -27,9 +27,9 @@
 	var/has_color_overlay = 1
 	var/image/image_color_overlay = null
 	var/image/image_sleep_overlay = null
-	speechverb_say = "bumbles"
-	speechverb_exclaim = "buzzes"
-	speechverb_ask = "bombles"
+	speech_verb_say = "bumbles"
+	speech_verb_exclaim = "buzzes"
+	speech_verb_ask = "bombles"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	health_brute = 25
 	health_brute_vuln = 0.8
@@ -745,9 +745,9 @@
 	icon_state_sleep = "moth-sleep"
 	icon_body = "moth"
 	honey_color = rgb(207, 207, 207)
-	speechverb_say = "flutters"
-	speechverb_exclaim = "squeaks"
-	speechverb_ask = "flutters"
+	speech_verb_say = "flutters"
+	speech_verb_exclaim = "squeaks"
+	speech_verb_ask = "flutters"
 
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"

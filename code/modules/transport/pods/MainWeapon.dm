@@ -24,6 +24,30 @@
 
 	power_used = 65
 	system = "Main Weapon"
+
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(vehicle.weapon_class == 0)
+			boutput(user, SPAN_ALERT("Weapons cannot be installed in this ship!"))
+			return FALSE
+		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
+		if(current_weapon && !current_weapon.removable)
+			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
+			return FALSE
+		return TRUE
+
+	get_install_slot()
+		return POD_PART_MAIN_WEAPON
+
+	ship_install()
+		..()
+		if(src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(image('icons/effects/64x64.dmi', "[src.appearanceString]"), "mainweapon")
+
+	ship_uninstall()
+		..()
+		if (src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(null, "mainweapon")
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
@@ -224,6 +248,9 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+
+/obj/item/shipcomponent/mainweapon/gun/pod_wars //normal nukies can have the fun version
+	firerate = 20
 
 /obj/item/shipcomponent/mainweapon/minigun
 	name = "Minigun"
@@ -1201,7 +1228,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("knockdown", 2 SECOND)
-			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))

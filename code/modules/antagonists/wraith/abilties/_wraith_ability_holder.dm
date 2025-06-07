@@ -153,14 +153,17 @@
 			return TRUE
 
 		. = ..()
-		//hearghosts is checked in deadsay.dm and chatprocs.dm
+
 		W.hearghosts = !W.hearghosts
 		if (W.hearghosts)
+			W.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
 			src.icon_state = "hide_chat"
 			boutput(W, SPAN_NOTICE("Now listening to the dead again."))
 		else
+			W.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
 			src.icon_state = "show_chat"
 			boutput(W, SPAN_NOTICE("No longer listening to the dead."))
+
 		return FALSE
 
 /obj/spookMarker
