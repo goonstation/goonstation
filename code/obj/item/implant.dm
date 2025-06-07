@@ -925,6 +925,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if(!src.inactive) //If this isn't the implant currently mindhacking the owner don't remove antag status
 			M.delStatus("mindhack")
 			M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		src.inactive = FALSE //Set back to normal incase its used again
 		return
 
 	proc/add_orders(var/orders)
