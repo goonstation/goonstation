@@ -498,6 +498,19 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			else
 				eye_covered = "R"
 			src.icon_state = "eyepatch-[eye_covered]"
+	trinket
+		name = "eyepatch"
+		pinhole = TRUE
+		block_eye = null
+
+		New()
+			..()
+			var/eye_covered
+			if (prob(50))
+				eye_covered = "L"
+			else
+				eye_covered = "R"
+			src.icon_state = "eyepatch-[eye_covered]"
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
