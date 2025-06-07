@@ -43,7 +43,7 @@
 		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
 			var/mob/living/critter/mimic/antag_spawn/mimic = parent
 			src.last_appearance = mimic.appearance
-			mimic.appearance = /obj/mimicdummy
+			mimic.disguise_as(/obj/mimicdummy)
 			mimic.base_form = FALSE
 			mimic.UpdateIcon()
 
