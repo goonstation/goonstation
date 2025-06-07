@@ -2190,7 +2190,9 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 #define SILICON_POWER_COST_MOD 10
 
 TYPEINFO(/obj/item/cargotele)
-	mats = 4
+	mats = list("telecrystal" = 5,
+				"conductive" = 5,
+				"reflective" = 2)
 
 /obj/item/cargotele
 	name = "cargo transporter"
@@ -2201,8 +2203,8 @@ TYPEINFO(/obj/item/cargotele)
 	var/cost = 25
 	/// Length of action bar before teleport completes
 	var/teleport_delay = 3 SECONDS
-	/// Target pad we send cargo to. Make sure you're sending to the pad's loc and not the pad itself
-	var/obj/submachine/cargopad/target = null
+	// The name of the target pad. Pads that share names will be chosen at random.
+	var/target_name = ""
 	/// Type of cell used in this
 	var/cell_type = /obj/item/ammo/power_cell/med_power
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
@@ -2210,7 +2212,6 @@ TYPEINFO(/obj/item/cargotele)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
-
 
 	New()
 		. = ..()
@@ -2225,13 +2226,13 @@ TYPEINFO(/obj/item/cargotele)
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(maybe_reset_target)) //make sure cargo pads can GC
 
 	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
-		if (target == pad)
-			target = null
+		if (src.target_name == pad.tele_name)
+			src.target_name = ""
 
 	examine(mob/user)
 		. = ..()
-		if(target)
-			. += "It's currently set to [src.target]."
+		if(src.target_name)
+			. += "It's currently set to [src.target_name]."
 		else
 			. += "No destination has been selected."
 		if (isrobot(user))
@@ -2251,12 +2252,11 @@ TYPEINFO(/obj/item/cargotele)
 			boutput(user, SPAN_ALERT("No receivers available."))
 		else
 			var/mob/holder = src.loc
-			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
-			if (src.loc != holder || !selection)
+			var/obj/submachine/cargopad/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
+			if (src.loc != holder || !istype(selection))
 				return
-			boutput(user, "Target set to [get_area(selection)].")
-			//blammo! works!
-			src.target = selection
+			src.target_name = selection.tele_name //blammo! works!
+			boutput(user, "Target set to [src.target_name].")
 
 	afterattack(var/obj/O, mob/user)
 		if (!istype(O))
@@ -2268,7 +2268,7 @@ TYPEINFO(/obj/item/cargotele)
 			src.try_teleport(O, user)
 
 	proc/can_teleport(var/obj/cargo, var/mob/user)
-		if (!src.target)
+		if (!src.target_name)
 			boutput(user, SPAN_ALERT("You need to set a target first!"))
 			return FALSE
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
@@ -2291,12 +2291,11 @@ TYPEINFO(/obj/item/cargotele)
 		if (!src.can_teleport(cargo, user))
 			return FALSE
 
-		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target]..."))
+		boutput(user, SPAN_NOTICE("Teleporting [cargo] to [src.target_name]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/datum/action/bar/private/icon/callback/teleport = new(user, cargo, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null, src)
 		actions.start(teleport, user)
 		return TRUE
-
 
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
@@ -2305,20 +2304,11 @@ TYPEINFO(/obj/item/cargotele)
 			var/obj/item/I = cargo
 			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
-		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
-		var/mob_teled = FALSE
-		for (var/mob/M in cargo.contents)
-			if (M)
-				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-				mob_teled = TRUE
+		global.cargo_pad_manager.transport(user, cargo, src.target_name, src)
 
-		if(!mob_teled)
-			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] ([cargo.type]) to [log_loc(src.target)].")
-
-		cargo.set_loc(get_turf(src.target))
-		target.receive_cargo(cargo)
+		// Transport finished
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2361,7 +2351,7 @@ TYPEINFO(/obj/item/cargotele)
 			store.weld(TRUE, user)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
-		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		var/rand_loc = random_space_turf() || random_nonrestrictedz_turf()
 		boutput(user, SPAN_NOTICE("Teleporting [cargo]..."))
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
@@ -2369,14 +2359,14 @@ TYPEINFO(/obj/item/cargotele)
 		for (var/atom/A in cargo.contents)
 			if (ismob(A))
 				var/mob/M = A
-				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(rand_loc)].")
 				var/datum/job/job = find_job_in_controller_by_string(M.job)
 				value += job?.wages * 5
 			else
 				cargo.contents -= A
 				qdel(A)
 		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
-			cargo.set_loc(src.target)
+			cargo.set_loc(rand_loc)
 		else
 			qdel(cargo)
 		src.total_earned += value
@@ -2512,7 +2502,7 @@ TYPEINFO(/obj/item/cargotele)
 	anchored = UNANCHORED
 	var/active = FALSE
 	var/obj/item/cell/cell = null
-	var/target = null
+	var/target_name = ""
 	var/group = null
 	var/image/hatch_image = null //no connected magnet = hatch closed cuz it won't take ore in
 	var/image/powercell_image = null
@@ -2539,7 +2529,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			src.UpdateOverlays(null, "powercell")
 
-		if(!target)
+		if(!src.target_name)
 			src.UpdateOverlays(src.hatch_image, "hatch")
 		else
 			src.UpdateOverlays(null, "hatch")
@@ -2604,20 +2594,20 @@ TYPEINFO(/obj/item/cargotele)
 				UpdateIcon()
 				return
 			PCEL.use(5)
-			if (src.target)
+			if (src.target_name)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
 					PCEL.use(2)
-					O.set_loc(src.target)
+					global.cargo_pad_manager.transport(null, O, src.target_name, src)
 				for(var/obj/item/scrap/S in orange(1,src))
 					PCEL.use(2)
-					S.set_loc(src.target)
+					global.cargo_pad_manager.transport(null, S, src.target_name, src)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
 					PCEL.use(2)
-					D.set_loc(src.target)
+					global.cargo_pad_manager.transport(null, D, src.target_name, src)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
 					PCEL.use(2)
-					R.set_loc(src.target)
+					global.cargo_pad_manager.transport(null, R, src.target_name, src)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
 					break
@@ -2641,7 +2631,7 @@ TYPEINFO(/obj/item/cargotele)
 				moved++
 
 	proc/change_dest(mob/user as mob)
-		if (!length(cargo_pad_manager.pads))
+		if (!length(global.cargo_pad_manager.pads))
 			boutput(user, SPAN_ALERT("No receivers available."))
 		else
 			var/list/L
@@ -2652,159 +2642,17 @@ TYPEINFO(/obj/item/cargotele)
 						L += C
 			else
 				L = global.cargo_pad_manager.pads
-			var/selection = tgui_input_list(user, "Select target output:", "Cargo Pads", L)
-			if(!selection)
+			var/obj/submachine/cargopad/selection = tgui_input_list(user, "Select target output:", "Cargo Pads", L)
+			if(!istype(selection))
 				return
-			var/turf/T = get_turf(selection)
-			if (!T)
-				boutput(user, SPAN_ALERT("Target not set!"))
-				return
-			boutput(user, "Target set to [selection] at [T.loc].")
-			src.target = T
+			src.target_name = selection.tele_name
+			boutput(user, "Target set to [src.target_name].")
 		UpdateIcon()
 
 	Exited(Obj, newloc)
 		. = ..()
 		if(Obj == src.cell)
 			src.cell = null
-
-/// Basically a list wrapper that removes and adds cargo pads to a global list when it receives the respective signals
-/datum/cargo_pad_manager
-	var/list/pads = list()
-
-	New()
-		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, PROC_REF(add_pad))
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(remove_pad))
-
-	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
-	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
-		if (!istype(pad)) //wuh?
-			return
-		src.pads |= pad
-
-	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
-	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)
-		if (!istype(pad)) //wuh!
-			return
-		src.pads -= pad
-
-
-var/global/datum/cargo_pad_manager/cargo_pad_manager
-
-TYPEINFO(/obj/submachine/cargopad)
-	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
-
-/obj/submachine/cargopad
-	name = "Cargo Pad"
-	desc = "Used to receive objects transported by a cargo transporter."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "cargopad"
-	anchored = ANCHORED
-	plane = PLANE_FLOOR
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/active = TRUE
-	var/group
-	/// The mailgroup to send notifications to
-	var/mailgroup = null
-
-	podbay
-		name = "Pod Bay Pad"
-	hydroponic
-		mailgroup = MGD_BOTANY
-		name = "Hydroponics Pad"
-	robotics
-		mailgroup = MGD_MEDRESEACH
-		name = "Robotics Pad"
-	artlab
-		mailgroup = MGD_SCIENCE
-		name = "Artifact Lab Pad"
-	engineering
-		mailgroup = MGO_ENGINEER
-		name = "Engineering Pad"
-	mechanics
-		mailgroup = MGO_ENGINEER
-		name = "Mechanics Pad"
-	magnet
-		mailgroup = MGD_MINING
-		name = "Mineral Magnet Pad"
-	miningoutpost
-		mailgroup = MGD_MINING
-		name = "Mining Outpost Pad"
-	qm
-		mailgroup = MGD_CARGO
-		name = "QM Pad"
-	qm2
-		mailgroup = MGD_CARGO
-		name = "QM Pad 2"
-	researchoutpost
-		mailgroup = MGD_SCIENCE
-		name = "Research Outpost Pad"
-	radio
-		name = "Radio Station Pad"
-
-	New()
-		..()
-		if (src.name == "Cargo Pad")
-			src.name += " ([rand(100,999)])"
-
-		//sadly maps often don't use the subtypes, so we do this instead
-		if (!src.mailgroup)
-			var/area/area = get_area(src)
-			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
-				src.mailgroup = MGD_BOTANY
-			else if (istype(area, /area/station/medical))
-				src.mailgroup = MGD_MEDRESEACH
-			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
-				src.mailgroup = MGD_SCIENCE
-			else if (istype(area, /area/station/engine))
-				src.mailgroup = MGO_ENGINEER
-			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
-				src.mailgroup = MGD_MINING
-			else if (istype(area, /area/station/quartermaster))
-				src.mailgroup = MGD_CARGO
-
-		if (src.active) //in case of map edits etc
-			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
-
-	disposing()
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
-		..()
-
-	was_deconstructed_to_frame(mob/user)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
-		..()
-
-	was_built_from_frame(mob/user, newly_built)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
-		..()
-
-	attack_hand(var/mob/user)
-		toggle(user)
-
-	attack_ai(mob/user)
-		. = ..()
-		toggle(user)
-
-	proc/toggle(mob/user)
-		if (src.active == 1)
-			boutput(user, SPAN_NOTICE("You switch the receiver off."))
-			ClearSpecificOverlays("lights")
-			src.active = FALSE
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_DISABLED, src)
-		else
-			boutput(user, SPAN_NOTICE("You switch the receiver on."))
-			AddOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
-			src.active = TRUE
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
-
-	proc/receive_cargo(var/obj/cargo)
-		if (!src.mailgroup)
-			return
-		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(src.mailgroup), "sender"="00000000", "message"="Notification: Incoming delivery to [src.name].")
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
 
