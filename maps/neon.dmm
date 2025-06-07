@@ -25359,7 +25359,7 @@
 /area/station/crew_quarters/kitchen)
 "sdZ" = (
 /obj/table/wood/auto,
-/obj/machinery/loudspeaker{
+/obj/loudspeaker{
 	layer = 4;
 	pixel_y = -6
 	},

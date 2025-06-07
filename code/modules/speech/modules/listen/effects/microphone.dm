@@ -7,12 +7,9 @@
 		return
 
 	var/feedback = FALSE
-	var/cause_fault = FALSE
-	var/list/obj/machinery/loudspeaker/loudspeakers = list()
-	for_by_tcl(loudspeaker, /obj/machinery/loudspeaker)
-		if (loudspeaker.is_broken())
-			continue
-
+	var/cause_damage = FALSE
+	var/list/obj/loudspeaker/loudspeakers = list()
+	for_by_tcl(loudspeaker, /obj/loudspeaker)
 		if (!IN_RANGE(microphone, loudspeaker, 7))
 			continue
 
@@ -30,9 +27,9 @@
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_MICROPHONE)
 
 	if (feedback || (length(loudspeakers) > 5))
-		cause_fault = TRUE
+		cause_damage = TRUE
 
-	for (var/obj/machinery/loudspeaker/loudspeaker as anything in loudspeakers)
+	for (var/obj/loudspeaker/loudspeaker as anything in loudspeakers)
 		var/datum/say_message/loudspeaker_message = message.Copy()
 		loudspeaker_message.speaker = loudspeaker
 		loudspeaker_message.message_origin = loudspeaker
@@ -42,6 +39,6 @@
 			loudspeaker.visible_message(SPAN_ALERT("[loudspeaker] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))
 			playsound(loudspeaker.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
-		if (cause_fault)
+		if (cause_damage)
 			if (prob(length(loudspeakers) * 5))
-				loudspeaker.set_broken()
+				loudspeaker.changeHealth(-length(loudspeakers))

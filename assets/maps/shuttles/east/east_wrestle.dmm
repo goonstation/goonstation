@@ -308,7 +308,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "jS" = (

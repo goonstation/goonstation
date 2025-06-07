@@ -36500,7 +36500,7 @@
 /obj/decal/stage_edge{
 	dir = 2
 	},
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cIp" = (
@@ -37348,7 +37348,7 @@
 	dir = 1
 	},
 /obj/decal/stage_edge,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cKZ" = (
@@ -44683,7 +44683,7 @@
 /area/syndicate_station/battlecruiser)
 "dfW" = (
 /obj/decal/stage_edge,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dfX" = (

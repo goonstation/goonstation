@@ -4787,7 +4787,7 @@
 /area/station/crew_quarters/fitness)
 "att" = (
 /obj/fireworksbox,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "atv" = (

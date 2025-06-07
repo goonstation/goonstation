@@ -4328,7 +4328,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aAo" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
@@ -19533,7 +19533,7 @@
 	},
 /area/station/hangar/main)
 "eFV" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/shrub{
 	dir = 6
 	},
@@ -20471,7 +20471,7 @@
 	},
 /area/station/solar/aisat)
 "fjr" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/shrub{
 	dir = 6
 	},
@@ -29844,7 +29844,7 @@
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/south)
 "kUu" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
@@ -40167,7 +40167,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "qIv" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "qII" = (
@@ -52624,7 +52624,7 @@
 	icon_state = "plant";
 	tag = "icon-plant (NORTH)"
 	},
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "yjL" = (

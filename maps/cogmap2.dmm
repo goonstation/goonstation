@@ -6191,7 +6191,7 @@
 /area/station/chapel/sanctuary)
 "aub" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fpurple1"
@@ -7006,7 +7006,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awx" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/decal/boxingrope,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -9981,7 +9981,7 @@
 /area/station/chapel/sanctuary)
 "aDV" = (
 /obj/table/wood/auto,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -10023,7 +10023,7 @@
 /area/station/chapel/sanctuary)
 "aEc" = (
 /obj/table/wood/auto,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -39740,7 +39740,7 @@
 /area/station/maintenance/south)
 "cqF" = (
 /obj/table/auto,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "cqG" = (

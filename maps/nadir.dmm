@@ -20912,7 +20912,7 @@
 	name = "Transception Array Control"
 	})
 "iYk" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -41044,7 +41044,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "rNd" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"

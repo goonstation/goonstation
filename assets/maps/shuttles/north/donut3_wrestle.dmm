@@ -869,7 +869,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "DA" = (
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "DE" = (

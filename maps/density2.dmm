@@ -3709,7 +3709,7 @@
 /area/station/hallway/secondary/exit)
 "yB" = (
 /obj/decal/stage_edge,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /obj/railing{
 	color = "#222288"
 	},

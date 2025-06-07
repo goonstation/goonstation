@@ -36251,7 +36251,7 @@
 /area/station/turret_protected/ai)
 "uOo" = (
 /obj/table/wood/auto,
-/obj/machinery/loudspeaker,
+/obj/loudspeaker,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "uOv" = (
