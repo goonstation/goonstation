@@ -910,7 +910,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		for (var/obj/item/implant/mindhack/MS in H.implant)
 			if(MS != src)
 				MS.inactive = TRUE
-		src.inactive = TRUE
+		src.inactive = FALSE
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
