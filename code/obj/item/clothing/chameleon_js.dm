@@ -37,6 +37,7 @@
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
+			P.hide_underwear = U.hide_underwear
 			src.clothing_choices += P
 
 			boutput(user, SPAN_NOTICE("[U.name]'s appearance has been copied!"))
@@ -81,8 +82,10 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.hide_underwear = T.hide_underwear
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
+			usr.update_body()
 
 /datum/chameleon_jumpsuit_pattern
 	var/name = "black jumpsuit"
@@ -92,6 +95,7 @@
 	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
 	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
+	var/hide_underwear = FALSE
 
 	white
 		name = "white jumpsuit"
