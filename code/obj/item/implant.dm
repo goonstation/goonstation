@@ -864,6 +864,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = IMPLANT_SCAN_CATEGORY_SYNDICATE
 	var/uses = 1
 	var/expire = TRUE
+	var/inactive = FALSE //Has this implant been overriden on the current implantee
 	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
@@ -892,13 +893,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return FALSE
-		// Same here, basically. Multiple active implants is just asking for trouble.
-		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
-		for (var/obj/item/implant/mindhack/MS in H.implant)
-			var/obj/item/implant/mindhack/Inew = new MS.type(H)
-			H.implant += Inew
-			qdel(MS)
-		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
 		..()
@@ -908,6 +902,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("knockdown", 10 SECONDS)
+
+		//Remove any existing mindhack statuses and override existing implants
+		for (var/obj/item/implant/mindhack/MS in M.implant)
+			MS.override()
 
 		if(M == I)
 			boutput(M, SPAN_ALERT("You feel utterly strengthened in your resolve! You are the most important person in the universe!"))
@@ -920,8 +918,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove(var/mob/M)
 		..()
 		src.former_implantee = M
-		M.delStatus("mindhack")
-		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+		if(!src.inactive) //If this isn't the implant currently mindhacking the owner don't remove antag status
+			M.delStatus("mindhack")
+			M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
 		return
 
 	proc/add_orders(var/orders)
@@ -930,6 +929,20 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.custom_orders = copytext(sanitize(html_encode(orders)), 1, MAX_MESSAGE_LEN)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
+
+	proc/override(var/orders)
+		if(src.inactive)
+			return FALSE
+		var/mob/living/carbon/human/H = src.implanted
+		if(!istype(H))
+			return FALSE
+		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+		src.inactive = TRUE
+
+/obj/item/implant/mindhack/super
+	name = "mindhack DELUXE implant"
+	expire = FALSE
+	uses = 2
 
 /obj/item/implant/marionette
 	name = "marionette implant"
@@ -1350,11 +1363,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				M.linked_address = src.net_id
 				user.playsound_local(user, "sound/machines/tone_beep.ogg", 30)
 			return TRUE
-
-/obj/item/implant/mindhack/super
-	name = "mindhack DELUXE implant"
-	expire = 0
-	uses = 2
 
 /obj/item/implant/projectile
 	name = "bullet"
