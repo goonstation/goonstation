@@ -878,6 +878,7 @@
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
 				boutput(src, SPAN_ALERT("Your mind twangs uncomfortably!"))
 				boutput(this_one, SPAN_ALERT("Your mind twangs uncomfortably!"))
+				logTheThing(LOG_COMBAT, owner, "swapped minds with [this_one] via Meta-Neural Transferral gene.")
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf

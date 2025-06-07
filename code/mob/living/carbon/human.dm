@@ -3343,6 +3343,10 @@ mob/living/carbon/human/has_genetics()
 
 	. = ..()
 
+/mob/living/carbon/human/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 /mob/living/carbon/human/proc/fake_say(text)
 	set waitfor = FALSE
 	var/spaces = length(splittext(text, " "))
