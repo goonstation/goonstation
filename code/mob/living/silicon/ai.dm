@@ -359,10 +359,10 @@ or don't if it uses a custom topopen overlay
 	if(eyecam)
 		eyecam.abilityHolder = abilityHolder
 
-	if(law_rack_connection)
-		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+	if(lawset_connection)
+		holoHolder.text_expansion = lawset_connection.host_rack.holo_expansions.Copy()
 
-		for(var/ability_type in law_rack_connection.ai_abilities)
+		for(var/ability_type in lawset_connection.host_rack.ai_abilities)
 			abilityHolder.addAbility(ability_type)
 
 	src.hologramContextActions = list()
@@ -468,17 +468,17 @@ or don't if it uses a custom topopen overlay
 			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
-		if(!src.law_rack_connection)
+		if(!src.lawset_connection || !src.lawset_connection.host_rack)
 			boutput(src,"[src.name] is not connected to a law rack")
 		else
-			var/area/A = get_area(src.law_rack_connection)
+			var/area/A = get_area(src.lawset_connection.host_rack)
 			boutput(user, "[src.name] is connected to a law rack at [A.name].")
 
 		if(!linker.linked_rack)
 			return
 
 		if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-			if(src.law_rack_connection)
+			if(src.lawset_connection.host_rack)
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.set_law_rack(linker.linked_rack, user)
@@ -925,8 +925,8 @@ or don't if it uses a custom topopen overlay
 		who = src.eyecam
 		boutput(who, "<b>Obey these laws:</b>")
 
-	if(src.law_rack_connection)
-		src.law_rack_connection.show_laws(who)
+	if(src.lawset_connection)
+		src.lawset_connection.show_laws(who)
 	else
 		boutput(src,"You have no laws!")
 	return
@@ -1036,17 +1036,25 @@ or don't if it uses a custom topopen overlay
 			. += SPAN_ALERT("<B>[src.name] looks severely burnt!</B>")
 
 	if(issilicon(user) || isAI(user))
-		var/lr = null
+		var/ls = null
 		if(isAIeye(user))
 			var/mob/living/intangible/aieye/E = user
-			lr =  E.mainframe?.law_rack_connection
+			ls =  E.mainframe?.lawset_connection
 		else
 			var/mob/living/silicon/S = user
-			lr =  S.law_rack_connection
-		if(src.law_rack_connection != lr)
+			ls =  S.lawset_connection
+		if(src.lawset_connection != ls)
 			. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"
+	if(HAS_ATOM_PROPERTY(user, PROP_MOB_LAW_VISION))
+		var/law_output = null
+		if(!lawset_connection)
+			law_output = "They do not have any laws!"
+		else
+			law_output = lawset_connection.host_rack ? "They are connected to rack ID [lawset_connection.host_rack.unique_id].<br>" : "They are not connected to a law rack.<br>"
+			law_output += "Their laws are:<br>" + lawset_connection.format_for_display()
+		. += "[SPAN_HINT(law_output)]"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
 	..()
@@ -1732,8 +1740,8 @@ or don't if it uses a custom topopen overlay
 		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
-	if(!src.law_rack_connection)
-		boutput(src.get_message_mob(), "You have no laws!")
+	if(!src.lawset_connection)
+		boutput(src, "You have no laws!")
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
@@ -1767,7 +1775,7 @@ or don't if it uses a custom topopen overlay
 		prefix = say_targets[choice]
 
 	logTheThing(LOG_SAY, usr, "states all their current laws.")
-	var/laws = src.law_rack_connection.format_for_irc()
+	var/laws = src.lawset_connection.format_for_irc()
 	for (var/number in laws)
 		src.say("[prefix] [number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)
