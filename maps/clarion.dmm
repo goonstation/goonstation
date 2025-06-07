@@ -3921,7 +3921,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aGj" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -7829,7 +7829,7 @@
 /area/station/security/hos)
 "bka" = (
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)

@@ -5572,7 +5572,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "avl" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -5839,7 +5839,7 @@
 /area/station/engine/elect)
 "awy" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /obj/decal/stage_edge,
 /turf/simulated/floor/wood,
@@ -8900,7 +8900,7 @@
 	},
 /area/station/hallway/primary/north)
 "aIO" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
