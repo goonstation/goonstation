@@ -30549,7 +30549,6 @@
 /area/station/hangar/engine)
 "dFj" = (
 /obj/rack,
-/obj/item/reagent_containers/food/drinks/juicer,
 /obj/item/swingsignfolded,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -43645,7 +43644,7 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/firealarm/west,
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "mEW" = (

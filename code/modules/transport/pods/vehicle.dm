@@ -12,17 +12,15 @@
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
 	var/passengers = 0 //The number of passengers in the ship
+
 	var/obj/item/tank/atmostank = null // provides the air for the passengers
 	var/obj/item/tank/fueltank = null // provides fuel, different mixes affect engine performance
-	var/list/components = list() //List of current components in ship
-	var/obj/item/shipcomponent/engine/engine = null //without this the ship can't do much
-	var/obj/item/shipcomponent/life_support/life_support = null // cleans and extends the life of the atmos tank
-	var/obj/item/shipcomponent/communications/com_system = null
-	var/obj/item/shipcomponent/mainweapon/m_w_system = null
-	var/obj/item/shipcomponent/secondary_system/sec_system = null
-	var/obj/item/shipcomponent/sensor/sensors = null
-	var/obj/item/shipcomponent/secondary_system/lock/lock = null
-	var/obj/item/shipcomponent/pod_lights/lights = null
+	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
+
+	///Associative list of part slot to the part installed in it
+	var/list/installed_parts = list(POD_PART_ENGINE=null, POD_PART_LIFE_SUPPORT=null, POD_PART_COMMS=null, \
+		POD_PART_MAIN_WEAPON=null, POD_PART_SECONDARY=null, POD_PART_SENSORS=null, POD_PART_LOCK=null, POD_PART_LIGHTS=null)
+
 	/// brake toggle
 	var/rcs = TRUE
 	var/uses_weapon_overlays = 0
@@ -31,7 +29,6 @@
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
 	var/acid_damage_multiplier = 1 // kubius: multiplier to damage taken from acid sea turfs (1 is full, 0 is none). 0 for syndie, 0.5 for subs
-	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
 	var/powercurrent = 0 //How much power the components are using
@@ -82,9 +79,10 @@
 
 
 	remove_air(amount as num)
+		var/obj/item/shipcomponent/life_support/life_support_part = src.get_part(POD_PART_LIFE_SUPPORT)
 		if(atmostank?.air_contents)
-			if(life_support?.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
-				life_support.power_used = 5 * passengers + 15
+			if(life_support_part?.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
+				life_support_part.power_used = 5 * passengers + 15
 				atmostank.air_contents.oxygen += amount / 5
 				atmostank.air_contents.nitrogen += 4 * amount / 5
 				if (atmostank.air_contents.carbon_dioxide > 0)
@@ -98,7 +96,7 @@
 			return atmostank.remove_air(amount)
 
 		else
-			life_support?.power_used = 0
+			life_support_part?.power_used = 0
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
@@ -136,42 +134,38 @@
 			actions.start(action_bar, user)
 			return
 
-		if (istype(W, /obj/item/shipcomponent))
-			Install(W)
-			return
-
 		if (istype(W, /obj/item/ammo/bullets))
 			if (W.disposed)
 				return
-			if (src.m_w_system)
-				if (!src.m_w_system.uses_ammunition)
-					boutput(user, SPAN_ALERT("That weapon does not require ammunition."))
-					return
-				if (src.m_w_system.remaining_ammunition >= 50)
-					boutput(user, SPAN_ALERT("The automated loader for the weapon cannot hold any more ammunition."))
-					return
-				var/obj/item/ammo/bullets/ammo = W
-				if (!ammo.amount_left)
-					return
-				if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
-					boutput(user, SPAN_ALERT("The [m_w_system] cannot fire that kind of ammunition."))
-					return
-				var/may_load = 50 - src.m_w_system.remaining_ammunition
-				if (may_load < ammo.amount_left)
-					ammo.amount_left -= may_load
-					src.m_w_system.remaining_ammunition += may_load
-					boutput(user, SPAN_NOTICE("You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition."))
-					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
-					return
-				else
-					src.m_w_system.remaining_ammunition += ammo.amount_left
-					ammo.amount_left = 0
-					boutput(user, SPAN_NOTICE("You load [ammo] into [m_w_system]."))
-					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
-					qdel(ammo)
-					return
-			else
+			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+			if(!main_weapon)
 				boutput(user, SPAN_ALERT("No main weapon system installed."))
+				return
+			if (!main_weapon.uses_ammunition)
+				boutput(user, SPAN_ALERT("That weapon does not require ammunition."))
+				return
+			if (main_weapon.remaining_ammunition >= 50)
+				boutput(user, SPAN_ALERT("The automated loader for the weapon cannot hold any more ammunition."))
+				return
+			var/obj/item/ammo/bullets/ammo = W
+			if (!ammo.amount_left)
+				return
+			if (main_weapon.current_projectile.type != ammo.ammo_type.type)
+				boutput(user, SPAN_ALERT("The [main_weapon] cannot fire that kind of ammunition."))
+				return
+			var/may_load = 50 - main_weapon.remaining_ammunition
+			if (may_load < ammo.amount_left)
+				ammo.amount_left -= may_load
+				main_weapon.remaining_ammunition += may_load
+				boutput(user, SPAN_NOTICE("You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition."))
+				logTheThing(LOG_COMBAT, user, "reloads [src]'s [main_weapon.name] (<b>Ammo type:</b> <i>[main_weapon.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
+				return
+			else
+				main_weapon.remaining_ammunition += ammo.amount_left
+				ammo.amount_left = 0
+				boutput(user, SPAN_NOTICE("You load [ammo] into [main_weapon]."))
+				logTheThing(LOG_COMBAT, user, "reloads [src]'s [main_weapon.name] (<b>Ammo type:</b> <i>[main_weapon.current_projectile.type]</i>) at [log_loc(src)].")
+				qdel(ammo)
 				return
 
 		if (istype(W, /obj/item/device/key))
@@ -182,8 +176,9 @@
 			return
 
 		if (istype(W, /obj/item/sheet))
-			if (src.m_w_system && istype(src.m_w_system,/obj/item/shipcomponent/mainweapon/constructor))
-				src.m_w_system.Attackby(W,user)
+			var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+			if (istype(main_weapon,/obj/item/shipcomponent/mainweapon/constructor))
+				main_weapon.Attackby(W,user)
 				return
 
 		if (istype(W, /obj/item/tank/plasma))
@@ -224,31 +219,87 @@
 		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 		// 		src.open_parts_panel(C.mob)
 
-//each pod part is a var so we have to macro this, yegh
-#define EJECT_PART(part) \
-	src.eject_part(part); \
-	usr.put_in_hand_or_drop(part); \
-	src.null_part(part); \
-	src.updateDialog()
+	///////////////////////////////////////////////////////////////////////////
+	////////Install/Eject Ship Part////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////
 
-	/// finds the part in the ship's parts and nulls it
-	proc/null_part(obj/item/shipcomponent/part)
-		if (part == src.engine)
-			src.engine = null
-		else if (part == src.lock)
-			src.lock = null
-		else if (part == src.life_support)
-			src.life_support = null
-		else if (part == src.com_system)
-			src.com_system = null
-		else if (part == src.m_w_system)
-			src.m_w_system = null
-		else if (part == src.sec_system)
-			src.sec_system = null
-		else if (part == src.sensors)
-			src.sensors = null
-		else if (part == src.lights)
-			src.lights = null
+	/// Remove the part from the ship and drop it. Returns the part.
+	proc/eject_part(var/mob/user, var/slot, var/give_message = TRUE)
+		RETURN_TYPE(/obj/item/shipcomponent)
+		var/obj/item/shipcomponent/part = src.get_part(slot)
+		if(!part)
+			return null
+		part.deactivate(give_message)
+		part.ship_uninstall()
+		part.ship = null
+		part.set_loc(get_turf(src))
+		if(user)
+			user.put_in_hand_or_drop(part)
+		src.installed_parts[slot] = null
+		return part
+
+	/// Don't know which slot a part is in? Use this.
+	proc/find_part_slot(var/obj/item/shipcomponent/part)
+		for(var/part_slot in src.installed_parts)
+			if(src.installed_parts[part_slot] == part)
+				return part_slot
+		return null
+
+	/// Remove the part from the ship and delete it from existance. Returns TRUE if there was a part to delete.
+	proc/delete_part(var/slot, var/give_message = TRUE)
+		var/obj/item/shipcomponent/part = src.eject_part(null, slot, give_message)
+		if(part)
+			qdel(part)
+			return TRUE
+		return FALSE
+
+	/// Use this proc to install a part onto the ship. Returns TRUE if successful.
+	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE)
+		if(!slot)
+			boutput(usr, "Report dev error! Slot not found.")
+			return FALSE
+		if(src.get_part(slot))
+			if(eject)
+				src.eject_part(user, slot)
+			else
+				boutput(usr, "That system already has a part!")
+				return FALSE
+		if(user) //This mean it's going on during the game!
+			user.drop_item(part)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+		part.set_loc(src)
+		src.installed_parts[slot] = part
+		part.ship = src
+		part.ship_install()
+		if(activate)
+			part.activate()
+		if(src.myhud)
+			src.myhud.update_systems()
+			src.myhud.update_states()
+		return TRUE
+
+	/// Returns the part currently installed in the specified slot, if any
+	proc/get_part(var/slot)
+		RETURN_TYPE(/obj/item/shipcomponent)
+		return src.installed_parts[slot]
+
+	/// Check if the part can be used before returning it
+	proc/get_usable_part(var/mob/user, var/slot)
+		RETURN_TYPE(/obj/item/shipcomponent)
+		if(is_incapacitated(user))
+			boutput(user, SPAN_ALERT("Not when you are incapacitated."))
+			return null
+		if(user.loc != src)
+			boutput(user, SPAN_ALERT("Uh-oh... you aren't in the ship! Report this."))
+			return null
+		var/obj/item/shipcomponent/part = src.get_part(slot)
+		if(!part)
+			boutput(user, "[src.ship_message("System not installed in ship!")]")
+			return null
+		if(!part.active)
+			boutput(user, "[src.ship_message("SYSTEM OFFLINE")]")
+			return null
+		return part
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -258,89 +309,17 @@
 		//////////////////////////////////////
 		if (usr.loc == src)
 			src.add_dialog(usr)
-			if (href_list["dengine"])
-				if (usr != pilot)
+			if(href_list["deactivate"])
+				if(href_list["deactivate"] == POD_PART_ENGINE && usr != pilot)
 					boutput(usr, "[ship_message("Only the pilot may do this!")]")
 					return
-				engine.deactivate()
-				src.updateDialog()
+				src.get_part(href_list["deactivate"])?.deactivate()
+			else if(href_list["activate"])
+				src.get_part(href_list["activate"])?.activate()
+			else if (href_list["opencomp"])
+				src.get_part(href_list["opencomp"])?.opencomputer(usr)
 
-			else if (href_list["aengine"])
-				engine.activate()
-				src.updateDialog()
-
-			else if (href_list["dlife"])
-				life_support.deactivate()
-				src.updateDialog()
-
-			else if (href_list["alife"])
-				life_support.activate()
-				src.updateDialog()
-
-			else if (href_list["acom"])
-				com_system.activate()
-				src.updateDialog()
-
-			else if (href_list["dcom"])
-				com_system.deactivate()
-				src.updateDialog()
-
-			else if (href_list["amweapon"])
-				m_w_system.activate()
-				src.updateDialog()
-
-			else if (href_list["dmweapon"])
-				m_w_system.deactivate()
-				src.updateDialog()
-
-			else if (href_list["asensors"])
-				sensors.activate()
-				src.updateDialog()
-
-			else if (href_list["dsensors"])
-				sensors.deactivate()
-				src.updateDialog()
-
-			else if (href_list["asec_system"])
-				sec_system.activate()
-				src.updateDialog()
-
-			else if (href_list["dsec_system"])
-				sec_system.deactivate()
-				src.updateDialog()
-
-			else if (href_list["alights"])
-				lights.activate()
-				src.updateDialog()
-
-			else if (href_list["dlights"])
-				lights.deactivate()
-				src.updateDialog()
-
-			else if (href_list["comcomp"])
-				com_system.opencomputer(usr)
-				src.updateDialog()
-
-			else if (href_list["mweaponcomp"])
-				m_w_system.opencomputer(usr)
-				src.updateDialog()
-
-			else if (href_list["enginecomp"])
-				engine.opencomputer(usr)
-				src.updateDialog()
-
-			else if (href_list["sensorcomp"])
-				sensors.opencomputer(usr)
-				src.updateDialog()
-
-			else if (href_list["sec_systemcomp"])
-				sec_system.opencomputer(usr)
-				src.updateDialog()
-
-			else if (href_list["lightscomp"])
-				lights.opencomputer(usr)
-				src.updateDialog()
-
+			src.updateDialog()
 			src.add_fingerprint(usr)
 			for (var/mob/M in src)
 				if (M.using_dialog_of(src))
@@ -354,65 +333,56 @@
 				boutput(usr, SPAN_ALERT("You can't modify parts with somebody inside."))
 				return
 
-			if (src.lock && src.locked)
+			var/obj/item/shipcomponent/secondary_system/lock/lock_part = src.get_part(POD_PART_LOCK)
+			if (lock_part && src.locked)
 				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
-				lock.show_lock_panel(usr, 0)
+				lock_part.show_lock_panel(usr, 0)
 				return
 
 			src.add_dialog(usr)
 			if (href_list["unengine"])
-				if (src.engine)
-					logTheThing(LOG_STATION, usr, "ejects the engine system ([src.engine]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.engine)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_ENGINE)
+				if(ejected_part)
+					logTheThing(LOG_STATION, usr, "ejects the engine system ([ejected_part]) from [src] at [log_loc(src)]")
 			else if (href_list["un_lock"])
-				if (src.lock)
+				if (lock_part)
 					if (src.locked)
-						lock.show_lock_panel(usr, 0)
+						lock_part.show_lock_panel(usr, 0)
 					else
-						EJECT_PART(src.lock)
-
+						src.eject_part(usr, POD_PART_LOCK)
 			else if (href_list["unlife"])
-				if (src.life_support)
-					logTheThing(LOG_VEHICLE, usr, "ejects the life support system ([src.life_support]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.life_support)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_LIFE_SUPPORT)
+				if(ejected_part)
+					logTheThing(LOG_VEHICLE, usr, "ejects the life support system ([ejected_part]) from [src] at [log_loc(src)]")
 			else if (href_list["uncom"])
-				if (src.com_system)
-					logTheThing(LOG_VEHICLE, usr, "ejects the comms system ([src.com_system]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.com_system)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_COMMS)
+				if (ejected_part)
+					logTheThing(LOG_VEHICLE, usr, "ejects the comms system ([ejected_part]) from [src] at [log_loc(src)]")
 			else if (href_list["unm_w"])
-				if (src.m_w_system)
-					if (!src.m_w_system.removable)
-						boutput(usr, SPAN_ALERT("[src.m_w_system] is fused to the hull and cannot be removed."))
-						return
-					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([src.m_w_system]) from [src] at [log_loc(src)]")
-					if (uses_weapon_overlays && m_w_system.appearanceString)
-						src.UpdateOverlays(null, "mainweapon")
-					EJECT_PART(src.m_w_system)
-
+				var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+				if(!main_weapon)
+					return
+				if(!main_weapon.removable)
+					boutput(usr, SPAN_ALERT("[main_weapon] is fused to the hull and cannot be removed."))
+					return
+				if(src.eject_part(usr, POD_PART_MAIN_WEAPON))
+					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([main_weapon]) from [src] at [log_loc(src)]")
 			else if (href_list["unloco"])
-				if (istype(src,/obj/machinery/vehicle/tank))
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_LOCOMOTION)
+				if(ejected_part)
 					logTheThing(LOG_VEHICLE, usr, "ejects the locomotion system from [src] at [log_loc(src)]")
-					src:remove_locomotion()
-					src.updateDialog()
-
 			else if (href_list["unsec_system"])
-				if (src.sec_system)
-					logTheThing(LOG_VEHICLE, usr, "ejects the secondary system ([src.sec_system]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.sec_system)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_SECONDARY)
+				if (ejected_part)
+					logTheThing(LOG_VEHICLE, usr, "ejects the secondary system ([ejected_part]) from [src] at [log_loc(src)]")
 			else if (href_list["unsensors"])
-				if (src.sensors)
-					logTheThing(LOG_VEHICLE, usr, "ejects the sensors system ([src.sensors]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.sensors)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_SENSORS)
+				if (ejected_part)
+					logTheThing(LOG_VEHICLE, usr, "ejects the sensors system ([ejected_part]) from [src] at [log_loc(src)]")
 			else if (href_list["unlights"])
-				if (src.lights)
-					logTheThing(LOG_VEHICLE, usr, "ejects the lights system ([src.lights]) from [src] at [log_loc(src)]")
-					EJECT_PART(src.lights)
-
+				var/obj/item/ejected_part = src.eject_part(usr, POD_PART_LIGHTS)
+				if (ejected_part)
+					logTheThing(LOG_VEHICLE, usr, "ejects the lighting system ([ejected_part]) from [src] at [log_loc(src)]")
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
 			else if (href_list["atmostank"])
 				if (src.atmostank)
@@ -425,20 +395,16 @@
 					usr.drop_item()
 					W.set_loc(src)
 					src.atmostank = W
-					src.updateDialog()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
-
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
 					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
 					usr.put_in_hand_or_drop(src.atmostank)
 					atmostank = null
-					src.updateDialog()
 				else
 					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
-
 			else if (href_list["fueltank"])
 				if (src.fueltank)
 					boutput(usr, SPAN_ALERT("There's already a tank in that slot."))
@@ -450,12 +416,10 @@
 					usr.drop_item()
 					W.set_loc(src)
 					src.fueltank = W
-					src.updateDialog()
 					src.myhud?.update_fuel()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
-
 			else if (href_list["takefueltank"])
 				if (src.fueltank)
 					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
@@ -463,30 +427,24 @@
 					fueltank = null
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine?.deactivate()
+					src.get_part(POD_PART_ENGINE)?.deactivate()
 				else
 					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
 
+			src.updateDialog()
 			myhud.update_systems()
-
 		else
 			usr.Browse(null, "window=ship_main")
 			return
-
-#undef EJECT_PART
-
-	proc/eject_part(obj/item/shipcomponent/part, give_message = TRUE)
-		part.deactivate(give_message)
-		part.set_loc(get_turf(src))
-		src.components -= part
 
 	proc/AmmoPerShot()
 		return 1
 
 	proc/ShootProjectiles(mob/user, datum/projectile/PROJ, shoot_dir, spread = -1, num_shots = 1)
-		if (src.m_w_system?.muzzle_flash && src.allow_muzzle_flash)
-			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+		if (main_weapon?.muzzle_flash && src.allow_muzzle_flash)
+			muzzle_flash_any(src, dir_to_angle(shoot_dir), main_weapon.muzzle_flash)
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
@@ -598,9 +556,10 @@
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
 	proc/calculate_shielded_dmg(dmg)
-		if (!istype(src.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
+		var/obj/item/shipcomponent/secondary_system/sec_part = src.get_part(POD_PART_SECONDARY)
+		if (!istype(sec_part, /obj/item/shipcomponent/secondary_system/shielding))
 			return dmg
-		var/obj/item/shipcomponent/secondary_system/shielding/shielding_comp = src.sec_system
+		var/obj/item/shipcomponent/secondary_system/shielding/shielding_comp = sec_part
 		return shielding_comp.process_incoming_dmg(dmg)
 
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
@@ -614,13 +573,13 @@
 		return
 
 	proc/disrupt(disruption, obj/projectile/P)
-		if(disruption <= 0 || !length(src.components))
+		if(disruption <= 0 || !length(src.installed_parts))
 			return
 		playsound(src.loc, pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/effects/electric_shock.ogg', 'sound/effects/elec_bzzz.ogg'), 50, 1)
 		if(pilot)
 			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-		var/obj/item/shipcomponent/S = pick(src.components)
+		var/obj/item/shipcomponent/S = src.installed_parts[pick(src.installed_parts)]
 		if (istype(S, /obj/item/shipcomponent/engine))
 			disruption += 40
 
@@ -643,10 +602,10 @@
 
 	ex_act(severity)
 		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
-		if (sec_system)
-			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
-				if (sec_system:crashable)
-					return
+		var/obj/item/shipcomponent/secondary_system/sec_part = src.get_part(POD_PART_SECONDARY)
+		if(sec_part?.type == /obj/item/shipcomponent/secondary_system/crash)
+			if(sec_part:crashable)
+				return
 		var/sevmod = 0
 		sevmod = round(src.explosion_protection / 5)
 
@@ -736,10 +695,10 @@
 
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
-		if (sec_system)
-			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
-				if (sec_system:crashable)
-					sec_system:crashtime2(target)
+		var/obj/item/shipcomponent/secondary_system/sec_part = src.get_part(POD_PART_SECONDARY)
+		if (sec_part?.type == /obj/item/shipcomponent/secondary_system/crash)
+			if (sec_part:crashable)
+				sec_part:crashtime2(target)
 		SPAWN(0)
 			..()
 			return
@@ -769,20 +728,17 @@
 
 		if (pilot)
 			pilot = null
-		if (components)
-			for(var/obj/S in components)
-				S.dispose()
-			components.len = 0
-			components = null
-		atmostank = null
-		fueltank = null
-		engine = null
-		life_support = null
-		com_system = null
-		m_w_system = null
-		sec_system = null
-		sensors = null
-		intercom = null
+
+		if(src.installed_parts)
+			for(var/slot_type in src.installed_parts)
+				var/obj/part = src.installed_parts[slot_type]
+				part?.dispose()
+		src.installed_parts.len = 0
+		src.installed_parts = null
+		src.atmostank = null
+		src.fueltank = null
+		src.intercom = null
+
 		fire_overlay = null
 		damage_overlay = null
 		ion_trail = null
@@ -792,19 +748,20 @@
 		..()
 
 	process(mult)
-		if(sec_system?.active)
-			sec_system.run_component(mult)
-		if(src.engine && engine.active)
+		var/obj/item/shipcomponent/sec_part = src.get_part(POD_PART_SECONDARY)
+		if(sec_part?.active)
+			sec_part.run_component(mult)
+		var/obj/item/shipcomponent/engine_part = src.get_part(POD_PART_ENGINE)
+		if(engine_part?.active)
 			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
 			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 			var/toxins = consumed?.toxins
 			if(isnull(toxins))
 				toxins = 0
-
 			if(usage)
 				src.myhud?.update_fuel()
 				if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
-					engine.deactivate()
+					engine_part.deactivate()
 			consumed?.dispose()
 
 #ifdef MAP_OVERRIDE_NADIR
@@ -896,85 +853,11 @@
 	. = list(start, stop)
 
 /obj/machinery/vehicle/proc/shipcrit()
-	if (src.engine)
+	if(src.delete_part(POD_PART_ENGINE))
 		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		visible_message(SPAN_ALERT("[src]'s engine bursts into flame!"))
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
-		engine.deactivate()
-		components -= engine
-		qdel(engine)
-		engine = null
-
-///////////////////////////////////////////////////////////////////////////
-////////Install Ship Part////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////
-/obj/machinery/vehicle/proc/Install(obj/item/shipcomponent/S as obj, give_feedback = TRUE)
-	switch(S.system)
-		if("Engine")
-			if(!src.engine)
-				src.engine = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Communications")
-			if(!com_system)
-				src.com_system = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Life Support")
-			if(!life_support)
-				src.life_support = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Sensors")
-			if(!sensors)
-				src.sensors = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Secondary System")
-			if(!sec_system)
-				sec_system = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Main Weapon")
-			if(!m_w_system)
-				if(weapon_class == 0)
-					boutput(usr, "Weapons cannot be installed in this ship!")
-					return
-				m_w_system = S
-				if(uses_weapon_overlays && m_w_system.appearanceString)
-					src.UpdateOverlays(image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]"), "mainweapon")
-
-				m_w_system.activate(give_feedback)
-			else
-				boutput(usr, "That system already has a part!")
-				return
-		if("Lights")
-			if(!lights)
-				lights = S
-			else
-				boutput(usr, "That system already has a part!")
-		if("Lock")
-			if (!lock)
-				src.lock = S
-			else
-				boutput(usr, "That system already has a part!")
-				return
-	components += S
-	S.ship = src
-	if (usr) //This mean it's going on during the game!
-		usr.drop_item(S)
-		if (give_feedback)
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
-	S.set_loc(src)
-	myhud.update_systems()
-	myhud.update_states()
-	return
 
 /////////////////////////////////////////////////////////////////////////////
 ////////////// Ship Death									////////////////
@@ -1076,10 +959,16 @@
 	EJ.last_move = null
 	ejectee.set_loc(location) // set_loc will call eject()
 
+	// Items can fall off the player while they are in the pod. Eject anything not considered to be installed.
 	for (var/obj/item/I in src)
-		if ( (I in src.components) || I == src.atmostank || I == src.fueltank || I == src.intercom)
+		var/is_installed = (I == src.atmostank || I == src.fueltank || I == src.intercom)
+		if(!is_installed)
+			for(var/part_slot in src.installed_parts)
+				if(src.installed_parts[part_slot] == I)
+					is_installed = TRUE
+					break
+		if (is_installed)
 			continue
-
 		I.set_loc(location)
 
 
@@ -1137,8 +1026,9 @@
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
-	for(var/obj/item/shipcomponent/S in src.components)
-		S.mob_activate(boarder)
+	for(var/part_slot in src.installed_parts)
+		var/obj/item/shipcomponent/S = get_part(part_slot)
+		S?.mob_activate(boarder)
 
 	src.passengers++
 	var/mob/M = boarder
@@ -1336,9 +1226,10 @@
 		boutput(user, SPAN_ALERT("You can't modify parts with somebody inside."))
 		return
 
-	if (src.lock && src.locked)
+	var/obj/item/shipcomponent/secondary_system/lock/lock_part = src.get_part(POD_PART_LOCK)
+	if (lock_part && src.locked)
 		boutput(user, SPAN_ALERT("You can't modify parts while [src] is locked."))
-		lock.show_lock_panel(user, 0)
+		lock_part.show_lock_panel(user, 0)
 		return
 
 	src.add_dialog(user)
@@ -1357,59 +1248,60 @@
 		dat += "<A href='byond://?src=\ref[src];fueltank=1'>--------</A>"
 	dat += "<HR><B>Engine</B>: "
 	//Engine
-	if(src.engine)
-		dat += "<A href='byond://?src=\ref[src];unengine=1'>[src.engine]</A>"
+	if(src.get_part(POD_PART_ENGINE))
+		dat += "<A href='byond://?src=\ref[src];unengine=1'>[src.get_part(POD_PART_ENGINE)]</A>"
 	else
 		dat += "None Installed"
 	///Life Support
 	dat += "<HR><B>Life Support</B>: "
-	if(src.life_support)
-		dat += "<A href='byond://?src=\ref[src];unlife=1'>[src.life_support]</A>"
+	if(src.get_part(POD_PART_LIFE_SUPPORT))
+		dat += "<A href='byond://?src=\ref[src];unlife=1'>[src.get_part(POD_PART_LIFE_SUPPORT)]</A>"
 	else
 		dat += "None Installed"
 	//// Com System
 	dat += "<HR><B>Com System</B>: "
-	if(src.com_system)
-		dat += "<A href='byond://?src=\ref[src];uncom=1'>[src.com_system]</A>"
+	if(src.get_part(POD_PART_COMMS))
+		dat += "<A href='byond://?src=\ref[src];uncom=1'>[src.get_part(POD_PART_COMMS)]</A>"
 	else
 		dat += "None Installed"
 	///Main Weapon
 	if(weapon_class != 0)
 		dat += "<HR><B>Main Weapon</B>: "
-		if(src.m_w_system)
-			dat += "<A href='byond://?src=\ref[src];unm_w=1'>[src.m_w_system]</A>"
-			if (src.m_w_system.uses_ammunition)
-				dat += "<br><b>Remaining ammo:</b> [src.m_w_system.remaining_ammunition]"
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_part(POD_PART_MAIN_WEAPON)
+		if(main_weapon)
+			dat += "<A href='byond://?src=\ref[src];unm_w=1'>[main_weapon]</A>"
+			if (main_weapon.uses_ammunition)
+				dat += "<br><b>Remaining ammo:</b> [main_weapon.remaining_ammunition]"
 		else
 			dat += "None Installed"
 	if(istype(src,/obj/machinery/vehicle/tank))
 		dat += "<HR><B>Locomotion</B>: "
-		if(src:locomotion)
-			dat += "<A href='byond://?src=\ref[src];unloco=1'>[src:locomotion]</A>"
+		if(src.get_part(POD_PART_LOCOMOTION))
+			dat += "<A href='byond://?src=\ref[src];unloco=1'>[src.get_part(POD_PART_LOCOMOTION)]</A>"
 		else
 			dat += "None Installed"
 	////Sensors
 	dat += "<HR><B>Sensors</B>: "
-	if(src.sensors)
-		dat += "<A href='byond://?src=\ref[src];unsensors=1'>[src.sensors]</A>"
+	if(src.get_part(POD_PART_SENSORS))
+		dat += "<A href='byond://?src=\ref[src];unsensors=1'>[src.get_part(POD_PART_SENSORS)]</A>"
 	else
 		dat += "None Installed"
 	////Secondary System
 	dat += "<HR><B>Secondary System</B>: "
-	if(src.sec_system)
-		dat += "<A href='byond://?src=\ref[src];unsec_system=1'>[src.sec_system]</A>"
+	if(src.get_part(POD_PART_SECONDARY))
+		dat += "<A href='byond://?src=\ref[src];unsec_system=1'>[src.get_part(POD_PART_SECONDARY)]</A>"
 	else
 		dat += "None Installed"
 	////Lights System
 	dat += "<HR><B>Lights System</B>: "
-	if(src.lights)
-		dat += "<A href='byond://?src=\ref[src];unlights=1'>[src.lights]</A>"
+	if(src.get_part(POD_PART_LIGHTS))
+		dat += "<A href='byond://?src=\ref[src];unlights=1'>[src.get_part(POD_PART_LIGHTS)]</A>"
 	else
 		dat += "None Installed"
 	////Locking System
 	dat += "<HR><B>Locking System</B>: "
-	if(src.lock)
-		dat += "<A href='byond://?src=\ref[src];un_lock=1'>[src.lock]</A>"
+	if(src.get_part(POD_PART_LOCK))
+		dat += "<A href='byond://?src=\ref[src];un_lock=1'>[src.get_part(POD_PART_LOCK)]</A>"
 	else
 		dat += "None Installed"
 
@@ -1472,70 +1364,33 @@
 		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
-	if(src.engine)
-		if(src.engine.active)
-			dat += {"<HR><B>Engine</B>: <I><A href='byond://?src=\ref[src];enginecomp=1'>[src.engine]</A></I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];dengine=1'>(Deactivate)</A>"}
+
+	var/list/slots_list = list(POD_PART_ENGINE, POD_PART_LIFE_SUPPORT, POD_PART_COMMS, \
+		POD_PART_MAIN_WEAPON, POD_PART_SENSORS, POD_PART_SECONDARY, POD_PART_LIGHTS)
+	for(var/slot in slots_list)
+		var/obj/item/shipcomponent/part = src.get_part(slot)
+		if(!part)
+			continue
+		if(part.active)
+			dat += {"<HR><B>[part.system]</B>: <I><A href='byond://?src=\ref[src];opencomp=[slot]'>[part]</A></I>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];deactivate=[slot]'>(Deactivate)</A>"}
 		else
-			dat += {"<HR><B>Engine</B>: <I>[src.engine]</I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];aengine=1'>(Activate)</A>"}
-	if(src.life_support)
-		dat += {"<HR><B>Life Support</B>: <I>[src.life_support]</I>"}
-		if(src.life_support.active)
-			dat += {"<BR><A href='byond://?src=\ref[src];dlife=1'>(Deactivate)</A>"}
-		else
-			dat += {"<BR><A href='byond://?src=\ref[src];alife=1'>(Activate)</A>"}
-		dat+={"([src.life_support.power_used])<BR>"}
-	if(src.com_system)
-		if(src.com_system.active)
-			dat += {"<HR><B>Com System</B>: <I><A href='byond://?src=\ref[src];comcomp=1'>[src.com_system]</A></I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];dcom=1'>(Deactivate)</A>"}
-		else
-			dat += {"<HR><B>Com System</B>: <I>[src.com_system]</I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];acom=1'>(Activate)</A>"}
-		dat+= {"([src.com_system.power_used])"}
-	if(src.m_w_system)
-		if(src.m_w_system.active)
-			dat += {"<HR><B>Main Weapon</B>: <I><A href='byond://?src=\ref[src];mweaponcomp=1'>[src.m_w_system]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];dmweapon=1'>(Deactivate)</A>"}
-		else
-			dat += {"<HR><B>Main Weapon</B>: <I>[src.m_w_system]</I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];amweapon=1'>(Activate)</A>"}
-		dat+= {"([src.m_w_system.power_used])"}
-	if(src.sensors)
-		if(src.sensors.active)
-			dat += {"<HR><B>Sensors</B>: <I><A href='byond://?src=\ref[src];sensorcomp=1'>[src.sensors]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];dsensors=1'>(Deactivate)</A>"}
-		else
-			dat += {"<HR><B>Sensors</B>: <I>[src.sensors]</I>"}
-			dat += {"<BR><A href='byond://?src=\ref[src];asensors=1'>(Activate)</A>"}
-		dat+= {"([src.sensors.power_used])"}
-	if(src.sec_system)
-		if(src.sec_system.active)
-			dat += {"<HR><B>Secondary System</B>: <I><A href='byond://?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];dsec_system=1'>(Deactivate)</A>"}
-		else
-			dat += {"<HR><B>Secondary System</B>: <I><A href='byond://?src=\ref[src];sec_systemcomp=1'>[src.sec_system]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];asec_system=1'>(Activate)</A>"}
-		dat+= {"([src.sec_system.power_used])"}
-	if(src.lights)
-		if(src.lights.active)
-			dat += {"<HR><B>Lights</B>: <I><A href='byond://?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];dlights=1'>(Deactivate)</A>"}
-		else
-			dat += {"<HR><B>Lights</B>: <I><A href='byond://?src=\ref[src];lightscomp=1'>[src.lights]</A></I> "}
-			dat += {"<BR><A href='byond://?src=\ref[src];alights=1'>(Activate)</A>"}
-		dat+= {"([src.lights.power_used])"}
-	if(src.lock)
+			dat += {"<HR><B>[part.system]</B>: <I>[part]</I>"}
+			dat += {"<BR><A href='byond://?src=\ref[src];activate=[slot]'>(Activate)</A>"}
+		if(slot != POD_PART_ENGINE) // Engine power used should be zero, but just in case
+			dat+={"([part.power_used])<BR>"}
+
+	var/obj/item/shipcomponent/secondary_system/lock/lock_part = src.get_part(POD_PART_LOCK)
+	if(lock_part)
 		dat += "<HR><B>Lock</B>:<br>"
 		if(src.locked)
-			dat += "<a href='byond://?src=\ref[src.lock];unlock=1'>(Unlock)</a>"
+			dat += "<a href='byond://?src=\ref[lock_part];unlock=1'>(Unlock)</a>"
 		else
-			if (src.lock.is_set())
-				dat += "<a href='byond://?src=\ref[src.lock];lock=1'>(Lock)</a>"
+			if (lock_part.is_set())
+				dat += "<a href='byond://?src=\ref[lock_part];lock=1'>(Lock)</a>"
 			// if the lock is not set OR it is set and can be reset, show the set code button
-			if (!src.lock.is_set() || (src.lock.is_set() && src.lock.can_reset))
-				dat += " <a href='byond://?src=\ref[src.lock];setcode=1;'>(Set Code)</a>"
+			if (!lock_part.is_set() || (lock_part.is_set() && lock_part.can_reset))
+				dat += " <a href='byond://?src=\ref[lock_part];setcode=1;'>(Set Code)</a>"
 	user.Browse(dat, "window=ship_main")
 	onclose(user, "ship_main")
 	return
@@ -1564,40 +1419,24 @@
 
 	src.myhud = new /datum/hud/pod(src)
 	///Engine Setup
-	src.fueltank = new /obj/item/tank/plasma( src )
-	src.engine = new /obj/item/shipcomponent/engine( src )
-	src.engine.ship = src
-	src.components += src.engine
-	src.engine.activate()
-
+	src.fueltank = new /obj/item/tank/plasma(src)
+	src.install_part(null, new /obj/item/shipcomponent/engine(src), POD_PART_ENGINE, FALSE)
 	/////Life Support Setup
-	src.atmostank = new /obj/item/tank/air( src )
-	src.life_support = new /obj/item/shipcomponent/life_support( src )
-	src.life_support.ship = src
-	src.components += src.life_support
-	src.life_support.activate()
+	src.atmostank = new /obj/item/tank/air(src)
+	src.install_part(null, new /obj/item/shipcomponent/life_support(src), POD_PART_LIFE_SUPPORT, FALSE)
 	/////Com-System Setup
-	src.intercom = new /obj/item/device/radio/intercom/ship( src )
+	src.intercom = new /obj/item/device/radio/intercom/ship(src)
 	//src.intercom.icon_state = src.icon_state
-	src.com_system = new src.init_comms_type(src)
-	src.com_system.ship = src
-	src.components += src.com_system
-	src.com_system.activate()
+	src.install_part(null, new src.init_comms_type(src), POD_PART_COMMS, FALSE)
 	///// Sensor System Setup
-	src.sensors = new /obj/item/shipcomponent/sensor( src )
-	src.sensors.ship = src
-	src.components += src.sensors
-	src.sensors.activate()
+	src.install_part(null, new /obj/item/shipcomponent/sensor(src), POD_PART_SENSORS, FALSE)
+	///// Lights Subsystem
+	src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_1x1(src), POD_PART_LIGHTS, FALSE)
+	// src.get_part(POD_PART_ENGINE).deactivate() // gotta not use up all that fuel!
 	myhud.update_systems()
 	myhud.update_states()
 	myhud.update_health()
 	myhud.update_fuel()
-	///// Lights Subsystem
-	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
-	src.lights.ship = src
-	src.components += src.lights
-
-	src.engine.deactivate() // gotta not use up all that fuel!
 
 	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
@@ -1626,7 +1465,7 @@
 			src.board_pod(M)
 			return
 
-	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
+	var/obj/item/shipcomponent/secondary_system/SS = src.get_part(POD_PART_SECONDARY)
 	if (!SS)
 		return
 	SS.Clickdrag_ObjectToPod(user,O)
@@ -1644,7 +1483,7 @@
 		boutput(usr, SPAN_ALERT("[src] is locked!"))
 		return
 
-	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
+	var/obj/item/shipcomponent/secondary_system/SS = src.get_part(POD_PART_SECONDARY)
 	if (!SS)
 		return
 	SS.Clickdrag_PodToObject(usr,over_object)
@@ -1694,145 +1533,79 @@
 		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/fire_main_weapon(mob/user)
-	if(is_incapacitated(user))
-		boutput(user, SPAN_ALERT("Not when you are incapacitated."))
+	if(src.stall)
 		return
-	if(istype(user.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = user.loc
-		if(ship.stall)
-			return
-		if(ship.m_w_system)
-			if(ship.m_w_system.active)
-				if(ship.m_w_system.r_gunner)
-					if(user == ship.m_w_system.gunner)
-						ship.stall += 1
-						ship.m_w_system.Fire(user, src.facing)
-					else
-						boutput(user, "[ship.ship_message("You must be in the gunner seat!")]")
-				else
-					ship.m_w_system.Fire(user, src.facing)
-			else
-				boutput(user, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(user, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(user, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
+	var/obj/item/shipcomponent/mainweapon/main_weapon = src.get_usable_part(user, POD_PART_MAIN_WEAPON)
+	if(!main_weapon)
+		return
+	if(!main_weapon.r_gunner)
+		main_weapon.Fire(user, src.facing)
+		return
+	if(user != main_weapon.gunner)
+		boutput(user, "[src.ship_message("You must be in the gunner seat!")]")
+		return
+	src.stall += 1
+	main_weapon.Fire(user, src.facing)
 
 /obj/machinery/vehicle/proc/use_external_speaker()
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
-		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.com_system)
-			if(ship.com_system.active)
-				ship.com_system.External()
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
+	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
+	if(comms)
+		comms.External()
 
-/obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
+/obj/machinery/vehicle/proc/create_wormhole()
+	var/obj/item/shipcomponent/engine/engine_part = src.get_usable_part(usr, POD_PART_ENGINE)
+	if(!engine_part)
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.engine && !istype(ship,/obj/machinery/vehicle/tank/car))
-			if(ship.engine.active)
-				if(ship.engine.ready)
-					var/turf/T = ship.loc
-					if (istype(T) && T.allows_vehicles)
-						ship.engine.Wormhole()
-					else
-						boutput(usr, "[ship.ship_message("Cannot create wormhole on this flooring!")]")
-				else
-					boutput(usr, "[ship.ship_message("Engine recharging wormhole capabilities!")]")
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
-
+	if(!engine_part.ready)
+		boutput(usr, "[src.ship_message("Engine recharging wormhole capabilities!")]")
+		return
+	var/turf/T = src.loc
+	if(!istype(T) || !T.allows_vehicles)
+		boutput(usr, "[src.ship_message("Cannot create wormhole on this flooring!")]")
+		return
+	engine_part.Wormhole()
 
 /obj/machinery/vehicle/proc/access_sensors()
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
-		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.sensors)
-			if(ship.sensors.active)
-				ship.sensors.opencomputer(usr)
-
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
-
-
+	var/obj/item/shipcomponent/sensor/sensors_part = src.get_usable_part(usr, POD_PART_SENSORS)
+	if(sensors_part)
+		sensors_part.opencomputer(usr)
 
 /obj/machinery/vehicle/proc/use_secondary_system()
 	if(is_incapacitated(usr))
 		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.sec_system)
-			if(ship.sec_system.active || ship.sec_system.f_active)
-				if(ship.sec_system.ready)
-					ship.sec_system.Use(usr)
-				else
-					boutput(usr, "[ship.ship_message("Secondary System isn't ready for use yet!")]")
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
+	if(usr.loc != src)
+		boutput(usr, SPAN_ALERT("Uh-oh... you aren't in the ship! Report this."))
+		return
+	var/obj/item/shipcomponent/secondary_system/sec_part = src.get_part(POD_PART_SECONDARY) // Cannot use get_usable_part() here due to f_active
+	if(!sec_part)
+		boutput(usr, "[src.ship_message("System not installed in ship!")]")
+		return
+	if(!sec_part.active && !sec_part.f_active)
+		boutput(usr, "[src.ship_message("SYSTEM OFFLINE")]")
+		return
+	if(!sec_part.ready)
+		boutput(usr, "[src.ship_message("Secondary System isn't ready for use yet!")]")
+		return
+	sec_part.Use(usr)
 
 /obj/machinery/vehicle/proc/open_hangar()
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
-		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.com_system)
-			if(ship.com_system.active)
-				ship.com_system.rc_ship.open_hangar(usr)
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
+	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
+	if(comms)
+		comms.rc_ship.open_hangar(usr)
 
 /obj/machinery/vehicle/proc/return_to_station()
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
+	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
+	if(!comms)
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.com_system)
-			if(ship.com_system.active)
-				if(ship.com_system.go_home())
-					return
-				ship.going_home = 1
-				boutput(usr, "[ship.ship_message("Course set for station level. Traveling off the edge of the current level will take you to the station level.")]")
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
+	if(comms.go_home())
+		return
+	src.going_home = 1
+	boutput(usr, "[src.ship_message("Course set for station level. Traveling off the edge of the current level will take you to the station level.")]")
 
 /obj/machinery/vehicle/proc/go_home()
-	. = src.com_system?.get_home_turf()
+	var/obj/item/shipcomponent/communications/comms_part = src.get_part(POD_PART_COMMS)
+	. = comms_part?.get_home_turf()
 
 //TODO
 
@@ -1845,7 +1618,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	icon_state = "minisub_body"
 	numbers_in_name = FALSE
 	var/body_type = "minisub"
-	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
@@ -1872,31 +1644,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
 
-	Install(obj/item/shipcomponent/S as obj)
-		if(S.system == "Locomotion")
-			if (istype(src,/obj/machinery/vehicle/tank))
-				var/obj/machinery/vehicle/tank/T = src
-				if (!T.locomotion)
-					T.locomotion = S
-					T.UpdateOverlays(image('icons/obj/machines/8dirvehicles.dmi', "[body_type]_[locomotion.appearanceString]"), "locomotion")
-				else
-					if (usr) //Occuring during gameplay
-						boutput(usr, "That system already has a part!")
-					return
-		..(S)
-
-		 //lol
-		if (S.system == "Locomotion")
-			src.locomotion.activate()
-
-	proc/remove_locomotion()
-		if (src.locomotion)
-			locomotion.deactivate()
-			components -= locomotion
-			src.UpdateOverlays(null, "locomotion")
-			locomotion.set_loc(src.loc)
-			locomotion = null
-
 /obj/machinery/vehicle/tank/minisub
 	name = "minisub"
 	body_type = "minisub"
@@ -1905,7 +1652,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	New()
 		..()
-		Install(new /obj/item/shipcomponent/locomotion/treads(src))
+		src.install_part(null, new /obj/item/shipcomponent/locomotion/treads(src), POD_PART_LOCOMOTION, FALSE)
 
 /obj/machinery/vehicle/tank/minisub/pilot
 	body_type = "minisub"
@@ -1915,16 +1662,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	New()
 		..()
-		src.com_system.deactivate()
-		qdel(src.engine)
-		qdel(src.com_system)
-		src.components -= src.engine
-		src.components -= src.com_system
-		src.engine = null
-		Install(new /obj/item/shipcomponent/engine/zero(src))
-		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
-		src.engine.activate()
-		src.com_system = null
+		src.delete_part(POD_PART_ENGINE, FALSE)
+		src.delete_part(POD_PART_COMMS, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/zero(src), POD_PART_ENGINE, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/bad_mining(src), POD_PART_MAIN_WEAPON, FALSE)
 		myhud.update_systems()
 		myhud.update_states()
 		new /obj/item/sea_ladder(src)
@@ -1939,8 +1680,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	New()
 		..()
 		name = "security patrol minisub"
-		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
-		Install(new /obj/item/shipcomponent/secondary_system/lock(src))
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK, FALSE)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1958,9 +1699,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 		name = "syndicate minisub"
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK, FALSE)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1977,8 +1716,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	New()
 		..()
 		name = "mining minisub"
-		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
-		Install(new /obj/item/shipcomponent/secondary_system/orescoop(src))
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/bad_mining(src), POD_PART_MAIN_WEAPON, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/orescoop(src), POD_PART_SECONDARY, FALSE)
 
 /obj/machinery/vehicle/tank/minisub/civilian
 	body_type = "minisub"
@@ -2025,8 +1764,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	New()
 		..()
 		name = "engineering minisub"
-		Install(new /obj/item/shipcomponent/mainweapon/foamer(src))
-		Install(new /obj/item/shipcomponent/secondary_system/cargo(src))
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/foamer(src), POD_PART_MAIN_WEAPON, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY, FALSE)
 
 
 /obj/machinery/vehicle/tank/minisub/escape_sub
@@ -2048,12 +1787,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	New()
 		. = ..()
-		src.components -= src.engine
-		qdel(src.engine)
-		src.engine = new /obj/item/shipcomponent/engine/escape(src)
-		src.components += src.engine
-		src.engine.ship = src
-		src.engine.activate()
+		src.delete_part(POD_PART_ENGINE, FALSE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/escape(src), POD_PART_ENGINE, TRUE)
 
 	finish_board_pod(var/mob/boarder)
 		..()
@@ -2202,7 +1937,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 	New()
 		..()
 		name = "little truck"
-		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
+		src.install_part(null, new /obj/item/shipcomponent/locomotion/wheels(src), POD_PART_LOCOMOTION, FALSE)
 
 // Gannets' Station Car/Vehicle Zone
 /* To-Do:
@@ -2221,7 +1956,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 
 	New()
 		..()
-		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
+		src.install_part(null, new /obj/item/shipcomponent/locomotion/wheels(src), POD_PART_LOCOMOTION, FALSE)
 
 	//Colours
 	black
@@ -2269,12 +2004,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 			..()
 			name = "security patrol car"
 			desc = "A Toriyama-Okawara SV-93 personal mobility vehicle, outfitted with a taser gun, siren system and a security livery."
-			Install(new /obj/item/shipcomponent/mainweapon/taser(src))
-
-			src.lights = new /obj/item/shipcomponent/pod_lights/police_siren( src )
-			src.lights.ship = src
-			src.components += src.lights
-
+			src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON, FALSE)
+			src.install_part(null, new /obj/item/shipcomponent/pod_lights/police_siren(src), POD_PART_LIGHTS, FALSE)
 			src.myhud?.update_states()
 /*
 	engineering

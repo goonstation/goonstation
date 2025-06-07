@@ -2290,7 +2290,8 @@
 					return
 				else
 					message = "<b>[src]</b> woofs!"
-					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
+					if (src.emote_check(voluntary, 1 SECOND))
+						playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
 				if (voluntary)
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")

@@ -1237,7 +1237,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]'s head."))
-				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if ((B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg"))) || B.cyber_incompatible)
 					src.visible_message(SPAN_ALERT("The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies."))
 					B.combust()
 					return
@@ -3634,6 +3634,10 @@ TYPEINFO(/mob/living/silicon/robot)
 						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
+
+/mob/living/silicon/robot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
 
 #undef can_step_sfx
 #undef ROBOT_BATTERY_DISTRESS_INACTIVE

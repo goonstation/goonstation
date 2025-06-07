@@ -21964,9 +21964,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
-	},
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "qmdockout"
@@ -26943,9 +26940,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/conveyor/WE{
-	id = "outbound"
-	},
 /obj/machinery/launcher_loader/east{
 	id = "qmdockout"
 	},
@@ -29306,7 +29300,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "uRQ" = (
