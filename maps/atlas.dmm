@@ -9595,7 +9595,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},

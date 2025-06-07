@@ -1,4 +1,18 @@
 
+(t)fri jun 06 25
+(u)JORJ949 & RSOD
+(p)23469
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(*)Spatial interdictors can now be unlocked by swiping an ID with access. They can also have their access changed by the AccessPro
+(+)The Interdictor in the ranch now requires ranch access.
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
 (t)wed jun 04 25
 (u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
 (p)23481
