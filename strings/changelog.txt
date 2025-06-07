@@ -1,5 +1,10 @@
 
 (t)fri jun 06 25
+(u)JORJ949 & RSOD
+(p)23469
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(*)Spatial interdictors can now be unlocked by swiping an ID with access. They can also have their access changed by the AccessPro
+(+)The Interdictor in the ranch now requires ranch access.
 (u)Avanth
 (p)23701
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
