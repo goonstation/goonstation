@@ -136,7 +136,7 @@ var/datum/job/priority_job = null
 							requested_job.limit += request_count
 							global.wagesystem.station_budget -= total_cost
 							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot(s) requisitioned by [src.account.assignment] [src.account.registered]")
-							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened: [requested_job.name]"))
+							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened for [requested_job.name]"))
 
 						requested_job = null
 						request_count = 0
