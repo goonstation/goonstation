@@ -1,5 +1,9 @@
 
 (t)sat jun 07 25
+(u)Kyle & glowbold
+(p)23021
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Werewolves hit with one of their weaknesses like silver or aconite receive a dedicated debuff Wolf's Bane
 (u)glowbold
 (p)23521
 (e)⚖💊|C-Balance, A-Medical
