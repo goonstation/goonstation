@@ -3582,6 +3582,10 @@ TYPEINFO(/mob/living/silicon/robot)
 
 		//STEP SOUND HANDLING OVER
 
+/mob/living/silicon/robot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
 /datum/statusEffect/low_power/robot
 	id = "low_power_robot"
 	var/mob/living/silicon/robot/robot

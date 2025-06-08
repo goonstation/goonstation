@@ -1,4 +1,41 @@
 
+(t)sun jun 08 25
+(u)JORJ949
+(p)22995
+(e)⚖🔨💡|C-Balance, A-Player-Actions, A-Station-Systems
+(+)Issuing fines is now tied to two new accesses rather than job on manifest.
+(+)The Ticket Master App now requires an ID to be inserted in your PDA.
+(t)sat jun 07 25
+(u)Kyle & glowbold
+(p)23021
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Werewolves hit with one of their weaknesses like silver or aconite receive a dedicated debuff Wolf's Bane
+(u)glowbold
+(p)23521
+(e)⚖💊|C-Balance, A-Medical
+(+)Fire, cold, and thermal resistance provide 25% base resistance, doubled when empowered.
+(u)bork
+(p)23554
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added vanilla extract and a new recipe, flan!
+(u)Cheekybrdy
+(p)23699
+(e)💅🐁|C-QoL, A-Critters
+(+)Senior ranch animals can now be determined through their description.
+(t)fri jun 06 25
+(u)JORJ949 & RSOD
+(p)23469
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(*)Spatial interdictors can now be unlocked by swiping an ID with access. They can also have their access changed by the AccessPro
+(+)The Interdictor in the ranch now requires ranch access.
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
 (t)wed jun 04 25
 (u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
 (p)23481

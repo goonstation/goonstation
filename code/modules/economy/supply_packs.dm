@@ -257,9 +257,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 3,
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
-					/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2)
+					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"

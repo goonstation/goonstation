@@ -29300,7 +29300,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "uRQ" = (

@@ -43644,7 +43644,7 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/firealarm/west,
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "mEW" = (
