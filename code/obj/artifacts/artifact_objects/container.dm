@@ -7,7 +7,7 @@
 	type_name = "Container"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
-	validtypes = list("ancient","martian","wizard","eldritch","precursor", "lattice")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
@@ -27,38 +27,37 @@
 		if (src.generated_loot)
 			return
 		src.generated_loot = TRUE
-		if (src.artitype.name == "lattice")
-			if(prob(5))
-				new/obj/item/artifact/activator_key(src.holder)
-			else if (prob(50))
-				new/obj/item/cell/artifact(src.holder)
-				new/obj/item/cell/artifact(src.holder)
-				new/obj/item/cell/artifact(src.holder)
-			else
-				new/obj/item/artifact/talisman(src.holder)
-		else
-			switch(rand(1, 3))
-				if(1)
-					if(prob(5))
-						new/obj/critter/domestic_bee/buddy(src.holder)
-						new/obj/item/clothing/suit/bee(src.holder)
-					else
-						new/obj/critter/domestic_bee_larva(src.holder)
-						new/obj/critter/domestic_bee_larva(src.holder)
-						new/obj/critter/domestic_bee_larva(src.holder)
-						new/obj/critter/domestic_bee_larva(src.holder)
-						new/obj/critter/domestic_bee_larva(src.holder)
-				if(2)
-					if(prob(5))
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-					else
-						new/obj/item/gimmickbomb/owlclothes(src.holder)
-				if(3)
-					new/obj/item/old_grenade/light_gimmick(src.holder)
+		switch(rand(1,4))
+			if(1)
+				if(prob(5))
+					new/obj/item/artifact/activator_key(src.holder)
+				else if (prob(50))
+					new/obj/item/cell/artifact(src.holder)
+					new/obj/item/cell/artifact(src.holder)
+					new/obj/item/cell/artifact(src.holder)
+				else
+					new/obj/item/artifact/talisman(src.holder)
+			if(2)
+				if(prob(5))
+					new/obj/critter/domestic_bee/buddy(src.holder)
+					new/obj/item/clothing/suit/bee(src.holder)
+				else
+					new/obj/critter/domestic_bee_larva(src.holder)
+					new/obj/critter/domestic_bee_larva(src.holder)
+					new/obj/critter/domestic_bee_larva(src.holder)
+					new/obj/critter/domestic_bee_larva(src.holder)
+					new/obj/critter/domestic_bee_larva(src.holder)
+			if(3)
+				if(prob(5))
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+				else
+					new/obj/item/gimmickbomb/owlclothes(src.holder)
+			if(4)
+				new/obj/item/old_grenade/light_gimmick(src.holder)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		. = ..()
