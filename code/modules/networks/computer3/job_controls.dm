@@ -43,25 +43,28 @@ var/datum/job/priority_job = null
 							if (job.limit <= 0 || !job.add_to_manifest || job.no_late_join)
 								continue
 							output += src.job_info(job)
+						for (var/datum/job/job in job_controls.special_jobs)
+							if (job.player_requested)
+								output += src.job_info(job)
 						src.print_text(output.Join("<br>"))
 
 					if ("prio")
 						var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 						if (!length(job_name))
-							if (global.priority_job)
-								src.print_text("Current priority role: [src.job_info(global.priority_job)]<br>Type \"prio none\" to clear.")
+							if (job_controls.priority_job)
+								src.print_text("Current priority role: [src.job_info(job_controls.priority_job)]<br>Type \"prio none\" to clear.")
 							else
 								src.print_text("No currently specified priority role.")
 							return
 						if (cmptext(job_name, "None"))
-							global.priority_job = null
+							job_controls.priority_job = null
 							src.print_text("Cleared priority job listing.")
 							return
 						var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE, latejoin_only = TRUE)
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
-						global.priority_job = job
+						job_controls.priority_job = job
 						src.print_text("Success: priority role set to: \[[job.name]\]")
 						src.send_pda_message("RoleControl notification: priority role set to [job.name] by [src.account.assignment] [src.account.registered]")
 
@@ -136,7 +139,9 @@ var/datum/job/priority_job = null
 							src.print_text("Error: insufficient funds. Requisition cancelled")
 						else
 							requested_job.limit += request_count
+							requested_job.player_requested = TRUE
 							global.wagesystem.station_budget -= total_cost
+							src.print_text("Requistioned [request_count] slots for [requested_job.name]")
 							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot(s) requisitioned by [src.account.assignment] [src.account.registered]")
 							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened for [requested_job.name]"))
 
@@ -146,7 +151,9 @@ var/datum/job/priority_job = null
 
 	proc/job_info(datum/job/job, var/include_requests = FALSE)
 		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
-		if (job.is_highlighted())
+		if (job.player_requested)
+			job_text += " (REQUESTED)"
+		else if (job.is_highlighted())
 			job_text += " (PRIORITY)"
 		if(include_requests && (job.request_limit > job.limit))
 			job_text += ", can requisition [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN])"

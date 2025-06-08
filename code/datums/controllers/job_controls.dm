@@ -6,6 +6,7 @@ var/datum/job_controller/job_controls
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
+	var/datum/job/priority_job = null
 
 	var/loaded_save = 0
 	var/last_client = null

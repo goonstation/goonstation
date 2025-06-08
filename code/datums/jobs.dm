@@ -101,6 +101,8 @@
 	var/unique = FALSE
 	var/request_limit = 0 //!Maximum limit that can be reached by requisitioning through RoleControl
 	var/request_cost = null //!Cost to open an additional slot using RoleControl
+	var/player_requested = FALSE //! Flag if currently requested via RoleControl
+
 
 
 	New()
@@ -202,9 +204,9 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-	/// Is this job highlighted for priority latejoining
+	/// Is this job highlighted for latejoiners
 	proc/is_highlighted()
-		return global.priority_job == src
+		return job_controls.priority_job == src || src.player_requested
 
 	/// The default miranda's rights for this job
 	proc/get_default_miranda()
