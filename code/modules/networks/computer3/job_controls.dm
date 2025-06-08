@@ -72,11 +72,10 @@ var/datum/job/priority_job = null
 						var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 						if(!length(job_name))
 							var/list/output = list("All roles that can be requisitioned:")
-							var/list/datum/job/all_jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
+							var/list/datum/job/all_jobs = job_controls.staple_jobs + job_controls.special_jobs
 							for (var/datum/job/job in all_jobs)
 								if (job.request_limit <= job.limit || !job.add_to_manifest || job.no_late_join || !job.request_cost)
 									continue
-
 								output += src.job_info(job, include_requests = TRUE)
 							src.print_text(output.Join("<br>"))
 							return
