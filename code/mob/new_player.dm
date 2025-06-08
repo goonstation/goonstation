@@ -693,6 +693,9 @@ a.latejoin-card:hover {
 			if (job_controls.allow_special_jobs)
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
+				for(var/datum/job/daily/J in job_controls.special_jobs)
+					dat += LateJoinLink(J)
+
 				for(var/datum/job/special/J in job_controls.special_jobs)
 					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 					dat += LateJoinLink(J)

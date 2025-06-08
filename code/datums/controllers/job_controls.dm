@@ -40,7 +40,7 @@ var/datum/job_controller/job_controls
 			else
 				var/datum/job/not_daily_job = new variety_job_path(src)
 				not_daily_job.limit = 0
-				src.hidden_jobs += not_daily_job
+				src.special_jobs += not_daily_job
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
