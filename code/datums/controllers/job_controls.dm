@@ -38,7 +38,9 @@ var/datum/job_controller/job_controls
 			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
 				src.staple_jobs += new variety_job_path(src)
 			else
-				src.hidden_jobs += new variety_job_path(src)
+				var/datum/job/not_daily_job = new variety_job_path(src)
+				not_daily_job.limit = 0
+				src.hidden_jobs += not_daily_job
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
