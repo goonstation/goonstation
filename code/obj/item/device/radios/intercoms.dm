@@ -19,6 +19,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	hardened = 0
 	use_speech_bubble = TRUE
 	forced_maptext = TRUE
+	speaker_range = 7
 
 	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
 

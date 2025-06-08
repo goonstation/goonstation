@@ -895,9 +895,9 @@
 			src.toggle_throw_mode()
 		if ("walk")
 			if (src.m_intent == "run")
-				src.m_intent = "walk"
+				src.set_m_intent("walk")
 			else
-				src.m_intent = "run"
+				src.set_m_intent("run")
 			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
@@ -982,7 +982,7 @@
 	u_equip(I)
 
 	if (GET_DIST(src, target) > 0)
-		src.set_dir(get_dir(src, target))
+		src.set_dir(get_dir_accurate(src, target, FALSE)) // Face the throwing direction
 
 	//actually throw it!
 	if (I)
@@ -990,7 +990,7 @@
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
 		var/yeet_change_mod = yeet_chance
-		var/throw_dir = get_dir(src, target)
+		var/throw_dir = get_dir_accurate(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_change_mod *= 1
@@ -1012,7 +1012,7 @@
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
+			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
@@ -2183,7 +2183,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		else
 			src.last_resist = world.time + 100
 			var/time = 450
-			src.show_text("You attempt to remove your shackles. (This will take around [round(time / 10)] seconds and you need to stand still.)", "red")
 			actions.start(new/datum/action/bar/private/icon/shackles_removal(time), src)
 
 	if (src.hasStatus("handcuffed"))
@@ -2233,7 +2232,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			boutput(src, SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)"))
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
 	return 0
@@ -3069,7 +3067,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			#endif
 
 			if(AM.throwforce >= 40)
-				src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
+				src.throw_at(get_edge_target_turf(src,get_dir_accurate(AM, src)), 10, 1)
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
@@ -3096,7 +3094,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		#endif
 
 		if(AM.throwforce >= 40)
-			src.throw_at(get_edge_target_turf(src, get_dir(AM, src)), 10, 1)
+			src.throw_at(get_edge_target_turf(src, get_dir_accurate(AM, src)), 10, 1)
 			src.changeStatus("stunned", 3 SECONDS)
 
 /// Goes through all the things that can be recolored and updates their colors
@@ -3348,6 +3346,10 @@ mob/living/carbon/human/has_genetics()
 			return hand_color
 
 	. = ..()
+
+/mob/living/carbon/human/remove_pulling()
+	..()
+	src.hud?.update_pulling()
 
 /mob/living/carbon/human/proc/fake_say(text)
 	set waitfor = FALSE
