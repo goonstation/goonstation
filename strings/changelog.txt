@@ -1,4 +1,10 @@
 
+(t)sun jun 08 25
+(u)JORJ949
+(p)22995
+(e)⚖🔨💡|C-Balance, A-Player-Actions, A-Station-Systems
+(+)Issuing fines is now tied to two new accesses rather than job on manifest.
+(+)The Ticket Master App now requires an ID to be inserted in your PDA.
 (t)sat jun 07 25
 (u)Kyle & glowbold
 (p)23021
