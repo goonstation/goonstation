@@ -1,5 +1,9 @@
 
 (t)sat jun 07 25
+(u)glowbold
+(p)23521
+(e)⚖💊|C-Balance, A-Medical
+(+)Fire, cold, and thermal resistance provide 25% base resistance, doubled when empowered.
 (u)bork
 (p)23554
 (e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
