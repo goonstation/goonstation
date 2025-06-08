@@ -511,7 +511,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)] " : ""][dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
+			src.inertia_dir = get_dir_accurate(target, src) // Float opposite direction from throw
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
 			var/mob/M = I
@@ -874,10 +874,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	set_density(0)
 	for (var/obj/item/checked_item in src.contents)
 		SEND_SIGNAL(checked_item, COMSIG_ITEM_ON_OWNER_DEATH, src)
-	if (src.can_implant)
-		for (var/obj/item/implant/H in src.implants)
-			H.on_death()
-		src.can_implant = 0
+	src.can_implant = FALSE
 	setdead(src)
 	if (!gibbed)
 		if (src.death_text)
@@ -1187,65 +1184,29 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
+
+	if (!message)
+		return
+
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: #C2BEBE;" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					if(m_type & 1)
-						chat_text.plane = PLANE_NOSHADOW_ABOVE
-						chat_text.layer = 420
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-	else
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else if (m_type & 2)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else if (!isturf(src.loc))
-				var/atom/A = src.loc
-				for (var/mob/O in A.contents)
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-
-
-/mob/living/critter/talk_into_equipment(var/mode, var/message, var/param)
-	switch (mode)
-		if ("left hand")
-			for (var/i = 1, i <= hands.len, i++)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		if ("right hand")
-			for (var/i = hands.len, i >= 1, i--)
-				var/datum/handHolder/HH = hands[i]
-				if (HH.can_hold_items)
-					if (HH.item)
-						HH.item.talk_into(src, message, param, src.real_name)
-					return
-		else
-			..()
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 /mob/living/critter/update_burning()
 	if (can_burn)
@@ -1510,9 +1471,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			src.toggle_throw_mode()
 		if ("walk")
 			if (src.m_intent == "run")
-				src.m_intent = "walk"
+				src.set_m_intent("walk")
 			else
-				src.m_intent = "run"
+				src.set_m_intent("run")
 			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
@@ -1542,21 +1503,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
 
-/mob/living/critter/say(var/message)
-	message = copytext(message, 1, MAX_MESSAGE_LEN)
-
-	if (dd_hasprefix(message, "*") || isdead(src))
-		..(message)
-		return
-
-	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
-		if (length(message) >= 2)
-			if (copytext(lowertext(message), 1, 3) == ":s")
-				message = copytext(message, 3)
-				src.robot_talk(message)
-				return
-	..()
-
 /mob/living/critter/blob_act(var/power)
 	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
@@ -1564,7 +1510,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return
 
 	var/shielded = 0
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		shielded = 1
 
 	var/modifier = power / 20
@@ -1580,7 +1526,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	src.show_message(SPAN_ALERT("The blob attacks you!"))
 
-	if (src.spellshield)
+	if (src.hasStatus("spellshield"))
 		boutput(src, SPAN_ALERT("<b>Your Spell Shield absorbs some damage!</b>"))
 
 	if (damage > 4.9)
@@ -1610,6 +1556,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
+
+/mob/living/critter/remove_pulling()
+	. = ..()
+	src.hud?.update_pulling()
 
 /mob/living/critter/proc/admincmd_attack()
 	set name = "Start Attacking"

@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/popup_name_override
 	/// Set when the antagonist is in the process of being removed, to prevent double removals.
 	var/removing = FALSE
+	/// Link to this antagonist's wiki page
+	var/wiki_link = null
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -104,7 +106,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (isnull(antagonists["[src.id]"]))
 				antagonists -= "[src.id]"
 
-			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.former_antagonist_roles.Add(src.id)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks.Remove(src.owner)

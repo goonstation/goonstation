@@ -62,7 +62,7 @@
 			return 1 // No cooldown when it fails.
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("STYX TUSNEKS", FALSE, maptext_style, maptext_colors)
+			holder.owner.say("STYX TUSNEKS", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
         //..() uncomment this when we have voice files
 
 		var/mob/living/critter/small_animal/snake/snake = new(stick.loc, stick)

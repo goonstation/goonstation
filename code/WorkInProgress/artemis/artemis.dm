@@ -604,7 +604,7 @@
 		return 0
 
 /area/ship
-	teleport_blocked = TRUE
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 
 	artemis
 		name = "Artemis"

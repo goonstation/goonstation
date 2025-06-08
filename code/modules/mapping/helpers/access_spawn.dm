@@ -332,6 +332,16 @@
 	req_access = list(access_polarisimportant)
 	color = CARGO
 
+/obj/mapping_helper/access/impossible
+	name = "impossible access spawn"
+	req_access = list(access_impossible)
+	color = MORGUE_BLACK
+
+/obj/mapping_helper/access/lunar_breakdoor
+	name = "lunar breakdoor access spawn"
+	req_access = list(access_lunar_breakdoor)
+	color = ENGINEERING
+
 #undef MEDICAL
 #undef SECURITY
 #undef MORGUE_BLACK
