@@ -48,7 +48,18 @@ TYPEINFO(/obj/item/card/emag)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
-		if(hit_atom && thr)
+		if(!hit_atom)
+			return
+		if(!thr?.thrown_by)
+			// No user, so probably thrown by an object.
+			// In this case assume that the last person to touch the EMAG is responsible.
+			var/mob/M = null
+			for(var/client/C in clients)
+				if(C.key == src.fingerprintslast)
+					M = C.mob
+					break
+			hit_atom.emag_act(M, src)
+		else
 			hit_atom.emag_act(thr.thrown_by, src)
 		return
 
