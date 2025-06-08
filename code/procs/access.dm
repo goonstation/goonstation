@@ -483,9 +483,9 @@ var/list/access_all_actually = null
 		if (access_ticket)
 			return "Ticketing"
 		if (access_fine_small)
-			return "Small Fines"
+			return "Fines (Small)"
 		if (access_fine_large)
-			return "Large Fines"
+			return "Fines (Large)"
 
 
 proc/colorAirlock(access)
