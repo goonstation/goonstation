@@ -334,6 +334,7 @@
 	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
+	var/blood_regen_amt = 1
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 	effect_group = "regen"
@@ -342,6 +343,9 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
+		if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+			L.blood_volume += 1*mult*power
+
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
@@ -372,6 +376,7 @@
 	msgLose = "Your flesh stops mending itself together."
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
+	blood_regen_amt = 2
 
 /datum/bioEffect/regenerator/wolf
 	name = "Lupine Regeneration"
@@ -392,6 +397,7 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 	acceptable_in_mutini = 0 // fun is banned
+	blood_regen_amt = 8
 
 	OnAdd()
 		. = ..()
