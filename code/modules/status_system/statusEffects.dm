@@ -786,10 +786,10 @@
 		id = "werewolf_bane"
 		name = "Wolf's Bane"
 		desc = "POISON!"
-		icon_state = "fragrant"
+		icon_state = "wolf_bane"
 		maxDuration = 5 MINUTES
 //////////////////////////////////effect_quality =
-		var/ag_stage = 0
+		var/stage = 0
 
 		onAdd(optional=null)
 			changeState()
@@ -797,7 +797,7 @@
 
 		getTooltip()
 			var/how_much = ""
-			switch(ag_stage)
+			switch(stage)
 				if(0)
 					how_much = "a bit of"
 				if(1)
@@ -820,16 +820,14 @@
 					if (prob(8))
 						H.changeStatus("stunned", 1 SECONDS)
 					if (prob(10))
-						H.dizziness = clamp(H.dizziness+5, 0,  ag_stage*5)
-
-					if (ag_stage >= 2 && prob(ag_stage*10)) //Why not?
-						H.take_toxin_damage(ag_stage)
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
+					if (stage >= 2 && prob(stage*10)) //Why not?
+						H.take_toxin_damage(stage)
 					H.make_jittery(2)
 					return
 				if (H.get_ability_holder(/datum/abilityHolder/werewolf) != null) //If wolf in human form
 					if (prob(40))
-						H.dizziness = clamp(H.dizziness+5, 0,  ag_stage*5)
-
+						H.dizziness = clamp(H.dizziness+5, 0, stage*5)
 					H.make_jittery(5)
 					return
 
@@ -838,18 +836,18 @@
 		proc/changeState()
 			if(owner?.reagents)
 				if (duration >= 200 SECONDS)
-					ag_stage = 4
+					stage = 4
 				else if (duration >= 100 SECONDS)
-					ag_stage = 3
+					stage = 3
 				else if (duration > 50 SECONDS)
-					ag_stage = 2
+					stage = 2
 				else if (duration <= 20 SECONDS)
-					ag_stage = 1
+					stage = 1
 				else if (duration <= 0)
-					ag_stage = 0
+					stage = 0
 					return
 				// TODO: different icons per stage
-				// icon_state = "werewolf_bane[ag_stage]"
+				// icon_state = "wolf_bane[stage]"
 
 	stuns
 		effect_quality = STATUS_QUALITY_NEGATIVE
