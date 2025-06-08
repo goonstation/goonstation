@@ -553,18 +553,20 @@ TYPEINFO(/mob/living)
 		//Don't think I need the above, this should work here.
 		if (istype(src.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = src.loc
+			var/obj/item/shipcomponent/secondary_system/sec_part = ship.get_part(POD_PART_SECONDARY)
 			if (ship.pilot == src)
-				if (ship.sensors)
-					if (ship.sensors.active)
+				var/obj/item/shipcomponent/sensor/sensors_part = ship.get_part(POD_PART_SENSORS)
+				if (sensors_part)
+					if (sensors_part.active)
 						var/obj/machinery/vehicle/target_pod = target
 						if (src.loc != target_pod && istype(target_pod))
-							ship.sensors.end_tracking()
-							ship.sensors.quick_obtain_target(target_pod)
+							sensors_part.end_tracking()
+							sensors_part.quick_obtain_target(target_pod)
 					else
 						if (istype(target, /obj/machinery/vehicle))
 							boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
-			else if (istype(ship.sec_system, /obj/item/shipcomponent/secondary_system/gunner_support) && ship.sec_system.active)
-				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = ship.sec_system
+			else if (istype(sec_part, /obj/item/shipcomponent/secondary_system/gunner_support) && sec_part.active)
+				var/obj/item/shipcomponent/secondary_system/gunner_support/support_gunner = sec_part
 				support_gunner.fire_at(target, src)
 
 
@@ -1041,10 +1043,10 @@ TYPEINFO(/mob/living)
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
-				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
+				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
-				else if (move_dir == turn(last_move_dir,180) && !isFlying)
+				else if (move_dir == turn(last_move_dir,180) && !HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					if(!HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
 						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.9)
@@ -1256,7 +1258,7 @@ TYPEINFO(/mob/living)
 
 			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 				sprint_particle(src, last)
-				if (!isFlying)
+				if (!HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive

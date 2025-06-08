@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	return FALSE
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
-	if (src.conversion_chamber && !isrobot(user))
+	if (src.conversion_chamber && !isrobot(user) && !isshell(user))
 		boutput(user, SPAN_ALERT("You're trapped inside!"))
 		return
 	src.go_out()
