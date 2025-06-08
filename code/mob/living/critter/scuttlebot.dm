@@ -34,10 +34,9 @@
 	proc/spawn_goggles()
 		if(!mail_glasses)
 			var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
-			R.connected_scuttlebot = src
 		else
 			var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
-			R.connected_pigeon = src
+		R.connected_scuttlebot = src
 
 	setup_hands()
 		..()
