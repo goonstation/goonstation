@@ -207,11 +207,6 @@
 		if(!can_lie && !isdead(src))
 			can_lie = 1
 
-	get_desc(dist, mob/user)
-		. = ..()
-		if (src.stage == RANCH_STAGE_SENIOR)
-			desc += "This animal looks rather old and probably won't be able to produce anything."
-
 	reduce_lifeprocess_on_death()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/ranch/age)
@@ -236,6 +231,7 @@
 
 	proc/grow_old()
 		stage = RANCH_STAGE_SENIOR
+		desc += "This animal looks rather old and probably won't be able to produce anything."
 		return
 
 	proc/die_of_old_age()
