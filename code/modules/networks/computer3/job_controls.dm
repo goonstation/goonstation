@@ -144,9 +144,6 @@ var/datum/job/priority_job = null
 						request_count = 0
 						state = MENU_MAIN
 
-						//TODO: make it inform respawnable observers and newPlayers
-
-
 	proc/job_info(datum/job/job, var/include_requests = FALSE)
 		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
 		if (job.is_highlighted())
