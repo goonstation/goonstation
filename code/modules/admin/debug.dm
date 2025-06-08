@@ -306,7 +306,11 @@ var/global/debug_messages = 0
 		//supplied lists have a different interface with a `list` var and `value` being the currently selected list item
 		//confusing!!
 		if (customization[ARG_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
-			.["options"][customization[ARG_INFO_NAME]]["list"] = flatten_list_to_keys(customization[ARG_INFO_DEFAULT])
+			var/list/key_list = list()
+			for (var/key in customization[ARG_INFO_DEFAULT])
+				key_list += "[key]" //stringify here to prevent encoding issues with letting the frontend do it
+			.["options"][customization[ARG_INFO_NAME]]["list"] = key_list
+			.["options"][customization[ARG_INFO_NAME]]["value"] = src.listargs[customization[ARG_INFO_NAME]]
 		//normal variable
 		.["options"][customization[ARG_INFO_NAME]]["value"] = src.listargs[customization[ARG_INFO_NAME]]
 
@@ -344,7 +348,16 @@ var/global/debug_messages = 0
 					listargs[params["name"]] = target
 					. = TRUE
 					break;
-
+		if ("modify_list_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE])
+					//go through the actual values and compare their stringified value to the one we got from the frontend
+					//so we don't end up returning a string instead of a type for instance
+					for (var/list_option in customization[ARG_INFO_DEFAULT])
+						if (strip_illegal_characters("[list_option]") == params["value"])
+							src.listargs[params["name"]] = list_option
+							return TRUE
 		if("activate")
 			closed = TRUE
 			ui.close()
