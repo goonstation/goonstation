@@ -153,10 +153,10 @@ var/datum/job/priority_job = null
 		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
 		if (job.player_requested)
 			job_text += " (REQUESTED)"
-		else if (job.is_highlighted())
+		if (job_controls.priority_job == job)
 			job_text += " (PRIORITY)"
 		if(include_requests && (job.request_limit > job.limit))
-			job_text += ", can requisition [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN])"
+			job_text += ", can requisition [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN] per)"
 		return job_text
 
 	proc/send_pda_message(message)
