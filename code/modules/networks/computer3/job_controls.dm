@@ -142,7 +142,7 @@ var/datum/job/priority_job = null
 							requested_job.player_requested = TRUE
 							global.wagesystem.station_budget -= total_cost
 							src.print_text("Requistioned [request_count] slots for [requested_job.name]")
-							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot(s) requisitioned by [src.account.assignment] [src.account.registered]")
+							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot[s_es(request_count)] requisitioned by [src.account.assignment] [src.account.registered]")
 							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened for [requested_job.name]"))
 
 						requested_job = null
