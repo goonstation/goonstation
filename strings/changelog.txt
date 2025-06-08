@@ -1,5 +1,9 @@
 
 (t)sun jun 08 25
+(u)LorrMaster
+(p)23419
+(e)🪲💊⚗|C-Bug, A-Medical, A-Chemistry
+(+)Fix for body temperature going below absolute zero under various conditions
 (u)bork
 (p)23778
 (e)🪲|C-Bug
