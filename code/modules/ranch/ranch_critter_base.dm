@@ -210,7 +210,7 @@
 	get_desc(dist, mob/user)
 		. = ..()
 		if (src.stage == RANCH_STAGE_SENIOR)
-			desc += "This animal looks rather old and probably won't be able to produce anything."
+			. += "<br>This animal looks rather old and probably won't be able to produce anything."
 
 	reduce_lifeprocess_on_death()
 		. = ..()
