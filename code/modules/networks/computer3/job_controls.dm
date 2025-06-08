@@ -118,6 +118,8 @@ var/datum/job/priority_job = null
 						state = MENU_MAIN
 					if(isnull(requested_job.request_cost))
 						src.print_text("Error: invalid requisition cost. Aborting...")
+						requested_job = null
+						state = MENU_MAIN
 					src.print_text("This will deduct [requested_job.request_cost * request_count][CREDIT_SIGN] from the payroll budget. Current payroll budget: [global.wagesystem.station_budget][CREDIT_SIGN]")
 					src.print_text("Confirm job requisition? (Y/N)")
 					state = MENU_REQUEST_CONFIRM
