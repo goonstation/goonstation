@@ -257,9 +257,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 3,
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
-					/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2)
+					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
+					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
@@ -579,7 +580,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_gun = 2)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -589,7 +590,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_small = 4)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -599,7 +600,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
 	cost = PAY_EXECUTIVE*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
 
@@ -609,7 +610,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_smg = 2)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate/weapon
+	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
@@ -2083,6 +2084,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = PAY_TRADESMAN*2
 	containername = "Bass Guitar Kit"
 	contains = list(/obj/item/instrument/bass)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/keytar
+	name = "Keytar Kit"
+	desc = "1x Keytar"
+	category = "Civilian Department"
+	cost = PAY_TRADESMAN*2
+	containername = "Keytar Kit"
+	contains = list(/obj/item/instrument/keytar)
 	containertype = /obj/storage/crate/wooden
 
 /datum/supply_packs/complex/player_piano

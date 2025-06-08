@@ -240,8 +240,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
+	var/payload = /obj/item/bananapeel
 	var/count = 7
+	var/throw_radius = 5
 
 	detonate()
 		var/turf/T = ..()
@@ -249,16 +250,88 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
-				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
+				var/turf/target = locate(T.x + rand(-throw_radius, throw_radius), T.y + rand(-throw_radius, throw_radius), T.z)
 				if(target)
-					thing.throw_at(target, rand(0, 10), rand(1, 4))
+					before_throwing(thing, target)
+					thing.throw_at(target, rand(0, 10), rand(1, throw_radius))
+
 		qdel(src)
+
 
 	launcher_clone() //for varedit shenanigans
 		var/obj/item/old_grenade/thing_thrower/out = ..()
 		out.payload = src.payload
 		out.count = src.count
 		return out
+
+	proc/before_throwing(var/thing, var/turf/target)
+		return
+
+/obj/item/old_grenade/thing_thrower/aconite
+	desc = "It is set to detonate in 3 seconds."
+	name = "aconite grenade"
+	icon_state = "aconite"
+	icon_state_armed = "aconite1"
+
+	payload = /obj/item/plant/herb/aconite
+	count = 8
+
+/obj/item/old_grenade/thing_thrower/garlic
+	desc = "It is set to detonate in 3 seconds."
+	name = "garlic grenade"
+	icon_state = "garlic"
+	icon_state_armed = "garlic1"
+
+	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
+	count = 16
+
+/obj/item/old_grenade/thing_thrower/csword
+	desc = "It is set to detonate in 3 seconds."
+	name = "cyalume saber grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+	payload = /obj/item/sword
+	count = 12
+
+	before_throwing(var/thing, var/turf/target)
+		if (istype(thing, /obj/item/sword))
+			var/obj/item/sword/sword = thing
+			sword.active = TRUE
+			sword.UpdateIcon()
+			// SET_BLOCKS(BLOCK_ALL)
+			sword.throwforce = 15
+			sword.hit_type = DAMAGE_CUT
+			sword.stamina_damage = sword.active_stamina_dmg
+			if(prob(50))
+				playsound(target,'sound/weapons/male_cswordturnon.ogg', 70, FALSE, 5, clamp(1.0 , 0.7, 1.2))
+			else
+				playsound(target,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0, 0.7, 1.4))
+			sword.force = sword.active_force
+			sword.stamina_cost = sword.active_stamina_cost
+			sword.w_class = W_CLASS_BULKY
+			sword.leaves_slash_wound = TRUE
+			sword.setItemSpecial(/datum/item_special/swipe/csaber)
+
+		return
+
+/obj/item/old_grenade/thing_thrower/pie
+	desc = "It is set to detonate in 3 seconds."
+	name = "pie grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/reagent_containers/food/snacks/pie/cream
+	count = 20
+
+
+/obj/item/old_grenade/thing_thrower/shuriken
+	desc = "It is set to detonate in 3 seconds."
+	name = "shuriken grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/implant/projectile/shuriken
+	count = 12
 
 TYPEINFO(/obj/item/old_grenade/graviton)
 	mats = 12
@@ -2113,62 +2186,62 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (istype(hero))
 					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
 				else // leave a radium puddle instead
-					for (var/turf/splat in view(1,src.loc))
+					for (var/turf/splat in view(1,origin))
 						make_cleanable( /obj/decal/cleanable/greenglow,splat)
-					for (var/mob/M in view(3,src.loc))
+					for (var/mob/M in view(3,origin))
 						if(iscarbon(M))
 							if (M.reagents)
 								M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
 						boutput(M, SPAN_ALERT("You are splashed with hot green liquid!"))
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(origin, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,src.loc))
+					playsound(origin, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,origin))
 					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(origin))
 				else
-					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
+					particleMaster.SpawnSystem(new /datum/particleSystem/confetti(origin))
 			if (meat)
 				if (meat > 1)
-					gibs(src.loc)
-				for (var/turf/splat in view(meat,src.loc))
+					gibs(origin)
+				for (var/turf/splat in view(meat,origin))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
 				if (ghost > 1)
-					for (var/mob/M in view(2+ghost,src.loc))
+					for (var/mob/M in view(2+ghost,origin))
 						if(iscarbon(M))
 							boutput(M, SPAN_ALERT("You are yanked by an unseen force!"))
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
 							M.throw_at(origin, yank_distance, 2)
-				for (var/obj/O in view(1,src.loc))
+				for (var/obj/O in view(1,origin))
 					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
 				throw_shrapnel(origin, 4, extra_shrapnel * (istype(hero) ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
-				for (var/mob/living/L in view(5, src.loc))
+				for (var/mob/living/L in view(5, origin))
 					target_count++
 				if (target_count)
-					for (var/mob/living/L in oview(5, src.loc))
+					for (var/mob/living/L in oview(5, origin))
 						// reducing range increases impact, reduce mob shock intensity instead
 						arcFlash(src, L, max((charge*7) / (target_count * (istype(hero) ? 2 : 1)), 1))
 				else
-					for (var/turf/T in oview(3,src.loc))
+					for (var/turf/T in oview(3,origin))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(istype(hero) ? 1 : 3,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3,origin))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
 				if (istype(hero))
 					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), origin))
 					src.reagents.reaction(T,1,5)
 
 			if (istype(hero))
@@ -2179,7 +2252,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 			//do mod effects : post-explosion
 			if (tele)
-				for (var/mob/M in view(4,src.loc))
+				for (var/mob/M in view(4,origin))
 					if(isturf(M.loc) && !isrestrictedz(M.loc.z))
 						var/turf/warp_to = get_turf(pick(orange(3 * tele, M.loc)))
 						if (isturf(warp_to))
@@ -2188,18 +2261,18 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 							boutput(M, SPAN_ALERT("You suddenly teleport ..."))
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
-				for (var/turf/T in view(rcd,src.loc))
+				playsound(origin, 'sound/items/Deconstruct.ogg', 70, TRUE)
+				for (var/turf/T in view(rcd,origin))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
 						F.setMaterial(getMaterial(rcd_mat))
 				if (rcd > 1)
-					for (var/turf/T in view(3,src.loc))
+					for (var/turf/T in view(3,origin))
 						if (prob(rcd * 10))
 							new /obj/mesh/grille/steel(T)
 
 			if (plasma)
-				for (var/turf/simulated/floor/target in range(1,src.loc))
+				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
 						if(target.parent?.group_processing)
 							target.parent.suspend_group_processing()
@@ -2213,7 +2286,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (throw_objs.len && length(throw_objs) > 0)
 				var/count = 20
 				var/obj/spawn_item
-				for (var/mob/living/L in oview(5, src.loc))
+				for (var/mob/living/L in oview(5, origin))
 					spawn_item = pick(throw_objs)
 					var/obj/O = new spawn_item(origin)
 					if (istype(O,/obj/item/reagent_containers/patch))
@@ -2222,7 +2295,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					O.throw_at(L, istype(hero) ? 2 : 5, 3) // thrown short of far targets
 					count--
 				if (count > 0)
-					for (var/turf/target in oview(4,src.loc))
+					for (var/turf/target in oview(4,origin))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
 							var/obj/O = new spawn_item(origin)

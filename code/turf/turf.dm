@@ -618,7 +618,7 @@ proc/generate_space_color()
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
-	if (can_replace_with_stuff || force)
+	if (can_replace_with_stuff || force || can_dig)
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
@@ -808,6 +808,7 @@ var/global/in_replace_with = 0
 	new_turf.RL_NeedsAdditive = rlneedsadditive
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
+
 	new_turf.opaque_atom_count = old_opaque_atom_count
 	new_turf.pass_unstable += old_pass_unstable
 
@@ -844,9 +845,6 @@ var/global/in_replace_with = 0
 					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
-	//cleanup old overlay to prevent some Stuff
-	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
-	new_turf.RL_Cleanup() //Cleans up/mostly removes the lighting.
 	new_turf.RL_Init()
 
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
@@ -1111,12 +1109,12 @@ TYPEINFO(/turf/simulated)
 
 /turf/simulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/unsimulated/grimycarpet
 	name = "grimy carpet"
-	icon = 'icons/turf/floors.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "grimy"
 
 /turf/simulated/grass
@@ -1186,7 +1184,7 @@ TYPEINFO(/turf/simulated)
 
 /turf/unsimulated/floor/carpet
 	name = "carpet"
-	icon = 'icons/turf/carpet.dmi'
+	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "red1"
 
 /turf/unsimulated/wall/bombvr
@@ -1242,10 +1240,10 @@ TYPEINFO(/turf/simulated)
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/attackby(obj/item/C, mob/user)
+/turf/attackby(obj/item/I, mob/user, params, is_special, silent)
 	if(src.can_build)
 		var/area/A = get_area (user)
-		var/obj/item/rods/R = C
+		var/obj/item/rods/R = I
 		if (istype(R))
 			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
@@ -1258,19 +1256,24 @@ TYPEINFO(/turf/simulated)
 			var/obj/lattice/lattice = new(src)
 			lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
 			if (R.material)
-				src.setMaterial(C.material)
+				src.setMaterial(R.material)
 			return
 
-		if (istype(C, /obj/item/tile))
+		if (istype(I, /obj/item/tile))
 			if (istype(A, /area/supply/spawn_point || /area/supply/sell_point))
 				boutput(user, SPAN_ALERT("You can't build here."))
 				return
-			var/obj/item/tile/T = C
+			var/obj/item/tile/T = I
 			if (T.amount >= 1)
 				for(var/obj/lattice/L in src)
 					qdel(L)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 				T.build(src)
+	if (src.can_dig && isdiggingtool(I))
+		if(checkTurfPassable(src))
+			actions.start(new/datum/action/bar/dig_trench(src), user)
+		else
+			boutput(user, SPAN_NOTICE("You can't start digging there with something in the way!"))
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
@@ -1371,53 +1374,25 @@ TYPEINFO(/turf/simulated)
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grasstodirt"
+	can_dig = TRUE
 
 /turf/unsimulated/grass
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/unsimulated/dirt
 	name = "Dirt"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/shovel))
-			if (src.icon_state == "dirt-dug")
-				boutput(user, SPAN_ALERT("That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space."))
-				return
-
-			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
-			//todo: A digging sound effect.
-			if (do_after(user, 4 SECONDS) && src.icon_state != "dirt-dug")
-				src.icon_state = "dirt-dug"
-				user.visible_message("<b>[user]</b> finishes digging.", "You finish digging.")
-				for (var/obj/tombstone/grave in orange(src, 1))
-					if (istype(grave) && !grave.robbed)
-						grave.robbed = 1
-						//idea: grave robber medal.
-						if (grave.special)
-							new grave.special (src)
-						else
-							switch (rand(1, 5))
-								if (1)
-									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
-								if (2)
-									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
-								if (3)
-									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
-								else
-									; // default
-						break
-
-		else
-			return ..()
+	can_dig = TRUE
 
 /turf/unsimulated/nicegrass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/unsimulated/nicegrass/random
 	New()
@@ -1428,6 +1403,7 @@ TYPEINFO(/turf/simulated)
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+	can_dig = TRUE
 
 /turf/simulated/nicegrass/random
 	New()

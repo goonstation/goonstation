@@ -12,6 +12,9 @@
 	var/painted = 0
 	var/paint = null
 
+TYPEINFO(/mob/living/silicon/robot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	voice_name = "synthesized voice"
@@ -22,7 +25,7 @@
 	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
-
+	say_language = LANGUAGE_ENGLISH
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
@@ -46,9 +49,7 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/obj/item/device/radio/headset/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/headset/radio = null
-	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
 	var/obj/item/instrument/scream_instrument = null
 	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
@@ -72,7 +73,6 @@
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
-	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -224,15 +224,7 @@
 
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio/headset(src)
-			if (src.shell)
-				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
-				// Do not apply the radio upgrade to AI shells
-				src.apply_radio_upgrade()
-			src.ears = src.radio
+			src.update_radio(/obj/item/device/radio/headset)
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
 			src.camera.network = CAMERA_NETWORK_ROBOTS
@@ -674,39 +666,29 @@
 				return
 		if (!isalive(src))
 			return
-		if (maptext_out)
-			var/image/chat_maptext/chat_text = null
-			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-				if (speechpopups && src.chat_text)
-					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-					if(chat_text)
-						chat_text.measure(src.client)
-						for(var/image/chat_maptext/I in src.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-				if (message)
-					logTheThing(LOG_SAY, src, "EMOTE: [message]")
-					act = lowertext(act)
-					if (m_type & 1)
-						for (var/mob/O in viewers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (m_type & 2)
-						for (var/mob/O in hearers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (!isturf(src.loc))
-						var/atom/A = src.loc
-						for (var/mob/O in A.contents)
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-				else
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-		return
+
+		if (!message)
+			return
+
+		var/list/mob/recipients = list()
+		if (m_type & 1)
+			recipients = viewers(src, null)
+
+		else if (m_type & 2)
+			recipients = hearers(src, null)
+
+		else if (!isturf(src.loc))
+			var/atom/A = src.loc
+			for (var/mob/M in A.contents)
+				recipients += M
+
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
+		act = lowertext(act)
+		for (var/mob/M as anything in recipients)
+			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+		if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+			DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	examine(mob/user)
 		. = list()
@@ -1255,7 +1237,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]'s head."))
-				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if ((B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg"))) || B.cyber_incompatible)
 					src.visible_message(SPAN_ALERT("The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies."))
 					B.combust()
 					return
@@ -1297,11 +1279,7 @@
 				src.part_head.ai_interface = I
 				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
-					if(isnull(src.ai_radio))
-						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-					src.radio = src.ai_radio
-					src.ears = src.radio
-					src.radio.set_loc(src)
+					src.update_radio(/obj/item/device/radio/headset/command/ai)
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
@@ -1547,17 +1525,13 @@
 						UPGR.upgrade_deactivate(src)
 
 					user.put_in_hand_or_drop(src.part_head.ai_interface)
-					src.radio = src.default_radio
-					if (src.module && istype(src.module.radio))
-						src.radio = src.module.radio
-					src.ears = src.radio
-					src.apply_radio_upgrade()
-					src.radio.set_loc(src)
 					src.part_head.ai_interface = null
-					if(src.ai_radio)
-						qdel(src.ai_radio)
-						src.ai_radio = null
 					src.shell = 0
+
+					if (src.module.radio_type)
+						src.update_radio(src.module.radio_type)
+					else
+						src.update_radio(/obj/item/device/radio/headset)
 
 					if (mainframe)
 						mainframe.return_to(src)
@@ -1870,28 +1844,6 @@
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
 
-	say_understands(var/other)
-		if (isAI(other)) return 1
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace.exclusive_language)
-				return 1
-		if (ishivebot(other)) return 1
-		return ..()
-
-	say_quote(var/text)
-		if (src.glitchy_speak || (src.dependent && isAI(src.mainframe) && src.mainframe.glitchy_speak))
-			text = voidSpeak(text)
-		var/ending = copytext(text, length(text))
-
-		if (singing)
-			return singify_text(text)
-
-		if (ending == "?") return "queries, \"[text]\"";
-		else if (ending == "!") return "declares, \"[text]\"";
-
-		return "states, \"[text]\"";
-
 	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
@@ -1918,16 +1870,6 @@
 		else
 			return null
 
-	proc/apply_radio_upgrade()
-		if(!istype(src.radio_upgrade))
-			return
-		// Remove it from the previous radio if applicable
-		var/obj/item/device/radio/headset/previous_radio = src.radio_upgrade.loc
-		if (istype(previous_radio))
-			previous_radio.remove_radio_upgrade()
-		if (istype(src.radio)) // Might be null when the robot is activated
-			src.radio.install_radio_upgrade(src.radio_upgrade)
-
 	add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
 		src.radio_upgrade = upgrade
 		src.apply_radio_upgrade()
@@ -1943,6 +1885,31 @@
 //////////////////////////
 // Robot-specific Procs //
 //////////////////////////
+
+	proc/update_radio(radio_path)
+		if (src.shell)
+			if (!istype(src.radio, /obj/item/device/radio/headset/command/ai))
+				radio_path = /obj/item/device/radio/headset/command/ai
+			else
+				return
+
+		if (!radio_path)
+			return
+
+		QDEL_NULL(src.radio)
+		src.radio = new radio_path(src)
+		src.ears = src.radio
+		src.apply_radio_upgrade()
+
+	proc/apply_radio_upgrade()
+		if(!istype(src.radio_upgrade))
+			return
+		// Remove it from the previous radio if applicable
+		var/obj/item/device/radio/headset/previous_radio = src.radio_upgrade.loc
+		if (istype(previous_radio))
+			previous_radio.remove_radio_upgrade()
+		if (istype(src.radio)) // Might be null when the robot is activated
+			src.radio.install_radio_upgrade(src.radio_upgrade)
 
 	proc/equip_slot(var/i, var/obj/item/tool)
 		src.module_states[i] = tool
@@ -2017,18 +1984,12 @@
 		src.update_appearance()
 		hud.update_module()
 		hud.module_added()
-		if(istype(RM.radio))
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = RM.radio
+		if(ispath(RM.radio_type))
+			if (!src.shell)
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
-				src.apply_radio_upgrade()
-			src.ears = src.radio
-			src.radio.set_loc(src)
+
+			src.update_radio(RM.radio_type)
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -2039,18 +2000,13 @@
 		uneq_all()
 		src.module = null
 		hud.module_removed()
-		if(istype(src.radio) && src.radio != src.default_radio)
-			src.radio.set_loc(RM)
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
+		if(ispath(RM.radio_type))
+			if (!src.shell)
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
-				src.apply_radio_upgrade()
-			src.ears = src.radio
+
+			src.update_radio(/obj/item/device/radio/headset)
+
 		return RM
 
 	proc/activated(obj/item/O)
@@ -2232,27 +2188,81 @@
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
+		var/list/say_targets = list()
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		say_targets += "Local"
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
+
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("1. You may not injure a human being or cause one to come to harm.")
+		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 		sleep(1 SECOND)
-		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 		sleep(1 SECOND)
-		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
-		set name = "State Laws"
+		set name = "State All Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
 		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
+
+		var/list/say_targets = list()
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		say_targets += "Local"
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
 
 		var/laws = null
 		if(src.dependent) //are you a shell?
@@ -2268,7 +2278,7 @@
 
 		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
-			src.say("[number]. [laws[number]]")
+			src.say("[prefix] [number]. [laws[number]]")
 			sleep(1 SECOND)
 
 	verb/robot_set_fake_laws()
@@ -3624,6 +3634,10 @@
 						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
+
+/mob/living/silicon/robot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
 
 #undef can_step_sfx
 #undef ROBOT_BATTERY_DISTRESS_INACTIVE

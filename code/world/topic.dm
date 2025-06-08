@@ -380,17 +380,17 @@
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
 						if(B.on)
-							B.speak(msg)
+							B.say(msg)
 					return 1
 
 				//This is important.
 				else if (nick == "HeadSurgeon")
 					for (var/obj/machinery/bot/medbot/head_surgeon/HS in machine_registry[MACHINES_BOTS])
 						if (HS.on)
-							HS.speak(msg)
+							HS.say(msg)
 					for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/HS in world)
 						LAGCHECK(LAG_LOW)
-						HS.speak(msg)
+						HS.say(msg)
 					return 1
 
 				return 0
@@ -640,7 +640,7 @@
 				var/address = plist["address"]
 				var/msg = "<br><div style='text-align: center; font-weight: bold;' class='deadsay'>---------------------<br>"
 				msg += "A round just ended on [server]<br>"
-				msg += "<a href='[address]'>Click here to join it</a><br>"
+				msg += "<a href='[address]'>Click here to join the next one!</a><br>"
 				msg += "---------------------</div><br>"
 				for (var/client/C)
 					if (isdead(C.mob))
