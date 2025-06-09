@@ -19478,7 +19478,8 @@
 /area/station/security/checkpoint/podbay)
 "bic" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
+	dir = 10;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
@@ -19673,7 +19674,9 @@
 	},
 /area/space)
 "biI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
@@ -20439,7 +20442,8 @@
 /area/station/maintenance/central)
 "bld" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
+	dir = 5;
+	can_rupture = 0
 	},
 /obj/machinery/meter,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -21917,7 +21921,6 @@
 /area/station/engine/hotloop)
 "bpS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/cable{
@@ -21929,7 +21932,6 @@
 /area/station/engine/hotloop)
 "bpT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 5
 	},
 /obj/cable{
@@ -22541,7 +22543,6 @@
 /area/station/solar/south)
 "brV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /turf/simulated/floor/caution/south,
@@ -23053,7 +23054,8 @@
 "btE" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
-	level = 2
+	level = 2;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -23072,7 +23074,6 @@
 /area/station/engine/hotloop)
 "btG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/table/reinforced/auto,
@@ -23564,10 +23565,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
-"bvm" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "bvn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -24199,7 +24196,8 @@
 /area/station/hallway/primary/east)
 "bxb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
@@ -24240,7 +24238,8 @@
 /area/station/engine/engineering)
 "bxg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
@@ -24262,7 +24261,8 @@
 	opacity = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -24277,7 +24277,8 @@
 	opacity = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
+	dir = 4;
+	can_rupture = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -24884,7 +24885,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /obj/machinery/light/small,
@@ -24929,7 +24929,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /turf/simulated/floor/caution/northsouth{
@@ -25442,7 +25441,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /turf/simulated/floor/plating,
@@ -25453,7 +25451,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -25496,7 +25493,6 @@
 /area/station/engine/inner)
 "bAO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/cable{
@@ -28850,7 +28846,6 @@
 /area/station/security/checkpoint/podbay)
 "bJR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/cable{
@@ -31645,7 +31640,8 @@
 /area/station/security/checkpoint/podbay)
 "bRK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
+	dir = 6;
+	can_rupture = 0
 	},
 /obj/machinery/meter,
 /obj/cable{
@@ -31678,7 +31674,6 @@
 "bRO" = (
 /obj/machinery/disposal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/disposalpipe/trunk{
@@ -31689,7 +31684,6 @@
 /area/station/engine/storage)
 "bRP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -32275,7 +32269,9 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
 "bTr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -32908,7 +32904,6 @@
 /area/station/engine/coldloop)
 "bVe" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/machinery/manufacturer/gas,
@@ -33863,9 +33858,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
 "bXR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/space,
 /area/space)
 "bXS" = (
@@ -48890,7 +48883,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
 "cVR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -56099,7 +56094,6 @@
 "fZH" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/decal/stripe_caution,
@@ -64756,7 +64750,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 6
 	},
 /obj/machinery/firealarm/west,
@@ -68834,7 +68827,6 @@
 /area/station/engine/engineering)
 "rAw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/machinery/light,
@@ -70426,7 +70418,6 @@
 /area/station/maintenance/central)
 "tgp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/decal/stripe_caution,
@@ -72912,7 +72903,6 @@
 /area/station/hangar/main)
 "vHI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
 	dir = 10
 	},
 /obj/machinery/firealarm/east,
@@ -74075,7 +74065,6 @@
 /area/station/ranch)
 "xfz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
@@ -116505,7 +116494,7 @@ odR
 bpX
 msj
 btE
-bvm
+bmH
 bxu
 byZ
 bAL
