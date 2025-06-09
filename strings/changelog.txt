@@ -1,5 +1,10 @@
 
 (t)mon jun 09 25
+(u)glowbold
+(p)23234
+(e)🪲🗺🎨⚖🔄💊|C-Bug, A-Mapping, C-Sprites, C-Balance, C-Rework, A-Medical
+(*)Defibrillators use power when you prime the paddles. Portable units have a power cell, cyborgs use their internal power cell, and mounted units use the area APC.
+(+)Medbay generally has two specialized defibrillator chargers. Defibrillators can also be recharged in standard rechargers.
 (u)RubberRats
 (p)23681
 (e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
