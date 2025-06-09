@@ -1,5 +1,9 @@
 
 (t)mon jun 09 25
+(u)JORJ949
+(p)23775
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)Any trained syndicate operative (ones that can open the listening post) will now remove time when putting the auth disk in a nuclear bomb, rather than just nukeops.
 (u)glowbold
 (p)23234
 (e)🪲🗺🎨⚖🔄💊|C-Bug, A-Mapping, C-Sprites, C-Balance, C-Rework, A-Medical
