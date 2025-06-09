@@ -3419,8 +3419,6 @@ var/global/noir = 0
 						src.owner:debug_variables(mining_controls)
 					if("mapsettings")
 						src.owner:debug_variables(map_settings)
-					if("ghostnotifications")
-						src.owner:debug_variables(ghost_notifier)
 					if("overlays")
 						overlaytest()
 					if("overlaysrem")

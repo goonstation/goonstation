@@ -66,16 +66,28 @@
 	role = "Ghost"
 
 
+/datum/speech_module/output/deadchat/wraith
+	id = SPEECH_OUTPUT_DEADCHAT_WRAITH
+	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+	role = "Wraith"
+
+
 /datum/speech_module/output/deadchat/poltergeist
 	id = SPEECH_OUTPUT_DEADCHAT_POLTERGEIST
 	priority = SPEECH_OUTPUT_PRIORITY_HIGH
 	role = "Poltergeist"
 
 
-/datum/speech_module/output/deadchat/wraith
-	id = SPEECH_OUTPUT_DEADCHAT_WRAITH
+/datum/speech_module/output/deadchat/plague_rat
+	id = SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT
 	priority = SPEECH_OUTPUT_PRIORITY_HIGH
-	role = "Wraith"
+	role = "Plague Rat"
+
+
+/datum/speech_module/output/deadchat/wraith_summon
+	id = SPEECH_OUTPUT_DEADCHAT_WRAITH_SUMMON
+	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+	role = "Wraith Summon"
 
 
 /datum/speech_module/output/deadchat_announcer

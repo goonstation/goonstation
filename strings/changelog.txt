@@ -1,3 +1,143 @@
+
+(t)sun jun 08 25
+(u)LeahTheTech
+(p)23763
+(e)🔨|A-Player-Actions
+(+)Pug woof once again has no cooldown but now has a stamina cost and will cause you to fall over wheezing if used too much.
+(u)LorrMaster
+(p)23419
+(e)🪲💊⚗|C-Bug, A-Medical, A-Chemistry
+(+)Fix for body temperature going below absolute zero under various conditions
+(u)bork
+(p)23778
+(e)🪲|C-Bug
+(+)removes the mention of a valuchimp from the kitchen kit from cargo
+(u)JORJ949
+(p)22995
+(e)⚖🔨💡|C-Balance, A-Player-Actions, A-Station-Systems
+(+)Issuing fines is now tied to two new accesses rather than job on manifest.
+(+)The Ticket Master App now requires an ID to be inserted in your PDA.
+(t)sat jun 07 25
+(u)Kyle & glowbold
+(p)23021
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Werewolves hit with one of their weaknesses like silver or aconite receive a dedicated debuff Wolf's Bane
+(u)glowbold
+(p)23521
+(e)⚖💊|C-Balance, A-Medical
+(+)Fire, cold, and thermal resistance provide 25% base resistance, doubled when empowered.
+(u)bork
+(p)23554
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added vanilla extract and a new recipe, flan!
+(u)Cheekybrdy
+(p)23699
+(e)💅🐁|C-QoL, A-Critters
+(+)Senior ranch animals can now be determined through their description.
+(t)fri jun 06 25
+(u)JORJ949 & RSOD
+(p)23469
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(*)Spatial interdictors can now be unlocked by swiping an ID with access. They can also have their access changed by the AccessPro
+(+)The Interdictor in the ranch now requires ranch access.
+(u)Avanth
+(p)23701
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)The lawbringer can now understand multiple words again.
+(u)Egregorious
+(p)23745
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)Harvesting plants with a produce satchel now auto-fills it with produce directly and ignores the seed packet, instead of demanding input.
+(t)wed jun 04 25
+(u)Mr. Moriarty, LeahTheTech, Sord, & glowbold
+(p)23481
+(e)🆕🗺🎨🔊📄|C-Feature, A-Mapping, C-Sprites, C-Sound, A-UI
+(*)The new player options menu includes an in-game tutorial.
+(u)Cheekybrdy
+(p)23683
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Automatic Command promotions to HoS won't happen in single digit staffing stations.
+(u)Lord_Earthfire
+(p)23705
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Atmospheric pipes in walls have their fatigue pressure increased by 5 times the walls material density. Double the value for reinforced walls.
+(u)Mr. Moriarty
+(p)23466
+(e)🆕🔎💅🔨|C-Feature, C-Code-Quality, C-QoL, A-Player-Actions
+(*)Added wraithchat. Wraiths now speak over wraithchat using T and deadchat using Y. Wraith summons can now speak over wraithchat using Y or by using the :wraith prefix.
+(u)LorrMaster
+(p)23552
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Controls and inertia directions more accurately reflect player inputs
+(u)KakoLookiyam
+(p)23713
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Gas flow meters are now mechscannable and deployable.
+(t)tue jun 03 25
+(u)Chasu
+(p)23715
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Secured assemblies can now be splashed with reagents, such as glue.
+(u)Cheekybrdy
+(p)23508
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)Readds Salvagers to classic, as a roundstart mixed role.
+(u)Flamearrow
+(p)22973
+(e)🚄📡🤖|C-Performance, A-AI, A-Silicons
+(*)AI static rendering has been reworked, please report any glitches or performance changes.
+(u)glowbold
+(p)23686
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)AI Eyebots now count as floating when active
+(+)Floating objects should react more consistently with expected behavior
+(u)Bobbis dobbis
+(p)23703
+(e)⚖|C-Balance
+(+)Small animals are no longer affected by food poisoning.
+(u)Lord_Earthfire
+(p)23706
+(e)🪲💨⚗|C-Bug, A-Atmospherics, A-Chemistry
+(+)Graphene hardening compound works on pipe manifolds now.
+(t)mon jun 02 25
+(u)glowbold
+(p)23698
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Anti-singularity buster shots will shrink large singularities. Small singularities will explode into white holes.
+(+)Loose singularities are more likely to drift towards station tiles.
+(u)LorrMaster
+(p)23669
+(e)🆕🌱|C-Feature, A-Hydroponics
+(*)Synth legs will now passively absorb reagents. Shoes prevent the effect in shallow fluids. An additional chem protection of 40% prevents it while submerged.
+(t)sun jun 01 25
+(u)glowbold
+(p)23591
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)You must use an aggressive grab to pull people away from aggressive grabs.
+(u)LorrMaster
+(p)23612
+(e)🆕🚗|C-Feature, A-Vehicles
+(+)Pod visuals now change depending on their installed engine type
+(u)nova2053
+(p)23620
+(e)🆕💅🔨|C-Feature, C-QoL, A-Player-Actions
+(+)Tables, racks, and other items which use a similar construction method can now be constructed on the same tile as thindows, sliding glass doors, and other objects with directional blocking.
+(+)Tables can now be constructed under a couple more objects, such as microwaves, espresso machines, and more. See PR page for full list.
+(t)sat may 31 25
+(u)LeahTheTech
+(*)Material analysers now display the rupture pressure of breakable pipes.
+(+)All concussive charges can now break geodes (if they're soft enough)
+(p)23646
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(*)Manifolds can now rupture and be reinforced just like regular pipes.
+(u)RubberRats
+(p)23658
+(e)🪲🍝|C-Bug, A-Catering
+(+)Peanut butter and honey sandwiches are now cookable again
+(u)CalliopeSoups
+(p)23630
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap 2's engine has less heat pipe covering wires.
 (t)fri may 30 25
 (u)CalliopeSoups and LeahTheTech
 (*)Added a new "Mixed Spooky" gamemode with a guaranteed wraith and supernatural antags. Enabled on all servers.

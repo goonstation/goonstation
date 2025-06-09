@@ -1427,7 +1427,7 @@
 /area/station/hallway/primary/northeast)
 "aEY" = (
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
 	},
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
@@ -7269,6 +7269,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"dpI" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "eastcc_stall5"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "dqn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
@@ -9087,7 +9093,7 @@
 /area/shuttle/arrival/station)
 "eez" = (
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
@@ -9621,7 +9627,7 @@
 /area/station/hallway/primary/northeast)
 "eub" = (
 /obj/machinery/light,
-/obj/machinery/interdictor/unlocked,
+/obj/machinery/interdictor/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "euf" = (
@@ -28594,7 +28600,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall4";
+	id = "eastcc_stall5";
 	pixel_x = 23;
 	pixel_y = 0
 	},
@@ -40981,9 +40987,6 @@
 	pixel_x = -12
 	},
 /obj/rack,
-/obj/item/reagent_containers/food/drinks/juicer{
-	pixel_y = 5
-	},
 /obj/item/storage/box/fruit_wedges,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -44867,7 +44870,7 @@
 	pixel_y = 1
 	},
 /obj/machinery/manufacturer/uniform{
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5)
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric=5)
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -113770,7 +113773,7 @@ uCs
 eIK
 oZp
 mem
-rXN
+dpI
 gfT
 oZp
 oZp

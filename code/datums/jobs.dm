@@ -3078,6 +3078,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			C.assignment = "Staff Assistant"
 			C.name = "[C.registered]'s ID Card ([C.assignment])"
 
+			M.job = "Staff Assistant" // for observers
+
 			var/obj/item/device/pda2/pda = locate() in M
 			pda.assignment = "Staff Assistant"
 			pda.ownerAssignment = "Staff Assistant"
@@ -3123,13 +3125,14 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_foot = list(/obj/item/clothing/shoes/witchfinder)
 	slot_back = list(/obj/item/quiver/leather/stocked)
 	slot_belt = list(/obj/item/storage/belt/crossbow)
+	slot_poc1 = list(/obj/item/storage/werewolf_hunter_pouch)
+
 	items_in_belt = list(
+		/obj/item/dagger/silver,
 		/obj/item/gun/bow/crossbow/wooden,
 		/obj/item/gun/bow/crossbow/wooden,
 		/obj/item/handcuffs/silver,
 		/obj/item/handcuffs/silver,
-		/obj/item/plant/herb/aconite,
-		/obj/item/plant/herb/aconite,
 	)
 
 /*---------------------------------------------------------------*/
