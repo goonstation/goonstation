@@ -84,7 +84,7 @@
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
 				for(var/datum/antagonist/antagdatum in M.mind?.antagonists)
-					if(!antagdatum.vr) //if we have one valid antag, that counts
+					if(!(antagdatum.vr || antagdatum.pseudo)) //if we have one valid antag, that counts
 						obs_data["antag"] = antagdatum.display_name
 						break
 

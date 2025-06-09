@@ -216,9 +216,6 @@
 
 /// For a specified mind, creates an entry in `antagonist_tab_data` containing the applicable information.
 /datum/crewCredits/proc/generate_antagonist_data(datum/mind/mind)
-	if (!mind.is_antagonist())
-		return
-
 	var/list/antagonist_display_names = list()
 	var/list/antagonist_statistics = list()
 	var/list/objectives = list()
@@ -257,6 +254,15 @@
 				"completed" = objective.check_completion(),
 				)
 			)
+
+	for (var/former_role in uniquelist(mind.former_antagonist_roles))
+		src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA] += list(list(
+			"antagonist_role" = capitalize(special_role_to_english(former_role)),
+			"real_name" = mind.current.real_name,
+			"player" = mind.displayed_key,
+			"dead" = isdead(mind.current),
+			)
+		)
 
 	if (!length(antagonist_display_names))
 		return
@@ -318,6 +324,12 @@
 	data["subordinate_antagonists"] = subordinate_antagonists
 
 	src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA] += list(data)
+
+// special roles are stored as a list of string IDs, so we need to look up their display name
+/datum/crewCredits/proc/special_role_to_english(special_role)
+	for(var/datum/antagonist/antag_type as anything in concrete_typesof(/datum/antagonist))
+		if (special_role == antag_type:id)
+			return antag_type:display_name
 
 /// Station Score
 /datum/crewCredits/proc/generate_score_data()

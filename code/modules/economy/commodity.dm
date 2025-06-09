@@ -1571,6 +1571,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "The delightful regalia of a terrible polkadot mascot."
 	price = PAY_UNTRAINED
 
+/datum/commodity/costume/chompskysuit
+	comname = "Gnome Chompsky costume"
+	comtype = /obj/item/storage/box/costume/chompskysuit
+	desc = "Roam as a Gnome with this giant-sized gnome costume."
+	price = PAY_UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack

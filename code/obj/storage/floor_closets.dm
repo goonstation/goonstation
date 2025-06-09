@@ -13,14 +13,18 @@
 		..()
 		src.UpdateIcon()
 
-	close()
+	close(entanglelogic, mob/user)
 		..()
+		if (user)
+			logTheThing(LOG_STATION, user, " closed a syndicate floor closet at [log_loc(src)]")
 		src.UpdateIcon()
 
 	open(entanglelogic, mob/user)
 		if (src.welded)
 			return
 		..()
+		if (user)
+			logTheThing(LOG_STATION, user, " opened a syndicate floor closet at [log_loc(src)]")
 		src.UpdateIcon()
 
 	update_icon(turf/turf_override = null)

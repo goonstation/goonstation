@@ -74,11 +74,13 @@
 		for (var/mob/M in T.contents)
 			logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
 			M.take_radiation_dose(rad_strength)
-			if (prob(mutate_prob) && M.bioHolder)
-				if (prob(bad_mut_prob))
-					M.bioHolder.RandomEffect("bad")
-				else
-					M.bioHolder.RandomEffect("good")
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (prob(mutate_prob) && M.bioHolder)
+					if (prob(bad_mut_prob))
+						H.bioHolder.RandomEffect("bad")
+					else
+						H.bioHolder.RandomEffect("good")
 
 /obj/anomaly/neutron_burst
 	name = "iridescent anomaly"
@@ -98,8 +100,8 @@
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
-			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
+		if(!particleMaster.CheckSystemExists(/datum/particleSystem/neutron_warning, src))
+			particleMaster.SpawnSystem(new /datum/particleSystem/neutron_warning(src))
 		SPAWN(lifespan)
 			playsound(src,pulse_sound,50,TRUE)
 			irradiate_turf(get_turf(src))
@@ -111,8 +113,8 @@
 			return
 
 	disposing()
-		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
-			particleMaster.RemoveSystem(/datum/particleSystem/rads_warning)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/neutron_warning, src))
+			particleMaster.RemoveSystem(/datum/particleSystem/neutron_warning)
 		..()
 
 	proc/irradiate_turf(var/turf/T)
@@ -183,6 +185,37 @@
 	Apply(var/obj/particle/par)
 		if(..())
 			par.color = "#00FF00"
+			par.alpha = 255
+
+			first.Scale(0.1,0.1)
+			par.transform = first
+
+			first.Scale(80)
+			animate(par, transform = first, time = 5, alpha = 5)
+			first.Reset()
+
+/datum/particleSystem/neutron_warning
+	New(var/atom/location = null)
+		..(location, "neutron_warning", 5)
+
+	Run()
+		if (..())
+			for(var/i=0, i<4, i++)
+				sleep(0.2 SECONDS)
+				SpawnParticle()
+			state = 1
+
+/datum/particleType/neutron_warning
+	name = "neutron_warning"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "32x32ring"
+
+	MatrixInit()
+		first = matrix()
+
+	Apply(var/obj/particle/par)
+		if(..())
+			par.color = "#0084ff"
 			par.alpha = 255
 
 			first.Scale(0.1,0.1)
