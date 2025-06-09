@@ -30531,6 +30531,11 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
+"dFj" = (
+/obj/rack,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "dFk" = (
 /obj/blind_switch/area/north,
 /turf/simulated/floor/wood/two,
@@ -41439,11 +41444,6 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"lfg" = (
-/obj/rack,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "lfn" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -43658,15 +43658,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"mET" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/railing/orange/reinforced,
-/obj/machinery/firealarm/west,
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "mEW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49890,6 +49881,15 @@
 /obj/shrub,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"rji" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced,
+/obj/machinery/firealarm/west,
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rjI" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -107942,7 +107942,7 @@ buI
 bvI
 aup
 hoy
-mET
+rji
 eBv
 aup
 bzl
@@ -116390,7 +116390,7 @@ jOn
 qsw
 tmx
 pvj
-lfg
+dFj
 boo
 gkQ
 pJk

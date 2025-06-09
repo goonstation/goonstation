@@ -4801,11 +4801,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
-"btX" = (
-/obj/table/auto,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "btZ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -28586,6 +28581,16 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/security/quarters)
+"iON" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/machinery/light_switch/north,
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "iOS" = (
 /obj/machinery/disposal/mail/small/autoname/medbay/south,
 /obj/disposalpipe/trunk/mail{
@@ -39374,6 +39379,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/inner)
+"lYc" = (
+/obj/table/auto,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "lYh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -61801,16 +61811,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
-"sXW" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/machinery/light_switch/north,
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
-/area/station/ranch)
 "sYa" = (
 /obj/mesh/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -123420,7 +123420,7 @@ oHX
 cev
 flq
 hcg
-btX
+lYc
 pQh
 rbK
 rTC
@@ -128542,7 +128542,7 @@ ePf
 qrn
 mfs
 mfs
-sXW
+iON
 tGj
 tGj
 tGj

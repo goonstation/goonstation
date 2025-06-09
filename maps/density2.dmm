@@ -3893,6 +3893,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"Aa" = (
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "Ac" = (
 /obj/mesh/catwalk,
 /turf/simulated/wall/auto/asteroid,
@@ -4442,10 +4446,6 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
-"Ej" = (
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/auto/grass/leafy,
-/area/station/ranch)
 "Ek" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46999,7 +46999,7 @@ CN
 Fi
 GO
 id
-Ej
+Aa
 Cm
 kE
 UV

@@ -376,8 +376,8 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
 			return
-		src.occupant.bodytemperature += 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
-		src.occupant.bodytemperature = max(src.occupant.bodytemperature, src.air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
+		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
 		src.occupant.changeStatus("burning", -10 SECONDS)
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))

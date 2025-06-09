@@ -1419,6 +1419,12 @@
 	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
+"aEY" = (
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
+	},
+/turf/simulated/floor/black,
+/area/station/storage/emergencyinternals)
 "aEZ" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -4674,12 +4680,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/northeast)
-"ccq" = (
-/obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
-	},
-/turf/simulated/floor/black,
-/area/station/storage/emergencyinternals)
 "cdg" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -7284,6 +7284,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"dpI" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "eastcc_stall5"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "dqn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
@@ -9100,6 +9106,12 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"eez" = (
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
+	},
+/turf/simulated/floor/plating,
+/area/pasiphae/maint)
 "eeW" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -9628,11 +9640,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northeast)
-"eub" = (
-/obj/machinery/light,
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "euf" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/power/apc/autoname_north,
@@ -18016,6 +18023,24 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"hMv" = (
+/obj/item/storage/toilet,
+/mob/living/carbon/human/npc/monkey/tanhony,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decoration/toiletholder{
+	dir = 4;
+	pixel_x = -32
+	},
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "eastcc_stall5";
+	pixel_x = 23;
+	pixel_y = 0
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "hMP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28526,15 +28551,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
-"mdd" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/rack,
-/obj/item/storage/box/fruit_wedges,
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "mdl" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/machinery/light{
@@ -28580,24 +28596,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"mem" = (
-/obj/item/storage/toilet,
-/mob/living/carbon/human/npc/monkey/tanhony,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/decoration/toiletholder{
-	dir = 4;
-	pixel_x = -32
-	},
-/obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall4";
-	pixel_x = 23;
-	pixel_y = 0
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/quarters_east)
 "mer" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -35730,21 +35728,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
-"pmC" = (
-/obj/machinery/door_control{
-	id = "nadirclomp";
-	name = "Cloning Bay Door Control";
-	pixel_x = -23;
-	dir = 8;
-	pixel_y = 1
-	},
-/obj/machinery/manufacturer/uniform{
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric=5)
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/medbay/cloner)
 "pmL" = (
 /obj/machinery/light/flock{
 	dir = 4
@@ -39021,12 +39004,6 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
-"qKX" = (
-/obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
-	},
-/turf/simulated/floor/plating,
-/area/pasiphae/maint)
 "qLh" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
@@ -39225,6 +39202,11 @@
 	dir = 8
 	},
 /area/station/maintenance/northeast)
+"qRn" = (
+/obj/machinery/light,
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "qRo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -41001,6 +40983,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"rLt" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/rack,
+/obj/item/storage/box/fruit_wedges,
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "rLG" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -44872,6 +44863,21 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
+"txe" = (
+/obj/machinery/door_control{
+	id = "nadirclomp";
+	name = "Cloning Bay Door Control";
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
+	},
+/obj/machinery/manufacturer/uniform{
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric=5)
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/medbay/cloner)
 "txh" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
@@ -86613,7 +86619,7 @@ hWJ
 sVT
 qUY
 nAP
-ccq
+aEY
 gRF
 xvN
 vKn
@@ -88411,7 +88417,7 @@ rsN
 rNq
 ndW
 aBg
-mdd
+rLt
 dFX
 gVW
 nis
@@ -89894,7 +89900,7 @@ soX
 soX
 ruj
 seW
-eub
+qRn
 nEA
 jJE
 kuZ
@@ -103469,7 +103475,7 @@ rlw
 mRC
 uUW
 qEY
-pmC
+txe
 ixn
 ili
 nwS
@@ -113768,8 +113774,8 @@ xyP
 uCs
 eIK
 oZp
-mem
-rXN
+hMv
+dpI
 gfT
 oZp
 oZp
@@ -120190,7 +120196,7 @@ tvO
 aHI
 mDi
 wCb
-qKX
+eez
 aSh
 gin
 jgW

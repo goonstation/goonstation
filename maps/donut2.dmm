@@ -18241,16 +18241,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"dTV" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/wood/seven,
-/area/station/ranch)
 "dUq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27749,25 +27739,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"jHg" = (
-/obj/storage/secure/closet/civilian/bartender,
-/obj/item/storage/box/donkpocket_kit{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/cable{
-	icon_state = "0-5"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/item/storage/box/beer{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/storage/box/fruit_wedges{
-	pixel_y = -1
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "jHm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43597,6 +43568,16 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/juryroom)
+"sIM" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "sIP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -48320,6 +48301,25 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"vwb" = (
+/obj/storage/secure/closet/civilian/bartender,
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/item/storage/box/beer{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/storage/box/fruit_wedges{
+	pixel_y = -1
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "vwt" = (
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/white/checker2,
@@ -71008,7 +71008,7 @@ blc
 gmL
 ieE
 qTk
-jHg
+vwb
 uEB
 bGd
 kaG
@@ -71622,7 +71622,7 @@ fvG
 vkL
 rRw
 dOS
-dTV
+sIM
 bGd
 bis
 vse

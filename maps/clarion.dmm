@@ -2888,10 +2888,6 @@
 "azd" = (
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
-"aze" = (
-/obj/machinery/vending/janitor,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "azj" = (
 /obj/storage/closet/coffin,
 /obj/machinery/light{
@@ -13682,6 +13678,11 @@
 	dir = 8
 	},
 /area/station/science/artifact)
+"dKz" = (
+/obj/machinery/firealarm/west,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
 "dLl" = (
 /obj/rack,
 /obj/item/clothing/suit/hazard/fire{
@@ -18064,10 +18065,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
-"haE" = (
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "hdq" = (
 /obj/item/rubberduck{
 	pixel_y = 6
@@ -25632,6 +25629,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"muF" = (
+/obj/machinery/vending/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
 "muO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -28092,6 +28093,10 @@
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"oot" = (
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ooQ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -30290,11 +30295,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"pVs" = (
-/obj/machinery/firealarm/west,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
 "pWc" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -69892,8 +69892,8 @@ awl
 axa
 axT
 axS
-aze
-pVs
+muF
+dKz
 aAT
 aBQ
 axS
@@ -84065,7 +84065,7 @@ tjK
 axB
 fqI
 btH
-haE
+oot
 akZ
 jDE
 btH

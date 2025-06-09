@@ -5402,6 +5402,14 @@
 /obj/item/hand_tele,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/teleporter)
+"dUl" = (
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "dUI" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
@@ -5850,17 +5858,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"ekK" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "eli" = (
 /obj/landmark/spawner/artifact,
 /obj/cable{
@@ -12854,16 +12851,6 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/yellow,
 /area/station/engine/gas)
-"jge" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/launcher_loader/east{
-	id = "qmdockout"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "jgM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22019,6 +22006,17 @@
 	icon_state = "floor"
 	},
 /area/station/crewquarters/cryotron)
+"pLu" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "pLx" = (
 /obj/machinery/door/airlock/pyro/weapons/secure{
 	dir = 4
@@ -26948,6 +26946,16 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"tkB" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/launcher_loader/east{
+	id = "qmdockout"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "tkN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29298,14 +29306,6 @@
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"uRG" = (
-/obj/machinery/light/incandescent,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "uRQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -82760,7 +82760,7 @@ alb
 aJe
 iFb
 tEU
-uRG
+dUl
 qXv
 uVl
 lqR
@@ -93600,7 +93600,7 @@ qpn
 qpn
 qpn
 dFl
-jge
+tkB
 wZe
 lUj
 fcB
@@ -93902,7 +93902,7 @@ qpn
 qpn
 qpn
 dFl
-ekK
+pLu
 jaJ
 lUj
 nTQ

@@ -1081,14 +1081,15 @@ a.latejoin-card:hover {
 	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	// ready tutorial / cancel ready tutorial
-	if (src.ready_play) // disabled tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
-	else if (src.ready_tutorial) // hide ready tutorial, show cancel here
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
-		if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	else // show ready tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+	if (global.newbee_tutorial_enabled)
+		if (src.ready_play) // disabled tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else if (src.ready_tutorial) // hide ready tutorial, show cancel here
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
+			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		else // show ready tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	if(client) winset(src, "joinmenu", "size=240x[current_vertical_offset]")
 
