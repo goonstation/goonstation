@@ -180,7 +180,7 @@
 	A.temperature_expose(null, temperature, volume)
 	if (isliving(A))
 		var/mob/living/H = A
-		var/B = clamp(temperature - 100 / 550, 0, 55)
+		var/B = clamp((temperature - 100) / 550, 0, 55)
 		H.update_burning(B)
 
 /// Process fire survival, mob burning, hotspot exposure, and heat radiation.
