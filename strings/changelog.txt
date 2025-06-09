@@ -1,5 +1,17 @@
 
 (t)sun jun 08 25
+(u)LeahTheTech
+(p)23763
+(e)🔨|A-Player-Actions
+(+)Pug woof once again has no cooldown but now has a stamina cost and will cause you to fall over wheezing if used too much.
+(u)LorrMaster
+(p)23419
+(e)🪲💊⚗|C-Bug, A-Medical, A-Chemistry
+(+)Fix for body temperature going below absolute zero under various conditions
+(u)bork
+(p)23778
+(e)🪲|C-Bug
+(+)removes the mention of a valuchimp from the kitchen kit from cargo
 (u)JORJ949
 (p)22995
 (e)⚖🔨💡|C-Balance, A-Player-Actions, A-Station-Systems

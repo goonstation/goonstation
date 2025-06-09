@@ -7269,6 +7269,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"dpI" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "eastcc_stall5"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/quarters_east)
 "dqn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
@@ -28594,7 +28600,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall4";
+	id = "eastcc_stall5";
 	pixel_x = 23;
 	pixel_y = 0
 	},
@@ -113767,7 +113773,7 @@ uCs
 eIK
 oZp
 mem
-rXN
+dpI
 gfT
 oZp
 oZp
