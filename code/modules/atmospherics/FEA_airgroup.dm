@@ -288,19 +288,23 @@
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
 
-		var/totalPressure = 0
-		var/maxTemperature = 0
+		//we're kind of duplicating the guts of check_regroup here so we don't have to iterate twice
+		//better than the godawful heuristic that was here before that meant large airgroups would always resume no matter what
+		var/try_group_process = TRUE
+		var/turf/simulated/sample = pick(members)
 		for(var/turf/simulated/member as anything in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
 			if(member.air)
-				ADD_MIXTURE_PRESSURE(member.air, totalPressure)
-				maxTemperature = max(maxTemperature, member.air.temperature)
+				if(length(member.active_hotspots))
+					try_group_process = FALSE
+				if(!member.air?.compare(sample.air))
+					try_group_process = FALSE
 			else
 				air_master.groups_to_rebuild[src] = null
 			LAGCHECK(LAG_REALTIME)
 
-		if(totalPressure / max(length(members), 1) < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(try_group_process)
 			src.resume_group_processing()
 			return
 	else
