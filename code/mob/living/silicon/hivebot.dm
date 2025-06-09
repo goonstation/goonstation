@@ -777,6 +777,7 @@ Frequency:
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
 		src.update_name_tag()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
@@ -792,6 +793,7 @@ Frequency:
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
 	src.update_name_tag()
+	REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	return
 
@@ -890,6 +892,10 @@ Frequency:
 
 /mob/living/silicon/hivebot/set_pulling(atom/movable/A)
 	. = ..()
+	src.hud?.update_pulling()
+
+/mob/living/silicon/hivebot/remove_pulling()
+	..()
 	src.hud?.update_pulling()
 
 /*-----Actual AI Shells---------------------------------------*/
@@ -1014,7 +1020,8 @@ Frequency:
 		available_ai_shells -= src
 		..()
 
-
+	on_close_viewport(datum/viewport/vp)
+		src.mainframe?.on_close_viewport(vp)
 
 /*-----Shell-Creation---------------------------------------*/
 
