@@ -1,5 +1,9 @@
 
 (t)mon jun 09 25
+(u)Scientifically
+(p)23384
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites the Coonskin Cap. Wear a fuzzy Raccoon butt on your head today!
 (u)JORJ949
 (p)23775
 (e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
