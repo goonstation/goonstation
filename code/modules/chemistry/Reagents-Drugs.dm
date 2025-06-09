@@ -199,7 +199,7 @@ datum
 					M.emote(pick("laugh", "giggle"))
 				if(prob(6))
 					boutput(M, SPAN_NOTICE("<b>You feel warm.</b>"))
-					M.bodytemperature += rand(1,10) * mult
+					M.changeBodyTemp(rand(1,10) KELVIN * mult)
 				if(prob(4))
 					boutput(M, SPAN_ALERT("<b>You feel kinda awful!</b>"))
 					M.take_toxin_damage(1 * mult)
@@ -218,7 +218,7 @@ datum
 						M.emote("scream")
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
-						M.bodytemperature += rand(5,30) * mult
+						M.changeBodyTemp(rand(5,30) KELVIN * mult)
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
 						M.setStatusMin("stunned", 3 SECONDS * mult)
@@ -228,7 +228,7 @@ datum
 				else if (severity == 2)
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is sweating like a pig!"))
-						M.bodytemperature += rand(20,100) * mult
+						M.changeBodyTemp(rand(20,100) KELVIN * mult)
 						M.take_toxin_damage(5 * mult)
 						M.setStatusMin("stunned", 4 SECONDS * mult)
 					else if (effect <= 4)
@@ -788,7 +788,7 @@ datum
 						M.emote("twitch")
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is all sweaty!"))
-						M.bodytemperature += rand(15,30) * mult
+						M.changeBodyTemp(rand(15,30) KELVIN * mult)
 						M.take_toxin_damage(3 * mult)
 					else if (effect <= 7)
 						M.take_toxin_damage(4 * mult)
@@ -880,7 +880,7 @@ datum
 					else if (effect <= 4)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> is super sweaty!"))
 						boutput(M, SPAN_ALERT("<b>You feel hot! Is it hot in here?!</b>"))
-						M.bodytemperature += rand(30,60)
+						M.changeBodyTemp(rand(30,60) KELVIN)
 						M.take_toxin_damage(4)
 					else if (effect <= 7)
 						M.take_toxin_damage(5)
@@ -981,7 +981,7 @@ datum
 				if(probmult(15)) M.emote(pick("smile", "grin", "yawn", "laugh", "drool"))
 				if(prob(10))
 					boutput(M, SPAN_NOTICE("<b>You feel pretty chill.</b>"))
-					M.bodytemperature -= 1 * mult
+					M.changeBodyTemp(-1 * mult)
 					M.emote("smile")
 				if(prob(5))
 					boutput(M, SPAN_ALERT("<b>You feel too chill!</b>"))
@@ -989,7 +989,7 @@ datum
 					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_toxin_damage(1 * mult)
 					M.take_brain_damage(1 * mult)
-					M.bodytemperature -= 20 * mult
+					M.changeBodyTemp(-20 * mult)
 				if(prob(2))
 					boutput(M, SPAN_ALERT("<b>Your skin feels all rough and dry.</b>"))
 					random_brute_damage(M, 2 * mult)
@@ -1005,7 +1005,7 @@ datum
 						M.emote("drool")
 					else if (effect <= 4)
 						M.emote("shiver")
-						M.bodytemperature -= 40 * mult
+						M.changeBodyTemp(-40 * mult)
 					else if (effect <= 7)
 						boutput(M, SPAN_ALERT("<b>Your skin is cracking and bleeding!</b>"))
 						random_brute_damage(M, 5 * mult)
@@ -1031,7 +1031,7 @@ datum
 							M.emote("faint")
 					else if (effect <= 7)
 						M.emote("shiver")
-						M.bodytemperature -= 70 * mult
+						M.changeBodyTemp(-70 * mult)
 
 		drug/catdrugs
 			name = "cat drugs"
@@ -1317,7 +1317,7 @@ datum
 						M.changeStatus("unconscious", 2 SECONDS)
 					if(check < 20)
 						boutput(M, SPAN_NOTICE("<b>You feel A LOT warmer.</b>"))
-						M.bodytemperature += rand(30,60)
+						M.changeBodyTemp(rand(30,60) KELVIN)
 				..()
 				return
 
