@@ -1304,7 +1304,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	afterlife_blacklisted = TRUE
 
 	onLife(var/mob/owner, var/mult)
-		if(owner.stat && !owner.lying && can_act(owner))
+		if(!can_act(owner))
 			return
 		if(!probmult(10))
 			return
@@ -1312,7 +1312,9 @@ TYPEINFO(/datum/trait/partyanimal)
 		if(!istype(H))
 			return
 
-		var/obj/item/target_item = H.equipped()
+		var/obj/item/target_item = H.equipped() //prioritise actively held items
+		if(!target_item)
+			target_item = H.find_type_in_hand(/obj/item)
 		if(!target_item)
 			return
 		if(target_item.cant_drop)
