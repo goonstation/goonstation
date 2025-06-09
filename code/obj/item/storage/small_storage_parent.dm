@@ -61,8 +61,10 @@
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
+	soundproofing = 20
 
 /obj/item/storage/box/starter // the one you get in your backpack
+	name = "emergency box"
 	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff(onlyMaskAndOxygen)

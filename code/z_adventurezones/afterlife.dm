@@ -13,7 +13,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 100
 	icon_state = "afterlife_bar"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	ambient_light = rgb(20, 25, 30)
 
 /area/afterlife/bar/sanctuary
@@ -64,7 +64,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 100
 	icon_state = "afterlife_bar_spawn"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sanctuary = 1
 
 /area/afterlife/hell
@@ -73,7 +73,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 0
 	icon_state = "afterlife_hell"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 
 /area/afterlife/hell/hellspawn
 	name = "hellspawn"
@@ -81,7 +81,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 0
 	icon_state = "afterlife_hell_spawn"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 
 /area/afterlife/arena
 	name = "THE ARENA"
@@ -89,7 +89,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 0
 	icon_state = "afterlife_hell"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	ambient_light = "#222222"
 
 /area/afterlife/arenaspawn
@@ -98,7 +98,7 @@ Hell area (send people here if they die in a shameful way)
 	sims_score = 0
 	icon_state = "afterlife_hell_spawn"
 	requires_power = 0
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 
 proc/inafterlifebar(var/mob/M as mob in world)
 	return istype(get_area(M),/area/afterlife/bar) || istype(get_area(M),/area/afterlife/heaven)

@@ -666,7 +666,7 @@
 							else
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
-			if ("twirl", "spin"/*, "juggle"*/)
+			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
@@ -2223,12 +2223,8 @@
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
-					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
-						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
-						if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
-							sec_record["criminal"] = ARREST_STATE_ARREST
-							sec_record["mi_crim"] = "Public dabbing."
-							src.update_arrest_icon()
+					if(!dab_id)
+						src.apply_automated_arrest("Public dabbing.")
 
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
@@ -2293,8 +2289,15 @@
 					src.say("Woof.")
 					return
 				else
-					message = "<b>[src]</b> woofs!"
-					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
+					src.remove_stamina(STAMINA_DEFAULT_WOOF_COST)
+					if (src.get_stamina() > 0 && !GET_COOLDOWN(src, "pug_woof_wheeze"))
+						message = "<b>[src]</b> woofs!"
+						playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
+					else
+						if (!ON_COOLDOWN(src, "pug_woof_wheeze", 3 SECONDS))
+							src.take_oxygen_deprivation(STAMINA_DEFAULT_WOOF_COST)
+							src.changeStatus("knockdown", 4 SECONDS)
+							return src.emote("wheeze", voluntary, emoteTarget, dead_check) //tail recursion, geddit?
 			else
 				if (voluntary)
 					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")

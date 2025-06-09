@@ -648,15 +648,13 @@ TYPEINFO(/obj/item/heat_dowsing)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
 	if (istype_exact(src, /turf/space/fluid))
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-			return
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 			return
 	..()
 
@@ -693,14 +691,14 @@ TYPEINFO(/obj/item/heat_dowsing)
 			var/obj/item/vent_capture_unbuilt/V = W
 			V.build(user,src.loc)
 			return
-		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-			actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
-		else if (istype(W,/obj/item/mining_tool/powered/shovel))
-			var/obj/item/mining_tool/powered/shovel/PS = W
-			if (PS.is_on)
-				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src.loc), user)
-			else
-				actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
+		if(isdiggingtool(W))
+			if (istype(W,/obj/item/mining_tool/powered/shovel))
+				var/obj/item/mining_tool/powered/shovel/PS = W
+				if (PS.is_on)
+					actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+					return
+			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 		..()
 
 #define VENT_GENFACTOR 300
@@ -718,7 +716,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			build(user,src.loc)
 			return
 		..()
@@ -783,7 +781,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			update_capture()
 
 	attackby(var/obj/item/W, var/mob/user)
-		if (istype(W,/obj/item/electronics/soldering) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
+		if (issolderingtool(W) || isscrewingtool(W) || ispryingtool(W) || iswrenchingtool(W))
 			actions.start(new/datum/action/bar/icon/unbuild_vent_capture(src), user)
 			return
 		..()
@@ -1108,7 +1106,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					src.say("Hotspot pinned.")
+					src.the_item.say("Hotspot pinned.", flags = SAYFLAG_IGNORE_POSITION)
 
 			for (var/mob/M in get_turf(src))
 				if (isliving(M) && !isintangible(M) && M != jumper)

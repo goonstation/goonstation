@@ -257,9 +257,6 @@
 				continue
 			L.Process(environment)
 
-		for (var/obj/item/implant/I in src.implant)
-			I.on_life(life_mult)
-
 		update_item_abilities()
 
 		if (!isdead(src)) //still breathing
