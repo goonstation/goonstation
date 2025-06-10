@@ -825,8 +825,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(mob/living/L, obj/item/I, mult)
 		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
 			return
-
-		if (prob(10) && istype(L))
-			arcFlash(I, L, src.wattage, 1.5)
+		if (!istype(L))
+			return
+		if (!isturf(L.loc) || prob(10))
+			L.shock(I, src.wattage, "All", 1.5, TRUE)
 		else
-			arcFlashTurf(I, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)
+			arcFlashTurf(L, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)
