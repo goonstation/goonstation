@@ -110,6 +110,12 @@
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
 
+	// minimum and maximum burning durations applied by the hotspot
+	var/min_status_duration = 30
+	var/max_status_duration = 55
+	// the temperature at which the maximum status duration will be applied
+	var/maximum_status_temp = 5000
+
 /atom/movable/hotspot/New(turf/newLoc, chemfire = null)
 	..()
 	START_TRACKING
@@ -179,9 +185,7 @@
 	..()
 	A.temperature_expose(null, temperature, volume)
 	if (isliving(A))
-		var/mob/living/H = A
-		var/B = clamp((temperature - 100) / 550, 0, 55)
-		H.update_burning(B)
+		update_status_effect(A)
 
 /// Process fire survival, mob burning, hotspot exposure, and heat radiation.
 /atom/movable/hotspot/proc/process(list/turf/simulated/possible_spread)
@@ -203,7 +207,7 @@
 		return FALSE
 
 	for (var/mob/living/L in src.loc)
-		L.update_burning(clamp(temperature / 60, 5, 33))
+		update_status_effect(L)
 
 	src.perform_exposure()
 	if(src.catalyst_active)
@@ -251,6 +255,14 @@
 			src.UpdateIcon("1")
 
 	return TRUE
+
+/// Applies relevant status effects to mobs when hotspot is stepped into or when a mob remains in it during a process() cycle.
+/// By default applies burning based on temperature.
+/atom/movable/hotspot/proc/update_status_effect(mob/living/target)
+	var/clamped_temp = clamp(temperature, FIRE_MINIMUM_TEMPERATURE_TO_EXIST, maximum_status_temp)
+	var/t = (clamped_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (maximum_status_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	var burn = lerp(min_status_duration, max_status_duration, t)
+	target.update_burning(burn)
 
 
 /atom/movable/hotspot/ex_act()
