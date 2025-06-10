@@ -44,7 +44,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 	speech_bubble_icon_sing_bad = "noterobot"
 
 	var/mob/living/silicon/ai/mainframe = null
-	var/last_loc = 0
+	var/atom/last_loc = 0
 
 	var/list/last_range = list()
 	var/list/current_range = list()
@@ -52,6 +52,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	var/x_edge = 0
 	var/y_edge = 0
 	var/turf/T = 0
+
+	/// client view width in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_width = 12
+	/// client view height in tiles + some padding for flickering, obtained from in-game inspection
+	var/static/v_height = 9
+	var/list/open_viewports = list()
 
 	var/outer_eye_atom = null
 
@@ -72,36 +78,26 @@ TYPEINFO(/mob/living/intangible/aieye)
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		var/client_color = src.client.color
-		src.client.color = "#000000"
-		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
-			if (!src.client) // just client things
-				return
-			src.client.images += aiImages
-			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.update_name_tag()
-			src.job = "AI"
-			if (src.mind)
-				src.mind.assigned_role = "AI"
-			animate(src.client, 0.3 SECONDS, color = client_color)
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				src.client << I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
+		if (!src.client) // just client things
+			return
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+		src.update_name_tag()
+		src.job = "AI"
+		if (src.mind)
+			src.mind.assigned_role = "AI"
+		SPAWN(0)
+			src.remove_viewport_statics()
+			src.add_all_statics()
+
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(src_turf_changed))
 
 	Logout()
-		var/client/cl = src.last_client
-		if (!cl)
+		if (!src.last_client)
 			return ..()
 		SPAWN(0)
-			cl?.images -= aiImages
-			var/sleep_counter = 0
-			for(var/image/I as anything in aiImagesLowPriority)
-				cl?.images -= I
-				if(sleep_counter++ % (300 * 10) == 0)
-					LAGCHECK(LAG_LOW)
-
+			src.remove_all_statics()
+			src.add_viewport_statics()
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		.=..()
 
 	isAIControlled()
@@ -142,6 +138,48 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()
+
+	proc/add_all_statics()
+		if (!src.loc)
+			return
+		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
+			src.client.images |= T.aiImage
+
+	proc/remove_all_statics()
+		if (!src.last_client)
+			return
+		var/atom/center = src.last_loc
+		for (var/turf/T as anything in (block(center?.x - src.v_width, center?.y - src.v_height, center?.z, center?.x + src.v_width, center?.y + src.v_height, center?.z) + src.get_viewport_turfs()))
+			src.last_client.images -= T.aiImage
+
+	proc/get_viewport_turfs()
+		var/list/turfs = list()
+		for (var/datum/viewport/vp as anything in src.open_viewports)
+			turfs |= vp.handler.vis_contents
+		return turfs
+
+	proc/add_viewport_statics()
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
+			src.last_client.images |= T.aiImage
+
+	proc/remove_viewport_statics()
+		if (!src.last_client)
+			return
+		for (var/turf/T as anything in src.get_viewport_turfs())
+			src.last_client.images -= T.aiImage
+
+	proc/src_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		SPAWN(0)
+			var/list/add_block = block(new_turf.x - src.v_width, new_turf.y - src.v_height, new_turf.z, new_turf.x + src.v_width, new_turf.y + src.v_height, new_turf.z) + src.get_viewport_turfs()
+			var/list/remove_block = block(old_turf.x - src.v_width, old_turf.y - src.v_height, old_turf.z, old_turf.x + src.v_width, old_turf.y + src.v_height, old_turf.z)
+
+			for (var/turf/T as anything in (remove_block - add_block))
+				src.client.images -= T.aiImage
+
+			for (var/turf/T as anything in (add_block - remove_block))
+				src.client.images |= T.aiImage
 
 	proc/update_statics()	//update seperate from move(). Mostly same code.
 		return
@@ -211,7 +249,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
-				src.set_dir(get_dir(src, target))
+				src.set_dir(get_dir_accurate(src, target, FALSE)) // Eye faces target when interacting
 
 			if(in_ai_range)
 				target.attack_ai(src, params, location, control)
@@ -294,7 +332,13 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (length(src.client?.getViewportsByType(VIEWPORT_ID_AI)) >= src.mainframe.viewport_limit)
 			boutput(src, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
 		else
-			. = ..()
+			src.open_viewports += ..()
+			src.add_all_statics()
+
+	on_close_viewport(datum/viewport/vp)
+		src.remove_all_statics()
+		src.open_viewports -= vp
+		src.add_all_statics()
 
 	proc/mainframe_check()
 		if (mainframe)
@@ -523,8 +567,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		src.observing = null
 
 	examine_verb(atom/A as mob|obj|turf in view(,usr))
-		var/turf/T = get_turf(A)
-		if (!length(T.camera_coverage_emitters))
+		if (!seen_by_camera(A))
 			return
 		. = ..()
 

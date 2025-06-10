@@ -176,7 +176,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	for(var/client/C)
 		if (istype(C.mob, /mob/new_player))
 			var/mob/new_player/new_player = C.mob
-			if (!new_player.ready)
+			if (!new_player.ready_play)
 				continue
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)

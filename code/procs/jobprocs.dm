@@ -54,9 +54,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (!istype(player) || !player.mind) continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
-		if (player.ready && !player.mind.assigned_role)
+		if (player.ready_play && !player.mind.assigned_role)
 			unassigned += player
-
+	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
@@ -171,7 +171,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				picks = FindPromotionCandidates(research_staff, command_job)
 			else if (istype(command_job, /datum/job/command/medical_director))
 				picks = FindPromotionCandidates(medical_staff, command_job)
-			else if (istype(command_job, /datum/job/command/head_of_security))
+			else if (istype(command_job, /datum/job/command/head_of_security) && inital_ready > 10)
 				picks = FindPromotionCandidates(security_officers, command_job)
 			if (!length(picks))
 				continue

@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	attackby(obj/item/W, mob/user, params)
 		if (src.attached)
 			src.attached.Attackby(W, user)
-			user.lastattacked = user
+			user.lastattacked = get_weakref(user)
 		else
 			. = ..()
 

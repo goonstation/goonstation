@@ -417,7 +417,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 		else
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
-		clients = global.clients
+		clients = list()
+		for (var/client/C in global.clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
+			clients += C
 	else if(isnum(target))
 		clients = list()
 		for(var/client/client as anything in global.clients)

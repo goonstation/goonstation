@@ -48,7 +48,7 @@
 
 	Cross(atom/movable/AM)
 		var/turf/T = get_turf(AM)
-		if (T && ismob(AM) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
 			return FALSE
 
 		. = ..()
@@ -56,7 +56,7 @@
 	Enter(atom/AM)
 		var/mob/M = AM
 		var/turf/T = get_turf(M)
-		if (T && ismob(M) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
@@ -71,7 +71,7 @@
 
 	Exit(atom/AM, turf/T)
 		var/mob/M = AM
-		if (T && ismob(M) && !istype(T, /turf/unsimulated/floor/auto/trench))
+		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/unsimulated/floor/auto/trench))
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
@@ -179,7 +179,7 @@
 
 	Cross(atom/movable/AM)
 		var/turf/T = get_turf(AM)
-		if (T && ismob(AM) && !istype(T, /turf/simulated/floor/auto/trench))
+		if (T && ismob(AM) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/simulated/floor/auto/trench))
 			return FALSE
 
 		. = ..()
@@ -187,7 +187,7 @@
 	Enter(atom/AM)
 		var/mob/M = AM
 		var/turf/T = get_turf(M)
-		if (T && ismob(M) && !istype(T, /turf/simulated/floor/auto/trench))
+		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/simulated/floor/auto/trench))
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return
@@ -202,7 +202,7 @@
 
 	Exit(atom/AM, turf/T)
 		var/mob/M = AM
-		if (T && ismob(M) && !istype(T, /turf/simulated/floor/auto/trench))
+		if (T && ismob(M) && !HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) && !istype(T, /turf/simulated/floor/auto/trench))
 			if (!M.throwing && isalive(M))
 				if (M.client && !M.client.check_key(KEY_RUN) && !M.client.check_key(KEY_BOLT))
 					return

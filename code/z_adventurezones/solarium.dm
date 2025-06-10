@@ -155,6 +155,8 @@ var/global/derelict_mode = 0
 			sleep(12.5 SECONDS)
 			var/datum/hud/cinematic/cinematic = new
 			for (var/client/C in clients)
+				if (istype(C.mob, /mob/living/carbon/human/tutorial))
+					continue
 				cinematic.add_client(C)
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)

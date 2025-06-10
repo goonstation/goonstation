@@ -399,6 +399,7 @@
 	desc = "A human leg, pretty important for mobility."
 	object_flags = NO_ARM_ATTACH
 	var/rebelliousness = 0
+	var/datum/fluid_group/last_fluid_group = null //! Used to tell when the fluid has changed to reduce absorbtion message spam
 
 	on_holder_examine()
 		if (src.show_on_examine)
@@ -421,6 +422,47 @@
 			boutput(holder, SPAN_ALERT("<b>Your [src.name] won't do what you tell it to!</b>"))
 			if (holder.misstep_chance < 20)
 				holder.change_misstep_chance(20)
+
+	/// Used by synth legs to absorb reagents from fluids
+	proc/fluid_absorbtion(var/absorbtion_rate)
+		if(!src.holder)
+			return
+		var/turf/T = get_turf(src.holder)
+		if(!T.active_liquid?.group?.reagents)
+			src.last_fluid_group = null
+			return
+		if(!ishuman(src.holder))
+			return
+		var/mob/living/carbon/human/H = src.holder
+		if(!H.shoes && !H.wear_suit?.check_for_covered("both legs"))
+			// Do not apply chemprot if legs aren't covered
+			if(prob(30))
+				absorb_reagents(T.active_liquid.group, absorbtion_rate)
+			return
+		if(T.active_liquid.my_depth_level < 2)
+			return // Fluid not deep enough to absorb through shoes/suit
+
+		// Less likely to absorb based on chem protection
+		var/chem_prot = clamp(GET_ATOM_PROPERTY(H, PROP_MOB_CHEMPROT), 0, 40)
+		if(chem_prot >= 40)
+			return
+		var/absorb_prob = (30 - (chem_prot / 2))
+		if(!prob(absorb_prob))
+			return
+		absorb_reagents(T.active_liquid.group, absorbtion_rate)
+
+	proc/absorb_reagents(var/datum/fluid_group/fluids, var/absorbtion_rate)
+		var/datum/reagents/R = fluids.reagents
+		if(!R.total_volume)
+			return
+		R.reaction(src.holder, INGEST, clamp(R.total_volume, CHEM_EPSILON, min(absorbtion_rate, (src.holder.reagents?.maximum_volume - src.holder.reagents?.total_volume))))
+		R.trans_to(src.holder, min(R.total_volume, absorbtion_rate))
+		playsound(src.holder.loc,'sound/items/drink.ogg', rand(10,20), 1)
+		eat_twitch(src.holder)
+		if(fluids != src.last_fluid_group)
+			var/tasteMessage = SPAN_NOTICE("[R.get_taste_string(src.holder)]")
+			src.holder.visible_message(SPAN_NOTICE("[src.holder]'s [src] begins to absorb the fluid from [src]."),"[SPAN_NOTICE("You begin to absorb the fluid from [src].")]\n[tasteMessage]", group = "[src.holder]_drink_messages")
+			src.last_fluid_group = fluids
 
 /obj/item/parts/human_parts/leg/left
 	name = "left leg"
@@ -913,6 +955,11 @@
 			set_loc(holder)
 		..()
 
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
+
+
 /obj/item/parts/human_parts/leg/right/synth
 	name = "synthetic right leg"
 	desc = "A right leg. Looks like a rope composed of vines. And tofu??"
@@ -933,6 +980,9 @@
 			set_loc(holder)
 		..()
 
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
 
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
@@ -1972,6 +2022,10 @@
 	severed_overlay_1_color = null
 	easy_attach = TRUE
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
+
+	on_life()
+		. = ..()
+		src.fluid_absorbtion(5)
 
 	New()
 		limb_overlay_1_state = "[src.slot]_kudzu"

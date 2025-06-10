@@ -378,7 +378,7 @@
 			return
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.traitHolder.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+			if(H.traitHolder?.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
 				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()

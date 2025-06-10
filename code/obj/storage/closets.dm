@@ -45,9 +45,6 @@ TYPEINFO(/obj/storage/closet)
 		return
 
 	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount

@@ -1481,7 +1481,7 @@ proc/spawn_kitchen_note()
 		Remember you can usually only fit three items total into a pipe frame.<br>
 		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
 		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
-		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>
+		<b>FINAL STEP:</b> Attach a detonator. The gold standard is a timer/igniter assembly, but anything stuck to an igniter will make it go boom. <b>Make sure to secure the assembly to your bomb with a screwdriver!</b><br><br>
 
 		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
 		"}

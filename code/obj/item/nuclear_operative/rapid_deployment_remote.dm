@@ -141,7 +141,7 @@
 				var/mob/new_player/player = C.mob
 				if (!istype(player))
 					continue
-				if(player.ready)
+				if(player.ready_play)
 					num_players++
 			if (num_players <= 70)
 				command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", 'sound/misc/announcement_1.ogg')

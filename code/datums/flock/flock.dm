@@ -894,6 +894,8 @@ proc/get_default_flock()
 
 	// Update all HUD icons.
 	for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+		if (QDELETED(flockmob)) //aaa
+			continue
 		if (istype(flockmob.loc, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = flockmob.loc
 			var/datum/hud/critter/flock/drone/flockhud = drone.hud

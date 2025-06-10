@@ -224,7 +224,7 @@
 				else
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
+						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively!"), 1)
 					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
 						SPAWN(0.3 SECONDS) //wait for them to move in
 							if (!QDELETED(src))
@@ -238,12 +238,14 @@
 									transfering_chemicals = TRUE
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
+					SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 					set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
 			if (GRAB_STRONG)
 				icon_state = "!reinforce"
 				src.state = GRAB_AGGRESSIVE
+				SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 				if (!src.affecting.buckled)
 					set_affected_loc()
 				src.assailant.lastattacked = get_weakref(src.affecting)
@@ -251,7 +253,7 @@
 				src.affecting.lastattackertime = world.time
 				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
-				src.assailant.visible_message(SPAN_ALERT("[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!"))
+				src.assailant.visible_message(SPAN_ALERT("[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting]!"))
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -287,6 +289,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 		src.state = GRAB_CHOKE
+		SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 		REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
 		src.assailant.lastattacked = get_weakref(src.affecting)
 		src.affecting.lastattacker = get_weakref(src.assailant)
@@ -316,6 +319,7 @@
 			O.show_message(SPAN_ALERT("[src.assailant] has pinned [src.affecting] to [get_turf(T)]!"), 1)
 
 		src.state = GRAB_PIN
+		SEND_SIGNAL(src.affecting, COMSIG_MOB_GRABBED, src)
 
 		src.assailant.lastattacked = get_weakref(src.affecting)
 		src.affecting.lastattacker = get_weakref(src.assailant)

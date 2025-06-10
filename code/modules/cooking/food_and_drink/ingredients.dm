@@ -1056,3 +1056,18 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal_amt = 0
 	initial_volume = 1
 	initial_reagents = list("bread"=1)
+
+/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract
+	name = "vanilla extract"
+	desc = "Surely it tastes like vanilla ice cream, right?"
+	icon_state = "vanilla-extract"
+	initial_volume = 10
+	initial_reagents = list("vanilla" = 10)
+
+/obj/item/reagent_containers/food/snacks/ingredient/raw_flan
+	name = "uncooked flan"
+	desc = "Is this queso, custard or flan?"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "custard"
+	initial_volume = 10
+	initial_reagents = list("vanilla" = 10)

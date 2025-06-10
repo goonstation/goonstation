@@ -20,7 +20,12 @@ TYPEINFO(/obj/laser_sink/splitter)
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
 		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
-		src.dir = turn(src.dir, 90)
+		src.set_dir(turn(src.dir, 90))
+		if (src.in_laser)
+			src.exident(src.in_laser)
+		var/obj/linked_laser/found_laser = locate() in get_step(src, turn(src.dir, 180))
+		if (found_laser)
+			src.incident(found_laser)
 	else
 		..()
 

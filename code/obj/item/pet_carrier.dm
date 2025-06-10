@@ -176,7 +176,7 @@
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
-		if (src.carrier_occupants)
+		if (length(src.carrier_occupants))
 			animate_storage_thump(src)
 		for (var/mob/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)

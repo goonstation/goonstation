@@ -155,6 +155,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 	var/gib_mobs = 0 //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
+	/// Targeted turf when loose
+	var/turf/target_turf
+	/// How many steps we'll continue to walk towards the target turf before rerolling
+	var/target_turf_counter = 0
 
 #ifdef SINGULARITY_TIME
 /*
@@ -224,7 +228,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (active == 1)
 		move()
-		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
+		SPAWN(2 SECONDS) // slowing this baby down a little -drsingh // smoother movement
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
@@ -284,18 +288,30 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (selfmove)
 		var/list/vector = src.calc_direction()
-		var/dir = pick(cardinal)
+		var/next_dir = pick(alldirs)
+
+		if (src.target_turf_counter <= 0)
+			if (prob(20)) // drift towards a random station turf for a few steps
+				src.target_turf = get_random_station_turf()
+				src.target_turf_counter = rand(radius,radius*2)
+		else
+			if (!src.target_turf)
+				src.target_turf = get_random_station_turf()
+			src.target_turf_counter--
+			next_dir = get_dir_accurate(src, src.target_turf)
+
 		var/vector_length = (vector[1] ** 2 + vector[2] ** 2) ** (1/2)
 		if (prob(vector_length * 400)) //scale the chance to move in the direction of resultant force by the strength of that force
 			var/angle = arctan(vector[2], vector[1])
-			dir = angle2dir(angle)
+			next_dir = angle2dir(angle)
 
+		// don't cross containment fields
 		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
-			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), next_dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
 
-		step(src, dir)
+		step(src, next_dir)
 
 ///Returns a 2D vector representing the resultant force acting on the singulo by all gravity wells, scaled by their distance
 /obj/machinery/the_singularity/proc/calc_direction()
@@ -483,6 +499,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			return ..()
 	else
 		return ..()
+
+/obj/machinery/the_singularity/proc/shrink()
+	radius--
+	SafeScaleAnim((radius-0.5)/(radius+0.5),(radius-0.5)/(radius+0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
+	grav_pull = min((radius+1)*3, grav_pull)
 
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)

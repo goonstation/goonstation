@@ -309,7 +309,6 @@
 						if (src.pulling)
 							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
-								//hud.update_pulling() // FIXME
 							else
 								var/can_pull = TRUE
 								if (ismob(src.pulling))
@@ -323,12 +322,13 @@
 									pulling += src.pulling
 						for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 							var/can_pull = TRUE
-							for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
-								if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
-									can_pull = FALSE
-									break
-							if (can_pull)
-								pulling += G.affecting
+							if (G.affecting)
+								for(var/obj/item/grab/grab_grabbed_by in G.affecting.grabbed_by)
+									if (grab_grabbed_by.assailant != src && grab_grabbed_by.state > G.state)
+										can_pull = FALSE
+										break
+								if (can_pull)
+									pulling += G.affecting
 
 						for (var/atom/movable/A in pulling)
 							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull

@@ -38,27 +38,26 @@
 				return NORTHEAST
 	return NORTH
 
-/proc/get_dir_accurate(var/atom/source, var/atom/target) // Get the closest direction rather than prioritizing a certain axis
+/// Get the closest direction to the target rather than prioritizing a certain axis
+/proc/get_dir_accurate(var/atom/source, var/atom/target, var/intercardinal = TRUE)
 	if(!source || !target)
 		CRASH("Invalid Params for get_dir_accurate: Source:[identify_object(source)] Target:[identify_object(target)]")
 	var/dir_angle = get_angle(source, target)
+	if(!intercardinal) // Only care about N,S,E, and W
+		switch(dir_angle)
+			if(45 to 135) return EAST
+			if(135 to 181, -181 to -135) return SOUTH
+			if(-135 to -45) return WEST
+			else return NORTH
 	switch(dir_angle)
-		if(22.5 to 67.5)
-			return NORTHEAST
-		if(67.5 to 112.5)
-			return EAST
-		if(112.5 to 157.5)
-			return SOUTHEAST
-		if(157.5 to 181, -181 to -157.5)
-			return SOUTH
-		if(-67.5 to -22.5)
-			return NORTHWEST
-		if(-112.5 to -67.5)
-			return WEST
-		if(-157.5 to -112.5)
-			return SOUTHWEST
-		else
-			return NORTH
+		if(22.5 to 67.5) return NORTHEAST
+		if(67.5 to 112.5) return EAST
+		if(112.5 to 157.5) return SOUTHEAST
+		if(157.5 to 181, -181 to -157.5) return SOUTH
+		if(-67.5 to -22.5) return NORTHWEST
+		if(-112.5 to -67.5) return WEST
+		if(-157.5 to -112.5) return SOUTHWEST
+		else return NORTH
 
 /proc/get_dir_pixel(var/atom/source, var/atom/target, params) //Get_dir using pixel coordinates of mouse
 	var/dx = (target.x - source.x) * 32
@@ -1218,7 +1217,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if (ismob(hit))
 			var/mob/M = hit
 			M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
-			M.bodytemperature += (4 * mult)
+			M.changeBodyTemp(4 KELVIN * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 
 		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
@@ -1589,7 +1588,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (ismob(hit))
 				var/mob/M = hit
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				M.bodytemperature += (4 * mult)
+				M.changeBodyTemp(4 KELVIN * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 

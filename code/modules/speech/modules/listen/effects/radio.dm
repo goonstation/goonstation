@@ -22,30 +22,50 @@
 	if (isAI(message.speaker))
 		message.hear_sound = 'sound/misc/talk/radio_ai.ogg'
 
+	radio.last_transmission = world.time
+	src.send_signal(message, radio, signal_frequency)
+
+/// Create and post the radio packet containing the message datum and handle any other associated effects.
+/datum/listen_module/effect/radio/proc/send_signal(datum/say_message/message, obj/item/device/radio/radio, signal_frequency)
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = radio
 	signal.encryption = "\ref[radio]"
 	signal.data["message"] = message
 
-	radio.last_transmission = world.time
+	if (!SEND_SIGNAL(radio, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, signal_frequency))
+		return
 
-	if (SEND_SIGNAL(radio, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, signal_frequency))
-		radio.ensure_speech_tree()
+	radio.ensure_speech_tree()
 
-		// Send the message to the global radio channel.
-		var/datum/say_message/global_message = message.Copy()
-		global_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO
-		radio.speech_tree.process(global_message)
+	// Send the message to the global radio channel.
+	var/datum/say_message/global_message = message.Copy()
+	global_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO
+	radio.speech_tree.process(global_message)
 
-		// If the message has been sent on the default frequency, send it to the global radio default channel.
-		if (signal_frequency == R_FREQ_DEFAULT)
-			var/datum/say_message/radio_default_message = message.Copy()
-			radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
-			radio.speech_tree.process(radio_default_message)
+	// If the message has been sent on the default frequency, send it to the global radio default channel.
+	if (signal_frequency == R_FREQ_DEFAULT)
+		var/datum/say_message/radio_default_message = message.Copy()
+		radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
+		radio.speech_tree.process(radio_default_message)
 
-		// If the radio and frequency is unprotected, send it to the global radio unprotected channel.
-		if (!radio.protected_radio && isnull(radio.traitorradio) && !(signal_frequency in global.protected_frequencies))
-			var/datum/say_message/radio_unprotected_message = message.Copy()
-			radio_unprotected_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY
-			radio.speech_tree.process(radio_unprotected_message)
+	// If the radio and frequency is unprotected, send it to the global radio unprotected channel.
+	if (!radio.protected_radio && isnull(radio.traitorradio) && !(signal_frequency in global.protected_frequencies))
+		var/datum/say_message/radio_unprotected_message = message.Copy()
+		radio_unprotected_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY
+		radio.speech_tree.process(radio_unprotected_message)
+
+
+/datum/listen_module/effect/radio/tutorial
+	id = LISTEN_EFFECT_RADIO_TUTORIAL
+
+/datum/listen_module/effect/radio/tutorial/send_signal(datum/say_message/message, obj/item/device/radio/radio, signal_frequency)
+	if (!radio.speaker_enabled || !(radio.wires & 2))
+		return
+
+	// Circumvent the packet network completely and directly route this message to the radio.
+	message.speaker = radio
+	message.message_origin = radio
+	message.heard_range = radio.speaker_range
+
+	radio.ensure_speech_tree().process(message)

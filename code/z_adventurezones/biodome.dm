@@ -405,7 +405,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if (isliving(O))
 				var/mob/living/M = O
-				if(M.isFlying && !src.no_fly_zone)
+				if(HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) && !src.no_fly_zone)
 					return
 				if (M.mind?.damned)
 					melt_away(M)

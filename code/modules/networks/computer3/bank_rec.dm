@@ -365,6 +365,12 @@
 
 					src.active_general["age"] = newAge
 
+				if(FIELDNUM_RANK)
+					if (ckey(inputText))
+						src.active_general["rank"] = copytext(inputText, 1, 33)
+					else
+						return
+
 				if(FIELDNUM_WAGE)
 					if (!src.active_bank)
 						src.print_text("No bank record loaded!")
