@@ -2124,11 +2124,17 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
 		icon_state = "beekini"
 		item_state = "beekini"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 /obj/item/clothing/under/misc/onepiece
 	name = "white one-piece swimsuit"
 	icon_state = "onepiece_w"
 	item_state = "onepiece_w"
 	hide_underwear = TRUE
+
+	white
+		name = "white one-piece swimsuit"
+		icon_state = "onepiece_w"
+		item_state = "onepiece_w"
 
 	red
 		name = "red one-piece swimsuit"
