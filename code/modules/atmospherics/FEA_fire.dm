@@ -261,8 +261,7 @@
 /atom/movable/hotspot/proc/update_status_effect(mob/living/target)
 	var/clamped_temp = clamp(temperature, FIRE_MINIMUM_TEMPERATURE_TO_EXIST, maximum_status_temp)
 	var/t = (clamped_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (maximum_status_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-	var burn = lerp(min_status_duration, max_status_duration, t)
-	target.update_burning(burn)
+	target.update_burning(lerp(min_status_duration, max_status_duration, t))
 
 
 /atom/movable/hotspot/ex_act()
