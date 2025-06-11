@@ -302,7 +302,7 @@ TYPEINFO(/mob/new_player)
 			JOB.assigned++
 			if (JOB.player_requested || JOB == job_controls.priority_job)
 				SPAWN(0) // don't pause late spawning for this
-					var/limit_reached = JOB.limit == JOB.assigned
+					var/limit_reached = JOB.limit <= JOB.assigned
 					if (JOB.player_requested && limit_reached)
 						JOB.player_requested = FALSE
 					if (JOB == job_controls.priority_job && limit_reached)
