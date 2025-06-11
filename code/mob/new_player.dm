@@ -303,11 +303,11 @@ TYPEINFO(/mob/new_player)
 			if (JOB.player_requested || JOB == job_controls.priority_job)
 				SPAWN(0) // don't pause late spawning for this
 					var/limit_reached = JOB.limit <= JOB.assigned
+					var/message = "RoleControl notification: hired[JOB.player_requested ? " requested":""][JOB == job_controls.priority_job ? " priority": ""] role [JOB.name][limit_reached ? " (limit reached)" : ""]"
 					if (JOB.player_requested && limit_reached)
 						JOB.player_requested = FALSE
 					if (JOB == job_controls.priority_job && limit_reached)
 						job_controls.priority_job = null
-					var/message = "RoleControl notification:[JOB.player_requested ? " requested":""][JOB == job_controls.priority_job ? " priority": ""] job [JOB.name] hired[limit_reached ? " (limit reached)" : ""]."
 					var/datum/signal/pdaSignal = get_free_signal()
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
