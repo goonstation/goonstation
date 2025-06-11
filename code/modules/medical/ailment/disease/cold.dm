@@ -5,7 +5,7 @@
 	virulence = 30 // Reduced from 100 %. Station-wide, basically incurable and unavoidable epidemics weren't fun (Convair880).
 	resistance_prob = 25 // Increased from 0 %.
 	cure_flags = ( CURE_SLEEP | CURE_MEDICINE | CURE_HIGH_TEMPERATURE)
-	reagentcure = list("honey_tea"=5,"chickensoup"=10,"currypowder"=10,"robustissin"=25)
+	reagentcure = list("honey_tea"=5,"chickensoup"=10,"currypowder"=10,"cold_medicine"=25)
 	associated_reagent = "mucus"
 	affected_species = list("Human")
 //

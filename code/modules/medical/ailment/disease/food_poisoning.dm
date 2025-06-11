@@ -4,7 +4,7 @@
 	spread = AILMENT_SPREAD_NONCONTAGIOUS
 	cure_flags = (CURE_SLEEP | CURE_MEDICINE)
 	cure_desc = "Spaceacillin"
-	reagentcure = list("spaceacillin"=100, "honey_tea"=3, "chickensoup"=10, "currypowder"=10,"robustissin"=25)
+	reagentcure = list("spaceacillin"=100, "honey_tea"=3, "chickensoup"=10, "currypowder"=10,"cold_medicine"=25)
 	associated_reagent = "salmonella"
 	affected_species = list("Human")
 
