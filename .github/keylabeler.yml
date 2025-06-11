@@ -107,6 +107,5 @@ labelMappings:
     "[LOGISTICS]": d-logistics
     "[SUPPLY]": d-logistics
     "[CARGO]": d-logistics
-    "[SPECIAL]": d-special
     "[ANTAGONIST]": d-antagonists # Not technically a department but it fits
     "[ANTAG]": d-antagonists
