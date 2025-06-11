@@ -19,15 +19,8 @@
 
 /obj/machinery/vehicle/recon/New()
 	..()
-	/////////Weapon Setup
-	src.m_w_system = new /obj/item/shipcomponent/mainweapon( src )
-	src.m_w_system.ship = src
-	src.components += src.m_w_system
-	src.m_w_system.activate()
-	////////Secondary System
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cloak( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
+	src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cloak(src), POD_PART_SECONDARY)
 	myhud.update_systems()
 	myhud.update_states()
 	return
@@ -42,9 +35,7 @@
 
 /obj/machinery/vehicle/cargo/New()
 	..()
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
 	myhud.update_systems()
 	myhud.update_states()
 	return
@@ -64,13 +55,8 @@
 	New()
 		..()
 		name = "Flying Saucer"
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/UFO( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/UFO( src )
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-		src.m_w_system.activate()
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/UFO(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/UFO(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -106,10 +92,7 @@
 	New()
 		..()
 		//Cargo hold
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo/small( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo/small(src), POD_PART_SECONDARY)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -130,16 +113,10 @@
 /obj/machinery/vehicle/miniputt/pilot
 	New()
 		. = ..()
-		src.com_system.deactivate()
-		qdel(src.engine)
-		qdel(src.com_system)
-		src.components -= src.engine
-		src.components -= src.com_system
-		src.engine = null
-		src.Install(new /obj/item/shipcomponent/engine/zero(src))
-		src.Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
-		src.engine.activate()
-		src.com_system = null
+		src.delete_part(POD_PART_COMMS)
+		src.delete_part(POD_PART_ENGINE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/zero(src), POD_PART_ENGINE, TRUE)
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/bad_mining(src), POD_PART_MAIN_WEAPON, FALSE)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -148,10 +125,7 @@
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
-
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -168,13 +142,8 @@
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
-		src.m_w_system.ship = src
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.m_w_system
-		src.components += src.lock
-
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon(src), POD_PART_MAIN_WEAPON)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -194,9 +163,7 @@
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -242,9 +209,7 @@
 
 	New()
 		..()
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/russian(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -262,9 +227,7 @@
 	armed
 		New()
 			..()
-			src.m_w_system = new /obj/item/shipcomponent/mainweapon/foamer(src)
-			src.m_w_system.ship = src
-			src.components += src.m_w_system
+			src.install_part(null, new /obj/item/shipcomponent/mainweapon/foamer(src), POD_PART_MAIN_WEAPON)
 			myhud.update_systems()
 			myhud.update_states()
 			return
@@ -411,6 +374,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/item/sub/frame_box
@@ -425,6 +389,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/structure/vehicleframe/puttframe
@@ -498,6 +463,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		O = new src.control_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage -= 2
 	if (stage == 9)
 		stage-- // no parts involved here, this construction step is welding the exterior
@@ -505,6 +471,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
@@ -513,29 +480,34 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		O = new src.engine_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 6)
 		var/obj/item/sheet/steel/M = new ( get_turf(src) )
 		M.amount = src.metal_amt
 		M.fingerprints = src.fingerprints
 		M.fingerprints_full = src.fingerprints_full
+		M.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 5)
 		O = new src.boards_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		stage--
 	if (stage == 4)
 		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
 		C.amount = src.cable_amt
 		C.fingerprints = src.fingerprints
 		C.fingerprints_full = src.fingerprints_full
+		C.forensic_holder = src.forensic_holder
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
 	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
+	O.forensic_holder = src.forensic_holder
 	qdel(src)
 
 /*-----------------------------*/
@@ -724,6 +696,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
 				var/obj/machinery/vehicle/V = new vehicle_type( src.loc )
+				V.forensic_holder = src.forensic_holder
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
@@ -749,13 +722,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_civ/New()
 	..()
-	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-	src.sec_system.ship = src
-	src.components += src.sec_system
-	qdel(src.lights)
-	src.lights = new /obj/item/shipcomponent/pod_lights/pod_2x2
-	src.lights.ship = src
-	src.components += src.lights
+	src.delete_part(POD_PART_LIGHTS)
+	src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+	src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_2x2(src), POD_PART_LIGHTS)
 	src.pixel_x = -16
 	src.pixel_y = -16
 	myhud.update_systems()
@@ -836,13 +805,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	New()
 		..()
-		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
-		src.sec_system.ship = src
-		src.components += src.sec_system
-		qdel(src.lights)
-		src.lights = new /obj/item/shipcomponent/pod_lights/pod_2x2
-		src.lights.ship = src
-		src.components += src.lights
+		src.delete_part(POD_PART_LIGHTS)
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
+		src.install_part(null, new /obj/item/shipcomponent/pod_lights/pod_2x2(src), POD_PART_LIGHTS)
 		myhud.update_systems()
 		myhud.update_states()
 		return
@@ -934,12 +899,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				maxboom = 0
 		maxboom = max(severity, maxboom)
 
-	Install(obj/item/shipcomponent/ship_component as obj, give_feedback)
-		if (!ship_component.large_pod_compatible)
-			boutput(usr, SPAN_ALERT("This part isn't compatible with pods of this size!"))
+	install_part(var/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE)
+		if (!part.large_pod_compatible)
+			boutput(user, SPAN_ALERT("This part isn't compatible with pods of this size!"))
 			return
 		return ..()
-
 
 /obj/machinery/vehicle/pod_smooth/light // standard civilian pods
 	name = "Pod C-"
@@ -992,9 +956,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		..()
 		myhud.update_systems()
 		myhud.update_states()
-		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
-		src.lock.ship = src
-		src.components += src.lock
+		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock(src), POD_PART_LOCK)
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1033,12 +995,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	New()
 		..()
 		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
-		src.m_w_system.ship = src
-		src.components += src.m_w_system
+		src.install_part(null, new /obj/item/shipcomponent/mainweapon/rockdrills(src), POD_PART_MAIN_WEAPON)
 		myhud.update_systems()
 		myhud.update_states()
-		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
 		return
 
 //pod wars ones//
@@ -1050,7 +1009,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speedmod = 1.11
-	init_comms_type = /obj/item/shipcomponent/communications
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1405,6 +1364,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
 			O.fingerprints_full = src.fingerprints_full
+			O.forensic_holder = src.forensic_holder
 			qdel(src)
 
 /obj/item/pod/paintjob
@@ -1469,12 +1429,8 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 	New()
 		. = ..()
-		src.components -= src.engine
-		qdel(src.engine)
-		src.engine = new /obj/item/shipcomponent/engine/escape(src)
-		src.components += src.engine
-		src.engine.ship = src
-		src.engine.activate()
+		src.delete_part(POD_PART_ENGINE)
+		src.install_part(null, new /obj/item/shipcomponent/engine/escape(src), POD_PART_ENGINE, TRUE)
 
 	finish_board_pod(var/mob/boarder)
 		..()
