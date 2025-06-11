@@ -74,7 +74,7 @@ var/datum/job/priority_job = null
 							var/list/output = list("All roles that can be requisitioned:")
 							var/list/datum/job/all_jobs = job_controls.staple_jobs + job_controls.special_jobs
 							for (var/datum/job/job in all_jobs)
-								if (job.request_limit <= job.limit || !job.add_to_manifest || job.no_late_join || !job.request_cost)
+								if (job.request_limit <= job.limit || job.limit == -1 || !job.add_to_manifest || job.no_late_join || !job.request_cost)
 									continue
 								output += src.job_info(job, include_requests = TRUE)
 							src.print_text(output.Join("<br>"))
