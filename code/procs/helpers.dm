@@ -2566,6 +2566,12 @@ proc/total_cross(turf/T, atom/movable/mover)
 
 var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 
+/proc/get_ghost_where_text(atom/X)
+	var/turf/where = get_turf(X)
+	. = "Unknown (?, ?, ?)"
+	if (where)
+		. = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+
 /proc/message_ghosts(message, show_wraith = FALSE)
 	var/list/mob/living/intangible/wraith/wraiths = list()
 	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))

@@ -681,10 +681,7 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		if (src.mind.ckey && !inafterlife(src))
-			var/turf/where = get_turf(src)
-			var/where_text = "Unknown (?, ?, ?)"
-			if (where)
-				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+			var/where_text =  get_ghost_where_text(src)
 
 			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
 #ifdef DATALOGGER
