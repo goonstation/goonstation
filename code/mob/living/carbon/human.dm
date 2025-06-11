@@ -2062,6 +2062,11 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (src.bioHolder)
 		bioHolder.RemoveAllEffects(EFFECT_TYPE_DISABILITY)
 
+	if (src.organHolder.head && isskeleton(src))
+		var/datum/mutantrace/skeleton/S = src.mutantrace
+		S.set_head(src.organHolder.head)
+		S.head_moved() // update tracking
+
 	if (src.sims)
 		for (var/name in sims.motives)
 			sims.affectMotive(name, 100)
