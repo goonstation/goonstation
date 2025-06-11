@@ -7233,9 +7233,6 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "doE" = (
-/obj/decal/poster/miners_almanac{
-	pixel_y = 28
-	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -35922,7 +35919,12 @@
 /obj/machinery/door_control{
 	id = "nadir_minetop";
 	name = "Loading Door Control";
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = 8
+	},
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28;
+	pixel_x = -6
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
