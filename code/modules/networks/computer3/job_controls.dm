@@ -21,7 +21,7 @@ var/datum/job/priority_job = null
 		<br>(List) to view currently advertised roles.
 		<br>(Info) to view info on a specific role.
 		<br>(Prio role name) to prioritize recruiting a specific role. Call without arguments to display currently prioritized role.
-		<br>(Request role name) to requesition more slots for a specific role. Call without arguments to display requestable roles.
+		<br>(Request role name) to requisition more job openings for a specific role. Call without arguments to display requestable roles.
 		<br>(Quit) to exit RoleControl.
 		"}
 		src.print_text(intro_text)
@@ -84,10 +84,10 @@ var/datum/job/priority_job = null
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
 						if (job.request_limit <= job.limit)
-							src.print_text("Error: can not requisition more slots for that role")
+							src.print_text("Error: can not requisition more job openings for that role")
 							return
 						requested_job = job
-						src.print_text("Enter the number of slots to requisition (max [job.request_limit - job.limit]), or type X to cancel")
+						src.print_text("Enter the number of job openings to requisition (max [job.request_limit - job.limit]), or type X to cancel")
 						state = MENU_REQUEST_COUNT
 
 
@@ -140,9 +140,9 @@ var/datum/job/priority_job = null
 							requested_job.limit += request_count
 							requested_job.player_requested = TRUE
 							global.wagesystem.station_budget -= total_cost
-							src.print_text("Requistioned [request_count] slots for [requested_job.name]")
-							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] slot[s_es(request_count)] requisitioned by [src.account.assignment] [src.account.registered]")
-							src.notify_respawnable_players(SPAN_NOTICE("New job slots have been opened for [requested_job.name]"))
+							src.print_text("Sucess: Requistioned [request_count] job openings for the [requested_job.name] role")
+							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] opening[s_es(request_count)] requisitioned by [src.account.assignment] [src.account.registered]")
+							src.notify_respawnable_players(SPAN_NOTICE("New job openings for the [requested_job.name] role!"))
 
 						requested_job = null
 						request_count = 0
