@@ -303,7 +303,12 @@ TYPEINFO(/mob/new_player)
 			if (JOB.player_requested || JOB == job_controls.priority_job)
 				SPAWN(0) // don't pause late spawning for this
 					var/limit_reached = JOB.limit <= JOB.assigned
-					var/message = "RoleControl notification: hired[JOB.player_requested ? " requested":""][JOB == job_controls.priority_job ? " priority": ""] role [JOB.name][limit_reached ? " (limit reached)" : ""]"
+					var/list/req_prio = list()
+					if (JOB.player_requested)
+						req_prio += "requested"
+					if (JOB == job_controls.priority_job)
+						req_prio += "priority"
+					var/message = "RoleControl notification: [english_list(req_prio, "")] role [JOB.name] hired[limit_reached ? " (limit reached, clearing [english_list(req_prio, "")] status)" : ""]"
 					if (JOB.player_requested && limit_reached)
 						JOB.player_requested = FALSE
 					if (JOB == job_controls.priority_job && limit_reached)
