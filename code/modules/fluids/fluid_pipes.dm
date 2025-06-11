@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	var/initialize_directions
 	/// The network we belong to.
 	var/datum/flow_network/network
-	var/hogs_tile = FALSE //does it take up the entire tile no matter what?
+	var/exclusionary = FALSE
 
 /obj/fluid_pipe/New()
 	..()

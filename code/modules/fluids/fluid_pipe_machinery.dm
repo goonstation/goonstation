@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 	plane = PLANE_FLOOR
 	/// What directions are valid for connections.
 	var/initialize_directions
+	var/exclusionary = FALSE
 
 /// Accepts an input network and an ideal amount of fluid to pull from network.
 /// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to QUANTIZATION_UNITS units.
@@ -32,6 +33,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary)
 /obj/machinery/fluid_pipe_machinery/unary
+	exclusionary = TRUE
 	var/datum/flow_network/network
 	level = UNDERFLOOR
 
@@ -58,6 +60,15 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary)
 	src.network = null
 	src.initialize()
 
+/obj/machinery/fluid_pipe_machinery/unary/nullifier
+	name = "Nullifier"
+	icon_state = "nullifier"
+	var/removalrate = 100
+
+/obj/machinery/fluid_pipe_machinery/unary/nullifier/process()
+	if(src.network)
+		qdel(src.pull_from_network(src.network, src.removalrate))
+
 
 ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/drain
@@ -77,7 +88,18 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 
 /obj/machinery/fluid_pipe_machinery/unary/drain/passive
 	name = "Passive drain"
-	icon_state = ""
+	icon_state = "drain"
+	drain_min = 2
+	drain_max = 7
+
+/obj/machinery/fluid_pipe_machinery/unary/drain/passive/process()
+	src.drain()
+
+/obj/machinery/fluid_pipe_machinery/unary/drain/passive/big
+	name = "Passive drain"
+	icon_state = "drainbig"
+	drain_min = 6
+	drain_max = 14
 
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump
 	name = "Inlet Pump"
@@ -91,21 +113,32 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary/drain)
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
-	src.UpdateIcon()
+	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
 
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/process()
+	var/area/A = get_area(src)
+	if (!isarea(A))
+		return
+	if(!A.powered(ENVIRON))
+		if(src.on)
+			src.on = FALSE
+			src.UpdateIcon(TRUE)
+			src.visible_message(SPAN_ALERT("[src] shuts down due to lack of APC power."))
+		return
 	if(!src.on)
 		return
 	src.drain()
+	src.use_power(100 WATTS, ENVIRON)
 
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/hide(intact)
 	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
 
-/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/update_icon()
+/obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/update_icon(animate)
 	var/turf/T = get_turf(src)
 	var/intact = T.intact
-	FLICK("inlet[!src.on][src.on][CHECKHIDEPIPE(src) ? "h" : null]", src)
+	if(animate)
+		FLICK("inlet[!src.on][src.on][CHECKHIDEPIPE(src) ? "h" : null]", src)
 	src.icon_state = "inlet[src.on][CHECKHIDEPIPE(src) ? "h" : null]"
 
 /obj/machinery/fluid_pipe_machinery/unary/drain/inlet_pump/overfloor
@@ -191,11 +224,12 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 /obj/machinery/fluid_pipe_machinery/binary/pump/attack_hand(mob/user)
 	interact_particle(user, src)
 	src.on = !src.on
-	src.UpdateIcon()
+	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
 
-/obj/machinery/fluid_pipe_machinery/binary/pump/update_icon()
-	FLICK("pump[!src.on][src.on]", src)
+/obj/machinery/fluid_pipe_machinery/binary/pump/update_icon(animate)
+	if(animate)
+		FLICK("pump[!src.on][src.on]", src)
 	src.icon_state = "pump[src.on]"
 
 /obj/machinery/fluid_pipe_machinery/binary/pump/process()
@@ -216,7 +250,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	if(ON_COOLDOWN(src, "fluidvalve", 1 SECOND))
 		return
 	src.on = !src.on
-	src.UpdateIcon()
+	src.UpdateIcon(TRUE)
 	user.visible_message(SPAN_NOTICE("[user] turns [src.on ? "on" : "off"] [src]."), SPAN_NOTICE("You turn [src.on ? "on" : "off"] [src]."))
 	if(!(src.network1 && src.network2))
 		return
@@ -225,8 +259,9 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	else
 		src.network1.rebuild_network()
 
-/obj/machinery/fluid_pipe_machinery/binary/valve/update_icon()
-	FLICK("valve[!src.on][src.on]", src)
+/obj/machinery/fluid_pipe_machinery/binary/valve/update_icon(animate)
+	if(animate)
+		FLICK("valve[!src.on][src.on]", src)
 	src.icon_state = "valve[src.on]"
 
 /obj/machinery/fluid_pipe_machinery/binary/valve/refresh_network(datum/flow_network/network)
@@ -235,3 +270,104 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 		return
 	if(src.network1 && src.network2)
 		src.network1.merge_network(src.network2)
+
+
+ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/trinary)
+/obj/machinery/fluid_pipe_machinery/trinary
+	var/datum/flow_network/network1
+	var/datum/flow_network/network2
+	var/datum/flow_network/network3
+
+/obj/machinery/fluid_pipe_machinery/trinary/New()
+	..()
+	switch(src.dir)
+		if(NORTH)
+			src.initialize_directions = NORTH|EAST|SOUTH
+		if(EAST)
+			src.initialize_directions = EAST|SOUTH|WEST
+		if(SOUTH)
+			src.initialize_directions = SOUTH|WEST|NORTH
+		if(WEST)
+			src.initialize_directions = WEST|NORTH|EAST
+
+/obj/machinery/fluid_pipe_machinery/trinary/disposing()
+	src.network1?.machines -= src
+	src.network2?.machines -= src
+	src.network3?.machines -= src
+	..()
+
+/obj/machinery/fluid_pipe_machinery/trinary/initialize()
+	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, 180)))
+		if(target.initialize_directions & get_dir(target,src))
+			src.network1 = target.network
+			src.network1.machines += src
+			break
+
+	for(var/obj/fluid_pipe/target in get_step(src, turn(src.dir, -90)))
+		if(target.initialize_directions & get_dir(target,src))
+			src.network2 = target.network
+			src.network2.machines += src
+			break
+
+	for(var/obj/fluid_pipe/target in get_step(src, src.dir))
+		if(target.initialize_directions & get_dir(target,src))
+			src.network3 = target.network
+			src.network3.machines += src
+			break
+
+/obj/machinery/fluid_pipe_machinery/trinary/refresh_network(datum/flow_network/network)
+	src.network1?.machines -= src
+	src.network2?.machines -= src
+	src.network1 = null
+	src.network2 = null
+	src.initialize()
+
+/obj/machinery/fluid_pipe_machinery/trinary/filter
+	name = "Reagent Filter"
+	icon_state = "filter0"
+	flags = NOSPLASH
+	var/pullrate = 200
+	var/obj/item/reagent_containers/glass/beaker
+
+/obj/machinery/fluid_pipe_machinery/trinary/filter/attackby(obj/item/reagent_containers/glass/B, mob/user)
+	..()
+	if(!istype(B))
+		return
+
+	if(src.beaker)
+		boutput(user, "A beaker is already loaded into the machine.")
+
+	var/reagent_to_filter = B.reagents.get_master_reagent_id()
+	if(!B.reagents.has_reagent(reagent_to_filter, 1))
+		boutput(user, "[B] doesn't have enough of any reagent.")
+		return
+	user.u_equip(B)
+	src.beaker = B
+	B.set_loc(src)
+	icon_state = "filter1"
+
+/obj/machinery/fluid_pipe_machinery/trinary/filter/attack_hand(mob/user)
+	..()
+	if(src.beaker)
+		user.put_in_hand_or_drop(src.beaker)
+		src.beaker = null
+		icon_state = "filter0"
+
+/obj/machinery/fluid_pipe_machinery/trinary/filter/process()
+	if(!src.beaker)
+		return
+	var/reagent_to_filter = src.beaker.reagents.get_master_reagent_id()
+	if(!src.beaker.reagents.has_reagent(reagent_to_filter, 1))
+		src.beaker.set_loc(get_turf(src))
+		src.visible_message(SPAN_ALERT("[src] ejects [src.beaker] due to insufficient reagents!"))
+		src.beaker = null
+		return
+	var/datum/reagents/removed = src.pull_from_network(src.network1, src.pullrate)
+	var/datum/reagents/filtered = new(removed.get_reagent_amount(reagent_to_filter))
+	filtered.add_reagent(reagent_to_filter, filtered.maximum_volume, donotreact = TRUE)
+	removed.remove_reagent(reagent_to_filter, filtered.maximum_volume)
+	if(!src.push_to_network(src.network2, filtered))
+		filtered.trans_to_direct(removed, filtered.total_volume)
+	if(!src.push_to_network(src.network3, removed))
+		src.push_to_network(src.network1, removed)
+
