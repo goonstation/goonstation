@@ -61,9 +61,6 @@ labelMappings:
     "[API]": a-api
     "[ATMOS]": a-atmospherics
     "[ATMOSPHERICS]": a-atmospherics
-    "[CATERING]": a-catering
-    "[CHEM]": a-chemistry
-    "[CHEMISTRY]": a-chemistry
     "[CLOTHING]": a-clothing
     "[CRITTER]": a-critters
     "[CRITTERS]": a-critters
@@ -73,20 +70,14 @@ labelMappings:
     "[GAMEMODES]": a-gamemodes
     "[GAME MODES]": a-gamemodes
     "[MODES]": a-gamemodes
-    "[HYDRO]": a-hydroponics
-    "[HYDROPONICS]": a-hydroponics
     "[INTERNAL]": a-internal
     "[MAPPING]": a-mapping
     "[MATERIALS]": a-materials
     "[MATSCI]": a-materials
-    "[MEDICAL]": a-medical
     "[MUTANTRACE]": a-mutantraces
     "[SPECIES]": a-mutantraces
     "[PLAYER ACTIONS]": a-player-actions
     "[ACTIONS]": a-player-actions
-    "[SCIENCE]": a-science
-    "[SILICONS]": a-silicons
-    "[BORGS]": a-silicons
     "[STATION SYSTEMS]": a-station-systems
     "[STATUS EFFECTS]": a-status-effects
     "[EVENTS]": a-events
@@ -100,3 +91,22 @@ labelMappings:
     "[VEHICLES]": a-vehicles
     "[TRAITS]": a-traits
     "[TRAIT]": a-traits
+# Department
+    "[COMMAND]": d-command
+    "[SECURITY]": d-security
+    "[CATERING]": d-catering
+    "[CHEM]": d-chemistry
+    "[CHEMISTRY]": d-chemistry
+    "[HYDRO]": d-hydroponics
+    "[HYDROPONICS]": d-hydroponics
+    "[MEDICAL]": d-medical
+    "[SCIENCE]": d-science
+    "[SILICONS]": d-silicons
+    "[BORGS]": d-silicons
+    "[ENGINEERING]": d-engineering
+    "[LOGISTICS]": d-logistics
+    "[SUPPLY]": d-logistics
+    "[CARGO]": d-logistics
+    "[SPECIAL]": d-special
+    "[ANTAGONIST]": d-antagonists # Not technically a department but it fits
+    "[ANTAG]": d-antagonists
