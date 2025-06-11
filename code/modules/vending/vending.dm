@@ -730,6 +730,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a logged product ([product.product_name]) from [src] at [log_loc(src)].")
 				if(player_list)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
+				if(account && (account["name"] != usr.real_name))
+				    // reduce logging spam from clerical errors
+					if(!usr.traitHolder.hasTrait("clericalerror") || !ON_COOLDOWN(src, "buy_[usr.real_name]", 10 SECONDS))
+						logTheThing(LOG_STATION, usr, "vended a product ([product.product_name]) from [src] at [log_loc(src)] using bank account ([account["name"]]).")
 		else
 			. = FALSE
 

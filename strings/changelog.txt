@@ -1,5 +1,31 @@
 
+(t)mon jun 09 25
+(u)Scientifically
+(p)23384
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites the Coonskin Cap. Wear a fuzzy Raccoon butt on your head today!
+(u)JORJ949
+(p)23775
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)Any trained syndicate operative (ones that can open the listening post) will now remove time when putting the auth disk in a nuclear bomb, rather than just nukeops.
+(u)glowbold
+(p)23234
+(e)🪲🗺🎨⚖🔄💊|C-Bug, A-Mapping, C-Sprites, C-Balance, C-Rework, A-Medical
+(*)Defibrillators use power when you prime the paddles. Portable units have a power cell, cyborgs use their internal power cell, and mounted units use the area APC.
+(+)Medbay generally has two specialized defibrillator chargers. Defibrillators can also be recharged in standard rechargers.
+(u)RubberRats
+(p)23681
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Underwear should no longer poke out from swimsuits and certain dresses
 (t)sun jun 08 25
+(u)LeahTheTech
+(p)23763
+(e)🔨|A-Player-Actions
+(+)Pug woof once again has no cooldown but now has a stamina cost and will cause you to fall over wheezing if used too much.
+(u)LorrMaster
+(p)23419
+(e)🪲💊⚗|C-Bug, A-Medical, A-Chemistry
+(+)Fix for body temperature going below absolute zero under various conditions
 (u)bork
 (p)23778
 (e)🪲|C-Bug
