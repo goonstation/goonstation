@@ -110,10 +110,10 @@
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
 
-	// minimum and maximum burning durations applied by the hotspot
+	/// minimum and maximum burning durations applied by the hotspot
 	var/min_status_duration = 30
 	var/max_status_duration = 55
-	// the temperature at which the maximum status duration will be applied
+	/// the temperature at which the maximum status duration will be applied
 	var/maximum_status_temp = 5000
 
 /atom/movable/hotspot/New(turf/newLoc, chemfire = null)
@@ -202,7 +202,7 @@
 		qdel(src)
 		return FALSE
 
-	if (!location.air || location.air.toxins < 0.5 MOLES || location.air.oxygen < 0.5 MOLES)
+	if (is_atmosphere_unsuitable(location))
 		qdel(src)
 		return FALSE
 
@@ -263,6 +263,9 @@
 	var/t = (clamped_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (maximum_status_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 	target.update_burning(lerp(min_status_duration, max_status_duration, t))
 
+/// Checks if the atmosphere on the tile is unsuitable for hotspot survival
+/atom/movable/hotspot/proc/is_atmosphere_unsuitable(turf/simulated/floor/location)
+	return (!location.air || location.air.toxins < 0.5 MOLES || location.air.oxygen < 0.5 MOLES)
 
 /atom/movable/hotspot/ex_act()
 	return
@@ -489,3 +492,7 @@
 			rgb = list(50, 50, 50)
 	src.add_medium_light("fire_lightup", list(65, 65, 65, 100))
 	src.add_medium_light("fire_color_highlight", list(rgb[1], rgb[2], rgb[3], 100))
+
+// Chemfires don't care about toxins in the atmosphere
+/atom/movable/hotspot/chemfire/is_atmosphere_unsuitable(turf/simulated/floor/location)
+	return (!location.air || location.air.oxygen < 0.5 MOLES)
