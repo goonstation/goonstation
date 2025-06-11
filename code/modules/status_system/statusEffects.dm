@@ -2941,7 +2941,7 @@
 
 		for (var/mob/living/other_mob in hearers(4, L))
 			if (prob(40) && other_mob != L)
-				L.viral_transmission(other_mob, "Airborne", 0)
+				L.viral_transmission(other_mob, AILMENT_SPREAD_AIRBORNE, 0)
 
 	preCheck(atom/A)
 		. = ..()

@@ -595,7 +595,7 @@
 
 			if (istype(A,/datum/ailment/disease/))
 				var/datum/ailment/disease/D = A
-				if (D.spread == "Airborne")
+				if (D.spread == AILMENT_SPREAD_AIRBORNE)
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
