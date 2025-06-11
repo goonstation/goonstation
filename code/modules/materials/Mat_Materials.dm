@@ -574,6 +574,35 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 1)
 
 
+/datum/material/metal/veranium
+	mat_id = "veranium"
+	name = "veranium"
+	desc = "It looks to be sparking."
+	color = "#8effdd"
+
+	New()
+		..()
+		setProperty("electrical", 4)
+		setProperty("thermal", 1)
+		setProperty("density", 4)
+		setProperty("chemical", 2)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+
+/datum/material/metal/voltite
+	mat_id = "voltite"
+	name = "voltite"
+	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	color = "#389fff"
+
+	New()
+		..()
+		setProperty("electrical", 9)
+		setProperty("density", 4)
+		setProperty("thermal", 1)
+		setProperty("hard", 1)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
+
 /datum/material/metal/steel
 	mat_id = "steel"
 	name = "steel"
