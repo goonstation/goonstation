@@ -56,14 +56,14 @@ labels_to_emoji = {
 	'c-runtime': '🐛',
 	'c-sound': '🔊',
 	'c-sprites': '🎨',
-	'e-contest': '🎉',
-	'e-fuck': '❗',
 	'd-catering': '🍝',
 	'd-chemistry': '⚗',
 	'd-hydroponics': '🌱',
 	'd-medical': '💊',
 	'd-science': '🔬',
 	'd-silicons': '🤖',
+	'e-contest': '🎉',
+	'e-fuck': '❗',
 }
 
 def parse_pr_changelog(pr):
