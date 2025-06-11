@@ -1,6 +1,6 @@
 /// generic proc for creating flashes of hotspot fire
 /// falloff is in units of degrees per tile
-/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), falloff = 0, checkLos = TRUE, chemfire = null, timeout = 3 SECONDS)
+/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), falloff = 0, checkLos = TRUE, chemfire = null)
 	. = list()
 	if (locate(/obj/blob/firewall) in center)
 		return
@@ -65,7 +65,7 @@
 			hotspot.set_real_color()
 
 	// timed life on hotspots
-	SPAWN(timeout)
+	SPAWN(3 SECONDS)
 		for (var/atom/movable/hotspot/hotspot as anything in created_hotspots)
 			if (!QDELETED(hotspot))
 				qdel(hotspot)
