@@ -17,6 +17,9 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 	var/list/access_type = list(POD_ACCESS_STANDARD)
 	var/obj/item/device/ship_radio_control/rc_ship = null
 
+	get_install_slot()
+		return POD_PART_COMMS
+
 	mining
 		name = "NT Magnet Link Array"
 		desc = "Allows a pod to communicate with a Mining Magnet for more convenient mining."

@@ -97,14 +97,8 @@
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
-	if (GET_DIST(src, target) > 0)
-		if(src.can_turn())
-			set_dir(get_dir(src, target))
-			if(dir & (dir-1))
-				if (dir & EAST)
-					set_dir(EAST)
-				else if (dir & WEST)
-					set_dir(WEST)
+	if (GET_DIST(src, target) > 0 && src.can_turn())
+		set_dir(get_dir_accurate(src, target, FALSE)) // Face the direction of the target
 
 /**
  * This proc is called when a mob double clicks on something with the left mouse button.
