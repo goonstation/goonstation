@@ -1475,7 +1475,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
 	linkcolor = SECURITY_LINK_COLOR
-	request_limit = 0 // you don't request them, they come to you
+	request_cost = PAY_EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -1499,7 +1499,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	linkcolor = NANOTRASEN_LINK_COLOR
-	request_limit = 1 // eh
+	request_cost = PAY_DONTBUYIT * 4 // gotta dig real deep for that second(?) opinion
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
@@ -2779,7 +2779,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
 	request_limit = 2
-	request_cost = PAY_IMPORTANT*4
+	request_cost = PAY_DOCTORATE*4
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
