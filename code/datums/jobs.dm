@@ -1475,6 +1475,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
 	linkcolor = SECURITY_LINK_COLOR
+	request_limit = 0 // you don't request them, they come to you
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -1498,6 +1499,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	linkcolor = NANOTRASEN_LINK_COLOR
+	request_limit = 1 // eh
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
@@ -1536,6 +1538,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Diplomat"
 	wages = PAY_DUMBCLOWN
 	access_string = "Diplomat"
+	request_limit = 0 // you don't request them, they come to you
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -1701,6 +1704,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
 	linkcolor = MEDICAL_LINK_COLOR
+	request_limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/medical
@@ -1715,6 +1719,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Radio Show Host"
 	wages = PAY_TRADESMAN
 	linkcolor = CIVILIAN_LINK_COLOR
+	request_limit = 1 // limited workspace
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 0
@@ -1746,6 +1751,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Psychiatrist"
 	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
+	request_limit = 1 // limited workspace
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical
