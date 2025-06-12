@@ -603,7 +603,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
-	// icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
@@ -654,6 +653,53 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			return
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
+
+/obj/item/dagger/silver
+	name = "silver dagger"
+	icon_state = "dagger-silver"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "dagger-silver"
+	force = 8
+	desc = "A silver dagger made to be used against creatures of the night."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+
+	New()
+		..()
+		src.setMaterial(getMaterial("silver"))
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		..()
+		if (iswerewolf(target))
+			target.changeStatus("werewolf_bane", 6 SECONDS)
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+			C.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			C.emote("twitch_v")
+			A:lastattacker = usr
+			A:lastattackertime = world.time
+			random_brute_damage(C, throwforce, 1)
+
+			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+		if(iswerewolf(A))
+			var/mob/living/carbon/human/H = A
+			H.changeStatus("knockdown", 4 SECONDS)
+			H.force_laydown_standup()
+			H.changeStatus("werewolf_bane", 15 SECONDS)
+
+
+	attack_hand(var/mob/user)
+		if(iswerewolf(user))
+			var/mob/living/carbon/human/H = user
+			H.emote("scream")
+			H.changeStatus("knockdown", 1 SECONDS)
+			H.force_laydown_standup()
+			H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
+			return
+
+		return ..(user)
 
 // Revolutionary sign.
 /obj/item/revolutionary_sign
@@ -820,7 +866,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife_b"
 	item_state = "knife_b"
-	force = 5
+	force = 25
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 8
@@ -867,7 +913,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=user))
 			return ..()
 		if (!isdead(C))
-			random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
@@ -903,7 +948,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "hunter_spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "hunter_spear"
-	force = 8
+	force = 28
 	throwforce = 35
 	throw_speed = 6
 	throw_range = 10

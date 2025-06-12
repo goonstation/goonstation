@@ -7,6 +7,9 @@
 	var/hud_state = "blank"
 	icon_state= "sec_system"
 
+	get_install_slot()
+		return POD_PART_SECONDARY
+
 	proc/Use(mob/user as mob)
 		boutput(user, "[ship.ship_message("No special function for this ship!")]")
 		return
@@ -832,7 +835,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		var/dat = "<TT><B>[src] Console</B><BR><HR>"
 		for(var/mob/M in ship)
 			if(M == ship.pilot) continue
-			dat +="<A href='?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
+			dat +="<A href='byond://?src=\ref[src];release=[M.name]'><B><U>[M.name]</U></B></A><BR>"
 		user.Browse(dat, "window=ship_sec_system")
 		onclose(user, "ship_sec_system")
 
@@ -863,11 +866,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 	var/configure_mode = 0 //If true, entering a valid code sets that as the code.
 	var/can_reset = TRUE //! Can you reset the code for this lock?
 
+	get_install_slot()
+		return POD_PART_LOCK
+
 	disposing()
 		if (ship)
 			ship.locked = 0
-			ship.lock = null
-
 		..()
 
 	deactivate()
@@ -925,7 +929,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("C"); return false;'>C</a></td></tr>
 		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("F"); return false;'>F</a></td><td><a href='#' onclick='keypadIn("E"); return false;'>E</a></td></td><td><a href='#' onclick='keypadIn("D"); return false;'>D</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='byond://?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
 	</table>
 
 <script language="JavaScript">
@@ -1439,6 +1443,7 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	name = "Inferno Trailblazer"
 	desc = "A totally RADICAL plasma igniter for your ship! Leave behind the COOLEST flames in the Frontier! Manufacturer is not responsible for deaths this device may cause."
 	hud_state = "trailblazer"
+	icon_state = "trailblazer"
 	f_active = TRUE
 
 	Use()
@@ -1461,6 +1466,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 	f_active = TRUE
 	var/obj/item/shipcomponent/mainweapon/loaded_wep = null
 
+	afterattack(atom/target, mob/user, reach, params)
+		..()
+		if(istype(target, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/vehicle = target
+			vehicle.install_part(user, src, POD_PART_SECONDARY)
+
 	Use(mob/user)
 		src.activate(user)
 
@@ -1473,35 +1484,34 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/shielding)
 		if (!.)
 			return
 
-		if (!src.loaded_wep && !src.ship.m_w_system)
+		var/obj/item/shipcomponent/mainweapon/main_weapon = src.ship.get_part(POD_PART_MAIN_WEAPON)
+		if (!src.loaded_wep && !main_weapon)
 			return
 
-		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || src.ship.m_w_system && GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd"))
-			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(src.ship.m_w_system, "weapon_swap_cd")) / 10, 1)
+		if (src.loaded_wep && GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || main_weapon && GET_COOLDOWN(main_weapon, "weapon_swap_cd"))
+			var/swap_cd = round((GET_COOLDOWN(src.loaded_wep, "weapon_swap_cd") || GET_COOLDOWN(main_weapon, "weapon_swap_cd")) / 10, 1)
 			boutput(src.ship.pilot, "[src.ship.ship_message("[src.ship]'s weapons are too hot to swap out! [swap_cd] seconds left.")]")
 			return
 
 		for (var/mob/M in src.ship)
-			if (src.loaded_wep && src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out for [src.loaded_wep].")]")
-			else if (src.ship.m_w_system)
-				boutput(M, "[src.ship.ship_message("[src.ship.m_w_system] has been swapped out.")]")
+			if (src.loaded_wep && main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out for [src.loaded_wep].")]")
+			else if (main_weapon)
+				boutput(M, "[src.ship.ship_message("[main_weapon] has been swapped out.")]")
 				src.ship.UpdateOverlays(null, "mainweapon") //todo: make pod components actually clean up their own overlays
 			else
 				boutput(M, "[src.ship.ship_message("[src.loaded_wep] has been swapped in.")]")
 
-		var/obj/item/shipcomponent/mainweapon/weapon = src.ship?.m_w_system
-		if (istype(weapon))
-			src.ship.eject_part(weapon, FALSE)
-			src.ship.null_part(weapon)
+		var/currently_active = main_weapon.active
+		if(main_weapon)
+			src.ship.eject_part(null, POD_PART_MAIN_WEAPON)
 		var/obj/item/shipcomponent/mainweapon/stored_weapon = src.loaded_wep
 		if (stored_weapon)
-			stored_weapon.ship = src.ship // prevents a bug in activate()
-			src.ship.Install(stored_weapon, FALSE)
+			src.ship.install_part(null, stored_weapon, POD_PART_MAIN_WEAPON, currently_active)
 			src.loaded_wep = null
 			src.UpdateIcon()
-		if (istype(weapon))
-			src.loaded_wep = weapon
+		if (istype(main_weapon))
+			src.loaded_wep = main_weapon
 			src.loaded_wep.set_loc(src)
 			src.UpdateIcon()
 

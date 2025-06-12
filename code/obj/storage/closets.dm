@@ -45,9 +45,6 @@ TYPEINFO(/obj/storage/closet)
 		return
 
 	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
@@ -114,9 +111,9 @@ TYPEINFO(/obj/storage/closet)
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
-				new /obj/item/tank/emergency_oxygen(src)
+				new /obj/item/tank/pocket/oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/mini_oxygen(src)
+					new /obj/item/tank/mini/oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -445,7 +442,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
 
-	close(var/entangleLogic)
+	close(var/entangleLogic, mob/user)
 		if (!src.open)
 			return 0
 		if (!src.can_close())

@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 /datum/material/metal/rock
 	mat_id = "rock"
-	name = "rock"
+	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
 	color = "#ACACAC"
 	texture = "rock"
@@ -573,6 +573,35 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("hard", 1)
 
+
+/datum/material/metal/veranium
+	mat_id = "veranium"
+	name = "veranium"
+	desc = "It looks to be sparking."
+	color = "#8effdd"
+
+	New()
+		..()
+		setProperty("electrical", 4)
+		setProperty("thermal", 1)
+		setProperty("density", 4)
+		setProperty("chemical", 2)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+
+/datum/material/metal/voltite
+	mat_id = "voltite"
+	name = "voltite"
+	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	color = "#389fff"
+
+	New()
+		..()
+		setProperty("electrical", 9)
+		setProperty("density", 4)
+		setProperty("thermal", 1)
+		setProperty("hard", 1)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
 /datum/material/metal/steel
 	mat_id = "steel"
@@ -1531,6 +1560,25 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 5)
 
+/datum/material/organic/plasmacoral
+	mat_id = "plasmacoral"
+	name = "plasma coral"
+	desc = "Strange coral seemingly infused with plasmastone. Appears naturally."
+	color = "#A114FF"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 1)
+		setProperty("hard", 2)
+		setProperty("electrical", 5)
+		setProperty("radioactive", 1) // less spicy in coral/wall form
+		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
+
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone())
 
 /datum/material/organic/ectoplasm
 	mat_id = "ectoplasm"
@@ -1742,21 +1790,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 4)
 		setProperty("thermal", 9)
 		setProperty("electrical", 7)
-
-/datum/material/metal/censorium
-	mat_id = "censorium"
-	name = "censorium"
-	desc = "A charred rock. Doesn't do much."
-	color = "#948686"
-
-	New()
-		..()
-		setProperty("electrical", 4)
-		setProperty("thermal", 4)
-		setProperty("hard", 2)
-		setProperty("density", 2)
-		setProperty("flammable", 3)
-		setProperty("chemical", 4)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"

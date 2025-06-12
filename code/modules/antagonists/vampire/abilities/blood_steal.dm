@@ -18,13 +18,16 @@
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/V = holder
 
+		if (!V.can_bite(target, is_pointblank = 0))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
 		if (actions.hasAction(M, /datum/action/bar/private/icon/vamp_blood_suc))
 			boutput(M, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
-			return 1
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
-		if (isnpc(target))
-			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
-			return 1
+		if (GET_DIST(M, target) > 7)
+			boutput(M, SPAN_ALERT("That target is too far away!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		. = ..()
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)

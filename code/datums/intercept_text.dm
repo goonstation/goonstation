@@ -62,7 +62,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	if (!dude)
+	if (!istype(dude) || !dude.bioHolder)
 		return "CLASSIFIED"
 	var/print = "[dude.bioHolder.fingerprints]"
 	return print

@@ -105,7 +105,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			boutput(M, SPAN_ALERT("<B>Your spell fizzles at the final moment, somehow your target is no longer human!</B>"))
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
+			M.say("YORAF UHRY", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

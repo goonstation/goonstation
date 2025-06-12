@@ -16,7 +16,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	pass_unstable = FALSE
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
 
 	meteorhit()
 		return
@@ -308,8 +308,15 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	return removed
 
+/turf/proc/update_air_properties()
+#ifdef CHECK_MORE_RUNTIMES
+	CRASH("NON SIMULATED TURF CALLED UPDATE AIR PROPERTIES AT [src.x],[src.y],[src.z] :(((")
+#else
+	return
+#endif
+
 /// Updates parent, processing, air checking directions, and space borders.
-/turf/simulated/proc/update_air_properties() //OPTIMIZE - yes this proc right here sir
+/turf/simulated/update_air_properties() //OPTIMIZE - yes this proc right here sir
 	src.air_check_directions = 0
 
 	for(var/direction in cardinal)

@@ -696,13 +696,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							boutput(H, SPAN_ALERT("You are scalded by the hot chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 							H.emote("scream")
-							H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
+							H.changeBodyTemp(clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500))
 					else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 						if (chem_helmet_check(H, "cold"))
 							boutput(H, SPAN_ALERT("You are frostbitten by the freezing cold chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 							H.emote("scream")
-							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
+							H.changeBodyTemp(-clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500))
 
 				for(var/current_id in reagent_list)
 					if (current_id == exception)
@@ -751,14 +751,14 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								dmg_multiplier = paramslist["dmg_multiplier"]
 
 						if(C.bioHolder)
-							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
+							if(temp_to_burn_with > C.scald_temp() && !C.is_heat_resistant())
 								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
-							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
+								C.changeBodyTemp(clamp((temp_to_burn_with - T0C) - 20, 5, 700))
+							else if(temp_to_burn_with < C.frostburn_temp() && !C.is_cold_resistant())
 								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+								C.changeBodyTemp(-clamp((temp_to_burn_with - T0C) - 20, 5, 700))
 
 
 				// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and

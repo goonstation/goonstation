@@ -741,6 +741,7 @@ toxic - poisons
 			..()
 
 	weak
+		name = "muckshot"
 		damage = 50 //can have a little throwing, as a treat
 
 /datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
@@ -1273,7 +1274,7 @@ toxic - poisons
 		if ((istype(hit, /mob/living) && !istype(hit, /mob/living/silicon)) && !istype(hit, /mob/living/critter/space_phoenix))
 			var/mob/living/L = hit
 			L.TakeDamage("All", 2.5, 5, damage_type = src.damage_type)
-			L.bodytemperature -= 3
+			L.changeBodyTemp(-3 KELVIN)
 			L.changeStatus("shivering", 3 SECONDS * (1 - 0.75 * L.get_cold_protection() / 100), TRUE)
 		else if (istype(hit, /mob/living/silicon/ai))
 			var/mob/living/L = hit
@@ -2141,8 +2142,18 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 	on_hit(atom/hit, dirflag)
 		var/obj/machinery/the_singularity/S = hit
 		if(istype(S))
-			new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
-			qdel(S)
+			if (S.radius > 3)
+				S.target_turf_counter = 0
+				S.shrink()
+				new /obj/effects/magicspark(S.loc)
+				SPAWN(3 SECONDS)
+					if(S)
+						S.target_turf_counter = 0
+						S.shrink()
+						new /obj/effects/magicspark(S.loc)
+			else
+				new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
+				qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))

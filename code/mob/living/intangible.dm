@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 /mob/living/intangible
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -7,7 +10,7 @@
 	blinded = 0
 	anchored = ANCHORED
 	throws_can_hit_me = FALSE
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
+	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 	can_lie = FALSE
 
@@ -28,8 +31,6 @@
 		return 0
 	is_active()
 		return 0
-	say_understands(var/other)
-		return 1
 	Cross(atom/movable/mover)
 		return 1
 

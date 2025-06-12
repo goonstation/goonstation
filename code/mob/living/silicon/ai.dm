@@ -77,17 +77,34 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
 	"Wink (Inverted)" = "ai_wink-lod",\
+	"Wide Smile" = "ai_widesmile-dol",\
+	"Wide Smile (Inverted)" = "ai_widesmile-lod",\
+	"Sunglasses" = "ai_sunglasses-dol",\
+	"Sunglasses (Inverted)" = "ai_sunglasses-lod",\
 	"Devious" = "ai_devious-dol",\
 	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
+
+TYPEINFO(/mob/living/silicon/ai)
+	start_listen_modifiers = list(LISTEN_MODIFIER_MOB_MODIFIERS)
+	start_listen_inputs = list(LISTEN_INPUT_EARS_AI, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+	start_speech_prefixes = list(SPEECH_PREFIX_AI_RADIO_1, SPEECH_PREFIX_AI_RADIO_2, SPEECH_PREFIX_AI_RADIO_3, SPEECH_PREFIX_AI_RADIO_DEFAULT, SPEECH_PREFIX_AI_RADIO_GENERAL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
+	voice_type = "cyborg"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	anchored = ANCHORED
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+
 	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
@@ -99,6 +116,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 		CAMERA_NETWORK_RANCH,
 		CAMERA_NETWORK_SCIENCE,
 		CAMERA_NETWORK_CARGO,
+		CAMERA_NETWORK_AI_ONLY,
 	)
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
@@ -108,7 +126,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
 	var/printalerts = 1
-	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -362,12 +379,18 @@ or don't if it uses a custom topopen overlay
 		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
+		src.radio1.icon_tooltip = "Artificial Intelligence"
+		src.radio1.toggle_microphone(FALSE)
+		src.radio1.toggle_speaker(FALSE)
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
-		src.radio3.name = "Secure Channels Monitor"
-		src.radio1.broadcasting = FALSE
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
-		src.radio3.broadcasting = FALSE
+		src.radio2.toggle_microphone(FALSE)
+		src.radio2.toggle_speaker(FALSE)
+		src.radio3.name = "Secure Channels Monitor"
+		src.radio3.icon_tooltip = "Artificial Intelligence"
+		src.radio3.toggle_microphone(FALSE)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -404,7 +427,7 @@ or don't if it uses a custom topopen overlay
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
+/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "")
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_message(msg, 1, 0, 0, group)
@@ -923,12 +946,12 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if (single_camera?.camera_status)
-		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"byond://?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
 	else if (length(camera_list))
 		var/first_cam = TRUE
 		var/cameras_string = ""
 		for (var/obj/machinery/camera/camera in camera_list)
-			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"byond://?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
 			first_cam = FALSE
 		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
 	else
@@ -1334,39 +1357,29 @@ or don't if it uses a custom topopen overlay
 
 	if (!isalive(src))
 		return
-	if (maptext_out)
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-	else
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-	return
+
+	if (!message)
+		return
+
+	var/list/mob/recipients = list()
+	if (m_type & 1)
+		recipients = viewers(src, null)
+
+	else if (m_type & 2)
+		recipients = hearers(src, null)
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			recipients += M
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/mob/M as anything in recipients)
+		M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 
 /mob/living/silicon/ai/clamp_values()
@@ -1510,34 +1523,6 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
 	..()
-
-/mob/living/silicon/ai/say_understands(var/other)
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace.exclusive_language)
-			return 1
-	if (isrobot(other))
-		return 1
-	if (isshell(other))
-		return 1
-	if (ismainframe(other))
-		return 1
-	return ..()
-
-/mob/living/silicon/ai/say_quote(var/text)
-	if (src.glitchy_speak)
-		text = voidSpeak(text)
-	var/ending = copytext(text, length(text))
-
-	if (singing)
-		return singify_text(text)
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"[text]\"";
 
 /mob/living/silicon/ai/set_eye(atom/new_eye)
 	var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
@@ -1689,17 +1674,44 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State Standard Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State Standard Laws", say_targets)
+
+	if (!choice)
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("1. You may not injure a human being or cause one to come to harm.")
+	src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+	src.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 	sleep(AI_LAW_STATE_DELAY)
-	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+	src.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 
 /mob/living/silicon/ai/proc/ai_set_fake_laws()
@@ -1716,21 +1728,48 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "State All Laws"
 
-	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+	if (GET_COOLDOWN(src, "state_laws"))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	if(!src.law_rack_connection)
+		boutput(src.get_message_mob(), "You have no laws!")
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
-	if(!src.law_rack_connection)
-		boutput(src, "You have no laws!")
+	var/list/say_targets = list()
+
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+		var/prefix_choice = prefix_module.get_prefix_choices()
+		if(!length(prefix_choice))
+			continue
+		say_targets += prefix_choice
+
+	say_targets += "Local"
+
+	var/choice
+	if (length(say_targets) == 1)
+		choice = say_targets[1]
+	else
+		choice = tgui_input_list(src.get_message_mob(), "Select output channel", "State All Laws", say_targets)
+
+	if (!choice)
 		return
+
+	if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+		boutput(src.get_message_mob(), SPAN_ALERT("Your law processor needs time to cool down!"))
+		return
+
+	var/prefix = ""
+	if (choice != "Local")
+		prefix = say_targets[choice]
 
 	logTheThing(LOG_SAY, usr, "states all their current laws.")
 	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
-		src.say("[number]. [laws[number]]")
+		src.say("[prefix] [number]. [laws[number]]")
 		sleep(AI_LAW_STATE_DELAY)
 
 #undef AI_LAW_STATE_DELAY
@@ -1781,6 +1820,8 @@ or don't if it uses a custom topopen overlay
 	target_shell.dependent = 1
 	src.deployed_shell = target_shell
 	src.mind.transfer_to(target_shell)
+	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
+	target_shell.gender = src.gender
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -1817,6 +1858,8 @@ or don't if it uses a custom topopen overlay
 		src.eyecam.name = src.name
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
+		src.ensure_speech_tree().migrate_speech_tree(src.eyecam, src, TRUE)
+		src.ensure_listen_tree().migrate_listen_tree(src.eyecam, src, TRUE)
 		src.mind.transfer_to(src.eyecam)
 
 /mob/living/silicon/ai/proc/notify_attacked()
@@ -1832,6 +1875,13 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)
+		if (src.deployed_to_eyecam)
+			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
+			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+
+		else if (src.deployed_shell)
+			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
+
 		user.mind.transfer_to(src)
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
@@ -2401,9 +2451,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 		if (M == usr)
 			continue
-
-		var/turf/T = get_turf(M)
-		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
+		if(!seen_by_camera(M))
 			continue
 
 		var/name = M.name
@@ -2812,4 +2860,3 @@ proc/get_mobs_trackable_by_AI()
 		src.job = "AI"
 		if (src.mind)
 			src.mind.assigned_role = "AI"
-

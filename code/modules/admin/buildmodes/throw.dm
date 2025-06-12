@@ -8,6 +8,7 @@ var/global/list/throwflags = list(
 		"THROW_BASEBALL" = THROW_BASEBALL,\
 		"THROW_THROUGH_WALL" = THROW_THROUGH_WALL,\
 		"THROW_GIB" = THROW_GIB,\
+		"THROW_PHASE" = THROW_PHASE,\
 	 )
 
 /datum/buildmode/throw
