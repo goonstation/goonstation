@@ -185,7 +185,7 @@ var/maniac_previous_victim = "Unknown"
 /area/evilreaver
 	name = "Forgotten Station"
 	icon_state = "derelict"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN

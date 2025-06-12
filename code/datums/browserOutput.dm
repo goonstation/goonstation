@@ -400,6 +400,8 @@ var/global
 
 	if (target == world)
 		for (var/client/C in clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
 			boutput(C, message, group, forceScroll)
 		return
 

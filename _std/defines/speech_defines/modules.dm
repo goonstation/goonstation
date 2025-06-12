@@ -14,10 +14,13 @@
 //------------ Speech Outputs ------------//
 #define SPEECH_OUTPUT_BLOBCHAT "blobchat"
 #define SPEECH_OUTPUT_DEADCHAT "deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_ADMIN "admin_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_ANNOUNCER "deadchat_announcer"
 #define SPEECH_OUTPUT_DEADCHAT_GHOST "ghost_deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT "plague_rat_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_POLTERGEIST "poltergeist_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_WRAITH "wraith_deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_WRAITH_SUMMON "wraith_summon_deadchat"
 #define SPEECH_OUTPUT_EQUIPPED "equipped"
 #define SPEECH_OUTPUT_FLOCK "flock"
 #define SPEECH_OUTPUT_FLOCK_GLOBAL "global_flock"
@@ -32,6 +35,7 @@
 #define SPEECH_OUTPUT_HIVECHAT_LEGWORM "legworm_hivechat"
 #define SPEECH_OUTPUT_HIVECHAT_MEMBER "member_hivechat"
 #define SPEECH_OUTPUT_KUDZUCHAT "kudzuchat"
+#define SPEECH_OUTPUT_KUDZUCHAT_ADMIN "admin_kudzuchat"
 #define SPEECH_OUTPUT_LOOC "looc"
 #define SPEECH_OUTPUT_MARTIAN "martian"
 #define SPEECH_OUTPUT_MARTIAN_LEADER "martian_leader"
@@ -54,6 +58,12 @@
 #define SPEECH_OUTPUT_THRALLCHAT_GLOBAL "global_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_THRALL "thrall_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_VAMPIRE "vampire_thrallchat"
+#define SPEECH_OUTPUT_WRAITHCHAT "wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_ADMIN "admin_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT "plague_rat_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_POLTERGEIST "poltergeist_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_WRAITH "wraith_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_WRAITH_SUMMON "wraith_summon_wraithchat"
 
 
 //------------ Speech Modifiers ------------//
@@ -137,6 +147,7 @@
 #define SPEECH_MODIFIER_RADIO "radio"
 #define SPEECH_MODIFIER_REVENANT "revenant"
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
+#define SPEECH_MODIFIER_TRANSLATOR "translator"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 
 
@@ -147,7 +158,9 @@
 #define SPEECH_PREFIX_AI_RADIO_DEFAULT "ai_radio_default"
 #define SPEECH_PREFIX_AI_RADIO_GENERAL "ai_radio_default_general"
 #define SPEECH_PREFIX_DEADCHAT "deadchat"
+#define SPEECH_PREFIX_HIVECHAT "hivechat"
 #define SPEECH_PREFIX_INTERCOM "intercom"
+#define SPEECH_PREFIX_KUDZUCHAT "kudzuchat"
 #define SPEECH_PREFIX_LEFT_HAND "left_hand"
 #define SPEECH_PREFIX_LOOC "looc"
 #define SPEECH_PREFIX_OOC "ooc"
@@ -155,6 +168,8 @@
 #define SPEECH_PREFIX_RADIO_GENERAL "radio_general"
 #define SPEECH_PREFIX_RIGHT_HAND "right_hand"
 #define SPEECH_PREFIX_SILICON "silicon"
+#define SPEECH_PREFIX_THRALLCHAT "thrallchat"
+#define SPEECH_PREFIX_WRAITHCHAT "wraithchat"
 
 
 //------------ Listen Inputs ------------//
@@ -199,6 +214,7 @@
 #define LISTEN_INPUT_GHOSTLY_WHISPER "spooky"
 #define LISTEN_INPUT_THRALLCHAT "thrallchat"
 #define LISTEN_INPUT_THRALLCHAT_GLOBAL "global_thrallchat"
+#define LISTEN_INPUT_WRAITHCHAT "wraithchat"
 
 
 //------------ Listen Modifiers ------------//
@@ -226,6 +242,7 @@
 #define LISTEN_EFFECT_PARROT "parrot"
 #define LISTEN_EFFECT_PROTOTYPE_MAPTEXT "prototype_maptext"
 #define LISTEN_EFFECT_RADIO "radio"
+#define LISTEN_EFFECT_RADIO_TUTORIAL "tutorial_radio"
 #define LISTEN_EFFECT_RITUAL "ritual"
 #define LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE "sims_social_motive"
 #define LISTEN_EFFECT_SKULLBOT "skullbot"

@@ -48,7 +48,7 @@
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
-				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
+				if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
 					AM.delivery_destination = "Disposals"
 				step(AM,src.dir)
@@ -82,14 +82,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
+				if(M == src || M.anchored || HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || A.anchored || isintangible(A) || iswraith(A) || isflockmob(A) || istype(A, /obj/projectile)) return
+		if (A.anchored || HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A) || istype(A, /obj/projectile)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -128,7 +128,7 @@
 
 	proc/get_next_dir()
 		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
+			if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 			if(AM.delivery_destination)
 				if(destinations.Find(AM.delivery_destination))
 					return destinations[AM.delivery_destination]
@@ -153,7 +153,7 @@
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
-				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2) || isflockmob(AM2)) continue
+				if(AM2.anchored || AM2 == src || HAS_ATOM_PROPERTY(AM2, PROP_ATOM_FLOATING) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
@@ -177,14 +177,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
+				if(M == src || M.anchored || HAS_ATOM_PROPERTY(M, PROP_ATOM_FLOATING) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING) || isflockmob(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A

@@ -2,7 +2,7 @@
 /obj/item/material_piece
 	name = "bar"
 	desc = "Some sort of processed material bar."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
@@ -242,12 +242,35 @@
 	icon_state = "bar"
 
 /obj/item/material_piece/iridiumalloy
-	icon_state = "iridium"
+	icon = 'icons/obj/items/materials/iridium.dmi'
 	name = "plate"
-	desc = "A chunk of some sort of iridium alloy plating."
+	desc = "A piece of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_default_material_appearance = FALSE
+	uses_default_material_appearance = TRUE
 	amount = 5
+
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$iridiumalloy"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$iridiumalloy"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$iridiumalloy"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$iridiumalloy"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$iridiumalloy"
+			else
+				src.icon_state = "scrap6_$$iridiumalloy"
 
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
@@ -453,12 +476,45 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/plutonium_scrap
 	name = "scrap"
-	icon_state = "plutonium"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
+	icon = 'icons/obj/items/materials/plutonium.dmi'
 	default_material = "plutonium"
+
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$plutonium"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$plutonium"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$plutonium"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$plutonium"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$plutonium"
+			else
+				src.icon_state = "scrap6_$$plutonium"
 
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"
 	default_material = "gold"
+
+/obj/item/material_piece/veranium
+	desc = "Veranium metal, shocking to the touch."
+	icon_state = "bar"
+	default_material = "veranium"
+
+/obj/item/material_piece/voltite
+	desc = "A highly energetic bar of voltite."
+	icon_state = "bar"
+	default_material = "voltite"

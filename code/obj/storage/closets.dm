@@ -45,9 +45,6 @@ TYPEINFO(/obj/storage/closet)
 		return
 
 	proc/take_damage(var/amount, var/obj/projectile/P)
-		if (!P)
-			message_admins("P Gone")
-			return
 		if (!isnum(amount) || amount <= 0)
 			return
 		src._health -= amount
@@ -445,7 +442,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
 
-	close(var/entangleLogic)
+	close(var/entangleLogic, mob/user)
 		if (!src.open)
 			return 0
 		if (!src.can_close())
