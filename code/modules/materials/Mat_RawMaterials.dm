@@ -458,7 +458,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/uranium
-	desc = "Deadly uranium ore."
+	desc = "Deadly uranium metal."
 	icon_state = "rod"
 	default_material = "uranium"
 

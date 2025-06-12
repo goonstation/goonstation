@@ -638,15 +638,18 @@
 	get_stack_value()
 		return 1
 
-/obj/item/raw_material/uranium
-	name = "uranium ore"
-	desc = "Uranium ore. Best to stay away from it without proper radiactive protection."
+/obj/item/raw_material/yuranite
+	name = "yuranite"
+	desc = "Yuranite, an ore of uranium. Best to stay away from it without proper radiactive protection."
 	icon = 'icons/obj/items/materials/materials.dmi'
 	material_name = "Uranium"
 	default_material = "uranium"
 
+	update_icon()
+		src.icon_state = "ore$$yuranite"
+
 	get_stack_value()
-		return 0
+		return 1
 
 // Misc building material
 
