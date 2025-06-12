@@ -1460,7 +1460,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The hat of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
-	seal_hair = 1
 
 /obj/item/clothing/head/party
 	name = "party hat"
