@@ -226,30 +226,3 @@ TYPEINFO(/mob/living/intangible/flock/flockmind)
 
 	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
 		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
-
-// old code for flocktrace respawns
-/datum/ghost_notification/respawn/flockdrone
-	respawn_explanation = "flockmind partition"
-	icon = 'icons/misc/featherzone.dmi'
-	icon_state = "flocktrace"
-
-/mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
-	if(!ghosts || length(ghosts) <= 0)
-		boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
-		return
-	var/list/valid_ghosts = list()
-	for(var/mob/dead/observer/O in ghosts)
-		if(O?.client)
-			valid_ghosts |= O
-	if(length(valid_ghosts) <= 0)
-		SPAWN(1 SECOND)
-			boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
-		return
-	// pick a random ghost
-	var/mob/dead/observer/winner = valid_ghosts[rand(1, valid_ghosts.len)]
-	if(winner) // probably a paranoid check
-		winner.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, master = src.mind)
-		var/mob/living/trace = winner.mind.current
-		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		src.flock.system_say_source.say("Trace partition \[ [trace.real_name] \] has been instantiated.")

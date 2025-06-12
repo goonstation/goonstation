@@ -24,6 +24,30 @@
 
 	power_used = 65
 	system = "Main Weapon"
+
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(vehicle.weapon_class == 0)
+			boutput(user, SPAN_ALERT("Weapons cannot be installed in this ship!"))
+			return FALSE
+		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
+		if(current_weapon && !current_weapon.removable)
+			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
+			return FALSE
+		return TRUE
+
+	get_install_slot()
+		return POD_PART_MAIN_WEAPON
+
+	ship_install()
+		..()
+		if(src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(image('icons/effects/64x64.dmi', "[src.appearanceString]"), "mainweapon")
+
+	ship_uninstall()
+		..()
+		if (src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(null, "mainweapon")
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return

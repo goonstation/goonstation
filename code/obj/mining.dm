@@ -2184,7 +2184,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10

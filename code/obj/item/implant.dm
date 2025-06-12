@@ -373,7 +373,7 @@ THROWING DARTS
 		H.mini_health_hud = 0
 		H.show_text("You feel less in-tune with your body.", "red")
 
-	on_life(var/mult = 1)
+	on_life(var/mob/M, var/mult = 1)
 		if (!ishuman(src.owner))
 			return
 		var/mob/living/carbon/human/H = src.owner
@@ -1507,7 +1507,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		proc/on_pull_out(mob/living/puller)
 			return
 
-		on_life(mult)
+		on_life(mob/M, mult)
 			. = ..()
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
