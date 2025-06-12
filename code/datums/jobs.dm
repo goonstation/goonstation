@@ -2062,7 +2062,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Ghost Buster"
 	wages = PAY_UNTRAINED
 	request_limit = 1
-	request_cost = PAY_IMPORTANT*8
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
