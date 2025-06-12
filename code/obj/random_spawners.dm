@@ -1,7 +1,7 @@
 
 /obj/random_item_spawner
 	name = "random item spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED
@@ -926,7 +926,7 @@
 
 /obj/random_pod_spawner
 	name = "random pod spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "podspawn"
 	density = 0
 	anchored = ANCHORED
@@ -989,10 +989,9 @@
 			pod2spawn = new /obj/machinery/vehicle/pod_smooth/light(T)
 
 	proc/spawn_lock()
-		pod2spawn.lock = new /obj/item/shipcomponent/secondary_system/lock(pod2spawn)
-		pod2spawn.lock.ship = pod2spawn
-		pod2spawn.components += pod2spawn.lock
-		pod2spawn.lock.code = random_hex(4)
+		var/obj/item/shipcomponent/secondary_system/lock/lock_part = new(pod2spawn)
+		src.pod2spawn.install_part(null, lock_part, POD_PART_LOCK)
+		lock_part.code = random_hex(4)
 		pod2spawn.locked = 1
 
 	proc/paint_pod()
@@ -1017,42 +1016,18 @@
 		else
 			new_weapon = /obj/item/shipcomponent/mainweapon
 
-		pod2spawn.m_w_system = new new_weapon(pod2spawn)
-		pod2spawn.m_w_system.ship = pod2spawn
-		pod2spawn.components += pod2spawn.m_w_system
-		if (pod2spawn.uses_weapon_overlays)
-			pod2spawn.overlays += image(pod2spawn.icon, "[pod2spawn.m_w_system.appearanceString]")
+		pod2spawn.install_part(null, new new_weapon(pod2spawn), POD_PART_MAIN_WEAPON)
 
 	proc/spawn_engine()
+		pod2spawn.delete_part(POD_PART_ENGINE)
 		if (prob(5))
-			pod2spawn.engine.deactivate()
-			pod2spawn.components -= pod2spawn.engine
-			qdel(pod2spawn.engine)
-
-			pod2spawn.engine = new /obj/item/shipcomponent/engine/hermes(pod2spawn)
-			pod2spawn.engine.ship = pod2spawn
-			pod2spawn.components += pod2spawn.engine
-			pod2spawn.engine.activate()
-
+			pod2spawn.install_part(null, new /obj/item/shipcomponent/engine/hermes(pod2spawn), POD_PART_ENGINE, TRUE)
 		else
-			pod2spawn.engine.deactivate()
-			pod2spawn.components -= pod2spawn.engine
-			qdel(pod2spawn.engine)
-
-			pod2spawn.engine = new /obj/item/shipcomponent/engine/helios(pod2spawn)
-			pod2spawn.engine.ship = pod2spawn
-			pod2spawn.components += pod2spawn.engine
-			pod2spawn.engine.activate()
+			pod2spawn.install_part(null, new /obj/item/shipcomponent/engine/helios(pod2spawn), POD_PART_ENGINE, TRUE)
 
 	proc/spawn_sensor()
-		pod2spawn.sensors.deactivate()
-		pod2spawn.components -= pod2spawn.sensors
-		qdel(pod2spawn.sensors)
-
-		pod2spawn.sensors = new /obj/item/shipcomponent/sensor/mining(pod2spawn)
-		pod2spawn.sensors.ship = pod2spawn
-		pod2spawn.components += pod2spawn.sensors
-		pod2spawn.sensors.activate()
+		pod2spawn.delete_part(POD_PART_SENSORS)
+		pod2spawn.install_part(null, new /obj/item/shipcomponent/sensor/mining(pod2spawn), POD_PART_SENSORS, TRUE)
 
 /obj/random_pod_spawner/random_putt_spawner
 	name = "random miniputt spawner"
@@ -1865,14 +1840,11 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188,
 	/obj/item/gun/kinetic/clock_188/boomerang,
 	/obj/item/gun/kinetic/derringer,
-	/obj/item/gun/kinetic/derringer/empty,
 	/obj/item/gun/kinetic/detectiverevolver,
-	/obj/item/gun/kinetic/flaregun,
-	/obj/item/gun/kinetic/foamdartgun,
 	/obj/item/gun/kinetic/pistol,
-	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
@@ -1892,11 +1864,16 @@
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
 	/obj/item/gun/kinetic/lopoint,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/greasegun,
-	/obj/item/gun/kinetic/greasegun
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/breakaction/singleshotrifle,
+	/obj/item/gun/kinetic/draco,
+	/obj/item/gun/kinetic/revolver
 	)
 
 	one

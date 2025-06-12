@@ -21,6 +21,17 @@
 			overlay_image.color = "#FFA200"
 
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		return
 
 /datum/bioEffect/coldres
 	name = "Cold Resistance"
@@ -42,6 +53,17 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		return
 
 /datum/bioEffect/thermalres
 	name = "Thermal Resistance"
@@ -66,15 +88,24 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
-		owner.temp_tolerance *= 10
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+		owner.temp_tolerance *= 5 * src.power
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+		owner.temp_tolerance /= 5 * oldval
+		owner.temp_tolerance *= 5 * newval
 
 	OnRemove()
 		..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		owner.temp_tolerance /= 10
+		owner.temp_tolerance /= 5 * src.power
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
@@ -303,6 +334,7 @@
 	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
+	var/blood_regen_amt = 1
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 	effect_group = "regen"
@@ -311,6 +343,9 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
+		if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+			L.blood_volume += 1*mult*power
+
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
@@ -341,6 +376,7 @@
 	msgLose = "Your flesh stops mending itself together."
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
+	blood_regen_amt = 2
 
 /datum/bioEffect/regenerator/wolf
 	name = "Lupine Regeneration"
@@ -361,6 +397,7 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 	acceptable_in_mutini = 0 // fun is banned
+	blood_regen_amt = 8
 
 	OnAdd()
 		. = ..()
@@ -424,6 +461,19 @@
 	stability_loss = 5
 	icon_state  = "haze"
 	isBad = 1
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+
+	OnRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -528,19 +578,36 @@
 	stability_loss = 5
 	degrade_to = "involuntary_teleporting"
 	icon_state  = "radiobrain"
+	var/current_module = null
 
 	OnAdd()
-		radio_brains[owner] = power
+		src.onPowerChange(0, src.power)
+
 		. = ..()
 
 	onPowerChange(oldval, newval)
-		radio_brains[owner] = newval
+		if (src.owner && src.current_module)
+			src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		switch (newval)
+			if (1)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY
+			if (2)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY
+			else
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
+
+		if (src.owner)
+			src.owner.listen_tree.AddListenInput(src.current_module)
 
 	OnRemove()
-		. = ..()
-		radio_brains -= owner
+		if (!src.owner || !src.current_module)
+			return
 
-var/list/radio_brains = list()
+		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		. = ..()
+
 
 /datum/bioEffect/hulk
 	name = "Gamma Ray Exposure"
@@ -1105,7 +1172,18 @@ var/list/radio_brains = list()
 		var/stop_delay = 0
 		for (var/i in 1 to 4)
 			src.owner.glide_size = (32 / 1) * world.tick_lag
-			step(src.owner, src.owner.dir)
+			var/move_dir = src.owner.dir
+			var/misstep_angle = 0
+			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+				misstep_angle += randfloat(0,owner.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+			if(misstep_angle)
+				misstep_angle = min(misstep_angle,90)
+				var/move_angle = dir2angle(move_dir)
+				move_angle += pick(-misstep_angle,misstep_angle)
+				move_dir = angle2dir(move_angle)
+
+			step(src.owner, move_dir)
 			if (locate(/obj/table) in src.owner.loc)
 				stop_delay = 1 SECOND
 				break

@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/intangible/wraith/poltergeist)
+	start_speech_outputs = list(SPEECH_OUTPUT_WRAITHCHAT_POLTERGEIST, SPEECH_OUTPUT_DEADCHAT_POLTERGEIST)
+
 /mob/living/intangible/wraith/poltergeist
 	name = "Poltergeist"
 	real_name = "Poltergeist"
@@ -11,6 +14,7 @@
 	forced_haunt_duration = 15 SECONDS
 	death_icon_state = "derangedghost"
 	weak_tk = TRUE
+	name_generator_path = /datum/wraith_name_generator/poltergeist
 	var/max_dist_marker = 15
 	var/max_dist_master = 12
 	var/following_master = 0
@@ -21,26 +25,6 @@
 	var/power_well_dist = 0		//the lesser of the two distances from master/marker
 
 	var/atom/movable/overlay/orbit_anchor = null	//empty dummy object that is attached to wraith for poltergeists to orbit around
-
-	make_name()
-		var/len = rand(4, 6)
-		var/vowel_prob = 0
-		var/list/con = list("h","n", "k", "s", "l", "t", "r", "sh", "m", "d")
-		var/list/vow = list("o", "a", "i", "u", "ou")
-		var/theName = ""
-		for (var/i = 1, i <= len, i++)
-			if (prob(vowel_prob))
-				vowel_prob = 0
-				theName += pick(vow)
-			else
-				vowel_prob += rand(15, 40)
-				theName += pick(con)
-		var/fc = copytext(theName, 1, 2)
-		theName = "[uppertext(fc)][copytext(theName, 2)]"
-		if (prob(2))
-			theName = pick("Peeves", "Peevs", "Peves", "Casper")
-		theName = theName  + "[pick(" the Poltergeist", " the Mischievous", " the Playful", " the Trickster", " the Sneaky", " the Child", " the Kid", " the Ass", " the Inquisitive", " the Exiled")]"
-		return theName
 
 	New(var/turf/T, var/mob/living/intangible/wraith/master, var/obj/spookMarker/marker)
 		..(T)
