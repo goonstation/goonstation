@@ -1,48 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Goonhub Auth</title>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Goonhub Auth</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-		html,
-		body {
-			height: 100%;
-		}
+    html,
+    body {
+      height: 100%;
+    }
 
-		body {
-			margin: 0;
-			padding: 0;
-			background: #303030;
-		}
+    body {
+      margin: 0;
+      padding: 0;
+      background: #303030;
+    }
 
-		iframe {
-			display: block;
-			width: 100%;
-			height: 100%;
-			border: 0;
-		}
-	</style>
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
 </head>
 
 <body>
-	<iframe src="{goonhub_url}/game-auth/login"></iframe>
-	<script>
-		(function () {
-			var ref = '{ref}';
+  <iframe src="{goonhub_url}/game-auth/login"></iframe>
+  <script>
+    (function () {
+      var ref = '{ref}';
 
-			window.addEventListener('message', function (event) {
-				window.location = 'byond://?src=' + ref + ';log=' + encodeURIComponent('id: ' + event.data.user.id + ', username: ' + event.data.user.name + ', email: ' + event.data.user.email)
-				if (event.origin !== '{goonhub_url}' && event.data.type !== 'authenticated') {
-					return;
-				}
+      window.addEventListener('message', function (event) {
+        window.location =
+          'byond://?src=' +
+          ref +
+          ';log=' +
+          encodeURIComponent(
+            'id: ' +
+              event.data.user.id +
+              ', username: ' +
+              event.data.user.name +
+              ', email: ' +
+              event.data.user.email
+          );
+        if (
+          event.origin !== '{goonhub_url}' &&
+          event.data.type !== 'authenticated'
+        ) {
+          return;
+        }
 
-				window.location = 'byond://?src=' + ref + ';authenticated=1;user=' + encodeURIComponent(JSON.stringify(event.data.user));
-			});
-		})();
-	</script>
+        window.location =
+          'byond://?src=' +
+          ref +
+          ';authenticated=1;user=' +
+          encodeURIComponent(JSON.stringify(event.data.user));
+      });
+    })();
+  </script>
 </body>
