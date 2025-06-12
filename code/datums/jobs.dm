@@ -2765,6 +2765,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	access_string = "Barber"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/barber)
+	slot_head = list(/obj/item/clothing/head/boater_hat)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
