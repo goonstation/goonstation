@@ -2,7 +2,7 @@
 	check(client/C)
 		if (IsLocalClient(C)) return TRUE
 
-		var/list/checkBan = bansHandler.check(C.ckey, C.computer_id, C.address)
+		var/list/checkBan = bansHandler.check(C.ckey, C.computer_id, C.address, C.client_auth_intent.player_id)
 		if (!checkBan) return TRUE
 
 		SPAWN(-1)

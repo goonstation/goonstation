@@ -245,8 +245,6 @@
 	world.log << "post_auth"
 	src.authenticated = TRUE
 
-	// TODO: player/New handles mentor checking and assignment
-	// will need to tweak for goonhub auth due to no ckey
 	src.player = make_player(key)
 	src.player.client = src
 

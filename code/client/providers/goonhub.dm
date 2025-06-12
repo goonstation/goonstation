@@ -16,7 +16,15 @@
 
 /datum/client_auth_provider/goonhub/proc/verify_auth(session)
 	var/datum/apiRoute/gameauth/verify/verifyAuth = new
-	verifyAuth.buildBody(session, config.server_id)
+	verifyAuth.buildBody(
+		session,
+		config.server_id,
+		src.owner.address ? src.owner.address : "127.0.0.1", // fallback for local dev
+		src.owner.computer_id,
+		src.owner.byond_version,
+		src.owner.byond_build,
+		roundId
+	)
 	try
 		var/datum/apiModel/VerifyAuthResource/verification = apiHandler.queryAPI(verifyAuth)
 		src.on_auth(verification)
@@ -27,6 +35,8 @@
 /datum/client_auth_provider/goonhub/on_auth(datum/apiModel/VerifyAuthResource/verification)
 	winshow(src.owner, src.window_id, FALSE)
 	src.owner.verbs -= /client/proc/open_goonhub_auth
+
+	src.owner.client_auth_intent.player_id = verification.player_id
 
 	if (verification.is_admin && verification.admin_rank)
 		src.owner.client_auth_intent.admin = TRUE

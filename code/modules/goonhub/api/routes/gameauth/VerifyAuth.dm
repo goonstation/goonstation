@@ -9,6 +9,11 @@
 
 	buildBody(
 		session,
-		server_id
+		server_id,
+		ip,
+		comp_id,
+		byond_major,
+		byond_minor,
+		round_id
 	)
 		. = ..(args)

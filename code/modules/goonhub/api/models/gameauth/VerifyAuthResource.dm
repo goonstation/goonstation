@@ -1,6 +1,7 @@
 
 /// VerifyAuthResource
 /datum/apiModel/VerifyAuthResource
+	var/player_id = null // integer
 	var/is_admin = null // bool
 	var/admin_rank = null // string|null
 	var/is_mentor = null // bool
@@ -10,6 +11,7 @@
 
 /datum/apiModel/VerifyAuthResource/SetupFromResponse(response)
 	. = ..()
+	src.player_id = response["player_id"]
 	src.is_admin = response["is_admin"]
 	src.admin_rank = response["admin_rank"]
 	src.is_mentor = response["is_mentor"]
@@ -20,7 +22,8 @@
 /datum/apiModel/VerifyAuthResource/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.is_admin) \
+		isnull(src.player_id) \
+		|| isnull(src.is_admin) \
 		|| isnull(src.is_mentor) \
 		|| isnull(src.is_hos) \
 		|| isnull(src.is_whitelisted) \
@@ -30,6 +33,7 @@
 
 /datum/apiModel/VerifyAuthResource/ToList()
 	. = ..()
+	.["player_id"] = src.player_id
 	.["is_admin"] = src.is_admin
 	.["admin_rank"] = src.admin_rank
 	.["is_mentor"] = src.is_mentor

@@ -33,6 +33,7 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
  * This is used to avoid granting access to the client until all the gate checks have been made.
  */
 /datum/client_auth_intent
+	var/player_id = null
 	var/admin = FALSE
 	var/admin_rank = null
 	var/mentor = FALSE
