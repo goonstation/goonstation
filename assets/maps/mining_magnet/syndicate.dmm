@@ -157,7 +157,7 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/mob/living/critter/robotic/gunbot,
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -257,7 +257,7 @@
 	},
 /area/mining/magnet)
 "O" = (
-/mob/living/critter/robotic/gunbot,
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -315,7 +315,7 @@
 	pixel_y = 5;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/snacks/candy/wrapped_candy,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
