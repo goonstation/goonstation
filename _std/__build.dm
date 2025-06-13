@@ -54,7 +54,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 
-#define STOP_DISTRACTING_ME //All of the below
+//#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
@@ -217,7 +217,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
 // #define TESTMERGE_PRS list(123, 456)
 
-// The following describe when the server was compiled
+// The following decribe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
