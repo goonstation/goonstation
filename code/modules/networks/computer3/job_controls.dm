@@ -39,8 +39,8 @@ var/datum/job/priority_job = null
 				switch(command)
 					if ("list")
 						var/list/output = list("All roles currently being advertised:")
-						for (var/datum/job/job in job_controls.staple_jobs)
-							if (job.limit == 0 || !job.add_to_manifest || job.no_late_join)
+						for (var/datum/job/job in job_controls.staple_jobs | job_controls.special_jobs)
+							if ((job.limit == 0 && job.request_limit == 0) || !job.add_to_manifest || job.no_late_join)
 								continue
 							output += src.job_info(job)
 						for (var/datum/job/job in job_controls.special_jobs)
