@@ -1088,7 +1088,7 @@ var/datum/job_controller/job_controls
 		if (latejoin_only)
 			if (J.no_late_join)
 				continue
-			if (J.limit == 0)
+			if (J.limit == 0 && J.request_limit == 0)
 				continue
 		if (J.match_to_string(string, case_sensitive))
 			results += J
@@ -1097,7 +1097,7 @@ var/datum/job_controller/job_controls
 			if (latejoin_only)
 				if (J.no_late_join)
 					continue
-				if (J.limit == 0)
+				if (J.limit == 0 && J.request_limit == 0)
 					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J
