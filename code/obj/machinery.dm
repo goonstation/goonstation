@@ -237,6 +237,7 @@
 /obj/machinery/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	src.power_change()
+	tgui_process.close_uis(src)
 
 /obj/machinery/was_built_from_frame(mob/user, newly_built)
 	. = ..()
