@@ -159,7 +159,7 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			for (var/obj/O in T)
-				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
+				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker) && !HAS_FLAG(O.event_handler_flags, IMMUNE_MINERAL_MAGNET))
 					qdel(O)
 			T.ClearAllOverlays()
 			for (var/mob/living/L in T)

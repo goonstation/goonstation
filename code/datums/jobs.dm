@@ -28,13 +28,14 @@
 	var/add_to_manifest = TRUE //! On join, add to general, bank, and security records.
 	var/no_late_join = FALSE
 	var/no_jobban_from_this_job = FALSE
-	var/allow_traitors = TRUE
 	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
 	var/allow_antag_fallthrough = TRUE
-	var/allow_spy_theft = TRUE
-	var/can_join_gangs = TRUE
-	var/cant_spawn_as_rev = FALSE // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
-	var/cant_spawn_as_con = FALSE // Prevents this job spawning as a conspirator in the conspiracy gamemode.
+
+	///Can this job roll antagonist? if FALSE ignores invalid_antagonist_roles
+	var/can_roll_antag = TRUE
+	///Which station antagonist roles can this job NOT be (e.g. ROLE_TRAITOR but not ROLE_NUKEOP)
+	var/list/invalid_antagonist_roles = list()
+
 	var/requires_whitelist = FALSE
 	var/trusted_only = FALSE // Do we require mentor/HoS status to be played
 	var/requires_supervisor_job = null //! String name of another job. The current job will only be available if the supervisor job is filled.
@@ -208,6 +209,11 @@
 	proc/is_highlighted()
 		return job_controls.priority_job == src || src.player_requested
 
+	proc/can_be_antag(var/role)
+		if (!src.can_roll_antag)
+			return FALSE
+		return !(role in src.invalid_antagonist_roles)
+
 	/// The default miranda's rights for this job
 	proc/get_default_miranda()
 		return DEFAULT_MIRANDA
@@ -248,7 +254,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = COMMAND_LINK_COLOR
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
-	can_join_gangs = FALSE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	job_category = JOB_COMMAND
 	unique = TRUE
 
@@ -265,11 +271,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	access_string = "Captain"
 	high_priority_job = TRUE
 	receives_miranda = TRUE
-	allow_traitors = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	announce_on_join = TRUE
-	allow_spy_theft = FALSE
-	allow_antag_fallthrough = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	wiki_link = "https://wiki.ss13.co/Captain"
 
@@ -315,10 +318,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	access_string = "Head of Personnel"
 	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
 
-	allow_spy_theft = FALSE
 	allow_antag_fallthrough = FALSE
 	receives_miranda = TRUE
-	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 
 
@@ -341,11 +342,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	access_string = "Head of Security"
 	requires_whitelist = TRUE
 	receives_miranda = TRUE
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_con = TRUE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	announce_on_join = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 	badge = /obj/item/clothing/suit/security_badge
@@ -395,9 +392,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
-	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
-	allow_spy_theft = FALSE
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -436,8 +431,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_scientist")
 	access_string = "Research Director"
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Research_Director"
 
@@ -464,8 +457,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 	trait_list = list("training_medical")
 	access_string = "Medical Director"
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Medical_Director"
 
@@ -486,8 +477,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_IMPORTANT
 	access_string = "Communications Officer"
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
@@ -523,11 +512,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Security Officer"
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_con = TRUE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	receives_disk = /obj/item/disk/data/floppy/security
 	badge = /obj/item/clothing/suit/security_badge
@@ -549,7 +534,6 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		lower_limit = 2
 		high_priority_job = FALSE //nope
-		cant_spawn_as_con = TRUE
 		wages = PAY_UNTRAINED
 		access_string = "Security Assistant"
 		receives_implants = list(/obj/item/implant/health/security)
@@ -592,8 +576,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	trait_list = list("training_drinker")
 	access_string = "Detective"
 	badge = /obj/item/clothing/suit/security_badge
-	cant_spawn_as_rev = TRUE
-	can_join_gangs = FALSE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_LEADER, ROLE_GANG_MEMBER, ROLE_CONSPIRATOR)
 	allow_antag_fallthrough = FALSE
 	unique = TRUE
 	slot_back = list(/obj/item/storage/backpack)
@@ -1043,8 +1026,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	no_late_join = TRUE
 	high_priority_job = TRUE
-	allow_traitors = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -1065,8 +1047,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = SILICON_LINK_COLOR
 	limit = 8
 	no_late_join = TRUE
-	allow_traitors = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -1117,8 +1098,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/station_builder
 	// Used for Construction game mode, where you build the station
 	name = "Station Builder"
-	allow_traitors = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	limit = 0
 	wages = PAY_TRADESMAN
 	trait_list = list("training_engineer")
@@ -1196,10 +1176,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Vice Officer"
-	allow_traitors = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_con = TRUE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	badge = /obj/item/clothing/suit/security_badge
 	receives_miranda = TRUE
 	slot_back = list(/obj/item/storage/backpack/withO2)
@@ -1217,7 +1194,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	access_string = "Forensic Technician"
-	cant_spawn_as_rev = TRUE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/color/darkred)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -1231,7 +1208,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Hall Monitor"
-	cant_spawn_as_rev = TRUE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/paper
 	slot_belt = list(/obj/item/device/pda2)
 	slot_jump = list(/obj/item/clothing/under/color/red)
@@ -1502,7 +1479,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	request_cost = PAY_DONTBUYIT * 4 // gotta dig real deep for that second(?) opinion
 	access_string = "Inspector"
 	receives_miranda = TRUE
-	cant_spawn_as_rev = TRUE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack)
@@ -1543,7 +1520,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	alt_names = list("Diplomat", "Ambassador")
-	cant_spawn_as_rev = TRUE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	change_name_on_spawn = TRUE
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2140,9 +2117,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Staff Assistant"
 	limit = 0
 	change_name_on_spawn = TRUE
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	receives_miranda = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud/superhero)
@@ -2265,7 +2240,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
 	trusted_only = TRUE
-	allow_traitors = FALSE
+	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -2332,10 +2307,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	//Always a generic antagonist, don't allow normal antag roles.
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2523,10 +2495,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	limit = 0
 	wages = PAY_IMPORTANT
 	//Emergency responders shouldn't be antags
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
@@ -2654,9 +2623,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = 0
 	add_to_manifest = FALSE
 	radio_announcement = FALSE
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	slot_card = /obj/item/card/id
 	slot_belt = list()
 	slot_back = list()
@@ -2699,9 +2666,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Juicer Security"
 	limit = 0
 	wages = 0
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	add_to_manifest = FALSE
 
 	slot_back = list(/obj/item/gun/energy/blaster_cannon)
@@ -2715,7 +2680,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
 	linkcolor = COMMAND_LINK_COLOR
-	cant_spawn_as_rev = TRUE
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
@@ -2744,7 +2709,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Meatcube"
 	linkcolor = SECURITY_LINK_COLOR
 	limit = 0
-	allow_traitors = FALSE
+	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -2763,7 +2728,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	linkcolor = SILICON_LINK_COLOR
 	limit = 0
 	wages = 0
-	allow_traitors = FALSE
+	can_roll_antag = FALSE
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -2818,6 +2783,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	access_string = "Barber"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/barber)
+	slot_head = list(/obj/item/clothing/head/boater_hat)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
@@ -2959,8 +2925,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	limit = 0
 	wages = PAY_IMPORTANT
 #endif
-	allow_traitors = FALSE
-	cant_spawn_as_rev = TRUE
+	can_roll_antag = FALSE
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
