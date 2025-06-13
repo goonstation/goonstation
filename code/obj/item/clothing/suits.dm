@@ -2619,7 +2619,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/swimskirt)
 /obj/item/clothing/suit/swimskirt
 	name = "swim skirt"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_sui_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	w_class = W_CLASS_SMALL
 
 	white

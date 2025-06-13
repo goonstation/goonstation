@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/swimskirt)
 
 /datum/clothingbooth_item/wear_suit/swimskirt/white
 	name = "White"
-	item_path = /obj/item/clothing/suit/swimskirt/blue
+	item_path = /obj/item/clothing/suit/swimskirt/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/wear_suit/swimskirt/red
