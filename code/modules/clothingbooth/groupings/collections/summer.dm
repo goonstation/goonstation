@@ -15,7 +15,6 @@
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/season/summer,
-		/datum/clothingbooth_grouping_tag/formality/casual
 	)
 
 /datum/clothingbooth_grouping/onepiece
@@ -90,4 +89,21 @@
 		/datum/clothingbooth_grouping_tag/season/summer
 	)
 
+/datum/clothingbooth_grouping/swimskirt
+	name = "Swim Skirt"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/swimskirt/white,
+		/datum/clothingbooth_item/wear_suit/swimskirt/red,
+		/datum/clothingbooth_item/wear_suit/swimskirt/orange,
+		/datum/clothingbooth_item/wear_suit/swimskirt/green,
+		/datum/clothingbooth_item/wear_suit/swimskirt/blue,
+		/datum/clothingbooth_item/wear_suit/swimskirt/purple,
+		/datum/clothingbooth_item/wear_suit/swimskirt/black,
+		/datum/clothingbooth_item/wear_suit/swimskirt/red_pdot,
+		/datum/clothingbooth_item/wear_suit/swimskirt/yellow_pdot,
+		/datum/clothingbooth_item/wear_suit/swimskirt/strawberry
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/season/summer
+	)
 #endif

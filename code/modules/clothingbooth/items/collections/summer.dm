@@ -254,3 +254,63 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/wetsuit)
 	swatch_foreground_color = "#f2a9a9"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 #endif
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/swimskirt)
+/datum/clothingbooth_item/wear_suit/swimskirt
+
+/datum/clothingbooth_item/wear_suit/swimskirt/white
+	name = "White"
+	item_path = /obj/item/clothing/suit/swimskirt/blue
+	swatch_background_color = "#ffffff"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/red
+	name = "Red"
+	item_path = /obj/item/clothing/suit/swimskirt/red
+	swatch_background_color = "#e21616"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/orange
+	name = "Orange"
+	item_path = /obj/item/clothing/suit/swimskirt/orange
+	swatch_background_color = "#e55b16"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/green
+	name = "Green"
+	item_path = /obj/item/clothing/suit/swimskirt/green
+	swatch_background_color = "#0c7f29"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/blue
+	name = "Blue"
+	item_path = /obj/item/clothing/suit/swimskirt/blue
+	swatch_background_color = "#2323b2"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/purple
+	name = "Purple"
+	item_path = /obj/item/clothing/suit/swimskirt/purple
+	swatch_background_color = "#9425bc"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/black
+	name = "Black"
+	item_path = /obj/item/clothing/suit/swimskirt/black
+	swatch_background_color = "#2f2851"
+
+/datum/clothingbooth_item/wear_suit/swimskirt/red_pdot
+	name = "Red Polka-Dot"
+	item_path = /obj/item/clothing/suit/swimskirt/red_pdot
+	swatch_background_color = "#e21616"
+	swatch_foreground_color = "#ffffff"
+	swatch_foreground_shape = SWATCH_POLKADOTS
+
+/datum/clothingbooth_item/wear_suit/swimskirt/yellow_pdot
+	name = "Yellow Polka-Dot"
+	item_path = /obj/item/clothing/suit/swimskirt/yellow_pdot
+	swatch_background_color = "#e0e02c"
+	swatch_foreground_color = "#2f2851"
+	swatch_foreground_shape = SWATCH_POLKADOTS
+
+
+/datum/clothingbooth_item/wear_suit/swimskirt/strawberry
+	name = "Strawberry"
+	item_path = /obj/item/clothing/suit/swimskirt/strawberry
+	swatch_background_color = "#c20038"
+	swatch_foreground_color = "#1fa03b"
+	swatch_foreground_shape = SWATCH_BISECT_LEFT
