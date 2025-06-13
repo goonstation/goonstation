@@ -408,7 +408,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
 
-				for (var/i=rand(1,rand(3,4)), i>0, i--)
+				for (var/i=rand(1,rand(3,5)), i>0, i--)
 					var/egg = pick(eggs_weak)
 					if (ispath(egg))
 						src.storage.add_contents(new egg(src))
