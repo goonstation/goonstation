@@ -435,7 +435,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					src.storage.add_contents(new egg(src))
 				for (var/i=rand(1,rand(3,4)), i>0, i--)
 					var/junk_egg = pick(eggs_junk)
-					if (ispath(junk_eggegg))
+					if (ispath(junk_egg))
 						src.storage.add_contents(new junk_egg(src))
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
 					E.infertile = TRUE
