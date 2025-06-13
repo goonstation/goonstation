@@ -1,4 +1,14 @@
 
+(t)wed jun 11 25
+(u)JORJ949
+(p)22750
+(e)🔎⚙|C-Code-Quality, A-Internal
+(*)Job-based antagonist preventions have been refactored internally, report any oddities.
+(u)FlameArrow57
+(p)23075
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added veranium to the rare metal mining event
+(+)Added voltite metal recipe (1 electrum + 1 veranium -> 1 voltite)
 (t)mon jun 09 25
 (u)Scientifically
 (p)23384
