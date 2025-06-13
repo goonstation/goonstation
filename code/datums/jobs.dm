@@ -100,7 +100,7 @@
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
-	var/request_limit = 0 //!Maximum limit that can be reached by requisitioning through RoleControl
+	var/request_limit = 0 //!Maximum total `limit` via RoleControl request function
 	var/request_cost = null //!Cost to open an additional slot using RoleControl
 	var/player_requested = FALSE //! Flag if currently requested via RoleControl
 
