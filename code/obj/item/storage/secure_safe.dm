@@ -408,7 +408,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
 
-				for (var/i=rand(1,src.storage.slots), i>0, i--)
+				for (var/i=rand(1,rand(3,4)), i>0, i--)
 					var/egg = pick(eggs_weak)
 					if (ispath(egg))
 						src.storage.add_contents(new egg(src))
@@ -426,9 +426,17 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
 					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
 				#endif
+				var/list/eggs_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne)
 				var/egg = pick(eggs_strong)
 				if (ispath(egg))
 					src.storage.add_contents(new egg(src))
+				for (var/i=rand(1,rand(3,4)), i>0, i--)
+					var/junk_egg = pick(eggs_junk)
+					if (ispath(junk_eggegg))
+						src.storage.add_contents(new junk_egg(src))
 				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
 					E.infertile = TRUE
 /obj/item/paper/IOU
