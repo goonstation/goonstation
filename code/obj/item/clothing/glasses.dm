@@ -533,6 +533,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return
 
 //Goggles used to assume control of a linked scuttlebot
+//Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
@@ -546,40 +547,51 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
-				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
+				if (!pigeon_controller)
+					boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
+				else
+					boutput(user, SPAN_ALERT("The P1G30N is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
+				if (!pigeon_controller)
+					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
+				else
+					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
-		if(connected_scuttlebot != null && pigeon_controller)
-			if(connected_scuttlebot.mind)
-				boutput(user, SPAN_ALERT("The P1G30N is already active somehow!"))
-			else if(pigeon_controller)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
+			if (!pigeon_controller)
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
 			else
-				H.network_device = src.connected_scuttlebot
-				connected_scuttlebot.controller = H
-				user.mind.transfer_to(connected_scuttlebot)
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
-			if (connected_scuttlebot != S && !pigeon_controller)
-				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
-				return
+			if (connected_scuttlebot != S)
+				if(!pigeon_controller)
+					boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
+				else
+					boutput(user, "You try to put the goggles back into the P1G30N but it grumps at you, not recognizing the goggles.")
+				return 1
 			if (S.linked_hat != null)
-				boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
-				return
 				S.linked_hat.set_loc(get_turf(S))
-			else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
-				new /obj/item/clothing/suit/pigeon(get_turf(S))
-			if (S.is_inspector)
-				connected_scuttlebot.make_inspector()
-			boutput(user, "You stuff the goggles back into [src]. It powers down with a low whirr.")
+			else
+				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
+					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
+					if (S.is_inspector)
+						newgadget.make_inspector()
+				else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
+					var/obj/item/clothing/suit/pigeon/newpigeon = new /obj/item/clothing/suit/pigeon(get_turf(S))
+				else
+					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
+					if (S.is_inspector)
+						newscuttle.make_inspector()
+			if(!pigeon_controller)
+				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			else
+				boutput(user, "You stuff the goggles back into the Carrier Pigeon. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
