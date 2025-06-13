@@ -59,8 +59,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 						manipulated_tick.growth_rate += 4
 		else if (ismob(A))
 			var/mob/M = A
-			if (M.bodytemperature < M.base_body_temp)
-				M.bodytemperature += 15 * mult
+			M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
 	use_power(ACTIVE_POWER_USAGE)
 
 /obj/machinery/hydro_growlamp/attack_hand(var/mob/user)
