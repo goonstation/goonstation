@@ -81,7 +81,7 @@
 		else
 			var/icon/I = getFlatIcon(target)
 			var/pixels = null
-			src.dir_locked = TRUE
+			src.dir_locked = target.dir_locked
 			src.base_form = FALSE
 			src.hide_density = target.density
 			src.appearance = target
@@ -169,7 +169,6 @@
 		..()
 		SPAWN(0)
 			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
-			src.AddComponent(/datum/component/mimic_stomach)
 
 	setup_hands() //give them an actual hand so they can open doors etc.
 		. = ..()

@@ -36,10 +36,15 @@
 
 	proc/activate(obj/target)
 		var/mob/parent = holder.owner
-		var/datum/component/mimic_stomach/component = parent.GetComponent(/datum/component/mimic_stomach)
+		var/datum/component/mimic_stomach/component = target.GetComponent(/datum/component/mimic_stomach)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = TRUE
-		component.mimic_move(parent, target)
+		if (component)
+			component.mimic_move(parent, target)
+		else
+			component = target.AddComponent(/datum/component/mimic_stomach)
+			component.mimic_move(parent, target)
+		src.current_container = target
 		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
 			var/mob/living/critter/mimic/antag_spawn/mimic = parent
 			src.last_appearance = mimic.appearance
@@ -48,15 +53,18 @@
 			mimic.UpdateIcon()
 
 	proc/deactivate()
-		var/mob/living/critter/parent = holder.owner
-		var/datum/component/mimic_stomach/component = parent.GetComponent(/datum/component/mimic_stomach)
+		var/mob/parent = holder.owner
+		var/datum/component/mimic_stomach/component = src.current_container.GetComponent(/datum/component/mimic_stomach)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
 		abil.inside = FALSE
 		abil.afterAction()
 		component.mimic_move(exit=TRUE)
-		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
-			var/mob/living/critter/mimic/antag_spawn/mimic = parent
-			mimic.appearance = last_appearance
+		component.RemoveComponent(/datum/component/mimic_stomach)
+		if (!istype(parent, /mob/living/critter/mimic/antag_spawn))
+			return
+		var/mob/living/critter/mimic/antag_spawn/mimic = parent
+		if (istype(src.last_appearance, /mob/living/critter/mimic/))
+			mimic.disguise_as(base_return=TRUE)
+		else
+			mimic.disguise_as(src.last_appearance)
 			src.last_appearance = null
-			mimic.base_form = TRUE
-			mimic.UpdateIcon()

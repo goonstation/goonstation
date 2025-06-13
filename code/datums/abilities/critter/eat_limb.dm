@@ -55,11 +55,18 @@
 		src.gobble(target, user)
 
 	proc/gobble(atom/target, mob/user)
-		var/datum/component/mimic_stomach/comp = user.GetComponent(/datum/component/mimic_stomach)
-		if (!isobj(target))
-			comp.add_limb(target, FALSE)
+		if (ishuman(target))
+			var/mob/living/carbon/human/targetHuman = target
+			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+			var/list/randLimb
+			for (var/potential_limb in randLimbBase) // build a list of limbs the target actually has
+				if (targetHuman.limbs.get_limb(potential_limb))
+					LAZYLISTADD(randLimb, potential_limb)
+			var/datum/human_limbs/torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
+			var/limb_obj = torn_limb.sever()
+			user.contents.Add(limb_obj)
 			target.emote("scream")
 			var/datum/targetable/critter/eat_limb/abil = user.getAbility(/datum/targetable/critter/eat_limb)
 			abil.afterAction()
 		else
-			comp.add_limb(target, FALSE)
+			user.contents.Add(target)

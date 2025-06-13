@@ -27,7 +27,9 @@ TYPEINFO(/datum/component/mimic_stomach)
 		call(region_init_proc)(region, parent)
 	else
 		src.default_init_region()
-	RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(death_barf))
+	if (!src.parent.GetComponent(/datum/component/death_barf))
+		src.parent.AddComponent(/datum/component/death_barf)
+
 
 /datum/component/mimic_stomach/proc/default_init_region()
 	region.clean_up(/turf/unsimulated/floor/setpieces/bloodfloor)
@@ -49,7 +51,6 @@ TYPEINFO(/datum/component/mimic_stomach)
 	if (istype(user, /mob/living/critter/mimic))
 		user.HealBleeding()
 		user.HealDamage("All", user.max_health, user.max_health)
-	return
 
 /datum/component/mimic_stomach/proc/mimic_move(mob/user, obj/target, var/exit = FALSE)
 	if (!exit)
@@ -58,8 +59,17 @@ TYPEINFO(/datum/component/mimic_stomach)
 		src.present_mimic.set_loc(src.center)
 		src.on_entered(user)
 		RegisterSignal(src.current_container, COMSIG_ATOM_ENTERED, PROC_REF(add_limb))
+		for (var/obj/item in src.present_mimic.contents)
+			if (istype(item, /obj/item/parts/human_parts))
+				src.add_limb(item, FALSE)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself inside out!</b>"))
 	else
+		var/datum/component/death_barf/barf_component = src.parent.GetComponent(/datum/component/death_barf)
+		if (barf_component)
+			for (var/obj/limb in src.things_eaten)
+				if (!istypes(limb, barf_component.limb_list))
+					LAZYLISTADD(barf_component.limb_list, limb)
+				src.present_mimic.contents.Add(limb)
 		src.present_mimic.set_loc(get_turf(src.current_container))
 		UnregisterSignal(src.current_container, COMSIG_ATOM_ENTERED)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself outside in!</b>"))
@@ -94,7 +104,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 				return
 	else
 		if (!istype(target, /obj/item/parts/human_parts))
-			boutput(src.parent, SPAN_ALERT("Doesn't look edible..."))
+			boutput(src.present_mimic, SPAN_ALERT("Doesn't look edible..."))
 			return
 		else
 			limb_obj = target
@@ -105,20 +115,6 @@ TYPEINFO(/datum/component/mimic_stomach)
 	limb_obj.pixel_y = rand(-12,12)
 	src.limb_target_turf = get_turf(pick(src.non_walls))
 	playsound(current_container, 'sound/voice/burp_alien.ogg', 60, 1)
-
-/datum/component/mimic_stomach/proc/death_barf()
-	UnregisterSignal(src.parent, COMSIG_MOB_DEATH)
-	var/pitch_counter = 2
-	for (var/obj/eaten_thing in src.things_eaten)
-		eaten_thing.set_loc(get_turf(src.parent))
-		ThrowRandom(eaten_thing, 10, 2, bonus_throwforce=10)
-		if (!ON_COOLDOWN(global, "burp", 1 SECONDS))
-			playsound(src.parent, 'sound/voice/burp_alien.ogg', 60, 0, pitch=pitch_counter)
-			if (pitch_counter >= 0)
-				pitch_counter -= 0.5
-		sleep(0.2 SECONDS)
-	playsound(src, 'sound/voice/burp_alien.ogg', 60, 1, pitch=-2)
-	src.RemoveComponent(/datum/component/mimic_stomach)
 
 /datum/component/mimic_stomach/UnregisterFromParent()
 	if (region)
