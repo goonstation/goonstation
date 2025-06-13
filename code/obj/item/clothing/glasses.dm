@@ -558,31 +558,28 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		if(connected_scuttlebot != null && pigeon_controller)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The P1G30N is already active somehow!"))
-			else if(!connected_pigeon.loc)
+			else if(pigeon_controller)
 				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldnt be found."))
 			else
-				H.network_device = src.connected_pigeon
-				connected_pigeon.controller = H
-				user.mind.transfer_to(connected_pigeon)
-		else
-			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
+				H.network_device = src.connected_scuttlebot
+				connected_scuttlebot.controller = H
+				user.mind.transfer_to(connected_scuttlebot)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S && !pigeon_controller)
 				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
-			else
+				return
 			if (S.linked_hat != null)
 				boutput(user, "You try to put the goggles back into the bird but it grumps at you, not recognizing the goggles.")
+				return
 				S.linked_hat.set_loc(get_turf(S))
-			else
-				if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
-					new /obj/item/clothing/suit/pigeon(get_turf(S))
-				if (S.is_inspector && connected_scuttlebot)
-					connected_scuttlebot.make_inspector()
-			else
-				boutput(user, "You stuff the goggles back into [src]. It powers down with a low whirr.")
+			else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
+				new /obj/item/clothing/suit/pigeon(get_turf(S))
+			if (S.is_inspector)
+				connected_scuttlebot.make_inspector()
+			boutput(user, "You stuff the goggles back into [src]. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
@@ -596,8 +593,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		..()
 		if(connected_scuttlebot != null)
 			connected_scuttlebot.return_to_owner()
-		else if (connected_pigeon != null)
-			connected_pigeon.return_to_owner()
 	mail
 		name = "P1G30N remote controller"
 		desc = "A pair of VR goggles connected to a remote pigeon. Use them on the scuttlebot to turn it back into a plushie."
