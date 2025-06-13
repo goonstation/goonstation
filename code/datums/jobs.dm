@@ -998,7 +998,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_DUMBCLOWN
 	request_limit = 3 //this is definitely a bad idea
-	request_cost = PAY_IMPORTANT*4
+	request_cost = PAY_TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	linkcolor = MEDICAL_LINK_COLOR // :o)
@@ -1135,8 +1135,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/mime
 	name = "Mime"
 	limit = 1
+	request_limit = 2
 	linkcolor = SILICON_LINK_COLOR // greyscale mimes
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
+	request_cost = PAY_DOCTORATE * 4
 	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
