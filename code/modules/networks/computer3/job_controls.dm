@@ -80,9 +80,8 @@ var/datum/job/priority_job = null
 					if ("req", "request")
 						var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 						if(!length(job_name))
-							var/list/output = list("All roles that can be requisitioned:")
-							var/list/datum/job/all_jobs = job_controls.staple_jobs + job_controls.special_jobs
-							for (var/datum/job/job in all_jobs)
+							var/list/output = list("All roles that can be requested:")
+							for (var/datum/job/job in (job_controls.staple_jobs | job_controls.special_jobs))
 								if (job.request_limit <= job.limit || job.limit == -1 || !job.add_to_manifest || job.no_late_join || !job.request_cost)
 									continue
 								output += src.job_info(job, include_requests = TRUE)
@@ -92,11 +91,11 @@ var/datum/job/priority_job = null
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
-						if (job.request_limit <= job.limit)
-							src.print_text("Error: can not requisition more job openings for that role")
+						if (job.request_limit <= job.limit || job.limit == -1 || !job.add_to_manifest || job.no_late_join || !job.request_cost)
+							src.print_text("Error: can not request more job openings for that role")
 							return
 						requested_job = job
-						src.print_text("Enter the number of job openings to requisition (max [job.request_limit - job.limit]), or type X to cancel")
+						src.print_text("Enter the number of job openings to request (max [job.request_limit - job.limit]), or type X to cancel")
 						state = MENU_REQUEST_COUNT
 
 
@@ -117,40 +116,42 @@ var/datum/job/priority_job = null
 					src.print_text("Error: no job selected")
 					state = MENU_MAIN
 					return
-				if(command == "x")
-					src.print_text("Cancelling job requisition...")
+				if(command == "x" || text2num(command) == 0)
+					src.print_text("Cancelling job request...")
 					requested_job = null
 					state = MENU_MAIN
 				else if(text2num(command))
-					request_count = clamp(text2num(command), 0, requested_job.request_limit - requested_job.limit)
-					if(request_count == 0)
-						src.print_text("Cancelling job requisition...")
-						requested_job = null
-						state = MENU_MAIN
+					request_count = text2num(command)
+					if (request_count > (requested_job.request_limit - requested_job.limit))
+						src.print_text("Error: cannot request that many slots")
+						src.print_text("Enter the number of job openings to request (max [requested_job.request_limit - requested_job.limit]), or type X to cancel")
+						request_count = 0
+						state = MENU_REQUEST_COUNT
+						return
 					if(isnull(requested_job.request_cost))
 						src.print_text("Error: invalid requisition cost. Aborting...")
 						requested_job = null
 						state = MENU_MAIN
 					src.print_text("This will deduct [requested_job.request_cost * request_count][CREDIT_SIGN] from the payroll budget. Current payroll budget: [global.wagesystem.station_budget][CREDIT_SIGN]")
-					src.print_text("Confirm job requisition? (Y/N)")
+					src.print_text("Confirm job request? (Y/N)")
 					state = MENU_REQUEST_CONFIRM
 			if(MENU_REQUEST_CONFIRM)
 				switch(command)
 					if("n")
-						src.print_text("Cancelling job requisition...")
+						src.print_text("Cancelling job request...")
 						requested_job = null
 						request_count = 0
 						state = MENU_MAIN
 					if("y")
 						var/total_cost = requested_job.request_cost * request_count
 						if(global.wagesystem.station_budget < total_cost)
-							src.print_text("Error: insufficient funds. Requisition cancelled")
+							src.print_text("Error: insufficient funds, request cancelled...")
 						else
 							requested_job.limit += request_count
 							requested_job.player_requested = TRUE
 							global.wagesystem.station_budget -= total_cost
-							src.print_text("Sucess: Requistioned [request_count] job opening[s_es(request_count)] for the [requested_job.name] role")
-							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] opening[s_es(request_count)] requisitioned by [src.account.assignment] [src.account.registered]")
+							src.print_text("Sucess: Requested [request_count] job opening[s_es(request_count)] for the [requested_job.name] role")
+							src.send_pda_message("RoleControl notification: [request_count] [requested_job.name] opening[s_es(request_count)] requested by [src.account.assignment] [src.account.registered]")
 							src.notify_respawnable_players(SPAN_NOTICE("New job opening[s_es(request_count)] for the [requested_job.name] role!"))
 
 						requested_job = null
@@ -164,7 +165,7 @@ var/datum/job/priority_job = null
 		if (job_controls.priority_job == job)
 			job_text += " (PRIORITY)"
 		if(include_requests && (job.request_limit > job.limit))
-			job_text += ", can requisition [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN] per)"
+			job_text += ", can request [job.request_limit - job.limit] more ([job.request_cost][CREDIT_SIGN] per)"
 		return job_text
 
 	proc/send_pda_message(message)
