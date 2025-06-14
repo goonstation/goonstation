@@ -107,7 +107,7 @@ var/datum/job/priority_job = null
 							return
 						src.print_text(src.job_info(job, include_requests = (job.request_limit > job.limit)))
 
-					if("quit")
+					if("quit","exit")
 						src.master.temp = ""
 						print_text("Now quitting...")
 						src.master.unload_program(src)
