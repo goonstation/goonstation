@@ -16,15 +16,19 @@ var/datum/job/priority_job = null
 			return TRUE
 		src.master.temp = null //clear the screen
 		var/intro_text = {"<br>Welcome to RoleControl!
-		<br>Recruitment management system.
-		<br><b>Commands:</b>
+		<br>Recruitment Management System."}
+		src.print_text(intro_text)
+		src.print_main_menu()
+
+	proc/print_main_menu()
+		var/menu_text = {"<br><b>Commands:</b>
 		<br>(List) to view currently advertised roles.
 		<br>(Info) to view info on a specific role.
-		<br>(Prio role name) to prioritize recruiting a specific role. Call without arguments to display currently prioritized role.
-		<br>(Request role name) to requisition more job openings for a specific role. Call without arguments to display requestable roles.
-		<br>(Quit) to exit RoleControl.
-		"}
-		src.print_text(intro_text)
+		<br>(Priority role name) to prioritize recruiting a specific role. Call without arguments to display currently prioritized role.
+		<br>(Request role name) to request job openings for a specific role. Call without arguments to display requestable roles.
+		<br>(Clear) to clear the screen.
+		<br>(Quit) to exit RoleControl."}
+		src.print_text(menu_text)
 		state = MENU_MAIN
 
 	input_text(text)
@@ -37,6 +41,11 @@ var/datum/job/priority_job = null
 		switch(state)
 			if(MENU_MAIN)
 				switch(command)
+					if ("clear")
+						src.master.temp = null
+						src.master.temp_add = "Workspace cleared.<br>"
+					if ("help","menu")
+						src.print_main_menu()
 					if ("list")
 						var/list/output = list("All roles currently being advertised:")
 						for (var/datum/job/job in job_controls.staple_jobs | job_controls.special_jobs)
