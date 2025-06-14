@@ -1004,10 +1004,14 @@ toxic - poisons
 	name = "glass"
 	sname = "glass"
 	icon_state = "glass"
-	dissipation_delay = 2
-	dissipation_rate = 2
+	dissipation_delay = 4
+	dissipation_rate = 1
 	implanted = null
-	damage = 6
+	damage = 3
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		var/mob/M = hit
+		take_bleeding_damage(M, proj.shooter, 2, DAMAGE_CUT, 1, override_bleed_level=2) //easily cause level 2 bleeds
+		..()
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
@@ -1023,7 +1027,7 @@ toxic - poisons
 	sname = "bone"
 	icon_state = "boneproj"
 	dissipation_delay = 1
-	dissipation_rate = 3
+	dissipation_rate = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	implanted = null
