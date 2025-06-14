@@ -152,8 +152,8 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ Unit Test Framework ------------//
 
-#define UNIT_TESTS
-#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TESTS
+//#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
 //#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING
