@@ -1958,6 +1958,18 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 		..()
 		src.install_part(null, new /obj/item/shipcomponent/locomotion/wheels(src), POD_PART_LOCOMOTION, FALSE)
 
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		if (!ishuman(pilot) || !pilot.statusEffects)
+			return ..(lifeform_inside_me, breath_request, mult)
+
+		for (var/effect in pilot.statusEffects)
+			if (istype(effect, /datum/statusEffect/drunk))
+				var/mob/living/carbon/human/H = pilot
+				H.apply_automated_arrest("DUI.")
+				break
+
+		return ..(lifeform_inside_me, breath_request, mult)
+
 	//Colours
 	black
 		body_type = "car"
