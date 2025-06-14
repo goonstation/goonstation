@@ -43,7 +43,7 @@
 
 										  /obj/critter/gunbot/drone/buzzdrone/naniteswarm/rare_metal/plutonium = 50,
 										  /obj/item/raw_material/veranium = 25,
-										  /obj/item/material_piece/neutronium = 10
+										  /obj/item/raw_material/yuranite = 25
 										 )
 
 	onExcavate(turf/simulated/wall/auto/asteroid/AST)
