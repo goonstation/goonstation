@@ -773,13 +773,10 @@
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
-		var/picked_color
 		New()
-			src.assign_color(src.picked_color)
+			src.true_color = random_color()
+			src.assign_color(src.true_color)
 			..()
-
-		reset_color()
-			src.assign_color(src.picked_color)
 
 	New()
 		..()
