@@ -2507,7 +2507,7 @@
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
 	name = "Quick charged"
-	icon_state = "stam-"
+	icon_state = "stam+"
 	maxDuration = null
 
 	getTooltip()
