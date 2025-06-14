@@ -29,7 +29,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/lightColor = list(255,255,255,255)
 	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
-	can_reticulate_when_active = FALSE
 	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE
 
 	New()
