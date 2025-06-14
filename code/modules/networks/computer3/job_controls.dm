@@ -105,6 +105,7 @@ var/datum/job/priority_job = null
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
+						src.print_text("Job Information:")
 						src.print_text(src.job_info(job, include_requests = (job.request_limit > job.limit)))
 
 					if("quit","exit")
