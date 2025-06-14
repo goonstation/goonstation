@@ -54,7 +54,7 @@ var/datum/job/priority_job = null
 							output += src.job_info(job)
 						src.print_text(output.Join("<br>"))
 
-					if ("prio")
+					if ("prio","priority")
 						var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 						if (!length(job_name))
 							if (job_controls.priority_job)
