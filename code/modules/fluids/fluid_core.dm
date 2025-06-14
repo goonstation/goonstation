@@ -57,7 +57,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	var/last_depth_level = 0
 	var/touched_channel = 0
 
-	var/list/overlay_images = null //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
+	var/list/wall_overlay_images = null //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
 	//var/list/floated_atoms = 0 //list of atoms we triggered a float anim on (cleanup later on qdel())
 
 	var/is_setup = 0
@@ -558,8 +558,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
-		src.display_overlay("fluid_lines")
-		if (icon_state != "15") return
+		if (icon_state != "15" && icon_state != "15-lines") return
+		src.icon_state = "15-lines"
 		var/blocked = 0
 		for( var/dir in cardinal )
 			if (dir == SOUTH) //No south perspective
@@ -590,11 +590,11 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)
 		var/image/overlay = 0
-		if (!overlay_images)
-			overlay_images = list()
+		if (!wall_overlay_images)
+			wall_overlay_images = list()
 
-		if (overlay_images[overlay_key])
-			overlay = overlay_images[overlay_key]
+		if (wall_overlay_images[overlay_key])
+			overlay = wall_overlay_images[overlay_key]
 		else
 			overlay = image('icons/obj/fluid.dmi', "blank")
 
@@ -603,14 +603,14 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		overlay.icon_state = "wall_[overlay_key]_[last_depth_level]"
 		overlay.pixel_x = pox
 		overlay.pixel_y = poy
-		overlay_images[overlay_key] = overlay
+		wall_overlay_images[overlay_key] = overlay
 
 		src.AddOverlays(overlay, overlay_key)
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)
 			src.ClearAllOverlays()
-		else if(key && overlay_images && overlay_images[key])
+		else if(key && wall_overlay_images && wall_overlay_images[key])
 			src.ClearSpecificOverlays(key)
 
 	proc/debug_search()
