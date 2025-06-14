@@ -609,6 +609,11 @@ var/global/mail_types_by_job = list(
 		/obj/item/storage/goodybag = 3,
 		),
 
+	/datum/job/civilian/mail_courier = list(
+		/obj/item/clothing/suit/pigeon = 3,
+		/obj/item/satchel/mail/large = 5,
+		),
+
 	/datum/job/civilian/staff_assistant = list(
 		/obj/item/football = 2,
 		/obj/item/basketball = 2,
