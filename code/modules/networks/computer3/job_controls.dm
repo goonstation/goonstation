@@ -77,7 +77,7 @@ var/datum/job/priority_job = null
 						src.print_text("Success: priority role set to: \[[job.name]\]")
 						src.send_pda_message("RoleControl notification: [job.name] set to priority role by [src.account.assignment] [src.account.registered]")
 
-					if ("request")
+					if ("req", "request")
 						var/job_name = command_list.Join(" ") //all later arguments are assumed to just be parts of the job name
 						if(!length(job_name))
 							var/list/output = list("All roles that can be requisitioned:")
