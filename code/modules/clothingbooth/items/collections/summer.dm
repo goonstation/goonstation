@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 	name = "Bee"
 	item_path = /obj/item/clothing/under/misc/bikini/bee
 	cost = PAY_TRADESMAN/2
-	swatch_background_color = "#e5bf00"
+	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
