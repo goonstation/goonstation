@@ -13,15 +13,13 @@
 	///unique id for logs - please don't ever assign except in ai_law_rack_manager.register
 	var/unique_id = "OMG THIS WASN'T SET OH NO THIS SHOULD NEVER HAPPEN AHHH"
 	var/datum/light/light
-	var/const/MAX_CIRCUITS = 9
 	/// list of aiModules ref'd by slot number.
-	var/obj/item/aiModule/law_circuits[MAX_CIRCUITS]
-	/// used during UpdateLaws to determine which laws have changed
-	var/list/last_laws[MAX_CIRCUITS]
+	var/obj/item/aiModule/law_modules[LAWRACK_MAX_MODULES]
+	var/datum/ai_lawset/lawset
 	/// welded status of law module by slot number
-	var/list/welded[MAX_CIRCUITS]
+	var/list/welded[LAWRACK_MAX_MODULES]
 	/// screwed status of law module by slot number
-	var/list/screwed[MAX_CIRCUITS]
+	var/list/screwed[LAWRACK_MAX_MODULES]
 	/// list of hologram expansions
 	var/list/holo_expansions = list()
 	/// list of ability expansions
@@ -31,22 +29,24 @@
 		START_TRACKING
 		. = ..()
 		//if the ticker isn't initialised yet, it'll grab this rack when it is (see /datum/ai_rack_manager)
+		lawset = new/datum/ai_lawset
 		ticker?.ai_law_rack_manager.register_new_rack(src)
+		lawset.host_rack = src
 
 		src.light = new/datum/light/point
 		src.light.set_brightness(0.4)
 		src.light.attach(src)
+
 		UpdateIcon()
-		update_last_laws()
 
 	/// Causes all law modules to drop to the ground, does not call UpdateLaws()
 	proc/drop_all_modules()
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			src.welded[i] = FALSE
 			src.screwed[i] = FALSE
-			if(src.law_circuits[i])
-				src.law_circuits[i].set_loc(get_turf(src))
-				src.law_circuits[i] = null
+			if(src.law_modules[i])
+				src.law_modules[i].set_loc(get_turf(src))
+				src.law_modules[i] = null
 
 	disposing()
 		STOP_TRACKING
@@ -56,8 +56,8 @@
 		. = ..()
 
 	build_deconstruction_buttons(mob/user) //mild hack to give a custom "can't be deconstructed" message
-		for (var/i in 1 to MAX_CIRCUITS)
-			if (src.law_circuits[i])
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
+			if (src.law_modules[i])
 				return "[src] cannot be deconstructed while it still has law modules inside!"
 		return ..()
 
@@ -127,27 +127,27 @@
 				law_update_needed = TRUE
 			else
 				var/list/mod_index_list = list()
-				for (var/i in 1 to MAX_CIRCUITS)
-					if(src.law_circuits[i])
+				for (var/i in 1 to LAWRACK_MAX_MODULES)
+					if(src.law_modules[i])
 						mod_index_list += i
 				if(length(mod_index_list) > 0)
 					var/i = pick(mod_index_list)
 					src.welded[i] = FALSE
 					src.screwed[i] = FALSE
-					src.law_circuits[i].set_loc(get_turf(src))
-					src.law_circuits[i] = null
+					src.law_modules[i].set_loc(get_turf(src))
+					src.law_modules[i] = null
 					src.visible_message(SPAN_ALERT("<b>A module tumbles out of the [src]!</b>"))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 					law_update_needed = TRUE
 		if(_health <= 25 && prevHealth > 25)
 			//severely damaged - we're basically falling apart here
 			//break all the welds and screws, eject half of remaining modules
-			for (var/i in 1 to MAX_CIRCUITS)
+			for (var/i in 1 to LAWRACK_MAX_MODULES)
 				src.welded[i] = FALSE
 				src.screwed[i] = FALSE
-				if(src.law_circuits[i] && prob(50))
-					src.law_circuits[i].set_loc(get_turf(src))
-					src.law_circuits[i] = null
+				if(src.law_modules[i] && prob(50))
+					src.law_modules[i].set_loc(get_turf(src))
+					src.law_modules[i] = null
 					law_update_needed = TRUE
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>Some of the [src]'s shelves collapse!</b>"))
@@ -184,9 +184,9 @@
 			var/mob/living/silicon/S = user
 			var/test_connection = null
 			if(isAIeye(user) || S.dependent)
-				test_connection = S.mainframe.law_rack_connection
+				test_connection = S.mainframe.lawset_connection
 			else
-				test_connection = S.law_rack_connection
+				test_connection = S.lawset_connection
 
 			if(test_connection == src)
 				. += "<b>You are connected to this law rack.</b>"
@@ -211,7 +211,7 @@
 			. += "<br>"
 			if(user.mind.get_player()?.dnr)
 				. += "Current Laws:<br>"
-				. += src.format_for_logs()
+				. += src.lawset.format_for_logs()
 			else
 				. += SPAN_ALERT("You must enable DNR to see the current laws.")
 
@@ -256,23 +256,23 @@
 	update_icon()
 		var/image/circuit_image = null
 		var/image/color_overlay = null
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			circuit_image = null
 			color_overlay = null
-			if(law_circuits[i])
+			if(law_modules[i])
 				circuit_image = image(src.icon, "aimod")
 				circuit_image.pixel_x = 0
 				circuit_image.pixel_y = -36 + i*4
-				circuit_image.color = law_circuits[i].color
+				circuit_image.color = law_modules[i].color
 				color_overlay = image(src.icon, "aimod_over")
-				color_overlay.color = law_circuits[i].highlight_color
+				color_overlay.color = law_modules[i].highlight_color
 				color_overlay.pixel_x = 0
 				color_overlay.pixel_y = -36 + i*4
 			src.UpdateOverlays(circuit_image,"module_slot_[i]")
 			src.UpdateOverlays(color_overlay,"module_slot_[i]_overlay")
 
 	attack_hand(mob/user)
-		if (!src.law_circuits)
+		if (!src.law_modules)
 			// YOU BETRAYED THE LAW!!!!!!
 			boutput(user, SPAN_ALERT("Oh dear, this really shouldn't happen. Call an admin."))
 			return
@@ -281,9 +281,9 @@
 			var/mob/living/silicon/S = user
 			var/test_connection = null
 			if(isAIeye(user) || S.dependent)
-				test_connection = S.mainframe.law_rack_connection
+				test_connection = S.mainframe.lawset_connection
 			else
-				test_connection = S.law_rack_connection
+				test_connection = S.lawset_connection
 
 			if(test_connection == src)
 				boutput(user,"<b>You are connected to this law rack.</b>")
@@ -291,7 +291,7 @@
 				boutput(user,"You are not connected to this law rack.")
 
 		boutput(user,"<b>This rack's laws are:</b>")
-		src.show_laws(user)
+		src.lawset.show_laws(user)
 		return ..()
 
 
@@ -314,8 +314,8 @@
 			var/obj/item/aiModule/AIM = I
 			var/inserted = FALSE
 			var/count = 1
-			while (!inserted && count <= MAX_CIRCUITS)
-				if(!src.law_circuits[count])
+			while (!inserted && count <= LAWRACK_MAX_MODULES)
+				if(!src.law_modules[count])
 					inserted = TRUE
 				else
 					count++
@@ -326,7 +326,7 @@
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
-				if(M.law_rack_connection == src)
+				if(M.lawset_connection == src)
 					M.moustache_mode = 1
 					user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [M.name]!"))
 					M.update_appearance()
@@ -358,16 +358,16 @@
 
 	ui_static_data(mob/user)
 		. = list(
-			"lawSlots" = MAX_CIRCUITS
+			"lawSlots" = LAWRACK_MAX_MODULES
 		)
 
 	ui_data(mob/user)
-		var/list/lawTitles[MAX_CIRCUITS]
-		var/list/lawText[MAX_CIRCUITS]
-		for (var/i in 1 to MAX_CIRCUITS)
-			if(law_circuits[i])
-				lawText[i] = law_circuits[i].get_law_text()
-				lawTitles[i] = law_circuits[i].get_law_name()
+		var/list/lawTitles[LAWRACK_MAX_MODULES]
+		var/list/lawText[LAWRACK_MAX_MODULES]
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
+			if(law_modules[i])
+				lawText[i] = law_modules[i].get_law_text()
+				lawTitles[i] = law_modules[i].get_law_name()
 			else
 				src.welded[i] = FALSE
 				src.screwed[i] = FALSE
@@ -398,7 +398,7 @@
 					boutput(ui.user,"You need a welding tool for that!")
 					return
 
-				if(!law_circuits[slotNum])
+				if(!law_modules[slotNum])
 					boutput(ui.user,"There's nothing to weld!")
 					return
 
@@ -422,7 +422,7 @@
 					boutput(ui.user,"You need a screwdriver for that!")
 					return
 
-				if(!law_circuits[slotNum])
+				if(!law_modules[slotNum])
 					boutput(ui.user,"There's nothing to screw in!")
 					return
 
@@ -445,7 +445,7 @@
 					ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but it's still screwed in!"), SPAN_ALERT("You struggle with the module but it's still screwed in!"))
 					return
 
-				if(law_circuits[slotNum])
+				if(law_modules[slotNum])
 					if(issilicon(ui.user))
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
@@ -453,7 +453,7 @@
 						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to tug a module out of the rack, but the retaining mag-locks are unpowered!"), SPAN_ALERT("You struggle with the module but [src] is unpowered!"))
 						return
 					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a module!"), SPAN_ALERT("You start removing the module!"))
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_modules[slotNum].icon, law_modules[slotNum].icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				else
 					var/equipped = ui.user.equipped()
@@ -480,138 +480,26 @@
 		else
 			. = list(start,stop)
 
-	/// Takes a list or single target to show laws to
-	proc/show_laws(var/who)
-		var/list/L =list()
-		L += who
-
-		var/laws_text = src.format_for_display()
-		for (var/W in L)
-			boutput(W, laws_text)
-
-	/** Formats current laws for logging, argument glue defaults to <br>
-	 * Output is:
-	 * [law number]: [law text]<br>
-	 * [law number]: [law text]
-	 * etc.
-	*/
-	proc/format_for_logs(var/glue = "<br>")
+	/// Saves the current laws as a list to pass to the ai_lawset datum
+	proc/format_as_list()
+		var/list/laws[LAWRACK_MAX_MODULES]
 		var/law_counter = 1
-		var/lawOut = list()
-		for (var/obj/item/aiModule/X in law_circuits)
-			if(!X)
-				continue
-			var/lt = X.get_law_text(TRUE)
-			if(islist(lt))
-				for(var/law in lt)
-					lawOut += "[law_counter++]: [law]"
-			else
-				lawOut += "[law_counter++]: [lt]"
-
-		return jointext(lawOut, glue)
-
-	/** Formats current laws for display to game chat
-	 * Output is the same as format_for_logs, but also includes removed laws at the top and styling for added laws
-	**/
-	proc/format_for_display(var/glue = "<br>")
-		var/law_counter = 1 //make the laws always sequential regardless of where in the rack they are
-		var/removed_law_offset = 0
-		var/list/lawOut = new
-		var/list/removed_laws = new
-
-		for (var/i in 1 to MAX_CIRCUITS)
-			var/obj/item/aiModule/module = law_circuits[i]
-			if(!module)
-				if (last_laws[i])
-					//load the law number and text from our saved law list
-					var/list/lawtext = last_laws[i]["law"]
-					if (islist(lawtext))
-						for (var/law in lawtext)
-							removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
-							if (lawtext.Find(law) != length(lawtext)) //screm
-								removed_law_offset++
-					else
-						removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
-				continue
-			var/lt = module.get_law_text(TRUE)
-			var/class = "regular"
-			if (!last_laws[i] || lt != last_laws[i]["law"])
-				class = "lawupdate"
-			if(islist(lt))
-				for(var/law in lt)
-					lawOut += "<span class='[class]'>[law_counter++]: [law]</span>"
-			else
-				lawOut += "<span class='[class]'>[law_counter++]: [lt]</span>"
-
-		var/text_output = ""
-		if (length(removed_laws))
-			text_output += SPAN_ALERT("Removed law[(length(removed_laws) > 1) ? "s" : ""]:") + glue + jointext(removed_laws, glue) + glue
-		text_output += jointext(lawOut, glue)
-		return text_output
-
-	/** Formats current laws as a list in the format:
-	 * {[lawnumber]=lawtext,etc.}
-	 */
-	proc/format_for_irc()
-		var/list/laws = list()
-
-		var/law_counter = 1
-		for (var/obj/item/aiModule/X in law_circuits)
-			if(!X)
-				continue
-			var/lt = X.get_law_text(TRUE)
-			if(islist(lt))
-				for(var/law in lt)
-					laws["[law_counter++]"] = law
-			else
-				laws["[law_counter++]"] = lt
-		return laws
-
-	/// Saves the current law list to last_laws so we can see diffs
-	proc/update_last_laws()
-		var/law_counter = 1
-		for (var/i in 1 to MAX_CIRCUITS)
-			var/obj/item/aiModule/module = law_circuits[i]
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
+			var/obj/item/aiModule/module = law_modules[i]
 			if (module)
 				//save the law text and the displayed law number (not the rack position)
-				last_laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
+				laws[i] = list("law" = module.get_law_text(TRUE), "number" = law_counter++)
 			else
-				last_laws[i] = null
+				laws[i] = null
+		return laws
 
-	/** Pushes law updates to all connected AIs and Borgs - notification text allows you to customise the header
-	* Defaults to <h3>Law update detected</h3>
-	*/
-	proc/UpdateLaws(var/notification_text="<h3>Law update detected</h3>")
-		var/list/affected_mobs = list()
-		for (var/mob/living/silicon/R in mobs)
-			if (isghostdrone(R))
-				continue
-			if(R.law_rack_connection == src || (R.dependent && R?.mainframe?.law_rack_connection == src))
-				if(R.dependent && R?.mainframe?.law_rack_connection != src)
-					R.law_rack_connection = R?.mainframe?.law_rack_connection //goddamn shells
-					continue
-				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
-				R.show_text(notification_text, "red")
-				src.show_laws(R)
-				affected_mobs |= R
-				if(isAI(R))
-					var/mob/living/silicon/ai/holoAI = R
-					holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-					src.reset_ai_abilities(R)
-		src.calculate_power_usage()
-		for (var/mob/living/intangible/aieye/E in mobs)
-			if(E.mainframe?.law_rack_connection == src)
-				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_IGNORE_DEAF)
-				src.show_laws(E)
-				affected_mobs |= E.mainframe
-				var/mob/living/silicon/ai/holoAI = E.mainframe
-				holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
-				E.abilityHolder?.updateButtons()
-		var/list/mobtextlist = list()
-		for(var/mob/living/M in affected_mobs)
-			mobtextlist += constructName(M, "admin")
-		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
-		update_last_laws()
+	proc/UpdateLaws()
+		for(var/mob/living/silicon/ai/holoAI in mobs)
+			holoAI.holoHolder.text_expansion = src.holo_expansions.Copy()
+			src.reset_ai_abilities(holoAI)
+		calculate_power_usage()
+		lawset.current_laws = format_as_list()
+		lawset.UpdateLaws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
 		if(src.welded[slot_number])
@@ -630,9 +518,9 @@
 		tgui_process.update_uis(src)
 
 	proc/insert_module_callback(var/slotNum,var/mob/user,var/obj/item/aiModule/equipped)
-		if(src.law_circuits[slotNum])
+		if(src.law_modules[slotNum])
 			return FALSE
-		src.law_circuits[slotNum]=equipped
+		src.law_modules[slotNum]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
@@ -650,21 +538,21 @@
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
-		if(isnull(src.law_circuits[slotNum]))
+		if(isnull(src.law_modules[slotNum]))
 			return FALSE
 		//add circuit to hand
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
-		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> an AI law module from rack([constructName(src)]): [src.law_modules[slotNum]]:[src.law_modules[slotNum].get_law_text()] at slot [slotNum]")
+		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_modules[slotNum]]:[src.law_modules[slotNum].get_law_text()] at slot [slotNum]")
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
 		user.visible_message(SPAN_ALERT("[user] slides a module out of the law rack"), SPAN_ALERT("You slide the module out of the rack."))
-		user.put_in_hand_or_drop(src.law_circuits[slotNum])
-		if(istype(src.law_circuits[slotNum],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slotNum]
+		user.put_in_hand_or_drop(src.law_modules[slotNum])
+		if(istype(src.law_modules[slotNum],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_modules[slotNum]
 			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slotNum],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slotNum]
+		else if(istype(src.law_modules[slotNum],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_modules[slotNum]
 			src.ai_abilities -= expansion.ai_abilities
-		src.law_circuits[slotNum] = null
+		src.law_modules[slotNum] = null
 		tgui_process.update_uis(src)
 		UpdateIcon()
 		UpdateLaws()
@@ -719,14 +607,14 @@
 	 * Does not call UpdateLaws()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
-		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+		if(istype(src.law_modules[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_modules[slot]
 			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+		else if(istype(src.law_modules[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_modules[slot]
 			src.ai_abilities -= expansion.ai_abilities
-		if(mod && slot <= MAX_CIRCUITS)
-			src.law_circuits[slot] = mod
+		if(mod && slot <= LAWRACK_MAX_MODULES)
+			src.law_modules[slot] = mod
 			src.welded[slot] = welded_in
 			src.screwed[slot] = screwed_in
 			tgui_process.update_uis(src)
@@ -753,13 +641,13 @@
 
 	/// Deletes a law in an abritrary slot. Does not call UpdateLaws()
 	proc/DeleteLaw(var/slot=1)
-		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
-			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+		if(istype(src.law_modules[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_modules[slot]
 			src.holo_expansions -= holo.expansion
-		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
-			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+		else if(istype(src.law_modules[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_modules[slot]
 			src.ai_abilities -= expansion.ai_abilities
-		src.law_circuits[slot]=null
+		src.law_modules[slot]=null
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE
 		tgui_process.update_uis(src)
@@ -768,7 +656,7 @@
 
 	/// Deletes all laws. Does not call UpdateLaws()
 	proc/DeleteAllLaws()
-		for (var/i in 1 to MAX_CIRCUITS)
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
 			src.DeleteLaw(i)
 
 	/**
@@ -779,17 +667,17 @@
 	 */
 	proc/cause_law_glitch(picked_law = "Beep repeatedly.", lawnumber = 1, replace = FALSE)
 		var/lawnumber_actual = 1
-		if(src.law_circuits[lawnumber])
+		if(src.law_modules[lawnumber])
 			lawnumber_actual = lawnumber
 		else
-			for (var/i in 1 to MAX_CIRCUITS)
+			for (var/i in 1 to LAWRACK_MAX_MODULES)
 				//if the difference between target and current is less than the difference between target and best, and also is a module
-				if(src.law_circuits[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
+				if(src.law_modules[i] && (abs(lawnumber - i) <= abs(lawnumber - lawnumber_actual)))
 					lawnumber_actual = i
-		if(!src.law_circuits[lawnumber_actual])
+		if(!src.law_modules[lawnumber_actual])
 			return FALSE //we could not find a law to modify, sorry
 		else
-			src.law_circuits[lawnumber_actual].make_glitchy(picked_law,replace)
+			src.law_modules[lawnumber_actual].make_glitchy(picked_law,replace)
 			tgui_process.update_uis(src)
 			if(replace)
 				src.visible_message(SPAN_ALERT("<b>The [src] sparks violently!</b>"))
@@ -799,8 +687,8 @@
 
 	proc/calculate_power_usage()
 		src.power_usage = 1000
-		for (var/i in 1 to MAX_CIRCUITS)
-			if (src.law_circuits[i])
+		for (var/i in 1 to LAWRACK_MAX_MODULES)
+			if (src.law_modules[i])
 				src.power_usage += 100
 
 	proc/reset_ai_abilities(mob/living/silicon/ai/target)
@@ -861,3 +749,4 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
