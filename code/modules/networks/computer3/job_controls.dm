@@ -70,6 +70,9 @@ var/datum/job/priority_job = null
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
+						if (job.limit == 0 || job.limit == job.assigned)
+							src.print_text("Error: job already at maximum limit")
+							return
 						job_controls.priority_job = job
 						src.print_text("Success: priority role set to: \[[job.name]\]")
 						src.send_pda_message("RoleControl notification: priority role set to [job.name] by [src.account.assignment] [src.account.registered]")
