@@ -111,6 +111,10 @@ var/datum/job/priority_job = null
 						src.master.temp = ""
 						print_text("Now quitting...")
 						src.master.unload_program(src)
+
+					else
+						print_text("Unknown command : \"[copytext(strip_html(command), 1, 16)]\"")
+
 			if(MENU_REQUEST_COUNT)
 				if(!requested_job)
 					src.print_text("Error: no job selected")
