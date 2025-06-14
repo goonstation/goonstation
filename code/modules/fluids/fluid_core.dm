@@ -557,9 +557,11 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
 			src.update_perspective_overlays()
 
+		if (src.icon_state == "15" && src.last_depth_level >= 2)
+			src.icon_state = "15-lines"
+
 	proc/update_perspective_overlays() // fancy perspective overlaying
 		if (icon_state != "15" && icon_state != "15-lines") return
-		src.icon_state = "15-lines"
 		var/blocked = 0
 		for( var/dir in cardinal )
 			if (dir == SOUTH) //No south perspective
@@ -612,6 +614,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.ClearAllOverlays()
 		else if(key && wall_overlay_images && wall_overlay_images[key])
 			src.ClearSpecificOverlays(key)
+
+		if (!src.last_depth_level < 2)
+			if (src.icon_state == "15-lines")
+				src.icon_state = "15"
 
 	proc/debug_search()
 		var/list/C = src.get_connected_fluids()
