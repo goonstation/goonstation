@@ -709,7 +709,7 @@ var/global/list/module_editors = list()
 		src.owner.UpdateOverlays(distress, "battery_distress")
 		src.silicon = src.owner
 		src.next_sound_time = TIME + 5 SECONDS
-		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
+		src.silicon.show_text(SPAN_ALERT("<b>You're running low on power!</b>"))
 
 	onUpdate(timePassed)
 		. = ..()
@@ -720,7 +720,6 @@ var/global/list/module_editors = list()
 	onRemove()
 		. = ..()
 		src.owner.ClearSpecificOverlays(TRUE, "battery_distress")
-		src.silicon.show_text(SPAN_ALERT("<b>You're beginning to run low on power!</b>"))
 
 /datum/statusEffect/no_power
 	id = "no_power"
