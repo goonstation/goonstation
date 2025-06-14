@@ -9430,7 +9430,7 @@
 "cHV" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "cHW" = (
@@ -33828,7 +33828,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/quarters)
 "kri" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
@@ -72260,7 +72260,7 @@
 /area/station/crew_quarters/cafeteria)
 "weI" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)

@@ -10817,7 +10817,7 @@
 /area/station/crewquarters/cryotron)
 "eTx" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -17835,7 +17835,7 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "hHS" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
@@ -36372,7 +36372,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/ghostdrone_factory)
 "pBT" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -37568,7 +37568,7 @@
 	name = "Cargo Auxiliary Endpoint"
 	})
 "qcT" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -37860,7 +37860,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/east)
 "qlx" = (
-/obj/decal/boxingropeenter,
+/obj/railing/wrestling,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -39261,7 +39261,7 @@
 /area/station/science/bot_storage)
 "qSK" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/decal/stage_edge{
 	dir = 4
 	},
@@ -54438,7 +54438,7 @@
 /area/station/maintenance/southeast)
 "xPC" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
