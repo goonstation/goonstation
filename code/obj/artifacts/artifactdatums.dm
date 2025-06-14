@@ -111,10 +111,6 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
 
-	/// been modified in some way by the reticulator
-	var/reticulated = FALSE
-	/// if the artifact can be loaded into the reticulator when active
-	var/can_reticulate_when_active = TRUE
 	/// what this artifact combines with
 	var/combine_flags = ARTIFACT_DOES_NOT_COMBINE
 	/// when used in a combination effect, priority in which this artifact's effect is used
