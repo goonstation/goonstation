@@ -282,7 +282,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 	density = 0
 
 	updateHealth()

@@ -24,8 +24,6 @@ var/list/asteroid_blocked_turfs = list()
 	var/list/small_encounters = list()
 	var/list/mining_encounters_selectable = list()
 
-	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/mesh/catwalk, /obj/overlay)
-
 	New()
 		..()
 		for (var/X in childrentypesof(/datum/ore) - /datum/ore/event)
@@ -179,6 +177,7 @@ var/list/asteroid_blocked_turfs = list()
 	density = 0
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	ex_act()
 		return
