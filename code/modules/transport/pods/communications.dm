@@ -150,14 +150,12 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-	proc/open_hangar(mob/user as mob)
-		var/pass = input(user, "Please enter panel access number.", "Access Number") as text
-		pass = copytext(html_encode(pass), 1, 32)
+	proc/toggle_hangar_door(mob/user as mob, var/pass)
 		if(!pass)
 			return
 
 		var/datum/signal/newsignal = get_free_signal()
-		newsignal.data["command"] = "open door"
+		newsignal.data["command"] = "toggle_hangar_door"
 		if (com)
 			newsignal.data["access_type"] = jointext(com.access_type,";")
 		newsignal.data["doorpass"] = pass
