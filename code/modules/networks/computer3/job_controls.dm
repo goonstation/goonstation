@@ -87,7 +87,7 @@ var/datum/job/priority_job = null
 								output += src.job_info(job, include_requests = TRUE)
 							src.print_text(output.Join("<br>"))
 							return
-						var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE)
+						var/datum/job/job = find_job_in_controller_by_string(job_name, soft = TRUE, case_sensitive = FALSE, latejoin_only = TRUE)
 						if (!job)
 							src.print_text("Error: unable to identify role with name \[[job_name]\]")
 							return
