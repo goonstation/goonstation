@@ -1543,3 +1543,16 @@ proc/spawn_kitchen_note()
 			<h3>Section 3: Safety</h3>
 			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
 		"}
+
+/obj/item/paper/syndicate_mining_magnet_1
+	name = "syndicate leadership memo"
+	info = {"<h2>Attention Syndicate outpost-62 members:<br></h2>
+	You've been stationed in this concealed outpost inside an artificial comet inbound for listening post 6678 in approximately one half (1/2) of a year.
+	You are to observe Nanotrasen facilities through Nanotrasen occupied space along the way and record your findings. Please help yourself to the
+	given amenities for enjoyment during your stay. Provided is 100k credits in bullion and cash to acquire asset Omicron upon arrival. You are to return
+	back using the comet.<br><br>Repeat, REPEAT, do not use the provided goods for any reason other than to acquire asset Omicron."}
+
+/obj/item/paper/syndicate_mining_magnet_2
+	name = "stern note"
+	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
+	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
