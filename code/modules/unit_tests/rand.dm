@@ -17,28 +17,28 @@
 		deterministic_check(/datum/xor_rand_generator/proc/xor_randf, list(0,100), 100, 3, 0xB00)
 		deterministic_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100), 100, 3, 0xDEAD)
 
-/datum/unit_test/xor_rand/proc/distribution_check(delegate, args, iterations)
+/datum/unit_test/xor_rand/proc/distribution_check(delegate, call_args, iterations)
 	var/result
 	var/sum
 	var/list/distro = list()
 	var/list/sub_distro = list()
-	var/range = args
-	if(!length(args))
+	var/range = call_args
+	if(!length(call_args))
 		range = list(0,1)
 	var/expected_mean = ((range[2]-range[1])/2)
 	var/sum_sqrs
 
 	for(var/i in 1 to iterations)
 		if(delegate)
-			result = call(R, delegate)(arglist(args))
+			result = call(R, delegate)(arglist(call_args))
 		else
-			if(length(args))
-				result = rand(args[1],args[2])
+			if(length(call_args))
+				result = rand(call_args[1],call_args[2])
 			else
 				result = rand()
 
 		var/bucket_val = result
-		if(!length(args))
+		if(!length(call_args))
 			bucket_val *= 100
 		sum += result
 		sum_sqrs += (result-expected_mean)**2
@@ -61,7 +61,7 @@
 	TEST_ASSERT(cv >= 0.51, "Test Coefficient of variation is within tolerance. [delegate] [cv] >= 0.51")
 	TEST_ASSERT(cv <= 0.65, "Test Coefficient of variation is within tolerance. [delegate] [cv] <= 0.65")
 
-/datum/unit_test/xor_rand/proc/deterministic_check(delegate, args, iterations, attempts, seed)
+/datum/unit_test/xor_rand/proc/deterministic_check(delegate, call_args, iterations, attempts, seed)
 	var/list/first_iteration = list()
 	var/list/this_result
 
@@ -70,9 +70,9 @@
 		R.seed = seed
 		for(var/j in 1 to iterations)
 			if(i == 1)
-				first_iteration += call(R, delegate)(arglist(args))
+				first_iteration += call(R, delegate)(arglist(call_args))
 			else
-				this_result = call(R, delegate)(arglist(args))
+				this_result = call(R, delegate)(arglist(call_args))
 				TEST_ASSERT(first_iteration[j] == this_result, "Test calculations is the same. Index:[j] [first_iteration[j]] == [this_result]")
 
 
