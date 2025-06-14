@@ -3599,6 +3599,12 @@ TYPEINFO(/mob/living/silicon/robot)
 	onAdd(optional)
 		. = ..()
 		src.robot = src.owner
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+
 
 	onUpdate(timePassed)
 		. = ..()
@@ -3610,6 +3616,12 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
 		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
 			src.remove_self()
+		else
+			src.robot.module_active = null
+			src.robot.uneq_all()
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated)
+					R.upgrade_deactivate(robot)
 
 /datum/statusEffect/no_power/robot
 	id = "no_power_robot"
