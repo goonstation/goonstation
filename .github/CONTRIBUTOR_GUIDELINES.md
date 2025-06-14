@@ -104,7 +104,7 @@ Aside from the actual changes to the repo that you make, opening a PR has some r
 As you might be able to tell, there are a lot of pull requests pending at any given moment in time. In order for a pull request to get merged, developers have to review and approve of it, but contributors can also review pull requests, as well as [add labels where appropriate](#Triage-Team).
 
 ### Labels
-There are many labels that people can use to attach to their PR or to issue reports. These are handy for organisation, as sometimes a developer will go through all the PRs that have a certain label (`Size-XXS`, or `A-Chemistry` for instance) and use that to pick what to review. It's therefore good practise to put labels on your pull requests, and there's a couple ways to add labels:
+There are many labels that people can use to attach to their PR or to issue reports. These are handy for organisation, as sometimes a developer will go through all the PRs that have a certain label (`Size-XXS`, or `D-Chemistry` for instance) and use that to pick what to review. It's therefore good practise to put labels on your pull requests, and there's a couple ways to add labels:
 
 - The KeywordLabeler bot assigns labels to pull requests based on certain key words in the pull request's description. For instance, putting \[BUG\] or \[FIX\] in the top line of a PR's ddescription will add the `C-bug` label to it. The full list of what key word matches what label can be found in the `.github/keylabeler.yml` file. These are handy for adding labels which start with the prefix `A-`.
 - Contributors with [triage permissions](#Triage-Team) can simply add and remove labels from their own PRs, as well as issue reports and other people's PRs.
@@ -120,7 +120,8 @@ Some labels are automatically assigned as well, and do certain things:
 - The `S-Needs-Reproducing` label is one put onto an issue report when the person trying to fix that particular bug can't recreate it, or wants to double check that this bug is actually in game and not a oneoff. Issues with this label for more than two weeks get automatically closed. The opposite of this label is `E-Verified`.
 
 The prefixes on the labels are used to group labels together by category, for easier scrolling. They are:
-- `A-`, generally for the **a**rea of the game, such as `A-Clothing` or `A-Chemistry`.
+- `A-`, generally for the **a**rea of the game, such as `A-Clothing` or `A-Game Objects`.
+- `D-`, for the relevant **d**epartments, such as `D-Security` or `D-Hydroponics`.
 - `C-`, for the **c**ategory of the change itself, like `C-Bug`, `C-QoL`, `C-Revert`, `C-Sprites`.
 - `E-`, **e**xtra information about the bug/PR itself, such as `E-FUCK`, `E-Complex`, `E-Certified-Organic`.
 - `P-`, labelling of the **p**riority of a bug (like `P-Minor`).
