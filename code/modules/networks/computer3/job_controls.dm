@@ -118,13 +118,14 @@ var/datum/job/priority_job = null
 
 			if(MENU_REQUEST_COUNT)
 				if(!requested_job)
-					src.print_text("Error: no job selected")
-					state = MENU_MAIN
+					src.print_text("Error: no job selected, aborting...")
+					src.print_main_menu()
 					return
 				if(command == "x" || text2num(command) == 0)
 					src.print_text("Cancelling job request...")
 					requested_job = null
-					state = MENU_MAIN
+					src.print_main_menu()
+					return
 				else if(text2num(command))
 					request_count = text2num(command)
 					if (request_count > (requested_job.request_limit - requested_job.limit))
@@ -134,9 +135,11 @@ var/datum/job/priority_job = null
 						state = MENU_REQUEST_COUNT
 						return
 					if(isnull(requested_job.request_cost))
-						src.print_text("Error: invalid requisition cost. Aborting...")
+						src.print_text("Error: invalid request cost, aborting...")
 						requested_job = null
-						state = MENU_MAIN
+						request_count = 0
+						src.print_main_menu()
+						return
 					src.print_text("This will deduct [requested_job.request_cost * request_count][CREDIT_SIGN] from the payroll budget. Current payroll budget: [global.wagesystem.station_budget][CREDIT_SIGN]")
 					src.print_text("Confirm job request? (Y/N)")
 					state = MENU_REQUEST_CONFIRM
@@ -146,7 +149,7 @@ var/datum/job/priority_job = null
 						src.print_text("Cancelling job request...")
 						requested_job = null
 						request_count = 0
-						state = MENU_MAIN
+						src.print_main_menu()
 					if("y")
 						var/total_cost = requested_job.request_cost * request_count
 						if(global.wagesystem.station_budget < total_cost)
@@ -161,7 +164,7 @@ var/datum/job/priority_job = null
 
 						requested_job = null
 						request_count = 0
-						state = MENU_MAIN
+						src.print_main_menu()
 
 	proc/job_info(datum/job/job, var/include_requests = FALSE)
 		var/job_text = "[job.name] \[[job.assigned]/[job.limit >= 0 ? job.limit : "∞"]\]"
