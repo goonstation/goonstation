@@ -611,7 +611,7 @@ proc/compare_ornament_score(list/a, list/b)
 		if (!M || !isliving(M))
 			return
 		var/mob/living/L = M
-		L.bodytemperature -= rand(1, 10)
+		L.changeBodyTemp(-rand(1, 10) KELVIN)
 		L.show_text("That was chilly!", "blue")
 		..()
 
@@ -623,7 +623,7 @@ proc/compare_ornament_score(list/a, list/b)
 		M.change_eye_blurry(25)
 		M.make_dizzy(rand(0, 5))
 		M.stuttering += rand(0, 1)
-		M.bodytemperature -= rand(1, 10)
+		M.changeBodyTemp(-rand(1, 10) KELVIN)
 		if (message)
 			M.visible_message(SPAN_ALERT("<b>[M]</b> is hit by [src]!"),\
 			SPAN_ALERT("You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]"))

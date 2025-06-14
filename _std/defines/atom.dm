@@ -61,6 +61,7 @@
 #define MOVE_NOCLIP 				(1 << 9)
 /// Atom won't get warped to z5 via floor holes on underwater maps
 #define IMMUNE_TRENCH_WARP			(1 << 10)
+#define IMMUNE_MINERAL_MAGNET		(1 << 11)
 
 
 //THROW flags (what kind of throw, we can have ddifferent kinds of throws ok)

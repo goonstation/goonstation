@@ -44,8 +44,8 @@ On server: [global.config.server_name]
 Active test merges: [english_list(testmerges)]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
-Round ID: [global.roundId]
-Map: [global.map_setting]
+Round ID: \[[global.roundId]\](https://goonhub.com/rounds/[global.roundId])
+Map: \[[global.map_setting]\](https://goonhub.com[map_settings.goonhub_map])
 "}
 	var/list/success = ircbot.export("issue", list(
 		"title" = title,
