@@ -690,7 +690,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
-		qdel(our_console)
+		QDEL_NULL(our_console)
 		..()
 
 
@@ -775,7 +775,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		our_console.our_sleeper = src
 
 	disposing()
-		qdel(our_console)
+		QDEL_NULL(our_console)
 		..()
 
 	attack_hand(mob/user)
