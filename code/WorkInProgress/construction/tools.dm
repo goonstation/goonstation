@@ -533,6 +533,19 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = 'icons/turf/walls/lead/gray.dmi',
 		"lead white" = 'icons/turf/walls/lead/white.dmi',
 		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
+		"tempus green" = 'icons/turf/walls/unused/walls_tempus-green.dmi',
+		"tempus white" = 'icons/turf/walls/unused/walls_tempus-white.dmi',
+		"black red" = 'icons/turf/walls/supernorn/blackred.dmi',
+		"orange" = 'icons/turf/walls/supernorn/orange.dmi',
+		"yellow" = 'icons/turf/walls/supernorn/yellow.dmi',
+		"beehive" = 'icons/turf/walls/beehive.dmi',
+		"hedge" = 'icons/turf/walls/hedge.dmi',
+		"ice" = 'icons/turf/walls/ice.dmi',
+		"mossy rock" = 'icons/turf/walls/mossy_rock.dmi',
+		"panel" = 'icons/turf/walls/panel.dmi',
+		"marsoutpost" = 'icons/turf/walls/marsoutpost.dmi',
+		"precursor" = 'icons/turf/walls/precursor.dmi',
+
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",
@@ -548,6 +561,19 @@ TYPEINFO(/obj/item/room_planner)
 		"lead gray" = "leadg-",
 		"lead white" = "leadw-",
 		"ancient smooth" = "interior-",
+		"tempus green" = "",
+		"tempus white" = "",
+		"black red" = "norn-BR-",
+		"orange" = "norn-O-",
+		"yellow" = "norn-Y-",
+		"beehive" = "bee-",
+		"hedge" = "hedge-",
+		"ice" = "ice-",
+		"mossy rock" = "rock-",
+		"panel" = "interior-",
+		"marsoutpost" = "interior-",
+		"precursor" = "interior-",
+
 	)
 
 	attack_self(mob/user as mob)
