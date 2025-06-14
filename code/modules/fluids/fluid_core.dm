@@ -57,7 +57,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	var/last_depth_level = 0
 	var/touched_channel = 0
 
-	var/list/overlay_images = 0 //overlay bits to make the water look deep. This is a cache of those overlays.
+	var/list/overlay_images = null //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
 	//var/list/floated_atoms = 0 //list of atoms we triggered a float anim on (cleanup later on qdel())
 
 	var/is_setup = 0
@@ -589,58 +589,28 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 	//perspective overlays
 	proc/display_overlay(var/overlay_key, var/pox, var/poy)
-		if (!src.overlay_images)
-			src.overlay_images = list()
+		var/image/overlay = 0
+		if (!overlay_images)
+			overlay_images = list()
 
-		if (overlay_key == "fluid_lines")
-			var/image/fluid_lines
-
-			if (src.overlay_images[overlay_key])
-				fluid_lines = src.overlay_images[overlay_key]
-			else
-				fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
-
-			fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-			fluid_lines.appearance_flags = RESET_COLOR
-			fluid_lines.blend_mode = BLEND_ADD
-			src.overlay_images[overlay_key] = fluid_lines
-
-			src.AddOverlays(fluid_lines, overlay_key)
+		if (overlay_images[overlay_key])
+			overlay = overlay_images[overlay_key]
 		else
-			var/image/wall_overlay
-			var/image/wall_fluid_lines
+			overlay = image('icons/obj/fluid.dmi', "blank")
 
-			if (src.overlay_images[overlay_key])
-				wall_overlay = src.overlay_images[overlay_key]
-				wall_fluid_lines = src.overlay_images["[overlay_key]_wall_fluid_lines"]
-			else
-				wall_overlay = image('icons/obj/fluid.dmi', "blank")
-				wall_fluid_lines = image('icons/obj/fluid.dmi', "fluid_lines")
+		var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
+		overlay.layer = over_obj ? 4 : src.layer
+		overlay.icon_state = "wall_[overlay_key]_[last_depth_level]"
+		overlay.pixel_x = pox
+		overlay.pixel_y = poy
+		overlay_images[overlay_key] = overlay
 
-			var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
-			wall_overlay.layer = over_obj ? 4 : src.layer
-			wall_overlay.icon_state = "wall_[overlay_key]_[src.last_depth_level]"
-			wall_overlay.pixel_x = pox
-			wall_overlay.pixel_y = poy
-			src.overlay_images[overlay_key] = wall_overlay
-
-			wall_fluid_lines.layer = src.last_depth_level >= 4 ? EFFECTS_LAYER_BASE : src.layer
-			wall_fluid_lines.appearance_flags = RESET_COLOR
-			wall_fluid_lines.blend_mode = BLEND_ADD
-			wall_fluid_lines.icon_state = "[wall_overlay.icon_state]_lines"
-			wall_fluid_lines.pixel_x = pox
-			wall_fluid_lines.pixel_y = poy
-			src.overlay_images["[overlay_key]_wall_fluid_lines"] = wall_fluid_lines
-
-			src.AddOverlays(wall_overlay, overlay_key)
-			src.AddOverlays(wall_fluid_lines, "[overlay_key]_wall_fluid_lines")
+		src.AddOverlays(overlay, overlay_key)
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)
-			if (src.overlay_images)
-				for (var/img_key in (src.overlay_images - "fluid_lines"))
-					src.ClearSpecificOverlays(img_key)
-		else if(key && src.overlay_images && src.overlay_images[key])
+			src.ClearAllOverlays()
+		else if(key && overlay_images && overlay_images[key])
 			src.ClearSpecificOverlays(key)
 
 	proc/debug_search()
