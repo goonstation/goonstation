@@ -1143,6 +1143,19 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				makeup_image.pixel_y = eye_offset
 				src.body_standing.overlays += makeup_image
 
+			if (src.blush && src.blush_color)
+				blush_image.icon_state = "blush[src.blush]"
+				blush_image.color = src.blush_color
+				blush_image.pixel_y = eye_offset
+				src.body_standing.overlays += blush_image
+
+			if (src.eyeshadow && src.eyeshadow_color)
+				eyeshadow_image.icon_state = "eyeshadow[src.eyeshadow]"
+				eyeshadow_image.color = src.eyeshadow_color
+				eyeshadow_image.pixel_y = eye_offset
+				src.body_standing.overlays += eyeshadow_image
+
+
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()
 	//Also forcing the updates since the overlays may have been modified on the images
