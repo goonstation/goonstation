@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(projectile.power / 10)
 		if (ishuman(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= projectile.power
+			L.changeBodyTemp(-projectile.power)
 
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
@@ -793,6 +793,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
 		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
 		for (var/mob/M in P.contents)
 			if(M.client)
@@ -821,14 +823,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/P)
 		for (var/atom/movable/AM in P.contents)
 			AM.set_loc(get_turf(P))
-			AM.delStatus("teleporting")
-			if (istype(AM, /mob))
-				var/mob/M = AM
-				if (M.client)
-					M.client.eye = M
 		qdel(src.eye_glider)
 		src.eye_glider = null
 		..()
+
+	on_exited(obj/projectile/P, atom/movable/AM)
+		AM.delStatus("teleporting")
+		if (istype(AM, /mob))
+			var/mob/M = AM
+			if (M.client)
+				M.client.eye = M
 
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
@@ -987,7 +991,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(temp_reduc / 10)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= temp_reduc
+			L.changeBodyTemp(-temp_reduc)
 			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
 			var/atom/targetTurf = 0
