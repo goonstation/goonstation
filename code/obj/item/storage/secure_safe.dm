@@ -635,7 +635,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	New()
 		..()
-		for (var/i in 1 to rand(2, 4))
+		for (var/i in 1 to rand(2, 3))
 			src.storage.add_contents(new /obj/item/stamped_bullion(src))
 		for (var/i in 1 to rand(2, 3))
 			src.storage.add_contents(new /obj/item/uplink_telecrystal/trick(src))
