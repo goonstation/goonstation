@@ -1734,7 +1734,7 @@
 
 /datum/tutorialStep/newbee/move_to/exit_movement
 	name = "Communication"
-	instructions = "Head into the next room to learn how to talk and use the radio."
+	instructions = "Head into the next room to learn how to talk and use the radio.<br>Both talking and radio appear in the right-side chat panel."
 	sidebar = NEWBEE_TUTORIAL_SIDEBAR_ACTIONS
 	step_area = /area/tutorial/newbee/room_13
 	custom_advance_sound = 'sound/misc/tutorial-bleep.ogg'
