@@ -4317,16 +4317,6 @@
 	dir = 9
 	},
 /area/station/hallway/primary/north)
-"azi" = (
-/obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line2"
-	},
-/obj/machinery/computer/operating{
-	id = "OR1"
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/surgery)
 "azj" = (
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
@@ -8697,6 +8687,19 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"bIn" = (
+/obj/machinery/light/incandescent,
+/obj/table/auto,
+/obj/random_item_spawner/medicine,
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 4
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 1;
+	pixel_y = 6
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "bJy" = (
 /obj/machinery/alarm{
 	pixel_y = 25
@@ -9591,15 +9594,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"dez" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grasstodirt{
-	dir = 8
-	},
-/area/station/ranch)
 "dfp" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -20216,16 +20210,6 @@
 "tet" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
-"tfi" = (
-/obj/machinery/light/incandescent,
-/obj/table/auto,
-/obj/random_item_spawner/medicine,
-/obj/item/device/radio/intercom/medical{
-	dir = 1;
-	pixel_y = 6
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "tfr" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -20339,6 +20323,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"tmG" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/station/ranch)
 "tnL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -22510,6 +22503,14 @@
 /obj/item/electronics/soldering,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"wnV" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line2"
+	},
+/obj/machinery/computer/operating/small,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/surgery)
 "woh" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -70051,7 +70052,7 @@ uii
 uii
 ifo
 bzc
-dez
+tmG
 aAC
 oKL
 aaC
@@ -71858,7 +71859,7 @@ ayF
 ayF
 woh
 guq
-tfi
+bIn
 aBx
 aBx
 aHA
@@ -73361,7 +73362,7 @@ ick
 avY
 amK
 ayD
-azi
+wnV
 acK
 avY
 aBA

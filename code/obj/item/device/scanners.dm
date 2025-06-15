@@ -449,7 +449,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.reagent_upgrade)
+		addUpgrade(W, user, src.reagent_upgrade)
 		..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -694,7 +694,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
-		addUpgrade(src, W, user, src.analyzer_upgrade)
+		addUpgrade(W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
@@ -739,7 +739,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 	throw_range = 10
 
 ///////////////// method to upgrade an analyzer if the correct upgrade cartridge is used on it /////////////////
-/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/src as obj, obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
+/obj/item/device/analyzer/proc/addUpgrade(obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
 	if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade) || istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade) || istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 		//Health Analyzers
 		if (istype(src, /obj/item/device/analyzer/healthanalyzer))
