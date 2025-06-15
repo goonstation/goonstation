@@ -27,9 +27,6 @@ TYPEINFO(/datum/component/mimic_stomach)
 		call(region_init_proc)(region, parent)
 	else
 		src.default_init_region()
-	if (!src.parent.GetComponent(/datum/component/death_barf))
-		src.parent.AddComponent(/datum/component/death_barf)
-
 
 /datum/component/mimic_stomach/proc/default_init_region()
 	region.clean_up(/turf/unsimulated/floor/setpieces/bloodfloor)
@@ -64,12 +61,6 @@ TYPEINFO(/datum/component/mimic_stomach)
 				src.add_limb(item, FALSE)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself inside out!</b>"))
 	else
-		var/datum/component/death_barf/barf_component = src.parent.GetComponent(/datum/component/death_barf)
-		if (barf_component)
-			for (var/obj/limb in src.things_eaten)
-				if (!istypes(limb, barf_component.limb_list))
-					LAZYLISTADD(barf_component.limb_list, limb)
-				src.present_mimic.contents.Add(limb)
 		src.present_mimic.set_loc(get_turf(src.current_container))
 		UnregisterSignal(src.current_container, COMSIG_ATOM_ENTERED)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself outside in!</b>"))

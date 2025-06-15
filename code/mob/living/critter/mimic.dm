@@ -81,7 +81,7 @@
 		else
 			var/icon/I = getFlatIcon(target)
 			var/pixels = null
-			src.dir_locked = target.dir_locked
+			src.dir_locked = TRUE
 			src.base_form = FALSE
 			src.hide_density = target.density
 			src.appearance = target

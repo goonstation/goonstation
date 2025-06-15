@@ -7,6 +7,14 @@
 	target_anything = TRUE
 	cooldown_after_action = TRUE
 
+	New()
+		..()
+		// stomach retreat can get away with being by itself, but eat limb should always come bundled with it
+		if (!src.parent.getAbility(/datum/targetable/critter/stomach_retreat))
+			src.parent.addAbility(/datum/targetable/critter/stomach_retreat)
+		if (!src.parent.GetComponent(/datum/component/death_barf))
+			src.parent.AddComponent(/datum/component/death_barf)
+
 	cast(atom/target)
 		. = ..()
 		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
@@ -55,6 +63,7 @@
 		src.gobble(target, user)
 
 	proc/gobble(atom/target, mob/user)
+		var/datum/component/death_barf/barfcomp = user.GetComponent(/datum/component/death_barf)
 		if (ishuman(target))
 			var/mob/living/carbon/human/targetHuman = target
 			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
@@ -64,9 +73,11 @@
 					LAZYLISTADD(randLimb, potential_limb)
 			var/datum/human_limbs/torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
 			var/limb_obj = torn_limb.sever()
-			user.contents.Add(limb_obj)
 			target.emote("scream")
+			user.contents.Add(limb_obj)
+			barfcomp.record_limb(limb_obj)
 			var/datum/targetable/critter/eat_limb/abil = user.getAbility(/datum/targetable/critter/eat_limb)
 			abil.afterAction()
 		else
 			user.contents.Add(target)
+			barfcomp.record_limb(target)

@@ -9,6 +9,12 @@
 	var/obj/current_container = null
 	var/last_appearance = null
 
+
+	New()
+		..()
+		if (!src.parent.GetComponent(/datum/component/death_barf))
+			src.parent.AddComponent(/datum/component/death_barf)
+
 	cast(atom/target)
 		. = ..()
 		if (inside)
@@ -47,7 +53,7 @@
 		src.current_container = target
 		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
 			var/mob/living/critter/mimic/antag_spawn/mimic = parent
-			src.last_appearance = mimic.appearance
+			src.last_appearance = mimic.type
 			mimic.disguise_as(/obj/mimicdummy)
 			mimic.base_form = FALSE
 			mimic.UpdateIcon()
@@ -63,7 +69,7 @@
 		if (!istype(parent, /mob/living/critter/mimic/antag_spawn))
 			return
 		var/mob/living/critter/mimic/antag_spawn/mimic = parent
-		if (istype(src.last_appearance, /mob/living/critter/mimic/))
+		if (src.last_appearance == /mob/living/critter/mimic/antag_spawn) // istype doesn't work here
 			mimic.disguise_as(base_return=TRUE)
 		else
 			mimic.disguise_as(src.last_appearance)

@@ -1,10 +1,14 @@
 /datum/component/death_barf // interacts with mimic_stomach
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/list/obj/item/parts/human_parts/limb_list = list()
+	var/list/obj/limb_list = list()
 
 /datum/component/death_barf/Initialize()
 	. = ..()
 	RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(barf))
+
+/datum/component/death_barf/proc/record_limb(atom/target)
+	if (!istypes(target, src.limb_list))
+		LAZYLISTADD(src.limb_list, target)
 
 /datum/component/death_barf/proc/barf()
 	UnregisterSignal(src.parent, COMSIG_MOB_DEATH)
