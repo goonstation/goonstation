@@ -111,7 +111,7 @@
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (!(S.cell && (S.cell.charge >= selection.cost * silicon_cost_multiplier)))
-				boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
+				boutput(user, SPAN_ALERT("Not enough charge to make a [selection.name]!"))
 				return
 		else if(src.resources < selection.cost)
 			boutput(user, SPAN_ALERT("Not enough resources to make a [selection.name]!"))
