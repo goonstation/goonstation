@@ -97,18 +97,19 @@ TYPEINFO(/datum/component/mimic_stomach)
 		if (targetHuman.limbs.get_limb(potential_limb))
 			LAZYLISTADD(randLimb, potential_limb)
 	torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
-	limb_obj = torn_limb.sever(src.parent, FALSE)
 
 	if (src.present_mimic)
 		if (GET_COOLDOWN(src.current_container, "mimicTrap"))
-			src.current_container.visible_message(SPAN_ALERT("<B>[targetHuman] narrowly avoids something biting at [him_or_her(targetHuman)] inside the [current_container]!</B>"))
+			boutput(targetHuman, SPAN_ALERT("<B>[targetHuman] narrowly avoids something biting at [him_or_her(targetHuman)] inside the [current_container]!</B>"))
 			return
-		if (limb_obj)
+		if (torn_limb)
 			ON_COOLDOWN(src.current_container, "mimicTrap", 5 SECONDS)
-			src.current_container.visible_message(SPAN_ALERT("Something in the [src.current_container] tears off [limb_obj]!"))
+			limb_obj = torn_limb.sever(src.parent, FALSE)
+			src.add_limb(limb_obj)
+			boutput(targetHuman, SPAN_ALERT("Something in the [src.current_container] tears off [limb_obj]!"))
 			playsound(src.current_container, 'sound/voice/burp_alien.ogg', 60, 1)
 		else
-			src.current_container.visible_message(SPAN_ALERT("Something in the [src.current_container] bites at [targetHuman], but [he_or_she_dont_or_doesnt(targetHuman)] have limbs to eat!"))
+			boutput(targetHuman, SPAN_ALERT("Something in the [src.current_container] bites at [targetHuman], but [he_or_she_dont_or_doesnt(targetHuman)] have limbs to eat!"))
 			return
 
 /datum/component/mimic_stomach/UnregisterFromParent()
