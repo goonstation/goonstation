@@ -202,8 +202,7 @@
 		rad_data = "&emsp;[SPAN_ALERT("The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv")]"
 
 	for (var/datum/ailment_data/A in M.ailments)
-		if (disease_detection >= A.detectability)
-			disease_data += "<br>[A.scan_info()]"
+		disease_data += "<br>[A.scan_info()]"
 
 	if (M.reagents)
 		if (verbose_reagent_info)
