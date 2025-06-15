@@ -125,6 +125,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage_type = D_ENERGY
 	goes_through_walls = 1
 
+/datum/projectile/special/piercing/resonator
+	name = "eldritch hyperecho"
+	sname = "eldritch hyperecho"
+	icon_state = "hyperecho"
+	damage_type = D_TOXIC
+	window_pass = 1
+	damage = 30
+	pierces = -1
+	goes_through_walls = 1
+	cost = 100
+	shot_sound = 'sound/machines/sweep.ogg'
+
 // Mildly crazy shit
 
 /datum/projectile/special/spreader
