@@ -49,6 +49,8 @@
 		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] hungrily devours [target]!</B>"))
 		playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 		logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] whole at [log_loc(owner)].")
+		var/where_text =  get_ghost_where_text(owner)
+		message_ghosts("<b>[target.name]</b> was devoured whole by a Maneater at [where_text])].")
 		//if we got a maneater as a user, we store it because of its unique behaviour
 		var/mob/living/critter/plant/maneater/eating_maneater = null
 		if (istype(ownerMob, /mob/living/critter/plant/maneater))
