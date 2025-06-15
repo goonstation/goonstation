@@ -26,7 +26,7 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
-	if (len(trimtext(text)) == 0)
+	if (length(trimtext(text)) == 0)
 		CRASH("Attempted to log without text with type \[[type]\] and source \[[source]\].")
 
 	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
