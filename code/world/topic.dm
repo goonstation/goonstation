@@ -960,13 +960,6 @@
 				)
 				return 1
 
-			if("goonhub_auth")
-				var/ckey = plist["ckey"]
-				var/client/C = find_client(ckey)
-				if (C && C.goonhub_auth)
-					C.goonhub_auth.on_auth()
-				return 1
-
 			if ("mapSwitchDone")
 				if (!plist["map"] || !mapSwitcher.locked) return 0
 

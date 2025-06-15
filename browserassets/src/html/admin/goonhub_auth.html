@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="pragma" content="no-cache" />
   <title>Goonhub Login</title>
   <style>
     * {
@@ -43,7 +43,7 @@
       padding: 10px;
     }
 
-    .content-wrap>div {
+    .content-wrap > div {
       display: none;
     }
 
@@ -75,26 +75,26 @@
 
 <body>
   <div class="content">
-    <div class="content-header">
-      Hello (probable) Admin
-    </div>
+    <div class="content-header">Hello (probable) Admin</div>
 
     <div class="content-wrap">
-      <div id="preLogin" style="display: block;">
-        <p>
-          You are required to login to Goonhub to continue.
-        </p>
-        <a href="#" onclick="openLogin(event)">
-          Open Login Page
-        </a>
+      <div id="preLogin" style="display: block">
+        <p>You are required to login to Goonhub to continue.</p>
+        <a href="#" onclick="openLogin(event)"> Open Login Page </a>
       </div>
 
       <div id="loggingIn">
         <p>
-          Opened login page, please check your browser and login to your account.
+          Opened login page, please check your browser and login to your
+          account.
         </p>
         <div class="spinner">
-          <img src="{{resource("images/spinner.gif")}}" width="32" height="32" alt="" />
+          <img
+            src="{{resource('images/spinner.gif')}}"
+            width="32"
+            height="32"
+            alt=""
+          />
         </div>
         <a href="#" onclick="cancelLogin(event)" class="cancel-login">
           Cancel
@@ -102,12 +102,8 @@
       </div>
 
       <div id="loginComplete">
-        <p>
-          Login successful! You can now close this window and go nuts.
-        </p>
-        <a href="#" onclick="closePopup(event)">
-          Close
-        </a>
+        <p>Login successful! You can now close this window and go nuts.</p>
+        <a href="#" onclick="closePopup(event)"> Close </a>
       </div>
     </div>
   </div>
@@ -120,7 +116,7 @@
 
     function openLogin(event) {
       event.preventDefault();
-      window.location = 'byond://?src='+ref+';openLogin=1'
+      window.location = 'byond://?src=' + ref + ';openLogin=1';
       preLoginEl.style.display = 'none';
       loggingInEl.style.display = 'block';
     }

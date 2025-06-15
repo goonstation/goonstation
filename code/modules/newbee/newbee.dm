@@ -4,7 +4,7 @@
 /// indicates if this is a player who is new to goonstation
 /datum/player/var/is_newbee = FALSE
 
-/client/New()
+/client/post_auth()
 	. = ..()
 	check_newbee()
 

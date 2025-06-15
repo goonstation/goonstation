@@ -22,7 +22,10 @@ a {
 }
 
 /* line 40, ../sass/martian.scss */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -36,9 +39,15 @@ h1 {
 /* line 50, ../sass/martian.scss */
 #screen {
   background: #503392;
-  -moz-box-shadow: #cac5df 0 0 20px 5px, #2b1857 0 0 10px 5px inset;
-  -webkit-box-shadow: #cac5df 0 0 20px 5px, #2b1857 0 0 10px 5px inset;
-  box-shadow: #cac5df 0 0 20px 5px, #2b1857 0 0 10px 5px inset;
+  -moz-box-shadow:
+    #cac5df 0 0 20px 5px,
+    #2b1857 0 0 10px 5px inset;
+  -webkit-box-shadow:
+    #cac5df 0 0 20px 5px,
+    #2b1857 0 0 10px 5px inset;
+  box-shadow:
+    #cac5df 0 0 20px 5px,
+    #2b1857 0 0 10px 5px inset;
   -webkit-border-radius: 60px;
   border-radius: 60px;
   background-clip: padding-box;
@@ -51,11 +60,12 @@ h1 {
 
 /* line 61, ../sass/martian.scss */
 .menu {
-  filter: url("#shadowed-goo");
+  filter: url('#shadowed-goo');
 }
 
 /* line 67, ../sass/martian.scss */
-.menu-item, .menu-open-button {
+.menu-item,
+.menu-open-button {
   background: #afcadb;
   border-radius: 100%;
   width: 80px;
@@ -252,7 +262,8 @@ keyframes :
   overflow: hidden;
 }
 /* line 274, ../sass/martian.scss */
-.scanlines:before, .scanlines:after {
+.scanlines:before,
+.scanlines:after {
   display: block;
   pointer-events: none;
   content: '';
@@ -274,7 +285,11 @@ keyframes :
   bottom: 0;
   left: 0;
   z-index: 2147483648;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.2) 51%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.2) 51%
+  );
   background-size: 100% 12px;
   animation: scanlines 6s steps(360) infinite;
 }
