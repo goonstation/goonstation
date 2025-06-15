@@ -282,7 +282,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 	density = 0
 
 	updateHealth()
@@ -426,6 +426,7 @@
 		F = new /obj/item/electronics/frame/flatpack(target_loc)
 	else
 		F = new(target_loc)
+	F.forensic_holder = src.forensic_holder // keep forensic evidence when deconstructed
 	F.name = "[src.name] frame"
 	if(src.deconstruct_flags & DECON_DESTRUCT)
 		F.store_type = src.type

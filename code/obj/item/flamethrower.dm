@@ -83,7 +83,7 @@ A Flamethrower in various states of assembly
 			return TRUE
 
 	log_shoot(mob/user, turf/T, obj/projectile/P)
-		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir_accurate(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
