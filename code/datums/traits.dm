@@ -1188,7 +1188,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		var/mob/living/carbon/human/H = owner
 		var/cyber_rejected = FALSE
 		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
-			if (P.kind_of_limb & LIMB_ROBOT)
+			if (isrobolimb(P))
 				boutput(H, SPAN_ALERT("Your body is incompatible with [P] and rejects it!"))
 				P.sever()
 				cyber_rejected = TRUE
