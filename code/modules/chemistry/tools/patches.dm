@@ -342,14 +342,14 @@
 /* =================================================== */
 
 /obj/item/reagent_containers/patch/mini/bruise
-	name = "brute mini-patch"
-	desc = "Heals small brute wounds."
+	name = "healing mini-patch"
+	desc = "Heals brute damage wounding."
 	medical = 1
 	initial_reagents = "styptic_powder"
 
 /obj/item/reagent_containers/patch/mini/burn
 	name = "burn mini-patch"
-	desc = "Heals small burn wounds."
+	desc = "Heals burn damage wounding."
 	medical = 1
 	initial_reagents = "silver_sulfadiazine"
 

@@ -1,7 +1,6 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
-	HELP_MESSAGE_OVERRIDE("")
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
@@ -58,16 +57,6 @@
 				var/datum/material/M = getMaterial("steel")
 				R.setMaterial(M)
 		qdel(src)
-
-	get_help_message(dist, mob/user)
-		. = ..()
-		if (src.broken)
-			. += "You can use a <b>welding tool</b> to remove this broken railing."
-		else
-			if (src.is_reinforced)
-				. += "You can use <b>wirecutters</b> to remove the reinforcement from this railing, or a <b>welding tool</b> to deconstruct it."
-			else
-				. += "You can use <b>metal rods</b> to reinforce this railing, or a <b>welding tool</b> to deconstruct it."
 
 	ex_act(severity)
 		switch(severity)
@@ -128,6 +117,8 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
+		if (istype(src, /obj/railing/wrestling))
+			return
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
@@ -262,7 +253,7 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/railing/wrestling, /obj/sec_tape,)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner

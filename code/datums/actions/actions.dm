@@ -874,7 +874,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
-	New(dur)
+	New(var/dur)
 		duration = dur
 		..()
 
@@ -884,10 +884,7 @@
 			var/mob/living/carbon/human/H = owner
 			duration = round(duration * H.handcuffs.remove_self_multiplier)
 
-		owner.visible_message(
-			SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"),
-			SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(duration/10)] seconds and you need to stand still)")
-		)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
 
 	onUpdate()
 		. = ..()
@@ -895,26 +892,19 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-	onInterrupt(flag)
+	onInterrupt(var/flag)
 		..()
+		boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
 		if(!(flag & INTERRUPT_ACTION))
-			if (owner.hasStatus("handcuffed"))
-				boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
 			src.resumable = FALSE
-
-	onResume(datum/action/attempted)
-		. = ..()
-		boutput(owner, SPAN_ALERT("You're still removing your handcuffs. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "handcuff_removal")
 
 	onEnd()
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			H.visible_message(
-				SPAN_ALERT("<B>[H] manages to remove the handcuffs!</B>"),
-				SPAN_NOTICE("You successfully remove your handcuffs.")
-			)
+			H.visible_message(SPAN_ALERT("<B>[H] attempts to remove the handcuffs!</B>"))
+			boutput(H, SPAN_NOTICE("You successfully remove your handcuffs."))
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -923,36 +913,18 @@
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	icon_state = "orange1"
 
-	New(dur)
+	New(var/dur)
 		duration = dur
 		..()
 
 	onStart()
 		..()
-		owner.visible_message(
-			SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"),
-			SPAN_ALERT("You attempt to remove your shackles. (This will take around [round(src.duration/10)] seconds and you need to stand still)")
-		)
+		for(var/mob/O in AIviewers(owner))
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"), 1)
 
-	onUpdate()
-		. = ..()
-		if (isnull(owner) || !ishuman(owner))
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/mob/living/carbon/human/H = owner
-		if (!H.shoes || !H.shoes.chained)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onInterrupt(flag)
+	onInterrupt(var/flag)
 		..()
-		if(!(flag & INTERRUPT_ACTION))
-			boutput(owner, SPAN_ALERT("Your attempt to remove the shackles was interrupted!"))
-			src.resumable = FALSE
-
-	onResume(datum/action/attempted)
-		. = ..()
-		boutput(owner, SPAN_ALERT("You're still removing your shackles. (Around [round((src.duration-src.time_spent())/10)] seconds remaining)"), "shackle_removal")
+		boutput(owner, SPAN_ALERT("Your attempt to remove the shackles was interrupted!"))
 
 	onEnd()
 		..()
@@ -965,10 +937,9 @@
 				H.update_clothing()
 				if (SH)
 					SH.layer = initial(SH.layer)
-				H.visible_message(
-					SPAN_ALERT("<B>[H] manages to remove the shackles!</B>"),
-					SPAN_NOTICE("You successfully remove the shackles.")
-				)
+				for(var/mob/O in AIviewers(H))
+					O.show_message(SPAN_ALERT("<B>[H] manages to remove the shackles!</B>"), 1)
+				H.show_text("You successfully remove the shackles.", "blue")
 				logTheThing(LOG_COMBAT, H, "removes their own shackles at [log_loc(H)].")
 
 
@@ -2015,17 +1986,10 @@
 	var/pixel_x_hand_offset = null
 	var/pixel_y_hand_offset = null
 
-	var/initial_pixel_x = null
-	var/initial_pixel_y = null
-	var/initial_vis_flags = null
-
 	New(mob/user, obj/item/item, hand_icon, x_offset = 6, y_offset = 2, x_hand_offset = 6, y_hand_offset = 2)
 		. = ..()
 		src.user = user
 		src.item = item
-		src.initial_pixel_x = src.item.pixel_x
-		src.initial_pixel_y = src.item.pixel_y
-		src.initial_vis_flags= src.item.vis_flags
 		src.hand_icon = hand_icon
 		src.pixel_x_offset = x_offset
 		src.pixel_y_offset = y_offset
@@ -2042,20 +2006,15 @@
 			src.pixel_x_offset = -src.pixel_x_offset
 			src.pixel_x_hand_offset = -src.pixel_x_hand_offset
 
-		src.item.vis_flags |= (VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
-		src.item.pixel_x = src.pixel_x_offset
-		src.item.pixel_y = src.pixel_y_offset
-		src.user.vis_contents += src.item
-
+		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, src.pixel_x_offset, src.pixel_y_offset)
 		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, src.pixel_x_hand_offset, src.pixel_y_hand_offset, color=user.get_fingertip_color())
+
+		src.user.UpdateOverlays(overlay, "showoff_overlay")
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
 
 		src.user.set_dir(SOUTH)
 
 	onDelete()
 		. = ..()
-		src.user.vis_contents -= src.item
-		src.item.vis_flags = initial_vis_flags
-		src.item.pixel_x = initial_pixel_x
-		src.item.pixel_y = initial_pixel_y
+		src.user.UpdateOverlays(null, "showoff_overlay")
 		src.user.UpdateOverlays(null, "showoff_hand_overlay")

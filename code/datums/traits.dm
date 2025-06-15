@@ -240,15 +240,7 @@
 		ASSERT(src.name)
 		..()
 
-	/// Returns TRUE if a trait should NOT be added to a mob.
-	proc/preventAddTrait(mob/owner, resolved_role)
-		if (resolved_role == "tutorial")
-			for (var/trait_cateogry in src.category)
-				if (trait_cateogry == "species")
-					return FALSE
-				if (trait_cateogry == "language")
-					return FALSE
-			return TRUE
+	proc/preventAddTrait(mob/owner, var/resolved_role)
 		. = FALSE
 
 	proc/onAdd(var/mob/owner)
@@ -1188,7 +1180,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		var/mob/living/carbon/human/H = owner
 		var/cyber_rejected = FALSE
 		for (var/obj/item/parts/P in list(H.limbs.l_arm, H.limbs.r_arm, H.limbs.l_leg, H.limbs.r_leg))
-			if (isrobolimb(P))
+			if (P.kind_of_limb & LIMB_ROBOT)
 				boutput(H, SPAN_ALERT("Your body is incompatible with [P] and rejects it!"))
 				P.sever()
 				cyber_rejected = TRUE
@@ -1480,11 +1472,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = 0
 	category = list("body", "nohair","nowig")
 	icon_state = "hair"
-
-	preventAddTrait(mob/owner, resolved_role)
-		. = ..()
-		if (resolved_role == "tutorial")
-			. = FALSE
 
 	onAdd(mob/owner)
 		owner.bioHolder.AddEffect("hair_growth", innate = TRUE)

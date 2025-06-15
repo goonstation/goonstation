@@ -196,7 +196,8 @@
 		#ifndef UPSCALED_MAP
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
-			if (seen_by_camera(tracking))
+			var/turf/T = get_turf(tracking)
+			if (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
 				failedToTrack = 0
 		#endif
 

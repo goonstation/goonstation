@@ -162,7 +162,6 @@
 
 	var/datum/viewport/vp = locate(id)
 	if(istype(vp) && vp.viewer == src)
-		src.mob?.on_close_viewport(vp)
 		qdel(vp)
 
 /mob/proc/create_viewport(kind, title=null, size=8, share_planes=FALSE)
@@ -181,10 +180,6 @@
 	vp.clickToMove = 1
 	vp.SetViewport(startPos, size, size)
 	return vp
-
-/// override per mob
-/mob/proc/on_close_viewport(datum/viewport/vp)
-	return
 
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"

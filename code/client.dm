@@ -947,7 +947,7 @@ var/global/curr_day = null
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
-	set name = "Rules - RP"
+	set name = "RP Rules"
 	set category = "Commands"
 
 	var/cant_interact_time = null

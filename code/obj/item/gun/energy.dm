@@ -1541,7 +1541,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/hot.ogg', 50)
 				src.toggle_recoil(TRUE)
-			if ("assault","high power", "bigshot")
+			if ("assault","highpower", "bigshot")
 				set_current_projectile(projectiles["assault"])
 				current_projectile.cost = 170
 				item_state = "lawg-bigshot"

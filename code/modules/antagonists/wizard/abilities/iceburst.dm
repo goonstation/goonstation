@@ -180,7 +180,8 @@
 			src.pixel_y = 0
 
 	proc/PassiveCool(var/mob/M, mult)
-		M.changeBodyTemp(-20 KELVIN * mult, min_temp = src.cooltemp)
+		if(M.bodytemperature >= src.cooltemp)
+			M.bodytemperature = max(M.bodytemperature - (20 * mult),src.cooltemp)
 		if(M.bodytemperature > src.melttemp)
 			takeDamage(1 * mult)
 

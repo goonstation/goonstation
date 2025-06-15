@@ -279,9 +279,9 @@ datum
 				if(!M) M = holder.my_atom
 				M.make_jittery(2)
 				if(M.bodytemperature > M.base_body_temp)
-					M.changeBodyTemp(-15 KELVIN * mult, min_temp = M.base_body_temp)
-				else if(M.bodytemperature < M.base_body_temp)
-					M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
+				else if(M.bodytemperature < 311)
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				..()
 				return
 
@@ -317,11 +317,13 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 2 * mult, 0)
-				M.changeBodyTemp(-10 KELVIN * mult, min_temp = M.base_body_temp)
+				if(M.bodytemperature > M.base_body_temp)
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(10 * mult))
 				// I only put this following bit because wiki claims it "attempts to return temperature to normal"
 				// Rather than the previous functionality of cooling down when hot
 				// No need to implement if the wiki is erronous here
-				M.changeBodyTemp(10 KELVIN * mult, max_temp = M.base_body_temp)
+				if(M.bodytemperature < M.base_body_temp)
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(10 * mult))
 				..()
 				return
 
@@ -342,7 +344,8 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(55))
 					M.HealDamage("All", 0, 2 * mult)
-				M.changeBodyTemp(-10 KELVIN * mult, min_temp = 280 KELVIN)
+				if(M.bodytemperature > 280)
+					M.bodytemperature = max(M.bodytemperature-(10 * mult),280)
 				..()
 				return
 
@@ -405,9 +408,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp)
-					M.changeBodyTemp(15 KELVIN * mult, max_temp = M.base_body_temp)
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				else if(M.bodytemperature > M.base_body_temp)
-					M.changeBodyTemp(-15 KELVIN * mult, min_temp = M.base_body_temp)
+					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
 				if(volume >= 1)
 					var/oxyloss = M.get_oxygen_deprivation()
 					M.take_oxygen_deprivation(-INFINITY)
@@ -585,7 +588,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -601,7 +604,7 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
@@ -852,7 +855,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeBodyTemp(7 KELVIN * mult, max_temp = M.base_body_temp)
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(7 * mult))
 				if(probmult(10))
 					M.make_jittery(4)
 				M.changeStatus("drowsy", -10 SECONDS)
@@ -1212,7 +1216,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
+				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.make_jittery(4)
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.losebreath > 3)
@@ -1446,7 +1451,8 @@ datum
 				M.make_dizzy(1 * mult)
 				M.change_misstep_chance(5 * mult)
 				src.total_misstep += 5 * mult
-				M.changeBodyTemp(10 KELVIN * mult, max_temp = M.base_body_temp + 10)
+				if(M.bodytemperature < M.base_body_temp)
+					M.bodytemperature = min(M.base_body_temp + 10, M.bodytemperature+(10 * mult))
 				if(probmult(4)) M.emote("collapse")
 				if(M.losebreath > 5)
 					M.losebreath = max(5, M.losebreath-(5 * mult))

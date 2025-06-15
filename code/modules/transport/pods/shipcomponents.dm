@@ -81,7 +81,8 @@
 		for(var/mob/M in src.ship)
 			boutput(M, "[ship.ship_message("[src] is coming online...")]")
 			mob_activate(M)
-	src.ship.myhud?.update_states()
+	if (src.ship.myhud)
+		src.ship.myhud.update_states()
 	return TRUE
 
 ///Component does this constantly
@@ -98,7 +99,7 @@
 		if (give_message)
 			boutput(M, "[ship.ship_message("[src] is shutting down...")]")
 		mob_deactivate(M)
-	src.ship.myhud?.update_states()
+	src.ship.myhud.update_states()
 	return
 ///Handles mob entering ship
 /obj/item/shipcomponent/proc/mob_activate(mob/M as mob)

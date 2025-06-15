@@ -127,7 +127,9 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			M.changeBodyTemp(-2 KELVIN * times, min_temp = M.base_body_temp + 3)
+			if (M.bodytemperature > M.base_body_temp + 3)
+				for(var/i in 1 to times)
+					M.bodytemperature -= 2
 
 /datum/statusEffect/foodwarm
 	id = "food_warm"
@@ -150,7 +152,9 @@
 		if(times >= 1 && ismob(owner))
 			tickCount -= (round(times) * tickSpacing)
 			var/mob/M = owner
-			M.changeBodyTemp(6 KELVIN * times, max_temp = M.base_body_temp + 8)
+			if (M.bodytemperature < M.base_body_temp + 8)
+				for(var/i in 1 to times)
+					M.bodytemperature += 6
 
 /datum/statusEffect/staminaregen/food
 	id = "food_refreshed"

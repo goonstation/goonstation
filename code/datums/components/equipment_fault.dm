@@ -578,13 +578,9 @@ TYPEINFO(/datum/component/equipment_fault/messy)
 
 /datum/component/equipment_fault/messy/Initialize(tool_flags, cleanables)
 	. = ..()
-	if (cleanables)
-		if (ispath(cleanables, /obj/decal/cleanable))
-			src.cleanable_types = list(cleanables)
-		else if (islist(cleanables))
-			src.cleanable_types = cleanables
-		else
-			return COMPONENT_INCOMPATIBLE
+	if (!islist(cleanables))
+		return COMPONENT_INCOMPATIBLE
+	src.cleanable_types = cleanables
 
 /datum/component/equipment_fault/messy/ef_process(obj/machinery/M, mult)
 	src.ef_perform_fault(M)

@@ -64,15 +64,15 @@
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
-	relaymove(mob/user as mob, dir)
-		if (!isalive(user))
+	relaymove(mob/usr as mob, dir)
+		if (!isalive(usr))
 			return
 		if (src.locked)
-			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
+			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
-		add_fingerprint(user)
+		add_fingerprint(usr)
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 

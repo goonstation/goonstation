@@ -136,7 +136,6 @@
 	var/turf/magnetic_center
 	alpha = 128
 	anchored = ANCHORED_ALWAYS
-	event_handler_flags = IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	small
 		width = 7
@@ -160,12 +159,11 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			for (var/obj/O in T)
-				continue_if_overlay_or_effect(O)
-				if (!HAS_FLAG(O.event_handler_flags, IMMUNE_MINERAL_MAGNET))
+				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && L.is_npc)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
 					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)

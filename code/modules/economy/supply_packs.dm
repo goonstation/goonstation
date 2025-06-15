@@ -257,10 +257,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/condiment/hotsauce = 3,
 					/obj/item/reagent_containers/food/snacks/condiment/ketchup = 4,
 					/obj/item/reagent_containers/food/snacks/condiment/mayo = 4,
-					/obj/item/reagent_containers/food/snacks/condiment/syrup = 2,
-					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 2,
-					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2,
-					/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 2)
+					/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/honey = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Condiment Crate"
@@ -1812,7 +1811,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/kitchen_kit
 	name = "Kitchen Kit"
-	desc = "1x Fridge, Frames: 1x Oven, 1x Mixer, 1x Sink, 1x Deep Fryer, 1x Food Processor, 1x FoodTech, 1x Meat Spike, 1x Gibber"
+	desc = "1x Fridge, Frames: 1x Oven, 1x Mixer, 1x Sink, 1x Deep Fryer, 1x Food Processor, 1x ValuChimp, 1x FoodTech, 1x Meat Spike, 1x Gibber"
 	category = "Civilian Department"
 	contains = list(/obj/storage/secure/closet/fridge)
 	frames = list(/obj/submachine/chef_oven,

@@ -1,25 +1,25 @@
 /datum/listen_module/effect/lawbringer
 	id = LISTEN_EFFECT_LAWBRINGER
 	var/list/valid_modes = list(
-		"detain",
-		"execute",
-		"exterminate",
-		"cluwneshot",
-		"smokeshot",
-		"fog",
-		"knockout",
-		"sleepshot",
-		"hotshot",
-		"incendiary",
-		"fired",
-		"assault",
-		"high power",
-		"bigshot",
-		"clownshot",
-		"clown",
-		"pulse",
-		"push",
-		"throw",
+		"detain" = TRUE,
+		"execute" = TRUE,
+		"exterminate" = TRUE,
+		"cluwneshot" = TRUE,
+		"smokeshot" = TRUE,
+		"fog" = TRUE,
+		"knockout" = TRUE,
+		"sleepshot" = TRUE,
+		"hotshot" = TRUE,
+		"incendiary" = TRUE,
+		"fired" = TRUE,
+		"assault" = TRUE,
+		"highpower" = TRUE,
+		"bigshot" = TRUE,
+		"clownshot" = TRUE,
+		"clown" = TRUE,
+		"pulse" = TRUE,
+		"push" = TRUE,
+		"throw" = TRUE,
 	)
 
 /datum/listen_module/effect/lawbringer/process(datum/say_message/message)
@@ -47,11 +47,12 @@
 		return
 
 	var/text = lawbringer.sanitize_talk(message.content)
+	var/list/words = splittext(text, " ")
 
-	for(var/valid_mode in valid_modes)
-		if(!findtext(text, valid_mode))
+	for(var/word in words)
+		if(!src.valid_modes[word])
 			continue
-		lawbringer.change_mode(H, valid_mode)
+		lawbringer.change_mode(H, word)
 		H.update_inhands()
 		lawbringer.UpdateIcon()
 		return

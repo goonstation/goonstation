@@ -352,7 +352,6 @@ Contains:
 		src.add_fingerprint(user)
 		src.UpdateIcon()
 		src.last_armer = user
-		flags ^= NOSPLASH
 		return
 	..()
 

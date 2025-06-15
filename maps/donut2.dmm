@@ -8025,6 +8025,22 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"aTY" = (
+/obj/table/auto,
+/obj/item/robodefibrillator{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/item/bandage{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/bandage{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "aTZ" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/toy/plush/small/bee{
@@ -15092,6 +15108,19 @@
 /obj/mapping_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"caf" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/carpet/blue/fancy/edge,
+/area/station/medical/staff)
 "cay" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -17359,7 +17388,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "drp" = (
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/grey{
@@ -18241,6 +18270,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"dTV" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "dUq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25390,25 +25429,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
-"iky" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -9;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/food/snacks/burger/heartburger{
-	pixel_y = 3;
-	rand_pos = 0;
-	pixel_x = 9
-	},
-/obj/machinery/recharger/defibrillator,
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 17
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge{
-	dir = 1
-	},
-/area/station/medical/staff)
 "ikD" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/arrival{
@@ -25648,25 +25668,6 @@
 /obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"iuN" = (
-/obj/table/auto,
-/obj/item/robodefibrillator{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/item/bandage{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/machinery/recharger/defibrillator{
-	pixel_y = 8
-	},
-/obj/item/bandage{
-	pixel_x = 16;
-	pixel_y = 3
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "iuU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -31754,17 +31755,6 @@
 /obj/item/clothing/suit/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
-"lXd" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/landmark/start/job/medical_doctor,
-/obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor/carpet/blue/fancy/edge,
-/area/station/medical/staff)
 "lZI" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/baroffice)
@@ -33256,7 +33246,7 @@
 /area/station/science/lab)
 "mTi" = (
 /obj/table/reinforced/auto,
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /obj/item/device/microphone,
 /obj/machinery/light/small/floor,
 /obj/decal/stage_edge{
@@ -43568,16 +43558,6 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/juryroom)
-"sIM" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/interdictor/ranch,
-/turf/simulated/floor/wood/seven,
-/area/station/ranch)
 "sIP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -48303,6 +48283,7 @@
 /area/station/maintenance/northwest)
 "vwb" = (
 /obj/storage/secure/closet/civilian/bartender,
+/obj/item/reagent_containers/food/drinks/juicer,
 /obj/item/storage/box/donkpocket_kit{
 	pixel_x = -7;
 	pixel_y = 4
@@ -50159,7 +50140,7 @@
 /area/station/crew_quarters/stockex)
 "wDk" = (
 /obj/stool,
-/obj/decal/boxingropeenter{
+/obj/railing/wrestling{
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
@@ -51056,6 +51037,21 @@
 	},
 /turf/simulated/floor/carpet/blue/decal/outercross,
 /area/station/chapel/sanctuary)
+"xjR" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_y = 4;
+	rand_pos = 0
+	},
+/obj/item/kitchen/food_box/sugar_box,
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 1
+	},
+/area/station/medical/staff)
 "xjV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -67046,7 +67042,7 @@ isN
 bbl
 pwc
 aUb
-iuN
+aTY
 gme
 vVR
 gcs
@@ -67346,7 +67342,7 @@ aRM
 aRa
 kdc
 vfW
-lXd
+caf
 aUb
 gcf
 dyT
@@ -67646,7 +67642,7 @@ bau
 bhP
 aUG
 aRa
-iky
+xjR
 gnn
 aTn
 aUb
@@ -71622,7 +71618,7 @@ fvG
 vkL
 rRw
 dOS
-sIM
+dTV
 bGd
 bis
 vse

@@ -1120,7 +1120,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					heart_image.pixel_y = body_offset
 					src.body_standing.overlays += heart_image
 
-			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && !(src.w_uniform?.hide_underwear) && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
+			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
 				undies_image.icon_state = underwear_styles[AHOLD.underwear]
 				undies_image.color = AHOLD.u_color
 				undies_image.pixel_y = body_offset

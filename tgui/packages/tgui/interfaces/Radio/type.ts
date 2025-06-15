@@ -9,10 +9,8 @@ import { BooleanLike } from 'tgui-core/react';
 
 export interface RadioData {
   name: string;
-  hasMicrophone: BooleanLike;
-  microphoneEnabled: BooleanLike;
-  hasSpeaker: BooleanLike;
-  speakerEnabled: BooleanLike;
+  broadcasting: BooleanLike;
+  listening: BooleanLike;
   frequency: number;
   frequencyFormatted: string;
   lockedFrequency: BooleanLike;
@@ -24,6 +22,7 @@ export interface RadioData {
   wires: number;
   modifiable: BooleanLike;
   code: number;
+  hasMicrophone: BooleanLike;
   sendButton: BooleanLike;
   hasToggleButton: BooleanLike;
   power: BooleanLike;

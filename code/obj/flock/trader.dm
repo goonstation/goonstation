@@ -109,8 +109,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 // TELEPORT MARKER
 ///////////////////
 /obj/fakeobject/flock/telepad
-	plane = PLANE_NOSHADOW_BELOW
-	layer = FLOOR_EQUIP_LAYER1
 	icon_state = "telemarker"
 	name = "glowing marker"
 	desc = "I got nothin'."

@@ -778,7 +778,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				return
 			if("chill")
 				for(var/mob/living/carbon/M in src.loc)
-					M.changeBodyTemp(-100 KELVIN)
+					M.bodytemperature -= 100
 					boutput(M, SPAN_ALERT("You feel colder!"))
 				return
 			if("tempblind")
