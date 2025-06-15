@@ -12,8 +12,8 @@
 
 	New()
 		..()
-		if (!src.parent.GetComponent(/datum/component/death_barf))
-			src.parent.AddComponent(/datum/component/death_barf)
+		if (!holder.owner.GetComponent(/datum/component/death_barf))
+			holder.owner.AddComponent(/datum/component/death_barf)
 
 	cast(atom/target)
 		. = ..()

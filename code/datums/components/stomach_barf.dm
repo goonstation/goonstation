@@ -7,8 +7,9 @@
 	RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(barf))
 
 /datum/component/death_barf/proc/record_limb(atom/target)
-	if (!istypes(target, src.limb_list))
-		LAZYLISTADD(src.limb_list, target)
+	if (target in src.limb_list)
+		return
+	LAZYLISTADD(src.limb_list, target)
 
 /datum/component/death_barf/proc/barf()
 	UnregisterSignal(src.parent, COMSIG_MOB_DEATH)

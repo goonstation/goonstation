@@ -10,10 +10,10 @@
 	New()
 		..()
 		// stomach retreat can get away with being by itself, but eat limb should always come bundled with it
-		if (!src.parent.getAbility(/datum/targetable/critter/stomach_retreat))
-			src.parent.addAbility(/datum/targetable/critter/stomach_retreat)
-		if (!src.parent.GetComponent(/datum/component/death_barf))
-			src.parent.AddComponent(/datum/component/death_barf)
+		if (!holder.owner.getAbility(/datum/targetable/critter/stomach_retreat))
+			holder.owner.addAbility(/datum/targetable/critter/stomach_retreat)
+		if (!holder.owner.GetComponent(/datum/component/death_barf))
+			holder.owner.AddComponent(/datum/component/death_barf)
 
 	cast(atom/target)
 		. = ..()
@@ -30,7 +30,7 @@
 	icon_state = "grabbed"
 	var/last_crunch = 0
 	var/atom/target
-	var/mob/living/critter/mimic/antag_spawn/user
+	var/mob/user
 
 	New(Target, User)
 		target = Target
@@ -43,8 +43,10 @@
 			duration = 5 SECONDS
 		else
 			duration = 1 SECONDS
-		user.stop_hiding()
-		user.last_disturbed = INFINITY
+		if (istype(user, /mob/living/critter/mimic))
+			var/mob/living/critter/mimic/mimic = user
+			mimic.stop_hiding()
+			mimic.last_disturbed = INFINITY
 
 	onUpdate()
 		..()
@@ -59,7 +61,9 @@
 
 	onEnd()
 		..()
-		user.last_disturbed = 1 SECONDS
+		if (istype(user, /mob/living/critter/mimic))
+			var/mob/living/critter/mimic/mimic = user
+			mimic.last_disturbed = 1 SECONDS
 		src.gobble(target, user)
 
 	proc/gobble(atom/target, mob/user)

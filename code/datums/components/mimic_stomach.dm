@@ -55,57 +55,61 @@ TYPEINFO(/datum/component/mimic_stomach)
 		src.present_mimic = user
 		src.present_mimic.set_loc(src.center)
 		src.on_entered(user)
-		RegisterSignal(src.current_container, COMSIG_ATOM_ENTERED, PROC_REF(add_limb))
+		RegisterSignal(src.current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
 		for (var/obj/item in src.present_mimic.contents)
-			if (istype(item, /obj/item/parts/human_parts))
-				src.add_limb(item, FALSE)
+			src.add_limb(item, FALSE)
+			LAZYLISTREMOVE(src.present_mimic.contents, item)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself inside out!</b>"))
 	else
+		for (var/obj/item in src.things_eaten)
+			LAZYLISTADD(src.present_mimic.contents, item)
 		src.present_mimic.set_loc(get_turf(src.current_container))
 		UnregisterSignal(src.current_container, COMSIG_ATOM_ENTERED)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself outside in!</b>"))
 		src.current_container = null
 		src.present_mimic = null
 
-/datum/component/mimic_stomach/proc/add_limb(atom/target, var/trap = TRUE)
+/datum/component/mimic_stomach/proc/add_limb(atom/target)
 	if (!target)
 		return
-	var/datum/human_limbs/torn_limb = null
-	var/obj/item/parts/human_parts/limb_obj = null
-	if (ishuman(target))
-		var/mob/living/carbon/human/targetHuman = target
-		var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
-		var/list/randLimb
-		for (var/potential_limb in randLimbBase) // build a list of limbs the target actually has
-			if (targetHuman.limbs.get_limb(potential_limb))
-				LAZYLISTADD(randLimb, potential_limb)
-		torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
-		limb_obj = torn_limb.sever()
-
-		if (src.present_mimic)
-			if (GET_COOLDOWN(src.current_container, "mimicTrap"))
-				boutput(target, SPAN_ALERT("<B>You narrowly avoid something biting at you inside the [current_container]!</B>"))
-				return
-			if (limb_obj)
-				ON_COOLDOWN(src.current_container, "mimicTrap", 5 SECONDS)
-				boutput(target, SPAN_ALERT("Something in the [src.current_container] tears off [limb_obj]!"))
-				playsound(src.current_container, 'sound/voice/burp_alien.ogg', 60, 1)
-			else
-				boutput(target, SPAN_ALERT("Something in the [src.current_container] bites at you, but you have no limbs to eat!"))
-				return
+	var/obj/item/parts/human_parts/limb_obj
+	if (!istype(target, /obj/item/parts/human_parts))
+		boutput(src.present_mimic, SPAN_ALERT("Doesn't look edible..."))
+		return
 	else
-		if (!istype(target, /obj/item/parts/human_parts))
-			boutput(src.present_mimic, SPAN_ALERT("Doesn't look edible..."))
-			return
-		else
-			limb_obj = target
-
+		limb_obj = target
 	LAZYLISTADD(src.things_eaten, limb_obj)
 	limb_obj.set_loc(src.limb_target_turf)
 	limb_obj.pixel_x = rand(-12,12)
 	limb_obj.pixel_y = rand(-12,12)
 	src.limb_target_turf = get_turf(pick(src.non_walls))
 	playsound(current_container, 'sound/voice/burp_alien.ogg', 60, 1)
+
+/datum/component/mimic_stomach/proc/trap_chomp(atom/target, atom/user)
+	var/mob/living/carbon/human/targetHuman = locate(/mob/living/carbon/human) in src.current_container
+	if (!istype(user, /mob/living/carbon/human) || !targetHuman) // user is the entered thing in this case. I know
+		return
+	var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+	var/list/randLimb
+	var/datum/human_limbs/torn_limb
+	var/obj/item/parts/human_parts/limb_obj
+	for (var/potential_limb in randLimbBase) // build a list of limbs the target actually has
+		if (targetHuman.limbs.get_limb(potential_limb))
+			LAZYLISTADD(randLimb, potential_limb)
+	torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
+	limb_obj = torn_limb.sever(src.parent, FALSE)
+
+	if (src.present_mimic)
+		if (GET_COOLDOWN(src.current_container, "mimicTrap"))
+			src.current_container.visible_message(SPAN_ALERT("<B>[targetHuman] narrowly avoids something biting at [him_or_her(targetHuman)] inside the [current_container]!</B>"))
+			return
+		if (limb_obj)
+			ON_COOLDOWN(src.current_container, "mimicTrap", 5 SECONDS)
+			src.current_container.visible_message(SPAN_ALERT("Something in the [src.current_container] tears off [limb_obj]!"))
+			playsound(src.current_container, 'sound/voice/burp_alien.ogg', 60, 1)
+		else
+			src.current_container.visible_message(SPAN_ALERT("Something in the [src.current_container] bites at [targetHuman], but [he_or_she_dont_or_doesnt(targetHuman)] have limbs to eat!"))
+			return
 
 /datum/component/mimic_stomach/UnregisterFromParent()
 	if (region)
