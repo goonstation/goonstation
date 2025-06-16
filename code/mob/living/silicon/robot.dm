@@ -17,6 +17,7 @@ TYPEINFO(/mob/living/silicon/robot)
 
 /mob/living/silicon/robot
 	name = "Cyborg"
+	var/flavor_text = ""
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
 	voice_type = "cyborg"
@@ -698,7 +699,8 @@ TYPEINFO(/mob/living/silicon/robot)
 			return
 		. += "[SPAN_NOTICE("*---------*")]<br>"
 		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")]<br>"
-
+		if (src.flavor_text != "")
+			. += "["[src.flavor_text]"]<br>"
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
 
@@ -2385,6 +2387,11 @@ TYPEINFO(/mob/living/silicon/robot)
 	// hacky, but this is used for says etc.
 	get_age_pitch_for_talk()
 		return vocal_pitch
+
+	verb/cmd_set_description()
+		set category = "Robot Commands"
+		set name = "Set Flavor Text"
+		src.flavor_text = tgui_input_text(src, "Set your flavor text:", "Flavor Text", src.mind.cust_notes, FLAVOR_CHAR_LIMIT, TRUE, allowEmpty = TRUE)
 
 	proc/pick_module()
 		if(src.module) return
