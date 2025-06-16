@@ -2394,6 +2394,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		set name = "Set Flavor Text"
 		if (!GET_COOLDOWN(src, "cmd_set_description"))
 			src.flavor_text = tgui_input_text(src, "Set your flavor text:", "Flavor Text", src.flavor_text, FLAVOR_CHAR_LIMIT, TRUE, allowEmpty = TRUE)
+			logTheThing(LOG_SAY, src, "set flavor text to: [src.flavor_text].")
 			ON_COOLDOWN(src, "cmd_set_description", src.flavor_text_cooldown)
 		else
 			src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "cmd_set_description") / 10)] seconds!", "red")
