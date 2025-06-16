@@ -18,6 +18,7 @@ TYPEINFO(/mob/living/silicon/robot)
 /mob/living/silicon/robot
 	name = "Cyborg"
 	var/flavor_text = ""
+	var/flavor_text_cooldown = 10 MINUTES
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
 	voice_type = "cyborg"
@@ -2391,7 +2392,11 @@ TYPEINFO(/mob/living/silicon/robot)
 	verb/cmd_set_description()
 		set category = "Robot Commands"
 		set name = "Set Flavor Text"
-		src.flavor_text = tgui_input_text(src, "Set your flavor text:", "Flavor Text", src.mind.cust_notes, FLAVOR_CHAR_LIMIT, TRUE, allowEmpty = TRUE)
+		if (!GET_COOLDOWN(src, "cmd_set_description"))
+			src.flavor_text = tgui_input_text(src, "Set your flavor text:", "Flavor Text", src.flavor_text, FLAVOR_CHAR_LIMIT, TRUE, allowEmpty = TRUE)
+			ON_COOLDOWN(src, "cmd_set_description", src.flavor_text_cooldown)
+		else
+			src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "cmd_set_description") / 10)] seconds!", "red")
 
 	proc/pick_module()
 		if(src.module) return
