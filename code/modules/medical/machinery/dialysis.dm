@@ -2,8 +2,6 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	mats = list("metal" = 20,
 				"crystal" = 5,
 				"conductive_high" = 5)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/medical/dialysis
 	name = "dialysis machine"
@@ -14,28 +12,18 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 #else
 	icon_state = "dialysis-base"
 #endif
-	density = 1
 	speech_verb_say = "beeps"
-	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
-	var/mob/living/carbon/patient
-	var/list/whitelist
-	// In units per process tick.
+	/// In units per process tick.
 	var/draw_amount = 16
-	var/hacked = FALSE
-	var/last_in = 0
-	var/last_out = 0
+	/// Colour is used for fluid image overlay.
 	var/output_blood_colour
 	/// Reagent ID of the current patient's blood.
 	var/patient_blood_id
 
 /obj/machinery/medical/dialysis/New()
 	..()
-	src.UnsubscribeProcess()
 	src.create_reagents(src.draw_amount)
-	if (!length(chem_whitelist))
-		CRASH("[src] tried to fetch the global chem whitelist but it has a length of 0!")
-	src.whitelist = chem_whitelist
 	src.UpdateIcon()
 
 /obj/machinery/medical/dialysis/disposing()
@@ -44,49 +32,12 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	..()
 
 /obj/machinery/medical/dialysis/emag_act(mob/user, obj/item/card/emag/E)
-	if (src.hacked) return FALSE
-	src.hacked = TRUE
+	..()
 	src.say("Dialysis protocols inversed.")
-	logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
-	logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
-	message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
 
-/obj/machinery/medical/dialysis/attack_hand(mob/user)
-	src.anchored = !src.anchored
-	boutput(user, "You [src.anchored ? "apply" : "release"] \the [src.name]'s brake.")
-
-/obj/machinery/medical/dialysis/get_desc(dist, mob/user)
-	..()
-	if (src.hacked)
-		. += " Something about it seems a little off."
-
-/obj/machinery/medical/dialysis/mouse_drop(atom/over_object)
-	if (!iscarbon(over_object))
-		return
-	var/mob/living/carbon/new_patient = over_object
-	var/mob/living/user = usr
-	if (!isliving(user) || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(new_patient, user))
-		return
-	if (src.patient)
-		if (src.patient != new_patient)
-			boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
-		else (new_patient == src.patient)
-			user.tri_message(new_patient,\
-			SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [new_patient]'s arm."),\
-			SPAN_NOTICE("You remove [src]'s cannulae from [new_patient]'s arm."),\
-			SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from your arm."))
-			src.stop_dialysis()
-		return
-	user.tri_message(new_patient,\
-	SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient]'s arm."),\
-	SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient]'s arm."),\
-	SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into your arm."))
-	logTheThing(LOG_COMBAT, user, "tries to hook up a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
-	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(cannulate), list(new_patient, user), src.icon, "dialysis-map", null, null)
+/obj/machinery/medical/dialysis/affect_patient(mult)
 	..()
 
-/obj/machinery/medical/dialysis/process(mult)
-	..()
 	if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
 		src.say("Patient lost.")
 		src.stop_dialysis()
@@ -108,7 +59,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	transfer_blood(src.patient, src, src.draw_amount)
 
 	// Re-implemented here due to all the got dang boutputs.
-	var/list/whitelist_buffer = src.whitelist + src.patient_blood_id
+	var/list/whitelist_buffer = chem_whitelist + src.patient_blood_id
 	for (var/reagent_id in src.reagents.reagent_list)
 		if ((!src.hacked && !(reagent_id in whitelist_buffer)) || (src.hacked && (reagent_id in whitelist_buffer)))
 			src.reagents.del_reagent(reagent_id)
@@ -126,6 +77,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	src.patient.reagents.reaction(src.patient, INGEST, amount_to_draw)
 	src.reagents.clear_reagents()
 	src.UpdateIcon()
+
 
 /obj/machinery/medical/dialysis/update_icon(...)
 	..()
@@ -152,36 +104,21 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 		src.ClearSpecificOverlays("blood_out")
 		src.ClearSpecificOverlays("blood_in")
 
-/obj/machinery/medical/dialysis/proc/cannulate(mob/living/carbon/new_patient, mob/user)
-	user.tri_message(new_patient,\
-	SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient]'s arm."),\
-	SPAN_NOTICE("You insert [src]'s cannulae into [new_patient]'s arm."),\
-	SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into your arm."))
-	logTheThing(LOG_COMBAT, user, "connects a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
-	src.start_dialysis(new_patient, user)
-
-/obj/machinery/medical/dialysis/proc/start_dialysis(mob/living/carbon/new_patient, mob/user)
-	if (!new_patient) return
-	if (src.patient)
-		return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
-	src.patient = new_patient
+/obj/machinery/medical/dialysis/add_patient(mob/living/carbon/new_patient, mob/user)
+	..()
 	src.patient.setStatus("dialysis", INFINITE_STATUS, src)
-	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
-	src.power_usage = 500
 	src.patient_blood_id = src.patient.blood_id
+	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 	src.UpdateIcon()
-	SubscribeToProcess()
 
-/obj/machinery/medical/dialysis/proc/stop_dialysis()
-	src.UnsubscribeProcess()
+/obj/machinery/medical/dialysis/remove_patient()
 	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
 	REMOVE_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src)
-	src.patient = null
 	src.patient_blood_id = null
 	src.output_blood_colour = null
-	src.power_usage = 0
+	..()
 	src.UpdateIcon()
 
 /datum/statusEffect/dialysis
