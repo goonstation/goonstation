@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 
 /obj/item/reagent_containers/glass/bottle/younggun
 	name = "Deageinium Poultry Formula"
-	desc = "A angsty bottle with labeling detailing younger youth and fitness."
+	desc = "An angsty bottle with labeling describing youth and fitness."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "bottle_3"
 	amount_per_transfer_from_this = 10
