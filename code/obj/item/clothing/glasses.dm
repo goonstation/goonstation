@@ -547,33 +547,21 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
-				if (!pigeon_controller)
-					boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
-				else
-					boutput(user, SPAN_ALERT("The P1G30N is already active somehow!"))
+				boutput(user, SPAN_ALERT("The [pigeon_controller ? "P1G30N" : "scuttlebot"] is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				if (!pigeon_controller)
-					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot couldn't be found."))
-				else
-					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N couldn't be found."))
+					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			if (!pigeon_controller)
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The scuttlebot is likely destroyed."))
-			else
-				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The P1G30N is likely destroyed."))
+			boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] is likely destroyed."))
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target, /mob/living/critter/robotic/scuttlebot))
 			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				if(!pigeon_controller)
-					boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the goggles.")
-				else
-					boutput(user, "You try to put the goggles back into the P1G30N but it grumps at you, not recognizing the goggles.")
+				boutput(user, "You try to put the goggles back into the [pigeon_controller ? "P1G30N" : "hat"] but it grumps at you, not recognizing the goggles.")
 				return 1
 			if (S.linked_hat != null)
 				S.linked_hat.set_loc(get_turf(S))
@@ -588,10 +576,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
 						newscuttle.make_inspector()
-			if(!pigeon_controller)
-				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
-			else
-				boutput(user, "You stuff the goggles back into the Carrier Pigeon. It powers down with a low whirr.")
+			boutput(user, "You stuff the goggles back into the [pigeon_controller ? "Carrier Pigeon" : "detgadget hat"]. It powers down with a low whirr.")
 			for(var/obj/item/photo/P in S.contents)
 				P.set_loc(get_turf(src))
 
