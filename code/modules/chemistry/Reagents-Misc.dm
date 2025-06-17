@@ -1450,8 +1450,7 @@ datum
 					M = holder.my_atom
 				if(prob(30) && istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.age > 5)
-						H.bioHolder.age -= 1 * mult
+					H.bioHolder.age = max(M.bioHolder.age - round(1 * mult), 18)
 					if (probmult(10))
 						boutput(H, SPAN_ALERT("You feel [pick("young", "energetic", "inexperienced", "tempermental", "odd")]."))
 					if (probmult(4))
