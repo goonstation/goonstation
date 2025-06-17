@@ -316,7 +316,6 @@
 		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
 		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
 
-
 /datum/mining_encounter/flock
 	name = "Flock Asteroid"
 	rarity_tier = 3
@@ -327,6 +326,17 @@
 
 		var/dmm_suite/asset_loader = new
 		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
+
+/datum/mining_encounter/syndicate
+	name = "Blocked Signal"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/syndicate.dmm"), target.x, target.y, target.z)
 
 /////////////TELESCOPE ENCOUNTERS BELOW
 
