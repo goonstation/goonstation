@@ -46,8 +46,18 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		. += " Something about it seems a little off."
 
 /obj/machinery/medical/attack_hand(mob/user)
+	if (src.paired_obj)
+		boutput(user, SPAN_ALERT("Cannot adjust brakes while [src] is attached to [src.paired_obj]!"))
+		return
 	src.anchored = !src.anchored
-	boutput(user, "You [src.anchored ? "apply" : "release"] \the [src.name]'s brake.")
+	boutput(user, SPAN_NOTICE("You [src.anchored ? "apply" : "release"] \the [src.name]'s brake."))
+
+/obj/machinery/medical/Move(atom/target)
+	. = ..()
+	if (!src.paired_obj)
+		return
+	if (!(src.paired_obj in src.loc))
+		src.detach_from_obj()
 
 /obj/machinery/medical/mouse_drop(atom/over_object)
 	if (!isatom(over_object))
@@ -78,6 +88,8 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	..()
 	if (!src.patient)
 		return
+	if (!in_interact_range(src, src.patient))
+		src.remove_patient(forceful = TRUE)
 	if (src.is_broken() || src.has_no_power())
 		return
 	src.affect_patient(mult)
@@ -131,24 +143,36 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
-	src.remove_patient()
+	src.remove_patient(user)
 
-/obj/machinery/medical/proc/remove_patient()
+/obj/machinery/medical/proc/remove_patient(mob/user, forceful = FALSE)
+	if (ismob(user))
+		src.remove_message(user)
 	src.patient = null
 	src.power_usage = 0
 	src.UnsubscribeProcess()
+
+/obj/machinery/medical/proc/remove_message(mob/user)
+	user.tri_message(src.patient,\
+		SPAN_NOTICE("<b>[user]</b> disconnects [src] from [src.patient]."),\
+		SPAN_NOTICE("You disconnect [src] from [src.patient]."),\
+		SPAN_NOTICE("<b>[user]</b> disconnects [src] from you."))
+	logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
 	if (!isobj(target_object) || src.paired_obj)
 		return FALSE
+	if (src.anchored)
+		boutput(user, SPAN_ALERT("Disengage the brakes first to attach [src] to [target_object]!"))
+		return FALSE
 	if (ismob(user))
 		src.visible_message(SPAN_NOTICE("[user] attaches [src] to [target_object]."))
+	src.paired_obj = target_object
 	mutual_attach(src, src.paired_obj)
 	src.set_loc(src.paired_obj.loc)
 	src.layer = (src.paired_obj.layer - 0.1)
 	src.pixel_y = src.connect_offset_y
-	src.paired_obj = src.paired_obj
 
 /obj/machinery/medical/proc/detach_from_obj(mob/user)
 	. = TRUE
