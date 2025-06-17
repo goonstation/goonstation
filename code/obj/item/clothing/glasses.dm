@@ -549,7 +549,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if(connected_scuttlebot.mind)
 				boutput(user, SPAN_ALERT("The [pigeon_controller ? "P1G30N" : "scuttlebot"] is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-					boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] couldn't be found."))
+				boutput(user, SPAN_ALERT("You put on the goggles but they show no signal. The [pigeon_controller ? "P1G30N" : "scuttlebot"] couldn't be found."))
 			else
 				H.network_device = src.connected_scuttlebot
 				connected_scuttlebot.controller = H
