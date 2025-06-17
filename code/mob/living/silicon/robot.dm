@@ -1962,9 +1962,6 @@ TYPEINFO(/mob/living/silicon/robot)
 			if (!src.cell)
 				src.show_text("You do not have a power cell!", "red")
 				return
-			if (src.cell.charge == 0)
-				src.show_text("You do not have enough power to activate \the [upgrade]!", "red")
-				return
 			if (src.cell.charge >= upgrade.drainrate)
 				src.cell.use(upgrade.drainrate)
 			else
@@ -3604,6 +3601,8 @@ TYPEINFO(/mob/living/silicon/robot)
 		for (var/obj/item/roboupgrade/R in robot.contents)
 			if (R.activated)
 				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to low power!</b>"))
+		src.robot.hud.update_upgrades()
 
 
 	onUpdate(timePassed)
@@ -3636,6 +3635,13 @@ TYPEINFO(/mob/living/silicon/robot)
 		. = ..()
 		src.robot = src.owner
 		src.robot.radio?.bricked = TRUE
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to no power!</b>"))
+		src.robot.hud.update_upgrades()
 		APPLY_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
 
 	onUpdate(timePassed)
@@ -3646,6 +3652,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		for (var/obj/item/roboupgrade/R in robot.contents)
 			if (R.activated)
 				R.upgrade_deactivate(robot)
+		src.robot.hud.update_upgrades()
 		if (isnull(src.robot.cell))
 			if (!src.robot.hasStatus("no_cell_robot"))
 				src.remove_self()
@@ -3701,6 +3708,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			if (R.activated)
 				R.upgrade_deactivate(src.robot)
 				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
 
 	onUpdate(timePassed)
 		. = ..()
@@ -3709,6 +3717,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			if (R.activated)
 				R.upgrade_deactivate(src.robot)
 				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
 
 	onRemove()
 		. = ..()

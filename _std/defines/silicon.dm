@@ -25,3 +25,8 @@
 
 /// Cyborg lockdown timer duration
 #define ROBOT_LOCKDOWN_DURATION 2 MINUTES
+
+/// Cannot use an upgrade because the robot is locked-down or otherwise disabled
+#define ROBOT_UPGRADE_FAIL_DISABLED 1
+/// Cannot use an upgrade because the robot is out of power
+#define ROBOT_UPGRADE_FAIL_LOW_POWER 2
