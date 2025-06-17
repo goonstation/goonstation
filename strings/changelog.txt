@@ -1,5 +1,9 @@
 
 (t)tue jun 17 25
+(u)RubberRats
+(p)23810
+(e)🪲|C-Bug
+(+)Researching the hemochromia gene also researches all of its variants.
 (u)TDHooligan
 (p)23152
 (e)⚖|C-Balance
