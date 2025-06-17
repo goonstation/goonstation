@@ -1,5 +1,10 @@
 
 (t)tue jun 17 25
+(u)TDHooligan
+(p)23152
+(e)⚖|C-Balance
+(+)Glass pipeshot now shoots more pellets and causes heavier bleeding, at the cost of some damage.
+(+)Bone pipeshot can now shoot 3x as far.
 (u)FlameArrow57
 (p)23067
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
