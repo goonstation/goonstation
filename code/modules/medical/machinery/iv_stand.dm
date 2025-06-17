@@ -8,6 +8,10 @@
 	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/iv_drip = null
 
+/obj/machinery/medical/iv_stand/New()
+	. = ..()
+	src.UpdateIcon()
+
 /obj/machinery/medical/iv_stand/disposing()
 	if (src.iv_drip)
 		src.iv_drip.set_loc(get_turf(src))
