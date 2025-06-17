@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 /obj/machinery/medical/dialysis/disposing()
 	if (src.patient)
-		src.stop_dialysis()
+		src.remove_patient()
 	..()
 
 /obj/machinery/medical/dialysis/emag_act(mob/user, obj/item/card/emag/E)
@@ -40,12 +40,12 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 	if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
 		src.say("Patient lost.")
-		src.stop_dialysis()
+		src.remove_patient()
 		return
 
 	if (!src.patient.blood_volume)
 		src.say("No blood pressure detected.")
-		src.stop_dialysis()
+		src.remove_patient()
 		return
 
 	if (!in_interact_range(src, src.patient))
@@ -53,7 +53,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 		src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]'s arm!</b>"),\
 		SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of your arm!</b>"))
 		src.say("No blood pressure detected.")
-		src.stop_dialysis()
+		src.remove_patient()
 		return
 
 	transfer_blood(src.patient, src, src.draw_amount)
