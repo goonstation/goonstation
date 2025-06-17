@@ -72,7 +72,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	if ((src.patient.blood_volume + blood_reagent_volume) > src.patient.blood_volume)
 		src.reagents.del_reagent("blood")
 
-	var/amount_to_draw = floor(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume))
+	var/amount_to_draw = min(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume))
 	src.reagents.trans_to(src.patient, amount_to_draw)
 	src.patient.reagents.reaction(src.patient, INGEST, amount_to_draw)
 	src.reagents.clear_reagents()
