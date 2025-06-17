@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	name = "dialysis machine"
 	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
 	icon = 'icons/obj/machines/medical/dialysis.dmi'
+	density = 1
 #ifdef IN_MAP_EDITOR
 	icon_state = "dialysis-map"
 #else
@@ -38,20 +39,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 /obj/machinery/medical/dialysis/affect_patient(mult)
 	..()
 
-	if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
-		src.say("Patient lost.")
-		src.remove_patient()
-		return
-
 	if (!src.patient.blood_volume)
-		src.say("No blood pressure detected.")
-		src.remove_patient()
-		return
-
-	if (!in_interact_range(src, src.patient))
-		var/fluff = pick("pulled", "yanked", "ripped")
-		src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of [src.patient]'s arm!</b>"),\
-		SPAN_ALERT("<b>[src]'s cannulae get [fluff] out of your arm!</b>"))
 		src.say("No blood pressure detected.")
 		src.remove_patient()
 		return
@@ -68,9 +56,12 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 
 	// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
 	// The blood that's not actually in the bloodstream yet, know what I mean?
-	var/blood_reagent_volume = src.patient.reagents.reagent_list["blood"]?.volume || 0
-	if ((src.patient.blood_volume + blood_reagent_volume) > src.patient.blood_volume)
-		src.reagents.del_reagent("blood")
+	var/datum/reagent/patient_blood_reagent = src.patient.reagents.reagent_list["blood"]
+	var/patient_blood_reagent_volume = patient_blood_reagent?.volume || 0
+	var/patient_blood = src.patient.blood_volume + patient_blood_reagent_volume
+	var/patient_blood_max = initial(src.patient.blood_volume)
+	if (patient_blood > patient_blood_max)
+		src.reagents.remove_reagent("blood", (patient_blood - patient_blood_max))
 
 	var/amount_to_draw = min(src.draw_amount, (src.patient.reagents.maximum_volume - src.patient.reagents.total_volume))
 	src.reagents.trans_to(src.patient, amount_to_draw)
