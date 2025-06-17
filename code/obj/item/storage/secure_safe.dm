@@ -421,10 +421,10 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
 				#ifdef SECRETS_ENABLED
-					eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
-					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
-					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
-					/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
 				#endif
 				var/list/eggs_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spider,\
