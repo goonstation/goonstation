@@ -152,7 +152,7 @@ TYPEINFO(/obj/machinery/medical/iv_stand)
 /obj/item/furniture_parts/IVstand
 	name = "\improper IV stand parts"
 	desc = "A collection of parts that can be used to make an IV stand."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/machines/medical/iv_stand.dmi'
 	icon_state = "IVstand_parts"
 	force = 2
 	stamina_damage = 10
