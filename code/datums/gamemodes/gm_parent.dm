@@ -176,16 +176,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 	for(var/client/C)
 		if (istype(C.mob, /mob/new_player))
 			var/mob/new_player/new_player = C.mob
-			if (!new_player.ready)
+			if (!new_player.ready_play)
 				continue
 		else if(istype(C.mob, /mob/living/carbon))
 			if(!allow_carbon)
 				continue
 			var/datum/job/job = find_job_in_controller_by_string(C.mob.job)
 			if (job)
-				if(!job.allow_traitors)
-					continue
-				if (!job.can_join_gangs && (type == ROLE_GANG_LEADER || type == ROLE_GANG_MEMBER))
+				if(!job.can_be_antag(type))
 					continue
 		else
 			continue

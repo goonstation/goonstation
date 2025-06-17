@@ -425,7 +425,7 @@
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)
-					if (player.ready)
+					if (player.ready_play)
 						players++
 
 				if (players < src.blob_min_players)
@@ -435,7 +435,7 @@
 			if (src.rev_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)
-					if (player.ready)
+					if (player.ready_play)
 						players++
 
 				if (players < src.rev_min_players)
@@ -445,7 +445,7 @@
 			if (src.spy_theft_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)
-					if (player.ready)
+					if (player.ready_play)
 						players++
 
 				if (players < src.spy_theft_min_players)

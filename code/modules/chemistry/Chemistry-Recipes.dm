@@ -5186,7 +5186,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_heat_resistant())
-						mob.bodytemperature += 10
+						mob.changeBodyTemp(10 KELVIN)
 				T.hotspot_expose(1000, 100, holder.my_atom)
 				var/obj/particle/heat_swirl/swirl = new /obj/particle/heat_swirl
 				swirl.set_loc(T)
@@ -5238,7 +5238,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_cold_resistant() || ischangeling(mob))
-						mob.bodytemperature -= 10
+						mob.changeBodyTemp(-10 KELVIN)
 				T.hotspot_expose(0, 100, holder.my_atom)
 				var/obj/particle/cryo_sparkle/sparkle = new /obj/particle/cryo_sparkle
 				sparkle.set_loc(T)

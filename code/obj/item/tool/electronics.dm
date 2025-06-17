@@ -315,6 +315,7 @@
 		AM.set_loc(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 0)
+		AM.forensic_holder = src.forensic_holder
 
 		// if we have a material, give it to the object if the object doesn't have one
 		if (src.material && !AM.material)
@@ -323,6 +324,7 @@
 		AM = new store_type(T)
 		AM.set_dir(src.dir)
 		AM.was_built_from_frame(user, 1)
+		AM.forensic_holder = src.forensic_holder
 
 		if (src.material && !AM.material)
 			AM.setMaterial(src.material)
@@ -874,7 +876,7 @@
 
 	dropped(var/mob/user)
 		. = ..()
-		user.closeContextActions()
+		user?.closeContextActions()
 
 	MouseDrop_T(atom/target, mob/user)
 		src.pre_attackby(src, target, user)
@@ -919,7 +921,7 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = 0
+	tool_flags = TOOL_DECONSTRUCTING
 	w_class = W_CLASS_NORMAL
 
 
