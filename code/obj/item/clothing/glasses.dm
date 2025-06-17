@@ -533,7 +533,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		return
 
 //Goggles used to assume control of a linked scuttlebot
-//Goggles used to assume control of a linked scuttlebot
 /obj/item/clothing/glasses/scuttlebot_vr
 	name = "Scuttlebot remote controller"
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
