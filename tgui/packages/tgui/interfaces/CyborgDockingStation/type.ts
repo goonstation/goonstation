@@ -36,6 +36,7 @@ interface OccupantDataBase {
 
 export interface OccupantDataRobot extends OccupantDataBase {
   kind: 'robot';
+  flavor_text: string;
   parts: PartListData;
   cell?: PowerCellData;
   moduleName?: string;

@@ -487,6 +487,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (isrobot(src.occupant))
 		var/mob/living/silicon/robot/R = src.occupant
 		occupant_data["name"] = R.name
+		occupant_data["flavor_text"] = R.flavor_text
 		occupant_data["kind"] = "robot"
 		if (R.part_head.brain)
 			occupant_data["user"] = "brain"
@@ -709,6 +710,21 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if("occupant-eject")
 			src.go_out()
 			. = TRUE
+		if("occupant-describe")
+			if (!isrobot(src.occupant))
+				return
+			var/mob/living/silicon/robot/R = src.occupant
+			var/new_text = tgui_input_text(usr, "What do you want to describe [R] as?:", "Cyborg Maintenance", R.flavor_text, multiline = TRUE, allowEmpty=TRUE)
+			if (!isnull(new_text))
+				if (length(new_text) > FLAVOR_CHAR_LIMIT)
+					tgui_alert(usr, "The description is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Description too long")
+					new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+			R.flavor_text = new_text || null
+			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !new_text)
+				return
+			if(new_text && new_text != R.flavor_text)
+				phrase_log.log_phrase("name-cyborg", new_text, no_duplicates=TRUE)
+			logTheThing(LOG_STATION, user, "uses a docking station to set [constructTarget(R,"combat")]'s flavor text to [new_text].")
 		if("occupant-paint-add")
 			if (!isrobot(src.occupant))
 				return

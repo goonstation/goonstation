@@ -21,6 +21,7 @@ export const OccupantSection = () => {
   const hasOccupant = !!occupant?.name;
   const handleEjectOccupant = () => act('occupant-eject');
   const handleRenameOccupant = () => act('occupant-rename');
+  const handleDescribeOccupant = () => act('occupant-describe');
   return (
     <Section title="Occupant">
       <Stack>
@@ -33,6 +34,7 @@ export const OccupantSection = () => {
               occupant={occupant}
               onEjectOccupant={handleEjectOccupant}
               onRenameOccupant={handleRenameOccupant}
+              onDescribeOccupant={handleDescribeOccupant}
             />
           ) : (
             <div>No occupant</div>
@@ -50,11 +52,19 @@ interface OccupantSectionContentsProps {
   occupant: OccupantData;
   onEjectOccupant: () => void;
   onRenameOccupant: () => void;
+  onDescribeOccupant: () => void;
 }
 
 const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
-  const { act, cabling, fuel, occupant, onEjectOccupant, onRenameOccupant } =
-    props;
+  const {
+    act,
+    cabling,
+    fuel,
+    occupant,
+    onEjectOccupant,
+    onRenameOccupant,
+    onDescribeOccupant,
+  } = props;
   const occupantTypeDescription = occupantTypeDescriptionLens(occupant);
   return (
     <>
@@ -82,6 +92,17 @@ const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
         >
           {occupant.name}
         </LabeledList.Item>
+        <LabeledList.Item
+          labelWrap:true
+          label="Description"
+          buttons={
+            <DockingAllowedButton
+              onClick={onDescribeOccupant}
+              icon="edit"
+              tooltip="Change the occupant's description"
+            />
+          }
+        />
         <LabeledList.Item label="Type">
           {occupantTypeDescription}
         </LabeledList.Item>
