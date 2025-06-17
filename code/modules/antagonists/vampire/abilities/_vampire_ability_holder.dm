@@ -88,14 +88,15 @@
 	// might deduct something from vamp_blood, though it shouldn't happen on a regular basis.
 	var/last_power = 0
 	var/level1 = 5
-	var/level2 = 300
-	var/level3 = 600
-	var/level4 = 900
-	var/level5 = 1400
-	var/level6 = 1800 // Full power.
+	var/level2 = 150
+	var/level3 = 300
+	var/level4 = 600
+	var/level5 = 900
+	var/level6 = 1400
+	var/level7 = 1800 // Full power.
 
 	var/list/thralls = list()
-	var/turf/coffin_turf = 0
+	var/turf/coffin_turf = null
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
 	var/obj/storage/closet/coffin/vampire/the_coffin = null
@@ -112,10 +113,12 @@
 	onAttach(mob/to_whom)
 		..()
 		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+		RegisterSignal(to_whom, COMSIG_MOB_POINT, PROC_REF(targeted_bat_orbiters))
 
 	onRemove(mob/from_who)
 		..()
 		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
+		UnregisterSignal(from_who, COMSIG_MOB_POINT)
 
 	onLife(var/mult = 1)
 		..()
@@ -194,6 +197,10 @@
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
+			src.addAbility(/datum/targetable/vampire/call_spirit_bats)
+
+		if (src.last_power == 2 && src.vamp_blood >= src.level3)
+			src.last_power = 3
 
 			src.has_thermal = 1
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
@@ -202,27 +209,28 @@
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
 			src.addAbility(/datum/targetable/vampire/coffin_escape)
 
-		if (src.last_power == 2 && src.vamp_blood >= src.level3)
-			src.last_power = 3
-
-			src.addAbility(/datum/targetable/vampire/call_bats)
-			src.addAbility(/datum/targetable/vampire/vampire_scream)
-
 		if (src.last_power == 3 && src.vamp_blood >= src.level4)
 			src.last_power = 4
+
+			src.removeAbility(/datum/targetable/vampire/call_spirit_bats)
+			src.addAbility(/datum/targetable/vampire/call_frost_bats)
+			src.addAbility(/datum/targetable/vampire/vampire_scream)
+
+		if (src.last_power == 4 && src.vamp_blood >= src.level5)
+			src.last_power = 5
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
 			src.addAbility(/datum/targetable/vampire/plague_touch)
 
-		if (src.last_power == 4 && src.vamp_blood >= src.level5)
-			src.last_power = 5
+		if (src.last_power == 5 && src.vamp_blood >= src.level6)
+			src.last_power = 6
 
 			src.removeAbility(/datum/targetable/vampire/vampire_scream)
 			src.addAbility(/datum/targetable/vampire/vampire_scream/mk2)
 
-		if (src.last_power == 5 && src.vamp_blood >= src.level6)
-			src.last_power = 6
+		if (src.last_power == 6 && src.vamp_blood >= src.level7)
+			src.last_power = 7
 
 			src.has_xray = 1
 			src.has_fullpower = 1
@@ -237,7 +245,8 @@
 		src.removeAbility(/datum/targetable/vampire/mark_coffin)
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
-		src.removeAbility(/datum/targetable/vampire/call_bats)
+		src.removeAbility(/datum/targetable/vampire/call_spirit_bats)
+		src.removeAbility(/datum/targetable/vampire/call_frost_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
 		src.removeAbility(/datum/targetable/vampire/plague_touch)
