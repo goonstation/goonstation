@@ -166,25 +166,6 @@
 			var/mob/M = owner
 			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
 
-	dialysis
-		id = "dialysis"
-		name = "Dialysis"
-		desc = "Your blood is being filtered by a dyalysis machine."
-		icon_state = "dialysis"
-		unique = FALSE
-		effect_quality = STATUS_QUALITY_POSITIVE
-		var/obj/machinery/dialysis/dialysis_machine = null
-
-		getTooltip()
-			. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."
-
-		onAdd(obj/machinery/dialysis/optional)
-			..()
-			src.dialysis_machine = optional
-
-		onCheck(optional)
-			return src.dialysis_machine == optional
-
 	staminaregen
 		id = "staminaregen"
 		name = ""
