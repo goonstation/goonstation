@@ -155,6 +155,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	proc/onPowerChange(oldval, newval)
 		return
 
+	proc/onResearched()
+		return
+
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "power")
