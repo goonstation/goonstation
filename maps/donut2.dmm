@@ -12943,7 +12943,7 @@
 /obj/machinery/computer/operating/small{
 	id = "OR1"
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
@@ -20452,7 +20452,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "fjW" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/carpet/blue/fancy/narrow/west,
@@ -39490,7 +39490,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -41844,7 +41844,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "rJk" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "rKn" = (
@@ -48214,7 +48214,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},

@@ -11136,7 +11136,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/blackwhite/side{
 	dir = 1
@@ -12287,7 +12287,7 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "dFM" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -26194,7 +26194,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "iap" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -27340,7 +27340,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "ivc" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -65019,7 +65019,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "tUg" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "tUl" = (
@@ -65656,7 +65656,7 @@
 /turf/space,
 /area/space)
 "ufs" = (
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "ufw" = (

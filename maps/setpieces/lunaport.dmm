@@ -235,7 +235,7 @@
 	name = "Blue Line platform"
 	})
 "aaP" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
@@ -9765,7 +9765,7 @@
 	name = "SPECTRE Showroom"
 	})
 "aKH" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/black/grime,
 /area/moon/underground/hemera{
@@ -10423,7 +10423,7 @@
 	ambient_light = "#223333"
 	})
 "aMJ" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/black/grime,
@@ -11666,7 +11666,7 @@
 	name = "Hogge & Wylde"
 	})
 "aQN" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/black/grime,

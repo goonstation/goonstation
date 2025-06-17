@@ -195,7 +195,7 @@
 	},
 /area/listeningpost/general)
 "ij" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"

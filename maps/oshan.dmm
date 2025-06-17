@@ -3502,7 +3502,7 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "amu" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red,
@@ -3939,7 +3939,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anZ" = (
@@ -12540,7 +12540,7 @@
 /turf/space/fluid,
 /area/space)
 "aTK" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/space/fluid,
 /area/space)
 "aTL" = (
@@ -14033,7 +14033,7 @@
 /area/research_outpost/toxins)
 "bca" = (
 /obj/machinery/light_switch/auto,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bcb" = (

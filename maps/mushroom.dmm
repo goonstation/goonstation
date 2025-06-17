@@ -14976,7 +14976,7 @@
 	dir = 1
 	},
 /obj/item/reagent_containers/iv_drip/saline,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
@@ -20318,7 +20318,7 @@
 "iRM" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/disposalpipe/segment,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -25260,7 +25260,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/redwhite{
 	dir = 8

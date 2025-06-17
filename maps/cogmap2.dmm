@@ -13891,7 +13891,7 @@
 	dir = 4;
 	pixel_x = -2
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -41312,7 +41312,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "cwp" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
@@ -42688,7 +42688,7 @@
 	},
 /area/station/science/testchamber)
 "cAu" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -50607,7 +50607,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "dcK" = (
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -50957,7 +50957,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dev" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -52944,14 +52944,14 @@
 	},
 /area/research_outpost/chamber)
 "dls" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/engine{
 	dir = 8;
 	icon_state = "engine_caution_corners"
 	},
 /area/research_outpost/chamber)
 "dlt" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -57587,7 +57587,7 @@
 /area/space)
 "hIe" = (
 /obj/machinery/light_switch/east,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/redwhite{
 	dir = 4

@@ -4232,7 +4232,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ayD" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
@@ -7428,7 +7428,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aUb" = (
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUh" = (

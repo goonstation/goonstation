@@ -483,7 +483,7 @@
 	brightness = 2;
 	dir = 1
 	},
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
@@ -36239,7 +36239,7 @@
 	},
 /area/owlery/office)
 "cHw" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/unsimulated/floor/engine,
 /area/owlery/lab)
 "cHx" = (
@@ -53371,7 +53371,7 @@
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
 "dPR" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)

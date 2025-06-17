@@ -15240,7 +15240,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/dialysis,
+/obj/machinery/medical/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -17161,7 +17161,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/treatment1)
 "buu" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -17202,7 +17202,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/treatment2)
 "bux" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light/small,
 /obj/machinery/camera{
@@ -18229,7 +18229,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "bzz" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "bzA" = (
@@ -26356,7 +26356,7 @@
 	},
 /area/station/hangar/medical)
 "cgm" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
 /obj/machinery/light{
 	dir = 8;
@@ -26746,7 +26746,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "chI" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -27024,7 +27024,7 @@
 /area/research_outpost/indigo_rye)
 "cja" = (
 /obj/decal/cleanable/robot_debris,
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cjb" = (
@@ -34513,7 +34513,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/hydroponics)
 "gpl" = (
-/obj/iv_stand,
+/obj/machinery/medical/iv_stand,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gpE" = (
