@@ -88,6 +88,17 @@ TYPEINFO(/obj/storage/closet)
 			AM.set_loc(src.loc)
 			src.close()
 
+	get_help_message(dist, mob/user)
+		if (src.open)
+			. = " You can use a <b>wrench</b> to dismantle the closet. [src.can_leghole && !src.legholes ? "You can use a <b>welding tool</b> to cut foot holes in the bottom. " : ""]"
+		else
+			if (src.welded)
+				. += " You can use a <b>welding tool</b> to remove the weld and allow it to open."
+			else
+				. += " You can use a <b>welding tool</b> to weld it shut and prevent it being opened."
+			if (src.can_flip_bust)
+				. += " Anyone locked inside can <b>flip</b> to try to break out."
+
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes prestocked with emergency equipment. <i>Hopefully</i>."
@@ -180,6 +191,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
 	auto_close = FALSE
+	can_leghole = FALSE
 
 	wood
 		icon_closed = "woodcoffin"
