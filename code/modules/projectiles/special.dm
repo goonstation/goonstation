@@ -793,6 +793,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
 		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
 		for (var/mob/M in P.contents)
 			if(M.client)
@@ -921,9 +923,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	goes_through_walls = 1
 
-	var/radius = 1.4
+	/// how many degrees of rotation are added per process tick
 	var/ang_inc = 15
-
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -940,6 +941,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.special_data["orbit_angle"] -= 360
 
 			var/atom/target = P.targets[1]
+			if (istype(target.loc, /obj/dummy/spell_batpoof))
+				target = target.loc
+
+			if (!isturf(target.loc))
+				P.special_data["diss_count"] += 1
+				if (P.special_data["diss_count"] > 40)
+					P.die()
+				return 1
 
 			//var/ang_between = get_angle(target,P)
 			var/tx = target.x + cos(P.special_data["orbit_angle"])
@@ -948,6 +957,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			desired_x = (tx - P.x)
 			desired_y = (ty - P.y)
 
+			P.special_data["diss_count"] = 0
 			.= 1
 		else
 			P.special_data["diss_count"] += 1

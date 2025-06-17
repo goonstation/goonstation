@@ -876,7 +876,7 @@
 
 	dropped(var/mob/user)
 		. = ..()
-		user.closeContextActions()
+		user?.closeContextActions()
 
 	MouseDrop_T(atom/target, mob/user)
 		src.pre_attackby(src, target, user)
