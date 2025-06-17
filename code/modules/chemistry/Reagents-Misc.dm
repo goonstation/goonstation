@@ -1437,7 +1437,7 @@ datum
 		deageinium
 			name = "deageinium"
 			id = "deageinium"
-			description = "A overenergetic jelly that writhes with childlike excitement."
+			description = "An over-energetic jelly that writhes with youthful excitement."
 			reagent_state = LIQUID
 			fluid_r = 89
 			fluid_g = 242
