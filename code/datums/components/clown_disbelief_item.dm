@@ -1,4 +1,5 @@
 var/global/list/image/clown_disbelief_images
+var/global/list/image/clown_disbelief_clown_mobs //Subscribed list of mobs that are currently deemed to be clowns
 
 /datum/component/clown_disbelief_item
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -25,9 +26,16 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 
 /datum/component/clown_disbelief_item/proc/on_equip(datum/source, mob/equipper, slot)
 	src.disbelief_image.loc = equipper
+	if(!clown_disbelief_clown_mobs[equipper])
+		clown_disbelief_clown_mobs[equipper] = 1
+	else
+		clown_disbelief_clown_mobs[equipper] +=1
 
 /datum/component/clown_disbelief_item/proc/on_unequip(datum/source, mob/user)
 	src.disbelief_image.loc = null
+	clown_disbelief_clown_mobs[user] -=1
+	if (clown_disbelief_clown_mobs[user] < 1) //No more clown time
+		clown_disbelief_clown_mobs -= user
 
 /datum/component/clown_disbelief_item/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_UNEQUIPPED))

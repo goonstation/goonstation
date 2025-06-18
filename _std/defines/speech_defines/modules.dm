@@ -222,7 +222,7 @@
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
-
+#define LISTEN_MODIFIER_CLOWN_DISBELIEF "clown_disbelief"
 
 //------------ Listen Effects ------------//
 #define LISTEN_EFFECT_ARTIFACT_TRIGGER "artifact_trigger"
