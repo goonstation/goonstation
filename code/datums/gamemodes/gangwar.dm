@@ -100,6 +100,7 @@
 	return 1
 
 /datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
+	logTheThing(LOG_GAMEMODE, src, "begins using random crew members to fill gang roster.")
 	var/num_teams = length(src.gangs)
 	var/num_people_needed = 0
 	if(num_teams == 0)
@@ -109,21 +110,21 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=GLOBAL_PROC_REF(can_join_gangs), force_fill = FALSE)
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
+	logTheThing(LOG_GAMEMODE, src, "assigning [people_added_per_gang] members each to [length(src.gangs)] gangs from a pool of [num_people_available] crew members.")
 	num_people_available = people_added_per_gang * num_teams
 	shuffle_list(candidates)
 	var/i = 1
+	var/gang_count = 0
 	for(var/datum/gang/gang in src.gangs)
+		gang_count++
 		for(var/j in 1 to people_added_per_gang)
 			var/datum/mind/candidate = candidates[i++]
+			logTheThing(LOG_GAMEMODE, src, "assigned [candidate.ckey] to gang #[gang_count]")
 			candidate.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = gang.leader, silent=TRUE)
 			traitors |= candidate
-
-/proc/can_join_gangs(mob/M) //stupid frickin 515 call syntax making me make this a global grumble grumble
-	var/datum/job/job = find_job_in_controller_by_string(M.mind.assigned_role)
-	. = (!job || !job.can_be_antag(ROLE_GANG_MEMBER) || !job.can_be_antag(ROLE_GANG_LEADER))
 
 /datum/game_mode/gang/send_intercept()
 	..(src.traitors)

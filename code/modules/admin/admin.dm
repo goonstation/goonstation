@@ -3921,7 +3921,6 @@ var/global/noir = 0
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=miningcontrols'>Mining Controls</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=mapsettings'>Map Settings</A> |
-					<A href='byond://?src=\ref[src];action=secretsdebug;type=ghostnotifications'>Ghost Notifications</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlays'>Overlays</A>
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=overlaysrem'>(Remove)</A> |
 					<A href='byond://?src=\ref[src];action=secretsdebug;type=world'>World</A> |
