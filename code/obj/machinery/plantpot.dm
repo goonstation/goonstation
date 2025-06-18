@@ -869,17 +869,13 @@ TYPEINFO(/obj/machinery/plantpot)
 	// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
 	// with since i've tried to account for most special circumstances that might come up.
 	if(!user) return
-	var/satchelpick = 0
 	if(SA)
 		if(length(SA.contents) >= SA.maxitems)
 			boutput(user, SPAN_ALERT("Your satchel is already full! Free some space up first."))
 			return
 		else
-			satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
-			if(!HYPcheck_if_harvestable() || satchelpick == "Never Mind")
+			if(!HYPcheck_if_harvestable())
 				return
-			if(satchelpick == "Everything")
-				satchelpick = null
 	// it's okay if we don't have a satchel at all since it'll just harvest by hand instead
 	var/datum/plant/growing = src.current
 	var/datum/plantgenes/DNA = src.plantgenes
@@ -1138,8 +1134,6 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// At this point all the harvested items are inside the plant pot, and this is the
 		// part where we decide where they're going and get them out.
-		var/seeds_only = satchelpick == "Seeds Only"
-		var/produce_only = satchelpick == "Produce Only"
 		if(SA)
 			// If we're putting stuff in a satchel, this is where we do it.
 			for(var/obj/item/I in src.contents)
@@ -1147,11 +1141,9 @@ TYPEINFO(/obj/machinery/plantpot)
 					boutput(user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 					break
 				if(istype(I,/obj/item/seed/))
-					if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
-						I.set_loc(SA)
-						I.add_fingerprint(user)
+					continue
 				else
-					if(SA.check_valid_content(I) && (!satchelpick || produce_only))
+					if(SA.check_valid_content(I))
 						I.set_loc(SA)
 						I.add_fingerprint(user)
 			SA.UpdateIcon()

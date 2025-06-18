@@ -5571,13 +5571,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"avl" = (
-/obj/railing/wrestling,
-/obj/decal/tile_edge/line/grey{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "avm" = (
 /obj/decal/boxingrope,
 /obj/decal/tile_edge/line/black{
@@ -5837,13 +5830,6 @@
 /obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"awy" = (
-/obj/table/reinforced/auto,
-/obj/machinery/wrestlingbell,
-/obj/item/device/microphone,
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "awA" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -8899,12 +8885,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"aIO" = (
-/obj/railing/wrestling,
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
-/area/station/crew_quarters/fitness)
 "aIS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_north)
@@ -16811,22 +16791,6 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/west)
-"bsI" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/table/round/auto,
-/obj/item/paper/book/from_file/dealing_with_clonelieness{
-	pixel_y = 5
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "bsJ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/transport,
@@ -30547,12 +30511,6 @@
 	dir = 1
 	},
 /area/station/hangar/engine)
-"dFj" = (
-/obj/rack,
-/obj/item/reagent_containers/food/drinks/juicer,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "dFk" = (
 /obj/blind_switch/area/north,
 /turf/simulated/floor/wood/two,
@@ -31299,6 +31257,13 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/secwing)
+"ecN" = (
+/obj/railing/wrestling,
+/obj/decal/tile_edge/line/grey{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "edo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -31881,6 +31846,20 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"exd" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/table/round/auto,
+/obj/machinery/recharger/defibrillator,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "exj" = (
 /obj/machinery/computer/camera_viewer{
 	dir = 4
@@ -34801,6 +34780,23 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"gyF" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/item/paper/book/from_file/dealing_with_clonelieness{
+	pixel_y = -2;
+	pixel_x = 3
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "gzl" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -36655,24 +36651,6 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
-"hLJ" = (
-/obj/table/auto,
-/obj/item/kitchen/food_box/donut_box,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/obj/item/robodefibrillator{
-	pixel_x = 5;
-	pixel_y = 15
-	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 6
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "hMb" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -43287,6 +43265,29 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/security/main)
+"mqe" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 12
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/item/robodefibrillator{
+	pixel_x = 10;
+	pixel_y = 4
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = -3
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 19
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "mqi" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -43639,15 +43640,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"mET" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/railing/orange/reinforced,
-/obj/machinery/firealarm/west,
-/obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "mEW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49871,6 +49863,15 @@
 /obj/shrub,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"rji" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced,
+/obj/machinery/firealarm/west,
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "rjI" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -54528,6 +54529,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"uBr" = (
+/obj/railing/wrestling,
+/turf/simulated/floor/stairs{
+	dir = 1
+	},
+/area/station/crew_quarters/fitness)
 "uCo" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "ranch";
@@ -57469,6 +57476,11 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
+"wHe" = (
+/obj/rack,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "wHE" = (
 /obj/cable/orange{
 	icon_state = "0-4"
@@ -59190,6 +59202,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"xLr" = (
+/obj/table/reinforced/auto,
+/obj/machinery/wrestlingbell,
+/obj/item/device/microphone,
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "xLG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -94311,8 +94330,8 @@ bcS
 efc
 bkY
 bmh
-cgi
-bsI
+gyF
+exd
 caj
 aZl
 baB
@@ -95526,7 +95545,7 @@ jJT
 baF
 boU
 jlI
-hLJ
+mqe
 ceI
 bfZ
 bnG
@@ -107923,7 +107942,7 @@ buI
 bvI
 aup
 hoy
-mET
+rji
 eBv
 aup
 bzl
@@ -116371,7 +116390,7 @@ jOn
 qsw
 tmx
 pvj
-dFj
+wHe
 boo
 gkQ
 pJk
@@ -120860,7 +120879,7 @@ uQv
 fdN
 xix
 atr
-aIO
+uBr
 cfv
 aHF
 aHF
@@ -121468,7 +121487,7 @@ spC
 ewU
 aHF
 aHF
-avl
+ecN
 aJz
 atr
 beg
@@ -121771,7 +121790,7 @@ lGP
 aOn
 aSp
 aBw
-awy
+xLr
 atr
 bei
 kaJ

@@ -142,8 +142,9 @@
 					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
-			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
-				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/sec_part = V.get_part(POD_PART_SECONDARY)
+			if (istype(sec_part, /obj/item/shipcomponent/secondary_system/orescoop))
+				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = sec_part
 				if (length(SCOOP.contents) >= SCOOP.capacity || !src.scoopable)
 					return
 				var/max_stack_reached = FALSE
@@ -624,15 +625,31 @@
 	default_material = "gold"
 	dense = 2
 
-/obj/item/raw_material/neutronium
-	name = "neutronium ore"
-	desc = "An ore containing deadly neutronium metal."
+/obj/item/raw_material/veranium
+	name = "veranium crystal"
+	desc = "A sparking crystal of veranium."
 	icon = 'icons/obj/items/materials/materials.dmi'
-	material_name = "Neutronium"
-	default_material = "neutronium"
+	material_name = "Veranium"
+	default_material = "veranium"
+
+	update_icon()
+		src.icon_state = "ore$$veranium"
 
 	get_stack_value()
-		return 0
+		return 1
+
+/obj/item/raw_material/yuranite
+	name = "yuranite"
+	desc = "Yuranite, an ore of uranium. Best to stay away from it without proper radiactive protection."
+	icon = 'icons/obj/items/materials/materials.dmi'
+	material_name = "Uranium"
+	default_material = "uranium"
+
+	update_icon()
+		src.icon_state = "ore$$yuranite"
+
+	get_stack_value()
+		return 1
 
 // Misc building material
 

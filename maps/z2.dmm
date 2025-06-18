@@ -19691,6 +19691,12 @@
 	icon_state = "corner_east"
 	},
 /area/iomoon/base/underground)
+"bBD" = (
+/obj/railing/wrestling{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/afterlife/bar)
 "bBE" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -36746,12 +36752,6 @@
 	tag = "icon-fblue2 (NORTHEAST)"
 	},
 /area/owlery/owleryhall)
-"cJa" = (
-/obj/railing/wrestling{
-	dir = 4
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
 "cJc" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -53918,12 +53918,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"dSH" = (
-/obj/railing/wrestling{
-	dir = 8
-	},
-/turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
 "dSI" = (
 /obj/decal/tile_edge/stripe{
 	dir = 1
@@ -54233,15 +54227,6 @@
 /area/afterlife/bar)
 "dTz" = (
 /obj/decal/boxingrope,
-/obj/map/light/white,
-/turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
-"dTA" = (
-/obj/decal/stage_edge,
-/obj/machinery/wrestlingbell{
-	density = 0;
-	pixel_y = 7
-	},
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
@@ -60553,6 +60538,12 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"iOP" = (
+/obj/railing/wrestling{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/afterlife/bar)
 "iOQ" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -78393,23 +78384,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"wAT" = (
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
-	},
-/mob/living/critter/small_animal/cat{
-	icon_state = "cat2";
-	name = "Moo";
-	random_look = 0;
-	random_name = 0
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/adventure_gannets.dmi';
-	icon_state = "sand";
-	name = "sand"
-	},
-/area/centcom/offices/enakai)
 "wBk" = (
 /obj/machinery/communications_dish,
 /obj/lattice,
@@ -80282,6 +80256,26 @@
 	opacity = 0
 	},
 /area/centcom/gallery)
+"xRt" = (
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/mob/living/critter/small_animal/cat{
+	icon_state = "cat2";
+	icon_state_alive = "cat2";
+	icon_state_dead = "cat2";
+	name = "Moo";
+	random_look = 0;
+	random_name = 0;
+	nodamage = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/adventure_gannets.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/centcom/offices/enakai)
 "xSb" = (
 /obj/lattice{
 	dir = 4;
@@ -80369,6 +80363,15 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"xUC" = (
+/obj/decal/stage_edge,
+/obj/machinery/wrestlingbell{
+	density = 0;
+	pixel_y = 7
+	},
+/obj/map/light/white,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "xUF" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe{
@@ -101095,7 +101098,7 @@ dSn
 dTd
 cwl
 cwl
-dSH
+bBD
 dTg
 dqe
 daN
@@ -101701,7 +101704,7 @@ dSK
 dSU
 cwf
 dan
-dTA
+xUC
 daN
 aaa
 ctn
@@ -102302,7 +102305,7 @@ dSb
 dSC
 dTf
 cwi
-cJa
+iOP
 cwi
 dTh
 dqe
@@ -152893,7 +152896,7 @@ eiT
 rcQ
 wel
 vEe
-wAT
+xRt
 vbL
 wel
 bSZ
