@@ -358,7 +358,7 @@
 
 	//admins and mentors can enter a server through player caps.
 	var/admin_status = init_admin()
-	if (admin_status == 1)
+	if (admin_status == 1 && src.holder && src.holder.rank != "Inactive")
 		var/ircmsg[] = new()
 		ircmsg["key"] =  src.key
 		ircmsg["name"] = src.ckey
