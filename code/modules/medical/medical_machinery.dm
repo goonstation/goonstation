@@ -3,7 +3,7 @@ TYPEINFO(/obj/machinery/medical)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
-	/// `obj` types this device can connect to.
+	/// `obj` types this machine can connect to.
 	var/list/paired_obj_whitelist = list(
 		/obj/machinery/optable,
 		/obj/stool/bed,
@@ -12,24 +12,63 @@ TYPEINFO(/obj/machinery/medical)
 
 ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical
-	name = "medical device"
+	name = "medical machine"
 	desc = "A medical doohickey. Call 1800-CODER if you see this."
 	icon = 'icons/obj/machines/medical/iv_stand.dmi'
 	icon_state = "IVstand"
 	anchored = UNANCHORED
 	density = 0
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	speech_verb_say = "beeps"
+
 	/// The `/mob/living/carbon` that this machine is affecting. Must stay within interact range.
 	var/mob/living/carbon/patient = null
-	/// Medical devices can be connected to objects such as beds or surgical tables.
+	/// Medical machines can be connected to objects such as beds or surgical tables.
 	var/obj/paired_obj = null
+
 	var/actionbar_icon = 'icons/obj/surgery.dmi'
 	/// Icon state that represents every actionbar interaction for this machine. See `src.actionbar_icon`.
 	var/actionbar_icon_state = "IV"
-	var/power_consumption = 12 WATTS
+
+	/// Power consumption is constant if a patient is connected to the machine. In Watts.
+	var/power_consumption = 250 MILLI WATTS
+	/// For EMAG effects.
+	var/hacked = FALSE
+
 	var/connect_offset_x = 0
 	var/connect_offset_y = 10
-	var/hacked = FALSE
+
+	/* `tri_message` inputs for chat log feedback.
+		Overrides:
+			* $USR -> [user]
+			* $SRC -> [src]
+			* $TRG -> [new_patient] or [src.patient] dependent on target.
+	*/
+	/// Message to be displayed to all other viewers on attempted connection.
+	var/attempt_msg_viewer = "<b>$USR</b> begins connecting $SRC to $TRG."
+	/// Message to be displayed to user on attempted connection.
+	var/attempt_msg_first = "You begin connecting $SRC to $TRG."
+	/// Message to be displayed to patient on attempted connection.
+	var/attempt_msg_second = "<b>$USR</b> begins connecting $SRC to you."
+
+	/// Message to be displayed to all other viewers on successful connection.
+	var/add_msg_viewer = "<b>$USR</b> connects $SRC to $TRG."
+	/// Message to be displayed to user on successful connection.
+	var/add_msg_first = "You connect $SRC to $TRG."
+	/// Message to be displayed to patient on successful connection.
+	var/add_msg_second = "<b>$USR</b> connects $SRC to you."
+
+	/// Message to be displayed to all other viewers on disconnection.
+	var/remove_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
+	/// Message to be displayed to user on disconnection.
+	var/remove_msg_first = "You disconnect $SRC from $TRG."
+	/// Message to be displayed to patient on disconnection.
+	var/remove_msg_second = "<b>$USR</b> disconnects $SRC from you."
+
+	/// Message to be displayed to all other viewers on forceful disconnection.
+	var/remove_forceful_msg_viewer = "<b>$USR</b> disconnects $SRC from $TRG."
+	/// Message to be displayed to patient on forceful disconnection.
+	var/remove_forceful_msg_patient = "<b>$USR</b> disconnects $SRC from you."
 
 /obj/machinery/medical/New()
 	. = ..()
@@ -117,30 +156,18 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		boutput(user, SPAN_ALERT("Unable to connect [new_patient] as [src.patient] is already using [src]!"))
 		return FALSE
 	src.attempt_message(user, new_patient)
-	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), src.icon, src.actionbar_icon, null, null)
-
-/obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
-	user.tri_message(new_patient,\
-		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to [new_patient]."),\
-		SPAN_NOTICE("You begin connecting [src] to [new_patient]."),\
-		SPAN_NOTICE("<b>[user]</b> begins connecting [src] to you."))
 	logTheThing(LOG_COMBAT, user, "is trying to connect [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
+	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(add_patient), list(new_patient, user), src.actionbar_icon, src.actionbar_icon_state, null, null)
 
 /obj/machinery/medical/proc/add_patient(mob/living/carbon/new_patient, mob/user)
 	if (!iscarbon(new_patient))
 		return
 	if (ismob(user))
 		src.add_message(user, new_patient)
+		logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 	src.patient = new_patient
 	src.power_usage = src.power_consumption
 	src.SubscribeToProcess()
-
-/obj/machinery/medical/proc/add_message(mob/user, mob/living/carbon/new_patient)
-	user.tri_message(new_patient,\
-		SPAN_NOTICE("<b>[user]</b> connects [src] to [new_patient]."),\
-		SPAN_NOTICE("You connect [src] to [new_patient]."),\
-		SPAN_NOTICE("<b>[user]</b> connects [src] to you."))
-	logTheThing(LOG_COMBAT, user, "connected [src] to [constructTarget(new_patient, "combat")] at [log_loc(user)].")
 
 /obj/machinery/medical/proc/attempt_remove_patient(mob/user)
 	src.remove_patient(user)
@@ -148,16 +175,46 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 /obj/machinery/medical/proc/remove_patient(mob/user, forceful = FALSE)
 	if (ismob(user))
 		src.remove_message(user)
+		logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
+	if (forceful && !user)
+		src.forceful_remove_message()
 	src.patient = null
 	src.power_usage = 0
 	src.UnsubscribeProcess()
 
+/// Replaces tags in constant text variables with non-constants.
+/obj/machinery/medical/proc/parse_message(text, mob/user, mob/living/carbon/target)
+	if (!length(text))
+		return ""
+	if (ismob(user))
+		text = replacetext(text, "$USR", "[user]")
+	if (iscarbon(target))
+		text = replacetext(text, "$TRG", "[target]")
+	text = replacetext(text, "$SRC", "[src]")
+	. = text
+
+/obj/machinery/medical/proc/attempt_message(mob/user, mob/living/carbon/new_patient)
+	user.tri_message(new_patient,\
+		SPAN_NOTICE(src.parse_message(src.attempt_msg_viewer, user, new_patient)),\
+		SPAN_NOTICE(src.parse_message(src.attempt_msg_first, user, new_patient)),\
+		SPAN_NOTICE(src.parse_message(src.attempt_msg_second, user, new_patient)))
+
+/obj/machinery/medical/proc/add_message(mob/user, mob/living/carbon/new_patient)
+	user.tri_message(new_patient,\
+		SPAN_NOTICE(src.parse_message(src.add_msg_viewer, user, new_patient)),\
+		SPAN_NOTICE(src.parse_message(src.add_msg_first, user, new_patient)),\
+		SPAN_NOTICE(src.parse_message(src.add_msg_second, user, new_patient)))
+
 /obj/machinery/medical/proc/remove_message(mob/user)
 	user.tri_message(src.patient,\
-		SPAN_NOTICE("<b>[user]</b> disconnects [src] from [src.patient]."),\
-		SPAN_NOTICE("You disconnect [src] from [src.patient]."),\
-		SPAN_NOTICE("<b>[user]</b> disconnects [src] from you."))
-	logTheThing(LOG_COMBAT, user, "disconnected [src] from [constructTarget(src.patient, "combat")] at [log_loc(user)].")
+		SPAN_NOTICE(src.parse_message(src.remove_msg_viewer, user, src.patient)),\
+		SPAN_NOTICE(src.parse_message(src.remove_msg_first, user, src.patient)),\
+		SPAN_NOTICE(src.parse_message(src.remove_msg_second, user, src.patient)))
+
+/obj/machinery/medical/proc/force_remove_message()
+	src.patient.visible_message(\
+		SPAN_ALERT(src.parse_message(src.forceful_remove_msg_viewer, target = src.patient)),\
+		SPAN_ALERT(src.parse_message(src.forceful_remove_msg_first, target = src.patient)))
 
 /obj/machinery/medical/proc/attach_to_obj(obj/target_object, mob/user)
 	. = TRUE
@@ -172,7 +229,9 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 	mutual_attach(src, src.paired_obj)
 	src.set_loc(src.paired_obj.loc)
 	src.layer = (src.paired_obj.layer - 0.1)
+	src.pixel_x = src.connect_offset_x
 	src.pixel_y = src.connect_offset_y
+	src.density = FALSE
 
 /obj/machinery/medical/proc/detach_from_obj(mob/user)
 	. = TRUE
@@ -182,5 +241,7 @@ ABSTRACT_TYPE(/obj/machinery/medical)
 		src.visible_message(SPAN_NOTICE("[user] detaches [src] from [src.paired_obj]."))
 	mutual_detach(src, src.paired_obj)
 	src.layer = initial(src.layer)
+	src.pixel_x = initial(src.pixel_x)
 	src.pixel_y = initial(src.pixel_y)
 	src.paired_obj = null
+	src.density = initial(src.density)
