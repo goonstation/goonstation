@@ -101,198 +101,198 @@ ABSTRACT_TYPE(/datum/mining_encounter)
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(2,6),0)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,6))
 
-/datum/mining_encounter/comet_chunk
-	name = "Comet Chunk"
-	rarity_tier = 2
+// /datum/mining_encounter/comet_chunk
+// 	name = "Comet Chunk"
+// 	rarity_tier = 2
 
-	generate(var/obj/magnet_target_marker/target)
-		if (..())
-			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
+// 	generate(var/obj/magnet_target_marker/target)
+// 		if (..())
+// 			return
+// 		var/list/generated_turfs
+// 		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
 
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			size = target.get_encounter_size(size,P=20)
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
+// 		var/magnetic_center = mining_controls.magnetic_center
+// 		var/area_restriction = /area/mining/magnet
+// 		if (target)
+// 			magnetic_center = target.magnetic_center
+// 			size = target.get_encounter_size(size,P=20)
+// 			area_restriction = null
+// 			size = min(size,min(target.width,target.height))
 
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/ice, size, 0, area_restriction)
+// 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/ice, size, 0, area_restriction)
 
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
+// 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+// 			AST.space_overlays()
 
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
+// 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
+// 			AST.UpdateIcon()
 
-		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
-		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
+// 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
+// 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
 
-/datum/mining_encounter/jean
-	name = "Jasteroid"
-	#ifdef APRIL_FOOLS
-	rarity_tier = 1
-	#else
-	rarity_tier = 3
-	#endif
+// /datum/mining_encounter/jean
+// 	name = "Jasteroid"
+// 	#ifdef APRIL_FOOLS
+// 	rarity_tier = 1
+// 	#else
+// 	rarity_tier = 3
+// 	#endif
 
-	generate(var/obj/magnet_target_marker/target)
-		if (..())
-			return
-		var/list/generated_turfs
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
+// 	generate(var/obj/magnet_target_marker/target)
+// 		if (..())
+// 			return
+// 		var/list/generated_turfs
+// 		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
 
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
+// 		var/magnetic_center = mining_controls.magnetic_center
+// 		var/area_restriction = /area/mining/magnet
+// 		if (target)
+// 			magnetic_center = target.magnetic_center
+// 			area_restriction = null
+// 			size = min(size,min(target.width,target.height))
 
-		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/jean, size, 1, area_restriction)
+// 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/jean, size, 1, area_restriction)
 
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
-			AST.setMaterial(getMaterial("jean"))
+// 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+// 			AST.space_overlays()
+// 			AST.setMaterial(getMaterial("jean"))
 
-		var/list/turf/floors = list()
-		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.UpdateIcon()
-			AST.setMaterial(getMaterial("jean"))
-			floors += AST
+// 		var/list/turf/floors = list()
+// 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
+// 			AST.UpdateIcon()
+// 			AST.setMaterial(getMaterial("jean"))
+// 			floors += AST
 
-		for(var/i in 0 to rand(0, 2))
-			var/jean_object_type = pick(
-				50; /obj/item/clothing/suit/jean_jacket,
-				10; /obj/item/clothing/under/misc/casualjeansacid,
-				10; /obj/item/clothing/under/misc/casualjeansblue,
-				10; /obj/item/clothing/under/misc/casualjeansgrey,
-				10; /obj/item/clothing/under/misc/casualjeanskhaki,
-				10; /obj/item/clothing/under/misc/casualjeansgrey,
-				10; /obj/item/clothing/under/misc/casualjeanspurp,
-				10; /obj/item/clothing/under/misc/casualjeansskb,
-				10; /obj/item/clothing/under/misc/casualjeansskr,
-				10; /obj/item/clothing/under/misc/casualjeanswb,
-				10; /obj/item/clothing/under/misc/casualjeansyel,
-				50; /obj/item/clothing/under/gimmick/shirtnjeans,
-				10; /obj/item/material_piece/cloth/jean,
-			)
-			var/turf/simulated/floor/plating/airless/asteroid/jean_floor = pick(floors)
-			floors -= jean_floor
-			var/obj/item/jean_object = new jean_object_type(jean_floor)
-			jean_object.pixel_x = rand(-6, 6)
-			jean_object.pixel_y = rand(-6, 6)
+// 		for(var/i in 0 to rand(0, 2))
+// 			var/jean_object_type = pick(
+// 				50; /obj/item/clothing/suit/jean_jacket,
+// 				10; /obj/item/clothing/under/misc/casualjeansacid,
+// 				10; /obj/item/clothing/under/misc/casualjeansblue,
+// 				10; /obj/item/clothing/under/misc/casualjeansgrey,
+// 				10; /obj/item/clothing/under/misc/casualjeanskhaki,
+// 				10; /obj/item/clothing/under/misc/casualjeansgrey,
+// 				10; /obj/item/clothing/under/misc/casualjeanspurp,
+// 				10; /obj/item/clothing/under/misc/casualjeansskb,
+// 				10; /obj/item/clothing/under/misc/casualjeansskr,
+// 				10; /obj/item/clothing/under/misc/casualjeanswb,
+// 				10; /obj/item/clothing/under/misc/casualjeansyel,
+// 				50; /obj/item/clothing/under/gimmick/shirtnjeans,
+// 				10; /obj/item/material_piece/cloth/jean,
+// 			)
+// 			var/turf/simulated/floor/plating/airless/asteroid/jean_floor = pick(floors)
+// 			floors -= jean_floor
+// 			var/obj/item/jean_object = new jean_object_type(jean_floor)
+// 			jean_object.pixel_x = rand(-6, 6)
+// 			jean_object.pixel_y = rand(-6, 6)
 
-		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
-		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
+// 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
+// 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
 
-/datum/mining_encounter/wreckage
-	name = "Wreckage"
-	rarity_tier = 2
+// /datum/mining_encounter/wreckage
+// 	name = "Wreckage"
+// 	rarity_tier = 2
 
-	generate(var/obj/magnet_target_marker/target)
-		if (..())
-			return
+// 	generate(var/obj/magnet_target_marker/target)
+// 		if (..())
+// 			return
 
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
+// 		var/magnetic_center = mining_controls.magnetic_center
+// 		var/area_restriction = /area/mining/magnet
+// 		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
+// 		if (target)
+// 			magnetic_center = target.magnetic_center
+// 			area_restriction = null
+// 			size = min(size,min(target.width,target.height))
 
-		Turfspawn_Wreckage(center=magnetic_center, size=size, area_restriction=area_restriction)
+// 		Turfspawn_Wreckage(center=magnetic_center, size=size, area_restriction=area_restriction)
 
-/datum/mining_encounter/geode
-	name = "Geode"
-	rarity_tier = 3
+// /datum/mining_encounter/geode
+// 	name = "Geode"
+// 	rarity_tier = 3
 
-	generate(var/obj/magnet_target_marker/target)
-		if (..())
-			return
+// 	generate(var/obj/magnet_target_marker/target)
+// 		if (..())
+// 			return
 
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		var/size = 7
+// 		var/magnetic_center = mining_controls.magnetic_center
+// 		var/area_restriction = /area/mining/magnet
+// 		var/size = 7
 
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
+// 		if (target)
+// 			magnetic_center = target.magnetic_center
+// 			area_restriction = null
+// 			size = min(size,min(target.width,target.height))
 
-		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/geode, size, 1, area_restriction)
+// 		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/geode, size, 1, area_restriction)
 
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
+// 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+// 			AST.space_overlays()
 
-		var/list/floors = list()
-		var/list/gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle,/obj/item/raw_material/gemstone,
-		/obj/item/raw_material/telecrystal,/obj/item/raw_material/fibrilith)
-		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
-			floors += T
+// 		var/list/floors = list()
+// 		var/list/gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle,/obj/item/raw_material/gemstone,
+// 		/obj/item/raw_material/telecrystal,/obj/item/raw_material/fibrilith)
+// 		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
+// 			floors += T
 
-		var/amount = rand(20,40)
-		var/the_gem = null
-		while (amount > 0)
-			amount--
-			the_gem = pick(gems)
-			if (length(floors))
-				var/obj/item/G = new the_gem
-				G.set_loc(pick(floors))
+// 		var/amount = rand(20,40)
+// 		var/the_gem = null
+// 		while (amount > 0)
+// 			amount--
+// 			the_gem = pick(gems)
+// 			if (length(floors))
+// 				var/obj/item/G = new the_gem
+// 				G.set_loc(pick(floors))
 
-/datum/mining_encounter/seafloor
-	name = "Hydroscopic Asteroid"
-	rarity_tier = 3
-	var/static/list/crates = list(
-			/obj/storage/crate/trench_loot/meds,
-			/obj/storage/crate/trench_loot/meds2,
-			/obj/storage/crate/trench_loot/ore3,
-			/obj/storage/crate/trench_loot/rad,
-			/obj/storage/crate/trench_loot/drug,
-			/obj/storage/crate/trench_loot/clothes,
-			/obj/storage/crate/trench_loot/tools2,
-			/obj/storage/crate/trench_loot/weapons4,
-			)
-	var/static/list/enemies = list(
-			/mob/living/critter/small_animal/trilobite,
-			/mob/living/critter/small_animal/hallucigenia,
-			/mob/living/critter/small_animal/pikaia
-	)
+// /datum/mining_encounter/seafloor
+// 	name = "Hydroscopic Asteroid"
+// 	rarity_tier = 3
+// 	var/static/list/crates = list(
+// 			/obj/storage/crate/trench_loot/meds,
+// 			/obj/storage/crate/trench_loot/meds2,
+// 			/obj/storage/crate/trench_loot/ore3,
+// 			/obj/storage/crate/trench_loot/rad,
+// 			/obj/storage/crate/trench_loot/drug,
+// 			/obj/storage/crate/trench_loot/clothes,
+// 			/obj/storage/crate/trench_loot/tools2,
+// 			/obj/storage/crate/trench_loot/weapons4,
+// 			)
+// 	var/static/list/enemies = list(
+// 			/mob/living/critter/small_animal/trilobite,
+// 			/mob/living/critter/small_animal/hallucigenia,
+// 			/mob/living/critter/small_animal/pikaia
+// 	)
 
-	generate(var/obj/magnet_target_marker/target)
-		if (..())
-			return
+// 	generate(var/obj/magnet_target_marker/target)
+// 		if (..())
+// 			return
 
-		var/magnetic_center = mining_controls.magnetic_center
-		var/area_restriction = /area/mining/magnet
-		var/size = 7
+// 		var/magnetic_center = mining_controls.magnetic_center
+// 		var/area_restriction = /area/mining/magnet
+// 		var/size = 7
 
-		if (target)
-			magnetic_center = target.magnetic_center
-			area_restriction = null
-			size = min(size,min(target.width,target.height))
+// 		if (target)
+// 			magnetic_center = target.magnetic_center
+// 			area_restriction = null
+// 			size = min(size,min(target.width,target.height))
 
-		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/algae, size, TRUE, area_restriction)
-		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
-			AST.space_overlays()
+// 		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/algae, size, TRUE, area_restriction)
+// 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+// 			AST.space_overlays()
 
-		var/list/floors = list()
-		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
-			floors += T
+// 		var/list/floors = list()
+// 		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
+// 			floors += T
 
-		var/the_crate = null
-		var/the_enemy = null
-		for (var/i in 1 to rand(1,3))
-			the_crate = pick(crates)
-			the_enemy = pick(enemies)
-			if (length(floors))
-				var/obj/storage/crate/new_crate = new the_crate
-				var/mob/living/critter/small_animal/new_enemy = new the_enemy
-				new_crate.set_loc(pick(floors))
-				new_enemy.set_loc(pick(floors))
+// 		var/the_crate = null
+// 		var/the_enemy = null
+// 		for (var/i in 1 to rand(1,3))
+// 			the_crate = pick(crates)
+// 			the_enemy = pick(enemies)
+// 			if (length(floors))
+// 				var/obj/storage/crate/new_crate = new the_crate
+// 				var/mob/living/critter/small_animal/new_enemy = new the_enemy
+// 				new_crate.set_loc(pick(floors))
+// 				new_enemy.set_loc(pick(floors))
 
 /datum/mining_encounter/artifact
 	name = "Fluctuating Asteroid"
@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 
 		var/dmm_suite/asset_loader = new
 		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
-
+/* this is busted
 /datum/mining_encounter/oneshot/syndicate
 	name = "Blocked Signal"
 	rarity_tier = 3
@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
 
 		var/dmm_suite/asset_loader = new
 		asset_loader.read_map(file2text("assets/maps/mining_magnet/syndicate.dmm"), target.x, target.y, target.z)
-
+*/
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium
