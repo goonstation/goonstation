@@ -1478,7 +1478,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	linkcolor = NANOTRASEN_LINK_COLOR
-	request_cost = PAY_DONTBUYIT * 4 // gotta dig real deep for that second(?) opinion
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
