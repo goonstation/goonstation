@@ -767,22 +767,24 @@
 	name = "chalk"
 	desc = "A stick of rock and dye that reminds you of your childhood. Don't get too carried away!"
 	icon_state = "chalk-9"
-	color = "#333333"
+	color = "#ffffff"
 	font = "Comic Sans MS"
+	var/true_color
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
-		var/picked_color
 		New()
+			src.true_color = random_color()
+			src.assign_color(src.true_color)
 			..()
-			src.assign_color(src.picked_color)
 
-		reset_color()
-			src.assign_color(src.picked_color)
+	New()
+		..()
+		src.true_color = src.color
 
 	proc/assign_color(var/color)
 		if(isnull(color))
-			color = "#ffffff"
+			src.color = "#ffffff"
 		src.color = color
 		src.font_color = src.color
 		src.color_name = hex2color_name(color)
@@ -813,7 +815,7 @@
 			src.icon_state = "chalk-[src.chalk_health]"
 
 	reset_color()
-		src.assign_color(initial(src.color))
+		src.assign_color(src.true_color)
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob)
 		..()

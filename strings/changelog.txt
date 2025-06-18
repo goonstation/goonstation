@@ -1,3 +1,37 @@
+
+(t)wed jun 18 25
+(u)RubberRats & glowbold
+(p)22814
+(e)🆕🐣|C-Feature, A-Respawning
+(*)The RoleControl program has a Request function, allowing players to open up additional job slots using surplus payroll budget.
+(+)Requested jobs are highlighted with a yellow border like priority jobs in the latejoin role selection menu
+(+)When someone joins a RoleControl prioritized or requested role, command gets a PDA message
+(t)tue jun 17 25
+(u)JORJ949
+(p)23302
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(*)The Access Pro now has a UI window that you can select accesses from rather than using an inserted ID.
+(u)Egregorious
+(p)23784
+(e)🪲⏰|C-Bug, A-Status-Effects
+(+)The burn-duration recieved from stepping into fires properly scales with the fire's temperature.
+(u)RubberRats
+(p)23810
+(e)🪲|C-Bug
+(+)Researching the hemochromia gene also researches all of its variants.
+(u)TDHooligan
+(p)23152
+(e)⚖|C-Balance
+(+)Glass pipeshot now shoots more pellets and causes heavier bleeding, at the cost of some damage.
+(+)Bone pipeshot can now shoot 3x as far.
+(u)FlameArrow57
+(p)23067
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Neutronium metal is no longer found in rare metal mining events
+(+)Added yuranite (uranium ore) to rare metal mining events
+(+)Added recipes for neutrite (1 uranium + 1 plutonium -> 1 neutrite) and neutronium (1 neutrite + 1 erebite -> 1 neutronium)
+(u)LeahTheTech
+(+)Influencers have been banished from the RP servers until they can make an actually sincere apology video.
 (t)sun jun 15 25
 (u)LeahTheTech
 (+)Radioactive anomalies will now spawn artifacts occasionally.
