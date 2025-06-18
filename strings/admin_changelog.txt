@@ -1,3 +1,6 @@
+(t)wed jun 18 25
+(u)LeahTheTech
+(*)Added reset cooldown buttons to the ability and bioeffect managers.
 (t)fri apr 11 25
 (u)glowbold
 (*)Added a "Stabilize" option to admin mob interaction and player panel. Heals people just above crit and cures them of most immediately fatal issues.
