@@ -31,12 +31,12 @@ export interface CyborgDockingStationData {
 
 interface OccupantDataBase {
   name: string;
+  flavor_text: string;
   kind: 'eyebot' | 'human' | 'robot';
 }
 
 export interface OccupantDataRobot extends OccupantDataBase {
   kind: 'robot';
-  flavor_text: string;
   parts: PartListData;
   cell?: PowerCellData;
   moduleName?: string;

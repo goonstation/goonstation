@@ -90,19 +90,34 @@ const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
             </>
           }
         >
-          {occupant.name}
+          <div
+            style={{
+              wordBreak: 'break-all',
+            }}
+          >
+            {occupant.name}
+          </div>
         </LabeledList.Item>
-        <LabeledList.Item
-          labelWrap:true
-          label="Description"
-          buttons={
-            <DockingAllowedButton
-              onClick={onDescribeOccupant}
-              icon="edit"
-              tooltip="Change the occupant's description"
-            />
-          }
-        />
+        {occupant.kind === 'robot' && (
+          <LabeledList.Item
+            label="Description"
+            buttons={
+              <DockingAllowedButton
+                onClick={onDescribeOccupant}
+                icon="edit"
+                tooltip="Change the occupant's description"
+              />
+            }
+          >
+            <div
+              style={{
+                wordBreak: 'break-all',
+              }}
+            >
+              {occupant.flavor_text}
+            </div>
+          </LabeledList.Item>
+        )}
         <LabeledList.Item label="Type">
           {occupantTypeDescription}
         </LabeledList.Item>
