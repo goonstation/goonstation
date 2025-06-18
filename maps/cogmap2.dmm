@@ -62156,12 +62156,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"lAN" = (
-/obj/decal/poster/wallsign/poster_nt{
-	pixel_y = 28
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/mining/staff_room)
 "lBA" = (
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/shuttlebay{
@@ -131345,7 +131339,7 @@ crl
 cEt
 cGg
 cHA
-lAN
+cIG
 cIG
 cLI
 cIG

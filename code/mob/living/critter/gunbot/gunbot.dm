@@ -191,6 +191,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	get_ranged_protection()
 		return 2
 
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter
+	name = "\improper Syndicate robot"
+	real_name = "\improper Syndicate robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon_state = "nukebot"
+	base_icon_state = "nukebot"
+	faction = list(FACTION_SYNDICATE)
+
 /mob/living/critter/robotic/gunbot/syndicate
 	name = "\improper Syndicate robot"
 	real_name = "\improper Syndicate robot"

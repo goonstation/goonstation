@@ -21,7 +21,8 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const DeptBox = (props) => {
+// Also used by AccessPro
+export const DeptBox = (props) => {
   const { act } = useBackend();
   const {
     name,
@@ -123,7 +124,8 @@ interface StandardJob {
   style: string;
 }
 
-interface AccessByArea {
+// AccessByArea also used by AccessPro
+export interface AccessByArea {
   name: string;
   color: string;
   accesses: number[];

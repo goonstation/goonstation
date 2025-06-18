@@ -1795,6 +1795,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 // god help us
+// hello it's me god, adding an RP define here
+#ifndef RP_MODE
 /datum/job/special/random/influencer
 	name = "Influencer"
 	wages = PAY_UNTRAINED
@@ -1808,6 +1810,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
 	special_spawn_location = LANDMARK_INFLUENCER_SPAWN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+#endif
 
 /*
  * Halloween jobs
