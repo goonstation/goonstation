@@ -1304,22 +1304,16 @@ TYPEINFO(/datum/trait/partyanimal)
 	afterlife_blacklisted = TRUE
 
 	onLife(var/mob/owner, var/mult)
-		if(!can_act(owner))
+		if(!can_act(owner) || !istype(owner))
 			return
 		if(!probmult(10))
 			return
-		var/mob/living/carbon/human/H = owner
-		if(!istype(H))
-			return
-
-		var/obj/item/target_item = H.equipped() //prioritise actively held items
+		var/obj/item/target_item = owner.equipped() //prioritise actively held items
 		if(!target_item)
-			target_item = H.find_type_in_hand(/obj/item)
-		if(!target_item)
+			target_item = owner.find_type_in_hand(/obj/item)
+		if(!target_item || target_item.cant_drop)
 			return
-		if(target_item.cant_drop)
-			return
-		H.drop_item(target_item)
+		owner.drop_item(target_item)
 		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> accidentally drops [target_item]!"))
 
 /datum/trait/leftfeet
