@@ -570,7 +570,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					if (S.is_inspector)
 						newgadget.make_inspector()
 				else if (istype(S, /mob/living/critter/robotic/scuttlebot/mail))
-					var/obj/item/clothing/suit/pigeon/newpigeon = new /obj/item/clothing/suit/pigeon(get_turf(S))
+					new /obj/item/clothing/suit/pigeon(get_turf(S))
 				else
 					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
 					if (S.is_inspector)
