@@ -1,5 +1,9 @@
 
 (t)tue jun 17 25
+(u)JORJ949
+(p)23302
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(*)The Access Pro now has a UI window that you can select accesses from rather than using an inserted ID.
 (u)Egregorious
 (p)23784
 (e)🪲⏰|C-Bug, A-Status-Effects
