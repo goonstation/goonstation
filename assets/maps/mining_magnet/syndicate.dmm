@@ -6,9 +6,7 @@
 	pixel_y = 4;
 	on = 1
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "b" = (
 /turf/space,
@@ -23,16 +21,12 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "d" = (
 /obj/table/syndicate/auto,
 /obj/item/paper/syndicate_mining_magnet_1,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "e" = (
 /obj/stool/bed,
@@ -41,29 +35,21 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "f" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "g" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "j" = (
 /obj/machinery/light/small,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "k" = (
 /obj/table/syndicate/auto,
@@ -81,17 +67,13 @@
 	pixel_y = 4;
 	pixel_x = 6
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "m" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "n" = (
 /obj/table/syndicate/auto,
@@ -99,20 +81,16 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "o" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "q" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/turf/simulated/wall/auto/shuttle/dark,
 /area/mining/magnet)
 "r" = (
 /obj/storage/closet/syndicate,
@@ -122,15 +100,11 @@
 /obj/item/deployer/barricade,
 /obj/item/deployer/barricade,
 /obj/item/deployer/barricade,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "t" = (
 /obj/machinery/vending/cigarette,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "v" = (
 /obj/storage/crate/classcrate{
@@ -146,9 +120,7 @@
 /obj/item/storage/secure/ssafe/syndicate_mining_encounter{
 	pixel_y = 25
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "y" = (
 /obj/stool/bed,
@@ -158,36 +130,26 @@
 	name = "syndicate bedsheet"
 	},
 /mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "A" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "D" = (
 /obj/table/syndicate/auto,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "E" = (
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "F" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "H" = (
 /obj/storage/crate/classcrate{
@@ -202,9 +164,7 @@
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/hundred,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "I" = (
 /obj/storage/closet/syndicate,
@@ -216,9 +176,7 @@
 /obj/item/clothing/head/bandana/random_color,
 /obj/item/clothing/head/black,
 /obj/item/clothing/head/black,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "J" = (
 /obj/stool/bed,
@@ -228,9 +186,7 @@
 	name = "syndicate bedsheet"
 	},
 /obj/machinery/light/small,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "K" = (
 /turf/simulated/floor/auto/glassblock/red,
@@ -246,30 +202,22 @@
 	pixel_y = 5;
 	pixel_x = -24
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "N" = (
 /mob/living/critter/human/syndicate/knife,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "O" = (
 /mob/living/critter/robotic/gunbot/syndicate_mining_encounter,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "P" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	name = "Syndicate Post";
 	opacity = 0
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "R" = (
 /turf/simulated/wall/auto/asteroid/dark,
@@ -281,33 +229,25 @@
 "T" = (
 /obj/table/syndicate/auto,
 /obj/random_item_spawner/desk_stuff/few,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "U" = (
 /obj/table/syndicate/auto,
 /obj/item/cigpacket{
 	pixel_x = -4
 	},
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "V" = (
 /obj/machinery/vending/cola/blue,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "W" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
 	},
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "X" = (
 /obj/table/syndicate/auto,
@@ -316,9 +256,7 @@
 	pixel_x = 8
 	},
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry,
-/turf/unsimulated/floor/shuttle/red{
-	dir = 4
-	},
+/turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 
 (1,1,1) = {"
