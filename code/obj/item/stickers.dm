@@ -604,7 +604,7 @@
 /obj/item/device/radio/spy
 	name = "spy radio"
 	desc = "Spy radio housed in a sticker. Wait, how are you reading this?"
-	initial_speaker_enabled = FALSE
+	has_speaker = FALSE
 	hardened = FALSE
 
 /obj/item/device/radio/spy/det_only
