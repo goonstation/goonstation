@@ -491,8 +491,8 @@
 		// check client version validity
 		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download")
+			if (tgui_alert(src, "Consider UPDATING BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the latest 515 version (at the bottom of the page).", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/build/515")
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			tgui_process.close_user_uis(src.mob)
@@ -500,7 +500,7 @@
 			return
 		if (src.byond_version >= 517)
 			if (tgui_alert(src, "You have connected with an unsupported BYOND beta version, and you may encounter major issues. For the best experience, please downgrade BYOND to the current stable release. Would you like to visit the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("https://www.byond.com/download")
+				src << link("https://www.byond.com/download/build/515")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -917,6 +917,10 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
+#ifndef LIVE_SERVER
+	UNLINT(return) //shut uppp
+#endif
+
 	joined_date = ""
 
 	// Get join date from BYOND members page
@@ -943,7 +947,7 @@ var/global/curr_day = null
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
-	set name = "RP Rules"
+	set name = "Rules - RP"
 	set category = "Commands"
 
 	var/cant_interact_time = null

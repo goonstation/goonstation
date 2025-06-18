@@ -254,13 +254,6 @@ client/proc/toggle_ghost_respawns()
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
 
-		if (src.preferences.listen_ooc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
-		if (src.preferences.listen_looc)
-			src.listen_tree.AddListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
-
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
 
@@ -319,13 +312,6 @@ client/proc/toggle_ghost_respawns()
 			else
 				// Cancel = don't turn on player mode
 				return
-
-		if (src.preferences.listen_ooc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
-			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
-		if (src.preferences.listen_looc)
-			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
-			src.listen_tree.RemoveListenControl(LISTEN_CONTROL_TOGGLE_HEARING_ALL_LOOC)
 
 		src.holder.admin_speech_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()
@@ -1318,3 +1304,22 @@ client/proc/toggle_ghost_respawns()
 		change_ghost_invisibility(INVIS_GHOST)
 		message_admins("[key_name(usr)] made ghosts invisible.")
 	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")
+
+/client/proc/toggle_tutorial_enabled()
+	set name = "Toggle Tutorial Enabled"
+	set desc = "Toggle whether people can start the tutorial"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	global.newbee_tutorial_enabled = !global.newbee_tutorial_enabled
+
+	logTheThing(LOG_ADMIN, usr, "[global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+	message_admins("[key_name(usr)] [global.newbee_tutorial_enabled ? "enabled" : "disabled"] the tutorial.")
+
+	for (var/mob/new_player/player in mobs)
+		if (!global.newbee_tutorial_enabled)
+			if (player.ready_tutorial == TRUE)
+				boutput(player, SPAN_ALERT("An administrator has disabled the tutorial for this round!"))
+			player.ready_tutorial = FALSE
+		player.update_joinmenu()

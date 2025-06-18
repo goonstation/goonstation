@@ -25,6 +25,7 @@
 		src.ability_holder.addAbility(/datum/targetable/vampire/glare)
 		src.ability_holder.addAbility(/datum/targetable/vampire/hypnotize)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vamp_cloak)
+		src.ability_holder.check_for_unlocks()
 
 		src.owner.current.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.ability_holder]")
 		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_THRALLCHAT, subchannel = "\ref[src.ability_holder]")

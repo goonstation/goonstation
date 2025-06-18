@@ -136,6 +136,7 @@
 	var/turf/magnetic_center
 	alpha = 128
 	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	small
 		width = 7
@@ -159,11 +160,12 @@
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			for (var/obj/O in T)
-				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
+				continue_if_overlay_or_effect(O)
+				if (!HAS_FLAG(O.event_handler_flags, IMMUNE_MINERAL_MAGNET))
 					qdel(O)
 			T.ClearAllOverlays()
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L) && L.is_npc)
 					qdel(L)
 			if(istype(T,/turf/unsimulated) && ( T.can_build || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
 				T.ReplaceWith(/turf/space, force=TRUE)
@@ -1965,6 +1967,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	powered_item_state = "pshovel1"
 	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 6
 	powered_force = 12
 	dig_strength = 0
@@ -2183,7 +2186,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 				boutput(C, SPAN_ALERT("You are battered by the concussive shockwave!"))
 
 		for (var/obj/geode/geode in get_turf(src))
-			geode.ex_act(2, null, 5 * src.expl_heavy)
+			geode.ex_act(2, null, 5)
 
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10

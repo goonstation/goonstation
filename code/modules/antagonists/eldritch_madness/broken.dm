@@ -18,6 +18,7 @@
 		src.shared_objective_text = objective.explanation_text
 	else
 		new /datum/objective/specialist(src.shared_objective_text, src.owner, src)
+	logTheThing(LOG_GAMEMODE, src.owner.current, "gains the Broken objective \"[src.shared_objective_text]\"")
 
 /datum/antagonist/broken/give_equipment()
 	src.alt_equipment()

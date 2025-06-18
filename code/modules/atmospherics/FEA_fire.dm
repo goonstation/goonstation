@@ -110,10 +110,10 @@
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
 
-	/// minimum and maximum burning durations applied by the hotspot
+	// minimum and maximum burning durations applied by the hotspot
 	var/min_status_duration = 30
 	var/max_status_duration = 55
-	/// the temperature at which the maximum status duration will be applied
+	// the temperature at which the maximum status duration will be applied
 	var/maximum_status_temp = 5000
 
 /atom/movable/hotspot/New(turf/newLoc, chemfire = null)

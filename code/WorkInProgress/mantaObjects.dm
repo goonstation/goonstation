@@ -1486,7 +1486,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Wreck of the NSS Polaris"
 	icon_state = "green"
 	sound_group = "polaris"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/loop/Polarisloop.ogg'
 
 /area/wrecknsspolaris/vault
@@ -1644,7 +1644,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/mantavault
 	name = "NSS Manta Secret Vault"
 	icon_state = "red"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/loop/manta_vault.ogg'
 	sound_group = "vault"
 
