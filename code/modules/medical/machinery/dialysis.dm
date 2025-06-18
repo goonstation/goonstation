@@ -13,14 +13,13 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 #else
 	icon_state = "dialysis-base"
 #endif
-	speech_verb_say = "beeps"
-
+	power_consumption = 1.5 KILO WATTS
 	/// In units per process tick.
 	var/draw_amount = 16
 	/// Colour is used for fluid image overlay.
-	var/output_blood_colour
+	var/output_blood_colour = null
 	/// Reagent ID of the current patient's blood.
-	var/patient_blood_id
+	var/patient_blood_id = null
 
 /obj/machinery/medical/dialysis/New()
 	..()
@@ -102,7 +101,7 @@ TYPEINFO(/obj/machinery/medical/dialysis)
 	APPLY_ATOM_PROPERTY(patient, PROP_MOB_BLOOD_ABSORPTION_RATE, src, 3)
 	src.UpdateIcon()
 
-/obj/machinery/medical/dialysis/remove_patient()
+/obj/machinery/medical/dialysis/remove_patient(mob/user, forceful)
 	var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
 	if (length(statuses))
 		src.patient.delStatus(statuses[1])
