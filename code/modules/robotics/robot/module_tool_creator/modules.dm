@@ -118,7 +118,7 @@
 		/obj/item/weldingtool,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
-		#if defined(MAP_OVERRIDE_OSHAN) || defined(MAP_OVERRIDE_NEON)
+		#ifdef HOTSPOTS_ENABLED
 			/obj/item/mining_tool/powered/shovel,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -126,7 +126,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
-		#if defined(MAP_OVERRIDE_OSHAN) || defined(MAP_OVERRIDE_NEON)
+		#ifdef HOTSPOTS_ENABLED
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
 		/obj/item/device/t_scanner,
