@@ -997,7 +997,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
-		playsound(src.loc, "swoosh", 50, 1)
+		playsound(src.loc, 'sound/effects/swoosh.ogg', 50, 1)
 		if (usr)
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)

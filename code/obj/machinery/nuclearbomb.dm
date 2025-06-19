@@ -268,7 +268,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				return
 
 			var/timer_modifier = 0
-			if (isnukeop(user))
+			if (istrainedsyndie(user))
 				timer_modifier = -src.timer_modifier_disk
 				user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W.name], shortening the bomb's timer by [src.timer_modifier_disk / 10] seconds!"))
 			else

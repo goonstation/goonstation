@@ -3893,6 +3893,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"Aa" = (
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "Ac" = (
 /obj/mesh/catwalk,
 /turf/simulated/wall/auto/asteroid,
@@ -4442,10 +4446,6 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
-"Ej" = (
-/obj/machinery/interdictor/ranch,
-/turf/simulated/floor/auto/grass/leafy,
-/area/station/ranch)
 "Ek" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6637,13 +6637,6 @@
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"Ua" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/hemostat,
-/obj/item/suture,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "Ub" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/under/scrub/teal,
@@ -7560,6 +7553,21 @@
 "ZJ" = (
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"ZM" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_x = 11
+	},
+/obj/item/hemostat{
+	pixel_y = 3;
+	pixel_x = 9
+	},
+/obj/machinery/recharger/defibrillator,
+/obj/item/suture{
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "ZN" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -46991,7 +46999,7 @@ CN
 Fi
 GO
 id
-Ej
+Aa
 Cm
 kE
 UV
@@ -57874,7 +57882,7 @@ LQ
 Qa
 Rn
 Sn
-Ua
+ZM
 Kc
 Rf
 Rf

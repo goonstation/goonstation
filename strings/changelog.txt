@@ -1,4 +1,75 @@
-
+(t)thu jun 19 25
+(u)Azrun
+(+)Salvagers now start with some additional currency and new gear on the M4GP13.
+(u)glowbold
+(*)Latejoin jobs slightly tweaked, details in minor notes
+(+)Hall Monitor is a random gimmick job. RoleControl can open up additional Hall Monitor slots.
+(+)Stowaway job has 0 to 3 slots per round.
+(+)RoleControl can open up an additional Sous-Chef slot.
+(t)wed jun 18 25
+(u)RubberRats & glowbold
+(p)22814
+(e)🆕🐣|C-Feature, A-Respawning
+(*)The RoleControl program has a Request function, allowing players to open up additional job slots using surplus payroll budget.
+(+)Requested jobs are highlighted with a yellow border like priority jobs in the latejoin role selection menu
+(+)When someone joins a RoleControl prioritized or requested role, command gets a PDA message
+(t)tue jun 17 25
+(u)JORJ949
+(p)23302
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(*)The Access Pro now has a UI window that you can select accesses from rather than using an inserted ID.
+(u)Egregorious
+(p)23784
+(e)🪲⏰|C-Bug, A-Status-Effects
+(+)The burn-duration recieved from stepping into fires properly scales with the fire's temperature.
+(u)RubberRats
+(p)23810
+(e)🪲|C-Bug
+(+)Researching the hemochromia gene also researches all of its variants.
+(u)TDHooligan
+(p)23152
+(e)⚖|C-Balance
+(+)Glass pipeshot now shoots more pellets and causes heavier bleeding, at the cost of some damage.
+(+)Bone pipeshot can now shoot 3x as far.
+(u)FlameArrow57
+(p)23067
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Neutronium metal is no longer found in rare metal mining events
+(+)Added yuranite (uranium ore) to rare metal mining events
+(+)Added recipes for neutrite (1 uranium + 1 plutonium -> 1 neutrite) and neutronium (1 neutrite + 1 erebite -> 1 neutronium)
+(u)LeahTheTech
+(+)Influencers have been banished from the RP servers until they can make an actually sincere apology video.
+(t)sun jun 15 25
+(u)LeahTheTech
+(+)Radioactive anomalies will now spawn artifacts occasionally.
+(t)wed jun 11 25
+(u)JORJ949
+(p)22750
+(e)🔎⚙|C-Code-Quality, A-Internal
+(*)Job-based antagonist preventions have been refactored internally, report any oddities.
+(u)FlameArrow57
+(p)23075
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added veranium to the rare metal mining event
+(+)Added voltite metal recipe (1 electrum + 1 veranium -> 1 voltite)
+(t)mon jun 09 25
+(u)Scientifically
+(p)23384
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites the Coonskin Cap. Wear a fuzzy Raccoon butt on your head today!
+(u)JORJ949
+(p)23775
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(+)Any trained syndicate operative (ones that can open the listening post) will now remove time when putting the auth disk in a nuclear bomb, rather than just nukeops.
+(u)glowbold
+(p)23234
+(e)🪲🗺🎨⚖🔄💊|C-Bug, A-Mapping, C-Sprites, C-Balance, C-Rework, A-Medical
+(*)Defibrillators use power when you prime the paddles. Portable units have a power cell, cyborgs use their internal power cell, and mounted units use the area APC.
+(+)Medbay generally has two specialized defibrillator chargers. Defibrillators can also be recharged in standard rechargers.
+(u)RubberRats
+(p)23681
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Underwear should no longer poke out from swimsuits and certain dresses
 (t)sun jun 08 25
 (u)LeahTheTech
 (p)23763

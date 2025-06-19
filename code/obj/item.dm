@@ -799,6 +799,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	//Click-drag tk stuff.
 /obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
 	if(!src.anchored)
+		if(ismob(usr))
+			if (world.time < usr.next_click)
+				return
+			usr.next_click = world.time + max(src.click_delay, src.combat_click_delay)
 		if (iswraith(usr))
 			var/mob/living/intangible/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
@@ -1750,12 +1754,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return
 
 /obj/item/proc/pickup(mob/user)
-	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
-	#endif
-	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
-	#endif
 	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()

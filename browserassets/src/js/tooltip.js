@@ -211,7 +211,7 @@ var tooltip = {
 				tooltip.params = $.parseJSON(params);
 			} catch (e) {
 				triggerError(
-					"(position params) JSON parse error for: " + params + ". " + e,
+					"(position params) JSON parse error for: " + params + ". " + e
 				);
 				return;
 			}
@@ -275,7 +275,7 @@ var tooltip = {
 					"Manually adjusted leftOffset by " +
 						manualOffsetX +
 						" amount. Real pixel offset value: " +
-						manualOffsetX * resizeRatioX,
+						manualOffsetX * resizeRatioX
 				);
 			}
 			if (tooltip.options.offset.hasOwnProperty("y")) {
@@ -285,7 +285,7 @@ var tooltip = {
 					"Manually adjusted topOffset by " +
 						manualOffsetY +
 						" amount. Real pixel offset value: " +
-						manualOffsetY * resizeRatioY,
+						manualOffsetY * resizeRatioY
 				);
 			}
 		}
@@ -296,10 +296,10 @@ var tooltip = {
 
 		//Calculate where on the screen the popup should appear (below the hovered tile)
 		var posX = Math.round(
-			(left - 1) * realIconSizeX + leftOffset + tooltip.padding,
+			(left - 1) * realIconSizeX + leftOffset + tooltip.padding
 		); //-1 to position at the left of the target tile
 		var posY = Math.round(
-			(tilesShownY - top + 1) * realIconSizeY + topOffset + tooltip.padding,
+			(tilesShownY - top + 1) * realIconSizeY + topOffset + tooltip.padding
 		); //+1 to position at the bottom of the target tile
 
 		var docWidth = 0,
@@ -336,7 +336,7 @@ var tooltip = {
 		//Apply our sizing
 		tooltip.$wrap.attr(
 			"style",
-			"width: " + docWidth + "px; height: " + docHeight + "px;",
+			"width: " + docWidth + "px; height: " + docHeight + "px;"
 		);
 
 		//Handle special flags
@@ -414,7 +414,7 @@ var tooltip = {
 				". PosX: " +
 				posX +
 				". PosY: " +
-				posY,
+				posY
 		);
 		tooltip.show(docWidth, docHeight, posX, posY);
 	},
@@ -455,14 +455,14 @@ var tooltip = {
 
 		try {
 			tooltip.mapOffsets = $.parseJSON(
-				map[tooltip.getMapControlFor("helper") + ".saved-params"],
+				map[tooltip.getMapControlFor("helper") + ".saved-params"]
 			);
 		} catch (e) {
 			triggerError(
 				"(updateCallback helper saved-params) JSON parse error for: " +
 					map[tooltip.getMapControlFor("helper") + ".saved-params"] +
 					". " +
-					e,
+					e
 			);
 			return;
 		}
@@ -481,7 +481,7 @@ var tooltip = {
 				". theme: " +
 				tooltip.options.theme +
 				". interrupt: " +
-				tooltip.interrupt,
+				tooltip.interrupt
 		);
 
 		//Some reset stuff to avoid fringe issues with sizing
@@ -494,7 +494,7 @@ var tooltip = {
 
 		tooltip.$docBody.attr(
 			"class",
-			tooltip.options.theme + (tooltip.pinned ? " pinned" : ""),
+			tooltip.options.theme + (tooltip.pinned ? " pinned" : "")
 		);
 		tooltip.$wrap.attr("style", "");
 		tooltip.changeContent(tooltip.options.title, tooltip.options.content); //calls position, which calls show
@@ -505,7 +505,7 @@ var tooltip = {
 			tooltip.params = $.parseJSON(params);
 		} catch (e) {
 			triggerError(
-				"(update params) JSON parse error for: " + params + ". " + e,
+				"(update params) JSON parse error for: " + params + ". " + e
 			);
 			return;
 		}
@@ -515,7 +515,7 @@ var tooltip = {
 				tooltip.params.init.screen,
 				tooltip.params.init.iconSize,
 				tooltip.params.init.window,
-				tooltip.params.init.map,
+				tooltip.params.init.map
 			);
 		}
 
@@ -523,7 +523,7 @@ var tooltip = {
 			tooltip.options = $.parseJSON(options);
 		} catch (e) {
 			triggerError(
-				"(update options) JSON parse error for: " + options + ". " + e,
+				"(update options) JSON parse error for: " + options + ". " + e
 			);
 			return;
 		}
