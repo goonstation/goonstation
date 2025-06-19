@@ -100,6 +100,10 @@
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
+	var/request_limit = 0 //!Maximum total `limit` via RoleControl request function
+	var/request_cost = null //!Cost to open an additional slot using RoleControl
+	var/player_requested = FALSE //! Flag if currently requested via RoleControl
+
 
 
 	New()
@@ -201,9 +205,9 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-	/// Is this job highlighted for priority latejoining
+	/// Is this job highlighted for latejoiners
 	proc/is_highlighted()
-		return global.priority_job == src
+		return job_controls.priority_job == src || src.player_requested
 
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)
@@ -993,6 +997,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Clown"
 	limit = 1
 	wages = PAY_DUMBCLOWN
+	request_limit = 3 //this is definitely a bad idea
+	request_cost = PAY_TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	linkcolor = MEDICAL_LINK_COLOR // :o)
@@ -1129,8 +1135,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/mime
 	name = "Mime"
 	limit = 1
+	request_limit = 2
 	linkcolor = SILICON_LINK_COLOR // greyscale mimes
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
+	request_cost = PAY_DOCTORATE * 4
 	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
@@ -1386,6 +1394,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"
+	request_limit = 2
+	request_cost = PAY_IMPORTANT*4
 
 	New()
 		..()
@@ -1444,6 +1454,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
 	linkcolor = SECURITY_LINK_COLOR
+	request_cost = PAY_EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -1467,6 +1478,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	linkcolor = NANOTRASEN_LINK_COLOR
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
@@ -1505,6 +1517,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Diplomat"
 	wages = PAY_DUMBCLOWN
 	access_string = "Diplomat"
+	request_limit = 0 // you don't request them, they come to you
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -1670,6 +1683,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
 	linkcolor = MEDICAL_LINK_COLOR
+	request_limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/medical
@@ -1684,6 +1698,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Radio Show Host"
 	wages = PAY_TRADESMAN
 	linkcolor = CIVILIAN_LINK_COLOR
+	request_limit = 1 // limited workspace
 	access_string = "Radio Show Host"
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 0
@@ -1715,6 +1730,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Psychiatrist"
 	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
+	request_limit = 1 // limited workspace
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical
@@ -1795,6 +1811,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 // god help us
+// hello it's me god, adding an RP define here
+#ifndef RP_MODE
 /datum/job/special/random/influencer
 	name = "Influencer"
 	wages = PAY_UNTRAINED
@@ -1808,6 +1826,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
 	special_spawn_location = LANDMARK_INFLUENCER_SPAWN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+#endif
 
 /*
  * Halloween jobs
@@ -2024,6 +2044,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
 	wages = PAY_UNTRAINED
+	request_limit = 1
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
@@ -2727,6 +2749,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
+	request_limit = 2
+	request_cost = PAY_DOCTORATE*4
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
@@ -2805,6 +2829,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Friday"
 	name = "Tourist"
 	limit = 100
+	request_limit = 0
 	wages = 0
 	slot_back = null
 	slot_belt = list(/obj/item/storage/fanny)

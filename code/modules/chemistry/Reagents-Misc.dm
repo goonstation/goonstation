@@ -1967,6 +1967,7 @@ datum
 						return
 					var/obj/item/pen/crayon/chalk/W = new(T)
 					chalk_color = holder.get_average_rgb()
+					W.true_color = chalk_color
 					W.assign_color(chalk_color)
 
 		shark_dna
