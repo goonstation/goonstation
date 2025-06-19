@@ -1227,8 +1227,6 @@ TYPEINFO(/mob)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
 		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))
-	//if(src.mind && !gibbed)
-	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
 		src.damn()
 		return
@@ -1237,8 +1235,10 @@ TYPEINFO(/mob)
 		src.suicide_alert = 0
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
-	//stop piloting pods or whatever
+	// stop piloting pods or whatever
 	src.override_movement_controller = null
+	// stop pulling shit!!
+	src.remove_pulling()
 
 
 /mob/proc/restrained()
