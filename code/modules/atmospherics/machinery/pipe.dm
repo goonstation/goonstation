@@ -96,6 +96,8 @@
 	if(new_rupture > src.ruptured)
 		ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
 	ruptured = max(src.ruptured, new_rupture, 1)
+	for (var/obj/window/window in get_turf(src))
+		window.smash()
 	src.desc = "[initial(src.desc)] Still looks salvageable through some careful welding."
 	UpdateIcon()
 

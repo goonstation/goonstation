@@ -6,6 +6,7 @@ var/datum/job_controller/job_controls
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
 	var/datum/job/created/job_creator = null
+	var/datum/job/priority_job = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -38,7 +39,9 @@ var/datum/job_controller/job_controls
 			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
 				src.staple_jobs += new variety_job_path(src)
 			else
-				src.hidden_jobs += new variety_job_path(src)
+				var/datum/job/not_daily_job = new variety_job_path(src)
+				not_daily_job.limit = 0
+				src.special_jobs += not_daily_job
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
@@ -85,15 +88,7 @@ var/datum/job_controller/job_controls
 			return
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
-			if ((!job.allow_traitors && player.mind.special_role))
-				return
-			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
-				return
-			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
-				return
-			else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
+			if (!job.can_be_antag(player.mind.special_role))
 				return
 		// job ban check
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
@@ -159,13 +154,8 @@ var/datum/job_controller/job_controls
 			var/datum/job/job = find_job_in_controller_by_string(player_preferences.job_favorite)
 			if (job)
 				// antag fall through flag set check
-				if ((!job.allow_traitors && player.mind.special_role))
+				if (!job.can_be_antag(player.mind.special_role))
 					player.antag_fallthrough = TRUE
-				else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
-					player.antag_fallthrough = TRUE
-				else if ((!job.can_join_gangs) && (player.mind.special_role in list(ROLE_GANG_MEMBER,ROLE_GANG_LEADER)))
-					player.antag_fallthrough = TRUE
-
 				// try to assign fav job
 				if (check_job_eligibility(player, job, STAPLE_JOBS))
 					player.mind.assigned_role = job.name
@@ -1098,7 +1088,7 @@ var/datum/job_controller/job_controls
 		if (latejoin_only)
 			if (J.no_late_join)
 				continue
-			if (J.limit == 0)
+			if (J.limit == 0 && J.request_limit == 0)
 				continue
 		if (J.match_to_string(string, case_sensitive))
 			results += J
@@ -1107,7 +1097,7 @@ var/datum/job_controller/job_controls
 			if (latejoin_only)
 				if (J.no_late_join)
 					continue
-				if (J.limit == 0)
+				if (J.limit == 0 && J.request_limit == 0)
 					continue
 			if (J.match_to_string(string, case_sensitive))
 				results += J

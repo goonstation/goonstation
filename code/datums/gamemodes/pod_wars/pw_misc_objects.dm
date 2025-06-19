@@ -1115,7 +1115,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	/obj/item/reagent_containers/mender/burn,
 	/obj/item/reagent_containers/hypospray/emagged, // maybe fine. it'll be fine. i'm sure it's fine.
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
-	/obj/item/robodefibrillator,
+	/obj/item/robodefibrillator/recharging,
 	/obj/item/clothing/glasses/healthgoggles/upgraded,
 	/obj/item/suture )
 

@@ -148,7 +148,7 @@
 		else
 			//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			body.emote("deathgasp", dead_check = FALSE)
-			body.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
+			body.visible_message(SPAN_ALERT("<B>[body]</B>'s head starts to shift around!"))
 			body.show_text("<b>We begin to grow a headspider...</b>", "blue")
 			var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(body) //we spawn the headspider inside this dude immediately.
 			HS.RegisterSignal(body, COMSIG_PARENT_PRE_DISPOSING, TYPE_PROC_REF(/mob/living/critter/changeling/headspider, remove)) //if this dude gets grindered or cremated or whatever, we go with it

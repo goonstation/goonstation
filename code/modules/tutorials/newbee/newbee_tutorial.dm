@@ -1,3 +1,5 @@
+var/global/newbee_tutorial_enabled = TRUE
+
 /datum/tutorial_base/regional/newbee
 	name = "Newbee Tutorial"
 	region_type = /datum/mapPrefab/allocated/newbee_tutorial
