@@ -1,7 +1,7 @@
 /datum/component/mimic_stomach
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/trap_whitelist = list(/obj/machinery/disposal, /obj/storage/)
-	var/list/trap_blacklist = list(/obj/storage/closet/port_a_sci)
+	var/list/trap_blacklist = list(/obj/storage/closet/port_a_sci, /obj/storage/closet/extradimensional)
 	var/datum/allocated_region/region
 	var/turf/center
 	var/obj/current_container
