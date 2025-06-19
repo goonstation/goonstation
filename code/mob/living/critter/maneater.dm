@@ -29,7 +29,6 @@
 
 /mob/living/critter/plant/maneater
 	name = "man-eating plant"
-	real_name = "man-eating plant"
 	desc = "It looks hungry..."
 	density = TRUE
 	icon_state = "maneater"

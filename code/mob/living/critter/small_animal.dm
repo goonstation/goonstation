@@ -98,7 +98,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 		src.add_stam_mod_max("small_animal", -(STAMINA_MAX*0.5))
-		src.real_name = src.name
 		if (src.random_name)
 			src.randomize_name()
 

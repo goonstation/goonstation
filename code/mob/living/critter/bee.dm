@@ -58,8 +58,6 @@
 
 	New()
 		..()
-		// bee mobs should have their actual bee names
-		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
 			src.UpdateIcon()

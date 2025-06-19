@@ -133,6 +133,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	burning_image.icon_state = null
 
 	src.old_canmove = src.canmove
+	src.real_name = src.name
 
 	if(!isnull(src.custom_organHolder_type))
 		src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
