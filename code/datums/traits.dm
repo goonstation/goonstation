@@ -1113,7 +1113,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
 			owner.client.images += I
-		owner.ensure_listen_tree()._AddListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
+		owner.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_CLOWN_DISBELIEF)
 
 	proc/examined(mob/owner, mob/examiner, list/lines)
 		if(examiner.job == "Clown")

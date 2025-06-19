@@ -20,6 +20,8 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 	src.disbelief_image.override = 1
 	if(isnull(global.clown_disbelief_images))
 		global.clown_disbelief_images = list()
+	if(isnull(global.clown_disbelief_clown_mobs))
+		global.clown_disbelief_clown_mobs = list()
 	global.clown_disbelief_images += src.disbelief_image
 	for(var/mob/M as anything in by_cat[TR_CAT_CLOWN_DISBELIEF_MOBS])
 		M.client?.images += src.disbelief_image
