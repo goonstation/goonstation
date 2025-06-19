@@ -334,7 +334,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 			boutput(user, SPAN_NOTICE(pick("Your head hurts a little less.", "You breathe a little easier.", "The pain in your chest lessens.")))
 
 	user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."), group = "stress_ball")
-	boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."), group = "stress_ball")
+	boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."), group = "stress_ball_self")
 
 /obj/item/toy/plush/small/deneb
 	name = "Deneb the swan"
