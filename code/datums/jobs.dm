@@ -1144,11 +1144,6 @@ ABSTRACT_TYPE(/datum/job/special)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Mime"
 
-/datum/job/special/attorney/judge
-	name = "Judge"
-	limit = 0
-	access_string = "Captain" // why does a judge have all access anyway?
-
 /datum/job/special/vice_officer
 	name = "Vice Officer"
 	linkcolor = SECURITY_LINK_COLOR
