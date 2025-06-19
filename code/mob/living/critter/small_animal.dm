@@ -50,7 +50,6 @@ todo: add more small animals!
 ABSTRACT_TYPE(/mob/living/critter/small_animal)
 /mob/living/critter/small_animal
 	name = "critter"
-	real_name = "critter"
 	desc = "you shouldn't be seeing this!"
 	density = FALSE
 	custom_gib_handler = /proc/gibs
