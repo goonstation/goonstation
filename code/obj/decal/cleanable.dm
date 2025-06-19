@@ -691,7 +691,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		return 0
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop) || (W.is_open_container() && W.reagents))
 			..()
 		else
 			src.loc.Attackby(user.equipped(), user)
