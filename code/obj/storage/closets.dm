@@ -232,7 +232,6 @@ TYPEINFO(/obj/storage/closet/coffin)
 	/obj/item/clothing/mask/breath,
 	/obj/item/clothing/under/misc/syndicate,
 	/obj/item/tank/jetpack/syndicate,
-	/obj/item/tank/jetpack,
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
 	/obj/item/clothing/head/helmet/space/santahat/noslow,
