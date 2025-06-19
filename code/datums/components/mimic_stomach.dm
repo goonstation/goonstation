@@ -46,7 +46,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 
 /datum/component/mimic_stomach/proc/on_entered(mob/user)
 	if (istype(user, /mob/living/critter/mimic))
-		user.HealBleeding()
+		user.HealBleeding(INFINITY)
 		user.HealDamage("All", user.max_health, user.max_health)
 
 /datum/component/mimic_stomach/proc/mimic_move(mob/user, obj/target, var/exit = FALSE)

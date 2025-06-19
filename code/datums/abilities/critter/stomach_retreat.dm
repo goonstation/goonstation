@@ -18,15 +18,15 @@
 	cast(atom/target)
 		. = ..()
 		if (inside)
-			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes.", "No.")))
-				if ("Yes.")
+			switch(tgui_alert(holder.owner, "Leave yourself?", "Retreat to Stomach", list("Yes", "No")))
+				if ("Yes")
 					deactivate()
 					return TRUE
-				if ("No.")
+				if ("No")
 					return TRUE
 		var/obj/target_container = holder.owner.loc
 		if (!isobj(target_container))
-			boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
+			boutput(holder.owner, SPAN_ALERT("You gotta be inside a chute or something to do that!"))
 			return TRUE
 
 		var/datum/component/mimic_stomach/component = target_container.GetComponent(/datum/component/mimic_stomach)
@@ -34,10 +34,10 @@
 			boutput(holder.owner, SPAN_ALERT("There's already a mimic in here!"))
 			return TRUE
 
-		switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes.", "No.")))
-			if ("Yes.")
+		switch(tgui_alert(holder.owner, "Retreat into yourself to heal?", "Retreat to Stomach", list("Yes", "No")))
+			if ("Yes")
 				activate(target_container)
-			if ("No.")
+			if ("No")
 				return TRUE
 
 	proc/activate(obj/target)
