@@ -32,7 +32,6 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
-	var/last_crunch = 0
 	var/atom/target
 	var/mob/user
 
@@ -44,9 +43,9 @@
 	onStart()
 		..()
 		if (ishuman(target))
-			duration = 5 SECONDS
+			src.duration = 5 SECONDS
 		else
-			duration = 1 SECONDS
+			src.duration = 1 SECONDS
 		if (istype(user, /mob/living/critter/mimic))
 			var/mob/living/critter/mimic/mimic = user
 			mimic.stop_hiding()
@@ -54,14 +53,12 @@
 
 	onUpdate()
 		..()
-		last_crunch++
-		if (last_crunch >= 2)
+		if (!ON_COOLDOWN(global, "chomp_gib", 2 SECONDS))
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
 			eat_twitch(user)
 			random_brute_damage(target, 2)
 			ThrowRandom(gib, rand(2,6))
-			last_crunch = 0
 
 	onEnd()
 		..()
