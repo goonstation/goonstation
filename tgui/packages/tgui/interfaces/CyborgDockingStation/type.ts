@@ -17,6 +17,7 @@ export interface CyborgDockingStationData {
   disabled: BooleanLike;
   viewer_is_occupant: BooleanLike;
   viewer_is_robot: BooleanLike;
+  viewer_is_human: BooleanLike;
   allow_self_service: BooleanLike;
   conversion_chamber: BooleanLike;
 
