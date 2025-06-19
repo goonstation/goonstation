@@ -1754,12 +1754,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	return
 
 /obj/item/proc/pickup(mob/user)
-	#ifdef COMSIG_ITEM_PICKUP
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
-	#endif
-	#ifdef COMSIG_MOB_PICKUP
 	SEND_SIGNAL(user, COMSIG_MOB_PICKUP, src)
-	#endif
 	src.material_on_pickup(user)
 	set_mob(user)
 	show_buttons()
