@@ -1,4 +1,6 @@
 (t)thu jun 19 25
+(u)Azrun
+(+)Salvagers now start with some additional currency and new gear on the M4GP13.
 (u)glowbold
 (*)Latejoin jobs slightly tweaked, details in minor notes
 (+)Hall Monitor is a random gimmick job. RoleControl can open up additional Hall Monitor slots.
