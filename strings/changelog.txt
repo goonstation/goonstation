@@ -1,4 +1,9 @@
-
+(t)thu jun 19 25
+(u)glowbold
+(*)Latejoin jobs slightly tweaked, details in minor notes
+(+)Hall Monitor is a random gimmick job. RoleControl can open up additional Hall Monitor slots.
+(+)Stowaway job has 0 to 3 slots per round.
+(+)RoleControl can open up an additional Sous-Chef slot.
 (t)wed jun 18 25
 (u)RubberRats & glowbold
 (p)22814
