@@ -44,12 +44,15 @@
 		var/mob/parent = holder.owner
 		var/datum/component/mimic_stomach/component = target.GetComponent(/datum/component/mimic_stomach)
 		var/datum/targetable/critter/stomach_retreat/abil = parent.getAbility(/datum/targetable/critter/stomach_retreat)
-		abil.inside = TRUE
-		if (component)
+		if (!component)
+			component = target.AddComponent(/datum/component/mimic_stomach)
+		if (istypes(target, component.trap_whitelist) && !istypes(target, component.trap_blacklist))
 			component.mimic_move(parent, target)
 		else
-			component = target.AddComponent(/datum/component/mimic_stomach)
-			component.mimic_move(parent, target)
+			boutput(holder.owner, SPAN_ALERT("You can't seem to get a grip in here!"))
+			component.RemoveComponent(/datum/component/mimic_stomach)
+			return
+		abil.inside = TRUE
 		src.current_container = target
 		if (istype(parent, /mob/living/critter/mimic/antag_spawn))
 			var/mob/living/critter/mimic/antag_spawn/mimic = parent

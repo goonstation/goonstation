@@ -6,7 +6,7 @@
 	. = ..()
 	RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(barf))
 
-/datum/component/death_barf/proc/record_limb(atom/target)
+/datum/component/death_barf/proc/record_limb(atom/target) // called by eat_limb's gobble()
 	if (target in src.limb_list)
 		return
 	LAZYLISTADD(src.limb_list, target)

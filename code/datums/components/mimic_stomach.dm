@@ -1,6 +1,7 @@
 /datum/component/mimic_stomach
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/trap_whitelist = list(/obj/machinery/disposal, /obj/storage/)
+	var/list/trap_blacklist = list(/obj/storage/closet/port_a_sci)
 	var/datum/allocated_region/region
 	var/turf/center
 	var/obj/current_container
@@ -56,8 +57,12 @@ TYPEINFO(/datum/component/mimic_stomach)
 		src.on_entered(user)
 		RegisterSignal(src.current_container, COMSIG_ATOM_ENTERED, PROC_REF(trap_chomp))
 		for (var/obj/item in src.present_mimic.contents)
-			src.add_limb(item, FALSE)
-			LAZYLISTREMOVE(src.present_mimic.contents, item)
+			if (istype(item, /obj/item/parts/human_parts)) // I wanted to make this take any item, but ran into too many problems
+				var/obj/item/parts/human_parts/limb = item
+				if (limb.holder == user)
+					continue
+				src.add_limb(limb, FALSE)
+				LAZYLISTREMOVE(src.present_mimic.contents, item)
 		src.current_container.visible_message(SPAN_ALERT("<b>[src.present_mimic.name] turns themself inside out!</b>"))
 	else
 		for (var/obj/item in src.things_eaten)
@@ -72,11 +77,7 @@ TYPEINFO(/datum/component/mimic_stomach)
 	if (!target)
 		return
 	var/obj/item/parts/human_parts/limb_obj
-	if (!istype(target, /obj/item/parts/human_parts))
-		boutput(src.present_mimic, SPAN_ALERT("Doesn't look edible..."))
-		return
-	else
-		limb_obj = target
+	limb_obj = target
 	LAZYLISTADD(src.things_eaten, limb_obj)
 	limb_obj.set_loc(src.limb_target_turf)
 	limb_obj.pixel_x = rand(-12,12)

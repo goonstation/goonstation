@@ -17,6 +17,10 @@
 
 	cast(atom/target)
 		. = ..()
+		var/turf/T = get_turf(holder.owner)
+		if (!T.z || isrestrictedz(T.z))
+			boutput(holder.owner, SPAN_ALERT("You can't do that here!"))
+			return
 		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
 			boutput(world, SPAN_ALERT("<b>[holder.owner] starts to gnaw at [target]!</b>"))
 		else
