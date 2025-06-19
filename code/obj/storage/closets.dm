@@ -231,11 +231,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(
 	/obj/item/clothing/mask/breath,
 	/obj/item/clothing/under/misc/syndicate,
-#if defined(MAP_OVERRIDE_MANTA)
 	/obj/item/tank/jetpack/syndicate,
-#else
 	/obj/item/tank/jetpack,
-#endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
 	/obj/item/clothing/head/helmet/space/santahat/noslow,

@@ -324,9 +324,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = TRUE
 
 
-#ifdef SUBMARINE_MAP
-	slot_suit = list(/obj/item/clothing/suit/armor/hopcoat)
-#endif
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
@@ -352,11 +349,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 
-#ifdef SUBMARINE_MAP
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
-#else
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
-#endif
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
@@ -471,27 +464,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
 	items_in_backpack = list(/obj/item/device/flash)
-
-#ifdef MAP_OVERRIDE_MANTA
-/datum/job/command/comm_officer
-	name = "Communications Officer"
-	limit = 1
-	wages = PAY_IMPORTANT
-	access_string = "Communications Officer"
-	announce_on_join = TRUE
-	wiki_link = "https://wiki.ss13.co/Communications_Officer"
-
-	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
-	slot_card = /obj/item/card/id/command
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_back = list(/obj/item/storage/backpack/withO2)
-	slot_belt = list(/obj/item/device/pda2/heads)
-	slot_poc1 = list(/obj/item/pen/fancy)
-	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
-	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
-#endif
 
 // Security Jobs
 
@@ -1220,15 +1192,31 @@ ABSTRACT_TYPE(/datum/job/special)
 	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
+/datum/job/special/comm_officer
+	name = "Communications Officer"
+	limit = 0
+	wages = PAY_IMPORTANT
+	access_string = "Communications Officer"
+	announce_on_join = TRUE
+	wiki_link = "https://wiki.ss13.co/Communications_Officer"
+
+	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
+	slot_card = /obj/item/card/id/command
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_belt = list(/obj/item/device/pda2/heads)
+	slot_poc1 = list(/obj/item/pen/fancy)
+	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
+
 /datum/job/special/radioshowhost
 	name = "Radio Show Host"
 	wages = PAY_TRADESMAN
 	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Radio Show Host"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 0
-	special_spawn_location = null
-#elif defined(MAP_OVERRIDE_OSHAN)
+#if defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = null
 #elif defined(MAP_OVERRIDE_NADIR)
