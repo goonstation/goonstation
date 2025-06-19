@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/datum/component/mimic_stomach)
 /datum/component/mimic_stomach
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/list/trap_whitelist = list(/obj/machinery/disposal, /obj/storage/)
