@@ -1,5 +1,6 @@
 (t)thu jun 19 25
 (u)LeahTheTech
+(*)Signal jammers now flash red when they block a signal.
 (+)Stress toys can now be squished without a stress-inducing popup.
 (u)Azrun
 (+)Salvagers now start with some additional currency and new gear on the M4GP13.
