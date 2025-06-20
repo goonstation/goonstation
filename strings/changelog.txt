@@ -1,5 +1,11 @@
 
 (t)fri jun 20 25
+(u)FlameArrow57
+(p)23310
+(e)⚖💅💊|C-Balance, C-QoL, A-Medical
+(*)Mannitol now only clears 0.25 brain damage per tick when above 80 brain damage.
+(*)Synaptizine and atropine are now much more effective at clearing brain damage above 80.
+(+)The health analyzer will now more clearly show brain damage levels as minor (20), moderate (40), major (60), severe (80), or lethal (100).
 (u)Egregorious
 (p)23803
 (e)🪲⏰|C-Bug, A-Status-Effects
