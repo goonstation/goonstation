@@ -986,23 +986,23 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 					var/the_brain = H.get_organ("brain") // don't need to know anything about it other than "is it there?"
 					var/braind = H.get_brain_damage()
 					if (!the_brain || isnum(braind))
-						if (!the_brain || braind >= 100) // braindead as heck
+						if (!the_brain || braind >= BRAIN_DAMAGE_LETHAL) // braindead as heck
 							if (leye) lmove = "[His_Her] left eye doesn't follow the light at all!"
 							if (reye) rmove = "[His_Her] right eye doesn't follow the light at all!"
 							if (!the_brain)
 								if (leye) lpreact = "doesn't react to the light at all!"
 								if (reye) rpreact = "doesn't react to the light at all!"
-						else if (braind >= 60) // when one becomes a gibbering mess
+						else if (braind >= BRAIN_DAMAGE_MAJOR) // when one becomes a gibbering mess
 							if (reye)
 								rmove = "[His_Her] right eye doesn't follow the light at all!"
 								rpstatus = " The pupil is very dialated and "
 								rpreact = "doesn't react to the light at all!"
-						else if (braind >= 35) // mid point where things are gettin serious
+						else if (braind >= BRAIN_DAMAGE_MODERATE) // mid point where things are gettin serious
 							if (reye)
 								rmove = "[His_Her] right eye doesn't follow the light well."
 								rpstatus = " The pupil is dialated and "
 								rpreact = "doesn't react to the light much."
-						else if (braind >= 10) // mild damage like a concussion
+						else if (braind >= BRAIN_DAMAGE_MINOR) // mild damage like a concussion
 							if (reye) rpstatus = " The pupil is slightly dialated and "
 
 					if (!leye)

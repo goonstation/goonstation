@@ -223,11 +223,11 @@
 				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
-		if (M.get_brain_damage() >= 100)
+		if (M.get_brain_damage() >= BRAIN_DAMAGE_LETHAL)
 			brain_data = SPAN_ALERT("Subject is braindead.")
-		else if (M.get_brain_damage() >= 60)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
-		else if (M.get_brain_damage() >= 10)
+		else if (M.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)

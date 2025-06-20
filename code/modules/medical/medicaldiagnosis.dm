@@ -23,7 +23,7 @@
 		if(ishuman(target) && can_act(user))
 			var/mob/living/carbon/human/H = target
 			if(user.a_intent == "help")
-				if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50) || (!user.traitHolder.hasTrait("training_medical") && prob(2)))
+				if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50) || (!user.traitHolder.hasTrait("training_medical") && prob(2)))
 					user.visible_message(SPAN_ALERT("<b>[user]</b> stabs themselves in the ears with [src]!"), SPAN_ALERT("You stab yourself in the ears with [src]!"))
 					user.apply_sonic_stun(0, 0, 0, 0, 0, 12, 6)
 					take_bleeding_damage(user, user, 15)
