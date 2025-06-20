@@ -412,7 +412,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 	bound_width = 64
 	bound_height = 32
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/minimum_gunbots = 1
 	var/building = FALSE
 	var/progress = 0
