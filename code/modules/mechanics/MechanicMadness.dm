@@ -1077,7 +1077,6 @@ TYPEINFO(/obj/item/mechanics)
 				if(M == src) continue
 				throwstuff(M)
 				if(count > 50) return
-				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN * 10) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
