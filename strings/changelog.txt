@@ -1,5 +1,9 @@
 
 (t)fri jun 20 25
+(u)Cheekybrdy
+(p)23472
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Carrier Pigeons are now obtainable in Courier's own personal mail.
 (u)Chasu
 (p)23403
 (e)💅📦🚗|C-QoL, A-Game-Objects, A-Vehicles
