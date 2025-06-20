@@ -933,9 +933,6 @@
 			C.dispose()
 	. = ..()
 
-/obj/proc/can_construct(mob/user)
-	. = TRUE
-
 /obj/proc/can_deconstruct(mob/user)
 	. = TRUE
 
