@@ -118,7 +118,6 @@
 		/obj/item/tool/omnitool/silicon,
 		/obj/item/weldingtool,
 		/obj/item/rcd,
-		/obj/item/places_pipes,
 		/obj/item/deconstructor/borg,
 		#ifdef HOTSPOTS_ENABLED
 			/obj/item/mining_tool/powered/shovel,
