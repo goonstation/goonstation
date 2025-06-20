@@ -40,7 +40,7 @@
 	icon_state = "sprite-arcane"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_4
 	var/datum/spriteType/spriteType = null
 	var/health = 33
@@ -187,7 +187,7 @@
 /obj/chaplainStuff/tentacle
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_4
 	name = ""
 	icon = 'icons/misc/chaplainRitual.dmi'
@@ -209,7 +209,7 @@
 /obj/chaplainStuff/ritualeffect
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	name = ""
 	icon = 'icons/misc/chaplainRitual.dmi'
 	icon_state = "empty"
@@ -226,7 +226,7 @@
 /obj/chaplainStuff/ritualeffectbig
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -64
 	pixel_y = -64
 	name = ""
@@ -270,7 +270,7 @@
 /obj/chaplainStuff/darkness
 	density = 0
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_4
 
 	name = "darkness"
@@ -804,7 +804,7 @@ obj/eldritch_altar
 	icon = 'icons/obj/spooky.dmi'
 	icon_state = "altar-sleep"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
