@@ -43,7 +43,6 @@
 		src.turn_on()
 	else
 		src.turn_off()
-	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/turn_on()
 	src.on = TRUE
