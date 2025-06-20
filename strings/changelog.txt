@@ -1,5 +1,9 @@
 
 (t)fri jun 20 25
+(u)Egregorious
+(p)23803
+(e)🪲⏰|C-Bug, A-Status-Effects
+(+)Chemfires are more consistently harmful to stand in.
 (u)CalliopeSoups, Gomp
 (p)23548
 (e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
