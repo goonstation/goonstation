@@ -1350,7 +1350,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	msgs.clear(target)
 	msgs.def_zone = def_zone
 	msgs.logs = list()
-	msgs.logc("attacks [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)])")
 
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, user, src)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, target, user) & ATTACK_PRE_DONT_ATTACK)
@@ -1498,6 +1497,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if (is_special && src.special)
 		msgs = src.special.modify_attack_result(user, target, msgs)
+
+	msgs.logc("attacks [constructTarget(target,"combat")] with [src] ([type]) for [msgs.damage] [DAMAGE_TYPE_TO_STRING(msgs.damage_type)] damage")
 
 	msgs.flush()
 	src.add_fingerprint(user)
