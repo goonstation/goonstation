@@ -518,6 +518,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		if (inafterlife(user))
 			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
+		if(istype(W, /obj/item/sticker)) //Stickers stick to it rather than destroy
+			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
