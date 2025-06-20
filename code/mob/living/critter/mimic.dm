@@ -29,7 +29,7 @@
 	var/last_disturbed = INFINITY
 	var/hide_density = null
 	///Time taken to hide if we sit still (Life interval dependent)
-	var/rehide_time = 5 SECONDS
+	var/rehide_time = 2 SECONDS
 	var/pixel_amount = null
 
 	New()
