@@ -339,11 +339,22 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/radiojammer
 	name = "signal jammer"
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
 	var/active = FALSE
+
+/obj/item/radiojammer/New()
+	. = ..()
+	src.RegisterSignal(src, COMSIG_SIGNAL_JAMMED, PROC_REF(signal_jammed))
+
+/obj/item/radiojammer/proc/signal_jammed()
+	//hoping this isn't too performance heavy if a lot of signals get blocked at once
+	if (!src.GetOverlayImage("jammed_light"))
+		src.UpdateOverlays(image(src.icon, "signal_jammed"), "jammed_light")
+	SPAWN(2 DECI SECONDS)
+		src.ClearSpecificOverlays("jammed_light")
 
 /obj/item/radiojammer/attack_self(mob/user)
 	if (!istype(global.radio_controller))
