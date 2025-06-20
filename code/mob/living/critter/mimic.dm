@@ -158,8 +158,8 @@
 	hand_count = 2
 	var/modifier = null
 	add_abilities = list(/datum/targetable/critter/mimic,
-						/datum/targetable/critter/eat_limb,
 						/datum/targetable/critter/drop_disguise,
+						/datum/targetable/critter/eat_limb,
 						/datum/targetable/critter/tackle,
 						/datum/targetable/critter/sting/mimic/antag_spawn,
 						/datum/targetable/vent_move,
