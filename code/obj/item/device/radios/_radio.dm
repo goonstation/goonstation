@@ -339,7 +339,7 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/radiojammer
 	name = "signal jammer"
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 	w_class = W_CLASS_TINY
 	is_syndicate = TRUE
