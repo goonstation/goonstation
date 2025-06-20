@@ -1,5 +1,9 @@
 
 (t)fri jun 20 25
+(u)Chasu
+(p)23403
+(e)💅📦🚗|C-QoL, A-Game-Objects, A-Vehicles
+(+)Pod-to-hangar communication is now packet-based
 (u)FlameArrow57
 (p)23310
 (e)⚖💅💊|C-Balance, C-QoL, A-Medical
