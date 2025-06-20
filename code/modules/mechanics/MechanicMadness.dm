@@ -941,7 +941,7 @@ TYPEINFO(/obj/item/mechanics)
 	one_per_tile = TRUE //also abusable
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
-	var/active = 0
+	var/active = FALSE
 	var/sendstr = "1"
 
 	New()
@@ -966,7 +966,7 @@ TYPEINFO(/obj/item/mechanics)
 		else
 			secure()
 	loosen()
-		active = 0
+		active = FALSE
 		for(var/beam in beamobjs)
 			qdel(beam)
 	secure()
@@ -994,7 +994,7 @@ TYPEINFO(/obj/item/mechanics)
 
 	proc/rebeam()
 		loosen()
-		active = 1
+		active = TRUE
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
@@ -1052,7 +1052,7 @@ TYPEINFO(/obj/item/mechanics)
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	var/active = 0
+	var/active = FALSE
 	event_handler_flags = USE_FLUID_ENTER
 
 	New()
@@ -1088,14 +1088,14 @@ TYPEINFO(/obj/item/mechanics)
 			var/in_container = istype(container,/obj/item/storage/mechanics)
 			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
-				active = 1
+				active = TRUE
 				drivecurrent(container)
 				sleep(0.5 SECONDS)
 				if (!in_container)
 					drivecurrent() // Gravitons in lockers only bonk once
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
-				active = 0
+				active = FALSE
 
 	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
@@ -1164,7 +1164,7 @@ TYPEINFO(/obj/item/mechanics)
 	name = "Delay Component"
 	desc = ""
 	icon_state = "comp_wait"
-	var/active = 0
+	var/active = FALSE
 	var/delay = 10
 	var/changesig = 0
 
@@ -1203,13 +1203,13 @@ TYPEINFO(/obj/item/mechanics)
 			SPAWN(0)
 				if(src)
 					icon_state = "[under_floor ? "u":""]comp_wait1"
-					active = 1
+					active = TRUE
 				sleep(delay)
 				if(src)
 					var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 					SEND_SIGNAL(src,transmissionStyle,input)
 					icon_state = "[under_floor ? "u":""]comp_wait"
-					active = 0
+					active = FALSE
 		return
 
 	update_icon()
@@ -2740,7 +2740,7 @@ TYPEINFO(/obj/item/mechanics)
 	desc = ""
 	icon_state = "comp_led"
 	var/light_level = 2
-	var/active = 0
+	var/active = FALSE
 	var/selcolor = "#FFFFFF"
 	var/datum/light/light
 	color = "#AAAAAA"
@@ -2784,7 +2784,7 @@ TYPEINFO(/obj/item/mechanics)
 		return 1
 
 	pickup()
-		active = 0
+		active = FALSE
 		light.disable()
 		src.color = "#AAAAAA"
 		return ..()
@@ -2802,7 +2802,7 @@ TYPEINFO(/obj/item/mechanics)
 	proc/turnon(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		active = 1
+		active = TRUE
 		light.enable()
 		src.color = selcolor
 		return
@@ -2810,7 +2810,7 @@ TYPEINFO(/obj/item/mechanics)
 	proc/turnoff(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		active = 0
+		active = FALSE
 		light.disable()
 		src.color = "#AAAAAA"
 		return
