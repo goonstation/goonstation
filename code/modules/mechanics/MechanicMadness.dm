@@ -1097,26 +1097,22 @@ TYPEINFO(/obj/item/mechanics)
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
 				active = 0
-		return
 
 	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, range, 1)
-		thr?.user = (owner)
-		return
+		thr?.user = owner
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if(level == OVERFLOOR) return
 		if(active)
 			throwstuff(AM)
-		return
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
-		return
 #undef GRAVITON_ITEM_COOLDOWN
 #undef GRAVITON_CONTAINER_COOLDOWN
 #undef GRAVITON_CONTAINER_FAIL_SOUND_VOLUME
