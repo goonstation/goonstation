@@ -119,7 +119,6 @@
 
 	var/matrix/transform_original = src.transform
 	if (src.throw_spin && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
-
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
