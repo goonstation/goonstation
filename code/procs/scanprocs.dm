@@ -159,7 +159,7 @@
 					brain_data = SPAN_ALERT("Moderate brain damage detected. Subject unable to function well.")
 				else if (H.get_brain_damage() >= BRAIN_DAMAGE_MINOR)
 					brain_data = SPAN_ALERT("Minor brain damage detected.")
-				else if (H.get_brain_damage() < BRAIN_DAMAGE_MINOR)
+				else if (H.get_brain_damage() > 0)
 					brain_data = SPAN_ALERT("Synapse function may be disrupted.")
 			else
 				brain_data = SPAN_ALERT("Subject has no brain.")
