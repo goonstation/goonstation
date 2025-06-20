@@ -292,7 +292,7 @@
 			src.Attackby(I, user)
 
 /obj/submachine/weapon_vendor/fishing/portable
-	anchored = 0
+	anchored = UNANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))

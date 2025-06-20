@@ -297,7 +297,7 @@ function redrawCanvas() {
 			currP.y * scalar[1],
 			currP.size * scalar[0],
 			0,
-			2 * Math.PI,
+			2 * Math.PI
 		);
 		context.stroke();
 		currP.size = Math.min(currP.size + currP.growSpeed, currP.maxSize);
@@ -316,7 +316,7 @@ function redrawCanvas() {
 			curr.y,
 			curr.currentSize,
 			lerpColor(curr.fromColor, curr.color, prc),
-			prc * (adj * 2),
+			prc * (adj * 2)
 		);
 	}
 
@@ -331,7 +331,7 @@ function redrawCanvas() {
 	if (prcReady == 1)
 		cooldownProps.barOpacity = Math.max(
 			cooldownProps.barOpacity - cooldownProps.barFadeSpeed,
-			0,
+			0
 		);
 
 	if (glitchProps.glitching) {
@@ -388,7 +388,7 @@ function easeInOutQuad(
 	currentIteration,
 	startValue,
 	changeInValue,
-	totalIterations,
+	totalIterations
 ) {
 	if ((currentIteration /= totalIterations / 2) < 1) {
 		return (
@@ -405,7 +405,7 @@ function easeInOutCubic(
 	currentIteration,
 	startValue,
 	changeInValue,
-	totalIterations,
+	totalIterations
 ) {
 	if ((currentIteration /= totalIterations / 2) < 1) {
 		return (changeInValue / 2) * Math.pow(currentIteration, 3) + startValue;
@@ -419,7 +419,7 @@ function easeInOutCirc(
 	currentIteration,
 	startValue,
 	changeInValue,
-	totalIterations,
+	totalIterations
 ) {
 	if ((currentIteration /= totalIterations / 2) < 1) {
 		return (

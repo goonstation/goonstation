@@ -1497,7 +1497,7 @@
 		else if (send_flying == 1)
 			msgs.after_effects += /proc/wrestler_knockdown
 
-		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] with [src.weak == 1 ? "werewolf" : "abomination"] arms at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] with [src.weak == 1 ? "werewolf" : "abomination"] arms for [msgs.damage] damage at [log_loc(user)].")
 		user.attack_effects(target, user.zone_sel?.selecting)
 		msgs.flush(SUPPRESS_LOGS)
 

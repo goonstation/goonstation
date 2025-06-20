@@ -47,7 +47,7 @@
 	name = "Equipment Chute"
 	desc = "Loading site for ship equipment."
 	icon = 'icons/obj/large/96x32.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "loader"
 	pixel_x = -32
 

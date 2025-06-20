@@ -1124,8 +1124,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if (M.bodytemperature > 0 && !M.hasStatus("burning"))
-					M.bodytemperature = max(M.bodytemperature-(10 * mult),0)
+				if(!M.hasStatus("burning"))
+					M.changeBodyTemp(-10 KELVIN * mult)
 				..()
 				return
 
@@ -1943,6 +1943,7 @@ datum
 						return
 					var/obj/item/pen/crayon/chalk/W = new(T)
 					chalk_color = holder.get_average_rgb()
+					W.true_color = chalk_color
 					W.assign_color(chalk_color)
 
 		shark_dna

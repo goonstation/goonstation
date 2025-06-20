@@ -282,7 +282,7 @@
 		 												//if you change the capacity, remember to manually update this string
 		w_class = W_CLASS_NORMAL // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
-		anchored=0
+		anchored=UNANCHORED
 		num_f_icons=1
 		icon_state="housing_handheld"
 		flags = EXTRADELAY | TABLEPASS | CONDUCT
@@ -324,7 +324,7 @@
 	var/icon_up = "button_comp_button_unpressed"
 	var/icon_down = "button_comp_button_pressed"
 	density = 1
-	anchored= 1
+	anchored= ANCHORED
 	level=1
 	w_class = W_CLASS_BULKY
 	New()

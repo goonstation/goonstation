@@ -48,7 +48,7 @@ chui.bycall = function (method, data) {
 	data = data || {};
 	data._cact = method;
 	const Http = new XMLHttpRequest();
-	Http.open("GET", "byond://?src=" + chui.window + "&" + $.param(data));
+	Http.open("GET", "?src=" + chui.window + "&" + $.param(data));
 	Http.send();
 };
 
@@ -305,7 +305,7 @@ chui.fadeIn = function () {
 						pos: x - 40 * neg + "," + (y - 40 * neg),
 					});
 				},
-			},
+			}
 		);
 	}, 1000);
 };
@@ -330,7 +330,7 @@ chui.fadeOut = function () {
 				});
 			},
 			complete: chui.close,
-		},
+		}
 	);
 };
 

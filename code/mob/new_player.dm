@@ -295,11 +295,27 @@ TYPEINFO(/mob/new_player)
 		global.latespawning.lock()
 
 		if (JOB && (force || job_controls.check_job_eligibility(src, JOB, STAPLE_JOBS | SPECIAL_JOBS)))
-			var/mob/character = create_character(JOB, JOB.allow_traitors)
+			var/mob/character = create_character(JOB, JOB.can_roll_antag)
 			if (isnull(character))
 				global.latespawning.unlock()
 				return
 			JOB.assigned++
+			if (JOB.player_requested || JOB == job_controls.priority_job)
+				SPAWN(0) // don't pause late spawning for this
+					var/limit_reached = JOB.limit <= JOB.assigned
+					var/list/req_prio = list()
+					if (JOB.player_requested)
+						req_prio += "requested"
+					if (JOB == job_controls.priority_job)
+						req_prio += "priority"
+					var/message = "RoleControl notification: [english_list(req_prio, "")] role [JOB.name] hired[limit_reached ? " (limit reached, clearing [english_list(req_prio, "")] status)" : ""]"
+					if (JOB.player_requested && limit_reached)
+						JOB.player_requested = FALSE
+					if (JOB == job_controls.priority_job && limit_reached)
+						job_controls.priority_job = null
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="COMMAND-MAILBOT", "group"=list(MGD_COMMAND), "sender"="00000000", "message"=message)
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if (JOB.counts_as)
 				var/datum/job/other = find_job_in_controller_by_string(JOB.counts_as)
 				other.assigned++
@@ -693,6 +709,9 @@ a.latejoin-card:hover {
 			if (job_controls.allow_special_jobs)
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
+				for(var/datum/job/daily/J in job_controls.special_jobs)
+					dat += LateJoinLink(J)
+
 				for(var/datum/job/special/J in job_controls.special_jobs)
 					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
 					dat += LateJoinLink(J)
@@ -819,7 +838,7 @@ a.latejoin-card:hover {
 					// Check if they have this antag type enabled. If not, too bad!
 					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
 					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
-					if (antag_enabled)
+					if (antag_enabled && J.can_be_antag(bad_type))
 						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
@@ -1081,14 +1100,15 @@ a.latejoin-card:hover {
 	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	// ready tutorial / cancel ready tutorial
-	if (src.ready_play) // disabled tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
-	else if (src.ready_tutorial) // hide ready tutorial, show cancel here
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
-		if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	else // show ready tutorial
-		if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
-	current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
+	if (global.newbee_tutorial_enabled)
+		if (src.ready_play) // disabled tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=true;pos=18,[current_vertical_offset]")
+		else if (src.ready_tutorial) // hide ready tutorial, show cancel here
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=true;is-visible=false")
+			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		else // show ready tutorial
+			if (client) winset(src, "joinmenu.button_tutorial", "is-disabled=false;is-visible=true;pos=18,[current_vertical_offset]")
+		current_vertical_offset += JOINMENU_VERTICAL_OFFSET_PER_BUTTON
 
 	if(client) winset(src, "joinmenu", "size=240x[current_vertical_offset]")
 
