@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			mindeater.reveal(src.full_reveal_on_use)
 
 	proc/get_nearest_human(atom/target)
-		if (isliving(target))
+		if (ishuman(target))
 			return target
 		for (var/mob/living/L in view(1, get_turf(target)))
 			if (!ishuman(L))
@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 			return L
 
 	proc/get_nearest_human_or_silicon(atom/target)
-		if (isliving(target))
+		if (ishuman(target))
 			return target
 		for (var/mob/living/L in view(1, get_turf(target)))
 			if (!(ishuman(L) || issilicon(L)))
@@ -253,7 +253,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) < src.pointCost)
 			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		return ..()
+		return ..(L)
 
 	cast(atom/target)
 		. = ..()
