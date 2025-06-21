@@ -23,12 +23,17 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 
 /obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user)
 	if (!user)
-		return 1
-	if(user.hasStatus("upgrade_disabled"))
+		return ROBOT_UPGRADE_FAIL_DISABLED
+	if(user.hasStatus("upgrade_disabled") || user.hasStatus("lockdown_robot") || user.hasStatus("no_cell_robot"))
 		boutput(user, SPAN_ALERT("Your modules are currently disabled!"))
-		return 1
+		return ROBOT_UPGRADE_FAIL_DISABLED
+	if(user.hasStatus("low_power_robot") ||  user.hasStatus("no_power_robot"))
+		boutput(user, SPAN_ALERT("Your power is critical!"))
+		return ROBOT_UPGRADE_FAIL_LOW_POWER
 	if (!src.activated && !src.active)
 		src.activated = 1
+	if (src.charges <= -1) // infinite charges
+		boutput(user, "[src] has been activated.")
 	if (src.charges > 0)
 		src.charges--
 		if (src.charges == 0)
@@ -46,3 +51,4 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	if (!user)
 		return 1
 	src.activated = 0
+	boutput(user, "[src] has been deactivated.")
