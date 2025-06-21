@@ -26,7 +26,7 @@
 
 	attack_hand(mob/M)
 		if (src.armed)
-			if ((M.get_brain_damage() >= 60 || M.bioHolder.HasEffect("clumsy")) && prob(30))
+			if ((M.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || M.bioHolder.HasEffect("clumsy")) && prob(30))
 				src.triggered(M)
 				JOB_XP(M, "Clown", 5)
 				M.visible_message(SPAN_ALERT("<B>[M] accidentally sets off the bear trap!</B>"),\

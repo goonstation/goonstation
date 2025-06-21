@@ -51,7 +51,7 @@
 			message.content = say_drunk(message.content)
 
 	// Handle brain damage modifiers.
-	if (speaker.get_brain_damage() >= 60)
+	if (speaker.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 		message.content = find_replace_in_string(message.content, "language/modifiers/brain_damage.txt")
 
 		// If the mob is wearing a headset, randomly cause them to speak into it.

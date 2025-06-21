@@ -67,11 +67,11 @@
 		var/is_chg = ischangeling(owner)
 		//if (src.brain_op_stage == 4.0) // handled above in handle_organs() now
 			//death()
-		if (owner.get_brain_damage() >= 120 || death_health <= -500) //-200) a shitty test here // let's lower the weight of oxy
+		if (owner.get_brain_damage() >= BRAIN_DAMAGE_DEATH || death_health <= -500) //-200) a shitty test here // let's lower the weight of oxy
 			if (!is_chg || owner.suiciding)
 				owner.death()
 
-		if (owner.get_brain_damage() >= 100) // braindeath
+		if (owner.get_brain_damage() >= BRAIN_DAMAGE_LETHAL) // braindeath
 			if (!is_chg)
 				boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
 				owner.losebreath += 10 * mult

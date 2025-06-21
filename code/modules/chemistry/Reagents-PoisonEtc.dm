@@ -1516,7 +1516,7 @@ datum
 							fainted = TRUE
 
 				M.jitteriness = max(M.jitteriness-30,0)
-				if (M.get_brain_damage() <= 80)
+				if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 					M.take_brain_damage(1 * mult)
 				else
 					if (prob(10)) M.take_brain_damage(1 * mult) // let's slow down a bit after 80

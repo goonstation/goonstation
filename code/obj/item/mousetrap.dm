@@ -89,7 +89,7 @@
 			src.set_armer(user)
 		else
 			src.icon_state = "mousetrap"
-			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if (user && (user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
@@ -128,7 +128,7 @@
 				critter.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 				return
 		if (src.armed)
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if ((user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"

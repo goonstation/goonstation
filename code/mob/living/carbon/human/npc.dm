@@ -352,7 +352,7 @@
 			if(iscarbon(ai_target))
 				var/mob/living/carbon/carbon_target = ai_target
 
-				if(src.get_brain_damage() >= 60)
+				if(src.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 

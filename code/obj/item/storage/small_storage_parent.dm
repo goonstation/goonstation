@@ -149,7 +149,7 @@
 			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return FALSE
 		// clumsy and braindamaged people have a chance to consume multiple pills and spill the rest onto the floor.
-		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > BRAIN_DAMAGE_MODERATE) && prob(20))
 			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
 			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
 								null, SPAN_NOTICE("Someone pops some pills."))

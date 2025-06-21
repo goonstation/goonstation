@@ -9,7 +9,7 @@
 		return
 
 	// Setup bad/loud/soft sayflags.
-	if ((mob_speaker.get_brain_damage() >= 60) || mob_speaker.bioHolder?.HasEffect("unintelligable") || mob_speaker.hasStatus("drunk"))
+	if ((mob_speaker.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) || mob_speaker.bioHolder?.HasEffect("unintelligable") || mob_speaker.hasStatus("drunk"))
 		message.flags |= SAYFLAG_BAD_SINGING
 
 	else if ((message.last_character == "!") || mob_speaker.bioHolder?.HasEffect("loud_voice"))
