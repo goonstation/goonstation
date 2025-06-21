@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 function initContent(io) {
-  io.println("test");
-};
+  io.println('test');
+}
 
 function setupHterm() {
   // We don't mark it local so people can play with it in the dev console.
@@ -12,14 +12,14 @@ function setupHterm() {
     var io = this.io.push();
     function printPrompt() {
       io.print(
-          '\x1B[38;2;51;105;232mh' +
+        '\x1B[38;2;51;105;232mh' +
           '\x1B[38;2;213;15;37mt' +
           '\x1B[38;2;238;178;17me' +
           '\x1B[38;2;51;105;232mr' +
           '\x1B[38;2;0;153;37mm' +
           '\x1B[38;2;213;15;37m>' +
           '\x1B[0m '
-);
+      );
     }
 
     io.onVTKeystroke = function (string) {

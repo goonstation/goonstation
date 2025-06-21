@@ -936,10 +936,6 @@ TYPEINFO(/mob)
 /mob/verb/list_medals()
 	set name = "Medals"
 
-	if (IsGuestKey(src.key))
-		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
-		return
-
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
 
 	SPAWN(0)
