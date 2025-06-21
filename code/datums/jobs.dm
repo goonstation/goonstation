@@ -9,6 +9,7 @@
 #define NANOTRASEN_LINK_COLOR "#3348ff"
 #define SYNDICATE_LINK_COLOR "#800"
 
+ABSTRACT_TYPE(/datum/job)
 /datum/job
 	var/name = null
 	var/list/alias_names = null
@@ -100,6 +101,10 @@
 	///if true, cryoing won't free up slots, only ghosting will
 	///basically there should never be two of these
 	var/unique = FALSE
+	var/request_limit = 0 //!Maximum total `limit` via RoleControl request function
+	var/request_cost = null //!Cost to open an additional slot using RoleControl
+	var/player_requested = FALSE //! Flag if currently requested via RoleControl
+
 
 
 	New()
@@ -201,9 +206,9 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-	/// Is this job highlighted for priority latejoining
+	/// Is this job highlighted for latejoiners
 	proc/is_highlighted()
-		return global.priority_job == src
+		return job_controls.priority_job == src || src.player_requested
 
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)
@@ -993,6 +998,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Clown"
 	limit = 1
 	wages = PAY_DUMBCLOWN
+	request_limit = 3 //this is definitely a bad idea
+	request_cost = PAY_TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	linkcolor = MEDICAL_LINK_COLOR // :o)
@@ -1060,8 +1067,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		return S
 
 // Special Cases
+ABSTRACT_TYPE(/datum/job/special)
 /datum/job/special
 	name = "Special Job"
+	limit = 0
 	wages = PAY_UNTRAINED
 	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // fallback for those without their own page
 
@@ -1070,7 +1079,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "IMCODER"
 	// Used for debug testing. No need to define special landmark, this overrides job picks
 	access_string = "Captain"
-
+	limit = -1
 	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
 	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/magnetic)
@@ -1113,24 +1122,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	items_in_backpack = list(/obj/item/rcd/construction, /obj/item/rcd_ammo/big, /obj/item/rcd_ammo/big, /obj/item/material_shaper,/obj/item/room_marker)
 
-/datum/job/special/hairdresser
-	name = "Hairdresser"
-	wages = PAY_UNTRAINED
-	access_string = "Barber"
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/misc/barber)
-	slot_head = list(/obj/item/clothing/head/boater_hat)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/scissors)
-	slot_poc2 = list(/obj/item/razor_blade)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	wiki_link = "https://wiki.ss13.co/Barber"
-
 /datum/job/special/mime
 	name = "Mime"
 	limit = 1
+	request_limit = 2
 	linkcolor = SILICON_LINK_COLOR // greyscale mimes
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
+	request_cost = PAY_DOCTORATE * 4
 	trait_list = list("training_mime")
 	access_string = "Mime"
 	slot_belt = list(/obj/item/device/pda2)
@@ -1145,24 +1143,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/baguette, /obj/item/instrument/whistle/janitor)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Mime"
-
-/datum/job/special/attorney
-	name = "Attorney"
-	linkcolor = SECURITY_LINK_COLOR
-	wages = PAY_DOCTORATE
-	access_string = "Lawyer"
-	limit = 0
-	badge = /obj/item/clothing/suit/security_badge/attorney
-	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	wiki_link = "https://wiki.ss13.co/Lawyer"
-
-/datum/job/special/attorney/judge
-	name = "Judge"
-	limit = 0
-	access_string = "Captain" // why does a judge have all access anyway?
 
 /datum/job/special/vice_officer
 	name = "Vice Officer"
@@ -1196,23 +1176,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
 	items_in_backpack = list(/obj/item/tank/pocket/oxygen)
-
-/datum/job/special/hall_monitor
-	name = "Hall Monitor"
-	limit = 2
-	wages = PAY_UNTRAINED
-	access_string = "Hall Monitor"
-	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
-	badge = /obj/item/clothing/suit/security_badge/paper
-	slot_belt = list(/obj/item/device/pda2)
-	slot_jump = list(/obj/item/clothing/under/color/red)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_head = list(/obj/item/clothing/head/basecap/red)
-	slot_poc1 = list(/obj/item/pen/pencil)
-	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
-	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
-
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
@@ -1257,9 +1220,57 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
+/datum/job/special/radioshowhost
+	name = "Radio Show Host"
+	wages = PAY_TRADESMAN
+	linkcolor = CIVILIAN_LINK_COLOR
+	access_string = "Radio Show Host"
+#ifdef MAP_OVERRIDE_MANTA
+	limit = 0
+	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_OSHAN)
+	limit = 1
+	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
+	limit = 1
+	special_spawn_location = null
+#else
+	limit = 1
+	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
+#endif
+	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
+	slot_eyes = list(/obj/item/clothing/glasses/regular)
+	slot_jump = list(/obj/item/clothing/under/shirt_pants)
+	slot_card = /obj/item/card/id/civilian
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
+	alt_names = list("Radio Show Host", "Talk Show Host")
+	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Radio_Host"
+
+/datum/job/special/souschef
+	name = "Sous-Chef"
+	limit = 1
+	request_limit = 2
+	request_cost = PAY_DOCTORATE * 4
+	wages = PAY_UNTRAINED
+	trait_list = list("training_chef")
+	access_string = "Sous-Chef"
+	requires_supervisor_job = "Chef"
+	slot_belt = list(/obj/item/device/pda2/chef)
+	slot_jump = list(/obj/item/clothing/under/misc/souschef)
+	slot_foot = list(/obj/item/clothing/shoes/chef)
+	slot_head = list(/obj/item/clothing/head/souschefhat)
+	slot_suit = list(/obj/item/clothing/suit/apron)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	wiki_link = "https://wiki.ss13.co/Chef"
+
 /datum/job/special/stowaway
 	name = "Stowaway"
-	limit = 2
+	limit = 0 // set in New()
 	wages = 0
 	trait_list = list("stowaway")
 	add_to_manifest = FALSE
@@ -1365,20 +1376,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/currency/buttcoin,
 	/obj/item/currency/spacecash/fivehundred)
 
-/datum/job/special/souschef
-	name = "Sous-Chef"
-	limit = 1
-	wages = PAY_UNTRAINED
-	trait_list = list("training_chef")
-	access_string = "Sous-Chef"
-	requires_supervisor_job = "Chef"
-	slot_belt = list(/obj/item/device/pda2/chef)
-	slot_jump = list(/obj/item/clothing/under/misc/souschef)
-	slot_foot = list(/obj/item/clothing/shoes/chef)
-	slot_head = list(/obj/item/clothing/head/souschefhat)
-	slot_suit = list(/obj/item/clothing/suit/apron)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	wiki_link = "https://wiki.ss13.co/Chef"
+	New()
+		. = ..()
+		src.limit = rand(0,3)
 
 // randomizd gimmick jobs
 
@@ -1386,6 +1386,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random
 	limit = 0
 	name = "Random"
+	request_limit = 2
+	request_cost = PAY_IMPORTANT*4
 
 	New()
 		..()
@@ -1393,6 +1395,21 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
+
+/datum/job/special/random/hall_monitor
+	name = "Hall Monitor"
+	wages = PAY_UNTRAINED
+	access_string = "Hall Monitor"
+	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
+	badge = /obj/item/clothing/suit/security_badge/paper
+	slot_belt = list(/obj/item/device/pda2)
+	slot_jump = list(/obj/item/clothing/under/color/red)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_head = list(/obj/item/clothing/head/basecap/red)
+	slot_poc1 = list(/obj/item/pen/pencil)
+	slot_poc2 = list(/obj/item/device/radio/hall_monitor)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
 
 /datum/job/special/random/hollywood
 	name = "Hollywood Actor"
@@ -1444,6 +1461,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY_EXECUTIVE
 	access_string = "VIP"
 	linkcolor = SECURITY_LINK_COLOR
+	request_cost = PAY_EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
@@ -1467,6 +1485,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Inspector"
 	wages = PAY_IMPORTANT
 	linkcolor = NANOTRASEN_LINK_COLOR
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Inspector"
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
@@ -1505,6 +1524,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Diplomat"
 	wages = PAY_DUMBCLOWN
 	access_string = "Diplomat"
+	request_limit = 0 // you don't request them, they come to you
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -1670,6 +1690,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pharmacist"
 	wages = PAY_DOCTORATE
 	linkcolor = MEDICAL_LINK_COLOR
+	request_limit = 1 // limited workspace
 	trait_list = list("training_medical")
 	access_string = "Pharmacist"
 	slot_card = /obj/item/card/id/medical
@@ -1680,41 +1701,11 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
 
-/datum/job/special/random/radioshowhost
-	name = "Radio Show Host"
-	wages = PAY_TRADESMAN
-	linkcolor = CIVILIAN_LINK_COLOR
-	access_string = "Radio Show Host"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 0
-	special_spawn_location = null
-#elif defined(MAP_OVERRIDE_OSHAN)
-	limit = 1
-	special_spawn_location = null
-#elif defined(MAP_OVERRIDE_NADIR)
-	limit = 1
-	special_spawn_location = null
-#else
-	limit = 1
-	special_spawn_location = LANDMARK_RADIO_SHOW_HOST_SPAWN
-#endif
-	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
-	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_jump = list(/obj/item/clothing/under/shirt_pants)
-	slot_card = /obj/item/card/id/civilian
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_belt = list(/obj/item/device/pda2)
-	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
-	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
-	alt_names = list("Radio Show Host", "Talk Show Host")
-	change_name_on_spawn = TRUE
-	wiki_link = "https://wiki.ss13.co/Radio_Host"
-
 /datum/job/special/random/psychiatrist
 	name = "Psychiatrist"
 	linkcolor = MEDICAL_LINK_COLOR
 	wages = PAY_DOCTORATE
+	request_limit = 1 // limited workspace
 	access_string = "Psychiatrist"
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical
@@ -1795,6 +1786,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 // god help us
+// hello it's me god, adding an RP define here
+#ifndef RP_MODE
 /datum/job/special/random/influencer
 	name = "Influencer"
 	wages = PAY_UNTRAINED
@@ -1808,6 +1801,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
 	special_spawn_location = LANDMARK_INFLUENCER_SPAWN
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+#endif
 
 /*
  * Halloween jobs
@@ -2024,6 +2019,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween/ghost_buster
 	name = "Ghost Buster"
 	wages = PAY_UNTRAINED
+	request_limit = 1
+	request_cost = PAY_EXECUTIVE * 4
 	access_string = "Staff Assistant"
 	change_name_on_spawn = TRUE
 	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
@@ -2727,6 +2724,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 
 ABSTRACT_TYPE(/datum/job/daily)
 /datum/job/daily //Special daily jobs
+	request_limit = 2
+	request_cost = PAY_DOCTORATE*4
 	var/day = ""
 /datum/job/daily/boxer
 	day = "Sunday"
@@ -2770,6 +2769,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	alt_names = list("Barber", "Hairdresser")
 	wiki_link = "https://wiki.ss13.co/Barber"
 
 /datum/job/daily/waiter
@@ -2798,6 +2798,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	alt_names = list("Lawyer", "Attorney")
 	wiki_link = "https://wiki.ss13.co/Lawyer"
 
 
@@ -2805,6 +2806,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	day = "Friday"
 	name = "Tourist"
 	limit = 100
+	request_limit = 0
 	wages = 0
 	slot_back = null
 	slot_belt = list(/obj/item/storage/fanny)

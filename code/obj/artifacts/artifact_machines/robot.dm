@@ -175,7 +175,6 @@
 		if (!target.melee_attack_test(user))
 			return
 
-		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an artifact limb at [log_loc(user)].")
 
 		var/turf/T = get_turf(user)
 		playsound(T, hitsound, 50, TRUE, -1)
@@ -186,6 +185,7 @@
 				random_burn_damage(target, dmg_amount)
 			if ("toxin")
 				target.take_toxin_damage(rand(1, dmg_amount))
+		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an artifact limb for [dmg_amount] [damtype] damage at [log_loc(user)].")
 		if (src.stamina_dmg)
 			target.do_disorient(stamina_damage = src.stamina_dmg, knockdown = src.stamina_dmg - 20, disorient = src.stamina_dmg - 40)
 

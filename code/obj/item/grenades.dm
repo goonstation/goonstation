@@ -1081,12 +1081,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-	proc/arm(mob/usr as mob)
+	proc/arm(mob/user as mob)
 
-		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
-		for(var/mob/O in viewers(usr))
+		user.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
+		for(var/mob/O in viewers(user))
 			if (O.client)
-				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[user] has armed the [src.name]! Run!</B>"), 1)
 
 		if (icon_state_armed)
 			icon_state = icon_state_armed

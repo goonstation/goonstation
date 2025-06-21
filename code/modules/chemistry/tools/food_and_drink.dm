@@ -1104,9 +1104,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				src.shatter++
 				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src.name]!"))
-				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				var/damage = rand(1,10)
+				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] for [damage] brute damage at [log_loc(user)].")
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
 				take_bleeding_damage(target, null, damage)
 		..()

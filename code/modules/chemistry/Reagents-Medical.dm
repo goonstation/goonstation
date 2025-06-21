@@ -516,7 +516,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping) M.sleeping = 0
-				if (M.get_brain_damage() <= 90)
+				if (M.get_brain_damage() < BRAIN_DAMAGE_SEVERE)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 				..()
@@ -585,7 +585,7 @@ datum
 				if (severity == 1) //lesser
 					M.stuttering += 1
 					if(effect <= 1)
-						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!"))
+						M.visible_message(SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!"))
 						M.emote("scream")
 						M.setStatusMin("knockdown", 4 SECONDS * mult)
 					else if(effect <= 3)
@@ -601,7 +601,7 @@ datum
 				else if (severity == 2) // greater
 					if(effect <= 5)
 						M.visible_message(pick(SPAN_ALERT("<b>[M.name]</b> jerks bolt upright, then collapses!"),
-							SPAN_ALERT("<b>[M.name]</b> suddenly cluches their gut!")))
+							SPAN_ALERT("<b>[M.name]</b> suddenly cluches [his_or_her(M)] gut!")))
 						M.setStatusMin("knockdown", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> stumbles and staggers."))
@@ -1387,7 +1387,7 @@ datum
 						M.take_oxygen_deprivation(-2 * mult)
 					if(M.losebreath && prob(50))
 						M.lose_breath(-1 * mult)
-					if (M.get_brain_damage())
+					if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 						M.take_brain_damage(-2 * mult)
 					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
 
@@ -1456,11 +1456,13 @@ datum
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 3 * mult, 3 * mult)
-					if (M.get_brain_damage())
+					if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
 						M.take_brain_damage(-2 * mult)
 				else if (M.health > 15 && M.get_toxin_damage() < 70)
 					M.take_toxin_damage(1 * mult)
 					flush(holder, 20 * mult, flushed_reagents)
+				if (M.get_brain_damage() > BRAIN_DAMAGE_SEVERE)
+					M.take_brain_damage(-5 * mult)
 				..()
 				return
 
@@ -1548,7 +1550,10 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_brain_damage(-3 * mult)
+				if (M.get_brain_damage() <= BRAIN_DAMAGE_SEVERE)
+					M.take_brain_damage(-3 * mult)
+				else
+					M.take_brain_damage(-0.25 * mult)
 				..()
 				return
 

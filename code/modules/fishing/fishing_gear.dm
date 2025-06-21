@@ -259,7 +259,7 @@ TYPEINFO(/obj/item/fish_portal)
 	name = "Aquatic Research Pool"
 	desc = "A small bulky pool that you can fish in. It has a low probability of containing various low-rarity fish."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fishing_pool"
 
@@ -323,7 +323,7 @@ TYPEINFO(/obj/item/fish_portal)
 	name = "master pool"
 
 /obj/fishing_pool/portable
-	anchored = 0
+	anchored = UNANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
@@ -437,7 +437,7 @@ TYPEINFO(/obj/item/fish_portal)
 			W.dropped(user)
 
 /obj/submachine/fishing_upload_terminal/portable
-	anchored = 0
+	anchored = UNANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))

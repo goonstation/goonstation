@@ -31762,7 +31762,6 @@
 	tag = ""
 	},
 /obj/landmark/start/job/medical_doctor,
-/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/medical/staff)
 "lZI" = (

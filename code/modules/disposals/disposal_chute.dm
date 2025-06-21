@@ -944,6 +944,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(target == user)
 				msg = "[user.name] climbs into the [chute]."
 				boutput(user, "You climb into the [chute].")
+
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
@@ -971,7 +972,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			interrupt(INTERRUPT_ALWAYS)
 			return FALSE
 		return TRUE
-
 
 #undef DISPOSAL_REPAIR_STEP_FIXED
 #undef DISPOSAL_REPAIR_STEP_SCREWDRIVER
