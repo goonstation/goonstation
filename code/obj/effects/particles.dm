@@ -376,6 +376,27 @@
 	gravity = list(0, 0, 0)
 	friction = generator("num", 0.8, 0.6, UNIFORM_RAND)
 
+/particles/mindeater_mind_eating
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("mindeater_brain_eating")
+	count = 100
+	gravity = list(0, 1, 0)
+	lifespan = 15
+	fade = 10
+	fadein = 2
+	color = generator("color", "#b50d8b", "#660066", UNIFORM_RAND)
+	scale = list(1, 1)
+	grow = list(-0.05, -0.05)
+	friction = 0.5
+	position = generator("circle", 8, 10, NORMAL_RAND)
+
+/particles/mindeater_mind_eating/directional
+	friction = 0
+
+	New(mob/mindeater, mob/tracking_mob)
+		..()
+		src.gravity = list(mindeater.x - tracking_mob.x, mindeater.y - tracking_mob.y, 0)
+
 /obj/effects/impact_gunshot
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = null

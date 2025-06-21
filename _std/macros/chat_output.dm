@@ -64,6 +64,9 @@
 /// both: color "#ffffff" | light: background-color "#566B44" | dark: background-color "#7B8F68"
 #define SPAN_KUDZUSAY(string) ("<span class='kudzusay'>" + string + "</span>")
 
+/// both: color "#8600C8"
+#define SPAN_INTRUDERSAY(string) ("<span class='intrudersay'>" + string + "</span>")
+
 /** both
  * color  font-family / 'Courier New', Courier, monospace / font-weight bold
  *
