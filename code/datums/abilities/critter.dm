@@ -65,6 +65,8 @@
 			object.name = src.name
 			object.icon_state = src.icon_state
 
+		object.desc = src.desc
+
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
 		return M.restrained() || is_incapacitated(M)

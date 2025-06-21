@@ -370,6 +370,9 @@
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 
+		var/datum/targetable/critter/mindeater/disguise/abil = src.abilityHolder.getAbility(/datum/targetable/critter/mindeater/disguise)
+		abil.reset()
+
 	/// turns psi bolt firing on/off when disguised
 	proc/toggle_psi_bolt()
 		src.can_fire_when_disguised = !src.can_fire_when_disguised

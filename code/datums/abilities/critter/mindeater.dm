@@ -312,10 +312,11 @@ ABSTRACT_TYPE(/area/veil_border)
 		else
 			mindeater.undisguise()
 
-			src.name = initial(src.name)
-			src.desc = initial(src.desc)
-			src.icon_state = initial(src.icon_state)
-			src.updateObject()
+	proc/reset()
+		src.name = initial(src.name)
+		src.desc = initial(src.desc)
+		src.icon_state = initial(src.icon_state)
+		src.updateObject()
 
 /datum/action/bar/private/mindeater_regenerate
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_ACT
