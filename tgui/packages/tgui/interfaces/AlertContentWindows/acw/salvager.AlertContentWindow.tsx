@@ -50,6 +50,11 @@ export const acw: AlertContentWindow = {
         7. Your objectives will always be stored in your notes. To access them,
         use the <em>Notes</em> verb.
       </p>
+
+      <p>
+        8. There is a way to get back to the Magpie if you are stranded. Seek
+        out Thrifty B.O.B. on the salvage vessel.
+      </p>
     </div>
   ),
 };

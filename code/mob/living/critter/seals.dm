@@ -142,7 +142,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 
 /mob/living/critter/small_animal/seal_arctic/baby
 	name = "seal pup"
-	real_name = "seal pup"
 	desc = "A fluffy, innocent, adorable creature usually remaining close to it's parents. And to think those are hunted for blubber and fur..."
 	icon_state = "seal"
 	icon_state_dead = "seal-dead"
@@ -158,7 +157,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 
 /mob/living/critter/small_animal/seal_arctic/adult
 	name = "seal"
-	real_name = "seal"
 	desc = "This species seems to be well adapted to survive in regions that don't have access to large bodies of liquid water"
 	death_text = "%src% lets out a final weak grumble and keels over."
 	health_brute = 30
@@ -175,7 +173,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal/seal_arctic)
 
 /mob/living/critter/small_animal/seal_arctic/adult/matriarch
 	name = "seal matriarch"
-	real_name = "seal matriarch"
 	desc = "This seal is quite a bit larger than the others. You can tell it lived longer than most seals you saw due to its flabby skin and scars."
 	health_brute = 50
 	health_brute_vuln = 0.4

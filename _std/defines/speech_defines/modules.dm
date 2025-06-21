@@ -17,8 +17,10 @@
 #define SPEECH_OUTPUT_DEADCHAT_ADMIN "admin_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_ANNOUNCER "deadchat_announcer"
 #define SPEECH_OUTPUT_DEADCHAT_GHOST "ghost_deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_PLAGUE_RAT "plague_rat_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_POLTERGEIST "poltergeist_deadchat"
 #define SPEECH_OUTPUT_DEADCHAT_WRAITH "wraith_deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_WRAITH_SUMMON "wraith_summon_deadchat"
 #define SPEECH_OUTPUT_EQUIPPED "equipped"
 #define SPEECH_OUTPUT_FLOCK "flock"
 #define SPEECH_OUTPUT_FLOCK_GLOBAL "global_flock"
@@ -58,6 +60,12 @@
 #define SPEECH_OUTPUT_THRALLCHAT_GLOBAL "global_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_THRALL "thrall_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_VAMPIRE "vampire_thrallchat"
+#define SPEECH_OUTPUT_WRAITHCHAT "wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_ADMIN "admin_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT "plague_rat_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_POLTERGEIST "poltergeist_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_WRAITH "wraith_wraithchat"
+#define SPEECH_OUTPUT_WRAITHCHAT_WRAITH_SUMMON "wraith_summon_wraithchat"
 
 
 //------------ Speech Modifiers ------------//
@@ -164,6 +172,7 @@
 #define SPEECH_PREFIX_RIGHT_HAND "right_hand"
 #define SPEECH_PREFIX_SILICON "silicon"
 #define SPEECH_PREFIX_THRALLCHAT "thrallchat"
+#define SPEECH_PREFIX_WRAITHCHAT "wraithchat"
 
 
 //------------ Listen Inputs ------------//
@@ -209,6 +218,7 @@
 #define LISTEN_INPUT_GHOSTLY_WHISPER "spooky"
 #define LISTEN_INPUT_THRALLCHAT "thrallchat"
 #define LISTEN_INPUT_THRALLCHAT_GLOBAL "global_thrallchat"
+#define LISTEN_INPUT_WRAITHCHAT "wraithchat"
 
 
 //------------ Listen Modifiers ------------//
@@ -236,6 +246,7 @@
 #define LISTEN_EFFECT_PARROT "parrot"
 #define LISTEN_EFFECT_PROTOTYPE_MAPTEXT "prototype_maptext"
 #define LISTEN_EFFECT_RADIO "radio"
+#define LISTEN_EFFECT_RADIO_TUTORIAL "tutorial_radio"
 #define LISTEN_EFFECT_RITUAL "ritual"
 #define LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE "sims_social_motive"
 #define LISTEN_EFFECT_SKULLBOT "skullbot"

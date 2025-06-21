@@ -1268,7 +1268,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				qdel(src)
 				return
 			// job-banned, DNR, or cyber-incompatible
-			if ((brain.owner && (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr)) || brain.donor_original?.traitHolder?.hasTrait("cyber_incompatible"))
+			if ((brain.owner && (jobban_isbanned(brain.owner.current,"Cyborg") || brain.owner.get_player().dnr)) || brain.cyber_incompatible)
 				src.visible_message(SPAN_ALERT("The brain inside [src] disintegrates!"))
 				borg.part_head.brain = null
 				qdel(brain)

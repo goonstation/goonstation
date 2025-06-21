@@ -675,6 +675,20 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	default_material = "wood"
 
+TYPEINFO(/turf/simulated/wall/auto/shuttle/dark)
+TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle/dark)
+	. = ..()
+	connect_overlay = 0
+/turf/simulated/wall/auto/shuttle/dark
+	icon = 'icons/turf/walls/shuttle/dark.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "dshuttle-0"
+#else
+	icon_state = "dshuttle-map"
+#endif
+	mod = "dshuttle-"
+	opacity = 1
+
 /* ===================================================== */
 /* -------------------- UNSIMULATED -------------------- */
 /* ===================================================== */

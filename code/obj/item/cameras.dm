@@ -280,7 +280,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				signature.layer = OBJ_LAYER + 0.01
 				src.overlays += signature
 				signed += "<span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			else if (signwrite == "write")
 				var/image/writing = image(icon='icons/misc/photo_writing.dmi',icon_state="[signwrite]")
 				writing.color = P.font_color
@@ -291,7 +291,7 @@ TYPEINFO(/obj/item/camera_film/large)
 				else
 					src.overlays -= src.my_writing
 					written = "[src.written] <span style='color: [P.font_color]'>[t]</span>"
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				src.my_writing = writing
 				src.overlays += writing
 		return

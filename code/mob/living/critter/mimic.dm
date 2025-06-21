@@ -1,6 +1,5 @@
 /mob/living/critter/mimic
 	name = "mimic"
-	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mimictrue"
@@ -27,8 +26,9 @@
 	var/is_hiding = FALSE
 	///The last time our disguise was interrupted
 	var/last_disturbed = INFINITY
+	var/hide_density = null
 	///Time taken to hide if we sit still (Life interval dependent)
-	var/rehide_time = 5 SECONDS
+	var/rehide_time = 2 SECONDS
 	var/pixel_amount = null
 
 	New()
@@ -74,6 +74,7 @@
 		if (base_return)
 			src.dir_locked = FALSE
 			src.base_form = TRUE
+			src.hide_density = 1
 			src.appearance = /mob/living/critter/mimic/
 			src.stop_hiding()
 		else
@@ -81,6 +82,7 @@
 			var/pixels = null
 			src.dir_locked = TRUE
 			src.base_form = FALSE
+			src.hide_density = target.density
 			src.appearance = target
 			src.dir = target.dir
 			src.invisibility = initial(src.invisibility)
@@ -101,6 +103,7 @@
 			return
 		if (src.is_hiding)
 			return
+		src.density = src.hide_density
 		src.is_hiding = TRUE
 		qdel(src.name_tag)
 		src.name_tag = null
@@ -113,6 +116,7 @@
 		if(!src.is_hiding)
 			return
 		src.is_hiding = FALSE
+		src.density = 1
 		src.name_tag = new()
 		src.update_name_tag()
 		src.vis_contents += src.name_tag
@@ -150,15 +154,22 @@
 	//same health as a firebot
 	health_brute = 25
 	health_burn = 25
-	add_abilities = list(/datum/targetable/critter/mimic,
-						/datum/targetable/critter/drop_disguise,
-						/datum/targetable/critter/tackle,
-						/datum/targetable/critter/sting/mimic/antag_spawn,
-						/datum/targetable/vent_move)
 	hand_count = 2
 	var/modifier = null
-	//give them an actual hand so they can open doors etc.
-	setup_hands()
+	add_abilities = list(/datum/targetable/critter/mimic,
+						/datum/targetable/critter/drop_disguise,
+						/datum/targetable/critter/eat_limb,
+						/datum/targetable/critter/tackle,
+						/datum/targetable/critter/sting/mimic/antag_spawn,
+						/datum/targetable/vent_move,
+						/datum/targetable/critter/stomach_retreat)
+
+	New()
+		..()
+		SPAWN(0)
+			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
+
+	setup_hands() //give them an actual hand so they can open doors etc.
 		. = ..()
 		var/datum/handHolder/HH = hands[2]
 		HH.limb = new /datum/limb/small_critter
@@ -174,3 +185,10 @@
 
 /mob/living/critter/mimic/virtual
 		add_abilities = list(/datum/targetable/critter/mimic,/datum/targetable/critter/tackle)
+
+/obj/mimicdummy
+	name = "mimic"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mimicface"
+	desc = "You shouldn't be seeing me!"
+	// dummy object for stomach appearance stuff

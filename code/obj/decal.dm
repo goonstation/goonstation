@@ -6,6 +6,7 @@
 	pass_unstable = FALSE
 
 	New()
+		src.flags |= UNCRUSHABLE
 		..()
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
@@ -17,7 +18,6 @@
 
 		if (!real_name)
 			real_name = name
-		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L)
 		if (random_icon_states && length(src.random_icon_states) > 0)

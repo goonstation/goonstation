@@ -342,6 +342,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
 	icon_state = "donkini"
 	item_state = "donkini"
+	hide_underwear = TRUE
 
 // Duke Nukem
 
@@ -1221,6 +1222,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	desc = "A very fancy and very expensive white dress which one is supposed to wear to be married, or while going insane post-marriage. Boy, it sure would be terrible if this got covered in blood and gore or something, someone would be out a lot of money!"
 	icon_state = "weddress"
 	item_state = "weddress"
+	hide_underwear = TRUE
 	c_flags = SLEEVELESS
 
 /obj/item/clothing/gloves/ring
@@ -1484,6 +1486,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	desc = "Every girl needs one, you know, but this is very, very little. Yeesh."
 	icon_state = "blackdress"
 	item_state = "blackdress"
+	hide_underwear = TRUE
 	c_flags = SLEEVELESS
 
 /obj/item/clothing/under/misc/dress/red
@@ -1813,12 +1816,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A dress. Specifically for masquerades."
 	icon_state = "blossomdress"
 	item_state = "blossomdress"
+	hide_underwear = TRUE
 
 /obj/item/clothing/under/peacockdress
 	name = "peacock dress"
 	desc = "A dress. Specifically for masquerades."
 	icon_state = "peacockdress"
 	item_state = "peacockdress"
+	hide_underwear = TRUE
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"
@@ -2073,6 +2078,26 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "rabbitsuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+/obj/item/clothing/suit/pigeon
+	name = "Carrier Pigeon"
+	desc = "A motionless pigeon plushie that attaches to shoulders. It looks like something is sticking out of it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "pigeon"
+	item_state = "pigeon"
+
+	attack_self (mob/user as mob)
+		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
+			return
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] on the pigeon using a hidden switch!</b>"))
+		var/mob/living/critter/robotic/scuttlebot/mail/S = new /mob/living/critter/robotic/scuttlebot/mail(get_turf(src))
+		S.linked_pigeon = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
 
 // Goku
 
