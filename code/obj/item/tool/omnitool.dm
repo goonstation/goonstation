@@ -97,7 +97,7 @@
 		if(src.mode == OMNI_MODE_DECON)
 			if(holder)
 				holder.closeContextActions() // Close deconstruction context actions
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		var/obj/item/currtype = mode_to_type(new_mode)
 		src.mode = new_mode
 		src.force = initial(currtype.force)

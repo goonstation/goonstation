@@ -544,7 +544,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			P.set_loc(F)
 			F.amount++
 		F.is_virtual = TRUE
-		F.tooltip_rebuild = 1
+		F.tooltip_rebuild = TRUE
 		return F
 	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))

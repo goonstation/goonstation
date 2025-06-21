@@ -326,7 +326,7 @@ var/global/game_force_started = FALSE
 				unreadied_count++
 	var/total = readied_count + (unreadied_count/2)
 	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+		logTheThing(LOG_GAMEMODE, null, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).

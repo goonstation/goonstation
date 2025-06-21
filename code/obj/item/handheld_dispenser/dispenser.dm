@@ -74,12 +74,12 @@
 		ammo.matter -= (src.max_resources - src.resources)
 		boutput(user, "The cartridge now contains [ammo.matter] units of matter.")
 		src.resources = src.max_resources
-		ammo.tooltip_rebuild = 1
+		ammo.tooltip_rebuild = TRUE
 	else
 		src.resources += ammo.matter
 		ammo.matter = 0
 		qdel(ammo)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
 	src.UpdateIcon()
@@ -150,7 +150,7 @@
 		src.resources -= recipe.cost
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
 	new /dmm_suite/preloader(target, list("dir" = (recipe.bent ? turn(direction, 45) : direction)))
@@ -181,7 +181,7 @@
 		resources -= 1
 	if (!issilicon(user))
 		src.inventory_counter.update_number(src.resources)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	qdel(target)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -231,7 +231,7 @@
 		if("select")
 			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])

@@ -170,7 +170,7 @@
 
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
@@ -199,7 +199,7 @@
 				else
 					src.icon_state = "postit-writing"
 			src.words += "[src.words ? "<br>" : ""][t]"
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			pen.in_use = 0
 			src.add_fingerprint(user)
 			return

@@ -10,7 +10,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian
 	name = "martian"
-	real_name = "martian"
 	var/martian_type = "basic"
 	desc = "Murderous monsters from Mars."
 	density = 1
@@ -135,7 +134,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian/warrior
 	name = "martian warrior"
-	real_name = "martian warrior"
 	martian_type = "warrior"
 	icon_state = "martianW"
 	icon_state_dead = "martianW-dead"
@@ -173,7 +171,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian/soldier
 	name = "martian soldier"
-	real_name = "martian soldier"
 	martian_type = "soldier"
 	icon_state = "martianS"
 	icon_state_dead = "martianS-dead"
@@ -195,7 +192,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian/mutant
 	name = "martian mutant"
-	real_name = "martian mutant"
 	martian_type = "mutant"
 	icon_state = "martianP"
 	icon_state_dead = "martianP-dead"
@@ -221,7 +217,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian/initiate
 	name = "martian initiate"
-	real_name = "martian initiate"
 	martian_type = "initiate"
 	icon_state = "martianP"
 	icon_state_dead = "martianP-dead"
@@ -235,7 +230,6 @@ TYPEINFO(/mob/living/critter/martian)
 
 /mob/living/critter/martian/mortian
 	name = "mortian"
-	real_name = "mortian"
 	martian_type = "mortian"
 	icon_state = "martianM"
 	icon_state_dead = "martianM-dead"
@@ -252,7 +246,6 @@ TYPEINFO(/mob/living/critter/martian)
 // These were for a martian gamemode so im leaving them as non-npcs for now
 /mob/living/critter/martian/sapper
 	name = "martian sapper"
-	real_name = "martian sapper"
 	martian_type = "sapper"
 	icon_state = "martianSP"
 	icon_state_dead = "martianSP-dead"
@@ -268,7 +261,6 @@ TYPEINFO(/mob/living/critter/martian/overseer)
 
 /mob/living/critter/martian/overseer
 	name = "martian overseer"
-	real_name = "martian overseer"
 	martian_type = "overseer"
 	icon_state = "martianL"
 	icon_state_dead = "martianL-dead"
@@ -289,7 +281,6 @@ TYPEINFO(/mob/living/critter/martian/overseer)
 
 /mob/living/critter/martian/infiltrator
 	name = "martian infiltrator"
-	real_name = "martian infiltrator"
 	martian_type = "infiltrator"
 	icon_state = "martianI"
 	icon_state_dead = "martianI-dead"
@@ -323,7 +314,6 @@ TYPEINFO(/mob/living/critter/martian/infiltrator/specialist)
 
 /mob/living/critter/martian/infiltrator/specialist
 	name = "martian specialist"
-	real_name = "martian specialist"
 	martian_type = "specialist"
 	icon_state = "martianST"
 	icon_state_dead = "martianST-dead"

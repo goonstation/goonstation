@@ -100,10 +100,10 @@ var/list/globalPropList = null
 /obj/item
 	setProperty()
 		. = ..()
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 	delProperty()
 		. = ..()
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 /datum/objectProperty
 	var/name = ""
