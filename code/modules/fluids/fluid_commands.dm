@@ -124,11 +124,7 @@ client/proc/replace_space_exclusive()
 
 			var/turf/orig = locate(S.x, S.y, S.z)
 
-#if defined(UNDERWATER_MAP)
 			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#else //space map
-			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
-#endif
 
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
