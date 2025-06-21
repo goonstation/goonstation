@@ -42,7 +42,6 @@
 	var/can_fire_when_disguised = TRUE
 
 	New()
-		src.name = "???" // set here so that in respawn popups the name doesn't appear as "???"
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
@@ -328,6 +327,7 @@
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
 				src.name = temp.real_name
+				src.real_name = temp.real_name
 				src.desc = temp.get_desc(0, src)
 				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 			if (MINDEATER_DISGUISE_COCKROACH)
@@ -336,6 +336,7 @@
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
 				src.name = temp.real_name
+				src.real_name = temp.real_name
 				src.desc = temp.get_desc(0, src)
 				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 			if (MINDEATER_DISGUISE_HUMAN)
@@ -354,6 +355,7 @@
 				src.icon = guise
 
 				src.name = src.human_disguise_dummy.real_name
+				src.real_name = src.human_disguise_dummy.real_name
 				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE)
 				src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
 
@@ -367,6 +369,7 @@
 	/// undisguise as disguised entity
 	proc/undisguise()
 		src.name = initial(src.name)
+		src.real_name = initial(src.real_name)
 		src.desc = initial(src.desc)
 		src.icon = initial(src.icon)
 		src.icon_state = initial(src.icon_state)

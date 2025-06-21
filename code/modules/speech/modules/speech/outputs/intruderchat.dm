@@ -5,6 +5,7 @@
 
 /datum/speech_module/output/intruderchat/process(datum/say_message/message)
 	message.flags |= SAYFLAG_NO_MAPTEXT
+	message.say_sound = NO_SAY_SOUND
 
 	var/mind_ref = ""
 	if (ismob(message.speaker))

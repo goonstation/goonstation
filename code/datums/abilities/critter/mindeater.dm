@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 		if (isliving(target) || istype(target, /obj/dummy/fake_mindeater))
 			return target
 		for (var/atom/A in view(1, get_turf(target)))
-			if (!(ishuman(A) || issilicon(A) || istype(target, /obj/dummy/fake_mindeater)))
+			if (!(ishuman(A) || issilicon(A) || istype(A, /obj/dummy/fake_mindeater)))
 				continue
 			return A
 
