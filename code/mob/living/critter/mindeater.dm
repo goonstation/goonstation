@@ -33,6 +33,8 @@
 	var/set_disguise = MINDEATER_DISGUISE_HUMAN
 	/// if this mindeater is using a disguise
 	var/disguised = FALSE
+	/// fake human disguise, stored as a var to prevent unnecessary creation/deletion over and over since humans don't GC well
+	var/mob/living/carbon/human/normal/assistant/human_disguise_dummy
 
 	var/lives = 3 // temporary lives for playtesting
 
@@ -70,6 +72,8 @@
 		src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
 		src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_INTRUDERCHAT)
 
+		src.human_disguise_dummy = new
+
 	disposing()
 		..()
 		get_image_group(CLIENT_IMAGE_GROUP_INTRUSION_OVERLAYS).remove_mob(src)
@@ -79,6 +83,8 @@
 
 		src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_INTRUDERCHAT)
 		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_INTRUDERCHAT)
+
+		QDEL_NULL(src.human_disguise_dummy)
 
 	Life()
 		. = ..()
@@ -321,19 +327,24 @@
 				src.icon = temp.icon
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
+				src.name = temp.real_name
+				src.desc = temp.get_desc(0, src)
+				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 			if (MINDEATER_DISGUISE_COCKROACH)
 				temp = new /mob/living/critter/small_animal/cockroach
 				src.icon = temp.icon
 				src.icon_state = temp.icon_state
 				src.flags |= (TABLEPASS | DOORPASS)
+				src.name = temp.real_name
+				src.desc = temp.get_desc(0, src)
+				src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
 			if (MINDEATER_DISGUISE_HUMAN)
-				temp = new /mob/living/carbon/human/normal/assistant
-				randomize_look(temp, change_name = FALSE)
+				randomize_look(src.human_disguise_dummy, change_name = FALSE)
 
-				var/icon/front = getFlatIcon(temp, SOUTH)
-				var/icon/back = getFlatIcon(temp, NORTH)
-				var/icon/left = getFlatIcon(temp, WEST)
-				var/icon/right = getFlatIcon(temp, EAST)
+				var/icon/front = getFlatIcon(src.human_disguise_dummy, SOUTH)
+				var/icon/back = getFlatIcon(src.human_disguise_dummy, NORTH)
+				var/icon/left = getFlatIcon(src.human_disguise_dummy, WEST)
+				var/icon/right = getFlatIcon(src.human_disguise_dummy, EAST)
 				var/icon/guise = new
 				guise.Insert(front, dir = SOUTH)
 				guise.Insert(back, dir = NORTH)
@@ -342,12 +353,10 @@
 
 				src.icon = guise
 
-		src.name = temp.real_name
-		if (ishuman(temp))
-			src.desc = temp.get_desc(TRUE, TRUE)
-		else
-			src.desc = temp.get_desc(0, src)
-		src.bioHolder.mobAppearance.gender = temp.bioHolder.mobAppearance.gender
+				src.name = src.human_disguise_dummy.real_name
+				src.desc = src.human_disguise_dummy.get_desc(TRUE, TRUE)
+				src.bioHolder.mobAppearance.gender = src.human_disguise_dummy.bioHolder.mobAppearance.gender
+
 		src.update_name_tag(src.name)
 		qdel(temp)
 

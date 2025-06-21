@@ -246,11 +246,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/mindeater)
 	full_reveal_on_use = TRUE
 
 	tryCast(atom/target)
-		target = src.get_nearest_human(target)
-		if (!target)
+		var/mob/living/L = src.get_nearest_human(target)
+		if (!L || isdead(L))
 			boutput(src.holder.owner, SPAN_ALERT("You can only target humans!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-		if (GET_ATOM_PROPERTY(target, PROP_MOB_INTELLECT_COLLECTED) < src.pointCost)
+		if (GET_ATOM_PROPERTY(L, PROP_MOB_INTELLECT_COLLECTED) < src.pointCost)
 			boutput(src.holder.owner, SPAN_ALERT("You don't have enough Intellect collected on this mob!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		return ..()
