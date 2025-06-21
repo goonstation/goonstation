@@ -21,6 +21,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/can_recycle = FALSE //can this be put in a glass recycler?
 	move_triggered = 1
 	var/last_new_initial_reagents = 0 //fuck
+	var/vendor_item = FALSE //applies a hunger/thirst nerf to the chems in the container
 
 	var/accepts_lid = FALSE //!if true, container will accept beaker lids. lids should not go onto containers that aren't open
 	var/obj/item/beaker_lid/current_lid = null //!the lid applied to the container
@@ -33,6 +34,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
 		original_icon_state = icon_state
+		if(src.vendor_item)
+			for(var/datum/reagent/vendor_reagent in initial_reagents)
+				vendor_reagent.vendor_chem = TRUE
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
