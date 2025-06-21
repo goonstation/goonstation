@@ -2066,7 +2066,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/tea_party_dress)
 	desc = "An elegant, old-fashioned dress layered over a blouse."
 	icon_state = "tea_party_dress-pink"
 	item_state = "tea_party_dress-pink"
-	layer = MOB_LAYER
 
 /obj/item/clothing/under/misc/tea_party_dress/pink
 	name = "pink tea party dress"
