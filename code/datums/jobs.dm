@@ -1216,7 +1216,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY_TRADESMAN
 	linkcolor = CIVILIAN_LINK_COLOR
 	access_string = "Radio Show Host"
-#if defined(MAP_OVERRIDE_OSHAN)
+#ifdef MAP_OVERRIDE_OSHAN
 	limit = 1
 	special_spawn_location = null
 #elif defined(MAP_OVERRIDE_NADIR)
