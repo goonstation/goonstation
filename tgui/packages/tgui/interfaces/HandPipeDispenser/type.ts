@@ -21,6 +21,7 @@ export type HandPipeDispenserData = {
   selectedcost: number;
   resources: number;
   selecteddesc: string;
+  issilicon: BooleanLike;
 };
 
 // I feel like this should be common somewhere but :iiam:
