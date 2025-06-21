@@ -163,9 +163,11 @@ TYPEINFO(/mob)
 	var/movement_delay_modifier = 0 //Always applied.
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
-//Disease stuff
+	//Disease stuff
+	/// A list /datum/ailment/ types this mob resistant to
 	var/list/resistances = null
-	var/list/ailments = null
+	/// What ailments does the mob currently have
+	var/list/datum/ailment_data/ailments = null
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 

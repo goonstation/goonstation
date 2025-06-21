@@ -351,11 +351,6 @@
 		if(!M) M = holder.my_atom
 		if(prob(70))
 			M.take_brain_damage(1*mult)
-		if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
-			var/mob/living/L = M
-			var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague))
-				L.cure_disease(plague)
 		..()
 
 	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
