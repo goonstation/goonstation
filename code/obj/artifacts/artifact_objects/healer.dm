@@ -15,6 +15,8 @@
 	activ_text = "begins to pulse softly."
 	deact_text = "ceases pulsing."
 	react_xray = list(11,70,90,9,"NONE")
+	combine_flags = ARTIFACT_ACCEPTS_ANY_COMBINE | ARTIFACT_COMBINES_INTO_ANY
+	combine_effect_priority = ARTIFACT_COMBINATION_TOUCHED
 	var/heal_amt = 20
 	var/field_range = 0
 	var/recharge_time = 600
