@@ -363,7 +363,7 @@ TYPEINFO_NEW(/obj/table)
 				user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				S.UpdateIcon()
 				return
 		// Placed as such because we do want to let borgs drag their satchels to dump on tables, but don't want to let them place items on tables from their module

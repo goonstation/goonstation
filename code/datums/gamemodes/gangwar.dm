@@ -1303,7 +1303,7 @@
 		spraycan.empty = TRUE
 		spraycan.icon_state = "spraycan_crushed_gang"
 		spraycan.setItemSpecial(/datum/item_special/simple)
-		spraycan.tooltip_rebuild = 1
+		spraycan.tooltip_rebuild = TRUE
 		gang.add_points(GANG_SPRAYPAINT_INSTANT_SCORE, M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
@@ -1453,7 +1453,7 @@
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
 			spraycan.icon_state = "spraycan_crushed"
 			spraycan.setItemSpecial(/datum/item_special/simple)
-			spraycan.tooltip_rebuild = 1
+			spraycan.tooltip_rebuild = TRUE
 
 
 /obj/ganglocker
@@ -2221,7 +2221,7 @@
 			for(var/obj/item/plant/herb/cannabis/herb in satchel.contents)
 				insert_item(herb,user)
 				satchel.UpdateIcon()
-				satchel.tooltip_rebuild = 1
+				satchel.tooltip_rebuild = TRUE
 				hadcannabis = 1
 
 			if(hadcannabis)

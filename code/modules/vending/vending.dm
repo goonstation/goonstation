@@ -2332,7 +2332,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				productListUpdater(I, user)
 			src.sortProducts()
 			S.UpdateIcon()
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 		else
 			for (var/obj/item/I as anything in targetContainer.storage.get_contents())
 				targetContainer.storage.transfer_stored_item(I, src, user = user)

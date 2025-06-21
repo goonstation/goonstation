@@ -133,7 +133,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/handspider
 	name = "handspider"
-	real_name = "handspider"
 	desc = "It's a living disembodied hand with shifting flesh... Disgusting!"
 	icon_state = "handspider"
 	icon_state_dead = "handspider-dead"
@@ -346,7 +345,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/eyespider
 	name = "eyespider"
-	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
 	density = 0
 	icon_state = "eyespider"
@@ -436,7 +434,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/legworm
 	name = "legworm"
-	real_name = "legworm"
 	desc = "A writhing, angry disembodied leg!"
 	icon_state = "legworm"
 	icon_state_dead = "legworm-dead"
@@ -569,7 +566,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/buttcrab
 	name = "buttcrab"
-	real_name = "buttcrab"
 	desc = "Well. OK then. Thats a thing."
 	icon_state = "buttcrab"
 	icon_state_dead = "buttcrab-dead"
@@ -641,7 +637,6 @@ TYPEINFO(/mob/living/critter/changeling)
 
 /mob/living/critter/changeling/headspider
 	name = "headspider"
-	real_name = "headspider"
 	desc = "Oh my god!"
 	icon_state = "headspider"
 	icon_state_dead = "headspider-dead"

@@ -2223,7 +2223,7 @@
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
 						dab_id.dab_count++
-						dab_id.tooltip_rebuild = 1
+						dab_id.tooltip_rebuild = TRUE
 					src.add_karma(-4)
 					if(!dab_id)
 						src.apply_automated_arrest("Public dabbing.")

@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/tmp/lastTooltipDist = null
 	var/tmp/lastTooltipUser = null
 	var/tmp/lastTooltipSpectro = null
-	var/tmp/tooltip_rebuild = 1
+	var/tmp/tooltip_rebuild = TRUE
 
 	var/tmp/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
 	var/tmp/obj/overlay/inventory_counter/inventory_counter = null
@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/obj/item)
 			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
 			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
 			 || (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
 			//z == 0 seems to be a good way to check if something is inworld or not... removed some ismob checks.
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/obj/item)
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-				tooltip_rebuild = 0
+				tooltip_rebuild = FALSE
 
 		usr.moused_over(src)
 
@@ -279,7 +279,7 @@ ABSTRACT_TYPE(/obj/item)
 
 	onMaterialChanged()
 		..()
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (istype(src.material))
 			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))

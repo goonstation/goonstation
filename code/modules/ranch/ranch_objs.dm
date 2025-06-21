@@ -208,7 +208,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				for(var/obj/item/O in S.contents)
 					src.add_item(O)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 

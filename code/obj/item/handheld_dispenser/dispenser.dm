@@ -72,12 +72,12 @@
 		ammo.matter -= (src.max_resources - src.resources)
 		boutput(user, "The cartridge now contains [ammo.matter] units of matter.")
 		src.resources = src.max_resources
-		ammo.tooltip_rebuild = 1
+		ammo.tooltip_rebuild = TRUE
 	else
 		src.resources += ammo.matter
 		ammo.matter = 0
 		qdel(ammo)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.inventory_counter.update_number(src.resources)
 	src.UpdateIcon()
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -131,7 +131,7 @@
 			boutput(user, SPAN_ALERT("Something is occupying that space!"))
 			return
 	src.resources -= recipe.cost
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.inventory_counter.update_number(src.resources)
 	user.visible_message(SPAN_NOTICE("[user] places a [recipe.name]."))
 	logTheThing(LOG_STATION, user, "places a [recipe.name] at [log_loc(target)] with dir: [target.dir] with an HPD")
@@ -152,7 +152,7 @@
 		if(O.high_risk)
 			message_admins("[key_name(user)] has destroyed the high-risk valve: [target] at [log_loc(src)]")
 	resources -= 1
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	src.inventory_counter.update_number(src.resources)
 	qdel(target)
 	src.UpdateIcon()
@@ -199,7 +199,7 @@
 		if("select")
 			src.selection = atmospipesforcreation[params["name"]] || atmosmachinesforcreation[params["name"]]
 			src.selectedimage = getBase64Img(src.selection, direction)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 			. = TRUE
 		if("changedir")
 			src.direction = text2num_safe(params["newdir"])

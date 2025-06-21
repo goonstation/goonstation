@@ -577,7 +577,7 @@ CONTAINS:
 				var/obj/item/bandage/B = tool
 				B.in_use = 0
 				B.uses --
-				B.tooltip_rebuild = 1
+				B.tooltip_rebuild = TRUE
 				B.UpdateIcon()
 				if (B.uses <= 0)
 					boutput(ownerMob, SPAN_ALERT("You use up the last of the bandages."))
