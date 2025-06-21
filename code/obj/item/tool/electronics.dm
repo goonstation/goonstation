@@ -188,8 +188,8 @@
 			if(!isturf(user.loc))
 				boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
 				return
-			if(!src.can_build())
-				boutput(user, SPAN_ALERT("You can't deploy the [src] here!"))
+			if(!src.can_build(user))
+				return // no output is needed here. complaint reasons are handled in can_build
 			boutput(user, SPAN_ALERT("You deploy the [src]!"))
 			if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 				qdel(user.loc)
@@ -307,14 +307,15 @@
 
 // This really just exists right now for custom APC logic to have its own space,
 // but if you want to judge whether other objs/types can be built do it here!
-/obj/item/electronics/frame/proc/can_build()
+/obj/item/electronics/frame/proc/can_build(mob/user)
 	var/type = src.store_type
 	if(src.deconstructed_thing != null)
 		type = src.deconstructed_thing.type
 	switch(type)
-		if("/obj/machinery/power/apc") // for ensuring 2 APCs aren't built in the same area
+		if(/obj/machinery/power/apc) // for ensuring 2 APCs aren't built in the same area
 			var/area/A = get_area(src)
 			if(A.area_apc != null)
+				boutput(user, SPAN_ALERT("You can't build this here! There is already another APC in charge of this area."))
 				return FALSE
 	return TRUE
 
