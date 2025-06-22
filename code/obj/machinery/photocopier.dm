@@ -749,7 +749,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	proc/scan_butt(var/obj/item/clothing/head/butt/B, var/mob/user)
 		scan_setup(B, user)
 		src.icon_state = "buttt"
-		boutput(user, "You slap the ass (hot) on the scan bed, close the lid, and press start...")
+		boutput(user, "You put [B] on the scan bed, close the lid, and press start...")
 		effects_scanning(B)
 		src.print_type = "butt"
 
