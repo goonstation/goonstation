@@ -958,7 +958,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		// At this point all the harvested items are inside the plant pot, and this is the
 		// part where we decide where they're going and get them out.
-		HYPharvesting_satchel_output(h_data, SA)
+		HYPharvesting_produce_output(h_data, SA)
 
 	// Now we determine the harvests remaining or grant extra ones.
 	HYPharvesting_remaining_harvests(h_data)
@@ -974,7 +974,7 @@ TYPEINFO(/obj/machinery/plantpot)
 // Could move some of these to var/datum/plant if plants ever wanted more control over how their produce is harvested
 
 /// Returns a generic quality score based on the given plant genes
-/obj/machinery/plantpot/proc/get_quality_score(var/datum/HYPharvesting_data/h_data)
+/obj/machinery/plantpot/proc/get_quality_score(datum/HYPharvesting_data/h_data)
 	var/quality_score = h_data.base_quality_score
 	quality_score += rand(-2,2)
 	// Just a bit of natural variance to make it interesting
@@ -1106,6 +1106,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			JOB_XP(h_data.user, "Botanist", 1)
 
+/// Handles stat bonuses and negatives associated with gene strains
 /obj/machinery/plantpot/proc/HYPharvesting_gene_strains(datum/HYPharvesting_data/h_data)
 	if(h_data.DNA.commuts)
 		for(var/datum/plant_gene_strain/G in h_data.DNA.commuts)
@@ -1130,6 +1131,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					h_data.harvest_cap *= Y.yield_mult
 					h_data.harvest_cap += Y.yield_mod
 
+/// Handles mutation crop produce
 /obj/machinery/plantpot/proc/HYPharvesting_mutated_crops(datum/HYPharvesting_data/h_data)
 	// Figure out what crop we use - the base crop or a mutation crop.
 	if(h_data.growing.crop || h_data.MUT?.crop)
@@ -1144,8 +1146,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			h_data.getitem = h_data.growing.crop
 			h_data.dont_rename_crop = h_data.growing.dont_rename_crop
 
+/// Handles bonuses and negatives associated with plant health
 /obj/machinery/plantpot/proc/HYPharvesting_health_bonuses(datum/HYPharvesting_data/h_data)
-
 	if(h_data.pot.health >= h_data.growing.starthealth * 2 && prob(30))
 		boutput(h_data.user, SPAN_NOTICE("This looks like a good harvest!"))
 		h_data.base_quality_score += 5
@@ -1165,6 +1167,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		h_data.base_quality_score -= 12
 		// And this is if you've neglected the plant!
 
+/// Handles the tracking of future harvests for the plant
 /obj/machinery/plantpot/proc/HYPharvesting_remaining_harvests(datum/HYPharvesting_data/h_data)
 	if(!HYPCheckCommut(h_data.DNA,/datum/plant_gene_strain/immortal))
 		// Immortal is a gene strain that means infinite harvests as long as the plant
@@ -1193,8 +1196,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		// remaining, though they do get bonuses for having a good harvests gene.
 		h_data.pot.HYPkillplant()
 
-///
-/obj/machinery/plantpot/proc/HYPharvesting_satchel_output(datum/HYPharvesting_data/h_data, obj/item/satchel/SA)
+/// Handles where the output of the harvest goes
+/obj/machinery/plantpot/proc/HYPharvesting_produce_output(datum/HYPharvesting_data/h_data, obj/item/satchel/SA)
 	if(SA)
 		// If we're putting stuff in a satchel, this is where we do it.
 		for(var/obj/item/I in h_data.pot.contents)
@@ -1219,9 +1222,11 @@ TYPEINFO(/obj/machinery/plantpot)
 		I.set_loc(h_data.user.loc)
 		I.add_fingerprint(h_data.user)
 
+/// Handles the generation of seed items
 /obj/machinery/plantpot/proc/HYPharvesting_seeds(datum/HYPharvesting_data/h_data)
 	if (h_data.seedcount > 0) HYPgenerateseedcopy(h_data.pot.plantgenes, h_data.growing, h_data.pot.generation, h_data.pot, h_data.seedcount)
 
+/// Handles the finalisation of cropcount
 /obj/machinery/plantpot/proc/HYPharvesting_finalise_cropcount(datum/HYPharvesting_data/h_data)
 	if(h_data.cropcount > h_data.harvest_cap)
 		h_data.extra_harvest_chance += h_data.cropcount - h_data.harvest_cap
