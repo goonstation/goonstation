@@ -8,20 +8,12 @@
 	cooldown_after_action = TRUE
 	var/datum/human_limbs/torn_limb
 
-	New()
-		..()
-		// stomach retreat can get away with being by itself, but eat limb should always come bundled with it
-		if (!holder.owner.getAbility(/datum/targetable/critter/stomach_retreat))
-			holder.owner.addAbility(/datum/targetable/critter/stomach_retreat)
-		if (!holder.owner.GetComponent(/datum/component/death_barf))
-			holder.owner.AddComponent(/datum/component/death_barf)
-
 	cast(atom/target)
 		. = ..()
 		var/datum/targetable/critter/stomach_retreat/stomach_abil = src.holder.getAbility(/datum/targetable/critter/stomach_retreat)
 		if (stomach_abil?.inside)
 			return TRUE
-		if (ishuman(target))
+		if (ishuman(target) && target != src.holder.owner)
 			var/mob/living/carbon/human/targetHuman = target
 			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
 			var/list/randLimb
@@ -42,7 +34,7 @@
 	interrupt_flags = null
 	var/atom/target
 	var/mob/user
-	var/datum/human_limbs/tornlimb
+	var/obj/item/parts/tornlimb
 
 	New(Target, User, Tornlimb)
 		target = Target
@@ -52,29 +44,29 @@
 
 	onStart()
 		..()
-		if (ishuman(target))
+		if (ishuman(src.target))
 			src.duration = 5 SECONDS
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
-			var/mob/living/carbon/human/human = target
-			user.set_loc(human)
-			human.vis_contents += user
-			if (istype(tornlimb, /obj/item/parts/human_parts/leg/))
-				user.pixel_y = -13
-				if (istype(tornlimb, /obj/item/parts/human_parts/leg/left))
-					user.pixel_x = 6
-				else
-					user.pixel_x = -6
-			else if (istype(tornlimb, /obj/item/parts/human_parts/arm/left))
-				user.pixel_x = 10
-			else
-				user.pixel_x = -10
-			user.layer = MOB_LAYER+1
-			user.animate_movement = SYNC_STEPS
+			var/mob/living/carbon/human/human = src.target
+			LAZYLISTREMOVE(human.attached_objs, src.user)
+			src.user.set_loc(src.target.loc)
+			src.user.transform = matrix(src.user.transform, 90, MATRIX_ROTATE | MATRIX_MODIFY)
+			switch (src.tornlimb.slot)
+				if ("l_leg")
+					src.user.pixel_y = -13
+					src.user.pixel_x = 6
+				if ("r_leg")
+					src.user.pixel_y = -13
+					src.user.pixel_x = -6
+				if ("l_arm")
+					src.user.pixel_x = 10
+				if ("r_arm")
+					src.user.pixel_x = -10
 		else
 			src.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 			src.duration = 1 SECONDS
-		if (istype(user, /mob/living/critter/mimic))
-			var/mob/living/critter/mimic/mimic = user
+		if (istype(src.user, /mob/living/critter/mimic))
+			var/mob/living/critter/mimic/mimic = src.user
 			mimic.stop_hiding()
 			mimic.last_disturbed = INFINITY
 
@@ -82,26 +74,26 @@
 		..()
 		if (!ON_COOLDOWN(global, "chomp_gib", 2 SECONDS))
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
-			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
-			eat_twitch(user)
-			random_brute_damage(target, 6)
-			take_bleeding_damage(target, user, 1, DAMAGE_CUT, 1)
+			playsound(src.user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
+			eat_twitch(src.user)
+			random_brute_damage(src.target, 6)
 			ThrowRandom(gib, rand(2,6))
 
 	onEnd()
 		..()
-		if (istype(user, /mob/living/critter/mimic))
-			var/mob/living/critter/mimic/antag_spawn/mimic = user
+		if (istype(src.user, /mob/living/critter/mimic))
+			var/mob/living/critter/mimic/antag_spawn/mimic = src.user
 			mimic.last_disturbed = 1 SECONDS
-		if (ishuman(target))
-			var/mob/living/carbon/human/human = target
-			human.vis_contents -= user
-			take_bleeding_damage(target, user, 15, DAMAGE_CUT, 1)
-			user.pixel_y = 0
-			user.pixel_x = 0
-			user.set_loc(get_turf(target))
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
-		src.gobble(target, user)
+		if (ishuman(src.target))
+			var/mob/living/carbon/human/human = src.target
+			src.user.transform = null
+			LAZYLISTREMOVE(human.attached_objs, src.user)
+			src.user.set_loc(src.target.loc)
+			src.user.pixel_y = 0
+			src.user.pixel_x = 0
+			take_bleeding_damage(src.target, src.user, 15, DAMAGE_CUT, 1)
+			REMOVE_ATOM_PROPERTY(src.user, PROP_MOB_CANTMOVE, "chomping")
+		src.gobble(src.target, src.user)
 
 	proc/gobble(atom/target, mob/user)
 		var/datum/component/death_barf/barfcomp = user.GetComponent(/datum/component/death_barf)
@@ -109,7 +101,8 @@
 			var/limb_obj = src.tornlimb.sever()
 			target.emote("scream")
 			user.contents.Add(limb_obj)
-			barfcomp.record_limb(limb_obj)
+			if (barfcomp)
+				barfcomp.record_limb(limb_obj)
 			var/datum/targetable/critter/eat_limb/abil = user.getAbility(/datum/targetable/critter/eat_limb)
 			abil.afterAction()
 		else
