@@ -2073,6 +2073,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
 	icon_state = "blouse_skirt-black"
 	item_state = "blouse_skirt-black"
 
+//Swimsuits, by RubberRats
+//Please don't wear a bikini as a work uniform on the RP servers, it would make me very unhappy.
 ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 /obj/item/clothing/under/misc/bikini
 	name = "bikini"

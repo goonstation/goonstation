@@ -1,6 +1,7 @@
 #ifdef SEASON_SUMMER
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini
+	cost = PAY_TRADESMAN/3
 
 /datum/clothingbooth_item/w_uniform/bikini/white
 	name = "White"
@@ -35,7 +36,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/polkadot
 	name = "Red Polka-Dot"
 	item_path = /obj/item/clothing/under/misc/bikini/pdot_red
-	cost = PAY_UNTRAINED
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#e21616"
 	swatch_foreground_color = "#ffffff"
 	swatch_foreground_shape = SWATCH_POLKADOTS
@@ -49,7 +50,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/strawberry
 	name = "Strawberry"
 	item_path = /obj/item/clothing/under/misc/bikini/strawberry
-	cost = PAY_TRADESMAN/2
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#c20038"
 	swatch_foreground_color = "#1fa03b"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -57,12 +58,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 /datum/clothingbooth_item/w_uniform/bikini/bee
 	name = "Bee"
 	item_path = /obj/item/clothing/under/misc/bikini/bee
-	cost = PAY_TRADESMAN/2
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#e0e02c"
 	swatch_foreground_color = "#2f2851"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
+	cost = PAY_TRADESMAN/3
 
 /datum/clothingbooth_item/w_uniform/onepiece/white
 	name = "White"
@@ -105,6 +107,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/onepiece)
 	swatch_background_color = "#2f2851"
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
+	cost = PAY_TRADEMAN/3
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/white
 	name = "White"
@@ -129,6 +132,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/bubblegum
 	name = "Bubblegum"
 	item_path = /obj/item/clothing/under/misc/frillyswimsuit/bubblegum
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#f2a9a9"
 	swatch_foreground_color = "#7fffff"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -136,11 +140,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/circus
 	name = "Circus"
 	item_path = /obj/item/clothing/under/misc/frillyswimsuit/circus
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
+	cost = PAY_TRADESMAN/3
 /datum/clothingbooth_item/w_uniform/swimtrunks/white
 	name = "White"
 	item_path = /obj/item/clothing/under/misc/swimtrunks/white
@@ -174,6 +180,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 /datum/clothingbooth_item/w_uniform/swimtrunks/circus
 	name = "Circus"
 	item_path = /obj/item/clothing/under/misc/swimtrunks/circus
+	cost = PAY_TRADESMAN
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e55b16"
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
@@ -181,6 +188,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/oldswimsuit)
 /datum/clothingbooth_item/w_uniform/oldswimsuit
 	swatch_foreground_shape = SWATCH_BISECT_LEFT
+	cost = PAY_TRADESMAN/3
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/red
 	name = "Red and White"
@@ -210,6 +218,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/wetsuit)
 /datum/clothingbooth_item/w_uniform/wetsuit/black
 	name = "Black"
 	item_path = /obj/item/clothing/under/misc/wetsuit
+	cost = PAY_TRADESMAN/3
 	swatch_background_color = "#2f2851"
 
 /datum/clothingbooth_item/w_uniform/wetsuit/red
