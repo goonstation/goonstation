@@ -693,7 +693,7 @@ TYPEINFO(/mob/living/silicon/robot)
 		if (isghostdrone(user))
 			return
 		. += "[SPAN_NOTICE("*---------*")]<br>"
-		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")]<br>"
+		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>.")]<br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
