@@ -2077,6 +2077,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
 	name = "white bikini"
 	icon_state = "bikini_w"
 	item_state = "bikini_w"
+	desc = "A stylish two-piece swimsuit. Well suited for a day at the beach, less so the cold depths of space."
 	hide_underwear = TRUE
 
 	yellow
@@ -2129,6 +2130,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 	name = "white one-piece swimsuit"
 	icon_state = "onepiece_w"
 	item_state = "onepiece_w"
+	desc = "A fashionable swimsuit. Well-suited for a day at the beach, less so the cold depths of space."
 	hide_underwear = TRUE
 
 	white
@@ -2175,6 +2177,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 	name = "frilly white swimsuit"
 	icon_state = "frillyswimsuit_w"
 	item_state = "frillyswimsuit_w"
+	desc = "A playful swimsuit with a ruffled top. What is this doing all the way out here?"
 	hide_underwear = TRUE
 
 	yellow
@@ -2206,6 +2209,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 	name = "white swim trunks"
 	icon_state = "swimtrunks_w"
 	item_state = "swimtrunks_w"
+	desc = "A pair of swim trunks. Well-suited for a day at the beach, less so the cold depths of space."
 
 	red
 		name = "red swim trunks"
@@ -2241,6 +2245,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 	name = "wetsuit"
 	icon_state = "wetsuit"
 	item_state = "wetsuit"
+	desc = "A skin-tight, flexible suit meant to keep divers warm underwater. Unfortunately, the material on this one is too thin to provide any real protection."
 
 	red
 		name = "red wetsuit"
@@ -2276,6 +2281,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 	name = "old-timey swimsuit"
 	icon_state = "oldswimsuit_rw"
 	item_state = "oldswimsuit_rw"
+	desc = "A mildly tacky bathing suit in a style nearly 200 years old. Can't fault the classics."
 
 	blue
 		icon_state = "oldswimsuit_uw"

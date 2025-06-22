@@ -2620,6 +2620,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/swimskirt)
 	name = "swim skirt"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	desc = "A loose skirt, meant to be tied around the waist and worn over a swimsuit"
 	w_class = W_CLASS_SMALL
 
 	white
