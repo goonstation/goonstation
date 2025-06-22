@@ -775,7 +775,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	proc/scan_id_data(var/obj/item/card/id/I, var/mob/user)
 		scan_setup(I, user)
-		if(I.icon_state == "gold")
+		if(I.icon_state == "id_gold")
 			src.icon_state = "scan_id_gold"
 		else
 			src.icon_state = "scan_id"
@@ -808,6 +808,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["stamps"] = null
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
+		src.print_info["icon"] = 'icons/obj/writing.dmi'
 		src.print_info["icon_state"] = "paper_blank"
 		src.print_info["sizex"] = 0
 		src.print_info["sizey"] = 0
