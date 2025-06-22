@@ -979,6 +979,18 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (E?.throwing) //imprecise, you're not neatly sliding it down their interface, you're just lobbing it at their arm
+			var/list/arms = list()
+			if (src.part_arm_l)
+				arms += src.part_arm_l
+			if (src.part_arm_r)
+				arms += src.part_arm_r
+			if (!length(arms))
+				return
+			var/obj/item/parts/robot_parts/arm/arm = pick(arms)
+			arm.emag_act(user, E)
+			return
+
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, SPAN_ALERT("Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!"))
 			return 0 //emags don't do anything to AI shells

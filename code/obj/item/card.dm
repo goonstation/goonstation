@@ -50,9 +50,6 @@ TYPEINFO(/obj/item/card/emag)
 		..()
 		if(!hit_atom || !thr)
 			return
-		if(issilicon(hit_atom) && !thr.thrown_by)
-			// Need to throw at the cyborg directly to emag them
-			return
 		hit_atom.emag_act(thr.user, src)
 
 /obj/item/card/emag/attack_self(mob/user as mob)
