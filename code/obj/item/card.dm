@@ -53,18 +53,7 @@ TYPEINFO(/obj/item/card/emag)
 		if(issilicon(hit_atom) && !thr.thrown_by)
 			// Need to throw at the cyborg directly to emag them
 			return
-		if(thr.user)
-			hit_atom.emag_act(thr.user, src)
-		else
-			// No user, so probably thrown by an object.
-			// In this case assume that the last person to touch the EMAG is responsible.
-			var/mob/M = null
-			for(var/client/C in clients)
-				if(C.key == src.fingerprintslast)
-					M = C.mob
-					break
-			hit_atom.emag_act(M, src)
-		return
+		hit_atom.emag_act(thr.user, src)
 
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
