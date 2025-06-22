@@ -51,6 +51,7 @@
 			LAZYLISTREMOVE(human.attached_objs, src.user)
 			src.user.set_loc(src.target.loc)
 			src.user.transform = matrix(src.user.transform, 90, MATRIX_ROTATE | MATRIX_MODIFY)
+			user.flags += CLICK_DELAY_IN_CONTENTS
 			switch (src.tornlimb.slot)
 				if ("l_leg")
 					src.user.pixel_y = -13
