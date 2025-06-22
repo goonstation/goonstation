@@ -1,5 +1,9 @@
 
 (t)sun jun 22 25
+(u)LorrMaster
+(p)23737
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Throwing an EMAG at things will now emag them.
 (u)glowbold
 (*)The number of late-join special jobs is influenced by server population.
 (+)Sous-chef is now a random job.
