@@ -30,7 +30,7 @@
 					LAZYLISTADD(randLimb, potential_limb)
 			src.torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
 		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
-			src.holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] starts to gnaw at [src.torn_limb]!</b>"))
+			src.holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] leaps, latching onto and gnawing at [src.torn_limb]!</b>"))
 		else
 			return
 		actions.start(new/datum/action/bar/icon/eat_limb(target, holder.owner, src.torn_limb), holder.owner)
@@ -84,7 +84,8 @@
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1)
 			eat_twitch(user)
-			random_brute_damage(target, 2)
+			random_brute_damage(target, 6)
+			take_bleeding_damage(target, user, 1, DAMAGE_CUT, 1)
 			ThrowRandom(gib, rand(2,6))
 
 	onEnd()
@@ -95,7 +96,7 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/human = target
 			human.vis_contents -= user
-			take_bleeding_damage(target, user, 10, DAMAGE_CUT, 1)
+			take_bleeding_damage(target, user, 15, DAMAGE_CUT, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
 			user.set_loc(get_turf(target))
