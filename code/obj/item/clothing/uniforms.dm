@@ -2073,12 +2073,18 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
 	icon_state = "blouse_skirt-black"
 	item_state = "blouse_skirt-black"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 /obj/item/clothing/under/misc/bikini
-	name = "white bikini"
+	name = "bikini"
 	icon_state = "bikini_w"
 	item_state = "bikini_w"
 	desc = "A stylish two-piece swimsuit. Well suited for a day at the beach, less so the cold depths of space."
 	hide_underwear = TRUE
+
+	white
+		name = "white bikini"
+		icon_state = "bikini_w"
+		item_state = "bikini_w"
 
 	yellow
 		name = "yellow bikini"
@@ -2173,12 +2179,19 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 		icon_state = "onepiece_b"
 		item_state = "onepiece_b"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/frillyswimsuit)
 /obj/item/clothing/under/misc/frillyswimsuit
-	name = "frilly white swimsuit"
+	name = "frilly swimsuit"
 	icon_state = "frillyswimsuit_w"
 	item_state = "frillyswimsuit_w"
 	desc = "A playful swimsuit with a ruffled top. What is this doing all the way out here?"
 	hide_underwear = TRUE
+
+	white
+		name = "frilly white swimsuit"
+		icon_state = "frillyswimsuit_w"
+		item_state = "frillyswimsuit_w"
+
 
 	yellow
 		name = "frilly yellow swimsuit"
@@ -2205,11 +2218,17 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 		icon_state = "frillyswimsuit_circus"
 		item_state = "frillyswimsuit_circus"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
 /obj/item/clothing/under/misc/swimtrunks
-	name = "white swim trunks"
+	name = "swim trunks"
 	icon_state = "swimtrunks_w"
 	item_state = "swimtrunks_w"
 	desc = "A pair of swim trunks. Well-suited for a day at the beach, less so the cold depths of space."
+
+	white
+		name = "white swim trunks"
+		icon_state = "swimtrunks_w"
+		item_state = "swimtrunks_w"
 
 	red
 		name = "red swim trunks"
@@ -2277,11 +2296,16 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 		icon_state = "wetsuit_p"
 		item_state = "wetsuit_p"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/oldswimsuit)
 /obj/item/clothing/under/misc/oldswimsuit
 	name = "old-timey swimsuit"
 	icon_state = "oldswimsuit_rw"
 	item_state = "oldswimsuit_rw"
 	desc = "A mildly tacky bathing suit in a style nearly 200 years old. Can't fault the classics."
+
+	red
+		icon_state = "oldswimsuit_rw"
+		item_state = "oldswimsuit_rw"
 
 	blue
 		icon_state = "oldswimsuit_uw"

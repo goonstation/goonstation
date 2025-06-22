@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/bikini)
 
 /datum/clothingbooth_item/w_uniform/bikini/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/bikini
+	item_path = /obj/item/clothing/under/misc/bikini/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/bikini/red
@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/frillyswimsuit
+	item_path = /obj/item/clothing/under/misc/frillyswimsuit/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/frillyswimsuit/yellow
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/frillyswimsuit)
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/swimtrunks)
 /datum/clothingbooth_item/w_uniform/swimtrunks/white
 	name = "White"
-	item_path = /obj/item/clothing/under/misc/swimtrunks
+	item_path = /obj/item/clothing/under/misc/swimtrunks/white
 	swatch_background_color = "#ffffff"
 
 /datum/clothingbooth_item/w_uniform/swimtrunks/red
@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/oldswimsuit)
 
 /datum/clothingbooth_item/w_uniform/oldswimsuit/red
 	name = "Red and White"
-	item_path = /obj/item/clothing/under/misc/oldswimsuit
+	item_path = /obj/item/clothing/under/misc/oldswimsuit/red
 	swatch_background_color = "#ffffff"
 	swatch_foreground_color = "#e21616"
 
