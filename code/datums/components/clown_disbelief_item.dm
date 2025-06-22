@@ -1,5 +1,5 @@
 var/global/list/image/clown_disbelief_images
-var/global/list/image/clown_disbelief_clown_mobs //Subscribed list of mobs that are currently deemed to be clowns
+var/global/list/image/clown_disbelief_clown_mobs /// An associative list of clown disbelief item subscription counts, indexed by the mob they've been applied to.
 
 /datum/component/clown_disbelief_item
 	dupe_mode = COMPONENT_DUPE_UNIQUE
