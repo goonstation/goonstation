@@ -312,7 +312,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 			stamina_damage = 25
 			stamina_cost = 15
 			stamina_crit_chance = 5
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 
 	attack_self(mob/user as mob)

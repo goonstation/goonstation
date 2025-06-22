@@ -1,4 +1,57 @@
 
+(t)sun jun 22 25
+(u)LorrMaster
+(p)23737
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Throwing an EMAG at things will now emag them.
+(u)glowbold
+(*)The number of late-join special jobs is influenced by server population.
+(+)Sous-chef is now a random job.
+(t)sat jun 21 25
+(u)cringe
+(p)23231
+(e)🆕📄🤖|C-Feature, A-UI, A-Silicons
+(*)the science borg can use the HPD now
+(t)fri jun 20 25
+(u)Cheekybrdy
+(p)23472
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Carrier Pigeons are now obtainable in Courier's own personal mail.
+(u)Chasu
+(p)23403
+(e)💅📦🚗|C-QoL, A-Game-Objects, A-Vehicles
+(+)Pod-to-hangar communication is now packet-based
+(u)FlameArrow57
+(p)23310
+(e)⚖💅💊|C-Balance, C-QoL, A-Medical
+(*)Mannitol now only clears 0.25 brain damage per tick when above 80 brain damage.
+(*)Synaptizine and atropine are now much more effective at clearing brain damage above 80.
+(+)The health analyzer will now more clearly show brain damage levels as minor (20), moderate (40), major (60), severe (80), or lethal (100).
+(u)Egregorious
+(p)23803
+(e)🪲⏰|C-Bug, A-Status-Effects
+(+)Chemfires are more consistently harmful to stand in.
+(u)CalliopeSoups, Gomp
+(p)23548
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(*)Mimics come with a stomach they can retreat inside of while in a disposal chute and can eat limbs off of people!
+(+)Mimics barf up every limb they've eaten on death.
+(+)Disposal chutes are trapped while a mimic is inside and in their stomach, don't lose a limb!
+(u)JORJ949 and seasnakes
+(p)23479
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Added a new butterfingers trait that will randomly make you drop whatever you're holding!
+(t)thu jun 19 25
+(u)LeahTheTech
+(*)Signal jammers now flash red when they block a signal.
+(+)Stress toys can now be squished without a stress-inducing popup.
+(u)Azrun
+(+)Salvagers now start with some additional currency and new gear on the M4GP13.
+(u)glowbold
+(*)Latejoin jobs slightly tweaked, details in minor notes
+(+)Hall Monitor is a random gimmick job. RoleControl can open up additional Hall Monitor slots.
+(+)Stowaway job has 0 to 3 slots per round.
+(+)RoleControl can open up an additional Sous-Chef slot.
 (t)wed jun 18 25
 (u)RubberRats & glowbold
 (p)22814

@@ -112,7 +112,7 @@ TYPEINFO(/obj/item/saw)
 			boutput(user, SPAN_NOTICE("[src] is now off."))
 			src.force = off_force
 			src.hitsound = initial(src.hitsound)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		user.set_body_icon_dirty()
 		src.UpdateIcon()
 		user.update_inhands()

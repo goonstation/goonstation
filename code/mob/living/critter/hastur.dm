@@ -5,7 +5,6 @@ TYPEINFO(/mob/living/critter/hastur)
 
 /mob/living/critter/hastur
 	name = "????"
-	real_name = "????"
 	desc = "He who must not be named..."
 	density = 1
 	anchored = ANCHORED

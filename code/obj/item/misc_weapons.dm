@@ -213,7 +213,7 @@ TYPEINFO(/obj/item/sword)
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (src.active)
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_ALL)
@@ -1091,7 +1091,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			stamina_damage = 25
 			stamina_cost = 15
 			stamina_crit_chance = 5
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 
 	attack_self(mob/user as mob)

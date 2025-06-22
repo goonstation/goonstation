@@ -636,7 +636,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					total_volume += current_reagent.volume
 		if(isitem(my_atom))
 			var/obj/item/I = my_atom
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		return 0
 
 	proc/clear_reagents()
