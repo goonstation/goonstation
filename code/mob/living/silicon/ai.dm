@@ -1017,7 +1017,7 @@ or don't if it uses a custom topopen overlay
 	if (isghostdrone(user))
 		return list()
 
-	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
