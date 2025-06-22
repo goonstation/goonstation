@@ -53,7 +53,7 @@
 	onStart()
 		..()
 		if (ishuman(src.target))
-			src.duration = 20 SECONDS
+			src.duration = 5 SECONDS
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
 			RegisterSignal(src.user, COMSIG_MOB_GRABBED, PROC_REF(hold_slip))
 			var/mob/living/carbon/human/human = src.target
