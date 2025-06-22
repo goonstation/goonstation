@@ -1,4 +1,8 @@
 
+(t)sun jun 22 25
+(u)glowbold
+(*)The number of late-join special jobs is influenced by server population.
+(+)Sous-chef is now a random job.
 (t)sat jun 21 25
 (u)cringe
 (p)23231

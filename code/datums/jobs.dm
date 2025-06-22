@@ -1334,8 +1334,6 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 	New()
 		..()
-		if (prob(40))
-			limit = 1
 		if (src.alt_names.len)
 			name = pick(src.alt_names)
 
