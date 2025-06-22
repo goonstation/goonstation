@@ -6,6 +6,7 @@
 	targeted = TRUE
 	target_anything = TRUE
 	cooldown_after_action = TRUE
+	var/datum/human_limbs/torn_limb
 
 	New()
 		..()
@@ -20,30 +21,47 @@
 		var/datum/targetable/critter/stomach_retreat/stomach_abil = src.holder.getAbility(/datum/targetable/critter/stomach_retreat)
 		if (stomach_abil?.inside)
 			return TRUE
+		if (ishuman(target))
+			var/mob/living/carbon/human/targetHuman = target
+			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
+			var/list/randLimb
+			for (var/potential_limb in randLimbBase) // build a list of limbs the target actually has
+				if (targetHuman.limbs.get_limb(potential_limb))
+					LAZYLISTADD(randLimb, potential_limb)
+			src.torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
 		if (ishuman(target) || istype(target, /obj/item/parts/human_parts))
-			src.holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] starts to gnaw at [target]!</b>"))
+			src.holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] starts to gnaw at [src.torn_limb]!</b>"))
 		else
 			return
-		actions.start(new/datum/action/bar/icon/eat_limb(target, holder.owner), holder.owner)
+		actions.start(new/datum/action/bar/icon/eat_limb(target, holder.owner, src.torn_limb), holder.owner)
 
 /datum/action/bar/icon/eat_limb
 	duration = 1 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
+	interrupt_flags = null
 	var/atom/target
 	var/mob/user
+	var/datum/human_limbs/tornlimb
 
-	New(Target, User)
+	New(Target, User, Tornlimb)
 		target = Target
 		user = User
+		tornlimb = Tornlimb
 		..()
 
 	onStart()
 		..()
 		if (ishuman(target))
-			src.duration = 5 SECONDS
+			src.duration = 10 SECONDS
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
+			var/mob/living/carbon/human/human = target
+			user.set_loc(human)
+			human.vis_contents += user
+			user.layer = MOB_LAYER+5
+			user.animate_movement = SYNC_STEPS
 		else
+			src.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 			src.duration = 1 SECONDS
 		if (istype(user, /mob/living/critter/mimic))
 			var/mob/living/critter/mimic/mimic = user
@@ -62,21 +80,19 @@
 	onEnd()
 		..()
 		if (istype(user, /mob/living/critter/mimic))
-			var/mob/living/critter/mimic/mimic = user
+			var/mob/living/critter/mimic/antag_spawn/mimic = user
 			mimic.last_disturbed = 1 SECONDS
+		if (ishuman(target))
+			var/mob/living/carbon/human/human = target
+			human.vis_contents -= user
+			user.set_loc(get_turf(target))
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
 		src.gobble(target, user)
 
 	proc/gobble(atom/target, mob/user)
 		var/datum/component/death_barf/barfcomp = user.GetComponent(/datum/component/death_barf)
 		if (ishuman(target))
-			var/mob/living/carbon/human/targetHuman = target
-			var/list/randLimbBase = list("r_arm", "r_leg", "l_arm", "l_leg")
-			var/list/randLimb
-			for (var/potential_limb in randLimbBase) // build a list of limbs the target actually has
-				if (targetHuman.limbs.get_limb(potential_limb))
-					LAZYLISTADD(randLimb, potential_limb)
-			var/datum/human_limbs/torn_limb = targetHuman.limbs.get_limb(pick(randLimb))
-			var/limb_obj = torn_limb.sever()
+			var/limb_obj = src.tornlimb.sever()
 			target.emote("scream")
 			user.contents.Add(limb_obj)
 			barfcomp.record_limb(limb_obj)
