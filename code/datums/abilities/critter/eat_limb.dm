@@ -53,12 +53,22 @@
 	onStart()
 		..()
 		if (ishuman(target))
-			src.duration = 10 SECONDS
+			src.duration = 5 SECONDS
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
 			var/mob/living/carbon/human/human = target
 			user.set_loc(human)
 			human.vis_contents += user
-			user.layer = MOB_LAYER+5
+			if (istype(tornlimb, /obj/item/parts/human_parts/leg/))
+				user.pixel_y = -13
+				if (istype(tornlimb, /obj/item/parts/human_parts/leg/left))
+					user.pixel_x = 6
+				else
+					user.pixel_x = -6
+			else if (istype(tornlimb, /obj/item/parts/human_parts/arm/left))
+				user.pixel_x = 10
+			else
+				user.pixel_x = -10
+			user.layer = MOB_LAYER+1
 			user.animate_movement = SYNC_STEPS
 		else
 			src.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
@@ -85,6 +95,9 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/human = target
 			human.vis_contents -= user
+			take_bleeding_damage(target, user, 10, DAMAGE_CUT, 1)
+			user.pixel_y = 0
+			user.pixel_x = 0
 			user.set_loc(get_turf(target))
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
 		src.gobble(target, user)
