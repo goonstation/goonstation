@@ -53,8 +53,9 @@
 	onStart()
 		..()
 		if (ishuman(src.target))
-			src.duration = 5 SECONDS
+			src.duration = 20 SECONDS
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
+			RegisterSignal(src.user, COMSIG_MOB_GRABBED, PROC_REF(hold_slip))
 			var/mob/living/carbon/human/human = src.target
 			LAZYLISTADD(human.attached_objs, src.user)
 			src.user.set_loc(src.target.loc)
@@ -96,6 +97,7 @@
 		if (ishuman(src.target))
 			var/mob/living/carbon/human/human = src.target
 			src.user.transform = null
+			UnregisterSignal(src.user, COMSIG_MOB_GRABBED)
 			LAZYLISTREMOVE(human.attached_objs, src.user)
 			src.user.set_loc(src.target.loc)
 			src.user.pixel_y = 0
@@ -118,3 +120,10 @@
 		else
 			user.contents.Add(target)
 			barfcomp.record_limb(target)
+
+	proc/hold_slip(source, obj/item/grab/grab)
+		SPAWN(0.5 SECONDS)
+			if (!grab.affecting || !grab.assailant)
+				return
+			boutput(src.target, SPAN_ALERT("You try to grab the [src.user] but it's writhing around too hard!"))
+			qdel(grab)
