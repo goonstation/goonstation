@@ -304,7 +304,7 @@
 
 ///////////////////////////////////////////// Vampire spell parent //////////////////////////////////////////////////
 
-// If you change the blood cost, cooldown etc of an ability, don't forget to update vampireTips.html too!
+// If you change the blood cost, cooldown etc of an ability, don't forget to update `vampire.AlertContentWindow.tsx` too!
 
 // Notes:
 // - If an ability isn't available from the beginning, add an unlock_message to notify the player of unlocks.
