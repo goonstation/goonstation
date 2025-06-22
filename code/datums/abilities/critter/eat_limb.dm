@@ -8,6 +8,14 @@
 	cooldown_after_action = TRUE
 	var/datum/human_limbs/torn_limb
 
+	New()
+		..()
+		// stomach retreat can get away with being by itself, but eat limb should always come bundled with it (probably will seperate later)
+		if (!holder.owner.getAbility(/datum/targetable/critter/stomach_retreat))
+			holder.owner.addAbility(/datum/targetable/critter/stomach_retreat)
+		if (!holder.owner.GetComponent(/datum/component/death_barf))
+			holder.owner.AddComponent(/datum/component/death_barf)
+
 	cast(atom/target)
 		. = ..()
 		var/datum/targetable/critter/stomach_retreat/stomach_abil = src.holder.getAbility(/datum/targetable/critter/stomach_retreat)
@@ -48,10 +56,10 @@
 			src.duration = 5 SECONDS
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "chomping")
 			var/mob/living/carbon/human/human = src.target
-			LAZYLISTREMOVE(human.attached_objs, src.user)
+			LAZYLISTADD(human.attached_objs, src.user)
 			src.user.set_loc(src.target.loc)
 			src.user.transform = matrix(src.user.transform, 90, MATRIX_ROTATE | MATRIX_MODIFY)
-			user.flags += CLICK_DELAY_IN_CONTENTS
+			ADD_FLAG(src.user.flags, CLICK_DELAY_IN_CONTENTS)
 			switch (src.tornlimb.slot)
 				if ("l_leg")
 					src.user.pixel_y = -13
@@ -94,6 +102,7 @@
 			src.user.pixel_x = 0
 			take_bleeding_damage(src.target, src.user, 15, DAMAGE_CUT, 1)
 			REMOVE_ATOM_PROPERTY(src.user, PROP_MOB_CANTMOVE, "chomping")
+			REMOVE_FLAG(src.user.flags, CLICK_DELAY_IN_CONTENTS)
 		src.gobble(src.target, src.user)
 
 	proc/gobble(atom/target, mob/user)
