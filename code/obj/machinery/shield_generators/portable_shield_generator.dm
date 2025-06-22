@@ -40,9 +40,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			PCEL = new /obj/item/cell/supercell(src)
 			PCEL.charge = PCEL.maxcharge
 
-		src.display_active = image('icons/obj/meteor_shield.dmi', "on")
-		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
-		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
+		src.display_active = image('icons/obj/shield_gen.dmi', "on")
+		src.display_battery = image('icons/obj/shield_gen.dmi', "")
+		src.display_panel = image('icons/obj/shield_gen.dmi', "")
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "toggle", PROC_REF(toggle))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set range", PROC_REF(set_range_mechcomp))
@@ -401,7 +401,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 /obj/forcefield/meteorshield
 	name = "Impact Forcefield"
 	desc = "A force field deployed to stop meteors and other high velocity masses."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shield"
 	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
@@ -484,7 +484,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 /obj/forcefield/energyshield
 	name = "Forcefield"
 	desc = "A force field that can block various states of matter."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldw"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/powerlevel //Stores the power level of the deployer

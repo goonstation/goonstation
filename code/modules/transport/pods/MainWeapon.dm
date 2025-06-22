@@ -1213,7 +1213,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1221,7 +1221,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			set_icon_state("SPS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 	proc/purge_sps(var/point_x, var/point_y)

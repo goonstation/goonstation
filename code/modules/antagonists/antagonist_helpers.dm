@@ -89,5 +89,4 @@ proc/get_all_gangs()
 			"Chief Engineer",
 			"Research Director",
 			"Medical Director",
-			"Communications Officer",
 			)
