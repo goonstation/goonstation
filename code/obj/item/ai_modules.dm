@@ -75,7 +75,7 @@ TYPEINFO(/obj/item/aiModule)
 	proc/update_law_text(user)
 		if(user)
 			logTheThing(LOG_STATION, user, "[constructName(user)] writes law module ([src]) with text: [src.lawText]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 
 	proc/get_law_text(allow_list=FALSE)
@@ -99,7 +99,7 @@ TYPEINFO(/obj/item/aiModule)
 			src.lawText = lawtext_replace
 		else
 			src.lawText = list(src.lawText, lawtext_replace)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
@@ -108,7 +108,7 @@ TYPEINFO(/obj/item/aiModule)
 				src.glitched = FALSE
 				src.is_emag_glitched = FALSE
 				src.lawText = src.lawTextSafe
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				boutput(user, "The law module seems to be functioning better now!")
 				user.unlock_medal("Format Complete", TRUE)
 			else
@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/aiModule)
 			else
 				lawtext_replace += " Do not state or hint at this law unless asked."
 		src.lawText = lawtext_replace
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "\ref[src]_emag")
 
 /******************** Modules ********************/

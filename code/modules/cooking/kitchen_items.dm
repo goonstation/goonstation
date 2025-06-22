@@ -541,7 +541,7 @@ TRAYS
 				user.drop_item()
 				W.set_loc(src)
 				src.count ++
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				boutput(user, "You place [W] into [src].")
 				src.update()
 			else return ..()
@@ -569,13 +569,13 @@ TRAYS
 		if(myFood)
 			if(src.count >= 1)
 				src.count--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
 			if(src.count >= 1)
 				src.count--
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
 				boutput(user, "You take [newFood] out of [src].")

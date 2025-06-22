@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/engineerbot
 	name = "Syndicate MULTI Unit"
-	real_name = "Syndicate MULTI Unit"
 	icon_state = "engineerbot"
 	base_icon_state = "engineerbot"
 	desc = "An engineering unit, you can somehow feel that it's angry at you."

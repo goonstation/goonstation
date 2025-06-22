@@ -23,8 +23,6 @@ TYPEINFO(/turf/variableTurf)
 			if (source.z == Z_LEVEL_STATION)
 				#ifdef MAP_OVERRIDE_NADIR
 				source.ReplaceWith(/turf/space/fluid/acid)
-				#elif defined(MOVING_SUB_MAP)
-				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
 				#else
 				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 				#endif
@@ -47,8 +45,6 @@ TYPEINFO(/turf/variableTurf/floor)
 			if (source.z == Z_LEVEL_STATION)
 				#ifdef MAP_OVERRIDE_NADIR
 				source.ReplaceWith(/turf/space/fluid/acid)
-				#elif defined(MOVING_SUB_MAP)
-				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
 				#else
 				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 				#endif
@@ -85,8 +81,6 @@ TYPEINFO(/turf/variableTurf/clear)
 			if (source.z == Z_LEVEL_STATION)
 				#ifdef MAP_OVERRIDE_NADIR
 				source.ReplaceWith(/turf/space/fluid/acid)
-				#elif defined(MOVING_SUB_MAP)
-				source.ReplaceWith(/turf/space/fluid/manta, FALSE, TRUE, FALSE, TRUE)
 				#else
 				source.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
 				#endif

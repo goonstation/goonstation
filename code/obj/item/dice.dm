@@ -105,7 +105,7 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		if (src.dicePals.len)
 			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
@@ -544,7 +544,7 @@ var/list/rollList = list()
 		src.initialName = src.name
 		src.initialDesc = src.desc
 		src.last_roll = null
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 		user.show_text("You reconfigure the [old_name] into a [name].")
 		return
@@ -663,7 +663,7 @@ var/list/rollList = list()
 		for(var/i=1, i<=dicelist.len, i++) //shuffle the overlay colors to give the illusion of dice rolling inside the cup?
 			if (src.dicelist[i].sides && isnum(src.dicelist[i].sides)) //index out of bounds
 				src.dicelist[i].last_roll = rand(1, src.dicelist[i].sides)
-				src.dicelist[i].tooltip_rebuild = 1
+				src.dicelist[i].tooltip_rebuild = TRUE
 				src.localRollList.Add(list(list("sides"=src.dicelist[i].sides,"roll"=src.dicelist[i].last_roll,"color"=src.dicelist[i].color))) //need a check for dice without a color
 				if(src.dicelist[i].sides == 6)
 					src.dicelist[i].icon_state = "d6_[src.dicelist[i].last_roll]"

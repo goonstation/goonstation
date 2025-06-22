@@ -31,7 +31,7 @@ var/list/asteroid_blocked_turfs = list()
 			ore_types_common += O
 			ore_types_all += O
 
-		for (var/X in childrentypesof(/datum/mining_encounter))
+		for (var/X in concrete_typesof(/datum/mining_encounter))
 			var/datum/mining_encounter/MC = new X
 			mining_encounters_common += MC
 			mining_encounters_all += MC

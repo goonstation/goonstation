@@ -1191,25 +1191,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
-		if(GET_DIST(usr, src) < 16)
-			if(istype(usr.loc, /obj/machinery/vehicle))
-				var/obj/machinery/vehicle/V = usr.loc
-				var/obj/item/shipcomponent/communications/comms_part = V.get_part(POD_PART_COMMS)
-				if (!comms_part)
-					boutput(usr, SPAN_ALERT("Your pod has no comms system installed!"))
-					return ..()
-				if (!comms_part.active)
-					boutput(usr, SPAN_ALERT("Your communications array isn't on!"))
-					return ..()
-				if (!access_type)
-					open_door()
-				else
-					if(comms_part.access_type.Find(src.access_type))
-						open_door()
-					else
-						boutput(usr, SPAN_ALERT("Access denied. Comms system not recognized."))
-						return ..()
+		if(GET_DIST(usr, src) > 16)
 			return ..()
+		if(istype(usr.loc, /obj/machinery/vehicle))
+			var/obj/machinery/vehicle/V = usr.loc
+			V.toggle_hangar_door(pass)
+
 
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
@@ -1223,7 +1210,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		boutput(user, SPAN_NOTICE("The password is \[[src.pass]\]"))
 		return
 
-	proc/open_door()
+	proc/toggle_hangar_door()
 		if(src.status & (NOPOWER|BROKEN))
 			return
 		src.use_power(5)
@@ -1241,7 +1228,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		if(..())
 			return
 		//////Open Door
-		if(signal.data["command"] =="open door")
+		if(signal.data["command"] =="toggle_hangar_door")
 			if(!signal.data["doorpass"])
 				return
 			if(!signal.data["access_type"])
@@ -1253,16 +1240,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(src.status & (NOPOWER|BROKEN))
-					return
-				src.use_power(5)
-
-				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-					if (M.id == src.id)
-						if (M.density)
-							M.open()
-						else
-							M.close()
+				toggle_hangar_door()
 			return
 		////////reset pass
 		if(signal.data["command"] =="reset door pass")
