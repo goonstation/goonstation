@@ -1,5 +1,9 @@
 
 (t)sun jun 22 25
+(u)RubberRats
+(p)23922
+(e)🆕💅🤖|C-Feature, C-QoL, A-Silicons
+(+)Cyborgs and AIs now show pronouns on examine.
 (u)glowbold
 (p)23224
 (e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
