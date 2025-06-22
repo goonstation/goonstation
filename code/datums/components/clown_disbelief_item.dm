@@ -28,10 +28,7 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 
 /datum/component/clown_disbelief_item/proc/on_equip(datum/source, mob/equipper, slot)
 	src.disbelief_image.loc = equipper
-	if(!clown_disbelief_clown_mobs[equipper])
-		clown_disbelief_clown_mobs[equipper] = 1
-	else
-		clown_disbelief_clown_mobs[equipper] +=1
+	clown_disbelief_clown_mobs[equipper] += 1
 
 /datum/component/clown_disbelief_item/proc/on_unequip(datum/source, mob/user)
 	src.disbelief_image.loc = null
