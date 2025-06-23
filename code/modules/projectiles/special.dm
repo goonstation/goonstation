@@ -993,10 +993,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		if (istype(hit, /obj/projectile))
 			var/obj/projectile/pass_proj = hit
-			if (!istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
-				if (pass_proj.proj_data.hit_object_sound)
-					playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
-				pass_proj.die()
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
+			if (pass_proj.proj_data.hit_object_sound)
+				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
+			pass_proj.die()
 			return
 
 		hit.damage_cold(temp_reduc / 10)
@@ -1053,14 +1056,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		if (istype(hit, /obj/projectile))
 			var/obj/projectile/pass_proj = hit
-			if (!istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
-				if (pass_proj.proj_data.hit_object_sound)
-					playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
-				pass_proj.die()
-				var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
-				poof.setup(P.loc)
-				playsound(P.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
-				P.die()
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
+			if (pass_proj.proj_data.hit_object_sound)
+				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
+			pass_proj.die()
+			var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+			poof.setup(P.loc)
+			playsound(P.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+			P.die()
 			return
 
 		if (isliving(hit))
