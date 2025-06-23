@@ -27,7 +27,7 @@
 
 /datum/targetable/vampire/call_frost_bats
 	name = "Call Frost Bats"
-	desc = "Calls a swarm of frost bats. They will orbit you, stopping all projectiles and flinging mobs they hit. Point at a mob to send one bat to it, or flip to send all to nearby mobs."
+	desc = "Calls a swarm of frost bats. They will orbit you, stopping all projectiles and flinging mobs they hit. Point at a mob to send one bat, or flip to send all to nearby mobs."
 	icon_state = "frostbats"
 	targeted = 0
 	target_nodamage_check = 0
@@ -78,7 +78,7 @@
 
 /datum/targetable/vampire/call_spirit_bats
 	name = "Call Spirit Bats"
-	desc = "Call a swarm of spirit bats. They will orbit you, stopping one projectile and disorienting mobs they hit. Point at a mob to send one bat to it, or flip to send all to nearby mobs."
+	desc = "Call a swarm of spirit bats. They will orbit you, stopping one projectile and disorienting mobs they hit. Point at a mob to send one bat, or flip to send all to nearby mobs."
 	icon_state = "frostbats" //TODO: Different icon?
 	targeted = FALSE
 	target_nodamage_check = 0
