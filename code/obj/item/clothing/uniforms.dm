@@ -2122,6 +2122,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 		name = "yellow polka-dot bikini"
 		icon_state = "bikini_pdoty"
 		item_state = "bikini_pdoty"
+		desc = "An itsy-bisty, teeny-weeny swimsuit. What's it doing out here in space?"
 
 	strawberry
 		name = "strawberry bikini"
@@ -2132,6 +2133,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/bikini)
 		name = "beekini"
 		icon_state = "beekini"
 		item_state = "beekini"
+		desc = "A stylish two-piece swimsuit. It even has little wings! Aww."
 
 ABSTRACT_TYPE(/obj/item/clothing/under/misc/onepiece)
 /obj/item/clothing/under/misc/onepiece
@@ -2186,7 +2188,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/frillyswimsuit)
 	name = "frilly swimsuit"
 	icon_state = "frillyswimsuit_w"
 	item_state = "frillyswimsuit_w"
-	desc = "A playful swimsuit with a ruffled top. What is this doing all the way out here?"
+	desc = "A playful swimsuit with a ruffled top. How did it get all the way out here?"
 	hide_underwear = TRUE
 
 	white
@@ -2219,6 +2221,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/frillyswimsuit)
 		name = "frilly circus swimsuit"
 		icon_state = "frillyswimsuit_circus"
 		item_state = "frillyswimsuit_circus"
+		desc = "A playful swimsuit with a ruffled top. This one has an alarming polka-dot pattern."
 
 ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
 /obj/item/clothing/under/misc/swimtrunks
@@ -2261,6 +2264,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/swimtrunks)
 		name = "circus swim trunks"
 		icon_state = "swimtrunks_circus"
 		item_state = "swimtrunks_circus"
+		desc = "A pair of swim trunks. This one has an alarming polka-dot pattern."
 
 /obj/item/clothing/under/misc/wetsuit
 	name = "wetsuit"
