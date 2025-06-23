@@ -175,6 +175,22 @@ var/global/game_force_started = FALSE
 	else
 		src.mode.announce()
 
+	// setup initial special random jobs based on roundstart count of players
+	var/latejoin_job_count = clamp(ceil(src.roundstart_player_count(FALSE) / 7), 5, 15)
+	var/list/datum/job/latejoin_jobs = list()
+	for (var/datum/job/J in global.job_controls.special_jobs)
+		if (istype(J, /datum/job/special/random))
+			latejoin_jobs += J
+	var/count = 0
+	while(count < latejoin_job_count && length(latejoin_jobs))
+		var/datum/job/J = pick(latejoin_jobs)
+		latejoin_jobs -= J
+		if (J.limit >= 1)
+			continue
+		J.limit = 1
+		count++
+	logTheThing(LOG_DEBUG, null, "Dynamic latejoin scaling added [latejoin_job_count] random jobs")
+
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 	message_admins("Chosen game mode: [mode] ([master_mode]).")
 
@@ -318,7 +334,7 @@ var/global/game_force_started = FALSE
 				unreadied_count++
 	var/total = readied_count + (unreadied_count/2)
 	if (loud)
-		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+		logTheThing(LOG_GAMEMODE, null, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
 	return total
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).

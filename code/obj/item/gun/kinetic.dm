@@ -133,12 +133,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 				if(AMMO_RELOAD_PARTIAL)
 					user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining."))
-					src.tooltip_rebuild = 1
+					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
 				if(AMMO_RELOAD_FULLY)
 					user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name]."))
-					src.tooltip_rebuild = 1
+					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b)
 					return
 				if(AMMO_RELOAD_TYPE_SWAP)
@@ -647,7 +647,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new barrel.default_projectile)
 		src.projectiles = list(current_projectile)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'

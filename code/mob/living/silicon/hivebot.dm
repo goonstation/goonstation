@@ -903,6 +903,7 @@ Frequency:
 /mob/living/silicon/hivebot/eyebot
 	name = "Eyebot"
 	icon_state = "eyebot"
+	open_to_sound = TRUE
 	health = 25
 	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.

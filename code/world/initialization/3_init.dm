@@ -239,11 +239,6 @@
 		qdel(thing)
 	#endif
 
-#ifdef MOVING_SUB_MAP
-	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
-	mantaSetMove(moving=1, doShake=0)
-#endif
-
 #ifdef TWITCH_BOT_ALLOWED
 	for (var/client/C)
 		if (C.ckey == TWITCH_BOT_CKEY)

@@ -572,6 +572,15 @@
 		qdel(P)
 		return
 
+	proc/get_random_part()
+		var/list/actually_installed_parts = list()
+		for (var/id in src.installed_parts)
+			if (src.installed_parts[id])
+				actually_installed_parts += src.installed_parts[id]
+		if (!length(actually_installed_parts))
+			return null
+		return pick(actually_installed_parts)
+
 	proc/disrupt(disruption, obj/projectile/P)
 		if(disruption <= 0 || !length(src.installed_parts))
 			return
@@ -579,7 +588,9 @@
 		if(pilot)
 			boutput(src.pilot, "[ship_message("WARNING! Electrical system disruption detected!")]")
 
-		var/obj/item/shipcomponent/S = src.installed_parts[pick(src.installed_parts)]
+		var/obj/item/shipcomponent/S = src.get_random_part()
+		if (!S)
+			return
 		if (istype(S, /obj/item/shipcomponent/engine))
 			disruption += 40
 
@@ -592,8 +603,14 @@
 			else
 				S.deactivate()
 				S.disrupted = TRUE
-				SPAWN(2 SECONDS)
+				SPAWN(3 SECONDS)
 					S.disrupted = FALSE
+
+	overload_act()
+		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
+		src.disrupt(100) //you managed to punch a pod, you get full disruption
+		src.disrupt(100)
+		return TRUE
 
 	emp_act()
 		ON_COOLDOWN(src, "in_combat", 5 SECONDS)
@@ -1589,10 +1606,12 @@
 		return
 	sec_part.Use(usr)
 
-/obj/machinery/vehicle/proc/open_hangar()
+/obj/machinery/vehicle/proc/toggle_hangar_door(var/pass)
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
-	if(comms)
-		comms.rc_ship.open_hangar(usr)
+	if(!comms)
+		return
+	comms.rc_ship.toggle_hangar_door(usr, pass)
+
 
 /obj/machinery/vehicle/proc/return_to_station()
 	var/obj/item/shipcomponent/communications/comms = src.get_usable_part(usr, POD_PART_COMMS)
