@@ -649,13 +649,13 @@
 		if (src.listen_tree && !src.listen_tree.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
 			src.listen_tree.AddListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
 			src.change_misstep_chance(66)
-	else if (amount < 0 && src.listen_tree?.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_SEVERE && src.listen_tree?.GetModifierByID(LISTEN_MODIFIER_BRAIN_DAMAGE))
 		src.listen_tree.RemoveListenModifier(LISTEN_MODIFIER_BRAIN_DAMAGE)
 		src.change_misstep_chance(-66)
 
 	if (amount > 0 && src.get_brain_damage() >= BRAIN_DAMAGE_MODERATE && !(locate(/datum/lifeprocess/brain) in src.lifeprocesses))
 		src.add_lifeprocess(/datum/lifeprocess/brain)
-	else if (amount < 0)
+	else if (amount < 0 && src.get_brain_damage() < BRAIN_DAMAGE_MODERATE)
 		src.remove_lifeprocess(/datum/lifeprocess/brain)
 
 /mob/living/carbon/human/get_brain_damage()
