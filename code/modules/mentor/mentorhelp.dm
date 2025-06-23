@@ -41,7 +41,7 @@
 			client.mob.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		return
 
-	if (client.player.cloudSaves.getData("mentorhelp_banner"))
+	if (client.player?.cloudSaves.getData("mentorhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 

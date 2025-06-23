@@ -6,7 +6,7 @@
 
 	var/client/client = src.client
 
-	if (client.player.cloudSaves.getData("adminhelp_banner"))
+	if (client.player?.cloudSaves.getData("adminhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
@@ -79,12 +79,12 @@
 
 	var/client/client = src.client
 
-	if(!client)
+	if(!client || !client.authenticated)
 		return
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
 		return
-	if(client.player.cloudSaves.getData( "prayer_banner" ))
+	if(client.player?.cloudSaves.getData( "prayer_banner" ))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 	if(ON_COOLDOWN(client.player, "ahelp", ADMINHELP_DELAY))

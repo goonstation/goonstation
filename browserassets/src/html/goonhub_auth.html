@@ -30,36 +30,25 @@
 </head>
 
 <body>
-  <iframe src="{goonhub_url}/game-auth/login"></iframe>
+  <iframe src="{goonhub_url}/game-auth/{route}"></iframe>
   <script>
     (function () {
       var ref = '{ref}';
 
       window.addEventListener('message', function (event) {
-        window.location =
-          'byond://?src=' +
-          ref +
-          ';log=' +
-          encodeURIComponent(
-            'id: ' +
-              event.data.user.id +
-              ', username: ' +
-              event.data.user.name +
-              ', email: ' +
-              event.data.user.email
-          );
-        if (
-          event.origin !== '{goonhub_url}' &&
-          event.data.type !== 'authenticated'
-        ) {
+        if (event.origin !== '{goonhub_url}') {
           return;
         }
 
-        window.location =
-          'byond://?src=' +
-          ref +
-          ';authenticated=1;user=' +
-          encodeURIComponent(JSON.stringify(event.data.user));
+        if (event.data.type === 'authenticated') {
+          window.location =
+            'byond://?src=' +
+            ref +
+            ';authenticated=1;user=' +
+            encodeURIComponent(JSON.stringify(event.data.user));
+        } else if (event.data.type === 'logout') {
+          window.location = 'byond://?src=' + ref + ';logout=1';
+        }
       });
     })();
   </script>

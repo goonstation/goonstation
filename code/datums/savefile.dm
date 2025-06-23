@@ -475,7 +475,7 @@
 
 	/// Load a character profile from the cloud.
 	cloudsave_load(client/user, name)
-		var/cloudSaveData = user.player.cloudSaves.getSave(name)
+		var/cloudSaveData = user.player?.cloudSaves.getSave(name)
 
 		var/savefile/save = new
 		save.ImportText( "/", cloudSaveData )
@@ -486,7 +486,7 @@
 		var/savefile/save = src.savefile_save(user.ckey, 1, 1)
 		var/exported = save.ExportText()
 
-		return user.player.cloudSaves.putSave(name, exported)
+		return user.player?.cloudSaves.putSave(name, exported)
 
 	cloudsave_delete(client/user, name)
-		return user.player.cloudSaves.deleteSave(name)
+		return user.player?.cloudSaves.deleteSave(name)

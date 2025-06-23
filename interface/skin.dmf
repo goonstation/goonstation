@@ -64,6 +64,11 @@ menu "menu"
 		command = ".command"
 		category = "&File"
 		saved-params = "is-checked"
+	elem "auth_logout"
+		name = "Logout"
+		command = ".authlogout"
+		category = "&File"
+		is-disabled = true
 	elem
 		name = ""
 		command = ""

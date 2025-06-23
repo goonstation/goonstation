@@ -1,4 +1,5 @@
 /datum/client_auth_provider/byond
+	name = "Byond"
 	start_state = CLIENT_AUTH_SUCCESS
 
 /datum/client_auth_provider/byond/New(client/owner)

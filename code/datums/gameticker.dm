@@ -274,14 +274,6 @@ var/global/game_force_started = FALSE
 			if(lobby_player.client)
 				lobby_player.update_joinmenu()
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 		roundManagement.recordUpdate(mode)

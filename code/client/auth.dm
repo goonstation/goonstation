@@ -55,9 +55,7 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	src.client_auth_intent = new()
 
 	for (var/datum/client_auth_gate/gate in pre_auth_gates)
-		world.log << "Checking gate: [gate]"
 		if (!gate.check(src))
-			world.log << "Gate failed"
 			gate.fail(src)
 			return CLIENT_AUTH_FAILED
 
@@ -74,14 +72,53 @@ var/list/datum/client_auth_gate/post_auth_gates = list(
 	SHOULD_CALL_PARENT(TRUE)
 
 	for (var/datum/client_auth_gate/gate in post_auth_gates)
-		world.log << "Checking gate: [gate]"
 		if (!gate.check(src))
-			world.log << "Gate failed"
 			gate.fail(src)
 			return CLIENT_AUTH_FAILED
 
-	if (isnewplayer(src.mob))
-		var/mob/new_player/new_player = src.mob
-		new_player.blocked_from_joining = FALSE
-
 	src.post_auth()
+
+/*
+ * Client auth failed
+ *
+ * This is called when the client fails to authenticate with the set auth provider.
+ */
+/client/proc/on_auth_failed()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (istype(src?.mob, /mob/new_player))
+		var/mob/new_player/new_player = src.mob
+		new_player.blocked_from_joining = TRUE
+
+	if (src?.mob) tgui_process?.close_user_uis(src.mob)
+	if (src) del(src)
+
+/*
+ * Client auth logout
+ *
+ * This is called when the client logs out.
+ */
+/client/proc/on_logout()
+	SHOULD_CALL_PARENT(TRUE)
+	boutput(src, {"
+		<div style='border: 2px solid green; margin: 0.5em 0;'>
+			<div style="color: black; background: #8f8; font-weight: bold; border-bottom: 1px solid green; text-align: center; padding: 0.2em 0.5em;">
+				Logged out
+			</div>
+			<div style="padding: 0.2em 0.5em; text-align: center;">
+				You have been logged out. Goodbye!
+			</div>
+		</div>
+		"}, forceScroll=TRUE)
+	if (src) del(src)
+
+/**
+ * Client auth logout verb
+ *
+ * This is a verb that is used to logout the client.
+ */
+/client/verb/auth_logout()
+	set name = ".authlogout"
+	set hidden = TRUE
+	if (src.client_auth_provider.can_logout)
+		src.client_auth_provider.logout()

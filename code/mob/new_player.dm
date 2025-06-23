@@ -1020,7 +1020,7 @@ a.latejoin-card:hover {
 #define JOINMENU_VERTICAL_OFFSET_PER_BUTTON 56
 
 /mob/new_player/proc/update_joinmenu()
-	if (!client)
+	if (!client || !client.authenticated)
 		return
 
 	// super conservative with client checks as we *really* don't want to crash here

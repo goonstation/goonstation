@@ -142,7 +142,8 @@
 	return
 
 /client/Del()
-	clients -= src
+	global.clients -= src
+	global.pre_auth_clients -= src
 
 	try
 		// technically not disposing but it really should be here for feature parity
@@ -210,18 +211,23 @@
 	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id], Byond version: [src.byond_version].[src.byond_build]", "access")
 
+	src.chatOutput = new /datum/chatOutput(src)
+
 	var/client_auth_status = src.auth()
 	if (client_auth_status == CLIENT_AUTH_FAILED) return FALSE
+
+	global.pre_auth_clients += src
+
+	src.player = make_player(src.key)
+	src.player.client = src
 
 	// TODO: is this necessary?
 	if (config.rsc) src.preload_rsc = config.rsc
 
-	//Assign custom interface datums
+	// Assign custom interface datums
 	if (!isnewplayer(src.mob)) src.loadResources()
 	src.initSizeHelpers()
-	src.chatOutput = new /datum/chatOutput(src)
-	SPAWN(-1)
-		src.chatOutput.start()
+	src.chatOutput.start()
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 	src.tooltipHolder.clearOld()
 
@@ -242,11 +248,19 @@
 
 
 /client/proc/post_auth()
-	world.log << "post_auth"
 	src.authenticated = TRUE
 
-	src.player = make_player(key)
-	src.player.client = src
+	global.pre_auth_clients -= src
+	global.clients += src
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
+
+	src.player.setup(src.key)
+	src.player.id = src.client_auth_intent.player_id || 0
+
+	if (isnewplayer(src.mob))
+		var/mob/new_player/new_player = src.mob
+		new_player.blocked_from_joining = FALSE
+		new_player.new_player_panel()
 
 	src.init_admin()
 
@@ -280,9 +294,6 @@
 	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	add_to_donator_list(src.ckey)
-
-	clients += src
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CLIENT_NEW, src)
 
 	if (do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
@@ -390,11 +401,11 @@
 
 		ircbot.event("login", src.key)
 		//Cloud data
-		if (!src.player.cloudSaves.loaded)
-			src.player.cloudSaves.fetch()
+		if (!src.player?.cloudSaves.loaded)
+			src.player?.cloudSaves.fetch()
 		src.antag_tokens = src.player?.get_antag_tokens()
 		src.load_persistent_bank()
-		var/decoded = src.player.cloudSaves.getData("audio_volume")
+		var/decoded = src.player?.cloudSaves.getData("audio_volume")
 		if(decoded)
 			var/list/old_volumes = volumes.Copy()
 			volumes = json_decode(decoded)
@@ -408,7 +419,7 @@
 			src.show_login_notice()
 
 			// Set screen saturation
-			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
+			src.set_saturation(text2num(src.player?.cloudSaves.getData("saturation")))
 
 		src.mob.reset_keymap()
 
@@ -746,11 +757,11 @@
 
 // 		ircbot.event("login", src.key)
 // 		//Cloud data
-// 		if (!src.player.cloudSaves.loaded)
-// 			src.player.cloudSaves.fetch()
+// 		if (!src.player?.cloudSaves.loaded)
+// 			src.player?.cloudSaves.fetch()
 // 		src.antag_tokens = src.player?.get_antag_tokens()
 // 		src.load_persistent_bank()
-// 		var/decoded = src.player.cloudSaves.getData("audio_volume")
+// 		var/decoded = src.player?.cloudSaves.getData("audio_volume")
 // 		if(decoded)
 // 			var/list/old_volumes = volumes.Copy()
 // 			volumes = json_decode(decoded)
@@ -764,7 +775,7 @@
 // 			src.show_login_notice()
 
 // 			// Set screen saturation
-// 			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
+// 			src.set_saturation(text2num(src.player?.cloudSaves.getData("saturation")))
 
 // 		src.mob.reset_keymap()
 
@@ -1020,12 +1031,12 @@
 #ifdef BONUS_POINTS
 	persistent_bank = 99999999
 #else
-	if (!src.player.cloudSaves.loaded) return
-	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
+	if (!src.player?.cloudSaves.loaded) return
+	var/cPersistentBank = src.player?.cloudSaves.getData("persistent_bank")
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
 #endif
 	persistent_bank_valid = TRUE //moved down to below api call so if it runtimes it won't be considered valid
-	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
+	persistent_bank_item = src.player?.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
 // defines are already set, just do the checks here ok
@@ -1034,14 +1045,14 @@
 /client/proc/set_last_purchase(datum/bank_purchaseable/purchase)
 	if (!purchase || purchase == 0 || !purchase.carries_over)
 		persistent_bank_item = "none"
-		src.player.cloudSaves.putData( "persistent_bank_item", "none" )
+		src.player?.cloudSaves.putData( "persistent_bank_item", "none" )
 	else
 		persistent_bank_item = purchase.name
-		src.player.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
+		src.player?.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
 
 /client/proc/set_persistent_bank(amt as num)
 	persistent_bank = amt
-	src.player.cloudSaves.putData( "persistent_bank", amt )
+	src.player?.cloudSaves.putData( "persistent_bank", amt )
 	/*
 	var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
 	if (!PB) return
@@ -1055,13 +1066,13 @@
 		if(!persistent_bank_valid)
 			return
 	persistent_bank += amt
-	src.player.cloudSaves.putData("persistent_bank", persistent_bank)
+	src.player?.cloudSaves.putData("persistent_bank", persistent_bank)
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
-	player.cloudSaves.fetch()
+	player?.cloudSaves.fetch()
 	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
@@ -1151,6 +1162,9 @@ var/global/curr_day = null
 /client/proc/setJoinDate()
 #ifndef LIVE_SERVER
 	UNLINT(return) //shut uppp
+#endif
+#if CLIENT_AUTH_PROVIDER_CURRENT != CLIENT_AUTH_PROVIDER_BYOND
+	UNLINT(return)
 #endif
 
 	joined_date = ""
@@ -1505,7 +1519,7 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.player.cloudSaves.putData("saturation", s)
+	src.player?.cloudSaves.putData("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
 
 

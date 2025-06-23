@@ -48,14 +48,29 @@
 		new /obj/titlecard(T)
 	return
 #else
-	last_pregame_html = {"<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'><style>@font-face{font-family:'PxPlus IBM VGA9';src:url([resource("misc/ibmvga9.ttf")]);}body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:contain;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
+	var/html = grabResource("html/pregame.html")
+
+	var/overlay_settings = ""
 	if (isnull(src.overlay_image_url))
-		last_pregame_html += {"#overlay{display:none;}"}
+		overlay_settings = "display: none;"
 	else
-		last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
-	last_pregame_html += {".area{white-space:pre;color:#fff;text-shadow: -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 2px 2px 0px #000, 2px 0px 0px #000, -2px 0px 0px #000, 0px 2px 0px #000, 0px -2px 0px #000;font:1em 'PxPlus IBM VGA9';}a{text-decoration:none;}#leftside{position:fixed;left:0;bottom:0;}#tip{text-align: center; width: 80%; white-space: pre-wrap; font-size: 0.7em; margin: 10px auto auto auto;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}</style></head><body><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script><div id="overlay"></div><div id="tip" class="area"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
+		overlay_settings = "background-image: url('[resource(src.overlay_image_url)]');"
+
+	html = replacetext(html, "/*{image_url}*/", "background-image: url('[resource(src.image_url)]');")
+	html = replacetext(html, "/*{overlay_settings}*/", overlay_settings)
+	html = replacetext(html, "<!--add_html-->", src.add_html)
+	last_pregame_html = html
+
 	for(var/client/C)
 		if(istype(C.mob, /mob/new_player))
+			if (!cdn)
+				var/list/resources = list("browserassets/src/misc/ibmvga9.ttf")
+				if (src.image_url)
+					resources += "browserassets/src/[src.image_url]"
+				if (src.overlay_image_url)
+					resources += "browserassets/src/[src.overlay_image_url]"
+				C.loadResourcesFromList(resources)
+
 			C << browse(last_pregame_html, "window=pregameBrowser")
 			if(C)
 				winshow(C, "pregameBrowser", 1)
@@ -100,9 +115,10 @@
 #endif
 	var/mob/new_player/new_player = C.mob
 	if(istype(new_player) && new_player.pregameBrowserLoaded)
-		for (var/id in maptext_areas)
-			C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
-		C << output(list2params(list("tip", src.get_tip(new_player))), "pregameBrowser:set_area")
+		var/list/to_send = maptext_areas
+		to_send["auth"] = !C.authenticated ? "Please authenticate to play. To re-open the login window, <a href='byond://winset?command=goonhub-auth'>click here</a>." : ""
+		to_send["tip"] = C.authenticated ? src.get_tip(new_player) : ""
+		C << output(list2params(list(json_encode(to_send))), "pregameBrowser:set_areas")
 
 /datum/titlecard/proc/get_tip(mob/new_player/new_player)
 	. = new_player.my_own_roundstart_tip || get_global_tip()
@@ -117,16 +133,23 @@ proc/get_random_tip()
 	#endif
 	. = pick(all_tips)
 
-proc/get_global_tip()
+proc/get_global_tip(generate = TRUE)
 	var/static/global_tip = null
-	if(isnull(global_tip))
+	if(isnull(global_tip) && generate)
 		global_tip = get_random_tip()
 	. = global_tip
 
 /mob/new_player/verb/refresh_tip()
 	set name = ".refresh_tip"
 	set hidden = 1
-	src.my_own_roundstart_tip = get_random_tip()
+	var/new_tip = ""
+	// Avoid duplicate sequential tips
+	var/tries = 0
+	while (new_tip == "" || new_tip == src.my_own_roundstart_tip || (!src.my_own_roundstart_tip && new_tip == get_global_tip(FALSE)))
+		new_tip = get_random_tip()
+		tries++
+		if (tries > 10) break
+	src.my_own_roundstart_tip = new_tip
 	lobby_titlecard.send_lobby_text(src.client)
 
 

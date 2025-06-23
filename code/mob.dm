@@ -938,6 +938,10 @@ TYPEINFO(/mob)
 /mob/verb/list_medals()
 	set name = "Medals"
 
+	if (src.client && !src.client.authenticated)
+		boutput(src, SPAN_ALERT("You must be logged in to view your medals."))
+		return
+
 	boutput(src, SPAN_HINT("Retrieving your medal information..."))
 
 	SPAWN(0)

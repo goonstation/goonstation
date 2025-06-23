@@ -8,6 +8,7 @@
 #define CLIENT_AUTH_PROVIDER_BYOND 1
 #define CLIENT_AUTH_PROVIDER_GOONHUB 2
 
+// Order of providers must match the order of the defines above
 var/list/datum/client_auth_provider/client_auth_providers = list(
 	/datum/client_auth_provider/byond,
 	/datum/client_auth_provider/goonhub,

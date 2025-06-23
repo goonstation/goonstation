@@ -1,6 +1,6 @@
 var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
 
-/client/New()
+/client/post_auth()
 	. = ..()
 	vpn_scan()
 
