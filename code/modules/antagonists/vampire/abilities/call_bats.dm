@@ -27,7 +27,7 @@
 
 /datum/targetable/vampire/call_frost_bats
 	name = "Call Frost Bats"
-	desc = "Calls a swarm of frost bat spirits. They will orbit you, protecting your personal space from projectiles and living assailants. You can use the Flip emote to launch them."
+	desc = "Calls a swarm of frost bats. They will orbit you, stopping all projectiles and flinging mobs they hit. Point at a mob to send one bat to it, or flip to send all to nearby mobs."
 	icon_state = "frostbats"
 	targeted = 0
 	target_nodamage_check = 0
@@ -78,8 +78,8 @@
 
 /datum/targetable/vampire/call_spirit_bats
 	name = "Call Spirit Bats"
-	desc = "Call a swarm of bat spirits. They will orbit you, protecting your personal space from living assailants. You can point at a mob to send a bat at them."
-	icon_state = "frostbats"
+	desc = "Call a swarm of spirit bats. They will orbit you, stopping one projectile and disorienting mobs they hit. Point at a mob to send one bat to it, or flip to send all to nearby mobs."
+	icon_state = "frostbats" //TODO: Different icon?
 	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
