@@ -217,7 +217,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // This exists and is set to a list of PR numbers when testmerges exist - goonhub-ci/scripts/compile.sh#L104
 // #define TESTMERGE_PRS list(123, 456)
 
-// The following decribe when the server was compiled
+// The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST
 #define BUILD_TIME_TIMEZONE_OFFSET -0500
 #define BUILD_TIME_FULL "2009-02-13 18:31:30"
