@@ -89,8 +89,8 @@
 	src.owner.verbs -= list(/client/proc/open_goonhub_auth, /client/proc/on_goonhub_auth_close)
 
 	src.owner.client_auth_intent.player_id = verification.player_id
-	src.owner.key = verification.key || verification.ckey
 	src.owner.ckey = verification.ckey
+	src.owner.key = verification.key || verification.ckey
 
 	var/mob/old_mob = src.owner.mob
 	var/mob/new_player/new_mob = new()
